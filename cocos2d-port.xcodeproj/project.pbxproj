@@ -34,6 +34,7 @@
 		2DA6ABA00D5E41EB002BF72E /* Success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA6AB9C0D5E41EB002BF72E /* Success.caf */; };
 		2DA6ABA10D5E41EB002BF72E /* Failure.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA6AB9D0D5E41EB002BF72E /* Failure.caf */; };
 		2DA6ABA20D5E41EB002BF72E /* Start.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA6AB9E0D5E41EB002BF72E /* Start.caf */; };
+		5019FF960DF49857000A5AD0 /* TextureMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 5019FF950DF49857000A5AD0 /* TextureMgr.m */; };
 		50F2D0C00DF44E3100553D35 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0B50DF44E3100553D35 /* Action.m */; };
 		50F2D0C10DF44E3100553D35 /* CocosNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0B70DF44E3100553D35 /* CocosNode.m */; };
 		50F2D0C20DF44E3100553D35 /* Director.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0B90DF44E3100553D35 /* Director.m */; };
@@ -76,6 +77,8 @@
 		2DA6AB9D0D5E41EB002BF72E /* Failure.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Failure.caf; sourceTree = "<group>"; };
 		2DA6AB9E0D5E41EB002BF72E /* Start.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Start.caf; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		5019FF940DF49857000A5AD0 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureMgr.h; path = cocos2d/TextureMgr.h; sourceTree = "<group>"; };
+		5019FF950DF49857000A5AD0 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureMgr.m; path = cocos2d/TextureMgr.m; sourceTree = "<group>"; };
 		50F2D0B40DF44E3100553D35 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Action.h; path = cocos2d/Action.h; sourceTree = "<group>"; };
 		50F2D0B50DF44E3100553D35 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Action.m; path = cocos2d/Action.m; sourceTree = "<group>"; };
 		50F2D0B60DF44E3100553D35 /* CocosNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocosNode.h; path = cocos2d/CocosNode.h; sourceTree = "<group>"; };
@@ -175,6 +178,8 @@
 		2D500B6F0D5A793600DBA0E3 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				5019FF940DF49857000A5AD0 /* TextureMgr.h */,
+				5019FF950DF49857000A5AD0 /* TextureMgr.m */,
 				50F2D0B40DF44E3100553D35 /* Action.h */,
 				50F2D0B50DF44E3100553D35 /* Action.m */,
 				50F2D0B60DF44E3100553D35 /* CocosNode.h */,
@@ -306,6 +311,7 @@
 				50F2D0C30DF44E3100553D35 /* Layer.m in Sources */,
 				50F2D0C40DF44E3100553D35 /* Scene.m in Sources */,
 				50F2D0C50DF44E3100553D35 /* Sprite.m in Sources */,
+				5019FF960DF49857000A5AD0 /* TextureMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

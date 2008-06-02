@@ -13,6 +13,9 @@
 @synthesize animationInterval;
 @synthesize window;
 
+//
+// singleton stuff
+//
 static Director *sharedDirector;
 
 + (Director *)sharedDirector
@@ -86,6 +89,13 @@ static Director *sharedDirector;
 		glDisable(GL_BLEND);
 }
 
+- (void) setTexture2D: (BOOL) on
+{
+	if (on)
+		glEnable(GL_TEXTURE_2D);
+	else
+		glDisable(GL_TEXTURE_2D);
+}
 - (void) setDepthTest: (BOOL) on
 {
 	if (on) {
@@ -125,7 +135,7 @@ static Director *sharedDirector;
 
 - (void)startAnimation
 {
-	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawView) userInfo:nil repeats:YES];
+	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
 }
 
 

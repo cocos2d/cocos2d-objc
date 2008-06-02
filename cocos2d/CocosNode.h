@@ -71,6 +71,7 @@
 -(id) init;
 
 // composition
+-(void) add: (CocosNode*)node;
 -(void) add: (CocosNode*)node z:(int)z;
 -(void) remove: (CocosNode*)node;
 -(void) onEnter;

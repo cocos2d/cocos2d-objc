@@ -75,6 +75,11 @@
 //	[children sortUsingSelector:@selector(compare:)];
 }
 
+-(void) add: (CocosNode*) child
+{
+	return [self add: child z:0];
+}
+
 -(void) remove: (CocosNode*)child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
