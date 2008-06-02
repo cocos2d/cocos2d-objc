@@ -35,6 +35,7 @@
 
 - (void) setAlphaBlending: (BOOL) on;
 - (void) setDepthTest: (BOOL) on;
+- (void) setTexture2D: (BOOL) on;
 - (void) setDefaultProjection;
 
 - (void) runScene:(Scene*) scene;
@@ -44,8 +45,6 @@
 - (void) drawScene;
 - (void) startAnimation;
 - (void) stopAnimation;
-
-
 
 + (Director *)sharedDirector;
 @end

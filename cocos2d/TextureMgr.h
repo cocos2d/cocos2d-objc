@@ -10,18 +10,13 @@
 
 #import "Texture2D.h"
 
-#import "CocosNode.h"
-
-
-@interface Sprite : CocosNode {
-
-	/* OpenGL name for the sprite texture */
-	Texture2D *texture;
+@interface TextureMgr : NSObject
+{
+	NSMutableDictionary *textures;
 }
 
-- (id) initFromFile:(NSString *)path;
-- (void) draw;
-- (void) initAnchors;
++ (TextureMgr *) sharedTextureMgr;
 
+-(Texture2D*) addImage: (NSString*) fileimage;
 
 @end
