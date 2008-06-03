@@ -31,7 +31,7 @@
 	if (![super init])
 		return nil;
 
-	is_running = FALSE;
+	isRunning = FALSE;
 	
 	position_x = 0;
 	position_y = 0;
@@ -52,9 +52,11 @@
 	children = [[NSMutableArray alloc] init];
 
 	// actions
-	actionTimer = nil;
 	actions = [[NSMutableArray alloc] init];
 	actionsToRemove = [[NSMutableArray alloc] init];
+	
+	// scheduled selectors
+	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
 	
 	return self;
 }
@@ -77,6 +79,7 @@
 
 -(void) add: (CocosNode*) child
 {
+	NSAssert( child != nil, @"Argument must be non-nil");
 	return [self add: child z:0];
 }
 
@@ -97,7 +100,12 @@
 
 -(void) draw
 {
-	@throw @"Override me";
+	NSException* myException = [NSException
+								exceptionWithName:@"DrawNotImplemented"
+								reason:@"CocosNode draw selector shall be overriden"
+								userInfo:nil];
+	@throw myException;
+	
 }
 
 -(void) transform
@@ -115,14 +123,13 @@
 		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
 
 	// restore and re-position point
-	if (transform_anchor_x != 0 || transform_anchor_y != 0)
-	{
+	if (transform_anchor_x != 0 || transform_anchor_y != 0)	{
 		if ( transform_anchor_x == children_anchor_x && transform_anchor_y == children_anchor_y)
 			glTranslatef( -transform_anchor_x, -transform_anchor_y, 0);
 		else
 			glTranslatef( children_anchor_x - transform_anchor_x, children_anchor_y-transform_anchor_y, 0);
 	}
-	if (children_anchor_x != 0 || children_anchor_y !=0 )
+	else if (children_anchor_x != 0 || children_anchor_y !=0 )
 		glTranslatef( children_anchor_x, children_anchor_y, 0 );
 }
 
@@ -130,85 +137,73 @@
 {
 	if (!visible)
 		return;
-		
+
 	for (id child in children)
 	{
 		if ( [[child objectAtIndex:0] intValue] < 0 )
 			[[child objectAtIndex:1] visit];
 	}	
-		
-	glPushMatrix();		
-	[self transform];
+
+	glPushMatrix();
+	[self transform];		
 	[self draw];
 	glPopMatrix();
-
 
 	for (id child in children)
 	{		
 		if ( [[child objectAtIndex:0] intValue] >= 0 )
 			[[child objectAtIndex:1] visit];
 	}
-
 }
 
 -(void) onEnter
 {
-	is_running = TRUE;
+	isRunning = TRUE;
 	
 	for( id child in children )
 		[[child objectAtIndex:1] onEnter];
+	[self activateTimers];
 }
 
 -(void) onExit
 {
-	is_running = FALSE;
+	isRunning = FALSE;
+	
+	[self deactivateTimers];
 	
 	for( id child in children )
 		[[child objectAtIndex:1] onExit];
+	
 }
 
 -(Action*) do: (Action*) action
 {
+	NSAssert( action != nil, @"Argument must be non-nil");
+
 	[action setTarget: self];
 	[action start];
 	
-	if (! is_scheduled )
-		[self schedule: @selector(_step)];
-	
+	[self schedule: @selector(_step)];
 	[actions addObject: action];
 		
 	return action;
 }
 
--(void) schedule: (SEL) method
-{
-	if( actionTimer)
-		return;
-	actionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:method userInfo:nil repeats:YES];
-}
-
--(void) unschedule
-{
-	if( ! actionTimer )
-		return;
-	[actionTimer invalidate];
-	[actionTimer release];
-	actionTimer = nil;
-}
-
 -(void) _step
 {
-	// remove 'removed' actions
-	for( id action in actionsToRemove )
-		[actions removeObject: action];
-	[actionsToRemove removeAllObjects];
-
-	// unschedule if it is no longer necesary
-	if ( [actions count] == 0 ) {
-		[self unschedule];
-		return;
+	// remove 'removed' actions]
+	if( [actionsToRemove count] > 0 ) {
+		for( Action* action in actionsToRemove )
+			[actions removeObject: action];
+		[actionsToRemove removeAllObjects];
 	}
 		
+	// unschedule if it is no longer necesary
+	if ( [actions count] == 0 ) {
+		[self unschedule: @selector(_step)];
+		return;
+	}
+	
 	// call all actions
 	for( Action *action in actions ) {
 		[action step];
@@ -218,4 +213,68 @@
 		}
 	}
 }
+
+-(void) schedule: (SEL) method
+{
+	NSAssert( method != nil, @"Argument must be non-nil");
+	
+	if( [scheduledSelectors valueForKey: NSStringFromSelector(method) ] ) {
+		NSLog(@"Selector already scheduled");
+		return;
+	}
+	[self activateTimer: method];	
+}
+
+- (void) activateTimer: (SEL) method
+{
+	if( isRunning ) {
+		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:method userInfo:nil repeats:YES];
+		[scheduledSelectors setValue: timer forKey: NSStringFromSelector(method) ];
+	} else
+		[scheduledSelectors setValue: [NSNull null] forKey: NSStringFromSelector(method) ];
+}
+
+-(void) unschedule: (SEL) method
+{
+	NSAssert( method != nil, @"Argument must be non-nil");
+	
+	NSTimer *timer = nil;
+	
+	if( ! (timer = [scheduledSelectors valueForKey: NSStringFromSelector(method)] ) )
+	{
+		NSLog(@"selector not scheduled");
+		NSException* myException = [NSException
+									exceptionWithName:@"SelectorNotScheduled"
+									reason:@"Selector not scheduled"
+									userInfo:nil];
+		@throw myException;
+	}
+
+	[scheduledSelectors removeObjectForKey: NSStringFromSelector(method) ];
+	[timer invalidate];
+	[timer release];
+	timer = nil;
+}
+
+- (void) activateTimers
+{
+	NSArray *keys = [scheduledSelectors allKeys];
+	for( NSString *key in keys ) {
+		SEL sel = NSSelectorFromString( key );
+		[self activateTimer: sel];
+	}
+}
+
+- (void) deactivateTimers
+{
+	NSArray *keys = [scheduledSelectors allKeys];
+	for( NSString *key in keys ) {
+		NSTimer *timer =[ scheduledSelectors valueForKey: key];
+		[timer invalidate];
+		[timer release];
+		timer = nil;
+		[scheduledSelectors setValue: [NSNull null] forKey: key];
+	}	
+}
+
 @end

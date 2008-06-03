@@ -573,10 +573,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) drawAtPoint:(CGPoint)point
 {
-	[self drawAtPoint:point depth:0.0];
+	GLfloat				width = (GLfloat)_width * _maxS,
+						height = (GLfloat)_height * _maxT;
+
+	[self drawAtPoint:point depth:0.0 anchor:CGPointMake(width/2, height/2) ];
 }
 
-- (void) drawAtPoint:(CGPoint)point depth:(CGFloat)depth
+- (void) drawAtPoint:(CGPoint)point depth:(CGFloat)depth anchor:(CGPoint) anchor
 {
 	GLfloat				coordinates[] = {
 							0,				_maxT,
@@ -584,14 +587,23 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 							0,				0,
 							_maxS,			0
 						};
-	GLfloat				width = (GLfloat)_width * _maxS,
-						height = (GLfloat)_height * _maxT;
+
+	GLfloat				width = anchor.x;
+	GLfloat				height = anchor.y;
 	GLfloat				vertices[] = {
-							-width / 2 + point.x,		-height / 2 + point.y,		depth,
-							width / 2 + point.x,		-height / 2 + point.y,		depth,
-							-width / 2 + point.x,		height / 2 + point.y,		depth,
-							width / 2 + point.x,		height / 2 + point.y,		depth
+							-width + point.x,		-height + point.y,		depth,
+							width  + point.x,		-height + point.y,		depth,
+							-width + point.x,		height + point.y,		depth,
+							width  + point.x,		height + point.y,		depth
 						};
+/*
+	GLfloat				vertices[] = {
+		point.x,			point.y,			depth,
+		width + point.x,	point.y,			depth,
+		point.x,			height + point.y,	depth,
+		width + point.x,	height + point.y,	depth
+	};
+*/
 	
 	glBindTexture(GL_TEXTURE_2D, _name);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);

@@ -22,7 +22,11 @@
 
 - (id) init
 {
-	@throw @"Use [ColorLayer initWithColor]";
+	NSException* myException = [NSException
+								exceptionWithName:@"ColorLayerInit"
+								reason:@"Use ColorLayer initWithColor instead"
+								userInfo:nil];
+	@throw myException;	
 }
 
 - (id) initWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h

@@ -34,7 +34,7 @@
 
 -(void) step
 {
-	@throw @"[Action step] override me";
+	NSLog(@"[Action step]. override me");
 }
 
 -(void) update: (double) time
@@ -93,8 +93,13 @@
 	struct timeval now;
 	double delta;	
 	
-	if( gettimeofday( &now, NULL) != 0 )
-		@throw @"Abnormal error in gettimezone()";	
+	if( gettimeofday( &now, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
 	
 	delta = (lastUpdate.tv_sec - now.tv_sec) + (lastUpdate.tv_usec - now.tv_usec) / 1000000.0;
 	
@@ -104,8 +109,13 @@
 
 -(void) start
 {
-	if( gettimeofday( &lastUpdate, NULL) != 0 )
-		@throw @"Abnormal error in gettimezone()";		
+	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
 	
 	elapsed = 0.0;
 }
