@@ -32,9 +32,9 @@
 
 - (void) initAnchors
 {
-	CGSize size = [texture contentSize];
-	transform_anchor_x = size.width  / 2;
-	transform_anchor_y = size.height / 2;
+//	CGSize size = [texture contentSize];
+//	transform_anchor_x = size.width  / 2;
+//	transform_anchor_y = size.height / 2;
 }
 
 - (void) draw
@@ -47,7 +47,6 @@
 	[texture drawAtPoint: CGPointZero];
 
 	glDisable( GL_TEXTURE_2D);
-
 	glDisableClientState(GL_VERTEX_ARRAY | GL_TEXTURE_COORD_ARRAY );
 }
 

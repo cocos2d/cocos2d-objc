@@ -121,7 +121,7 @@ These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_CO
 @interface Texture2D (Drawing)
 - (void) preload; //Forces the texture to "preload" by drawing an invisible quad with it
 - (void) drawAtPoint:(CGPoint)point;
-- (void) drawAtPoint:(CGPoint)point depth:(CGFloat)depth;
+- (void) drawAtPoint:(CGPoint)point depth:(CGFloat)depth anchor:(CGPoint) anchor;
 - (void) drawInRect:(CGRect)rect;
 - (void) drawInRect:(CGRect)rect depth:(CGFloat)depth;
 @end

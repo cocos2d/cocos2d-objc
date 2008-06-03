@@ -42,16 +42,17 @@
 	NSMutableArray *children;
 	
 	// is running
-	BOOL is_running;
+	BOOL isRunning;
 	
 	// weakref to parent
 	CocosNode *parent;
 	
 	// actions
-	BOOL is_scheduled;
 	NSMutableArray *actions;
 	NSMutableArray *actionsToRemove;
-	NSTimer *actionTimer;
+	
+	// scheduled selectors
+	NSMutableDictionary *scheduledSelectors;
 }
 
 @property(readwrite,assign) float rotation;
@@ -84,7 +85,12 @@
 
 // actions
 -(Action*) do: (Action*) action;
--(void) schedule: (SEL) method;
--(void) unschedule;
 -(void) _step;
+
+// timers
+-(void) schedule: (SEL) method;
+-(void) unschedule: (SEL) method;
+-(void) activateTimers;
+-(void) activateTimer: (SEL) method;
+-(void) deactivateTimers;
 @end
