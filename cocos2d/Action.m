@@ -216,28 +216,24 @@
 // MoveBy
 //
 @implementation MoveBy
--(id) initWithDuration: (double) t x:(int)x y:(int)y
+-(id) initWithDuration: (double) t delta: (CGPoint) p
 {
 	if( ![super initWithDuration: t] )
 		return nil;
 
-	delta_x = x;
-	delta_y = y;
+	delta = p;
 	return self;
 }
 
 -(void) start
 {
 	[super start];
-	start_x = [target position_x];
-	start_y = [target position_y];
+	startPos = [target position];
 }
 
 -(void) update: (double) t
 {	
-	[target setPosition_x: (start_x + delta_x * t ) ];
-	[target setPosition_y: (start_y + delta_y * t ) ];
-
+	[target setPosition: CGPointMake( (startPos.x + delta.x * t ), (startPos.y + delta.y * t )) ];
 }
 @end
 
