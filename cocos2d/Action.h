@@ -84,12 +84,10 @@
 //
 @interface MoveBy : IntervalAction
 {
-	int delta_x;
-	int delta_y;
-	int start_x;
-	int start_y;
+	CGPoint delta;
+	CGPoint startPos;
 }
--(id) initWithDuration: (double) t x:(int) x y:(int) y;
+-(id) initWithDuration: (double) t delta: (CGPoint) delta;
 @end
 
 //

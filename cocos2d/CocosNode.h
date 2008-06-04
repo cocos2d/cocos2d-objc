@@ -20,8 +20,7 @@
 	float scale;
 	
 	// position of the node
-	int position_x;
-	int position_y;
+	CGPoint position;
 	
 	// color and opacity
 	int color;
@@ -31,12 +30,10 @@
 	BOOL visible;
 	
 	// transformation anchor point
-	int transform_anchor_x;
-	int transform_anchor_y;
+	CGPoint transformAnchor;
 	
 	// where are the children placed (anchor)
-	int children_anchor_x;
-	int children_anchor_y;
+	CGPoint childrenAnchor;
 	
 	// array of children
 	NSMutableArray *children;
@@ -57,15 +54,12 @@
 
 @property(readwrite,assign) float rotation;
 @property(readwrite,assign) float scale;
-@property(readwrite,assign) int position_x;
-@property(readwrite,assign) int position_y;
+@property(readwrite,assign) CGPoint position;
 @property(readwrite,assign) int color;
 @property(readwrite,assign) int opacity;
 @property(readwrite,assign) BOOL visible;
-@property(readwrite,assign) int transform_anchor_x;
-@property(readwrite,assign) int transform_anchor_y;
-@property(readwrite,assign) int children_anchor_x;
-@property(readwrite,assign) int children_anchor_y;
+@property(readwrite,assign) CGPoint transformAnchor;
+@property(readwrite,assign) CGPoint childrenAnchor;
 @property(readwrite,assign) CocosNode* parent;
 
 // initializators

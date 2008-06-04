@@ -15,15 +15,12 @@
 
 @synthesize rotation;
 @synthesize scale;
-@synthesize position_x;
-@synthesize position_y;
+@synthesize position;
 @synthesize color;
 @synthesize opacity;
 @synthesize visible;
-@synthesize transform_anchor_x;
-@synthesize transform_anchor_y;
-@synthesize children_anchor_x;
-@synthesize children_anchor_y;
+@synthesize transformAnchor;
+@synthesize childrenAnchor;
 @synthesize parent;
 
 -(id) init
@@ -33,9 +30,8 @@
 
 	isRunning = FALSE;
 	
-	position_x = 0;
-	position_y = 0;
-
+	position = CGPointZero;
+	
 	rotation = 0.0f;		// 0 degrees	
 	scale = 1.0f;			// scale factor
 
@@ -43,11 +39,8 @@
 	opacity = 255;
 	visible = TRUE;
 
-	children_anchor_x = 0;
-	children_anchor_y = 0;
-	
-	transform_anchor_x = 0;
-	transform_anchor_y = 0;
+	childrenAnchor = CGPointZero;
+	transformAnchor = CGPointZero;
 	
 	children = [[NSMutableArray alloc] init];
 
@@ -111,10 +104,10 @@
 -(void) transform
 {
 	// transformations
-	if (transform_anchor_x != 0 || transform_anchor_y != 0)
-		glTranslatef( position_x + transform_anchor_x, position_y + transform_anchor_y, 0);
-	else if ( position_x !=0 || position_y !=0 )
-		glTranslatef( position_x, position_y, 0 );
+	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
+		glTranslatef( position.x + transformAnchor.x, position.y + transformAnchor.y, 0);
+	else if ( position.x !=0 || position.y !=0 )
+		glTranslatef( position.x, position.y, 0 );
 		
 	if (scale != 1.0f)
 		glScalef( scale, scale, 1.0f );
@@ -123,14 +116,14 @@
 		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
 
 	// restore and re-position point
-	if (transform_anchor_x != 0 || transform_anchor_y != 0)	{
-		if ( transform_anchor_x == children_anchor_x && transform_anchor_y == children_anchor_y)
-			glTranslatef( -transform_anchor_x, -transform_anchor_y, 0);
+	if (transformAnchor.x != 0 || transformAnchor.y != 0)	{
+		if ( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y)
+			glTranslatef( -transformAnchor.x, -transformAnchor.y, 0);
 		else
-			glTranslatef( children_anchor_x - transform_anchor_x, children_anchor_y-transform_anchor_y, 0);
+			glTranslatef( childrenAnchor.x - transformAnchor.x, childrenAnchor.y - transformAnchor.y, 0);
 	}
-	else if (children_anchor_x != 0 || children_anchor_y !=0 )
-		glTranslatef( children_anchor_x, children_anchor_y, 0 );
+	else if (childrenAnchor.x != 0 || childrenAnchor.y !=0 )
+		glTranslatef( childrenAnchor.x, childrenAnchor.y, 0 );
 }
 
 -(void) visit
@@ -252,7 +245,6 @@
 
 	[scheduledSelectors removeObjectForKey: NSStringFromSelector(method) ];
 	[timer invalidate];
-	[timer release];
 	timer = nil;
 }
 
