@@ -21,11 +21,7 @@
 	
 	// position of the node
 	CGPoint position;
-	
-	// color and opacity
-	int color;
-	int opacity;
-	
+
 	// is visible
 	BOOL visible;
 	
@@ -55,8 +51,6 @@
 @property(readwrite,assign) float rotation;
 @property(readwrite,assign) float scale;
 @property(readwrite,assign) CGPoint position;
-@property(readwrite,assign) int color;
-@property(readwrite,assign) int opacity;
 @property(readwrite,assign) BOOL visible;
 @property(readwrite,assign) CGPoint transformAnchor;
 @property(readwrite,assign) CGPoint childrenAnchor;

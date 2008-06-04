@@ -11,7 +11,6 @@
 #include <sys/time.h>
 
 @class CocosNode;
-
 @interface Action : NSObject {
 	CocosNode *target;	
 }
@@ -54,6 +53,7 @@
 -(void) start;
 -(BOOL) isDone;
 -(double) getDeltaTime;
+- (IntervalAction*) reverse;
 @end
 
 //
@@ -74,7 +74,7 @@
 @interface RotateBy : IntervalAction
 {
 	float angle;
-	float start_angle;
+	float startAngle;
 }
 -(id) initWithDuration: (double) t angle:(float) a;
 @end
@@ -91,12 +91,34 @@
 @end
 
 //
-// ScaleBy
+// ScaleTo
 //
-@interface ScaleBy : IntervalAction
+@interface ScaleTo : IntervalAction
 {
 	float scale;
-	float start_scale;
+	float startScale;
+	float endScale;
+	float delta;
 }
+
 -(id) initWithDuration: (double) t scale:(float) s;
+@end
+
+//
+// ScaleBy
+//
+@interface ScaleBy : ScaleTo
+{
+}
+@end
+
+//
+// Accelerate
+//
+@interface Accelerate: IntervalAction
+{
+	IntervalAction *other;
+	float rate;
+}
+- (id) initWithAction: (IntervalAction*) action rate: (float) rate;
 @end

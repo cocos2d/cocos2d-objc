@@ -10,6 +10,7 @@
 #import "Action.h"
 #import "CocosNode.h"
 
+
 //
 // Action Base Class
 //
@@ -67,6 +68,16 @@
 
 @synthesize duration;
 
+-(id) init
+{
+	NSException* myException = [NSException
+								exceptionWithName:@"IntervalActionInit"
+								reason:@"Init not supported. Use InitWithDuration"
+								userInfo:nil];
+	@throw myException;
+	
+}
+
 -(id) initWithDuration: (double) d
 {
 	if( ![super init] )
@@ -120,6 +131,14 @@
 	elapsed = 0.0;
 }
 
+- (IntervalAction*) reverse
+{
+	NSException* myException = [NSException
+								exceptionWithName:@"ReverseActionNotImplemented"
+								reason:@"Reverse Action not implemented"
+								userInfo:nil];
+	@throw myException;	
+}
 @end
 
 //
@@ -202,14 +221,20 @@
 -(void) start
 {
 	[super start];
-	start_angle = [target rotation];
+	startAngle = [target rotation];
 }
 
 -(void) update: (double) t
 {	
 	// XXX: shall I add % 360
-	[target setRotation: (start_angle + angle * t ) ];
+	[target setRotation: (startAngle + angle * t ) ];
 }
+
+-(IntervalAction*) reverse
+{
+	return [[RotateBy alloc] initWithDuration: duration angle: -angle];
+}
+
 @end
 
 //
@@ -235,31 +260,86 @@
 {	
 	[target setPosition: CGPointMake( (startPos.x + delta.x * t ), (startPos.y + delta.y * t )) ];
 }
+
+-(IntervalAction*) reverse
+{
+	return [[MoveBy alloc] initWithDuration: duration delta: CGPointMake( -delta.x, -delta.y)];
+}
 @end
 
 //
-// ScaleBy
+// ScaleTo
 //
-@implementation ScaleBy
+@implementation ScaleTo
 -(id) initWithDuration: (double) t scale:(float) s
 {
 	if( ![super initWithDuration: t] )
 		return nil;
-
-	scale = s;
+	
+	endScale = s;
 	return self;
 }
 
 -(void) start
 {
 	[super start];
-	start_scale = [target scale];
+	startScale = [target scale];
+	delta = endScale - startScale;
 }
 
 -(void) update: (double) t
 {	
-	[target setScale: (start_scale + scale * t ) ];	
+	[target setScale: (startScale + delta * t ) ];	
 }
 @end
+
+//
+// ScaleBy
+//
+@implementation ScaleBy
+-(void) start
+{
+	[super start];
+	delta = startScale * endScale - startScale;
+}
+
+-(IntervalAction*) reverse
+{
+	return [[ScaleBy alloc] initWithDuration: duration scale: 1/endScale];
+}
+@end
+
+//
+// Accelerate
+//
+@implementation Accelerate
+- (id) initWithAction: (IntervalAction*) action rate: (float) r
+{	
+	if( ! [super initWithDuration: [action duration]] )
+		return nil;
+	
+	other = [action retain];
+	rate = r;
+	return self;
+}
+
+- (void) start
+{
+	[super start];
+	other.target = target;
+	[other start];
+}
+
+- (void) update: (double) t
+{
+	[other update: pow(t,rate) ];
+}
+
+- (IntervalAction*) reverse
+{
+	return [ [Accelerate alloc] initWithAction: [other reverse] rate: 1/rate];
+}
+@end
+
 
 

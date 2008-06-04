@@ -17,6 +17,7 @@
 
 @interface ColorLayer : Layer
 {
+	GLuint color;
 	GLfloat squareVertices[4 * 2];
 	GLubyte squareColors[4 * 4];
 }
@@ -25,5 +26,7 @@
 - (id) initWithColor: (GLuint) aColor;
 - (void) changeColor: (GLuint) aColor;
 - (void) initWidth: (GLint)w height:(GLint)h;
+
+@property (readwrite, assign) GLuint color;
 
 @end

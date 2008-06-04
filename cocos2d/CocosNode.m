@@ -16,8 +16,6 @@
 @synthesize rotation;
 @synthesize scale;
 @synthesize position;
-@synthesize color;
-@synthesize opacity;
 @synthesize visible;
 @synthesize transformAnchor;
 @synthesize childrenAnchor;
@@ -35,8 +33,6 @@
 	rotation = 0.0f;		// 0 degrees	
 	scale = 1.0f;			// scale factor
 
-	color =0xffffffff;		// rgba (0-255 each color)	
-	opacity = 255;
 	visible = YES;
 
 	childrenAnchor = CGPointZero;
@@ -145,6 +141,8 @@
 	{
 		if ( [[child objectAtIndex:0] intValue] < 0 )
 			[[child objectAtIndex:1] visit];
+		else
+			break;
 	}	
 
 	glPushMatrix();
