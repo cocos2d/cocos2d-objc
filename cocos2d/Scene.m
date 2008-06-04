@@ -10,8 +10,7 @@
 
 
 @implementation Scene
--(void) draw
+- (void) draw
 {
-	NSLog(@"[Scene draw];");
 }
 @end

@@ -41,6 +41,7 @@
 		50F2D0C30DF44E3100553D35 /* Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0BB0DF44E3100553D35 /* Layer.m */; };
 		50F2D0C40DF44E3100553D35 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0BD0DF44E3100553D35 /* Scene.m */; };
 		50F2D0C50DF44E3100553D35 /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0BF0DF44E3100553D35 /* Sprite.m */; };
+		50F2DB6D0DF7196F009C2B43 /* Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2DB6C0DF7196F009C2B43 /* Label.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,8 @@
 		50F2D0BD0DF44E3100553D35 /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Scene.m; path = cocos2d/Scene.m; sourceTree = "<group>"; };
 		50F2D0BE0DF44E3100553D35 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite.h; path = cocos2d/Sprite.h; sourceTree = "<group>"; };
 		50F2D0BF0DF44E3100553D35 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sprite.m; path = cocos2d/Sprite.m; sourceTree = "<group>"; };
+		50F2DB6B0DF7196F009C2B43 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Label.h; path = cocos2d/Label.h; sourceTree = "<group>"; };
+		50F2DB6C0DF7196F009C2B43 /* Label.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Label.m; path = cocos2d/Label.m; sourceTree = "<group>"; };
 		84FA87720DB963700038B5F3 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +181,8 @@
 		2D500B6F0D5A793600DBA0E3 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				50F2DB6B0DF7196F009C2B43 /* Label.h */,
+				50F2DB6C0DF7196F009C2B43 /* Label.m */,
 				5019FF940DF49857000A5AD0 /* TextureMgr.h */,
 				5019FF950DF49857000A5AD0 /* TextureMgr.m */,
 				50F2D0B40DF44E3100553D35 /* Action.h */,
@@ -312,6 +317,7 @@
 				50F2D0C40DF44E3100553D35 /* Scene.m in Sources */,
 				50F2D0C50DF44E3100553D35 /* Sprite.m in Sources */,
 				5019FF960DF49857000A5AD0 /* TextureMgr.m in Sources */,
+				50F2DB6D0DF7196F009C2B43 /* Label.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
