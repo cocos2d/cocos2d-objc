@@ -14,11 +14,12 @@
 @implementation Layer
 -(void) draw
 {
-	NSLog(@"[Layer draw];");
 }
 @end
 
 @implementation ColorLayer
+
+@synthesize color;
 
 - (id) init
 {

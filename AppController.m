@@ -33,9 +33,9 @@
 	Sprite *sprite = [[Sprite alloc] initFromFile: @"Ship.png"];
 	MainLayer * mainLayer =[[MainLayer alloc] init];
 	
-	RotateBy *rot = [[RotateBy alloc] initWithDuration: 4 angle:360];
-	ScaleBy *scale = [[ScaleBy alloc] initWithDuration: 4 scale:2];
-	MoveBy *move = [[MoveBy alloc] initWithDuration: 1 delta: CGPointMake(0,-200) ];
+	id rot = [[RotateBy alloc] initWithDuration: 4 angle:360];
+	id scale = [[ScaleTo alloc] initWithDuration: 4 scale:0.2];
+	id move = [[MoveBy alloc] initWithDuration: 1 delta: CGPointMake(0,-200) ];
 	
 	[scene add: mainLayer z:1];
 	[scene add: layer z:2];
@@ -44,8 +44,8 @@
 	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,
 									  [[Director sharedDirector] winSize].size.height / 2 )  ];
 	
-	[sprite do: rot];
-	[sprite do: scale];
+	[sprite do: [[Sequence alloc] initOne: rot two: [rot reverse] ] ];
+	[sprite do: [[Accelerate alloc] initWithAction: scale rate:4 ]];
 	[sprite do: move];
 	
 	[[Director sharedDirector] runScene: scene];
