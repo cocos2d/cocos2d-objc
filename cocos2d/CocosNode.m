@@ -28,7 +28,7 @@
 	if (![super init])
 		return nil;
 
-	isRunning = FALSE;
+	isRunning = NO;
 	
 	position = CGPointZero;
 	
@@ -37,7 +37,7 @@
 
 	color =0xffffffff;		// rgba (0-255 each color)	
 	opacity = 255;
-	visible = TRUE;
+	visible = YES;
 
 	childrenAnchor = CGPointZero;
 	transformAnchor = CGPointZero;
@@ -63,11 +63,21 @@
 	
 	NSNumber *index = [NSNumber numberWithInt:z];
 	entry = [NSArray arrayWithObjects: index, child, nil];
-	[children addObject:entry];
+
+	int idx=0;
+	BOOL added = NO;
+	for( NSArray *a in children ) {
+		if ( [[a objectAtIndex: 0] intValue] >= z ) {
+			added = YES;
+			[ children insertObject:entry atIndex:idx];
+			break;
+		}
+		idx++;
+	}
+	if( ! added )
+		[children addObject:entry];
 	
 	[child setParent: self];
-	
-//	[children sortUsingSelector:@selector(compare:)];
 }
 
 -(void) add: (CocosNode*) child
@@ -151,7 +161,7 @@
 
 -(void) onEnter
 {
-	isRunning = TRUE;
+	isRunning = YES;
 	
 	for( id child in children )
 		[[child objectAtIndex:1] onEnter];
@@ -160,7 +170,7 @@
 
 -(void) onExit
 {
-	isRunning = FALSE;
+	isRunning = NO;
 	
 	[self deactivateTimers];
 	
@@ -184,7 +194,7 @@
 
 -(void) _step
 {
-	// remove 'removed' actions]
+	// remove 'removed' actions
 	if( [actionsToRemove count] > 0 ) {
 		for( Action* action in actionsToRemove )
 			[actions removeObject: action];
