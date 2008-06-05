@@ -66,7 +66,7 @@
 	double split;
 	int last;
 }
-+(id) actions: (IntervalAction*) action1, ...;
++(id) actions: (IntervalAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 +(id) actionOne: (IntervalAction*) one two:(IntervalAction*) two;
 -(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
 @end
@@ -142,6 +142,17 @@
 @end
 
 //
+// Blink
+//
+@interface Blink : IntervalAction
+{
+	int times;
+}
++(id) actionWithDuration: (double) t blinks: (int) blinks;
+-(id) initWithDuration: (double) t blinks: (int) blinks;
+@end
+
+//
 // Accelerate
 //
 @interface Accelerate: IntervalAction
@@ -151,6 +162,29 @@
 }
 +(id) actionWithAction: (IntervalAction*) action rate: (float) rate;
 -(id) initWithAction: (IntervalAction*) action rate: (float) rate;
+@end
+
+//
+// AccelDeccel
+//
+@interface AccelDeccel: IntervalAction
+{
+	IntervalAction *other;
+}
++(id) actionWithAction: (IntervalAction*) action;
+-(id) initWithAction: (IntervalAction*) action;
+@end
+
+//
+// Speed
+//
+@interface Speed : IntervalAction
+{
+	double speed;
+	IntervalAction * other;
+}
++(id) actionWithAction: (IntervalAction*) action speed:(double)s;
+-(id) initWithAction: (IntervalAction*) action speed:(double)s;
 @end
 
 //

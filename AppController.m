@@ -30,7 +30,7 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// first instruction
+	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: NO];
 
 	Scene *scene = [Scene node];
@@ -38,11 +38,11 @@
 	Sprite *sprite = [Sprite spriteFromFile: @"Ship.png"];
 	MainLayer * mainLayer =[MainLayer node];
 	
-	id rotby = [RotateBy actionWithDuration: 1.5 angle:90];
+	id rotby = [RotateBy actionWithDuration: 1.5 angle:360+90];
 	id rotto = [RotateTo actionWithDuration: 1.5 angle:270];
 	id scaleby = [ScaleBy actionWithDuration: 2 scale:0.2];
 	id moveby =	[MoveBy actionWithDuration: 2 delta: CGPointMake(0,100) ];
-	id moveto =	[MoveTo actionWithDuration: 2 position: CGPointMake(20,20) ];
+	id moveto =	[Speed actionWithAction: [MoveTo actionWithDuration: 8 position: CGPointMake(20,20) ] speed:2 ];
 	
 	[scene add: mainLayer z:1];
 	[scene add: layer z:2];
@@ -51,7 +51,8 @@
 	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,
 									  [[Director sharedDirector] winSize].size.height / 2 )  ];
 	
-	[sprite do: [Sequence actions: rotby, rotto, nil ] ];
+	[sprite do: [Blink actionWithDuration: 2 blinks: 10]];
+	[sprite do: [AccelDeccel actionWithAction: [Sequence actions: rotby, rotto, nil ] ] ];
 	[sprite do: [Accelerate actionWithAction: [Sequence actions: scaleby, [scaleby reverse], nil] rate:4] ];
 	[sprite do: [Sequence actions: moveby, [DelayTime actionWithDuration:2], moveto, nil] ];
 	
