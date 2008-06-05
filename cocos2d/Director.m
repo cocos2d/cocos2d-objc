@@ -9,7 +9,6 @@
 
 @implementation Director
 
-@synthesize winSize;
 @synthesize animationInterval;
 @synthesize window;
 
@@ -65,9 +64,22 @@ static Director *sharedDirector;
 	[self setDepthTest: NO];
 	[self setDefaultProjection];
 	
+	// landscape
+	landscape = NO;
+	
 	//Show window
 	[window makeKeyAndVisible];	
 	return self;
+}
+
+- (void) dealloc {
+	NSLog( @"deallocing %@", self);
+	
+	[GLView release];
+	[window release];
+	[runningScene release];
+	
+	[super dealloc];
 }
 
 - (void) setDefaultProjection
@@ -78,6 +90,34 @@ static Director *sharedDirector;
 	glMatrixMode(GL_PROJECTION);
 	glOrthof(0, winSize.size.width, 0, winSize.size.height, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
+}
+
+//
+// custom properties
+//
+- (CGRect) winSize
+{
+	CGRect r = winSize;
+	if( landscape ) {
+		// swap x,y in landscape mode
+		r.size.width = winSize.size.height;
+		r.size.height = winSize.size.width;
+	}
+	return r;
+}
+
+- (BOOL) landscape
+{
+	return landscape;
+}
+
+- (void) setLandscape: (BOOL) on
+{
+	if( on != landscape ) {
+		landscape = on;
+//		[self setDefaultProjection];
+	}
+	return;
 }
 
 - (void) setAlphaBlending: (BOOL) on
@@ -105,16 +145,6 @@ static Director *sharedDirector;
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	} else
 		glDisable( GL_DEPTH_TEST );
-}
-
-- (void) dealloc {
-	NSLog( @"deallocing %@", self);
-
-	[GLView release];
-	[window release];
-	[runningScene release];
-	
-	[super dealloc];
 }
 
 - (void)runScene:(Scene*) scene
@@ -161,7 +191,14 @@ static Director *sharedDirector;
 
 - (void) drawScene
 {
+	glLoadIdentity();
+	if( landscape ) {
+		glTranslatef(160,240,0);
+		glRotatef(-90,0,0,1);
+		glTranslatef(-240,-160,0);
+	}
 	[runningScene visit];
 	[GLView swapBuffers];
+
 }
 @end

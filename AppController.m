@@ -30,6 +30,9 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// first instruction
+	[[Director sharedDirector] setLandscape: NO];
+
 	Scene *scene = [Scene node];
 	ColorLayer *layer = [ColorLayer layerWithColor: 0x00ff0080];
 	Sprite *sprite = [Sprite spriteFromFile: @"Ship.png"];
@@ -38,8 +41,8 @@
 	id rotby = [RotateBy actionWithDuration: 1.5 angle:90];
 	id rotto = [RotateTo actionWithDuration: 1.5 angle:270];
 	id scaleby = [ScaleBy actionWithDuration: 2 scale:0.2];
-	id moveby =	[MoveBy actionWithDuration: 2 delta: CGPointMake(0,-200) ];
-	id moveto =	[MoveTo actionWithDuration: 2 position: CGPointMake(240,400) ];
+	id moveby =	[MoveBy actionWithDuration: 2 delta: CGPointMake(0,100) ];
+	id moveto =	[MoveTo actionWithDuration: 2 position: CGPointMake(20,20) ];
 	
 	[scene add: mainLayer z:1];
 	[scene add: layer z:2];

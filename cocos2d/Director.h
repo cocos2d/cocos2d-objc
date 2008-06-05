@@ -22,6 +22,9 @@
 	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
 
+	/* landscape mode ? */
+	BOOL landscape;
+	
 	/* running scene */
 	Scene *runningScene;
 
@@ -30,8 +33,11 @@
 }
 
 @property (readwrite, assign) NSTimeInterval animationInterval;
-@property (readwrite,assign) CGRect winSize;
 @property (readwrite,assign) UIWindow* window;
+
+- (CGRect) winSize;
+- (BOOL) landscape;
+- (void) setLandscape: (BOOL) on;
 
 - (void) setAlphaBlending: (BOOL) on;
 - (void) setDepthTest: (BOOL) on;
