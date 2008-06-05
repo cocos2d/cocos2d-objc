@@ -18,6 +18,23 @@
 
 @synthesize target;
 
+-(id) init
+{
+	if( ![super init] )
+		return nil;
+	
+	target = nil;
+	return self;
+}
+
+-(void) dealloc
+{
+	NSLog(@"deallocing %@", self);
+	if( target )
+		[target release];
+	[super dealloc];
+}
+
 -(void) start
 {
 	// override me
@@ -76,6 +93,11 @@
 								userInfo:nil];
 	@throw myException;
 	
+}
+
++(id) actionWithDuration: (double) d
+{
+	return [[[self alloc] initWithDuration:d ] autorelease];
 }
 
 -(id) initWithDuration: (double) d
@@ -145,6 +167,10 @@
 // Sequence
 //
 @implementation Sequence
++(id) actionOne: (IntervalAction*) one two: (IntervalAction*) two
+{	
+	return [[[self alloc] initOne:one two:two ] autorelease];
+}
 
 -(id) initOne: (IntervalAction*) one two: (IntervalAction*) two
 {
@@ -156,11 +182,18 @@
 	return self;
 }
 
+-(void) dealloc
+{
+//	NSLog( @"deallocing %@", self);
+	[actions release];
+	[super dealloc];
+}
+
 -(void) start
 {
 	[super start];
 	for( Action * action in actions )
-		[action setTarget: target];
+		[action setTarget: [target retain] ];
 	
 	split = [[actions objectAtIndex:0] duration] / duration;
 	last = -1;
@@ -201,6 +234,11 @@
 	[[actions objectAtIndex:found] update: new_t];
 	last = found;
 }
+
+- (IntervalAction *) reverse
+{
+	return [Sequence actionOne: [[actions objectAtIndex:1] reverse] two: [[actions objectAtIndex:0] reverse ] ];
+}
 @end
 
 
@@ -208,6 +246,11 @@
 // RotateBy
 //
 @implementation RotateBy
++(id) actionWithDuration: (double) t angle:(float) a
+{	
+	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
+}
+
 -(id) initWithDuration: (double) t angle:(float) a
 {
 	if( ! [super initWithDuration: t] )
@@ -232,7 +275,7 @@
 
 -(IntervalAction*) reverse
 {
-	return [[RotateBy alloc] initWithDuration: duration angle: -angle];
+	return [RotateBy actionWithDuration: duration angle: -angle];
 }
 
 @end
@@ -241,6 +284,11 @@
 // MoveBy
 //
 @implementation MoveBy
++(id) actionWithDuration: (double) t delta: (CGPoint) p
+{	
+	return [[[self alloc] initWithDuration:t delta:p ] autorelease];
+}
+
 -(id) initWithDuration: (double) t delta: (CGPoint) p
 {
 	if( ![super initWithDuration: t] )
@@ -263,7 +311,7 @@
 
 -(IntervalAction*) reverse
 {
-	return [[MoveBy alloc] initWithDuration: duration delta: CGPointMake( -delta.x, -delta.y)];
+	return [MoveBy actionWithDuration: duration delta: CGPointMake( -delta.x, -delta.y)];
 }
 @end
 
@@ -271,6 +319,11 @@
 // ScaleTo
 //
 @implementation ScaleTo
++(id) actionWithDuration: (double) t scale:(float) s
+{
+	return [[[self alloc] initWithDuration: t scale:s] autorelease];
+}
+
 -(id) initWithDuration: (double) t scale:(float) s
 {
 	if( ![super initWithDuration: t] )
@@ -305,7 +358,7 @@
 
 -(IntervalAction*) reverse
 {
-	return [[ScaleBy alloc] initWithDuration: duration scale: 1/endScale];
+	return [ScaleBy actionWithDuration: duration scale: 1/endScale];
 }
 @end
 
@@ -313,6 +366,11 @@
 // Accelerate
 //
 @implementation Accelerate
++ (id) actionWithAction: (IntervalAction*) action rate: (float) r
+{
+	return [[[self alloc] initWithAction:action rate:r ] autorelease];
+}
+
 - (id) initWithAction: (IntervalAction*) action rate: (float) r
 {	
 	if( ! [super initWithDuration: [action duration]] )
@@ -323,10 +381,17 @@
 	return self;
 }
 
+- (void) dealloc
+{
+//	NSLog( @"deallocing %@", self);
+	[other release];
+	[super dealloc];
+}
+
 - (void) start
 {
 	[super start];
-	other.target = target;
+	other.target = [target retain];
 	[other start];
 }
 
@@ -337,7 +402,7 @@
 
 - (IntervalAction*) reverse
 {
-	return [ [Accelerate alloc] initWithAction: [other reverse] rate: 1/rate];
+	return [Accelerate actionWithAction: [other reverse] rate: 1/rate];
 }
 @end
 

@@ -30,6 +30,16 @@
 	@throw myException;	
 }
 
++ (id) layerWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
+{
+	return [[[self alloc] initWithColor: aColor width:w height:h] autorelease];
+}
+
++ (id) layerWithColor: (GLuint) aColor
+{
+	return [[[self alloc] initWithColor: aColor] autorelease];
+}
+
 - (id) initWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
 {
 	if (![super init])

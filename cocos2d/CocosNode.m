@@ -21,6 +21,11 @@
 @synthesize childrenAnchor;
 @synthesize parent;
 
++(id) node
+{
+	return [[[self alloc] init] autorelease];
+}
+
 -(id) init
 {
 	if (![super init])
@@ -48,6 +53,15 @@
 	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
 	
 	return self;
+}
+- (void) dealloc
+{
+	NSLog( @"deallocing %@", self);
+	[children release];
+	[scheduledSelectors release];
+	[actions release];
+	[actionsToRemove release];
+	[super dealloc];
 }
 
 // add a node to the array
@@ -181,7 +195,7 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[action setTarget: self];
+	[action setTarget: [self retain]];
 	[action start];
 	
 	[self schedule: @selector(_step)];
@@ -219,7 +233,7 @@
 {
 	NSAssert( method != nil, @"Argument must be non-nil");
 	
-	if( [scheduledSelectors valueForKey: NSStringFromSelector(method) ] ) {
+	if( [scheduledSelectors objectForKey: NSStringFromSelector(method) ] ) {
 		NSLog(@"Selector already scheduled");
 		return;
 	}
@@ -241,7 +255,7 @@
 	
 	NSTimer *timer = nil;
 	
-	if( ! (timer = [scheduledSelectors valueForKey: NSStringFromSelector(method)] ) )
+	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(method)] ) )
 	{
 		NSLog(@"selector not scheduled");
 		NSException* myException = [NSException
@@ -269,7 +283,7 @@
 {
 	NSArray *keys = [scheduledSelectors allKeys];
 	for( NSString *key in keys ) {
-		NSTimer *timer =[ scheduledSelectors valueForKey: key];
+		NSTimer *timer =[ scheduledSelectors objectForKey: key];
 		[timer invalidate];
 		[timer release];
 		timer = nil;

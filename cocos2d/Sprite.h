@@ -19,7 +19,9 @@
 	Texture2D *texture;
 }
 
++ (id) spriteFromFile:(NSString *)path;
 - (id) initFromFile:(NSString *)path;
+
 - (void) draw;
 - (void) initAnchors;
 

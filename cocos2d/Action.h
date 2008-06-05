@@ -48,6 +48,7 @@
 
 @property (readwrite,assign) double duration;
 
++(id) actionWithDuration: (double) d;
 -(id) initWithDuration: (double) d;
 -(void) step;
 -(void) start;
@@ -66,6 +67,7 @@
 	int last;
 }
 -(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
++(id) actionOne: (IntervalAction*) one two:(IntervalAction*) two;
 @end
 
 //
@@ -76,6 +78,7 @@
 	float angle;
 	float startAngle;
 }
++(id) actionWithDuration: (double) t angle:(float) a;
 -(id) initWithDuration: (double) t angle:(float) a;
 @end
 
@@ -87,6 +90,7 @@
 	CGPoint delta;
 	CGPoint startPos;
 }
++(id) actionWithDuration: (double) t delta: (CGPoint) delta;
 -(id) initWithDuration: (double) t delta: (CGPoint) delta;
 @end
 
@@ -101,6 +105,7 @@
 	float delta;
 }
 
++(id) actionWithDuration: (double) t scale:(float) s;
 -(id) initWithDuration: (double) t scale:(float) s;
 @end
 
@@ -120,5 +125,6 @@
 	IntervalAction *other;
 	float rate;
 }
-- (id) initWithAction: (IntervalAction*) action rate: (float) rate;
++(id) actionWithAction: (IntervalAction*) action rate: (float) rate;
+-(id) initWithAction: (IntervalAction*) action rate: (float) rate;
 @end
