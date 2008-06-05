@@ -445,6 +445,37 @@
 @end
 
 //
+// Blink
+//
+@implementation Blink
++(id) actionWithDuration: (double) t blinks: (int) b
+{
+	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
+}
+
+-(id) initWithDuration: (double) t blinks: (int) b
+{
+	[super initWithDuration: t];
+	times = b;
+	return self;
+}
+
+-(void) update: (double) t
+{
+	double slice = 1.0f / times;
+	double m = fmod(t, slice);
+	target.visible = (m > slice/2) ? YES : NO;
+}
+
+-(IntervalAction*) reverse
+{
+	// return 'self'
+	return [Blink actionWithDuration: duration blinks: times];
+}
+@end
+
+
+//
 // Accelerate
 //
 @implementation Accelerate
@@ -485,6 +516,89 @@
 - (IntervalAction*) reverse
 {
 	return [Accelerate actionWithAction: [other reverse] rate: 1/rate];
+}
+@end
+
+//
+// AccelDeccel
+//
+@implementation AccelDeccel
++(id) actionWithAction: (IntervalAction*) action
+{
+	return [[[self alloc] initWithAction: action ] autorelease ];
+}
+
+-(id) initWithAction: (IntervalAction*) action
+{
+	[super initWithDuration: action.duration ];
+	other = [action retain];
+	return self;
+}
+
+-(void) dealloc
+{
+	[other release];
+	[super dealloc];
+}
+
+-(void) start
+{
+	[super start];
+	other.target = target;
+	[other start];
+}
+
+-(void) update: (double) t
+{
+	double ft = (t-0.5f) * 12;
+	double nt = 1.0f/( 1.0f + exp(-ft) );
+	[other update: nt];	
+}
+
+-(IntervalAction*) reverse
+{
+	return [AccelDeccel actionWithAction: [other reverse]];
+}
+@end
+
+//
+// Speed
+//
+@implementation Speed
++(id) actionWithAction: (IntervalAction*) action speed:(double) s
+{
+	return [[[self alloc] initWithAction: action speed:s] autorelease ];
+}
+
+-(id) initWithAction: (IntervalAction*) action speed:(double) s
+{
+	[super initWithDuration: action.duration / s ];
+	other = [action retain];
+	speed = s;
+	return self;
+}
+
+-(void) dealloc
+{
+	[other release];
+	[super dealloc];
+}
+
+-(void) start
+{
+	[super start];
+	other.target = target;
+	[other start];
+}
+
+-(void) update: (double) t
+{
+	[other update: t];
+}
+
+-(IntervalAction*) reverse
+{
+	return [Speed actionWithAction: [other reverse] speed:speed];
 }
 @end
 
