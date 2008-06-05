@@ -22,8 +22,12 @@
 	GLubyte squareColors[4 * 4];
 }
 
++ (id) layerWithColor: (GLuint) aColor width:(GLint)w height:(GLint)h;
++ (id) layerWithColor: (GLuint) aColor;
+
 - (id) initWithColor: (GLuint) aColor width:(GLint)w height:(GLint)h;
 - (id) initWithColor: (GLuint) aColor;
+
 - (void) changeColor: (GLuint) aColor;
 - (void) initWidth: (GLint)w height:(GLint)h;
 

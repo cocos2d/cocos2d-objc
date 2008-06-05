@@ -16,6 +16,8 @@
 		return nil;
 	hello = [[Label alloc] initWithString:@"Hello" dimensions:CGSizeMake(64, 32) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:14];
 
+	[hello autorelease];
+	
 	[self add: hello z:0];
 	[hello setPosition: CGPointMake(200,200)];
 	return self;
@@ -28,15 +30,14 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	Scene *scene = [[Scene alloc]init];
-	ColorLayer *layer = [[ColorLayer alloc] initWithColor: 0x00ff0080];
-	Sprite *sprite = [[Sprite alloc] initFromFile: @"Ship.png"];
-	MainLayer * mainLayer =[[MainLayer alloc] init];
+	Scene *scene = [Scene node];
+	ColorLayer *layer = [ColorLayer layerWithColor: 0x00ff0080];
+	Sprite *sprite = [Sprite spriteFromFile: @"Ship.png"];
+	MainLayer * mainLayer =[MainLayer node];
 	
-	id rot = [[RotateBy alloc] initWithDuration: 4 angle:360];
-	id scale = [[ScaleTo alloc] initWithDuration: 4 scale:0.2];
-	id move = [[MoveBy alloc] initWithDuration: 1 delta: CGPointMake(0,-200) ];
-	
+	id rot = [RotateBy actionWithDuration: 4 angle:360];
+	id scale = [ScaleTo actionWithDuration: 4 scale:0.2];
+		
 	[scene add: mainLayer z:1];
 	[scene add: layer z:2];
 	[layer add: sprite];
@@ -44,9 +45,9 @@
 	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,
 									  [[Director sharedDirector] winSize].size.height / 2 )  ];
 	
-	[sprite do: [[Sequence alloc] initOne: rot two: [rot reverse] ] ];
-	[sprite do: [[Accelerate alloc] initWithAction: scale rate:4 ]];
-	[sprite do: move];
+	[sprite do: [Sequence actionOne: rot two: [rot reverse] ] ];
+	[sprite do: [Accelerate actionWithAction: scale rate:4] ];
+	[sprite do: [MoveBy actionWithDuration: 1 delta: CGPointMake(0,-200) ] ];
 	
 	[[Director sharedDirector] runScene: scene];
 }

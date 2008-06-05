@@ -19,6 +19,11 @@
 @implementation Sprite
 // Sets up an array of values to use as the sprite vertices.
 
++ (id) spriteFromFile: (NSString*) filename
+{
+	return [[[self alloc] initFromFile:filename] autorelease];
+}
+
 - (id) initFromFile: (NSString*) filename
 {
 	if (![super init])

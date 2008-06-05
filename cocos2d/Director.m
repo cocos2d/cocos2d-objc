@@ -108,8 +108,11 @@ static Director *sharedDirector;
 }
 
 - (void) dealloc {
+	NSLog( @"deallocing %@", self);
+
 	[GLView release];
 	[window release];
+	[runningScene release];
 	
 	[super dealloc];
 }

@@ -49,6 +49,13 @@
 	return self;
 }
 
+- (void) dealloc
+{
+	NSLog( @"deallocing %@", self);
+	[texture release];
+	[super dealloc];
+}
+
 - (void) initAnchors
 {
 //	CGSize size = [texture contentSize];

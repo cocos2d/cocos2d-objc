@@ -57,6 +57,7 @@
 @property(readwrite,assign) CocosNode* parent;
 
 // initializators
++(id) node;
 -(id) init;
 
 // composition
