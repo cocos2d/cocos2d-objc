@@ -15,7 +15,7 @@
 	CocosNode *target;	
 }
 
-@property (readwrite,assign) CocosNode *target;
+@property (readwrite,retain) CocosNode *target;
 
 -(void) start;
 -(BOOL) isDone;
@@ -66,8 +66,21 @@
 	double split;
 	int last;
 }
--(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
++(id) actions: (IntervalAction*) action1, ...;
 +(id) actionOne: (IntervalAction*) one two:(IntervalAction*) two;
+-(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
+@end
+
+//
+// RotateTo
+//
+@interface RotateTo : IntervalAction
+{
+	float angle;
+	float startAngle;
+}
++(id) actionWithDuration: (double) t angle:(float) a;
+-(id) initWithDuration: (double) t angle:(float) a;
 @end
 
 //
@@ -83,12 +96,23 @@
 @end
 
 //
+// MoveTo
+//
+@interface MoveTo : IntervalAction
+{
+	CGPoint endPosition;
+	CGPoint startPosition;
+	CGPoint delta;
+}
++(id) actionWithDuration: (double) t position: (CGPoint) pos;
+-(id) initWithDuration: (double) t position: (CGPoint) pos;
+@end
+
+//
 // MoveBy
 //
-@interface MoveBy : IntervalAction
+@interface MoveBy : MoveTo
 {
-	CGPoint delta;
-	CGPoint startPos;
 }
 +(id) actionWithDuration: (double) t delta: (CGPoint) delta;
 -(id) initWithDuration: (double) t delta: (CGPoint) delta;
@@ -127,4 +151,12 @@
 }
 +(id) actionWithAction: (IntervalAction*) action rate: (float) rate;
 -(id) initWithAction: (IntervalAction*) action rate: (float) rate;
+@end
+
+//
+// Delay
+//
+@interface DelayTime : IntervalAction
+{
+}
 @end

@@ -137,9 +137,7 @@
 
 	// restore and re-position point
 	if (transformAnchor.x != 0 || transformAnchor.y != 0)	{
-		if ( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y)
-			glTranslatef( -transformAnchor.x, -transformAnchor.y, 0);
-		else
+		if ( !( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y) )
 			glTranslatef( childrenAnchor.x - transformAnchor.x, childrenAnchor.y - transformAnchor.y, 0);
 	}
 	else if (childrenAnchor.x != 0 || childrenAnchor.y !=0 )
@@ -195,7 +193,7 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[action setTarget: [self retain]];
+	action.target = self;
 	[action start];
 	
 	[self schedule: @selector(_step)];

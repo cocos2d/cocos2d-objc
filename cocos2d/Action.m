@@ -172,6 +172,25 @@
 	return [[[self alloc] initOne:one two:two ] autorelease];
 }
 
++(id) actions: (IntervalAction*) action1, ...
+{
+	va_list params;
+	va_start(params,action1);
+	
+	IntervalAction *now;
+	IntervalAction *prev = action1;
+	
+	while( action1 ) {
+		now = va_arg(params,IntervalAction*);
+		if ( now )
+			prev = [Sequence actionOne: prev two: now];
+		else
+			break;
+	}
+	va_end(params);
+	return prev;
+}
+
 -(id) initOne: (IntervalAction*) one two: (IntervalAction*) two
 {
 	double d = [one duration] + [two duration];
@@ -193,7 +212,7 @@
 {
 	[super start];
 	for( Action * action in actions )
-		[action setTarget: [target retain] ];
+		action.target = target;
 	
 	split = [[actions objectAtIndex:0] duration] / duration;
 	last = -1;
@@ -241,6 +260,41 @@
 }
 @end
 
+//
+// RotateTo
+//
+@implementation RotateTo
++(id) actionWithDuration: (double) t angle:(float) a
+{	
+	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
+}
+
+-(id) initWithDuration: (double) t angle:(float) a
+{
+	if( ! [super initWithDuration: t] )
+		return nil;
+	[super initWithDuration: t];
+	
+	angle = a;
+	return self;
+}
+
+-(void) start
+{
+	[super start];
+	startAngle = target.rotation;
+	angle -= startAngle;
+	if (angle > 180)
+		angle = -360 + angle;
+	if (angle < -180)
+		angle = 360 + angle;
+}
+-(void) update: (double) t
+{
+	target.rotation = startAngle + angle * t;
+}
+@end
+
 
 //
 // RotateBy
@@ -270,7 +324,7 @@
 -(void) update: (double) t
 {	
 	// XXX: shall I add % 360
-	[target setRotation: (startAngle + angle * t ) ];
+	target.rotation = (startAngle + angle * t );
 }
 
 -(IntervalAction*) reverse
@@ -278,6 +332,38 @@
 	return [RotateBy actionWithDuration: duration angle: -angle];
 }
 
+@end
+
+//
+// MoveTo
+//
+@implementation MoveTo
++(id) actionWithDuration: (double) t position: (CGPoint) p
+{	
+	return [[[self alloc] initWithDuration:t position:p ] autorelease];
+}
+
+-(id) initWithDuration: (double) t position: (CGPoint) p
+{
+	if( ![super initWithDuration: t] )
+		return nil;
+	
+	endPosition = p;
+	return self;
+}
+
+-(void) start
+{
+	[super start];
+	startPosition = [target position];
+	delta.x = endPosition.x - startPosition.x;
+	delta.y = endPosition.y - startPosition.y;	
+}
+
+-(void) update: (double) t
+{	
+	[target setPosition: CGPointMake( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t )) ];
+}
 @end
 
 //
@@ -300,13 +386,9 @@
 
 -(void) start
 {
+	CGPoint dTmp = delta;
 	[super start];
-	startPos = [target position];
-}
-
--(void) update: (double) t
-{	
-	[target setPosition: CGPointMake( (startPos.x + delta.x * t ), (startPos.y + delta.y * t )) ];
+	delta = dTmp;
 }
 
 -(IntervalAction*) reverse
@@ -391,7 +473,7 @@
 - (void) start
 {
 	[super start];
-	other.target = [target retain];
+	other.target = target;
 	[other start];
 }
 
@@ -406,5 +488,14 @@
 }
 @end
 
+//
+// Delay
+//
+@implementation DelayTime
+-(void) update: (double) t
+{
+	return;
+}
+@end
 
 
