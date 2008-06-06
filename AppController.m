@@ -1,11 +1,15 @@
-
+//
+// cocos2d for iphone
+// IntervalAction
+//
 
 #import "Scene.h"
 #import "Layer.h"
 #import "Director.h"
 #import "Sprite.h"
 #import "AppController.h"
-#import "Action.h"
+#import "IntervalAction.h"
+#import "InstantAction.h"
 #import "Label.h"
 #import "Texture2D.h"
 
@@ -20,7 +24,21 @@
 	
 	[self add: hello z:0];
 	[hello setPosition: CGPointMake(200,200)];
+	
+	[hello do: [Sequence actions:
+				[MoveBy actionWithDuration: 2 delta: CGPointMake(-100,-100)],
+				[CallFunc actionWithTarget: self selector: @selector(testCB)],
+				nil ] ];
+	[hello do: [Spawn actions:
+				[RotateBy actionWithDuration: 2 angle: 360],
+				[ScaleBy actionWithDuration: 3 scale:1.5],
+				nil] ];
 	return self;
+}
+
+-(void) testCB
+{
+	[hello setPosition: CGPointMake(200,200)];
 }
 @end
 
