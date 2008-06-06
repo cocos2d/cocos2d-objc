@@ -35,6 +35,8 @@
 		2DA6ABA10D5E41EB002BF72E /* Failure.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA6AB9D0D5E41EB002BF72E /* Failure.caf */; };
 		2DA6ABA20D5E41EB002BF72E /* Start.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA6AB9E0D5E41EB002BF72E /* Start.caf */; };
 		5019FF960DF49857000A5AD0 /* TextureMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 5019FF950DF49857000A5AD0 /* TextureMgr.m */; };
+		50DB9CE70DF999DD00BA70B0 /* InstantAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB9CE40DF999DD00BA70B0 /* InstantAction.m */; };
+		50DB9CE80DF999DD00BA70B0 /* IntervalAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB9CE60DF999DD00BA70B0 /* IntervalAction.m */; };
 		50F2D0C00DF44E3100553D35 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0B50DF44E3100553D35 /* Action.m */; };
 		50F2D0C10DF44E3100553D35 /* CocosNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0B70DF44E3100553D35 /* CocosNode.m */; };
 		50F2D0C20DF44E3100553D35 /* Director.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2D0B90DF44E3100553D35 /* Director.m */; };
@@ -80,6 +82,12 @@
 		32CA4F630368D1EE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5019FF940DF49857000A5AD0 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureMgr.h; path = cocos2d/TextureMgr.h; sourceTree = "<group>"; };
 		5019FF950DF49857000A5AD0 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureMgr.m; path = cocos2d/TextureMgr.m; sourceTree = "<group>"; };
+		50DB9CE30DF999DD00BA70B0 /* InstantAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstantAction.h; path = cocos2d/InstantAction.h; sourceTree = "<group>"; };
+		50DB9CE40DF999DD00BA70B0 /* InstantAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstantAction.m; path = cocos2d/InstantAction.m; sourceTree = "<group>"; };
+		50DB9CE50DF999DD00BA70B0 /* IntervalAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalAction.h; path = cocos2d/IntervalAction.h; sourceTree = "<group>"; };
+		50DB9CE60DF999DD00BA70B0 /* IntervalAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalAction.m; path = cocos2d/IntervalAction.m; sourceTree = "<group>"; };
+		50DB9CF10DF999FE00BA70B0 /* cocos2d-test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cocos2d-test-Info.plist"; sourceTree = "<group>"; };
+		50DB9D5C0DF99CD500BA70B0 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
 		50F2D0B40DF44E3100553D35 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Action.h; path = cocos2d/Action.h; sourceTree = "<group>"; };
 		50F2D0B50DF44E3100553D35 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Action.m; path = cocos2d/Action.m; sourceTree = "<group>"; };
 		50F2D0B60DF44E3100553D35 /* CocosNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocosNode.h; path = cocos2d/CocosNode.h; sourceTree = "<group>"; };
@@ -132,6 +140,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				50DB9CF10DF999FE00BA70B0 /* cocos2d-test-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -153,6 +162,7 @@
 				1D4F2F990D10AC310045FB13 /* Default.png */,
 				1D30AB170D05D02000671497 /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
+				50DB9D5C0DF99CD500BA70B0 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -181,6 +191,10 @@
 		2D500B6F0D5A793600DBA0E3 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				50DB9CE30DF999DD00BA70B0 /* InstantAction.h */,
+				50DB9CE40DF999DD00BA70B0 /* InstantAction.m */,
+				50DB9CE50DF999DD00BA70B0 /* IntervalAction.h */,
+				50DB9CE60DF999DD00BA70B0 /* IntervalAction.m */,
 				50F2DB6B0DF7196F009C2B43 /* Label.h */,
 				50F2DB6C0DF7196F009C2B43 /* Label.m */,
 				5019FF940DF49857000A5AD0 /* TextureMgr.h */,
@@ -239,9 +253,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* CrashLanding */ = {
+		1D6058900D05DD3D006BFB54 /* cocos2d */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CrashLanding" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "cocos2d" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -251,7 +265,7 @@
 			);
 			dependencies = (
 			);
-			name = CrashLanding;
+			name = cocos2d;
 			productName = foo;
 			productReference = 1D6058910D05DD3D006BFB54 /* CrashLanding.app */;
 			productType = "com.apple.product-type.application";
@@ -268,7 +282,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* CrashLanding */,
+				1D6058900D05DD3D006BFB54 /* cocos2d */,
 			);
 		};
 /* End PBXProject section */
@@ -318,6 +332,8 @@
 				50F2D0C50DF44E3100553D35 /* Sprite.m in Sources */,
 				5019FF960DF49857000A5AD0 /* TextureMgr.m in Sources */,
 				50F2DB6D0DF7196F009C2B43 /* Label.m in Sources */,
+				50DB9CE70DF999DD00BA70B0 /* InstantAction.m in Sources */,
+				50DB9CE80DF999DD00BA70B0 /* IntervalAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +406,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CrashLanding" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "cocos2d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
