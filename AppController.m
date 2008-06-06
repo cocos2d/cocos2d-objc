@@ -18,7 +18,7 @@
 {
 	if( ! [super init] )
 		return nil;
-	hello = [[Label alloc] initWithString:@"Hello" dimensions:CGSizeMake(64, 32) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:14];
+	hello = [[Label alloc] initWithString:@"cocos2d in iphone" dimensions:CGSizeMake(280, 32) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 
 	[hello autorelease];
 	
@@ -49,11 +49,14 @@
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: NO];
+	[[Director sharedDirector] setLandscape: YES];
 
 	Scene *scene = [Scene node];
 	ColorLayer *layer = [ColorLayer layerWithColor: 0x00ff0080];
-	Sprite *sprite = [Sprite spriteFromFile: @"Ship.png"];
+	Sprite *sprite = [Sprite spriteFromFile: @"grossini.png"];
+	Sprite *spriteSister1 = [Sprite spriteFromFile: @"grossinis_sister1.png"];
+	Sprite *spriteSister2 = [Sprite spriteFromFile: @"grossinis_sister2.png"];
+							 
 	MainLayer * mainLayer =[MainLayer node];
 	
 	id rotby = [RotateBy actionWithDuration: 1.5 angle:360+90];
@@ -65,6 +68,16 @@
 	[scene add: mainLayer z:1];
 	[scene add: layer z:2];
 	[layer add: sprite];
+	[layer add: spriteSister1];
+	[layer add: spriteSister2];
+	
+	spriteSister1.position = CGPointMake(40,100);
+	spriteSister2.position = CGPointMake(440,100);
+	
+	
+	[spriteSister1 do: [Repeat actionWithAction: [JumpBy actionWithDuration:4 position:CGPointMake(400,0) height:100 jumps:4] times: 1] ];
+	[spriteSister2 do: [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4]];
+
 	
 	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,
 									  [[Director sharedDirector] winSize].size.height / 2 )  ];
@@ -73,7 +86,11 @@
 	[sprite do: [AccelDeccel actionWithAction: [Sequence actions: rotby, rotto, nil ] ] ];
 	[sprite do: [Accelerate actionWithAction: [Sequence actions: scaleby, [scaleby reverse], nil] rate:4] ];
 	[sprite do: [Sequence actions: moveby, [DelayTime actionWithDuration:2], moveto, nil] ];
-	
+
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
 	[[Director sharedDirector] runScene: scene];
 }
 

@@ -193,6 +193,49 @@
 @end
 
 //
+// Repeat
+//
+@implementation Repeat
++(id) actionWithAction: (IntervalAction*) action times: (int) t
+{
+	return [[[self alloc] initWithAction: action times: t] autorelease];
+}
+
+-(id) initWithAction: (IntervalAction*) action times: (int) t
+{
+	if(! [super initWithDuration: [action duration] ] )
+		return nil;
+	times = t;
+	other = [action retain];
+	return self;
+}
+
+-(void) dealloc
+{
+	[other release];
+	[super dealloc];
+}
+
+-(void) start
+{
+	[super start];
+	other.target = target;
+	[other start];
+}
+
+-(void) step
+{
+	[other step];
+	if( [other isDone] )
+		[self start];
+}
+-(BOOL) isDone
+{
+	return NO;
+}
+@end
+
+//
 // Spawn
 //
 @implementation Spawn
@@ -375,7 +418,7 @@
 
 -(void) update: (double) t
 {	
-	[target setPosition: CGPointMake( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t )) ];
+	target.position = CGPointMake( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
 }
 @end
 
@@ -407,6 +450,40 @@
 -(IntervalAction*) reverse
 {
 	return [MoveBy actionWithDuration: duration delta: CGPointMake( -delta.x, -delta.y)];
+}
+@end
+
+//
+// JumpBy
+//
+@implementation JumpBy
++(id) actionWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j
+{
+	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
+}
+-(id) initWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j
+{
+	[super initWithDuration:t];
+	delta = pos;
+	height = h;
+	jumps = j;
+	return self;
+}
+-(void) start
+{
+	[super start];
+	startPosition = target.position;
+}
+-(void) update: (double) t
+{
+	double y = height * fabs( sinf(t * M_PI * jumps ) );
+	y += delta.y * t;
+	double x = delta.x * t;
+	target.position = CGPointMake( startPosition.x + x, startPosition.y + y );
+}
+-(IntervalAction*) reverse
+{
+	return [JumpBy actionWithDuration: duration position: CGPointMake(-startPosition.x,-startPosition.y) height: height jumps:jumps];
 }
 @end
 
