@@ -44,6 +44,18 @@
 @end
 
 //
+// Repeat
+//
+@interface Repeat : IntervalAction
+{
+	int times;
+	IntervalAction *other;
+}
++(id) actionWithAction: (IntervalAction*) action times: (int) t;
+-(id) initWithAction: (IntervalAction*) action times: (int) t;
+@end
+
+//
 // Spawn
 //
 @interface Spawn : IntervalAction
@@ -102,6 +114,31 @@
 +(id) actionWithDuration: (double) t delta: (CGPoint) delta;
 -(id) initWithDuration: (double) t delta: (CGPoint) delta;
 @end
+
+//
+// JumpBy
+//
+@interface JumpBy : IntervalAction
+{
+	CGPoint startPosition;
+	CGPoint delta;
+	double height;
+	int jumps;
+}
++(id) actionWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j;
+-(id) initWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j;
+@end
+
+//
+// JumpTo
+//
+@interface JumpTo : JumpBy
+{
+}
++(id) actionWithDuration: (double) t delta: (CGPoint) delta;
+-(id) initWithDuration: (double) t delta: (CGPoint) delta;
+@end
+
 
 //
 // ScaleTo
