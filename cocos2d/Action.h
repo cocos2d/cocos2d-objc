@@ -11,7 +11,7 @@
 #include <sys/time.h>
 
 @class CocosNode;
-@interface Action : NSObject {
+@interface Action : NSObject <NSCopying> {
 	CocosNode *target;	
 }
 
@@ -19,6 +19,8 @@
 
 +(id) action;
 -(id) init;
+
+-(id) copyWithZone: (NSZone*) zone;
 
 -(void) start;
 -(BOOL) isDone;

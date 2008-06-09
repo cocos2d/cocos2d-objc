@@ -11,7 +11,7 @@
 //
 // IntervalAction
 //
-@interface IntervalAction: Action
+@interface IntervalAction: Action <NSCopying>
 {
 	struct timeval lastUpdate;
 	double elapsed;
@@ -32,7 +32,7 @@
 //
 // Sequence
 //
-@interface Sequence : IntervalAction
+@interface Sequence : IntervalAction <NSCopying>
 {
 	NSArray *actions;
 	double split;
@@ -46,7 +46,7 @@
 //
 // Repeat
 //
-@interface Repeat : IntervalAction
+@interface Repeat : IntervalAction <NSCopying>
 {
 	int times;
 	IntervalAction *other;
@@ -58,7 +58,7 @@
 //
 // Spawn
 //
-@interface Spawn : IntervalAction
+@interface Spawn : IntervalAction <NSCopying>
 {
 	IntervalAction *one;
 	IntervalAction *two;
@@ -71,7 +71,7 @@
 //
 // RotateTo
 //
-@interface RotateTo : IntervalAction
+@interface RotateTo : IntervalAction <NSCopying>
 {
 	float angle;
 	float startAngle;
@@ -83,7 +83,7 @@
 //
 // RotateBy
 //
-@interface RotateBy : IntervalAction
+@interface RotateBy : IntervalAction <NSCopying>
 {
 	float angle;
 	float startAngle;
@@ -95,7 +95,7 @@
 //
 // MoveTo
 //
-@interface MoveTo : IntervalAction
+@interface MoveTo : IntervalAction <NSCopying>
 {
 	CGPoint endPosition;
 	CGPoint startPosition;
@@ -108,7 +108,7 @@
 //
 // MoveBy
 //
-@interface MoveBy : MoveTo
+@interface MoveBy : MoveTo <NSCopying>
 {
 }
 +(id) actionWithDuration: (double) t delta: (CGPoint) delta;
@@ -118,7 +118,7 @@
 //
 // JumpBy
 //
-@interface JumpBy : IntervalAction
+@interface JumpBy : IntervalAction <NSCopying>
 {
 	CGPoint startPosition;
 	CGPoint delta;
@@ -132,7 +132,7 @@
 //
 // JumpTo
 //
-@interface JumpTo : JumpBy
+@interface JumpTo : JumpBy <NSCopying>
 {
 }
 +(id) actionWithDuration: (double) t delta: (CGPoint) delta;
@@ -143,7 +143,7 @@
 //
 // ScaleTo
 //
-@interface ScaleTo : IntervalAction
+@interface ScaleTo : IntervalAction <NSCopying>
 {
 	float scale;
 	float startScale;
@@ -158,7 +158,7 @@
 //
 // ScaleBy
 //
-@interface ScaleBy : ScaleTo
+@interface ScaleBy : ScaleTo <NSCopying>
 {
 }
 @end
@@ -166,7 +166,7 @@
 //
 // Blink
 //
-@interface Blink : IntervalAction
+@interface Blink : IntervalAction <NSCopying>
 {
 	int times;
 }
@@ -177,7 +177,7 @@
 //
 // Accelerate
 //
-@interface Accelerate: IntervalAction
+@interface Accelerate: IntervalAction <NSCopying>
 {
 	IntervalAction *other;
 	float rate;
@@ -189,7 +189,7 @@
 //
 // AccelDeccel
 //
-@interface AccelDeccel: IntervalAction
+@interface AccelDeccel: IntervalAction <NSCopying>
 {
 	IntervalAction *other;
 }
@@ -200,7 +200,7 @@
 //
 // Speed
 //
-@interface Speed : IntervalAction
+@interface Speed : IntervalAction <NSCopying>
 {
 	double speed;
 	IntervalAction * other;
@@ -212,7 +212,7 @@
 //
 // Delay
 //
-@interface DelayTime : IntervalAction
+@interface DelayTime : IntervalAction <NSCopying>
 {
 }
 @end

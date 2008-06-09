@@ -39,6 +39,14 @@
 	[super dealloc];
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] init];
+					 	
+    [copy setTarget:[self target]];
+    return copy;
+}
+
 -(void) start
 {
 	// override me
