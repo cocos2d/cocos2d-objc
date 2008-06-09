@@ -11,7 +11,7 @@
 //
 // InstantAction
 //
-@interface InstantAction : Action
+@interface InstantAction : Action <NSCopying>
 {
 	double duration;
 }
@@ -48,7 +48,7 @@
 //
 // Place
 //
-@interface Place : InstantAction
+@interface Place : InstantAction <NSCopying>
 {
 	CGPoint position;
 }
@@ -59,7 +59,7 @@
 //
 // CallFunc
 //
-@interface CallFunc : InstantAction
+@interface CallFunc : InstantAction <NSCopying>
 {
 	NSInvocation *invocation;
 }

@@ -74,7 +74,7 @@
 
 // actions
 -(Action*) do: (Action*) action;
--(void) _step;
+-(void) step_;
 
 // timers
 -(void) schedule: (SEL) method;

@@ -193,16 +193,18 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	action.target = self;
-	[action start];
+	Action *copy = [[action copy] autorelease];
 	
-	[self schedule: @selector(_step)];
-	[actions addObject: action];
+	copy.target = self;
+	[copy start];
+	
+	[self schedule: @selector(step_)];
+	[actions addObject: copy];
 		
 	return action;
 }
 
--(void) _step
+-(void) step_
 {
 	// remove 'removed' actions
 	if( [actionsToRemove count] > 0 ) {
@@ -213,7 +215,7 @@
 		
 	// unschedule if it is no longer necesary
 	if ( [actions count] == 0 ) {
-		[self unschedule: @selector(_step)];
+		[self unschedule: @selector(step_)];
 		return;
 	}
 	

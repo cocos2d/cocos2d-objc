@@ -22,6 +22,12 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	InstantAction *copy = [[[self class] allocWithZone: zone] init];
+	return copy;
+}
+
 - (BOOL) isDone
 {
 	return YES;
@@ -86,6 +92,12 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	InstantAction *copy = [[[self class] allocWithZone: zone] initWithPosition: position];
+	return copy;
+}
+
 -(void) start
 {
 	[super start];
@@ -113,6 +125,12 @@
 	[invocation setSelector:cb];
 	[invocation retain];
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	InstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget: [invocation target] selector: [invocation selector]];
+	return copy;
 }
 
 -(void) dealloc

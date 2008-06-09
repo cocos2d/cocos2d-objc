@@ -52,7 +52,7 @@
 	[[Director sharedDirector] setLandscape: YES];
 
 	Scene *scene = [Scene node];
-	ColorLayer *layer = [ColorLayer layerWithColor: 0x00ff0080];
+	ColorLayer *layer = [ColorLayer layerWithColor: 0x00ff00ff];
 	Sprite *sprite = [Sprite spriteFromFile: @"grossini.png"];
 	Sprite *spriteSister1 = [Sprite spriteFromFile: @"grossinis_sister1.png"];
 	Sprite *spriteSister2 = [Sprite spriteFromFile: @"grossinis_sister2.png"];
@@ -65,8 +65,8 @@
 	id moveby =	[MoveBy actionWithDuration: 2 delta: CGPointMake(0,100) ];
 	id moveto =	[Speed actionWithAction: [MoveTo actionWithDuration: 8 position: CGPointMake(20,20) ] speed:2 ];
 	
-	[scene add: mainLayer z:1];
-	[scene add: layer z:2];
+	[scene add: mainLayer z:2];
+	[scene add: layer z:1];
 	[layer add: sprite];
 	[layer add: spriteSister1];
 	[layer add: spriteSister2];
@@ -74,9 +74,11 @@
 	spriteSister1.position = CGPointMake(40,100);
 	spriteSister2.position = CGPointMake(440,100);
 	
+	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4];
+	IntervalAction *jump2 = [jump1 reverse];
 	
-	[spriteSister1 do: [Repeat actionWithAction: [JumpBy actionWithDuration:4 position:CGPointMake(400,0) height:100 jumps:4] times: 1] ];
-	[spriteSister2 do: [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4]];
+	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions:jump2, jump1, nil] times:1 ] ];
+	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions:jump1, jump2, nil] times:1 ] ];
 
 	
 	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,

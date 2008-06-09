@@ -39,6 +39,13 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] ];
+    return copy;
+}
+
+
 - (BOOL) isDone
 {
 	return (elapsed >= duration);
@@ -120,17 +127,26 @@
 	return prev;
 }
 
--(id) initOne: (IntervalAction*) one two: (IntervalAction*) two
+-(id) initOne: (IntervalAction*) one_ two: (IntervalAction*) two_
 {
-	NSAssert( one!=nil, @"Sequence: argument one must be non-nil");
-	NSAssert( two!=nil, @"Sequence: argument two must be non-nil");
+	NSAssert( one_!=nil, @"Sequence: argument one must be non-nil");
+	NSAssert( two_!=nil, @"Sequence: argument two must be non-nil");
 
+	IntervalAction *one = [[one_ copy] autorelease];
+	IntervalAction *two = [[two_ copy] autorelease];
+		
 	double d = [one duration] + [two duration];
 	[super initWithDuration: d];
 	
 	actions = [[NSArray arrayWithObjects: one, two, nil] retain];
 	
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initOne: [actions objectAtIndex:0] two: [actions objectAtIndex:1] ];
+    return copy;
 }
 
 -(void) dealloc
@@ -206,9 +222,16 @@
 	if(! [super initWithDuration: [action duration] ] )
 		return nil;
 	times = t;
-	other = [action retain];
+	other = [action copy];
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other times: times];
+    return copy;
+}
+
 
 -(void) dealloc
 {
@@ -263,27 +286,33 @@
 	return [[[self alloc] initOne:one two:two ] autorelease];
 }
 
--(id) initOne: (IntervalAction*) _one two: (IntervalAction*) _two
+-(id) initOne: (IntervalAction*) one_ two: (IntervalAction*) two_
 {
-	NSAssert( _one!=nil, @"Spawn: argument one must be non-nil");
-	NSAssert( _two!=nil, @"Spawn: argument two must be non-nil");
+	NSAssert( one_!=nil, @"Spawn: argument one must be non-nil");
+	NSAssert( two_!=nil, @"Spawn: argument two must be non-nil");
 
-	double d1 = [_one duration];
-	double d2 = [_two duration];	
+	double d1 = [one_ duration];
+	double d2 = [two_ duration];	
 	
 	[super initWithDuration: fmax(d1,d2)];
 
-	one = _one;
-	two = _two;
+	one = [[one_ copy] autorelease];
+	two = [[two_ copy] autorelease];
 
 	if( d1 > d2 )
-		two = [Sequence actions: _two, [DelayTime actionWithDuration: (d1-d2)], nil];
+		two = [Sequence actions: two_, [DelayTime actionWithDuration: (d1-d2)], nil];
 	else if( d1 < d2)
-		one = [Sequence actions: _one, [DelayTime actionWithDuration: (d2-d1)], nil];
+		one = [Sequence actions: one_, [DelayTime actionWithDuration: (d2-d1)], nil];
 	
 	[one retain];
 	[two retain];
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initOne: one two: two];
+    return copy;
 }
 
 -(void) dealloc
@@ -335,6 +364,12 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] angle: angle];
+    return copy;
+}
+
 -(void) start
 {
 	[super start];
@@ -369,6 +404,12 @@
 
 	angle = a;
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] angle: angle];
+    return copy;
 }
 
 -(void) start
@@ -408,6 +449,12 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: endPosition];
+    return copy;
+}
+
 -(void) start
 {
 	[super start];
@@ -440,6 +487,12 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] delta: delta];
+    return copy;
+}
+
 -(void) start
 {
 	CGPoint dTmp = delta;
@@ -461,6 +514,7 @@
 {
 	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
 }
+
 -(id) initWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j
 {
 	[super initWithDuration:t];
@@ -469,11 +523,19 @@
 	jumps = j;
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: delta height:height jumps:jumps];
+    return copy;
+}
+
 -(void) start
 {
 	[super start];
 	startPosition = target.position;
 }
+
 -(void) update: (double) t
 {
 	double y = height * fabs( sinf(t * M_PI * jumps ) );
@@ -481,9 +543,10 @@
 	double x = delta.x * t;
 	target.position = CGPointMake( startPosition.x + x, startPosition.y + y );
 }
+
 -(IntervalAction*) reverse
 {
-	return [JumpBy actionWithDuration: duration position: CGPointMake(-startPosition.x,-startPosition.y) height: height jumps:jumps];
+	return [JumpBy actionWithDuration: duration position: CGPointMake(-delta.x,-delta.y) height: height jumps:jumps];
 }
 @end
 
@@ -503,6 +566,12 @@
 	
 	endScale = s;
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] scale: endScale];
+    return copy;
 }
 
 -(void) start
@@ -550,6 +619,12 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] blinks: times];
+    return copy;
+}
+
 -(void) update: (double) t
 {
 	double slice = 1.0f / times;
@@ -581,9 +656,15 @@
 	if( ! [super initWithDuration: [action duration]] )
 		return nil;
 	
-	other = [action retain];
+	other = [action copy];
 	rate = r;
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other rate: rate];
+    return copy;
 }
 
 - (void) dealloc
@@ -625,8 +706,14 @@
 	NSAssert( action!=nil, @"AccelDeccel: argument action must be non-nil");
 
 	[super initWithDuration: action.duration ];
-	other = [action retain];
+	other = [action copy];
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other];
+    return copy;
 }
 
 -(void) dealloc
@@ -669,9 +756,15 @@
 	NSAssert( action!=nil, @"Speed: argument action must be non-nil");
 
 	[super initWithDuration: action.duration / s ];
-	other = [action retain];
+	other = [action copy];
 	speed = s;
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other speed: speed];
+    return copy;
 }
 
 -(void) dealloc
