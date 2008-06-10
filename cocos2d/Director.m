@@ -1,6 +1,6 @@
 //
-// cocos2d
-// iPhone port
+//	Director.m
+//	cocos2d
 //
 
 #import "Director.h"
@@ -11,6 +11,7 @@
 
 @synthesize animationInterval;
 @synthesize window;
+@synthesize runningScene;
 
 //
 // singleton stuff
@@ -48,6 +49,7 @@ static Director *sharedDirector;
 		return nil;
 
 	runningScene = nil;
+	nextScene = nil;
 	animationInterval = 1.0 / kDefaultFPS;
 	
 	winSize = [[UIScreen mainScreen] bounds];
@@ -159,6 +161,7 @@ static Director *sharedDirector;
 
 -(void) replaceScene: (Scene*) scene
 {
+	nextScene = [scene retain];
 }
 
 - (void) pushScene: (Scene*) scene
@@ -195,16 +198,38 @@ static Director *sharedDirector;
 
 - (void) drawScene
 {
-	// add depth test later
+	/* clear window */
 	glClear( GL_COLOR_BUFFER_BIT );
+//	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	
+	/* landscape or portrait mode */
 	glLoadIdentity();
 	if( landscape ) {
 		glTranslatef(160,240,0);
 		glRotatef(-90,0,0,1);
 		glTranslatef(-240,-160,0);
 	}
+	
+	/* draw the scene */
 	[runningScene visit];
+	
+	/* swap buffers */
 	[GLView swapBuffers];
+	
+	/* new scene */
+	if( nextScene ) {
+		[self setNextScene];
+	}
+}
 
+-(void) setNextScene
+{
+	[runningScene onExit];
+	[runningScene release];
+	
+	[nextScene onEnter];
+	runningScene = nextScene;
+
+	nextScene = nil;
 }
 @end

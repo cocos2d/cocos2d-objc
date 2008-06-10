@@ -1,6 +1,6 @@
 //
-// cocos2d for iphone
-// IntervalAction
+//	IntervalAction.m
+//	cocos2d
 //
 
 

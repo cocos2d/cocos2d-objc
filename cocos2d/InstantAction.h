@@ -1,6 +1,6 @@
 //
-// cocos2d for iphone
-// InstantAction
+//	InstantAction.h
+//	cocos2d
 //
 
 

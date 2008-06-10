@@ -1,9 +1,6 @@
 //
 //  Layer.m
-//  test-opengl2
-//
-//  Created by Ricardo Quesada on 30/05/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  cocos2d
 //
 
 #import <OpenGLES/ES1/gl.h>
@@ -12,6 +9,19 @@
 #import "Director.h"
 
 @implementation Layer
+-(id) init
+{
+	if( ! [super init] )
+		return nil;
+	
+	CGRect s = [[Director sharedDirector] winSize];
+	
+	transformAnchor.x = s.size.width / 2;
+	transformAnchor.y = s.size.height / 2;
+	
+	return self;
+}
+
 -(void) draw
 {
 }

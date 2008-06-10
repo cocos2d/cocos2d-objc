@@ -1,9 +1,6 @@
 //
 //  sprite.m
-//  test-opengl
-//
-//  Created by Ricardo Quesada on 28/05/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//	cocos2d
 //
 
 #import <QuartzCore/QuartzCore.h>
@@ -25,6 +22,16 @@
 								reason:@"Use initWithString:dimensions:aligment:fontName:font instead"
 								userInfo:nil];
 	@throw myException;
+}
+
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size]autorelease];
+}
+
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*) font
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment font:font] autorelease];
 }
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;

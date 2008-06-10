@@ -13,7 +13,6 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		2D500B1C0D5A766900DBA0E3 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D500B1B0D5A766900DBA0E3 /* AppController.m */; };
 		2D500B940D5A79C200DBA0E3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		2D500B9A0D5A79CF00DBA0E3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		2D500ED10D5A84E900DBA0E3 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
@@ -49,7 +48,6 @@
 		5018F2780DFDEAFF00C013A5 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2610DFDEAFF00C013A5 /* Scene.m */; };
 		5018F2790DFDEAFF00C013A5 /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2620DFDEAFF00C013A5 /* Sprite.h */; };
 		5018F27A0DFDEAFF00C013A5 /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2630DFDEAFF00C013A5 /* Sprite.m */; };
-		5018F27B0DFDEAFF00C013A5 /* MoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2650DFDEAFF00C013A5 /* MoveBy.h */; };
 		5018F27D0DFDEAFF00C013A5 /* TextureMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2670DFDEAFF00C013A5 /* TextureMgr.h */; };
 		5018F27E0DFDEAFF00C013A5 /* TextureMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2680DFDEAFF00C013A5 /* TextureMgr.m */; };
 		5018F2850DFDEB2E00C013A5 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2800DFDEB2E00C013A5 /* EAGLView.h */; };
@@ -62,6 +60,20 @@
 		5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		5018F2E50DFDEBBA00C013A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		5018F2E60DFDEBBA00C013A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		502C66200DFEFCEE00E4107D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
+		502C66210DFEFCEE00E4107D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
+		502C66220DFEFCEE00E4107D /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E820DF9C85C00BA70B0 /* grossini.png */; };
+		502C66230DFEFCEE00E4107D /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */; };
+		502C66240DFEFCEE00E4107D /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
+		502C66250DFEFD0900E4107D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		502C664F0DFEFD6800E4107D /* RotateWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C664E0DFEFD6800E4107D /* RotateWorld.m */; };
+		502C67020DFEFE1000E4107D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		502C67030DFEFE1000E4107D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		502C67040DFEFE1000E4107D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		502C67050DFEFE1000E4107D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		502C67ED0DFF0A7300E4107D /* demoJumpingGirls.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */; };
 		5082437A0DFDF84100113673 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50B130830DFDFACD003BAB56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B130840DFDFACD003BAB56 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -89,6 +101,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		502C661E0DFEFCDF00E4107D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			remoteInfo = cocos2d;
+		};
 		50B130A10DFDFB00003BAB56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -110,8 +129,6 @@
 		285EACBC0D64CFB400F351DD /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = OpenGLSupport/EAGLView.h; sourceTree = "<group>"; };
 		285EACBD0D64CFB400F351DD /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = OpenGLSupport/EAGLView.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2D500B1A0D5A766900DBA0E3 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		2D500B1B0D5A766900DBA0E3 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		2D500B750D5A794B00DBA0E3 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2D.m; path = OpenGLSupport/Texture2D.m; sourceTree = "<group>"; };
 		2D500B770D5A794B00DBA0E3 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2D.h; path = OpenGLSupport/Texture2D.h; sourceTree = "<group>"; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -152,8 +169,6 @@
 		5018F2610DFDEAFF00C013A5 /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		5018F2620DFDEAFF00C013A5 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
 		5018F2630DFDEAFF00C013A5 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprite.m; sourceTree = "<group>"; };
-		5018F2650DFDEAFF00C013A5 /* MoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveBy.h; sourceTree = "<group>"; };
-		5018F2660DFDEAFF00C013A5 /* MoveBy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveBy.m; sourceTree = "<group>"; };
 		5018F2670DFDEAFF00C013A5 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureMgr.h; sourceTree = "<group>"; };
 		5018F2680DFDEAFF00C013A5 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureMgr.m; sourceTree = "<group>"; };
 		5018F2800DFDEB2E00C013A5 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
@@ -163,6 +178,13 @@
 		5018F2840DFDEB2E00C013A5 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture2D.m; sourceTree = "<group>"; };
 		5019FF940DF49857000A5AD0 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureMgr.h; path = cocos2d/TextureMgr.h; sourceTree = "<group>"; };
 		5019FF950DF49857000A5AD0 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureMgr.m; path = cocos2d/TextureMgr.m; sourceTree = "<group>"; };
+		502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-documentation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		502C66180DFEFCCA00E4107D /* demo-rotate-world.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "demo-rotate-world.app"; path = "build/Debug-iphonesimulator/demo-rotate-world.app"; sourceTree = "<group>"; };
+		502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "demo-rotate-world-Info.plist"; sourceTree = "<group>"; };
+		502C664D0DFEFD6800E4107D /* RotateWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotateWorld.h; path = tests/RotateWorld.h; sourceTree = "<group>"; };
+		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
+		502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = demoJumpingGirls.h; path = tests/demoJumpingGirls.h; sourceTree = "<group>"; };
+		502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demoJumpingGirls.m; path = tests/demoJumpingGirls.m; sourceTree = "<group>"; };
 		50B12FCC0DFDFA90003BAB56 /* test-moveby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-moveby.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B12FCE0DFDFA90003BAB56 /* test-moveby-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-moveby-Info.plist"; sourceTree = "<group>"; };
 		50B130FD0DFE0946003BAB56 /* MoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoveBy.h; path = tests/MoveBy.h; sourceTree = "<group>"; };
@@ -219,6 +241,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		502C65EC0DFEF3DD00E4107D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		502C66160DFEFCCA00E4107D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				502C67020DFEFE1000E4107D /* Foundation.framework in Frameworks */,
+				502C67030DFEFE1000E4107D /* UIKit.framework in Frameworks */,
+				502C67040DFEFE1000E4107D /* CoreGraphics.framework in Frameworks */,
+				502C67050DFEFE1000E4107D /* OpenGLES.framework in Frameworks */,
+				502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */,
+				502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B12FCA0DFDFA90003BAB56 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -241,6 +283,8 @@
 				1D6058910D05DD3D006BFB54 /* CrashLanding.app */,
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
 				50B12FCC0DFDFA90003BAB56 /* test-moveby.app */,
+				502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */,
+				502C66180DFEFCCA00E4107D /* demo-rotate-world.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,7 +296,6 @@
 				5018F27F0DFDEB2E00C013A5 /* OpenGLSupport */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				84FA87720DB963700038B5F3 /* ReadMe.txt */,
-				2D500B1D0D5A766B00DBA0E3 /* Classes */,
 				2D500B6F0D5A793600DBA0E3 /* Support */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -260,6 +303,7 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				50DB9CF10DF999FE00BA70B0 /* cocos2d-test-Info.plist */,
 				50B12FCE0DFDFA90003BAB56 /* test-moveby-Info.plist */,
+				502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -296,15 +340,6 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				2D500B1A0D5A766900DBA0E3 /* AppController.h */,
-				2D500B1B0D5A766900DBA0E3 /* AppController.m */,
-			);
-			name = Classes;
 			sourceTree = "<group>";
 		};
 		2D500B6F0D5A793600DBA0E3 /* Support */ = {
@@ -393,20 +428,10 @@
 				5018F2610DFDEAFF00C013A5 /* Scene.m */,
 				5018F2620DFDEAFF00C013A5 /* Sprite.h */,
 				5018F2630DFDEAFF00C013A5 /* Sprite.m */,
-				5018F2640DFDEAFF00C013A5 /* tests */,
 				5018F2670DFDEAFF00C013A5 /* TextureMgr.h */,
 				5018F2680DFDEAFF00C013A5 /* TextureMgr.m */,
 			);
 			path = cocos2d;
-			sourceTree = "<group>";
-		};
-		5018F2640DFDEAFF00C013A5 /* tests */ = {
-			isa = PBXGroup;
-			children = (
-				5018F2650DFDEAFF00C013A5 /* MoveBy.h */,
-				5018F2660DFDEAFF00C013A5 /* MoveBy.m */,
-			);
-			path = tests;
 			sourceTree = "<group>";
 		};
 		5018F27F0DFDEB2E00C013A5 /* OpenGLSupport */ = {
@@ -424,6 +449,10 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */,
+				502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */,
+				502C664D0DFEFD6800E4107D /* RotateWorld.h */,
+				502C664E0DFEFD6800E4107D /* RotateWorld.m */,
 				50B130FD0DFE0946003BAB56 /* MoveBy.h */,
 				50B130FE0DFE0946003BAB56 /* MoveBy.m */,
 			);
@@ -446,11 +475,17 @@
 				5018F2750DFDEAFF00C013A5 /* Layer.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* Scene.h in Headers */,
 				5018F2790DFDEAFF00C013A5 /* Sprite.h in Headers */,
-				5018F27B0DFDEAFF00C013A5 /* MoveBy.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* TextureMgr.h in Headers */,
 				5018F2850DFDEB2E00C013A5 /* EAGLView.h in Headers */,
 				5018F2870DFDEB2E00C013A5 /* OpenGL_Internal.h in Headers */,
 				5018F2880DFDEB2E00C013A5 /* Texture2D.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		502C65EA0DFEF3DD00E4107D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +517,6 @@
 				5018F2490DFDEAC400C013A5 /* Headers */,
 				5018F24A0DFDEAC400C013A5 /* Sources */,
 				5018F24B0DFDEAC400C013A5 /* Frameworks */,
-				504B12C00DFEB8F800FDFA40 /* Run Script: doxygen */,
 			);
 			buildRules = (
 			);
@@ -492,6 +526,42 @@
 			productName = cocos2d;
 			productReference = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 502C65F10DFEF3FC00E4107D /* Build configuration list for PBXNativeTarget "cocos2d-documentation" */;
+			buildPhases = (
+				502C65EA0DFEF3DD00E4107D /* Headers */,
+				502C65EB0DFEF3DD00E4107D /* Sources */,
+				502C65EC0DFEF3DD00E4107D /* Frameworks */,
+				502C65F30DFEF44900E4107D /* Run Script: doxygen */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocos2d-documentation";
+			productName = "cocos2d-documentation";
+			productReference = 502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		502C66170DFEFCCA00E4107D /* demo-rotate-world */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "demo-rotate-world" */;
+			buildPhases = (
+				502C66140DFEFCCA00E4107D /* Resources */,
+				502C66150DFEFCCA00E4107D /* Sources */,
+				502C66160DFEFCCA00E4107D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				502C661F0DFEFCDF00E4107D /* PBXTargetDependency */,
+			);
+			name = "demo-rotate-world";
+			productName = "demo-rotate-world";
+			productReference = 502C66180DFEFCCA00E4107D /* demo-rotate-world.app */;
+			productType = "com.apple.product-type.application";
 		};
 		50B12FCB0DFDFA90003BAB56 /* test-moveby */ = {
 			isa = PBXNativeTarget;
@@ -523,9 +593,11 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* demo-jumping-sisters */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
+				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
+				1D6058900D05DD3D006BFB54 /* demo-jumping-sisters */,
 				50B12FCB0DFDFA90003BAB56 /* test-moveby */,
+				502C66170DFEFCCA00E4107D /* demo-rotate-world */,
 			);
 		};
 /* End PBXProject section */
@@ -558,6 +630,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		502C66140DFEFCCA00E4107D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				502C66200DFEFCEE00E4107D /* Icon.png in Resources */,
+				502C66210DFEFCEE00E4107D /* Default.png in Resources */,
+				502C66220DFEFCEE00E4107D /* grossini.png in Resources */,
+				502C66230DFEFCEE00E4107D /* grossinis_sister1.png in Resources */,
+				502C66240DFEFCEE00E4107D /* grossinis_sister2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B12FC80DFDFA90003BAB56 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -573,7 +657,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		504B12C00DFEB8F800FDFA40 /* Run Script: doxygen */ = {
+		502C65F30DFEF44900E4107D /* Run Script: doxygen */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -585,7 +669,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#  Build the doxygen documentation for the project and load the docset into Xcode.\n\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to \n#   a get default file.\n\nif ! [ -f $SOURCE_ROOT/doxygen.config ] \nthen \n  echo doxygen config file does not exist\n  $DOXYGEN_PATH -g $SOURCE_ROOT/doxygen.config\nfi\n\n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n\ncp $SOURCE_ROOT/doxygen.config $TEMP_DIR/doxygen.config\n\necho \"INPUT = $SOURCE_ROOT\" >> $TEMP_DIR/doxygen.config\necho \"OUTPUT_DIRECTORY = $SOURCE_ROOT/DoxygenDocs.docset\" >> $TEMP_DIR/doxygen.config\necho \"GENERATE_DOCSET        = YES\" >> $TEMP_DIR/doxygen.config\necho \"DOCSET_BUNDLE_ID       = com.mycompany.DoxygenExample\" >> $TEMP_DIR/doxygen.config\n\n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n\n$DOXYGEN_PATH $TEMP_DIR/doxygen.config\n\n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n\nmake -C $SOURCE_ROOT/DoxygenDocs.docset/html install\n\n#  Construct a temporary applescript file to tell Xcode to load a docset.\n\nrm -f $TEMP_DIR/loadDocSet.scpt\n\necho \"tell application \\\"Xcode\\\"\" >> $TEMP_DIR/loadDocSet.scpt\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\" \n     >> $TEMP_DIR/loadDocSet.scpt\necho \"end tell\" >> $TEMP_DIR/loadDocSet.scpt\n\n#  Run the load-docset applescript command.\n\nosascript $TEMP_DIR/loadDocSet.scpt\n\nexit 0";
+			shellScript = "#  Build the doxygen documentation for the project and load the docset into Xcode.\n\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to \n#   a get default file.\n\nif ! [ -f $SOURCE_ROOT/doxygen.config ] \nthen \n  echo doxygen config file does not exist\n  $DOXYGEN_PATH -g $SOURCE_ROOT/doxygen.config\nfi\n\n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n\ncp $SOURCE_ROOT/doxygen.config $TEMP_DIR/doxygen.config\n\necho \"INPUT = $SOURCE_ROOT/cocos2d\" >> $TEMP_DIR/doxygen.config\necho \"OUTPUT_DIRECTORY = $SOURCE_ROOT/DoxygenDocs.docset\" >> $TEMP_DIR/doxygen.config\necho \"GENERATE_DOCSET        = YES\" >> $TEMP_DIR/doxygen.config\necho \"DOCSET_BUNDLE_ID       = com.mycompany.DoxygenExample\" >> $TEMP_DIR/doxygen.config\n\n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n\n$DOXYGEN_PATH $TEMP_DIR/doxygen.config\n\n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n\nmake -C $SOURCE_ROOT/DoxygenDocs.docset/html install\n\n#  Construct a temporary applescript file to tell Xcode to load a docset.\n\nrm -f $TEMP_DIR/loadDocSet.scpt\n\necho \"tell application \\\"Xcode\\\"\" >> $TEMP_DIR/loadDocSet.scpt\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\" \n     >> $TEMP_DIR/loadDocSet.scpt\necho \"end tell\" >> $TEMP_DIR/loadDocSet.scpt\n\n#  Run the load-docset applescript command.\n\nosascript $TEMP_DIR/loadDocSet.scpt\n\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -595,7 +679,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				2D500B1C0D5A766900DBA0E3 /* AppController.m in Sources */,
+				502C67ED0DFF0A7300E4107D /* demoJumpingGirls.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +702,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		502C65EB0DFEF3DD00E4107D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		502C66150DFEFCCA00E4107D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				502C66250DFEFD0900E4107D /* main.m in Sources */,
+				502C664F0DFEFD6800E4107D /* RotateWorld.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B12FC90DFDFA90003BAB56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -634,6 +734,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 5018F2F40DFDECD600C013A5 /* PBXContainerItemProxy */;
+		};
+		502C661F0DFEFCDF00E4107D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 502C661E0DFEFCDF00E4107D /* PBXContainerItemProxy */;
 		};
 		50B130A20DFDFB00003BAB56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -700,6 +805,82 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		502C65EF0DFEF3DE00E4107D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = "cocos2d-documentation";
+			};
+			name = Debug;
+		};
+		502C65F00DFEF3DE00E4107D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = "cocos2d-documentation";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		502C661B0DFEFCCA00E4107D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "demo-rotate-world-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "demo-rotate-world";
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		502C661C0DFEFCCA00E4107D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "demo-rotate-world-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "demo-rotate-world";
+				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -799,6 +980,24 @@
 			buildConfigurations = (
 				5018F24E0DFDEAC500C013A5 /* Debug */,
 				5018F24F0DFDEAC500C013A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		502C65F10DFEF3FC00E4107D /* Build configuration list for PBXNativeTarget "cocos2d-documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				502C65EF0DFEF3DE00E4107D /* Debug */,
+				502C65F00DFEF3DE00E4107D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "demo-rotate-world" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				502C661B0DFEFCCA00E4107D /* Debug */,
+				502C661C0DFEFCCA00E4107D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

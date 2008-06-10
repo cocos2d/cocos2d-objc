@@ -36,7 +36,7 @@ Example:
 
 /** creates the action */
 +(id) actionWithDuration: (double) d;
-/** initializes the action *?
+/** initializes the action */
 -(id) initWithDuration: (double) d;
 -(void) step;
 /** called when the action is about to start */
@@ -109,7 +109,7 @@ Example:
 -(id) initWithDuration: (double) t angle:(float) a;
 @end
 
-/** Rotates a `CocosNode` object clockwise a number of degrees by modiying it's rotation attribute.
+/** Rotates a CocosNode object clockwise a number of degrees by modiying it's rotation attribute.
 */
 @interface RotateBy : IntervalAction <NSCopying>
 {
@@ -122,7 +122,7 @@ Example:
 -(id) initWithDuration: (double) t angle:(float) a;
 @end
 
-/** Moves a `CocosNode` object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+/** Moves a CocosNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
 */
 @interface MoveTo : IntervalAction <NSCopying>
 {
@@ -136,7 +136,7 @@ Example:
 -(id) initWithDuration: (double) t position: (CGPoint) pos;
 @end
 
-/**  Moves a `CocosNode` object x,y pixels by modifying it's position attribute.
+/**  Moves a CocosNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
 */ 
@@ -149,7 +149,7 @@ Example:
 -(id) initWithDuration: (double) t delta: (CGPoint) delta;
 @end
 
-/** Moves a `CocosNode` object simulating a jump movement by modifying it's position attribute.
+/** Moves a CocosNode object simulating a jump movement by modifying it's position attribute.
 */
  @interface JumpBy : IntervalAction <NSCopying>
 {
@@ -174,7 +174,7 @@ Example:
 @end
 
 
-/** Scales a `CocosNode` object to a zoom factor by modifying it's scale attribute.
+/** Scales a CocosNode object to a zoom factor by modifying it's scale attribute.
  */
 @interface ScaleTo : IntervalAction <NSCopying>
 {
@@ -189,14 +189,14 @@ Example:
 -(id) initWithDuration: (double) t scale:(float) s;
 @end
 
-/** Scales a `CocosNode` object a zoom factor by modifying it's scale attribute.
+/** Scales a CocosNode object a zoom factor by modifying it's scale attribute.
 */
 @interface ScaleBy : ScaleTo <NSCopying>
 {
 }
 @end
 
-/** Blinks a `CocosNode` object by modifying it's visible attribute
+/** Blinks a CocosNode object by modifying it's visible attribute
 */
 @interface Blink : IntervalAction <NSCopying>
 {

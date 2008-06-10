@@ -1,15 +1,9 @@
 //
 //  CocosNode.m
-//  test-opengl2
+//	cocos2d
 //
-//  Created by Ricardo Quesada on 29/05/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
-//
-
-
 
 #import "CocosNode.h"
-
 
 @implementation CocosNode
 
@@ -149,6 +143,7 @@
 	if (!visible)
 		return;
 
+	glPushMatrix();
 	for (id child in children)
 	{
 		if ( [[child objectAtIndex:0] intValue] < 0 )
@@ -157,16 +152,16 @@
 			break;
 	}	
 
-	glPushMatrix();
-	[self transform];		
+	[self transform];
 	[self draw];
-	glPopMatrix();
 
 	for (id child in children)
 	{		
 		if ( [[child objectAtIndex:0] intValue] >= 0 )
 			[[child objectAtIndex:1] visit];
 	}
+	glPopMatrix();
+
 }
 
 -(void) onEnter

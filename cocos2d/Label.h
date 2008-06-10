@@ -1,9 +1,6 @@
 //
 //  sprite.h
-//  test-opengl
-//
-//  Created by Ricardo Quesada on 28/05/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//	cocos2d
 //
 
 #import <UIKit/UIKit.h>
@@ -19,6 +16,10 @@
 	Texture2D *texture;
 }
 
+/** creates a label from a font */
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*)font;
+/** creates a label from a fontname and font size */
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the label with a font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the label with font class */

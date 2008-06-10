@@ -26,15 +26,21 @@ and when to execute the Scenes
 
 	BOOL landscape;
 	
-	/* running scene */
+	/** running scene */
 	Scene *runningScene;
+	
+	/* will be the next 'runningScene' in the next frame */
+	Scene *nextScene;	
 
 	/** scheduled scenes */
 	NSMutableArray *scenes;
 }
 
+@property (readonly, assign) Scene* runningScene;
 @property (readwrite, assign) NSTimeInterval animationInterval;
 @property (readwrite,assign) UIWindow* window;
+
+-(void) setNextScene;
 
 - (CGRect) winSize;
 /** returns whether or not the screen is in landscape mode */
