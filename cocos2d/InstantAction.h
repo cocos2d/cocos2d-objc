@@ -48,9 +48,9 @@
 {
 	CGPoint position;
 }
-//! creates a Place action with a position
+/** creates a Place action with a position */
 +(id) actionWithPosition: (CGPoint) pos;
-//! Initializes a Place action with a position
+/** Initializes a Place action with a position */
 -(id) initWithPosition: (CGPoint) pos;
 @end
 
@@ -60,9 +60,8 @@
 {
 	NSInvocation *invocation;
 }
-//! creates the action with the callback
+/** creates the action with the callback */
 +(id) actionWithTarget: (id) receiver selector:(SEL) callback;
-//! initializes the action with the callback
+/** initializes the action with the callback */
 -(id) initWithTarget: (id) receiver selector:(SEL) callback;
 @end
-

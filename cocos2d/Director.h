@@ -24,13 +24,12 @@ and when to execute the Scenes
 	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
 
-	/* landscape mode ? */
 	BOOL landscape;
 	
 	/* running scene */
 	Scene *runningScene;
 
-	// scenes
+	/** scheduled scenes */
 	NSMutableArray *scenes;
 }
 
@@ -38,12 +37,18 @@ and when to execute the Scenes
 @property (readwrite,assign) UIWindow* window;
 
 - (CGRect) winSize;
+/** returns whether or not the screen is in landscape mode */
 - (BOOL) landscape;
+/** sets lanscape mode */
 - (void) setLandscape: (BOOL) on;
 
+/** enables/disables OpenGL alpha blending */
 - (void) setAlphaBlending: (BOOL) on;
+/** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
+/** enables/disables OpenGL texture 2D */
 - (void) setTexture2D: (BOOL) on;
+/** sets Cocos OpenGL default projection */
 - (void) setDefaultProjection;
 
 /**Runs a scene, entering in the Director's main loop.
@@ -69,5 +74,6 @@ and when to execute the Scenes
 - (void) startAnimation;
 - (void) stopAnimation;
 
+/** returns a shared instance of the director */
 + (Director *)sharedDirector;
 @end
