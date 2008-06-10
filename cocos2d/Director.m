@@ -1,6 +1,6 @@
 //
-//	Director.m
-//	cocos2d
+//  Director.m
+//  cocos2d
 //
 
 #import "Director.h"

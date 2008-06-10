@@ -1,6 +1,6 @@
 //
-//  sprite.h
-//	cocos2d
+//  Sprite.h
+//  cocos2d
 //
 
 #import <UIKit/UIKit.h>

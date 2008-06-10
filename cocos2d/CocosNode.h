@@ -1,6 +1,6 @@
 //
 //  CocosNode.h
-//	cocos2d
+//  cocos2d
 //
 
 #import <OpenGLES/ES1/gl.h>

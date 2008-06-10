@@ -1,6 +1,6 @@
 //
-//	InstantAction.m
-//	cocos2d
+//  InstantAction.m
+//  cocos2d
 //
 
 

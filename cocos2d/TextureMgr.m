@@ -1,9 +1,6 @@
 //
-//  sprite.m
-//  test-opengl
-//
-//  Created by Ricardo Quesada on 28/05/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  TextureMgr.m
+//  cocos2d
 //
 
 #import <QuartzCore/QuartzCore.h>

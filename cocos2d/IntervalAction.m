@@ -1,6 +1,6 @@
 //
-//	IntervalAction.m
-//	cocos2d
+//  IntervalAction.m
+//  cocos2d
 //
 
 
@@ -554,6 +554,17 @@
 -(IntervalAction*) reverse
 {
 	return [JumpBy actionWithDuration: duration position: CGPointMake(-delta.x,-delta.y) height: height jumps:jumps];
+}
+@end
+
+//
+// JumpTo
+//
+@implementation JumpTo
+-(void) start
+{
+	[super start];
+	delta = CGPointMake( delta.x - startPosition.x, delta.y - startPosition.y );
 }
 @end
 

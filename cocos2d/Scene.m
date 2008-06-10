@@ -1,6 +1,6 @@
 //
 //  Scene.m
-//	cocos2d
+//  cocos2d
 //
 
 #import "Scene.h"

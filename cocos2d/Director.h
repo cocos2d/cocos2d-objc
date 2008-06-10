@@ -1,5 +1,6 @@
 //
-// cocos2d
+//  Director.h
+//  cocos2d
 //
 
 // cocoa related
