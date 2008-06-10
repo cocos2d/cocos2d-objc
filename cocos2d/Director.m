@@ -191,6 +191,8 @@ static Director *sharedDirector;
 
 - (void) drawScene
 {
+	// add depth test later
+	glClear( GL_COLOR_BUFFER_BIT );
 	glLoadIdentity();
 	if( landscape ) {
 		glTranslatef(160,240,0);

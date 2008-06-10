@@ -1,6 +1,6 @@
 //
 // cocos2d for iphone
-// IntervalAction
+// main file
 //
 
 #import "Scene.h"
@@ -77,8 +77,14 @@
 	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4];
 	IntervalAction *jump2 = [jump1 reverse];
 	
-	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions:jump2, jump1, nil] times:1 ] ];
-	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions:jump1, jump2, nil] times:1 ] ];
+	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
+	IntervalAction *rot2 = [rot1 reverse];
+	
+	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions:jump2, jump1, nil] times:5 ] ];
+	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions:jump1, jump2, nil] times:5 ] ];
+
+	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions: rot1, rot2, nil] times:5 ] ];
+	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions: rot2, rot1, nil] times:5 ] ];
 
 	
 	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,

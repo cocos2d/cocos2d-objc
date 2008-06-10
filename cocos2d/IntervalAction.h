@@ -48,11 +48,12 @@
 //
 @interface Repeat : IntervalAction <NSCopying>
 {
-	int times;
+	unsigned int times;
+	unsigned int total;
 	IntervalAction *other;
 }
-+(id) actionWithAction: (IntervalAction*) action times: (int) t;
--(id) initWithAction: (IntervalAction*) action times: (int) t;
++(id) actionWithAction: (IntervalAction*) action times: (unsigned int) t;
+-(id) initWithAction: (IntervalAction*) action times: (unsigned int) t;
 @end
 
 //
