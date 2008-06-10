@@ -212,17 +212,19 @@
 // Repeat
 //
 @implementation Repeat
-+(id) actionWithAction: (IntervalAction*) action times: (int) t
++(id) actionWithAction: (IntervalAction*) action times: (unsigned int) t
 {
 	return [[[self alloc] initWithAction: action times: t] autorelease];
 }
 
--(id) initWithAction: (IntervalAction*) action times: (int) t
+-(id) initWithAction: (IntervalAction*) action times: (unsigned int) t
 {
-	if(! [super initWithDuration: [action duration] ] )
+	int d = [action duration] * t;
+	if(! [super initWithDuration: d ] )
 		return nil;
 	times = t;
 	other = [action copy];
+	total = 0;
 	return self;
 }
 
@@ -249,12 +251,17 @@
 -(void) step
 {
 	[other step];
-	if( [other isDone] )
+	if( [other isDone] ) {
+		total++;
 		[self start];
+	}
 }
 -(BOOL) isDone
 {
-	return NO;
+	// times == 0, Always repeat
+	if( !times )
+		return NO;
+	return ( total == times );
 }
 @end
 
