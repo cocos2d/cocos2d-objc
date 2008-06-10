@@ -7,11 +7,12 @@
 #import "Layer.h"
 #import "Director.h"
 #import "Sprite.h"
-#import "AppController.h"
 #import "IntervalAction.h"
 #import "InstantAction.h"
 #import "Label.h"
 #import "Texture2D.h"
+
+#import "MoveBy.h"
 
 @implementation MainLayer
 -(id) init

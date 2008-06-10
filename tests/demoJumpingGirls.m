@@ -1,26 +1,25 @@
 //
-// cocos2d for iphone
-// main file
+//	demoJumpingGirls.m
+//	cocos2d
 //
 
 #import "Scene.h"
 #import "Layer.h"
 #import "Director.h"
 #import "Sprite.h"
-#import "AppController.h"
 #import "IntervalAction.h"
 #import "InstantAction.h"
 #import "Label.h"
 #import "Texture2D.h"
+
+#import "demoJumpingGirls.h"
 
 @implementation MainLayer
 -(id) init
 {
 	if( ! [super init] )
 		return nil;
-	hello = [[Label alloc] initWithString:@"cocos2d in iphone" dimensions:CGSizeMake(280, 32) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
-
-	[hello autorelease];
+	hello = [Label labelWithString:@"cocos2d in iphone" dimensions:CGSizeMake(280, 32) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	
 	[self add: hello z:0];
 	[hello setPosition: CGPointMake(200,200)];
