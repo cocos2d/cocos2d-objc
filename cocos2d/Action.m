@@ -1,6 +1,6 @@
 //
 //  Action.m
-//	cocos2d
+//  cocos2d
 //
 
 

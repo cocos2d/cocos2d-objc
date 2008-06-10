@@ -1,6 +1,6 @@
 //
-//  sprite.m
-//	cocos2d
+//  Label.m
+//  cocos2d
 //
 
 #import <QuartzCore/QuartzCore.h>

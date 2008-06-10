@@ -1,6 +1,6 @@
 //
-// cocos2d for iphone
-// IntervalAction
+//  IntervalAction.h
+//  cocos2d
 //
 
 #import <UIKit/UIKit.h>
@@ -158,7 +158,9 @@ Example:
 	double height;
 	int jumps;
 }
+/** creates the action */
 +(id) actionWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j;
+/** initializes the action */
 -(id) initWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j;
 @end
 
@@ -167,10 +169,6 @@ Example:
  @interface JumpTo : JumpBy <NSCopying>
 {
 }
-/** creates the action */
-+(id) actionWithDuration: (double) t delta: (CGPoint) delta;
-/** initializes the action */
--(id) initWithDuration: (double) t delta: (CGPoint) delta;
 @end
 
 

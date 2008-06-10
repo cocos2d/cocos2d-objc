@@ -1,6 +1,6 @@
 //
 //  CocosNode.m
-//	cocos2d
+//  cocos2d
 //
 
 #import "CocosNode.h"

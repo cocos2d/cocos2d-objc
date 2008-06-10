@@ -1,6 +1,6 @@
 //
 //  Action.h
-//	cocos2d
+//  cocos2d
 //
 
 #import <UIKit/UIKit.h>

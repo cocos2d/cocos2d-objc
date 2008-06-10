@@ -1,6 +1,6 @@
 //
-//	InstantAction.h
-//	cocos2d
+//  InstantAction.h
+//  cocos2d
 //
 
 
