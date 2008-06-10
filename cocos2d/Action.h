@@ -11,6 +11,8 @@
 #include <sys/time.h>
 
 @class CocosNode;
+/** Base class for actions
+ */
 @interface Action : NSObject <NSCopying> {
 	CocosNode *target;	
 }

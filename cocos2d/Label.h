@@ -12,15 +12,16 @@
 
 #import "CocosNode.h"
 
-
+//! A label
 @interface Label : CocosNode {
 
 	/* OpenGL name for the sprite texture */
 	Texture2D *texture;
 }
 
-// Text
+// initializes the label with a font name and font size
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+//! initializes the label with font class
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*)font;
 
 - (void) draw;

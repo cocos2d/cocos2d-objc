@@ -8,9 +8,24 @@
 
 #include <sys/time.h>
 
-//
-// IntervalAction
-//
+/** An interval action is an action that takes place within a certain period of time.
+It has an start time, and a finish time. The finish time is the parameter
+``duration`` plus the start time.
+
+These `IntervalAction` have some interesting properties, like:
+
+- They can run normally (default)
+- They can run reversed with the Reverse action.
+- They can run with the time altered with the `Accelerate`, `AccelDeccel` and
+`Speed` actions.
+
+For example, you can simulate a Ping Pong effect running the action normally and
+then running it again in Reverse mode.
+
+Example:
+
+ping_pong_action = action + Reverse( action )
+*/
 @interface IntervalAction: Action <NSCopying>
 {
 	struct timeval lastUpdate;
@@ -29,9 +44,8 @@
 - (IntervalAction*) reverse;
 @end
 
-//
-// Sequence
-//
+/** Runs actions sequentially, one after another
+ */
 @interface Sequence : IntervalAction <NSCopying>
 {
 	NSArray *actions;
@@ -175,9 +189,8 @@
 -(id) initWithDuration: (double) t blinks: (int) blinks;
 @end
 
-//
-// Accelerate
-//
+/** Changes the acceleration of an action
+ */
 @interface Accelerate: IntervalAction <NSCopying>
 {
 	IntervalAction *other;
