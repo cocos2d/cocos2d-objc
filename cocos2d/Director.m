@@ -157,6 +157,10 @@ static Director *sharedDirector;
 	[self startAnimation];
 }
 
+-(void) replaceScene: (Scene*) scene
+{
+}
+
 - (void) pushScene: (Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
