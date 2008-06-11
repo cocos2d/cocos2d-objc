@@ -58,8 +58,7 @@
 	[super dealloc];
 }
 
-// add a node to the array
--(void) add: (CocosNode*) child z:(int)z
+-(void) add: (CocosNode*) child z:(int)z name:(NSString*)name
 {
 	NSArray *entry;
 	
@@ -67,7 +66,7 @@
 	
 	NSNumber *index = [NSNumber numberWithInt:z];
 	entry = [NSArray arrayWithObjects: index, child, nil];
-
+	
 	int idx=0;
 	BOOL added = NO;
 	for( NSArray *a in children ) {
@@ -82,23 +81,36 @@
 		[children addObject:entry];
 	
 	[child setParent: self];
+	
+	if( isRunning )
+		[child onEnter];
+}
+
+// add a node to the array
+-(void) add: (CocosNode*) child z:(int)z
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	return [self add: child z:z name:@""];
 }
 
 -(void) add: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:0];
+	return [self add: child z:0 name:@""];
 }
 
 -(void) remove: (CocosNode*)child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
-	for( id entry in children)
-	{
-		if( [ [entry objectAtIndex:1] isEqual: child] )
-		{
-			[[entry objectAtIndex:1] setParent: nil];
+	for( id entry in children) {
+		CocosNode *c;
+		c = [entry objectAtIndex:1];
+		if( [c isEqual: child] ) {
+			[c setParent: nil];
+			if( isRunning )
+				[c onExit];
+			
 			[children removeObject: entry];
 			break;
 		}
@@ -197,6 +209,12 @@
 	[actions addObject: copy];
 		
 	return action;
+}
+
+-(void) stop
+{
+	for( Action* action in actions)
+		[actionsToRemove addObject: action];
 }
 
 -(void) step_

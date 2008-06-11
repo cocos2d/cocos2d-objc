@@ -29,10 +29,6 @@
 	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size]autorelease];
 }
 
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*) font
-{
-	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment font:font] autorelease];
-}
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 {
@@ -40,17 +36,6 @@
 		return nil;
 
 	texture = [[Texture2D alloc] initWithString:string dimensions:dimensions alignment:alignment fontName:name fontSize:size];
-	
-	[self initAnchors];
-	return self;
-}
-
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*) font
-{
-	if (![super init])
-		return nil;
-	
-	texture = [[Texture2D alloc] initWithString:string dimensions:dimensions alignment:alignment font:font];
 	
 	[self initAnchors];
 	return self;

@@ -78,8 +78,10 @@
 
 /** Adds a child to the container with z-order as 0 */
 -(void) add: (CocosNode*)node;
-/** Adds a child to the container */
+/** Adds a child to the container with a z-order*/
 -(void) add: (CocosNode*)node z:(int)z;
+/** Adds a child to the container with z order and name */
+-(void) add: (CocosNode*)node z:(int)z name:(NSString*)name;
 /** Removes a child from the container */
 -(void) remove: (CocosNode*)node;
 /** callback that is called every time the node enters the 'stage' */
@@ -96,8 +98,10 @@
 -(void) transform;
 
 // actions
-/** executes an action */
+/** Executes an action, and returns the action that is executed (a copy of the original) */
 -(Action*) do: (Action*) action;
+/** Removes all actions from the running action list */
+-(void) stop;
 -(void) step_;
 
 // timers
