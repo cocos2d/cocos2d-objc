@@ -111,6 +111,7 @@
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
-	glDisableClientState(GL_VERTEX_ARRAY | GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 @end

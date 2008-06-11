@@ -12,7 +12,7 @@
 @synthesize animationInterval;
 @synthesize window;
 @synthesize runningScene;
-
+@synthesize eventHandler;
 //
 // singleton stuff
 //
@@ -45,22 +45,20 @@ static Director *sharedDirector;
 
 - (id) init
 {
-	if( ! [super init] )
+	//Create a full-screen window
+	winSize = [[UIScreen mainScreen] bounds];
+	
+	window = [[UIWindow alloc] initWithFrame:winSize];
+
+	if( ! [super initWithFrame:[window bounds] pixelFormat:kEAGLColorFormatRGB565] )
 		return nil;
 
+	[window addSubview:self];
+	
 	runningScene = nil;
 	nextScene = nil;
 	animationInterval = 1.0 / kDefaultFPS;
-	
-	winSize = [[UIScreen mainScreen] bounds];
-	
-	//Create a full-screen window
-	window = [[UIWindow alloc] initWithFrame:winSize];
-		
-	//Create the OpenGL view and add it to the window  kEAGLColorFormat
-	GLView = [[EAGLView alloc] initWithFrame:[window bounds] pixelFormat:kEAGLColorFormatRGB565];
-	[window addSubview:GLView];
-	
+	eventHandler = nil;
 	
 	[self setAlphaBlending: YES];
 	[self setDepthTest: NO];
@@ -77,9 +75,8 @@ static Director *sharedDirector;
 - (void) dealloc {
 	NSLog( @"deallocing %@", self);
 	
-	[GLView release];
-	[window release];
 	[runningScene release];
+	[window release];
 	
 	[super dealloc];
 }
@@ -214,7 +211,7 @@ static Director *sharedDirector;
 	[runningScene visit];
 	
 	/* swap buffers */
-	[GLView swapBuffers];
+	[self swapBuffers];
 	
 	/* new scene */
 	if( nextScene ) {
@@ -232,4 +229,23 @@ static Director *sharedDirector;
 
 	nextScene = nil;
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+		[eventHandler touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+		[eventHandler touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+		[eventHandler touchesEnded:touches withEvent:event];
+}
+
 @end

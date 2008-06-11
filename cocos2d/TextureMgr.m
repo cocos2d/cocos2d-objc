@@ -49,7 +49,7 @@ static TextureMgr *sharedTextureMgr;
 	if( ! [super init])
 		return nil;
 	
-	textures = [NSMutableDictionary dictionaryWithCapacity: 10];
+	textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
 	return self;
 }
 
@@ -61,7 +61,7 @@ static TextureMgr *sharedTextureMgr;
 		return	[tex retain];
 	}
 	
-	tex = [[Texture2D alloc] initWithImagePath: fileimage];
+	tex = [[Texture2D alloc] initWithImage: [UIImage imageNamed:fileimage]];
 	[textures setObject: tex forKey:fileimage];
 	
 	return tex;

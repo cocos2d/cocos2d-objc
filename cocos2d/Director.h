@@ -16,10 +16,10 @@
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes
 */
-@interface Director : NSObject
+@interface Director : EAGLView
 {
 	UIWindow*				window;
-	EAGLView*				GLView;
+//	EAGLView*				GLView;
 	CGRect					winSize;
 
 	NSTimer *animationTimer;
@@ -31,7 +31,10 @@ and when to execute the Scenes
 	Scene *runningScene;
 	
 	/* will be the next 'runningScene' in the next frame */
-	Scene *nextScene;	
+	Scene *nextScene;
+	
+	/* event handler */
+	id	eventHandler;
 
 	/** scheduled scenes */
 	NSMutableArray *scenes;
@@ -40,6 +43,7 @@ and when to execute the Scenes
 @property (readonly, assign) Scene* runningScene;
 @property (readwrite, assign) NSTimeInterval animationInterval;
 @property (readwrite,assign) UIWindow* window;
+@property (readwrite, assign) id eventHandler;
 
 -(void) setNextScene;
 

@@ -112,12 +112,12 @@
 
 	[green setScale: 0.5];
 	[green setPosition: CGPointMake(-x/4,y/4)];
+	[green add: [TextLayer node]];
 
 	[white setScale: 0.5];
 	[white setPosition: CGPointMake(x/4,y/4)];
-	[white add: [TextLayer node]];
 
-	[self add: blue];
+	[self add: blue z:-1];
 	[self add: white];
 	[self add: green];
 	[self add: red];
