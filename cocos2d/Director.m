@@ -91,6 +91,20 @@ static Director *sharedDirector;
 	glMatrixMode(GL_MODELVIEW);
 }
 
+-(CGPoint) convertCoordinate: (CGPoint) p
+{
+	int newY = winSize.size.height - p.y;
+
+	CGPoint ret = CGPointMake( p.x, newY );
+	if( ! landscape )
+		return ret;
+	
+	ret.x = p.y;
+	ret.y = p.x;
+	
+	return ret;
+}
+
 //
 // custom properties
 //
