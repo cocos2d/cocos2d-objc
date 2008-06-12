@@ -104,6 +104,17 @@
 	}
 }
 
+-(void) setOpacity: (GLubyte) o
+{
+	GLuint c = (color & 0xffffff00) | o;
+	[self changeColor:c];
+}
+
+-(GLubyte) opacity
+{
+	return (color & 0xff);
+}
+
 - (void) initWidth: (GLint) w height:(GLint) h
 {
 	for (int i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )

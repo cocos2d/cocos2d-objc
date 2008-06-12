@@ -657,6 +657,67 @@
 }
 @end
 
+//
+// FadeIn
+//
+@implementation FadeIn
+-(void) update: (double) t
+{
+	[(id<CocosNodeOpacity>) target setOpacity: 255 *t];
+}
+-(IntervalAction*) reverse
+{
+	return [FadeOut actionWithDuration: duration];
+}
+@end
+
+//
+// FadeOut
+//
+@implementation FadeOut
+-(void) update: (double) t
+{
+	[(id<CocosNodeOpacity>) target setOpacity: 255 *(1-t)];
+}
+-(IntervalAction*) reverse
+{
+	return [FadeOut actionWithDuration: duration];
+}
+@end
+
+//
+// FadeTo
+//
+@implementation FadeTo
++(id) actionWithDuration: (double) t opacity: (GLubyte) o
+{
+	return [[[ self alloc] initWithDuration: t opacity: o] autorelease];
+}
+
+-(id) initWithDuration: (double) t opacity: (GLubyte) o
+{
+	[super initWithDuration: t];
+	toOpacity = o;
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] opacity: toOpacity];
+    return copy;
+}
+
+-(void) start
+{
+	[super start];
+	fromOpacity = [(id<CocosNodeOpacity>)target opacity];
+}
+
+-(void) update: (double) t
+{
+	[(id<CocosNodeOpacity>)target setOpacity: fromOpacity + ( toOpacity - fromOpacity ) * t];
+}
+@end
 
 //
 // Accelerate
