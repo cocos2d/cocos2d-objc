@@ -16,12 +16,10 @@ seeds.
 =====================
 
 File: SoundEngine.h
-Abstract: This C API is a sound engine intended for games and applications that
-want to do more than casual UI sounds playback e.g. background music track,
-multiple sound effects, stereo panning... while ensuring low-latency response at
-the same time.
+Abstract: These functions play background music tracks, multiple sound effects,
+and support stereo panning with a low-latency response.
 
-Version: 1.1
+Version: 1.6
 
 Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
 ("Apple") in consideration of your agreement to the following terms, and your

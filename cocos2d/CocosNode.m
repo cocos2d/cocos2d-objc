@@ -37,7 +37,9 @@
 	childrenAnchor = CGPointZero;
 	transformAnchor = CGPointZero;
 	
+	// children
 	children = [[NSMutableArray alloc] init];
+	childrenNames = [[NSMutableDictionary alloc] init];
 
 	// actions
 	actions = [[NSMutableArray alloc] init];
@@ -51,10 +53,17 @@
 - (void) dealloc
 {
 	NSLog( @"deallocing %@", self);
+	// children
 	[children release];
+	[childrenNames release];
+	
+	// timers
 	[scheduledSelectors release];
+	
+	// actions
 	[actions release];
 	[actionsToRemove release];
+	
 	[super dealloc];
 }
 
@@ -80,6 +89,9 @@
 	if( ! added )
 		[children addObject:entry];
 	
+	if( name )
+		[childrenNames setObject:child forKey:name];
+	
 	[child setParent: self];
 	
 	if( isRunning )
@@ -90,13 +102,13 @@
 -(void) add: (CocosNode*) child z:(int)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:z name:@""];
+	return [self add: child z:z name:nil];
 }
 
 -(void) add: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:0 name:@""];
+	return [self add: child z:0 name:nil];
 }
 
 -(void) remove: (CocosNode*)child
@@ -112,9 +124,25 @@
 				[c onExit];
 			
 			[children removeObject: entry];
+			
 			break;
 		}
 	}
+}
+
+-(void) removeByName: (NSString*) name
+{
+	NSAssert( name != nil, @"Argument must be non-nil");
+	
+	id child = [childrenNames objectForKey: name];
+	[self remove: child];
+	[childrenNames removeObjectForKey: name];
+}
+
+-(CocosNode*) get: (NSString*) name
+{
+	NSAssert( name != nil, @"Argument must be non-nil");
+	return [childrenNames objectForKey:name];
 }
 
 -(void) draw

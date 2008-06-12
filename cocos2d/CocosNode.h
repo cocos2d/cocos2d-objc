@@ -46,6 +46,9 @@
 	/// array of children
 	NSMutableArray *children;
 	
+	/// dictionary of child name -> child
+	NSMutableDictionary *childrenNames;
+	
 	/// is running
 	BOOL isRunning;
 	
@@ -74,20 +77,27 @@
 //! initializes the node
 -(id) init;
 
-// composition
+// scene managment
+/** callback that is called every time the node enters the 'stage' */
+-(void) onEnter;
+/** callback that is called every time the node leaves the 'stage'. */
+-(void) onExit;
 
+// composition
 /** Adds a child to the container with z-order as 0 */
 -(void) add: (CocosNode*)node;
 /** Adds a child to the container with a z-order*/
 -(void) add: (CocosNode*)node z:(int)z;
 /** Adds a child to the container with z order and name */
 -(void) add: (CocosNode*)node z:(int)z name:(NSString*)name;
-/** Removes a child from the container */
+/** Removes a child from the container
+ If you have added a 'named' child, you MUST remove it using removeByName instead
+ */
 -(void) remove: (CocosNode*)node;
-/** callback that is called every time the node enters the 'stage' */
--(void) onEnter;
-/** callback that is called every time the node leaves the 'stage'. */
--(void) onExit;
+/** Removes a child from the container given its name */
+-(void) removeByName: (NSString*)name;
+/** Gets a child from the container given its name */
+-(CocosNode*) get: (NSString*) name;
 
 // draw
 /** override this method to draw your own node. */
@@ -113,3 +123,12 @@
 -(void) activateTimer: (SEL) method;
 -(void) deactivateTimers;
 @end
+
+//
+// protocols
+//
+@protocol CocosNodeOpacity
+-(GLubyte) opacity;
+-(void) setOpacity: (GLubyte) opacity;
+@end
+

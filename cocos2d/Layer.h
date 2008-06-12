@@ -7,6 +7,9 @@
 
 #import "CocosNode.h"
 
+//
+// Layer
+//
 /** a Layer */
 @interface Layer : CocosNode
 {
@@ -15,8 +18,11 @@
 }
 @end
 
+//
+// ColorLayer
+//
 //! a Layer with color and opacity
-@interface ColorLayer : Layer
+@interface ColorLayer : Layer <CocosNodeOpacity>
 {
 	GLuint color;
 	GLfloat squareVertices[4 * 2];
@@ -33,21 +39,35 @@
 /** initializes a Layer with color. Width and height are the window size. */
 - (id) initWithColor: (GLuint) aColor;
 
+/** initializes the witdh and height of the layer */
+- (void) initWidth: (GLint)w height:(GLint)h;
+
 /** changes the color of the layer */
 - (void) changeColor: (GLuint) aColor;
-- (void) initWidth: (GLint)w height:(GLint)h;
+
+// CocosNodeOpacity protocol
+/** returns the opacity */
+-(GLubyte) opacity;
+/** sets the opacity of the layer */
+-(void) setOpacity: (GLubyte) opacity;
 
 @property (readwrite, assign) GLuint color;
 
 @end
 
+//
+// MultiplexLayer
+//
 @interface MultiplexLayer : Layer
 {
 	unsigned int enabledLayer;
 	NSMutableArray *layers;
 }
 
+/** creates a MultiplexLayer with one or more layers */
 +(id) layerWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
+/** initializes a MultiplexLayer with one or more layers */
 -(id) initWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
+/** switches to a certain layer */
 -(void) switchTo: (unsigned int) n;
 @end

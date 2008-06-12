@@ -60,6 +60,20 @@
 		502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		502C67ED0DFF0A7300E4107D /* demoJumpingGirls.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */; };
+		506C77CF0E01520900B48100 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
+		506C77D00E01520900B48100 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
+		506C77D10E01520900B48100 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
+		506C77D20E01520900B48100 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E820DF9C85C00BA70B0 /* grossini.png */; };
+		506C77D30E01520900B48100 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */; };
+		506C77D40E01520900B48100 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
+		506C77D70E01520900B48100 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		506C77DC0E01520900B48100 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		506C77DD0E01520900B48100 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		506C77DE0E01520900B48100 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		506C77E70E01524200B48100 /* ClickAndMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C77E60E01524200B48100 /* ClickAndMove.m */; };
 		507EB6520DFF315B00A0C77E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		507EB6530DFF315B00A0C77E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		507EB6540DFF315B00A0C77E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -108,11 +122,18 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		506C77CD0E01520900B48100 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		507EB6B50DFF331700A0C77E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
 		50B130A10DFDFB00003BAB56 /* PBXContainerItemProxy */ = {
@@ -131,7 +152,7 @@
 		1D30AB170D05D02000671497 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1D4F2F990D10AC310045FB13 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* CrashLanding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrashLanding.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* JumpingSisters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JumpingSisters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		285EACBC0D64CFB400F351DD /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = OpenGLSupport/EAGLView.h; sourceTree = "<group>"; };
 		285EACBD0D64CFB400F351DD /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = OpenGLSupport/EAGLView.m; sourceTree = "<group>"; };
@@ -175,12 +196,16 @@
 		5019FF940DF49857000A5AD0 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureMgr.h; path = cocos2d/TextureMgr.h; sourceTree = "<group>"; };
 		5019FF950DF49857000A5AD0 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureMgr.m; path = cocos2d/TextureMgr.m; sourceTree = "<group>"; };
 		502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-documentation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		502C66180DFEFCCA00E4107D /* demo-rotate-world.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "demo-rotate-world.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		502C66180DFEFCCA00E4107D /* RotateWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RotateWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "demo-rotate-world-Info.plist"; sourceTree = "<group>"; };
 		502C664D0DFEFD6800E4107D /* RotateWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotateWorld.h; path = tests/RotateWorld.h; sourceTree = "<group>"; };
 		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
 		502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = demoJumpingGirls.h; path = tests/demoJumpingGirls.h; sourceTree = "<group>"; };
 		502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demoJumpingGirls.m; path = tests/demoJumpingGirls.m; sourceTree = "<group>"; };
+		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		506C77E40E01520900B48100 /* playground-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy.plist"; sourceTree = "<group>"; };
+		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
+		506C77E60E01524200B48100 /* ClickAndMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMove.m; path = tests/ClickAndMove.m; sourceTree = "<group>"; };
 		507EB5780DFF2FD200A0C77E /* Playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playground.h; path = tests/Playground.h; sourceTree = "<group>"; };
 		507EB5790DFF2FD200A0C77E /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
 		507EB59D0DFF314400A0C77E /* playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -261,6 +286,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		506C77D80E01520900B48100 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506C77D90E01520900B48100 /* Foundation.framework in Frameworks */,
+				506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */,
+				506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */,
+				506C77DC0E01520900B48100 /* OpenGLES.framework in Frameworks */,
+				506C77DD0E01520900B48100 /* QuartzCore.framework in Frameworks */,
+				506C77DE0E01520900B48100 /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		507EB59B0DFF314400A0C77E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,12 +331,13 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* CrashLanding.app */,
+				1D6058910D05DD3D006BFB54 /* JumpingSisters.app */,
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
 				50B12FCC0DFDFA90003BAB56 /* test-moveby.app */,
 				502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */,
-				502C66180DFEFCCA00E4107D /* demo-rotate-world.app */,
+				502C66180DFEFCCA00E4107D /* RotateWorld.app */,
 				507EB59D0DFF314400A0C77E /* playground.app */,
+				506C77E20E01520900B48100 /* ClickAndMove.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -319,6 +358,7 @@
 				50B12FCE0DFDFA90003BAB56 /* test-moveby-Info.plist */,
 				502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */,
 				507EB59F0DFF314400A0C77E /* playground-Info.plist */,
+				506C77E40E01520900B48100 /* playground-Info copy.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -453,6 +493,8 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				506C77E50E01524200B48100 /* ClickAndMove.h */,
+				506C77E60E01524200B48100 /* ClickAndMove.m */,
 				507EB5780DFF2FD200A0C77E /* Playground.h */,
 				507EB5790DFF2FD200A0C77E /* Playground.m */,
 				502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */,
@@ -498,9 +540,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* demo-jumping-sisters */ = {
+		1D6058900D05DD3D006BFB54 /* JumpingSisters */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "demo-jumping-sisters" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "JumpingSisters" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -511,9 +553,9 @@
 			dependencies = (
 				5018F2F50DFDECD600C013A5 /* PBXTargetDependency */,
 			);
-			name = "demo-jumping-sisters";
+			name = JumpingSisters;
 			productName = foo;
-			productReference = 1D6058910D05DD3D006BFB54 /* CrashLanding.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* JumpingSisters.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5018F24C0DFDEAC400C013A5 /* cocos2d */ = {
@@ -551,9 +593,9 @@
 			productReference = 502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		502C66170DFEFCCA00E4107D /* demo-rotate-world */ = {
+		502C66170DFEFCCA00E4107D /* RotateWorld */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "demo-rotate-world" */;
+			buildConfigurationList = 502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "RotateWorld" */;
 			buildPhases = (
 				502C66140DFEFCCA00E4107D /* Resources */,
 				502C66150DFEFCCA00E4107D /* Sources */,
@@ -564,9 +606,27 @@
 			dependencies = (
 				502C661F0DFEFCDF00E4107D /* PBXTargetDependency */,
 			);
-			name = "demo-rotate-world";
+			name = RotateWorld;
 			productName = "demo-rotate-world";
-			productReference = 502C66180DFEFCCA00E4107D /* demo-rotate-world.app */;
+			productReference = 502C66180DFEFCCA00E4107D /* RotateWorld.app */;
+			productType = "com.apple.product-type.application";
+		};
+		506C77CB0E01520900B48100 /* ClickAndMove */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 506C77DF0E01520900B48100 /* Build configuration list for PBXNativeTarget "ClickAndMove" */;
+			buildPhases = (
+				506C77CE0E01520900B48100 /* Resources */,
+				506C77D50E01520900B48100 /* Sources */,
+				506C77D80E01520900B48100 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				506C77CC0E01520900B48100 /* PBXTargetDependency */,
+			);
+			name = ClickAndMove;
+			productName = playground;
+			productReference = 506C77E20E01520900B48100 /* ClickAndMove.app */;
 			productType = "com.apple.product-type.application";
 		};
 		507EB59C0DFF314400A0C77E /* playground */ = {
@@ -619,10 +679,11 @@
 			targets = (
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
-				1D6058900D05DD3D006BFB54 /* demo-jumping-sisters */,
+				1D6058900D05DD3D006BFB54 /* JumpingSisters */,
 				50B12FCB0DFDFA90003BAB56 /* test-moveby */,
-				502C66170DFEFCCA00E4107D /* demo-rotate-world */,
+				502C66170DFEFCCA00E4107D /* RotateWorld */,
 				507EB59C0DFF314400A0C77E /* playground */,
+				506C77CB0E01520900B48100 /* ClickAndMove */,
 			);
 		};
 /* End PBXProject section */
@@ -650,6 +711,19 @@
 				502C66220DFEFCEE00E4107D /* grossini.png in Resources */,
 				502C66230DFEFCEE00E4107D /* grossinis_sister1.png in Resources */,
 				502C66240DFEFCEE00E4107D /* grossinis_sister2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506C77CE0E01520900B48100 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506C77CF0E01520900B48100 /* Icon.png in Resources */,
+				506C77D00E01520900B48100 /* Default.png in Resources */,
+				506C77D10E01520900B48100 /* Background.png in Resources */,
+				506C77D20E01520900B48100 /* grossini.png in Resources */,
+				506C77D30E01520900B48100 /* grossinis_sister1.png in Resources */,
+				506C77D40E01520900B48100 /* grossinis_sister2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +816,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		506C77D50E01520900B48100 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506C77D70E01520900B48100 /* main.m in Sources */,
+				506C77E70E01524200B48100 /* ClickAndMove.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		507EB59A0DFF314400A0C77E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -773,6 +856,11 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 502C661E0DFEFCDF00E4107D /* PBXContainerItemProxy */;
 		};
+		506C77CC0E01520900B48100 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 506C77CD0E01520900B48100 /* PBXContainerItemProxy */;
+		};
 		507EB6B60DFF331700A0C77E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -799,7 +887,7 @@
 				GCC_PREFIX_HEADER = Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PREBINDING = NO;
-				PRODUCT_NAME = CrashLanding;
+				PRODUCT_NAME = JumpingSisters;
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
@@ -815,7 +903,7 @@
 				GCC_PREFIX_HEADER = Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PREBINDING = NO;
-				PRODUCT_NAME = CrashLanding;
+				PRODUCT_NAME = JumpingSisters;
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;
@@ -893,7 +981,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "demo-rotate-world";
+				PRODUCT_NAME = RotateWorld;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -917,7 +1005,56 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "demo-rotate-world";
+				PRODUCT_NAME = RotateWorld;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		506C77E00E01520900B48100 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ClickAndMove;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		506C77E10E01520900B48100 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ClickAndMove;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -1053,7 +1190,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "demo-jumping-sisters" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "JumpingSisters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -1080,11 +1217,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "demo-rotate-world" */ = {
+		502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "RotateWorld" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				502C661B0DFEFCCA00E4107D /* Debug */,
 				502C661C0DFEFCCA00E4107D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		506C77DF0E01520900B48100 /* Build configuration list for PBXNativeTarget "ClickAndMove" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506C77E00E01520900B48100 /* Debug */,
+				506C77E10E01520900B48100 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -4,6 +4,8 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import <OpenGLES/ES1/gl.h>
 #import "Action.h"
 
 #include <sys/time.h>
@@ -205,6 +207,32 @@ Example:
 /** initilizes the action */
 -(id) initWithDuration: (double) t blinks: (int) blinks;
 @end
+
+/** Fades in a CocosNode, from opacity 0 to 255 */
+@interface FadeIn : IntervalAction <NSCopying>
+{
+}
+@end
+
+/** Fades out a CocosNode, from opacity 255 to 0 */
+@interface FadeOut : IntervalAction <NSCopying>
+{
+}
+@end
+
+/** Fades a CocosNode from current opacity to a custom one */
+@interface FadeTo : IntervalAction <NSCopying>
+{
+	GLubyte toOpacity;
+	GLubyte fromOpacity;
+}
+/** creates an action with duration and opactiy */
++(id) actionWithDuration: (double) t opacity: (GLubyte) o;
+/** initializes the action with duration and opacity */
+-(id) initWithDuration: (double) t opacity: (GLubyte) o;
+@end
+
+
 
 /** Changes the acceleration of an action
  */
