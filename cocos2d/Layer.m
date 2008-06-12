@@ -19,11 +19,24 @@
 	transformAnchor.x = s.size.width / 2;
 	transformAnchor.y = s.size.height / 2;
 	
+	isEventHandler = NO;
+	
 	return self;
 }
 
--(void) draw
+-(void) onEnter
 {
+	[super onEnter];
+	
+	if( isEventHandler )
+		[[Director sharedDirector] setEventHandler:self];
+}
+-(void) onExit
+{
+	[super onExit];
+	
+	if( isEventHandler )
+		[[Director sharedDirector] setEventHandler:nil];
 }
 @end
 
@@ -113,5 +126,66 @@
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
+}
+@end
+
+@implementation MultiplexLayer
++(id) layerWithLayers: (Layer*) layer, ... 
+{
+	va_list args;
+	va_start(args,layer);
+	
+	id s = [[[self alloc] initWithLayers: layer, args] autorelease];
+	
+	va_end(args);
+	return s;
+}
+
+-(id) initWithLayers: (Layer*) layer, ... 
+{
+	if( ![super init] )
+		return nil;
+	
+	layers = [[NSArray array] retain];
+	
+	[layers addObject: layer];
+	
+	va_list params;
+	va_start(params,layer);
+
+	Layer *l = va_arg(params,Layer*);
+	while( l ) {
+		[layers addObject: layer];
+		l = va_arg(params,Layer*);
+	}
+	va_end(params);
+	
+	enabledLayer = 0;
+	[self add: [layers objectAtIndex: enabledLayer]];		
+	
+	return self;
+}
+
+-(void) dealloc
+{
+	[layers release];
+	[super dealloc];
+}
+
+-(void) switchTo: (unsigned int) n
+{
+	if( n >= [layers count] ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"MultiplexLayerInvalidIndex"
+									reason:@"Invalid index in MultiplexLayer switchTo message"
+									userInfo:nil];
+		@throw myException;		
+	}
+		
+	[self remove: [layers objectAtIndex:enabledLayer]];
+	
+	enabledLayer = n;
+	
+	[self add: [layers objectAtIndex:n]];		
 }
 @end

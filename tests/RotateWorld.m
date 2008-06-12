@@ -27,8 +27,11 @@
 	size = [[Director sharedDirector] winSize];
 	x = size.size.width;
 	y = size.size.height;
-	
-	Label* label = [Label labelWithString:@"cocos2d" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:64];
+
+	NSArray *array = [UIFont familyNames];
+	for( NSString *s in array )
+		NSLog( s );
+	Label* label = [Label labelWithString:@"cocos2d" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
 
 	[label setPosition: CGPointMake(x/2,y/2)];
 	

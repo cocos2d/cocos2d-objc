@@ -19,6 +19,9 @@
 {
 	if( ! [super init] )
 		return nil;
+	
+	isEventHandler = YES;
+	
 	Sprite *sprite = [Sprite spriteFromFile: @"grossini.png"];
 		
 	[self add: sprite z:0];
@@ -29,17 +32,6 @@
 	return self;
 }
 
--(void) onEnter
-{
-	[super onEnter];
-	[[Director sharedDirector] setEventHandler:self];
-}
--(void) onExit
-{
-	[super onExit];
-	[[Director sharedDirector] setEventHandler:nil];
-}
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
@@ -48,7 +40,7 @@
 	
 	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
 	[sprite setPosition: CGPointMake(location.x, 480-location.y)];
-	[sprite do: [RotateBy actionWithDuration:2 angle:360]];
+	[sprite do: [RotateBy actionWithDuration:2*4 angle:360*4]];
 	[self add: sprite];
 
 }
@@ -64,8 +56,8 @@
 
 	UIAlertView*			alertView;
 
-	alertView = [[UIAlertView alloc] initWithTitle:@"Welcome to Crash Landing!" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Start", nil];
-	[alertView setMessage:[NSString stringWithFormat:@"Control the ship by gently\ntilting the %@:\n- Left / Right for orientation\n- Backward / Forward for thrust", [[UIDevice currentDevice] model]]];
+	alertView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Start", nil];
+	[alertView setMessage:[NSString stringWithFormat:@"Click on the screen\nto spawn rotating Grossinis", [[UIDevice currentDevice] model]]];
 	[alertView show];
 	[alertView release];
 		
@@ -80,16 +72,6 @@
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	[[Director sharedDirector] runScene: scene];
-}
-
-- (void)handleTap
-{
-	[[Director sharedDirector] popScene];
-}
-
-- (void)modalView:(UIAlertView *)modalView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	//Start a new game after the user has dismissed the welcome dialog
-	[[Director sharedDirector] popScene];
 }
 
 @end

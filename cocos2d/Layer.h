@@ -8,8 +8,10 @@
 #import "CocosNode.h"
 
 /** a Layer */
-@interface Layer : CocosNode {
-
+@interface Layer : CocosNode
+{
+	//! wheter or not it will receive Touch events
+	BOOL isEventHandler;
 }
 @end
 
@@ -37,4 +39,15 @@
 
 @property (readwrite, assign) GLuint color;
 
+@end
+
+@interface MultiplexLayer : Layer
+{
+	unsigned int enabledLayer;
+	NSMutableArray *layers;
+}
+
++(id) layerWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
+-(id) initWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
+-(void) switchTo: (unsigned int) n;
 @end
