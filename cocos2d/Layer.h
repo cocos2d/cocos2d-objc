@@ -67,7 +67,7 @@
 /** creates a MultiplexLayer with one or more layers */
 +(id) layerWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
 /** initializes a MultiplexLayer with one or more layers */
--(id) initWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
+-(id) initWithLayers: (Layer*) layer vaList:(va_list) params;
 /** switches to a certain layer */
 -(void) switchTo: (unsigned int) n;
 @end

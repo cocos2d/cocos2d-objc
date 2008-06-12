@@ -4,6 +4,7 @@
 //
 
 #import <OpenGLES/ES1/gl.h>
+#import <stdarg.h>
 
 #import "Layer.h"
 #import "Director.h"
@@ -126,6 +127,7 @@
 	squareVertices[7] = h;
 	
 }
+
 - (void)draw
 {		
 	glVertexPointer(2, GL_FLOAT, 0, squareVertices);
@@ -146,30 +148,26 @@
 	va_list args;
 	va_start(args,layer);
 	
-	id s = [[[self alloc] initWithLayers: layer, args] autorelease];
+	id s = [[[self alloc] initWithLayers: layer vaList:args] autorelease];
 	
 	va_end(args);
 	return s;
 }
 
--(id) initWithLayers: (Layer*) layer, ... 
+-(id) initWithLayers: (Layer*) layer vaList:(va_list) params
 {
 	if( ![super init] )
 		return nil;
 	
-	layers = [[NSArray array] retain];
+	layers = [[NSMutableArray array] retain];
 	
 	[layers addObject: layer];
 	
-	va_list params;
-	va_start(params,layer);
-
 	Layer *l = va_arg(params,Layer*);
 	while( l ) {
-		[layers addObject: layer];
+		[layers addObject: l];
 		l = va_arg(params,Layer*);
 	}
-	va_end(params);
 	
 	enabledLayer = 0;
 	[self add: [layers objectAtIndex: enabledLayer]];		

@@ -24,5 +24,6 @@
 - (void) draw;
 - (void) initAnchors;
 
+@property (readonly,assign) Texture2D* texture;
 
 @end
