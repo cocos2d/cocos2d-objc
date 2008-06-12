@@ -57,8 +57,8 @@
 	UITouch *touch = [touches anyObject];
 	
 	CGPoint location = [touch locationInView: [touch view]];
-	
-	location.y = 480-location.y;
+
+	location = [[Director sharedDirector] convertCoordinate: location];
 	
 	for( NSArray* array in children ) {
 		MenuItem *item = [array objectAtIndex:1];

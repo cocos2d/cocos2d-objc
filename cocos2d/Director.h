@@ -85,6 +85,11 @@ and when to execute the Scenes
 - (void) startAnimation;
 - (void) stopAnimation;
 
+/** converts a UIKit coordinate to an OpenGL coordinate
+ Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
+ */
+-(CGPoint) convertCoordinate: (CGPoint) p;
+
 /** returns a shared instance of the director */
 + (Director *)sharedDirector;
 @end

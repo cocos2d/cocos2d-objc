@@ -78,7 +78,7 @@
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setLandscape: YES];
 
 		
 	Scene *scene = [Scene node];
