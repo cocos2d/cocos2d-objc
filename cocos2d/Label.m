@@ -13,7 +13,8 @@
 #import "Label.h"
 
 @implementation Label
-// Sets up an array of values to use as the sprite vertices.
+
+@synthesize texture;
 
 - (id) init
 {

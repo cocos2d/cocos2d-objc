@@ -53,6 +53,12 @@ static TextureMgr *sharedTextureMgr;
 	return self;
 }
 
+-(void) dealloc
+{
+	[textures release];
+	[super dealloc];
+}
+
 -(Texture2D*) addImage: (NSString*) fileimage
 {
 	Texture2D * tex;

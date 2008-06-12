@@ -74,6 +74,24 @@
 		506C77DD0E01520900B48100 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506C77DE0E01520900B48100 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		506C77E70E01524200B48100 /* ClickAndMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C77E60E01524200B48100 /* ClickAndMove.m */; };
+		506C78A70E016A7300B48100 /* Menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 506C78A50E016A7300B48100 /* Menu.h */; };
+		506C78A80E016A7300B48100 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C78A60E016A7300B48100 /* Menu.m */; };
+		506C78EC0E0178FD00B48100 /* MenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 506C78EA0E0178FD00B48100 /* MenuItem.h */; };
+		506C78ED0E0178FD00B48100 /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C78EB0E0178FD00B48100 /* MenuItem.m */; };
+		506C79F60E01C73A00B48100 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
+		506C79F70E01C73A00B48100 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
+		506C79F80E01C73A00B48100 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
+		506C79F90E01C73A00B48100 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E820DF9C85C00BA70B0 /* grossini.png */; };
+		506C79FA0E01C73A00B48100 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */; };
+		506C79FB0E01C73A00B48100 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
+		506C79FE0E01C73A00B48100 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		506C7A000E01C73A00B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		506C7A010E01C73A00B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		506C7A020E01C73A00B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		506C7A030E01C73A00B48100 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		506C7A040E01C73A00B48100 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		506C7A050E01C73A00B48100 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		506C7A0E0E01C78700B48100 /* MenuTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C7A0D0E01C78700B48100 /* MenuTest.m */; };
 		507EB6520DFF315B00A0C77E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		507EB6530DFF315B00A0C77E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		507EB6540DFF315B00A0C77E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -123,6 +141,13 @@
 			remoteInfo = cocos2d;
 		};
 		506C77CD0E01520900B48100 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		506C79F40E01C73A00B48100 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -206,6 +231,14 @@
 		506C77E40E01520900B48100 /* playground-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy.plist"; sourceTree = "<group>"; };
 		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
 		506C77E60E01524200B48100 /* ClickAndMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMove.m; path = tests/ClickAndMove.m; sourceTree = "<group>"; };
+		506C78A50E016A7300B48100 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
+		506C78A60E016A7300B48100 /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
+		506C78EA0E0178FD00B48100 /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
+		506C78EB0E0178FD00B48100 /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
+		506C7A090E01C73A00B48100 /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		506C7A0B0E01C73A00B48100 /* playground-Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 2.plist"; sourceTree = "<group>"; };
+		506C7A0C0E01C78700B48100 /* MenuTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuTest.h; path = tests/MenuTest.h; sourceTree = "<group>"; };
+		506C7A0D0E01C78700B48100 /* MenuTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuTest.m; path = tests/MenuTest.m; sourceTree = "<group>"; };
 		507EB5780DFF2FD200A0C77E /* Playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playground.h; path = tests/Playground.h; sourceTree = "<group>"; };
 		507EB5790DFF2FD200A0C77E /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
 		507EB59D0DFF314400A0C77E /* playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,6 +332,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		506C79FF0E01C73A00B48100 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506C7A000E01C73A00B48100 /* Foundation.framework in Frameworks */,
+				506C7A010E01C73A00B48100 /* UIKit.framework in Frameworks */,
+				506C7A020E01C73A00B48100 /* CoreGraphics.framework in Frameworks */,
+				506C7A030E01C73A00B48100 /* OpenGLES.framework in Frameworks */,
+				506C7A040E01C73A00B48100 /* QuartzCore.framework in Frameworks */,
+				506C7A050E01C73A00B48100 /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		507EB59B0DFF314400A0C77E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +384,7 @@
 				502C66180DFEFCCA00E4107D /* RotateWorld.app */,
 				507EB59D0DFF314400A0C77E /* playground.app */,
 				506C77E20E01520900B48100 /* ClickAndMove.app */,
+				506C7A090E01C73A00B48100 /* MenuTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -359,6 +406,7 @@
 				502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */,
 				507EB59F0DFF314400A0C77E /* playground-Info.plist */,
 				506C77E40E01520900B48100 /* playground-Info copy.plist */,
+				506C7A0B0E01C73A00B48100 /* playground-Info copy 2.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -454,6 +502,10 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				506C78EA0E0178FD00B48100 /* MenuItem.h */,
+				506C78EB0E0178FD00B48100 /* MenuItem.m */,
+				506C78A50E016A7300B48100 /* Menu.h */,
+				506C78A60E016A7300B48100 /* Menu.m */,
 				5018F2520DFDEAFF00C013A5 /* Action.h */,
 				5018F2530DFDEAFF00C013A5 /* Action.m */,
 				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
@@ -493,6 +545,8 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				506C7A0C0E01C78700B48100 /* MenuTest.h */,
+				506C7A0D0E01C78700B48100 /* MenuTest.m */,
 				506C77E50E01524200B48100 /* ClickAndMove.h */,
 				506C77E60E01524200B48100 /* ClickAndMove.m */,
 				507EB5780DFF2FD200A0C77E /* Playground.h */,
@@ -527,6 +581,8 @@
 				5018F2850DFDEB2E00C013A5 /* EAGLView.h in Headers */,
 				5018F2870DFDEB2E00C013A5 /* OpenGL_Internal.h in Headers */,
 				5018F2880DFDEB2E00C013A5 /* Texture2D.h in Headers */,
+				506C78A70E016A7300B48100 /* Menu.h in Headers */,
+				506C78EC0E0178FD00B48100 /* MenuItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +685,24 @@
 			productReference = 506C77E20E01520900B48100 /* ClickAndMove.app */;
 			productType = "com.apple.product-type.application";
 		};
+		506C79F20E01C73A00B48100 /* MenuTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 506C7A060E01C73A00B48100 /* Build configuration list for PBXNativeTarget "MenuTest" */;
+			buildPhases = (
+				506C79F50E01C73A00B48100 /* Resources */,
+				506C79FC0E01C73A00B48100 /* Sources */,
+				506C79FF0E01C73A00B48100 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				506C79F30E01C73A00B48100 /* PBXTargetDependency */,
+			);
+			name = MenuTest;
+			productName = playground;
+			productReference = 506C7A090E01C73A00B48100 /* MenuTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		507EB59C0DFF314400A0C77E /* playground */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 507EB5A20DFF314500A0C77E /* Build configuration list for PBXNativeTarget "playground" */;
@@ -684,6 +758,7 @@
 				502C66170DFEFCCA00E4107D /* RotateWorld */,
 				507EB59C0DFF314400A0C77E /* playground */,
 				506C77CB0E01520900B48100 /* ClickAndMove */,
+				506C79F20E01C73A00B48100 /* MenuTest */,
 			);
 		};
 /* End PBXProject section */
@@ -724,6 +799,19 @@
 				506C77D20E01520900B48100 /* grossini.png in Resources */,
 				506C77D30E01520900B48100 /* grossinis_sister1.png in Resources */,
 				506C77D40E01520900B48100 /* grossinis_sister2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506C79F50E01C73A00B48100 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506C79F60E01C73A00B48100 /* Icon.png in Resources */,
+				506C79F70E01C73A00B48100 /* Default.png in Resources */,
+				506C79F80E01C73A00B48100 /* Background.png in Resources */,
+				506C79F90E01C73A00B48100 /* grossini.png in Resources */,
+				506C79FA0E01C73A00B48100 /* grossinis_sister1.png in Resources */,
+				506C79FB0E01C73A00B48100 /* grossinis_sister2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,6 +885,8 @@
 				5018F27E0DFDEAFF00C013A5 /* TextureMgr.m in Sources */,
 				5018F2860DFDEB2E00C013A5 /* EAGLView.m in Sources */,
 				5018F2890DFDEB2E00C013A5 /* Texture2D.m in Sources */,
+				506C78A80E016A7300B48100 /* Menu.m in Sources */,
+				506C78ED0E0178FD00B48100 /* MenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,6 +912,15 @@
 			files = (
 				506C77D70E01520900B48100 /* main.m in Sources */,
 				506C77E70E01524200B48100 /* ClickAndMove.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506C79FC0E01C73A00B48100 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506C79FE0E01C73A00B48100 /* main.m in Sources */,
+				506C7A0E0E01C78700B48100 /* MenuTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -860,6 +959,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 506C77CD0E01520900B48100 /* PBXContainerItemProxy */;
+		};
+		506C79F30E01C73A00B48100 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 506C79F40E01C73A00B48100 /* PBXContainerItemProxy */;
 		};
 		507EB6B60DFF331700A0C77E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1060,6 +1164,55 @@
 			};
 			name = Release;
 		};
+		506C7A070E01C73A00B48100 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy 2.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MenuTest;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		506C7A080E01C73A00B48100 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy 2.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MenuTest;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		507EB5A00DFF314500A0C77E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1231,6 +1384,15 @@
 			buildConfigurations = (
 				506C77E00E01520900B48100 /* Debug */,
 				506C77E10E01520900B48100 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		506C7A060E01C73A00B48100 /* Build configuration list for PBXNativeTarget "MenuTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506C7A070E01C73A00B48100 /* Debug */,
+				506C7A080E01C73A00B48100 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
