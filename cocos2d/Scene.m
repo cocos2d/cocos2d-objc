@@ -19,8 +19,4 @@
 	
 	return self;
 }
-
-- (void) draw
-{
-}
 @end

@@ -7,7 +7,6 @@
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 {
 }
--(void) handleTap;
 @end
 
 

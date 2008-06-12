@@ -16,10 +16,9 @@ seeds.
 =====================
 
 File: Texture2D.h
-Abstract: Convenience class that allows to create OpenGL 2D textures from
-images, text or raw data.
+Abstract: Creates OpenGL 2D textures from images or text.
 
-Version: 1.1
+Version: 1.6
 
 Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
 ("Apple") in consideration of your agreement to the following terms, and your
@@ -69,17 +68,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 typedef enum {
 	kTexture2DPixelFormat_Automatic = 0,
 	kTexture2DPixelFormat_RGBA8888,
-	kTexture2DPixelFormat_RGBA4444,
-	kTexture2DPixelFormat_RGBA5551,
 	kTexture2DPixelFormat_RGB565,
-	kTexture2DPixelFormat_RGB888,
-	kTexture2DPixelFormat_L8,
 	kTexture2DPixelFormat_A8,
-	kTexture2DPixelFormat_LA88,
-	kTexture2DPixelFormat_RGB_PVRTC2,
-	kTexture2DPixelFormat_RGB_PVRTC4,
-	kTexture2DPixelFormat_RGBA_PVRTC2,
-	kTexture2DPixelFormat_RGBA_PVRTC4
 } Texture2DPixelFormat;
 
 //CLASS INTERFACES:
@@ -119,11 +109,8 @@ Drawing extensions to make it easy to draw basic quads using a Texture2D object.
 These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 */
 @interface Texture2D (Drawing)
-- (void) preload; //Forces the texture to "preload" by drawing an invisible quad with it
 - (void) drawAtPoint:(CGPoint)point;
-- (void) drawAtPoint:(CGPoint)point depth:(CGFloat)depth anchor:(CGPoint) anchor;
 - (void) drawInRect:(CGRect)rect;
-- (void) drawInRect:(CGRect)rect depth:(CGFloat)depth;
 @end
 
 /*
@@ -131,11 +118,7 @@ Extensions to make it easy to create a Texture2D object from an image file.
 Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface Texture2D (Image)
-- (id) initWithImagePath:(NSString*)path; //If the path is not absolute, it is assumed to be relative to the main bundle's resources
-- (id) initWithImagePath:(NSString*)path sizeToFit:(BOOL)sizeToFit; //For non-power-of-two images, if "sizeToFit" is YES, the image is scaled to power-of-two dimensions, otherwise extra margins are added
-- (id) initWithImagePath:(NSString*)path sizeToFit:(BOOL)sizeToFit pixelFormat:(Texture2DPixelFormat)pixelFormat;
-
-- (id) initWithCGImage:(CGImageRef)image orientation:(UIImageOrientation)orientation sizeToFit:(BOOL)sizeToFit pixelFormat:(Texture2DPixelFormat)pixelFormat; //Primitive
+- (id) initWithImage:(UIImage *)uiImage;
 @end
 
 /*
@@ -144,5 +127,4 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 */
 @interface Texture2D (Text)
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*)font;
 @end

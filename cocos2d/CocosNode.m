@@ -70,7 +70,7 @@
 	int idx=0;
 	BOOL added = NO;
 	for( NSArray *a in children ) {
-		if ( [[a objectAtIndex: 0] intValue] >= z ) {
+		if ( [[a objectAtIndex: 0] intValue] > z ) {
 			added = YES;
 			[ children insertObject:entry atIndex:idx];
 			break;
@@ -119,12 +119,7 @@
 
 -(void) draw
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"DrawNotImplemented"
-								reason:@"CocosNode draw selector shall be overriden"
-								userInfo:nil];
-	@throw myException;
-	
+	// override me
 }
 
 -(void) transform
