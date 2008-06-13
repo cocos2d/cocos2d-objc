@@ -35,11 +35,15 @@
 		return nil;
 
 	isEventHandler = YES;
+	selectedItem = -1;
 	
-	[self add: item];
+	int z=0;
+	
+	[self add: item z:z];
 	MenuItem *i = va_arg(args, MenuItem*);
 	while(i) {
-		[self add: i];
+		z++;
+		[self add: i z:z];
 		i = va_arg(args, MenuItem*);
 	}
 	[self alignItems];
@@ -54,17 +58,47 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
-	
-	CGPoint location = [touch locationInView: [touch view]];
+	UITouch *touch = [touches anyObject];	
+	CGPoint point = [touch locationInView: [touch view]];
+	int idx;
 
-	location = [[Director sharedDirector] convertCoordinate: location];
+	MenuItem *item = [self itemInPoint: point idx:&idx];
+
+	if( item ) {
+		[item selected];
+		selectedItem = idx;
+	}
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];	
+	CGPoint point = [touch locationInView: [touch view]];
+	int idx;
+
+	MenuItem *item = [self itemInPoint: point idx:&idx];
+	if( item ) {
+		[item unselected];
+		[item activate];
+	} else if( selectedItem != -1 ) {
+		[[[children objectAtIndex:selectedItem] objectAtIndex:1] unselected];
+		selectedItem = -1;
+	}
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];	
+	CGPoint point = [touch locationInView: [touch view]];
+	int idx;
 	
-	for( NSArray* array in children ) {
-		MenuItem *item = [array objectAtIndex:1];
-		if( CGRectContainsPoint( [item rect], location ) ) {
-			[item activate];
-			break;
+	MenuItem *item = [self itemInPoint: point idx:&idx];
+	if( item ) {
+		if( idx != selectedItem ) {
+			if( selectedItem != -1 )
+				[[[children objectAtIndex:selectedItem] objectAtIndex:1] unselected];
+			[item selected];
+			selectedItem = idx;
 		}
 	}
 }
@@ -82,5 +116,20 @@
 		[item setPosition:CGPointMake(x/2, initialY)];
 		initialY -= incY;
 	}
+}
+
+-(id) itemInPoint: (CGPoint) point idx:(int*)idx
+{
+	point = [[Director sharedDirector] convertCoordinate: point];
+
+	int i=0;
+	for( NSArray* array in children ) {
+		*idx = i;
+		MenuItem *item = [array objectAtIndex:1];
+		if( CGRectContainsPoint( [item rect], point ) )
+			return item;
+		i++;
+	}
+	return nil;
 }
 @end

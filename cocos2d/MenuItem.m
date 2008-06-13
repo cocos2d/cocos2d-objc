@@ -5,6 +5,7 @@
 
 #import "MenuItem.h"
 #import "Label.h"
+#import "IntervalAction.h"
 
 @implementation MenuItem
 
@@ -55,6 +56,19 @@
 	
 	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
 	return r;
+}
+
+-(void) selected
+{
+	[self stop];
+	[self do: [ScaleTo actionWithDuration:0.2 scale:1.5]];
+}
+
+-(void) unselected
+{
+	[self stop];
+	[self do: [ScaleTo actionWithDuration:0.2 scale:1.0]];
+
 }
 
 -(void) activate

@@ -11,6 +11,7 @@
 /** A Menu */
 @interface Menu : Layer
 {
+	int selectedItem;
 }
 
 /** creates a menu with it's items */
@@ -20,5 +21,8 @@
 
 /** align items */
 -(void) alignItems;
+
+/** if a point in inside an item, in returns the item */
+-(id) itemInPoint: (CGPoint) p idx:(int*)idx;
 
 @end
