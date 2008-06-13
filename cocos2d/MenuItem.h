@@ -30,6 +30,12 @@
 /** activate the item */
 -(void) activate;
 
+/** the item was selected (not activated), similar to "mouse-over" */
+-(void) selected;
+
+/** the item was unselected */
+-(void) unselected;
+
 /** returns the height of the item */
 -(unsigned int) height;
 @end

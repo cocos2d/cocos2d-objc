@@ -280,9 +280,9 @@
 {
 	if( isRunning ) {
 		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:method userInfo:nil repeats:YES];
-		[scheduledSelectors setValue: timer forKey: NSStringFromSelector(method) ];
+		[scheduledSelectors setObject: timer forKey: NSStringFromSelector(method) ];
 	} else
-		[scheduledSelectors setValue: [NSNull null] forKey: NSStringFromSelector(method) ];
+		[scheduledSelectors setObject: [NSNull null] forKey: NSStringFromSelector(method) ];
 }
 
 -(void) unschedule: (SEL) method
@@ -321,9 +321,8 @@
 	for( NSString *key in keys ) {
 		NSTimer *timer =[ scheduledSelectors objectForKey: key];
 		[timer invalidate];
-		[timer release];
 		timer = nil;
-		[scheduledSelectors setValue: [NSNull null] forKey: key];
+		[scheduledSelectors setObject: [NSNull null] forKey: key];
 	}	
 }
 
