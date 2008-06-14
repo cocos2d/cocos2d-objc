@@ -55,8 +55,11 @@ static Director *sharedDirector;
 
 	[window addSubview:self];
 	
+	// scenes
 	runningScene = nil;
 	nextScene = nil;
+	scenes = [[NSMutableArray arrayWithCapacity:10] retain];
+	
 	animationInterval = 1.0 / kDefaultFPS;
 	eventHandler = nil;
 	
@@ -74,8 +77,9 @@ static Director *sharedDirector;
 
 - (void) dealloc {
 	NSLog( @"deallocing %@", self);
-	
+
 	[runningScene release];
+	[scenes release];
 	[window release];
 	
 	[super dealloc];
@@ -164,31 +168,55 @@ static Director *sharedDirector;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 		
-	runningScene = [scene retain];
-	[runningScene onEnter];
-		
+	[self pushScene: scene];
 	[self startAnimation];
 }
 
 -(void) replaceScene: (Scene*) scene
 {
+	NSAssert( scene != nil, @"Argument must be non-nil");
+	
 	nextScene = [scene retain];
 }
 
 - (void) pushScene: (Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
+
+	[scenes addObject: scene];
+	nextScene = [scene retain];		// retained twice
 }
 
 -(void) popScene
+{	
+	NSAssert( [scenes count]!=0, @"Abnormal error in director scene stack.");
+	
+	[scenes removeLastObject];
+	int c = [scenes count];
+	if( c == 0 ) {
+		[self end];
+	} else {
+		nextScene = [[scenes objectAtIndex:c-1] retain];
+	}
+}
+
+-(void) end
 {
+	[scenes release];
+	scenes = nil;
+	[runningScene onExit];
+	[runningScene release];
+	runningScene = nil;
+	[self stopAnimation];
+
+	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
+		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 
 - (void)startAnimation
 {
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
 }
-
 
 - (void)stopAnimation
 {
@@ -212,6 +240,11 @@ static Director *sharedDirector;
 	/* clear window */
 	glClear( GL_COLOR_BUFFER_BIT );
 //	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+	/* new scene */
+	if( nextScene ) {
+		[self setNextScene];
+	}
 	
 	/* landscape or portrait mode */
 	glLoadIdentity();
@@ -227,10 +260,6 @@ static Director *sharedDirector;
 	/* swap buffers */
 	[self swapBuffers];
 	
-	/* new scene */
-	if( nextScene ) {
-		[self setNextScene];
-	}
 }
 
 -(void) setNextScene

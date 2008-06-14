@@ -14,8 +14,8 @@
 {
 	Menu * menu;
 }
--(void) menuCallback;
--(void) menuCallback2;
+-(void) onOptions;
+-(void) onVoid;
 -(void) onQuit;
 @end
 
@@ -23,6 +23,12 @@
 {
 	Menu * menu;
 }
--(void) menuCallback;
--(void) menuCallback2;
+-(void) onGoBack;
+-(void) onFullscreen;
 @end
+
+@interface Layer3: ColorLayer
+{
+}
+@end
+

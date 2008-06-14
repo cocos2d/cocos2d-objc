@@ -18,9 +18,8 @@ and when to execute the Scenes
 */
 @interface Director : EAGLView
 {
-	UIWindow*				window;
-//	EAGLView*				GLView;
-	CGRect					winSize;
+	UIWindow*	window;
+	CGRect		winSize;
 
 	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
@@ -80,6 +79,9 @@ and when to execute the Scenes
 /** Replaces the running scene with a new one. The running scene is terminated.
  */
 -(void) replaceScene: (Scene*) scene;
+
+/** Ends the execution */
+-(void) end;
 
 - (void) drawScene;
 - (void) startAnimation;

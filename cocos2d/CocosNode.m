@@ -67,7 +67,7 @@
 	[super dealloc];
 }
 
--(void) add: (CocosNode*) child z:(int)z name:(NSString*)name
+-(id) add: (CocosNode*) child z:(int)z name:(NSString*)name
 {
 	NSArray *entry;
 	
@@ -96,16 +96,17 @@
 	
 	if( isRunning )
 		[child onEnter];
+	return self;
 }
 
 // add a node to the array
--(void) add: (CocosNode*) child z:(int)z
+-(id) add: (CocosNode*) child z:(int)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	return [self add: child z:z name:nil];
 }
 
--(void) add: (CocosNode*) child
+-(id) add: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	return [self add: child z:0 name:nil];

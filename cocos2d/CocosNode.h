@@ -84,12 +84,18 @@
 -(void) onExit;
 
 // composition
-/** Adds a child to the container with z-order as 0 */
--(void) add: (CocosNode*)node;
-/** Adds a child to the container with a z-order*/
--(void) add: (CocosNode*)node z:(int)z;
-/** Adds a child to the container with z order and name */
--(void) add: (CocosNode*)node z:(int)z name:(NSString*)name;
+/** Adds a child to the container with z-order as 0 
+ @return returns self
+ */
+-(id) add: (CocosNode*)node;
+/** Adds a child to the container with a z-order
+ @return returns self
+ */
+-(id) add: (CocosNode*)node z:(int)z;
+/** Adds a child to the container with z order and name
+ @return returns self
+ */
+-(id) add: (CocosNode*)node z:(int)z name:(NSString*)name;
 /** Removes a child from the container
  If you have added a 'named' child, you MUST remove it using removeByName instead
  */

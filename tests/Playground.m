@@ -35,7 +35,8 @@
 
 -(void) menuCallback
 {
-	[(MultiplexLayer*)parent switchTo:1];
+	Scene * scene = [[Scene node] add: [Layer2 node]];
+	[[Director sharedDirector] pushScene: scene];
 }
 
 -(void) menuCallback2
@@ -62,7 +63,7 @@
 
 -(void) menuCallback
 {
-	[(MultiplexLayer*)parent switchTo:0];
+	[[Director sharedDirector] popScene];
 }
 
 -(void) menuCallback2
@@ -83,8 +84,7 @@
 		
 	Scene *scene = [Scene node];
 
-	MultiplexLayer *layer = [MultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], nil];
-	[scene add: layer z:0];
+	[scene add: [Layer1 node] z:0];
 
 	[[Director sharedDirector] runScene: scene];
 }
