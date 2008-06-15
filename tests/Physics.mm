@@ -13,7 +13,7 @@
 #import "MenuItem.h"
 #import "Menu.h"
 
-#import "Playground.h"
+#import "Physics.h"
 
 #import "OpenGL_Internal.h"
 
