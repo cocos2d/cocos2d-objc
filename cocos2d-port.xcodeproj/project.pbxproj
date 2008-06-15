@@ -75,6 +75,7 @@
 		503B4B9B0E04C8EB00AAF246 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		503B4B9C0E04C8EB00AAF246 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506C7A270E01CFC800B48100 /* libbox2d.a */; };
 		503B4BA60E04C95500AAF246 /* Physics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503B4BA40E04C93400AAF246 /* Physics.mm */; };
+		503B4BB40E04CAAC00AAF246 /* Playground.m in Sources */ = {isa = PBXBuildFile; fileRef = 503B4BB30E04CAAC00AAF246 /* Playground.m */; };
 		506C77CF0E01520900B48100 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
 		506C77D00E01520900B48100 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
 		506C77D10E01520900B48100 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
@@ -197,7 +198,6 @@
 		507EB65C0DFF319A00A0C77E /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */; };
 		507EB65D0DFF319A00A0C77E /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
 		507EB65E0DFF31A500A0C77E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		507EB65F0DFF31CD00A0C77E /* Playground.mm in Sources */ = {isa = PBXBuildFile; fileRef = 507EB5790DFF2FD200A0C77E /* Playground.mm */; };
 		5082437A0DFDF84100113673 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50B130830DFDFACD003BAB56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B130840DFDFACD003BAB56 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -351,6 +351,7 @@
 		503B4BA20E04C8EB00AAF246 /* playground-Info copy 4.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 4.plist"; sourceTree = "<group>"; };
 		503B4BA30E04C93400AAF246 /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics.h; path = tests/Physics.h; sourceTree = "<group>"; };
 		503B4BA40E04C93400AAF246 /* Physics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Physics.mm; path = tests/Physics.mm; sourceTree = "<group>"; };
+		503B4BB30E04CAAC00AAF246 /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C77E40E01520900B48100 /* playground-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy.plist"; sourceTree = "<group>"; };
 		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
@@ -434,7 +435,6 @@
 		506C80110E041CDB00B48100 /* SceneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneTest.h; path = tests/SceneTest.h; sourceTree = "<group>"; };
 		506C80120E041CDB00B48100 /* SceneTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneTest.m; path = tests/SceneTest.m; sourceTree = "<group>"; };
 		507EB5780DFF2FD200A0C77E /* Playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playground.h; path = tests/Playground.h; sourceTree = "<group>"; };
-		507EB5790DFF2FD200A0C77E /* Playground.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Playground.mm; path = tests/Playground.mm; sourceTree = "<group>"; };
 		507EB59D0DFF314400A0C77E /* playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		507EB59F0DFF314400A0C77E /* playground-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info.plist"; sourceTree = "<group>"; };
 		50B12FCC0DFDFA90003BAB56 /* test-moveby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-moveby.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -916,6 +916,7 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				503B4BB30E04CAAC00AAF246 /* Playground.m */,
 				503B4BA30E04C93400AAF246 /* Physics.h */,
 				503B4BA40E04C93400AAF246 /* Physics.mm */,
 				506C80110E041CDB00B48100 /* SceneTest.h */,
@@ -925,7 +926,6 @@
 				506C77E50E01524200B48100 /* ClickAndMove.h */,
 				506C77E60E01524200B48100 /* ClickAndMove.m */,
 				507EB5780DFF2FD200A0C77E /* Playground.h */,
-				507EB5790DFF2FD200A0C77E /* Playground.mm */,
 				502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */,
 				502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */,
 				502C664D0DFEFD6800E4107D /* RotateWorld.h */,
@@ -1481,8 +1481,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				507EB65F0DFF31CD00A0C77E /* Playground.mm in Sources */,
 				507EB65E0DFF31A500A0C77E /* main.m in Sources */,
+				503B4BB40E04CAAC00AAF246 /* Playground.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
