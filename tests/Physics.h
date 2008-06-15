@@ -1,7 +1,13 @@
+//
+// cocos2d
+//
+
 #import <UIKit/UIKit.h>
+#import "Box2D.h"
+
 #import "Layer.h"
 
-@class Label;
+@class Menu;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
@@ -9,18 +15,9 @@
 }
 @end
 
-@interface SpriteLayer: Layer
+@interface Layer1 : Layer
 {
+	b2World* world;
 }
-@end
-
-@interface TextLayer: Layer
-{
-}
-@end
-
-@interface MainLayer : Layer
-{
-	Label *hello;
-}
+-(void) step;
 @end
