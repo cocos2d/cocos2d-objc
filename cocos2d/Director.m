@@ -3,6 +3,8 @@
 //  cocos2d
 //
 
+#import "glu.h"
+
 #import "Director.h"
 
 #define kDefaultFPS		30.0	// 30 frames per second
@@ -64,8 +66,11 @@ static Director *sharedDirector;
 	eventHandler = nil;
 	
 	[self setAlphaBlending: YES];
-	[self setDepthTest: NO];
+	[self setDepthTest: YES];
 	[self setDefaultProjection];
+
+	// set other opengl default values
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
 	// landscape
 	landscape = NO;
@@ -87,12 +92,38 @@ static Director *sharedDirector;
 
 - (void) setDefaultProjection
 {
+	static int i=0;
+	if( i/30 % 2 )
+		[self set2Dprojection];
+	else
+		[self set3Dprojection];
+	i++;
+}
+-(void) set2Dprojection
+{
 	//Setup OpenGL projection matrix
-	glLoadIdentity();
 	glViewport(0, 0, winSize.size.width, winSize.size.height);
 	glMatrixMode(GL_PROJECTION);
-	glOrthof(0, winSize.size.width, 0, winSize.size.height, -1, 1);
+	glLoadIdentity();
+	glOrthof(0, winSize.size.width, 0, winSize.size.height, -100, 100);
+	
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+-(void) set3Dprojection
+{
+	glViewport(0, 0, winSize.size.width, winSize.size.height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60, (GLfloat)winSize.size.width/winSize.size.height, 0.5f, 960.0f);
+	
+	glMatrixMode(GL_MODELVIEW);	
+	glLoadIdentity();
+	gluLookAt( winSize.size.width/2, winSize.size.height/2, winSize.size.height/1.1566f,
+			  winSize.size.width/2, winSize.size.height/2, 0,
+			  0.0f, 1.0f, 0.0f
+			  );
 }
 
 -(CGPoint) convertCoordinate: (CGPoint) p
@@ -238,16 +269,16 @@ static Director *sharedDirector;
 - (void) drawScene
 {
 	/* clear window */
-	glClear( GL_COLOR_BUFFER_BIT );
-//	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	/* new scene */
 	if( nextScene ) {
 		[self setNextScene];
 	}
-	
+
+	glPushMatrix();
+
 	/* landscape or portrait mode */
-	glLoadIdentity();
 	if( landscape ) {
 		glTranslatef(160,240,0);
 		glRotatef(-90,0,0,1);
@@ -256,6 +287,8 @@ static Director *sharedDirector;
 	
 	/* draw the scene */
 	[runningScene visit];
+	
+	glPopMatrix();
 	
 	/* swap buffers */
 	[self swapBuffers];

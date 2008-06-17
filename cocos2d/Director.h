@@ -60,6 +60,11 @@ and when to execute the Scenes
 - (void) setTexture2D: (BOOL) on;
 /** sets Cocos OpenGL default projection */
 - (void) setDefaultProjection;
+/** sets a 2D projection */
+-(void) set2Dprojection;
+/** sets a 3D projection */
+-(void) set3Dprojection;
+
 
 /**Runs a scene, entering in the Director's main loop.
  */

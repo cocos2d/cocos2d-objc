@@ -10,6 +10,7 @@
 #import "Sprite.h"
 #import "IntervalAction.h"
 #import "InstantAction.h"
+#import "CameraAction.h"
 #import "Label.h"
 
 
@@ -154,7 +155,7 @@
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	[scene do: [RotateBy actionWithDuration: 4 angle:-360]];
+	[scene do: [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:NAN deltaAngleZ:180 angleX:NAN deltaAngleX:0]];
 	 
 	[[Director sharedDirector] runScene: scene];
 }
