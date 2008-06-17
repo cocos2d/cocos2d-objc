@@ -4,6 +4,7 @@
 //
 
 #import "CocosNode.h"
+#import "Camera.h"
 
 @implementation CocosNode
 
@@ -14,6 +15,7 @@
 @synthesize transformAnchor;
 @synthesize childrenAnchor;
 @synthesize parent;
+@synthesize camera;
 
 +(id) node
 {
@@ -32,6 +34,8 @@
 	rotation = 0.0f;		// 0 degrees	
 	scale = 1.0f;			// scale factor
 
+	camera = [[Camera alloc] init];
+	
 	visible = YES;
 
 	childrenAnchor = CGPointZero;
@@ -53,6 +57,10 @@
 - (void) dealloc
 {
 	NSLog( @"deallocing %@", self);
+	
+	// attributes
+	[camera release];
+	
 	// children
 	[children release];
 	[childrenNames release];
@@ -153,6 +161,9 @@
 
 -(void) transform
 {
+	
+	[camera locate];
+	
 	// transformations
 	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
 		glTranslatef( position.x + transformAnchor.x, position.y + transformAnchor.y, 0);

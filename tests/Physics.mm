@@ -90,7 +90,6 @@
 	body->SetMassFromShapes();
 	
 	// user data
-
 	return self;
 }
 

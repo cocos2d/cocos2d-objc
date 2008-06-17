@@ -8,6 +8,8 @@
 
 #import "Action.h"
 
+@class Camera;
+
 /** CocosNode is the main element. Anything thats gets drawn or contains things that get drawn is a CocosNode.
  The most popular CocosNodes are: Scene, Layer, Sprite.
  
@@ -36,6 +38,9 @@
 
 	/// is visible
 	BOOL visible;
+	
+	/// a Camera
+	Camera *camera;
 	
 	/// transformation anchor point
 	CGPoint transformAnchor;
@@ -66,6 +71,7 @@
 @property(readwrite,assign) float rotation;
 @property(readwrite,assign) float scale;
 @property(readwrite,assign) CGPoint position;
+@property(readwrite,assign) Camera* camera;
 @property(readwrite,assign) BOOL visible;
 @property(readwrite,assign) CGPoint transformAnchor;
 @property(readwrite,assign) CGPoint childrenAnchor;
