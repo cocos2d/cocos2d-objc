@@ -20,6 +20,11 @@
 	[[target camera] eyeX:&eyeXOrig eyeY:&eyeYOrig eyeZ: &eyeZOrig];
 	[[target camera] upX:&upXOrig upY:&upYOrig upZ: &upZOrig];
 }
+
+-(id) reverse
+{
+	return [ReverseTime actionWithAction:self];
+}
 @end
 
 @implementation OrbitCamera

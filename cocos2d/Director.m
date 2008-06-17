@@ -116,7 +116,7 @@ static Director *sharedDirector;
 	glViewport(0, 0, winSize.size.width, winSize.size.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, (GLfloat)winSize.size.width/winSize.size.height, 0.5f, 960.0f);
+	gluPerspective(60, (GLfloat)winSize.size.width/winSize.size.height, 0.5f, 1500.0f);
 	
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
