@@ -143,7 +143,7 @@
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+//	[[Director sharedDirector] setLandscape: YES];
 
 	Scene *scene = [Scene node];
 
@@ -155,7 +155,9 @@
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	[scene do: [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:NAN deltaAngleZ:180 angleX:NAN deltaAngleX:0]];
+	IntervalAction *a = [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:90];
+	
+	[scene do: [Sequence actions: a, [a reverse], nil]];
 	 
 	[[Director sharedDirector] runScene: scene];
 }

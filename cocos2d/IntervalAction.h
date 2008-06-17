@@ -279,3 +279,20 @@ Example:
 {
 }
 @end
+
+/** Executes an action in reverse order, from time=duration to time=0
+ 
+ WARNING: Use this action carefully. This action is not
+ sequenceable. Use it as the default "reversed" method
+ of your own actions, but using it outside the "reversed"
+ scope is not recommended.
+*/
+@interface ReverseTime : IntervalAction <NSCopying>
+{
+	IntervalAction * other;
+}
+/** creates the action */
++(id) actionWithAction: (IntervalAction*) action;
+/** initializes the action */
+-(id) initWithAction: (IntervalAction*) action;
+@end

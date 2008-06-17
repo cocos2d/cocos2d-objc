@@ -880,4 +880,54 @@
 }
 @end
 
+//
+// ReverseTime
+//
 
+@implementation ReverseTime
++(id) actionWithAction: (IntervalAction*) action
+{
+	return [[[super alloc] initWithAction:action] autorelease];
+}
+
+-(id) initWithAction: (IntervalAction*) action
+{
+	[super initWithDuration: [action duration]];
+	other = [action copy];
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	return [[[self class] allocWithZone: zone] initWithAction: other];
+}
+
+-(void) dealloc
+{
+	[other release];
+	[super dealloc];
+}
+
+-(void) start
+{
+	[super start];
+	other.target = target;
+	[other start];
+}
+
+-(void) stop
+{
+	[other stop];
+	[super stop];
+}
+
+-(void) update:(double)t
+{
+	[other update:1-t];
+}
+
+-(IntervalAction*) reverse
+{
+	return [[other copy] autorelease];
+}
+@end

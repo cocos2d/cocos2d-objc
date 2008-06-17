@@ -28,7 +28,6 @@ void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
 
 /* Following gluLookAt implementation is adapted from the
  * Mesa 3D Graphics library. http://www.mesa3d.org
- * 
  */
 void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
 					  GLfloat centerx, GLfloat centery, GLfloat centerz,
@@ -45,7 +44,7 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
     z[1] = eyey - centery;
     z[2] = eyez - centerz;
     mag = (float)sqrt(z[0] * z[0] + z[1] * z[1] + z[2] * z[2]);
-    if (mag) {			/* mpichler, 19950515 */
+    if (mag) {
         z[0] /= mag;
         z[1] /= mag;
         z[2] /= mag;
@@ -66,7 +65,6 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
     y[1] = -z[0] * x[2] + z[2] * x[0];
     y[2] = z[0] * x[1] - z[1] * x[0];
 	
-    /* mpichler, 19950515 */
     /* cross product gives area of parallelogram, which is < 1.0 for
      * non-perpendicular unit-length vectors; so normalize x, y here
      */
