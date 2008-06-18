@@ -40,15 +40,20 @@
 -(void) locate
 {
 	if( dirty ) {
+		BOOL landscape = [[Director sharedDirector] landscape];
 
 		glLoadIdentity();
+
+		if( landscape )
+			glRotatef(-90,0,0,1);
 		
 		gluLookAt( eyeX, eyeY, eyeZ,
-				  centerX, centerY, centerZ,
-				   upX, upY, upZ
-				   );
-				
-		[[Director sharedDirector] applyLandscape];
+				centerX, centerY, centerZ,
+				upX, upY, upZ
+				);
+		
+		if( landscape )
+			glTranslatef(-80,80,0);
 	}
 }
 

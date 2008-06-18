@@ -121,7 +121,7 @@
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	IntervalAction *a = [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:360];
+	IntervalAction *a = [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:45 deltaAngleX:0];
 	
 	[scene do: [Sequence actions: a, [a reverse], nil]];
 	 
