@@ -95,44 +95,10 @@
 {
 	if( ! [super init] )
 		return nil;
-	CGRect size;
-	float x,y;
-	
-	size = [[Director sharedDirector] winSize];
-	x = size.size.width;
-	y = size.size.height;
-	
 	id blue =  [ColorLayer layerWithColor: 0x0000ffff];
-	id red =   [ColorLayer layerWithColor: 0xff0000ff];
-	id green = [ColorLayer layerWithColor: 0x00ff00ff];
-	id white = [ColorLayer layerWithColor: 0xffffffff];
-
-	[blue setScale: 0.5];
-	[blue setPosition: CGPointMake(-x/4,-y/4)];
-	[blue add: [SpriteLayer node]];
 	
-	[red setScale: 0.5];
-	[red setPosition: CGPointMake(x/4,-y/4)];
-
-	[green setScale: 0.5];
-	[green setPosition: CGPointMake(-x/4,y/4)];
-	[green add: [TextLayer node]];
-
-	[white setScale: 0.5];
-	[white setPosition: CGPointMake(x/4,y/4)];
-
-	[self add: blue z:-1];
-	[self add: white];
-	[self add: green];
-	[self add: red];
-
-	Action * rot = [RotateBy actionWithDuration:8 angle:720];
-	
-	[blue do: rot];
-	[red do: rot];
-	[green do: rot];
-	[white do: rot];
-	
+	[self add: blue];
+	[self add: [SpriteLayer node] z:1];
 	return self;
 }
 @end
@@ -143,7 +109,7 @@
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setLandscape: YES];
 
 	Scene *scene = [Scene node];
 
@@ -155,7 +121,7 @@
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	IntervalAction *a = [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:90];
+	IntervalAction *a = [OrbitCamera actionWithDuration:4 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:360];
 	
 	[scene do: [Sequence actions: a, [a reverse], nil]];
 	 

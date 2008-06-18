@@ -31,7 +31,6 @@
     float upZ;
 	
 	BOOL dirty;
-	BOOL once;
 }
 
 /** returns the Z eye */
