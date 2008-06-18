@@ -46,7 +46,11 @@ and when to execute the Scenes
 
 -(void) setNextScene;
 
+/** returns the size of the screen 480x320 or 320x480 depeding if landscape mode is activated or not */
 - (CGRect) winSize;
+/** returns 320x480, always */
+-(CGRect) displaySize;
+
 /** returns whether or not the screen is in landscape mode */
 - (BOOL) landscape;
 /** sets lanscape mode */
@@ -64,7 +68,8 @@ and when to execute the Scenes
 -(void) set2Dprojection;
 /** sets a 3D projection */
 -(void) set3Dprojection;
-
+/** rotates the screen if Landscape mode is activated */
+-(void) applyLandscape;
 
 /**Runs a scene, entering in the Director's main loop.
  */

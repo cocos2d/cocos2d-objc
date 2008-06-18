@@ -4,8 +4,10 @@
 //
 
 #import "glu.h"
+#import "OpenGL_Internal.h"
 
 #import "Director.h"
+#import "Camera.h"
 
 #define kDefaultFPS		30.0	// 30 frames per second
 
@@ -92,12 +94,7 @@ static Director *sharedDirector;
 
 - (void) setDefaultProjection
 {
-	static int i=0;
-	if( i/30 % 2 )
-		[self set2Dprojection];
-	else
-		[self set3Dprojection];
-	i++;
+	[self set3Dprojection];
 }
 -(void) set2Dprojection
 {
@@ -120,7 +117,7 @@ static Director *sharedDirector;
 	
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
-	gluLookAt( winSize.size.width/2, winSize.size.height/2, winSize.size.height/1.1566f,
+	gluLookAt( winSize.size.width/2, winSize.size.height/2, [Camera getZEye],
 			  winSize.size.width/2, winSize.size.height/2, 0,
 			  0.0f, 1.0f, 0.0f
 			  );
@@ -154,6 +151,11 @@ static Director *sharedDirector;
 	return r;
 }
 
+-(CGRect) displaySize
+{
+	return winSize;
+}
+
 - (BOOL) landscape
 {
 	return landscape;
@@ -184,6 +186,7 @@ static Director *sharedDirector;
 	else
 		glDisable(GL_TEXTURE_2D);
 }
+
 - (void) setDepthTest: (BOOL) on
 {
 	if (on) {
@@ -266,6 +269,15 @@ static Director *sharedDirector;
 	}
 }
 
+-(void) applyLandscape
+{
+	if( landscape ) {
+		glTranslatef(160,240,0);
+		glRotatef(-90,0,0,1);
+		glTranslatef(-240,-160,0);
+	}	
+}
+
 - (void) drawScene
 {
 	/* clear window */
@@ -278,12 +290,7 @@ static Director *sharedDirector;
 
 	glPushMatrix();
 
-	/* landscape or portrait mode */
-	if( landscape ) {
-		glTranslatef(160,240,0);
-		glRotatef(-90,0,0,1);
-		glTranslatef(-240,-160,0);
-	}
+	[self applyLandscape];
 	
 	/* draw the scene */
 	[runningScene visit];
@@ -292,6 +299,8 @@ static Director *sharedDirector;
 	
 	/* swap buffers */
 	[self swapBuffers];
+	
+	CHECK_GL_ERROR();
 	
 }
 

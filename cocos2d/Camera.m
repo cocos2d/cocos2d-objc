@@ -20,14 +20,14 @@
 
 -(void) restore
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	
-	eyeX = s.size.width / 2;
-	eyeY = s.size.height / 2;
+	CGRect s = [[Director sharedDirector] displaySize];
+
+	eyeX = s.size.width/2;
+	eyeY = s.size.height/2;
 	eyeZ = [Camera getZEye];
 	
-	centerX = s.size.width / 2;
-	centerY = s.size.height / 2;
+	centerX = s.size.width/2;
+	centerY = s.size.height/2;
 	centerZ = 0.0f;
 	
 	upX = 0.0f;
@@ -35,24 +35,26 @@
 	upZ = 0.0f;
 	
 	dirty = NO;
-	once = YES;
 }
 
 -(void) locate
 {
-	if( dirty || once) {
+	if( dirty ) {
+
 		glLoadIdentity();
+		
 		gluLookAt( eyeX, eyeY, eyeZ,
 				  centerX, centerY, centerZ,
 				   upX, upY, upZ
 				   );
-		once = NO;
+				
+		[[Director sharedDirector] applyLandscape];
 	}
 }
 
 +(float) getZEye
 {
-	CGRect s = [[Director sharedDirector] winSize];
+	CGRect s = [[Director sharedDirector] displaySize];
 	return ( s.size.height / 1.1566 );
 }
 

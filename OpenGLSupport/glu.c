@@ -1,5 +1,7 @@
 //
 // glu internal implementation
+// gluLookAt and gluPerspective from:
+// http://jet.ro/creations (San Angeles Observation)
 // 
 
 #import <OpenGLES/ES1/gl.h>
@@ -8,12 +10,7 @@
 #include "glu.h"
 
 void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
-{
-//	GLfloat size;
-//	
-//	size = zNear * tanf(DEGREES_TO_RADIANS(fovy) / 2.0);
-//	glFrustumf(-size, size, -size/aspect, size/aspect, zNear, zFar);
-	
+{	
 	GLfloat xmin, xmax, ymin, ymax;
 		
 	ymax = zNear * (GLfloat)tan(fovy * M_PI / 360);
@@ -26,9 +23,6 @@ void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
 				zNear, zFar);	
 }
 
-/* Following gluLookAt implementation is adapted from the
- * Mesa 3D Graphics library. http://www.mesa3d.org
- */
 void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
 					  GLfloat centerx, GLfloat centery, GLfloat centerz,
 					  GLfloat upx, GLfloat upy, GLfloat upz)
