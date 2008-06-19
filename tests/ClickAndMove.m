@@ -12,7 +12,7 @@
 #import "Label.h"
 #import "Texture2D.h"
 
-#import "Playground.h"
+#import "ClickAndMove.h"
 
 #import "OpenGL_Internal.h"
 
