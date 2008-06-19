@@ -871,12 +871,17 @@
 @end
 
 //
-// Delay
+// DelayTime
 //
 @implementation DelayTime
 -(void) update: (double) t
 {
 	return;
+}
+
+-(id)reverse
+{
+	return [DelayTime actionWithDuration:duration];
 }
 @end
 

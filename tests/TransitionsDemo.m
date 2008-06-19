@@ -15,7 +15,7 @@
 #import "Transition.h"
 
 // local import
-#import "Playground.h"
+#import "TransitionsDemo.h"
 
 id nextTransition()
 {
@@ -26,6 +26,7 @@ id nextTransition()
 	[RotoZoomTransition node];
 	
 	NSArray *transitions = [[NSArray arrayWithObjects:
+									@"FadeTransition",
 									@"FlipXTransition",
 									@"FlipYTransition",
 									@"FlipAngularTransition",
@@ -76,7 +77,7 @@ id nextTransition()
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.5 scene:s2]];
+	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2 scene:s2]];
 }	
 @end
 
@@ -107,7 +108,7 @@ id nextTransition()
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.5 scene:s2]];
+	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2 scene:s2]];
 }	
 @end
 
