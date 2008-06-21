@@ -16,6 +16,20 @@
 		2D500B940D5A79C200DBA0E3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		2D500B9A0D5A79CF00DBA0E3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		2D500ED10D5A84E900DBA0E3 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
+		3188C3CB0E0D960A00EFA866 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
+		3188C3CC0E0D960A00EFA866 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
+		3188C3CD0E0D960A00EFA866 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
+		3188C3CE0E0D960A00EFA866 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E820DF9C85C00BA70B0 /* grossini.png */; };
+		3188C3CF0E0D960A00EFA866 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */; };
+		3188C3D00E0D960A00EFA866 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
+		3188C3D20E0D960A00EFA866 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		3188C3D50E0D960A00EFA866 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		3188C3D60E0D960A00EFA866 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		3188C3D70E0D960A00EFA866 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		3188C3D80E0D960A00EFA866 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		3188C3D90E0D960A00EFA866 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		3188C3DA0E0D960A00EFA866 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */; };
 		5018F2690DFDEAFF00C013A5 /* Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* Action.h */; };
 		5018F26A0DFDEAFF00C013A5 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* Action.m */; };
 		5018F26B0DFDEAFF00C013A5 /* CocosNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CocosNode.h */; };
@@ -254,6 +268,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3188C3C90E0D960A00EFA866 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		5018F2F40DFDECD600C013A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -361,6 +382,9 @@
 		2DA6AB9C0D5E41EB002BF72E /* Success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Success.caf; sourceTree = "<group>"; };
 		2DA6AB9D0D5E41EB002BF72E /* Failure.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Failure.caf; sourceTree = "<group>"; };
 		2DA6AB9E0D5E41EB002BF72E /* Start.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Start.caf; sourceTree = "<group>"; };
+		3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TcpAccelClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3188C3E00E0D960A00EFA866 /* TcpAccelClient.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TcpAccelClient.plist; sourceTree = "<group>"; };
+		3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TcpAccelClient.m; path = tests/TcpAccelClient.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
@@ -547,6 +571,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3188C3D40E0D960A00EFA866 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3188C3D50E0D960A00EFA866 /* Foundation.framework in Frameworks */,
+				3188C3D60E0D960A00EFA866 /* UIKit.framework in Frameworks */,
+				3188C3D70E0D960A00EFA866 /* CoreGraphics.framework in Frameworks */,
+				3188C3D80E0D960A00EFA866 /* OpenGLES.framework in Frameworks */,
+				3188C3D90E0D960A00EFA866 /* QuartzCore.framework in Frameworks */,
+				3188C3DA0E0D960A00EFA866 /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5018F24B0DFDEAC400C013A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -711,6 +748,7 @@
 				503B4BA00E04C8EB00AAF246 /* Physics.app */,
 				50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */,
 				50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */,
+				3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -738,6 +776,7 @@
 				503B4BA20E04C8EB00AAF246 /* playground-Info copy 4.plist */,
 				50C938E20E0A9DBB00517B01 /* playground-Info copy 5.plist */,
 				50C93AD80E0BFBED00517B01 /* SpritesDemo.plist */,
+				3188C3E00E0D960A00EFA866 /* TcpAccelClient.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1020,6 +1059,7 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */,
 				50C938E30E0A9E1100517B01 /* TransitionsDemo.h */,
@@ -1137,6 +1177,24 @@
 			name = JumpingSisters;
 			productName = foo;
 			productReference = 1D6058910D05DD3D006BFB54 /* JumpingSisters.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3188C3C70E0D960A00EFA866 /* TcpAccelClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3188C3DB0E0D960A00EFA866 /* Build configuration list for PBXNativeTarget "TcpAccelClient" */;
+			buildPhases = (
+				3188C3CA0E0D960A00EFA866 /* Resources */,
+				3188C3D10E0D960A00EFA866 /* Sources */,
+				3188C3D40E0D960A00EFA866 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3188C3C80E0D960A00EFA866 /* PBXTargetDependency */,
+			);
+			name = TcpAccelClient;
+			productName = playground;
+			productReference = 3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5018F24C0DFDEAC400C013A5 /* cocos2d */ = {
@@ -1380,6 +1438,7 @@
 				503B4B860E04C8EB00AAF246 /* Physics */,
 				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
 				50C93A930E0BF6E000517B01 /* SpritesDemo */,
+				3188C3C70E0D960A00EFA866 /* TcpAccelClient */,
 			);
 		};
 /* End PBXProject section */
@@ -1395,6 +1454,19 @@
 				50DB9E850DF9C85C00BA70B0 /* grossini.png in Resources */,
 				50DB9E860DF9C85C00BA70B0 /* grossinis_sister1.png in Resources */,
 				50DB9E870DF9C85C00BA70B0 /* grossinis_sister2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3188C3CA0E0D960A00EFA866 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3188C3CB0E0D960A00EFA866 /* Icon.png in Resources */,
+				3188C3CC0E0D960A00EFA866 /* Default.png in Resources */,
+				3188C3CD0E0D960A00EFA866 /* Background.png in Resources */,
+				3188C3CE0E0D960A00EFA866 /* grossini.png in Resources */,
+				3188C3CF0E0D960A00EFA866 /* grossinis_sister1.png in Resources */,
+				3188C3D00E0D960A00EFA866 /* grossinis_sister2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1539,6 +1611,15 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				502C67ED0DFF0A7300E4107D /* demoJumpingGirls.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3188C3D10E0D960A00EFA866 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */,
+				3188C3D20E0D960A00EFA866 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1696,6 +1777,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3188C3C80E0D960A00EFA866 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 3188C3C90E0D960A00EFA866 /* PBXContainerItemProxy */;
+		};
 		5018F2F50DFDECD600C013A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -1790,6 +1876,55 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = JumpingSisters;
 				WARNING_CFLAGS = "-Wall";
+			};
+			name = Release;
+		};
+		3188C3DC0E0D960A00EFA866 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = TcpAccelClient.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TcpAccelClient;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		3188C3DD0E0D960A00EFA866 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = TcpAccelClient.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SpritesDemo;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2350,6 +2485,15 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3188C3DB0E0D960A00EFA866 /* Build configuration list for PBXNativeTarget "TcpAccelClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3188C3DC0E0D960A00EFA866 /* Debug */,
+				3188C3DD0E0D960A00EFA866 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
