@@ -19,6 +19,7 @@ wm.rpt_mode = 31
 while True:
     acc, buttons = wm.state['acc'], wm.state['buttons']
     acc = map(lambda x: (x-128.)/64, acc)
+    acc = -acc[0], acc[1], -acc[2] # el wii tiene los ejes X y Z al reves que el iTouch
     print acc
     s.send(struct.pack("<fff", *acc))
     time.sleep(.1)
