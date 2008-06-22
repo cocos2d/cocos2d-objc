@@ -43,6 +43,7 @@ class AccelServer(asyncore.dispatcher):
 
     def handle_accept(self):
         channel, addr = self.accept()
+        print "new connection", channel, addr
         c = AccelChannel(channel)
         self.append_channel(c)
 
