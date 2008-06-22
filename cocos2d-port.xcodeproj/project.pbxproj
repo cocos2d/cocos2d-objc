@@ -30,6 +30,8 @@
 		3188C3D90E0D960A00EFA866 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		3188C3DA0E0D960A00EFA866 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */; };
+		319DDE890E0EAF06001FD34B /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */; };
+		319DDF090E0EC51E001FD34B /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */; };
 		5018F2690DFDEAFF00C013A5 /* Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* Action.h */; };
 		5018F26A0DFDEAFF00C013A5 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* Action.m */; };
 		5018F26B0DFDEAFF00C013A5 /* CocosNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CocosNode.h */; };
@@ -385,6 +387,8 @@
 		3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TcpAccelClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3188C3E00E0D960A00EFA866 /* TcpAccelClient.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TcpAccelClient.plist; sourceTree = "<group>"; };
 		3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TcpAccelClient.m; path = tests/TcpAccelClient.m; sourceTree = "<group>"; };
+		319DDE870E0EAF06001FD34B /* VirtualAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualAccelerometer.h; sourceTree = "<group>"; };
+		319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualAccelerometer.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
@@ -1080,6 +1084,8 @@
 				502C664E0DFEFD6800E4107D /* RotateWorld.m */,
 				50B130FD0DFE0946003BAB56 /* MoveBy.h */,
 				50B130FE0DFE0946003BAB56 /* MoveBy.m */,
+				319DDE870E0EAF06001FD34B /* VirtualAccelerometer.h */,
+				319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -1618,6 +1624,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				319DDF090E0EC51E001FD34B /* VirtualAccelerometer.m in Sources */,
 				3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */,
 				3188C3D20E0D960A00EFA866 /* main.m in Sources */,
 			);
@@ -1771,6 +1778,7 @@
 			files = (
 				50C93AA00E0BF6E000517B01 /* main.m in Sources */,
 				50C93AC50E0BF8FC00517B01 /* SpritesDemo.m in Sources */,
+				319DDE890E0EAF06001FD34B /* VirtualAccelerometer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
