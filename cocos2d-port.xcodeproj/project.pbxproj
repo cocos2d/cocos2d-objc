@@ -234,6 +234,48 @@
 		50B1309C0DFDFAE4003BAB56 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
 		50B130AD0DFDFB22003BAB56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		50B130FF0DFE0946003BAB56 /* MoveBy.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B130FE0DFE0946003BAB56 /* MoveBy.m */; };
+		50B2C5950E100B1200AE9530 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5670E100B1200AE9530 /* chipmunk.c */; };
+		50B2C5960E100B1200AE9530 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5680E100B1200AE9530 /* chipmunk.h */; };
+		50B2C5970E100B1200AE9530 /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C56A0E100B1200AE9530 /* cpArbiter.c */; };
+		50B2C5980E100B1200AE9530 /* cpArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C56B0E100B1200AE9530 /* cpArbiter.h */; };
+		50B2C5990E100B1200AE9530 /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C56C0E100B1200AE9530 /* cpArray.c */; };
+		50B2C59A0E100B1200AE9530 /* cpArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C56D0E100B1200AE9530 /* cpArray.h */; };
+		50B2C59B0E100B1200AE9530 /* cpBB.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C56E0E100B1200AE9530 /* cpBB.c */; };
+		50B2C59C0E100B1200AE9530 /* cpBB.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C56F0E100B1200AE9530 /* cpBB.h */; };
+		50B2C59D0E100B1200AE9530 /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5700E100B1200AE9530 /* cpBody.c */; };
+		50B2C59E0E100B1200AE9530 /* cpBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5710E100B1200AE9530 /* cpBody.h */; };
+		50B2C59F0E100B1200AE9530 /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5720E100B1200AE9530 /* cpCollision.c */; };
+		50B2C5A00E100B1200AE9530 /* cpCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5730E100B1200AE9530 /* cpCollision.h */; };
+		50B2C5A10E100B1200AE9530 /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5740E100B1200AE9530 /* cpHashSet.c */; };
+		50B2C5A20E100B1200AE9530 /* cpHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5750E100B1200AE9530 /* cpHashSet.h */; };
+		50B2C5A30E100B1200AE9530 /* cpJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5760E100B1200AE9530 /* cpJoint.c */; };
+		50B2C5A40E100B1200AE9530 /* cpJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5770E100B1200AE9530 /* cpJoint.h */; };
+		50B2C5A50E100B1200AE9530 /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5780E100B1200AE9530 /* cpPolyShape.c */; };
+		50B2C5A60E100B1200AE9530 /* cpPolyShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5790E100B1200AE9530 /* cpPolyShape.h */; };
+		50B2C5A70E100B1200AE9530 /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C57A0E100B1200AE9530 /* cpShape.c */; };
+		50B2C5A80E100B1200AE9530 /* cpShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C57B0E100B1200AE9530 /* cpShape.h */; };
+		50B2C5A90E100B1200AE9530 /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C57C0E100B1200AE9530 /* cpSpace.c */; };
+		50B2C5AA0E100B1200AE9530 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C57D0E100B1200AE9530 /* cpSpace.h */; };
+		50B2C5AB0E100B1200AE9530 /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C57E0E100B1200AE9530 /* cpSpaceHash.c */; };
+		50B2C5AC0E100B1200AE9530 /* cpSpaceHash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C57F0E100B1200AE9530 /* cpSpaceHash.h */; };
+		50B2C5AD0E100B1200AE9530 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5800E100B1200AE9530 /* cpVect.c */; };
+		50B2C5AE0E100B1200AE9530 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5810E100B1200AE9530 /* cpVect.h */; };
+		50B2C5AF0E100B1200AE9530 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5820E100B1200AE9530 /* prime.h */; };
+		50B2C5D40E100EF000AE9530 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
+		50B2C5D50E100EF000AE9530 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
+		50B2C5D60E100EF000AE9530 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
+		50B2C5D70E100EF000AE9530 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E820DF9C85C00BA70B0 /* grossini.png */; };
+		50B2C5D80E100EF000AE9530 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */; };
+		50B2C5D90E100EF000AE9530 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */; };
+		50B2C5DC0E100EF000AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50B2C5E10E100EF000AE9530 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50B2C5E20E100EF000AE9530 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50B2C5E30E100EF000AE9530 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		50B2C5ED0E100F8800AE9530 /* Physics-chipmunk.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */; };
+		50B2C60C0E1014AE00AE9530 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		50C938CC0E0A9DBB00517B01 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D30AB170D05D02000671497 /* Icon.png */; };
 		50C938CD0E0A9DBB00517B01 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
 		50C938CE0E0A9DBB00517B01 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D500EC10D5A84E900DBA0E3 /* Background.png */; };
@@ -346,6 +388,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		50B2C5D20E100EF000AE9530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		50B2C60A0E1014A700AE9530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
+			remoteInfo = Chipmunk;
 		};
 		50C938CA0E0A9DBB00517B01 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -525,6 +581,43 @@
 		50B12FCE0DFDFA90003BAB56 /* test-moveby-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-moveby-Info.plist"; sourceTree = "<group>"; };
 		50B130FD0DFE0946003BAB56 /* MoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoveBy.h; path = tests/MoveBy.h; sourceTree = "<group>"; };
 		50B130FE0DFE0946003BAB56 /* MoveBy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoveBy.m; path = tests/MoveBy.m; sourceTree = "<group>"; };
+		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		50B2C4D60E100B1100AE9530 /* chipmunk-docs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "chipmunk-docs.html"; sourceTree = "<group>"; };
+		50B2C4D70E100B1100AE9530 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50B2C4E70E100B1100AE9530 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		50B2C4F70E100B1100AE9530 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		50B2C5670E100B1200AE9530 /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
+		50B2C5680E100B1200AE9530 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
+		50B2C5690E100B1200AE9530 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50B2C56A0E100B1200AE9530 /* cpArbiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpArbiter.c; sourceTree = "<group>"; };
+		50B2C56B0E100B1200AE9530 /* cpArbiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpArbiter.h; sourceTree = "<group>"; };
+		50B2C56C0E100B1200AE9530 /* cpArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpArray.c; sourceTree = "<group>"; };
+		50B2C56D0E100B1200AE9530 /* cpArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpArray.h; sourceTree = "<group>"; };
+		50B2C56E0E100B1200AE9530 /* cpBB.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpBB.c; sourceTree = "<group>"; };
+		50B2C56F0E100B1200AE9530 /* cpBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpBB.h; sourceTree = "<group>"; };
+		50B2C5700E100B1200AE9530 /* cpBody.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpBody.c; sourceTree = "<group>"; };
+		50B2C5710E100B1200AE9530 /* cpBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpBody.h; sourceTree = "<group>"; };
+		50B2C5720E100B1200AE9530 /* cpCollision.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpCollision.c; sourceTree = "<group>"; };
+		50B2C5730E100B1200AE9530 /* cpCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpCollision.h; sourceTree = "<group>"; };
+		50B2C5740E100B1200AE9530 /* cpHashSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpHashSet.c; sourceTree = "<group>"; };
+		50B2C5750E100B1200AE9530 /* cpHashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpHashSet.h; sourceTree = "<group>"; };
+		50B2C5760E100B1200AE9530 /* cpJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpJoint.c; sourceTree = "<group>"; };
+		50B2C5770E100B1200AE9530 /* cpJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpJoint.h; sourceTree = "<group>"; };
+		50B2C5780E100B1200AE9530 /* cpPolyShape.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpPolyShape.c; sourceTree = "<group>"; };
+		50B2C5790E100B1200AE9530 /* cpPolyShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpPolyShape.h; sourceTree = "<group>"; };
+		50B2C57A0E100B1200AE9530 /* cpShape.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpShape.c; sourceTree = "<group>"; };
+		50B2C57B0E100B1200AE9530 /* cpShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpShape.h; sourceTree = "<group>"; };
+		50B2C57C0E100B1200AE9530 /* cpSpace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpace.c; sourceTree = "<group>"; };
+		50B2C57D0E100B1200AE9530 /* cpSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpace.h; sourceTree = "<group>"; };
+		50B2C57E0E100B1200AE9530 /* cpSpaceHash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceHash.c; sourceTree = "<group>"; };
+		50B2C57F0E100B1200AE9530 /* cpSpaceHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpaceHash.h; sourceTree = "<group>"; };
+		50B2C5800E100B1200AE9530 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
+		50B2C5810E100B1200AE9530 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
+		50B2C5820E100B1200AE9530 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
+		50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Physics-Chipmunk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Physics-chipmunk.h"; path = "tests/Physics-chipmunk.h"; sourceTree = "<group>"; };
+		50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Physics-chipmunk.m"; path = "tests/Physics-chipmunk.m"; sourceTree = "<group>"; };
+		50B2C6100E1014F100AE9530 /* Physics-Chipmunk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Physics-Chipmunk.plist"; sourceTree = "<group>"; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E20E0A9DBB00517B01 /* playground-Info copy 5.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 5.plist"; sourceTree = "<group>"; };
 		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
@@ -707,6 +800,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50B2C4CF0E100AEA00AE9530 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50B2C5DD0E100EF000AE9530 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */,
+				50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */,
+				50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */,
+				50B2C5E10E100EF000AE9530 /* OpenGLES.framework in Frameworks */,
+				50B2C5E20E100EF000AE9530 /* QuartzCore.framework in Frameworks */,
+				50B2C5E30E100EF000AE9530 /* libcocos2d.a in Frameworks */,
+				50B2C60C0E1014AE00AE9530 /* libChipmunk.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C938D50E0A9DBB00517B01 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -739,6 +853,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				50B2C6100E1014F100AE9530 /* Physics-Chipmunk.plist */,
 				1D6058910D05DD3D006BFB54 /* JumpingSisters.app */,
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
 				50B12FCC0DFDFA90003BAB56 /* test-moveby.app */,
@@ -753,6 +868,8 @@
 				50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */,
 				50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */,
 				3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */,
+				50B2C4D10E100AEA00AE9530 /* libChipmunk.a */,
+				50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -760,6 +877,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				50B2C4D50E100B1100AE9530 /* Chipmunk */,
 				506C7B7C0E01D1F800B48100 /* Box2D */,
 				50B130FC0DFE0923003BAB56 /* tests */,
 				5018F27F0DFDEB2E00C013A5 /* OpenGLSupport */,
@@ -1063,6 +1181,8 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */,
+				50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */,
 				3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */,
@@ -1088,6 +1208,53 @@
 				319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */,
 			);
 			name = tests;
+			sourceTree = "<group>";
+		};
+		50B2C4D50E100B1100AE9530 /* Chipmunk */ = {
+			isa = PBXGroup;
+			children = (
+				50B2C4D60E100B1100AE9530 /* chipmunk-docs.html */,
+				50B2C4D70E100B1100AE9530 /* CMakeLists.txt */,
+				50B2C4E70E100B1100AE9530 /* LICENSE.txt */,
+				50B2C4F70E100B1100AE9530 /* README.txt */,
+				50B2C5660E100B1200AE9530 /* src */,
+			);
+			path = Chipmunk;
+			sourceTree = "<group>";
+		};
+		50B2C5660E100B1200AE9530 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				50B2C5670E100B1200AE9530 /* chipmunk.c */,
+				50B2C5680E100B1200AE9530 /* chipmunk.h */,
+				50B2C5690E100B1200AE9530 /* CMakeLists.txt */,
+				50B2C56A0E100B1200AE9530 /* cpArbiter.c */,
+				50B2C56B0E100B1200AE9530 /* cpArbiter.h */,
+				50B2C56C0E100B1200AE9530 /* cpArray.c */,
+				50B2C56D0E100B1200AE9530 /* cpArray.h */,
+				50B2C56E0E100B1200AE9530 /* cpBB.c */,
+				50B2C56F0E100B1200AE9530 /* cpBB.h */,
+				50B2C5700E100B1200AE9530 /* cpBody.c */,
+				50B2C5710E100B1200AE9530 /* cpBody.h */,
+				50B2C5720E100B1200AE9530 /* cpCollision.c */,
+				50B2C5730E100B1200AE9530 /* cpCollision.h */,
+				50B2C5740E100B1200AE9530 /* cpHashSet.c */,
+				50B2C5750E100B1200AE9530 /* cpHashSet.h */,
+				50B2C5760E100B1200AE9530 /* cpJoint.c */,
+				50B2C5770E100B1200AE9530 /* cpJoint.h */,
+				50B2C5780E100B1200AE9530 /* cpPolyShape.c */,
+				50B2C5790E100B1200AE9530 /* cpPolyShape.h */,
+				50B2C57A0E100B1200AE9530 /* cpShape.c */,
+				50B2C57B0E100B1200AE9530 /* cpShape.h */,
+				50B2C57C0E100B1200AE9530 /* cpSpace.c */,
+				50B2C57D0E100B1200AE9530 /* cpSpace.h */,
+				50B2C57E0E100B1200AE9530 /* cpSpaceHash.c */,
+				50B2C57F0E100B1200AE9530 /* cpSpaceHash.h */,
+				50B2C5800E100B1200AE9530 /* cpVect.c */,
+				50B2C5810E100B1200AE9530 /* cpVect.h */,
+				50B2C5820E100B1200AE9530 /* prime.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1161,6 +1328,27 @@
 				506C7D540E01D1F900B48100 /* b2PrismaticJoint.h in Headers */,
 				506C7D560E01D1F900B48100 /* b2PulleyJoint.h in Headers */,
 				506C7D580E01D1F900B48100 /* b2RevoluteJoint.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50B2C4CD0E100AEA00AE9530 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2C5960E100B1200AE9530 /* chipmunk.h in Headers */,
+				50B2C5980E100B1200AE9530 /* cpArbiter.h in Headers */,
+				50B2C59A0E100B1200AE9530 /* cpArray.h in Headers */,
+				50B2C59C0E100B1200AE9530 /* cpBB.h in Headers */,
+				50B2C59E0E100B1200AE9530 /* cpBody.h in Headers */,
+				50B2C5A00E100B1200AE9530 /* cpCollision.h in Headers */,
+				50B2C5A20E100B1200AE9530 /* cpHashSet.h in Headers */,
+				50B2C5A40E100B1200AE9530 /* cpJoint.h in Headers */,
+				50B2C5A60E100B1200AE9530 /* cpPolyShape.h in Headers */,
+				50B2C5A80E100B1200AE9530 /* cpShape.h in Headers */,
+				50B2C5AA0E100B1200AE9530 /* cpSpace.h in Headers */,
+				50B2C5AC0E100B1200AE9530 /* cpSpaceHash.h in Headers */,
+				50B2C5AE0E100B1200AE9530 /* cpVect.h in Headers */,
+				50B2C5AF0E100B1200AE9530 /* prime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1383,6 +1571,42 @@
 			productReference = 50B12FCC0DFDFA90003BAB56 /* test-moveby.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50B2C4D00E100AEA00AE9530 /* Chipmunk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50B2C4D40E100B0000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk" */;
+			buildPhases = (
+				50B2C4CD0E100AEA00AE9530 /* Headers */,
+				50B2C4CE0E100AEA00AE9530 /* Sources */,
+				50B2C4CF0E100AEA00AE9530 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Chipmunk;
+			productName = Chipmunk;
+			productReference = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		50B2C5CE0E100EF000AE9530 /* Physics-Chipmunk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Physics-Chipmunk" */;
+			buildPhases = (
+				50B2C5D30E100EF000AE9530 /* Resources */,
+				50B2C5DA0E100EF000AE9530 /* Sources */,
+				50B2C5DD0E100EF000AE9530 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50B2C5D10E100EF000AE9530 /* PBXTargetDependency */,
+				50B2C60B0E1014A700AE9530 /* PBXTargetDependency */,
+			);
+			name = "Physics-Chipmunk";
+			productName = playground;
+			productReference = 50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */;
+			productType = "com.apple.product-type.application";
+		};
 		50C938C60E0A9DBB00517B01 /* TransitionsDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C938DD0E0A9DBB00517B01 /* Build configuration list for PBXNativeTarget "TransitionsDemo" */;
@@ -1431,6 +1655,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				50B2C4D00E100AEA00AE9530 /* Chipmunk */,
 				506C7A260E01CFC800B48100 /* box2d */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
@@ -1445,6 +1670,7 @@
 				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
 				50C93A930E0BF6E000517B01 /* SpritesDemo */,
 				3188C3C70E0D960A00EFA866 /* TcpAccelClient */,
+				50B2C5CE0E100EF000AE9530 /* Physics-Chipmunk */,
 			);
 		};
 /* End PBXProject section */
@@ -1562,6 +1788,19 @@
 				50B1309A0DFDFAE4003BAB56 /* grossini.png in Resources */,
 				50B1309B0DFDFAE4003BAB56 /* grossinis_sister1.png in Resources */,
 				50B1309C0DFDFAE4003BAB56 /* grossinis_sister2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50B2C5D30E100EF000AE9530 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2C5D40E100EF000AE9530 /* Icon.png in Resources */,
+				50B2C5D50E100EF000AE9530 /* Default.png in Resources */,
+				50B2C5D60E100EF000AE9530 /* Background.png in Resources */,
+				50B2C5D70E100EF000AE9530 /* grossini.png in Resources */,
+				50B2C5D80E100EF000AE9530 /* grossinis_sister1.png in Resources */,
+				50B2C5D90E100EF000AE9530 /* grossinis_sister2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1763,6 +2002,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50B2C4CE0E100AEA00AE9530 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2C5950E100B1200AE9530 /* chipmunk.c in Sources */,
+				50B2C5970E100B1200AE9530 /* cpArbiter.c in Sources */,
+				50B2C5990E100B1200AE9530 /* cpArray.c in Sources */,
+				50B2C59B0E100B1200AE9530 /* cpBB.c in Sources */,
+				50B2C59D0E100B1200AE9530 /* cpBody.c in Sources */,
+				50B2C59F0E100B1200AE9530 /* cpCollision.c in Sources */,
+				50B2C5A10E100B1200AE9530 /* cpHashSet.c in Sources */,
+				50B2C5A30E100B1200AE9530 /* cpJoint.c in Sources */,
+				50B2C5A50E100B1200AE9530 /* cpPolyShape.c in Sources */,
+				50B2C5A70E100B1200AE9530 /* cpShape.c in Sources */,
+				50B2C5A90E100B1200AE9530 /* cpSpace.c in Sources */,
+				50B2C5AB0E100B1200AE9530 /* cpSpaceHash.c in Sources */,
+				50B2C5AD0E100B1200AE9530 /* cpVect.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50B2C5DA0E100EF000AE9530 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2C5DC0E100EF000AE9530 /* main.m in Sources */,
+				50B2C5ED0E100F8800AE9530 /* Physics-chipmunk.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C938D20E0A9DBB00517B01 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1839,6 +2107,16 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50B130A10DFDFB00003BAB56 /* PBXContainerItemProxy */;
+		};
+		50B2C5D10E100EF000AE9530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 50B2C5D20E100EF000AE9530 /* PBXContainerItemProxy */;
+		};
+		50B2C60B0E1014A700AE9530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
+			targetProxy = 50B2C60A0E1014A700AE9530 /* PBXContainerItemProxy */;
 		};
 		50C938C90E0A9DBB00517B01 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2358,6 +2636,88 @@
 			};
 			name = Release;
 		};
+		50B2C4D20E100AEB00AE9530 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Chipmunk;
+			};
+			name = Debug;
+		};
+		50B2C4D30E100AEB00AE9530 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Chipmunk;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		50B2C5E60E100EF000AE9530 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/riq/progs/g/grossini-touch/cocos2d-port/physics-chipmunk.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Physics-Chipmunk";
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		50B2C5E70E100EF000AE9530 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/riq/progs/g/grossini-touch/cocos2d-port/physics-chipmunk.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Physics-Chipmunk";
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		50C938DE0E0A9DBB00517B01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2592,6 +2952,24 @@
 			buildConfigurations = (
 				50B12FCF0DFDFA91003BAB56 /* Debug */,
 				50B12FD00DFDFA91003BAB56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50B2C4D40E100B0000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50B2C4D20E100AEB00AE9530 /* Debug */,
+				50B2C4D30E100AEB00AE9530 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Physics-Chipmunk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50B2C5E60E100EF000AE9530 /* Debug */,
+				50B2C5E70E100EF000AE9530 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
