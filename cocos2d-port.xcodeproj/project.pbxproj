@@ -30,8 +30,6 @@
 		3188C3D90E0D960A00EFA866 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		3188C3DA0E0D960A00EFA866 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */; };
-		319DDE890E0EAF06001FD34B /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */; };
-		319DDF090E0EC51E001FD34B /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */; };
 		5018F2690DFDEAFF00C013A5 /* Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* Action.h */; };
 		5018F26A0DFDEAFF00C013A5 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* Action.m */; };
 		5018F26B0DFDEAFF00C013A5 /* CocosNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CocosNode.h */; };
@@ -442,8 +440,6 @@
 		2DA6AB9E0D5E41EB002BF72E /* Start.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Start.caf; sourceTree = "<group>"; };
 		3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TcpAccelClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TcpAccelClient.m; path = tests/TcpAccelClient.m; sourceTree = "<group>"; };
-		319DDE870E0EAF06001FD34B /* VirtualAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualAccelerometer.h; sourceTree = "<group>"; };
-		319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualAccelerometer.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
@@ -481,7 +477,7 @@
 		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
 		502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = demoJumpingGirls.h; path = tests/demoJumpingGirls.h; sourceTree = "<group>"; };
 		502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demoJumpingGirls.m; path = tests/demoJumpingGirls.m; sourceTree = "<group>"; };
-		503B4BA00E04C8EB00AAF246 /* Physics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		503B4BA00E04C8EB00AAF246 /* Physics-Box2d.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Physics-Box2d.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		503B4BA30E04C93400AAF246 /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics.h; path = tests/Physics.h; sourceTree = "<group>"; };
 		503B4BA40E04C93400AAF246 /* Physics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Physics.mm; path = tests/Physics.mm; sourceTree = "<group>"; };
 		503B4BB30E04CAAC00AAF246 /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
@@ -609,7 +605,6 @@
 		50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Physics-Chipmunk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Physics-chipmunk.h"; path = "tests/Physics-chipmunk.h"; sourceTree = "<group>"; };
 		50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Physics-chipmunk.m"; path = "tests/Physics-chipmunk.m"; sourceTree = "<group>"; };
-		50B2C6100E1014F100AE9530 /* Physics-Chipmunk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Physics-Chipmunk.plist"; sourceTree = "<group>"; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsDemo.m; path = tests/TransitionsDemo.m; sourceTree = "<group>"; };
@@ -842,7 +837,6 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				50B2C6100E1014F100AE9530 /* Physics-Chipmunk.plist */,
 				1D6058910D05DD3D006BFB54 /* JumpingSisters.app */,
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
 				50B12FCC0DFDFA90003BAB56 /* test-moveby.app */,
@@ -853,7 +847,7 @@
 				506C7A090E01C73A00B48100 /* MenuTest.app */,
 				506C7A270E01CFC800B48100 /* libbox2d.a */,
 				506C800E0E041C9300B48100 /* SceneTest.app */,
-				503B4BA00E04C8EB00AAF246 /* Physics.app */,
+				503B4BA00E04C8EB00AAF246 /* Physics-Box2d.app */,
 				50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */,
 				50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */,
 				3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */,
@@ -873,21 +867,11 @@
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				84FA87720DB963700038B5F3 /* ReadMe.txt */,
 				2D500B6F0D5A793600DBA0E3 /* Support */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = CustomTemplate;
-			sourceTree = "<group>";
-		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32CA4F630368D1EE00C91783 /* Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
-			);
-			name = "Other Sources";
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -1159,6 +1143,8 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				32CA4F630368D1EE00C91783 /* Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
 				50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */,
 				50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */,
 				3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */,
@@ -1182,8 +1168,6 @@
 				502C664E0DFEFD6800E4107D /* RotateWorld.m */,
 				50B130FD0DFE0946003BAB56 /* MoveBy.h */,
 				50B130FE0DFE0946003BAB56 /* MoveBy.m */,
-				319DDE870E0EAF06001FD34B /* VirtualAccelerometer.h */,
-				319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -1422,9 +1406,9 @@
 			productReference = 502C66180DFEFCCA00E4107D /* RotateWorld.app */;
 			productType = "com.apple.product-type.application";
 		};
-		503B4B860E04C8EB00AAF246 /* Physics */ = {
+		503B4B860E04C8EB00AAF246 /* Physics-Box2d */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 503B4B9D0E04C8EB00AAF246 /* Build configuration list for PBXNativeTarget "Physics" */;
+			buildConfigurationList = 503B4B9D0E04C8EB00AAF246 /* Build configuration list for PBXNativeTarget "Physics-Box2d" */;
 			buildPhases = (
 				503B4B8B0E04C8EB00AAF246 /* Resources */,
 				503B4B920E04C8EB00AAF246 /* Sources */,
@@ -1436,9 +1420,9 @@
 				503B4B870E04C8EB00AAF246 /* PBXTargetDependency */,
 				503B4B890E04C8EB00AAF246 /* PBXTargetDependency */,
 			);
-			name = Physics;
+			name = "Physics-Box2d";
 			productName = playground;
-			productReference = 503B4BA00E04C8EB00AAF246 /* Physics.app */;
+			productReference = 503B4BA00E04C8EB00AAF246 /* Physics-Box2d.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506C77CB0E01520900B48100 /* ClickAndMove */ = {
@@ -1644,7 +1628,7 @@
 				506C77CB0E01520900B48100 /* ClickAndMove */,
 				506C79F20E01C73A00B48100 /* MenuTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
-				503B4B860E04C8EB00AAF246 /* Physics */,
+				503B4B860E04C8EB00AAF246 /* Physics-Box2d */,
 				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
 				50C93A930E0BF6E000517B01 /* SpritesDemo */,
 				3188C3C70E0D960A00EFA866 /* TcpAccelClient */,
@@ -1841,7 +1825,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				319DDF090E0EC51E001FD34B /* VirtualAccelerometer.m in Sources */,
 				3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */,
 				3188C3D20E0D960A00EFA866 /* main.m in Sources */,
 			);
@@ -2024,7 +2007,6 @@
 			files = (
 				50C93AA00E0BF6E000517B01 /* main.m in Sources */,
 				50C93AC50E0BF8FC00517B01 /* SpritesDemo.m in Sources */,
-				319DDE890E0EAF06001FD34B /* VirtualAccelerometer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2314,7 +2296,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Physics;
+				PRODUCT_NAME = "Physics-Box2d";
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -2338,7 +2320,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Physics;
+				PRODUCT_NAME = "Physics-Box2d";
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -2871,7 +2853,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		503B4B9D0E04C8EB00AAF246 /* Build configuration list for PBXNativeTarget "Physics" */ = {
+		503B4B9D0E04C8EB00AAF246 /* Build configuration list for PBXNativeTarget "Physics-Box2d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				503B4B9E0E04C8EB00AAF246 /* Debug */,
