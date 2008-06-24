@@ -1,0 +1,39 @@
+cocos2d-iphone
+--------------
+
+cocos2d-iphone is a framework for building 2D games, demos, and other
+graphical/interactive applications. It is based on the cocos2d design:
+  it uses the same API, but instead of using python it uses objective-c.
+
+A cocos2d-iphone application consists of several scenes, and a workflow
+connecting the different scenes. It provides you with a "director"
+(a singleton) which handles that workflow between scenes. Each scene is
+composed of an arbitrary number of layers; layers take care of drawing
+to the screen (using the OpenGL ES APIs), handling events and in general
+contain all of the game/application logic.
+
+cocos2d-iphone simplifies the game development in these areas:
+
+    * Defining a workflow for your game
+    * Creating special effects in layers
+    * Creating transitions between scenes
+    * Managing sprites
+    * Basic menus
+    * Integrated 2d physics engine (box2d or chipmunk). 
+
+
+
+This library doesn't not work with the toolchain, but I
+think it is easy to port it to it.
+
+
+Build Requeriments
+------------------
+
+Mac OS X 10.5.3, Xcode 3.1, iPhone OS 2.0, Beta 6 release or later
+
+
+Runtime Requirements
+--------------------
+
+Mac OS X 10.5.3, iPhone OS 2.0, Beta 6 release or later
