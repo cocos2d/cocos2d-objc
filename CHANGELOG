@@ -1,1 +1,7 @@
-CHANGELOG
+24-jun-2008:
+ . moved all main.c and other tests files to tests/
+ . moved plists, sounds and images to Resources/
+ . removed unused images
+ . Using only one plist file in Resources
+ . cocos2d-port renamed to trunk
+ . Imported code from Assembla
