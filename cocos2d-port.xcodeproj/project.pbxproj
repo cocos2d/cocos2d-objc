@@ -441,7 +441,6 @@
 		2DA6AB9D0D5E41EB002BF72E /* Failure.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Failure.caf; sourceTree = "<group>"; };
 		2DA6AB9E0D5E41EB002BF72E /* Start.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Start.caf; sourceTree = "<group>"; };
 		3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TcpAccelClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3188C3E00E0D960A00EFA866 /* TcpAccelClient.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TcpAccelClient.plist; sourceTree = "<group>"; };
 		3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TcpAccelClient.m; path = tests/TcpAccelClient.m; sourceTree = "<group>"; };
 		319DDE870E0EAF06001FD34B /* VirtualAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualAccelerometer.h; sourceTree = "<group>"; };
 		319DDE880E0EAF06001FD34B /* VirtualAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualAccelerometer.m; sourceTree = "<group>"; };
@@ -478,18 +477,15 @@
 		502B3E990E09A59500886982 /* Transition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transition.m; sourceTree = "<group>"; };
 		502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-documentation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		502C66180DFEFCCA00E4107D /* RotateWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RotateWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "demo-rotate-world-Info.plist"; sourceTree = "<group>"; };
 		502C664D0DFEFD6800E4107D /* RotateWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotateWorld.h; path = tests/RotateWorld.h; sourceTree = "<group>"; };
 		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
 		502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = demoJumpingGirls.h; path = tests/demoJumpingGirls.h; sourceTree = "<group>"; };
 		502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demoJumpingGirls.m; path = tests/demoJumpingGirls.m; sourceTree = "<group>"; };
 		503B4BA00E04C8EB00AAF246 /* Physics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physics.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		503B4BA20E04C8EB00AAF246 /* playground-Info copy 4.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 4.plist"; sourceTree = "<group>"; };
 		503B4BA30E04C93400AAF246 /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics.h; path = tests/Physics.h; sourceTree = "<group>"; };
 		503B4BA40E04C93400AAF246 /* Physics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Physics.mm; path = tests/Physics.mm; sourceTree = "<group>"; };
 		503B4BB30E04CAAC00AAF246 /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		506C77E40E01520900B48100 /* playground-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy.plist"; sourceTree = "<group>"; };
 		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
 		506C77E60E01524200B48100 /* ClickAndMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMove.m; path = tests/ClickAndMove.m; sourceTree = "<group>"; };
 		506C78A50E016A7300B48100 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
@@ -497,7 +493,6 @@
 		506C78EA0E0178FD00B48100 /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
 		506C78EB0E0178FD00B48100 /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
 		506C7A090E01C73A00B48100 /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		506C7A0B0E01C73A00B48100 /* playground-Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 2.plist"; sourceTree = "<group>"; };
 		506C7A0C0E01C78700B48100 /* MenuTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuTest.h; path = tests/MenuTest.h; sourceTree = "<group>"; };
 		506C7A0D0E01C78700B48100 /* MenuTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuTest.m; path = tests/MenuTest.m; sourceTree = "<group>"; };
 		506C7A270E01CFC800B48100 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -567,18 +562,15 @@
 		506C7C910E01D1F900B48100 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		506C7C930E01D1F900B48100 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		506C800E0E041C9300B48100 /* SceneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		506C80100E041C9300B48100 /* playground-Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 3.plist"; sourceTree = "<group>"; };
 		506C80110E041CDB00B48100 /* SceneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneTest.h; path = tests/SceneTest.h; sourceTree = "<group>"; };
 		506C80120E041CDB00B48100 /* SceneTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneTest.m; path = tests/SceneTest.m; sourceTree = "<group>"; };
 		507EB5780DFF2FD200A0C77E /* Playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playground.h; path = tests/Playground.h; sourceTree = "<group>"; };
 		507EB59D0DFF314400A0C77E /* playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		507EB59F0DFF314400A0C77E /* playground-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info.plist"; sourceTree = "<group>"; };
 		509E665C0E06CD940050992C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		509E665D0E06CD940050992C /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; };
 		509E66EE0E06E1360050992C /* CameraAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraAction.h; sourceTree = "<group>"; };
 		509E66EF0E06E1360050992C /* CameraAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraAction.m; sourceTree = "<group>"; };
 		50B12FCC0DFDFA90003BAB56 /* test-moveby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-moveby.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		50B12FCE0DFDFA90003BAB56 /* test-moveby-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-moveby-Info.plist"; sourceTree = "<group>"; };
 		50B130FD0DFE0946003BAB56 /* MoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoveBy.h; path = tests/MoveBy.h; sourceTree = "<group>"; };
 		50B130FE0DFE0946003BAB56 /* MoveBy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoveBy.m; path = tests/MoveBy.m; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -619,18 +611,15 @@
 		50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Physics-chipmunk.m"; path = "tests/Physics-chipmunk.m"; sourceTree = "<group>"; };
 		50B2C6100E1014F100AE9530 /* Physics-Chipmunk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Physics-Chipmunk.plist"; sourceTree = "<group>"; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C938E20E0A9DBB00517B01 /* playground-Info copy 5.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "playground-Info copy 5.plist"; sourceTree = "<group>"; };
 		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsDemo.m; path = tests/TransitionsDemo.m; sourceTree = "<group>"; };
 		50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesDemo.h; path = tests/SpritesDemo.h; sourceTree = "<group>"; };
 		50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesDemo.m; path = tests/SpritesDemo.m; sourceTree = "<group>"; };
-		50C93AD80E0BFBED00517B01 /* SpritesDemo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SpritesDemo.plist; sourceTree = "<group>"; };
 		50DB9CE30DF999DD00BA70B0 /* InstantAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstantAction.h; path = cocos2d/InstantAction.h; sourceTree = "<group>"; };
 		50DB9CE40DF999DD00BA70B0 /* InstantAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstantAction.m; path = cocos2d/InstantAction.m; sourceTree = "<group>"; };
 		50DB9CE50DF999DD00BA70B0 /* IntervalAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalAction.h; path = cocos2d/IntervalAction.h; sourceTree = "<group>"; };
 		50DB9CE60DF999DD00BA70B0 /* IntervalAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalAction.m; path = cocos2d/IntervalAction.m; sourceTree = "<group>"; };
-		50DB9CF10DF999FE00BA70B0 /* cocos2d-test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cocos2d-test-Info.plist"; sourceTree = "<group>"; };
 		50DB9E820DF9C85C00BA70B0 /* grossini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini.png; sourceTree = "<group>"; };
 		50DB9E830DF9C85C00BA70B0 /* grossinis_sister1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossinis_sister1.png; sourceTree = "<group>"; };
 		50DB9E840DF9C85C00BA70B0 /* grossinis_sister2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossinis_sister2.png; sourceTree = "<group>"; };
@@ -888,17 +877,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				50DB9CF10DF999FE00BA70B0 /* cocos2d-test-Info.plist */,
-				50B12FCE0DFDFA90003BAB56 /* test-moveby-Info.plist */,
-				502C661A0DFEFCCA00E4107D /* demo-rotate-world-Info.plist */,
-				507EB59F0DFF314400A0C77E /* playground-Info.plist */,
-				506C77E40E01520900B48100 /* playground-Info copy.plist */,
-				506C7A0B0E01C73A00B48100 /* playground-Info copy 2.plist */,
-				506C80100E041C9300B48100 /* playground-Info copy 3.plist */,
-				503B4BA20E04C8EB00AAF246 /* playground-Info copy 4.plist */,
-				50C938E20E0A9DBB00517B01 /* playground-Info copy 5.plist */,
-				50C93AD80E0BFBED00517B01 /* SpritesDemo.plist */,
-				3188C3E00E0D960A00EFA866 /* TcpAccelClient.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2175,7 +2153,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = TcpAccelClient.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2199,7 +2177,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = TcpAccelClient.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2278,7 +2256,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "demo-rotate-world-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2302,7 +2280,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "demo-rotate-world-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2327,7 +2305,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info copy 4.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2351,7 +2329,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy 4.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2376,7 +2354,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info copy.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2400,7 +2378,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2425,7 +2403,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info copy 2.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2449,7 +2427,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy 2.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2499,7 +2477,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info copy 3.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2523,7 +2501,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy 3.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2548,7 +2526,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2572,7 +2550,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2597,7 +2575,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "test-moveby-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2621,7 +2599,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "test-moveby-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2679,7 +2657,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/g/grossini-touch/cocos2d-port/physics-chipmunk.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2703,7 +2681,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/g/grossini-touch/cocos2d-port/physics-chipmunk.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2728,7 +2706,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "playground-Info copy 5.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2752,7 +2730,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/playground-Info copy 5.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2777,7 +2755,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = SpritesDemo.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2801,7 +2779,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/grossini-touch/cocos2d-port/SpritesDemo.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
