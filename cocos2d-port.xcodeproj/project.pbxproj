@@ -211,7 +211,6 @@
 		50B2CB1F0E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50B2CB200E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50B2CB210E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
-		50B2CB220E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50B2CB230E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50B2CB310E10EE4A00AE9530 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50B2CB320E10EE4A00AE9530 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -323,6 +322,33 @@
 		50B2CBA70E10EE4A00AE9530 /* Start.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2E0E10EE4A00AE9530 /* Start.caf */; };
 		50B2CBA80E10EE4A00AE9530 /* Success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2F0E10EE4A00AE9530 /* Success.caf */; };
 		50B2CBA90E10EE4A00AE9530 /* Thrust.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB300E10EE4A00AE9530 /* Thrust.caf */; };
+		50B2CCC40E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCC50E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCC60E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCC70E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCC80E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCC90E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCCA0E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCCB0E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCCD0E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2CCC20E119B8E00AE9530 /* Primitives.h */; };
+		50B2CCCF0E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CE500E12A01C00AE9530 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
+		50B2CE510E12A02100AE9530 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		50B2CE520E12A03B00AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50B2CE530E12A03B00AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50B2CE540E12A03B00AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50B2CE550E12A03B00AE9530 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50B2CE560E12A03B00AE9530 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50B2CE580E12A0B400AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		50B2CE740E12A0F500AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CE6A0E12A0F500AE9530 /* main.m */; };
+		50B2CED90E12A76000AE9530 /* Demo1.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CED80E12A76000AE9530 /* Demo1.m */; };
+		50B2CEE40E12A78E00AE9530 /* Demo2.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CEDE0E12A78E00AE9530 /* Demo2.m */; };
+		50B2CEE50E12A78E00AE9530 /* Demo3.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CEDF0E12A78E00AE9530 /* Demo3.m */; };
+		50B2CEE60E12A78E00AE9530 /* Demo4.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CEE00E12A78E00AE9530 /* Demo4.m */; };
+		50B2CEE70E12A78E00AE9530 /* Demo5.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CEE10E12A78E00AE9530 /* Demo5.m */; };
+		50B2CEE80E12A78E00AE9530 /* Demo6.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CEE20E12A78E00AE9530 /* Demo6.m */; };
+		50B2CEE90E12A78E00AE9530 /* Demo7.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CEE30E12A78E00AE9530 /* Demo7.m */; };
 		50C938D60E0A9DBB00517B01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50C938D70E0A9DBB00517B01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50C938D80E0A9DBB00517B01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -417,6 +443,20 @@
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
+			remoteInfo = Chipmunk;
+		};
+		50B2CE4C0E12A01400AE9530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			remoteInfo = cocos2d;
+		};
+		50B2CE4E0E12A01700AE9530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
 			remoteInfo = Chipmunk;
 		};
 		50C938CA0E0A9DBB00517B01 /* PBXContainerItemProxy */ = {
@@ -630,6 +670,18 @@
 		50B2CB2E0E10EE4A00AE9530 /* Start.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Start.caf; sourceTree = "<group>"; };
 		50B2CB2F0E10EE4A00AE9530 /* Success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Success.caf; sourceTree = "<group>"; };
 		50B2CB300E10EE4A00AE9530 /* Thrust.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Thrust.caf; sourceTree = "<group>"; };
+		50B2CCC20E119B8E00AE9530 /* Primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Primitives.h; sourceTree = "<group>"; };
+		50B2CCC30E119B8E00AE9530 /* Primitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Primitives.m; sourceTree = "<group>"; };
+		50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50B2CE6A0E12A0F500AE9530 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ChipmunkDemo-Info.plist"; path = "Resources/ChipmunkDemo-Info.plist"; sourceTree = "<group>"; };
+		50B2CED80E12A76000AE9530 /* Demo1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo1.m; sourceTree = "<group>"; };
+		50B2CEDE0E12A78E00AE9530 /* Demo2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo2.m; sourceTree = "<group>"; };
+		50B2CEDF0E12A78E00AE9530 /* Demo3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo3.m; sourceTree = "<group>"; };
+		50B2CEE00E12A78E00AE9530 /* Demo4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo4.m; sourceTree = "<group>"; };
+		50B2CEE10E12A78E00AE9530 /* Demo5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo5.m; sourceTree = "<group>"; };
+		50B2CEE20E12A78E00AE9530 /* Demo6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo6.m; sourceTree = "<group>"; };
+		50B2CEE30E12A78E00AE9530 /* Demo7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demo7.m; sourceTree = "<group>"; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsDemo.m; path = tests/TransitionsDemo.m; sourceTree = "<group>"; };
@@ -811,6 +863,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50B2CE440E129FD900AE9530 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2CE520E12A03B00AE9530 /* Foundation.framework in Frameworks */,
+				50B2CE530E12A03B00AE9530 /* UIKit.framework in Frameworks */,
+				50B2CE540E12A03B00AE9530 /* CoreGraphics.framework in Frameworks */,
+				50B2CE550E12A03B00AE9530 /* OpenGLES.framework in Frameworks */,
+				50B2CE560E12A03B00AE9530 /* QuartzCore.framework in Frameworks */,
+				50B2CE500E12A01C00AE9530 /* libChipmunk.a in Frameworks */,
+				50B2CE510E12A02100AE9530 /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C938D50E0A9DBB00517B01 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -858,6 +924,7 @@
 				3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */,
 				50B2C4D10E100AEA00AE9530 /* libChipmunk.a */,
 				50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */,
+				50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -884,6 +951,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
@@ -941,6 +1009,8 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50B2CCC20E119B8E00AE9530 /* Primitives.h */,
+				50B2CCC30E119B8E00AE9530 /* Primitives.m */,
 				502B3E980E09A59500886982 /* Transition.h */,
 				502B3E990E09A59500886982 /* Transition.m */,
 				509E66EE0E06E1360050992C /* CameraAction.h */,
@@ -1161,6 +1231,7 @@
 		50B2C4D50E100B1100AE9530 /* Chipmunk */ = {
 			isa = PBXGroup;
 			children = (
+				50B2CE600E12A0F500AE9530 /* Demo */,
 				50B2C4D60E100B1100AE9530 /* chipmunk-docs.html */,
 				50B2C4D70E100B1100AE9530 /* CMakeLists.txt */,
 				50B2C4E70E100B1100AE9530 /* LICENSE.txt */,
@@ -1229,6 +1300,21 @@
 			path = Resources/Sounds;
 			sourceTree = "<group>";
 		};
+		50B2CE600E12A0F500AE9530 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				50B2CEDE0E12A78E00AE9530 /* Demo2.m */,
+				50B2CEDF0E12A78E00AE9530 /* Demo3.m */,
+				50B2CEE00E12A78E00AE9530 /* Demo4.m */,
+				50B2CEE10E12A78E00AE9530 /* Demo5.m */,
+				50B2CEE20E12A78E00AE9530 /* Demo6.m */,
+				50B2CEE30E12A78E00AE9530 /* Demo7.m */,
+				50B2CED80E12A76000AE9530 /* Demo1.m */,
+				50B2CE6A0E12A0F500AE9530 /* main.m */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1255,6 +1341,7 @@
 				509E665E0E06CD940050992C /* Camera.h in Headers */,
 				509E66F00E06E1360050992C /* CameraAction.h in Headers */,
 				502B3E9A0E09A59500886982 /* Transition.h in Headers */,
+				50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1560,6 +1647,25 @@
 			productReference = 50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50B2CE450E129FD900AE9530 /* ChipmunkDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkDemo" */;
+			buildPhases = (
+				50B2CE420E129FD900AE9530 /* Resources */,
+				50B2CE430E129FD900AE9530 /* Sources */,
+				50B2CE440E129FD900AE9530 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50B2CE4D0E12A01400AE9530 /* PBXTargetDependency */,
+				50B2CE4F0E12A01700AE9530 /* PBXTargetDependency */,
+			);
+			name = ChipmunkDemo;
+			productName = ChipmunkDemo;
+			productReference = 50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		50C938C60E0A9DBB00517B01 /* TransitionsDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C938DD0E0A9DBB00517B01 /* Build configuration list for PBXNativeTarget "TransitionsDemo" */;
@@ -1623,6 +1729,7 @@
 				50C93A930E0BF6E000517B01 /* SpritesDemo */,
 				3188C3C70E0D960A00EFA866 /* TcpAccelClient */,
 				50B2C5CE0E100EF000AE9530 /* Physics-Chipmunk */,
+				50B2CE450E129FD900AE9530 /* ChipmunkDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -1781,6 +1888,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50B2CE420E129FD900AE9530 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C938CB0E0A9DBB00517B01 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1851,6 +1965,7 @@
 				3188C4060E0D9B8E00EFA866 /* TcpAccelClient.m in Sources */,
 				50B2C9A10E10980200AE9530 /* VirtualAccelerometer.m in Sources */,
 				50B2CB230E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCCD0E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1876,6 +1991,7 @@
 				509E665F0E06CD940050992C /* Camera.m in Sources */,
 				509E66F10E06E1360050992C /* CameraAction.m in Sources */,
 				502B3E9B0E09A59500886982 /* Transition.m in Sources */,
+				50B2CCCF0E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1892,6 +2008,7 @@
 			files = (
 				502C664F0DFEFD6800E4107D /* RotateWorld.m in Sources */,
 				50B2CB200E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCCB0E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1901,6 +2018,7 @@
 			files = (
 				503B4BA60E04C95500AAF246 /* Physics.mm in Sources */,
 				50B2CB1C0E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCC70E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1910,6 +2028,7 @@
 			files = (
 				506C77E70E01524200B48100 /* ClickAndMove.m in Sources */,
 				50B2CB1F0E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCCA0E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1919,6 +2038,7 @@
 			files = (
 				506C7A0E0E01C78700B48100 /* MenuTest.m in Sources */,
 				50B2CB1E0E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCC90E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1966,6 +2086,7 @@
 			files = (
 				506C80130E041CDB00B48100 /* SceneTest.m in Sources */,
 				50B2CB1D0E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCC80E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1975,6 +2096,7 @@
 			files = (
 				503B4BB40E04CAAC00AAF246 /* Playground.m in Sources */,
 				50B2CB190E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCC40E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2002,8 +2124,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50B2CE580E12A0B400AE9530 /* main.m in Sources */,
 				50B2C5ED0E100F8800AE9530 /* Physics-chipmunk.m in Sources */,
-				50B2CB220E10EE0800AE9530 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50B2CE430E129FD900AE9530 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50B2CE740E12A0F500AE9530 /* main.m in Sources */,
+				50B2CED90E12A76000AE9530 /* Demo1.m in Sources */,
+				50B2CEE40E12A78E00AE9530 /* Demo2.m in Sources */,
+				50B2CEE50E12A78E00AE9530 /* Demo3.m in Sources */,
+				50B2CEE60E12A78E00AE9530 /* Demo4.m in Sources */,
+				50B2CEE70E12A78E00AE9530 /* Demo5.m in Sources */,
+				50B2CEE80E12A78E00AE9530 /* Demo6.m in Sources */,
+				50B2CEE90E12A78E00AE9530 /* Demo7.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2013,6 +2150,7 @@
 			files = (
 				50C938E50E0A9E1100517B01 /* TransitionsDemo.m in Sources */,
 				50B2CB1B0E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCC60E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2022,6 +2160,7 @@
 			files = (
 				50C93AC50E0BF8FC00517B01 /* SpritesDemo.m in Sources */,
 				50B2CB1A0E10EE0800AE9530 /* main.m in Sources */,
+				50B2CCC50E119B8E00AE9530 /* Primitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2082,6 +2221,16 @@
 			isa = PBXTargetDependency;
 			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
 			targetProxy = 50B2C60A0E1014A700AE9530 /* PBXContainerItemProxy */;
+		};
+		50B2CE4D0E12A01400AE9530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 50B2CE4C0E12A01400AE9530 /* PBXContainerItemProxy */;
+		};
+		50B2CE4F0E12A01700AE9530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
+			targetProxy = 50B2CE4E0E12A01700AE9530 /* PBXContainerItemProxy */;
 		};
 		50C938C90E0A9DBB00517B01 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2634,6 +2783,55 @@
 			};
 			name = Release;
 		};
+		50B2CE490E129FDA00AE9530 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Resources/ChipmunkDemo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ChipmunkDemo;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		50B2CE4A0E129FDA00AE9530 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Resources/ChipmunkDemo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ChipmunkDemo;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		50C938DE0E0A9DBB00517B01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2877,6 +3075,15 @@
 			buildConfigurations = (
 				50B2C5E60E100EF000AE9530 /* Debug */,
 				50B2C5E70E100EF000AE9530 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50B2CE490E129FDA00AE9530 /* Debug */,
+				50B2CE4A0E129FDA00AE9530 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

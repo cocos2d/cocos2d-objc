@@ -59,23 +59,22 @@ void drawPoly( float *poli, int points )
 	glVertexPointer(2, GL_FLOAT, 0, poli);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
-	glDrawArrays(GL_LINES, 0, points);
+	glDrawArrays(GL_LINE_LOOP, 0, points);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void drawCircle( float x, float y, float r, int segs)
+void drawCircle( float x, float y, float r, float a, int segs)
 {
 	const float coef = 2.0*M_PI/(float)segs;
-	float a = 0;
 	
-	float *vertices = malloc( sizeof(float)*2*segs);
+	float *vertices = malloc( sizeof(float)*2*(segs+2));
 	if( ! vertices )
 		return;
 	
-	memset( vertices,0, sizeof(float)*2*segs);
+	memset( vertices,0, sizeof(float)*2*(segs+2));
 	
-	for(int i=0;i<segs;i++)
+	for(int i=0;i<=segs;i++)
 	{
 		float rads = i*coef;
 		float j = r*cos(rads + a) + x;
@@ -84,10 +83,13 @@ void drawCircle( float x, float y, float r, int segs)
 		vertices[i*2] = j;
 		vertices[i*2+1] =k;
 	}
+	vertices[(segs+1)*2] = x;
+	vertices[(segs+1)*2+1] = y;
+	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
-	glDrawArrays(GL_LINE_LOOP, 0, segs);
+	glDrawArrays(GL_LINE_STRIP, 0, segs+2);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	

@@ -26,4 +26,4 @@ void drawLine( float x1, float x2, float y1, float y2);
 /// draws a poligon given a pointer to float coordiantes and the number of vertices
 void drawPoly( float *poli, int points );
 /// draws a circle given the center, radius and number of segments
-void drawCircle( float x, float y, float radius, int segments);
+void drawCircle( float x, float y, float radius, float angle, int segs);
