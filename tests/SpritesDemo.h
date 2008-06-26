@@ -43,6 +43,11 @@
 }
 @end
 
+@interface SpriteAnimate : SpriteDemo
+{
+}
+@end
+
 @interface SpriteSequence : SpriteDemo
 {
 }

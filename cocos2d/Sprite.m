@@ -29,7 +29,8 @@
 #import "Sprite.h"
 
 @implementation Sprite
-// Sets up an array of values to use as the sprite vertices.
+
+@synthesize texture;
 
 + (id) spriteFromFile: (NSString*) filename
 {
@@ -41,17 +42,17 @@
 	if (![super init])
 		return nil;
 
-	texture = [[TextureMgr sharedTextureMgr] addImage: filename];
+	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+	texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
 	
-	[self initAnchors];
 	return self;
 }
 
-- (void) initAnchors
+-(void) dealloc
 {
-//	CGSize size = [texture contentSize];
-//	transform_anchor_x = size.width  / 2;
-//	transform_anchor_y = size.height / 2;
+	[texture release];
+	[animations release];
+	[super dealloc];
 }
 
 - (void) draw
@@ -69,4 +70,48 @@
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
+-(void) addAnimation: (Animation*) anim
+{
+	[animations setObject:anim forKey:[anim name]];
+}
 @end
+
+@implementation Animation
+@synthesize name, delay, frames;
+
++(id) animationWithName: (NSString*) name delay:(float)delay images:image1,...
+{
+	va_list args;
+	va_start(args,image1);
+	
+	id s = [[[self alloc] initWithName:name delay:delay vaList:args] autorelease];
+	
+	va_end(args);
+	return s;
+}
+
+-(id) initWithName: (NSString*) name delay:(float)d vaList: (va_list) args
+{
+	if( ![super init] )
+		return nil;
+	
+	frames = [[NSMutableArray array] retain];
+	delay = d;
+		
+	NSString *filename = va_arg(args, NSString*);
+	while(filename) {
+		Texture2D *texture = [[TextureMgr sharedTextureMgr] addImage: filename];
+		[frames addObject:texture];
+		
+		 filename = va_arg(args, NSString*);
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[frames release];
+	[super dealloc];
+}
+@end
+

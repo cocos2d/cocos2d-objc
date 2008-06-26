@@ -79,12 +79,12 @@ static TextureMgr *sharedTextureMgr;
 	Texture2D * tex;
 	
 	if( (tex=[textures objectForKey: fileimage] ) ) {
-		return	[tex retain];
+		return tex;
 	}
 	
 	tex = [[Texture2D alloc] initWithImage: [UIImage imageNamed:fileimage]];
 	[textures setObject: tex forKey:fileimage];
 	
-	return tex;
+	return [tex autorelease];
 }
 @end
