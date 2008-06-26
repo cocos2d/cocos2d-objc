@@ -312,3 +312,18 @@ Example:
 /** initializes the action */
 -(id) initWithAction: (IntervalAction*) action;
 @end
+
+
+@class Animation;
+@class Texture2D;
+/** Animates a sprite given the name of an Animation */
+@interface Animate : IntervalAction <NSCopying>
+{
+	Animation *animation;
+	Texture2D *origFrame;
+}
++(id) actionWithAnimation:(Animation*) a;
+-(id) initWithAnimation:(Animation*) a;
+@end
+
+

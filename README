@@ -19,12 +19,12 @@ cocos2d-iphone simplifies the game development in these areas:
     * Creating transitions between scenes
     * Managing sprites
     * Basic menus
-    * Integrated 2d physics engine (box2d or chipmunk). 
+    * Integrated Chipmunk 2d physics engine
 
 
 
 This library doesn't not work with the toolchain, but I
-think it is easy to port it to it.
+should be easy to port it to it.
 
 
 Build Requeriments

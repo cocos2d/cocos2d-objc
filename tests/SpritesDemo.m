@@ -165,6 +165,43 @@ Class nextAction();
 }
 @end
 
+@implementation SpriteAnimate
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites];
+	
+	[tamara setVisible:NO];
+	
+	id animation = [Animation animationWithName:@"dance" delay:0.2 images:
+					@"grossini_dance_01.png",
+					@"grossini_dance_02.png",
+					@"grossini_dance_03.png",
+					@"grossini_dance_04.png",
+					@"grossini_dance_05.png",
+					@"grossini_dance_06.png",
+					@"grossini_dance_07.png",
+					@"grossini_dance_08.png",
+					@"grossini_dance_09.png",
+					@"grossini_dance_10.png",
+					@"grossini_dance_11.png",
+					@"grossini_dance_12.png",
+					@"grossini_dance_13.png",
+					@"grossini_dance_14.png",
+					nil ];
+	
+	id action = [Animate actionWithAnimation: animation];
+	
+	[grossini do:action];
+}
+-(NSString *) title
+{
+	return @"Animatinon";
+}
+@end
+
+
 @implementation SpriteSequence
 -(void) onEnter
 {
@@ -341,6 +378,7 @@ Class nextAction()
 								@"SpriteScale",
 								@"SpriteJump",
 								@"SpriteBlink",
+								@"SpriteAnimate",
 								@"SpriteSequence",
 								@"SpriteSpawn",
 								@"SpriteReverse",

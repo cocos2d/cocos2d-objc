@@ -20,6 +20,7 @@
 
 
 #import "IntervalAction.h"
+#import "Sprite.h"
 #import "CocosNode.h"
 
 //
@@ -951,3 +952,66 @@
 	return [[other copy] autorelease];
 }
 @end
+
+@implementation Animate
++(id) actionWithAnimation: (Animation*) a
+{
+	return [[[self alloc] initWithAnimation: a] autorelease];
+}
+
+-(id) initWithAnimation: (Animation*) a
+{
+	if( ! [super initWithDuration: [[a frames] count] * [a delay]] )
+		return nil;
+	animation = [a retain];
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	return [[[self class] allocWithZone: zone] initWithAnimation: animation];
+}
+
+-(void) dealloc
+{
+	[animation release];
+	[origFrame release];
+	[super dealloc];
+}
+
+-(void) start
+{
+	[super start];
+	Sprite *s = (Sprite*) target;
+	origFrame = [[s texture] retain];
+}
+
+-(void) stop
+{
+	Sprite *s = (Sprite*) target;
+	// XXX TODO i'm I leaking ?
+//	[[s texture] autorelease];
+	[s setTexture: origFrame];
+	[super stop];
+}
+
+-(void) update: (double) t
+{
+	int idx=0;
+	
+	double slice = 1.0f / [[animation frames] count];
+	
+	if(t !=0 )
+		idx = t/ slice;
+
+	NSLog(@"idx: %d", idx);
+	
+	Sprite *s = (Sprite*) target;
+	if ( s.texture != [[animation frames] objectAtIndex: idx] ) {
+		// XXX TODO i'm I leaking ?
+//		[[s texture] autorelease];
+		[s setTexture: [[animation frames] objectAtIndex:idx]];
+	}
+}
+@end
+
