@@ -237,7 +237,7 @@
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration delta:CGPointMake(s.size.width,0)];
+	return [MoveBy actionWithDuration:duration position:CGPointMake(s.size.width,0)];
 }
 
 -(void) initScenes
@@ -260,7 +260,7 @@
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration delta:CGPointMake(-s.size.width,0)];
+	return [MoveBy actionWithDuration:duration position:CGPointMake(-s.size.width,0)];
 }
 
 @end
@@ -278,7 +278,7 @@
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration delta:CGPointMake(0,-s.size.height)];
+	return [MoveBy actionWithDuration:duration position:CGPointMake(0,-s.size.height)];
 }
 
 @end
@@ -296,7 +296,7 @@
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration delta:CGPointMake(0,s.size.height)];
+	return [MoveBy actionWithDuration:duration position:CGPointMake(0,s.size.height)];
 }
 @end
 

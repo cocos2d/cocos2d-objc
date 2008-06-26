@@ -25,7 +25,7 @@
 	[hello setPosition: CGPointMake(200,200)];
 	
 	[hello do: [Sequence actions:
-				[MoveBy actionWithDuration: 2 delta: CGPointMake(-100,-100)],
+				[MoveBy actionWithDuration: 2 position: CGPointMake(-100,-100)],
 				[CallFunc actionWithTarget: self selector: @selector(testCB)],
 				nil ] ];
 	[hello do: [Spawn actions:
@@ -61,7 +61,7 @@
 	id rotby = [RotateBy actionWithDuration: 1.5 angle:360+90];
 	id rotto = [RotateTo actionWithDuration: 1.5 angle:270];
 	id scaleby = [ScaleBy actionWithDuration: 2 scale:0.2];
-	id moveby =	[MoveBy actionWithDuration: 2 delta: CGPointMake(0,100) ];
+	id moveby =	[MoveBy actionWithDuration: 2 position: CGPointMake(0,100) ];
 	id moveto =	[Speed actionWithAction: [MoveTo actionWithDuration: 8 position: CGPointMake(20,20) ] speed:2 ];
 	
 	[scene add: mainLayer z:2];
