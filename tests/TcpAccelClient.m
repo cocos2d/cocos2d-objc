@@ -63,7 +63,7 @@ Class nextAction();
 {
 	[super onEnter];
 	
-	id actionBy = [MoveBy actionWithDuration:2  delta: CGPointMake(80,80)];
+	id actionBy = [MoveBy actionWithDuration:2  position: CGPointMake(80,80)];
 	
 	[grossini do:actionBy];
 

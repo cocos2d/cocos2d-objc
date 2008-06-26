@@ -162,9 +162,9 @@ Example:
 {
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t delta: (CGPoint) delta;
++(id) actionWithDuration: (double) t position: (CGPoint) delta;
 /** initializes the action */
--(id) initWithDuration: (double) t delta: (CGPoint) delta;
+-(id) initWithDuration: (double) t position: (CGPoint) delta;
 @end
 
 /** Moves a CocosNode object simulating a jump movement by modifying it's position attribute.
