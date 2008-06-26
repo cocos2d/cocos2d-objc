@@ -961,9 +961,12 @@
 
 -(id) initWithAnimation: (Animation*) a
 {
+	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
+
 	if( ! [super initWithDuration: [[a frames] count] * [a delay]] )
 		return nil;
 	animation = [a retain];
+	origFrame = nil;
 	return self;
 }
 
@@ -983,15 +986,21 @@
 {
 	[super start];
 	Sprite *s = (Sprite*) target;
-	origFrame = [[s texture] retain];
+
+	[[s texture] retain];
+	[origFrame release];
+	origFrame = [s texture];
 }
 
 -(void) stop
 {
 	Sprite *s = (Sprite*) target;
-	// XXX TODO i'm I leaking ?
-//	[[s texture] autorelease];
+
+	// XXX TODO should I retain ?
+	[origFrame retain];
+	[[s texture] release];
 	[s setTexture: origFrame];
+	
 	[super stop];
 }
 
@@ -1008,9 +1017,11 @@
 	
 	Sprite *s = (Sprite*) target;
 	if ( s.texture != [[animation frames] objectAtIndex: idx] ) {
-		// XXX TODO i'm I leaking ?
-//		[[s texture] autorelease];
-		[s setTexture: [[animation frames] objectAtIndex:idx]];
+		// XXX TODO should I retain ?
+		id obj = [[animation frames] objectAtIndex:idx];
+		[obj retain];
+		[[s texture] release];
+		[s setTexture: obj];
 	}
 }
 @end
