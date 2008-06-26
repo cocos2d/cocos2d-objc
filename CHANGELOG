@@ -1,7 +1,10 @@
+
+version 0.1:
+
 25-jun-2008:
  . added Animation, Animate classes to animates sprites
  . removed box2d and related stuff to box2d
- . added / ported Chipmunk Demo
+ . added and ported Chipmunk Demo
  . added primitives like drawCircle(), drawPoly(), drawLine(), drawPoint()
 
 24-jun-2008:

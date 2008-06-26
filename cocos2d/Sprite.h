@@ -37,8 +37,14 @@
 @property (readwrite,assign) float delay;
 @property (readwrite,assign) NSMutableArray *frames;
 
+/** creates an Animation with name, delay and frames */
 +(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
--(id) initWithName: (NSString*) name delay:(float)delay vaList:(va_list) args;
+/** initializes an Animation with name, delay and frames */
+-(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
+/** initializes an Animation with name and delay */
+-(id) initWithName: (NSString*) name delay:(float)delay;
+/** adds a frame to an Animation */
+-(void) addFrame: (NSString*) filename;
 @end
 
 
