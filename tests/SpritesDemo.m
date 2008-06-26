@@ -78,7 +78,7 @@ Class nextAction();
 
 	
 	id actionTo = [MoveTo actionWithDuration: 2 position:CGPointMake(s.size.width-40, s.size.height-40)];
-	id actionBy = [MoveBy actionWithDuration:2  delta: CGPointMake(80,80)];
+	id actionBy = [MoveBy actionWithDuration:2  position: CGPointMake(80,80)];
 	
 	[tamara do: actionTo];
 	[grossini do:actionBy];
@@ -174,22 +174,9 @@ Class nextAction();
 	
 	[tamara setVisible:NO];
 	
-	id animation = [Animation animationWithName:@"dance" delay:0.2 images:
-					@"grossini_dance_01.png",
-					@"grossini_dance_02.png",
-					@"grossini_dance_03.png",
-					@"grossini_dance_04.png",
-					@"grossini_dance_05.png",
-					@"grossini_dance_06.png",
-					@"grossini_dance_07.png",
-					@"grossini_dance_08.png",
-					@"grossini_dance_09.png",
-					@"grossini_dance_10.png",
-					@"grossini_dance_11.png",
-					@"grossini_dance_12.png",
-					@"grossini_dance_13.png",
-					@"grossini_dance_14.png",
-					nil ];
+	id animation = [[Animation alloc] initWithName:@"dance" delay:0.2];
+	for( int i=1;i<15;i++)
+		[animation addFrame: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
 	id action = [Animate actionWithAnimation: animation];
 	
@@ -210,7 +197,7 @@ Class nextAction();
 	[tamara setVisible:NO];
 
 	id action = [Sequence actions:
-				 [MoveBy actionWithDuration: 2 delta:CGPointMake(240,0)],
+				 [MoveBy actionWithDuration: 2 position:CGPointMake(240,0)],
 				 [RotateBy actionWithDuration: 2 angle: 540],
 				 nil];
 	
@@ -267,7 +254,7 @@ Class nextAction();
 	
 	[tamara setVisible:NO];
 	
-	id move = [MoveBy actionWithDuration:1 delta:CGPointMake(150,0)];
+	id move = [MoveBy actionWithDuration:1 position:CGPointMake(150,0)];
 	id action = [Sequence actions: move, [DelayTime actionWithDuration:2], move, nil];
 	
 	[grossini do:action];
@@ -285,8 +272,8 @@ Class nextAction();
 	
 	[tamara setVisible:NO];
 
-	id move1 = [MoveBy actionWithDuration:1 delta:CGPointMake(250,0)];
-	id move2 = [MoveBy actionWithDuration:1 delta:CGPointMake(0,50)];
+	id move1 = [MoveBy actionWithDuration:1 position:CGPointMake(250,0)];
+	id move2 = [MoveBy actionWithDuration:1 position:CGPointMake(0,50)];
 	id seq = [Sequence actions: move1, move2, [move1 reverse], nil];
 	id action = [Sequence actions: seq, [seq reverse], nil];
 	
@@ -303,7 +290,7 @@ Class nextAction();
 {
 	[super onEnter];
 		
-	id a1 = [MoveBy actionWithDuration:1 delta:CGPointMake(150,0)];
+	id a1 = [MoveBy actionWithDuration:1 position:CGPointMake(150,0)];
 	id action1 = [Repeat actionWithAction:
 						[Sequence actions: [Place actionWithPosition:CGPointMake(60,60)], a1, nil]
 									times:10];
@@ -325,7 +312,7 @@ Class nextAction();
 {
 	[super onEnter];
 	
-	id a1 = [MoveBy actionWithDuration:3 delta:CGPointMake(350,0)];
+	id a1 = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 	id seq =[Sequence actions: [Place actionWithPosition:CGPointMake(60,60)], a1, nil];
 	id seq2 =[Sequence actions: [Place actionWithPosition:CGPointMake(60,260)], a1, nil];
 	id rep = [Repeat actionWithAction:seq times:10];
@@ -350,7 +337,7 @@ Class nextAction();
 	[tamara setVisible:NO];
 	
 	id action = [Sequence actions:
-				 [MoveBy actionWithDuration:2 delta:CGPointMake(200,0)],
+				 [MoveBy actionWithDuration:2 position:CGPointMake(200,0)],
 				 [CallFunc actionWithTarget:self selector:@selector(callback)],
 				nil];
 	[grossini do:action];

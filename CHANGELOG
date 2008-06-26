@@ -2,6 +2,7 @@
 version 0.1:
 
 25-jun-2008:
+ . renamed MoveBy:actionWithDuration:delta to MoveBy:actionWithDuration:position
  . added Animation, Animate classes to animates sprites
  . removed box2d and related stuff to box2d
  . added and ported Chipmunk Demo

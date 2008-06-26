@@ -496,12 +496,12 @@
 // MoveBy
 //
 @implementation MoveBy
-+(id) actionWithDuration: (double) t delta: (CGPoint) p
++(id) actionWithDuration: (double) t position: (CGPoint) p
 {	
-	return [[[self alloc] initWithDuration:t delta:p ] autorelease];
+	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (double) t delta: (CGPoint) p
+-(id) initWithDuration: (double) t position: (CGPoint) p
 {
 	if( ![super initWithDuration: t] )
 		return nil;
@@ -512,7 +512,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] delta: delta];
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: delta];
     return copy;
 }
 
@@ -525,7 +525,7 @@
 
 -(IntervalAction*) reverse
 {
-	return [MoveBy actionWithDuration: duration delta: CGPointMake( -delta.x, -delta.y)];
+	return [MoveBy actionWithDuration: duration position: CGPointMake( -delta.x, -delta.y)];
 }
 @end
 
