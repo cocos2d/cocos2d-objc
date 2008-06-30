@@ -9,7 +9,9 @@
 }
 @end
 
+@class EmitFireworks;
 @interface TextLayer: Layer
 {
+	EmitFireworks *emitter;
 }
 @end
