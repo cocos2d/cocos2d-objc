@@ -59,6 +59,8 @@
 		502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		502C67ED0DFF0A7300E4107D /* demoJumpingGirls.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */; };
+		5038B6B20E196CD8009A621E /* Particle.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038B6B00E196CD8009A621E /* Particle.h */; };
+		5038B6B30E196CD8009A621E /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* Particle.m */; };
 		503B4BB40E04CAAC00AAF246 /* Playground.m in Sources */ = {isa = PBXBuildFile; fileRef = 503B4BB30E04CAAC00AAF246 /* Playground.m */; };
 		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -404,6 +406,8 @@
 		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
 		502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = demoJumpingGirls.h; path = tests/demoJumpingGirls.h; sourceTree = "<group>"; };
 		502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demoJumpingGirls.m; path = tests/demoJumpingGirls.m; sourceTree = "<group>"; };
+		5038B6B00E196CD8009A621E /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		5038B6B10E196CD8009A621E /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
 		503B4BB30E04CAAC00AAF246 /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
@@ -803,6 +807,8 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				5038B6B00E196CD8009A621E /* Particle.h */,
+				5038B6B10E196CD8009A621E /* Particle.m */,
 				50B2CCC20E119B8E00AE9530 /* Primitives.h */,
 				50B2CCC30E119B8E00AE9530 /* Primitives.m */,
 				502B3E980E09A59500886982 /* Transition.h */,
@@ -1000,6 +1006,7 @@
 				509E66F00E06E1360050992C /* CameraAction.h in Headers */,
 				502B3E9A0E09A59500886982 /* Transition.h in Headers */,
 				50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */,
+				5038B6B20E196CD8009A621E /* Particle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1531,6 +1538,7 @@
 				509E66F10E06E1360050992C /* CameraAction.m in Sources */,
 				502B3E9B0E09A59500886982 /* Transition.m in Sources */,
 				50B2CCCF0E119B8E00AE9530 /* Primitives.m in Sources */,
+				5038B6B30E196CD8009A621E /* Particle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
