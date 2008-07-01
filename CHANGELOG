@@ -1,5 +1,7 @@
+version 0.2 - ???
+ . Added particle system (Pixel and Texture)
 
-version 0.1:
+version 0.1 - 25-jun-2008:
 
 25-jun-2008:
  . renamed MoveBy:actionWithDuration:delta to MoveBy:actionWithDuration:position

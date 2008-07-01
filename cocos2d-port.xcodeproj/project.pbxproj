@@ -259,6 +259,8 @@
 		50C93AC50E0BF8FC00517B01 /* SpritesDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */; };
 		50F0992B0E05F01800A8AD5C /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F099290E05F01800A8AD5C /* glu.c */; };
 		50F0992C0E05F01800A8AD5C /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F0992A0E05F01800A8AD5C /* glu.h */; };
+		50F9E8170E1AA34E000E7616 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* types.h */; };
+		50F9EA900E1AE87E000E7616 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -531,6 +533,8 @@
 		50F2D0BF0DF44E3100553D35 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sprite.m; path = cocos2d/Sprite.m; sourceTree = "<group>"; };
 		50F2DB6B0DF7196F009C2B43 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Label.h; path = cocos2d/Label.h; sourceTree = "<group>"; };
 		50F2DB6C0DF7196F009C2B43 /* Label.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Label.m; path = cocos2d/Label.m; sourceTree = "<group>"; };
+		50F9E8160E1AA34E000E7616 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -807,6 +811,7 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50F9E8160E1AA34E000E7616 /* types.h */,
 				5038B6B00E196CD8009A621E /* Particle.h */,
 				5038B6B10E196CD8009A621E /* Particle.m */,
 				50B2CCC20E119B8E00AE9530 /* Primitives.h */,
@@ -941,6 +946,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50F9EA8F0E1AE87E000E7616 /* fire.png */,
 				50B2D0E00E13296F00AE9530 /* grossini_dance_01.png */,
 				50B2D0E10E13296F00AE9530 /* grossini_dance_02.png */,
 				50B2D0E20E13296F00AE9530 /* grossini_dance_03.png */,
@@ -1007,6 +1013,7 @@
 				502B3E9A0E09A59500886982 /* Transition.h in Headers */,
 				50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */,
 				5038B6B20E196CD8009A621E /* Particle.h in Headers */,
+				50F9E8170E1AA34E000E7616 /* types.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1412,6 +1419,7 @@
 				50B2CB340E10EE4A00AE9530 /* grossini.png in Resources */,
 				50B2CB350E10EE4A00AE9530 /* grossinis_sister1.png in Resources */,
 				50B2CB360E10EE4A00AE9530 /* grossinis_sister2.png in Resources */,
+				50F9EA900E1AE87E000E7616 /* fire.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

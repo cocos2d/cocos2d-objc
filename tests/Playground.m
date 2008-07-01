@@ -1,6 +1,5 @@
 //
-// Transitions Demo
-// a cocos2d example
+// a cocos2d-iphone example
 //
 
 // cocos2d imports
@@ -24,7 +23,8 @@
 -(id) init
 {
 	[super init];
-	emitter = [[EmitFireworks alloc] init];
+//	emitter = [[EmitFireworks alloc] init];
+	emitter = [[EmitFire alloc] init];
 	for( int i=0; i < emitter.totalParticles;i++ )
 		[emitter addParticle];
 	return self;
@@ -32,14 +32,7 @@
 
 -(void) draw
 {
-	for( Particle *p in emitter.particles ) {
-		if( [emitter updateParticle: p] ) {
-			glColor4ub( 255,255,255,255);
-			float x = p.pos.x + [emitter pos].x;
-			float y = p.pos.y + [emitter pos].y;
-			drawPoint( x, y );
-		}
-	}
+	[emitter update];
 }
 @end
 
