@@ -178,129 +178,35 @@
 // TextureEmitter
 //
 @implementation TextureEmitter
--(id) init
-{
-	if( ![super init] )
-		return nil;
-	
-	vertices = malloc( sizeof(cpVect) * 4 * totalParticles );
-	texCoords = malloc( sizeof(cpVect) * 4 * totalParticles );
-	colors = malloc( sizeof(ColorF) * 4 * totalParticles );
-	elementsIdx = malloc( sizeof(uint16) * 6 * totalParticles );
-	
-	if( ! ( vertices && texCoords && colors && elementsIdx ) ) {
-		NSLog(@"Not enough memory to initialize TextureEmitter");
-		if( vertices )
-			free(vertices);
-		if( texCoords )
-			free(texCoords);
-		if( colors )
-			free(colors);
-		if( elementsIdx )
-			free(elementsIdx);
-		return nil;
-	}
-	
-	return self;
-}
-
--(void) dealloc
-{
-	free(vertices);
-	free(texCoords);
-	free(colors);
-	free(elementsIdx);
-	[super dealloc];
-}
 
 -(void) preParticles
 {
-	particleIdx = 0;
-}
-
--(void) postParticles
-{
-	// save states
-	glBindTexture(GL_TEXTURE_2D, texture.name);
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	glEnableClientState( GL_COLOR_ARRAY);
+	glEnable( GL_POINT_SPRITE_OES );
 	glEnable( GL_TEXTURE_2D);
-	
-	// draw
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-	glColorPointer(4, GL_FLOAT, 0, colors);
-	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, elementsIdx);
-	
-	CHECK_GL_ERROR();
-	
-	// restore state
-	glDisable( GL_TEXTURE_2D);
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-	glDisableClientState( GL_COLOR_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, texture.name );
+	glTexEnvi(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE );
 }
-
 -(void) drawParticle: (Particle*) p
 {
-	float w,h;
+	glPointSize(p->size);
+	glColor4f(p->color.r, p->color.g, p->color.b, p->color.a);
 	
 	// relative to center
 	cpVect v = cpvadd( p->pos, pos );
-	int	i = particleIdx * 4;
-	int j=i;
-	w = shape.x * p->size;
-	h = shape.y * p->size;
-
-	// tex coordinates
-	texCoords[i].x = texture.maxS;
-	texCoords[i].y = texture.maxT;
-	i++;
-	texCoords[i].x = 0.0f;
-	texCoords[i].y = texture.maxT;
-	i++;
-	texCoords[i].x = 0.0f;
-	texCoords[i].y = 0.0f;
-	i++;
-	texCoords[i].x = texture.maxS;
-	texCoords[i].y = 0.0f;
-	
-	// vertices
-	i=j;
-	vertices[i].x = v.x - w;
-	vertices[i].y = v.y - h;
-	i++;	
-	vertices[i].x = v.x + w;
-	vertices[i].y = v.y - h;
-	i++;	
-	vertices[i].x = v.x + w;
-	vertices[i].y = v.y + h;	
-	i++;
-	vertices[i].x = v.x - w;
-	vertices[i].y = v.y + h;	
-	
-	// colors
-	i=j;
-	colors[i] = p->color;
-	colors[i+1] = p->color;
-	colors[i+2] = p->color;
-	colors[i+3] = p->color;
-
-	// indices
-	i = particleIdx * 6;
-	j = particleIdx * 4;
-	elementsIdx[i++] = j;
-	elementsIdx[i++] = j + 1;
-	elementsIdx[i++] = j + 2;
-	elementsIdx[i++] = j + 2;
-	elementsIdx[i++] = j;
-	elementsIdx[i++] = j + 3;
-
-	particleIdx++;
+	drawPoint( v.x, v.y );
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable( GL_POINT_SPRITE_OES );
+	glDisable( GL_TEXTURE_2D );
 }
 @end
 
+//
+// PixelEmitter
+//
 @implementation PixelEmitter
 -(void) drawParticle: (Particle*) p
 {
@@ -379,7 +285,7 @@
 @implementation EmitFire
 -(id) init
 {
-	totalParticles = 300;
+	totalParticles = 100;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -395,32 +301,30 @@
 	
 	// emitter position
 	pos.x = 160;
-	pos.y = -20;
-	posVar.x = 160;
-	posVar.y = 20;
+	pos.y = 0;
+	posVar.x = 100;
+	posVar.y = 30;
 	
 	// life of particles
-	life = 100;
+	life = 60;
 	lifeVar = 20;
 	
 	// speed of particles
-	speed = 0.5;
-	speedVar = 0;
+	speed = 0.7;
+	speedVar = 0.4;
 		
 	// size, in pixels
-	size = 20.0f;
-	sizeVar = 10.0f;
-	shape.x = 1;
-	shape.y = 1;
+	size = 64.0f;
+	sizeVar = 5.0f;
 	
 	// color of particles
-	startColor.r = 0.8f;
-	startColor.g = 0.2f;
-	startColor.b = 0.2f;
+	startColor.r = 0.76f;
+	startColor.g = 0.25f;
+	startColor.b = 0.12f;
 	startColor.a = 1.0f;
-	startColorVar.r = 0.2;
-	startColorVar.g = 0.1;
-	startColorVar.b = 0.1;
+	startColorVar.r = 0.0;
+	startColorVar.g = 0.0;
+	startColorVar.b = 0.0;
 	startColorVar.a = 0.0;
 	endColor.r = 0.0f;
 	endColor.g = 0.0f;

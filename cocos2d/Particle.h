@@ -90,14 +90,6 @@ typedef struct sParticle
 @interface TextureEmitter : Emitter
 {
 	Texture2D *texture;
-	cpVect	shape;
-	
-	cpVect	*vertices;
-	cpVect	*texCoords;
-	ColorF	*colors;
-	uint16	*elementsIdx;
-	
-	int		particleIdx;
 }
 @end
 
