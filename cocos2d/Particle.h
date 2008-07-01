@@ -22,35 +22,44 @@
 
 #import "chipmunk.h"
 
-@interface Particle : NSObject
+#import "types.h"
+
+#define kLIVE (1 << 0)
+typedef struct sParticle
 {
 	cpVect	pos;
 	cpVect	dir;
+	ColorF	color;
+	ColorF	deltaColor;
+	float	size;
 	int		life;
-}
-@property (readwrite, assign) cpVect pos;
-@property (readwrite, assign) cpVect dir;
-@property (readwrite, assign) int life;
+	long	flags;
+} Particle;
 
-@end
+@class Texture2D;
 
 @interface Emitter : NSObject
 {
 	int id;
 	long flags;
-	cpVect pos;
 	
 	cpVect force;
-	
+
+	cpVect pos, posVar;
 	float angle, angleVar;
 	float speed, speedVar;
+	float size, sizeVar;
+	ColorF startColor, startColorVar;
+	ColorF endColor, endColorVar;
 	
-	NSMutableArray *particles;
+	Particle *particles;
 	int totalParticles;
 	int particleCount;
 	int emitsPerFrame, emitVar;
 	int life, lifeVar;
 }
+// FLAGS
+#define kRESPAWN ( 1 << 0 )
 
 @property (readwrite,assign) cpVect pos;
 @property (readwrite,assign) float angle;
@@ -60,19 +69,49 @@
 @property (readwrite,assign) int emitsPerFrame;
 @property (readwrite,assign) int emitVar;
 @property (readwrite,assign) int totalParticles;
-@property (readwrite,assign) NSMutableArray *particles;
 
 
+//! update the emitter
+-(void) update;
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Update a particle
 -(BOOL) updateParticle: (Particle*) particle;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
-
+//! Draws the particle
+-(void) drawParticle: (Particle*) particle;
+//! perform actions before all the particles are visited
+-(void) preParticles;
+//! perform actions after all the particles have been visited, like draw them
+-(void) postParticles;
 @end
 
-@interface EmitFireworks : Emitter
+@interface TextureEmitter : Emitter
+{
+	Texture2D *texture;
+	cpVect	shape;
+	
+	cpVect	*vertices;
+	cpVect	*texCoords;
+	ColorF	*colors;
+	uint16	*elementsIdx;
+	
+	int		particleIdx;
+}
+@end
+
+@interface PixelEmitter : Emitter
+{
+}
+@end
+
+@interface EmitFireworks : PixelEmitter
+{
+}
+@end
+
+@interface EmitFire: TextureEmitter
 {
 }
 @end

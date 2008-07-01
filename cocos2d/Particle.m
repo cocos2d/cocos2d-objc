@@ -18,59 +18,72 @@
  *
  */
 
+// ideas taken from:
+//	 . The ocean spray in your face [Jeff Lander]
+//		http://www.double.co.nz/dust/col0798.pdf
+//	 . Building an Advanced Particle System [John van der Burg]
+//		http://www.gamasutra.com/features/20000623/vanderburg_01.htm
+
+// opengl
+#import <OpenGLES/ES1/gl.h>
+
+// cocos2d
 #import "Particle.h"
+#import "Primitives.h"
+#import "TextureMgr.h"
+
+// support
 #import "OpenGL_Internal.h"
 
 #define RANDOM_FLOAT() (((float)random() / (float)0x3fffffff )-1.0f)
 
 
-@implementation Particle
-@synthesize pos, dir, life;
-@end
-
 @implementation Emitter
 
-@synthesize pos, angle, angleVar, speed, speedVar, emitsPerFrame, emitVar, totalParticles, particles;
+@synthesize pos, angle, angleVar, speed, speedVar, emitsPerFrame, emitVar, totalParticles;
 
 -(id) init
 {
 	if( ! [super init] )
 		return nil;
 	
-	particles = [[NSMutableArray arrayWithCapacity:200] retain];
-	totalParticles = 100;
-	force.x = 0;
-	force.y = -0.1;
-	angle = 90;
-	angleVar = 45;
-	pos.x = 160;
-	pos.y = 240;
-	life = 100;
-	lifeVar = 20;
-	speed = 3;
-	speedVar = 0.3;
+	particles = malloc( sizeof(Particle) * totalParticles );
+	if( ! particles ) {
+		NSLog(@"Not enought memory for particle %@", self);
+		return nil;
+	}
+	bzero( particles, sizeof(Particle) * totalParticles );
 	
 	return self;
 }
 
 -(void) dealloc
 {
-	[particles release];
+	free( particles );
 	[super dealloc];
+}
+
+-(void) update
+{
+	Particle *p;
+	
+	[self preParticles];
+	for( int i=0; i<totalParticles;i++ ) {
+		p = &particles[i];
+		[self updateParticle:p];
+	}
+	[self postParticles];
 }
 
 -(BOOL) addParticle
 {
 	if( particleCount < totalParticles ) {
-		Particle * particle = [[Particle alloc] init];
+		Particle * particle = &particles[ particleCount ];
 		
 		[self initParticle: particle];
 		
 		particleCount++;
-		
-		[particles addObject: particle];
-		[particle release];
-		
+				
 		return YES;
 	}
 	return NO;
@@ -78,41 +91,363 @@
 
 -(void) initParticle: (Particle*) particle
 {
-	particle.pos = cpvzero;
-	particle.dir = cpvzero;
-	particle.life = life + lifeVar * RANDOM_FLOAT();
+	// position
+	particle->pos.x = posVar.x * RANDOM_FLOAT();
+	particle->pos.y = posVar.y * RANDOM_FLOAT();
+	
+	// direction
 	float ar = angle + angleVar * RANDOM_FLOAT();
 	float a = DEGREES_TO_RADIANS( ar );
 	cpVect v;
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * RANDOM_FLOAT();
-	particle.dir = cpvmult( v, s );
-	particle.life = life + lifeVar * RANDOM_FLOAT();
+	particle->dir = cpvmult( v, s );
+	
+	// life
+	particle->life = life + lifeVar * RANDOM_FLOAT();
+	
+	// Color
+	ColorF start;
+	start.r = startColor.r + startColorVar.r * RANDOM_FLOAT();
+	start.g = startColor.g + startColorVar.g * RANDOM_FLOAT();
+	start.b = startColor.b + startColorVar.b * RANDOM_FLOAT();
+	start.a = startColor.a + startColorVar.a * RANDOM_FLOAT();
+
+	ColorF end;
+	end.r = endColor.r + endColorVar.r * RANDOM_FLOAT();
+	end.g = endColor.g + endColorVar.g * RANDOM_FLOAT();
+	end.b = endColor.b + endColorVar.b * RANDOM_FLOAT();
+	end.a = endColor.a + endColorVar.a * RANDOM_FLOAT();
+	
+	particle->color = start;
+	particle->deltaColor.r = (end.r - start.r) / particle->life;
+	particle->deltaColor.g = (end.g - start.g) / particle->life;
+	particle->deltaColor.b = (end.b - start.b) / particle->life;
+	particle->deltaColor.a = (end.a - start.a) / particle->life;
+
+	// size
+	particle->size = size + sizeVar * RANDOM_FLOAT();
+	
+	// alive
+	particle->flags |= kLIVE;
 }
 
 -(BOOL) updateParticle: (Particle*) p
 {
-	if( p.life > 0 ) {
-		p.pos = cpvadd( p.pos, p.dir );
-		p.dir = cpvadd( p.dir, force );
-		p.life--;
+	if( p->life > 0 ) {
+		p->pos = cpvadd( p->pos, p->dir );
+		p->dir = cpvadd( p->dir, force );
+		p->color.r += p->deltaColor.r;
+		p->color.g += p->deltaColor.g;
+		p->color.b += p->deltaColor.b;
+		p->color.a += p->deltaColor.a;
+		p->life--;
+		
+		[self drawParticle: p];
 		return YES;
-	} else {
-		[self initParticle:p];
-//		particleCount--;
-//		[particles removeObject: p];
+	}
+	
+	if (p->flags & kLIVE ) {
+		if( flags & kRESPAWN ) {
+			[self initParticle:p];
+			return YES;
+		} else {
+			particleCount--;
+			p->flags &= ~kLIVE;
+		}
 	}
 	return NO;
 }
+
+-(void) drawParticle: (Particle*) p
+{
+	// overrideme
+}
+-(void) preParticles
+{
+	// overrideme
+}
+-(void) postParticles
+{
+	// overrideme
+}
 @end
 
+//
+// TextureEmitter
+//
+@implementation TextureEmitter
+-(id) init
+{
+	if( ![super init] )
+		return nil;
+	
+	vertices = malloc( sizeof(cpVect) * 4 * totalParticles );
+	texCoords = malloc( sizeof(cpVect) * 4 * totalParticles );
+	colors = malloc( sizeof(ColorF) * 4 * totalParticles );
+	elementsIdx = malloc( sizeof(uint16) * 6 * totalParticles );
+	
+	if( ! ( vertices && texCoords && colors && elementsIdx ) ) {
+		NSLog(@"Not enough memory to initialize TextureEmitter");
+		if( vertices )
+			free(vertices);
+		if( texCoords )
+			free(texCoords);
+		if( colors )
+			free(colors);
+		if( elementsIdx )
+			free(elementsIdx);
+		return nil;
+	}
+	
+	return self;
+}
+
+-(void) dealloc
+{
+	free(vertices);
+	free(texCoords);
+	free(colors);
+	free(elementsIdx);
+	[super dealloc];
+}
+
+-(void) preParticles
+{
+	particleIdx = 0;
+}
+
+-(void) postParticles
+{
+	// save states
+	glBindTexture(GL_TEXTURE_2D, texture.name);
+	glEnableClientState( GL_VERTEX_ARRAY);
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	glEnableClientState( GL_COLOR_ARRAY);
+	glEnable( GL_TEXTURE_2D);
+	
+	// draw
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	glColorPointer(4, GL_FLOAT, 0, colors);
+	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, elementsIdx);
+	
+	CHECK_GL_ERROR();
+	
+	// restore state
+	glDisable( GL_TEXTURE_2D);
+	glDisableClientState(GL_VERTEX_ARRAY );
+	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	glDisableClientState( GL_COLOR_ARRAY);
+}
+
+-(void) drawParticle: (Particle*) p
+{
+	float w,h;
+	
+	// relative to center
+	cpVect v = cpvadd( p->pos, pos );
+	int	i = particleIdx * 4;
+	int j=i;
+	w = shape.x * p->size;
+	h = shape.y * p->size;
+
+	// tex coordinates
+	texCoords[i].x = texture.maxS;
+	texCoords[i].y = texture.maxT;
+	i++;
+	texCoords[i].x = 0.0f;
+	texCoords[i].y = texture.maxT;
+	i++;
+	texCoords[i].x = 0.0f;
+	texCoords[i].y = 0.0f;
+	i++;
+	texCoords[i].x = texture.maxS;
+	texCoords[i].y = 0.0f;
+	
+	// vertices
+	i=j;
+	vertices[i].x = v.x - w;
+	vertices[i].y = v.y - h;
+	i++;	
+	vertices[i].x = v.x + w;
+	vertices[i].y = v.y - h;
+	i++;	
+	vertices[i].x = v.x + w;
+	vertices[i].y = v.y + h;	
+	i++;
+	vertices[i].x = v.x - w;
+	vertices[i].y = v.y + h;	
+	
+	// colors
+	i=j;
+	colors[i] = p->color;
+	colors[i+1] = p->color;
+	colors[i+2] = p->color;
+	colors[i+3] = p->color;
+
+	// indices
+	i = particleIdx * 6;
+	j = particleIdx * 4;
+	elementsIdx[i++] = j;
+	elementsIdx[i++] = j + 1;
+	elementsIdx[i++] = j + 2;
+	elementsIdx[i++] = j + 2;
+	elementsIdx[i++] = j;
+	elementsIdx[i++] = j + 3;
+
+	particleIdx++;
+}
+@end
+
+@implementation PixelEmitter
+-(void) drawParticle: (Particle*) p
+{
+	glPointSize(p->size);
+	glColor4f(p->color.r, p->color.g, p->color.b, p->color.a);
+	
+	// relative to center
+	cpVect v = cpvadd( p->pos, pos );
+	drawPoint( v.x, v.y );
+}
+@end
+
+//
+// EmitFireworks
+//
 @implementation EmitFireworks
 -(id) init
 {
+	totalParticles = 1500;
+
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+
+	// gravity
+	force.x = 0;
+	force.y = -0.1;
+	
+	// angle
+	angle = 90;
+	angleVar = 20;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = 240;
+	
+	// life of particles
+	life = 100;
+	lifeVar = 20;
+	
+	// speed of particles
+	speed = 5;
+	speedVar = 2;
+	
+	// color of particles
+	startColor.r = 0.8f;
+	startColor.g = 0.3f;
+	startColor.b = 0.3f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.5;
+	startColorVar.g = 0.5;
+	startColorVar.b = 0.5;
+	startColorVar.a = 0.1;
+	endColor.r = 0.1f;
+	endColor.g = 0.1f;
+	endColor.b = 0.1f;
+	endColor.a = 0.2f;
+	endColorVar.r = 0.1f;
+	endColorVar.g = 0.1f;
+	endColorVar.b = 0.1f;
+	endColorVar.a = 0.2f;
+	
+	// size, in pixels
+	size = 3.0f;
+	sizeVar = 2.0f;
+
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+@end
+
+//
+// EmitFire
+//
+@implementation EmitFire
+-(id) init
+{
+	totalParticles = 300;
+	
+	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
 	
+	// gravity
+	force.x = 0;
+	force.y = 0.06;
+	
+	// angle
+	angle = 90;
+	angleVar = 20;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = -20;
+	posVar.x = 160;
+	posVar.y = 20;
+	
+	// life of particles
+	life = 100;
+	lifeVar = 20;
+	
+	// speed of particles
+	speed = 0.5;
+	speedVar = 0;
+		
+	// size, in pixels
+	size = 20.0f;
+	sizeVar = 10.0f;
+	shape.x = 1;
+	shape.y = 1;
+	
+	// color of particles
+	startColor.r = 0.8f;
+	startColor.g = 0.2f;
+	startColor.b = 0.2f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.2;
+	startColorVar.g = 0.1;
+	startColorVar.b = 0.1;
+	startColorVar.a = 0.0;
+	endColor.r = 0.0f;
+	endColor.g = 0.0f;
+	endColor.b = 0.0f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
 	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 @end
