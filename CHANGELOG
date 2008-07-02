@@ -1,6 +1,7 @@
 version 0.2 - ???
- . Added particle system (Pixel and Texture)
-
+ . added support to display FPS
+ . Added particle system: Fire, Fireworks
+ 
 version 0.1 - 25-jun-2008:
 
 25-jun-2008:

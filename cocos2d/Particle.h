@@ -116,4 +116,14 @@ typedef struct sParticle
 }
 @end
 
+@interface EmitFireworks2 : TextureEmitter
+{
+}
+@end
+
+@interface EmitSun : TextureEmitter
+{
+}
+@end
+
 
