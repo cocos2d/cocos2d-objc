@@ -90,6 +90,14 @@ typedef struct sParticle
 @interface TextureEmitter : Emitter
 {
 	Texture2D *texture;
+	
+	// VBO related
+	VtxPointSprite *vertices;
+	ColorF	*colors;
+	GLuint	verticesID;
+	GLuint	colorsID;
+	
+	int particleIdx;
 }
 @end
 

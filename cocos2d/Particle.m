@@ -187,28 +187,95 @@
 //
 @implementation TextureEmitter
 
+-(id) init
+{
+	if( ! [super init] )
+		return nil;
+
+	glGenBuffers(1, &verticesID);
+	glGenBuffers(1, &colorsID);
+
+	vertices = malloc( sizeof(VtxPointSprite)*totalParticles);
+	colors = malloc (sizeof(ColorF)*totalParticles);
+	if( ! (vertices && colors ) ) {
+		NSLog(@"TextureEmitter: not enough memory");
+		if( vertices )
+			free(vertices);
+		if( colors )
+			free(colors);
+		return nil;
+	}
+	
+	glBindBuffer( GL_ARRAY_BUFFER, verticesID );
+	glBufferData(GL_ARRAY_BUFFER, sizeof(VtxPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
+
+	glBindBuffer( GL_ARRAY_BUFFER, colorsID );
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
+	
+	return self;
+}
+
+-(void) dealloc
+{
+	free(vertices);
+	free(colors);
+	glDeleteBuffers(1, &verticesID);
+	glDeleteBuffers(1, &colorsID);
+	[super dealloc];
+}
+
 -(void) preParticles
 {
-	glEnable( GL_POINT_SPRITE_OES );
-	glEnable( GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture.name );
-	glTexEnvi(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE );
+	particleIdx = 0;
 }
+
 -(void) drawParticle: (Particle*) p
 {
-	glPointSize(p->size);
-	glColor4f(p->color.r, p->color.g, p->color.b, p->color.a);
 	
 	// relative to center
 	cpVect v = cpvadd( p->pos, pos );
-	drawPoint( v.x, v.y );
+	
+	vertices[particleIdx].x = v.x;
+	vertices[particleIdx].y = v.y;
+	vertices[particleIdx].size = p->size;
+	
+	// colors
+	colors[particleIdx] = p->color;
+		
+	particleIdx++;
 }
+
 -(void) postParticles
 {
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable( GL_POINT_SPRITE_OES );
-	glDisable( GL_TEXTURE_2D );
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture.name);
+	
+	glEnable(GL_POINT_SPRITE_OES);
+	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(VtxPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
+	glVertexPointer(3,GL_FLOAT,sizeof(VtxPointSprite),0);
+		
+	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
+	glPointSizePointerOES(GL_FLOAT,sizeof(VtxPointSprite),(GLvoid*) (sizeof(GL_FLOAT)*2));
+
+	glEnableClientState(GL_COLOR_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, colorsID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
+	glColorPointer(4,GL_FLOAT,0,0);
+		
+	glDrawArrays(GL_POINTS, 0, particleIdx);
+
+	// unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_POINT_SPRITE_OES);
 }
 @end
 
@@ -297,7 +364,7 @@
 @implementation EmitFire
 -(id) init
 {
-	totalParticles = 100;
+	totalParticles = 350;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -309,7 +376,7 @@
 	
 	// angle
 	angle = 90;
-	angleVar = 20;
+	angleVar = 50;
 	
 	// emitter position
 	pos.x = 160;
@@ -318,7 +385,7 @@
 	posVar.y = 30;
 	
 	// life of particles
-	life = 60;
+	life = 80;
 	lifeVar = 20;
 	
 	// speed of particles
@@ -326,12 +393,12 @@
 	speedVar = 0.4;
 		
 	// size, in pixels
-	size = 64.0f;
-	sizeVar = 5.0f;
+	size = 30.0f;
+	sizeVar = 10.0f;
 	
 	// emits per frame
-	emitsPerFrame = 3;
-	emitVar = 2;
+	emitsPerFrame = 6;
+	emitVar = 3;
 	
 	// color of particles
 	startColor.r = 0.76f;
@@ -362,5 +429,10 @@
 {
 	[texture release];
 	[super dealloc];
+}
+-(void) preParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super preParticles];
 }
 @end

@@ -37,3 +37,11 @@ typedef struct sColorF {
 	float a;
 } ColorF;
 
+typedef struct sVtxPointSprite
+{
+	float x;
+	float y;
+	float size;
+} VtxPointSprite;
+		
+
