@@ -14,5 +14,6 @@
 {
 	id emitter1;
 	id emitter2;
+	id emitter3;
 }
 @end

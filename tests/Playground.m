@@ -24,7 +24,15 @@
 {
 	[super init];
 	emitter1 = [[EmitFireworks alloc] init];
-	emitter2 = [[EmitFire alloc] init];
+	emitter2 = [[EmitFireworks2 alloc] init];
+	emitter3 = [[EmitFire alloc] init];
+	
+	cpVect v;
+	v.x=160;
+	v.y=20;
+	[emitter2 setPos:v];
+	
+//	emitter2 = [[EmitFire alloc] init];
 	return self;
 }
 
@@ -32,6 +40,7 @@
 {
 	[emitter1 update];
 	[emitter2 update];
+	[emitter3 update];
 }
 @end
 
@@ -43,6 +52,9 @@
 {
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
+
+	[[Director sharedDirector] setFPS: YES];
+	
 
 	Scene *scene = [Scene node];
 	[scene add: [TextLayer node]];

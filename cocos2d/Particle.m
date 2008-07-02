@@ -206,11 +206,11 @@
 		return nil;
 	}
 	
-	glBindBuffer( GL_ARRAY_BUFFER, verticesID );
-	glBufferData(GL_ARRAY_BUFFER, sizeof(VtxPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
+//	glBindBuffer( GL_ARRAY_BUFFER, verticesID );
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(VtxPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
 
-	glBindBuffer( GL_ARRAY_BUFFER, colorsID );
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
+//	glBindBuffer( GL_ARRAY_BUFFER, colorsID );
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
 	
 	return self;
 }
@@ -300,7 +300,7 @@
 @implementation EmitFireworks
 -(id) init
 {
-	totalParticles = 750;
+	totalParticles = 3000;
 
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -359,12 +359,93 @@
 @end
 
 //
+// EmitFireworks2
+//
+@implementation EmitFireworks2
+-(id) init
+{
+	totalParticles = 3000;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	force.x = 0;
+	force.y = -0.1;
+	
+	// angle
+	angle = 90;
+	angleVar = 20;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = 240;
+	
+	// life of particles
+	life = 100;
+	lifeVar = 20;
+	
+	// speed of particles
+	speed = 5;
+	speedVar = 2;
+	
+	// emits per frame
+	emitsPerFrame = 15;
+	emitVar = 5;
+	
+	// color of particles
+	startColor.r = 0.8f;
+	startColor.g = 0.3f;
+	startColor.b = 0.3f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.5;
+	startColorVar.g = 0.5;
+	startColorVar.b = 0.5;
+	startColorVar.a = 0.1;
+	endColor.r = 0.1f;
+	endColor.g = 0.1f;
+	endColor.b = 0.1f;
+	endColor.a = 0.2f;
+	endColorVar.r = 0.1f;
+	endColorVar.g = 0.1f;
+	endColorVar.b = 0.1f;
+	endColorVar.a = 0.2f;
+	
+	// size, in pixels
+	size = 8.0f;
+	sizeVar = 2.0f;
+
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+@end
+
+//
 // EmitFire
 //
 @implementation EmitFire
 -(id) init
 {
-	totalParticles = 350;
+	totalParticles = 400;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -430,9 +511,90 @@
 	[texture release];
 	[super dealloc];
 }
--(void) preParticles
+-(void) postParticles
 {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	[super preParticles];
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// EmitFlower
+//
+@implementation EmitSun
+-(id) init
+{
+	totalParticles = 350;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	force.x = 0;
+	force.y = 0;
+	
+	// angle
+	angle = 90;
+	angleVar = 360;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = 240;
+	posVar.x = 0;
+	posVar.y = 0;
+	
+	// life of particles
+	life = 30;
+	lifeVar = 15;
+	
+	// speed of particles
+	speed = 0.7;
+	speedVar = 0.4;
+	
+	// size, in pixels
+	size = 30.0f;
+	sizeVar = 10.0f;
+	
+	// emits per frame
+	emitsPerFrame = 6;
+	emitVar = 3;
+	
+	// color of particles
+	startColor.r = 0.76f;
+	startColor.g = 0.25f;
+	startColor.b = 0.12f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.0;
+	startColorVar.g = 0.0;
+	startColorVar.b = 0.0;
+	startColorVar.a = 0.0;
+	endColor.r = 0.0f;
+	endColor.g = 0.0f;
+	endColor.b = 0.0f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 @end
