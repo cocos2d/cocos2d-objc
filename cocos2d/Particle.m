@@ -363,11 +363,4 @@
 	[texture release];
 	[super dealloc];
 }
-
--(void) postParticles
-{
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	[super postParticles];
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
 @end
