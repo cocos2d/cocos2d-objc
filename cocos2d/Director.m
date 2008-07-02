@@ -24,6 +24,7 @@
 
 #import "Director.h"
 #import "Camera.h"
+#import "Texture2D.h"
 
 #define kDefaultFPS		30.0	// 30 frames per second
 
@@ -33,6 +34,8 @@
 @synthesize window;
 @synthesize runningScene;
 @synthesize eventHandler;
+@synthesize FPS;
+
 //
 // singleton stuff
 //
@@ -92,6 +95,10 @@ static Director *sharedDirector;
 	
 	// landscape
 	landscape = NO;
+	
+	// FPS
+	FPS = NO;
+	frames = 0;
 	
 	//Show window
 	[window makeKeyAndVisible];	
@@ -186,6 +193,9 @@ static Director *sharedDirector;
 	return;
 }
 
+//
+// OpenGL helpers
+//
 - (void) setAlphaBlending: (BOOL) on
 {
 	if (on) {
@@ -214,6 +224,9 @@ static Director *sharedDirector;
 		glDisable( GL_DEPTH_TEST );
 }
 
+//
+// Scene Management
+//
 - (void)runScene:(Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
@@ -263,6 +276,20 @@ static Director *sharedDirector;
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 
+-(void) setNextScene
+{
+	[runningScene onExit];
+	[runningScene release];
+	
+	[nextScene onEnter];
+	runningScene = nextScene;
+	
+	nextScene = nil;
+}
+
+//
+// timers
+//
 - (void)startAnimation
 {
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
@@ -274,7 +301,6 @@ static Director *sharedDirector;
 	animationTimer = nil;
 }
 
-
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
 	animationInterval = interval;
@@ -285,6 +311,9 @@ static Director *sharedDirector;
 	}
 }
 
+//
+// landscape mode
+//
 -(void) applyLandscape
 {
 	if( landscape ) {
@@ -294,6 +323,9 @@ static Director *sharedDirector;
 	}	
 }
 
+//
+// main loop
+//
 - (void) drawScene
 {
 	/* clear window */
@@ -312,25 +344,53 @@ static Director *sharedDirector;
 	[runningScene visit];
 	
 	glPopMatrix();
-	
+
+	if( FPS )
+		[self displayFPS];
+		
 	/* swap buffers */
 	[self swapBuffers];
 	
 	CHECK_GL_ERROR();
-	
 }
 
--(void) setNextScene
+//
+// display FPS
+//
+-(void) displayFPS
 {
-	[runningScene onExit];
-	[runningScene release];
-	
-	[nextScene onEnter];
-	runningScene = nextScene;
+ 	static struct timeval lastUpdate = {0,0};
+	struct timeval now = {0,0};
 
-	nextScene = nil;
+ 	frames++;
+	gettimeofday(&now, NULL);
+	
+	double delta = ( now.tv_sec - lastUpdate.tv_sec) + ( now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
+
+	if (delta > 0.3)  {
+		frameRate = frames/delta;
+		lastUpdate = now;
+		frames = 0;
+	}
+
+	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
+	Texture2D *texture = [[Texture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:24];
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState( GL_VERTEX_ARRAY);
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+
+	glColor4ub(224,224,244,200);
+	[texture drawAtPoint: CGPointMake(60,20)];
+	[texture release];
+		
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
+//
+// multi touch proxies
+//
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventHandler && [eventHandler respondsToSelector:_cmd] )

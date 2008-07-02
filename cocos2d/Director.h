@@ -41,6 +41,9 @@ and when to execute the Scenes
 	NSTimeInterval animationInterval;
 
 	BOOL landscape;
+	BOOL FPS;
+	int frames;
+	float frameRate;
 	
 	/** running scene */
 	Scene *runningScene;
@@ -59,6 +62,7 @@ and when to execute the Scenes
 @property (readwrite, assign) NSTimeInterval animationInterval;
 @property (readwrite,assign) UIWindow* window;
 @property (readwrite, assign) id eventHandler;
+@property (readwrite, assign) BOOL FPS;
 
 -(void) setNextScene;
 
@@ -119,5 +123,8 @@ and when to execute the Scenes
 -(CGPoint) convertCoordinate: (CGPoint) p;
 
 /** returns a shared instance of the director */
-+ (Director *)sharedDirector;
++(Director *)sharedDirector;
+
+/** displays the FPS */
+-(void) displayFPS;
 @end
