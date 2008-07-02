@@ -12,6 +12,7 @@
 @class EmitFireworks;
 @interface TextLayer: Layer
 {
-	EmitFireworks *emitter;
+	id emitter1;
+	id emitter2;
 }
 @end
