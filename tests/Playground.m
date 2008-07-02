@@ -23,16 +23,15 @@
 -(id) init
 {
 	[super init];
-//	emitter = [[EmitFireworks alloc] init];
-	emitter = [[EmitFire alloc] init];
-	for( int i=0; i < emitter.totalParticles;i++ )
-		[emitter addParticle];
+	emitter1 = [[EmitFireworks alloc] init];
+	emitter2 = [[EmitFire alloc] init];
 	return self;
 }
 
 -(void) draw
 {
-	[emitter update];
+	[emitter1 update];
+	[emitter2 update];
 }
 @end
 

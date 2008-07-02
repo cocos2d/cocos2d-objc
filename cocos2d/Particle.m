@@ -66,6 +66,14 @@
 -(void) update
 {
 	Particle *p;
+
+	int i = totalParticles - particleCount;
+	if( i ) {
+		int m = MIN(emitsPerFrame + emitVar * RANDOM_FLOAT(), i );
+		
+		for(int j=0;j<m;j++)
+			[self addParticle];
+	}
 	
 	[self preParticles];
 	for( int i=0; i<totalParticles;i++ ) {
@@ -225,7 +233,7 @@
 @implementation EmitFireworks
 -(id) init
 {
-	totalParticles = 1500;
+	totalParticles = 750;
 
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -250,6 +258,10 @@
 	// speed of particles
 	speed = 5;
 	speedVar = 2;
+
+	// emits per frame
+	emitsPerFrame = 15;
+	emitVar = 5;
 	
 	// color of particles
 	startColor.r = 0.8f;
@@ -316,6 +328,10 @@
 	// size, in pixels
 	size = 64.0f;
 	sizeVar = 5.0f;
+	
+	// emits per frame
+	emitsPerFrame = 3;
+	emitVar = 2;
 	
 	// color of particles
 	startColor.r = 0.76f;
