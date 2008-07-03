@@ -23,6 +23,8 @@
 //		http://www.double.co.nz/dust/col0798.pdf
 //	 . Building an Advanced Particle System [John van der Burg]
 //		http://www.gamasutra.com/features/20000623/vanderburg_01.htm
+//   . LOVE game engine
+//      http://love.sf.net
 
 // opengl
 #import <OpenGLES/ES1/gl.h>
@@ -38,9 +40,17 @@
 #define RANDOM_FLOAT() (((float)random() / (float)0x3fffffff )-1.0f)
 
 
-@implementation Emitter
+@implementation ParticleSystem
 
-@synthesize pos, angle, angleVar, speed, speedVar, emitsPerFrame, emitVar, totalParticles;
+@synthesize pos, posVar;
+@synthesize angle, angleVar;
+@synthesize speed, speedVar;
+@synthesize tangentialAccel, tangentialAccelVar;
+@synthesize radialAccel, radialAccelVar;
+@synthesize startColor, startColorVar;
+@synthesize endColor, endColorVar;
+@synthesize emissionRate;
+@synthesize totalParticles;
 
 -(id) init
 {
@@ -63,22 +73,32 @@
 	[super dealloc];
 }
 
--(void) update
+-(void) draw
 {
 	Particle *p;
-
-	int i = totalParticles - particleCount;
-	if( i ) {
-		int m = MIN(emitsPerFrame + emitVar * RANDOM_FLOAT(), i );
+	
+ 	static struct timeval lastUpdate = {0,0};
+	struct timeval now = {0,0};
 		
-		for(int j=0;j<m;j++)
-			[self addParticle];
+	gettimeofday(&now, NULL);
+
+	double delta = ( now.tv_sec - lastUpdate.tv_sec) + ( now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
+	lastUpdate = now;
+	// first run ?
+	if( delta > 1000 )
+		return;
+	
+	float rate = 1.0 / emissionRate;
+	emitCounter += delta;
+	while( particleCount < totalParticles && emitCounter > rate ) {
+		[self addParticle];
+		emitCounter -= rate;
 	}
 	
 	[self preParticles];
 	for( int i=0; i<totalParticles;i++ ) {
 		p = &particles[i];
-		[self updateParticle:p];
+		[self updateParticle:p delta:delta];
 	}
 	[self postParticles];
 }
@@ -112,6 +132,12 @@
 	float s = speed + speedVar * RANDOM_FLOAT();
 	particle->dir = cpvmult( v, s );
 	
+	// radial accel
+	particle->radialAccel = radialAccel + radialAccelVar * RANDOM_FLOAT();
+	
+	// tangential accel
+	particle->tangentialAccel = tangentialAccel + tangentialAccelVar * RANDOM_FLOAT();
+	
 	// life
 	particle->life = life + lifeVar * RANDOM_FLOAT();
 	
@@ -141,16 +167,38 @@
 	particle->flags |= kLIVE;
 }
 
--(BOOL) updateParticle: (Particle*) p
+-(BOOL) updateParticle: (Particle*) p delta:(double)dt
 {
 	if( p->life > 0 ) {
-		p->pos = cpvadd( p->pos, p->dir );
-		p->dir = cpvadd( p->dir, force );
-		p->color.r += p->deltaColor.r;
-		p->color.g += p->deltaColor.g;
-		p->color.b += p->deltaColor.b;
-		p->color.a += p->deltaColor.a;
-		p->life--;
+		
+		cpVect tmp, radial, tangential;
+		
+		radial = cpvzero;
+		// radial acceleration
+		if(p->pos.x || p->pos.y)
+			radial = cpvnormalize(p->pos);
+		tangential = radial;
+		radial = cpvmult(radial, p->radialAccel);
+		
+		// tangential acceleration
+		float newy = tangential.x;
+		tangential.x = -tangential.y;
+		tangential.y = newy;
+		tangential = cpvmult(tangential, p->tangentialAccel);
+		
+		// (gravity + radial + tangential) * dt
+		tmp = cpvadd( cpvadd( radial, tangential), gravity);
+		tmp = cpvmult( tmp, dt);
+		p->dir = cpvadd( p->dir, tmp);
+		tmp = cpvmult(p->dir, dt);
+		p->pos = cpvadd( p->pos, tmp );
+		
+		p->color.r += (p->deltaColor.r * dt);
+		p->color.g += (p->deltaColor.g * dt);
+		p->color.b += (p->deltaColor.b * dt);
+		p->color.a += (p->deltaColor.a * dt);
+		
+		p->life -= dt;
 		
 		[self drawParticle: p];
 		return YES;
@@ -183,9 +231,9 @@
 @end
 
 //
-// TextureEmitter
+// TextureParticleSystem
 //
-@implementation TextureEmitter
+@implementation TextureParticleSystem
 
 -(id) init
 {
@@ -205,13 +253,7 @@
 			free(colors);
 		return nil;
 	}
-	
-//	glBindBuffer( GL_ARRAY_BUFFER, verticesID );
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(VtxPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
-
-//	glBindBuffer( GL_ARRAY_BUFFER, colorsID );
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
-	
+		
 	return self;
 }
 
@@ -280,9 +322,9 @@
 @end
 
 //
-// PixelEmitter
+// PixelParticleSystem
 //
-@implementation PixelEmitter
+@implementation PixelParticleSystem
 -(void) drawParticle: (Particle*) p
 {
 	glPointSize(p->size);
@@ -295,9 +337,9 @@
 @end
 
 //
-// EmitFireworks
+// ParticleFireworks
 //
-@implementation EmitFireworks
+@implementation ParticleFireworks
 -(id) init
 {
 	totalParticles = 3000;
@@ -307,8 +349,8 @@
 		return nil;
 
 	// gravity
-	force.x = 0;
-	force.y = -0.1;
+	gravity.x = 0;
+	gravity.y = -0.1;
 	
 	// angle
 	angle = 90;
@@ -319,16 +361,15 @@
 	pos.y = 240;
 	
 	// life of particles
-	life = 100;
-	lifeVar = 20;
+	life = 5;
+	lifeVar = 1;
 	
 	// speed of particles
 	speed = 5;
 	speedVar = 2;
 
-	// emits per frame
-	emitsPerFrame = 15;
-	emitVar = 5;
+	// emits per seconds
+	emissionRate = totalParticles/life;
 	
 	// color of particles
 	startColor.r = 0.8f;
@@ -359,9 +400,9 @@
 @end
 
 //
-// EmitFireworks2
+// ParticleFireworks2
 //
-@implementation EmitFireworks2
+@implementation ParticleFireworks2
 -(id) init
 {
 	totalParticles = 3000;
@@ -371,28 +412,31 @@
 		return nil;
 	
 	// gravity
-	force.x = 0;
-	force.y = -0.1;
+	gravity.x = 0;
+	gravity.y = -100;
 	
 	// angle
 	angle = 90;
 	angleVar = 20;
 	
+	// radial
+	radialAccel = 0;
+	radialAccelVar = 0;
+
+	// speed of particles
+	speed = 180;
+	speedVar = 20;
+	
 	// emitter position
 	pos.x = 160;
-	pos.y = 240;
+	pos.y = 160;
 	
 	// life of particles
-	life = 100;
-	lifeVar = 20;
-	
-	// speed of particles
-	speed = 5;
-	speedVar = 2;
-	
+	life = 3;
+	lifeVar = 1;
+		
 	// emits per frame
-	emitsPerFrame = 15;
-	emitVar = 5;
+	emissionRate = totalParticles/life;
 	
 	// color of particles
 	startColor.r = 0.8f;
@@ -440,46 +484,49 @@
 @end
 
 //
-// EmitFire
+// ParticleFire
 //
-@implementation EmitFire
+@implementation ParticleFire
 -(id) init
 {
-	totalParticles = 400;
+	totalParticles = 200;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
 	
 	// gravity
-	force.x = 0;
-	force.y = 0.06;
+	gravity.x = 0;
+	gravity.y = 0;
 	
 	// angle
 	angle = 90;
-	angleVar = 50;
+	angleVar = 20;
+
+	// radial acceleration
+	radialAccel = 0;
+	radialAccelVar = 0;
 	
 	// emitter position
 	pos.x = 160;
-	pos.y = 0;
-	posVar.x = 100;
-	posVar.y = 30;
+	pos.y = 60;
+	posVar.x = 40;
+	posVar.y = 20;
 	
 	// life of particles
-	life = 80;
-	lifeVar = 20;
+	life = 2;
+	lifeVar = 1;
 	
 	// speed of particles
-	speed = 0.7;
-	speedVar = 0.4;
+	speed = 70;
+	speedVar = 40;
 		
 	// size, in pixels
-	size = 30.0f;
+	size = 40.0f;
 	sizeVar = 10.0f;
 	
 	// emits per frame
-	emitsPerFrame = 6;
-	emitVar = 3;
+	emissionRate = totalParticles/life;
 	
 	// color of particles
 	startColor.r = 0.76f;
@@ -520,9 +567,9 @@
 @end
 
 //
-// EmitFlower
+// ParticleSun
 //
-@implementation EmitSun
+@implementation ParticleSun
 -(id) init
 {
 	totalParticles = 350;
@@ -532,12 +579,16 @@
 		return nil;
 	
 	// gravity
-	force.x = 0;
-	force.y = 0;
+	gravity.x = 0;
+	gravity.y = 0;
 	
 	// angle
 	angle = 90;
 	angleVar = 360;
+	
+	// radial acceleration
+	radialAccel = 0;
+	radialAccelVar = 0;	
 	
 	// emitter position
 	pos.x = 160;
@@ -546,25 +597,111 @@
 	posVar.y = 0;
 	
 	// life of particles
-	life = 30;
-	lifeVar = 15;
+	life = 1;
+	lifeVar = 0.5;
 	
 	// speed of particles
-	speed = 0.7;
-	speedVar = 0.4;
+	speed = 20;
+	speedVar = 5;
 	
 	// size, in pixels
 	size = 30.0f;
 	sizeVar = 10.0f;
 	
-	// emits per frame
-	emitsPerFrame = 6;
-	emitVar = 3;
+	// emits per seconds
+	emissionRate = totalParticles/life;
 	
 	// color of particles
 	startColor.r = 0.76f;
 	startColor.g = 0.25f;
 	startColor.b = 0.12f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.0;
+	startColorVar.g = 0.0;
+	startColorVar.b = 0.0;
+	startColorVar.a = 0.0;
+	endColor.r = 0.0f;
+	endColor.g = 0.0f;
+	endColor.b = 0.0f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// ParticleGalaxy
+//
+@implementation ParticleGalaxy
+-(id) init
+{
+	totalParticles = 250;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	gravity.x = 0;
+	gravity.y = 0;
+	
+	// angle
+	angle = 90;
+	angleVar = 360;
+	
+	// speed of particles
+	speed = 60;
+	speedVar = 10;
+		
+	// radial
+	radialAccel = -80;
+	radialAccelVar = 0;
+	
+	// tagential
+	tangentialAccel = 80;
+	tangentialAccelVar = 0;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = 240;
+	posVar.x = 0;
+	posVar.y = 0;
+	
+	// life of particles
+	life = 4;
+	lifeVar = 1;
+	
+	// size, in pixels
+	size = 40.0f;
+	sizeVar = 10.0f;
+	
+	// emits per second
+	emissionRate = totalParticles/life;
+	
+	// color of particles
+	startColor.r = 0.12f;
+	startColor.g = 0.25f;
+	startColor.b = 0.76f;
 	startColor.a = 1.0f;
 	startColorVar.r = 0.0;
 	startColorVar.g = 0.0;
