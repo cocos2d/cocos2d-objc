@@ -12,23 +12,27 @@
 @class Emitter;
 @interface ParticleDemo : Layer
 {
-	Emitter *emitter;
 }
 
 -(NSString*) title;
 @end
 
-@interface ParticleFirework : ParticleDemo
+@interface DemoFirework : ParticleDemo
 {
 }
 @end
 
-@interface ParticleFire : ParticleDemo
+@interface DemoFire : ParticleDemo
 {
 }
 @end
 
-@interface ParticleSun : ParticleDemo
+@interface DemoSun : ParticleDemo
+{
+}
+@end
+
+@interface DemoGalaxy : ParticleDemo
 {
 }
 @end

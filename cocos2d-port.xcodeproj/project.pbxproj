@@ -94,6 +94,7 @@
 		507EB6560DFF315B00A0C77E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		507EB6570DFF315B00A0C77E /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		5082437A0DFDF84100113673 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		509E665E0E06CD940050992C /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* Camera.h */; };
 		509E665F0E06CD940050992C /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E665D0E06CD940050992C /* Camera.m */; };
 		509E66F00E06E1360050992C /* CameraAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E66EE0E06E1360050992C /* CameraAction.h */; };
@@ -327,6 +328,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		508D48F00E1C76840091E768 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
+			remoteInfo = Chipmunk;
 		};
 		50B2C5D20E100EF000AE9530 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -599,6 +607,7 @@
 				5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */,
 				5018F2E50DFDEBBA00C013A5 /* OpenGLES.framework in Frameworks */,
 				5018F2E60DFDEBBA00C013A5 /* QuartzCore.framework in Frameworks */,
+				508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1138,6 +1147,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				508D48F10E1C76840091E768 /* PBXTargetDependency */,
 			);
 			name = cocos2d;
 			productName = cocos2d;
@@ -1793,6 +1803,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 507EB6B50DFF331700A0C77E /* PBXContainerItemProxy */;
+		};
+		508D48F10E1C76840091E768 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
+			targetProxy = 508D48F00E1C76840091E768 /* PBXContainerItemProxy */;
 		};
 		50B2C5D10E100EF000AE9530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

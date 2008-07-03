@@ -21,7 +21,7 @@
 #import <UIKit/UIKit.h>
 
 #import "chipmunk.h"
-
+#import "CocosNode.h"
 #import "types.h"
 
 #define kLIVE (1 << 0)
@@ -29,54 +29,104 @@ typedef struct sParticle
 {
 	cpVect	pos;
 	cpVect	dir;
+	float	radialAccel;
+	float	tangentialAccel;
 	ColorF	color;
 	ColorF	deltaColor;
 	float	size;
-	int		life;
+	float	life;
 	long	flags;
 } Particle;
 
 @class Texture2D;
 
-@interface Emitter : NSObject
+@interface ParticleSystem : CocosNode
 {
 	int id;
 	long flags;
 	
-	cpVect force;
+	/// Gravity of the particles
+	cpVect gravity;
 
-	cpVect pos, posVar;
-	float angle, angleVar;
-	float speed, speedVar;
-	float size, sizeVar;
-	ColorF startColor, startColorVar;
-	ColorF endColor, endColorVar;
+	/// Position where the particles will be born
+	cpVect pos;
+	/// Position variance
+	cpVect posVar;
+	
+	/// The angle (direction) of the particles measured in degrees
+	float angle;
+	/// Angle variance measured in degrees;
+	float angleVar;
+	
+	/// The speed the particles will have.
+	float speed;
+	/// The speed variance
+	float speedVar;
+	
+	/// Tangential acceleration
+	float tangentialAccel;
+	/// Tangential acceleration variance
+	float tangentialAccelVar;
+
+	/// Radial acceleration
+	float radialAccel;
+	/// Radial acceleration variance
+	float radialAccelVar;
+	
+	/// Size of the particles
+	float size;
+	/// Size variance
+	float sizeVar;
+	
+	/// Start color of the particles
+	ColorF startColor;
+	/// Start color variance
+	ColorF startColorVar;
+	/// End color of the particles
+	ColorF endColor;
+	/// End color variance
+	ColorF endColorVar;
 	
 	Particle *particles;
+	/// Maximum particles
 	int totalParticles;
+	/// Count of particles
 	int particleCount;
-	int emitsPerFrame, emitVar;
-	int life, lifeVar;
+	
+	/// How many particles can be emitted per second
+	float emissionRate;
+	float emitCounter;
+	
+	/// How many seconds will the particle live
+	float life;
+	/// Life variance
+	float lifeVar;
 }
 // FLAGS
 #define kRESPAWN ( 1 << 0 )
 
 @property (readwrite,assign) cpVect pos;
+@property (readwrite,assign) cpVect posVar;
 @property (readwrite,assign) float angle;
 @property (readwrite,assign) float angleVar;
 @property (readwrite,assign) float speed;
 @property (readwrite,assign) float speedVar;
-@property (readwrite,assign) int emitsPerFrame;
-@property (readwrite,assign) int emitVar;
+@property (readwrite,assign) float tangentialAccel;
+@property (readwrite,assign) float tangentialAccelVar;
+@property (readwrite,assign) float radialAccel;
+@property (readwrite,assign) float radialAccelVar;
+@property (readwrite,assign) ColorF startColor;
+@property (readwrite,assign) ColorF startColorVar;
+@property (readwrite,assign) ColorF endColor;
+@property (readwrite,assign) ColorF endColorVar;
+@property (readwrite,assign) float emissionRate;
 @property (readwrite,assign) int totalParticles;
 
 
-//! update the emitter
--(void) update;
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Update a particle
--(BOOL) updateParticle: (Particle*) particle;
+-(BOOL) updateParticle: (Particle*) particle delta:(double)dt;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
 //! Draws the particle
@@ -87,7 +137,7 @@ typedef struct sParticle
 -(void) postParticles;
 @end
 
-@interface TextureEmitter : Emitter
+@interface TextureParticleSystem : ParticleSystem
 {
 	Texture2D *texture;
 	
@@ -101,29 +151,33 @@ typedef struct sParticle
 }
 @end
 
-@interface PixelEmitter : Emitter
+@interface PixelParticleSystem : ParticleSystem
 {
 }
 @end
 
-@interface EmitFireworks : PixelEmitter
+@interface ParticleFireworks : PixelParticleSystem
 {
 }
 @end
 
-@interface EmitFire: TextureEmitter
+@interface ParticleFire: TextureParticleSystem
 {
 }
 @end
 
-@interface EmitFireworks2 : TextureEmitter
+@interface ParticleFireworks2 : TextureParticleSystem
 {
 }
 @end
 
-@interface EmitSun : TextureEmitter
+@interface ParticleSun : TextureParticleSystem
 {
 }
 @end
 
+@interface ParticleGalaxy : TextureParticleSystem
+{
+}
+@end
 

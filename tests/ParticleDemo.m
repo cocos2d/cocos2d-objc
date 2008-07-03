@@ -30,18 +30,6 @@ Class nextAction();
 	return self;
 }
 
--(void) onExit
-{
-	[super onExit];
-	[emitter release];
-	emitter = nil;
-}
-
--(void) draw
-{
-	[emitter update];
-}
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	Scene *s = [Scene node];
@@ -55,39 +43,55 @@ Class nextAction();
 }
 @end
 
-@implementation ParticleFirework
+@implementation DemoFirework
 -(void) onEnter
 {
 	[super onEnter];
-	emitter = [[EmitFireworks2 alloc] init];
+	ParticleSystem *emitter = [ParticleFireworks2 node];
+	[self add: emitter];
 }
 -(NSString *) title
 {
-	return @"EmitFireworks";
+	return @"ParticleFireworks";
 }
 @end
 
-@implementation ParticleFire
+@implementation DemoFire
 -(void) onEnter
 {
 	[super onEnter];
-	emitter = [[EmitFire alloc] init];
+	ParticleSystem *emitter = [ParticleFire node];
+	[self add: emitter];
 }
 -(NSString *) title
 {
-	return @"EmitFire";
+	return @"ParticleFire";
 }
 @end
 
-@implementation ParticleSun
+@implementation DemoSun
 -(void) onEnter
 {
 	[super onEnter];
-	emitter = [[EmitSun alloc] init];
+	ParticleSystem *emitter = [ParticleSun node];
+	[self add: emitter];
 }
 -(NSString *) title
 {
-	return @"EmitSun";
+	return @"ParticleSun";
+}
+@end
+
+@implementation DemoGalaxy
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleGalaxy node];
+	[self add: emitter];
+}
+-(NSString *) title
+{
+	return @"ParticleGalaxy";
 }
 @end
 
@@ -96,9 +100,10 @@ Class nextAction()
 	static int i=0;
 	
 	NSArray *transitions = [[NSArray arrayWithObjects:
-								@"ParticleFirework",
-								@"ParticleFire",
-								@"ParticleSun",
+								@"DemoGalaxy",
+								@"DemoFirework",
+								@"DemoFire",
+								@"DemoSun",
 									nil ] retain];
 	
 	
