@@ -1,8 +1,8 @@
 version 0.2 - ???
  . Added particle system.
     . uses VBO + POINT_SPRITES
-    . Built-in systems: Fire, Fireworks, Sun, Galaxy
-	. supports: gravity, radial, tangential, color, size, texture, direction, spread (with its variation)
+    . Built-in systems: Fire, Fireworks, Sun, Galaxy, Flower, Meteor
+	. supports: gravity, radial, tangential, color, size, texture, direction, spread (all of them with its variation)
  . added support to display FPS
  
 version 0.1 - 25-jun-2008:

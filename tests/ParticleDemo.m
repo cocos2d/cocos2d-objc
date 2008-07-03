@@ -95,15 +95,43 @@ Class nextAction();
 }
 @end
 
+@implementation DemoFlower
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleFlower node];
+	[self add: emitter];
+}
+-(NSString *) title
+{
+	return @"ParticleFlower";
+}
+@end
+
+@implementation DemoMeteor
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleMeteor node];
+	[self add: emitter];
+}
+-(NSString *) title
+{
+	return @"ParticleMeteor";
+}
+@end
+
 Class nextAction()
 {
 	static int i=0;
 	
 	NSArray *transitions = [[NSArray arrayWithObjects:
+								@"DemoFlower",
 								@"DemoGalaxy",
 								@"DemoFirework",
-								@"DemoFire",
 								@"DemoSun",
+								@"DemoMeteor",
+								@"DemoFire",
 									nil ] retain];
 	
 	

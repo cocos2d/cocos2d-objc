@@ -413,7 +413,7 @@
 	
 	// gravity
 	gravity.x = 0;
-	gravity.y = -100;
+	gravity.y = -90;
 	
 	// angle
 	angle = 90;
@@ -425,23 +425,23 @@
 
 	// speed of particles
 	speed = 180;
-	speedVar = 20;
+	speedVar = 50;
 	
 	// emitter position
 	pos.x = 160;
 	pos.y = 160;
 	
 	// life of particles
-	life = 3;
+	life = 3.5;
 	lifeVar = 1;
 		
 	// emits per frame
 	emissionRate = totalParticles/life;
 	
 	// color of particles
-	startColor.r = 0.8f;
-	startColor.g = 0.3f;
-	startColor.b = 0.3f;
+	startColor.r = 0.5f;
+	startColor.g = 0.5f;
+	startColor.b = 0.5f;
 	startColor.a = 1.0f;
 	startColorVar.r = 0.5;
 	startColorVar.g = 0.5;
@@ -655,7 +655,7 @@
 @implementation ParticleGalaxy
 -(id) init
 {
-	totalParticles = 250;
+	totalParticles = 200;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -692,7 +692,7 @@
 	lifeVar = 1;
 	
 	// size, in pixels
-	size = 40.0f;
+	size = 37.0f;
 	sizeVar = 10.0f;
 	
 	// emits per second
@@ -707,6 +707,180 @@
 	startColorVar.g = 0.0;
 	startColorVar.b = 0.0;
 	startColorVar.a = 0.0;
+	endColor.r = 0.0f;
+	endColor.g = 0.0f;
+	endColor.b = 0.0f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// ParticleFlower
+//
+@implementation ParticleFlower
+-(id) init
+{
+	totalParticles = 250;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	gravity.x = 0;
+	gravity.y = 0;
+	
+	// angle
+	angle = 90;
+	angleVar = 360;
+	
+	// speed of particles
+	speed = 80;
+	speedVar = 10;
+	
+	// radial
+	radialAccel = -60;
+	radialAccelVar = 0;
+	
+	// tagential
+	tangentialAccel = 15;
+	tangentialAccelVar = 0;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = 240;
+	posVar.x = 0;
+	posVar.y = 0;
+	
+	// life of particles
+	life = 4;
+	lifeVar = 1;
+	
+	// size, in pixels
+	size = 30.0f;
+	sizeVar = 10.0f;
+	
+	// emits per second
+	emissionRate = totalParticles/life;
+	
+	// color of particles
+	startColor.r = 0.50f;
+	startColor.g = 0.50f;
+	startColor.b = 0.50f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.5f;
+	startColorVar.g = 0.5f;
+	startColorVar.b = 0.5f;
+	startColorVar.a = 0.5f;
+	endColor.r = 0.0f;
+	endColor.g = 0.0f;
+	endColor.b = 0.0f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// ParticleTest
+//
+@implementation ParticleMeteor
+-(id) init
+{
+	totalParticles = 150;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	gravity.x = -200;
+	gravity.y = 200;
+	
+	// angle
+	angle = 90;
+	angleVar = 360;
+	
+	// speed of particles
+	speed = 15;
+	speedVar = 5;
+	
+	// radial
+	radialAccel = 0;
+	radialAccelVar = 0;
+	
+	// tagential
+	tangentialAccel = 0;
+	tangentialAccelVar = 0;
+	
+	// emitter position
+	pos.x = 160;
+	pos.y = 240;
+	posVar.x = 0;
+	posVar.y = 0;
+	
+	// life of particles
+	life = 2;
+	lifeVar = 1;
+	
+	// size, in pixels
+	size = 60.0f;
+	sizeVar = 10.0f;
+	
+	// emits per second
+	emissionRate = totalParticles/life;
+	
+	// color of particles
+	startColor.r = 0.2f;
+	startColor.g = 0.4f;
+	startColor.b = 0.7f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.0f;
+	startColorVar.g = 0.0f;
+	startColorVar.b = 0.2f;
+	startColorVar.a = 0.1f;
 	endColor.r = 0.0f;
 	endColor.g = 0.0f;
 	endColor.b = 0.0f;

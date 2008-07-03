@@ -181,3 +181,12 @@ typedef struct sParticle
 }
 @end
 
+@interface ParticleFlower : TextureParticleSystem
+{
+}
+@end
+
+@interface ParticleMeteor : TextureParticleSystem
+{
+}
+@end
