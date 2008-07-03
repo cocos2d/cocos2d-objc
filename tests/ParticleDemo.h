@@ -37,3 +37,12 @@
 }
 @end
 
+@interface DemoFlower : ParticleDemo
+{
+}
+@end
+
+@interface DemoMeteor : ParticleDemo
+{
+}
+@end
