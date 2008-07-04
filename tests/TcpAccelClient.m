@@ -31,11 +31,11 @@ Class nextAction();
 
 	CGRect s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: CGPointMake(60, s.size.height/3)];
+	[grossini setPosition: cpv(60, s.size.height/3)];
 	
 	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
-	[label setPosition: CGPointMake(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
 
 	return self;
 }
@@ -50,7 +50,7 @@ Class nextAction();
 {
 	CGRect s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: CGPointMake(s.size.width/3, s.size.height/2)];
+	[grossini setPosition: cpv(s.size.width/3, s.size.height/2)];
 }
 -(NSString*) title
 {
@@ -63,7 +63,7 @@ Class nextAction();
 {
 	[super onEnter];
 	
-	id actionBy = [MoveBy actionWithDuration:2  position: CGPointMake(80,80)];
+	id actionBy = [MoveBy actionWithDuration:2  position: cpv(80,80)];
 	
 	[grossini do:actionBy];
 

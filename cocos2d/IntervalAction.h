@@ -18,8 +18,9 @@
  *
  */
 
-
 #import <UIKit/UIKit.h>
+
+#import "chipmunk.h"
 
 #import <OpenGLES/ES1/gl.h>
 #import "Action.h"
@@ -144,14 +145,14 @@ Example:
 */
 @interface MoveTo : IntervalAction <NSCopying>
 {
-	CGPoint endPosition;
-	CGPoint startPosition;
-	CGPoint delta;
+	cpVect endPosition;
+	cpVect startPosition;
+	cpVect delta;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t position: (CGPoint) pos;
++(id) actionWithDuration: (double) t position: (cpVect) pos;
 /** initializes the action */
--(id) initWithDuration: (double) t position: (CGPoint) pos;
+-(id) initWithDuration: (double) t position: (cpVect) pos;
 @end
 
 /**  Moves a CocosNode object x,y pixels by modifying it's position attribute.
@@ -162,24 +163,24 @@ Example:
 {
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t position: (CGPoint) delta;
++(id) actionWithDuration: (double) t position: (cpVect) delta;
 /** initializes the action */
--(id) initWithDuration: (double) t position: (CGPoint) delta;
+-(id) initWithDuration: (double) t position: (cpVect) delta;
 @end
 
 /** Moves a CocosNode object simulating a jump movement by modifying it's position attribute.
 */
  @interface JumpBy : IntervalAction <NSCopying>
 {
-	CGPoint startPosition;
-	CGPoint delta;
+	cpVect startPosition;
+	cpVect delta;
 	double height;
 	int jumps;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j;
++(id) actionWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j;
 /** initializes the action */
--(id) initWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j;
+-(id) initWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j;
 @end
 
 /** Moves a `CocosNode` object to a position simulating a jump movement by modifying it's position attribute.

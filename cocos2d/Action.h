@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "chipmunk.h"
 #include <sys/time.h>
 
 @class CocosNode;

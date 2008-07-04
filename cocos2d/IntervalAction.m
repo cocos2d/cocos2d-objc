@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ *cpVect
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -86,10 +86,10 @@
 		@throw myException;
 	}
 	
-	delta = (lastUpdate.tv_sec - now.tv_sec) + (lastUpdate.tv_usec - now.tv_usec) / 1000000.0;
+	delta = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
 	
 	memcpy( &lastUpdate, &now, sizeof(lastUpdate) );
-	return -delta;
+	return delta;
 }
 
 -(void) start
@@ -458,12 +458,12 @@
 // MoveTo
 //
 @implementation MoveTo
-+(id) actionWithDuration: (double) t position: (CGPoint) p
++(id) actionWithDuration: (double) t position: (cpVect) p
 {	
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (double) t position: (CGPoint) p
+-(id) initWithDuration: (double) t position: (cpVect) p
 {
 	if( ![super initWithDuration: t] )
 		return nil;
@@ -482,13 +482,12 @@
 {
 	[super start];
 	startPosition = [target position];
-	delta.x = endPosition.x - startPosition.x;
-	delta.y = endPosition.y - startPosition.y;	
+	delta = cpvsub( endPosition, startPosition );
 }
 
 -(void) update: (double) t
 {	
-	target.position = CGPointMake( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
+	target.position = cpv( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
 }
 @end
 
@@ -496,12 +495,12 @@
 // MoveBy
 //
 @implementation MoveBy
-+(id) actionWithDuration: (double) t position: (CGPoint) p
++(id) actionWithDuration: (double) t position: (cpVect) p
 {	
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (double) t position: (CGPoint) p
+-(id) initWithDuration: (double) t position: (cpVect) p
 {
 	if( ![super initWithDuration: t] )
 		return nil;
@@ -518,14 +517,14 @@
 
 -(void) start
 {
-	CGPoint dTmp = delta;
+	cpVect dTmp = delta;
 	[super start];
 	delta = dTmp;
 }
 
 -(IntervalAction*) reverse
 {
-	return [MoveBy actionWithDuration: duration position: CGPointMake( -delta.x, -delta.y)];
+	return [MoveBy actionWithDuration: duration position: cpv( -delta.x, -delta.y)];
 }
 @end
 
@@ -533,12 +532,12 @@
 // JumpBy
 //
 @implementation JumpBy
-+(id) actionWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j
++(id) actionWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j
 {
 	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
 }
 
--(id) initWithDuration: (double) t position: (CGPoint) pos height: (double) h jumps:(int)j
+-(id) initWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j
 {
 	[super initWithDuration:t];
 	delta = pos;
@@ -564,12 +563,12 @@
 	double y = height * fabs( sinf(t * M_PI * jumps ) );
 	y += delta.y * t;
 	double x = delta.x * t;
-	target.position = CGPointMake( startPosition.x + x, startPosition.y + y );
+	target.position = cpv( startPosition.x + x, startPosition.y + y );
 }
 
 -(IntervalAction*) reverse
 {
-	return [JumpBy actionWithDuration: duration position: CGPointMake(-delta.x,-delta.y) height: height jumps:jumps];
+	return [JumpBy actionWithDuration: duration position: cpv(-delta.x,-delta.y) height: height jumps:jumps];
 }
 @end
 
@@ -580,7 +579,7 @@
 -(void) start
 {
 	[super start];
-	delta = CGPointMake( delta.x - startPosition.x, delta.y - startPosition.y );
+	delta = cpv( delta.x - startPosition.x, delta.y - startPosition.y );
 }
 @end
 

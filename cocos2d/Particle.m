@@ -41,8 +41,8 @@
 
 
 @implementation ParticleSystem
-
-@synthesize pos, posVar;
+@synthesize active, duration;
+@synthesize posVar;
 @synthesize angle, angleVar;
 @synthesize speed, speedVar;
 @synthesize tangentialAccel, tangentialAccelVar;
@@ -275,7 +275,8 @@
 {
 	
 	// relative to center
-	cpVect v = cpvadd( p->pos, pos );
+//	cpVect v = cpvadd( p->pos, position );
+	cpVect v = p->pos;
 	
 	vertices[particleIdx].x = v.x;
 	vertices[particleIdx].y = v.y;
@@ -331,7 +332,7 @@
 	glColor4f(p->color.r, p->color.g, p->color.b, p->color.a);
 	
 	// relative to center
-	cpVect v = cpvadd( p->pos, pos );
+	cpVect v = cpvadd( p->pos, position );
 	drawPoint( v.x, v.y );
 }
 @end
@@ -357,8 +358,8 @@
 	angleVar = 20;
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 240;
+	position.x = 160;
+	position.y = 240;
 	
 	// life of particles
 	life = 5;
@@ -428,8 +429,8 @@
 	speedVar = 50;
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 160;
+	position.x = 160;
+	position.y = 160;
 	
 	// life of particles
 	life = 3.5;
@@ -508,8 +509,8 @@
 	radialAccelVar = 0;
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 60;
+	position.x = 160;
+	position.y = 60;
 	posVar.x = 40;
 	posVar.y = 20;
 	
@@ -591,8 +592,8 @@
 	radialAccelVar = 0;	
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 240;
+	position.x = 160;
+	position.y = 240;
 	posVar.x = 0;
 	posVar.y = 0;
 	
@@ -682,8 +683,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 240;
+	position.x = 160;
+	position.y = 240;
 	posVar.x = 0;
 	posVar.y = 0;
 	
@@ -769,8 +770,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 240;
+	position.x = 160;
+	position.y = 240;
 	posVar.x = 0;
 	posVar.y = 0;
 	
@@ -824,7 +825,7 @@
 @end
 
 //
-// ParticleTest
+// ParticleMeteor
 //
 @implementation ParticleMeteor
 -(id) init
@@ -856,8 +857,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	pos.x = 160;
-	pos.y = 240;
+	position.x = 160;
+	position.y = 240;
 	posVar.x = 0;
 	posVar.y = 0;
 	
@@ -888,6 +889,180 @@
 	endColorVar.r = 0.0f;
 	endColorVar.g = 0.0f;
 	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// ParticleSpiral
+//
+@implementation ParticleSpiral
+-(id) init
+{
+	totalParticles = 500;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	gravity.x = 0;
+	gravity.y = 0;
+	
+	// angle
+	angle = 90;
+	angleVar = 0;
+	
+	// speed of particles
+	speed = 150;
+	speedVar = 0;
+	
+	// radial
+	radialAccel = -380;
+	radialAccelVar = 0;
+	
+	// tagential
+	tangentialAccel = 45;
+	tangentialAccelVar = 0;
+	
+	// emitter position
+	position.x = 160;
+	position.y = 240;
+	posVar.x = 00;
+	posVar.y = 00;
+	
+	// life of particles
+	life = 12;
+	lifeVar = 0;
+	
+	// size, in pixels
+	size = 20.0f;
+	sizeVar = 0.0f;
+	
+	// emits per second
+	emissionRate = totalParticles/life;
+	
+	// color of particles
+	startColor.r = 0.5f;
+	startColor.g = 0.5f;
+	startColor.b = 0.5f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.5f;
+	startColorVar.g = 0.5f;
+	startColorVar.b = 0.5f;
+	startColorVar.a = 0.0f;
+	endColor.r = 0.5f;
+	endColor.g = 0.5f;
+	endColor.b = 0.5f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.5f;
+	endColorVar.g = 0.5f;
+	endColorVar.b = 0.5f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// respawn dead particles
+	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// ParticleTest
+//
+@implementation ParticleTest
+-(id) init
+{
+	totalParticles = 500;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// gravity
+	gravity.x = 0;
+	gravity.y = -80;
+	
+	// angle
+	angle = 120;
+	angleVar = 0;
+	
+	// speed of particles
+	speed = 150;
+	speedVar = 0;
+	
+	// radial
+	radialAccel = -380;
+	radialAccelVar = 0;
+	
+	// tagential
+	tangentialAccel = 45;
+	tangentialAccelVar = 0;
+	
+	// emitter position
+	position.x = 160;
+	position.y = 240;
+	posVar.x = 00;
+	posVar.y = 00;
+	
+	// life of particles
+	life = 12;
+	lifeVar = 0;
+	
+	// size, in pixels
+	size = 20.0f;
+	sizeVar = 10.0f;
+	
+	// emits per second
+	emissionRate = totalParticles/life;
+	
+	// color of particles
+	startColor.r = 0.5f;
+	startColor.g = 0.5f;
+	startColor.b = 0.5f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.5f;
+	startColorVar.g = 0.5f;
+	startColorVar.b = 0.5f;
+	startColorVar.a = 0.0f;
+	endColor.r = 0.5f;
+	endColor.g = 0.5f;
+	endColor.b = 0.5f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.5f;
+	endColorVar.g = 0.5f;
+	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];

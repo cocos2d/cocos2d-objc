@@ -30,9 +30,9 @@
 	[self add: layer];
 		
 	[self add: sprite z:0 name:@"sprite"];
-	[sprite setPosition: CGPointMake(20,150)];
+	[sprite setPosition: cpv(20,150)];
 	
-	[sprite do: [JumpTo actionWithDuration:4 position:CGPointMake(300,48) height:100 jumps:4] ];
+	[sprite do: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
 	
 	[layer do: [Repeat actionWithAction: 
 								[Sequence actions:
@@ -59,7 +59,7 @@
  */
 	CocosNode *s = [self get: @"sprite"];
 	[s stop];
-	[s do: [MoveTo actionWithDuration:1 position:CGPointMake(location.x, 480-location.y)]];
+	[s do: [MoveTo actionWithDuration:1 position:cpv(location.x, 480-location.y)]];
 	double o = location.x - [s position].x;
 	double a = (480-location.y) - [s position].y;
 	double at = RADIANS_TO_DEGREES( atan(o/a) );

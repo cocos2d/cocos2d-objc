@@ -67,7 +67,7 @@ id nextTransition()
 
 	Label* label = [Label labelWithString:@"SCENE 1" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
 
-	[label setPosition: CGPointMake(x/2,y/2)];
+	[label setPosition: cpv(x/2,y/2)];
 	
 	[self add: label];
 	return self;
@@ -98,7 +98,7 @@ id nextTransition()
 	
 	Label* label = [Label labelWithString:@"SCENE 2" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
 	
-	[label setPosition: CGPointMake(x/2,y/2)];
+	[label setPosition: cpv(x/2,y/2)];
 	
 	[self add: label];
 	return self;
