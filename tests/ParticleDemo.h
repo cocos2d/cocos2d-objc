@@ -46,3 +46,13 @@
 {
 }
 @end
+
+@interface DemoSpiral : ParticleDemo
+{
+}
+@end
+
+@interface DemoTest : ParticleDemo
+{
+}
+@end

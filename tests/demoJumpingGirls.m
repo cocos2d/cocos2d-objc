@@ -22,10 +22,10 @@
 	hello = [Label labelWithString:@"cocos2d in iphone" dimensions:CGSizeMake(280, 32) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	
 	[self add: hello z:0];
-	[hello setPosition: CGPointMake(200,200)];
+	[hello setPosition: cpv(200,200)];
 	
 	[hello do: [Sequence actions:
-				[MoveBy actionWithDuration: 2 position: CGPointMake(-100,-100)],
+				[MoveBy actionWithDuration: 2 position: cpv(-100,-100)],
 				[CallFunc actionWithTarget: self selector: @selector(testCB)],
 				nil ] ];
 	[hello do: [Spawn actions:
@@ -37,7 +37,7 @@
 
 -(void) testCB
 {
-	[hello setPosition: CGPointMake(200,200)];
+	[hello setPosition: cpv(200,200)];
 }
 @end
 
@@ -61,8 +61,8 @@
 	id rotby = [RotateBy actionWithDuration: 1.5 angle:360+90];
 	id rotto = [RotateTo actionWithDuration: 1.5 angle:270];
 	id scaleby = [ScaleBy actionWithDuration: 2 scale:0.2];
-	id moveby =	[MoveBy actionWithDuration: 2 position: CGPointMake(0,100) ];
-	id moveto =	[Speed actionWithAction: [MoveTo actionWithDuration: 8 position: CGPointMake(20,20) ] speed:2 ];
+	id moveby =	[MoveBy actionWithDuration: 2 position: cpv(0,100) ];
+	id moveto =	[Speed actionWithAction: [MoveTo actionWithDuration: 8 position: cpv(20,20) ] speed:2 ];
 	
 	[scene add: mainLayer z:2];
 	[scene add: layer z:1];
@@ -70,10 +70,10 @@
 	[layer add: spriteSister1];
 	[layer add: spriteSister2];
 	
-	spriteSister1.position = CGPointMake(40,100);
-	spriteSister2.position = CGPointMake(440,100);
+	spriteSister1.position = cpv(40,100);
+	spriteSister2.position = cpv(440,100);
 	
-	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4];
+	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:cpv(-400,0) height:100 jumps:4];
 	IntervalAction *jump2 = [jump1 reverse];
 	
 	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
@@ -86,7 +86,7 @@
 	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions: rot2, rot1, nil] times:5 ] ];
 
 	
-	[sprite setPosition:  CGPointMake( [[Director sharedDirector] winSize].size.width / 2,
+	[sprite setPosition:  cpv( [[Director sharedDirector] winSize].size.width / 2,
 									  [[Director sharedDirector] winSize].size.height / 2 )  ];
 	
 	[sprite do: [Blink actionWithDuration: 2 blinks: 10]];

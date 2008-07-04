@@ -33,7 +33,7 @@
 		NSLog( s );
 	Label* label = [Label labelWithString:@"cocos2d" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
 
-	[label setPosition: CGPointMake(x/2,y/2)];
+	[label setPosition: cpv(x/2,y/2)];
 	
 	[self add: label];
 	return self;
@@ -60,9 +60,9 @@
 	[spriteSister1 setScale: 1.5];
 	[spriteSister2 setScale: 1.5];
 	
-	[sprite setPosition: CGPointMake(x/2,y/2)];
-	[spriteSister1 setPosition: CGPointMake(40,y/2)];
-	[spriteSister2 setPosition: CGPointMake(x-40,y/2)];
+	[sprite setPosition: cpv(x/2,y/2)];
+	[spriteSister1 setPosition: cpv(40,y/2)];
+	[spriteSister2 setPosition: cpv(x-40,y/2)];
 
 	Action *rot = [RotateBy actionWithDuration:16 angle:-3600];
 	
@@ -72,7 +72,7 @@
 	
 	[sprite do: rot];
 
-	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4];
+	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:cpv(-400,0) height:100 jumps:4];
 	IntervalAction *jump2 = [jump1 reverse];
 	
 	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
@@ -107,18 +107,18 @@
 	id white = [ColorLayer layerWithColor: 0xffffffff];
 
 	[blue setScale: 0.5];
-	[blue setPosition: CGPointMake(-x/4,-y/4)];
+	[blue setPosition: cpv(-x/4,-y/4)];
 	[blue add: [SpriteLayer node]];
 	
 	[red setScale: 0.5];
-	[red setPosition: CGPointMake(x/4,-y/4)];
+	[red setPosition: cpv(x/4,-y/4)];
 
 	[green setScale: 0.5];
-	[green setPosition: CGPointMake(-x/4,y/4)];
+	[green setPosition: cpv(-x/4,y/4)];
 	[green add: [TextLayer node]];
 
 	[white setScale: 0.5];
-	[white setPosition: CGPointMake(x/4,y/4)];
+	[white setPosition: cpv(x/4,y/4)];
 
 	[self add: blue z:-1];
 	[self add: white];

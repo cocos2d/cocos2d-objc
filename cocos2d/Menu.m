@@ -129,7 +129,7 @@
 	
 	for( NSArray* array in children ) {
 		MenuItem *item = [array objectAtIndex:1];
-		[item setPosition:CGPointMake(x/2, initialY)];
+		[item setPosition:cpv(x/2, initialY)];
 		initialY -= incY;
 	}
 }

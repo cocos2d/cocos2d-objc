@@ -94,12 +94,12 @@
 // Place
 //
 @implementation Place
-+(id) actionWithPosition: (CGPoint) pos
++(id) actionWithPosition: (cpVect) pos
 {
 	return [[[self alloc]initWithPosition:pos]autorelease];
 }
 
--(id) initWithPosition: (CGPoint) pos
+-(id) initWithPosition: (cpVect) pos
 {
 	if( ! [super init] )
 		return nil;

@@ -68,12 +68,12 @@
 {
 	/* clean up */	
 	[inScene setVisible:YES];
-	[inScene setPosition:CGPointMake(0,0)];
+	[inScene setPosition:cpv(0,0)];
 	[inScene setScale:1.0f];
 	[inScene setRotation:0.0f];
 	
 	[outScene setVisible:YES];
-	[outScene setPosition:CGPointMake(0,0)];
+	[outScene setPosition:cpv(0,0)];
 	[outScene setScale:1.0f];
 	[outScene setRotation:0.0f];
 	
@@ -101,8 +101,8 @@
 	[inScene setScale:0.001f];
 	[outScene setScale:1.0f];
 	
-	[inScene setTransformAnchor: CGPointMake( s.size.width/2, s.size.height/2) ];
-	[outScene setTransformAnchor: CGPointMake( s.size.width/2, s.size.height/2) ];
+	[inScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
+	[outScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
 	
 	IntervalAction *rotozoom = [Sequence actions: [Spawn actions:
 								   [ScaleBy actionWithDuration:duration/2 scale:0.001f],
@@ -130,12 +130,12 @@
 	CGRect s = [[Director sharedDirector] winSize];
 	
 	[inScene setScale:0.5f];
-	[inScene setPosition:CGPointMake( s.size.width,0 )];
+	[inScene setPosition:cpv( s.size.width,0 )];
 	
-	[inScene setTransformAnchor: CGPointMake( s.size.width/2, s.size.height/2) ];
-	[outScene setTransformAnchor: CGPointMake( s.size.width/2, s.size.height/2) ];
+	[inScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
+	[outScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
 
-	IntervalAction *jump = [JumpBy actionWithDuration:duration/4 position:CGPointMake(-s.size.width,0) height:s.size.width/4 jumps:2];
+	IntervalAction *jump = [JumpBy actionWithDuration:duration/4 position:cpv(-s.size.width,0) height:s.size.width/4 jumps:2];
 	IntervalAction *scaleIn = [ScaleTo actionWithDuration:duration/4 scale:1.0f];
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration/4 scale:0.5f];
 	
@@ -172,13 +172,13 @@
 }
 -(IntervalAction*) action
 {
-	return [MoveTo actionWithDuration:duration position:CGPointMake(0,0)];
+	return [MoveTo actionWithDuration:duration position:cpv(0,0)];
 }
 
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake( -s.size.width,0) ];
+	[inScene setPosition: cpv( -s.size.width,0) ];
 }
 @end
 
@@ -189,7 +189,7 @@
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake( s.size.width,0) ];
+	[inScene setPosition: cpv( s.size.width,0) ];
 }
 @end
 
@@ -200,7 +200,7 @@
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake( 0, s.size.height) ];
+	[inScene setPosition: cpv( 0, s.size.height) ];
 }
 @end
 
@@ -211,7 +211,7 @@
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake( 0, -s.size.height) ];
+	[inScene setPosition: cpv( 0, -s.size.height) ];
 }
 @end
 
@@ -237,13 +237,13 @@
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:CGPointMake(s.size.width,0)];
+	return [MoveBy actionWithDuration:duration position:cpv(s.size.width,0)];
 }
 
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake( -s.size.width,0) ];
+	[inScene setPosition: cpv( -s.size.width,0) ];
 }
 @end
 
@@ -254,13 +254,13 @@
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake( s.size.width,0) ];
+	[inScene setPosition: cpv( s.size.width,0) ];
 }
 
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:CGPointMake(-s.size.width,0)];
+	return [MoveBy actionWithDuration:duration position:cpv(-s.size.width,0)];
 }
 
 @end
@@ -272,13 +272,13 @@
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake(0,s.size.height) ];
+	[inScene setPosition: cpv(0,s.size.height) ];
 }
 
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:CGPointMake(0,-s.size.height)];
+	return [MoveBy actionWithDuration:duration position:cpv(0,-s.size.height)];
 }
 
 @end
@@ -290,13 +290,13 @@
 -(void) initScenes
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: CGPointMake(0,-s.size.height) ];
+	[inScene setPosition: cpv(0,-s.size.height) ];
 }
 
 -(IntervalAction*) action
 {
 	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:CGPointMake(0,s.size.height)];
+	return [MoveBy actionWithDuration:duration position:cpv(0,s.size.height)];
 }
 @end
 
@@ -313,8 +313,8 @@
 	[inScene setScale:0.001f];
 	[outScene setScale:1.0f];
 	
-	[inScene setTransformAnchor:CGPointMake(2*s.size.width/3,s.size.height/2) ];
-	[outScene setTransformAnchor:CGPointMake(s.size.width/3,s.size.height/2) ];
+	[inScene setTransformAnchor:cpv(2*s.size.width/3,s.size.height/2) ];
+	[outScene setTransformAnchor:cpv(s.size.width/3,s.size.height/2) ];
 	
 	
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration scale:0.01f];

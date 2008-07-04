@@ -25,7 +25,7 @@ Class nextAction();
 	CGRect s = [[Director sharedDirector] winSize];
 	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
-	[label setPosition: CGPointMake(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
 		
 	return self;
 }
@@ -48,7 +48,7 @@ Class nextAction();
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFireworks2 node];
-	[self add: emitter];
+	[self add: emitter];	
 }
 -(NSString *) title
 {
@@ -121,14 +121,41 @@ Class nextAction();
 }
 @end
 
+@implementation DemoSpiral
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleSpiral node];
+	[self add: emitter];
+}
+-(NSString *) title
+{
+	return @"ParticleSpiral";
+}
+@end
+
+@implementation DemoTest
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleTest node];
+	[self add: emitter];
+}
+-(NSString *) title
+{
+	return @"ParticleTest";
+}
+@end
 Class nextAction()
 {
 	static int i=0;
 	
 	NSArray *transitions = [[NSArray arrayWithObjects:
+//								@"DemoTest",
 								@"DemoFlower",
 								@"DemoGalaxy",
 								@"DemoFirework",
+								@"DemoSpiral",
 								@"DemoSun",
 								@"DemoMeteor",
 								@"DemoFire",

@@ -45,7 +45,7 @@
 
 	isRunning = NO;
 	
-	position = CGPointZero;
+	position = cpvzero;
 	
 	rotation = 0.0f;		// 0 degrees	
 	scale = 1.0f;			// scale factor
@@ -54,8 +54,8 @@
 	
 	visible = YES;
 
-	childrenAnchor = CGPointZero;
-	transformAnchor = CGPointZero;
+	childrenAnchor = cpvzero;
+	transformAnchor = cpvzero;
 	
 	// children
 	children = [[NSMutableArray alloc] init];

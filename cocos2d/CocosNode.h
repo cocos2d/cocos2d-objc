@@ -23,6 +23,7 @@
 #import <UIKit/UIKit.h>
 
 #import "Action.h"
+#import "chipmunk.h"
 
 @class Camera;
 
@@ -50,7 +51,7 @@
 	float scale;
 	
 	/// position of the node
-	CGPoint position;
+	cpVect position;
 
 	/// is visible
 	BOOL visible;
@@ -59,10 +60,10 @@
 	Camera *camera;
 	
 	/// transformation anchor point
-	CGPoint transformAnchor;
+	cpVect transformAnchor;
 	
 	/// where are the children placed (anchor)
-	CGPoint childrenAnchor;
+	cpVect childrenAnchor;
 	
 	/// array of children
 	NSMutableArray *children;
@@ -86,11 +87,11 @@
 
 @property(readwrite,assign) float rotation;
 @property(readwrite,assign) float scale;
-@property(readwrite,assign) CGPoint position;
+@property(readwrite,assign) cpVect position;
 @property(readwrite,assign) Camera* camera;
 @property(readwrite,assign) BOOL visible;
-@property(readwrite,assign) CGPoint transformAnchor;
-@property(readwrite,assign) CGPoint childrenAnchor;
+@property(readwrite,assign) cpVect transformAnchor;
+@property(readwrite,assign) cpVect childrenAnchor;
 @property(readwrite,assign) CocosNode* parent;
 
 // initializators

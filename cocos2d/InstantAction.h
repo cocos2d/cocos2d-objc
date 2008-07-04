@@ -61,12 +61,12 @@
  */
 @interface Place : InstantAction <NSCopying>
 {
-	CGPoint position;
+	cpVect position;
 }
 /** creates a Place action with a position */
-+(id) actionWithPosition: (CGPoint) pos;
++(id) actionWithPosition: (cpVect) pos;
 /** Initializes a Place action with a position */
--(id) initWithPosition: (CGPoint) pos;
+-(id) initWithPosition: (cpVect) pos;
 @end
 
 /** Calls a 'callback'

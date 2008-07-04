@@ -45,11 +45,15 @@ typedef struct sParticle
 	int id;
 	long flags;
 	
+	/// is the particle system active ?
+	BOOL active;
+	/// duration in seconds of the system. -1 is infinity
+	float duration;
+	
 	/// Gravity of the particles
 	cpVect gravity;
 
-	/// Position where the particles will be born
-	cpVect pos;
+	/// position is from "superclass" CocosNode
 	/// Position variance
 	cpVect posVar;
 	
@@ -105,7 +109,8 @@ typedef struct sParticle
 // FLAGS
 #define kRESPAWN ( 1 << 0 )
 
-@property (readwrite,assign) cpVect pos;
+@property (readonly)	BOOL active;
+@property (readwrite,assign) float duration;
 @property (readwrite,assign) cpVect posVar;
 @property (readwrite,assign) float angle;
 @property (readwrite,assign) float angleVar;
@@ -187,6 +192,16 @@ typedef struct sParticle
 @end
 
 @interface ParticleMeteor : TextureParticleSystem
+{
+}
+@end
+
+@interface ParticleSpiral : TextureParticleSystem
+{
+}
+@end
+
+@interface ParticleTest : TextureParticleSystem
 {
 }
 @end

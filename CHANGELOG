@@ -1,7 +1,8 @@
 version 0.2 - ???
+ . Replaced CGPoint with chipmunk's vector (cpVect) in CocosNode
  . Added particle system.
     . uses VBO + POINT_SPRITES
-    . Built-in systems: Fire, Fireworks, Sun, Galaxy, Flower, Meteor
+    . Built-in systems: Fire, Fireworks, Sun, Galaxy, Flower, Meteor, Spiral
 	. supports: gravity, radial, tangential, color, size, texture, direction, spread (all of them with its variation)
  . added support to display FPS
  

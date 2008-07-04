@@ -27,7 +27,7 @@ eachShape(void *ptr, void* unused)
 	Sprite *sprite = shape->data;
 	if( sprite ) {
 		cpBody *body = shape->body;
-		[sprite setPosition: CGPointMake( body->p.x, body->p.y)];
+		[sprite setPosition: cpv( body->p.x, body->p.y)];
 		[sprite setRotation: RADIANS_TO_DEGREES( -body->a )];
 	}
 }
