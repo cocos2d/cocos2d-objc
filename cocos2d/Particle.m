@@ -64,6 +64,8 @@
 	}
 	bzero( particles, sizeof(Particle) * totalParticles );
 	
+	active = YES;
+	
 	return self;
 }
 
@@ -88,11 +90,17 @@
 	if( delta > 1000 )
 		return;
 	
-	float rate = 1.0 / emissionRate;
-	emitCounter += delta;
-	while( particleCount < totalParticles && emitCounter > rate ) {
-		[self addParticle];
-		emitCounter -= rate;
+	if( active ) {
+		float rate = 1.0 / emissionRate;
+		emitCounter += delta;
+		while( particleCount < totalParticles && emitCounter > rate ) {
+			[self addParticle];
+			emitCounter -= rate;
+		}
+	
+		elapsed += delta;
+		if(duration != -1 && duration < elapsed)
+			[self stopSystem];
 	}
 	
 	[self preParticles];
@@ -119,14 +127,14 @@
 
 -(void) initParticle: (Particle*) particle
 {
+	cpVect v;
+
 	// position
 	particle->pos.x = posVar.x * RANDOM_FLOAT();
 	particle->pos.y = posVar.y * RANDOM_FLOAT();
 	
 	// direction
-	float ar = angle + angleVar * RANDOM_FLOAT();
-	float a = DEGREES_TO_RADIANS( ar );
-	cpVect v;
+	float a = DEGREES_TO_RADIANS( angle + angleVar * RANDOM_FLOAT() );
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * RANDOM_FLOAT();
@@ -204,16 +212,29 @@
 		return YES;
 	}
 	
-	if (p->flags & kLIVE ) {
-		if( flags & kRESPAWN ) {
-			[self initParticle:p];
-			return YES;
-		} else {
-			particleCount--;
-			p->flags &= ~kLIVE;
-		}
+	/* else */
+	if( p->flags & kLIVE ) {
+		int pidx = p - &particles[0];
+		if( pidx )
+			particles[pidx] = particles[particleCount-1];
+		particles[particleCount-1].flags &= ~kLIVE;
+		particleCount--;
 	}
+	
 	return NO;
+}
+
+-(void) stopSystem
+{
+	active = NO;
+	elapsed= duration;
+	emitCounter = 0;
+}
+
+-(void) resetSystem
+{
+	elapsed= duration;
+	emitCounter = 0;
 }
 
 -(void) drawParticle: (Particle*) p
@@ -332,10 +353,12 @@
 	glColor4f(p->color.r, p->color.g, p->color.b, p->color.a);
 	
 	// relative to center
-	cpVect v = cpvadd( p->pos, position );
+//	cpVect v = cpvadd( p->pos, position );
+	cpVect v = p->pos;
 	drawPoint( v.x, v.y );
 }
 @end
+
 
 //
 // ParticleFireworks
@@ -344,74 +367,14 @@
 -(id) init
 {
 	totalParticles = 3000;
-
-	// must be called after totalParticles is set
-	if( ! [super init] )
-		return nil;
-
-	// gravity
-	gravity.x = 0;
-	gravity.y = -0.1;
-	
-	// angle
-	angle = 90;
-	angleVar = 20;
-	
-	// emitter position
-	position.x = 160;
-	position.y = 240;
-	
-	// life of particles
-	life = 5;
-	lifeVar = 1;
-	
-	// speed of particles
-	speed = 5;
-	speedVar = 2;
-
-	// emits per seconds
-	emissionRate = totalParticles/life;
-	
-	// color of particles
-	startColor.r = 0.8f;
-	startColor.g = 0.3f;
-	startColor.b = 0.3f;
-	startColor.a = 1.0f;
-	startColorVar.r = 0.5;
-	startColorVar.g = 0.5;
-	startColorVar.b = 0.5;
-	startColorVar.a = 0.1;
-	endColor.r = 0.1f;
-	endColor.g = 0.1f;
-	endColor.b = 0.1f;
-	endColor.a = 0.2f;
-	endColorVar.r = 0.1f;
-	endColorVar.g = 0.1f;
-	endColorVar.b = 0.1f;
-	endColorVar.a = 0.2f;
-	
-	// size, in pixels
-	size = 3.0f;
-	sizeVar = 2.0f;
-
-	// respawn dead particles
-	flags |= kRESPAWN;
-	return self;
-}
-@end
-
-//
-// ParticleFireworks2
-//
-@implementation ParticleFireworks2
--(id) init
-{
-	totalParticles = 3000;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
 	
+	// duration
+	duration = -1;
+
 	// gravity
 	gravity.x = 0;
 	gravity.y = -90;
@@ -464,8 +427,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 
@@ -495,7 +456,10 @@
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
-	
+
+	// duration
+	duration = -1;
+
 	// gravity
 	gravity.x = 0;
 	gravity.y = 0;
@@ -550,8 +514,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 -(void) dealloc
@@ -578,6 +540,9 @@
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
+
+	// duration
+	duration = -1;
 	
 	// gravity
 	gravity.x = 0;
@@ -633,8 +598,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 -(void) dealloc
@@ -662,6 +625,9 @@
 	if( ! [super init] )
 		return nil;
 	
+	// duration
+	duration = -1;
+
 	// gravity
 	gravity.x = 0;
 	gravity.y = 0;
@@ -720,8 +686,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 -(void) dealloc
@@ -749,6 +713,9 @@
 	if( ! [super init] )
 		return nil;
 	
+	// duration
+	duration = -1;
+
 	// gravity
 	gravity.x = 0;
 	gravity.y = 0;
@@ -807,8 +774,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 -(void) dealloc
@@ -835,6 +800,9 @@
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
+
+	// duration
+	duration = -1;
 	
 	// gravity
 	gravity.x = -200;
@@ -894,8 +862,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 -(void) dealloc
@@ -923,6 +889,9 @@
 	if( ! [super init] )
 		return nil;
 	
+	// duration
+	duration = -1;
+
 	// gravity
 	gravity.x = 0;
 	gravity.y = 0;
@@ -981,8 +950,94 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
+	return self;
+}
+-(void) dealloc
+{
+	[texture release];
+	[super dealloc];
+}
+-(void) postParticles
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	[super postParticles];
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+@end
+
+//
+// ParticleExplosion
+//
+@implementation ParticleExplosion
+-(id) init
+{
+	totalParticles = 700;
+	
+	// must be called after totalParticles is set
+	if( ! [super init] )
+		return nil;
+	
+	// duration
+	duration = 0.1;
+	
+	// gravity
+	gravity.x = 0;
+	gravity.y = -100;
+	
+	// angle
+	angle = 90;
+	angleVar = 360;
+	
+	// speed of particles
+	speed = 70;
+	speedVar = 40;
+	
+	// radial
+	radialAccel = 0;
+	radialAccelVar = 0;
+	
+	// tagential
+	tangentialAccel = 0;
+	tangentialAccelVar = 0;
+	
+	// emitter position
+	position.x = 160;
+	position.y = 240;
+	posVar.x = 00;
+	posVar.y = 00;
+	
+	// life of particles
+	life = 5.0;
+	lifeVar = 2;
+	
+	// size, in pixels
+	size = 15.0f;
+	sizeVar = 10.0f;
+	
+	// emits per second
+	emissionRate = totalParticles/duration;
+	
+	// color of particles
+	startColor.r = 0.7f;
+	startColor.g = 0.1f;
+	startColor.b = 0.2f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.5f;
+	startColorVar.g = 0.5f;
+	startColorVar.b = 0.5f;
+	startColorVar.a = 0.0f;
+	endColor.r = 0.5f;
+	endColor.g = 0.5f;
+	endColor.b = 0.5f;
+	endColor.a = 0.0f;
+	endColorVar.r = 0.5f;
+	endColorVar.g = 0.5f;
+	endColorVar.b = 0.5f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
 	return self;
 }
 -(void) dealloc
@@ -1004,30 +1059,33 @@
 @implementation ParticleTest
 -(id) init
 {
-	totalParticles = 500;
+	totalParticles = 700;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
 	
+	// duration
+	duration = 0.1;
+	
 	// gravity
 	gravity.x = 0;
-	gravity.y = -80;
+	gravity.y = -100;
 	
 	// angle
-	angle = 120;
-	angleVar = 0;
+	angle = 90;
+	angleVar = 360;
 	
 	// speed of particles
-	speed = 150;
-	speedVar = 0;
+	speed = 70;
+	speedVar = 40;
 	
 	// radial
-	radialAccel = -380;
+	radialAccel = 0;
 	radialAccelVar = 0;
 	
 	// tagential
-	tangentialAccel = 45;
+	tangentialAccel = 0;
 	tangentialAccelVar = 0;
 	
 	// emitter position
@@ -1037,20 +1095,20 @@
 	posVar.y = 00;
 	
 	// life of particles
-	life = 12;
-	lifeVar = 0;
+	life = 5.0;
+	lifeVar = 2;
 	
 	// size, in pixels
-	size = 20.0f;
+	size = 15.0f;
 	sizeVar = 10.0f;
 	
 	// emits per second
-	emissionRate = totalParticles/life;
+	emissionRate = totalParticles/duration;
 	
 	// color of particles
-	startColor.r = 0.5f;
-	startColor.g = 0.5f;
-	startColor.b = 0.5f;
+	startColor.r = 0.7f;
+	startColor.g = 0.1f;
+	startColor.b = 0.2f;
 	startColor.a = 1.0f;
 	startColorVar.r = 0.5f;
 	startColorVar.g = 0.5f;
@@ -1059,7 +1117,7 @@
 	endColor.r = 0.5f;
 	endColor.g = 0.5f;
 	endColor.b = 0.5f;
-	endColor.a = 1.0f;
+	endColor.a = 0.0f;
 	endColorVar.r = 0.5f;
 	endColorVar.g = 0.5f;
 	endColorVar.b = 0.5f;
@@ -1068,8 +1126,6 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
-	// respawn dead particles
-	flags |= kRESPAWN;
 	return self;
 }
 -(void) dealloc
