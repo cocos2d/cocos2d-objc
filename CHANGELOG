@@ -1,4 +1,4 @@
-version 0.2 - ???
+version 0.2 - 5-Jul-2008
  . Replaced CGPoint with chipmunk's vector (cpVect) in CocosNode
  . Added particle system.
     . uses VBO + POINT_SPRITES
