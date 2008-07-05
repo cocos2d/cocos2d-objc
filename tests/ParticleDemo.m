@@ -47,7 +47,7 @@ Class nextAction();
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleFireworks2 node];
+	ParticleSystem *emitter = [ParticleFireworks node];
 	[self add: emitter];	
 }
 -(NSString *) title
@@ -134,6 +134,18 @@ Class nextAction();
 }
 @end
 
+@implementation DemoExplosion
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleExplosion node];
+	[self add: emitter];
+}
+-(NSString *) title
+{
+	return @"ParticleExplosion";
+}
+@end
 @implementation DemoTest
 -(void) onEnter
 {
@@ -159,6 +171,7 @@ Class nextAction()
 								@"DemoSun",
 								@"DemoMeteor",
 								@"DemoFire",
+								@"DemoExplosion",
 									nil ] retain];
 	
 	

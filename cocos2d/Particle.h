@@ -49,6 +49,8 @@ typedef struct sParticle
 	BOOL active;
 	/// duration in seconds of the system. -1 is infinity
 	float duration;
+	/// time elapsed since the start of the system (in seconds)
+	float elapsed;
 	
 	/// Gravity of the particles
 	cpVect gravity;
@@ -106,8 +108,6 @@ typedef struct sParticle
 	/// Life variance
 	float lifeVar;
 }
-// FLAGS
-#define kRESPAWN ( 1 << 0 )
 
 @property (readonly)	BOOL active;
 @property (readwrite,assign) float duration;
@@ -140,6 +140,10 @@ typedef struct sParticle
 -(void) preParticles;
 //! perform actions after all the particles have been visited, like draw them
 -(void) postParticles;
+//! stop the running system
+-(void) stopSystem;
+//! rest the system
+-(void) resetSystem;
 @end
 
 @interface TextureParticleSystem : ParticleSystem
@@ -161,17 +165,12 @@ typedef struct sParticle
 }
 @end
 
-@interface ParticleFireworks : PixelParticleSystem
-{
-}
-@end
-
 @interface ParticleFire: TextureParticleSystem
 {
 }
 @end
 
-@interface ParticleFireworks2 : TextureParticleSystem
+@interface ParticleFireworks : TextureParticleSystem
 {
 }
 @end
@@ -197,6 +196,11 @@ typedef struct sParticle
 @end
 
 @interface ParticleSpiral : TextureParticleSystem
+{
+}
+@end
+
+@interface ParticleExplosion : TextureParticleSystem
 {
 }
 @end

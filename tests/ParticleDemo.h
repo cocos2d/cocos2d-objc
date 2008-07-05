@@ -52,6 +52,11 @@
 }
 @end
 
+@interface DemoExplosion : ParticleDemo
+{
+}
+@end
+
 @interface DemoTest : ParticleDemo
 {
 }
