@@ -12,6 +12,23 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2D500B940D5A79C200DBA0E3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		2D500B9A0D5A79CF00DBA0E3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		317070450E2940C900DD3360 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		317070460E2940C900DD3360 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		317070470E2940C900DD3360 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB270E10EE4A00AE9530 /* Background.png */; };
+		317070480E2940C900DD3360 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		317070490E2940C900DD3360 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		3170704A0E2940C900DD3360 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		3170704B0E2940C900DD3360 /* clouds.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 310334A50E20F45300860880 /* clouds.jpg */; };
+		3170704E0E2940C900DD3360 /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */; };
+		3170704F0E2940C900DD3360 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		317070500E2940C900DD3360 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		317070520E2940C900DD3360 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		317070530E2940C900DD3360 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		317070540E2940C900DD3360 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		317070550E2940C900DD3360 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportDemo.m */; };
 		3188C3D50E0D960A00EFA866 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		3188C3D60E0D960A00EFA866 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		3188C3D70E0D960A00EFA866 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -280,6 +297,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		317070430E2940C900DD3360 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		3188C3C90E0D960A00EFA866 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -400,6 +424,11 @@
 		2D500B770D5A794B00DBA0E3 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2D.h; path = OpenGLSupport/Texture2D.h; sourceTree = "<group>"; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		310334A50E20F45300860880 /* clouds.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = clouds.jpg; path = Resources/Images/clouds.jpg; sourceTree = "<group>"; };
+		317070350E29409E00DD3360 /* AccelViewportDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportDemo.m; path = tests/AccelViewportDemo.m; sourceTree = "<group>"; };
+		317070360E29409E00DD3360 /* AccelViewportDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportDemo.h; path = tests/AccelViewportDemo.h; sourceTree = "<group>"; };
+		3170705B0E2940C900DD3360 /* AccelViewportDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3170705D0E2940C900DD3360 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TcpAccelClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TcpAccelClient.m; path = tests/TcpAccelClient.m; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -582,6 +611,19 @@
 				2D500B940D5A79C200DBA0E3 /* OpenGLES.framework in Frameworks */,
 				2D500B9A0D5A79CF00DBA0E3 /* QuartzCore.framework in Frameworks */,
 				5082437A0DFDF84100113673 /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		317070510E2940C900DD3360 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				317070520E2940C900DD3360 /* Foundation.framework in Frameworks */,
+				317070530E2940C900DD3360 /* UIKit.framework in Frameworks */,
+				317070540E2940C900DD3360 /* CoreGraphics.framework in Frameworks */,
+				317070550E2940C900DD3360 /* OpenGLES.framework in Frameworks */,
+				317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */,
+				317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +820,7 @@
 				50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */,
 				50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */,
 				50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */,
+				3170705B0E2940C900DD3360 /* AccelViewportDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -785,6 +828,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				310334A50E20F45300860880 /* clouds.jpg */,
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50B2C9C00E109A5900AE9530 /* LICENSE */,
 				50B2C9C10E109A5900AE9530 /* README */,
@@ -809,6 +853,7 @@
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
 				50DB1BCC0E1C1E5900A89DFF /* Info copy.plist */,
+				3170705D0E2940C900DD3360 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -917,15 +962,17 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				317070350E29409E00DD3360 /* AccelViewportDemo.m */,
+				317070360E29409E00DD3360 /* AccelViewportDemo.h */,
 				50DB1BCE0E1C1EF000A89DFF /* ParticleDemo.h */,
 				50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */,
 				50B2CB170E10EE0800AE9530 /* main.m */,
 				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
 				50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */,
-				50B2C9770E10972B00AE9530 /* TcpAccelClient.h */,
 				50B2C9780E10972B00AE9530 /* VirtualAccelerometer.h */,
 				50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */,
 				50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */,
+				50B2C9770E10972B00AE9530 /* TcpAccelClient.h */,
 				3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */,
@@ -1116,6 +1163,24 @@
 			name = JumpingSisters;
 			productName = foo;
 			productReference = 1D6058910D05DD3D006BFB54 /* JumpingSisters.app */;
+			productType = "com.apple.product-type.application";
+		};
+		317070410E2940C900DD3360 /* AccelViewportDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 317070580E2940C900DD3360 /* Build configuration list for PBXNativeTarget "AccelViewportDemo" */;
+			buildPhases = (
+				317070440E2940C900DD3360 /* Resources */,
+				3170704C0E2940C900DD3360 /* Sources */,
+				317070510E2940C900DD3360 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				317070420E2940C900DD3360 /* PBXTargetDependency */,
+			);
+			name = AccelViewportDemo;
+			productName = playground;
+			productReference = 3170705B0E2940C900DD3360 /* AccelViewportDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3188C3C70E0D960A00EFA866 /* TcpAccelClient */ = {
@@ -1398,6 +1463,7 @@
 				50B2C5CE0E100EF000AE9530 /* Physics-Chipmunk */,
 				50B2CE450E129FD900AE9530 /* ChipmunkDemo */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleDemo */,
+				317070410E2940C900DD3360 /* AccelViewportDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -1413,6 +1479,20 @@
 				50B2CB8C0E10EE4A00AE9530 /* grossini.png in Resources */,
 				50B2CB8D0E10EE4A00AE9530 /* grossinis_sister1.png in Resources */,
 				50B2CB8E0E10EE4A00AE9530 /* grossinis_sister2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		317070440E2940C900DD3360 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				317070450E2940C900DD3360 /* Default.png in Resources */,
+				317070460E2940C900DD3360 /* Icon.png in Resources */,
+				317070470E2940C900DD3360 /* Background.png in Resources */,
+				317070480E2940C900DD3360 /* grossini.png in Resources */,
+				317070490E2940C900DD3360 /* grossinis_sister1.png in Resources */,
+				3170704A0E2940C900DD3360 /* grossinis_sister2.png in Resources */,
+				3170704B0E2940C900DD3360 /* clouds.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1598,6 +1678,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3170704C0E2940C900DD3360 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */,
+				3170704E0E2940C900DD3360 /* VirtualAccelerometer.m in Sources */,
+				3170704F0E2940C900DD3360 /* main.m in Sources */,
+				317070500E2940C900DD3360 /* Primitives.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3188C3D10E0D960A00EFA866 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1769,6 +1860,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		317070420E2940C900DD3360 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 317070430E2940C900DD3360 /* PBXContainerItemProxy */;
+		};
 		3188C3C80E0D960A00EFA866 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -1878,6 +1974,55 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = JumpingSisters;
 				WARNING_CFLAGS = "-Wall";
+			};
+			name = Release;
+		};
+		317070590E2940C900DD3360 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AccelViewportDemo;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		3170705A0E2940C900DD3360 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "/Users/alecu/grossiniTouch/cocos2d-iphone/Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SpritesDemo;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2544,6 +2689,15 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		317070580E2940C900DD3360 /* Build configuration list for PBXNativeTarget "AccelViewportDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				317070590E2940C900DD3360 /* Debug */,
+				3170705A0E2940C900DD3360 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
