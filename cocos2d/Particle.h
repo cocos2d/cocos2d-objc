@@ -24,7 +24,6 @@
 #import "CocosNode.h"
 #import "types.h"
 
-#define kLIVE (1 << 0)
 typedef struct sParticle
 {
 	cpVect	pos;
@@ -35,15 +34,14 @@ typedef struct sParticle
 	ColorF	deltaColor;
 	float	size;
 	float	life;
-	long	flags;
 } Particle;
 
 @class Texture2D;
 
+//! Particle System base class
 @interface ParticleSystem : CocosNode
 {
 	int id;
-	long flags;
 	
 	/// is the particle system active ?
 	BOOL active;
@@ -84,6 +82,11 @@ typedef struct sParticle
 	/// Size variance
 	float sizeVar;
 	
+	/// How many seconds will the particle live
+	float life;
+	/// Life variance
+	float lifeVar;
+	
 	/// Start color of the particles
 	ColorF startColor;
 	/// Start color variance
@@ -93,20 +96,34 @@ typedef struct sParticle
 	/// End color variance
 	ColorF endColorVar;
 	
+	/// Array of particles
 	Particle *particles;
 	/// Maximum particles
 	int totalParticles;
 	/// Count of particles
 	int particleCount;
 	
+	// additive color or blend
+	BOOL additive;
+	
 	/// How many particles can be emitted per second
 	float emissionRate;
 	float emitCounter;
 	
-	/// How many seconds will the particle live
-	float life;
-	/// Life variance
-	float lifeVar;
+	/// Texture of the particles
+	Texture2D *texture;
+	
+	/// Array of (x,y,size) 
+	VtxPointSprite *vertices;
+	/// Array of colors
+	ColorF	*colors;
+	/// vertices buffer id
+	GLuint	verticesID;
+	/// colors buffer id
+	GLuint	colorsID;
+	
+	///  particle idx
+	int particleIdx;
 }
 
 @property (readonly)	BOOL active;
@@ -131,81 +148,15 @@ typedef struct sParticle
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Update a particle
--(BOOL) updateParticle: (Particle*) particle delta:(double)dt;
+-(void) updateParticlesWithDelta:(double)dt;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
-//! Draws the particle
--(void) drawParticle: (Particle*) particle;
-//! perform actions before all the particles are visited
--(void) preParticles;
-//! perform actions after all the particles have been visited, like draw them
--(void) postParticles;
+//! draw all the particles
+-(void) drawParticles;
 //! stop the running system
 -(void) stopSystem;
-//! rest the system
+//! reset the system
 -(void) resetSystem;
-@end
-
-@interface TextureParticleSystem : ParticleSystem
-{
-	Texture2D *texture;
-	
-	// VBO related
-	VtxPointSprite *vertices;
-	ColorF	*colors;
-	GLuint	verticesID;
-	GLuint	colorsID;
-	
-	int particleIdx;
-}
-@end
-
-@interface PixelParticleSystem : ParticleSystem
-{
-}
-@end
-
-@interface ParticleFire: TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleFireworks : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleSun : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleGalaxy : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleFlower : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleMeteor : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleSpiral : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleExplosion : TextureParticleSystem
-{
-}
-@end
-
-@interface ParticleTest : TextureParticleSystem
-{
-}
+//! is the system full ?
+-(BOOL) isFull;
 @end
