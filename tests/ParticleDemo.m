@@ -8,7 +8,7 @@
 #import "Layer.h"
 #import "Director.h"
 #import "Label.h"
-#import "Particle.h"
+#import "ParticleSystems.h"
 
 // local import
 #import "ParticleDemo.h"
