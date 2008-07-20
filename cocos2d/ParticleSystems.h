@@ -68,7 +68,8 @@
 }
 @end
 
-@interface ParticleTest : ParticleSystem
+//! Smoke particle system
+@interface ParticleSmoke : ParticleSystem
 {
 }
 @end
