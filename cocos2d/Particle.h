@@ -104,7 +104,9 @@ typedef struct sParticle
 	int particleCount;
 	
 	// additive color or blend
-	BOOL additive;
+	BOOL blendAdditive;
+	// color modulate
+	BOOL colorModulate;
 	
 	/// How many particles can be emitted per second
 	float emissionRate;

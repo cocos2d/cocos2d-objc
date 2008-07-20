@@ -146,16 +146,17 @@ Class nextAction();
 	return @"ParticleExplosion";
 }
 @end
-@implementation DemoTest
+
+@implementation DemoSmoke
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleTest node];
+	ParticleSystem *emitter = [ParticleSmoke node];
 	[self add: emitter];
 }
 -(NSString *) title
 {
-	return @"ParticleTest";
+	return @"ParticleSmoke";
 }
 @end
 Class nextAction()
@@ -163,7 +164,6 @@ Class nextAction()
 	static int i=0;
 	
 	NSArray *transitions = [[NSArray arrayWithObjects:
-//								@"DemoTest",
 								@"DemoFlower",
 								@"DemoGalaxy",
 								@"DemoFirework",
@@ -171,6 +171,7 @@ Class nextAction()
 								@"DemoSun",
 								@"DemoMeteor",
 								@"DemoFire",
+								@"DemoSmoke",
 								@"DemoExplosion",
 									nil ] retain];
 	

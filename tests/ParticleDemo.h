@@ -57,7 +57,7 @@
 }
 @end
 
-@interface DemoTest : ParticleDemo
+@interface DemoSmoke : ParticleDemo
 {
 }
 @end

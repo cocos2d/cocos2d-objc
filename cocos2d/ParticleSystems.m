@@ -35,9 +35,6 @@
 	if( ! [super init] )
 		return nil;
 	
-	// additive
-	additive = NO;
-	
 	// duration
 	duration = -1;
 
@@ -92,6 +89,9 @@
 
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
+
+	// additive
+	blendAdditive = NO;
 	
 	return self;
 }
@@ -103,7 +103,7 @@
 @implementation ParticleFire
 -(id) init
 {
-	totalParticles = 200;
+	totalParticles = 250;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
@@ -118,7 +118,7 @@
 	
 	// angle
 	angle = 90;
-	angleVar = 20;
+	angleVar = 10;
 
 	// radial acceleration
 	radialAccel = 0;
@@ -131,15 +131,15 @@
 	posVar.y = 20;
 	
 	// life of particles
-	life = 2;
-	lifeVar = 1;
+	life = 3;
+	lifeVar = 0.25;
 	
 	// speed of particles
-	speed = 70;
-	speedVar = 40;
+	speed = 60;
+	speedVar = 20;
 		
 	// size, in pixels
-	size = 40.0f;
+	size = 100.0f;
 	sizeVar = 10.0f;
 	
 	// emits per frame
@@ -166,6 +166,9 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
+	// additive
+	blendAdditive = YES;
+		
 	return self;
 }
 @end
@@ -182,6 +185,9 @@
 	if( ! [super init] )
 		return nil;
 
+	// additive
+	blendAdditive = YES;
+		
 	// duration
 	duration = -1;
 	
@@ -254,7 +260,7 @@
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
-	
+
 	// duration
 	duration = -1;
 
@@ -315,6 +321,9 @@
 	
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
+
+	// additive
+	blendAdditive = YES;
 	
 	return self;
 }
@@ -392,7 +401,10 @@
 	
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
-	
+
+	// additive
+	blendAdditive = YES;
+		
 	return self;
 }
 @end
@@ -470,6 +482,9 @@
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
 	
+	// additive
+	blendAdditive = YES;
+	
 	return self;
 }
 @end
@@ -546,6 +561,9 @@
 	
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
+
+	// additive
+	blendAdditive = NO;
 	
 	return self;
 }
@@ -623,83 +641,85 @@
 	
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
+
+	// additive
+	blendAdditive = NO;
 	
 	return self;
 }
 @end
 
 //
-// ParticleTest
+// ParticleSmoke
 //
-@implementation ParticleTest
+@implementation ParticleSmoke
 -(id) init
 {
-	totalParticles = 700;
+	totalParticles = 200;
 	
 	// must be called after totalParticles is set
 	if( ! [super init] )
 		return nil;
 	
 	// duration
-	duration = 0.1;
+	duration = -1;
 	
 	// gravity
 	gravity.x = 0;
-	gravity.y = -100;
+	gravity.y = 0;
 	
 	// angle
 	angle = 90;
-	angleVar = 360;
+	angleVar = 5;
 	
-	// speed of particles
-	speed = 70;
-	speedVar = 40;
-	
-	// radial
+	// radial acceleration
 	radialAccel = 0;
 	radialAccelVar = 0;
 	
-	// tagential
-	tangentialAccel = 0;
-	tangentialAccelVar = 0;
-	
 	// emitter position
 	position.x = 160;
-	position.y = 240;
-	posVar.x = 00;
-	posVar.y = 00;
+	position.y = 0;
+	posVar.x = 20;
+	posVar.y = 0;
 	
 	// life of particles
-	life = 5.0;
-	lifeVar = 2;
+	life = 4;
+	lifeVar = 1;
+	
+	// speed of particles
+	speed = 25;
+	speedVar = 10;
 	
 	// size, in pixels
-	size = 15.0f;
+	size = 60.0f;
 	sizeVar = 10.0f;
 	
-	// emits per second
-	emissionRate = totalParticles/duration;
+	// emits per frame
+	emissionRate = totalParticles/life;
 	
 	// color of particles
-	startColor.r = 0.7f;
-	startColor.g = 0.1f;
-	startColor.b = 0.2f;
+	startColor.r = 0.8f;
+	startColor.g = 0.8f;
+	startColor.b = 0.8f;
 	startColor.a = 1.0f;
-	startColorVar.r = 0.5f;
-	startColorVar.g = 0.5f;
-	startColorVar.b = 0.5f;
-	startColorVar.a = 0.0f;
-	endColor.r = 0.5f;
-	endColor.g = 0.5f;
-	endColor.b = 0.5f;
-	endColor.a = 0.0f;
-	endColorVar.r = 0.5f;
-	endColorVar.g = 0.5f;
-	endColorVar.b = 0.5f;
+	startColorVar.r = 0.02;
+	startColorVar.g = 0.02;
+	startColorVar.b = 0.02;
+	startColorVar.a = 0.0;
+	endColor.r = 0.0f;
+	endColor.g = 0.0f;
+	endColor.b = 0.0f;
+	endColor.a = 1.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
 	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	[texture retain];
+	
+	// additive
+	blendAdditive = NO;
 	
 	return self;
 }

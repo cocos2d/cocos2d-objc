@@ -78,7 +78,10 @@
 	active = YES;
 	
 	// default: additive
-	additive = YES;
+	blendAdditive = NO;
+	
+	// default: modulate
+	colorModulate = YES;
 		
 	glGenBuffers(1, &verticesID);
 	glGenBuffers(1, &colorsID);	
@@ -264,7 +267,8 @@
 
 -(void) drawParticles
 {
-	int blend_src, blend_dst;
+	int blendSrc, blendDst;
+//	int colorMode;
 	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture.name);
@@ -286,17 +290,31 @@
 	glColorPointer(4,GL_FLOAT,0,0);
 
 	// save blend state
-	glGetIntegerv(GL_BLEND_DST, &blend_dst);
-	glGetIntegerv(GL_BLEND_SRC, &blend_src);
-	if( additive )
+	glGetIntegerv(GL_BLEND_DST, &blendDst);
+	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	else
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+
+	// save color mode
+#if 0
+	glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &colorMode);
+	if( colorModulate )
+		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	else
+		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+#endif
+
 	glDrawArrays(GL_POINTS, 0, particleIdx);
 	
 	// restore blend state
-	glBlendFunc( blend_src, blend_dst );
+	glBlendFunc( blendSrc, blendDst );
+
+#if 0
+	// restore color mode
+	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, colorMode);
+#endif
 	
 	// unbind VBO buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
