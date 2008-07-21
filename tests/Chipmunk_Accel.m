@@ -3,6 +3,8 @@
 // main file
 //
 
+#import "chipmunk.h"
+
 #import "Scene.h"
 #import "Layer.h"
 #import "Director.h"
@@ -13,11 +15,9 @@
 #import "MenuItem.h"
 #import "Menu.h"
 
-#import "Physics-chipmunk.h"
-
 #import "OpenGL_Internal.h"
 
-#import "chipmunk.h"
+#import "Chipmunk_Accel.h"
 
 
 static void
@@ -37,6 +37,8 @@ eachShape(void *ptr, void* unused)
 {
 	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
 	[self add: sprite];
+	
+	sprite.position = cpv(x,y);
 	
 	int num = 4;
 	cpVect verts[] = {
@@ -61,7 +63,8 @@ eachShape(void *ptr, void* unused)
 {
 	[super init];
 	
-	isEventHandler = YES;
+	isTouchEnabled = YES;
+	isAccelerometerEnabled = YES;
 	
 	CGRect wins = [[Director sharedDirector] winSize];
 	cpInitChipmunk();
@@ -69,14 +72,30 @@ eachShape(void *ptr, void* unused)
 	cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
 	space = cpSpaceNew();
 	cpSpaceResizeStaticHash(space, 20.0, 999);
-	space->gravity = cpv(0, -100);
+	space->gravity = cpv(0, 0);
 
 	cpShape *shape;
 	
-	shape = cpSegmentShapeNew(staticBody, cpv(-wins.size.width,0), cpv(wins.size.width*2,0), 0.0f);
+	// bottom
+	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(wins.size.width,0), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 
+	// top
+	shape = cpSegmentShapeNew(staticBody, cpv(0,wins.size.height), cpv(wins.size.width,wins.size.height), 0.0f);
+	shape->e = 1.0; shape->u = 1.0;
+	cpSpaceAddStaticShape(space, shape);
+
+	// left
+	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(0,wins.size.height), 0.0f);
+	shape->e = 1.0; shape->u = 1.0;
+	cpSpaceAddStaticShape(space, shape);
+
+	// right
+	shape = cpSegmentShapeNew(staticBody, cpv(wins.size.width,0), cpv(wins.size.width,wins.size.height), 0.0f);
+	shape->e = 1.0; shape->u = 1.0;
+	cpSpaceAddStaticShape(space, shape);
+	
 	[self addNewSpriteX: 200 y:200];
 
 	return self;
@@ -86,12 +105,14 @@ eachShape(void *ptr, void* unused)
 {
 	[super onEnter];
 	[self schedule: @selector(step)];
+
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 30)];
 }
 
 -(void) onExit
 {
-	[super onExit];
 	[self unschedule:@selector(step)];
+	[super onExit];
 }
 
 -(void) step
@@ -115,6 +136,16 @@ eachShape(void *ptr, void* unused)
 	
 	[self addNewSpriteX: location.x y:location.y];
 	
+}
+
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
+{
+	cpVect v = cpv( acceleration.x, acceleration.y);
+	
+//	if( v.x || v.y )
+//		v = cpvnormalize(v);
+	
+	space->gravity = cpvmult(v, 100);
 }
 @end
 

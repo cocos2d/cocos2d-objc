@@ -27,10 +27,13 @@
 // Layer
 //
 /** a Layer */
-@interface Layer : CocosNode
+@interface Layer : CocosNode <UIAccelerometerDelegate>
 {
-	//! wheter or not it will receive Touch events
-	BOOL isEventHandler;
+	//! whether or not it will receive Touch events
+	BOOL isTouchEnabled;
+	
+	//! whether or not it will receive Accelerometer events
+	BOOL isAccelerometerEnabled;
 }
 @end
 

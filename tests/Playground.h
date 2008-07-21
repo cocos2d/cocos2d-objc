@@ -1,19 +1,22 @@
-#import <UIKit/UIKit.h>
-#import "Layer.h"
+//
+// cocos2d
+//
 
-@class Label;
+#import <UIKit/UIKit.h>
+
+#import "Layer.h"
+#import "chipmunk.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
+@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate>
 {
 }
 @end
 
-@class EmitFireworks;
-@interface TextLayer: Layer
+@interface Layer1 : Layer
 {
-	id emitter1;
-	id emitter2;
-	id emitter3;
+	cpSpace *space;
 }
+-(void) step;
+-(void) addNewSpriteX:(float)x y:(float)y;
 @end

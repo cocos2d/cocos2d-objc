@@ -8,7 +8,7 @@
 #import "chipmunk.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
+@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate>
 {
 }
 @end

@@ -152,7 +152,7 @@
 		50B2C5E10E100EF000AE9530 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50B2C5E20E100EF000AE9530 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50B2C5E30E100EF000AE9530 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50B2C5ED0E100F8800AE9530 /* Physics-chipmunk.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */; };
+		50B2C5ED0E100F8800AE9530 /* Chipmunk_Accel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */; };
 		50B2C60C0E1014AE00AE9530 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		50B2C9A10E10980200AE9530 /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */; };
 		50B2CB190E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
@@ -291,7 +291,6 @@
 		50DB1BC40E1C1E5900A89DFF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50DB1BD00E1C1EF000A89DFF /* ParticleDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */; };
 		50DB1BD10E1C1EF000A89DFF /* ParticleDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */; };
 		50F0992B0E05F01800A8AD5C /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F099290E05F01800A8AD5C /* glu.c */; };
 		50F0992C0E05F01800A8AD5C /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F0992A0E05F01800A8AD5C /* glu.h */; };
@@ -429,8 +428,8 @@
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		317070350E29409E00DD3360 /* AccelViewportDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportDemo.m; path = tests/AccelViewportDemo.m; sourceTree = "<group>"; };
 		317070360E29409E00DD3360 /* AccelViewportDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportDemo.h; path = tests/AccelViewportDemo.h; sourceTree = "<group>"; };
-		3170705B0E2940C900DD3360 /* SpritesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3188C3DE0E0D960A00EFA866 /* SpritesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3170705B0E2940C900DD3360 /* AccelViewportDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TcpAccelClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TcpAccelClient.m; path = tests/TcpAccelClient.m; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
@@ -527,9 +526,9 @@
 		50B2C5800E100B1200AE9530 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		50B2C5810E100B1200AE9530 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		50B2C5820E100B1200AE9530 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
-		50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Physics-Chipmunk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Physics-chipmunk.h"; path = "tests/Physics-chipmunk.h"; sourceTree = "<group>"; };
-		50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Physics-chipmunk.m"; path = "tests/Physics-chipmunk.m"; sourceTree = "<group>"; };
+		50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chipmunk_Accel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chipmunk_Accel.h; path = tests/Chipmunk_Accel.h; sourceTree = "<group>"; };
+		50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Chipmunk_Accel.m; path = tests/Chipmunk_Accel.m; sourceTree = "<group>"; };
 		50B2C9770E10972B00AE9530 /* TcpAccelClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TcpAccelClient.h; path = tests/TcpAccelClient.h; sourceTree = "<group>"; };
 		50B2C9780E10972B00AE9530 /* VirtualAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualAccelerometer.h; path = tests/VirtualAccelerometer.h; sourceTree = "<group>"; };
 		50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VirtualAccelerometer.m; path = tests/VirtualAccelerometer.m; sourceTree = "<group>"; };
@@ -819,12 +818,12 @@
 				506C800E0E041C9300B48100 /* SceneTest.app */,
 				50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */,
 				50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */,
-				3188C3DE0E0D960A00EFA866 /* SpritesDemo.app */,
+				3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */,
 				50B2C4D10E100AEA00AE9530 /* libChipmunk.a */,
-				50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */,
+				50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */,
 				50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */,
 				50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */,
-				3170705B0E2940C900DD3360 /* SpritesDemo.app */,
+				3170705B0E2940C900DD3360 /* AccelViewportDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -973,8 +972,8 @@
 				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
 				50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */,
 				50B2C9780E10972B00AE9530 /* VirtualAccelerometer.h */,
-				50B2C5EB0E100F8800AE9530 /* Physics-chipmunk.h */,
-				50B2C5EC0E100F8800AE9530 /* Physics-chipmunk.m */,
+				50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */,
+				50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */,
 				50B2C9770E10972B00AE9530 /* TcpAccelClient.h */,
 				3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
@@ -1186,7 +1185,7 @@
 			);
 			name = AccelViewportDemo;
 			productName = playground;
-			productReference = 3170705B0E2940C900DD3360 /* SpritesDemo.app */;
+			productReference = 3170705B0E2940C900DD3360 /* AccelViewportDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3188C3C70E0D960A00EFA866 /* TcpAccelClient */ = {
@@ -1204,7 +1203,7 @@
 			);
 			name = TcpAccelClient;
 			productName = playground;
-			productReference = 3188C3DE0E0D960A00EFA866 /* SpritesDemo.app */;
+			productReference = 3188C3DE0E0D960A00EFA866 /* TcpAccelClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5018F24C0DFDEAC400C013A5 /* cocos2d */ = {
@@ -1350,9 +1349,9 @@
 			productReference = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		50B2C5CE0E100EF000AE9530 /* Physics-Chipmunk */ = {
+		50B2C5CE0E100EF000AE9530 /* Chipmunk_Accel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Physics-Chipmunk" */;
+			buildConfigurationList = 50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk_Accel" */;
 			buildPhases = (
 				50B2C5D30E100EF000AE9530 /* Resources */,
 				50B2C5DA0E100EF000AE9530 /* Sources */,
@@ -1364,9 +1363,9 @@
 				50B2C5D10E100EF000AE9530 /* PBXTargetDependency */,
 				50B2C60B0E1014A700AE9530 /* PBXTargetDependency */,
 			);
-			name = "Physics-Chipmunk";
+			name = Chipmunk_Accel;
 			productName = playground;
-			productReference = 50B2C5E80E100EF000AE9530 /* Physics-Chipmunk.app */;
+			productReference = 50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50B2CE450E129FD900AE9530 /* ChipmunkDemo */ = {
@@ -1466,7 +1465,7 @@
 				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
 				50C93A930E0BF6E000517B01 /* SpritesDemo */,
 				3188C3C70E0D960A00EFA866 /* TcpAccelClient */,
-				50B2C5CE0E100EF000AE9530 /* Physics-Chipmunk */,
+				50B2C5CE0E100EF000AE9530 /* Chipmunk_Accel */,
 				50B2CE450E129FD900AE9530 /* ChipmunkDemo */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleDemo */,
 				317070410E2940C900DD3360 /* AccelViewportDemo */,
@@ -1788,7 +1787,6 @@
 			files = (
 				503B4BB40E04CAAC00AAF246 /* Playground.m in Sources */,
 				50B2CB190E10EE0800AE9530 /* main.m in Sources */,
-				50DB1BD00E1C1EF000A89DFF /* ParticleDemo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1817,7 +1815,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B2CE580E12A0B400AE9530 /* main.m in Sources */,
-				50B2C5ED0E100F8800AE9530 /* Physics-chipmunk.m in Sources */,
+				50B2C5ED0E100F8800AE9530 /* Chipmunk_Accel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2434,7 +2432,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "Physics-Chipmunk";
+				PRODUCT_NAME = Chipmunk_Accel;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -2458,7 +2456,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "Physics-Chipmunk";
+				PRODUCT_NAME = Chipmunk_Accel;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -2791,7 +2789,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Physics-Chipmunk" */ = {
+		50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk_Accel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50B2C5E60E100EF000AE9530 /* Debug */,

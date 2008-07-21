@@ -27,7 +27,7 @@ Class nextAction();
 {
 	[super init];
 
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 
 	cloudsSize = cpv(1416/2, 930/2);
 	clouds = [[Sprite spriteFromFile:@"clouds.jpg"] retain];
