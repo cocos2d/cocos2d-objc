@@ -50,7 +50,7 @@
 	if( ![super init] )
 		return nil;
 
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 	selectedItem = -1;
 	
 	int z=0;

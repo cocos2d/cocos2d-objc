@@ -178,7 +178,7 @@ void drawCollisions(void *ptr, void *data)
 -(id) init
 {
 	[super init];
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 	cpInitChipmunk();	
 	init_funcs[demo_index]();
 	return self;

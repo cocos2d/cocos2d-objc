@@ -408,5 +408,9 @@ static Director *sharedDirector;
 	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
 		[eventHandler touchesEnded:touches withEvent:event];
 }
-
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+		[eventHandler touchesCancelled:touches withEvent:event];
+}
 @end

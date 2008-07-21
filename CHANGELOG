@@ -1,9 +1,12 @@
 
 version 0.3 - XXX
+ . Director: proxies touchesCancelled
+ . Particle System: added smoke particle.
+ . Particle System: fire example improved.
  . Particle System: supports for additive and blend colors
  . Particle System: splited in 2 files: particle.[hm] and ParticleSystems.[hm]
  . Particle System: doesn't iterate over dead particles
- . Particle System: fire.png uses white color, so "blend" mode works ok.
+ . Particle System: fire.png uses white color, so "blend" mode works ok. fire.png is smaller (less resources)
  
 version 0.2 - 5-Jul-2008
  . Replaced CGPoint with chipmunk's vector (cpVect) in CocosNode

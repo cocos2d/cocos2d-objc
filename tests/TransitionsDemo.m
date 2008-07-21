@@ -56,7 +56,7 @@ id nextTransition()
 	if( ! [super initWithColor: 0x00ff00ff] )
 		return nil;
 
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 
 	CGRect size;
 	float x,y;
@@ -87,7 +87,7 @@ id nextTransition()
 	if( ! [super initWithColor: 0xff0000ff] )
 		return nil;
 	
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 	
 	CGRect size;
 	float x,y;

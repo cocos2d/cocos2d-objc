@@ -22,7 +22,7 @@ Class nextAction();
 {
 	[super init];
 
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 
 	grossini = [[Sprite spriteFromFile:@"grossini.png"] retain];
 	tamara = [[Sprite spriteFromFile:@"grossinis_sister1.png"] retain];

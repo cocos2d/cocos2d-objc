@@ -74,7 +74,7 @@
 -(id) init
 {
 	[super initWithColor: 0x0000ffff];
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 	return self;
 }
 

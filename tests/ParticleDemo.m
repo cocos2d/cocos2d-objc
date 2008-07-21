@@ -20,7 +20,7 @@ Class nextAction();
 {
 	[super init];
 
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 
 	CGRect s = [[Director sharedDirector] winSize];
 	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];

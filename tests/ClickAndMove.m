@@ -22,7 +22,7 @@
 	if( ! [super init] )
 		return nil;
 	
-	isEventHandler = YES;
+	isTouchEnabled = YES;
 	
 	Sprite *sprite = [Sprite spriteFromFile: @"grossini.png"];
 	

@@ -2,9 +2,9 @@ cocos2d-iphone
 --------------
 
 cocos2d-iphone is a framework for building 2D games, demos, and other
-graphical/interactive applications. It is based on the cocos2d (python)
+graphical/interactive applications. It is based on the cocos2d [1] (python)
 design:
-  it uses the same API, but instead of using python it uses objective-c.
+  it uses the same API and design, but instead of using python it uses objective-c.
 
 A cocos2d-iphone application consists of several scenes, and a workflow
 connecting the different scenes. It provides you with a "director"
@@ -38,3 +38,7 @@ Runtime Requirements
 --------------------
 
 Mac OS X 10.5.3, iPhone OS 2.0, Beta 6 release or later
+
+
+
+[1]: http://www.cocos2d.org

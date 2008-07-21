@@ -36,7 +36,8 @@
 	transformAnchor.x = s.size.width / 2;
 	transformAnchor.y = s.size.height / 2;
 	
-	isEventHandler = NO;
+	isTouchEnabled = NO;
+	isAccelerometerEnabled = NO;
 	
 	return self;
 }
@@ -45,15 +46,22 @@
 {
 	[super onEnter];
 	
-	if( isEventHandler )
+	if( isTouchEnabled )
 		[[Director sharedDirector] setEventHandler:self];
+	
+	if( isAccelerometerEnabled )
+		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
+
 -(void) onExit
 {
-	[super onExit];
-	
-	if( isEventHandler )
+	if( isTouchEnabled )
 		[[Director sharedDirector] setEventHandler:nil];
+
+	if( isAccelerometerEnabled )
+		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+	
+	[super onExit];
 }
 @end
 
