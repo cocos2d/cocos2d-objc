@@ -1,5 +1,6 @@
 
 version 0.3 - XXX
+ . Director: landscape can be RIGHT or LEFT (at compile time)
  . Director: proxies touchesCancelled
  . Particle System: added smoke particle.
  . Particle System: fire example improved.

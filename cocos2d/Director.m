@@ -28,6 +28,9 @@
 
 #define kDefaultFPS		30.0	// 30 frames per second
 
+// Landscape is right or left ?
+#define LANDSCAPE_LEFT 0
+
 @implementation Director
 
 @synthesize animationInterval;
@@ -149,14 +152,18 @@ static Director *sharedDirector;
 -(CGPoint) convertCoordinate: (CGPoint) p
 {
 	int newY = winSize.size.height - p.y;
-
+	
 	CGPoint ret = CGPointMake( p.x, newY );
 	if( ! landscape )
 		return ret;
-	
+
+#if LANDSCAPE_LEFT
 	ret.x = p.y;
 	ret.y = p.x;
-	
+#else
+	ret.x = p.y;
+	ret.y = winSize.size.width -p.x;
+#endif // LANDSCAPE_LEFT
 	return ret;
 }
 
@@ -318,8 +325,15 @@ static Director *sharedDirector;
 {
 	if( landscape ) {
 		glTranslatef(160,240,0);
+
+#if LANDSCAPE_LEFT
 		glRotatef(-90,0,0,1);
 		glTranslatef(-240,-160,0);
+#else		
+		// rotate left
+		glRotatef(90,0,0,1);
+		glTranslatef(-240,-160,0);
+#endif // LANDSCAPE_LEFT
 	}	
 }
 
