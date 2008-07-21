@@ -1,5 +1,5 @@
 
-version 0.3 - XXX
+version 0.2.1 - 21-Jul-2008
  . Director: landscape can be RIGHT or LEFT (at compile time)
  . Director: proxies touchesCancelled
  . Particle System: added smoke particle.
