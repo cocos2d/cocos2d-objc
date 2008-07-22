@@ -1,5 +1,6 @@
 
 version XXXX - XXXX
+ . Added CallFuncN action. First argument is the target node
  . "texture" node added (label and sprite)
  . Added FadeIn/FadeOut support to Texture nodes
  . Added transform anchor support to Texture nodes

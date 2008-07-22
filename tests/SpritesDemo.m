@@ -77,8 +77,7 @@ Class nextAction();
 	CGRect s = [[Director sharedDirector] winSize];
 
 	
-//	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.size.width-40, s.size.height-40)];
-	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(0,0)];
+	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.size.width-40, s.size.height-40)];
 	id actionBy = [MoveBy actionWithDuration:2  position: cpv(80,80)];
 	
 	[tamara do: actionTo];
@@ -119,6 +118,8 @@ Class nextAction();
 	
 	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5];
 	id actionBy = [ScaleBy actionWithDuration:2  scale: 2];
+	
+//	grossini.transformAnchor = cpv( [grossini transformAnchor].x, 0 );
 	
 	[tamara do: actionTo];
 	[grossini do:actionBy];

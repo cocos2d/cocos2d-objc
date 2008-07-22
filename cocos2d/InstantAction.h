@@ -73,10 +73,18 @@
  */
 @interface CallFunc : InstantAction <NSCopying>
 {
-	NSInvocation *invocation;
+	id receiver;
+	SEL selector;
 }
 /** creates the action with the callback */
 +(id) actionWithTarget: (id) receiver selector:(SEL) callback;
 /** initializes the action with the callback */
 -(id) initWithTarget: (id) receiver selector:(SEL) callback;
+@end
+
+/** Calls a 'callback' with the node as the first argument
+ */
+@interface CallFuncN : CallFunc
+{
+}
 @end
