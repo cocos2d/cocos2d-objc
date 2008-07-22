@@ -30,8 +30,6 @@
 
 @implementation Label
 
-@synthesize texture;
-
 - (id) init
 {
 	NSException* myException = [NSException
@@ -54,7 +52,8 @@
 
 	texture = [[Texture2D alloc] initWithString:string dimensions:dimensions alignment:alignment fontName:name fontSize:size];
 	
-	[self initAnchors];
+	CGSize s = texture.contentSize;
+	transformAnchor = cpv( s.width/2, s.height/2);
 	return self;
 }
 
@@ -63,27 +62,4 @@
 	[texture release];
 	[super dealloc];
 }
-
-- (void) initAnchors
-{
-//	CGSize size = [texture contentSize];
-//	transform_anchor_x = size.width  / 2;
-//	transform_anchor_y = size.height / 2;
-}
-
-- (void) draw
-{
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-
-	glEnable( GL_TEXTURE_2D);
-
-	[texture drawAtPoint: CGPointZero];
-
-	glDisable( GL_TEXTURE_2D);
-
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-}
-
 @end

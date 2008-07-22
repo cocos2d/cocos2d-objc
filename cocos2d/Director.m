@@ -28,9 +28,6 @@
 
 #define kDefaultFPS		30.0	// 30 frames per second
 
-// Landscape is right or left ?
-#define LANDSCAPE_LEFT 0
-
 @implementation Director
 
 @synthesize animationInterval;

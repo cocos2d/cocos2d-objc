@@ -23,7 +23,7 @@
 
 #import "Texture2D.h"
 
-#import "CocosNode.h"
+#import "TextureNode.h"
 
 /** an Animation object used within Sprites to perform animations */
 @interface Animation : NSObject
@@ -49,14 +49,10 @@
 
 
 /** a 2D sprite */
-@interface Sprite : CocosNode {
-
-	/* OpenGL name for the sprite texture */
-	Texture2D *texture;
-	NSMutableDictionary *animations;
+@interface Sprite : TextureNode
+{
+	NSMutableDictionary *animations;	
 }
-
-@property (readwrite,assign) Texture2D *texture;
 
 /** creates an sprite from a filepath */
 + (id) spriteFromFile:(NSString *)path;
@@ -66,5 +62,4 @@
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (Animation*) animation;
 
--(void) draw;
 @end
