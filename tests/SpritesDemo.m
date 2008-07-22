@@ -77,7 +77,8 @@ Class nextAction();
 	CGRect s = [[Director sharedDirector] winSize];
 
 	
-	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.size.width-40, s.size.height-40)];
+//	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.size.width-40, s.size.height-40)];
+	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(0,0)];
 	id actionBy = [MoveBy actionWithDuration:2  position: cpv(80,80)];
 	
 	[tamara do: actionTo];
@@ -162,6 +163,26 @@ Class nextAction();
 -(NSString *) title
 {
 	return @"Blink";
+}
+@end
+
+@implementation SpriteFade
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites];
+	
+	tamara.opacity = 0;
+	id action1 = [FadeIn actionWithDuration:1.0];
+	id action2 = [FadeOut actionWithDuration:1.0];
+	
+	[tamara do: action1];
+	[grossini do:action2];
+}
+-(NSString *) title
+{
+	return @"FadeIn / FadeOut";
 }
 @end
 
@@ -365,6 +386,7 @@ Class nextAction()
 								@"SpriteScale",
 								@"SpriteJump",
 								@"SpriteBlink",
+								@"SpriteFade",
 								@"SpriteAnimate",
 								@"SpriteSequence",
 								@"SpriteSpawn",

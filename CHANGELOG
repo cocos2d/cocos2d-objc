@@ -1,4 +1,12 @@
 
+version XXXX - XXXX
+ . "texture" node added (label and sprite)
+ . Added FadeIn/FadeOut support to Texture nodes
+ . Added transform anchor support to Texture nodes
+ . Menu item doesn't have "artifacts"
+ . Director landscape mode: is LEFT again, since "Touch fighter" (apple game) uses left landscape
+ 
+
 version 0.2.1 - 21-Jul-2008
  . Director: landscape can be RIGHT or LEFT (at compile time)
  . Director: proxies touchesCancelled

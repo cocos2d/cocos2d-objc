@@ -37,6 +37,9 @@ eachShape(void *ptr, void* unused)
 {
 	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
 	[self add: sprite];
+	sprite.scale = 0.1;
+	
+	[sprite do: [ScaleTo actionWithDuration:0.2 scale:1.0]];
 	
 	sprite.position = cpv(x,y);
 	

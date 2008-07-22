@@ -87,3 +87,8 @@
 {
 }
 @end
+
+@interface SpriteFade : SpriteDemo
+{
+}
+@end
