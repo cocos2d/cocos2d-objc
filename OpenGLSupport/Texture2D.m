@@ -299,8 +299,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation Texture2D (Drawing)
 
-
-
 - (void) drawAtPoint:(CGPoint)point 
 {
 	GLfloat		coordinates[] = { 0,	_maxT,
@@ -309,10 +307,19 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 								_maxS,	0 };
 	GLfloat		width = (GLfloat)_width * _maxS,
 				height = (GLfloat)_height * _maxT;
+
+#if 0
 	GLfloat		vertices[] = {	-width / 2 + point.x,	-height / 2 + point.y,	0.0,
 								width / 2 + point.x,	-height / 2 + point.y,	0.0,
 								-width / 2 + point.x,	height / 2 + point.y,	0.0,
 								width / 2 + point.x,	height / 2 + point.y,	0.0 };
+	
+#else // anchor is done by cocos2d automagically
+	GLfloat		vertices[] = {	point.x,			point.y,	0.0,
+								width + point.x,	point.y,	0.0,
+								point.x,			height  + point.y,	0.0,
+								width + point.x,	height  + point.y,	0.0 };
+#endif
 	
 	glBindTexture(GL_TEXTURE_2D, _name);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
