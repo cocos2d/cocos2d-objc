@@ -131,33 +131,61 @@
 
 -(id) initWithTarget: (id) rec selector:(SEL) cb
 {
-	NSMethodSignature * sig = nil;
-	sig = [[rec class] instanceMethodSignatureForSelector:cb];
-
-	invocation = nil;
-	invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:rec];
-	[invocation setSelector:cb];
-	[invocation retain];
+	if( ! [super init] )
+		return nil;
+	
+	receiver = rec;
+	selector = cb;
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	InstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget: [invocation target] selector: [invocation selector]];
+	InstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget:receiver selector:selector];
 	return copy;
 }
 
--(void) dealloc
-{
-	if( invocation )
-		[invocation release];
-	[super dealloc];
-}
 
 -(void) start
 {
 	[super start];
+
+	NSInvocation *invocation;
+	NSMethodSignature * sig = nil;
+	sig = [[receiver class] instanceMethodSignatureForSelector:selector];
+		
+	invocation = [NSInvocation invocationWithMethodSignature:sig];
+	[invocation setTarget:receiver];
+	[invocation setSelector:selector];
+	[invocation retain];
+	
 	[invocation invoke];
+	
+	[invocation release];
+}
+@end
+
+//
+// CallFuncN
+//
+@implementation CallFuncN
+
+-(void) start
+{
+	[super start];
+
+	NSInvocation *invocation;
+	NSMethodSignature * sig = nil;
+	sig = [[receiver class] instanceMethodSignatureForSelector:selector];
+
+	invocation = [NSInvocation invocationWithMethodSignature:sig];
+	[invocation setTarget:receiver];
+	[invocation setSelector:selector];
+	[invocation setArgument:&target atIndex:2];
+	[invocation retain];
+	
+	[invocation invoke];
+	
+	[invocation release];
 }
 @end
