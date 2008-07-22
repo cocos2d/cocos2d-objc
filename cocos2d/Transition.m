@@ -26,6 +26,7 @@
 #import "InstantAction.h"
 #import "CameraAction.h"
 #import "Layer.h"
+#import "Camera.h"
 
 @implementation TransitionScene
 +(id) transitionWithDuration:(double) t scene:(Scene*)s
@@ -71,11 +72,13 @@
 	[inScene setPosition:cpv(0,0)];
 	[inScene setScale:1.0f];
 	[inScene setRotation:0.0f];
+	[inScene.camera restore];
 	
 	[outScene setVisible:YES];
 	[outScene setPosition:cpv(0,0)];
 	[outScene setScale:1.0f];
 	[outScene setRotation:0.0f];
+	[outScene.camera restore];
 	
 	
 	[[Director sharedDirector] replaceScene: inScene];
