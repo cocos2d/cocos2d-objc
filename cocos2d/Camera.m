@@ -69,7 +69,11 @@
 				);
 		
 		if( landscape )
+#if LANDSCAPE_LEFT
 			glTranslatef(-80,80,0);
+#else
+#error "FIX ME"
+#endif // LANDSCAPE_LEFT
 	}
 }
 

@@ -30,8 +30,6 @@
 
 @implementation Sprite
 
-@synthesize texture;
-
 + (id) spriteFromFile: (NSString*) filename
 {
 	return [[[self alloc] initFromFile:filename] autorelease];
@@ -46,6 +44,9 @@
 
 	texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
 	
+	CGSize s = texture.contentSize;
+	transformAnchor = cpv( s.width/2, s.height/2);
+	
 	return self;
 }
 
@@ -54,21 +55,6 @@
 	[texture release];
 	[animations release];
 	[super dealloc];
-}
-
-- (void) draw
-{
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-
-	glEnable( GL_TEXTURE_2D);
-
-	[texture drawAtPoint: CGPointZero];
-
-	glDisable( GL_TEXTURE_2D);
-
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
 -(void) addAnimation: (Animation*) anim

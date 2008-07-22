@@ -19,21 +19,25 @@
  */
 
 
-#import "Scene.h"
-#import "Director.h"
+#import <UIKit/UIKit.h>
 
-@implementation Scene
--(id) init
-{
-	if( ! [super init] )
-		return nil;
-	
-	CGRect s = [[Director sharedDirector] winSize];
-	relativeTransformAnchor = NO;
+#import "Texture2D.h"
 
-	transformAnchor.x = s.size.width / 2;
-	transformAnchor.y = s.size.height / 2;
+#import "CocosNode.h"
+
+
+/** A node that knows how to render a texture */
+@interface TextureNode : CocosNode <CocosNodeOpacity> {
+
+	/* OpenGL name for the sprite texture */
+	Texture2D *texture;
 	
-	return self;
+	/// sprite opacity
+	GLubyte opacity;
 }
+
+@property (readwrite,assign) Texture2D *texture;
+@property (readwrite,assign) GLubyte opacity;
+
+-(void) draw;
 @end

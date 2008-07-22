@@ -43,7 +43,7 @@
  - overriding draw to render the node    
 */ 
 @interface CocosNode : NSObject {
-
+	
 	/// rotation angle
 	float rotation;	
 	
@@ -58,7 +58,12 @@
 	
 	/// a Camera
 	Camera *camera;
-	
+
+	/// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	/// Sprites, Labels and any other "small" object uses it.
+	/// Scenes, Layers and other "whole screen" object don't use it.
+	BOOL relativeTransformAnchor;
+
 	/// transformation anchor point
 	cpVect transformAnchor;
 	

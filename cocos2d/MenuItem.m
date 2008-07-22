@@ -52,7 +52,11 @@
 	[invocation setSelector:cb];
 	[invocation retain];
 	
-	label = [Label labelWithString:value dimensions:CGSizeMake(kItemSize*[value length], kItemSize) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:kItemSize];
+	label = [Label labelWithString:value dimensions:CGSizeMake((kItemSize+2)*[value length], (kItemSize+2)) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:kItemSize];
+
+	CGSize s = [[label texture] contentSize];
+	transformAnchor = cpv( s.width/2, s.height/2 );
+	
 	[label retain];
 
 	return self;

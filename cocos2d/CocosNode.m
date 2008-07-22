@@ -68,6 +68,10 @@
 	// scheduled selectors
 	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
 	
+	// default.
+	// "whole screen" objects should set it to NO, like Scenes and Layers
+	relativeTransformAnchor = YES;
+	
 	return self;
 }
 - (void) dealloc
@@ -181,6 +185,9 @@
 	[camera locate];
 	
 	// transformations
+	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
+		glTranslatef( -transformAnchor.x, -transformAnchor.y, 0);
+	
 	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
 		glTranslatef( position.x + transformAnchor.x, position.y + transformAnchor.y, 0);
 	else if ( position.x !=0 || position.y !=0 )

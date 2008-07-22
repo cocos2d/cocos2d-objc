@@ -18,22 +18,47 @@
  *
  */
 
+#import <QuartzCore/QuartzCore.h>
+#import <OpenGLES/EAGLDrawable.h>
+#import <UIKit/UIKit.h>
+#import <OpenGLES/EAGL.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 
-#import "Scene.h"
-#import "Director.h"
+#import "TextureMgr.h"
+#import "TextureNode.h"
 
-@implementation Scene
--(id) init
+@implementation TextureNode
+
+@synthesize texture, opacity;
+
+- (id) init
 {
-	if( ! [super init] )
+	if( ![super init] )
 		return nil;
 	
-	CGRect s = [[Director sharedDirector] winSize];
-	relativeTransformAnchor = NO;
-
-	transformAnchor.x = s.size.width / 2;
-	transformAnchor.y = s.size.height / 2;
+	opacity = 255;
 	
 	return self;
+}
+
+- (void) draw
+{
+	glEnableClientState( GL_VERTEX_ARRAY);
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+
+	glEnable( GL_TEXTURE_2D);
+
+	glColor4ub( 255, 255, 255, opacity);
+	
+	[texture drawAtPoint: CGPointZero];
+
+	// is this chepear than saving/restoring color state ?
+	glColor4ub( 255, 255, 255, 255);
+
+	glDisable( GL_TEXTURE_2D);
+
+	glDisableClientState(GL_VERTEX_ARRAY );
+	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 @end

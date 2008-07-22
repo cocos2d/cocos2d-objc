@@ -28,6 +28,8 @@
 // cocos2d related
 #import "Scene.h"
 
+// Landscape is right or left ?
+#define LANDSCAPE_LEFT 1
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes
