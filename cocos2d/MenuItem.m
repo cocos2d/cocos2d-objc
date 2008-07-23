@@ -70,6 +70,14 @@ static BOOL _fontNameRelease = NO;
 {
 	if(! [super init])
 		return nil;
+	
+	if( [value length] == 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"MenuItemInvalid"
+									reason:@"Can't create a MenuItem without value"
+									userInfo:nil];
+		@throw myException;		
+	}
 
 	NSMethodSignature * sig = nil;
 	sig = [[rec class] instanceMethodSignatureForSelector:cb];
