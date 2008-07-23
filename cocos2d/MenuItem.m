@@ -22,6 +22,7 @@
 #import "Label.h"
 #import "IntervalAction.h"
 
+static int _fontSize = kItemSize;
 @implementation MenuItem
 
 -(id) init
@@ -31,6 +32,16 @@
 								reason:@"Init not supported. Use InitFromString"
 								userInfo:nil];
 	@throw myException;	
+}
+
++(void) setFontSize: (int) s
+{
+	_fontSize = s;
+}
+
++(int) fontSize
+{
+	return _fontSize;
 }
 
 +(id) itemFromString: (NSString*) value receiver:(id) r selector:(SEL) s
@@ -52,7 +63,7 @@
 	[invocation setSelector:cb];
 	[invocation retain];
 	
-	label = [Label labelWithString:value dimensions:CGSizeMake((kItemSize+2)*[value length], (kItemSize+2)) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:kItemSize];
+	label = [Label labelWithString:value dimensions:CGSizeMake((_fontSize+2)*[value length], (_fontSize+2)) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:_fontSize];
 
 	CGSize s = [[label texture] contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );
@@ -80,13 +91,13 @@
 -(void) selected
 {
 	[self stop];
-	[self do: [ScaleTo actionWithDuration:0.2 scale:1.5]];
+	[self do: [ScaleTo actionWithDuration:0.1 scale:1.2]];
 }
 
 -(void) unselected
 {
 	[self stop];
-	[self do: [ScaleTo actionWithDuration:0.2 scale:1.0]];
+	[self do: [ScaleTo actionWithDuration:0.1 scale:1.0]];
 
 }
 

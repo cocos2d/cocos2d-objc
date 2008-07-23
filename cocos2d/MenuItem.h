@@ -33,6 +33,12 @@
 	NSInvocation *invocation;	
 }
 
+/** set font size */
++(void) setFontSize: (int) s;
+
+/** get font size */
++(int) fontSize;
+
 /** creates a menu item from a string */
 +(id) itemFromString: (NSString*) value receiver:(id) r selector:(SEL) s;
 
