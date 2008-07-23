@@ -21,14 +21,17 @@
 {
 	[super init];
 	
-	[MenuItem setFontSize:42];
+	[MenuItem setFontSize:30];
 	[MenuItem setFontName: @"Courier New"];
+	
 	
 	MenuItem *item1 = [MenuItem itemFromString: @"Start" receiver:self selector:@selector(menuCallback2)];
 	MenuItem *item2 = [MenuItem itemFromString: @"Options" receiver:self selector:@selector(menuCallback)];
 	MenuItem *item3 = [MenuItem itemFromString: @"Scores" receiver:self selector:@selector(menuCallback2)];
 	MenuItem *item4 = [MenuItem itemFromString: @"Help" receiver:self selector:@selector(menuCallback2)];
 	MenuItem *item5 = [MenuItem itemFromString: @"Quit" receiver:self selector:@selector(onQuit)];
+	
+	[Menu setOffsetY:-40];
 	
 	menu = [Menu menuWithItems: item1, item2, item3, item4, item5, nil];
 	

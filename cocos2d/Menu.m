@@ -22,8 +22,20 @@
 #import "Menu.h"
 #import "Director.h"
 
+static int _offset_y = 0;
+
 @implementation Menu
 // Sets up an array of values to use as the sprite vertices.
+
++(void) setOffsetY: (int) y
+{
+	_offset_y = y;
+}
+
++(int) offsetY
+{
+	return _offset_y;
+}
 
 - (id) init
 {
@@ -125,7 +137,7 @@
 	int x = s.size.width;
 	int y = s.size.height;
 	int incY = [[[children objectAtIndex:0] objectAtIndex:1] height] + 5;
-	int initialY = (y/2) + (incY * [children count])/2;
+	int initialY = (y/2) + (incY * [children count])/2 + _offset_y;
 	
 	for( NSArray* array in children ) {
 		MenuItem *item = [array objectAtIndex:1];
