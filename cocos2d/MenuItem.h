@@ -39,6 +39,12 @@
 /** get font size */
 +(int) fontSize;
 
+/** set the font name */
++(void) setFontName: (NSString*) n;
+
+/** get the font name */
++(NSString*) fontName;
+
 /** creates a menu item from a string */
 +(id) itemFromString: (NSString*) value receiver:(id) r selector:(SEL) s;
 
