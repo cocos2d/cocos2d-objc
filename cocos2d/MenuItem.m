@@ -23,6 +23,9 @@
 #import "IntervalAction.h"
 
 static int _fontSize = kItemSize;
+static NSString *_fontName = @"Marker Felt";
+static BOOL _fontNameRelease = NO;
+
 @implementation MenuItem
 
 -(id) init
@@ -44,6 +47,20 @@ static int _fontSize = kItemSize;
 	return _fontSize;
 }
 
++(void) setFontName: (NSString*) n
+{
+	if( _fontNameRelease )
+		[_fontName release];
+	
+	_fontName = [n retain];
+	_fontNameRelease = YES;
+}
+
++(NSString*) fontName
+{
+	return _fontName;
+}
+
 +(id) itemFromString: (NSString*) value receiver:(id) r selector:(SEL) s
 {
 	return [[[self alloc] initFromString: value receiver:r selector:s] autorelease];
@@ -63,7 +80,7 @@ static int _fontSize = kItemSize;
 	[invocation setSelector:cb];
 	[invocation retain];
 	
-	label = [Label labelWithString:value dimensions:CGSizeMake((_fontSize+2)*[value length], (_fontSize+2)) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:_fontSize];
+	label = [Label labelWithString:value dimensions:CGSizeMake((_fontSize+2)*[value length], (_fontSize+2)) alignment:UITextAlignmentCenter fontName:_fontName fontSize:_fontSize];
 
 	CGSize s = [[label texture] contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );

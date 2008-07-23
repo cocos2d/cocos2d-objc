@@ -22,6 +22,7 @@
 	[super init];
 	
 	[MenuItem setFontSize:42];
+	[MenuItem setFontName: @"Courier New"];
 	
 	MenuItem *item1 = [MenuItem itemFromString: @"Start" receiver:self selector:@selector(menuCallback2)];
 	MenuItem *item2 = [MenuItem itemFromString: @"Options" receiver:self selector:@selector(menuCallback)];
