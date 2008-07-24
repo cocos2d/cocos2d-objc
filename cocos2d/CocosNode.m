@@ -76,7 +76,9 @@
 }
 - (void) dealloc
 {
+#ifdef COCOS2D_DEBUG
 	NSLog( @"deallocing %@", self);
+#endif
 	
 	// attributes
 	[camera release];
@@ -314,7 +316,7 @@
 - (void) activateTimer: (SEL) method
 {
 	if( isRunning ) {
-		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:method userInfo:nil repeats:YES];
+		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:method userInfo:nil repeats:YES];
 		[scheduledSelectors setObject: timer forKey: NSStringFromSelector(method) ];
 	} else
 		[scheduledSelectors setObject: [NSNull null] forKey: NSStringFromSelector(method) ];
