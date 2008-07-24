@@ -149,19 +149,7 @@
 -(void) start
 {
 	[super start];
-
-	NSInvocation *invocation;
-	NSMethodSignature * sig = nil;
-	sig = [[receiver class] instanceMethodSignatureForSelector:selector];
-		
-	invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:receiver];
-	[invocation setSelector:selector];
-	[invocation retain];
-	
-	[invocation invoke];
-	
-	[invocation release];
+	[receiver performSelector:selector];
 }
 @end
 
@@ -173,19 +161,6 @@
 -(void) start
 {
 	[super start];
-
-	NSInvocation *invocation;
-	NSMethodSignature * sig = nil;
-	sig = [[receiver class] instanceMethodSignatureForSelector:selector];
-
-	invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:receiver];
-	[invocation setSelector:selector];
-	[invocation setArgument:&target atIndex:2];
-	[invocation retain];
-	
-	[invocation invoke];
-	
-	[invocation release];
+	[receiver performSelector:selector withObject:target];
 }
 @end

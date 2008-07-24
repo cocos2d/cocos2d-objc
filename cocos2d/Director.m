@@ -25,6 +25,7 @@
 #import "Director.h"
 #import "Camera.h"
 #import "Texture2D.h"
+#import "Scheduler.h"
 
 #define kDefaultFPS		30.0	// 30 frames per second
 
@@ -356,13 +357,16 @@ static Director *sharedDirector;
 	
 	glPopMatrix();
 
+	[[Scheduler sharedScheduler] tick];
 	if( FPS )
 		[self displayFPS];
 		
 	/* swap buffers */
 	[self swapBuffers];
-	
+
+#ifdef COCOS2D_DEBUG
 	CHECK_GL_ERROR();
+#endif
 }
 
 //
