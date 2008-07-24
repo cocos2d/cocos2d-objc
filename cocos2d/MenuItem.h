@@ -33,6 +33,8 @@
 	NSInvocation *invocation;	
 }
 
+@property (assign, readwrite) Label* label;
+
 /** set font size */
 +(void) setFontSize: (int) s;
 

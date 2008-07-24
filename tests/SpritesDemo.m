@@ -317,7 +317,7 @@ Class nextAction();
 						[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil]
 									times:10];
 	id action2 = [Repeat actionWithAction:
-						[Sequence actions: a1, [a1 reverse], nil]
+						[Sequence actions: [a1 copy], [a1 reverse], nil]
 									times:5];
 	
 	[grossini do:action1];
@@ -336,7 +336,7 @@ Class nextAction();
 	
 	id a1 = [MoveBy actionWithDuration:3 position:cpv(350,0)];
 	id seq =[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil];
-	id seq2 =[Sequence actions: [Place actionWithPosition:cpv(60,260)], a1, nil];
+	id seq2 =[Sequence actions: [Place actionWithPosition:cpv(60,260)], [a1 copy], nil];
 	id rep = [Repeat actionWithAction:seq times:10];
 	id action = [Accelerate actionWithAction:seq2 rate:2];
 	id rep2 = [Repeat actionWithAction:action times:10];
