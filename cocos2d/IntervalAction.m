@@ -148,8 +148,13 @@
 	NSAssert( one_!=nil, @"Sequence: argument one must be non-nil");
 	NSAssert( two_!=nil, @"Sequence: argument two must be non-nil");
 
+#ifdef COPY_ACTIONS
 	IntervalAction *one = [[one_ copy] autorelease];
 	IntervalAction *two = [[two_ copy] autorelease];
+#else
+	IntervalAction *one = one_;
+	IntervalAction *two = two_;
+#endif
 		
 	double d = [one duration] + [two duration];
 	[super initWithDuration: d];
@@ -239,7 +244,11 @@
 	if(! [super initWithDuration: d ] )
 		return nil;
 	times = t;
+#ifdef COPY_ACTIONS
 	other = [action copy];
+#else
+	other = [action retain];
+#endif
 	total = 0;
 	return self;
 }
@@ -319,8 +328,13 @@
 	
 	[super initWithDuration: fmax(d1,d2)];
 
+#ifdef COPY_ACTIONS
 	one = [[one_ copy] autorelease];
 	two = [[two_ copy] autorelease];
+#else
+	one = one_;
+	two = two_;
+#endif
 
 	if( d1 > d2 )
 		two = [Sequence actions: two_, [DelayTime actionWithDuration: (d1-d2)], nil];
@@ -749,8 +763,13 @@
 
 	if( ! [super initWithDuration: [action duration]] )
 		return nil;
-	
+
+#ifdef COPY_ACTIONS
 	other = [action copy];
+#else
+	other = [action retain];
+#endif
+	
 	rate = r;
 	return self;
 }
@@ -800,7 +819,13 @@
 	NSAssert( action!=nil, @"AccelDeccel: argument action must be non-nil");
 
 	[super initWithDuration: action.duration ];
+
+#ifdef COPY_ACTIONS
 	other = [action copy];
+#else
+	other = [action retain];
+#endif
+	
 	return self;
 }
 
@@ -850,7 +875,13 @@
 	NSAssert( action!=nil, @"Speed: argument action must be non-nil");
 
 	[super initWithDuration: action.duration / s ];
+	
+#ifdef COPY_ACTIONS
 	other = [action copy];
+#else
+	other = [action retain];
+#endif
+	
 	speed = s;
 	return self;
 }
@@ -913,7 +944,12 @@
 -(id) initWithAction: (IntervalAction*) action
 {
 	[super initWithDuration: [action duration]];
+#ifdef COPY_ACTIONS
 	other = [action copy];
+#else
+	other = [action retain];
+#endif
+	
 	return self;
 }
 

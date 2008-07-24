@@ -80,6 +80,8 @@
 +(id) actionWithTarget: (id) receiver selector:(SEL) callback;
 /** initializes the action with the callback */
 -(id) initWithTarget: (id) receiver selector:(SEL) callback;
+/** exeuctes the callback */
+-(void) execute;
 @end
 
 /** Calls a 'callback' with the node as the first argument

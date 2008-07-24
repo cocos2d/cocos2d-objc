@@ -149,6 +149,11 @@
 -(void) start
 {
 	[super start];
+	[self execute];
+}
+
+-(void) execute
+{
 	[receiver performSelector:selector];
 }
 @end
@@ -158,9 +163,8 @@
 //
 @implementation CallFuncN
 
--(void) start
+-(void) execute
 {
-	[super start];
 	[receiver performSelector:selector withObject:target];
 }
 @end

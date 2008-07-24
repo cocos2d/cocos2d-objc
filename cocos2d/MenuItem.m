@@ -28,8 +28,6 @@ static BOOL _fontNameRelease = NO;
 
 @implementation MenuItem
 
-@synthesize label;
-
 -(id) init
 {
 	NSException* myException = [NSException
