@@ -1,5 +1,7 @@
 
 version XXXX - XXXX
+ . CallFunc, CallFuncN using performSelector instead of NSInvocator
+ . Added color suppport for "TextureNode"
  . Menu: added support for y-offset
  . MenuItem: font size and font name are customizables
  . Added CallFuncN action. First argument is the target node
