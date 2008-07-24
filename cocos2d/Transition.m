@@ -228,11 +228,12 @@
 	
 	[self initScenes];
 	
-	IntervalAction *a = [self action];
+	IntervalAction *in = [self action];
+	IntervalAction *out = [in copy];
 
-	[inScene do: [Accelerate actionWithAction:a rate:0.5] ];
+	[inScene do: [Accelerate actionWithAction:in rate:0.5] ];
 	[outScene do: [Sequence actions:
-				   [Accelerate actionWithAction:a rate:0.5],
+				   [Accelerate actionWithAction:out rate:0.5],
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
 				   nil] ];	
 }

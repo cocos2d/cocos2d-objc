@@ -1,5 +1,6 @@
 
 version XXXX - XXXX
+ . performance: Actions are not cloned. If you want to reuse them, clone them manually using the method 'copy'
  . CallFunc, CallFuncN using performSelector instead of NSInvocator
  . Added color suppport for "TextureNode"
  . Menu: added support for y-offset
