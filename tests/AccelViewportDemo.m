@@ -13,7 +13,7 @@
 #import "Label.h"
 
 // local import
-#import "VirtualAccelerometer.h"
+//#import "VirtualAccelerometer.h"
 #import "AccelViewportDemo.h"
 
 float randfloat() {
@@ -22,41 +22,65 @@ float randfloat() {
 
 Class nextAction();
 
-@implementation SpriteDemo
+@implementation AccelViewportDemo
 -(id) init
 {
 	[super init];
 
 	isTouchEnabled = YES;
-
-	cloudsSize = cpv(1416/2, 930/2);
+	isAccelerometerEnabled = YES;
 	clouds = [[Sprite spriteFromFile:@"clouds.jpg"] retain];
+	[clouds setScale: 1.6];
 	
-	//[self add: grossini z:1];
+	CGSize cs = clouds.texture.contentSize;
+	cloudsSize = cpv(cs.width, cs.height);
 	[self add: clouds z:0];
 
 	CGRect s = [[Director sharedDirector] winSize];
+	cpVect screenSize = cpv(s.size.width, s.size.height);
 	
-	screenCenter = cpv(s.size.width/2, s.size.height/2);
+	cloudsCentered = cpvmult(screenSize, 0.5);
+	cpVect halfCloudsSize = cpvmult(cloudsSize, 0.5);
+	cpVect tl = cpvsub(cloudsCentered, halfCloudsSize);
+	cpVect br = cpvadd(cloudsCentered, halfCloudsSize);
+	visibleArea = cpBBNew(tl.x, tl.y, br.x, br.y);
 	
-	//[grossini setPosition: screenCenter];
-	[clouds setPosition: screenCenter];
-	cloudsPos = screenCenter;
-	[clouds setScale: 1.5];	
+	[clouds setPosition: cloudsCentered];
+	cloudsPos = cloudsCentered;
 
-	for (int n=0; n<NUM_BALLS; n++) {
-		grossini[n] = [[Sprite spriteFromFile:@"grossini.png"] retain];
-		[clouds add: grossini[n]];
-		[grossini[n] setScale: .15];
-		[grossini[n] setPosition: cpv((randfloat()-0.5)*cloudsSize.x, (randfloat()-0.5)*cloudsSize.y) ];
+	int n =0;
+/*
+    grossini[n] = [self addNewSpritePosition:cpv(0,0) scale:1];
+	[grossini[n] setRotation: 90 ];
+	n++;
+		
+    grossini[n] = [self addNewSpritePosition:cloudsSize scale:1];
+	n++;
+*/	
+
+	for (; n<NUM_BALLS; n++) {
+		cpVect pos = cpv((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
+		grossini[n] = [self addNewSpritePosition:pos scale:0.15];
 		[grossini[n] do:[Repeat actionWithAction:[RotateBy actionWithDuration:.5*(n%5) angle:(n>NUM_BALLS/2)?360:-360 ] times:100000]];
 	}
-	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+		
+	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
+
+	info = @"Grossini's iPhone";
+	Label* label = [Label labelWithString:info dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
 	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
 
 	return self;
+}
+
+-(Sprite *) addNewSpritePosition:(cpVect)pos scale:(double)scle
+{
+	Sprite *g = [[Sprite spriteFromFile:@"grossini.png"] retain];
+	[clouds add: g];
+	[g setScale: scle];
+	[g setPosition: pos ];
+	return g;
 }
 
 -(void) dealloc
@@ -65,13 +89,6 @@ Class nextAction();
 	[super dealloc];
 }
 
--(NSString*) title
-{
-	return @"No title";
-}
-@end
-
-@implementation SpriteMove
 -(void) onEnter
 {
 	[super onEnter];
@@ -80,9 +97,22 @@ Class nextAction();
 	//[grossini do:actionBy];
 
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
-	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+	//[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];	
+	CGPoint location = [touch locationInView: [touch view]];
+
+	location = [[Director sharedDirector] convertCoordinate: location];
+	double x = location.x+cloudsPos.x;
+	double y = location.y+cloudsPos.y;
+	[grossini[num_g++%NUM_BALLS] setPosition:cpv(x,y) ];
+/*
+	[self addNewSpritePosition:cpv(location.x, location.y) scale:0.20];
+*/
+}
 
 // Implement this method to get the lastest data from the accelerometer 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration {
@@ -92,20 +122,35 @@ Class nextAction();
 	angle *= -180.0/3.14159;	
 	[grossini setRotation:angle];
 	*/
+
+	double kFilteringFactor = 0.01;
 	
-	cpVect dest = cpvadd(screenCenter, cpv(cloudsSize.x*ACC_FACTOR*acceleration.y, cloudsSize.y*ACC_FACTOR*acceleration.x));
-	if (cpvlength(cpvsub(cloudsPos, dest)) > 10) {
+	accels[0] = acceleration.x * kFilteringFactor + accels[0] * (1.0 - kFilteringFactor);
+	accels[1] = acceleration.y * kFilteringFactor + accels[1] * (1.0 - kFilteringFactor);
+	accels[2] = acceleration.z * kFilteringFactor + accels[2] * (1.0 - kFilteringFactor);
+	
+	cpVect dest = cpvadd(cloudsCentered, cpv(cloudsSize.x*ACC_FACTOR*accels[1], cloudsSize.y*ACC_FACTOR*-accels[0]));
+	dest = cpBBClampVect(visibleArea, dest);
+	
+	// velocidad inv. prop. a la distancia a recorrer
+	cpVect newPos = cpvadd(cloudsPos, cpvmult(cpvsub(dest, cloudsPos), 0.1) );
+	[clouds setPosition:newPos];
+	cloudsPos = newPos;
+	
+	/*
+	if (cpvlength(cpvsub(cloudsPos, dest)) > 20) {
 		id actionTo = [MoveTo actionWithDuration:.3 position:dest];
 		[clouds do:actionTo];
 		cloudsPos = dest;
 	}
+	 */
 	//[clouds setPosition:dest];
 }
 
 
 -(NSString *) title
 {
-	return @"VirtualAccelerometer";
+	return @"VirtualAccelerometer try2";
 }
 @end
 
@@ -121,7 +166,7 @@ Class nextAction();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	Scene *scene = [Scene node];
-	SpriteMove *layer = [SpriteMove node];
+	AccelViewportDemo *layer = [AccelViewportDemo node];
 	[scene add: layer];
 			 
 	[[Director sharedDirector] runScene: scene];

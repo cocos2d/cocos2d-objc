@@ -20,3 +20,4 @@
 -(void) step;
 -(void) addNewSpriteX:(float)x y:(float)y;
 @end
+	

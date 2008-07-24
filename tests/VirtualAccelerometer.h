@@ -47,9 +47,10 @@
 
 @end
 
-
+/*
 #if TARGET_IPHONE_SIMULATOR // running inside the simulator
 #define UIAccelerometer VirtualAccelerometer
 #define UIAcceleration VirtualAcceleration
 #define UIAccelerometerDelegate VirtualAccelerometerDelegate
 #endif // simulator
+*/
