@@ -30,7 +30,7 @@
 
 @implementation TextureNode
 
-@synthesize texture, opacity;
+@synthesize texture, opacity, r, g, b;
 
 - (id) init
 {
@@ -38,8 +38,16 @@
 		return nil;
 	
 	opacity = 255;
+	r = g = b = 255;
 	
 	return self;
+}
+
+-(void) setR: (GLubyte) rr g:(GLubyte) gg b:(GLubyte)bb
+{
+	r=rr;
+	g=gg;
+	b=bb;
 }
 
 - (void) draw
@@ -49,7 +57,7 @@
 
 	glEnable( GL_TEXTURE_2D);
 
-	glColor4ub( 255, 255, 255, opacity);
+	glColor4ub( r, g, b, opacity);
 	
 	[texture drawAtPoint: CGPointZero];
 
