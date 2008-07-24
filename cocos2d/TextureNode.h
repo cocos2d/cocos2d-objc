@@ -26,18 +26,24 @@
 #import "CocosNode.h"
 
 
-/** A node that knows how to render a texture */
+/** A CocosNode that knows how to render a texture */
 @interface TextureNode : CocosNode <CocosNodeOpacity> {
 
-	/* OpenGL name for the sprite texture */
+	/// texture
 	Texture2D *texture;
 	
-	/// sprite opacity
+	/// texture opacity
 	GLubyte opacity;
+	
+	/// texture color
+	GLubyte	r,g,b;
 }
 
 @property (readwrite,assign) Texture2D *texture;
-@property (readwrite,assign) GLubyte opacity;
+@property (readwrite,assign) GLubyte r, g, b, opacity;
+
+/** set the color of the texture */
+-(void) setR: (GLubyte) r g:(GLubyte)g b:(GLubyte)b;
 
 -(void) draw;
 @end
