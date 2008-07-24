@@ -76,7 +76,7 @@
 }
 - (void) dealloc
 {
-#ifdef COCOS2D_DEBUG
+#if DEBUG
 	NSLog( @"deallocing %@", self);
 #endif
 	
@@ -260,6 +260,7 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
+#ifdef COPY_ACTIONS
 	Action *copy = [[action copy] autorelease];
 	
 	copy.target = self;
@@ -267,6 +268,14 @@
 	
 	[self schedule: @selector(step_)];
 	[actions addObject: copy];
+#else	
+	action.target = self;
+	[action start];
+	
+	[self schedule: @selector(step_)];
+	[actions addObject: action];
+	
+#endif
 		
 	return action;
 }
