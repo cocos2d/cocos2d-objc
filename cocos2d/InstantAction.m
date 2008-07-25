@@ -47,7 +47,7 @@
 {
 	return YES;
 }
--(void) step
+-(void) step: (double) dt
 {
 	[self update: 1];
 }

@@ -39,7 +39,7 @@
 -(id) initWithTarget:(id) t sel:(SEL)s;
 
 /** triggers the timer */
--(void) fire;
+-(void) fire: (double) dt;
 @end
 
 //
@@ -58,7 +58,7 @@
 +(Scheduler *)sharedScheduler;
 
 /** the scheduler is ticked */
--(void) tick;
+-(void) tick: (double) dt;
 
 /** schedule a target/selector */
 -(Timer*) scheduleTarget:(id) r selector:(SEL) s;

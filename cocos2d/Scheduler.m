@@ -56,9 +56,16 @@
 	[super dealloc];
 }
 
--(void) fire
+-(void) fire: (double) dt
 {
-	[target performSelector:sel];
+//	[target performSelector:sel];
+	
+	NSMethodSignature * sig = [[target class] instanceMethodSignatureForSelector:sel];
+	NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
+	[invocation setTarget:target];
+	[invocation setSelector:sel];
+	[invocation setArgument:&dt atIndex:2];
+	[invocation invoke];
 }
 @end
 
@@ -164,7 +171,7 @@ static Scheduler *sharedScheduler;
 	[methodsToRemove addObject:t];
 }
 
--(void) tick 
+-(void) tick: (double) dt
 {
 	for( id k in methodsToRemove )
 		[scheduledMethods removeObject:k];
@@ -176,6 +183,6 @@ static Scheduler *sharedScheduler;
 	
 	
 	for( Timer *t in scheduledMethods )
-		[t fire];
+		[t fire: dt];
 }
 @end

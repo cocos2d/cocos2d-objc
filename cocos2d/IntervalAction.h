@@ -57,12 +57,10 @@ Example:
 +(id) actionWithDuration: (double) d;
 /** initializes the action */
 -(id) initWithDuration: (double) d;
--(void) step;
 /** called when the action is about to start */
 -(void) start;
 /** returns YES if the action has finished */
 -(BOOL) isDone;
--(double) getDeltaTime;
 /** returns a reversed action */
 - (IntervalAction*) reverse;
 @end

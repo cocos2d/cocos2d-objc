@@ -43,7 +43,7 @@
 -(BOOL) isDone;
 //! called after the action has finished
 -(void) stop;
--(void) step;
+-(void) step: (double) dt;
 //! called once per frame. time a value between 0 and 1
 //! For example: 
 //! * 0 means that the action just started
