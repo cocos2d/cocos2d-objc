@@ -48,6 +48,7 @@ and when to execute the Scenes
 	/** display FPS ? */
 	BOOL displayFPS;
 	int frames;
+	float accumDt;
 	float frameRate;
 	
 	/** is the running scene paused */

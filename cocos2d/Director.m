@@ -421,11 +421,13 @@ static Director *sharedDirector;
 //
 -(void) showFPS
 {
- 	frames++;
+	frames++;
+	accumDt += dt;
 
-	if (dt > 0.3)  {
-		frameRate = frames/dt;
+	if ( accumDt > 0.3)  {
+		frameRate = frames/accumDt;
 		frames = 0;
+		accumDt = 0;
 	}
 
 	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
