@@ -51,6 +51,7 @@
 {
 	NSMutableArray *scheduledMethods;
 	NSMutableArray *methodsToRemove;
+	NSMutableArray *methodsToAdd;
 }
 
 /** returns a shared instance of the Scheduler */
