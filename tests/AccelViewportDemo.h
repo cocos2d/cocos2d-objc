@@ -4,7 +4,7 @@
 
 @class Sprite;
 
-#define NUM_BALLS 20
+#define NUM_GROSSINIS 20
 #define ACC_FACTOR 5.0
 
 //CLASS INTERFACE
@@ -15,13 +15,16 @@
 
 @interface AccelViewportDemo : Layer
 {
-	Sprite * grossini[NUM_BALLS];
+	Sprite * grossini[NUM_GROSSINIS];
 	Sprite * clouds;
 	cpVect cloudsCentered;
 	cpVect cloudsPos;
 	cpVect cloudsSize;
+	cpVect screenSize;
+	cpVect halfCloudsSize;
 	cpBB visibleArea;
 	Action * rotateForever;
+	Label * label;
 	double accels[3];
 	int num_g;
 }
