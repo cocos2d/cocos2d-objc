@@ -18,9 +18,10 @@
  *
  */
 
-
+// cocos2d imports
 #import "CocosNode.h"
 #import "Camera.h"
+#import "Director.h"
 
 @implementation CocosNode
 
@@ -325,7 +326,7 @@
 - (void) activateTimer: (SEL) method
 {
 	if( isRunning ) {
-		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:method userInfo:nil repeats:YES];
+		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:[[Director sharedDirector] animationInterval] target:self selector:method userInfo:nil repeats:YES];
 		[scheduledSelectors setObject: timer forKey: NSStringFromSelector(method) ];
 	} else
 		[scheduledSelectors setObject: [NSNull null] forKey: NSStringFromSelector(method) ];
