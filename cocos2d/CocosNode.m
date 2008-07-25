@@ -18,10 +18,10 @@
  *
  */
 
-// cocos2d imports
+
 #import "CocosNode.h"
 #import "Camera.h"
-#import "Director.h"
+#import "Scheduler.h"
 
 @implementation CocosNode
 
@@ -241,15 +241,17 @@
 {
 	isRunning = YES;
 	
+	
 	for( id child in children )
 		[[child objectAtIndex:1] onEnter];
+	
 	[self activateTimers];
 }
 
 -(void) onExit
 {
 	isRunning = NO;
-	
+
 	[self deactivateTimers];
 	
 	for( id child in children )
@@ -261,22 +263,11 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-#ifdef COPY_ACTIONS
-	Action *copy = [[action copy] autorelease];
-	
-	copy.target = self;
-	[copy start];
-	
-	[self schedule: @selector(step_)];
-	[actions addObject: copy];
-#else	
 	action.target = self;
 	[action start];
 	
 	[self schedule: @selector(step_)];
 	[actions addObject: action];
-	
-#endif
 		
 	return action;
 }
@@ -317,26 +308,25 @@
 	NSAssert( method != nil, @"Argument must be non-nil");
 	
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(method) ] ) {
-		NSLog(@"Selector already scheduled");
+#ifdef DEBUG
+		NSLog(@"CocosNode.schedule: Selector already scheduled");
+#endif
 		return;
 	}
-	[self activateTimer: method];	
-}
 
-- (void) activateTimer: (SEL) method
-{
-	if( isRunning ) {
-		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:[[Director sharedDirector] animationInterval] target:self selector:method userInfo:nil repeats:YES];
-		[scheduledSelectors setObject: timer forKey: NSStringFromSelector(method) ];
-	} else
-		[scheduledSelectors setObject: [NSNull null] forKey: NSStringFromSelector(method) ];
+	Timer *timer = [Timer timerWithTarget:self sel:method];
+
+	if( isRunning )
+		[[Scheduler sharedScheduler] scheduleTimer:timer];
+	
+	[scheduledSelectors setObject: timer forKey: NSStringFromSelector(method) ];
 }
 
 -(void) unschedule: (SEL) method
 {
 	NSAssert( method != nil, @"Argument must be non-nil");
 	
-	NSTimer *timer = nil;
+	Timer *timer = nil;
 	
 	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(method)] ) )
 	{
@@ -349,28 +339,19 @@
 	}
 
 	[scheduledSelectors removeObjectForKey: NSStringFromSelector(method) ];
-	[timer invalidate];
-	timer = nil;
+	[[Scheduler sharedScheduler] unscheduleTimer:timer];
 }
 
 - (void) activateTimers
 {
-	NSArray *keys = [scheduledSelectors allKeys];
-	for( NSString *key in keys ) {
-		SEL sel = NSSelectorFromString( key );
-		[self activateTimer: sel];
-	}
+	for( id key in scheduledSelectors )
+		[[Scheduler sharedScheduler] scheduleTimer: [scheduledSelectors objectForKey:key]];
 }
 
 - (void) deactivateTimers
 {
-	NSArray *keys = [scheduledSelectors allKeys];
-	for( NSString *key in keys ) {
-		NSTimer *timer =[ scheduledSelectors objectForKey: key];
-		[timer invalidate];
-		timer = nil;
-		[scheduledSelectors setObject: [NSNull null] forKey: key];
-	}	
+	for( id key in scheduledSelectors )
+		[[Scheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
 }
 
 @end

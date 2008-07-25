@@ -153,8 +153,9 @@
 -(void) schedule: (SEL) method;
 /** unschedule a method */
 -(void) unschedule: (SEL) method;
+/** activate all scheduled timers */
 -(void) activateTimers;
--(void) activateTimer: (SEL) method;
+/** deactivate all scheduled timers */
 -(void) deactivateTimers;
 @end
 
