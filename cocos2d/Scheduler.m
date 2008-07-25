@@ -124,6 +124,14 @@ static Scheduler *sharedScheduler;
 
 -(void) scheduleTimer: (Timer*) t
 {
+	// it is possible that sometimes (in transitions in particular) an scene unschedule a timer
+	// and before the timer is deleted, it is re-scheduled
+	if( [methodsToRemove containsObject:t] )
+	{
+		[methodsToRemove removeObject:t];
+		return;
+	}
+	
 	if( [scheduledMethods containsObject:t] ) {
 		NSLog(@"Scheduler.schedulerTimer: timer already scheduled");
 		NSException* myException = [NSException
