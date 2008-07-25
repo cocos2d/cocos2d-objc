@@ -45,25 +45,25 @@
 	if(! [super init] )
 		return nil;
 	
-	target = [t retain];
-	sel = s;
+	NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
+	invocation = [NSInvocation invocationWithMethodSignature:sig];
+	[invocation setTarget:t];
+	[invocation setSelector:s];
+	
+	[invocation retain];
 	return self;
 }
 
 -(void) dealloc
 {
-	[target release];
+	[invocation release];
 	[super dealloc];
 }
 
 -(void) fire: (double) dt
 {
 //	[target performSelector:sel];
-	
-	NSMethodSignature * sig = [[target class] instanceMethodSignatureForSelector:sel];
-	NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:target];
-	[invocation setSelector:sel];
+
 	[invocation setArgument:&dt atIndex:2];
 	[invocation invoke];
 }
