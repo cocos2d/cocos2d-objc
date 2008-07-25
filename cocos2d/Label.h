@@ -28,11 +28,17 @@
 /** A Label */
 @interface Label : TextureNode
 {
+	CGSize _dimensions;
+	UITextAlignment _alignment;
+	NSString * _fontName;
+	CGFloat _fontSize;
 }
 
 /** creates a label from a fontname and font size */
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the label with a font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+
+- (void) setString:(NSString*)string;
 
 @end

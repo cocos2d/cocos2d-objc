@@ -50,11 +50,23 @@
 	if (![super init])
 		return nil;
 
-	texture = [[Texture2D alloc] initWithString:string dimensions:dimensions alignment:alignment fontName:name fontSize:size];
+	_dimensions = dimensions;
+	_alignment = alignment;
+	_fontName = name;
+	_fontSize = size;
 	
+	[self setString:string];
+	return self;
+}
+
+- (void) setString:(NSString*)string
+{
+	if (texture!=NULL) {
+		[texture release];
+	}
+	texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
 	CGSize s = texture.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2);
-	return self;
 }
 
 - (void) dealloc
