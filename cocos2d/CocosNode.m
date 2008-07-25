@@ -266,7 +266,7 @@
 	action.target = self;
 	[action start];
 	
-	[self schedule: @selector(step_)];
+	[self schedule: @selector(step_:)];
 	[actions addObject: action];
 		
 	return action;
@@ -278,7 +278,7 @@
 		[actionsToRemove addObject: action];
 }
 
--(void) step_
+-(void) step_: (double) dt
 {
 	// remove 'removed' actions
 	if( [actionsToRemove count] > 0 ) {
@@ -289,13 +289,13 @@
 		
 	// unschedule if it is no longer necesary
 	if ( [actions count] == 0 ) {
-		[self unschedule: @selector(step_)];
+		[self unschedule: @selector(step_:)];
 		return;
 	}
 	
 	// call all actions
 	for( Action *action in actions ) {
-		[action step];
+		[action step: dt];
 		if( [action isDone] ) {
 			[action stop];
 			[actionsToRemove addObject: action];

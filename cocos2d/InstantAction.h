@@ -32,7 +32,6 @@
 }
 @property (readonly,assign) double duration;
 
--(void) step;
 -(BOOL) isDone;
 @end
 

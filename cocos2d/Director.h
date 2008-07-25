@@ -50,6 +50,9 @@ and when to execute the Scenes
 	int frames;
 	float frameRate;
 	
+	/** is the running scene paused */
+	BOOL paused;
+	
 	/** running scene */
 	Scene *runningScene;
 	
@@ -61,6 +64,11 @@ and when to execute the Scenes
 
 	/** scheduled scenes */
 	NSMutableArray *scenes;
+	
+	/** last time the main loop was updated */
+	struct timeval lastUpdate;
+	/** delta time since last tick to main loop */
+	double dt;
 }
 
 @property (readonly, assign) Scene* runningScene;
@@ -68,6 +76,10 @@ and when to execute the Scenes
 @property (readwrite,assign) UIWindow* window;
 @property (readwrite, assign) id eventHandler;
 @property (readwrite, assign) BOOL displayFPS;
+
+/** returns a shared instance of the director */
++(Director *)sharedDirector;
+
 
 -(void) setNextScene;
 
@@ -132,9 +144,10 @@ and when to execute the Scenes
  */
 -(CGPoint) convertCoordinate: (CGPoint) p;
 
-/** returns a shared instance of the director */
-+(Director *)sharedDirector;
-
 /** shows the FPS in the screen */
 -(void) showFPS;
+
+/** calculates delta time since last time it was called */
+-(void) calculateDeltaTime;
+
 @end

@@ -74,7 +74,7 @@
 	return YES;
 }
 
--(void) step
+-(void) step: (double) dt
 {
 	NSLog(@"[Action step]. override me");
 }

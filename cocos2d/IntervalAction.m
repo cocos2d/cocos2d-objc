@@ -67,29 +67,10 @@
 	return (elapsed >= duration);
 }
 
--(void) step
+-(void) step: (double) dt
 {
-	elapsed += [self getDeltaTime];
+	elapsed += dt;
 	[self update: MIN(1, elapsed/duration)];
-}
-
-- (double) getDeltaTime
-{
-	struct timeval now;
-	double delta;	
-	
-	if( gettimeofday( &now, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
-	}
-	
-	delta = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
-	
-	memcpy( &lastUpdate, &now, sizeof(lastUpdate) );
-	return delta;
 }
 
 -(void) start
@@ -273,9 +254,9 @@
 	[other start];
 }
 
--(void) step
+-(void) step:(double) dt
 {
-	[other step];
+	[other step: dt];
 	if( [other isDone] ) {
 		total++;
 		[self start];

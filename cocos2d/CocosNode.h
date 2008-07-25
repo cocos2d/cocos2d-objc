@@ -146,7 +146,7 @@
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stop;
--(void) step_;
+-(void) step_: (double) dt;
 
 // timers
 /** schedules a method */

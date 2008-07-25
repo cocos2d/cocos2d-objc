@@ -103,6 +103,9 @@ static Director *sharedDirector;
 	displayFPS = NO;
 	frames = 0;
 	
+	// paused ?
+	paused = NO;
+	
 	//Show window
 	[window makeKeyAndVisible];	
 	return self;
@@ -304,10 +307,21 @@ static Director *sharedDirector;
 
 -(void) pause
 {
+	paused = YES;
 }
 
 -(void) resume
 {
+	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
+	
+	paused = NO;
+	dt = 0;
 }
 
 //
@@ -315,6 +329,15 @@ static Director *sharedDirector;
 //
 - (void)startAnimation
 {
+	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
+	
+
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
 }
 
@@ -358,6 +381,9 @@ static Director *sharedDirector;
 //
 - (void) drawScene
 {
+	/* calculate "global" dt */
+	[self calculateDeltaTime];
+
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -378,7 +404,9 @@ static Director *sharedDirector;
 	if( displayFPS )
 		[self showFPS];
 	
-	[[Scheduler sharedScheduler] tick];
+	if( ! paused )
+		[[Scheduler sharedScheduler] tick: dt];
+
 		
 	/* swap buffers */
 	[self swapBuffers];
@@ -393,17 +421,10 @@ static Director *sharedDirector;
 //
 -(void) showFPS
 {
- 	static struct timeval lastUpdate = {0,0};
-	struct timeval now = {0,0};
-
  	frames++;
-	gettimeofday(&now, NULL);
-	
-	double delta = ( now.tv_sec - lastUpdate.tv_sec) + ( now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
 
-	if (delta > 0.3)  {
-		frameRate = frames/delta;
-		lastUpdate = now;
+	if (dt > 0.3)  {
+		frameRate = frames/dt;
 		frames = 0;
 	}
 
@@ -421,6 +442,25 @@ static Director *sharedDirector;
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+
+-(void) calculateDeltaTime
+{
+	struct timeval now;
+	
+	if( gettimeofday( &now, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
+	
+	// new delta time
+	dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
+	
+	lastUpdate = now;	
+}
+
 
 //
 // multi touch proxies
