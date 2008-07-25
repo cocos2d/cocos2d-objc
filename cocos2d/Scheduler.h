@@ -28,8 +28,7 @@
 /** Light weight timer */
 @interface Timer : NSObject
 {
-	id target;
-	SEL sel;
+	NSInvocation* invocation;
 }
 
 /** constructor for timer */
