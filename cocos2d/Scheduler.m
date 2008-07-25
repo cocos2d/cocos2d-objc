@@ -100,7 +100,8 @@ static Scheduler *sharedScheduler;
 		return nil;
 	
 	scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];
-	methodsToRemove = [[NSMutableArray arrayWithCapacity:50] retain];
+	methodsToRemove = [[NSMutableArray arrayWithCapacity:20] retain];
+	methodsToAdd = [[NSMutableArray arrayWithCapacity:20] retain];
 
 	return self;
 }
@@ -109,7 +110,8 @@ static Scheduler *sharedScheduler;
 {
 	[scheduledMethods release];
 	[methodsToRemove release];
-
+	[methodsToAdd release];
+	
 	[super dealloc];
 }
 
@@ -117,7 +119,7 @@ static Scheduler *sharedScheduler;
 {
 	Timer *t = [Timer timerWithTarget:target sel:sel];
 	
-	[scheduledMethods addObject: t];
+	[methodsToAdd addObject: t];
 	
 	return t;
 }
@@ -132,7 +134,7 @@ static Scheduler *sharedScheduler;
 		return;
 	}
 	
-	if( [scheduledMethods containsObject:t] ) {
+	if( [scheduledMethods containsObject:t] || [methodsToAdd containsObject:t]) {
 		NSLog(@"Scheduler.schedulerTimer: timer already scheduled");
 		NSException* myException = [NSException
 									exceptionWithName:@"SchedulerTimerAlreadyScheduled"
@@ -140,11 +142,17 @@ static Scheduler *sharedScheduler;
 									userInfo:nil];
 		@throw myException;		
 	}
-	[scheduledMethods addObject: t];
+	[methodsToAdd addObject: t];
 }
 
 -(void) unscheduleTimer: (Timer*) t;
 {
+	// some wants to remove it before it was added
+	if( [methodsToAdd containsObject:t] ) {
+		[methodsToAdd removeObject:t];
+		return;
+	}
+	
 	if( ![scheduledMethods containsObject:t] ) {
 		NSException* myException = [NSException
 									exceptionWithName:@"SchedulerTimerNotFound"
@@ -161,6 +169,11 @@ static Scheduler *sharedScheduler;
 	for( id k in methodsToRemove )
 		[scheduledMethods removeObject:k];
 	[methodsToRemove removeAllObjects];
+
+	for( id k in methodsToAdd )
+		[scheduledMethods addObject:k];
+	[methodsToAdd removeAllObjects];
+	
 	
 	for( Timer *t in scheduledMethods )
 		[t fire];
