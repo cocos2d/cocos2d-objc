@@ -19,11 +19,14 @@
  */
 
 
-#import "glu.h"
-#import "OpenGL_Internal.h"
-
+// cocos2d imports
 #import "Director.h"
 #import "Camera.h"
+#import "Scheduler.h"
+
+// support imports
+#import "glu.h"
+#import "OpenGL_Internal.h"
 #import "Texture2D.h"
 
 #define kDefaultFPS		30.0	// 30 frames per second
@@ -306,6 +309,7 @@ static Director *sharedDirector;
 -(void) resume
 {
 }
+
 //
 // timers
 //
@@ -373,6 +377,8 @@ static Director *sharedDirector;
 
 	if( displayFPS )
 		[self showFPS];
+	
+	[[Scheduler sharedScheduler] tick];
 		
 	/* swap buffers */
 	[self swapBuffers];

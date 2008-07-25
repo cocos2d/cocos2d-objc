@@ -22,10 +22,35 @@
 // cocoa related
 #import <UIKit/UIKit.h>
 
+//
+// Timer
+//
+/** Light weight timer */
+@interface Timer : NSObject
+{
+	id target;
+	SEL sel;
+}
+
+/** constructor for timer */
++(id) timerWithTarget:(id) t sel:(SEL)s;
+
+/** init for Timer */
+-(id) initWithTarget:(id) t sel:(SEL)s;
+
+/** triggers the timer */
+-(void) fire;
+@end
+
+//
+// Scheduler
+//
 /**Class manages all the schedulers
 */
 @interface Scheduler : NSObject
 {
+	NSMutableArray *scheduledMethods;
+	NSMutableArray *methodsToRemove;
 }
 
 /** returns a shared instance of the Scheduler */
@@ -34,4 +59,12 @@
 /** the scheduler is ticked */
 -(void) tick;
 
+/** schedule a target/selector */
+-(Timer*) scheduleTarget:(id) r selector:(SEL) s;
+
+/** schedule a Timer */
+-(void) scheduleTimer: (Timer*) t;
+
+/** unschedule a timer */
+-(void) unscheduleTimer: (Timer*) t;
 @end

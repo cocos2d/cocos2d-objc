@@ -22,11 +22,51 @@
 #import "Scheduler.h"
 
 
-@implementation Scheduler
+//
+// Timer
+//
+@implementation Timer
+-(id) init
+{
+	NSException* myException = [NSException
+								exceptionWithName:@"TimerInvalid"
+								reason:@"Invalid init for Timer. Use initWithTarget:sel:"
+								userInfo:nil];
+	@throw myException;
+}
+
++(id) timerWithTarget:(id) t sel:(SEL)s
+{
+	return [[[self alloc] initWithTarget:t sel:s] autorelease];
+}
+
+-(id) initWithTarget:(id) t sel:(SEL)s
+{
+	if(! [super init] )
+		return nil;
+	
+	target = [t retain];
+	sel = s;
+	return self;
+}
+
+-(void) dealloc
+{
+	[target release];
+	[super dealloc];
+}
+
+-(void) fire
+{
+	[target performSelector:sel];
+}
+@end
 
 //
-// singleton stuff
+// Scheduler
 //
+@implementation Scheduler
+
 static Scheduler *sharedScheduler;
 
 + (Scheduler *)sharedScheduler
@@ -59,23 +99,62 @@ static Scheduler *sharedScheduler;
 	if( ! [super init] )
 		return nil;
 	
+	scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];
+	methodsToRemove = [[NSMutableArray arrayWithCapacity:50] retain];
+
 	return self;
 }
 
 - (void) dealloc
 {
+	[scheduledMethods release];
+	[methodsToRemove release];
+
 	[super dealloc];
 }
 
--(void) schedule: (id) receiver msg:(SEL)msg
+-(Timer*) scheduleTarget: (id) target selector:(SEL)sel
 {
+	Timer *t = [Timer timerWithTarget:target sel:sel];
+	
+	[scheduledMethods addObject: t];
+	
+	return t;
 }
 
--(void) unschedule:(id) receiver msg:(SEL)msg
+-(void) scheduleTimer: (Timer*) t
 {
+	if( [scheduledMethods containsObject:t] ) {
+		NSLog(@"Scheduler.schedulerTimer: timer already scheduled");
+		NSException* myException = [NSException
+									exceptionWithName:@"SchedulerTimerAlreadyScheduled"
+									reason:@"Scheduler.scheduleTimer already scheduled"
+									userInfo:nil];
+		@throw myException;		
+	}
+	[scheduledMethods addObject: t];
+}
+
+-(void) unscheduleTimer: (Timer*) t;
+{
+	if( ![scheduledMethods containsObject:t] ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"SchedulerTimerNotFound"
+									reason:@"Scheduler.unscheduleTimer not found"
+									userInfo:nil];
+		@throw myException;		
+	}
+	
+	[methodsToRemove addObject:t];
 }
 
 -(void) tick 
 {
+	for( id k in methodsToRemove )
+		[scheduledMethods removeObject:k];
+	[methodsToRemove removeAllObjects];
+	
+	for( Timer *t in scheduledMethods )
+		[t fire];
 }
 @end
