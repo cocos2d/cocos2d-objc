@@ -42,18 +42,21 @@ and when to execute the Scenes
 	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
 
+	/** landscape mode ? */
 	BOOL landscape;
-	BOOL FPS;
+	
+	/** display FPS ? */
+	BOOL displayFPS;
 	int frames;
 	float frameRate;
 	
 	/** running scene */
 	Scene *runningScene;
 	
-	/* will be the next 'runningScene' in the next frame */
+	/** will be the next 'runningScene' in the next frame */
 	Scene *nextScene;
 	
-	/* event handler */
+	/** event handler */
 	id	eventHandler;
 
 	/** scheduled scenes */
@@ -64,7 +67,7 @@ and when to execute the Scenes
 @property (readwrite, assign) NSTimeInterval animationInterval;
 @property (readwrite,assign) UIWindow* window;
 @property (readwrite, assign) id eventHandler;
-@property (readwrite, assign) BOOL FPS;
+@property (readwrite, assign) BOOL displayFPS;
 
 -(void) setNextScene;
 
@@ -93,7 +96,7 @@ and when to execute the Scenes
 /** rotates the screen if Landscape mode is activated */
 -(void) applyLandscape;
 
-/**Runs a scene, entering in the Director's main loop.
+/**Runs a scene, entering in the Director's main loop. 
  */
 - (void) runScene:(Scene*) scene;
 
@@ -115,6 +118,11 @@ and when to execute the Scenes
 /** Ends the execution */
 -(void) end;
 
+/** Pauses the running scene */
+-(void) pause;
+/** Resumes the paused scene */
+-(void) resume;
+
 - (void) drawScene;
 - (void) startAnimation;
 - (void) stopAnimation;
@@ -127,6 +135,6 @@ and when to execute the Scenes
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
 
-/** displays the FPS */
--(void) displayFPS;
+/** shows the FPS in the screen */
+-(void) showFPS;
 @end

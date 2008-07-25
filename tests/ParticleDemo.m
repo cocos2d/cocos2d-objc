@@ -190,7 +190,8 @@ Class nextAction()
 {
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: NO];
-	[[Director sharedDirector] setFPS: YES];
+	[[Director sharedDirector] setDisplayFPS: YES];
+//	[[Director sharedDirector] setAnimationInterval: 1.0/60];
 
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];

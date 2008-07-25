@@ -52,7 +52,7 @@
 
 	_dimensions = dimensions;
 	_alignment = alignment;
-	_fontName = name;
+	_fontName = [name retain];
 	_fontSize = size;
 	
 	[self setString:string];
@@ -61,9 +61,9 @@
 
 - (void) setString:(NSString*)string
 {
-	if (texture!=NULL) {
+	if (texture)
 		[texture release];
-	}
+
 	texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
 	CGSize s = texture.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2);
@@ -71,6 +71,7 @@
 
 - (void) dealloc
 {
+	[_fontName release];
 	[texture release];
 	[super dealloc];
 }

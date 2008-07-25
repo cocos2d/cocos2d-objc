@@ -34,7 +34,7 @@
 @synthesize window;
 @synthesize runningScene;
 @synthesize eventHandler;
-@synthesize FPS;
+@synthesize displayFPS;
 
 //
 // singleton stuff
@@ -97,7 +97,7 @@ static Director *sharedDirector;
 	landscape = NO;
 	
 	// FPS
-	FPS = NO;
+	displayFPS = NO;
 	frames = 0;
 	
 	//Show window
@@ -192,7 +192,15 @@ static Director *sharedDirector;
 {
 	if( on != landscape ) {
 		landscape = on;
-//		[self setDefaultProjection];
+		if( landscape )
+#if LANDSCAPE_LEFT
+			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated:NO];
+#else
+			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
+#endif
+		else
+			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
+
 	}
 	return;
 }
@@ -291,6 +299,13 @@ static Director *sharedDirector;
 	nextScene = nil;
 }
 
+-(void) pause
+{
+}
+
+-(void) resume
+{
+}
 //
 // timers
 //
@@ -356,8 +371,8 @@ static Director *sharedDirector;
 	
 	glPopMatrix();
 
-	if( FPS )
-		[self displayFPS];
+	if( displayFPS )
+		[self showFPS];
 		
 	/* swap buffers */
 	[self swapBuffers];
@@ -368,9 +383,9 @@ static Director *sharedDirector;
 }
 
 //
-// display FPS
+// show FPS
 //
--(void) displayFPS
+-(void) showFPS
 {
  	static struct timeval lastUpdate = {0,0};
 	struct timeval now = {0,0};
