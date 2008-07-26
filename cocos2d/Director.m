@@ -43,6 +43,19 @@
 // singleton stuff
 //
 static Director *sharedDirector;
+static int _pixelFormat = RGB565;
+
++(void) setPixelFormat: (int) format
+{
+	if( format != RGB565 && format != RGBA8 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"DirectorInvalidPixelFormat"
+									reason:@"Invalid Pixel Format for GL view"
+									userInfo:nil];
+		@throw myException;		
+	}
+	_pixelFormat = format;
+}
 
 + (Director *)sharedDirector
 {
@@ -71,12 +84,17 @@ static Director *sharedDirector;
 
 - (id) init
 {
+	NSString *format;
 	//Create a full-screen window
 	winSize = [[UIScreen mainScreen] bounds];
-	
 	window = [[UIWindow alloc] initWithFrame:winSize];
 
-	if( ! [super initWithFrame:[window bounds] pixelFormat:kEAGLColorFormatRGB565] )
+	if( _pixelFormat == RGB565 )
+		format = kEAGLColorFormatRGB565;
+	else
+		format = kEAGLColorFormatRGBA8;
+	
+	if( ! [super initWithFrame:[window bounds] pixelFormat:format] )
 		return nil;
 
 	[window addSubview:self];
@@ -125,6 +143,7 @@ static Director *sharedDirector;
 {
 	[self set3Dprojection];
 }
+
 -(void) set2Dprojection
 {
 	//Setup OpenGL projection matrix
@@ -410,10 +429,6 @@ static Director *sharedDirector;
 		
 	/* swap buffers */
 	[self swapBuffers];
-
-#ifdef _DEBUG
-	CHECK_GL_ERROR();
-#endif
 }
 
 //
