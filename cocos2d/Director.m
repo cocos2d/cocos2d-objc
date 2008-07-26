@@ -42,7 +42,7 @@
 //
 // singleton stuff
 //
-static Director *sharedDirector;
+static Director *sharedDirector = nil;
 static int _pixelFormat = RGB565;
 
 +(void) setPixelFormat: (int) format
@@ -54,6 +54,15 @@ static int _pixelFormat = RGB565;
 									userInfo:nil];
 		@throw myException;		
 	}
+
+	if( sharedDirector ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"DirectorAlreadyInitialized"
+									reason:@"Can't change the pixel format after the director was initialized"
+									userInfo:nil];
+		@throw myException;		
+	}
+	
 	_pixelFormat = format;
 }
 
