@@ -10,6 +10,7 @@
 #import "Sprite.h"
 #import "IntervalAction.h"
 #import "InstantAction.h"
+#import "CameraAction.h"
 #import "Label.h"
 
 // local import
@@ -376,6 +377,36 @@ Class nextAction();
 }
 @end
 
+@implementation SpriteOrbit
+-(void) onEnter
+{
+	[super onEnter];
+
+	[self centerSprites];
+	
+	id orbit1 = [OrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+	id action1 = [Sequence actions:
+					orbit1,
+					[orbit1 reverse],
+					nil ];
+
+	id orbit2 = [OrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:-45 deltaAngleX:0];
+	id action2 = [Sequence actions:
+				  orbit2,
+				  [orbit2 reverse],
+				  nil ];
+	
+	
+	[grossini do:action1];
+	[tamara do:action2];
+}
+
+
+-(NSString *) title
+{
+	return @"OrbitCamera action";
+}
+@end
 
 Class nextAction()
 {
@@ -397,6 +428,7 @@ Class nextAction()
 								@"SpriteReverseSequence",
 								@"SpriteAccelerate",
 								@"SpriteCallFunc",
+								@"SpriteOrbit",
 									nil ] retain];
 	
 	
