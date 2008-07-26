@@ -1,19 +1,20 @@
 
 version XXXX - XXXX
- . Using own scheduler to schedule timers/etc... pause/resume works as expected
+ . Actions: they are not cloned. If you want to reuse them, clone them manually using the method 'copy'
+ . Actions: CallFunc, CallFuncN using performSelector instead of NSInvocator
+ . Actions: added CallFuncN action. First argument is the target node
+ . Core: Using own scheduler to schedule timers/etc... pause/resume works as expected
+ . Director: can initialize the view with pixel format RGBA8 or RGB565 (default)
  . Director: if in landscape mode, tells the application to be in landscape mode too
+ . Director: landscape mode is LEFT again, since "Touch fighter" (apple game) uses left landscape
  . Label: supports changing it's string
- . performance: Actions are not cloned. If you want to reuse them, clone them manually using the method 'copy'
- . CallFunc, CallFuncN using performSelector instead of NSInvocator
- . Added color suppport for "TextureNode"
  . Menu: added support for y-offset
  . MenuItem: font size and font name are customizables
- . Added CallFuncN action. First argument is the target node
- . "texture" node added (label and sprite)
- . Added FadeIn/FadeOut support to Texture nodes
- . Added transform anchor support to Texture nodes
- . Menu item doesn't have "artifacts"
- . Director landscape mode: is LEFT again, since "Touch fighter" (apple game) uses left landscape
+ . MenuItems: doesn't have "artifacts"
+ . Texture Node: Added FadeIn/FadeOut support
+ . Texture Node: Added transform anchor support
+ . Texture Node: Added color suppport
+ . Texture Node: Added new cocos2d node. Base class of Sprite and Label
  
 
 version 0.2.1 - 21-Jul-2008
