@@ -92,3 +92,8 @@
 {
 }
 @end
+
+@interface SpriteOrbit : SpriteDemo
+{
+}
+@end

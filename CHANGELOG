@@ -4,6 +4,7 @@ version XXXX - XXXX
  . Actions: CallFunc, CallFuncN using performSelector instead of NSInvocator
  . Actions: added CallFuncN action. First argument is the target node
  . Core: Using own scheduler to schedule timers/etc... pause/resume works as expected
+ . Demos: Added OrbitCamera demo in SpritesDemo project
  . Director: can initialize the view with pixel format RGBA8 or RGB565 (default)
  . Director: if in landscape mode, tells the application to be in landscape mode too
  . Director: landscape mode is LEFT again, since "Touch fighter" (apple game) uses left landscape
