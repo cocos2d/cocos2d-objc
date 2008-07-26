@@ -31,6 +31,12 @@
 // Landscape is right or left ?
 #define LANDSCAPE_LEFT 1
 
+enum {
+	RGB565,
+	RGBA8
+};
+	
+
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes
 */
@@ -80,6 +86,12 @@ and when to execute the Scenes
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
+
+/** change default pixel format
+Call this class method before any other call to the Director.
+ Default pixel format: RGB565. Supported pixel formats: RGBA8 and RGB565
+ */
++(void) setPixelFormat: (int) p;
 
 
 -(void) setNextScene;
