@@ -17,7 +17,7 @@
 {
 	cpSpace *space;
 }
--(void) step;
+-(void) step: (double) dt;
 -(void) addNewSpriteX:(float)x y:(float)y;
 @end
 	
