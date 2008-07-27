@@ -98,21 +98,16 @@ eachShape(void *ptr, void* unused)
 	
 	[self addNewSpriteX: 200 y:200];
 
+	[self schedule: @selector(step:)];
+
 	return self;
 }
 
 -(void) onEnter
 {
 	[super onEnter];
-	[self schedule: @selector(step:)];
 
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 30)];
-}
-
--(void) onExit
-{
-	[self unschedule:@selector(step)];
-	[super onExit];
 }
 
 -(void) step: (double) delta
