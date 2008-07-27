@@ -104,7 +104,7 @@ eachShape(void *ptr, void* unused)
 -(void) onEnter
 {
 	[super onEnter];
-	[self schedule: @selector(step)];
+	[self schedule: @selector(step:)];
 
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 30)];
 }
@@ -115,7 +115,7 @@ eachShape(void *ptr, void* unused)
 	[super onExit];
 }
 
--(void) step
+-(void) step: (double) delta
 {
 	int steps = 2;
 	cpFloat dt = 1.0/30.0/(cpFloat)steps;
