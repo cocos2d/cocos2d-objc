@@ -409,8 +409,6 @@ static int _pixelFormat = RGB565;
 //
 - (void) drawScene
 {
-	/* calculate "global" dt */
-	[self calculateDeltaTime];
 
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -420,6 +418,12 @@ static int _pixelFormat = RGB565;
 		[self setNextScene];
 	}
 
+	/* calculate "global" dt */
+	[self calculateDeltaTime];
+	if( ! paused )
+		[[Scheduler sharedScheduler] tick: dt];
+	
+	
 	glPushMatrix();
 
 	[self applyLandscape];
@@ -432,9 +436,6 @@ static int _pixelFormat = RGB565;
 	if( displayFPS )
 		[self showFPS];
 	
-	if( ! paused )
-		[[Scheduler sharedScheduler] tick: dt];
-
 		
 	/* swap buffers */
 	[self swapBuffers];

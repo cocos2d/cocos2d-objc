@@ -181,6 +181,9 @@ void drawCollisions(void *ptr, void *data)
 	isTouchEnabled = YES;
 	cpInitChipmunk();	
 	init_funcs[demo_index]();
+
+	[self schedule: @selector(step:)];
+
 	return self;
 }
 
@@ -209,16 +212,9 @@ void drawCollisions(void *ptr, void *data)
 	
 
 	
-	[self schedule: @selector(step)];
 }
 
--(void) onExit
-{
-	[super onExit];
-	[self unschedule:@selector(step)];
-}
-
--(void) step
+-(void) step: (double) dt
 {
 	ticks++;	
 	update_funcs[demo_index](ticks);
@@ -264,6 +260,7 @@ void drawCollisions(void *ptr, void *data)
 {
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDisplayFPS:YES];
 	
 	Scene *scene = [Scene node];
 	

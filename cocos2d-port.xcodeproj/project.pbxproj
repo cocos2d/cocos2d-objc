@@ -580,6 +580,7 @@
 		50B2D0EB0E13296F00AE9530 /* grossini_dance_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_12.png; sourceTree = "<group>"; };
 		50B2D0EC0E13296F00AE9530 /* grossini_dance_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_13.png; sourceTree = "<group>"; };
 		50B2D0ED0E13296F00AE9530 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
+		50C2DE7D0E3CCC84005D53BA /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsDemo.m; path = tests/TransitionsDemo.m; sourceTree = "<group>"; };
@@ -922,7 +923,6 @@
 				509E574B0E36234300BD7F09 /* TextureNode.m */,
 				504055AE0E3230BD00213FEF /* ParticleSystems.h */,
 				504055AF0E3230BD00213FEF /* ParticleSystems.m */,
-				50F9E8160E1AA34E000E7616 /* types.h */,
 				5038B6B00E196CD8009A621E /* Particle.h */,
 				5038B6B10E196CD8009A621E /* Particle.m */,
 				50B2CCC20E119B8E00AE9530 /* Primitives.h */,
@@ -957,6 +957,7 @@
 				5018F2630DFDEAFF00C013A5 /* Sprite.m */,
 				5018F2670DFDEAFF00C013A5 /* TextureMgr.h */,
 				5018F2680DFDEAFF00C013A5 /* TextureMgr.m */,
+				50F9E8160E1AA34E000E7616 /* types.h */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -978,16 +979,14 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				317070350E29409E00DD3360 /* AccelViewportDemo.m */,
-				50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */,
 				317070360E29409E00DD3360 /* AccelViewportDemo.h */,
+				317070350E29409E00DD3360 /* AccelViewportDemo.m */,
+				50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */,
+				50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */,
 				50DB1BCE0E1C1EF000A89DFF /* ParticleDemo.h */,
 				50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */,
-				50B2CB170E10EE0800AE9530 /* main.m */,
-				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
 				50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */,
 				50B2C9780E10972B00AE9530 /* VirtualAccelerometer.h */,
-				50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */,
 				50B2C9770E10972B00AE9530 /* TcpAccelClient.h */,
 				3188C3E70E0D97A500EFA866 /* TcpAccelClient.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
@@ -1006,6 +1005,8 @@
 				502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */,
 				502C664D0DFEFD6800E4107D /* RotateWorld.h */,
 				502C664E0DFEFD6800E4107D /* RotateWorld.m */,
+				50B2CB170E10EE0800AE9530 /* main.m */,
+				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -1098,6 +1099,7 @@
 				50B2CEE10E12A78E00AE9530 /* Demo5.m */,
 				50B2CEE20E12A78E00AE9530 /* Demo6.m */,
 				50B2CEE30E12A78E00AE9530 /* Demo7.m */,
+				50C2DE7D0E3CCC84005D53BA /* main.h */,
 				50B2CE6A0E12A0F500AE9530 /* main.m */,
 			);
 			path = Demo;
