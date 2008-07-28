@@ -149,10 +149,10 @@
 -(void) step_: (double) dt;
 
 // timers
-/** schedules a method */
--(void) schedule: (SEL) method;
-/** unschedule a method */
--(void) unschedule: (SEL) method;
+/** schedules a selector */
+-(void) schedule: (SEL) s;
+/** unschedule a selector */
+-(void) unschedule: (SEL) s;
 /** activate all scheduled timers */
 -(void) activateTimers;
 /** deactivate all scheduled timers */

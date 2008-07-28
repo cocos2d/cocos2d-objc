@@ -303,32 +303,32 @@
 	}
 }
 
--(void) schedule: (SEL) method
+-(void) schedule: (SEL) selector
 {
-	NSAssert( method != nil, @"Argument must be non-nil");
+	NSAssert( selector != nil, @"Argument must be non-nil");
 	
-	if( [scheduledSelectors objectForKey: NSStringFromSelector(method) ] ) {
+	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
 #ifdef DEBUG
 		NSLog(@"CocosNode.schedule: Selector already scheduled");
 #endif
 		return;
 	}
 
-	Timer *timer = [Timer timerWithTarget:self sel:method];
+	Timer *timer = [Timer timerWithTarget:self selector:selector];
 
 	if( isRunning )
 		[[Scheduler sharedScheduler] scheduleTimer:timer];
 	
-	[scheduledSelectors setObject: timer forKey: NSStringFromSelector(method) ];
+	[scheduledSelectors setObject: timer forKey: NSStringFromSelector(selector) ];
 }
 
--(void) unschedule: (SEL) method
+-(void) unschedule: (SEL) selector
 {
-	NSAssert( method != nil, @"Argument must be non-nil");
+	NSAssert( selector != nil, @"Argument must be non-nil");
 	
 	Timer *timer = nil;
 	
-	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(method)] ) )
+	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
 	{
 		NSLog(@"selector not scheduled");
 		NSException* myException = [NSException
@@ -338,7 +338,7 @@
 		@throw myException;
 	}
 
-	[scheduledSelectors removeObjectForKey: NSStringFromSelector(method) ];
+	[scheduledSelectors removeObjectForKey: NSStringFromSelector(selector) ];
 	[[Scheduler sharedScheduler] unscheduleTimer:timer];
 }
 

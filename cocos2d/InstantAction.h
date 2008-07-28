@@ -72,13 +72,13 @@
  */
 @interface CallFunc : InstantAction <NSCopying>
 {
-	id receiver;
+	id targetCallback;
 	SEL selector;
 }
 /** creates the action with the callback */
-+(id) actionWithTarget: (id) receiver selector:(SEL) callback;
++(id) actionWithTarget: (id) t selector:(SEL) s;
 /** initializes the action with the callback */
--(id) initWithTarget: (id) receiver selector:(SEL) callback;
+-(id) initWithTarget: (id) t selector:(SEL) s;
 /** exeuctes the callback */
 -(void) execute;
 @end

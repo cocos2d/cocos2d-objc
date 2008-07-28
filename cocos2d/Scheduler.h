@@ -32,10 +32,10 @@
 }
 
 /** constructor for timer */
-+(id) timerWithTarget:(id) t sel:(SEL)s;
++(id) timerWithTarget:(id) t selector:(SEL)s;
 
 /** init for Timer */
--(id) initWithTarget:(id) t sel:(SEL)s;
+-(id) initWithTarget:(id) t selector:(SEL)s;
 
 /** triggers the timer */
 -(void) fire: (double) dt;

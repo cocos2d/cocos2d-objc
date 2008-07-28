@@ -29,7 +29,7 @@
 #import "OpenGL_Internal.h"
 #import "Texture2D.h"
 
-#define kDefaultFPS		30.0	// 30 frames per second
+#define kDefaultFPS		60.0	// 60 frames per second
 
 @implementation Director
 
@@ -433,9 +433,12 @@ static int _pixelFormat = RGB565;
 	
 	glPopMatrix();
 
-	if( displayFPS )
+	if( displayFPS ) {
+		glPushMatrix();
+		[self applyLandscape];
 		[self showFPS];
-	
+		glPopMatrix();
+	}
 		
 	/* swap buffers */
 	[self swapBuffers];

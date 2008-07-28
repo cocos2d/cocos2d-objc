@@ -1,7 +1,9 @@
 
 version XXXX - YYYY
+ . All: methods that receives target/selector, are named:Target selector (unified API)
  . Demos: added resume/pause to application
  . Demos: chipmunk_accel is frame independent
+ . Particles: don't uses draw to update, uses scheduled step. (pause/resume works)
  
  
 version 0.3.0 - 27-Jul-2008

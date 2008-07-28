@@ -124,24 +124,24 @@
 // CallFunc
 //
 @implementation CallFunc
-+(id) actionWithTarget: (id) receiver selector:(SEL) cb
++(id) actionWithTarget: (id) t selector:(SEL) s
 {
-	return [[[self alloc] initWithTarget: receiver selector: cb] autorelease];
+	return [[[self alloc] initWithTarget: t selector: s] autorelease];
 }
 
--(id) initWithTarget: (id) rec selector:(SEL) cb
+-(id) initWithTarget: (id) t selector:(SEL) s
 {
 	if( ! [super init] )
 		return nil;
 	
-	receiver = rec;
-	selector = cb;
+	targetCallback = t;
+	selector = s;
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	InstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget:receiver selector:selector];
+	InstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector];
 	return copy;
 }
 
@@ -154,7 +154,7 @@
 
 -(void) execute
 {
-	[receiver performSelector:selector];
+	[targetCallback performSelector:selector];
 }
 @end
 
@@ -165,6 +165,6 @@
 
 -(void) execute
 {
-	[receiver performSelector:selector withObject:target];
+	[targetCallback performSelector:selector withObject:target];
 }
 @end
