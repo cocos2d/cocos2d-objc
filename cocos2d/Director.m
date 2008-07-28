@@ -335,11 +335,17 @@ static int _pixelFormat = RGB565;
 
 -(void) pause
 {
+	oldAnimationInterval = animationInterval;
+	
+	// when paused, don't consume CPU
+//	[self setAnimationInterval:1/4.0];
 	paused = YES;
 }
 
 -(void) resume
 {
+//	[self setAnimationInterval: oldAnimationInterval];
+
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
 		NSException* myException = [NSException
 									exceptionWithName:@"GetTimeOfDay"

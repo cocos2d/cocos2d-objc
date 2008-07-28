@@ -164,7 +164,7 @@
 	particle->size = size + sizeVar * RANDOM_FLOAT();	
 }
 
--(void) step: (double) dt
+-(void) step: (float) dt
 {
 	if( active ) {
 		float rate = 1.0 / emissionRate;

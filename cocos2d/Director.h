@@ -47,6 +47,7 @@ and when to execute the Scenes
 
 	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
+	NSTimeInterval oldAnimationInterval;
 
 	/** landscape mode ? */
 	BOOL landscape;
@@ -75,7 +76,7 @@ and when to execute the Scenes
 	/** last time the main loop was updated */
 	struct timeval lastUpdate;
 	/** delta time since last tick to main loop */
-	double dt;
+	float dt;
 }
 
 @property (readonly, assign) Scene* runningScene;

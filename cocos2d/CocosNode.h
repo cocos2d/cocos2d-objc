@@ -146,11 +146,13 @@
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stop;
--(void) step_: (double) dt;
+-(void) step_: (float) dt;
 
 // timers
 /** schedules a selector */
 -(void) schedule: (SEL) s;
+/** schedules a selector with an interval time*/
+-(void) schedule: (SEL) s interval:(float) i;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
 /** activate all scheduled timers */
