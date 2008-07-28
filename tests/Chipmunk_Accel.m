@@ -113,7 +113,7 @@ eachShape(void *ptr, void* unused)
 -(void) step: (double) delta
 {
 	int steps = 2;
-	cpFloat dt = 1.0/30.0/(cpFloat)steps;
+	cpFloat dt = delta/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
@@ -151,6 +151,8 @@ eachShape(void *ptr, void* unused)
 {
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+	[[Director sharedDirector] setDisplayFPS:YES];
 
 		
 	Scene *scene = [Scene node];
@@ -162,6 +164,18 @@ eachShape(void *ptr, void* unused)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	
 	[[Director sharedDirector] runScene: scene];
+}
+
+// getting a call, pause the game
+-(void) applicationWillResignActive:(UIApplication *)application
+{
+	[[Director sharedDirector] pause];
+}
+
+// call got rejected
+-(void) applicationDidBecomeActive:(UIApplication *)application
+{
+	[[Director sharedDirector] resume];
 }
 
 @end

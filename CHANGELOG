@@ -1,4 +1,9 @@
 
+version XXXX - YYYY
+ . Demos: added resume/pause to application
+ . Demos: chipmunk_accel is frame independent
+ 
+ 
 version 0.3.0 - 27-Jul-2008
  . Actions: they are not cloned. If you want to reuse them, clone them manually using the method 'copy'
  . Actions: CallFunc, CallFuncN using performSelector instead of NSInvocator

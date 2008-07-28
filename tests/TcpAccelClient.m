@@ -103,4 +103,16 @@ Class nextAction();
 	
 }
 
+// getting a call, pause the game
+-(void) applicationWillResignActive:(UIApplication *)application
+{
+	[[Director sharedDirector] pause];
+}
+
+// call got rejected
+-(void) applicationDidBecomeActive:(UIApplication *)application
+{
+	[[Director sharedDirector] resume];
+}
+
 @end
