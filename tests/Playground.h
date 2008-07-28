@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 
 #import "Layer.h"
-#import "chipmunk.h"
+#import "Label.h"
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate>
@@ -15,8 +15,15 @@
 
 @interface Layer1 : Layer
 {
-	cpSpace *space;
+	Label *label1;
+	Label *label2;
+	Label *label3;
+	
+	int time1, time2, time3;
 }
--(void) step: (double) dt;
--(void) addNewSpriteX:(float)x y:(float)y;
+
+-(void) step1: (float) dt;
+-(void) step2: (float) dt;
+-(void) step3: (float) dt;
+
 @end

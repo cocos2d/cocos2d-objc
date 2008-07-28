@@ -278,7 +278,7 @@
 		[actionsToRemove addObject: action];
 }
 
--(void) step_: (double) dt
+-(void) step_: (float) dt
 {
 	// remove 'removed' actions
 	if( [actionsToRemove count] > 0 ) {
@@ -305,7 +305,13 @@
 
 -(void) schedule: (SEL) selector
 {
+	[self schedule:selector interval:0];
+}
+
+-(void) schedule: (SEL) selector interval:(float)interval
+{
 	NSAssert( selector != nil, @"Argument must be non-nil");
+	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
 #ifdef DEBUG
@@ -314,7 +320,7 @@
 		return;
 	}
 
-	Timer *timer = [Timer timerWithTarget:self selector:selector];
+	Timer *timer = [Timer timerWithTarget:self selector:selector interval:interval];
 
 	if( isRunning )
 		[[Scheduler sharedScheduler] scheduleTimer:timer];

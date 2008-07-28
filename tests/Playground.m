@@ -3,8 +3,6 @@
 // main file
 //
 
-#import "chipmunk.h"
-
 #import "Scene.h"
 #import "Layer.h"
 #import "Director.h"
@@ -14,136 +12,95 @@
 #import "Label.h"
 #import "MenuItem.h"
 #import "Menu.h"
-
-#import "OpenGL_Internal.h"
+#import "ParticleSystems.h"
 
 #import "Playground.h"
 
 
-static void
-eachShape(void *ptr, void* unused)
-{
-	cpShape *shape = (cpShape*) ptr;
-	Sprite *sprite = shape->data;
-	if( sprite ) {
-		cpBody *body = shape->body;
-		[sprite setPosition: cpv( body->p.x, body->p.y)];
-		[sprite setRotation: RADIANS_TO_DEGREES( -body->a )];
-	}
-}
-
 @implementation Layer1
--(void) addNewSpriteX: (float)x y:(float)y
-{
-	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
-	[self add: sprite];
-	sprite.scale = 0.1;
-	
-	[sprite do: [ScaleTo actionWithDuration:0.2 scale:1.0]];
-	
-	sprite.position = cpv(x,y);
-	
-	int num = 4;
-	cpVect verts[] = {
-		cpv(-24,-54),
-		cpv(-24, 54),
-		cpv( 24, 54),
-		cpv( 24,-54),
-	};
-	
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
-	body->p = cpv(x, y);
-	cpSpaceAddBody(space, body);
-	
-	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	shape->e = 0.5; shape->u = 1.5;
-	shape->collision_type = 1;
-	shape->data = sprite;
-	cpSpaceAddShape(space, shape);
-	
-}
 -(id) init
 {
 	[super init];
 	
-	isTouchEnabled = YES;
-	isAccelerometerEnabled = YES;
+	// pause button
+	MenuItem *item1 = [MenuItem itemFromString: @"Pause" receiver:self selector:@selector(pause)];
+	[Menu setOffsetY:80];
+	Menu *menu = [Menu menuWithItems: item1, nil];
+	[self add: menu];
 	
-	CGRect wins = [[Director sharedDirector] winSize];
-	cpInitChipmunk();
-	
-	cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
-	space = cpSpaceNew();
-	cpSpaceResizeStaticHash(space, 20.0, 999);
-	space->gravity = cpv(0, 0);
+	// sun
+	CocosNode* sun = [ParticleSun node];
+	sun.position = cpv(480-50,320-50);
+	[self add:sun];
 
-	cpShape *shape;
+	// timers
+	label1 = [Label labelWithString:@"0" dimensions:CGSizeMake(80,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
+	label2 = [Label labelWithString:@"0" dimensions:CGSizeMake(80,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
+	label3 = [Label labelWithString:@"0" dimensions:CGSizeMake(80,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
 	
-	// bottom
-	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(wins.size.width,0), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
-
-	// top
-	shape = cpSegmentShapeNew(staticBody, cpv(0,wins.size.height), cpv(wins.size.width,wins.size.height), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
-
-	// left
-	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(0,wins.size.height), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
-
-	// right
-	shape = cpSegmentShapeNew(staticBody, cpv(wins.size.width,0), cpv(wins.size.width,wins.size.height), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
+	[self schedule: @selector(step1:) interval: 0.5];
+	[self schedule: @selector(step2:) interval:0.8];
+	[self schedule: @selector(step3:) interval: 1.2];
 	
-	[self addNewSpriteX: 200 y:200];
+	label1.position = cpv(80,160);
+	label2.position = cpv(240,160);
+	label3.position = cpv(400,160);
 	
-	[self schedule: @selector(step:)];
+	[self add:label1];
+	[self add:label2];
+	[self add:label3];
+	
+	// Sprite
+	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
+	sprite.position = cpv(40,50);
+	
+	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
+	
+	[self add:sprite];
+	[sprite do: [Repeat actionWithAction:
+					[Sequence actions: jump, [jump reverse], nil]
+								   times:-1]
+	 ];
 
 	return self;
 }
 
--(void) onEnter
+-(void) pause
 {
-	[super onEnter];
-
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
+	[[Director sharedDirector] pause];
+	
+	// Dialog
+	UIAlertView* dialog = [[[UIAlertView alloc] init] retain];
+	[dialog setDelegate:self];
+	[dialog setTitle:@"Game Paused"];
+	[dialog setMessage:@"Game paused"];
+	[dialog addButtonWithTitle:@"Resume"];
+	[dialog show];	
 }
 
--(void) step: (double) delta
-{
-	int steps = 2;
-	cpFloat dt = 1.0/30.0/(cpFloat)steps;
-	
-	for(int i=0; i<steps; i++){
-		cpSpaceStep(space, dt);
-		cpSpaceHashEach(space->activeShapes, &eachShape, nil);
-		cpSpaceHashEach(space->staticShapes, &eachShape, nil);
-	}
+- (void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex
+{	
+	[[Director sharedDirector] resume];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) step1: (float) delta
 {
-	UITouch *touch = [touches anyObject];	
-	CGPoint location = [touch locationInView: [touch view]];
-	
-	location = [[Director sharedDirector] convertCoordinate: location];
-	
-	[self addNewSpriteX: location.x y:location.y];
-	
+	time1 +=1;
+	[label1 setString: [NSString stringWithFormat:@"%d", time1] ];
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
+-(void) step2: (float) delta
 {
-	cpVect v = cpv( acceleration.x, acceleration.y);
-	v = cpvnormalize(v);
-	
-	if (acceleration.x || acceleration.y)
-		space->gravity = cpvmult(v, 100);
+	time2 +=1;
+	[label2 setString: [NSString stringWithFormat:@"%d", time2] ];
 }
+
+-(void) step3: (float) delta
+{
+	time3 +=1;
+	[label3 setString: [NSString stringWithFormat:@"%d", time3] ];
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS
@@ -152,18 +109,28 @@ eachShape(void *ptr, void* unused)
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
-
+	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDisplayFPS:YES];
 		
 	Scene *scene = [Scene node];
 
 	[scene add: [Layer1 node] z:0];
 
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	
 	[[Director sharedDirector] runScene: scene];
 }
+
+// getting a call, pause the game
+-(void) applicationWillResignActive:(UIApplication *)application
+{
+	[[Director sharedDirector] pause];
+}
+
+// call got rejected
+-(void) applicationDidBecomeActive:(UIApplication *)application
+{
+	[[Director sharedDirector] resume];
+}
+
 
 @end

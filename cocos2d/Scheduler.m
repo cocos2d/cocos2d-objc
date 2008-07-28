@@ -26,6 +26,9 @@
 // Timer
 //
 @implementation Timer
+
+@synthesize interval;
+
 -(id) init
 {
 	NSException* myException = [NSException
@@ -40,10 +43,24 @@
 	return [[[self alloc] initWithTarget:t selector:s] autorelease];
 }
 
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(float) i
+{
+	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
+}
+
+
 -(id) initWithTarget:(id) t selector:(SEL)s
+{
+	return [self initWithTarget:t selector:s interval:0];
+}
+
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(float) i
 {
 	if(! [super init] )
 		return nil;
+	
+	interval = i;
+	elapsed = 0;
 	
 	NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
 	invocation = [NSInvocation invocationWithMethodSignature:sig];
@@ -60,12 +77,16 @@
 	[super dealloc];
 }
 
--(void) fire: (double) dt
+-(void) fire: (float) dt
 {
-//	[target performSelector:sel];
-
-	[invocation setArgument:&dt atIndex:2];
-	[invocation invoke];
+	elapsed += dt;
+	if( elapsed >= interval ) {
+		[invocation setArgument:&dt atIndex:2];
+		[invocation invoke];
+		
+		// save the difference
+		elapsed = elapsed - interval;
+	}
 }
 @end
 
@@ -131,6 +152,17 @@ static Scheduler *sharedScheduler;
 	return t;
 }
 
+-(Timer*) scheduleTarget: (id) target selector:(SEL)sel interval:(float) i
+{
+	Timer *t = [Timer timerWithTarget:target selector:sel];
+	
+	[t setInterval:i];
+	
+	[methodsToAdd addObject: t];
+	
+	return t;
+}
+
 -(void) scheduleTimer: (Timer*) t
 {
 	// it is possible that sometimes (in transitions in particular) an scene unschedule a timer
@@ -171,7 +203,7 @@ static Scheduler *sharedScheduler;
 	[methodsToRemove addObject:t];
 }
 
--(void) tick: (double) dt
+-(void) tick: (float) dt
 {
 	for( id k in methodsToRemove )
 		[scheduledMethods removeObject:k];

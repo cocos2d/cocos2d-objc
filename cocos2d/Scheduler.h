@@ -29,16 +29,26 @@
 @interface Timer : NSObject
 {
 	NSInvocation* invocation;
+	float interval;
+	float elapsed; 
 }
+@property (readwrite,assign) float interval;
 
 /** constructor for timer */
 +(id) timerWithTarget:(id) t selector:(SEL)s;
 
+/** constructor for timer with interval */
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(float) i;
+
 /** init for Timer */
 -(id) initWithTarget:(id) t selector:(SEL)s;
 
+/** init for Timer with interval */
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(float) i;
+
+
 /** triggers the timer */
--(void) fire: (double) dt;
+-(void) fire: (float) dt;
 @end
 
 //
@@ -57,10 +67,14 @@
 +(Scheduler *)sharedScheduler;
 
 /** the scheduler is ticked */
--(void) tick: (double) dt;
+-(void) tick: (float) dt;
 
 /** schedule a target/selector */
 -(Timer*) scheduleTarget:(id) r selector:(SEL) s;
+
+/** schedule a target/selector with interval */
+-(Timer*) scheduleTarget:(id) r selector:(SEL) s interval: (float) i;
+
 
 /** schedule a Timer */
 -(void) scheduleTimer: (Timer*) t;
