@@ -100,6 +100,8 @@ eachShape(void *ptr, void* unused)
 	cpSpaceAddStaticShape(space, shape);
 	
 	[self addNewSpriteX: 200 y:200];
+	
+	[self schedule: @selector(step:)];
 
 	return self;
 }
@@ -107,18 +109,11 @@ eachShape(void *ptr, void* unused)
 -(void) onEnter
 {
 	[super onEnter];
-	[self schedule: @selector(step)];
 
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
 }
 
--(void) onExit
-{
-	[self unschedule:@selector(step)];
-	[super onExit];
-}
-
--(void) step
+-(void) step: (double) delta
 {
 	int steps = 2;
 	cpFloat dt = 1.0/30.0/(cpFloat)steps;
