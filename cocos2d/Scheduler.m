@@ -35,12 +35,12 @@
 	@throw myException;
 }
 
-+(id) timerWithTarget:(id) t sel:(SEL)s
++(id) timerWithTarget:(id) t selector:(SEL)s
 {
-	return [[[self alloc] initWithTarget:t sel:s] autorelease];
+	return [[[self alloc] initWithTarget:t selector:s] autorelease];
 }
 
--(id) initWithTarget:(id) t sel:(SEL)s
+-(id) initWithTarget:(id) t selector:(SEL)s
 {
 	if(! [super init] )
 		return nil;
@@ -124,7 +124,7 @@ static Scheduler *sharedScheduler;
 
 -(Timer*) scheduleTarget: (id) target selector:(SEL)sel
 {
-	Timer *t = [Timer timerWithTarget:target sel:sel];
+	Timer *t = [Timer timerWithTarget:target selector:sel];
 	
 	[methodsToAdd addObject: t];
 	

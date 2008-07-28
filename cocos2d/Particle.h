@@ -149,12 +149,12 @@ typedef struct sParticle
 
 //! Add a particle to the emitter
 -(BOOL) addParticle;
-//! Update a particle
--(void) updateParticlesWithDelta:(double)dt;
+//! Update all particles
+-(void) step:(double)dt;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
 //! draw all the particles
--(void) drawParticles;
+-(void) draw;
 //! stop the running system
 -(void) stopSystem;
 //! reset the system

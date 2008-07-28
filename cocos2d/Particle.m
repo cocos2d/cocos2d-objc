@@ -81,11 +81,13 @@
 	blendAdditive = NO;
 	
 	// default: modulate
-	colorModulate = YES;
+	// XXX: not used
+//	colorModulate = YES;
 		
 	glGenBuffers(1, &verticesID);
 	glGenBuffers(1, &colorsID);	
 	
+	[self schedule:@selector(step:)];
 	return self;
 }
 
@@ -100,39 +102,6 @@
 	[texture release];
 	
 	[super dealloc];
-}
-
--(void) draw
-{	
- 	static struct timeval lastUpdate = {0,0};
-	struct timeval now = {0,0};
-		
-	gettimeofday(&now, NULL);
-
-	double delta = ( now.tv_sec - lastUpdate.tv_sec) + ( now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
-	lastUpdate = now;
-	// first run ?
-	if( delta > 1000 )
-		return;
-	
-	if( active ) {
-		float rate = 1.0 / emissionRate;
-		emitCounter += delta;
-		while( particleCount < totalParticles && emitCounter > rate ) {
-			[self addParticle];
-			emitCounter -= rate;
-		}
-	
-		elapsed += delta;
-		if(duration != -1 && duration < elapsed)
-			[self stopSystem];
-	}
-		
-	particleIdx = 0;
-	
-	[self updateParticlesWithDelta: delta];
-
-	[self drawParticles];
 }
 
 -(BOOL) addParticle
@@ -195,8 +164,23 @@
 	particle->size = size + sizeVar * RANDOM_FLOAT();	
 }
 
--(void) updateParticlesWithDelta: (double)dt
+-(void) step: (double) dt
 {
+	if( active ) {
+		float rate = 1.0 / emissionRate;
+		emitCounter += dt;
+		while( particleCount < totalParticles && emitCounter > rate ) {
+			[self addParticle];
+			emitCounter -= rate;
+		}
+		
+		elapsed += dt;
+		if(duration != -1 && duration < elapsed)
+			[self stopSystem];
+	}
+		
+	particleIdx = 0;
+	
 	while( particleIdx < particleCount )
 	{
 		Particle *p = &particles[particleIdx];
@@ -265,7 +249,7 @@
 	emitCounter = 0;
 }
 
--(void) drawParticles
+-(void) draw
 {
 	int blendSrc, blendDst;
 //	int colorMode;
