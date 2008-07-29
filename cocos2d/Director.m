@@ -113,7 +113,7 @@ static int _pixelFormat = RGB565;
 	nextScene = nil;
 	scenes = [[NSMutableArray arrayWithCapacity:10] retain];
 	
-	animationInterval = 1.0 / kDefaultFPS;
+	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
 	eventHandler = nil;
 	
 	[self setAlphaBlending: YES];
@@ -335,16 +335,22 @@ static int _pixelFormat = RGB565;
 
 -(void) pause
 {
+	if( paused )
+		return;
+
 	oldAnimationInterval = animationInterval;
 	
 	// when paused, don't consume CPU
-//	[self setAnimationInterval:1/4.0];
+	[self setAnimationInterval:1/4.0];
 	paused = YES;
 }
 
 -(void) resume
 {
-//	[self setAnimationInterval: oldAnimationInterval];
+	if( ! paused )
+		return;
+	
+	[self setAnimationInterval: oldAnimationInterval];
 
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
 		NSException* myException = [NSException

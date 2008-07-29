@@ -131,18 +131,13 @@ typedef struct sParticle
 @property (readonly)	BOOL active;
 @property (readwrite,assign) float duration;
 @property (readwrite,assign) cpVect posVar;
-@property (readwrite,assign) float angle;
-@property (readwrite,assign) float angleVar;
-@property (readwrite,assign) float speed;
-@property (readwrite,assign) float speedVar;
-@property (readwrite,assign) float tangentialAccel;
-@property (readwrite,assign) float tangentialAccelVar;
-@property (readwrite,assign) float radialAccel;
-@property (readwrite,assign) float radialAccelVar;
-@property (readwrite,assign) ColorF startColor;
-@property (readwrite,assign) ColorF startColorVar;
-@property (readwrite,assign) ColorF endColor;
-@property (readwrite,assign) ColorF endColorVar;
+@property (readwrite,assign) float life, lifeVar;
+@property (readwrite,assign) float angle, angleVar;
+@property (readwrite,assign) float speed, speedVar;
+@property (readwrite,assign) float tangentialAccel, tangentialAccelVar;
+@property (readwrite,assign) float radialAccel, radialAccelVar;
+@property (readwrite,assign) ColorF startColor, startColorVar;
+@property (readwrite,assign) ColorF endColor, endColorVar;
 @property (readwrite,assign) float emissionRate;
 @property (readwrite,assign) int totalParticles;
 

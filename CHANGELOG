@@ -3,6 +3,8 @@ version XXXX - YYYY
  . All: methods that receives target/selector, are named:Target selector (unified API)
  . Demos: added resume/pause to application
  . Demos: chipmunk_accel is frame independent
+ . Demos: added IntervalDemo demo. Shows how to uses interval timers, and how pause/resume works
+ . Director: when paused don't consume CPU. Only renders the screen at 4 FPS.
  . Particles: don't uses draw to update, uses scheduled step. (pause/resume works)
  
  
