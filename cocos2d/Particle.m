@@ -43,6 +43,7 @@
 @implementation ParticleSystem
 @synthesize active, duration;
 @synthesize posVar;
+@synthesize life, lifeVar;
 @synthesize angle, angleVar;
 @synthesize speed, speedVar;
 @synthesize tangentialAccel, tangentialAccelVar;
