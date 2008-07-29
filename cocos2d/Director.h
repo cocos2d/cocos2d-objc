@@ -128,6 +128,7 @@ Call this class method before any other call to the Director.
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  The new scene will be executed.
+ Try to avoid big stacks of pushed scenes to reduce memory allocation. 
  */
 - (void) pushScene:(Scene*) scene;
 
@@ -144,9 +145,16 @@ Call this class method before any other call to the Director.
 /** Ends the execution */
 -(void) end;
 
-/** Pauses the running scene */
+/** Pauses the running scene.
+ The running scene will be _drawed_ but all scheduled timers will be paused
+ While paused, the draw rate will be 4 FPS to reduce CPU consuption
+ */
 -(void) pause;
-/** Resumes the paused scene */
+
+/** Resumes the paused scene
+ The scheduled timers will be activated again.
+ The "delta time" will be 0 (as if the game wasn't paused)
+ */
 -(void) resume;
 
 - (void) drawScene;

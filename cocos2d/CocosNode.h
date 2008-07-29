@@ -149,9 +149,13 @@
 -(void) step_: (float) dt;
 
 // timers
-/** schedules a selector */
+/** schedules a selector.
+ The scheduled selector will be ticked every frame
+ */
 -(void) schedule: (SEL) s;
-/** schedules a selector with an interval time*/
+/** schedules a selector with an interval time.
+ If time is 0 it will be ticked every frame.
+ */
 -(void) schedule: (SEL) s interval:(float) i;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
