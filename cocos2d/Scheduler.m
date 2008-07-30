@@ -81,11 +81,14 @@
 {
 	elapsed += dt;
 	if( elapsed >= interval ) {
-		[invocation setArgument:&dt atIndex:2];
+		[invocation setArgument:&elapsed atIndex:2];
 		[invocation invoke];
 		
 		// save the difference
-		elapsed = elapsed - interval;
+		if( interval )
+			elapsed -= interval;
+		else
+			elapsed = 0;
 	}
 }
 @end
