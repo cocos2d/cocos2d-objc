@@ -19,7 +19,7 @@
 	Label *label2;
 	Label *label3;
 	
-	int time1, time2, time3;
+	float time1, time2, time3;
 }
 
 -(void) step1: (float) dt;
