@@ -15,7 +15,7 @@
 	// sun
 	ParticleSystem* sun = [ParticleSun node];
 	sun.position = cpv(480-50,320-50);
-	sun.totalParticles = 180;
+	sun.totalParticles = 130;
 	sun.life = 0.6;
 	[self add:sun];
 
@@ -24,9 +24,9 @@
 	label2 = [Label labelWithString:@"0" dimensions:CGSizeMake(120,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
 	label3 = [Label labelWithString:@"0" dimensions:CGSizeMake(120,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
 	
-	[self schedule: @selector(step1:) interval: 0.2];
-	[self schedule: @selector(step2:) interval:0.5];
-	[self schedule: @selector(step3:) interval: 1.0];
+	[self schedule: @selector(step1:) interval: 0.5];
+	[self schedule: @selector(step2:) interval:1.0];
+	[self schedule: @selector(step3:) interval: 1.5];
 	
 	label1.position = cpv(80,160);
 	label2.position = cpv(240,160);
@@ -77,22 +77,22 @@
 
 -(void) step1: (ccTime) delta
 {
-	time1 +=delta;
-//	time1 +=1;
+//	time1 +=delta;
+	time1 +=1;
 	[label1 setString: [NSString stringWithFormat:@"%2.1f", time1] ];
 }
 
 -(void) step2: (ccTime) delta
 {
-	time2 +=delta;
-//	time2 +=1;
+//	time2 +=delta;
+	time2 +=1;
 	[label2 setString: [NSString stringWithFormat:@"%2.1f", time2] ];
 }
 
 -(void) step3: (ccTime) delta
 {
-	time3 +=delta;
-//	time3 +=1;
+//	time3 +=delta;
+	time3 +=1;
 	[label3 setString: [NSString stringWithFormat:@"%2.1f", time3] ];
 }
 
