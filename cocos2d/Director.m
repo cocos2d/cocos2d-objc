@@ -424,17 +424,16 @@ static int _pixelFormat = RGB565;
 
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	/* new scene */
-	if( nextScene ) {
-		[self setNextScene];
-	}
 
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 	if( ! paused )
 		[[Scheduler sharedScheduler] tick: dt];
+
 	
+	/* to avoid flickr, nextScene MUST be here: after tick and before draw */
+	if( nextScene )
+		[self setNextScene];
 	
 	glPushMatrix();
 
