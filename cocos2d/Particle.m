@@ -59,8 +59,8 @@
 		return nil;
 	
 	particles = malloc( sizeof(Particle) * totalParticles );
-	vertices = malloc( sizeof(VtxPointSprite) * totalParticles );
-	colors = malloc (sizeof(ColorF) * totalParticles);
+	vertices = malloc( sizeof(ccPointSprite) * totalParticles );
+	colors = malloc (sizeof(ccColorF) * totalParticles);
 
 	if( ! ( particles &&vertices && colors ) ) {
 		NSLog(@"Particle system: not enough memory");
@@ -144,13 +144,13 @@
 	particle->life = life + lifeVar * RANDOM_FLOAT();
 	
 	// Color
-	ColorF start;
+	ccColorF start;
 	start.r = startColor.r + startColorVar.r * RANDOM_FLOAT();
 	start.g = startColor.g + startColorVar.g * RANDOM_FLOAT();
 	start.b = startColor.b + startColorVar.b * RANDOM_FLOAT();
 	start.a = startColor.a + startColorVar.a * RANDOM_FLOAT();
 
-	ColorF end;
+	ccColorF end;
 	end.r = endColor.r + endColorVar.r * RANDOM_FLOAT();
 	end.g = endColor.g + endColorVar.g * RANDOM_FLOAT();
 	end.b = endColor.b + endColorVar.b * RANDOM_FLOAT();
@@ -166,7 +166,7 @@
 	particle->size = size + sizeVar * RANDOM_FLOAT();	
 }
 
--(void) step: (float) dt
+-(void) step: (ccTime) dt
 {
 	if( active ) {
 		float rate = 1.0 / emissionRate;
@@ -264,15 +264,15 @@
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(VtxPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
-	glVertexPointer(3,GL_FLOAT,sizeof(VtxPointSprite),0);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
+	glVertexPointer(3,GL_FLOAT,sizeof(ccPointSprite),0);
 	
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glPointSizePointerOES(GL_FLOAT,sizeof(VtxPointSprite),(GLvoid*) (sizeof(GL_FLOAT)*2));
+	glPointSizePointerOES(GL_FLOAT,sizeof(ccPointSprite),(GLvoid*) (sizeof(GL_FLOAT)*2));
 	
 	glEnableClientState(GL_COLOR_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, colorsID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ccColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
 	glColorPointer(4,GL_FLOAT,0,0);
 
 	// save blend state

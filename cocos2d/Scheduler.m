@@ -43,7 +43,7 @@
 	return [[[self alloc] initWithTarget:t selector:s] autorelease];
 }
 
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(float) i
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i
 {
 	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
 }
@@ -54,7 +54,7 @@
 	return [self initWithTarget:t selector:s interval:0];
 }
 
--(id) initWithTarget:(id) t selector:(SEL)s interval:(float) i
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) i
 {
 	if(! [super init] )
 		return nil;
@@ -77,7 +77,7 @@
 	[super dealloc];
 }
 
--(void) fire: (float) dt
+-(void) fire: (ccTime) dt
 {
 	elapsed += dt;
 	if( elapsed >= interval ) {
@@ -155,7 +155,7 @@ static Scheduler *sharedScheduler;
 	return t;
 }
 
--(Timer*) scheduleTarget: (id) target selector:(SEL)sel interval:(float) i
+-(Timer*) scheduleTarget: (id) target selector:(SEL)sel interval:(ccTime) i
 {
 	Timer *t = [Timer timerWithTarget:target selector:sel];
 	
@@ -206,7 +206,7 @@ static Scheduler *sharedScheduler;
 	[methodsToRemove addObject:t];
 }
 
--(void) tick: (float) dt
+-(void) tick: (ccTime) dt
 {
 	for( id k in methodsToRemove )
 		[scheduledMethods removeObject:k];

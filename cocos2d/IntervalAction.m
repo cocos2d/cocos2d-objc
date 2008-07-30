@@ -40,12 +40,12 @@
 	
 }
 
-+(id) actionWithDuration: (double) d
++(id) actionWithDuration: (ccTime) d
 {
 	return [[[self alloc] initWithDuration:d ] autorelease];
 }
 
--(id) initWithDuration: (double) d
+-(id) initWithDuration: (ccTime) d
 {
 	if( ![super init] )
 		return nil;
@@ -67,7 +67,7 @@
 	return (elapsed >= duration);
 }
 
--(void) step: (double) dt
+-(void) step: (ccTime) dt
 {
 	elapsed += dt;
 	[self update: MIN(1, elapsed/duration)];
@@ -137,7 +137,7 @@
 	IntervalAction *two = two_;
 #endif
 		
-	double d = [one duration] + [two duration];
+	ccTime d = [one duration] + [two duration];
 	[super initWithDuration: d];
 	
 	actions = [[NSArray arrayWithObjects: one, two, nil] retain];
@@ -168,10 +168,10 @@
 	last = -1;
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	int found = 0;
-	double new_t = 0.0;
+	ccTime new_t = 0.0;
 	
 	if( t >= split ) {
 		found = 1;
@@ -254,7 +254,7 @@
 	[other start];
 }
 
--(void) step:(double) dt
+-(void) step:(ccTime) dt
 {
 	[other step: dt];
 	if( [other isDone] ) {
@@ -304,8 +304,8 @@
 	NSAssert( one_!=nil, @"Spawn: argument one must be non-nil");
 	NSAssert( two_!=nil, @"Spawn: argument two must be non-nil");
 
-	double d1 = [one_ duration];
-	double d2 = [two_ duration];	
+	ccTime d1 = [one_ duration];
+	ccTime d2 = [two_ duration];	
 	
 	[super initWithDuration: fmax(d1,d2)];
 
@@ -352,7 +352,7 @@
 {
 	return [one isDone] && [two isDone];	
 }
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	// ignore. not needed
 }
@@ -367,12 +367,12 @@
 // RotateTo
 //
 @implementation RotateTo
-+(id) actionWithDuration: (double) t angle:(float) a
++(id) actionWithDuration: (ccTime) t angle:(float) a
 {	
 	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
 }
 
--(id) initWithDuration: (double) t angle:(float) a
+-(id) initWithDuration: (ccTime) t angle:(float) a
 {
 	if( ! [super initWithDuration: t] )
 		return nil;
@@ -398,7 +398,7 @@
 	if (angle < -180)
 		angle = 360 + angle;
 }
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	target.rotation = startAngle + angle * t;
 }
@@ -409,12 +409,12 @@
 // RotateBy
 //
 @implementation RotateBy
-+(id) actionWithDuration: (double) t angle:(float) a
++(id) actionWithDuration: (ccTime) t angle:(float) a
 {	
 	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
 }
 
--(id) initWithDuration: (double) t angle:(float) a
+-(id) initWithDuration: (ccTime) t angle:(float) a
 {
 	if( ! [super initWithDuration: t] )
 		return nil;
@@ -436,7 +436,7 @@
 	startAngle = [target rotation];
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {	
 	// XXX: shall I add % 360
 	target.rotation = (startAngle + angle * t );
@@ -453,12 +453,12 @@
 // MoveTo
 //
 @implementation MoveTo
-+(id) actionWithDuration: (double) t position: (cpVect) p
++(id) actionWithDuration: (ccTime) t position: (cpVect) p
 {	
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (double) t position: (cpVect) p
+-(id) initWithDuration: (ccTime) t position: (cpVect) p
 {
 	if( ![super initWithDuration: t] )
 		return nil;
@@ -480,7 +480,7 @@
 	delta = cpvsub( endPosition, startPosition );
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {	
 	target.position = cpv( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
 }
@@ -490,12 +490,12 @@
 // MoveBy
 //
 @implementation MoveBy
-+(id) actionWithDuration: (double) t position: (cpVect) p
++(id) actionWithDuration: (ccTime) t position: (cpVect) p
 {	
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (double) t position: (cpVect) p
+-(id) initWithDuration: (ccTime) t position: (cpVect) p
 {
 	if( ![super initWithDuration: t] )
 		return nil;
@@ -527,12 +527,12 @@
 // JumpBy
 //
 @implementation JumpBy
-+(id) actionWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j
++(id) actionWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j
 {
 	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
 }
 
--(id) initWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j
+-(id) initWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j
 {
 	[super initWithDuration:t];
 	delta = pos;
@@ -553,11 +553,11 @@
 	startPosition = target.position;
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
-	double y = height * fabs( sinf(t * M_PI * jumps ) );
+	ccTime y = height * fabs( sinf(t * M_PI * jumps ) );
 	y += delta.y * t;
-	double x = delta.x * t;
+	ccTime x = delta.x * t;
 	target.position = cpv( startPosition.x + x, startPosition.y + y );
 }
 
@@ -582,12 +582,12 @@
 // ScaleTo
 //
 @implementation ScaleTo
-+(id) actionWithDuration: (double) t scale:(float) s
++(id) actionWithDuration: (ccTime) t scale:(float) s
 {
 	return [[[self alloc] initWithDuration: t scale:s] autorelease];
 }
 
--(id) initWithDuration: (double) t scale:(float) s
+-(id) initWithDuration: (ccTime) t scale:(float) s
 {
 	if( ![super initWithDuration: t] )
 		return nil;
@@ -609,7 +609,7 @@
 	delta = endScale - startScale;
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {	
 	[target setScale: (startScale + delta * t ) ];	
 }
@@ -635,12 +635,12 @@
 // Blink
 //
 @implementation Blink
-+(id) actionWithDuration: (double) t blinks: (int) b
++(id) actionWithDuration: (ccTime) t blinks: (int) b
 {
 	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
 }
 
--(id) initWithDuration: (double) t blinks: (int) b
+-(id) initWithDuration: (ccTime) t blinks: (int) b
 {
 	[super initWithDuration: t];
 	times = b;
@@ -653,10 +653,10 @@
     return copy;
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
-	double slice = 1.0f / times;
-	double m = fmod(t, slice);
+	ccTime slice = 1.0f / times;
+	ccTime m = fmod(t, slice);
 	target.visible = (m > slice/2) ? YES : NO;
 }
 
@@ -671,7 +671,7 @@
 // FadeIn
 //
 @implementation FadeIn
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	[(id<CocosNodeOpacity>) target setOpacity: 255 *t];
 }
@@ -685,7 +685,7 @@
 // FadeOut
 //
 @implementation FadeOut
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	[(id<CocosNodeOpacity>) target setOpacity: 255 *(1-t)];
 }
@@ -699,12 +699,12 @@
 // FadeTo
 //
 @implementation FadeTo
-+(id) actionWithDuration: (double) t opacity: (GLubyte) o
++(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o
 {
 	return [[[ self alloc] initWithDuration: t opacity: o] autorelease];
 }
 
--(id) initWithDuration: (double) t opacity: (GLubyte) o
+-(id) initWithDuration: (ccTime) t opacity: (GLubyte) o
 {
 	[super initWithDuration: t];
 	toOpacity = o;
@@ -723,7 +723,7 @@
 	fromOpacity = [(id<CocosNodeOpacity>)target opacity];
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	[(id<CocosNodeOpacity>)target setOpacity: fromOpacity + ( toOpacity - fromOpacity ) * t];
 }
@@ -775,7 +775,7 @@
 	[other start];
 }
 
-- (void) update: (double) t
+- (void) update: (ccTime) t
 {
 	[other update: pow(t,rate) ];
 }
@@ -829,10 +829,10 @@
 	[other start];
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
-	double ft = (t-0.5f) * 12;
-	double nt = 1.0f/( 1.0f + exp(-ft) );
+	ccTime ft = (t-0.5f) * 12;
+	ccTime nt = 1.0f/( 1.0f + exp(-ft) );
 	[other update: nt];	
 }
 
@@ -846,12 +846,12 @@
 // Speed
 //
 @implementation Speed
-+(id) actionWithAction: (IntervalAction*) action speed:(double) s
++(id) actionWithAction: (IntervalAction*) action speed:(ccTime) s
 {
 	return [[[self alloc] initWithAction: action speed:s] autorelease ];
 }
 
--(id) initWithAction: (IntervalAction*) action speed:(double) s
+-(id) initWithAction: (IntervalAction*) action speed:(ccTime) s
 {
 	NSAssert( action!=nil, @"Speed: argument action must be non-nil");
 
@@ -886,7 +886,7 @@
 	[other start];
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	[other update: t];
 }
@@ -901,7 +901,7 @@
 // DelayTime
 //
 @implementation DelayTime
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	return;
 }
@@ -958,7 +958,7 @@
 	[super stop];
 }
 
--(void) update:(double)t
+-(void) update:(ccTime)t
 {
 	[other update:1-t];
 }
@@ -1020,11 +1020,11 @@
 	[super stop];
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	int idx=0;
 	
-	double slice = 1.0f / [[animation frames] count];
+	ccTime slice = 1.0f / [[animation frames] count];
 	
 	if(t !=0 )
 		idx = t/ slice;

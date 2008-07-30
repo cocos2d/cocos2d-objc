@@ -3,13 +3,6 @@
 // a cocos2d example
 //
 
-// cocos2d imports
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Label.h"
-#import "ParticleSystems.h"
-
 // local import
 #import "ParticleDemo.h"
 

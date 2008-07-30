@@ -22,6 +22,8 @@
 // cocoa related
 #import <UIKit/UIKit.h>
 
+#import "types.h"
+
 //
 // Timer
 //
@@ -29,26 +31,26 @@
 @interface Timer : NSObject
 {
 	NSInvocation* invocation;
-	float interval;
-	float elapsed; 
+	ccTime interval;
+	ccTime elapsed; 
 }
-@property (readwrite,assign) float interval;
+@property (readwrite,assign) ccTime interval;
 
 /** constructor for timer */
 +(id) timerWithTarget:(id) t selector:(SEL)s;
 
 /** constructor for timer with interval */
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(float) i;
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i;
 
 /** init for Timer */
 -(id) initWithTarget:(id) t selector:(SEL)s;
 
 /** init for Timer with interval */
--(id) initWithTarget:(id) t selector:(SEL)s interval:(float) i;
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) i;
 
 
 /** triggers the timer */
--(void) fire: (float) dt;
+-(void) fire: (ccTime) dt;
 @end
 
 //
@@ -67,13 +69,13 @@
 +(Scheduler *)sharedScheduler;
 
 /** the scheduler is ticked */
--(void) tick: (float) dt;
+-(void) tick: (ccTime) dt;
 
 /** schedule a target/selector */
 -(Timer*) scheduleTarget:(id) r selector:(SEL) s;
 
 /** schedule a target/selector with interval */
--(Timer*) scheduleTarget:(id) r selector:(SEL) s interval: (float) i;
+-(Timer*) scheduleTarget:(id) r selector:(SEL) s interval: (ccTime) i;
 
 
 /** schedule a Timer */

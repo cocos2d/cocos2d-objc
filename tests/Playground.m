@@ -3,17 +3,6 @@
 // main file
 //
 
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Sprite.h"
-#import "IntervalAction.h"
-#import "InstantAction.h"
-#import "Label.h"
-#import "MenuItem.h"
-#import "Menu.h"
-#import "ParticleSystems.h"
-
 #import "Playground.h"
 
 
@@ -83,19 +72,19 @@
 	[[Director sharedDirector] resume];
 }
 
--(void) step1: (float) delta
+-(void) step1: (ccTime) delta
 {
 	time1 +=1;
 	[label1 setString: [NSString stringWithFormat:@"%d", time1] ];
 }
 
--(void) step2: (float) delta
+-(void) step2: (ccTime) delta
 {
 	time2 +=1;
 	[label2 setString: [NSString stringWithFormat:@"%d", time2] ];
 }
 
--(void) step3: (float) delta
+-(void) step3: (ccTime) delta
 {
 	time3 +=1;
 	[label3 setString: [NSString stringWithFormat:@"%d", time3] ];

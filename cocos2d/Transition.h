@@ -26,12 +26,12 @@
 @interface TransitionScene : Scene {
 	Scene * inScene;
 	Scene * outScene;
-	double duration;
+	ccTime duration;
 }
 /** creates a base transition with duration and incoming scene */
-+(id) transitionWithDuration:(double) t scene:(Scene*)s;
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
 /** initializes a transition with duration and incoming scene */
--(id) initWithDuration:(double) t scene:(Scene*)s;
+-(id) initWithDuration:(ccTime) t scene:(Scene*)s;
 /** called before the transition starts */
 -(void) start;
 /** called after the transition finishes */

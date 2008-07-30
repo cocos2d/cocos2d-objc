@@ -3,12 +3,6 @@
 // main file
 //
 
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "MenuItem.h"
-#import "Menu.h"
-
 #import "SceneTest.h"
 
 @implementation Layer1

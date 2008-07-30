@@ -29,12 +29,12 @@
 #import "Camera.h"
 
 @implementation TransitionScene
-+(id) transitionWithDuration:(double) t scene:(Scene*)s
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s
 {
 	return [[[self alloc] initWithDuration:t scene:s] autorelease];
 }
 
--(id) initWithDuration:(double) t scene:(Scene*)s
+-(id) initWithDuration:(ccTime) t scene:(Scene*)s
 {
 	NSAssert( s != nil, @"Argument scene must be non-nil");
 	

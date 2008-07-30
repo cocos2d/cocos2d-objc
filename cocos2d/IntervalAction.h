@@ -46,17 +46,17 @@ Example:
 @interface IntervalAction: Action <NSCopying>
 {
 	struct timeval lastUpdate;
-	double elapsed;
+	ccTime elapsed;
 	//! duration in seconds
-	double duration;
+	ccTime duration;
 }
 
-@property (readwrite,assign) double duration;
+@property (readwrite,assign) ccTime duration;
 
 /** creates the action */
-+(id) actionWithDuration: (double) d;
++(id) actionWithDuration: (ccTime) d;
 /** initializes the action */
--(id) initWithDuration: (double) d;
+-(id) initWithDuration: (ccTime) d;
 /** called when the action is about to start */
 -(void) start;
 /** returns YES if the action has finished */
@@ -70,7 +70,7 @@ Example:
 @interface Sequence : IntervalAction <NSCopying>
 {
 	NSArray *actions;
-	double split;
+	ccTime split;
 	int last;
 }
 /** helper contructor to create an array of sequenceable actions */
@@ -121,9 +121,9 @@ Example:
 	float startAngle;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t angle:(float) a;
++(id) actionWithDuration: (ccTime) t angle:(float) a;
 /** initializes the action */
--(id) initWithDuration: (double) t angle:(float) a;
+-(id) initWithDuration: (ccTime) t angle:(float) a;
 @end
 
 /** Rotates a CocosNode object clockwise a number of degrees by modiying it's rotation attribute.
@@ -134,9 +134,9 @@ Example:
 	float startAngle;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t angle:(float) a;
++(id) actionWithDuration: (ccTime) t angle:(float) a;
 /** initializes the action */
--(id) initWithDuration: (double) t angle:(float) a;
+-(id) initWithDuration: (ccTime) t angle:(float) a;
 @end
 
 /** Moves a CocosNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
@@ -148,9 +148,9 @@ Example:
 	cpVect delta;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t position: (cpVect) pos;
++(id) actionWithDuration: (ccTime) t position: (cpVect) pos;
 /** initializes the action */
--(id) initWithDuration: (double) t position: (cpVect) pos;
+-(id) initWithDuration: (ccTime) t position: (cpVect) pos;
 @end
 
 /**  Moves a CocosNode object x,y pixels by modifying it's position attribute.
@@ -161,9 +161,9 @@ Example:
 {
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t position: (cpVect) delta;
++(id) actionWithDuration: (ccTime) t position: (cpVect) delta;
 /** initializes the action */
--(id) initWithDuration: (double) t position: (cpVect) delta;
+-(id) initWithDuration: (ccTime) t position: (cpVect) delta;
 @end
 
 /** Moves a CocosNode object simulating a jump movement by modifying it's position attribute.
@@ -172,13 +172,13 @@ Example:
 {
 	cpVect startPosition;
 	cpVect delta;
-	double height;
+	ccTime height;
 	int jumps;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j;
++(id) actionWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j;
 /** initializes the action */
--(id) initWithDuration: (double) t position: (cpVect) pos height: (double) h jumps:(int)j;
+-(id) initWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j;
 @end
 
 /** Moves a `CocosNode` object to a position simulating a jump movement by modifying it's position attribute.
@@ -199,9 +199,9 @@ Example:
 	float delta;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t scale:(float) s;
++(id) actionWithDuration: (ccTime) t scale:(float) s;
 /** initializes the action */
--(id) initWithDuration: (double) t scale:(float) s;
+-(id) initWithDuration: (ccTime) t scale:(float) s;
 @end
 
 /** Scales a CocosNode object a zoom factor by modifying it's scale attribute.
@@ -218,9 +218,9 @@ Example:
 	int times;
 }
 /** creates the action */
-+(id) actionWithDuration: (double) t blinks: (int) blinks;
++(id) actionWithDuration: (ccTime) t blinks: (int) blinks;
 /** initilizes the action */
--(id) initWithDuration: (double) t blinks: (int) blinks;
+-(id) initWithDuration: (ccTime) t blinks: (int) blinks;
 @end
 
 /** Fades in a CocosNode, from opacity 0 to 255 */
@@ -242,9 +242,9 @@ Example:
 	GLubyte fromOpacity;
 }
 /** creates an action with duration and opactiy */
-+(id) actionWithDuration: (double) t opacity: (GLubyte) o;
++(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o;
 /** initializes the action with duration and opacity */
--(id) initWithDuration: (double) t opacity: (GLubyte) o;
+-(id) initWithDuration: (ccTime) t opacity: (GLubyte) o;
 @end
 
 
@@ -279,13 +279,13 @@ Example:
  */
 @interface Speed : IntervalAction <NSCopying>
 {
-	double speed;
+	ccTime speed;
 	IntervalAction * other;
 }
 /** creates the action */
-+(id) actionWithAction: (IntervalAction*) action speed:(double)s;
++(id) actionWithAction: (IntervalAction*) action speed:(ccTime)s;
 /** initializes the action */
--(id) initWithAction: (IntervalAction*) action speed:(double)s;
+-(id) initWithAction: (IntervalAction*) action speed:(ccTime)s;
 @end
 
 /** Delays the action a certain amount of seconds

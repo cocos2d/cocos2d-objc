@@ -30,8 +30,8 @@ typedef struct sParticle
 	cpVect	dir;
 	float	radialAccel;
 	float	tangentialAccel;
-	ColorF	color;
-	ColorF	deltaColor;
+	ccColorF	color;
+	ccColorF	deltaColor;
 	float	size;
 	float	life;
 } Particle;
@@ -88,13 +88,13 @@ typedef struct sParticle
 	float lifeVar;
 	
 	/// Start color of the particles
-	ColorF startColor;
+	ccColorF startColor;
 	/// Start color variance
-	ColorF startColorVar;
+	ccColorF startColorVar;
 	/// End color of the particles
-	ColorF endColor;
+	ccColorF endColor;
 	/// End color variance
-	ColorF endColorVar;
+	ccColorF endColorVar;
 	
 	/// Array of particles
 	Particle *particles;
@@ -116,9 +116,9 @@ typedef struct sParticle
 	Texture2D *texture;
 	
 	/// Array of (x,y,size) 
-	VtxPointSprite *vertices;
+	ccPointSprite *vertices;
 	/// Array of colors
-	ColorF	*colors;
+	ccColorF	*colors;
 	/// vertices buffer id
 	GLuint	verticesID;
 	/// colors buffer id
@@ -136,8 +136,8 @@ typedef struct sParticle
 @property (readwrite,assign) float speed, speedVar;
 @property (readwrite,assign) float tangentialAccel, tangentialAccelVar;
 @property (readwrite,assign) float radialAccel, radialAccelVar;
-@property (readwrite,assign) ColorF startColor, startColorVar;
-@property (readwrite,assign) ColorF endColor, endColorVar;
+@property (readwrite,assign) ccColorF startColor, startColorVar;
+@property (readwrite,assign) ccColorF endColor, endColorVar;
 @property (readwrite,assign) float emissionRate;
 @property (readwrite,assign) int totalParticles;
 
@@ -145,7 +145,7 @@ typedef struct sParticle
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Update all particles
--(void) step:(float)dt;
+-(void) step:(ccTime)dt;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
 //! draw all the particles

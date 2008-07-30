@@ -76,6 +76,7 @@
 		502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		502C67ED0DFF0A7300E4107D /* demoJumpingGirls.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */; };
+		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
 		5038B6B20E196CD8009A621E /* Particle.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038B6B00E196CD8009A621E /* Particle.h */; };
 		5038B6B30E196CD8009A621E /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* Particle.m */; };
 		503B4BB40E04CAAC00AAF246 /* Playground.m in Sources */ = {isa = PBXBuildFile; fileRef = 503B4BB30E04CAAC00AAF246 /* Playground.m */; };
@@ -495,6 +496,7 @@
 		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
 		502C67EB0DFF0A7300E4107D /* demoJumpingGirls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = demoJumpingGirls.h; path = tests/demoJumpingGirls.h; sourceTree = "<group>"; };
 		502C67EC0DFF0A7300E4107D /* demoJumpingGirls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = demoJumpingGirls.m; path = tests/demoJumpingGirls.m; sourceTree = "<group>"; };
+		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		5038B6B00E196CD8009A621E /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		5038B6B10E196CD8009A621E /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
 		503B4BB30E04CAAC00AAF246 /* Playground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playground.m; path = tests/Playground.m; sourceTree = "<group>"; };
@@ -958,6 +960,7 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50305AF30E40E33200F63373 /* cocos2d.h */,
 				5066020F0E38A70D000B500E /* Scheduler.h */,
 				506602100E38A70D000B500E /* Scheduler.m */,
 				509E574A0E36234300BD7F09 /* TextureNode.h */,
@@ -1180,6 +1183,7 @@
 				504055B00E3230BD00213FEF /* ParticleSystems.h in Headers */,
 				509E574C0E36234300BD7F09 /* TextureNode.h in Headers */,
 				506602110E38A70D000B500E /* Scheduler.h in Headers */,
+				50305AF40E40E33200F63373 /* cocos2d.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

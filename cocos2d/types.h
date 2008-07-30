@@ -18,30 +18,36 @@
  *
  */
 
-#import "chipmunk.h"
+//
+// cocos (cc) types
+//
 
 //! RGBA color composed of bytes
-typedef struct sColorB
+typedef struct _ccColorB
 {
 	char r;
 	char g;
 	char b;
 	char a;
-} Color;
+} ccColorB;
 
 //! RGBA color composed of floats
-typedef struct sColorF {
+typedef struct _ccColorF {
 	float r;
 	float g;
 	float b;
 	float a;
-} ColorF;
+} ccColorF;
 
-typedef struct sVtxPointSprite
+//! Point Sprite attributes
+typedef struct _ccPointSprite
 {
 	float x;
 	float y;
 	float size;
-} VtxPointSprite;
-		
+} ccPointSprite;
+
+//! delta time type
+typedef float ccTime;
+//typedef double ccTime;
 

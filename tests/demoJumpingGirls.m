@@ -3,15 +3,6 @@
 //	cocos2d
 //
 
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Sprite.h"
-#import "IntervalAction.h"
-#import "InstantAction.h"
-#import "Label.h"
-#import "Texture2D.h"
-
 #import "demoJumpingGirls.h"
 
 @implementation MainLayer

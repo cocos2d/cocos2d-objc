@@ -55,8 +55,8 @@ and when to execute the Scenes
 	/** display FPS ? */
 	BOOL displayFPS;
 	int frames;
-	float accumDt;
-	float frameRate;
+	ccTime accumDt;
+	ccTime frameRate;
 	
 	/** is the running scene paused */
 	BOOL paused;
@@ -76,7 +76,7 @@ and when to execute the Scenes
 	/** last time the main loop was updated */
 	struct timeval lastUpdate;
 	/** delta time since last tick to main loop */
-	float dt;
+	ccTime dt;
 }
 
 @property (readonly, assign) Scene* runningScene;

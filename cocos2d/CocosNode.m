@@ -278,7 +278,7 @@
 		[actionsToRemove addObject: action];
 }
 
--(void) step_: (float) dt
+-(void) step_: (ccTime) dt
 {
 	// remove 'removed' actions
 	if( [actionsToRemove count] > 0 ) {
@@ -308,7 +308,7 @@
 	[self schedule:selector interval:0];
 }
 
--(void) schedule: (SEL) selector interval:(float)interval
+-(void) schedule: (SEL) selector interval:(ccTime)interval
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");

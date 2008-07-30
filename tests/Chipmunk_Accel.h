@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Layer.h"
+#import "cocos2d.h"
 #import "chipmunk.h"
 
 //CLASS INTERFACE
@@ -17,7 +17,7 @@
 {
 	cpSpace *space;
 }
--(void) step: (double) dt;
+-(void) step: (ccTime) dt;
 -(void) addNewSpriteX:(float)x y:(float)y;
 @end
 	

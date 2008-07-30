@@ -3,16 +3,6 @@
 // main file
 //
 
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "TextureMgr.h"
-#import "Sprite.h"
-#import "IntervalAction.h"
-#import "InstantAction.h"
-#import "Label.h"
-#import "MenuItem.h"
-#import "Menu.h"
 
 #import "MenuTest.h"
 
