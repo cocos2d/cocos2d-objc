@@ -189,13 +189,13 @@
 	
 	if (last == -1 && found==1)	{
 		[[actions objectAtIndex:0] start];
-		[[actions objectAtIndex:0] update:1];
+		[[actions objectAtIndex:0] update:1.0f];
 		[[actions objectAtIndex:0] stop];
 	}
 
 	if (last != found ) {
 		if( last != -1 ) {
-			[[actions objectAtIndex: last] update: 1];
+			[[actions objectAtIndex: last] update: 1.0f];
 			[[actions objectAtIndex: last] stop];
 		}
 		[[actions objectAtIndex: found] start];

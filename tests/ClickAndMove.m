@@ -51,9 +51,9 @@
 	CocosNode *s = [self get: @"sprite"];
 	[s stop];
 	[s do: [MoveTo actionWithDuration:1 position:cpv(location.x, 480-location.y)]];
-	double o = location.x - [s position].x;
-	double a = (480-location.y) - [s position].y;
-	double at = RADIANS_TO_DEGREES( atan(o/a) );
+	float o = location.x - [s position].x;
+	float a = (480-location.y) - [s position].y;
+	float at = RADIANS_TO_DEGREES( atan(o/a) );
 	
 	if( a < 0 )
 		if(  o < 0 )
