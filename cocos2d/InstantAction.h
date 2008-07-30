@@ -28,9 +28,9 @@
 */ 
 @interface InstantAction : Action <NSCopying>
 {
-	double duration;
+	ccTime duration;
 }
-@property (readonly,assign) double duration;
+@property (readonly,assign) ccTime duration;
 
 -(BOOL) isDone;
 @end

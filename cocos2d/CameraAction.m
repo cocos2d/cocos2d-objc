@@ -89,7 +89,7 @@
 	radX = DEGREES_TO_RADIANS(angleX);
 }
 
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	float r = (radius + deltaRadius * t) *[Camera getZEye];
 	float za = radZ + radDeltaZ * t;

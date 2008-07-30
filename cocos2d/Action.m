@@ -74,12 +74,12 @@
 	return YES;
 }
 
--(void) step: (double) dt
+-(void) step: (ccTime) dt
 {
 	NSLog(@"[Action step]. override me");
 }
 
--(void) update: (double) time
+-(void) update: (ccTime) time
 {
 	NSLog(@"[Action update]. override me");
 }

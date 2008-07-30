@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "Layer.h"
+#import "cocos2d.h"
 //#import "VirtualAccelerometer.h"
 
 @class Sprite;

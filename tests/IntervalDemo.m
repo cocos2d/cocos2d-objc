@@ -3,16 +3,6 @@
 // main file
 //
 
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Sprite.h"
-#import "IntervalAction.h"
-#import "InstantAction.h"
-#import "Label.h"
-#import "MenuItem.h"
-#import "Menu.h"
-#import "ParticleSystems.h"
 
 #import "IntervalDemo.h"
 
@@ -25,8 +15,8 @@
 	// sun
 	ParticleSystem* sun = [ParticleSun node];
 	sun.position = cpv(480-50,320-50);
-	sun.totalParticles = 250;
-	sun.life = 0.7;
+	sun.totalParticles = 180;
+	sun.life = 0.6;
 	[self add:sun];
 
 	// timers
@@ -55,7 +45,7 @@
 	[self add:sprite];
 	[sprite do: [Repeat actionWithAction:
 					[Sequence actions: jump, [jump reverse], nil]
-								   times:-1]
+						times:-1]
 	 ];
 
 	// pause button
@@ -85,24 +75,24 @@
 	[[Director sharedDirector] resume];
 }
 
--(void) step1: (float) delta
+-(void) step1: (ccTime) delta
 {
-//	time1 +=delta;
-	time1 +=1;
+	time1 +=delta;
+//	time1 +=1;
 	[label1 setString: [NSString stringWithFormat:@"%2.1f", time1] ];
 }
 
--(void) step2: (float) delta
+-(void) step2: (ccTime) delta
 {
-//	time2 +=delta;
-	time2 +=1;
+	time2 +=delta;
+//	time2 +=1;
 	[label2 setString: [NSString stringWithFormat:@"%2.1f", time2] ];
 }
 
--(void) step3: (float) delta
+-(void) step3: (ccTime) delta
 {
-//	time3 +=delta;
-	time3 +=1;
+	time3 +=delta;
+//	time3 +=1;
 	[label3 setString: [NSString stringWithFormat:@"%2.1f", time3] ];
 }
 

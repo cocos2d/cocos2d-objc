@@ -4,8 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Layer.h"
-#import "Label.h"
+#import "cocos2d.h"
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate>
@@ -19,11 +18,11 @@
 	Label *label2;
 	Label *label3;
 	
-	float time1, time2, time3;
+	ccTime time1, time2, time3;
 }
 
--(void) step1: (float) dt;
--(void) step2: (float) dt;
--(void) step3: (float) dt;
+-(void) step1: (ccTime) dt;
+-(void) step2: (ccTime) dt;
+-(void) step3: (ccTime) dt;
 
 @end

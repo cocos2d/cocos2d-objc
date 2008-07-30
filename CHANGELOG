@@ -7,6 +7,8 @@ version 0.3.1 - 30-Jul-2008
  . Director: when paused don't consume CPU. Only renders the screen at 4 FPS.
  . Particles: don't uses draw to update, uses scheduled step. (pause/resume works)
  . Scheduler: added interval timers
+ . Types: created ccTime (float or double) used to calculate delta time
+ . Types: older types have the prefix "cc" (cocos)
 
  
 version 0.3.0 - 27-Jul-2008

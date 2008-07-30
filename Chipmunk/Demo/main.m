@@ -20,10 +20,6 @@
  */
  
 #import <UIKit/UIKit.h>
-#import "Primitives.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Scene.h"
 #import "main.h"
 
 #include <stdlib.h>
@@ -214,7 +210,7 @@ void drawCollisions(void *ptr, void *data)
 	
 }
 
--(void) step: (double) dt
+-(void) step: (ccTime) dt
 {
 	ticks++;	
 	update_funcs[demo_index](ticks);

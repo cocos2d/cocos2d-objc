@@ -3,17 +3,6 @@
 // main file
 //
 
-#import "chipmunk.h"
-
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Sprite.h"
-#import "IntervalAction.h"
-#import "InstantAction.h"
-#import "Label.h"
-#import "MenuItem.h"
-#import "Menu.h"
 
 #import "OpenGL_Internal.h"
 
@@ -110,7 +99,7 @@ eachShape(void *ptr, void* unused)
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 30)];
 }
 
--(void) step: (double) delta
+-(void) step: (ccTime) delta
 {
 	int steps = 2;
 	cpFloat dt = delta/(cpFloat)steps;

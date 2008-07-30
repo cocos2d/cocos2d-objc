@@ -3,15 +3,6 @@
 // a cocos2d example
 //
 
-// cocos2d imports
-#import "Scene.h"
-#import "Layer.h"
-#import "Director.h"
-#import "Sprite.h"
-#import "IntervalAction.h"
-#import "InstantAction.h"
-#import "Label.h"
-
 // local import
 //#import "VirtualAccelerometer.h"
 #import "AccelViewportDemo.h"

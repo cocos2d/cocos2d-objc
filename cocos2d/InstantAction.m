@@ -47,11 +47,11 @@
 {
 	return YES;
 }
--(void) step: (double) dt
+-(void) step: (ccTime) dt
 {
 	[self update: 1];
 }
--(void) update: (double) t
+-(void) update: (ccTime) t
 {
 	// ignore
 }

@@ -24,6 +24,7 @@
 
 #import "Action.h"
 #import "chipmunk.h"
+#import "types.h"
 
 @class Camera;
 
@@ -146,7 +147,7 @@
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stop;
--(void) step_: (float) dt;
+-(void) step_: (ccTime) dt;
 
 // timers
 /** schedules a selector.
@@ -156,7 +157,7 @@
 /** schedules a selector with an interval time.
  If time is 0 it will be ticked every frame.
  */
--(void) schedule: (SEL) s interval:(float) i;
+-(void) schedule: (SEL) s interval:(ccTime) i;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
 /** activate all scheduled timers */

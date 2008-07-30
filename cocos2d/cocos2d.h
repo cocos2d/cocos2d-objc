@@ -18,58 +18,28 @@
  *
  */
 
+//
+// all cocos2d include files
+//
+
+#import "Action.h"
+#import "Camera.h"
+#import "CameraAction.h"
+#import "CocosNode.h"
+#import "Director.h"
+#import "InstantAction.h"
+#import "IntervalAction.h"
+#import "Label.h"
+#import "Layer.h"
+#import "Menu.h"
+#import "MenuItem.h"
 #import "Particle.h"
-
-//! Fire particle system
-@interface ParticleFire: ParticleSystem
-{
-}
-@end
-
-//! Fireworks particle system
-@interface ParticleFireworks : ParticleSystem
-{
-}
-@end
-
-//! Sun particle system
-@interface ParticleSun : ParticleSystem
-{
-}
-@end
-
-//! Galaxy particle system
-@interface ParticleGalaxy : ParticleSystem
-{
-}
-@end
-
-//! Flower particle system
-@interface ParticleFlower : ParticleSystem
-{
-}
-@end
-
-//! Meteor particle system
-@interface ParticleMeteor : ParticleSystem
-{
-}
-@end
-
-//! Spiral particle system
-@interface ParticleSpiral : ParticleSystem
-{
-}
-@end
-
-//! Explosion particle system
-@interface ParticleExplosion : ParticleSystem
-{
-}
-@end
-
-//! Smoke particle system
-@interface ParticleSmoke : ParticleSystem
-{
-}
-@end
+#import "ParticleSystems.h"
+#import "Primitives.h"
+#import "Scene.h"
+#import "Scheduler.h"
+#import "Sprite.h"
+#import "TextureMgr.h"
+#import "TextureNode.h"
+#import "Transition.h"
+#import "types.h"
