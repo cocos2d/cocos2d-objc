@@ -969,6 +969,9 @@
 }
 @end
 
+//
+// Animate
+//
 @implementation Animate
 +(id) actionWithAnimation: (Animation*) a
 {
