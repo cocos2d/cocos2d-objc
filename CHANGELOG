@@ -1,4 +1,9 @@
 
+version 0.x.y - dd-mmm-yyyy
+ . Misc: Removed sound support. Not part of cocos2d
+ . Misc: Moved OpenGLSupport inside the cocos2d directory. cocos2d.h includes OpenGLSupport headers
+
+
 version 0.3.1 - 30-Jul-2008
  . All: methods that receives target/selector, are named:Target selector (unified API)
  . All: added "cocos2d.h". applications should only import this file.

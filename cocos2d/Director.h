@@ -23,7 +23,7 @@
 #import <UIKit/UIKit.h>
 
 // OpenGL related
-#import "EAGLView.h"
+#import "OpenGLSupport/EAGLView.h"
 
 // cocos2d related
 #import "Scene.h"

@@ -21,7 +21,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Texture2D.h"
+#import "OpenGLSupport/Texture2D.h"
 
 #import "TextureNode.h"
 
