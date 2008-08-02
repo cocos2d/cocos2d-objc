@@ -21,7 +21,6 @@
 //
 // all cocos2d include files
 //
-
 #import "Action.h"
 #import "Camera.h"
 #import "CameraAction.h"
@@ -43,3 +42,10 @@
 #import "TextureNode.h"
 #import "Transition.h"
 #import "types.h"
+
+//
+// cocos2d helper files
+//
+#import "OpenGLSupport/OpenGL_Internal.h"
+#import "OpenGLSupport/Texture2D.h"
+#import "OpenGLSupport/EAGLView.h"

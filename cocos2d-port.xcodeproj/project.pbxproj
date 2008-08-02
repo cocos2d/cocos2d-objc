@@ -50,11 +50,6 @@
 		5018F27A0DFDEAFF00C013A5 /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2630DFDEAFF00C013A5 /* Sprite.m */; };
 		5018F27D0DFDEAFF00C013A5 /* TextureMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2670DFDEAFF00C013A5 /* TextureMgr.h */; };
 		5018F27E0DFDEAFF00C013A5 /* TextureMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2680DFDEAFF00C013A5 /* TextureMgr.m */; };
-		5018F2850DFDEB2E00C013A5 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2800DFDEB2E00C013A5 /* EAGLView.h */; };
-		5018F2860DFDEB2E00C013A5 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2810DFDEB2E00C013A5 /* EAGLView.m */; };
-		5018F2870DFDEB2E00C013A5 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2820DFDEB2E00C013A5 /* OpenGL_Internal.h */; };
-		5018F2880DFDEB2E00C013A5 /* Texture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2830DFDEB2E00C013A5 /* Texture2D.h */; };
-		5018F2890DFDEB2E00C013A5 /* Texture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2840DFDEB2E00C013A5 /* Texture2D.m */; };
 		5018F2E20DFDEBBA00C013A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		5018F2E30DFDEBBA00C013A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -125,6 +120,13 @@
 		507EB6560DFF315B00A0C77E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		507EB6570DFF315B00A0C77E /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
+		508F973E0E451D4A00F6FAC6 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 508F97370E451D4A00F6FAC6 /* EAGLView.h */; };
+		508F973F0E451D4A00F6FAC6 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 508F97380E451D4A00F6FAC6 /* EAGLView.m */; };
+		508F97400E451D4A00F6FAC6 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 508F97390E451D4A00F6FAC6 /* glu.c */; };
+		508F97410E451D4A00F6FAC6 /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = 508F973A0E451D4A00F6FAC6 /* glu.h */; };
+		508F97420E451D4A00F6FAC6 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 508F973B0E451D4A00F6FAC6 /* OpenGL_Internal.h */; };
+		508F97430E451D4A00F6FAC6 /* Texture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 508F973C0E451D4A00F6FAC6 /* Texture2D.h */; };
+		508F97440E451D4A00F6FAC6 /* Texture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 508F973D0E451D4A00F6FAC6 /* Texture2D.m */; };
 		509E574C0E36234300BD7F09 /* TextureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E574A0E36234300BD7F09 /* TextureNode.h */; };
 		509E574D0E36234300BD7F09 /* TextureNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E574B0E36234300BD7F09 /* TextureNode.m */; };
 		509E665E0E06CD940050992C /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* Camera.h */; };
@@ -287,8 +289,6 @@
 		50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DB1BD10E1C1EF000A89DFF /* ParticleDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */; };
-		50F0992B0E05F01800A8AD5C /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F099290E05F01800A8AD5C /* glu.c */; };
-		50F0992C0E05F01800A8AD5C /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F0992A0E05F01800A8AD5C /* glu.h */; };
 		50F9E8170E1AA34E000E7616 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* types.h */; };
 		50F9EA900E1AE87E000E7616 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
 /* End PBXBuildFile section */
@@ -447,11 +447,6 @@
 		5018F2630DFDEAFF00C013A5 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprite.m; sourceTree = "<group>"; };
 		5018F2670DFDEAFF00C013A5 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureMgr.h; sourceTree = "<group>"; };
 		5018F2680DFDEAFF00C013A5 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureMgr.m; sourceTree = "<group>"; };
-		5018F2800DFDEB2E00C013A5 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
-		5018F2810DFDEB2E00C013A5 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
-		5018F2820DFDEB2E00C013A5 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
-		5018F2830DFDEB2E00C013A5 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2D.h; sourceTree = "<group>"; };
-		5018F2840DFDEB2E00C013A5 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture2D.m; sourceTree = "<group>"; };
 		5019FF940DF49857000A5AD0 /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureMgr.h; path = cocos2d/TextureMgr.h; sourceTree = "<group>"; };
 		5019FF950DF49857000A5AD0 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureMgr.m; path = cocos2d/TextureMgr.m; sourceTree = "<group>"; };
 		502B3E980E09A59500886982 /* Transition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transition.h; sourceTree = "<group>"; };
@@ -488,6 +483,13 @@
 		5078B5330E3E437F0004233A /* IntervalDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalDemo.m; path = tests/IntervalDemo.m; sourceTree = "<group>"; };
 		507EB5780DFF2FD200A0C77E /* Playground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playground.h; path = tests/Playground.h; sourceTree = "<group>"; };
 		507EB59D0DFF314400A0C77E /* playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		508F97370E451D4A00F6FAC6 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		508F97380E451D4A00F6FAC6 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		508F97390E451D4A00F6FAC6 /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
+		508F973A0E451D4A00F6FAC6 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
+		508F973B0E451D4A00F6FAC6 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
+		508F973C0E451D4A00F6FAC6 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2D.h; sourceTree = "<group>"; };
+		508F973D0E451D4A00F6FAC6 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture2D.m; sourceTree = "<group>"; };
 		509E574A0E36234300BD7F09 /* TextureNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureNode.h; sourceTree = "<group>"; };
 		509E574B0E36234300BD7F09 /* TextureNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureNode.m; sourceTree = "<group>"; };
 		509E665C0E06CD940050992C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
@@ -584,8 +586,6 @@
 		50DB9CE40DF999DD00BA70B0 /* InstantAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstantAction.m; path = cocos2d/InstantAction.m; sourceTree = "<group>"; };
 		50DB9CE50DF999DD00BA70B0 /* IntervalAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalAction.h; path = cocos2d/IntervalAction.h; sourceTree = "<group>"; };
 		50DB9CE60DF999DD00BA70B0 /* IntervalAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalAction.m; path = cocos2d/IntervalAction.m; sourceTree = "<group>"; };
-		50F099290E05F01800A8AD5C /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
-		50F0992A0E05F01800A8AD5C /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		50F2D0B40DF44E3100553D35 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Action.h; path = cocos2d/Action.h; sourceTree = "<group>"; };
 		50F2D0B50DF44E3100553D35 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Action.m; path = cocos2d/Action.m; sourceTree = "<group>"; };
 		50F2D0B60DF44E3100553D35 /* CocosNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocosNode.h; path = cocos2d/CocosNode.h; sourceTree = "<group>"; };
@@ -835,9 +835,9 @@
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50B2C9C00E109A5900AE9530 /* LICENSE */,
 				50B2C9C10E109A5900AE9530 /* README */,
+				508F97360E451D4A00F6FAC6 /* OpenGLSupport */,
 				50B2C4D50E100B1100AE9530 /* Chipmunk */,
 				50B130FC0DFE0923003BAB56 /* tests */,
-				5018F27F0DFDEB2E00C013A5 /* OpenGLSupport */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				2D500B6F0D5A793600DBA0E3 /* Support */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -953,18 +953,19 @@
 			path = cocos2d;
 			sourceTree = "<group>";
 		};
-		5018F27F0DFDEB2E00C013A5 /* OpenGLSupport */ = {
+		508F97360E451D4A00F6FAC6 /* OpenGLSupport */ = {
 			isa = PBXGroup;
 			children = (
-				50F099290E05F01800A8AD5C /* glu.c */,
-				50F0992A0E05F01800A8AD5C /* glu.h */,
-				5018F2820DFDEB2E00C013A5 /* OpenGL_Internal.h */,
-				5018F2800DFDEB2E00C013A5 /* EAGLView.h */,
-				5018F2810DFDEB2E00C013A5 /* EAGLView.m */,
-				5018F2830DFDEB2E00C013A5 /* Texture2D.h */,
-				5018F2840DFDEB2E00C013A5 /* Texture2D.m */,
+				508F97370E451D4A00F6FAC6 /* EAGLView.h */,
+				508F97380E451D4A00F6FAC6 /* EAGLView.m */,
+				508F97390E451D4A00F6FAC6 /* glu.c */,
+				508F973A0E451D4A00F6FAC6 /* glu.h */,
+				508F973B0E451D4A00F6FAC6 /* OpenGL_Internal.h */,
+				508F973C0E451D4A00F6FAC6 /* Texture2D.h */,
+				508F973D0E451D4A00F6FAC6 /* Texture2D.m */,
 			);
-			path = OpenGLSupport;
+			name = OpenGLSupport;
+			path = cocos2d/OpenGLSupport;
 			sourceTree = "<group>";
 		};
 		50B130FC0DFE0923003BAB56 /* tests */ = {
@@ -1112,12 +1113,8 @@
 				5018F2770DFDEAFF00C013A5 /* Scene.h in Headers */,
 				5018F2790DFDEAFF00C013A5 /* Sprite.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* TextureMgr.h in Headers */,
-				5018F2850DFDEB2E00C013A5 /* EAGLView.h in Headers */,
-				5018F2870DFDEB2E00C013A5 /* OpenGL_Internal.h in Headers */,
-				5018F2880DFDEB2E00C013A5 /* Texture2D.h in Headers */,
 				506C78A70E016A7300B48100 /* Menu.h in Headers */,
 				506C78EC0E0178FD00B48100 /* MenuItem.h in Headers */,
-				50F0992C0E05F01800A8AD5C /* glu.h in Headers */,
 				509E665E0E06CD940050992C /* Camera.h in Headers */,
 				509E66F00E06E1360050992C /* CameraAction.h in Headers */,
 				502B3E9A0E09A59500886982 /* Transition.h in Headers */,
@@ -1128,6 +1125,10 @@
 				509E574C0E36234300BD7F09 /* TextureNode.h in Headers */,
 				506602110E38A70D000B500E /* Scheduler.h in Headers */,
 				50305AF40E40E33200F63373 /* cocos2d.h in Headers */,
+				508F973E0E451D4A00F6FAC6 /* EAGLView.h in Headers */,
+				508F97410E451D4A00F6FAC6 /* glu.h in Headers */,
+				508F97420E451D4A00F6FAC6 /* OpenGL_Internal.h in Headers */,
+				508F97430E451D4A00F6FAC6 /* Texture2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1711,11 +1712,8 @@
 				5018F2780DFDEAFF00C013A5 /* Scene.m in Sources */,
 				5018F27A0DFDEAFF00C013A5 /* Sprite.m in Sources */,
 				5018F27E0DFDEAFF00C013A5 /* TextureMgr.m in Sources */,
-				5018F2860DFDEB2E00C013A5 /* EAGLView.m in Sources */,
-				5018F2890DFDEB2E00C013A5 /* Texture2D.m in Sources */,
 				506C78A80E016A7300B48100 /* Menu.m in Sources */,
 				506C78ED0E0178FD00B48100 /* MenuItem.m in Sources */,
-				50F0992B0E05F01800A8AD5C /* glu.c in Sources */,
 				509E665F0E06CD940050992C /* Camera.m in Sources */,
 				509E66F10E06E1360050992C /* CameraAction.m in Sources */,
 				502B3E9B0E09A59500886982 /* Transition.m in Sources */,
@@ -1724,6 +1722,9 @@
 				504055B10E3230BD00213FEF /* ParticleSystems.m in Sources */,
 				509E574D0E36234300BD7F09 /* TextureNode.m in Sources */,
 				506602120E38A70D000B500E /* Scheduler.m in Sources */,
+				508F973F0E451D4A00F6FAC6 /* EAGLView.m in Sources */,
+				508F97400E451D4A00F6FAC6 /* glu.c in Sources */,
+				508F97440E451D4A00F6FAC6 /* Texture2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
