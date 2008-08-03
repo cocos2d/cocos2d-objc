@@ -96,7 +96,7 @@ eachShape(void *ptr, void* unused)
 {
 	[super onEnter];
 
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 30)];
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
 }
 
 -(void) step: (ccTime) delta
@@ -106,10 +106,11 @@ eachShape(void *ptr, void* unused)
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
-		cpSpaceHashEach(space->activeShapes, &eachShape, nil);
-		cpSpaceHashEach(space->staticShapes, &eachShape, nil);
 	}
+	cpSpaceHashEach(space->activeShapes, &eachShape, nil);
+	cpSpaceHashEach(space->staticShapes, &eachShape, nil);
 }
+
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
