@@ -14,7 +14,12 @@
 		
 	// sun
 	ParticleSystem* sun = [ParticleSun node];
-	sun.position = cpv(480-50,320-50);
+//	sun.position = cpv(480-0,320-0);
+//	sun.position = cpv(480/2.0f,320/2.0f);
+	sun.position = cpv(480,320/2);
+//	sun.position = cpv(0,0);
+//	sun.transformAnchor= cpv(15,15);
+
 	sun.totalParticles = 130;
 	sun.life = 0.6;
 	[self add:sun];

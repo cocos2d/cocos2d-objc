@@ -265,7 +265,7 @@
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
-	glVertexPointer(3,GL_FLOAT,sizeof(ccPointSprite),0);
+	glVertexPointer(2,GL_FLOAT,sizeof(ccPointSprite),0);
 	
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glPointSizePointerOES(GL_FLOAT,sizeof(ccPointSprite),(GLvoid*) (sizeof(GL_FLOAT)*2));
