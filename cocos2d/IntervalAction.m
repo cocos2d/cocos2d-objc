@@ -153,7 +153,6 @@
 
 -(void) dealloc
 {
-//	NSLog( @"deallocing %@", self);
 	[actions release];
 	[super dealloc];
 }
@@ -335,7 +334,6 @@
 
 -(void) dealloc
 {
-	//	NSLog( @"deallocing %@", self);
 	[one release];
 	[two release];
 	[super dealloc];
@@ -763,7 +761,6 @@
 
 - (void) dealloc
 {
-//	NSLog( @"deallocing %@", self);
 	[other release];
 	[super dealloc];
 }
@@ -1032,8 +1029,9 @@
 	if(t !=0 )
 		idx = t/ slice;
 
-	NSLog(@"idx: %d", idx);
-	
+	if( idx >= [[animation frames] count] ) {
+		idx = [[animation frames] count] -1;
+	}
 	Sprite *s = (Sprite*) target;
 	if ( s.texture != [[animation frames] objectAtIndex: idx] ) {
 		// XXX TODO should I retain ?
