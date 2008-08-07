@@ -77,11 +77,12 @@
 	return s;
 }
 
--(id) initWithName: (NSString*) name delay:(float)d firstImage:(NSString*)image vaList: (va_list) args
+-(id) initWithName: (NSString*) n delay:(float)d firstImage:(NSString*)image vaList: (va_list) args
 {
 	if( ![super init] )
 		return nil;
 	
+	name = [n retain];
 	frames = [[NSMutableArray array] retain];
 	delay = d;
 
