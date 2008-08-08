@@ -61,6 +61,16 @@
 {
 	[animations setObject:anim forKey:[anim name]];
 }
+
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
+{
+	Animation *a = [animations objectForKey: animationName];
+	Texture2D *tex = [[a frames] objectAtIndex:frameIndex];
+	if( tex == texture )
+		return;
+	[texture release];
+	texture = [tex retain];
+}
 @end
 
 @implementation Animation

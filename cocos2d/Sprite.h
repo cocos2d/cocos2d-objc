@@ -61,5 +61,7 @@
 
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (Animation*) animation;
+/** changes the display frame based on an animation and an index */
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
 
 @end

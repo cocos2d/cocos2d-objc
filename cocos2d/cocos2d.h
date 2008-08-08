@@ -18,6 +18,10 @@
  *
  */
 
+static char *cocos2d_version = "\ncocos2d-iphone v0.3.2\n";
+
+#define COCOS2D_VERSION 0x00000302
+
 //
 // all cocos2d include files
 //
