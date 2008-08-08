@@ -18,7 +18,6 @@
  *
  */
 
-
 // cocos2d imports
 #import "Director.h"
 #import "Camera.h"

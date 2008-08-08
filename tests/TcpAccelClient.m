@@ -65,6 +65,16 @@ Class nextAction();
 
 // Implement this method to get the lastest data from the accelerometer 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration {
+
+	static float prevX=0, prevY=0;
+
+#define kFilterFactor 0.05
+
+	float accelX = acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
+	float accelY = acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
+
+	prevX = accelX;
+	prevY = accelY;
 	float angle = atan2(acceleration.y, acceleration.x);
 	angle += 3.14159;
 	angle *= -180.0/3.14159;	
