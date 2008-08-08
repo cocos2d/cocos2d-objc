@@ -133,6 +133,7 @@
 		509E665F0E06CD940050992C /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E665D0E06CD940050992C /* Camera.m */; };
 		509E66F00E06E1360050992C /* CameraAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E66EE0E06E1360050992C /* CameraAction.h */; };
 		509E66F10E06E1360050992C /* CameraAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E66EF0E06E1360050992C /* CameraAction.m */; };
+		50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */; };
 		50B2C5950E100B1200AE9530 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5670E100B1200AE9530 /* chipmunk.c */; };
 		50B2C5960E100B1200AE9530 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2C5680E100B1200AE9530 /* chipmunk.h */; };
 		50B2C5970E100B1200AE9530 /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C56A0E100B1200AE9530 /* cpArbiter.c */; };
@@ -496,6 +497,7 @@
 		509E665D0E06CD940050992C /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; };
 		509E66EE0E06E1360050992C /* CameraAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraAction.h; sourceTree = "<group>"; };
 		509E66EF0E06E1360050992C /* CameraAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraAction.m; sourceTree = "<group>"; };
+		50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C4D60E100B1100AE9530 /* chipmunk-docs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "chipmunk-docs.html"; sourceTree = "<group>"; };
 		50B2C4D70E100B1100AE9530 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -908,6 +910,7 @@
 			isa = PBXGroup;
 			children = (
 				50305AF30E40E33200F63373 /* cocos2d.h */,
+				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 				5066020F0E38A70D000B500E /* Scheduler.h */,
 				506602100E38A70D000B500E /* Scheduler.m */,
 				509E574A0E36234300BD7F09 /* TextureNode.h */,
@@ -1725,6 +1728,7 @@
 				508F973F0E451D4A00F6FAC6 /* EAGLView.m in Sources */,
 				508F97400E451D4A00F6FAC6 /* glu.c in Sources */,
 				508F97440E451D4A00F6FAC6 /* Texture2D.m in Sources */,
+				50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

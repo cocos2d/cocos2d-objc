@@ -18,41 +18,11 @@
  *
  */
 
-// 0x00 HI ME LO
-#define COCOS2D_VERSION 0x00000302
+#import <UIKit/UIKit.h>
 
-//
-// all cocos2d include files
-//
-#import "Action.h"
-#import "Camera.h"
-#import "CameraAction.h"
-#import "CocosNode.h"
-#import "Director.h"
-#import "InstantAction.h"
-#import "IntervalAction.h"
-#import "Label.h"
-#import "Layer.h"
-#import "Menu.h"
-#import "MenuItem.h"
-#import "Particle.h"
-#import "ParticleSystems.h"
-#import "Primitives.h"
-#import "Scene.h"
-#import "Scheduler.h"
-#import "Sprite.h"
-#import "TextureMgr.h"
-#import "TextureNode.h"
-#import "Transition.h"
-#import "types.h"
+static NSString *version = @"cocos2d v0.3.2";
 
-//
-// cocos2d helper files
-//
-#import "OpenGLSupport/OpenGL_Internal.h"
-#import "OpenGLSupport/Texture2D.h"
-#import "OpenGLSupport/EAGLView.h"
-
-
-// free functions
-NSString * cocos2dVersion(void);
+NSString *cocos2dVersion()
+{
+	return version;
+}
