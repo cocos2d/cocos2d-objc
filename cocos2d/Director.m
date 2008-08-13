@@ -35,7 +35,6 @@
 @synthesize animationInterval;
 @synthesize window;
 @synthesize runningScene;
-@synthesize eventHandler;
 @synthesize displayFPS;
 
 //
@@ -113,7 +112,7 @@ static int _pixelFormat = RGB565;
 	scenes = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
-	eventHandler = nil;
+	eventHandlers = [[NSMutableArray arrayWithCapacity:3] retain];
 	
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
@@ -501,30 +500,49 @@ static int _pixelFormat = RGB565;
 	lastUpdate = now;	
 }
 
+-(void) addEventHandler:(CocosNode*) node
+{
+	NSAssert( node != nil, @"Director.AddEventHandler: Node must be non nil");
+	[eventHandlers addObject:node];
+}
+
+-(void) removeEventHandler:(CocosNode*) node
+{
+	NSAssert( node != nil, @"Director.removeEventHandler: Node must be non nil");
+	[eventHandlers removeObject:node];
+}
 
 //
 // multi touch proxies
 //
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-		[eventHandler touchesBegan:touches withEvent:event];
+	for( id eventHandler in eventHandlers ) {
+		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+			[eventHandler touchesBegan:touches withEvent:event];
+	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-		[eventHandler touchesMoved:touches withEvent:event];
+	for( id eventHandler in eventHandlers ) {
+		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+			[eventHandler touchesMoved:touches withEvent:event];
+	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-		[eventHandler touchesEnded:touches withEvent:event];
+	for( id eventHandler in eventHandlers ) {
+		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+			[eventHandler touchesEnded:touches withEvent:event];
+	}
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-		[eventHandler touchesCancelled:touches withEvent:event];
+	for( id eventHandler in eventHandlers ) {
+		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+			[eventHandler touchesCancelled:touches withEvent:event];
+	}
 }
 @end

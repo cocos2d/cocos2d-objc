@@ -48,7 +48,7 @@
 	[super onEnter];
 	
 	if( isTouchEnabled )
-		[[Director sharedDirector] setEventHandler:self];
+		[[Director sharedDirector] addEventHandler:self];
 	
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
@@ -57,7 +57,7 @@
 -(void) onExit
 {
 	if( isTouchEnabled )
-		[[Director sharedDirector] setEventHandler:nil];
+		[[Director sharedDirector] removeEventHandler:self];
 
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
