@@ -49,7 +49,7 @@
 }
 
 /** creates the Layer with color, width and height */
-+ (id) layerWithColor: (GLuint) aColor width:(GLint)w height:(GLint)h;
++ (id) layerWithColor: (GLuint) aColor width:(GLfloat)w height:(GLfloat)h;
 /** creates the layer with color. Width and height are the window size. */
 + (id) layerWithColor: (GLuint) aColor;
 
@@ -59,10 +59,15 @@
 - (id) initWithColor: (GLuint) aColor;
 
 /** initializes the witdh and height of the layer */
-- (void) initWidth: (GLint)w height:(GLint)h;
+- (void) initWidth: (GLfloat)w height:(GLfloat)h;
 
 /** changes the color of the layer */
 - (void) changeColor: (GLuint) aColor;
+
+/** change width */
+-(void) changeWidth: (GLfloat)w;
+/** change height */
+-(void) changeHeight: (GLfloat)h;
 
 // CocosNodeOpacity protocol
 /** returns the opacity */
