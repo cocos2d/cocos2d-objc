@@ -42,8 +42,7 @@ eachShape(void *ptr, void* unused)
 	cpSpaceAddBody(space, body);
 	
 	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	shape->e = 0.5; shape->u = 1.5;
-	shape->collision_type = 1;
+	shape->e = 0.5; shape->u = 0.5;
 	shape->data = sprite;
 	cpSpaceAddShape(space, shape);
 	
@@ -124,13 +123,20 @@ eachShape(void *ptr, void* unused)
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
-	cpVect v = cpv( acceleration.x, acceleration.y);
+{	
+	static float prevX=0, prevY=0;
 	
-//	if( v.x || v.y )
-//		v = cpvnormalize(v);
+#define kFilterFactor 0.05
 	
-	space->gravity = cpvmult(v, 100);
+	float accelX = acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
+	float accelY = acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
+	
+	prevX = accelX;
+	prevY = accelY;
+
+	cpVect v = cpv( accelX, accelY);
+
+	space->gravity = cpvmult(v, 200);
 }
 @end
 
