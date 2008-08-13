@@ -79,7 +79,7 @@
 	@throw myException;	
 }
 
-+ (id) layerWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
++ (id) layerWithColor: (GLuint) aColor width:(GLfloat)w  height:(GLfloat) h
 {
 	return [[[self alloc] initWithColor: aColor width:w height:h] autorelease];
 }
@@ -105,6 +105,19 @@
 	
 	return [self initWithColor: aColor width:size.size.width height:size.size.height];
 }
+
+-(void) changeWidth: (GLfloat) w
+{
+	squareVertices[2] = w;
+	squareVertices[6] = w;
+}
+
+-(void) changeHeight: (GLfloat) h
+{
+	squareVertices[5] = h;
+	squareVertices[7] = h;
+}
+
 
 - (void) changeColor: (GLuint) aColor
 {
@@ -141,7 +154,7 @@
 	return (color & 0xff);
 }
 
-- (void) initWidth: (GLint) w height:(GLint) h
+- (void) initWidth: (GLfloat) w height:(GLfloat) h
 {
 	for (int i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
 		squareVertices[i] = 0.0f;

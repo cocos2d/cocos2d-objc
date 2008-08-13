@@ -1,6 +1,7 @@
 
-version 0.x.y - dd-mmm-yyyy
+version 0.3.2 - dd-mmm-yyyy
  . Action: Animate was using the wrong index. Possible crash fixed
+ . ColorLayer: added support to change width & height at runtime
  . Demos: IntervalDemo using relative path for plist.info file
  . Demos: added filter to TcpAccelClient (by Brian Hammond)
  . Misc: Removed sound support. Not part of cocos2d
