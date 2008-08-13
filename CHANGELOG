@@ -4,6 +4,7 @@ version 0.3.2 - dd-mmm-yyyy
  . ColorLayer: added support to change width & height at runtime
  . Demos: IntervalDemo using relative path for plist.info file
  . Demos: added filter to TcpAccelClient (by Brian Hammond)
+ . Director: propagates TouchEvents to all registered layers
  . Misc: Removed sound support. Not part of cocos2d
  . Misc: Moved OpenGLSupport inside the cocos2d directory. cocos2d.h includes OpenGLSupport headers
  . Misc: added getCocos2dVersion() function

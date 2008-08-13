@@ -68,7 +68,7 @@ and when to execute the Scenes
 	Scene *nextScene;
 	
 	/** event handler */
-	id	eventHandler;
+	NSMutableArray	*eventHandlers;
 
 	/** scheduled scenes */
 	NSMutableArray *scenes;
@@ -82,7 +82,6 @@ and when to execute the Scenes
 @property (readonly, assign) Scene* runningScene;
 @property (readwrite, assign) NSTimeInterval animationInterval;
 @property (readwrite,assign) UIWindow* window;
-@property (readwrite, assign) id eventHandler;
 @property (readwrite, assign) BOOL displayFPS;
 
 /** returns a shared instance of the director */
@@ -172,4 +171,8 @@ Call this class method before any other call to the Director.
 /** calculates delta time since last time it was called */
 -(void) calculateDeltaTime;
 
+/** adds a cocosnode object to the list of multi-touch event queue */
+-(void) addEventHandler: (CocosNode*) node;
+/** removes a cocosnode object from the list of multi-touch event queue */
+-(void) removeEventHandler: (CocosNode*) node;
 @end
