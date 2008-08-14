@@ -84,8 +84,23 @@
 @end
 
 /** Calls a 'callback' with the node as the first argument
+ /* N means Node
  */
 @interface CallFuncN : CallFunc
 {
 }
+@end
+
+/** Calls a 'callback' with the node as the first argument and the 2nd argument is data
+ * ND means: Node Data
+ */
+@interface CallFuncND : CallFuncN
+{
+	void *data;
+	NSInvocation *invocation;
+}
+/** creates the action with the callback and the data to pass as an argument */
++(id) actionWithTarget: (id) t selector:(SEL) s data:(void*)d;
+/** initializes the action with the callback and the data to pass as an argument */
+-(id) initWithTarget:(id) t selector:(SEL) s data:(void*) d;
 @end

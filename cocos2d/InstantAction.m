@@ -168,3 +168,48 @@
 	[targetCallback performSelector:selector withObject:target];
 }
 @end
+
+//
+// CallFuncND
+//
+@implementation CallFuncND
+
++(id) actionWithTarget: (id) t selector:(SEL) s data:(void*) d
+{
+	return [[[self alloc] initWithTarget: t selector: s data:d] autorelease];
+}
+
+-(id) initWithTarget:(id) t selector:(SEL) s data:(void*) d
+{
+	if(! [super initWithTarget:t selector:s])
+		return nil;
+	data = d;
+	
+	NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
+	invocation = [NSInvocation invocationWithMethodSignature:sig];
+	[invocation setTarget:t];
+	[invocation setSelector:s];
+	[invocation retain];
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	InstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector data:data];
+	return copy;
+}
+
+
+-(void) dealloc
+{
+	[invocation release];
+	[super dealloc];
+}
+
+-(void) execute
+{
+	[invocation setArgument:&target atIndex:2];
+	[invocation setArgument:&data atIndex:3];
+	[invocation invoke];
+}
+@end
