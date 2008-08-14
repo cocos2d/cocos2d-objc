@@ -1,5 +1,5 @@
 
-version 0.3.2 - dd-mmm-yyyy
+version 0.3.2 - 14-Ago-2008
  . Action: Animate was using the wrong index. Possible crash fixed
  . ColorLayer: added support to change width & height at runtime
  . Demos: IntervalDemo using relative path for plist.info file
