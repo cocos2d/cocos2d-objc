@@ -1,5 +1,7 @@
 version 0.3.3 - dd-MMM-yyyy
  . Action: Added CallFuncND. Like CallFuncN but accepts data
+ . CocosNode: actions can schedule actions [FIXED CRASH]
+ . CocosNode: added default capacity to actions, children, & schedulers
 
 version 0.3.2 - 14-Ago-2008
  . Action: Animate was using the wrong index. Possible crash fixed

@@ -86,6 +86,8 @@
 	// actions
 	NSMutableArray *actions;
 	NSMutableArray *actionsToRemove;
+	NSMutableArray *actionsToAdd;
+
 	
 	// scheduled selectors
 	NSMutableDictionary *scheduledSelectors;

@@ -59,12 +59,13 @@
 	transformAnchor = cpvzero;
 	
 	// children
-	children = [[NSMutableArray alloc] init];
-	childrenNames = [[NSMutableDictionary alloc] init];
+	children = [[NSMutableArray arrayWithCapacity:10] retain];
+	childrenNames = [[NSMutableDictionary dictionaryWithCapacity:5] retain];
 
 	// actions
-	actions = [[NSMutableArray alloc] init];
-	actionsToRemove = [[NSMutableArray alloc] init];
+	actions = [[NSMutableArray arrayWithCapacity:10] retain];
+	actionsToRemove = [[NSMutableArray arrayWithCapacity:10] retain];
+	actionsToAdd = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	// scheduled selectors
 	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
@@ -94,6 +95,7 @@
 	// actions
 	[actions release];
 	[actionsToRemove release];
+	[actionsToAdd release];
 	
 	[super dealloc];
 }
@@ -265,15 +267,17 @@
 
 	action.target = self;
 	[action start];
-	
+
+	[actionsToAdd addObject: action];
 	[self schedule: @selector(step_:)];
-	[actions addObject: action];
 		
 	return action;
 }
 
 -(void) stop
 {
+	[actionsToAdd removeAllObjects];
+	
 	for( Action* action in actions)
 		[actionsToRemove addObject: action];
 }
@@ -281,11 +285,14 @@
 -(void) step_: (ccTime) dt
 {
 	// remove 'removed' actions
-	if( [actionsToRemove count] > 0 ) {
-		for( Action* action in actionsToRemove )
-			[actions removeObject: action];
-		[actionsToRemove removeAllObjects];
-	}
+	for( Action* action in actionsToRemove )
+		[actions removeObject: action];
+	[actionsToRemove removeAllObjects];
+
+	// add actions that needs to be added
+	for( Action* action in actionsToAdd )
+		[actions addObject: action];
+	[actionsToAdd removeAllObjects];
 		
 	// unschedule if it is no longer necesary
 	if ( [actions count] == 0 ) {
