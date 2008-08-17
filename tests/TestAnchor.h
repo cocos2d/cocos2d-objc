@@ -26,3 +26,8 @@
 {
 }
 @end
+
+@interface Anchor3 : AnchorDemo
+{
+}
+@end

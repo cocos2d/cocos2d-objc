@@ -126,8 +126,39 @@ Class nextAction();
 {
 	return @"transformAnchor and children";
 }
+@end
+@implementation Anchor3
+-(void) onEnter
+{
+	[super onEnter];
+
+	tamara.visible = NO;
+
+	[self centerSprites];
+	
+	Sprite *sp1 = [Sprite spriteFromFile:@"grossinis_sister1.png"];
+	Sprite *sp2 = [Sprite spriteFromFile:@"grossinis_sister2.png"];
+	
+	sp1.position = cpv(20,80);
+	sp2.position = cpv(70,50);
+	
+	[grossini add:sp1 z:-1];
+	[grossini add:sp2 z:1];
+	
+	id a1 = [RotateBy actionWithDuration:4 angle:360];
+	id action1 = [Repeat actionWithAction:a1 times:-1];
+	[grossini do:action1];	
+	
+	
+}
+-(NSString *) title
+{
+	return @"z order";
+}
 
 @end
+
+
 
 Class nextAction()
 {
@@ -136,6 +167,7 @@ Class nextAction()
 	NSArray *transitions = [[NSArray arrayWithObjects:
 								@"Anchor1",
 								@"Anchor2",
+								@"Anchor3",
 									nil ] retain];
 	
 	

@@ -226,22 +226,23 @@
 		return;
 
 	glPushMatrix();
-	for (id child in children)
-	{
+	
+	[self transform];
+
+	for (id child in children) {
 		if ( [[child objectAtIndex:0] intValue] < 0 )
 			[[child objectAtIndex:1] visit];
 		else
 			break;
-	}	
-
-	[self transform];
+	}
+	
 	[self draw];
 
-	for (id child in children)
-	{		
+	for (id child in children) {		
 		if ( [[child objectAtIndex:0] intValue] >= 0 )
 			[[child objectAtIndex:1] visit];
 	}
+	
 	glPopMatrix();
 
 }
