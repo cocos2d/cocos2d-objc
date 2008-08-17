@@ -25,12 +25,12 @@
 
 @implementation CocosNode
 
-@synthesize rotation;
-@synthesize scale;
-@synthesize position;
+@synthesize rotation, scale, position;
 @synthesize visible;
-@synthesize transformAnchor;
-@synthesize childrenAnchor;
+@synthesize transformAnchor, relativeTransformAnchor;
+#if USING_CHILDREN_ANCHOR
+	@synthesize childrenAnchor;
+#endif
 @synthesize parent;
 @synthesize camera;
 
@@ -55,7 +55,9 @@
 	
 	visible = YES;
 
+#if USING_CHILDREN_ANCHOR
 	childrenAnchor = cpvzero;
+#endif
 	transformAnchor = cpvzero;
 	
 	// children
@@ -205,12 +207,17 @@
 		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
 
 	// restore and re-position point
-	if (transformAnchor.x != 0 || transformAnchor.y != 0)	{
+	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
+#if USING_CHILDREN_ANCHOR
+	{
 		if ( !( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y) )
 			glTranslatef( childrenAnchor.x - transformAnchor.x, childrenAnchor.y - transformAnchor.y, 0);
 	}
 	else if (childrenAnchor.x != 0 || childrenAnchor.y !=0 )
 		glTranslatef( childrenAnchor.x, childrenAnchor.y, 0 );
+#else
+		glTranslatef(-transformAnchor.x, -transformAnchor.y, 0);
+#endif
 }
 
 -(void) visit
