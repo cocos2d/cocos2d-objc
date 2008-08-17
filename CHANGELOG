@@ -4,6 +4,7 @@ version 0.3.3 - dd-MMM-yyyy
  . CocosNode: added default capacity to actions, children, & schedulers
  . CocosNode: relativeTrasnformAnchor is property
  . CocosNode: childrenAnchor removed (It wasn't working and it wasn't very useful)
+ . CocosNode: negative z-order working
  . Demos: removed playgroud
  . Demos: added AnchorDemo
 
