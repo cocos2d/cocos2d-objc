@@ -26,6 +26,11 @@
 #import "chipmunk.h"
 #import "types.h"
 
+// XXX: children anchor is not working
+// but since cocos2d-iphone uses a different way to call it's children
+// it is not necesary to have children anchor
+//#define USING_CHILDREN_ANCHOR 1
+
 @class Camera;
 
 /** CocosNode is the main element. Anything thats gets drawn or contains things that get drawn is a CocosNode.
@@ -69,7 +74,7 @@
 	cpVect transformAnchor;
 	
 	/// where are the children placed (anchor)
-	cpVect childrenAnchor;
+//	cpVect childrenAnchor;
 	
 	/// array of children
 	NSMutableArray *children;
@@ -99,8 +104,11 @@
 @property(readwrite,assign) Camera* camera;
 @property(readwrite,assign) BOOL visible;
 @property(readwrite,assign) cpVect transformAnchor;
-@property(readwrite,assign) cpVect childrenAnchor;
 @property(readwrite,assign) CocosNode* parent;
+@property(readwrite,assign) BOOL relativeTransformAnchor;
+#if USING_CHILDREN_ANCHOR
+@property(readwrite,assign) cpVect childrenAnchor;
+#endif
 
 // initializators
 //! creates a node
