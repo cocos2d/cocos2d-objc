@@ -61,13 +61,13 @@
 	transformAnchor = cpvzero;
 	
 	// children
-	children = [[NSMutableArray arrayWithCapacity:10] retain];
-	childrenNames = [[NSMutableDictionary dictionaryWithCapacity:5] retain];
+	children = [[NSMutableArray arrayWithCapacity:4] retain];
+	childrenNames = [[NSMutableDictionary dictionaryWithCapacity:4] retain];
 
 	// actions
-	actions = [[NSMutableArray arrayWithCapacity:10] retain];
-	actionsToRemove = [[NSMutableArray arrayWithCapacity:10] retain];
-	actionsToAdd = [[NSMutableArray arrayWithCapacity:10] retain];
+	actions = [[NSMutableArray arrayWithCapacity:4] retain];
+	actionsToRemove = [[NSMutableArray arrayWithCapacity:4] retain];
+	actionsToAdd = [[NSMutableArray arrayWithCapacity:4] retain];
 	
 	// scheduled selectors
 	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
