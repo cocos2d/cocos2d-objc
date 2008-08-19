@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCPServer.h"
 
 @protocol VirtualAccelerometerDelegate;
 
@@ -22,18 +23,19 @@
 
 @end
 
-@interface VirtualAccelerometer : NSObject {
+@interface VirtualAccelerometer : NSObject <TCPServerDelegate> {
 	id <VirtualAccelerometerDelegate> delegate;
 	NSTimeInterval updateInterval;
-	NSOutputStream *oStream;
-    NSInputStream *iStream;
+    NSInputStream* _inStream;
+	NSOutputStream* _outStream;
+	TCPServer* _server;
 }
 
 @property(nonatomic,assign) id<VirtualAccelerometerDelegate> delegate;
 @property(nonatomic,assign) NSTimeInterval updateInterval;
 
 + (VirtualAccelerometer *)sharedAccelerometer;
-- (void) connect;
+- (void) setup;
 - (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode;
 
 @end
@@ -42,15 +44,14 @@
 @protocol VirtualAccelerometerDelegate <NSObject>
 
 @optional
-
 - (void)accelerometer:(VirtualAccelerometer *)accelerometer didAccelerate:(VirtualAcceleration *)acceleration;
+- (void)virtualTapWithX:(float)x withY:(float)y;
 
 @end
 
-/*
+
 #if TARGET_IPHONE_SIMULATOR // running inside the simulator
 #define UIAccelerometer VirtualAccelerometer
 #define UIAcceleration VirtualAcceleration
 #define UIAccelerometerDelegate VirtualAccelerometerDelegate
 #endif // simulator
-*/
