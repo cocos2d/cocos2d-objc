@@ -411,15 +411,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18E80B370D6E418800A48CAC /* SoundEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundEngine.cpp; path = AudioSupport/SoundEngine.cpp; sourceTree = "<group>"; };
-		18E80B380D6E418800A48CAC /* SoundEngine.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = SoundEngine.h; path = AudioSupport/SoundEngine.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		285EACBC0D64CFB400F351DD /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = OpenGLSupport/EAGLView.h; sourceTree = "<group>"; };
-		285EACBD0D64CFB400F351DD /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = OpenGLSupport/EAGLView.m; sourceTree = "<group>"; };
-		2D500B750D5A794B00DBA0E3 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2D.m; path = OpenGLSupport/Texture2D.m; sourceTree = "<group>"; };
-		2D500B770D5A794B00DBA0E3 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2D.h; path = OpenGLSupport/Texture2D.h; sourceTree = "<group>"; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		31288D7F0E376A9000F6A59D /* clouds.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = clouds.jpg; sourceTree = "<group>"; };
@@ -467,7 +461,6 @@
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		50405A1F0E32A15500213FEF /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		506144080E589A2E003CCDB7 /* AnchorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5061440A0E589A2E003CCDB7 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		5061440B0E589A7B003CCDB7 /* TestAnchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestAnchor.h; path = tests/TestAnchor.h; sourceTree = "<group>"; };
 		5061440C0E589A7B003CCDB7 /* TestAnchor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestAnchor.m; path = tests/TestAnchor.m; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
@@ -485,7 +478,6 @@
 		506C800E0E041C9300B48100 /* SceneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C80110E041CDB00B48100 /* SceneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneTest.h; path = tests/SceneTest.h; sourceTree = "<group>"; };
 		506C80120E041CDB00B48100 /* SceneTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneTest.m; path = tests/SceneTest.m; sourceTree = "<group>"; };
-		5078B52F0E3E43540004233A /* playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5078B5320E3E437F0004233A /* IntervalDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalDemo.h; path = tests/IntervalDemo.h; sourceTree = "<group>"; };
 		5078B5330E3E437F0004233A /* IntervalDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalDemo.m; path = tests/IntervalDemo.m; sourceTree = "<group>"; };
 		508F97370E451D4A00F6FAC6 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
@@ -579,6 +571,7 @@
 		50B2D0EC0E13296F00AE9530 /* grossini_dance_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_13.png; sourceTree = "<group>"; };
 		50B2D0ED0E13296F00AE9530 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
 		50C2DE7D0E3CCC84005D53BA /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntervalDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsDemo.m; path = tests/TransitionsDemo.m; sourceTree = "<group>"; };
@@ -829,8 +822,8 @@
 				50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */,
 				50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */,
 				3170705B0E2940C900DD3360 /* AccelViewportDemo.app */,
-				5078B52F0E3E43540004233A /* playground.app */,
 				506144080E589A2E003CCDB7 /* AnchorDemo.app */,
+				50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -861,7 +854,6 @@
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
-				5061440A0E589A2E003CCDB7 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -901,12 +893,6 @@
 				50F2D0BD0DF44E3100553D35 /* Scene.m */,
 				50F2D0BE0DF44E3100553D35 /* Sprite.h */,
 				50F2D0BF0DF44E3100553D35 /* Sprite.m */,
-				285EACBC0D64CFB400F351DD /* EAGLView.h */,
-				285EACBD0D64CFB400F351DD /* EAGLView.m */,
-				2D500B770D5A794B00DBA0E3 /* Texture2D.h */,
-				2D500B750D5A794B00DBA0E3 /* Texture2D.m */,
-				18E80B380D6E418800A48CAC /* SoundEngine.h */,
-				18E80B370D6E418800A48CAC /* SoundEngine.cpp */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -1350,7 +1336,7 @@
 			);
 			name = IntervalDemo;
 			productName = playground;
-			productReference = 5078B52F0E3E43540004233A /* playground.app */;
+			productReference = 50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50B2C4D00E100AEA00AE9530 /* Chipmunk */ = {
@@ -2199,7 +2185,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2208,7 +2194,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = playground;
+				PRODUCT_NAME = AnchorDemo;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -2380,7 +2366,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = playground;
+				PRODUCT_NAME = IntervalDemo;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -2693,7 +2679,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ricardo Quesada";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
