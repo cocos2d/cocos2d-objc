@@ -7,6 +7,8 @@ version 0.3.3 - dd-MMM-yyyy
  . CocosNode: negative z-order working
  . Demos: removed playgroud
  . Demos: added AnchorDemo
+ . Demos: removed unused code from MenuTest
+ . Director: fixed memory leak. First scene wasn't released
 
 version 0.3.2 - 14-Ago-2008
  . Action: Animate was using the wrong index. Possible crash fixed

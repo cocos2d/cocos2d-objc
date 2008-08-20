@@ -89,7 +89,6 @@
 	MultiplexLayer *layer = [MultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], nil];
 	[scene add: layer z:0];
 
-	[TextureMgr sharedTextureMgr];
 	[[Director sharedDirector] runScene: scene];
 }
 
@@ -103,14 +102,5 @@
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[Director sharedDirector] resume];
-}
-
--(void) applicationWillTerminate: (UIApplication*) application
-{
-	NSLog(@"%d", [[Director sharedDirector] retainCount] );
-	NSLog(@"%d", [[TextureMgr sharedTextureMgr] retainCount] );
-
-	[[Director sharedDirector] release];
-	[[TextureMgr sharedTextureMgr] release];
 }
 @end

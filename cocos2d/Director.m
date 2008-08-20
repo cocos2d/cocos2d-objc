@@ -275,7 +275,8 @@ static int _pixelFormat = RGB565;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 		
-	[self pushScene: scene];
+//	[self pushScene: scene];
+	[self replaceScene: scene];
 	[self startAnimation];
 }
 
@@ -290,20 +291,18 @@ static int _pixelFormat = RGB565;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
-	[scenes addObject: scene];
+	[scenes addObject: runningScene];
 	nextScene = [scene retain];		// retained twice
 }
 
 -(void) popScene
 {	
-	NSAssert( [scenes count]!=0, @"Abnormal error in director scene stack.");
-	
-	[scenes removeLastObject];
 	int c = [scenes count];
 	if( c == 0 ) {
 		[self end];
 	} else {
 		nextScene = [[scenes objectAtIndex:c-1] retain];
+		[scenes removeLastObject];
 	}
 }
 
