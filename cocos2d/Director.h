@@ -77,6 +77,8 @@ and when to execute the Scenes
 	struct timeval lastUpdate;
 	/** delta time since last tick to main loop */
 	ccTime dt;
+	/** whether or not the next delta time will be zero */
+	 BOOL nextDeltaTimeZero;
 }
 
 @property (readonly, assign) Scene* runningScene;
