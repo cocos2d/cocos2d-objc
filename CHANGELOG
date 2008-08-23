@@ -1,4 +1,4 @@
-version 0.3.3 - dd-MMM-yyyy
+version 0.3.3 - 23-Ago-2008
  . Action: Added CallFuncND. Like CallFuncN but accepts data
  . CocosNode: actions can schedule actions [FIXED CRASH]
  . CocosNode: added default capacity to actions, children, & schedulers
@@ -9,6 +9,7 @@ version 0.3.3 - dd-MMM-yyyy
  . Demos: added AnchorDemo
  . Demos: removed unused code from MenuTest
  . Director: fixed memory leak. First scene wasn't released
+ . Director: fixed issue #6. Delta Time is never negative, and if a "Significant Time Change" is present, then DeltaTime will be 0.
 
 version 0.3.2 - 14-Ago-2008
  . Action: Animate was using the wrong index. Possible crash fixed
