@@ -8,6 +8,8 @@ version 0.3.3 - 23-Ago-2008
  . Demos: removed playgroud
  . Demos: added AnchorDemo
  . Demos: removed unused code from MenuTest
+ . Demos: removed TcpAccelClient (deprecated)
+ . Demos: AccelViewPort using VirtualAccelerometer
  . Director: fixed memory leak. First scene wasn't released
  . Director: fixed issue #6. Delta Time is never negative, and if a "Significant Time Change" is present, then DeltaTime will be 0.
 
