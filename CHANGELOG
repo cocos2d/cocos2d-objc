@@ -1,3 +1,8 @@
+version 0.4.0 - dd-mmm-yyyy
+ . MenuItem: renamed to MenuItemFont
+ . MenuItem: added MenuItemImage
+ . MenuItem: uses target/selector, not receiver/selector
+
 version 0.3.3 - 23-Ago-2008
  . Action: Added CallFuncND. Like CallFuncN but accepts data
  . CocosNode: actions can schedule actions [FIXED CRASH]

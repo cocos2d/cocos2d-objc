@@ -21,14 +21,13 @@
 #import "MenuItem.h"
 #import "Label.h"
 #import "IntervalAction.h"
+#import "Sprite.h"
 
 static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
 @implementation MenuItem
-
-@synthesize label;
 
 -(id) init
 {
@@ -38,6 +37,70 @@ static BOOL _fontNameRelease = NO;
 								userInfo:nil];
 	@throw myException;	
 }
+
++(id) itemWithTarget:(id) r selector:(SEL) s
+{
+	return [[[self alloc] initWithTarget:r selector:s] autorelease];
+}
+
+-(id) initWithTarget:(id) rec selector:(SEL) cb
+{
+	if(! [super init])
+		return nil;
+	
+	NSMethodSignature * sig = nil;
+	sig = [[rec class] instanceMethodSignatureForSelector:cb];
+	
+	invocation = nil;
+	invocation = [NSInvocation invocationWithMethodSignature:sig];
+	[invocation setTarget:rec];
+	[invocation setSelector:cb];
+	[invocation retain];
+	
+	return self;
+}
+
+-(void) dealloc
+{
+	[invocation release];
+	[super dealloc];
+}
+
+-(void) selected
+{
+	NSAssert(1,@"MenuItem.selected must be overriden");
+}
+
+-(void) unselected
+{
+	NSAssert(1,@"MenuItem.unselected must be overriden");
+}
+
+-(void) activate
+{
+	[invocation invoke];
+}
+
+-(CGRect) rect
+{
+	NSAssert(1,@"MenuItem.rect must be overriden");
+	
+	// to make the compiler happy
+	CGRect a;
+	return a;
+}
+
+-(unsigned int) height
+{
+	NSAssert(1,@"MenuItem.height must be overriden");
+	return 0;
+}
+@end
+
+
+@implementation MenuItemFont
+
+@synthesize label;
 
 +(void) setFontSize: (int) s
 {
@@ -63,14 +126,14 @@ static BOOL _fontNameRelease = NO;
 	return _fontName;
 }
 
-+(id) itemFromString: (NSString*) value receiver:(id) r selector:(SEL) s
++(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s
 {
-	return [[[self alloc] initFromString: value receiver:r selector:s] autorelease];
+	return [[[self alloc] initFromString: value target:r selector:s] autorelease];
 }
 
--(id) initFromString: (NSString*) value receiver:(id) rec selector:(SEL) cb
+-(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
 {
-	if(! [super init])
+	if(! [super initWithTarget:rec selector:cb] )
 		return nil;
 	
 	if( [value length] == 0 ) {
@@ -80,29 +143,19 @@ static BOOL _fontNameRelease = NO;
 									userInfo:nil];
 		@throw myException;		
 	}
-
-	NSMethodSignature * sig = nil;
-	sig = [[rec class] instanceMethodSignatureForSelector:cb];
 	
-	invocation = nil;
-	invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:rec];
-	[invocation setSelector:cb];
-	[invocation retain];
 	
 	label = [Label labelWithString:value dimensions:CGSizeMake((_fontSize+2)*[value length], (_fontSize+2)) alignment:UITextAlignmentCenter fontName:_fontName fontSize:_fontSize];
-
+	[label retain];	
+	
 	CGSize s = [[label texture] contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );
 	
-	[label retain];
-
 	return self;
 }
 
 -(void) dealloc
 {
-	[invocation release];
 	[label release];
 	[super dealloc];
 }
@@ -125,22 +178,80 @@ static BOOL _fontNameRelease = NO;
 {
 	[self stop];
 	[self do: [ScaleTo actionWithDuration:0.1 scale:1.0]];
-
-}
-
--(void) activate
-{
-	[invocation invoke];
+	
 }
 
 -(unsigned int) height
 {
 	return [[label texture] contentSize].height;
 }
+
 -(void) draw
 {
 	[label draw];
 }
 @end
+
+
+@implementation MenuItemImage
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) t selector:(SEL) s
+{
+	return [[[self alloc] initFromNormalImage:value selectedImage:value2 target:t selector:s] autorelease];
+}
+
+-(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 target:(id) t selector:(SEL) sel
+{
+	if( ![super initWithTarget:t selector:sel] )
+		return nil;
+
+	normalImage = [[Sprite spriteFromFile:value] retain];
+	selectedImage = [[Sprite spriteFromFile:value2] retain];
+	
+	CGSize s = [[normalImage texture] contentSize];
+	transformAnchor = cpv( s.width/2, s.height/2 );
+
+	return self;
+}
+
+-(void) dealloc
+{
+	[normalImage release];
+	[selectedImage release];
+
+	[super dealloc];
+}
+
+-(void) selected
+{
+	selected = YES;
+}
+
+-(void) unselected
+{
+	selected = NO;
+}
+
+-(CGRect) rect
+{
+	CGSize s = [[normalImage texture] contentSize];
+	
+	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
+	return r;
+}
+
+-(unsigned int) height
+{
+	return [[normalImage texture] contentSize].height;
+}
+
+-(void) draw
+{
+	if( selected )
+		[selectedImage draw];
+	else
+		[normalImage draw];
+}
+@end
+
 
 

@@ -50,7 +50,7 @@
 	 ];
 
 	// pause button
-	MenuItem *item1 = [MenuItem itemFromString: @"Pause" receiver:self selector:@selector(pause)];
+	MenuItem *item1 = [MenuItemFont itemFromString: @"Pause" target:self selector:@selector(pause)];
 	[Menu setOffsetY:80];
 	Menu *menu = [Menu menuWithItems: item1, nil];
 	[self add: menu];
