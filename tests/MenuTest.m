@@ -11,15 +11,15 @@
 {
 	[super init];
 	
-	[MenuItem setFontSize:30];
-	[MenuItem setFontName: @"Courier New"];
+	[MenuItemFont setFontSize:30];
+	[MenuItemFont setFontName: @"Courier New"];
 	
 	
-	MenuItem *item1 = [MenuItem itemFromString: @"Start" receiver:self selector:@selector(menuCallback2)];
-	MenuItem *item2 = [MenuItem itemFromString: @"Options" receiver:self selector:@selector(menuCallback)];
-	MenuItem *item3 = [MenuItem itemFromString: @"Scores" receiver:self selector:@selector(menuCallback2)];
-	MenuItem *item4 = [MenuItem itemFromString: @"Help" receiver:self selector:@selector(menuCallback2)];
-	MenuItem *item5 = [MenuItem itemFromString: @"Quit" receiver:self selector:@selector(onQuit)];
+	MenuItem *item1 = [MenuItemFont itemFromString: @"Start" target:self selector:@selector(menuCallback2)];
+	MenuItem *item2 = [MenuItemFont itemFromString: @"Options" target:self selector:@selector(menuCallback)];
+	MenuItem *item3 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2)];
+	MenuItem *item4 = [MenuItemFont itemFromString: @"Help" target:self selector:@selector(menuCallback2)];
+	MenuItemFont *item5 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit)];
 	
 	[[item5 label] setR:255 g:0 b:32];
 	
@@ -52,8 +52,8 @@
 {
 	[super init];
 	
-	MenuItem *item1 = [MenuItem itemFromString: @"Fullscreen" receiver:self selector:@selector(menuCallback2)];
-	MenuItem *item2 = [MenuItem itemFromString: @"Go Back" receiver:self selector:@selector(menuCallback)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Fullscreen" target:self selector:@selector(menuCallback2)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
 	

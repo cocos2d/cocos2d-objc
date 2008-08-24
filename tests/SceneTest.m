@@ -10,8 +10,8 @@
 {
 	[super init];
 	
-	MenuItem *item1 = [MenuItem itemFromString: @"Options" receiver:self selector:@selector(onOptions)];
-	MenuItem *item2 = [MenuItem itemFromString: @"Quit" receiver:self selector:@selector(onQuit)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Options" target:self selector:@selector(onOptions)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
 	
@@ -42,8 +42,8 @@
 {
 	[super init];
 	
-	MenuItem *item1 = [MenuItem itemFromString: @"Fullscreen" receiver:self selector:@selector(onFullscreen)];
-	MenuItem *item2 = [MenuItem itemFromString: @"Go Back" receiver:self selector:@selector(onGoBack)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Fullscreen" target:self selector:@selector(onFullscreen)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
 	

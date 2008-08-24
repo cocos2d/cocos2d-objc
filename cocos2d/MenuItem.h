@@ -23,14 +23,44 @@
 #import "CocosNode.h"
 
 @class Label;
+@class Sprite;
 
 #define kItemSize 32
 
-/** A MenuItem */
 @interface MenuItem : CocosNode
 {
+	NSInvocation *invocation;
+}
+/** creates a menu item with a target/selector */
++(id) itemWithTarget:(id) r selector:(SEL) s;
+
+/** initializes a menu item with a target/selector */
+-(id) initWithTarget:(id) r selector:(SEL) s;
+
+/** returns the outside box */
+-(CGRect) rect;
+
+/** activate the item */
+-(void) activate;
+
+/** the item was selected (not activated), similar to "mouse-over" */
+-(void) selected;
+
+/** the item was unselected */
+-(void) unselected;
+
+/** returns the height of the item */
+-(unsigned int) height;
+
+
+@end
+
+
+
+/** A MenuItemFont */
+@interface MenuItemFont : MenuItem
+{
 	Label *label;
-	NSInvocation *invocation;	
 }
 
 @property (assign, readwrite) Label* label;
@@ -48,23 +78,24 @@
 +(NSString*) fontName;
 
 /** creates a menu item from a string */
-+(id) itemFromString: (NSString*) value receiver:(id) r selector:(SEL) s;
++(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s;
 
 /** initializes a menu item from a string */
--(id) initFromString: (NSString*) value receiver:(id) r selector:(SEL) s;
-
-/** returns the outside box */
--(CGRect) rect;
-
-/** activate the item */
--(void) activate;
-
-/** the item was selected (not activated), similar to "mouse-over" */
--(void) selected;
-
-/** the item was unselected */
--(void) unselected;
-
-/** returns the height of the item */
--(unsigned int) height;
+-(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
+
+
+
+/** A MenuItemImage */
+@interface MenuItemImage : MenuItem
+{
+	BOOL selected;
+	Sprite *normalImage, *selectedImage;
+}
+/** creates a menu item from a string */
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
+
+/** initializes a menu item from a string */
+-(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 target:(id) r selector:(SEL) s;
+@end
+
