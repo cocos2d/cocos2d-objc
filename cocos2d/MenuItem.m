@@ -168,6 +168,12 @@ static BOOL _fontNameRelease = NO;
 	return r;
 }
 
+-(void) activate {
+	[self stop];
+	self.scale = 1.0;
+	[super activate];
+}
+
 -(void) selected
 {
 	[self stop];
