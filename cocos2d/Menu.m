@@ -23,9 +23,9 @@
 #import "Director.h"
 
 static int _offset_y = 0;
+static int _offset_x = 0;
 
 @implementation Menu
-// Sets up an array of values to use as the sprite vertices.
 
 +(void) setOffsetY: (int) y
 {
@@ -35,6 +35,16 @@ static int _offset_y = 0;
 +(int) offsetY
 {
 	return _offset_y;
+}
+
++(void) setOffsetX: (int) x
+{
+	_offset_x = x;
+}
+
++(int) offsetX
+{
+	return _offset_x;
 }
 
 - (id) init
@@ -141,7 +151,7 @@ static int _offset_y = 0;
 	
 	for( NSArray* array in children ) {
 		MenuItem *item = [array objectAtIndex:1];
-		[item setPosition:cpv(x/2, initialY)];
+		[item setPosition:cpv(x/2 + _offset_x, initialY)];
 		initialY -= incY;
 	}
 }
