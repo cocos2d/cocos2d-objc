@@ -1,7 +1,9 @@
 version 0.4.0 - dd-mmm-yyyy
+ . Menu: added setOffsetX
  . MenuItem: renamed to MenuItemFont
  . MenuItem: added MenuItemImage
  . MenuItem: uses target/selector, not receiver/selector
+ . MenuItem: MenuItemFont restore scale to 1.0 after being invoked (by Codemattic)
 
 version 0.3.3 - 23-Ago-2008
  . Action: Added CallFuncND. Like CallFuncN but accepts data
