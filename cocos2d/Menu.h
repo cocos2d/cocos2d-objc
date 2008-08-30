@@ -29,18 +29,6 @@
 	int selectedItem;
 }
 
-/** sets the menu y offset */
-+(void) setOffsetY:(int)y;
-
-/** get the menu y offset */
-+(int) offsetY;
-
-/** sets the menu x offset */
-+(void) setOffsetX:(int)x;
-
-/** get the menu x offset */
-+(int) offsetX;
-
 /** creates a menu with it's items */
 + (id) menuWithItems: (MenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
 
