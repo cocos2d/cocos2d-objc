@@ -1,3 +1,9 @@
+version 0.4.1 - dd-mmm-yyyy
+ . Director: added eventsEnabled. You can enable/disabled touch events globally (eg: Transitions want this feature)
+ . Transitions: Added new ZoomFlipXTransition transition.
+ . Transitions: Added new ZoomFlipYTransition transition.
+ . Transitions: Added new ZoomFlipAngularTransition transition.
+ 
 version 0.4.0 - 30-Ago-2008
  . CocosNode: private methods are private
  . CocosNode: stop renamed to stopAllActions

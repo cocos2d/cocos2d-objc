@@ -55,6 +55,9 @@
 		@throw myException;		
 	}
 	
+	// disable events while transitions
+	[[Director sharedDirector] setEventsEnabled: NO];
+	
 	[self start];
 	return self;
 }
@@ -82,6 +85,9 @@
 	
 	
 	[[Director sharedDirector] replaceScene: inScene];
+
+	// enable events while transitions
+	[[Director sharedDirector] setEventsEnabled: YES];
 
 	[self remove: inScene];
 	[self remove: outScene];
@@ -409,6 +415,105 @@
 	[outScene do: outA];
 }
 @end
+
+//
+// FlipX Transition
+//
+@implementation ZoomFlipXTransition
+-(void) start
+{
+	[super start];
+	
+	[inScene setVisible: NO];
+	IntervalAction *inA = [Sequence actions:
+						   [DelayTime actionWithDuration:duration/2],
+						   [Spawn actions:
+							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:0 deltaAngleX:0],
+							[ScaleTo actionWithDuration:duration/2 scale:1],
+							[Show action],
+							nil],
+						   [CallFunc actionWithTarget:self selector:@selector(finish)],
+						   nil ];
+	IntervalAction *outA = [Sequence actions:
+							[Spawn actions:
+							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:0 deltaAngleX:0],
+							 [ScaleTo actionWithDuration:duration/2 scale:0.5],
+							 nil],
+							[Hide action],
+							[DelayTime actionWithDuration:duration/2],							
+							nil ];
+	
+	inScene.scale = 0.5f;
+	[inScene do: inA];
+	[outScene do: outA];
+}
+@end
+
+//
+// FlipY Transition
+//
+@implementation ZoomFlipYTransition
+-(void) start
+{
+	[super start];
+	
+	[inScene setVisible: NO];
+	IntervalAction *inA = [Sequence actions:
+						   [DelayTime actionWithDuration:duration/2],
+						   [Spawn actions:
+							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:90 deltaAngleX:0],
+							 [ScaleTo actionWithDuration:duration/2 scale:1],
+							 [Show action],
+							 nil],
+						   [CallFunc actionWithTarget:self selector:@selector(finish)],
+						   nil ];
+	IntervalAction *outA = [Sequence actions:
+							[Spawn actions:
+							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:90 deltaAngleX:0],
+							 [ScaleTo actionWithDuration:duration/2 scale:0.5],
+							 nil],							
+							[Hide action],
+							[DelayTime actionWithDuration:duration/2],							
+							nil ];
+	inScene.scale = 0.5;
+	[inScene do: inA];
+	[outScene do: outA];
+}
+@end
+
+//
+// FlipAngular Transition
+//
+@implementation ZoomFlipAngularTransition
+-(void) start
+{
+	[super start];
+	
+	[inScene setVisible: NO];
+	IntervalAction *inA = [Sequence actions:
+						   [DelayTime actionWithDuration:duration/2],
+						   [Spawn actions:
+							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:-45 deltaAngleX:0],
+							[ScaleTo actionWithDuration:duration/2 scale:1],
+							[Show action],
+							nil],						   
+						   [Show action],
+						   [CallFunc actionWithTarget:self selector:@selector(finish)],
+						   nil ];
+	IntervalAction *outA = [Sequence actions:
+							[Spawn actions:
+							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:45 deltaAngleX:0],
+							 [ScaleTo actionWithDuration:duration/2 scale:0.5],
+							 nil],							
+							[Hide action],
+							[DelayTime actionWithDuration:duration/2],							
+							nil ];
+	inScene.scale = 0.5;
+	[inScene do: inA];
+	[outScene do: outA];
+}
+@end
+
 
 //
 // Fade Transition

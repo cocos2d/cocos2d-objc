@@ -50,7 +50,7 @@
 @synthesize animationInterval;
 @synthesize window;
 @synthesize runningScene;
-@synthesize displayFPS;
+@synthesize displayFPS, eventsEnabled;
 
 //
 // singleton stuff
@@ -145,6 +145,9 @@ static int _pixelFormat = RGB565;
 	
 	// paused ?
 	paused = NO;
+	
+	// touch events enabled ?
+	eventsEnabled = YES;
 	
 	//Show window
 	[window makeKeyAndVisible];	
@@ -542,32 +545,40 @@ static int _pixelFormat = RGB565;
 //
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( id eventHandler in eventHandlers ) {
-		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-			[eventHandler touchesBegan:touches withEvent:event];
+	if( eventsEnabled ) {
+		for( id eventHandler in eventHandlers ) {
+			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+				[eventHandler touchesBegan:touches withEvent:event];
+		}
 	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( id eventHandler in eventHandlers ) {
-		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-			[eventHandler touchesMoved:touches withEvent:event];
+	if( eventsEnabled ) {
+		for( id eventHandler in eventHandlers ) {
+			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+				[eventHandler touchesMoved:touches withEvent:event];
+		}
 	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( id eventHandler in eventHandlers ) {
-		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-			[eventHandler touchesEnded:touches withEvent:event];
+	if( eventsEnabled ) {
+		for( id eventHandler in eventHandlers ) {
+			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+				[eventHandler touchesEnded:touches withEvent:event];
+		}
 	}
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( id eventHandler in eventHandlers ) {
-		if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-			[eventHandler touchesCancelled:touches withEvent:event];
+	if( eventsEnabled )  {
+		for( id eventHandler in eventHandlers ) {
+			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
+				[eventHandler touchesCancelled:touches withEvent:event];
+		}
 	}
 }
 @end
