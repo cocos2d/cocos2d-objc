@@ -42,8 +42,10 @@
 @property (readwrite,assign) Texture2D *texture;
 @property (readwrite,assign) GLubyte r, g, b, opacity;
 
-/** set the color of the texture */
--(void) setR: (GLubyte) r g:(GLubyte)g b:(GLubyte)b;
+/** set the color of the texture.
+ * example:  [node setRGB: 255:128:25];
+ */
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
 
 -(void) draw;
 @end

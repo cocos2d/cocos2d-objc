@@ -43,7 +43,7 @@
 	return self;
 }
 
--(void) setR: (GLubyte) rr g:(GLubyte) gg b:(GLubyte)bb
+-(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
 {
 	r=rr;
 	g=gg;

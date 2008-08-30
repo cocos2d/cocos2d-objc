@@ -23,6 +23,15 @@
 #import "Camera.h"
 #import "Scheduler.h"
 
+
+@interface CocosNode (Private)
+-(void) step_: (ccTime) dt;
+// activate all scheduled timers
+-(void) activateTimers;
+// deactivate all scheduled timers
+-(void) deactivateTimers;
+@end
+
 @implementation CocosNode
 
 @synthesize rotation, scale, position;
@@ -33,6 +42,7 @@
 #endif
 @synthesize parent;
 @synthesize camera;
+@synthesize zOrder;
 
 +(id) node
 {
@@ -103,26 +113,23 @@
 }
 
 -(id) add: (CocosNode*) child z:(int)z name:(NSString*)name
-{
-	NSArray *entry;
-	
+{	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
-	NSNumber *index = [NSNumber numberWithInt:z];
-	entry = [NSArray arrayWithObjects: index, child, nil];
+	child.zOrder=z;
 	
-	int idx=0;
+	int index=0;
 	BOOL added = NO;
-	for( NSArray *a in children ) {
-		if ( [[a objectAtIndex: 0] intValue] > z ) {
+	for( CocosNode *a in children ) {
+		if ( a.zOrder > z ) {
 			added = YES;
-			[ children insertObject:entry atIndex:idx];
+			[ children insertObject:child atIndex:index];
 			break;
 		}
-		idx++;
+		index++;
 	}
 	if( ! added )
-		[children addObject:entry];
+		[children addObject:child];
 	
 	if( name )
 		[childrenNames setObject:child forKey:name];
@@ -151,15 +158,13 @@
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
-	for( id entry in children) {
-		CocosNode *c;
-		c = [entry objectAtIndex:1];
+	for( CocosNode * c in children) {
 		if( [c isEqual: child] ) {
 			[c setParent: nil];
 			if( isRunning )
 				[c onExit];
 			
-			[children removeObject: entry];
+			[children removeObject: c];
 			
 			break;
 		}
@@ -229,18 +234,18 @@
 	
 	[self transform];
 
-	for (id child in children) {
-		if ( [[child objectAtIndex:0] intValue] < 0 )
-			[[child objectAtIndex:1] visit];
+	for (CocosNode * child in children) {
+		if ( child.zOrder < 0 )
+			[child visit];
 		else
 			break;
 	}
 	
 	[self draw];
 
-	for (id child in children) {		
-		if ( [[child objectAtIndex:0] intValue] >= 0 )
-			[[child objectAtIndex:1] visit];
+	for (CocosNode * child in children) {		
+		if ( child.zOrder >= 0 )
+			[child visit];
 	}
 	
 	glPopMatrix();
@@ -253,7 +258,7 @@
 	
 	
 	for( id child in children )
-		[[child objectAtIndex:1] onEnter];
+		[child onEnter];
 	
 	[self activateTimers];
 }
@@ -265,7 +270,7 @@
 	[self deactivateTimers];
 	
 	for( id child in children )
-		[[child objectAtIndex:1] onExit];
+		[child onExit];
 	
 }
 
@@ -282,7 +287,7 @@
 	return action;
 }
 
--(void) stop
+-(void) stopAllActions
 {
 	[actionsToAdd removeAllObjects];
 	

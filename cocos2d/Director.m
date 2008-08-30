@@ -30,6 +30,21 @@
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
+
+@interface Director (Private)
+-(void) drawScene;
+-(void) startAnimation;
+-(void) stopAnimation;
+-(void) setNextScene;
+// rotates the screen if Landscape mode is activated
+-(void) applyLandscape;
+// shows the FPS in the screen
+-(void) showFPS;
+// calculates delta time since last time it was called
+-(void) calculateDeltaTime;
+
+@end
+
 @implementation Director
 
 @synthesize animationInterval;

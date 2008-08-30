@@ -88,16 +88,18 @@ and when to execute the Scenes
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
+@end
 
+
+@interface Director (iPhoneSpecific)
 /** change default pixel format
-Call this class method before any other call to the Director.
+ Call this class method before any other call to the Director.
  Default pixel format: RGB565. Supported pixel formats: RGBA8 and RGB565
  */
 +(void) setPixelFormat: (int) p;
+@end
 
-
--(void) setNextScene;
-
+@interface Director (Landscape)
 /** returns the size of the screen 480x320 or 320x480 depeding if landscape mode is activated or not */
 - (CGRect) winSize;
 /** returns 320x480, always */
@@ -107,22 +109,14 @@ Call this class method before any other call to the Director.
 - (BOOL) landscape;
 /** sets lanscape mode */
 - (void) setLandscape: (BOOL) on;
+/** converts a UIKit coordinate to an OpenGL coordinate
+ Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
+ */
+-(CGPoint) convertCoordinate: (CGPoint) p;
+@end
 
-/** enables/disables OpenGL alpha blending */
-- (void) setAlphaBlending: (BOOL) on;
-/** enables/disables OpenGL depth test */
-- (void) setDepthTest: (BOOL) on;
-/** enables/disables OpenGL texture 2D */
-- (void) setTexture2D: (BOOL) on;
-/** sets Cocos OpenGL default projection */
-- (void) setDefaultProjection;
-/** sets a 2D projection */
--(void) set2Dprojection;
-/** sets a 3D projection */
--(void) set3Dprojection;
-/** rotates the screen if Landscape mode is activated */
--(void) applyLandscape;
 
+@interface Director (SceneManagement)
 /**Runs a scene, entering in the Director's main loop. 
  */
 - (void) runScene:(Scene*) scene;
@@ -157,24 +151,31 @@ Call this class method before any other call to the Director.
  The "delta time" will be 0 (as if the game wasn't paused)
  */
 -(void) resume;
+@end
 
-- (void) drawScene;
-- (void) startAnimation;
-- (void) stopAnimation;
 
-/** converts a UIKit coordinate to an OpenGL coordinate
- Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
- */
--(CGPoint) convertCoordinate: (CGPoint) p;
-
-/** shows the FPS in the screen */
--(void) showFPS;
-
-/** calculates delta time since last time it was called */
--(void) calculateDeltaTime;
-
+@interface Director (Events)
 /** adds a cocosnode object to the list of multi-touch event queue */
 -(void) addEventHandler: (CocosNode*) node;
 /** removes a cocosnode object from the list of multi-touch event queue */
 -(void) removeEventHandler: (CocosNode*) node;
 @end
+
+
+@interface Director (OpenGLHelper)
+/** enables/disables OpenGL alpha blending */
+- (void) setAlphaBlending: (BOOL) on;
+/** enables/disables OpenGL depth test */
+- (void) setDepthTest: (BOOL) on;
+/** enables/disables OpenGL texture 2D */
+- (void) setTexture2D: (BOOL) on;
+/** sets Cocos OpenGL default projection */
+- (void) setDefaultProjection;
+/** sets a 2D projection */
+-(void) set2Dprojection;
+/** sets a 3D projection */
+-(void) set3Dprojection;
+@end
+
+
+

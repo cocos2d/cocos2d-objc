@@ -169,20 +169,20 @@ static BOOL _fontNameRelease = NO;
 }
 
 -(void) activate {
-	[self stop];
+	[self stopAllActions];
 	self.scale = 1.0;
 	[super activate];
 }
 
 -(void) selected
 {
-	[self stop];
+	[self stopAllActions];
 	[self do: [ScaleTo actionWithDuration:0.1 scale:1.2]];
 }
 
 -(void) unselected
 {
-	[self stop];
+	[self stopAllActions];
 	[self do: [ScaleTo actionWithDuration:0.1 scale:1.0]];
 	
 }

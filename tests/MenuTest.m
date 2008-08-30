@@ -21,8 +21,9 @@
 	MenuItem *item4 = [MenuItemFont itemFromString: @"Help" target:self selector:@selector(menuCallback2)];
 	MenuItemFont *item5 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit)];
 	
-	[[item5 label] setR:255 g:0 b:32];
+	[[item5 label] setRGB:255:0:32];
 	
+	[Menu setOffsetX:0];
 	[Menu setOffsetY:-40];
 	
 	menu = [Menu menuWithItems: item1, item2, item3, item4, item5, nil];
