@@ -79,12 +79,16 @@ and when to execute the Scenes
 	ccTime dt;
 	/** whether or not the next delta time will be zero */
 	 BOOL nextDeltaTimeZero;
+	
+	/** are touch events enabled. Default is YES */
+	BOOL eventsEnabled;
 }
 
 @property (readonly, assign) Scene* runningScene;
 @property (readwrite, assign) NSTimeInterval animationInterval;
 @property (readwrite,assign) UIWindow* window;
 @property (readwrite, assign) BOOL displayFPS;
+@property (readwrite, assign) BOOL eventsEnabled;
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;

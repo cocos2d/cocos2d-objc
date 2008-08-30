@@ -162,6 +162,33 @@
 }
 @end
 
+/** ZoomFlipX Transition
+ Flips the screen horizontally doing a zoom out/in
+ The front face is the outgoing scene and the back face is the incoming scene.
+ */
+@interface ZoomFlipXTransition : TransitionScene
+{
+}
+@end
+
+/** ZoomFlipY Transition
+ Flips the screen vertically doing a little zooming out/in
+ The front face is the outgoing scene and the back face is the incoming scene.
+ */
+@interface ZoomFlipYTransition : TransitionScene
+{
+}
+@end
+
+/** ZoomFlipAngular Transition
+ Flips the screen half horizontally and half vertically doing a little zooming out/in.
+ The front face is the outgoing scene and the back face is the incoming scene.
+ */
+@interface ZoomFlipAngularTransition : TransitionScene
+{
+}
+@end
+
 /** Fade Transition
  Fade out the outgoing scene and then fade in the incoming scene.'''
  */
