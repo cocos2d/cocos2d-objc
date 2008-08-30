@@ -22,9 +22,6 @@
 #import "Menu.h"
 #import "Director.h"
 
-static int _offset_y = 0;
-static int _offset_x = 0;
-
 @interface Menu (Private)
 // align items
 -(void) alignItems;
@@ -33,26 +30,6 @@ static int _offset_x = 0;
 @end
 
 @implementation Menu
-
-+(void) setOffsetY: (int) y
-{
-	_offset_y = y;
-}
-
-+(int) offsetY
-{
-	return _offset_y;
-}
-
-+(void) setOffsetX: (int) x
-{
-	_offset_x = x;
-}
-
-+(int) offsetX
-{
-	return _offset_x;
-}
 
 - (id) init
 {
@@ -78,6 +55,10 @@ static int _offset_x = 0;
 {
 	if( ![super init] )
 		return nil;
+	
+	// menu in the center of the screen
+	CGRect r = [[Director sharedDirector] winSize];
+	position = cpv( r.size.width/2, r.size.height/2);
 
 	isTouchEnabled = YES;
 	selectedItem = -1;
@@ -138,6 +119,8 @@ static int _offset_x = 0;
 	int idx;
 	
 	MenuItem *item = [self itemInPoint: point idx:&idx];
+	
+	// "mouse" draged inside a button
 	if( item ) {
 		if( idx != selectedItem ) {
 			if( selectedItem != -1 )
@@ -145,19 +128,23 @@ static int _offset_x = 0;
 			[item selected];
 			selectedItem = idx;
 		}
+
+	// "mouse" draged outside the selected button
+	} else {
+		if( selectedItem != -1 ) {
+			[[children objectAtIndex:selectedItem] unselected];
+			selectedItem = -1;
+		}
 	}
 }
 
 -(void) alignItems
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	int x = s.size.width;
-	int y = s.size.height;
 	int incY = [[children objectAtIndex:0] height] + 5;
-	int initialY = (y/2) + (incY * [children count])/2 + _offset_y;
+	int initialY =  (incY * [children count])/2;
 	
 	for( MenuItem* item in children ) {
-		[item setPosition:cpv(x/2 + _offset_x, initialY)];
+		[item setPosition:cpv(0,initialY)];
 		initialY -= incY;
 	}
 }
@@ -169,7 +156,10 @@ static int _offset_x = 0;
 	int i=0;
 	for( MenuItem* item in children ) {
 		*idx = i;
-		if( CGRectContainsPoint( [item rect], point ) )
+		CGRect r = [item rect];
+		r.origin.x += position.x;
+		r.origin.y += position.y;
+		if( CGRectContainsPoint( r, point ) )
 			return item;
 		i++;
 	}

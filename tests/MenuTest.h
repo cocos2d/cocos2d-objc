@@ -26,3 +26,11 @@
 -(void) menuCallback;
 -(void) menuCallback2;
 @end
+
+@interface Layer3 : Layer
+{
+	Menu * menu;
+}
+-(void) menuCallback;
+-(void) menuCallback2;
+@end
