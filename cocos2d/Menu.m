@@ -25,6 +25,13 @@
 static int _offset_y = 0;
 static int _offset_x = 0;
 
+@interface Menu (Private)
+// align items
+-(void) alignItems;
+// if a point in inside an item, in returns the item
+-(id) itemInPoint: (CGPoint) p idx:(int*)idx;
+@end
+
 @implementation Menu
 
 +(void) setOffsetY: (int) y
@@ -119,7 +126,7 @@ static int _offset_x = 0;
 		[item unselected];
 		[item activate];
 	} else if( selectedItem != -1 ) {
-		[[[children objectAtIndex:selectedItem] objectAtIndex:1] unselected];
+		[[children objectAtIndex:selectedItem] unselected];
 		selectedItem = -1;
 	}
 }
@@ -134,7 +141,7 @@ static int _offset_x = 0;
 	if( item ) {
 		if( idx != selectedItem ) {
 			if( selectedItem != -1 )
-				[[[children objectAtIndex:selectedItem] objectAtIndex:1] unselected];
+				[[children objectAtIndex:selectedItem] unselected];
 			[item selected];
 			selectedItem = idx;
 		}
@@ -146,11 +153,10 @@ static int _offset_x = 0;
 	CGRect s = [[Director sharedDirector] winSize];
 	int x = s.size.width;
 	int y = s.size.height;
-	int incY = [[[children objectAtIndex:0] objectAtIndex:1] height] + 5;
+	int incY = [[children objectAtIndex:0] height] + 5;
 	int initialY = (y/2) + (incY * [children count])/2 + _offset_y;
 	
-	for( NSArray* array in children ) {
-		MenuItem *item = [array objectAtIndex:1];
+	for( MenuItem* item in children ) {
 		[item setPosition:cpv(x/2 + _offset_x, initialY)];
 		initialY -= incY;
 	}
@@ -161,9 +167,8 @@ static int _offset_x = 0;
 	point = [[Director sharedDirector] convertCoordinate: point];
 
 	int i=0;
-	for( NSArray* array in children ) {
+	for( MenuItem* item in children ) {
 		*idx = i;
-		MenuItem *item = [array objectAtIndex:1];
 		if( CGRectContainsPoint( [item rect], point ) )
 			return item;
 		i++;

@@ -64,6 +64,9 @@
 	
 	/// a Camera
 	Camera *camera;
+	
+	/// z-order value
+	int zOrder;
 
 	/// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	/// Sprites, Labels and any other "small" object uses it.
@@ -98,6 +101,7 @@
 	NSMutableDictionary *scheduledSelectors;
 }
 
+@property(readwrite,assign) int zOrder;
 @property(readwrite,assign) float rotation;
 @property(readwrite,assign) float scale;
 @property(readwrite,assign) cpVect position;
@@ -115,14 +119,19 @@
 +(id) node;
 //! initializes the node
 -(id) init;
+@end
 
 // scene managment
+@interface CocosNode (SceneManagement)
 /** callback that is called every time the node enters the 'stage' */
 -(void) onEnter;
 /** callback that is called every time the node leaves the 'stage'. */
 -(void) onExit;
+@end
+
 
 // composition
+@interface CocosNode (Composition)
 /** Adds a child to the container with z-order as 0 
  @return returns self
  */
@@ -143,23 +152,31 @@
 -(void) removeByName: (NSString*)name;
 /** Gets a child from the container given its name */
 -(CocosNode*) get: (NSString*) name;
+@end
+
 
 // draw
+@interface CocosNode (Draw)
 /** override this method to draw your own node. */
 -(void) draw;
 /** recursive method that visit its children and draw them */
 -(void) visit;
 /** performs opengl view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
+@end
+
 
 // actions
+@interface CocosNode (Actions)
 /** Executes an action, and returns the action that is executed (a copy of the original) */
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
--(void) stop;
--(void) step_: (ccTime) dt;
+-(void) stopAllActions;
+@end
+
 
 // timers
+@interface CocosNode (Timers)
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
@@ -170,10 +187,6 @@
 -(void) schedule: (SEL) s interval:(ccTime) i;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
-/** activate all scheduled timers */
--(void) activateTimers;
-/** deactivate all scheduled timers */
--(void) deactivateTimers;
 @end
 
 //
