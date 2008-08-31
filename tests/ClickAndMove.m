@@ -49,7 +49,7 @@
 	[self add: sprite];
  */
 	CocosNode *s = [self get: @"sprite"];
-	[s stop];
+	[s stopAllActions];
 	[s do: [MoveTo actionWithDuration:1 position:cpv(location.x, 480-location.y)]];
 	float o = location.x - [s position].x;
 	float a = (480-location.y) - [s position].y;
