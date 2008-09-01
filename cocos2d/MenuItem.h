@@ -61,6 +61,7 @@
 @interface MenuItemFont : MenuItem
 {
 	Label *label;
+	Action *zoomAction;
 }
 
 @property (assign, readwrite) Label* label;

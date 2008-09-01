@@ -169,22 +169,29 @@ static BOOL _fontNameRelease = NO;
 }
 
 -(void) activate {
-	[self stopAllActions];
+	[self stopAction: zoomAction];
+	[zoomAction release];
+	zoomAction = nil;
 	self.scale = 1.0;
 	[super activate];
 }
 
 -(void) selected
 {
-	[self stopAllActions];
-	[self do: [ScaleTo actionWithDuration:0.1 scale:1.2]];
+	[self stopAction: zoomAction];
+	[zoomAction release];
+	zoomAction = nil;
+	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.2] retain];
+	[self do:zoomAction];
 }
 
 -(void) unselected
 {
-	[self stopAllActions];
-	[self do: [ScaleTo actionWithDuration:0.1 scale:1.0]];
-	
+	[self stopAction: zoomAction];
+	[zoomAction release];
+	zoomAction = nil;
+	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.0] retain];
+	[self do:zoomAction];
 }
 
 -(unsigned int) height

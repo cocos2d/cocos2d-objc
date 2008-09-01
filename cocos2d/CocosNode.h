@@ -170,10 +170,12 @@
 
 // actions
 @interface CocosNode (Actions)
-/** Executes an action, and returns the action that is executed (a copy of the original) */
+/** Executes an action, and returns the action that is executed */
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
+/** Removes one action from the running action list */
+-(void) stopAction: (Action*) action;
 @end
 
 
