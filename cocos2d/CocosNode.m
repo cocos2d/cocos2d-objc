@@ -190,9 +190,9 @@
 		[c setParent: nil];
 		if( isRunning )
 			[c onExit];
-			
-		[children removeObject: c];
 	}	
+	[children removeAllObjects];
+	[childrenNames removeAllObjects];
 }
 
 -(CocosNode*) get: (NSString*) name
@@ -320,6 +320,17 @@
 	
 	for( Action* action in actions)
 		[actionsToRemove addObject: action];
+}
+
+-(void) stopAction: (Action*) action
+{
+	if( [actionsToRemove containsObject:action] ) {
+		// do nothing
+	} else if( [actionsToAdd containsObject:action] ) {
+		[actionsToAdd removeObject:action];
+	} else if( [actions containsObject:actions] ) {
+		[actionsToRemove addObject:action];
+	}
 }
 
 -(void) step_: (ccTime) dt
