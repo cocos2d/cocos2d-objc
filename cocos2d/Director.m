@@ -58,27 +58,6 @@
 static Director *sharedDirector = nil;
 static int _pixelFormat = RGB565;
 
-+(void) setPixelFormat: (int) format
-{
-	if( format != RGB565 && format != RGBA8 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"DirectorInvalidPixelFormat"
-									reason:@"Invalid Pixel Format for GL view"
-									userInfo:nil];
-		@throw myException;		
-	}
-
-	if( sharedDirector ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"DirectorAlreadyInitialized"
-									reason:@"Can't change the pixel format after the director was initialized"
-									userInfo:nil];
-		@throw myException;		
-	}
-	
-	_pixelFormat = format;
-}
-
 + (Director *)sharedDirector
 {
 	@synchronized(self)
@@ -164,6 +143,103 @@ static int _pixelFormat = RGB565;
 	[super dealloc];
 }
 
+//
+// main loop
+//
+- (void) drawScene
+{
+	
+	/* clear window */
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	/* calculate "global" dt */
+	[self calculateDeltaTime];
+	if( ! paused )
+		[[Scheduler sharedScheduler] tick: dt];
+	
+	
+	/* to avoid flickr, nextScene MUST be here: after tick and before draw */
+	if( nextScene )
+		[self setNextScene];
+	
+	glPushMatrix();
+	
+	[self applyLandscape];
+	
+	/* draw the scene */
+	[runningScene visit];
+	
+	glPopMatrix();
+	
+	if( displayFPS ) {
+		glPushMatrix();
+		[self applyLandscape];
+		[self showFPS];
+		glPopMatrix();
+	}
+	
+	/* swap buffers */
+	[self swapBuffers];
+}
+
+-(void) calculateDeltaTime
+{
+	struct timeval now;
+	
+	if( gettimeofday( &now, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
+	
+	// new delta time
+	if( nextDeltaTimeZero ) {
+		dt = 0;
+		nextDeltaTimeZero = NO;
+	} else {
+		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
+		dt = MAX(0,dt);
+	}
+	
+	lastUpdate = now;	
+}
+
+-(void) applicationSignificantTimeChange:(UIApplication *)application
+{
+	nextDeltaTimeZero = YES;
+}
+@end
+
+
+@implementation Director (iPhoneSpecific)
+
++(void) setPixelFormat: (int) format
+{
+	if( format != RGB565 && format != RGBA8 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"DirectorInvalidPixelFormat"
+									reason:@"Invalid Pixel Format for GL view"
+									userInfo:nil];
+		@throw myException;		
+	}
+	
+	if( sharedDirector ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"DirectorAlreadyInitialized"
+									reason:@"Can't change the pixel format after the director was initialized"
+									userInfo:nil];
+		@throw myException;		
+	}
+	
+	_pixelFormat = format;
+}
+@end
+
+
+@implementation Director (OpenGLHelper)
+
 - (void) setDefaultProjection
 {
 	[self set3Dprojection];
@@ -195,6 +271,38 @@ static int _pixelFormat = RGB565;
 			  0.0f, 1.0f, 0.0f
 			  );
 }
+- (void) setAlphaBlending: (BOOL) on
+{
+	if (on) {
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	} else
+		glDisable(GL_BLEND);
+}
+
+- (void) setTexture2D: (BOOL) on
+{
+	if (on)
+		glEnable(GL_TEXTURE_2D);
+	else
+		glDisable(GL_TEXTURE_2D);
+}
+
+- (void) setDepthTest: (BOOL) on
+{
+	if (on) {
+		glClearDepthf(1.0f);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	} else
+		glDisable( GL_DEPTH_TEST );
+}
+
+@end
+
+
+@implementation Director (Landscape)
 
 -(CGPoint) convertCoordinate: (CGPoint) p
 {
@@ -214,9 +322,6 @@ static int _pixelFormat = RGB565;
 	return ret;
 }
 
-//
-// custom properties
-//
 - (CGRect) winSize
 {
 	CGRect r = winSize;
@@ -255,40 +360,27 @@ static int _pixelFormat = RGB565;
 	return;
 }
 
-//
-// OpenGL helpers
-//
-- (void) setAlphaBlending: (BOOL) on
+-(void) applyLandscape
 {
-	if (on) {
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	} else
-		glDisable(GL_BLEND);
+	if( landscape ) {
+		glTranslatef(160,240,0);
+		
+#if LANDSCAPE_LEFT
+		glRotatef(-90,0,0,1);
+		glTranslatef(-240,-160,0);
+#else		
+		// rotate left
+		glRotatef(90,0,0,1);
+		glTranslatef(-240,-160,0);
+#endif // LANDSCAPE_LEFT
+	}	
 }
 
-- (void) setTexture2D: (BOOL) on
-{
-	if (on)
-		glEnable(GL_TEXTURE_2D);
-	else
-		glDisable(GL_TEXTURE_2D);
-}
+@end
 
-- (void) setDepthTest: (BOOL) on
-{
-	if (on) {
-		glClearDepthf(1.0f);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	} else
-		glDisable( GL_DEPTH_TEST );
-}
 
-//
-// Scene Management
-//
+@implementation Director (SceneManagement)
+
 - (void)runScene:(Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
@@ -379,9 +471,6 @@ static int _pixelFormat = RGB565;
 	dt = 0;
 }
 
-//
-// timers
-//
 - (void)startAnimation
 {
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
@@ -412,121 +501,10 @@ static int _pixelFormat = RGB565;
 	}
 }
 
-//
-// landscape mode
-//
--(void) applyLandscape
-{
-	if( landscape ) {
-		glTranslatef(160,240,0);
+@end
 
-#if LANDSCAPE_LEFT
-		glRotatef(-90,0,0,1);
-		glTranslatef(-240,-160,0);
-#else		
-		// rotate left
-		glRotatef(90,0,0,1);
-		glTranslatef(-240,-160,0);
-#endif // LANDSCAPE_LEFT
-	}	
-}
 
-//
-// main loop
-//
-- (void) drawScene
-{
-
-	/* clear window */
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	/* calculate "global" dt */
-	[self calculateDeltaTime];
-	if( ! paused )
-		[[Scheduler sharedScheduler] tick: dt];
-
-	
-	/* to avoid flickr, nextScene MUST be here: after tick and before draw */
-	if( nextScene )
-		[self setNextScene];
-	
-	glPushMatrix();
-
-	[self applyLandscape];
-	
-	/* draw the scene */
-	[runningScene visit];
-	
-	glPopMatrix();
-
-	if( displayFPS ) {
-		glPushMatrix();
-		[self applyLandscape];
-		[self showFPS];
-		glPopMatrix();
-	}
-		
-	/* swap buffers */
-	[self swapBuffers];
-}
-
-//
-// show FPS
-//
--(void) showFPS
-{
-	frames++;
-	accumDt += dt;
-
-	if ( accumDt > 0.3)  {
-		frameRate = frames/accumDt;
-		frames = 0;
-		accumDt = 0;
-	}
-
-	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
-	Texture2D *texture = [[Texture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:24];
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-
-	glColor4ub(224,224,244,200);
-	[texture drawAtPoint: CGPointMake(60,20)];
-	[texture release];
-		
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-}
-
--(void) calculateDeltaTime
-{
-	struct timeval now;
-	
-	if( gettimeofday( &now, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
-	}
-	
-	// new delta time
-	if( nextDeltaTimeZero ) {
-		dt = 0;
-		nextDeltaTimeZero = NO;
-	} else {
-		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
-		dt = MAX(0,dt);
-	}
-	
-	lastUpdate = now;	
-}
-
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	nextDeltaTimeZero = YES;
-}
+@implementation Director (Events)
 
 -(void) addEventHandler:(CocosNode*) node
 {
@@ -582,3 +560,35 @@ static int _pixelFormat = RGB565;
 	}
 }
 @end
+
+
+@implementation Director (Debug)
+
+-(void) showFPS
+{
+	frames++;
+	accumDt += dt;
+	
+	if ( accumDt > 0.3)  {
+		frameRate = frames/accumDt;
+		frames = 0;
+		accumDt = 0;
+	}
+	
+	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
+	Texture2D *texture = [[Texture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:24];
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState( GL_VERTEX_ARRAY);
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	
+	glColor4ub(224,224,244,200);
+	[texture drawAtPoint: CGPointMake(60,20)];
+	[texture release];
+	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+@end
+

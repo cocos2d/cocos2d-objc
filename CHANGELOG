@@ -1,5 +1,9 @@
 version 0.4.1 - dd-mmm-yyyy
+ . CocosNode: added removeAll (by Codemattic)
+ . CocosNode: implementation file reorganized
+ . Demo: ClickAndMove demo working again (issue 12)
  . Director: added eventsEnabled. You can enable/disabled touch events globally (eg: Transitions want this feature)
+ . Director: implementation file reorganized
  . Transitions: Added new ZoomFlipXTransition transition.
  . Transitions: Added new ZoomFlipYTransition transition.
  . Transitions: Added new ZoomFlipAngularTransition transition.

@@ -150,6 +150,8 @@
 -(void) remove: (CocosNode*)node;
 /** Removes a child from the container given its name */
 -(void) removeByName: (NSString*)name;
+/** Removes all children from the container */
+-(void) removeAll;
 /** Gets a child from the container given its name */
 -(CocosNode*) get: (NSString*) name;
 @end

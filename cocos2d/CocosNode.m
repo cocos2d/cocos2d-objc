@@ -88,6 +88,7 @@
 	
 	return self;
 }
+
 - (void) dealloc
 {
 #if DEBUG
@@ -111,6 +112,10 @@
 	
 	[super dealloc];
 }
+@end
+
+
+@implementation CocosNode (Composition)
 
 -(id) add: (CocosNode*) child z:(int)z name:(NSString*)name
 {	
@@ -180,11 +185,25 @@
 	[childrenNames removeObjectForKey: name];
 }
 
+-(void) removeAll {
+	for( CocosNode * c in children) {
+		[c setParent: nil];
+		if( isRunning )
+			[c onExit];
+			
+		[children removeObject: c];
+	}	
+}
+
 -(CocosNode*) get: (NSString*) name
 {
 	NSAssert( name != nil, @"Argument must be non-nil");
 	return [childrenNames objectForKey:name];
 }
+@end
+
+
+@implementation CocosNode (Draw)
 
 -(void) draw
 {
@@ -251,6 +270,10 @@
 	glPopMatrix();
 
 }
+@end
+
+
+@implementation CocosNode (SceneManagement)
 
 -(void) onEnter
 {
@@ -273,6 +296,10 @@
 		[child onExit];
 	
 }
+@end
+
+
+@implementation CocosNode (Actions)
 
 -(Action*) do: (Action*) action
 {
@@ -322,6 +349,9 @@
 		}
 	}
 }
+@end
+
+@implementation CocosNode (Timers)
 
 -(void) schedule: (SEL) selector
 {
@@ -379,5 +409,4 @@
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
 }
-
 @end
