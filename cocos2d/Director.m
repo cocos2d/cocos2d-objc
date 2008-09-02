@@ -32,7 +32,7 @@
 
 
 @interface Director (Private)
--(void) drawScene;
+-(void) mainLoop;
 -(void) startAnimation;
 -(void) stopAnimation;
 -(void) setNextScene;
@@ -146,7 +146,7 @@ static int _pixelFormat = RGB565;
 //
 // main loop
 //
-- (void) drawScene
+- (void) mainLoop
 {
 	
 	/* clear window */
@@ -482,7 +482,7 @@ static int _pixelFormat = RGB565;
 	}
 	
 
-	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
+	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
 }
 
 - (void)stopAnimation
