@@ -157,6 +157,7 @@ static BOOL _fontNameRelease = NO;
 -(void) dealloc
 {
 	[label release];
+	[zoomAction release];
 	[super dealloc];
 }
 
@@ -169,10 +170,13 @@ static BOOL _fontNameRelease = NO;
 }
 
 -(void) activate {
-	[self stopAction: zoomAction];
+//	[self stopAction: zoomAction];
+	[self stopAllActions];
 	[zoomAction release];
 	zoomAction = nil;
+
 	self.scale = 1.0;
+
 	[super activate];
 }
 
@@ -180,7 +184,6 @@ static BOOL _fontNameRelease = NO;
 {
 	[self stopAction: zoomAction];
 	[zoomAction release];
-	zoomAction = nil;
 	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.2] retain];
 	[self do:zoomAction];
 }
@@ -189,7 +192,6 @@ static BOOL _fontNameRelease = NO;
 {
 	[self stopAction: zoomAction];
 	[zoomAction release];
-	zoomAction = nil;
 	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.0] retain];
 	[self do:zoomAction];
 }
