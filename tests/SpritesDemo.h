@@ -16,6 +16,10 @@
 }
 -(void) centerSprites;
 -(NSString*) title;
+
+-(void) backCallback;
+-(void) nextCallback;
+-(void) restartCallback;
 @end
 
 @interface SpriteMove : SpriteDemo

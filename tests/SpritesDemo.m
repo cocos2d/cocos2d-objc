@@ -6,14 +6,59 @@
 // local import
 #import "SpritesDemo.h"
 
-Class nextAction();
+static int sceneIdx=-1;
+static NSString *transitions[] = {
+						 @"SpriteMove",
+						 @"SpriteRotate",
+						 @"SpriteScale",
+						 @"SpriteJump",
+						 @"SpriteBlink",
+						 @"SpriteFade",
+						 @"SpriteAnimate",
+						 @"SpriteSequence",
+						 @"SpriteSpawn",
+						 @"SpriteReverse",
+						 @"SpriteDelayTime",
+						 @"SpriteRepeat",
+						 @"SpriteReverseSequence",
+						 @"SpriteAccelerate",
+						 @"SpriteCallFunc",
+						@"SpriteOrbit" };
+
+Class nextAction()
+{
+
+	sceneIdx++;
+	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
+	NSString *r = transitions[sceneIdx];
+	Class c = NSClassFromString(r);
+	return c;
+}
+
+Class backAction()
+{
+	sceneIdx--;
+	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
+	NSString *r = transitions[sceneIdx];
+	Class c = NSClassFromString(r);
+	return c;
+}
+
+Class restartAction()
+{
+	NSString *r = transitions[sceneIdx];
+	Class c = NSClassFromString(r);
+	return c;
+}
+
+
+
+
 
 @implementation SpriteDemo
 -(id) init
 {
 	[super init];
-
-	isTouchEnabled = YES;
 
 	grossini = [[Sprite spriteFromFile:@"grossini.png"] retain];
 	tamara = [[Sprite spriteFromFile:@"grossinis_sister1.png"] retain];
@@ -30,6 +75,17 @@ Class nextAction();
 	[self add: label];
 	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
 
+	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback)];
+	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback)];
+	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback)];
+	
+	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+	menu.position = cpvzero;
+	item1.position = cpv(480/2-100,30);
+	item2.position = cpv(480/2, 30);
+	item3.position = cpv(480/2+100,30);
+	[self add: menu z:1];
+
 	return self;
 }
 
@@ -40,12 +96,28 @@ Class nextAction();
 	[super dealloc];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+
+-(void) restartCallback
+{
+	Scene *s = [Scene node];
+	[s add: [restartAction() node]];
+	[[Director sharedDirector] replaceScene: s];
+}
+
+-(void) nextCallback
 {
 	Scene *s = [Scene node];
 	[s add: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
+
+-(void) backCallback
+{
+	Scene *s = [Scene node];
+	[s add: [backAction() node]];
+	[[Director sharedDirector] replaceScene: s];
+}
+
 
 -(void) centerSprites
 {
@@ -398,36 +470,6 @@ Class nextAction();
 }
 @end
 
-Class nextAction()
-{
-	static int i=0;
-	
-	NSArray *transitions = [[NSArray arrayWithObjects:
-								@"SpriteMove",
-								@"SpriteRotate",
-								@"SpriteScale",
-								@"SpriteJump",
-								@"SpriteBlink",
-								@"SpriteFade",
-								@"SpriteAnimate",
-								@"SpriteSequence",
-								@"SpriteSpawn",
-								@"SpriteReverse",
-								@"SpriteDelayTime",
-								@"SpriteRepeat",
-								@"SpriteReverseSequence",
-								@"SpriteAccelerate",
-								@"SpriteCallFunc",
-								@"SpriteOrbit",
-									nil ] retain];
-	
-	
-	NSString *r = [transitions objectAtIndex:i++];
-	i = i % [transitions count];
-	Class c = NSClassFromString(r);
-	return c;
-}
-
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
@@ -437,7 +479,7 @@ Class nextAction()
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+//	[[Director sharedDirector] setDisplayFPS:YES];
 
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
