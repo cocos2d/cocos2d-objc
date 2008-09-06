@@ -24,6 +24,16 @@
 		317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportDemo.m */; };
+		500165A10E72DB470085673F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		500165A20E72DB470085673F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		500165A30E72DB470085673F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		500165A40E72DB470085673F /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		500165A50E72DB470085673F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		500165A60E72DB470085673F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		500165A70E72DB470085673F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		500165A80E72DB470085673F /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		500165A90E72DB7D0085673F /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		500165AA0E72DB7D0085673F /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		5018F2690DFDEAFF00C013A5 /* Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* Action.h */; };
 		5018F26A0DFDEAFF00C013A5 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* Action.m */; };
 		5018F26B0DFDEAFF00C013A5 /* CocosNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CocosNode.h */; };
@@ -402,6 +412,12 @@
 		317070350E29409E00DD3360 /* AccelViewportDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportDemo.m; path = tests/AccelViewportDemo.m; sourceTree = "<group>"; };
 		317070360E29409E00DD3360 /* AccelViewportDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportDemo.h; path = tests/AccelViewportDemo.h; sourceTree = "<group>"; };
 		3170705B0E2940C900DD3360 /* AccelViewportDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		500165990E72DB0E0085673F /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r1.png; sourceTree = "<group>"; };
+		5001659A0E72DB0E0085673F /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
+		5001659D0E72DB470085673F /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b1.png; sourceTree = "<group>"; };
+		5001659E0E72DB470085673F /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b2.png; sourceTree = "<group>"; };
+		5001659F0E72DB470085673F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
+		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
 		5018F2530DFDEAFF00C013A5 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Action.m; sourceTree = "<group>"; };
@@ -1013,6 +1029,12 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5001659D0E72DB470085673F /* b1.png */,
+				5001659E0E72DB470085673F /* b2.png */,
+				5001659F0E72DB470085673F /* f1.png */,
+				500165A00E72DB470085673F /* f2.png */,
+				500165990E72DB0E0085673F /* r1.png */,
+				5001659A0E72DB0E0085673F /* r2.png */,
 				5036DFBF0E612F2D003B6155 /* SendScoreButton.png */,
 				5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */,
 				31288D7F0E376A9000F6A59D /* clouds.jpg */,
@@ -1544,6 +1566,10 @@
 				50B2CB4A0E10EE4A00AE9530 /* grossini.png in Resources */,
 				50B2CB4B0E10EE4A00AE9530 /* grossinis_sister1.png in Resources */,
 				50B2CB4C0E10EE4A00AE9530 /* grossinis_sister2.png in Resources */,
+				500165A50E72DB470085673F /* b1.png in Resources */,
+				500165A60E72DB470085673F /* b2.png in Resources */,
+				500165A70E72DB470085673F /* f1.png in Resources */,
+				500165A80E72DB470085673F /* f2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1551,6 +1577,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				500165A90E72DB7D0085673F /* r1.png in Resources */,
+				500165AA0E72DB7D0085673F /* r2.png in Resources */,
 				50B2CB3C0E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB3D0E10EE4A00AE9530 /* Icon.png in Resources */,
 				50B2CB3F0E10EE4A00AE9530 /* grossini.png in Resources */,
@@ -1570,6 +1598,10 @@
 				50B2D0F90E13296F00AE9530 /* grossini_dance_12.png in Resources */,
 				50B2D0FA0E13296F00AE9530 /* grossini_dance_13.png in Resources */,
 				50B2D0FB0E13296F00AE9530 /* grossini_dance_14.png in Resources */,
+				500165A10E72DB470085673F /* b1.png in Resources */,
+				500165A20E72DB470085673F /* b2.png in Resources */,
+				500165A30E72DB470085673F /* f1.png in Resources */,
+				500165A40E72DB470085673F /* f2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

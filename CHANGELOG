@@ -3,6 +3,7 @@ version 0.4.1 - dd-mmm-yyyy
  . CocosNode: implementation file reorganized
  . CocosNode: added stopAction method (to remove just 1 one action)
  . Demo: ClickAndMove demo working again (issue 12)
+ . Demo: SpritesDemo using back, restart & forward arrows
  . Director: added eventsEnabled. You can enable/disabled touch events globally (eg: Transitions want this feature)
  . Director: implementation file reorganized
  . Director: drawScene renamed to mainLoop
