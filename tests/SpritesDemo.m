@@ -4,6 +4,7 @@
 //
 
 // local import
+#import "cocos2d.h"
 #import "SpritesDemo.h"
 
 static int sceneIdx=-1;
