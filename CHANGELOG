@@ -1,4 +1,4 @@
-version 0.4.1 - dd-mmm-yyyy
+version 0.4.1 - 08-Sept-2008
  . Actions: commented an NSLog()
  . CocosNode: added removeAll (by Codemattic)
  . CocosNode: implementation file reorganized
@@ -7,9 +7,11 @@ version 0.4.1 - dd-mmm-yyyy
  . Demo: ClickAndMove demo working again (issue 12)
  . Demo: SpritesDemo using back, restart & forward arrows
  . Demo: TransitionsDemo using back, restart & forward arrows
+ . Demo: ParticleDemo using back, restart & forward arrows
  . Director: added eventsEnabled. You can enable/disabled touch events globally (eg: Transitions want this feature)
  . Director: implementation file reorganized
  . Director: drawScene renamed to mainLoop
+ . Director: FPS are shown in the very bottom-left corner
  . Transitions: Added new ZoomFlipXTransition transition.
  . Transitions: Added new ZoomFlipYTransition transition.
  . Transitions: Added new ZoomFlipAngularTransition transition.
