@@ -318,8 +318,11 @@
 {
 	[actionsToAdd removeAllObjects];
 	
-	for( Action* action in actions)
-		[actionsToRemove addObject: action];
+	for( Action* action in actions) {
+		// prevents double release
+		if( ! [actionsToRemove containsObject: action] )
+			[actionsToRemove addObject: action];
+	}
 }
 
 -(void) stopAction: (Action*) action
