@@ -1,7 +1,9 @@
 version 0.4.1 - dd-mmm-yyyy
+ . Actions: commented an NSLog()
  . CocosNode: added removeAll (by Codemattic)
  . CocosNode: implementation file reorganized
  . CocosNode: added stopAction method (to remove just 1 one action)
+ . CocosNode: sanity check when removing actions
  . Demo: ClickAndMove demo working again (issue 12)
  . Demo: SpritesDemo using back, restart & forward arrows
  . Demo: TransitionsDemo using back, restart & forward arrows

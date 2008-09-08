@@ -45,9 +45,13 @@
 
 -(void) dealloc
 {
+#if DEBUG
 	NSLog(@"deallocing %@", self);
-	if( target )
+#endif
+	if( target ) {
 		[target release];
+		target = nil;
+	}
 	[super dealloc];
 }
 
