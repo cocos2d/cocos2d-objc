@@ -38,7 +38,9 @@
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the label with a font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-
+/** changes the string
+ * WARNING: Changing the string is as expensive as creating a new Label.
+ */
 - (void) setString:(NSString*)string;
 
 @end
