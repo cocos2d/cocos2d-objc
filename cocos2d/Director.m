@@ -576,13 +576,13 @@ static int _pixelFormat = RGB565;
 	}
 	
 	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
-	Texture2D *texture = [[Texture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:24];
+	Texture2D *texture = [[Texture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:24];
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState( GL_VERTEX_ARRAY);
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	
 	glColor4ub(224,224,244,200);
-	[texture drawAtPoint: CGPointMake(60,20)];
+	[texture drawAtPoint: CGPointMake(5,2)];
 	[texture release];
 	
 	glDisable(GL_TEXTURE_2D);

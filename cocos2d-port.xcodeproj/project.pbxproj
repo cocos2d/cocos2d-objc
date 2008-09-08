@@ -79,6 +79,12 @@
 		504055B10E3230BD00213FEF /* ParticleSystems.m in Sources */ = {isa = PBXBuildFile; fileRef = 504055AF0E3230BD00213FEF /* ParticleSystems.m */; };
 		50405A140E3296AC00213FEF /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
 		50405A200E32A15500213FEF /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A1F0E32A15500213FEF /* smoke.png */; };
+		506046A20E75CEFB0044A29B /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		506046A30E75CEFB0044A29B /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		506046A40E75CEFB0044A29B /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		506046A50E75CEFB0044A29B /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		506046A60E75CEFB0044A29B /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		506046A70E75CEFB0044A29B /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		506143F50E589A2E003CCDB7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		506143F60E589A2E003CCDB7 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		506143F70E589A2E003CCDB7 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1613,6 +1619,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506046A20E75CEFB0044A29B /* b1.png in Resources */,
+				506046A30E75CEFB0044A29B /* b2.png in Resources */,
+				506046A40E75CEFB0044A29B /* f1.png in Resources */,
+				506046A50E75CEFB0044A29B /* f2.png in Resources */,
+				506046A60E75CEFB0044A29B /* r1.png in Resources */,
+				506046A70E75CEFB0044A29B /* r2.png in Resources */,
 				50DB1BB50E1C1E5900A89DFF /* Default.png in Resources */,
 				50DB1BB60E1C1E5900A89DFF /* Icon.png in Resources */,
 				50DB1BB80E1C1E5900A89DFF /* grossini.png in Resources */,
