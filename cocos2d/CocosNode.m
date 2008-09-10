@@ -378,7 +378,7 @@
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
-#ifdef DEBUG
+#if DEBUG
 		NSLog(@"CocosNode.schedule: Selector already scheduled");
 #endif
 		return;
