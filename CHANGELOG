@@ -3,6 +3,7 @@ version 0.4.2 - dd-MMM-yyy
  . Demo: AnchorDemo using back, restart, forward arrows
  . MenuItem: callback receives the sender as its argument (issue 14)
  . Particles: added initWithParticles method.
+ . Transitions: Fixed HUGE memory leak
  . Transitions: Timing fix. Slide transitions don't show "black" space
 
 version 0.4.1 - 08-Sept-2008

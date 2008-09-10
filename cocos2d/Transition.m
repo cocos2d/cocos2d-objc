@@ -61,8 +61,24 @@
 	// add both scenes
 	[self add: inScene z:1];
 	[self add: outScene z:0];
-
+	
 	return self;
+}
+
+-(void) step: (ccTime) dt {
+
+	[self unschedule:_cmd];
+	
+	[[Director sharedDirector] replaceScene: inScene];
+
+	// enable events while transitions
+	[[Director sharedDirector] setEventsEnabled: YES];
+	
+	[self remove: inScene];
+	[self remove: outScene];
+	
+	inScene = nil;
+	outScene = nil;
 }
 
 -(void) finish
@@ -80,18 +96,10 @@
 	[outScene setRotation:0.0f];
 	[outScene.camera restore];
 	
-	
-	[[Director sharedDirector] replaceScene: inScene];
+//	[inScene stopAllActions];
+//	[outScene stopAllActions];
 
-	// enable events while transitions
-	[[Director sharedDirector] setEventsEnabled: YES];
-
-	[self remove: inScene];
-	[self remove: outScene];
-	
-	inScene = nil;
-	outScene = nil;
-
+	[self schedule:@selector(step:) interval:0];
 }
 @end
 
@@ -228,7 +236,7 @@
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	[self initScenes];
 	
 	IntervalAction *in = [self action];
@@ -238,7 +246,9 @@
 	[outScene do: [Sequence actions:
 				   [Accelerate actionWithAction:out rate:0.5],
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
-				   nil] ];	
+				   nil] ];
+	
+	[out release];
 }
 
 -(IntervalAction*) action
