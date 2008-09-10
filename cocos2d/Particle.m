@@ -53,10 +53,20 @@
 @synthesize emissionRate;
 @synthesize totalParticles;
 
--(id) init
+-(id) init {
+	NSException* myException = [NSException
+								exceptionWithName:@"Particle.init"
+								reason:@"Particle.init shall not be called. Used initWithParticles instead."
+								userInfo:nil];
+	@throw myException;	
+}
+
+-(id) initWithParticles:(int) numberOfParticles
 {
 	if( ! [super init] )
 		return nil;
+	
+	totalParticles = numberOfParticles;
 	
 	particles = malloc( sizeof(Particle) * totalParticles );
 	vertices = malloc( sizeof(ccPointSprite) * totalParticles );
