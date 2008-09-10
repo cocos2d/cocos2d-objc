@@ -689,7 +689,7 @@
 }
 -(IntervalAction*) reverse
 {
-	return [FadeOut actionWithDuration: duration];
+	return [FadeIn actionWithDuration: duration];
 }
 @end
 
