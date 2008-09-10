@@ -14,17 +14,17 @@
 {
 	Menu * menu;
 }
--(void) onOptions;
--(void) onVoid;
--(void) onQuit;
+-(void) onOptions: (id) sender;
+-(void) onVoid: (id) sender;
+-(void) onQuit: (id) sender;
 @end
 
 @interface Layer2 : Layer
 {
 	Menu * menu;
 }
--(void) onGoBack;
--(void) onFullscreen;
+-(void) onGoBack: (id) sender;
+-(void) onFullscreen: (id) sender;
 @end
 
 @interface Layer3: ColorLayer

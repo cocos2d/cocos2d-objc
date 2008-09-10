@@ -76,9 +76,9 @@ Class restartAction()
 	[self add: label];
 	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
 
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback)];
+	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 	
 	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 	menu.position = cpvzero;
@@ -98,21 +98,21 @@ Class restartAction()
 }
 
 
--(void) restartCallback
+-(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
 	[s add: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
--(void) nextCallback
+-(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
 	[s add: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
--(void) backCallback
+-(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
 	[s add: [backAction() node]];
