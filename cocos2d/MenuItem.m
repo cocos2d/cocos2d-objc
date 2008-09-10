@@ -55,6 +55,7 @@ static BOOL _fontNameRelease = NO;
 	invocation = [NSInvocation invocationWithMethodSignature:sig];
 	[invocation setTarget:rec];
 	[invocation setSelector:cb];
+	[invocation setArgument:self atIndex:2];
 	[invocation retain];
 	
 	return self;

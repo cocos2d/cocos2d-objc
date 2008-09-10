@@ -14,23 +14,23 @@
 {
 	Menu * menu;
 }
--(void) menuCallback;
--(void) menuCallback2;
--(void) onQuit;
+-(void) menuCallback:(id) sender;
+-(void) menuCallback2:(id) sender;
+-(void) onQuit:(id) sender;
 @end
 
 @interface Layer2 : Layer
 {
 	Menu * menu;
 }
--(void) menuCallback;
--(void) menuCallback2;
+-(void) menuCallback: (id) sender;
+-(void) menuCallback2: (id) sender;
 @end
 
 @interface Layer3 : Layer
 {
 	Menu * menu;
 }
--(void) menuCallback;
--(void) menuCallback2;
+-(void) menuCallback: (id) sender;
+-(void) menuCallback2: (id) sender;
 @end

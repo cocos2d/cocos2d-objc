@@ -10,8 +10,8 @@
 {
 	[super init];
 	
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Options" target:self selector:@selector(onOptions)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Options" target:self selector:@selector(onOptions:)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
 	
@@ -20,18 +20,18 @@
 	return self;
 }
 
--(void) onOptions
+-(void) onOptions: (id) sender
 {
 	Scene * scene = [[Scene node] add: [Layer2 node]];
 	[[Director sharedDirector] pushScene: scene];
 }
 
--(void) onQuit
+-(void) onQuit: (id) sender
 {
 	[[Director sharedDirector] popScene];
 }
 
--(void) onVoid
+-(void) onVoid: (id) sender
 {
 }
 
@@ -42,8 +42,8 @@
 {
 	[super init];
 	
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Fullscreen" target:self selector:@selector(onFullscreen)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Fullscreen" target:self selector:@selector(onFullscreen:)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
 	
@@ -53,12 +53,12 @@
 	return self;
 }
 
--(void) onGoBack
+-(void) onGoBack:(id) sender
 {
 	[[Director sharedDirector] popScene];
 }
 
--(void) onFullscreen
+-(void) onFullscreen:(id) sender
 {
 	[[Director sharedDirector] replaceScene: [ [Scene node] add: [Layer3 node]] ];
 }

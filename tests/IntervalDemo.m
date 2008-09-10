@@ -50,7 +50,7 @@
 	 ];
 
 	// pause button
-	MenuItem *item1 = [MenuItemFont itemFromString: @"Pause" target:self selector:@selector(pause)];
+	MenuItem *item1 = [MenuItemFont itemFromString: @"Pause" target:self selector:@selector(pause:)];
 	Menu *menu = [Menu menuWithItems: item1, nil];
 	menu.position = cpv(480/2, 270);
 
@@ -59,7 +59,7 @@
 	return self;
 }
 
--(void) pause
+-(void) pause: (id) sender
 {
 	[[Director sharedDirector] pause];
 	

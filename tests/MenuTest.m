@@ -15,9 +15,9 @@
 	[MenuItemFont setFontName: @"Courier New"];
 	
 	
-	MenuItem *item1 = [MenuItemFont itemFromString: @"Start" target:self selector:@selector(menuCallback)];
-	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2)];
-	MenuItemFont *item3 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit)];
+	MenuItem *item1 = [MenuItemFont itemFromString: @"Start" target:self selector:@selector(menuCallback:)];
+	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
+	MenuItemFont *item3 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	[[item3 label] setRGB:255:0:32];
 
@@ -28,17 +28,17 @@
 	return self;
 }
 
--(void) menuCallback
+-(void) menuCallback: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:1];
 }
 
--(void) menuCallback2
+-(void) menuCallback2: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:2];
 }
 
--(void) onQuit
+-(void) onQuit: (id) sender
 {
 	[[Director sharedDirector] end];
 }
@@ -53,8 +53,8 @@
 	[MenuItemFont setFontName: @"Marker Felt"];
 
 	
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2:)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
 
@@ -67,12 +67,12 @@
 	return self;
 }
 
--(void) menuCallback
+-(void) menuCallback: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:0];
 }
 
--(void) menuCallback2
+-(void) menuCallback2: (id) sender
 {
 }
 @end
@@ -84,8 +84,8 @@
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:28];
 
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2:)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];	
 	menu.position = cpv(0,0);
@@ -105,12 +105,12 @@
 	return self;
 }
 
--(void) menuCallback
+-(void) menuCallback: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:0];
 }
 
--(void) menuCallback2
+-(void) menuCallback2: (id) sender
 {
 }
 

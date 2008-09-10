@@ -8,15 +8,47 @@
 
 // local import
 #import "TestAnchor.h"
+static int sceneIdx=-1;
+static NSString *transitions[] = {
+			@"Anchor1",
+			@"Anchor2",
+			@"Anchor3",
+};
 
-Class nextAction();
+Class nextAction()
+{
+	
+	sceneIdx++;
+	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
+	NSString *r = transitions[sceneIdx];
+	Class c = NSClassFromString(r);
+	return c;
+}
+
+Class backAction()
+{
+	sceneIdx--;
+	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
+	if( sceneIdx < 0 )
+		sceneIdx += total;	
+	
+	NSString *r = transitions[sceneIdx];
+	Class c = NSClassFromString(r);
+	return c;
+}
+
+Class restartAction()
+{
+	NSString *r = transitions[sceneIdx];
+	Class c = NSClassFromString(r);
+	return c;
+}
+
 
 @implementation AnchorDemo
 -(id) init
 {
 	[super init];
-
-	isTouchEnabled = YES;
 
 	grossini = [[Sprite spriteFromFile:@"grossini.png"] retain];
 	tamara = [[Sprite spriteFromFile:@"grossinis_sister1.png"] retain];
@@ -32,6 +64,18 @@ Class nextAction();
 	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
 	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
+	
+	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+	
+	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+	
+	menu.position = cpvzero;
+	item1.position = cpv( s.size.width/2 - 100,30);
+	item2.position = cpv( s.size.width/2, 30);
+	item3.position = cpv( s.size.width/2 + 100,30);
+	[self add: menu z:-1];	
 
 	return self;
 }
@@ -43,10 +87,24 @@ Class nextAction();
 	[super dealloc];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) restartCallback: (id) sender
+{
+	Scene *s = [Scene node];
+	[s add: [restartAction() node]];
+	[[Director sharedDirector] replaceScene: s];
+}
+
+-(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
 	[s add: [nextAction() node]];
+	[[Director sharedDirector] replaceScene: s];
+}
+
+-(void) backCallback: (id) sender
+{
+	Scene *s = [Scene node];
+	[s add: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -157,25 +215,6 @@ Class nextAction();
 }
 
 @end
-
-
-
-Class nextAction()
-{
-	static int i=0;
-	
-	NSArray *transitions = [[NSArray arrayWithObjects:
-								@"Anchor1",
-								@"Anchor2",
-								@"Anchor3",
-									nil ] retain];
-	
-	
-	NSString *r = [transitions objectAtIndex:i++];
-	i = i % [transitions count];
-	Class c = NSClassFromString(r);
-	return c;
-}
 
 
 // CLASS IMPLEMENTATIONS
