@@ -56,12 +56,12 @@
 -(id) init {
 	NSException* myException = [NSException
 								exceptionWithName:@"Particle.init"
-								reason:@"Particle.init shall not be called. Used initWithParticles instead."
+								reason:@"Particle.init shall not be called. Used initWithTotalParticles instead."
 								userInfo:nil];
 	@throw myException;	
 }
 
--(id) initWithParticles:(int) numberOfParticles
+-(id) initWithTotalParticles:(int) numberOfParticles
 {
 	if( ! [super init] )
 		return nil;

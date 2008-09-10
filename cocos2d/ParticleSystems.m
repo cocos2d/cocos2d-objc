@@ -29,12 +29,12 @@
 @implementation ParticleFireworks
 -(id) init
 {
-	return [self initWithParticles:1500];
+	return [self initWithTotalParticles:1500];
 }
 
--(id) initWithParticles:(int)p
+-(id) initWithTotalParticles:(int)p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 	
 	// duration
@@ -105,12 +105,12 @@
 @implementation ParticleFire
 -(id) init
 {
-	return [self initWithParticles:250];
+	return [self initWithTotalParticles:250];
 }
 
--(id) initWithParticles:(int) p
+-(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 
 	// duration
@@ -183,12 +183,12 @@
 @implementation ParticleSun
 -(id) init
 {
-	return [self initWithParticles:350];
+	return [self initWithTotalParticles:350];
 }
 
--(id) initWithParticles:(int) p
+-(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 
 	// additive
@@ -261,12 +261,12 @@
 @implementation ParticleGalaxy
 -(id) init
 {
-	return [self initWithParticles:200];
+	return [self initWithTotalParticles:200];
 }
 
--(id) initWithParticles:(int)p
+-(id) initWithTotalParticles:(int)p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 
 	// duration
@@ -343,12 +343,12 @@
 @implementation ParticleFlower
 -(id) init
 {
-	return [self initWithParticles:250];
+	return [self initWithTotalParticles:250];
 }
 
--(id) initWithParticles:(int) p
+-(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 	
 	// duration
@@ -425,12 +425,12 @@
 @implementation ParticleMeteor
 -(id) init
 {
-	return [self initWithParticles:150];
+	return [self initWithTotalParticles:150];
 }
 
--(id) initWithParticles:(int) p
+-(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 
 	// duration
@@ -507,12 +507,12 @@
 @implementation ParticleSpiral
 -(id) init
 {
-	return [self initWithParticles:500];
+	return [self initWithTotalParticles:500];
 }
 
--(id) initWithParticles:(int) p
+-(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 	
 	// duration
@@ -589,12 +589,12 @@
 @implementation ParticleExplosion
 -(id) init
 {
-	return [self initWithParticles:700];
+	return [self initWithTotalParticles:700];
 }
 
--(id) initWithParticles:(int)p
+-(id) initWithTotalParticles:(int)p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 	
 	// duration
@@ -671,12 +671,12 @@
 @implementation ParticleSmoke
 -(id) init
 {
-	return [self initWithParticles:200];
+	return [self initWithTotalParticles:200];
 }
 
--(id) initWithParticles:(int) p
+-(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithParticles:p] )
+	if( ! [super initWithTotalParticles:p] )
 		return nil;
 	
 	// duration

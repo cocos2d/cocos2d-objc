@@ -1,8 +1,8 @@
-version 0.4.2 - dd-MMM-yyy
+version 0.4.2 - 10-Sept-2008
  . Action: FadeOut reverse fixed
  . Demo: AnchorDemo using back, restart, forward arrows
  . MenuItem: callback receives the sender as its argument (issue 14)
- . Particles: added initWithParticles method.
+ . Particles: added initWithTotalParticles method.
  . Transitions: Fixed HUGE memory leak
  . Transitions: Timing fix. Slide transitions don't show "black" space
 
