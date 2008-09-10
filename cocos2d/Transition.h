@@ -32,8 +32,6 @@
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
 /** initializes a transition with duration and incoming scene */
 -(id) initWithDuration:(ccTime) t scene:(Scene*)s;
-/** called before the transition starts */
--(void) start;
 /** called after the transition finishes */
 -(void) finish;
 @end

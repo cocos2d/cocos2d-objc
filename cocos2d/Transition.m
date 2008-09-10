@@ -57,15 +57,12 @@
 	
 	// disable events while transitions
 	[[Director sharedDirector] setEventsEnabled: NO];
-	
-	[self start];
-	return self;
-}
 
--(void) start
-{
+	// add both scenes
 	[self add: inScene z:1];
 	[self add: outScene z:0];
+
+	return self;
 }
 
 -(void) finish
@@ -102,9 +99,9 @@
 // RotoZoom
 //
 @implementation RotoZoomTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	CGRect s = [[Director sharedDirector] winSize];
 	
 	[inScene setScale:0.001f];
@@ -133,9 +130,9 @@
 // JumpZoom
 //
 @implementation JumpZoomTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	CGRect s = [[Director sharedDirector] winSize];
 	
 	[inScene setScale:0.5f];
@@ -165,9 +162,9 @@
 // MoveInL
 //
 @implementation MoveInLTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[self initScenes];
 	
@@ -228,9 +225,9 @@
 // SlideInL
 //
 @implementation SlideInLTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[self initScenes];
 	
@@ -314,9 +311,9 @@
 // ShrinkGrow Transition
 //
 @implementation ShrinkGrowTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	CGRect s = [[Director sharedDirector] winSize];
 	
@@ -342,9 +339,9 @@
 // FlipX Transition
 //
 @implementation FlipXTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 
 	[inScene setVisible: NO];
 	IntervalAction *inA = [Sequence actions:
@@ -368,9 +365,9 @@
 // FlipY Transition
 //
 @implementation FlipYTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[inScene setVisible: NO];
 	IntervalAction *inA = [Sequence actions:
@@ -394,9 +391,9 @@
 // FlipAngular Transition
 //
 @implementation FlipAngularTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[inScene setVisible: NO];
 	IntervalAction *inA = [Sequence actions:
@@ -420,9 +417,9 @@
 // FlipX Transition
 //
 @implementation ZoomFlipXTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[inScene setVisible: NO];
 	IntervalAction *inA = [Sequence actions:
@@ -453,9 +450,9 @@
 // FlipY Transition
 //
 @implementation ZoomFlipYTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[inScene setVisible: NO];
 	IntervalAction *inA = [Sequence actions:
@@ -485,9 +482,9 @@
 // FlipAngular Transition
 //
 @implementation ZoomFlipAngularTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	[inScene setVisible: NO];
 	IntervalAction *inA = [Sequence actions:
@@ -519,18 +516,15 @@
 // Fade Transition
 //
 @implementation FadeTransition
--(void) start
+-(void) onEnter
 {
-	[super start];
+	[super onEnter];
 	
 	ColorLayer *l = [ColorLayer layerWithColor: 0x00000000];
 	[inScene setVisible: NO];
 	
 	[self add: l z:2 name:@"fade"];
-}
--(void) onEnter
-{
-	[super onEnter];
+	
 	
 	CocosNode *f = [self get:@"fade"];
 
