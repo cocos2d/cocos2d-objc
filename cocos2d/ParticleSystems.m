@@ -29,10 +29,12 @@
 @implementation ParticleFireworks
 -(id) init
 {
-	totalParticles = 1500;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:1500];
+}
+
+-(id) initWithParticles:(int)p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 	
 	// duration
@@ -103,10 +105,12 @@
 @implementation ParticleFire
 -(id) init
 {
-	totalParticles = 250;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:250];
+}
+
+-(id) initWithParticles:(int) p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 
 	// duration
@@ -179,10 +183,12 @@
 @implementation ParticleSun
 -(id) init
 {
-	totalParticles = 350;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:350];
+}
+
+-(id) initWithParticles:(int) p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 
 	// additive
@@ -255,10 +261,12 @@
 @implementation ParticleGalaxy
 -(id) init
 {
-	totalParticles = 200;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:200];
+}
+
+-(id) initWithParticles:(int)p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 
 	// duration
@@ -335,10 +343,12 @@
 @implementation ParticleFlower
 -(id) init
 {
-	totalParticles = 250;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:250];
+}
+
+-(id) initWithParticles:(int) p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 	
 	// duration
@@ -415,10 +425,12 @@
 @implementation ParticleMeteor
 -(id) init
 {
-	totalParticles = 150;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:150];
+}
+
+-(id) initWithParticles:(int) p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 
 	// duration
@@ -495,10 +507,12 @@
 @implementation ParticleSpiral
 -(id) init
 {
-	totalParticles = 500;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:500];
+}
+
+-(id) initWithParticles:(int) p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 	
 	// duration
@@ -575,10 +589,12 @@
 @implementation ParticleExplosion
 -(id) init
 {
-	totalParticles = 700;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:700];
+}
+
+-(id) initWithParticles:(int)p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 	
 	// duration
@@ -655,10 +671,12 @@
 @implementation ParticleSmoke
 -(id) init
 {
-	totalParticles = 200;
-	
-	// must be called after totalParticles is set
-	if( ! [super init] )
+	return [self initWithParticles:200];
+}
+
+-(id) initWithParticles:(int) p
+{
+	if( ! [super initWithParticles:p] )
 		return nil;
 	
 	// duration
