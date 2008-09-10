@@ -1,3 +1,6 @@
+version 0.4.2 - dd-MMM-yyy
+ . Transitions: Timing fix. Slide transitions don't show "black" space
+
 version 0.4.1 - 08-Sept-2008
  . Actions: commented an NSLog()
  . CocosNode: added removeAll (by Codemattic)
