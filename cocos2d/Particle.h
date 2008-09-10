@@ -142,7 +142,7 @@ typedef struct sParticle
 @property (readwrite,assign) int totalParticles;
 
 //! Initializes a system with a fixed number of particles
--(id) initWithParticles:(int) numberOfParticles;
+-(id) initWithTotalParticles:(int) numberOfParticles;
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Update all particles
