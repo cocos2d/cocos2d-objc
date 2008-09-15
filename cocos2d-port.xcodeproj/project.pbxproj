@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		31288D800E376A9000F6A59D /* clouds.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 31288D7F0E376A9000F6A59D /* clouds.jpg */; };
-		3139AA050E5A0F3D004DA81D /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3139AA040E5A0F3D004DA81D /* TCPServer.m */; };
 		317070450E2940C900DD3360 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		317070460E2940C900DD3360 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		317070480E2940C900DD3360 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -421,8 +420,6 @@
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		31288D7F0E376A9000F6A59D /* clouds.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = clouds.jpg; sourceTree = "<group>"; };
-		3139AA030E5A0F3D004DA81D /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
-		3139AA040E5A0F3D004DA81D /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		317070350E29409E00DD3360 /* AccelViewportDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportDemo.m; path = tests/AccelViewportDemo.m; sourceTree = "<group>"; };
 		317070360E29409E00DD3360 /* AccelViewportDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportDemo.h; path = tests/AccelViewportDemo.h; sourceTree = "<group>"; };
 		3170705B0E2940C900DD3360 /* AccelViewportDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -960,8 +957,6 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				3139AA030E5A0F3D004DA81D /* TCPServer.h */,
-				3139AA040E5A0F3D004DA81D /* TCPServer.m */,
 				5061440B0E589A7B003CCDB7 /* TestAnchor.h */,
 				5061440C0E589A7B003CCDB7 /* TestAnchor.m */,
 				5078B5320E3E437F0004233A /* IntervalDemo.h */,
@@ -1676,7 +1671,6 @@
 				3170704E0E2940C900DD3360 /* VirtualAccelerometer.m in Sources */,
 				3170704F0E2940C900DD3360 /* main.m in Sources */,
 				317070500E2940C900DD3360 /* Primitives.m in Sources */,
-				3139AA050E5A0F3D004DA81D /* TCPServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
