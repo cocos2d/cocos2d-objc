@@ -21,6 +21,14 @@
 #import "Scene.h"
 @class IntervalAction;
 @class CocosNode;
+
+typedef enum {
+	kOrientationLeftRight = 0,
+	kOrientationRightLeft = 1,
+	kOrientationUpOver = 0,
+	kOrientationDownOver = 1,
+} tOrientation;
+
 /** Base class for actions
  */
 @interface TransitionScene : Scene {
@@ -34,6 +42,16 @@
 -(id) initWithDuration:(ccTime) t scene:(Scene*)s;
 /** called after the transition finishes */
 -(void) finish;
+@end
+
+@interface OrientedTransitionScene : TransitionScene
+{
+	tOrientation orientation;
+}
+/** creates a base transition with duration and incoming scene */
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s orientation:(tOrientation)o;
+/** initializes a transition with duration and incoming scene */
+-(id) initWithDuration:(ccTime) t scene:(Scene*)s orientation:(tOrientation)o;
 @end
 
 
@@ -137,7 +155,7 @@
  Flips the screen horizontally.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
-@interface FlipXTransition : TransitionScene
+@interface FlipXTransition : OrientedTransitionScene
 {
 }
 @end
@@ -146,7 +164,7 @@
  Flips the screen vertically.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
-@interface FlipYTransition : TransitionScene
+@interface FlipYTransition : OrientedTransitionScene
 {
 }
 @end
@@ -155,7 +173,7 @@
  Flips the screen half horizontally and half vertically.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
-@interface FlipAngularTransition : TransitionScene
+@interface FlipAngularTransition : OrientedTransitionScene
 {
 }
 @end
@@ -164,7 +182,7 @@
  Flips the screen horizontally doing a zoom out/in
  The front face is the outgoing scene and the back face is the incoming scene.
  */
-@interface ZoomFlipXTransition : TransitionScene
+@interface ZoomFlipXTransition : OrientedTransitionScene
 {
 }
 @end
@@ -173,7 +191,7 @@
  Flips the screen vertically doing a little zooming out/in
  The front face is the outgoing scene and the back face is the incoming scene.
  */
-@interface ZoomFlipYTransition : TransitionScene
+@interface ZoomFlipYTransition : OrientedTransitionScene
 {
 }
 @end
@@ -182,7 +200,7 @@
  Flips the screen half horizontally and half vertically doing a little zooming out/in.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
-@interface ZoomFlipAngularTransition : TransitionScene
+@interface ZoomFlipAngularTransition : OrientedTransitionScene
 {
 }
 @end
