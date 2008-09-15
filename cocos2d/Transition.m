@@ -104,6 +104,25 @@
 @end
 
 //
+// Oriented Transition
+//
+@implementation OrientedTransitionScene
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s orientation:(tOrientation)o
+{
+	return [[[self alloc] initWithDuration:t scene:s orientation:o] autorelease];
+}
+
+-(id) initWithDuration:(ccTime) t scene:(Scene*)s orientation:(tOrientation)o
+{
+	if( ! [super initWithDuration:t scene:s] )
+		return nil;
+	orientation = o;
+	return self;
+}
+@end
+
+
+//
 // RotoZoom
 //
 @implementation RotoZoomTransition
@@ -352,22 +371,39 @@
 -(void) onEnter
 {
 	[super onEnter];
-
+	
+	IntervalAction *inA, *outA;
 	[inScene setVisible: NO];
-	IntervalAction *inA = [Sequence actions:
-							[DelayTime actionWithDuration:duration/2],
-							[Show action],
-							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:0 deltaAngleX:0],
-							[CallFunc actionWithTarget:self selector:@selector(finish)],
-						  nil ];
-	IntervalAction *outA = [Sequence actions:
-							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:0 deltaAngleX:0],
-							[Hide action],
-							[DelayTime actionWithDuration:duration/2],							
-							nil ];
+
+	float inDeltaZ, inAngleZ;
+	float outDeltaZ, outAngleZ;
+
+	if( orientation == kOrientationDownOver ) {
+		inDeltaZ = 90;
+		inAngleZ = 270;
+		outDeltaZ = 90;
+		outAngleZ = 0;
+	} else {
+		inDeltaZ = -90;
+		inAngleZ = 90;
+		outDeltaZ = -90;
+		outAngleZ = 0;
+	}
+	inA = [Sequence actions:
+		   [DelayTime actionWithDuration:duration/2],
+		   [Show action],
+		   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:0 deltaAngleX:0],
+		   [CallFunc actionWithTarget:self selector:@selector(finish)],
+		   nil ];
+	outA = [Sequence actions:
+			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:0 deltaAngleX:0],
+			[Hide action],
+			[DelayTime actionWithDuration:duration/2],							
+			nil ];
 	
 	[inScene do: inA];
 	[outScene do: outA];
+	
 }
 @end
 
@@ -379,21 +415,38 @@
 {
 	[super onEnter];
 	
+	IntervalAction *inA, *outA;
 	[inScene setVisible: NO];
-	IntervalAction *inA = [Sequence actions:
-						   [DelayTime actionWithDuration:duration/2],
-						   [Show action],
-						   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:90 deltaAngleX:0],
-						   [CallFunc actionWithTarget:self selector:@selector(finish)],
-						   nil ];
-	IntervalAction *outA = [Sequence actions:
-							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:90 deltaAngleX:0],
-							[Hide action],
-							[DelayTime actionWithDuration:duration/2],							
-							nil ];
+
+	float inDeltaZ, inAngleZ;
+	float outDeltaZ, outAngleZ;
+
+	if( orientation == kOrientationUpOver ) {
+		inDeltaZ = 90;
+		inAngleZ = 270;
+		outDeltaZ = 90;
+		outAngleZ = 0;
+	} else {
+		inDeltaZ = -90;
+		inAngleZ = 90;
+		outDeltaZ = -90;
+		outAngleZ = 0;
+	}
+	inA = [Sequence actions:
+		   [DelayTime actionWithDuration:duration/2],
+		   [Show action],
+		   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:90 deltaAngleX:0],
+		   [CallFunc actionWithTarget:self selector:@selector(finish)],
+		   nil ];
+	outA = [Sequence actions:
+			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:90 deltaAngleX:0],
+			[Hide action],
+			[DelayTime actionWithDuration:duration/2],							
+			nil ];
 	
 	[inScene do: inA];
 	[outScene do: outA];
+	
 }
 @end
 
@@ -405,50 +458,82 @@
 {
 	[super onEnter];
 	
+	IntervalAction *inA, *outA;
 	[inScene setVisible: NO];
-	IntervalAction *inA = [Sequence actions:
-						   [DelayTime actionWithDuration:duration/2],
-						   [Show action],
-						   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:-45 deltaAngleX:0],
-						   [CallFunc actionWithTarget:self selector:@selector(finish)],
-						   nil ];
-	IntervalAction *outA = [Sequence actions:
-							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:45 deltaAngleX:0],
-							[Hide action],
-							[DelayTime actionWithDuration:duration/2],							
-							nil ];
-	
+
+	float inDeltaZ, inAngleZ;
+	float outDeltaZ, outAngleZ;
+
+	if( orientation == kOrientationDownOver ) {
+		inDeltaZ = 90;
+		inAngleZ = 270;
+		outDeltaZ = 90;
+		outAngleZ = 0;
+	} else {
+		inDeltaZ = -90;
+		inAngleZ = 90;
+		outDeltaZ = -90;
+		outAngleZ = 0;
+	}
+	inA = [Sequence actions:
+			   [DelayTime actionWithDuration:duration/2],
+			   [Show action],
+			   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:-45 deltaAngleX:0],
+			   [CallFunc actionWithTarget:self selector:@selector(finish)],
+			   nil ];
+	outA = [Sequence actions:
+				[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:45 deltaAngleX:0],
+				[Hide action],
+				[DelayTime actionWithDuration:duration/2],							
+				nil ];
+
 	[inScene do: inA];
 	[outScene do: outA];
 }
 @end
 
 //
-// FlipX Transition
+// ZoomFlipX Transition
 //
 @implementation ZoomFlipXTransition
 -(void) onEnter
 {
 	[super onEnter];
 	
+	IntervalAction *inA, *outA;
 	[inScene setVisible: NO];
-	IntervalAction *inA = [Sequence actions:
-						   [DelayTime actionWithDuration:duration/2],
-						   [Spawn actions:
-							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:0 deltaAngleX:0],
-							[ScaleTo actionWithDuration:duration/2 scale:1],
-							[Show action],
-							nil],
-						   [CallFunc actionWithTarget:self selector:@selector(finish)],
-						   nil ];
-	IntervalAction *outA = [Sequence actions:
-							[Spawn actions:
-							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:0 deltaAngleX:0],
-							 [ScaleTo actionWithDuration:duration/2 scale:0.5],
-							 nil],
-							[Hide action],
-							[DelayTime actionWithDuration:duration/2],							
-							nil ];
+	
+	float inDeltaZ, inAngleZ;
+	float outDeltaZ, outAngleZ;
+	
+	if( orientation == kOrientationDownOver ) {
+		inDeltaZ = 90;
+		inAngleZ = 270;
+		outDeltaZ = 90;
+		outAngleZ = 0;
+	} else {
+		inDeltaZ = -90;
+		inAngleZ = 90;
+		outDeltaZ = -90;
+		outAngleZ = 0;
+	}
+	inA = [Sequence actions:
+		   [DelayTime actionWithDuration:duration/2],
+		   [Spawn actions:
+			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:0 deltaAngleX:0],
+			[ScaleTo actionWithDuration:duration/2 scale:1],
+			[Show action],
+			nil],
+		   [CallFunc actionWithTarget:self selector:@selector(finish)],
+		   nil ];
+	outA = [Sequence actions:
+			[Spawn actions:
+			 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:0 deltaAngleX:0],
+			 [ScaleTo actionWithDuration:duration/2 scale:0.5],
+			 nil],
+			[Hide action],
+			[DelayTime actionWithDuration:duration/2],							
+			nil ];
 	
 	inScene.scale = 0.5f;
 	[inScene do: inA];
@@ -457,31 +542,49 @@
 @end
 
 //
-// FlipY Transition
+// ZoomFlipY Transition
 //
 @implementation ZoomFlipYTransition
 -(void) onEnter
 {
 	[super onEnter];
 	
+	IntervalAction *inA, *outA;
 	[inScene setVisible: NO];
-	IntervalAction *inA = [Sequence actions:
-						   [DelayTime actionWithDuration:duration/2],
-						   [Spawn actions:
-							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:90 deltaAngleX:0],
-							 [ScaleTo actionWithDuration:duration/2 scale:1],
-							 [Show action],
-							 nil],
-						   [CallFunc actionWithTarget:self selector:@selector(finish)],
-						   nil ];
-	IntervalAction *outA = [Sequence actions:
-							[Spawn actions:
-							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:90 deltaAngleX:0],
-							 [ScaleTo actionWithDuration:duration/2 scale:0.5],
-							 nil],							
-							[Hide action],
-							[DelayTime actionWithDuration:duration/2],							
-							nil ];
+	
+	float inDeltaZ, inAngleZ;
+	float outDeltaZ, outAngleZ;
+
+	if( orientation == kOrientationDownOver ) {
+		inDeltaZ = 90;
+		inAngleZ = 270;
+		outDeltaZ = 90;
+		outAngleZ = 0;
+	} else {
+		inDeltaZ = -90;
+		inAngleZ = 90;
+		outDeltaZ = -90;
+		outAngleZ = 0;
+	}
+	
+	inA = [Sequence actions:
+			   [DelayTime actionWithDuration:duration/2],
+			   [Spawn actions:
+				 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:90 deltaAngleX:0],
+				 [ScaleTo actionWithDuration:duration/2 scale:1],
+				 [Show action],
+				 nil],
+			   [CallFunc actionWithTarget:self selector:@selector(finish)],
+			   nil ];
+	outA = [Sequence actions:
+				[Spawn actions:
+				 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:90 deltaAngleX:0],
+				 [ScaleTo actionWithDuration:duration/2 scale:0.5],
+				 nil],							
+				[Hide action],
+				[DelayTime actionWithDuration:duration/2],							
+				nil ];
+
 	inScene.scale = 0.5;
 	[inScene do: inA];
 	[outScene do: outA];
@@ -489,32 +592,50 @@
 @end
 
 //
-// FlipAngular Transition
+// ZoomFlipAngular Transition
 //
 @implementation ZoomFlipAngularTransition
 -(void) onEnter
 {
 	[super onEnter];
 	
+	IntervalAction *inA, *outA;
 	[inScene setVisible: NO];
-	IntervalAction *inA = [Sequence actions:
-						   [DelayTime actionWithDuration:duration/2],
-						   [Spawn actions:
-							[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:270 deltaAngleZ:90 angleX:-45 deltaAngleX:0],
-							[ScaleTo actionWithDuration:duration/2 scale:1],
-							[Show action],
-							nil],						   
-						   [Show action],
-						   [CallFunc actionWithTarget:self selector:@selector(finish)],
-						   nil ];
-	IntervalAction *outA = [Sequence actions:
-							[Spawn actions:
-							 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:90 angleX:45 deltaAngleX:0],
-							 [ScaleTo actionWithDuration:duration/2 scale:0.5],
-							 nil],							
-							[Hide action],
-							[DelayTime actionWithDuration:duration/2],							
-							nil ];
+	
+	float inDeltaZ, inAngleZ;
+	float outDeltaZ, outAngleZ;
+	
+	if( orientation == kOrientationDownOver ) {
+		inDeltaZ = 90;
+		inAngleZ = 270;
+		outDeltaZ = 90;
+		outAngleZ = 0;
+	} else {
+		inDeltaZ = -90;
+		inAngleZ = 90;
+		outDeltaZ = -90;
+		outAngleZ = 0;
+	}
+		
+	inA = [Sequence actions:
+		   [DelayTime actionWithDuration:duration/2],
+		   [Spawn actions:
+			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:-45 deltaAngleX:0],
+			[ScaleTo actionWithDuration:duration/2 scale:1],
+			[Show action],
+			nil],						   
+		   [Show action],
+		   [CallFunc actionWithTarget:self selector:@selector(finish)],
+		   nil ];
+	outA = [Sequence actions:
+			[Spawn actions:
+			 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:45 deltaAngleX:0],
+			 [ScaleTo actionWithDuration:duration/2 scale:0.5],
+			 nil],							
+			[Hide action],
+			[DelayTime actionWithDuration:duration/2],							
+			nil ];
+	
 	inScene.scale = 0.5;
 	[inScene do: inA];
 	[outScene do: outA];
