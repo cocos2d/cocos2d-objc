@@ -378,7 +378,7 @@
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationDownOver ) {
+	if( orientation == kOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -506,7 +506,7 @@
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 	
-	if( orientation == kOrientationDownOver ) {
+	if( orientation == kOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
