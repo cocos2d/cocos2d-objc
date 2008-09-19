@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
-#import "VirtualAccelerometer.h"
+//#import "VirtualAccelerometer.h"
 
 @class Sprite;
 
@@ -13,7 +13,7 @@
 }
 @end
 
-@interface AccelViewportDemo : Layer <VirtualAccelerometerDelegate>
+@interface AccelViewportDemo : Layer
 {
 	Sprite * grossini[NUM_GROSSINIS];
 	Sprite * clouds;
