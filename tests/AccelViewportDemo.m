@@ -4,7 +4,7 @@
 //
 
 // local import
-#import "VirtualAccelerometer.h"
+//#import "VirtualAccelerometer.h"
 #import "AccelViewportDemo.h"
 
 float randfloat() {
@@ -19,8 +19,7 @@ float randfloat() {
 	[super init];
 
 	isTouchEnabled = YES;
-	//isAccelerometerEnabled = YES;
-	[[VirtualAccelerometer sharedAccelerometer] setDelegate:self];
+	isAccelerometerEnabled = YES;
 	clouds = [[Sprite spriteFromFile:@"clouds.jpg"] retain];
 	[clouds setScale: CLOUDS_SCALE];
 	
@@ -75,18 +74,33 @@ float randfloat() {
 -(void) onEnter
 {
 	[super onEnter];
-	[[VirtualAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];	
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+
+	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	cpVect location = cpv(touchLocation.x, touchLocation.y);
+	location = cpvsub(location, cloudsPos);
+	location = cpvmult(location, 1.0/CLOUDS_SCALE);
+	location = cpvadd(location, cpvmult(cloudsSize, 0.5));
+
+	NSString *info = [ NSString stringWithFormat: @"(%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f)", 
+					   touchLocation.x, touchLocation.y, cloudsSize.x, cloudsSize.y,
+					   cloudsPos.x, cloudsPos.y, location.x, location.y ];
+	
+	[label setString: info];
+	
+	[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
 }
 
 // Implement this method to get the lastest data from the accelerometer 
-- (void)accelerometer:(VirtualAccelerometer*)accelerometer didAccelerate:(VirtualAcceleration*)acceleration {
-/*
-	accels[0] = acceleration.x;
-	accels[1] = acceleration.y;
-	accels[2] = acceleration.z;
-*/	
-	
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration {
 	double kFilteringFactor = 0.01;
+	
 	accels[0] = acceleration.x * kFilteringFactor + accels[0] * (1.0 - kFilteringFactor);
 	accels[1] = acceleration.y * kFilteringFactor + accels[1] * (1.0 - kFilteringFactor);
 	accels[2] = acceleration.z * kFilteringFactor + accels[2] * (1.0 - kFilteringFactor);
@@ -94,7 +108,7 @@ float randfloat() {
 	cpVect dest = cpvadd(cloudsCentered, cpv(cloudsSize.x*ACC_FACTOR*accels[1], cloudsSize.y*ACC_FACTOR*-accels[0]));
 	
 	// comentar esta linea para no limitar el area scrolleable
-	//dest = cpBBClampVect(visibleArea, dest);
+	dest = cpBBClampVect(visibleArea, dest);
 	
 	// velocidad inv. prop. a la distancia a recorrer
 	cpVect newPos = cpvadd(cloudsPos, cpvmult(cpvsub(dest, cloudsPos), 0.1) );
@@ -102,41 +116,9 @@ float randfloat() {
 	cloudsPos = newPos;
 }
 
-- (void)handleTapWithX:(float)x withY:(float)y
-{
-	CGPoint touchLocation;
-	touchLocation.x = x;
-	touchLocation.y = y;
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
-	cpVect location = cpv(touchLocation.x, touchLocation.y);
-	location = cpvsub(location, cloudsPos);
-	location = cpvmult(location, 1.0/CLOUDS_SCALE);
-	location = cpvadd(location, cpvmult(cloudsSize, 0.5));
-	
-	NSString *info = [ NSString stringWithFormat: @"(%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f)", 
-					  touchLocation.x, touchLocation.y, cloudsSize.x, cloudsSize.y,
-					  cloudsPos.x, cloudsPos.y, location.x, location.y ];
-	
-	[label setString: info];
-	
-	[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	UITouch *touch = [touches anyObject];	
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	[self handleTapWithX:touchLocation.x withY:touchLocation.y ];
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[self touchesMoved:touches withEvent:event];
-}
-
-- (void) virtualTapWithX:(float)x withY:(float)y
-{
-	[self handleTapWithX:x withY:y];
 }
 
 -(NSString *) title
@@ -159,7 +141,7 @@ float randfloat() {
 	Scene *scene = [Scene node];
 	AccelViewportDemo *layer = [AccelViewportDemo node];
 	[scene add: layer];
-	
+			 
 	[[Director sharedDirector] runScene: scene];
 }
 
