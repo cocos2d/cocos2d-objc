@@ -1,6 +1,9 @@
 version 0.4.3 - dd-MMM-yyyy
+ . Demo: AccelViewPort using code without the VirtualAccelerometer
+ . Demo: TransitionDemo shows the 6 new transitions
+ . Demo: Updated Icon.png & Default.png files
  . MenuItem: MenuItemFont are 3 pixels heigher.
- . Transitions: all Flip transitions have orientation: Left<->Right, Up<-->Down
+ . Transitions: all Flip transitions have orientation: Left<->Right, Up<-->Down (6 new transitions)
 
 version 0.4.2 - 10-Sept-2008
  . Action: FadeOut reverse fixed

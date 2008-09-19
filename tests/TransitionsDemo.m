@@ -7,15 +7,121 @@
 #import "cocos2d.h"
 #import "TransitionsDemo.h"
 
+@interface FlipXLeftOver : FlipXTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface FlipXRightOver : FlipXTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface FlipYUpOver : FlipYTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface FlipYDownOver : FlipYTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface FlipAngularLeftOver : FlipAngularTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface FlipAngularRightOver : FlipAngularTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface ZoomFlipXLeftOver : ZoomFlipXTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface ZoomFlipXRightOver : ZoomFlipXTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface ZoomFlipYUpOver : ZoomFlipYTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface ZoomFlipYDownOver : ZoomFlipYTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface ZoomFlipAngularLeftOver : ZoomFlipAngularTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface ZoomFlipAngularRightOver : ZoomFlipAngularTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+
+@implementation FlipXLeftOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+}
+@end
+@implementation FlipXRightOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+}
+@end
+@implementation FlipYUpOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationUpOver];
+}
+@end
+@implementation FlipYDownOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationDownOver];
+}
+@end
+@implementation FlipAngularLeftOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+}
+@end
+@implementation FlipAngularRightOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+}
+@end
+@implementation ZoomFlipXLeftOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+}
+@end
+@implementation ZoomFlipXRightOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+}
+@end
+@implementation ZoomFlipYUpOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationUpOver];
+}
+@end
+@implementation ZoomFlipYDownOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationDownOver];
+}
+@end
+@implementation ZoomFlipAngularLeftOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+}
+@end
+@implementation ZoomFlipAngularRightOver
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+}
+@end
+
+
+
 static int sceneIdx=0;
 static NSString *transitions[] = {
 						 @"FadeTransition",
-						 @"FlipXTransition",
-						 @"FlipYTransition",
-						 @"FlipAngularTransition",
-						 @"ZoomFlipXTransition",
-						 @"ZoomFlipYTransition",
-						 @"ZoomFlipAngularTransition",
+						 @"FlipXLeftOver",
+						 @"FlipXRightOver",
+						 @"FlipYUpOver",
+						 @"FlipYDownOver",
+						 @"FlipAngularLeftOver",
+						 @"FlipAngularRightOver",
+						 @"ZoomFlipXLeftOver",
+						 @"ZoomFlipXRightOver",
+						 @"ZoomFlipYUpOver",
+						 @"ZoomFlipYDownOver",
+						 @"ZoomFlipAngularLeftOver",
+ 						 @"ZoomFlipAngularRightOver",
 						 @"ShrinkGrowTransition",
 						 @"RotoZoomTransition",
 						 @"JumpZoomTransition",
