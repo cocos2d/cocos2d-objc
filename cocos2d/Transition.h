@@ -23,8 +23,8 @@
 @class CocosNode;
 
 typedef enum {
-	kOrientationLeftRight = 0,
-	kOrientationRightLeft = 1,
+	kOrientationLeftOver = 0,
+	kOrientationRightOver = 1,
 	kOrientationUpOver = 0,
 	kOrientationDownOver = 1,
 } tOrientation;
