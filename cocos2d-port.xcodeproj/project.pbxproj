@@ -13,7 +13,6 @@
 		317070480E2940C900DD3360 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
 		317070490E2940C900DD3360 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
 		3170704A0E2940C900DD3360 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
-		3170704E0E2940C900DD3360 /* VirtualAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */; };
 		3170704F0E2940C900DD3360 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		317070500E2940C900DD3360 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
 		317070520E2940C900DD3360 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -537,8 +536,6 @@
 		50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chipmunk_Accel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chipmunk_Accel.h; path = tests/Chipmunk_Accel.h; sourceTree = "<group>"; };
 		50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Chipmunk_Accel.m; path = tests/Chipmunk_Accel.m; sourceTree = "<group>"; };
-		50B2C9780E10972B00AE9530 /* VirtualAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualAccelerometer.h; path = tests/VirtualAccelerometer.h; sourceTree = "<group>"; };
-		50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VirtualAccelerometer.m; path = tests/VirtualAccelerometer.m; sourceTree = "<group>"; };
 		50B2C9BF0E109A5900AE9530 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		50B2C9C00E109A5900AE9530 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		50B2C9C10E109A5900AE9530 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -967,8 +964,6 @@
 				50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */,
 				50DB1BCE0E1C1EF000A89DFF /* ParticleDemo.h */,
 				50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */,
-				50B2C9A00E10980200AE9530 /* VirtualAccelerometer.m */,
-				50B2C9780E10972B00AE9530 /* VirtualAccelerometer.h */,
 				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */,
 				50C938E30E0A9E1100517B01 /* TransitionsDemo.h */,
@@ -1668,7 +1663,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */,
-				3170704E0E2940C900DD3360 /* VirtualAccelerometer.m in Sources */,
 				3170704F0E2940C900DD3360 /* main.m in Sources */,
 				317070500E2940C900DD3360 /* Primitives.m in Sources */,
 			);
