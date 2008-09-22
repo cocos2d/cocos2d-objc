@@ -1,3 +1,6 @@
+version 0.4.4 - dd-MMM-yyyy
+ . MenuItem: sending correct 'self' as argument (issue 19)
+
 version 0.4.3 - 19-Sept-2008
  . Demo: AccelViewPort using code without the VirtualAccelerometer
  . Demo: TransitionDemo shows the 6 new transitions
