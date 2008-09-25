@@ -210,10 +210,8 @@ static int _pixelFormat = RGB565;
 {
 	nextDeltaTimeZero = YES;
 }
-@end
 
-
-@implementation Director (iPhoneSpecific)
+#pragma mark Director Scene iPhone Specific
 
 +(void) setPixelFormat: (int) format
 {
@@ -235,10 +233,8 @@ static int _pixelFormat = RGB565;
 	
 	_pixelFormat = format;
 }
-@end
 
-
-@implementation Director (OpenGLHelper)
+#pragma mark Director Scene OpenGL Helper
 
 - (void) setDefaultProjection
 {
@@ -299,10 +295,7 @@ static int _pixelFormat = RGB565;
 		glDisable( GL_DEPTH_TEST );
 }
 
-@end
-
-
-@implementation Director (Landscape)
+#pragma mark Director Scene Landscape
 
 -(CGPoint) convertCoordinate: (CGPoint) p
 {
@@ -376,10 +369,7 @@ static int _pixelFormat = RGB565;
 	}	
 }
 
-@end
-
-
-@implementation Director (SceneManagement)
+#pragma mark Director Scene Management
 
 - (void)runScene:(Scene*) scene
 {
@@ -501,10 +491,7 @@ static int _pixelFormat = RGB565;
 	}
 }
 
-@end
-
-
-@implementation Director (Events)
+#pragma mark Director Events
 
 -(void) addEventHandler:(CocosNode*) node
 {
@@ -559,11 +546,8 @@ static int _pixelFormat = RGB565;
 		}
 	}
 }
-@end
 
-
-@implementation Director (Debug)
-
+#pragma mark Director Debug
 -(void) showFPS
 {
 	frames++;

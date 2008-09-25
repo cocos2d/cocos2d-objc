@@ -119,19 +119,18 @@
 +(id) node;
 //! initializes the node
 -(id) init;
-@end
+
 
 // scene managment
-@interface CocosNode (SceneManagement)
+
 /** callback that is called every time the node enters the 'stage' */
 -(void) onEnter;
 /** callback that is called every time the node leaves the 'stage'. */
 -(void) onExit;
-@end
 
 
 // composition
-@interface CocosNode (Composition)
+
 /** Adds a child to the container with z-order as 0 
  @return returns self
  */
@@ -154,33 +153,30 @@
 -(void) removeAll;
 /** Gets a child from the container given its name */
 -(CocosNode*) get: (NSString*) name;
-@end
 
 
 // draw
-@interface CocosNode (Draw)
+
 /** override this method to draw your own node. */
 -(void) draw;
 /** recursive method that visit its children and draw them */
 -(void) visit;
 /** performs opengl view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
-@end
 
 
 // actions
-@interface CocosNode (Actions)
+
 /** Executes an action, and returns the action that is executed */
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
 /** Removes one action from the running action list */
 -(void) stopAction: (Action*) action;
-@end
 
 
 // timers
-@interface CocosNode (Timers)
+
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
