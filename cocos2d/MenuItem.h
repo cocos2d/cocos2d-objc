@@ -27,6 +27,8 @@
 
 #define kItemSize 32
 
+/** Menu Item base class
+ */
 @interface MenuItem : CocosNode
 {
 	NSInvocation *invocation;
