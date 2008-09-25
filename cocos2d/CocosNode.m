@@ -112,10 +112,8 @@
 	
 	[super dealloc];
 }
-@end
 
-
-@implementation CocosNode (Composition)
+#pragma mark CocosNode Composition
 
 -(id) add: (CocosNode*) child z:(int)z name:(NSString*)name
 {	
@@ -200,10 +198,8 @@
 	NSAssert( name != nil, @"Argument must be non-nil");
 	return [childrenNames objectForKey:name];
 }
-@end
 
-
-@implementation CocosNode (Draw)
+#pragma mark CocosNode Draw
 
 -(void) draw
 {
@@ -270,10 +266,8 @@
 	glPopMatrix();
 
 }
-@end
 
-
-@implementation CocosNode (SceneManagement)
+#pragma mark CocosNode SceneManagement
 
 -(void) onEnter
 {
@@ -296,10 +290,8 @@
 		[child onExit];
 	
 }
-@end
 
-
-@implementation CocosNode (Actions)
+#pragma mark CocosNode Actions
 
 -(Action*) do: (Action*) action
 {
@@ -363,9 +355,8 @@
 		}
 	}
 }
-@end
 
-@implementation CocosNode (Timers)
+#pragma mark CocosNode Timers 
 
 -(void) schedule: (SEL) selector
 {
