@@ -1,9 +1,10 @@
 version 0.4.4 - dd-MMM-yyyy
+ . Actions: copy protocol fixed on some actions (issue #27)
  . CocosNode: class is not splitted. Doxygen wasn't generating proper documentation.
 	Added #pragma mark for better navigation
  . Director: class is not splitted. Doxygen wasn't generating proper documentation.
 	Added #pragma mark for better navigation
- . MenuItem: sending correct 'self' as argument (issue 19)
+ . MenuItem: sending correct 'self' as argument (issue #19)
 
 version 0.4.3 - 19-Sept-2008
  . Demo: AccelViewPort using code without the VirtualAccelerometer
