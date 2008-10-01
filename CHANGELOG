@@ -1,9 +1,7 @@
 version 0.4.4 - dd-MMM-yyyy
  . Actions: copy protocol fixed on some actions (issue #27)
- . CocosNode: class is not splitted. Doxygen wasn't generating proper documentation.
-	Added #pragma mark for better navigation
- . Director: class is not splitted. Doxygen wasn't generating proper documentation.
-	Added #pragma mark for better navigation
+ . CocosNode: Doxygen API reference fixed (issue #29)
+ . Director: Doxygen API reference fixed (issue #29)
  . MenuItem: sending correct 'self' as argument (issue #19)
  . Scheduler: retain arguments (issue #28)
 
