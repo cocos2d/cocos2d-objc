@@ -66,6 +66,7 @@
 	invocation = [NSInvocation invocationWithMethodSignature:sig];
 	[invocation setTarget:t];
 	[invocation setSelector:s];
+	[invocation retainArguments];
 	
 	[invocation retain];
 	return self;
