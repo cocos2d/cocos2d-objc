@@ -129,13 +129,8 @@
 	NSAssert( one_!=nil, @"Sequence: argument one must be non-nil");
 	NSAssert( two_!=nil, @"Sequence: argument two must be non-nil");
 
-#ifdef COPY_ACTIONS
-	IntervalAction *one = [[one_ copy] autorelease];
-	IntervalAction *two = [[two_ copy] autorelease];
-#else
 	IntervalAction *one = one_;
 	IntervalAction *two = two_;
-#endif
 		
 	ccTime d = [one duration] + [two duration];
 	[super initWithDuration: d];
@@ -147,7 +142,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initOne: [actions objectAtIndex:0] two: [actions objectAtIndex:1] ];
+	Action *copy = [[[self class] allocWithZone: zone] initOne: [[actions objectAtIndex:0] copy] two: [[actions objectAtIndex:1] copy] ];
     return copy;
 }
 
@@ -224,18 +219,15 @@
 	if(! [super initWithDuration: d ] )
 		return nil;
 	times = t;
-#ifdef COPY_ACTIONS
-	other = [action copy];
-#else
 	other = [action retain];
-#endif
+
 	total = 0;
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other times: times];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] times: times];
     return copy;
 }
 
@@ -308,13 +300,8 @@
 	
 	[super initWithDuration: fmax(d1,d2)];
 
-#ifdef COPY_ACTIONS
-	one = [[one_ copy] autorelease];
-	two = [[two_ copy] autorelease];
-#else
 	one = one_;
 	two = two_;
-#endif
 
 	if( d1 > d2 )
 		two = [Sequence actions: two_, [DelayTime actionWithDuration: (d1-d2)], nil];
@@ -328,7 +315,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initOne: one two: two];
+	Action *copy = [[[self class] allocWithZone: zone] initOne: [one copy] two: [two copy] ];
     return copy;
 }
 
@@ -743,11 +730,7 @@
 	if( ! [super initWithDuration: [action duration]] )
 		return nil;
 
-#ifdef COPY_ACTIONS
-	other = [action copy];
-#else
 	other = [action retain];
-#endif
 	
 	rate = r;
 	return self;
@@ -755,7 +738,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other rate: rate];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] rate: rate];
     return copy;
 }
 
@@ -798,18 +781,14 @@
 
 	[super initWithDuration: action.duration ];
 
-#ifdef COPY_ACTIONS
-	other = [action copy];
-#else
 	other = [action retain];
-#endif
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] ];
     return copy;
 }
 
@@ -854,11 +833,7 @@
 
 	[super initWithDuration: action.duration / s ];
 	
-#ifdef COPY_ACTIONS
-	other = [action copy];
-#else
 	other = [action retain];
-#endif
 	
 	speed = s;
 	return self;
@@ -866,7 +841,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: other speed: speed];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] speed: speed];
     return copy;
 }
 
@@ -922,18 +897,14 @@
 -(id) initWithAction: (IntervalAction*) action
 {
 	[super initWithDuration: [action duration]];
-#ifdef COPY_ACTIONS
-	other = [action copy];
-#else
 	other = [action retain];
-#endif
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAction: other];
+	return [[[self class] allocWithZone: zone] initWithAction: [other copy] ];
 }
 
 -(void) dealloc
