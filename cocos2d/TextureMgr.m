@@ -87,4 +87,8 @@ static TextureMgr *sharedTextureMgr;
 	
 	return [tex autorelease];
 }
+
+-(void) removeAllTextures {
+	[textures removeAllObjects];
+}
 @end

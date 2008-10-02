@@ -22,13 +22,28 @@
 
 #import "OpenGLSupport/Texture2D.h"
 
+/** Singleton that handles the loading of textures
+ * Once the texture is loaded, the next time it will return
+ * a reference of the previously loaded texture
+ */
 @interface TextureMgr : NSObject
 {
 	NSMutableDictionary *textures;
 }
 
+/** Retruns ths shared instance of the Texture Manager */
 + (TextureMgr *) sharedTextureMgr;
 
+/** Returns a Texture2D object given an file image
+ * If the file image was not previously loaded, it will create a new Texture2D
+ *  object and it will return it.
+ * Otherwise it will return a reference of a previosly loaded image
+ */
 -(Texture2D*) addImage: (NSString*) fileimage;
+
+/** Purges the dictionary of loaded textures.
+ * Call this method if you receive the "Memory Warning"
+ */
+-(void) removeAllTextures;
 
 @end

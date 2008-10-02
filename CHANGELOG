@@ -3,6 +3,7 @@ version 0.4.4 - dd-MMM-yyyy
  . CocosNode: Doxygen API reference fixed (issue #29)
  . Director: Doxygen API reference fixed (issue #29)
  . MenuItem: sending correct 'self' as argument (issue #19)
+ . TextureMgr: added removeAllTextures (issue #31)
  . Scheduler: retain arguments (issue #28)
 
 version 0.4.3 - 19-Sept-2008
