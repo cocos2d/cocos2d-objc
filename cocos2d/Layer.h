@@ -40,7 +40,7 @@
 //
 // ColorLayer
 //
-//! a Layer with color and opacity
+/** a Layer with color and opacity */
 @interface ColorLayer : Layer <CocosNodeOpacity>
 {
 	GLuint color;

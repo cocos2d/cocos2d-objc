@@ -160,4 +160,9 @@ float randfloat() {
 	[[Director sharedDirector] resume];
 }
 
+// purge memroy
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
 @end

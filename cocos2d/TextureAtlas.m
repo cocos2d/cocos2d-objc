@@ -19,6 +19,7 @@
  */
 
 #import "TextureAtlas.h"
+#import "TextureMgr.h"
 
 @interface TextureAtlas (Private)
 -(void) initIndices;
@@ -27,17 +28,22 @@
 
 @implementation TextureAtlas
 
+@synthesize totalQuads, texture;
+
 #pragma mark TextureAtlas - alloc & init
 
-+(id) textureAtlasWithImage:(UIImage*) image capacity: (int) n {
-	return [[[self alloc] initWithImage:image capacity:n] autorelease];
++(id) textureAtlasWithFile:(NSString*) file capacity: (int) n {
+	return [[[self alloc] initWithFile:file capacity:n] autorelease];
 }
 
--(id) initWithImage:(UIImage*)image capacity:(int)n {
-	if( ![super initWithImage:image] )
+-(id) initWithFile:(NSString*)file capacity:(int)n {
+	if( ![super init] )
 		return nil;
 	
 	totalQuads = n;
+	
+	// retained in property
+	self.texture = [[TextureMgr sharedTextureMgr] addImage:file];
 	
 	texCoordinates = malloc( sizeof(texCoordinates[0]) * totalQuads );
 	vertices = malloc( sizeof(vertices[0]) * totalQuads );
@@ -67,6 +73,9 @@
 	free(vertices);
 	free(texCoordinates);
 	free(indices);
+	
+	[texture release];
+
 	[super dealloc];
 }
 
@@ -92,6 +101,36 @@
 	vertices[n] = *quadV;
 }
 
+#pragma mark TextureAtlas - Resize
+
+-(void) resizeCapacity: (int) n {
+	if( n == totalQuads )
+		return;
+	
+	totalQuads = n;
+
+	texCoordinates = realloc( texCoordinates, sizeof(texCoordinates[0]) * totalQuads );
+	vertices = realloc( vertices, sizeof(vertices[0]) * totalQuads );
+	indices = realloc( vertices, sizeof(indices[0]) * totalQuads * 6 );
+	
+	if( ! ( texCoordinates && vertices && indices) ) {
+		NSLog(@"TextureAtlas: not enough memory");
+		if( texCoordinates )
+			free(texCoordinates);
+		if( vertices )
+			free(vertices);
+		if( indices )
+			free(vertices);
+		[NSException raise:@"TextureAtlas:NoMemory" format:@"Texture Atlas. Not enough memory to resize the capacity"];
+	}
+	
+	bzero( texCoordinates, sizeof(texCoordinates[0]) * totalQuads );
+	bzero( vertices, sizeof(vertices[0]) * totalQuads );	
+	bzero( indices, sizeof(indices[0]) * totalQuads );
+	
+	[self initIndices];
+}
+
 #pragma mark TextureAtlas - Drawing
 
 -(void) drawQuads {
@@ -99,7 +138,7 @@
 }
 
 -(void) drawNumberOfQuads: (int) n {
-	glBindTexture(GL_TEXTURE_2D, self.name);
+	glBindTexture(GL_TEXTURE_2D, [texture name]);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);

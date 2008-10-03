@@ -1,6 +1,6 @@
 //
 // cocos2d for iphone
-// main file
+// Accelerometer + physics example
 //
 
 
@@ -172,6 +172,11 @@ eachShape(void *ptr, void* unused)
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[Director sharedDirector] resume];
+}
+
+// purge memroy
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+	[[TextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 @end

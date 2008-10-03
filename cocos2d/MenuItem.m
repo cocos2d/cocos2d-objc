@@ -184,6 +184,7 @@ static BOOL _fontNameRelease = NO;
 
 -(void) selected
 {
+	// subclass to change the default action
 	[self stopAction: zoomAction];
 	[zoomAction release];
 	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.2] retain];
@@ -192,6 +193,7 @@ static BOOL _fontNameRelease = NO;
 
 -(void) unselected
 {
+	// subclass to change the default action
 	[self stopAction: zoomAction];
 	[zoomAction release];
 	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.0] retain];

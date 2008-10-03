@@ -1,6 +1,6 @@
 //
 // cocos2d for iphone
-// main file
+// Menu test
 //
 
 
@@ -145,4 +145,10 @@
 {
 	[[Director sharedDirector] resume];
 }
+
+// purge memroy
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
 @end

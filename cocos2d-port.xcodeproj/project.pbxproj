@@ -126,6 +126,9 @@
 		506882140E95763E00F943E5 /* TestAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506881E70E9575E100F943E5 /* TestAtlas.m */; };
 		506882160E95770400F943E5 /* TextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50637A160E95397A000C9182 /* TextureAtlas.m */; };
 		506882690E957C4A00F943E5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		506884D70E96921100F943E5 /* LabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506884710E96734A00F943E5 /* LabelAtlas.m */; };
+		506885150E96940600F943E5 /* blocks1.png in Resources */ = {isa = PBXBuildFile; fileRef = 506885140E96940600F943E5 /* blocks1.png */; };
+		506885B50E96AC4400F943E5 /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */; };
 		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -496,8 +499,11 @@
 		506881E60E9575E100F943E5 /* TestAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestAtlas.h; path = tests/TestAtlas.h; sourceTree = "<group>"; };
 		506881E70E9575E100F943E5 /* TestAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestAtlas.m; path = tests/TestAtlas.m; sourceTree = "<group>"; };
 		506882110E95761200F943E5 /* AtlasDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtlasDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		506882130E95761200F943E5 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		506882680E957C4A00F943E5 /* atlastest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlastest.png; sourceTree = "<group>"; };
+		506884700E96734A00F943E5 /* LabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelAtlas.h; sourceTree = "<group>"; };
+		506884710E96734A00F943E5 /* LabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelAtlas.m; sourceTree = "<group>"; };
+		506885140E96940600F943E5 /* blocks1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks1.png; sourceTree = "<group>"; };
+		506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap.png"; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
 		506C77E60E01524200B48100 /* ClickAndMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMove.m; path = tests/ClickAndMove.m; sourceTree = "<group>"; };
@@ -865,7 +871,6 @@
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
-				506882130E95761200F943E5 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -930,6 +935,8 @@
 				50F9E8160E1AA34E000E7616 /* types.h */,
 				50637A150E95397A000C9182 /* TextureAtlas.h */,
 				50637A160E95397A000C9182 /* TextureAtlas.m */,
+				506884700E96734A00F943E5 /* LabelAtlas.h */,
+				506884710E96734A00F943E5 /* LabelAtlas.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -1033,6 +1040,8 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */,
+				506885140E96940600F943E5 /* blocks1.png */,
 				506882680E957C4A00F943E5 /* atlastest.png */,
 				5001659D0E72DB470085673F /* b1.png */,
 				5001659E0E72DB470085673F /* b2.png */,
@@ -1534,6 +1543,8 @@
 				506882020E95761200F943E5 /* grossinis_sister2.png in Resources */,
 				506882030E95761200F943E5 /* fire.png in Resources */,
 				506882690E957C4A00F943E5 /* atlastest.png in Resources */,
+				506885150E96940600F943E5 /* blocks1.png in Resources */,
+				506885B50E96AC4400F943E5 /* tuffy_bold_italic-charmap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1711,6 +1722,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506884D70E96921100F943E5 /* LabelAtlas.m in Sources */,
 				506882160E95770400F943E5 /* TextureAtlas.m in Sources */,
 				5018F26A0DFDEAFF00C013A5 /* Action.m in Sources */,
 				5018F26C0DFDEAFF00C013A5 /* CocosNode.m in Sources */,
@@ -2181,7 +2193,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2205,7 +2217,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
