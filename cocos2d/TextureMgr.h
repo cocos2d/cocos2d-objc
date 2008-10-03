@@ -24,7 +24,7 @@
 
 /** Singleton that handles the loading of textures
  * Once the texture is loaded, the next time it will return
- * a reference of the previously loaded texture
+ * a reference of the previously loaded texture reducing GPU & CPU memory
  */
 @interface TextureMgr : NSObject
 {
@@ -43,7 +43,14 @@
 
 /** Purges the dictionary of loaded textures.
  * Call this method if you receive the "Memory Warning"
+ * In the short term: it will free some resources preventing your app from being killed
+ * In the medium term: it will allocate more resources
+ * In the long term: it will be the same
  */
 -(void) removeAllTextures;
+
+/** Deletes a texture from the Texture Manager
+ */
+-(void) removeTexture: (Texture2D*) tex;
 
 @end
