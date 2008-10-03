@@ -46,6 +46,7 @@
 #import "TextureNode.h"
 #import "Transition.h"
 #import "types.h"
+#import "TextureAtlas.h"
 
 //
 // cocos2d helper files
