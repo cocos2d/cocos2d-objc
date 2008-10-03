@@ -21,8 +21,10 @@
  
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "chipmunk.h"
+#include "math.h"
 
 unsigned int SHAPE_ID_COUNTER = 0;
 
@@ -34,9 +36,9 @@ cpResetShapeIdCounter(void)
 
 
 cpShape*
-cpShapeInit(cpShape *shape, cpShapeType type, cpBody *body)
+cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body)
 {
-	shape->type = type;
+	shape->klass = klass;
 	
 	shape->id = SHAPE_ID_COUNTER;
 	SHAPE_ID_COUNTER++;
@@ -62,7 +64,7 @@ cpShapeInit(cpShape *shape, cpShapeType type, cpBody *body)
 void
 cpShapeDestroy(cpShape *shape)
 {
-	if(shape->destroy) shape->destroy(shape);
+	if(shape->klass->destroy) shape->klass->destroy(shape);
 }
 
 void
@@ -77,9 +79,15 @@ cpShapeCacheBB(cpShape *shape)
 {
 	cpBody *body = shape->body;
 	
-	shape->bb = shape->cacheData(shape, body->p, body->rot);
+	shape->bb = shape->klass->cacheData(shape, body->p, body->rot);
 	return shape->bb;
 }
+
+int
+cpShapePointQuery(cpShape *shape, cpVect p){
+	return shape->klass->pointQuery(shape, p);
+}
+
 
 
 cpCircleShape *
@@ -103,15 +111,28 @@ cpCircleShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	return bbFromCircle(circle->tc, circle->r);
 }
 
+static int
+cpCircleShapePointQuery(cpShape *shape, cpVect p){
+	cpCircleShape *circle = (cpCircleShape *)shape;
+	
+	cpFloat distSQ = cpvlengthsq(cpvsub(circle->tc, p));
+	return distSQ <= (circle->r*circle->r);
+}
+
+static const cpShapeClass circleClass = {
+	CP_CIRCLE_SHAPE,
+	cpCircleShapeCacheData,
+	NULL,
+	cpCircleShapePointQuery,
+};
+
 cpCircleShape *
 cpCircleShapeInit(cpCircleShape *circle, cpBody *body, cpFloat radius, cpVect offset)
 {
 	circle->c = offset;
 	circle->r = radius;
 	
-	circle->shape.cacheData = &cpCircleShapeCacheData;
-	circle->shape.destroy = NULL;
-	cpShapeInit((cpShape *)circle, CP_CIRCLE_SHAPE, body);
+	cpShapeInit((cpShape *)circle, &circleClass, body);
 	
 	return circle;
 }
@@ -159,6 +180,49 @@ cpSegmentShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	return cpBBNew(l - rad, s - rad, r + rad, t + rad);
 }
 
+static int
+cpSegmentShapePointQuery(cpShape *shape, cpVect p){
+	cpSegmentShape *seg = (cpSegmentShape *)shape;
+	
+	// Calculate normal distance from segment.
+	cpFloat dn = cpvdot(seg->tn, p) - cpvdot(seg->ta, seg->tn);
+	cpFloat dist = fabs(dn) - seg->r;
+	if(dist > 0.0f) return 0;
+	
+	// Calculate tangential distance along segment.
+	cpFloat dt = -cpvcross(seg->tn, p);
+	cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
+	cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
+	
+	// Decision tree to decide which feature of the segment to collide with.
+	if(dt <= dtMin){
+		if(dt < (dtMin - seg->r)){
+			return 0;
+		} else {
+			return cpvlengthsq(cpvsub(seg->ta, p)) < (seg->r*seg->r);
+		}
+	} else {
+		if(dt < dtMax){
+			return 1;
+		} else {
+			if(dt < (dtMax + seg->r)) {
+				return cpvlengthsq(cpvsub(seg->tb, p)) < (seg->r*seg->r);
+			} else {
+				return 0;
+			}
+		}
+	}
+	
+	return 1;	
+}
+
+static const cpShapeClass segmentClass = {
+	CP_SEGMENT_SHAPE,
+	cpSegmentShapeCacheData,
+	NULL,
+	cpSegmentShapePointQuery,
+};
+
 cpSegmentShape *
 cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloat r)
 {
@@ -168,9 +232,7 @@ cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloa
 	
 	seg->r = r;
 	
-	seg->shape.cacheData = &cpSegmentShapeCacheData;
-	seg->shape.destroy = NULL;
-	cpShapeInit((cpShape *)seg, CP_SEGMENT_SHAPE, body);
+	cpShapeInit((cpShape *)seg, &segmentClass, body);
 	
 	return seg;
 }

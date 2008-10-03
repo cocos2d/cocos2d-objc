@@ -120,11 +120,13 @@ cpSpaceAlloc(void)
 #define DEFAULT_DIM_SIZE 100.0f
 #define DEFAULT_COUNT 1000
 #define DEFAULT_ITERATIONS 10
+#define DEFAULT_ELASTIC_ITERATIONS 0
 
 cpSpace*
 cpSpaceInit(cpSpace *space)
 {
 	space->iterations = DEFAULT_ITERATIONS;
+	space->elasticIterations = DEFAULT_ELASTIC_ITERATIONS;
 //	space->sleepTicks = 300;
 	
 	space->gravity = cpvzero;
@@ -229,6 +231,7 @@ cpSpaceAddShape(cpSpace *space, cpShape *shape)
 void
 cpSpaceAddStaticShape(cpSpace *space, cpShape *shape)
 {
+	cpShapeCacheBB(shape);
 	cpSpaceHashInsert(space->staticShapes, shape, shape->id, shape->bb);
 }
 
@@ -305,18 +308,54 @@ cpSpaceRehashStatic(cpSpace *space)
 	cpSpaceHashRehash(space->staticShapes);
 }
 
+typedef struct pointQueryFuncPair {
+	cpSpacePointQueryFunc func;
+	void *data;
+} pointQueryFuncPair;
+
+static int 
+pointQueryHelper(void *point, void *obj, void *data)
+{
+	cpShape *shape = (cpShape *)obj;
+	pointQueryFuncPair *pair = (pointQueryFuncPair *)data;
+	
+	if(cpShapePointQuery(shape, *((cpVect *)point)))
+		pair->func(shape, pair->data);
+	
+	return 1; // return value needed for historical reasons (value is ignored)
+}
+
+static void
+pointQuery(cpSpaceHash *hash, cpVect point, cpSpacePointQueryFunc func, void *data)
+{
+	pointQueryFuncPair pair = {func, data};
+	cpSpaceHashPointQuery(hash, point, pointQueryHelper, &pair);
+}
+
+void
+cpSpaceShapePointQuery(cpSpace *space, cpVect point, cpSpacePointQueryFunc func, void *data)
+{
+	pointQuery(space->activeShapes, point, func, data);
+}
+
+void
+cpSpaceStaticShapePointQuery(cpSpace *space, cpVect point, cpSpacePointQueryFunc func, void *data)
+{
+	pointQuery(space->staticShapes, point, func, data);
+}
+
 static inline int
 queryReject(cpShape *a, cpShape *b)
 {
 	return
 		// BBoxes must overlap
-	   !cpBBintersects(a->bb, b->bb)
-	   // Don't collide shapes attached to the same body.
-	   || a->body == b->body
-	   // Don't collide objects in the same non-zero group
-	   || (a->group && b->group && a->group == b->group)
-	   // Don't collide objects that don't share at least on layer.
-	   || !(a->layers & b->layers);
+		!cpBBintersects(a->bb, b->bb)
+		// Don't collide shapes attached to the same body.
+		|| a->body == b->body
+		// Don't collide objects in the same non-zero group
+		|| (a->group && b->group && a->group == b->group)
+		// Don't collide objects that don't share at least on layer.
+		|| !(a->layers & b->layers);
 }
 
 // Callback from the spatial hash.
@@ -333,7 +372,7 @@ queryFunc(void *p1, void *p2, void *data)
 	if(queryReject(a,b)) return 0;
 	
 	// Shape 'a' should have the lower shape type. (required by cpCollideShapes() )
-	if(a->type > b->type){
+	if(a->klass->type > b->klass->type){
 		cpShape *temp = a;
 		a = b;
 		b = temp;
@@ -426,11 +465,12 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	// Empty the arbiter list.
 	cpHashSetReject(space->contactSet, &contactSetReject, space);
 	space->arbiters->num = 0;
-	
-	// Integrate velocities.
-	cpFloat damping = pow(1.0f/space->damping, -dt);
-	for(int i=0; i<bodies->num; i++)
-		cpBodyUpdateVelocity((cpBody *)bodies->arr[i], space->gravity, damping, dt);
+
+	// Integrate positions.
+	for(int i=0; i<bodies->num; i++){
+		cpBody *body = (cpBody *)bodies->arr[i];
+		body->position_func(body, dt);
+	}
 	
 	// Pre-cache BBoxes and shape data.
 	cpSpaceHashEach(space->activeShapes, &updateBBCache, NULL);
@@ -438,7 +478,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	// Collide!
 	cpSpaceHashEach(space->activeShapes, &active2staticIter, space);
 	cpSpaceHashQueryRehash(space->activeShapes, &queryFunc, space);
-	
+
 	// Prestep the arbiters.
 	for(int i=0; i<arbiters->num; i++)
 		cpArbiterPreStep((cpArbiter *)arbiters->arr[i], dt_inv);
@@ -446,16 +486,37 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	// Prestep the joints.
 	for(int i=0; i<joints->num; i++){
 		cpJoint *joint = (cpJoint *)joints->arr[i];
-		joint->preStep(joint, dt_inv);
+		joint->klass->preStep(joint, dt_inv);
 	}
+
+	for(int i=0; i<space->elasticIterations; i++){
+		for(int j=0; j<arbiters->num; j++)
+			cpArbiterApplyImpulse((cpArbiter *)arbiters->arr[j], 1.0f);
+			
+		for(int j=0; j<joints->num; j++){
+			cpJoint *joint = (cpJoint *)joints->arr[j];
+			joint->klass->applyImpulse(joint);
+		}
+	}
+
+	// Integrate velocities.
+	cpFloat damping = pow(1.0f/space->damping, -dt);
+	for(int i=0; i<bodies->num; i++){
+		cpBody *body = (cpBody *)bodies->arr[i];
+		body->velocity_func(body, space->gravity, damping, dt);
+	}
+
+	for(int i=0; i<arbiters->num; i++)
+		cpArbiterApplyCachedImpulse((cpArbiter *)arbiters->arr[i]);
 	
 	// Run the impulse solver.
 	for(int i=0; i<space->iterations; i++){
 		for(int j=0; j<arbiters->num; j++)
-			cpArbiterApplyImpulse((cpArbiter *)arbiters->arr[j]);
+			cpArbiterApplyImpulse((cpArbiter *)arbiters->arr[j], 0.0f);
+			
 		for(int j=0; j<joints->num; j++){
 			cpJoint *joint = (cpJoint *)joints->arr[j];
-			joint->applyImpulse(joint);
+			joint->klass->applyImpulse(joint);
 		}
 	}
 
@@ -463,10 +524,6 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 //	dvsq *= dt*dt * space->damping*space->damping;
 //	for(int i=0; i<bodies->num; i++)
 //		cpBodyMarkLowEnergy(bodies->arr[i], dvsq, space->sleepTicks);
-
-	// Integrate positions.
-	for(int i=0; i<bodies->num; i++)
-		cpBodyUpdatePosition((cpBody *)bodies->arr[i], dt);
 	
 	// Increment the stamp.
 	space->stamp++;

@@ -68,6 +68,7 @@ cpPolyShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	l = r = verts[0].x;
 	b = t = verts[0].y;
 	
+	// TODO do as part of cpPolyShapeTransformVerts?
 	for(int i=1; i<poly->numVerts; i++){
 		cpVect v = verts[i];
 		
@@ -93,6 +94,19 @@ cpPolyShapeDestroy(cpShape *shape)
 	free(poly->tAxes);
 }
 
+static int
+cpPolyShapePointQuery(cpShape *shape, cpVect p){
+	// TODO Check against BB first?
+	return cpPolyShapeContainsVert((cpPolyShape *)shape, p);
+}
+
+static const cpShapeClass polyClass = {
+	CP_POLY_SHAPE,
+	cpPolyShapeCacheData,
+	cpPolyShapeDestroy,
+	cpPolyShapePointQuery,
+};
+
 cpPolyShape *
 cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 {	
@@ -113,9 +127,7 @@ cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cp
 		poly->axes[i].d = cpvdot(n, a);
 	}
 	
-	poly->shape.cacheData = &cpPolyShapeCacheData;
-	poly->shape.destroy = &cpPolyShapeDestroy;
-	cpShapeInit((cpShape *)poly, CP_POLY_SHAPE, body);
+	cpShapeInit((cpShape *)poly, &polyClass, body);
 
 	return poly;
 }

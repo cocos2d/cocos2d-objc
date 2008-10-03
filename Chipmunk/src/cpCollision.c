@@ -74,9 +74,12 @@ circle2segment(cpShape *circleShape, cpShape *segmentShape, cpContact **con)
 	cpCircleShape *circ = (cpCircleShape *)circleShape;
 	cpSegmentShape *seg = (cpSegmentShape *)segmentShape;
 	
+	// Radius sum
+	cpFloat rsum = circ->r + seg->r;
+	
 	// Calculate normal distance from segment.
 	cpFloat dn = cpvdot(seg->tn, circ->tc) - cpvdot(seg->ta, seg->tn);
-	cpFloat dist = fabs(dn) - circ->r - seg->r;
+	cpFloat dist = fabs(dn) - rsum;
 	if(dist > 0.0f) return 0;
 	
 	// Calculate tangential distance along segment.
@@ -86,7 +89,7 @@ circle2segment(cpShape *circleShape, cpShape *segmentShape, cpContact **con)
 	
 	// Decision tree to decide which feature of the segment to collide with.
 	if(dt < dtMin){
-		if(dt < (dtMin - circ->r)){
+		if(dt < (dtMin - rsum)){
 			return 0;
 		} else {
 			return circle2circleQuery(circ->tc, seg->ta, circ->r, seg->r, con);
@@ -104,7 +107,7 @@ circle2segment(cpShape *circleShape, cpShape *segmentShape, cpContact **con)
 			);
 			return 1;
 		} else {
-			if(dt < (dtMax + circ->r)) {
+			if(dt < (dtMax + rsum)) {
 				return circle2circleQuery(circ->tc, seg->tb, circ->r, seg->r, con);
 			} else {
 				return 0;
@@ -167,13 +170,13 @@ findVerts(cpContact **arr, cpPolyShape *poly1, cpPolyShape *poly2, cpVect n, cpF
 	
 	for(int i=0; i<poly1->numVerts; i++){
 		cpVect v = poly1->tVerts[i];
-		if(cpPolyShapeContainsVert(poly2, v))
+		if(cpPolyShapeContainsVertPartial(poly2, v, cpvneg(n)))
 			cpContactInit(addContactPoint(arr, &max, &num), v, n, dist, CP_HASH_PAIR(poly1, i));
 	}
 	
 	for(int i=0; i<poly2->numVerts; i++){
 		cpVect v = poly2->tVerts[i];
-		if(cpPolyShapeContainsVert(poly1, v))
+		if(cpPolyShapeContainsVertPartial(poly1, v, n))
 			cpContactInit(addContactPoint(arr, &max, &num), v, n, dist, CP_HASH_PAIR(poly2, i));
 	}
 	
@@ -281,6 +284,24 @@ seg2poly(cpShape *shape1, cpShape *shape2, cpContact **arr)
 		else
 			findPointsBehindSeg(arr, &max, &num, seg, poly, minNeg, -1.0f);
 	}
+	
+	// If no other collision points are found, try colliding endpoints.
+	if(num == 0){
+		cpVect poly_a = poly->tVerts[mini];
+		cpVect poly_b = poly->tVerts[(mini + 1)%poly->numVerts];
+		
+		if(circle2circleQuery(seg->ta, poly_a, seg->r, 0.0f, arr))
+			return 1;
+			
+		if(circle2circleQuery(seg->tb, poly_a, seg->r, 0.0f, arr))
+			return 1;
+			
+		if(circle2circleQuery(seg->ta, poly_b, seg->r, 0.0f, arr))
+			return 1;
+			
+		if(circle2circleQuery(seg->tb, poly_b, seg->r, 0.0f, arr))
+			return 1;
+	}
 
 	return num;
 }
@@ -362,8 +383,8 @@ int
 cpCollideShapes(cpShape *a, cpShape *b, cpContact **arr)
 {
 	// Their shape types must be in order.
-	assert(a->type <= b->type);
+	assert(a->klass->type <= b->klass->type);
 	
-	collisionFunc cfunc = colfuncs[a->type + b->type*CP_NUM_SHAPES];
+	collisionFunc cfunc = colfuncs[a->klass->type + b->klass->type*CP_NUM_SHAPES];
 	return (cfunc) ? cfunc(a, b, arr) : 0;
 }

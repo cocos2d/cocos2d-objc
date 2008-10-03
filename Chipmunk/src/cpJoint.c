@@ -37,7 +37,46 @@ cpJointFree(cpJoint *joint)
 	free(joint);
 }
 
+static void
+cpJointInit(cpJoint *joint, const cpJointClass *klass, cpBody *a, cpBody *b)
+{
+	joint->klass = klass;
+	joint->a = a;
+	joint->b = b;
+}
 
+
+static inline cpVect
+relative_velocity(cpVect r1, cpVect v1, cpFloat w1, cpVect r2, cpVect v2, cpFloat w2){
+	cpVect v1_sum = cpvadd(v1, cpvmult(cpvperp(r1), w1));
+	cpVect v2_sum = cpvadd(v2, cpvmult(cpvperp(r2), w2));
+	
+	return cpvsub(v2_sum, v1_sum);
+}
+
+static inline cpFloat
+scalar_k(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect n)
+{
+	cpFloat mass_sum = a->m_inv + b->m_inv;
+	cpFloat r1cn = cpvcross(r1, n);
+	cpFloat r2cn = cpvcross(r2, n);
+
+	return mass_sum + a->i_inv*r1cn*r1cn + b->i_inv*r2cn*r2cn;
+}
+
+static inline void
+apply_impulses(cpBody *a , cpBody *b, cpVect r1, cpVect r2, cpVect j)
+{
+	cpBodyApplyImpulse(a, cpvneg(j), r1);
+	cpBodyApplyImpulse(b, j, r2);
+}
+
+static inline void
+apply_bias_impulses(cpBody *a , cpBody *b, cpVect r1, cpVect r2, cpVect j)
+{
+	cpBodyApplyBiasImpulse(a, cpvneg(j), r1);
+	cpBodyApplyBiasImpulse(b, j, r2);
+}
 
 
 static void
@@ -47,8 +86,6 @@ pinJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	cpBody *b = joint->b;
 	cpPinJoint *jnt = (cpPinJoint *)joint;
 	
-	cpFloat mass_sum = a->m_inv + b->m_inv;
-	
 	jnt->r1 = cpvrotate(jnt->anchr1, a->rot);
 	jnt->r2 = cpvrotate(jnt->anchr2, b->rot);
 	
@@ -57,10 +94,7 @@ pinJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	jnt->n = cpvmult(delta, 1.0f/(dist ? dist : INFINITY));
 	
 	// calculate mass normal
-	cpFloat r1cn = cpvcross(jnt->r1, jnt->n);
-	cpFloat r2cn = cpvcross(jnt->r2, jnt->n);
-	cpFloat kn = mass_sum + a->i_inv*r1cn*r1cn + b->i_inv*r2cn*r2cn;
-	jnt->nMass = 1.0f/kn;
+	jnt->nMass = 1.0f/scalar_k(a, b, jnt->r1, jnt->r2, jnt->n);
 	
 	// calculate bias velocity
 	jnt->bias = -cp_joint_bias_coef*dt_inv*(dist - jnt->dist);
@@ -68,8 +102,7 @@ pinJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	
 	// apply accumulated impulse
 	cpVect j = cpvmult(jnt->n, jnt->jnAcc);
-	cpBodyApplyImpulse(a, cpvneg(j), jnt->r1);
-	cpBodyApplyImpulse(b, j, jnt->r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, j);
 }
 
 static void
@@ -84,21 +117,18 @@ pinJointApplyImpulse(cpJoint *joint)
 	cpVect r2 = jnt->r2;
 
 	//calculate bias impulse
-	cpVect vb1 = cpvadd(a->v_bias, cpvmult(cpvperp(r1), a->w_bias));
-	cpVect vb2 = cpvadd(b->v_bias, cpvmult(cpvperp(r2), b->w_bias));
-	cpFloat vbn = cpvdot(cpvsub(vb2, vb1), n);
+	cpVect vbr = relative_velocity(r1, a->v_bias, a->w_bias, r2, b->v_bias, b->w_bias);
+	cpFloat vbn = cpvdot(vbr, n);
 	
 	cpFloat jbn = (jnt->bias - vbn)*jnt->nMass;
 	jnt->jBias += jbn;
 	
 	cpVect jb = cpvmult(n, jbn);
-	cpBodyApplyBiasImpulse(a, cpvneg(jb), r1);
-	cpBodyApplyBiasImpulse(b, jb, r2);
+	apply_bias_impulses(a, b, jnt->r1, jnt->r2, jb);
 	
 	// compute relative velocity
-	cpVect v1 = cpvadd(a->v, cpvmult(cpvperp(r1), a->w));
-	cpVect v2 = cpvadd(b->v, cpvmult(cpvperp(r2), b->w));
-	cpFloat vrn = cpvdot(cpvsub(v2, v1), n);
+	cpVect vr = relative_velocity(r1, a->v, a->w, r2, b->v, b->w);
+	cpFloat vrn = cpvdot(vr, n);
 	
 	// compute normal impulse
 	cpFloat jn = -vrn*jnt->nMass;
@@ -106,9 +136,14 @@ pinJointApplyImpulse(cpJoint *joint)
 	
 	// apply impulse
 	cpVect j = cpvmult(n, jn);
-	cpBodyApplyImpulse(a, cpvneg(j), r1);
-	cpBodyApplyImpulse(b, j, r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, j);
 }
+
+static const cpJointClass pinJointClass = {
+	CP_PIN_JOINT,
+	pinJointPreStep,
+	pinJointApplyImpulse,
+};
 
 cpPinJoint *
 cpPinJointAlloc(void)
@@ -119,11 +154,7 @@ cpPinJointAlloc(void)
 cpPinJoint *
 cpPinJointInit(cpPinJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2)
 {
-	joint->joint.preStep = &pinJointPreStep;
-	joint->joint.applyImpulse = &pinJointApplyImpulse;
-	
-	joint->joint.a = a;
-	joint->joint.b = b;
+	cpJointInit((cpJoint *)joint, &pinJointClass, a, b);
 	
 	joint->anchr1 = anchr1;
 	joint->anchr2 = anchr2;
@@ -147,13 +178,11 @@ cpPinJointNew(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2)
 
 
 static void
-SlideJointPreStep(cpJoint *joint, cpFloat dt_inv)
+slideJointPreStep(cpJoint *joint, cpFloat dt_inv)
 {
 	cpBody *a = joint->a;
 	cpBody *b = joint->b;
 	cpSlideJoint *jnt = (cpSlideJoint *)joint;
-	
-	cpFloat mass_sum = a->m_inv + b->m_inv;
 	
 	jnt->r1 = cpvrotate(jnt->anchr1, a->rot);
 	jnt->r2 = cpvrotate(jnt->anchr2, b->rot);
@@ -170,27 +199,27 @@ SlideJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	jnt->n = cpvmult(delta, 1.0f/(dist ? dist : INFINITY));
 	
 	// calculate mass normal
-	cpFloat r1cn = cpvcross(jnt->r1, jnt->n);
-	cpFloat r2cn = cpvcross(jnt->r2, jnt->n);
-	cpFloat kn = mass_sum + a->i_inv*r1cn*r1cn + b->i_inv*r2cn*r2cn;
-	jnt->nMass = 1.0f/kn;
+	jnt->nMass = 1.0f/scalar_k(a, b, jnt->r1, jnt->r2, jnt->n);
 	
 	// calculate bias velocity
 	jnt->bias = -cp_joint_bias_coef*dt_inv*(pdist);
 	jnt->jBias = 0.0f;
 	
 	// apply accumulated impulse
-	if(!jnt->bias) jnt->jnAcc = 0.0f;
-	cpVect j = cpvmult(jnt->n, jnt->jnAcc);
-	cpBodyApplyImpulse(a, cpvneg(j), jnt->r1);
-	cpBodyApplyImpulse(b, j, jnt->r2);
+	if(!jnt->bias) //{
+		// if bias is 0, then the joint is not at a limit.
+		jnt->jnAcc = 0.0f;
+//	} else {
+		cpVect j = cpvmult(jnt->n, jnt->jnAcc);
+		apply_impulses(a, b, jnt->r1, jnt->r2, j);
+//	}
 }
 
 static void
-SlideJointApplyImpulse(cpJoint *joint)
+slideJointApplyImpulse(cpJoint *joint)
 {
 	cpSlideJoint *jnt = (cpSlideJoint *)joint;
-	if(!jnt->bias) return;
+	if(!jnt->bias) return;  // early exit
 
 	cpBody *a = joint->a;
 	cpBody *b = joint->b;
@@ -200,9 +229,8 @@ SlideJointApplyImpulse(cpJoint *joint)
 	cpVect r2 = jnt->r2;
 	
 	//calculate bias impulse
-	cpVect vb1 = cpvadd(a->v_bias, cpvmult(cpvperp(r1), a->w_bias));
-	cpVect vb2 = cpvadd(b->v_bias, cpvmult(cpvperp(r2), b->w_bias));
-	cpFloat vbn = cpvdot(cpvsub(vb2, vb1), n);
+	cpVect vbr = relative_velocity(r1, a->v_bias, a->w_bias, r2, b->v_bias, b->w_bias);
+	cpFloat vbn = cpvdot(vbr, n);
 	
 	cpFloat jbn = (jnt->bias - vbn)*jnt->nMass;
 	cpFloat jbnOld = jnt->jBias;
@@ -210,13 +238,11 @@ SlideJointApplyImpulse(cpJoint *joint)
 	jbn = jnt->jBias - jbnOld;
 	
 	cpVect jb = cpvmult(n, jbn);
-	cpBodyApplyBiasImpulse(a, cpvneg(jb), r1);
-	cpBodyApplyBiasImpulse(b, jb, r2);
+	apply_bias_impulses(a, b, jnt->r1, jnt->r2, jb);
 	
 	// compute relative velocity
-	cpVect v1 = cpvadd(a->v, cpvmult(cpvperp(r1), a->w));
-	cpVect v2 = cpvadd(b->v, cpvmult(cpvperp(r2), b->w));
-	cpFloat vrn = cpvdot(cpvsub(v2, v1), n);
+	cpVect vr = relative_velocity(r1, a->v, a->w, r2, b->v, b->w);
+	cpFloat vrn = cpvdot(vr, n);
 	
 	// compute normal impulse
 	cpFloat jn = -vrn*jnt->nMass;
@@ -226,9 +252,14 @@ SlideJointApplyImpulse(cpJoint *joint)
 	
 	// apply impulse
 	cpVect j = cpvmult(n, jn);
-	cpBodyApplyImpulse(a, cpvneg(j), r1);
-	cpBodyApplyImpulse(b, j, r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, j);
 }
+
+static const cpJointClass slideJointClass = {
+	CP_SLIDE_JOINT,
+	slideJointPreStep,
+	slideJointApplyImpulse,
+};
 
 cpSlideJoint *
 cpSlideJointAlloc(void)
@@ -239,11 +270,7 @@ cpSlideJointAlloc(void)
 cpSlideJoint *
 cpSlideJointInit(cpSlideJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat min, cpFloat max)
 {
-	joint->joint.preStep = &SlideJointPreStep;
-	joint->joint.applyImpulse = &SlideJointApplyImpulse;
-	
-	joint->joint.a = a;
-	joint->joint.b = b;
+	cpJointInit((cpJoint *)joint, &slideJointClass, a, b);
 	
 	joint->anchr1 = anchr1;
 	joint->anchr2 = anchr2;
@@ -305,8 +332,7 @@ pivotJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	jnt->jBias = cpvzero;
 	
 	// apply accumulated impulse
-	cpBodyApplyImpulse(a, cpvneg(jnt->jAcc), jnt->r1);
-	cpBodyApplyImpulse(b, jnt->jAcc, jnt->r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, jnt->jAcc);
 }
 
 static void
@@ -322,29 +348,30 @@ pivotJointApplyImpulse(cpJoint *joint)
 	cpVect k2 = jnt->k2;
 	
 	//calculate bias impulse
-	cpVect vb1 = cpvadd(a->v_bias, cpvmult(cpvperp(r1), a->w_bias));
-	cpVect vb2 = cpvadd(b->v_bias, cpvmult(cpvperp(r2), b->w_bias));
-	cpVect vbr = cpvsub(jnt->bias, cpvsub(vb2, vb1));
+	cpVect vbr = relative_velocity(r1, a->v_bias, a->w_bias, r2, b->v_bias, b->w_bias);
+	vbr = cpvsub(jnt->bias, vbr);
 	
 	cpVect jb = cpv(cpvdot(vbr, k1), cpvdot(vbr, k2));
 	jnt->jBias = cpvadd(jnt->jBias, jb);
 	
-	cpBodyApplyBiasImpulse(a, cpvneg(jb), r1);
-	cpBodyApplyBiasImpulse(b, jb, r2);
+	apply_bias_impulses(a, b, jnt->r1, jnt->r2, jb);
 	
 	// compute relative velocity
-	cpVect v1 = cpvadd(a->v, cpvmult(cpvperp(r1), a->w));
-	cpVect v2 = cpvadd(b->v, cpvmult(cpvperp(r2), b->w));
-	cpVect vr = cpvsub(v2, v1);
+	cpVect vr = relative_velocity(r1, a->v, a->w, r2, b->v, b->w);
 	
 	// compute normal impulse
 	cpVect j = cpv(-cpvdot(vr, k1), -cpvdot(vr, k2));
 	jnt->jAcc = cpvadd(jnt->jAcc, j);
 	
 	// apply impulse
-	cpBodyApplyImpulse(a, cpvneg(j), r1);
-	cpBodyApplyImpulse(b, j, r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, j);
 }
+
+static const cpJointClass pivotJointClass = {
+	CP_PIVOT_JOINT,
+	pivotJointPreStep,
+	pivotJointApplyImpulse,
+};
 
 cpPivotJoint *
 cpPivotJointAlloc(void)
@@ -355,11 +382,7 @@ cpPivotJointAlloc(void)
 cpPivotJoint *
 cpPivotJointInit(cpPivotJoint *joint, cpBody *a, cpBody *b, cpVect pivot)
 {
-	joint->joint.preStep = &pivotJointPreStep;
-	joint->joint.applyImpulse = &pivotJointApplyImpulse;
-	
-	joint->joint.a = a;
-	joint->joint.b = b;
+	cpJointInit((cpJoint *)joint, &pivotJointClass, a, b);
 	
 	joint->anchr1 = cpvunrotate(cpvsub(pivot, a->p), a->rot);
 	joint->anchr2 = cpvunrotate(cpvsub(pivot, b->p), b->rot);
@@ -399,15 +422,15 @@ grooveJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	// calculate tangential distance along the axis of r2
 	cpFloat td = cpvcross(cpvadd(b->p, jnt->r2), n);
 	// calculate clamping factor and r2
-	if(td < cpvcross(ta, n)){
+	if(td <= cpvcross(ta, n)){
 		jnt->clamp = 1.0f;
 		jnt->r1 = cpvsub(ta, a->p);
-	} else if(td > cpvcross(tb, n)){
+	} else if(td >= cpvcross(tb, n)){
 		jnt->clamp = -1.0f;
 		jnt->r1 = cpvsub(tb, a->p);
 	} else {
 		jnt->clamp = 0.0f;
-		jnt->r1 = cpvadd(cpvmult(cpvperp(n), -td), cpvmult(n, d));
+		jnt->r1 = cpvsub(cpvadd(cpvmult(cpvperp(n), -td), cpvmult(n, d)), a->p);
 	}
 		
 	// calculate mass matrix
@@ -445,8 +468,7 @@ grooveJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	jnt->jBias = cpvzero;
 	
 	// apply accumulated impulse
-	cpBodyApplyImpulse(a, cpvneg(jnt->jAcc), jnt->r1);
-	cpBodyApplyImpulse(b, jnt->jAcc, jnt->r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, jnt->jAcc);
 }
 
 static inline cpVect
@@ -474,33 +496,33 @@ grooveJointApplyImpulse(cpJoint *joint)
 	cpVect k2 = jnt->k2;
 	
 	//calculate bias impulse
-	cpVect vb1 = cpvadd(a->v_bias, cpvmult(cpvperp(r1), a->w_bias));
-	cpVect vb2 = cpvadd(b->v_bias, cpvmult(cpvperp(r2), b->w_bias));
-	cpVect vbr = cpvsub(jnt->bias, cpvsub(vb2, vb1));
+	cpVect vbr = relative_velocity(r1, a->v_bias, a->w_bias, r2, b->v_bias, b->w_bias);
+	vbr = cpvsub(jnt->bias, vbr);
 	
 	cpVect jb = cpv(cpvdot(vbr, k1), cpvdot(vbr, k2));
 	cpVect jbOld = jnt->jBias;
 	jnt->jBias = grooveConstrain(jnt, cpvadd(jbOld, jb));
 	jb = cpvsub(jnt->jBias, jbOld);
 	
-	cpBodyApplyBiasImpulse(a, cpvneg(jb), r1);
-	cpBodyApplyBiasImpulse(b, jb, r2);
-	
-	// compute relative velocity
-	cpVect v1 = cpvadd(a->v, cpvmult(cpvperp(r1), a->w));
-	cpVect v2 = cpvadd(b->v, cpvmult(cpvperp(r2), b->w));
-	cpVect vr = cpvsub(v2, v1);
+	apply_bias_impulses(a, b, jnt->r1, jnt->r2, jb);
 	
 	// compute impulse
+	cpVect vr = relative_velocity(r1, a->v, a->w, r2, b->v, b->w);
+
 	cpVect j = cpv(-cpvdot(vr, k1), -cpvdot(vr, k2));
 	cpVect jOld = jnt->jAcc;
 	jnt->jAcc = grooveConstrain(jnt, cpvadd(jOld, j));
 	j = cpvsub(jnt->jAcc, jOld);
 	
 	// apply impulse
-	cpBodyApplyImpulse(a, cpvneg(j), r1);
-	cpBodyApplyImpulse(b, j, r2);
+	apply_impulses(a, b, jnt->r1, jnt->r2, j);
 }
+
+static const cpJointClass grooveJointClass = {
+	CP_GROOVE_JOINT,
+	grooveJointPreStep,
+	grooveJointApplyImpulse,
+};
 
 cpGrooveJoint *
 cpGrooveJointAlloc(void)
@@ -511,11 +533,7 @@ cpGrooveJointAlloc(void)
 cpGrooveJoint *
 cpGrooveJointInit(cpGrooveJoint *joint, cpBody *a, cpBody *b, cpVect groove_a, cpVect groove_b, cpVect anchr2)
 {
-	joint->joint.preStep = &grooveJointPreStep;
-	joint->joint.applyImpulse = &grooveJointApplyImpulse;
-	
-	joint->joint.a = a;
-	joint->joint.b = b;
+	cpJointInit((cpJoint *)joint, &grooveJointClass, a, b);
 	
 	joint->grv_a = groove_a;
 	joint->grv_b = groove_b;

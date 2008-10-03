@@ -25,7 +25,7 @@
 #include "chipmunk.h"
 
 
-#define CP_ARRAY_INCREMENT 10
+//#define CP_ARRAY_INCREMENT 10
 
 // NOTE: cpArray is rarely used and will probably go away.
 
@@ -40,7 +40,7 @@ cpArrayInit(cpArray *arr, int size)
 {
 	arr->num = 0;
 	
-	size = (size ? size : CP_ARRAY_INCREMENT);
+	size = (size ? size : 4);
 	arr->max = size;
 	arr->arr = (void **)malloc(size*sizeof(void**));
 	
@@ -71,7 +71,7 @@ void
 cpArrayPush(cpArray *arr, void *object)
 {
 	if(arr->num == arr->max){
-		arr->max += CP_ARRAY_INCREMENT;
+		arr->max *= 2;
 		arr->arr = (void **)realloc(arr->arr, arr->max*sizeof(void**));
 	}
 	

@@ -34,6 +34,9 @@ cpBodyAlloc(void)
 cpBody*
 cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 {
+	body->velocity_func = cpBodyUpdateVelocity;
+	body->position_func = cpBodyUpdatePosition;
+	
 	cpBodySetMass(body, m);
 	cpBodySetMoment(body, i);
 
@@ -48,6 +51,7 @@ cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 	body->v_bias = cpvzero;
 	body->w_bias = 0.0f;
 	
+	body->data = NULL;
 //	body->active = 1;
 
 	return body;
@@ -92,7 +96,7 @@ cpBodySetAngle(cpBody *body, cpFloat a)
 void
 cpBodySlew(cpBody *body, cpVect pos, cpFloat dt)
 {
-	cpVect delta = cpvsub(body->p, pos);
+	cpVect delta = cpvsub(pos, body->p);
 	body->v = cpvmult(delta, 1.0/dt);
 }
 

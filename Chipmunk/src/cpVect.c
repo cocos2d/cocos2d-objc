@@ -51,7 +51,7 @@ cpvforangle(const cpFloat a)
 cpFloat
 cpvtoangle(const cpVect v)
 {
-	return atan2(v.x, v.y);
+	return atan2(v.y, v.x);
 }
 
 char*

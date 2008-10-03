@@ -60,7 +60,7 @@ typedef struct cpArbiter{
 	cpShape *a, *b;
 	
 	// Calculated by cpArbiterPreStep().
-	cpFloat u, e;
+	cpFloat u;
 	cpVect target_v;
 	
 	// Time stamp of the arbiter. (from cpSpace)
@@ -80,5 +80,6 @@ void cpArbiterFree(cpArbiter *arb);
 void cpArbiterInject(cpArbiter *arb, cpContact *contacts, int numContacts);
 // Precalculate values used by the solver.
 void cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv);
+void cpArbiterApplyCachedImpulse(cpArbiter *arb);
 // Run an iteration of the solver on the arbiter.
-void cpArbiterApplyImpulse(cpArbiter *arb);
+void cpArbiterApplyImpulse(cpArbiter *arb, cpFloat eCoef);
