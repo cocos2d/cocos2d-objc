@@ -113,7 +113,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) dealloc
 {
 	if(_name)
-	 glDeleteTextures(1, &_name);
+		glDeleteTextures(1, &_name);
 	
 	[super dealloc];
 }

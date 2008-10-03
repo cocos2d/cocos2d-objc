@@ -47,6 +47,23 @@ typedef struct _ccPointSprite
 	float size;
 } ccPointSprite;
 
+//!	A 2D Quad. 8 floats.
+typedef struct sQuad2 {
+	float	lb_x, lb_y;
+	float	rb_x, rb_y;
+	float	tr_x, tr_y;
+	float tl_x, tl_y;
+} ccQuad2;
+
+//!	A 3D Quad. 12 floats.
+typedef struct sQuad3 {
+	float	lb_x, lb_y, lb_z;
+	float	rb_x, rb_y, rb_z;
+	float	tr_x, tr_y, tr_z;
+	float tl_x, tl_y, tl_z;
+} ccQuad3;
+
+
 //! delta time type
 typedef float ccTime;
 //typedef double ccTime;
