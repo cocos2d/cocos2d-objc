@@ -30,19 +30,47 @@ typedef enum cpShapeType{
 	CP_NUM_SHAPES
 } cpShapeType;
 
-// Basic shape struct that the others inherit from.
-typedef struct cpShape{
-	cpShapeType type;
+// Forward declarations required for defining the cpShape and cpShapeClass structs.
+struct cpShape;
+struct cpShapeClass;
 
+// Shape class. Holds function pointers and type data.
+typedef struct cpShapeClass {
+	cpShapeType type;
+	
 	// Called by cpShapeCacheBB().
 	cpBB (*cacheData)(struct cpShape *shape, cpVect p, cpVect rot);
 	// Called to by cpShapeDestroy().
 	void (*destroy)(struct cpShape *shape);
 	
-	// Unique id used as the hash value.
-	unsigned int id;
+	// called by cpShapeQueryPointQuery().
+	int (*pointQuery)(struct cpShape *shape, cpVect p);
+} cpShapeClass;
+
+// Basic shape struct that the others inherit from.
+typedef struct cpShape{
+	// The "class" of a shape as defined above 
+	const cpShapeClass *klass;
+	
+	// cpBody that the shape is attached to.
+	cpBody *body;
+
 	// Cached BBox for the shape.
 	cpBB bb;
+	
+	// *** Surface properties.
+	
+	// Coefficient of restitution. (elasticity)
+	cpFloat e;
+	// Coefficient of friction.
+	cpFloat u;
+	// Surface velocity used when solving for friction.
+	cpVect surface_v;
+
+	// *** User Definable Fields
+
+	// User defined data pointer for the shape.
+	void *data;
 	
 	// User defined collision type for the shape.
 	unsigned int collision_type;
@@ -51,22 +79,14 @@ typedef struct cpShape{
 	// User defined layer bitmask for the shape.
 	unsigned int layers;
 	
-	// User defined data pointer for the shape.
-	void *data;
+	// *** Internally Used Fields
 	
-	// cpBody that the shape is attached to.
-	cpBody *body;
-	
-	// Coefficient of restitution. (elasticity)
-	cpFloat e;
-	// Coefficient of friction.
-	cpFloat u;
-	// Surface velocity used when solving for friction.
-	cpVect surface_v;
+	// Unique id used as the hash value.
+	unsigned int id;
 } cpShape;
 
 // Low level shape initialization func.
-cpShape* cpShapeInit(cpShape *shape, cpShapeType type, cpBody *body);
+cpShape* cpShapeInit(cpShape *shape, const struct cpShapeClass *klass, cpBody *body);
 
 // Basic destructor functions. (allocation functions are not shared)
 void cpShapeDestroy(cpShape *shape);
@@ -74,6 +94,14 @@ void cpShapeFree(cpShape *shape);
 
 // Cache the BBox of the shape.
 cpBB cpShapeCacheBB(cpShape *shape);
+
+// Test if a point lies within a shape.
+int cpShapePointQuery(cpShape *shape, cpVect p);
+
+// Test if a segment collides with a shape.
+// Returns [0-1] if the segment collides and -1 otherwise.
+// 0 would be a collision at point a, 1 would be a collision at point b.
+//cpFloat cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b);
 
 
 // Circle shape structure.
@@ -109,5 +137,5 @@ typedef struct cpSegmentShape{
 
 // Basic allocation functions for cpSegmentShape.
 cpSegmentShape* cpSegmentShapeAlloc(void);
-cpSegmentShape* cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloat r);
-cpShape* cpSegmentShapeNew(cpBody *body, cpVect a, cpVect b, cpFloat r);
+cpSegmentShape* cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloat radius);
+cpShape* cpSegmentShapeNew(cpBody *body, cpVect a, cpVect b, cpFloat radius);

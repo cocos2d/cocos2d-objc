@@ -35,13 +35,21 @@ typedef struct cpCollPairFunc {
 } cpCollPairFunc;
 
 typedef struct cpSpace{
-	// Number of iterations to use in the impulse solver.
-	int iterations;
-//	int sleepTicks;
+	// *** User definable fields
 	
-	// Self explanatory.
+	// Number of iterations to use in the impulse solver to solve contacts.
+	int iterations;
+	
+	// Number of iterations to use in the impulse solver to solve elastic collisions.
+	int elasticIterations;
+	
+	// Default gravity to supply when integrating rigid body motions.
 	cpVect gravity;
+	
+	// Default damping to supply when integrating rigid body motions.
 	cpFloat damping;
+	
+	// *** Internally Used Fields
 	
 	// Time stamp. Is incremented on every call to cpSpaceStep().
 	int stamp;
@@ -93,6 +101,11 @@ void cpSpaceRemoveShape(cpSpace *space, cpShape *shape);
 void cpSpaceRemoveStaticShape(cpSpace *space, cpShape *shape);
 void cpSpaceRemoveBody(cpSpace *space, cpBody *body);
 void cpSpaceRemoveJoint(cpSpace *space, cpJoint *joint);
+
+// Point query callback function
+typedef void (*cpSpacePointQueryFunc)(cpShape *shape, void *data);
+void cpSpaceShapePointQuery(cpSpace *space, cpVect point, cpSpacePointQueryFunc func, void *data);
+void cpSpaceStaticShapePointQuery(cpSpace *space, cpVect point, cpSpacePointQueryFunc func, void *data);
 
 // Iterator function for iterating the bodies in a space.
 typedef void (*cpSpaceBodyIterator)(cpBody *body, void *data);

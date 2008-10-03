@@ -142,7 +142,7 @@ cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv)
 	cpShape *shapea = arb->a;
 	cpShape *shapeb = arb->b;
 		
-	arb->e = shapea->e * shapeb->e;
+	cpFloat e = shapea->e * shapeb->e;
 	arb->u = shapea->u * shapeb->u;
 	arb->target_v = cpvsub(shapeb->surface_v, shapea->surface_v);
 
@@ -178,9 +178,26 @@ cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv)
 		// Calculate the target bounce velocity.
 		cpVect v1 = cpvadd(a->v, cpvmult(cpvperp(con->r1), a->w));
 		cpVect v2 = cpvadd(b->v, cpvmult(cpvperp(con->r2), b->w));
-		con->bounce = cpvdot(con->n, cpvsub(v2, v1))*arb->e;
+		con->bounce = cpvdot(con->n, cpvsub(v2, v1))*e;
+	}
+}
+
+void
+cpArbiterApplyCachedImpulse(cpArbiter *arb)
+{
+	cpShape *shapea = arb->a;
+	cpShape *shapeb = arb->b;
 		
-		// Apply the previous accumulated impulse.
+	arb->u = shapea->u * shapeb->u;
+	arb->target_v = cpvsub(shapeb->surface_v, shapea->surface_v);
+
+	cpBody *a = shapea->body;
+	cpBody *b = shapeb->body;
+	
+	for(int i=0; i<arb->numContacts; i++){
+		cpContact *con = &arb->contacts[i];
+		
+		cpVect t = cpvperp(con->n);
 		cpVect j = cpvadd(cpvmult(con->n, con->jnAcc), cpvmult(t, con->jtAcc));
 		cpBodyApplyImpulse(a, cpvneg(j), con->r1);
 		cpBodyApplyImpulse(b, j, con->r2);
@@ -188,7 +205,7 @@ cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv)
 }
 
 void
-cpArbiterApplyImpulse(cpArbiter *arb)
+cpArbiterApplyImpulse(cpArbiter *arb, cpFloat eCoef)
 {
 	cpBody *a = arb->a->body;
 	cpBody *b = arb->b->body;
@@ -222,7 +239,7 @@ cpArbiterApplyImpulse(cpArbiter *arb)
 		cpFloat vrn = cpvdot(vr, n);
 		
 		// Calculate and clamp the normal impulse.
-		cpFloat jn = -(con->bounce + vrn)*con->nMass;
+		cpFloat jn = -(con->bounce*eCoef + vrn)*con->nMass;
 		cpFloat jnOld = con->jnAcc;
 		con->jnAcc = cpfmax(jnOld + jn, 0.0f);
 		jn = con->jnAcc - jnOld;
@@ -235,7 +252,7 @@ cpArbiterApplyImpulse(cpArbiter *arb)
 		cpFloat jtMax = arb->u*con->jnAcc;
 		cpFloat jt = -vrt*con->tMass;
 		cpFloat jtOld = con->jtAcc;
-		con->jtAcc = cpfmin(cpfmax(jtOld + jt, -jtMax), jtMax);
+		con->jtAcc = cpfclamp(jtOld + jt, -jtMax, jtMax);
 		jt = con->jtAcc - jtOld;
 		
 		// Apply the final impulse.

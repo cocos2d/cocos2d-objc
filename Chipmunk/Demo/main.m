@@ -146,7 +146,7 @@ void drawPolyShape(cpShape *shape)
 void drawObject(void *ptr, void *unused)
 {
 	cpShape *shape = (cpShape *)ptr;
-	switch(shape->type){
+	switch(shape->klass->type){
 		case CP_CIRCLE_SHAPE:
 			drawCircleShape(shape);
 			break;

@@ -20,14 +20,31 @@
 */
 
 // TODO: Comment me!
-
+	
 extern cpFloat cp_joint_bias_coef;
 
-typedef struct cpJoint {
-	cpBody *a, *b;
+typedef enum cpJointType {
+	CP_PIN_JOINT,
+	CP_PIVOT_JOINT,
+	CP_SLIDE_JOINT,
+	CP_GROOVE_JOINT,
+	CP_CUSTOM_JOINT, // For user definable joint types.
+} cpJointType;
 
+struct cpJoint;
+struct cpJointClass;
+
+typedef struct cpJointClass {
+	cpJointType type;
+	
 	void (*preStep)(struct cpJoint *joint, cpFloat dt_inv);
 	void (*applyImpulse)(struct cpJoint *joint);
+} cpJointClass;
+
+typedef struct cpJoint {
+	const cpJointClass *klass;
+	
+	cpBody *a, *b;
 } cpJoint;
 
 void cpJointDestroy(cpJoint *joint);

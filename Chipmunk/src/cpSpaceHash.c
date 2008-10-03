@@ -301,8 +301,11 @@ void
 cpSpaceHashRemove(cpSpaceHash *hash, void *obj, unsigned int id)
 {
 	cpHandle *hand = (cpHandle *)cpHashSetRemove(hash->handleSet, id, obj);
-	hand->obj = NULL;
-	cpHandleRelease(hand);
+	
+	if(hand){
+		hand->obj = NULL;
+		cpHandleRelease(hand);
+	}
 }
 
 // Used by the cpSpaceHashEach() iterator.
@@ -341,19 +344,32 @@ query(cpSpaceHash *hash, cpSpaceHashBin *bin, void *obj, cpSpaceHashQueryFunc fu
 		
 		// Skip over certain conditions
 		if(
-		   // Have we already tried this pair in this query?
-		   hand->stamp == hash->stamp
-		   // Is obj the same as other?
-		   || obj == other 
-		   // Has other been removed since the last rehash?
-		   || !other
-		   ) continue;
+			// Have we already tried this pair in this query?
+			hand->stamp == hash->stamp
+			// Is obj the same as other?
+			|| obj == other 
+			// Has other been removed since the last rehash?
+			|| !other
+			) continue;
 		
 		func(obj, other, data);
 
 		// Stamp that the handle was checked already against this object.
 		hand->stamp = hash->stamp;
 	}
+}
+
+void
+cpSpaceHashPointQuery(cpSpaceHash *hash, cpVect point, cpSpaceHashQueryFunc func, void *data)
+{
+	cpFloat dim = hash->celldim;
+	int index = hash_func((int)(point.x/dim), (int)(point.y/dim), hash->numcells);
+	
+	query(hash, hash->table[index], &point, func, data);
+
+	// Increment the stamp.
+	// Only one cell is checked, but query() requires it anyway.
+	hash->stamp++;
 }
 
 void

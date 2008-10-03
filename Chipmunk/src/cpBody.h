@@ -18,20 +18,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+struct cpBody;
+typedef void (*cpBodyVelocityFunc)(struct cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);
+typedef void (*cpBodyPositionFunc)(struct cpBody *body, cpFloat dt);
+
  
 typedef struct cpBody{
+	// *** Integration Functions.
+
+	// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
+	cpBodyVelocityFunc velocity_func;
+	
+	// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
+	cpBodyPositionFunc position_func;
+	
+	// *** Mass Properties
+	
 	// Mass and it's inverse.
+	// Always use cpBodySetMass() whenever changing the mass as these values must agree.
 	cpFloat m, m_inv;
+	
 	// Moment of inertia and it's inverse.
+	// Always use cpBodySetMass() whenever changing the mass as these values must agree.
 	cpFloat i, i_inv;
 	
-	// NOTE: v_bias and w_bias are used internally for penetration/joint correction.
+	// *** Positional Properties
+	
 	// Linear components of motion (position, velocity, and force)
-	cpVect p, v, f, v_bias;
+	cpVect p, v, f;
+	
 	// Angular components of motion (angle, angular velocity, and torque)
-	cpFloat a, w, t, w_bias;
-	// Unit length 
-	cpVect rot; 
+	// Always use cpBodySetAngle() to set the angle of the body as a and rot must agree.
+	cpFloat a, w, t;
+	
+	// Cached unit length vector representing the angle of the body.
+	// Used for fast vector rotation using cpvrotate().
+	cpVect rot;
+	
+	// *** User Definable Fields
+	
+	// User defined data pointer.
+	void *data;
+	
+	// *** Internally Used Fields
+	
+	// Velocity bias values used when solving penetrations and correcting joints.
+	cpVect v_bias;
+	cpFloat w_bias;
 	
 //	int active;
 } cpBody;
@@ -49,10 +83,11 @@ void cpBodySetMass(cpBody *body, cpFloat m);
 void cpBodySetMoment(cpBody *body, cpFloat i);
 void cpBodySetAngle(cpBody *body, cpFloat a);
 
-// Modify the velocity of an object so that it will 
+//  Modify the velocity of the body so that it will move to the specified absolute coordinates in the next timestep.
+// Intended for objects that are moved manually with a custom velocity integration function.
 void cpBodySlew(cpBody *body, cpVect pos, cpFloat dt);
 
-// Integration functions.
+// Default Integration functions.
 void cpBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);
 void cpBodyUpdatePosition(cpBody *body, cpFloat dt);
 
