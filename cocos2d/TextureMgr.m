@@ -76,6 +76,8 @@ static TextureMgr *sharedTextureMgr;
 
 -(Texture2D*) addImage: (NSString*) fileimage
 {
+	NSAssert(fileimage != nil, @"TextureMgr: fileimage MUST not be nill");
+
 	Texture2D * tex;
 	
 	if( (tex=[textures objectForKey: fileimage] ) ) {
@@ -91,4 +93,11 @@ static TextureMgr *sharedTextureMgr;
 -(void) removeAllTextures {
 	[textures removeAllObjects];
 }
+
+-(void) removeTexture: (Texture2D*) tex {
+	NSAssert(tex != nil, @"TextureMgr: tex MUST not be nill");
+
+	[textures removeObjectForKey:tex];
+}
+
 @end
