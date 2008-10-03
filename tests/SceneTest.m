@@ -1,6 +1,6 @@
 //
 // cocos2d for iphone
-// main file
+// Scene demo
 //
 
 #import "SceneTest.h"
@@ -108,5 +108,9 @@
 	[[Director sharedDirector] resume];
 }
 
+// purge memroy
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
 
 @end

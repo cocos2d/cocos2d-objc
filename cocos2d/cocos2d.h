@@ -18,9 +18,23 @@
  *
  */
 
+
+/** @mainpage cocos2d for iPhone API reference
+ *
+ * @image html cocos2d-Icon.png
+ *
+ * @section intro Introduction
+ * Here you will find the API reference
+ *
+ * <hr>
+ *
+ * @todo A native english speaker shall check the grammar. We need your help!
+ *
+ */
+
 // 0x00 HI ME LO
-// 00   00 04 04
-#define COCOS2D_VERSION 0x00000404
+// 00   00 05 00
+#define COCOS2D_VERSION 0x00000500
 
 //
 // all cocos2d include files
@@ -47,6 +61,7 @@
 #import "Transition.h"
 #import "types.h"
 #import "TextureAtlas.h"
+#import "LabelAtlas.h"
 
 //
 // cocos2d helper files

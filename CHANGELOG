@@ -1,8 +1,10 @@
-version 0.4.4 - dd-MMM-yyyy
+version 0.5.0 - dd-MMM-yyyy
  . Actions: copy protocol fixed on some actions (issue #27)
+ . Chipmunk: using newest version from svn (issue #34)
  . CocosNode: Doxygen API reference fixed (issue #29)
  . Director: Doxygen API reference fixed (issue #29)
  . MenuItem: sending correct 'self' as argument (issue #19)
+ . Misc: improved cocos2d icon and default image (issue #33)
  . TextureAtlas: added TextureAtlas (issue #32)
  . TextureMgr: added removeAllTextures (issue #31)
  . Scheduler: retain arguments (issue #28)

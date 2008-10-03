@@ -23,6 +23,7 @@ cocos2d-iphone simplifies the game development in these areas:
     * Integrated Chipmunk 2d physics engine
     * Particle system
     * Text Rendering support
+	* Texture Atlas support
     * Touch/Accelerometer support
     * Integrated Pause/Resume
 	* Language: objective-c

@@ -104,6 +104,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark Example Atlas 1
+
 @implementation Atlas1
 
 
@@ -112,7 +114,7 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
-	textureAtlas = [[TextureAtlas textureAtlasWithImage: [UIImage imageNamed:@"atlastest.png"] capacity:3] retain];
+	textureAtlas = [[TextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
 
 	ccQuad2 texCoords[] = {
 		{0.0,0.2,	0.5,0.2,	0.0,0.0,	0.5,0.0},
@@ -155,21 +157,34 @@ Class restartAction()
 					
 -(NSString *) title
 {
-	return @"TextureAtlas manual";
+	return @"Atlas: TextureAtlas";
 }
 @end
 
+#pragma mark Example Atlas 2
+
 @implementation Atlas2
--(void) onEnter
-{
-	[super onEnter];
+-(id) init {
+	if( ![super init] )
+		return nil;
+	
+	
+	LabelAtlas *label = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+	
+	[self add:label];
+	label.position = cpv(10,100);
+
+	return self;
 	
 }
 -(NSString *) title
 {
-	return @"transformAtlas and children";
+	return @"Atlas: LabelAtlas";
 }
 @end
+
+#pragma mark Example Atlas 3
+
 @implementation Atlas3
 -(void) onEnter
 {
@@ -178,7 +193,7 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"z order";
+	return @"Coming soon";
 }
 
 @end
@@ -210,6 +225,11 @@ Class restartAction()
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[Director sharedDirector] resume];
+}
+
+// purge memroy
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+	[[TextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 @end

@@ -1,7 +1,9 @@
 //
-// glu internal implementation
+// cocos2d (incomplete) GLU implementation
+//
 // gluLookAt and gluPerspective from:
 // http://jet.ro/creations (San Angeles Observation)
+// 
 // 
 
 #import <OpenGLES/ES1/gl.h>

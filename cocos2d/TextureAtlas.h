@@ -21,24 +21,29 @@
 #import "Texture2D.h"
 #import "types.h"
 
-@interface TextureAtlas : Texture2D {
+/** A class that implements a basic Texture Atlas */
+@interface TextureAtlas : NSObject {
 	int			totalQuads;
 	ccQuad2		*texCoordinates;
 	ccQuad3		*vertices;
 	GLushort	*indices;
+	Texture2D	*texture;
 }
 
-/** creates a TextureAtlas with an iname and with a capacity for n Quads
- * n is the number of Quads that will be rendered at once from this Atlas
- * n is the maximun number of Quads it will be able to render, but not the minimun
- */
-+(id) textureAtlasWithImage:(UIImage*)image capacity: (int) n;
+@property (readonly) int totalQuads;
+@property (nonatomic,retain) Texture2D *texture;
 
-/** initializes a TextureAtlas with an iname and with a capacity for n Quads
+/** creates a TextureAtlas with an iname filename and with a capacity for n Quads
  * n is the number of Quads that will be rendered at once from this Atlas
  * n is the maximun number of Quads it will be able to render, but not the minimun
  */
--(id) initWithImage: (UIImage*) image capacity:(int)n;
++(id) textureAtlasWithFile:(NSString*)file capacity: (int) n;
+
+/** initializes a TextureAtlas with an iname filename and with a capacity for n Quads
+ * n is the number of Quads that will be rendered at once from this Atlas
+ * n is the maximun number of Quads it will be able to render, but not the minimun
+ */
+-(id) initWithFile: (NSString*) file capacity:(int)n;
 
 /** updates a certain texture coordinate & vertex with new Quads.
  * n must be between 0 and the atlas capacity - 1
@@ -56,5 +61,11 @@
 /** draws all the Atlas's Quads
  */
 -(void) drawQuads;
+
+
+/** resize the capacity of the Texture Atlas.
+ * The new capacity can be lower or higher
+ */
+-(void) resizeCapacity: (int) n;
 
 @end

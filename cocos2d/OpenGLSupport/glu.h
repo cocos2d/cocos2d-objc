@@ -1,4 +1,6 @@
 //
+// cocos2d GLU implementation
+//
 // implementation of GLU functions
 //
 #ifndef __COCOS2D_GLU_H
