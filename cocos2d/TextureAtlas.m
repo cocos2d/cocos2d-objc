@@ -32,11 +32,13 @@
 
 #pragma mark TextureAtlas - alloc & init
 
-+(id) textureAtlasWithFile:(NSString*) file capacity: (int) n {
++(id) textureAtlasWithFile:(NSString*) file capacity: (int) n
+{
 	return [[[self alloc] initWithFile:file capacity:n] autorelease];
 }
 
--(id) initWithFile:(NSString*)file capacity:(int)n {
+-(id) initWithFile:(NSString*)file capacity:(int)n
+{
 	if( ![super init] )
 		return nil;
 	
@@ -69,7 +71,8 @@
 	return self;
 }
 
--(void) dealloc {
+-(void) dealloc
+{
 	free(vertices);
 	free(texCoordinates);
 	free(indices);
@@ -79,7 +82,8 @@
 	[super dealloc];
 }
 
--(void) initIndices {
+-(void) initIndices
+{
 	for( int i=0;i<totalQuads;i++) {
 		indices[i*6+0] = i*4+0;
 		indices[i*6+1] = i*4+1;
@@ -93,7 +97,8 @@
 
 #pragma mark TextureAtlas - Updates
 
--(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(int) n {
+-(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(int) n
+{
 	
 	NSAssert( n >= 0 && n < totalQuads, @"updateQuadWithTexture: Invalid index");
 
@@ -103,7 +108,8 @@
 
 #pragma mark TextureAtlas - Resize
 
--(void) resizeCapacity: (int) n {
+-(void) resizeCapacity: (int) n
+{
 	if( n == totalQuads )
 		return;
 	
@@ -133,11 +139,13 @@
 
 #pragma mark TextureAtlas - Drawing
 
--(void) drawQuads {
+-(void) drawQuads
+{
 	return [self drawNumberOfQuads: totalQuads];
 }
 
--(void) drawNumberOfQuads: (int) n {
+-(void) drawNumberOfQuads: (int) n
+{
 	glBindTexture(GL_TEXTURE_2D, [texture name]);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);

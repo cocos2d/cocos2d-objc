@@ -186,14 +186,35 @@ Class restartAction()
 #pragma mark Example Atlas 3
 
 @implementation Atlas3
--(void) onEnter
-{
-	[super onEnter];
-
+-(id) init {
+	if( ![super init] )
+		return nil;
+	
+	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	[self add:tilemap];
+	
+	tilemap.position = cpv(0,-200);
+	
+	id s = [ScaleBy actionWithDuration:8 scale:0.5];
+	id scaleBack = [s reverse];
+	id go = [MoveBy actionWithDuration:4 position:cpv(-400,0)];
+	id goBack = [go reverse];
+	
+	id seq = [Sequence actions: s,
+							go,
+							scaleBack,
+							goBack,
+							nil];
+	
+	[tilemap do:seq];
+		
+	return self;
+	
 }
+
 -(NSString *) title
 {
-	return @"Coming soon";
+	return @"Atlas: TileMapAtlas";
 }
 
 @end

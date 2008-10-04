@@ -18,45 +18,18 @@
  *
  */
 
-#import "CocosNode.h"
+#import "AtlasNode.h"
 #import "TextureAtlas.h"
 
 /** A Label that laods the font from a Texture Atlas */
-@interface LabelAtlas : CocosNode <CocosNodeOpacity> {
-	
-	/// texture atlas
-	TextureAtlas	*texture;
-	/// chars per row
-	int				itemsPerRow;
-	/// chars per column
-	int				itemsPerColumn;
-	
-	/// texture coordinate x increment
-	float			texStepX;
-	/// texture coordinate y increment
-	float			texStepY;
-
-	/// width of each char
-	int				itemWidth;
-	/// height of each char
-	int				itemHeight;
-	
+@interface LabelAtlas : AtlasNode {
+		
 	/// string to render
 	NSString		*string;
 	
 	/// the first char in the charmap
 	char			mapStartChar;
-	
-	/// texture opacity
-	GLubyte opacity;
-	
-	/// texture color
-	GLubyte	r,g,b;
-	
 }
-
-@property (readwrite,assign) GLubyte r, g, b, opacity;
-
 
 /** creates the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 +(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c;
@@ -66,10 +39,4 @@
 
 /** returns the content size of the Label */
 -(CGSize) contentSize;
-
-/** set the color of the texture.
- * example:  [node setRGB: 255:128:25];
- */
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
-
 @end

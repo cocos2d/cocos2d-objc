@@ -62,6 +62,8 @@
 #import "types.h"
 #import "TextureAtlas.h"
 #import "LabelAtlas.h"
+#import "TileMapAtlas.h"
+#import "AtlasNode.h"
 
 //
 // cocos2d helper files
