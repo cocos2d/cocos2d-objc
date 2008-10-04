@@ -21,46 +21,31 @@
 #import "LabelAtlas.h"
 
 
-@interface LabelAtlas (Private)
--(void) calculateMaxItems;
--(void) calculateTexCoordsSteps;
--(void) updateAltasValues;
-@end
-
 @implementation LabelAtlas
 
-@synthesize	r,g,b,opacity;
-
 #pragma mark LabelAtlas - Creation & Init
-+(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c {
++(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
+{
 	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
 }
 
 
--(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c {
-	if (! [super init] )
+-(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
+{
+
+	if (! [super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ] )
 		return nil;
 
 	string = [theString retain];
-	texture = [[TextureAtlas textureAtlasWithFile:charmapfile capacity:[string length]] retain];
+	mapStartChar = c;	
 	
-	itemWidth = w;
-	itemHeight = h;
-	
-	mapStartChar = c;
-	
-	opacity = 255;
-	r = g = b = 255;
-
-	[self calculateMaxItems];
-	[self calculateTexCoordsSteps];
 	[self updateAltasValues];
 
 	return self;
 }
 
--(void) dealloc {
-	[texture release];
+-(void) dealloc
+{
 	[string release];
 
 	[super dealloc];
@@ -68,33 +53,8 @@
 
 #pragma mark LabelAtlas - Atlas generation
 
--(void) calculateMaxItems {
-	CGSize s = [[texture texture] contentSize];
-	itemsPerRow = s.height / itemHeight;
-	itemsPerColumn = s.width / itemWidth;
-}
-
--(void) calculateTexCoordsSteps {
-	CGSize s = [[texture texture] contentSize];
-	
-	// find power of 2 numbers and then calculate the size
-
-	for(int i=0;i<32;i++) {
-		if( s.width <= (1<<i) ) {
-			texStepX = (float) itemWidth / (1<<i);
-			break;
-		}
-	}
-
-	for(int i=0;i<32;i++) {
-		if( s.height <= (1<<i) ) {
-			texStepY = (float) itemHeight / (1<<i);
-			break;
-		}
-	}
-}
-
--(void) updateAltasValues {
+-(void) updateAltasValues
+{
 	int n = [string length];
 	
 	ccQuad2 texCoord;
@@ -156,19 +116,11 @@
 
 #pragma mark LabelAtlas - protocol related
 
--(CGSize) contentSize {
+-(CGSize) contentSize
+{
 	CGSize s;
 	s.width = [string length] * itemWidth;
 	s.height = itemHeight;
 	return s;
 }
-
--(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
-{
-	r=rr;
-	g=gg;
-	b=bb;
-}
-
-
 @end

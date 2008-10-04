@@ -128,6 +128,11 @@
 		506882690E957C4A00F943E5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		506884D70E96921100F943E5 /* LabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506884710E96734A00F943E5 /* LabelAtlas.m */; };
 		506885B50E96AC4400F943E5 /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */; };
+		506886530E96C2D800F943E5 /* tiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 506886510E96C2D800F943E5 /* tiles.png */; };
+		506886570E96C6E700F943E5 /* TileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506886550E96C6CC00F943E5 /* TileMapAtlas.m */; };
+		506887F70E96D4F000F943E5 /* AtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 506887D80E96C90000F943E5 /* AtlasNode.m */; };
+		506887F80E96D4F000F943E5 /* TGAlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 506887DB0E96D0FF00F943E5 /* TGAlib.c */; };
+		506888A30E96D7A200F943E5 /* levelmap.tga in Resources */ = {isa = PBXBuildFile; fileRef = 506888A20E96D7A200F943E5 /* levelmap.tga */; };
 		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -502,6 +507,14 @@
 		506884700E96734A00F943E5 /* LabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelAtlas.h; sourceTree = "<group>"; };
 		506884710E96734A00F943E5 /* LabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelAtlas.m; sourceTree = "<group>"; };
 		506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap.png"; sourceTree = "<group>"; };
+		506886510E96C2D800F943E5 /* tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles.png; sourceTree = "<group>"; };
+		506886540E96C6CC00F943E5 /* TileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapAtlas.h; sourceTree = "<group>"; };
+		506886550E96C6CC00F943E5 /* TileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileMapAtlas.m; sourceTree = "<group>"; };
+		506887D70E96C90000F943E5 /* AtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasNode.h; sourceTree = "<group>"; };
+		506887D80E96C90000F943E5 /* AtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasNode.m; sourceTree = "<group>"; };
+		506887DA0E96D0FF00F943E5 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
+		506887DB0E96D0FF00F943E5 /* TGAlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TGAlib.c; sourceTree = "<group>"; };
+		506888A20E96D7A200F943E5 /* levelmap.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelmap.tga; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
 		506C77E60E01524200B48100 /* ClickAndMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMove.m; path = tests/ClickAndMove.m; sourceTree = "<group>"; };
@@ -935,8 +948,22 @@
 				50637A160E95397A000C9182 /* TextureAtlas.m */,
 				506884700E96734A00F943E5 /* LabelAtlas.h */,
 				506884710E96734A00F943E5 /* LabelAtlas.m */,
+				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
+				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
+				506887D70E96C90000F943E5 /* AtlasNode.h */,
+				506887D80E96C90000F943E5 /* AtlasNode.m */,
+				506889530E96D7E300F943E5 /* Support */,
 			);
 			path = cocos2d;
+			sourceTree = "<group>";
+		};
+		506889530E96D7E300F943E5 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				506887DA0E96D0FF00F943E5 /* TGAlib.h */,
+				506887DB0E96D0FF00F943E5 /* TGAlib.c */,
+			);
+			name = Support;
 			sourceTree = "<group>";
 		};
 		508F97360E451D4A00F6FAC6 /* OpenGLSupport */ = {
@@ -1038,6 +1065,8 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				506888A20E96D7A200F943E5 /* levelmap.tga */,
+				506886510E96C2D800F943E5 /* tiles.png */,
 				506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */,
 				506882680E957C4A00F943E5 /* atlastest.png */,
 				5001659D0E72DB470085673F /* b1.png */,
@@ -1541,6 +1570,8 @@
 				506882030E95761200F943E5 /* fire.png in Resources */,
 				506882690E957C4A00F943E5 /* atlastest.png in Resources */,
 				506885B50E96AC4400F943E5 /* tuffy_bold_italic-charmap.png in Resources */,
+				506886530E96C2D800F943E5 /* tiles.png in Resources */,
+				506888A30E96D7A200F943E5 /* levelmap.tga in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1718,6 +1749,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506887F70E96D4F000F943E5 /* AtlasNode.m in Sources */,
+				506887F80E96D4F000F943E5 /* TGAlib.c in Sources */,
+				506886570E96C6E700F943E5 /* TileMapAtlas.m in Sources */,
 				506884D70E96921100F943E5 /* LabelAtlas.m in Sources */,
 				506882160E95770400F943E5 /* TextureAtlas.m in Sources */,
 				5018F26A0DFDEAFF00C013A5 /* Action.m in Sources */,

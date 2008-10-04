@@ -22,7 +22,15 @@
 // cocos (cc) types
 //
 
-//! RGBA color composed of bytes
+//! RGB color composed of bytes. 3 chars
+typedef struct _ccRGBB
+{
+	char	r;
+	char	g;
+	char	b;
+} ccRGBB;
+
+//! RGBA color composed of bytes. 4 chars
 typedef struct _ccColorB
 {
 	char r;
@@ -31,7 +39,7 @@ typedef struct _ccColorB
 	char a;
 } ccColorB;
 
-//! RGBA color composed of floats
+//! RGBA color composed of floats. 4 floats
 typedef struct _ccColorF {
 	float r;
 	float g;
