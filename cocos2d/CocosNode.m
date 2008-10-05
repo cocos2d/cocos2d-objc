@@ -89,6 +89,20 @@
 	return self;
 }
 
+- (void)cleanup;
+{
+	// actions
+	[actions release];
+	actions = nil;
+
+	[actionsToRemove release];
+	actionsToRemove = nil;
+
+	[actionsToAdd release];
+	actionsToAdd = nil;
+}
+
+
 - (void) dealloc
 {
 #if DEBUG
@@ -99,6 +113,7 @@
 	[camera release];
 	
 	// children
+	[children makeObjectsPerformSelector:@selector(cleanup)];
 	[children release];
 	[childrenNames release];
 	

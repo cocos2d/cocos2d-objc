@@ -3,9 +3,11 @@ version 0.5.0 - dd-MMM-yyyy
  . Chipmunk: using newest version from svn (issue #34)
  . CocosNode: Doxygen API reference fixed (issue #29)
  . Director: Doxygen API reference fixed (issue #29)
+ . LabelAtlas: Fast render update Label (issue #36) (*NEW_FEATURE*)
  . MenuItem: sending correct 'self' as argument (issue #19)
  . Misc: improved cocos2d icon and default image (issue #33)
- . TextureAtlas: added TextureAtlas (issue #32)
+ . TextureAtlas: Object to render indexed vertex arrays (issue #32) (*NEW_FEATURE*)
+ . TileMapAtlas: Map Tile rendered (issue #35) (*NEW_FEATURE*)
  . TextureMgr: added removeAllTextures (issue #31)
  . Scheduler: retain arguments (issue #28)
 
