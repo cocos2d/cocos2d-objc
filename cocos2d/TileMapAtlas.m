@@ -24,10 +24,13 @@
 
 @interface TileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
+-(void) calculateItemsToRender;
 @end
 
 
 @implementation TileMapAtlas
+
+@synthesize contentSize;
 
 #pragma mark TileMapAtlas - Creation & Init
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h
@@ -38,20 +41,39 @@
 
 -(id) initWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h
 {
-	// XXX: 200 can't be hardcoded
-	if( ![super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: 1000] )
+	[self loadTGAfile: map];
+	[self calculateItemsToRender];
+
+	if( ![super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender] )
 		return nil;
 
-	[self loadTGAfile: map];
 	[self updateAltasValues];
+	
+	contentSize.width = tgaInfo->width * itemWidth;
+	contentSize.height = tgaInfo->height * itemHeight;
+
+	tgaDestroy(tgaInfo);
+	tgaInfo = nil;
 
 	return self;
 }
 
 -(void) dealloc
 {	
-	tgaDestroy(tgaInfo);
 	[super dealloc];
+}
+
+-(void) calculateItemsToRender
+{
+	itemsToRender = 0;
+	for(int x=0;x < tgaInfo->width; x++ ) {
+		for( int y=0; y < tgaInfo->height; y++ ) {
+			ccRGBB *ptr = (ccRGBB*) tgaInfo->imageData;
+			ccRGBB value = ptr[x + y * tgaInfo->width];
+			if( value.r )
+				itemsToRender++;
+		}
+	}
 }
 
 -(void) loadTGAfile:(NSString*)file
@@ -69,9 +91,8 @@
 
 #pragma mark TileMapAtlas - Atlas generation
 
--(void) updateAltasValues {	
-	int n = 1000;
-	
+-(void) updateAltasValues
+{	
 	ccQuad2 texCoord;
 	ccQuad3 vertex;
 	
@@ -79,7 +100,7 @@
 
 	for(int x=0;x < tgaInfo->width; x++ ) {
 		for( int y=0; y < tgaInfo->height; y++ ) {
-			if( total < n ) {
+			if( total < itemsToRender ) {
 				ccRGBB *ptr = (ccRGBB*) tgaInfo->imageData;
 				ccRGBB value = ptr[x + y * tgaInfo->width];
 				
@@ -110,7 +131,7 @@
 					vertex.tr_y = y * itemHeight + itemHeight-0;	// D - y
 					vertex.tr_z = 0;								// D - z
 					
-					[texture updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:total];
+					[textureAtlas updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:total];
 
 					total++;
 				}
@@ -118,4 +139,5 @@
 		}
 	}
 }
+
 @end

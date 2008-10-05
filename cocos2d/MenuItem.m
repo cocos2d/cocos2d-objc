@@ -150,7 +150,7 @@ static BOOL _fontNameRelease = NO;
 
 	[label retain];	
 	
-	CGSize s = [[label texture] contentSize];
+	CGSize s = label.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2 );
 	
 	return self;
@@ -165,7 +165,7 @@ static BOOL _fontNameRelease = NO;
 
 -(CGRect) rect
 {
-	CGSize s = [[label texture] contentSize];
+	CGSize s = label.contentSize;
 	
 	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
 	return r;
@@ -202,7 +202,7 @@ static BOOL _fontNameRelease = NO;
 
 -(unsigned int) height
 {
-	return [[label texture] contentSize].height;
+	return [label contentSize].height;
 }
 
 -(void) draw
@@ -226,7 +226,7 @@ static BOOL _fontNameRelease = NO;
 	normalImage = [[Sprite spriteFromFile:value] retain];
 	selectedImage = [[Sprite spriteFromFile:value2] retain];
 	
-	CGSize s = [[normalImage texture] contentSize];
+	CGSize s = [normalImage contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );
 
 	return self;
@@ -252,7 +252,7 @@ static BOOL _fontNameRelease = NO;
 
 -(CGRect) rect
 {
-	CGSize s = [[normalImage texture] contentSize];
+	CGSize s = [normalImage contentSize];
 	
 	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
 	return r;
@@ -260,7 +260,7 @@ static BOOL _fontNameRelease = NO;
 
 -(unsigned int) height
 {
-	return [[normalImage texture] contentSize].height;
+	return [normalImage contentSize].height;
 }
 
 -(void) draw

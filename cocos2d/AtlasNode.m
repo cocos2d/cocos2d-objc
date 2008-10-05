@@ -28,7 +28,7 @@
 
 @implementation AtlasNode
 
-@synthesize	r,g,b,opacity;
+@synthesize	opacity;
 
 #pragma mark AtlasNode - Creation & Init
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c
@@ -42,7 +42,7 @@
 	if (! [super init] )
 		return nil;
 	
-	texture = [[TextureAtlas textureAtlasWithFile:tile capacity:c] retain];
+	textureAtlas = [[TextureAtlas textureAtlasWithFile:tile capacity:c] retain];
 	
 	itemWidth = w;
 	itemHeight = h;
@@ -58,7 +58,7 @@
 
 -(void) dealloc
 {
-	[texture release];
+	[textureAtlas release];
 	
 	[super dealloc];
 }
@@ -67,14 +67,14 @@
 
 -(void) calculateMaxItems
 {
-	CGSize s = [[texture texture] contentSize];
+	CGSize s = [[textureAtlas texture] contentSize];
 	itemsPerRow = s.height / itemHeight;
 	itemsPerColumn = s.width / itemWidth;
 }
 
 -(void) calculateTexCoordsSteps
 {
-	CGSize s = [[texture texture] contentSize];
+	CGSize s = [[textureAtlas texture] contentSize];
 	
 	// find power of 2 numbers and then calculate the size
 	
@@ -108,7 +108,7 @@
 	
 	glColor4ub( r, g, b, opacity);
 	
-	[texture drawQuads];
+	[textureAtlas drawQuads];
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
@@ -128,5 +128,10 @@
 	b=bb;
 }
 
+-(CGSize) contentSize
+{
+	[NSException raise:@"ContentSizeAbstract" format:@"ContentSize was not overriden"];
+	return CGSizeMake(0,0);
+}
 
 @end

@@ -21,13 +21,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "OpenGLSupport/Texture2D.h"
+#import "Support/Texture2D.h"
 
 #import "CocosNode.h"
 
 
 /** A CocosNode that knows how to render a texture */
-@interface TextureNode : CocosNode <CocosNodeOpacity> {
+@interface TextureNode : CocosNode <CocosNodeOpacity, CocosNodeSize> {
 
 	/// texture
 	Texture2D *texture;
@@ -47,5 +47,9 @@
  */
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
 
--(void) draw;
+
+/** returns the size in pixels of the texture
+ * Conforms to the CocosNodeSize protocol
+ */
+-(CGSize) contentSize;
 @end

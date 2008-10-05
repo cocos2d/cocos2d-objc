@@ -24,10 +24,18 @@
 
 /** A TileMap that laods the font from a Texture Atlas */
 @interface TileMapAtlas : AtlasNode {
-	unsigned int	*mapData;
+	
+	/// info about the map file
 	tTgaInfo		*tgaInfo;
+	
+	/// size of the map in pixels
+	CGSize			contentSize;
+	
+	/// numbers of tiles to render
+	int				itemsToRender;
 }
 
+@property (readonly) CGSize contentSize;
 
 /** creates the TileMap with a tile file (atlas) with a map file and the width and height of each tile */
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;

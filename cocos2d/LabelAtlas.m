@@ -89,9 +89,20 @@
 		vertex.tr_y = itemWidth;					// D - y
 		vertex.tr_z = 0;							// D - z
 		
-		[texture updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
+		[textureAtlas updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
 	}
 }
+
+- (void) setString:(NSString*) newString
+{
+	if( newString.length > textureAtlas.totalQuads )
+		[textureAtlas resizeCapacity: newString.length];
+
+	[string release];
+	string = [newString retain];
+	[self updateAltasValues];
+}
+
 
 #pragma mark LabelAtlas - draw
 - (void) draw
@@ -103,7 +114,7 @@
 	
 	glColor4ub( r, g, b, opacity);
 	
-	[texture drawQuads];
+	[textureAtlas drawNumberOfQuads: string.length];
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
@@ -113,6 +124,7 @@
 	glDisableClientState(GL_VERTEX_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
+
 
 #pragma mark LabelAtlas - protocol related
 

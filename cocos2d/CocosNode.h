@@ -192,8 +192,20 @@
 //
 // protocols
 //
+
+/// CocosNode opacity protocol
 @protocol CocosNodeOpacity
+/// returns the opacity
 -(GLubyte) opacity;
+/// sets the opacity
 -(void) setOpacity: (GLubyte) opacity;
 @end
+
+/// Size CocosNode protocol
+@protocol CocosNodeSize
+/// returns the size in pixels of a CocosNode
+-(CGSize) contentSize;
+@end
+
+
 
