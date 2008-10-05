@@ -54,7 +54,7 @@ Class restartAction()
 	CGRect s = [[Director sharedDirector] winSize];
 		
 	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
-	[self add: label];
+	[self add: label z:1];
 	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -67,7 +67,7 @@ Class restartAction()
 	item1.position = cpv( s.size.width/2 - 100,30);
 	item2.position = cpv( s.size.width/2, 30);
 	item3.position = cpv( s.size.width/2 + 100,30);
-	[self add: menu z:-1];	
+	[self add: menu z:1];	
 
 	return self;
 }
@@ -135,13 +135,15 @@ Class restartAction()
 	return self;
 }
 
--(void) dealloc {
+-(void) dealloc
+{
 	[textureAtlas release];
 	[super dealloc];
 }
 
 
--(void) draw {
+-(void) draw
+{
 	glEnableClientState( GL_VERTEX_ARRAY);
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	
@@ -164,19 +166,37 @@ Class restartAction()
 #pragma mark Example Atlas 2
 
 @implementation Atlas2
--(id) init {
+-(id) init
+{
 	if( ![super init] )
 		return nil;
 	
 	
-	LabelAtlas *label = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+	label = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	
 	[self add:label];
+	[label retain];
+
 	label.position = cpv(10,100);
 
+	[self schedule:@selector(step:)];
 	return self;
 	
 }
+
+-(void) step:(ccTime) dt
+{
+	time += dt;
+	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
+	[label setString:string];
+}
+
+-(void) dealloc
+{
+	[label release];
+	[super dealloc];
+}
+
 -(NSString *) title
 {
 	return @"Atlas: LabelAtlas";
@@ -186,18 +206,21 @@ Class restartAction()
 #pragma mark Example Atlas 3
 
 @implementation Atlas3
--(id) init {
+-(id) init
+{
 	if( ![super init] )
 		return nil;
 	
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 	[self add:tilemap];
 	
-	tilemap.position = cpv(0,-200);
+	CGSize size = tilemap.contentSize;
+	tilemap.transformAnchor = cpv(0, size.height/2);
+	tilemap.position = cpv(0,0);
 	
 	id s = [ScaleBy actionWithDuration:8 scale:0.5];
 	id scaleBack = [s reverse];
-	id go = [MoveBy actionWithDuration:4 position:cpv(-400,0)];
+	id go = [MoveBy actionWithDuration:4 position:cpv(-850,0)];
 	id goBack = [go reverse];
 	
 	id seq = [Sequence actions: s,

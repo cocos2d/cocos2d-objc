@@ -69,4 +69,10 @@
 	glDisableClientState(GL_VERTEX_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
+
+-(CGSize) contentSize
+{
+	return [texture contentSize];
+}
+	
 @end

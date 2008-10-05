@@ -21,7 +21,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "OpenGLSupport/Texture2D.h"
+#import "Support/Texture2D.h"
 
 #import "TextureNode.h"
 
@@ -38,8 +38,9 @@
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the label with a font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** changes the string
- * WARNING: Changing the string is as expensive as creating a new Label.
+
+/** changes the string to render
+ * @warning: Changing the string is as expensive as creating a new Label. To obtain better performance use LabelAtlas
  */
 - (void) setString:(NSString*)string;
 

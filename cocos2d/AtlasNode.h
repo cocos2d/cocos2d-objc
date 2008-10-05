@@ -22,10 +22,10 @@
 #import "CocosNode.h"
 
 /** An Atlas node. Knows how to render Atlas */
-@interface AtlasNode :CocosNode <CocosNodeOpacity> {
+@interface AtlasNode :CocosNode <CocosNodeOpacity, CocosNodeSize> {
 	
 	/// texture atlas
-	TextureAtlas	*texture;
+	TextureAtlas	*textureAtlas;
 	/// chars per row
 	int				itemsPerRow;
 	/// chars per column
@@ -49,7 +49,8 @@
 	
 }
 
-@property (readwrite,assign) GLubyte r, g, b, opacity;
+/// property of opacity. Conforms to CocosNodeOpacity protocol
+@property (readwrite,assign) GLubyte opacity;
 
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
@@ -68,5 +69,10 @@
  * example:  [node setRGB: 255:128:25];
  */
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
+
+/** returns the content size of the Atlas in pixels
+ * Conforms to CocosNodeSize protocol
+ */
+-(CGSize) contentSize;
 
 @end

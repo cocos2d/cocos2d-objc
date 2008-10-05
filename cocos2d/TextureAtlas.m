@@ -117,7 +117,7 @@
 
 	texCoordinates = realloc( texCoordinates, sizeof(texCoordinates[0]) * totalQuads );
 	vertices = realloc( vertices, sizeof(vertices[0]) * totalQuads );
-	indices = realloc( vertices, sizeof(indices[0]) * totalQuads * 6 );
+	indices = realloc( indices, sizeof(indices[0]) * totalQuads * 6 );
 	
 	if( ! ( texCoordinates && vertices && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");

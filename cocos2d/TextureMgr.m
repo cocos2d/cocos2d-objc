@@ -90,11 +90,13 @@ static TextureMgr *sharedTextureMgr;
 	return [tex autorelease];
 }
 
--(void) removeAllTextures {
+-(void) removeAllTextures
+{
 	[textures removeAllObjects];
 }
 
--(void) removeTexture: (Texture2D*) tex {
+-(void) removeTexture: (Texture2D*) tex
+{
 	NSAssert(tex != nil, @"TextureMgr: tex MUST not be nill");
 
 	[textures removeObjectForKey:tex];

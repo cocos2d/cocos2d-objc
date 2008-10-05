@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "OpenGLSupport/Texture2D.h"
+#import "Support/Texture2D.h"
 
 /** Singleton that handles the loading of textures
  * Once the texture is loaded, the next time it will return

@@ -68,9 +68,9 @@
 //
 // cocos2d helper files
 //
-#import "OpenGLSupport/OpenGL_Internal.h"
-#import "OpenGLSupport/Texture2D.h"
-#import "OpenGLSupport/EAGLView.h"
+#import "Support/OpenGL_Internal.h"
+#import "Support/Texture2D.h"
+#import "Support/EAGLView.h"
 
 
 // free functions
