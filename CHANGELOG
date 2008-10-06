@@ -3,6 +3,7 @@ version 0.5.0 - dd-MMM-yyyy
  . Chipmunk: using newest version from svn (issue #34)
  . CocosNode: Nodes not being dealloced with active actions (issue #25)
  . CocosNode: Doxygen API reference fixed (issue #29)
+ . Demo: added test/example of the new Atlas feature (issue #40)
  . Director: Doxygen API reference fixed (issue #29)
  . Director: Display FPS are rendered 10 times per second (issue #37)
  . LabelAtlas: Fast render update Label (issue #36) (*NEW_FEATURE*)
@@ -12,6 +13,7 @@ version 0.5.0 - dd-MMM-yyyy
  . TileMapAtlas: Tile Map renderer (issue #35) (*NEW_FEATURE*)
  . TextureMgr: added removeAllTextures (issue #31)
  . Scheduler: retain arguments (issue #28)
+ . Sprite: replaced FromFile with WithFile (issue #39) (*API_CHANGED*)
 
 version 0.4.3 - 19-Sept-2008
  . Demo: AccelViewPort using code without the VirtualAccelerometer
