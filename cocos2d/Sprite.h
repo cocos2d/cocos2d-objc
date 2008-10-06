@@ -54,10 +54,10 @@
 	NSMutableDictionary *animations;	
 }
 
-/** creates an sprite from a filepath */
-+ (id) spriteFromFile:(NSString *)path;
-/** initializes the sprite from a filepath */
-- (id) initFromFile:(NSString *)path;
+/** creates an sprite with an image file */
++ (id) spriteWithFile:(NSString *)imageFile;
+/** initializes the sprite with an image file */
+- (id) initWithFile:(NSString *) imageFile;
 
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (Animation*) animation;

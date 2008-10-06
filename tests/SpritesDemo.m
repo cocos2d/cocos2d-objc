@@ -61,8 +61,8 @@ Class restartAction()
 {
 	[super init];
 
-	grossini = [[Sprite spriteFromFile:@"grossini.png"] retain];
-	tamara = [[Sprite spriteFromFile:@"grossinis_sister1.png"] retain];
+	grossini = [[Sprite spriteWithFile:@"grossini.png"] retain];
+	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	
 	[self add: grossini z:1];
 	[self add: tamara z:2];
@@ -480,7 +480,7 @@ Class restartAction()
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
-//	[[Director sharedDirector] setDisplayFPS:YES];
+	[[Director sharedDirector] setDisplayFPS:YES];
 
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];

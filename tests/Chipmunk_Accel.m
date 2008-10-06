@@ -24,7 +24,7 @@ eachShape(void *ptr, void* unused)
 @implementation Layer1
 -(void) addNewSpriteX: (float)x y:(float)y
 {
-	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
+	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
 	[self add: sprite];
 	
 	sprite.position = cpv(x,y);

@@ -223,8 +223,8 @@ static BOOL _fontNameRelease = NO;
 	if( ![super initWithTarget:t selector:sel] )
 		return nil;
 
-	normalImage = [[Sprite spriteFromFile:value] retain];
-	selectedImage = [[Sprite spriteFromFile:value2] retain];
+	normalImage = [[Sprite spriteWithFile:value] retain];
+	selectedImage = [[Sprite spriteWithFile:value2] retain];
 	
 	CGSize s = [normalImage contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );

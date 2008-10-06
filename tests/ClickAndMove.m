@@ -15,7 +15,7 @@
 	
 	isTouchEnabled = YES;
 	
-	Sprite *sprite = [Sprite spriteFromFile: @"grossini.png"];
+	Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
 	
 	id layer = [ColorLayer layerWithColor: 0xffff00ff];
 	[self add: layer];
@@ -43,7 +43,7 @@
 	CGPoint location = [touch locationInView: [touch view]];
 
 /*
-	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
+	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
 	[sprite setPosition: CGPointMake(location.x, 480-location.y)];
 	[sprite do: [RotateBy actionWithDuration:2*4 angle:360*4]];
 	[self add: sprite];
