@@ -50,8 +50,8 @@ Class restartAction()
 {
 	[super init];
 
-	grossini = [[Sprite spriteFromFile:@"grossini.png"] retain];
-	tamara = [[Sprite spriteFromFile:@"grossinis_sister1.png"] retain];
+	grossini = [[Sprite spriteWithFile:@"grossini.png"] retain];
+	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	
 	[self add: grossini z:1];
 	[self add: tamara z:2];
@@ -156,8 +156,8 @@ Class restartAction()
 	
 	[self centerSprites];
 
-	Sprite *sp1 = [Sprite spriteFromFile:@"grossini.png"];
-	Sprite *sp2 = [Sprite spriteFromFile:@"grossinis_sister1.png"];
+	Sprite *sp1 = [Sprite spriteWithFile:@"grossini.png"];
+	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	
 	sp1.scale = 0.25;
 	sp2.scale = 0.25;
@@ -194,8 +194,8 @@ Class restartAction()
 
 	[self centerSprites];
 	
-	Sprite *sp1 = [Sprite spriteFromFile:@"grossinis_sister1.png"];
-	Sprite *sp2 = [Sprite spriteFromFile:@"grossinis_sister2.png"];
+	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	
 	sp1.position = cpv(20,80);
 	sp2.position = cpv(70,50);

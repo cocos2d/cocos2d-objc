@@ -30,12 +30,12 @@
 
 @implementation Sprite
 
-+ (id) spriteFromFile: (NSString*) filename
++ (id) spriteWithFile: (NSString*) filename
 {
-	return [[[self alloc] initFromFile:filename] autorelease];
+	return [[[self alloc] initWithFile:filename] autorelease];
 }
 
-- (id) initFromFile: (NSString*) filename
+- (id) initWithFile: (NSString*) filename
 {
 	if (![super init])
 		return nil;

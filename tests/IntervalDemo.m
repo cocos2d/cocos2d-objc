@@ -38,7 +38,7 @@
 	[self add:label3];
 	
 	// Sprite
-	Sprite *sprite = [Sprite spriteFromFile:@"grossini.png"];
+	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
 	sprite.position = cpv(40,50);
 	
 	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];

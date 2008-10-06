@@ -23,7 +23,7 @@ float randfloat() {
 
 	isTouchEnabled = YES;
 	isAccelerometerEnabled = YES;
-	clouds = [[Sprite spriteFromFile:@"clouds.jpg"] retain];
+	clouds = [[Sprite spriteWithFile:@"clouds.jpg"] retain];
 	[clouds setScale: CLOUDS_SCALE];
 	
 	CGSize cs = clouds.texture.contentSize;
@@ -61,7 +61,7 @@ float randfloat() {
 
 -(Sprite *) addNewSpritePosition:(cpVect)pos scale:(double)scle
 {
-	Sprite *g = [[Sprite spriteFromFile:@"grossini.png"] retain];
+	Sprite *g = [[Sprite spriteWithFile:@"grossini.png"] retain];
 	[clouds add: g];
 	[g setScale: scle];
 	[g setPosition: pos ];

@@ -43,9 +43,9 @@
 	x = size.size.width;
 	y = size.size.height;
 	
-	Sprite *sprite = [Sprite spriteFromFile: @"grossini.png"];
-	Sprite *spriteSister1 = [Sprite spriteFromFile: @"grossinis_sister1.png"];
-	Sprite *spriteSister2 = [Sprite spriteFromFile: @"grossinis_sister2.png"];
+	Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
+	Sprite *spriteSister1 = [Sprite spriteWithFile: @"grossinis_sister1.png"];
+	Sprite *spriteSister2 = [Sprite spriteWithFile: @"grossinis_sister2.png"];
 	
 	[sprite setScale: 1.5];
 	[spriteSister1 setScale: 1.5];
