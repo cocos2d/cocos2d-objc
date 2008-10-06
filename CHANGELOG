@@ -13,6 +13,7 @@ version 0.5.0 - dd-MMM-yyyy
  . TileMapAtlas: Tile Map renderer (issue #35) (*NEW_FEATURE*)
  . TextureMgr: added removeAllTextures (issue #31)
  . Scheduler: retain arguments (issue #28)
+ . Scheduler: passes correct delta time (issue #26)
  . Sprite: replaced FromFile with WithFile (issue #39) (*API_CHANGED*)
 
 version 0.4.3 - 19-Sept-2008
