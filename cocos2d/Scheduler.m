@@ -85,11 +85,7 @@
 		[invocation setArgument:&elapsed atIndex:2];
 		[invocation invoke];
 		
-		// save the difference
-		if( interval )
-			elapsed -= interval;
-		else
-			elapsed = 0;
+		elapsed = 0;
 	}
 }
 @end
