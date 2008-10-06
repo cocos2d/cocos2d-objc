@@ -171,7 +171,6 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
-	
 	label = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	
 	[self add:label];

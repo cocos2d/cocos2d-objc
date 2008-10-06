@@ -27,6 +27,7 @@
 #import "glu.h"
 #import "OpenGL_Internal.h"
 #import "Texture2D.h"
+#import "LabelAtlas.h"
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -121,6 +122,9 @@ static int _pixelFormat = RGB565;
 	// FPS
 	displayFPS = NO;
 	frames = 0;
+#ifdef FAST_FPS_DISPLAY
+	FPSLabel = [[LabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
+#endif
 	
 	// paused ?
 	paused = NO;
@@ -136,6 +140,9 @@ static int _pixelFormat = RGB565;
 - (void) dealloc {
 	NSLog( @"deallocing %@", self);
 
+#ifdef FAST_FPS_DISPLAY
+	[FPSLabel release];
+#endif
 	[runningScene release];
 	[scenes release];
 	[window release];
@@ -547,7 +554,29 @@ static int _pixelFormat = RGB565;
 	}
 }
 
-#pragma mark Director Debug
+#ifdef FAST_FPS_DISPLAY
+
+// display the FPS using a LabelAtlas
+// updates the FPS every frame
+-(void) showFPS
+{
+	frames++;
+	accumDt += dt;
+	
+	if ( accumDt > 0.1)  {
+		frameRate = frames/accumDt;
+		frames = 0;
+		accumDt = 0;
+	}
+		
+	NSString *str = [NSString stringWithFormat:@"%.1f",frameRate];
+//	glTranslatef(10.0, 10.0, 0);
+	[FPSLabel setString:str];
+	[FPSLabel draw];
+}
+#else
+// display the FPS using a manually generated Texture (very slow)
+// updates the FPS 3 times per second aprox.
 -(void) showFPS
 {
 	frames++;
@@ -573,6 +602,8 @@ static int _pixelFormat = RGB565;
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+#endif
+
 
 @end
 

@@ -80,14 +80,14 @@
 	
 	for(int i=0;i<32;i++) {
 		if( s.width <= (1<<i) ) {
-			texStepX = (double) itemWidth / (1<<i);
+			texStepX = (float) itemWidth / (1<<i);
 			break;
 		}
 	}
 	
 	for(int i=0;i<32;i++) {
 		if( s.height <= (1<<i) ) {
-			texStepY = (double) itemHeight / (1<<i);
+			texStepY = (float) itemHeight / (1<<i);
 			break;
 		}
 	}
