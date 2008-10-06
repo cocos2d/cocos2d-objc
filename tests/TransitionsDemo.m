@@ -288,6 +288,8 @@ Class restartTransition()
 {
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDisplayFPS:YES];
+
 
 	Scene *scene = [Scene node];
 	[scene add: [TextLayer node]];

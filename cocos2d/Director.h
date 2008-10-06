@@ -31,11 +31,16 @@
 // Landscape is right or left ?
 #define LANDSCAPE_LEFT 1
 
+// Fast FPS display. FPS are updated 10 times per second without consuming resources
+// uncomment this line to use the old method that updated
+#define FAST_FPS_DISPLAY 1
+
 enum {
 	RGB565,
 	RGBA8
 };
-	
+
+@class LabelAtlas;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes
@@ -57,6 +62,9 @@ and when to execute the Scenes
 	int frames;
 	ccTime accumDt;
 	ccTime frameRate;
+#ifdef FAST_FPS_DISPLAY
+	LabelAtlas *FPSLabel;
+#endif
 	
 	/** is the running scene paused */
 	BOOL paused;

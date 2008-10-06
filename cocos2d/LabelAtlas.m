@@ -83,10 +83,10 @@
 		vertex.br_y = 0;							// B - y
 		vertex.br_z = 0;							// B - z
 		vertex.tl_x = i * itemWidth;				// C - x
-		vertex.tl_y = itemWidth;					// C - y
+		vertex.tl_y = itemHeight;					// C - y
 		vertex.tl_z = 0;							// C - z
 		vertex.tr_x = i * itemWidth + itemWidth;	// D - x
-		vertex.tr_y = itemWidth;					// D - y
+		vertex.tr_y = itemHeight;					// D - y
 		vertex.tr_z = 0;							// D - z
 		
 		[textureAtlas updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
