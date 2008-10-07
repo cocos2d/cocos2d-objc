@@ -32,6 +32,7 @@
 @interface MenuItem : CocosNode
 {
 	NSInvocation *invocation;
+    BOOL isEnabled;
 }
 /** creates a menu item with a target/selector */
 +(id) itemWithTarget:(id) r selector:(SEL) s;
@@ -50,6 +51,11 @@
 
 /** the item was unselected */
 -(void) unselected;
+
+/** enable or disabled the MenuItem */
+-(void) setIsEnabled: (BOOL)enabled;
+/** returns whether or not the MenuItem is enabled */
+-(BOOL) isEnabled;
 
 /** returns the height of the item */
 -(unsigned int) height;
@@ -93,12 +99,13 @@
 @interface MenuItemImage : MenuItem
 {
 	BOOL selected;
-	Sprite *normalImage, *selectedImage;
+	Sprite *normalImage, *selectedImage, *disabledImage;
 }
 /** creates a menu item from a string */
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
 
 /** initializes a menu item from a string */
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 target:(id) r selector:(SEL) s;
+-(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
 @end
 
