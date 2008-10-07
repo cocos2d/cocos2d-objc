@@ -44,6 +44,7 @@ void demo5_init(void)
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
 	cpResetShapeIdCounter();
+	
 	space = cpSpaceNew();
 	space->iterations = 20;
 	cpSpaceResizeActiveHash(space, 40.0, 2999);
@@ -54,6 +55,7 @@ void demo5_init(void)
 	
 	cpShape *shape;
 	
+	// Vertexes for the dominos.
 	int num = 4;
 	cpVect verts[] = {
 		cpv(-3,-20),
@@ -62,12 +64,15 @@ void demo5_init(void)
 		cpv( 3,-20),
 	};
 	
+	// Add a floor.
 	shape = cpSegmentShapeNew(staticBody, cpv(-600,-240), cpv(600,-240), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 	
+	// Shared friction constant.
 	cpFloat u = 0.6;
 	
+	// Add the dominoes. Skim over this. It doesn't do anything fancy, and it's hard to follow.
 	int n = 9;
 	for(int i=1; i<=n; i++){
 		cpVect offset = cpv(-i*60/2.0f, (n - i)*52);
@@ -113,6 +118,7 @@ void demo5_init(void)
 		cpSpaceAddShape(space, shape);		
 	}
 	
-	body->w = -1;
-	body->v = cpv(-body->w*20, 0);
+	// Give the last domino a little tip.
+//	body->w = -1;
+//	body->v = cpv(-body->w*20, 0);
 }

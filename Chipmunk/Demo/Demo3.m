@@ -30,6 +30,7 @@
 extern cpSpace *space;
 extern cpBody *staticBody;
 
+// Iterate over all of the bodies and reset the ones that have fallen offscreen.
 static void
 eachBody(cpBody *body, void *unused)
 {
@@ -57,6 +58,7 @@ void demo3_init(void)
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
 	cpResetShapeIdCounter();
+	
 	space = cpSpaceNew();
 	space->iterations = 5;
 	space->gravity = cpv(0, -100);
@@ -67,18 +69,21 @@ void demo3_init(void)
 	cpBody *body;
 	cpShape *shape;
 	
+	// Create vertexes for a pentagon shape.
 	cpVect verts[NUM_VERTS];
 	for(int i=0; i<NUM_VERTS; i++){
 		cpFloat angle = -2*M_PI*i/((cpFloat) NUM_VERTS);
 		verts[i] = cpv(10*cos(angle), 10*sin(angle));
 	}
 	
+	// Vertexes for a triangle shape.
 	cpVect tris[] = {
 		cpv(-15,-15),
 		cpv(  0, 10),
 		cpv( 15,-15),
 	};
 
+	// Create the static triangles.
 	for(int i=0; i<9; i++){
 		for(int j=0; j<6; j++){
 			cpFloat stagger = (j%2)*40;
@@ -88,15 +93,15 @@ void demo3_init(void)
 			cpSpaceAddStaticShape(space, shape);
 		}
 	}
-		
+	
+	// Add lots of pentagons.
 	for(int i=0; i<300; i++){
 		body = cpBodyNew(1.0, cpMomentForPoly(1.0, NUM_VERTS, verts, cpvzero));
-//		body = cpBodyNew(1.0, cpMomentForCircle(1.0, 0.0, 10.0));
 		cpFloat x = rand()/(cpFloat)RAND_MAX*640 - 320;
 		body->p = cpv(x, 350);
+		
 		cpSpaceAddBody(space, body);
 		shape = cpPolyShapeNew(body, NUM_VERTS, verts, cpvzero);
-//		shape = cpShapeNew(CP_CIRCLE_SHAPE, cpCircleNew(cpvzero, 10.0), body);
 		shape->e = 0.0; shape->u = 0.4;
 		cpSpaceAddShape(space, shape);
 	}
