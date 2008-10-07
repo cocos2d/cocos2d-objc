@@ -19,6 +19,18 @@
  * SOFTWARE.
  */
  
+/*
+ IMPORTANT - READ ME!
+ 
+ This file sets up a simple interface that the individual demos can use to get
+ a Chipmunk space running and draw what's in it. In order to keep the Chipmunk
+ examples clean and simple, they contain no graphics code. All drawing is done
+ by accessing the Chipmunk structures at a very low level. It is NOT
+ recommended to write a game or application this way as it does not scale
+ beyond simple shape drawing and is very dependent on implementation details
+ about Chipmunk which may change with little to no warning.
+*/
+
 #import <UIKit/UIKit.h>
 #import "main.h"
 
@@ -205,9 +217,6 @@ void drawCollisions(void *ptr, void *data)
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
     glLineWidth(1.5f);
-	
-
-	
 }
 
 -(void) step: (ccTime) dt

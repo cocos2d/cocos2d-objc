@@ -25,6 +25,8 @@
 
 #include "chipmunk.h"
 
+// TODO clean this up
+
 extern cpSpace *space;
 extern cpBody *staticBody;
 

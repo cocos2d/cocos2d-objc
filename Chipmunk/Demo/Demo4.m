@@ -37,7 +37,13 @@ void demo4_update(int ticks)
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
+		
+		// Manually update the position of the static shape so that
+		// the box rotates.
 		cpBodyUpdatePosition(staticBody, dt);
+		
+		// Because the box was added as a static shape and we moved it
+		// we need to manually rehash the static spatial hash.
 		cpSpaceRehashStatic(space);
 	}
 }
@@ -47,6 +53,7 @@ void demo4_init(void)
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
 	cpResetShapeIdCounter();
+	
 	space = cpSpaceNew();
 	cpSpaceResizeActiveHash(space, 30.0, 999);
 	cpSpaceResizeStaticHash(space, 200.0, 99);
@@ -55,6 +62,7 @@ void demo4_init(void)
 	cpBody *body;
 	cpShape *shape;
 	
+	// Vertexes for the bricks
 	int num = 4;
 	cpVect verts[] = {
 		cpv(-30,-15),
@@ -63,6 +71,7 @@ void demo4_init(void)
 		cpv( 30,-15),
 	};
 	
+	// Set up the static box.
 	cpVect a = cpv(-200, -200);
 	cpVect b = cpv(-200,  200);
 	cpVect c = cpv( 200,  200);
@@ -84,8 +93,14 @@ void demo4_init(void)
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 	
+	// Give the box a little spin.
+	// Because staticBody is never added to the space, we will need to
+	// update it ourselves. (see above).
+	// NOTE: Normally you would want to add the segments as normal and not static shapes.
+	// I'm just doing it to demonstrate the cpSpaceRehashStatic() function.
 	staticBody->w = 0.4;
 	
+	// Add the bricks.
 	for(int i=0; i<3; i++){
 		for(int j=0; j<7; j++){
 			body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));

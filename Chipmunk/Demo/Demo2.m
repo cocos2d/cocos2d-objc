@@ -45,6 +45,7 @@ void demo2_init(void)
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
 	cpResetShapeIdCounter();
+	
 	space = cpSpaceNew();
 	space->iterations = 20;
 	cpSpaceResizeStaticHash(space, 40.0, 1000);
@@ -62,6 +63,7 @@ void demo2_init(void)
 		cpv( 15,-15),
 	};
 	
+	// Create segments around the edge of the screen.
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
@@ -74,6 +76,7 @@ void demo2_init(void)
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 	
+	// Add lots of boxes.
 	for(int i=0; i<14; i++){
 		for(int j=0; j<=i; j++){
 			body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
@@ -85,7 +88,7 @@ void demo2_init(void)
 		}
 	}
 	
-	
+	// Add a ball to make things more interesting
 	cpFloat radius = 15.0;
 	body = cpBodyNew(10.0, cpMomentForCircle(10.0, 0.0, radius, cpvzero));
 	body->p = cpv(0, -240 + radius);

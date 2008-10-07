@@ -44,26 +44,35 @@ static int
 collFunc(cpShape *a, cpShape *b, cpContact *contacts, int numContacts, cpFloat normal_coef, void *data)
 {
 	int *some_ptr = (int *)data;
+
+// Do various things with the contact information. 
+// Make particle effects, estimate the impact damage from the relative velocities, etc.
+//	for(int i=0; i<numContacts; i++)
+//		printf("Collision at %s. (%d - %d) %d\n", cpvstr(contacts[i].p), a->collision_type, b->collision_type, *some_ptr);
 	
-	for(int i=0; i<numContacts; i++)
-		printf("Collision at %s. (%d - %d) %d\n", cpvstr(contacts[i].p), a->collision_type, b->collision_type, *some_ptr);
-	
+	// Returning 0 will cause the collision to be discarded. This allows you to do conditional collisions.
 	return 1;
 }
 
 void demo1_init(void)
 {
+	// Initialize a static body with infinite mass and moment of inertia
+	// to attach the static geometry to.
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
+	// Optional. Read the docs to see what this really does.
 	cpResetShapeIdCounter();
+	
+	// Create a space and adjust some of it's parameters.
 	space = cpSpaceNew();
 	cpSpaceResizeStaticHash(space, 20.0, 999);
 	space->gravity = cpv(0, -100);
 	
 	cpBody *body;
-	
 	cpShape *shape;
 	
+	// Vertexes we'll use to create a box.
+	// Note that the vertexes are in counterclockwise order.
 	int num = 4;
 	cpVect verts[] = {
 		cpv(-15,-15),
@@ -72,6 +81,7 @@ void demo1_init(void)
 		cpv( 15,-15),
 	};
 	
+	// Create some segments around the edges of the screen.
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
@@ -84,7 +94,7 @@ void demo1_init(void)
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 
-		
+	// Create the stair steps.
 	for(int i=0; i<50; i++){
 		int j = i + 1;
 		cpVect a = cpv(i*10 - 320, i*-10 + 240);
@@ -99,7 +109,8 @@ void demo1_init(void)
 		shape->e = 1.0; shape->u = 1.0;
 		cpSpaceAddStaticShape(space, shape);
 	}
-			
+	
+	// Create a box and initialize some of its parameters.
 	body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
 	body->p = cpv(-280, 240);
 	cpSpaceAddBody(space, body);
@@ -108,5 +119,6 @@ void demo1_init(void)
 	shape->collision_type = 1;
 	cpSpaceAddShape(space, shape);
 	
+	// Add a collision callback between objects of the default type and the box.
 	cpSpaceAddCollisionPairFunc(space, 1, 0, &collFunc, &some_value);
 }
