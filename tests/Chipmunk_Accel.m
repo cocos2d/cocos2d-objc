@@ -59,8 +59,11 @@ eachShape(void *ptr, void* unused)
 	
 	cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
 	space = cpSpaceNew();
-	cpSpaceResizeStaticHash(space, 20.0, 999);
+	cpSpaceResizeStaticHash(space, 400.0, 40);
+	cpSpaceResizeActiveHash(space, 100, 600);
+
 	space->gravity = cpv(0, 0);
+	space->elasticIterations = space->iterations;
 
 	cpShape *shape;
 	
