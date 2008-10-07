@@ -1,3 +1,6 @@
+version 0.5.1 - dd-MMM-yyyy
+ . Actions: CallFunc retains target (issue #42)
+ 
 version 0.5.0 - 05-Oct-2008
  . Actions: copy protocol fixed on some actions (issue #27)
  . Chipmunk: using newest version from svn (issue #34)

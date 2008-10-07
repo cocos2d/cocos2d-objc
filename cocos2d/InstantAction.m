@@ -134,9 +134,15 @@
 	if( ! [super init] )
 		return nil;
 	
-	targetCallback = t;
+	targetCallback = [t retain];
 	selector = s;
 	return self;
+}
+
+-(void) dealloc
+{
+	[targetCallback release];
+	[super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone

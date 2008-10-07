@@ -217,15 +217,15 @@ Class restartAction()
 	tilemap.transformAnchor = cpv(0, size.height/2);
 	tilemap.position = cpv(0,0);
 	
-	id s = [ScaleBy actionWithDuration:8 scale:0.5];
+	id s = [ScaleBy actionWithDuration:4 scale:0.8];
 	id scaleBack = [s reverse];
-	id go = [MoveBy actionWithDuration:4 position:cpv(-850,0)];
+	id go = [MoveBy actionWithDuration:8 position:cpv(-1650,0)];
 	id goBack = [go reverse];
 	
 	id seq = [Sequence actions: s,
 							go,
-							scaleBack,
 							goBack,
+							scaleBack,
 							nil];
 	
 	[tilemap do:seq];

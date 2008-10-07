@@ -19,7 +19,7 @@ IF(GLUT_FOUND)
     MESSAGE("libglut found. ${GLUT_INCLUDE_DIR} ${GLUT_LIBRARIES}")
     LINK_DIRECTORIES(${GLUT_LIBRARIES})
 ELSE(GLUT_FOUND)
-    MESSAGE("libglut requested but not found.")
+    MESSAGE(FATAL_ERROR "libglut requested but not found. Please install freeglut")
 ENDIF(GLUT_FOUND)
 
 
@@ -27,7 +27,7 @@ IF(OPENGL_FOUND)
     MESSAGE("libGL found. ${OPENGL_INCLUDE_DIR} ${OPENGL_LIBRARIES}")
     LINK_DIRECTORIES(${OPENGL_LIBRARIES})
 ELSE(OPENGL_FOUND)
-    MESSAGE("libGL requested but not found.")
+    MESSAGE(FATAL_ERROR "libGL requested but not found. Please install OpenGL libraries")
 ENDIF(OPENGL_FOUND)
 
 #Set any libraries that your project depends on.
@@ -44,10 +44,10 @@ GL glut
 #MyExe will be built using the files MyClass.h and MyClass.cxx, and it will
 #be linked to all the libraries you specified above. 
 #You can build more than one executable per project
-SET(CurrentExe "../../chipmunk_demos")
+SET(CurrentExe "../chipmunk_demos")
 ADD_EXECUTABLE(${CurrentExe}  Demo1.c  Demo2.c  Demo3.c  Demo4.c  Demo5.c  Demo6.c  Demo7.c  main.c)
 
-TARGET_LINK_LIBRARIES(${CurrentExe} ${Libraries} chipmunk)
+TARGET_LINK_LIBRARIES(${CurrentExe} ${Libraries} chipmunk_static)
 
 #the following line is an example of how to add a test to your project.
 #Testname is the title for this particular test.  ExecutableToRun is the
