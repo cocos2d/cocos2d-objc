@@ -17,21 +17,40 @@
 	
 	MenuItem *item1 = [MenuItemFont itemFromString: @"Start" target:self selector:@selector(menuCallback:)];
 	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
-	MenuItemFont *item3 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
+	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
+	MenuItem *item4 = [MenuItemFont itemFromString: @"I toogle enable items" target: self selector:@selector(menuCallbackEnable:)];
+	MenuItemFont *item5 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
-	[[item3 label] setRGB:255:0:32];
+	[[item5 label] setRGB:255:0:32];
 
-	menu = [Menu menuWithItems: item1, item2, item3, nil];
-	
+	Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, nil];
+
+	disabledItem = [item3 retain];
+	disabledItem.isEnabled = NO;
+
 	[self add: menu];
 
 	return self;
+}
+
+-(void) dealloc
+{
+	[disabledItem release];
+	[super dealloc];
 }
 
 -(void) menuCallback: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:1];
 }
+
+-(void) menuCallbackDisabled:(id) sender {
+}
+
+-(void) menuCallbackEnable:(id) sender {
+	disabledItem.isEnabled = ~disabledItem.isEnabled;
+}
+
 
 -(void) menuCallback2: (id) sender
 {

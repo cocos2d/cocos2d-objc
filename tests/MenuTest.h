@@ -12,8 +12,9 @@
 
 @interface Layer1 : Layer
 {
-	Menu * menu;
+	MenuItem *disabledItem;
 }
+
 -(void) menuCallback:(id) sender;
 -(void) menuCallback2:(id) sender;
 -(void) onQuit:(id) sender;

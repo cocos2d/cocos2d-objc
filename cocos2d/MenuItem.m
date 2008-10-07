@@ -57,6 +57,8 @@ static BOOL _fontNameRelease = NO;
 	[invocation setSelector:cb];
 	[invocation setArgument:&self atIndex:2];
 	[invocation retain];
+    
+    isEnabled = YES;
 	
 	return self;
 }
@@ -79,7 +81,18 @@ static BOOL _fontNameRelease = NO;
 
 -(void) activate
 {
-	[invocation invoke];
+	if(isEnabled)
+        [invocation invoke];
+}
+
+-(void) setIsEnabled: (BOOL)enabled
+{
+    isEnabled = enabled;
+}
+
+-(BOOL) isEnabled
+{
+    return isEnabled;
 }
 
 -(CGRect) rect
@@ -172,32 +185,47 @@ static BOOL _fontNameRelease = NO;
 }
 
 -(void) activate {
-//	[self stopAction: zoomAction];
-	[self stopAllActions];
-	[zoomAction release];
-	zoomAction = nil;
+	if(isEnabled) {
+		[self stopAllActions];
+		[zoomAction release];
+		zoomAction = nil;
 
-	self.scale = 1.0;
+		self.scale = 1.0;
 
-	[super activate];
+		[super activate];
+	}
 }
 
 -(void) selected
 {
 	// subclass to change the default action
-	[self stopAction: zoomAction];
-	[zoomAction release];
-	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.2] retain];
-	[self do:zoomAction];
+	if(isEnabled) {
+		[self stopAction: zoomAction];
+		[zoomAction release];
+		zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.2] retain];
+		[self do:zoomAction];
+	}
 }
 
 -(void) unselected
 {
 	// subclass to change the default action
-	[self stopAction: zoomAction];
-	[zoomAction release];
-	zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.0] retain];
-	[self do:zoomAction];
+	if(isEnabled) {
+		[self stopAction: zoomAction];
+		[zoomAction release];
+		zoomAction = [[ScaleTo actionWithDuration:0.1 scale:1.0] retain];
+		[self do:zoomAction];
+	}
+}
+
+-(void) setIsEnabled: (BOOL)enabled
+{
+	if(enabled == NO)
+		[label setRGB:126 :126 :126];
+	else
+		[label setRGB:255 :255 :255];
+
+	[super setIsEnabled:enabled];
 }
 
 -(unsigned int) height
@@ -215,16 +243,26 @@ static BOOL _fontNameRelease = NO;
 @implementation MenuItemImage
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) t selector:(SEL) s
 {
-	return [[[self alloc] initFromNormalImage:value selectedImage:value2 target:t selector:s] autorelease];
+	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:t selector:s];
 }
 
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 target:(id) t selector:(SEL) sel
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3 target:(id) t selector:(SEL) s
+{
+	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:t selector:s] autorelease];
+}
+
+-(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id) t selector:(SEL) sel
 {
 	if( ![super initWithTarget:t selector:sel] )
 		return nil;
 
-	normalImage = [[Sprite spriteWithFile:value] retain];
-	selectedImage = [[Sprite spriteWithFile:value2] retain];
+	normalImage = [[Sprite spriteWithFile:normalI] retain];
+	selectedImage = [[Sprite spriteWithFile:selectedI] retain];
+    
+	if(disabledI == nil)
+		disabledImage = nil;
+	else
+		disabledImage = [[Sprite spriteWithFile:disabledI] retain];
 	
 	CGSize s = [normalImage contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );
@@ -236,6 +274,7 @@ static BOOL _fontNameRelease = NO;
 {
 	[normalImage release];
 	[selectedImage release];
+    [disabledImage release];
 
 	[super dealloc];
 }
@@ -265,12 +304,19 @@ static BOOL _fontNameRelease = NO;
 
 -(void) draw
 {
-	if( selected )
-		[selectedImage draw];
-	else
-		[normalImage draw];
+	if(isEnabled) {
+		if( selected )
+			[selectedImage draw];
+		else
+			[normalImage draw];
+
+	} else {
+		if(disabledImage != nil)
+			[disabledImage draw];
+		
+		// disabled image was not provided
+		else
+			[normalImage draw];
+	}
 }
 @end
-
-
-
