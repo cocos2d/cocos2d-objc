@@ -941,17 +941,30 @@
 // Animate
 //
 @implementation Animate
+
 +(id) actionWithAnimation: (Animation*) a
 {
-	return [[[self alloc] initWithAnimation: a] autorelease];
+	return [[[self alloc] initWithAnimation: a restoreOriginalFrame:YES] autorelease];
+}
+
++(id) actionWithAnimation: (Animation*) a restoreOriginalFrame:(BOOL)b
+{
+	return [[[self alloc] initWithAnimation: a restoreOriginalFrame:b] autorelease];
 }
 
 -(id) initWithAnimation: (Animation*) a
 {
 	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
+	return [self initWithAnimation:a restoreOriginalFrame:YES];
+}
+
+-(id) initWithAnimation: (Animation*) a restoreOriginalFrame:(BOOL) b
+{
+	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
 
 	if( ! [super initWithDuration: [[a frames] count] * [a delay]] )
 		return nil;
+	restoreOriginalFrame = b;
 	animation = [a retain];
 	origFrame = nil;
 	return self;
@@ -981,12 +994,17 @@
 
 -(void) stop
 {
-	Sprite *s = (Sprite*) target;
+	
+	if( restoreOriginalFrame ) {
+		Sprite *s = (Sprite*) target;
 
-	// XXX TODO should I retain ?
-	[origFrame retain];
-	[[s texture] release];
-	[s setTexture: origFrame];
+		// XXX TODO should I retain ?
+		// XXX NO, I should not retain it
+		// TextureNode.texture shall be (retain) property
+		[origFrame retain];
+		[[s texture] release];
+		[s setTexture: origFrame];
+	}
 	
 	[super stop];
 }
@@ -1006,6 +1024,8 @@
 	Sprite *s = (Sprite*) target;
 	if ( s.texture != [[animation frames] objectAtIndex: idx] ) {
 		// XXX TODO should I retain ?
+		// XXX NO, I should not retain it
+		// TextureNode.texture shall be (retain) property
 		id obj = [[animation frames] objectAtIndex:idx];
 		[obj retain];
 		[[s texture] release];
