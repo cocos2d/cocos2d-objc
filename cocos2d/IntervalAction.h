@@ -297,7 +297,7 @@ Example:
 
 /** Executes an action in reverse order, from time=duration to time=0
  
- WARNING: Use this action carefully. This action is not
+ @WARNING: Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
@@ -320,9 +320,16 @@ Example:
 {
 	Animation *animation;
 	Texture2D *origFrame;
+	BOOL restoreOriginalFrame;
 }
+/** creates the action with an Animation and will restore the original frame when the animation is over */
 +(id) actionWithAnimation:(Animation*) a;
+/** initializes the action with an Animation and will restore the original frame when the animtion is over */
 -(id) initWithAnimation:(Animation*) a;
+/** creates the action with an Animation */
++(id) actionWithAnimation:(Animation*) a restoreOriginalFrame:(BOOL)b;
+/** initializes the action with an Animation */
+-(id) initWithAnimation:(Animation*) a restoreOriginalFrame:(BOOL)b;
 @end
 
 

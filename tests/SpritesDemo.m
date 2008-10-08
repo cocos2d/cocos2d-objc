@@ -270,7 +270,7 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"Animatinon";
+	return @"Animation";
 }
 @end
 
