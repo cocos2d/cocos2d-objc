@@ -52,6 +52,8 @@
 @synthesize endColor, endColorVar;
 @synthesize emissionRate;
 @synthesize totalParticles;
+@synthesize size, sizeVar;
+@synthesize gravity;
 
 -(id) init {
 	NSException* myException = [NSException

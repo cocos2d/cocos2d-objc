@@ -245,16 +245,17 @@ static int _pixelFormat = RGB565;
 
 - (void) setDefaultProjection
 {
+//	[self set2Dprojection];
 	[self set3Dprojection];
 }
 
 -(void) set2Dprojection
 {
 	//Setup OpenGL projection matrix
-	glViewport(0, 0, winSize.size.width, winSize.size.height);
+//	glViewport(0, 0, winSize.size.width, winSize.size.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, winSize.size.width, 0, winSize.size.height, -100, 100);
+	glOrthof(0, winSize.size.width, 0, winSize.size.height, -1, 1);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

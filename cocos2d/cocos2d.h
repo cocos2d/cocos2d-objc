@@ -23,8 +23,6 @@
  *
  * @image html cocos2d-Icon.png
  *
- * @section intro Introduction
- * Here you will find the API reference
  *
  * <hr>
  *
@@ -33,8 +31,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 05 00
-#define COCOS2D_VERSION 0x00000500
+// 00   00 05 01
+#define COCOS2D_VERSION 0x00000501
 
 //
 // all cocos2d include files
