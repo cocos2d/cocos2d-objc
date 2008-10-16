@@ -129,6 +129,7 @@ typedef struct sParticle
 }
 
 @property (readonly)	BOOL active;
+@property (readwrite,assign) cpVect gravity;
 @property (readwrite,assign) float duration;
 @property (readwrite,assign) cpVect posVar;
 @property (readwrite,assign) float life, lifeVar;
@@ -136,6 +137,7 @@ typedef struct sParticle
 @property (readwrite,assign) float speed, speedVar;
 @property (readwrite,assign) float tangentialAccel, tangentialAccelVar;
 @property (readwrite,assign) float radialAccel, radialAccelVar;
+@property (readwrite,assign) float size, sizeVar;
 @property (readwrite,assign) ccColorF startColor, startColorVar;
 @property (readwrite,assign) ccColorF endColor, endColorVar;
 @property (readwrite,assign) float emissionRate;

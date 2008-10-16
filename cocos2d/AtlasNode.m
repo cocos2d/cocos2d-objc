@@ -68,29 +68,14 @@
 -(void) calculateMaxItems
 {
 	CGSize s = [[textureAtlas texture] contentSize];
-	itemsPerRow = s.height / itemHeight;
-	itemsPerColumn = s.width / itemWidth;
+	itemsPerColumn = s.height / itemHeight;
+	itemsPerRow = s.width / itemWidth;
 }
 
 -(void) calculateTexCoordsSteps
 {
-	CGSize s = [[textureAtlas texture] contentSize];
-	
-	// find power of 2 numbers and then calculate the size
-	
-	for(int i=0;i<32;i++) {
-		if( s.width <= (1<<i) ) {
-			texStepX = (float) itemWidth / (1<<i);
-			break;
-		}
-	}
-	
-	for(int i=0;i<32;i++) {
-		if( s.height <= (1<<i) ) {
-			texStepY = (float) itemHeight / (1<<i);
-			break;
-		}
-	}
+	texStepX = itemWidth / (float) [[textureAtlas texture] pixelsWide];
+	texStepY = itemHeight / (float) [[textureAtlas texture] pixelsHigh]; 	
 }
 
 -(void) updateAltasValues
@@ -105,14 +90,15 @@
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	
 	glEnable( GL_TEXTURE_2D);
-	
+
+
 	glColor4ub( r, g, b, opacity);
-	
+
 	[textureAtlas drawQuads];
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
-	
+
 	glDisable( GL_TEXTURE_2D);
 	
 	glDisableClientState(GL_VERTEX_ARRAY );

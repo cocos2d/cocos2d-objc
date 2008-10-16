@@ -89,7 +89,7 @@
 	return self;
 }
 
-- (void)cleanup;
+- (void)cleanup
 {
 	// actions
 	[actions release];

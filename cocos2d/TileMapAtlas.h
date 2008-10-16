@@ -26,7 +26,7 @@
 @interface TileMapAtlas : AtlasNode {
 	
 	/// info about the map file
-	tTgaInfo		*tgaInfo;
+	tImageTGA		*tgaInfo;
 	
 	/// size of the map in pixels
 	CGSize			contentSize;

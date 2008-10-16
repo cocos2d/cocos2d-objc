@@ -84,9 +84,11 @@
 	NSString * path = [resourcePath stringByAppendingPathComponent:file];
 	
 	tgaInfo = tgaLoad( [path UTF8String] );
+#if 1
 	if( tgaInfo->status != TGA_OK ) {
 		[NSException raise:@"TileMapAtlasLoadTGA" format:@"TileMapAtas cannot load TGA file"];
-	}	
+	}
+#endif
 }
 
 #pragma mark TileMapAtlas - Atlas generation
@@ -117,6 +119,18 @@
 					texCoord.tl_y = col + texStepY;					// C - y
 					texCoord.tr_x = row + texStepX;					// D - x
 					texCoord.tr_y = col + texStepY;					// D - y
+					
+#ifdef DEBUG
+					NSLog(@"Tex coords: (%f,%f), (%f,%f), (%f,%f), (%f,%f)",
+						  texCoord.bl_x,
+						  texCoord.bl_y,
+						  texCoord.br_x,
+						  texCoord.br_y,
+						  texCoord.tl_x,
+						  texCoord.tl_y,
+						  texCoord.tr_x,
+						  texCoord.tr_y );
+#endif
 					
 					vertex.bl_x = x * itemWidth;					// A - x
 					vertex.bl_y = y * itemHeight;					// A - y
