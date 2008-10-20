@@ -1,4 +1,4 @@
-version 0.5.1 - 16-Oct-2008
+version 0.5.1 - 20-Oct-2008
  . Actions: Animation has restoreOriginalFrame argument (issue #46)
  . Actions: CallFunc retains target (issue #42)
  . AtlasNode: renders some artifacts (partially fixed issue #47)
