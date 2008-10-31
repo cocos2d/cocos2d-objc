@@ -155,7 +155,7 @@ static BOOL _fontNameRelease = NO;
 									exceptionWithName:@"MenuItemInvalid"
 									reason:@"Can't create a MenuItem without value"
 									userInfo:nil];
-		@throw myException;		
+		@throw myException;
 	}
 	
 	
@@ -241,6 +241,9 @@ static BOOL _fontNameRelease = NO;
 
 
 @implementation MenuItemImage
+
+@synthesize selectedImage, normalImage, disabledImage;
+
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) t selector:(SEL) s
 {
 	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:t selector:s];
