@@ -43,7 +43,6 @@
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
-
 @end
 
 @implementation Director
@@ -96,7 +95,7 @@ static int _pixelFormat = RGB565;
 	else
 		format = kEAGLColorFormatRGBA8;
 	
-	if( ! [super initWithFrame:[window bounds] pixelFormat:format] )
+	if( ! (self = [super initWithFrame:[window bounds] pixelFormat:format] ) )
 		return nil;
 
 	[window addSubview:self];
@@ -107,7 +106,7 @@ static int _pixelFormat = RGB565;
 	scenes = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
-	eventHandlers = [[NSMutableArray arrayWithCapacity:3] retain];
+	eventHandlers = [[NSMutableArray arrayWithCapacity:8] retain];
 	
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
@@ -137,12 +136,14 @@ static int _pixelFormat = RGB565;
 	return self;
 }
 
-- (void) dealloc {
+- (void) dealloc
+{
 	NSLog( @"deallocing %@", self);
 
 #ifdef FAST_FPS_DISPLAY
 	[FPSLabel release];
 #endif
+	[eventHandlers release];
 	[runningScene release];
 	[scenes release];
 	[window release];
@@ -155,7 +156,6 @@ static int _pixelFormat = RGB565;
 //
 - (void) mainLoop
 {
-	
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -186,7 +186,7 @@ static int _pixelFormat = RGB565;
 	}
 	
 	/* swap buffers */
-	[self swapBuffers];
+	[self swapBuffers];	
 }
 
 -(void) calculateDeltaTime
@@ -310,16 +310,19 @@ static int _pixelFormat = RGB565;
 	int newY = winSize.size.height - p.y;
 	
 	CGPoint ret = CGPointMake( p.x, newY );
-	if( ! landscape )
-		return ret;
+	if( ! landscape ) {
+		ret = ret;
+	} else {
+	
+	#if LANDSCAPE_LEFT
+		ret.x = p.y;
+		ret.y = p.x;
+	#else
+		ret.x = p.y;
+		ret.y = winSize.size.width -p.x;
+	#endif // LANDSCAPE_LEFT
+	}
 
-#if LANDSCAPE_LEFT
-	ret.x = p.y;
-	ret.y = p.x;
-#else
-	ret.x = p.y;
-	ret.y = winSize.size.width -p.x;
-#endif // LANDSCAPE_LEFT
 	return ret;
 }
 
@@ -418,10 +421,14 @@ static int _pixelFormat = RGB565;
 {
 	[scenes release];
 	scenes = nil;
+
 	[runningScene onExit];
 	[runningScene release];
 	runningScene = nil;
 	[self stopAnimation];
+	
+	[eventHandlers release];
+	eventHandlers = nil;
 
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
@@ -503,7 +510,7 @@ static int _pixelFormat = RGB565;
 
 -(void) addEventHandler:(CocosNode*) node
 {
-	NSAssert( node != nil, @"Director.AddEventHandler: Node must be non nil");
+	NSAssert( node != nil, @"Director.AddEventHandler: Node must be non nil");	
 	[eventHandlers addObject:node];
 }
 
@@ -519,41 +526,52 @@ static int _pixelFormat = RGB565;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		for( id eventHandler in eventHandlers ) {
+		NSMutableArray *copyArray = [eventHandlers copy];
+		for( id eventHandler in copyArray ) {
 			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
 				[eventHandler touchesBegan:touches withEvent:event];
 		}
+		
+		[copyArray release];
 	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		for( id eventHandler in eventHandlers ) {
+		NSMutableArray *copyArray = [eventHandlers copy];
+		for( id eventHandler in copyArray ) {
 			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
 				[eventHandler touchesMoved:touches withEvent:event];
 		}
+		
+		[copyArray release];
 	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		for( id eventHandler in eventHandlers ) {
+		NSMutableArray *copyArray = [eventHandlers copy];
+		for( id eventHandler in copyArray ) {
 			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
 				[eventHandler touchesEnded:touches withEvent:event];
 		}
+		[copyArray release];
 	}
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled )  {
-		for( id eventHandler in eventHandlers ) {
+		NSMutableArray *copyArray = [eventHandlers copy];
+		for( id eventHandler in copyArray ) {
 			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
 				[eventHandler touchesCancelled:touches withEvent:event];
 		}
+		[copyArray release];
 	}
 }
+
 
 #ifdef FAST_FPS_DISPLAY
 
