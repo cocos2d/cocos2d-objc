@@ -162,6 +162,12 @@ and when to execute the Scenes
  */
 -(void) resume;
 
+/** Hides the Director Window & stops animation */
+-(void) hide;
+
+/** UnHides the Director Window & starts animation*/
+-(void) unhide;
+
 // Events
 
 /** adds a cocosnode object to the list of multi-touch event queue */
