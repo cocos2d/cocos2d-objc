@@ -101,6 +101,9 @@
 	BOOL selected;
 	Sprite *normalImage, *selectedImage, *disabledImage;
 }
+
+@property (readonly) Sprite *normalImage, *selectedImage, *disabledImage;
+
 /** creates a menu item from a string */
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
