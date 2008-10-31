@@ -476,6 +476,21 @@ static int _pixelFormat = RGB565;
 	dt = 0;
 }
 
+/** Hides the Director Window & stops animation */
+-(void) hide
+{
+	[self stopAnimation];
+	window.hidden = YES;
+}
+
+/** UnHides the Director Window & starts animation*/
+-(void) unhide
+{
+	[self startAnimation];
+	[window makeKeyAndVisible];
+}
+
+
 - (void)startAnimation
 {
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {

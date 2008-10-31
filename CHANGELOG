@@ -1,5 +1,6 @@
 version 0.5.2 - dd-MMM-YYYY
  . Director: able to remove event enabled nodes (issue #56)
+ . Director: can be hidden / unhidden (issue #55)
  . License: Explicit paragraphs that allows cocos2d + closed source projects (issue #57)
  . MenuItemImage: able to modify inner sprites (issue #58)
  . Transitions: don't flicker (issue #60)
