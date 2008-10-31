@@ -90,7 +90,8 @@
 	[inScene setRotation:0.0f];
 	[inScene.camera restore];
 	
-	[outScene setVisible:YES];
+	[outScene setVisible:NO]; // SJI
+//	[outScene setVisible:YES];
 	[outScene setPosition:cpv(0,0)];
 	[outScene setScale:1.0f];
 	[outScene setRotation:0.0f];
