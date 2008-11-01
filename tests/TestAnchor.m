@@ -13,6 +13,7 @@ static NSString *transitions[] = {
 			@"Anchor1",
 			@"Anchor2",
 			@"Anchor3",
+			@"Anchor4",
 };
 
 Class nextAction()
@@ -185,6 +186,7 @@ Class restartAction()
 	return @"transformAnchor and children";
 }
 @end
+
 @implementation Anchor3
 -(void) onEnter
 {
@@ -213,7 +215,52 @@ Class restartAction()
 {
 	return @"z order";
 }
+@end
 
+@implementation Anchor4
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	// ignore these lines
+	// they are not part of the tag test
+	grossini.visible = NO;
+	tamara.visible = NO;
+	
+	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	
+	sp1.position = cpv(100,160);
+	sp2.position = cpv(380,160);
+	
+	[self add:sp1 z:0 tag:2];
+	[self add:sp2 z:0 tag:3];
+	
+	[self schedule:@selector(delay2:) interval:2.0];
+	[self schedule:@selector(delay4:) interval:4.0];
+	
+	return self;
+}
+
+-(void) delay2:(ccTime) dt
+{
+	id node = [self getByTag:2];
+	id action1 = [RotateBy actionWithDuration:1 angle:360];
+	[node do:action1];
+}
+
+-(void) delay4:(ccTime) dt
+{
+	[self unschedule:_cmd];
+	[self removeByTag:3];
+}
+
+
+-(NSString *) title
+{
+	return @"tags";
+}
 @end
 
 
