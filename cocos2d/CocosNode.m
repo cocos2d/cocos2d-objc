@@ -182,7 +182,7 @@
 	if( ! added )
 		[children addObject:child];
 
-	tag = aTag;
+	child.tag = aTag;
 	
 	[child setParent: self];
 	
