@@ -38,7 +38,7 @@
 {
 	NSAssert( s != nil, @"Argument scene must be non-nil");
 	
-	if( ! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	duration = t;
@@ -90,8 +90,7 @@
 	[inScene setRotation:0.0f];
 	[inScene.camera restore];
 	
-	[outScene setVisible:NO]; // SJI
-//	[outScene setVisible:YES];
+	[outScene setVisible:NO];
 	[outScene setPosition:cpv(0,0)];
 	[outScene setScale:1.0f];
 	[outScene setRotation:0.0f];
