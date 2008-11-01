@@ -37,7 +37,7 @@
 
 - (id) initWithFile: (NSString*) filename
 {
-	if (![super init])
+	if( ! (self=[super init]) )
 		return nil;
 
 	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
@@ -89,7 +89,7 @@
 
 -(id) initWithName: (NSString*) n delay:(float)d firstImage:(NSString*)image vaList: (va_list) args
 {
-	if( ![super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	name = [n retain];

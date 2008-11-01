@@ -25,7 +25,7 @@
 @implementation Scene
 -(id) init
 {
-	if( ! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	CGRect s = [[Director sharedDirector] winSize];

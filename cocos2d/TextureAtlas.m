@@ -39,7 +39,7 @@
 
 -(id) initWithFile:(NSString*)file capacity:(int)n
 {
-	if( ![super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	totalQuads = n;

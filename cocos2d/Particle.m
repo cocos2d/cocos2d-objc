@@ -65,7 +65,7 @@
 
 -(id) initWithTotalParticles:(int) numberOfParticles
 {
-	if( ! [super init] )
+	if( !(self=[super init]) )
 		return nil;
 	
 	totalParticles = numberOfParticles;

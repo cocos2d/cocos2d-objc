@@ -43,6 +43,7 @@
 @synthesize parent;
 @synthesize camera;
 @synthesize zOrder;
+@synthesize tag;
 
 +(id) node
 {
@@ -51,7 +52,7 @@
 
 -(id) init
 {
-	if (![super init])
+	if (!(self=[super init]) )
 		return nil;
 
 	isRunning = NO;
@@ -69,6 +70,8 @@
 	childrenAnchor = cpvzero;
 #endif
 	transformAnchor = cpvzero;
+	
+	tag = kCocosNodeTagInvalid;
 	
 	// children
 	children = [[NSMutableArray arrayWithCapacity:4] retain];
@@ -130,6 +133,7 @@
 
 #pragma mark CocosNode Composition
 
+// XXX: deprecated
 -(id) add: (CocosNode*) child z:(int)z name:(NSString*)name
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
@@ -159,17 +163,45 @@
 	return self;
 }
 
+-(id) add: (CocosNode*) child z:(int)z tag:(int) aTag
+{	
+	NSAssert( child != nil, @"Argument must be non-nil");
+	
+	child.zOrder=z;
+	
+	int index=0;
+	BOOL added = NO;
+	for( CocosNode *a in children ) {
+		if ( a.zOrder > z ) {
+			added = YES;
+			[ children insertObject:child atIndex:index];
+			break;
+		}
+		index++;
+	}
+	if( ! added )
+		[children addObject:child];
+
+	tag = aTag;
+	
+	[child setParent: self];
+	
+	if( isRunning )
+		[child onEnter];
+	return self;
+}
+
 // add a node to the array
 -(id) add: (CocosNode*) child z:(int)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:z name:nil];
+	return [self add: child z:z tag:kCocosNodeTagInvalid];
 }
 
 -(id) add: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:0 name:nil];
+	return [self add: child z:0 tag:kCocosNodeTagInvalid];
 }
 
 -(void) remove: (CocosNode*)child
@@ -189,6 +221,7 @@
 	}
 }
 
+// XXX: deprecated method. Use removeByTag instead
 -(void) removeByName: (NSString*) name
 {
 	NSAssert( name != nil, @"Argument must be non-nil");
@@ -196,6 +229,22 @@
 	id child = [childrenNames objectForKey: name];
 	[self remove: child];
 	[childrenNames removeObjectForKey: name];
+}
+
+-(void) removeByTag:(int) aTag
+{
+	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
+
+	CocosNode *toRemove = nil;
+	for( CocosNode *node in children ) {
+		if( node.tag == aTag ) {
+			toRemove = node;
+			break;
+		}
+	}
+	if( toRemove )
+		[self remove:toRemove];
+
 }
 
 -(void) removeAll {
@@ -208,11 +257,25 @@
 	[childrenNames removeAllObjects];
 }
 
+// XXX: deprecated method. Use getByTag instead
 -(CocosNode*) get: (NSString*) name
 {
 	NSAssert( name != nil, @"Argument must be non-nil");
 	return [childrenNames objectForKey:name];
 }
+
+-(CocosNode*) getByTag:(int) aTag
+{
+	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
+	
+	for( CocosNode *node in children ) {
+		if( node.tag == aTag )
+			return node;
+	}
+	// not found
+	return nil;
+}
+
 
 #pragma mark CocosNode Draw
 

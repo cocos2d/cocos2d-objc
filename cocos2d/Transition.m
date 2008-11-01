@@ -115,7 +115,7 @@
 
 -(id) initWithDuration:(ccTime) t scene:(Scene*)s orientation:(tOrientation)o
 {
-	if( ! [super initWithDuration:t scene:s] )
+	if( !(self=[super initWithDuration:t scene:s]) )
 		return nil;
 	orientation = o;
 	return self;

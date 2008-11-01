@@ -33,7 +33,7 @@
 -(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
 {
 
-	if (! [super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ] )
+	if (! (self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) )
 		return nil;
 
 	string = [theString retain];

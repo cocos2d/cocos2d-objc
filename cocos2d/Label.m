@@ -47,7 +47,7 @@
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 {
-	if (![super init])
+	if( ! (self=[super init]) )
 		return nil;
 
 	_dimensions = dimensions;

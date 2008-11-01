@@ -34,7 +34,7 @@
 
 -(id) initWithTotalParticles:(int)p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 	
 	// duration
@@ -110,7 +110,7 @@
 
 -(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 
 	// duration
@@ -188,7 +188,7 @@
 
 -(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 
 	// additive
@@ -266,7 +266,7 @@
 
 -(id) initWithTotalParticles:(int)p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 
 	// duration
@@ -348,7 +348,7 @@
 
 -(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 	
 	// duration
@@ -430,7 +430,7 @@
 
 -(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 
 	// duration
@@ -512,7 +512,7 @@
 
 -(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 	
 	// duration
@@ -594,7 +594,7 @@
 
 -(id) initWithTotalParticles:(int)p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 	
 	// duration
@@ -676,7 +676,7 @@
 
 -(id) initWithTotalParticles:(int) p
 {
-	if( ! [super initWithTotalParticles:p] )
+	if( !(self=[super initWithTotalParticles:p]) )
 		return nil;
 	
 	// duration

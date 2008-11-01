@@ -34,7 +34,7 @@
 
 - (id) init
 {
-	if( ![super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	opacity = 255;

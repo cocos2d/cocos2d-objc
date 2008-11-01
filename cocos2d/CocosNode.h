@@ -26,6 +26,10 @@
 #import "chipmunk.h"
 #import "types.h"
 
+enum {
+	kCocosNodeTagInvalid = -1,
+};
+
 // XXX: children anchor is not working
 // but since cocos2d-iphone uses a different way to call it's children
 // it is not necesary to have children anchor
@@ -91,6 +95,9 @@
 	/// weakref to parent
 	CocosNode *parent;
 	
+	/// a tag. any number you want to assign to the node
+	int tag;
+	
 	// actions
 	NSMutableArray *actions;
 	NSMutableArray *actionsToRemove;
@@ -110,6 +117,7 @@
 @property(readwrite,assign) cpVect transformAnchor;
 @property(readwrite,assign) CocosNode* parent;
 @property(readwrite,assign) BOOL relativeTransformAnchor;
+@property(readwrite,assign) int tag;
 #if USING_CHILDREN_ANCHOR
 @property(readwrite,assign) cpVect childrenAnchor;
 #endif
@@ -141,18 +149,32 @@
 -(id) add: (CocosNode*)node z:(int)z;
 /** Adds a child to the container with z order and name
  @return returns self
+ @deprecated Use add:z:tag instead
  */
 -(id) add: (CocosNode*)node z:(int)z name:(NSString*)name;
+/** Adds a child to the container with z order and tag
+ @return returns self
+ */
+-(id) add: (CocosNode*)node z:(int)z tag:(int)tag;
 /** Removes a child from the container
  If you have added a 'named' child, you MUST remove it using removeByName instead
  */
 -(void) remove: (CocosNode*)node;
-/** Removes a child from the container given its name */
+/** Removes a child from the container given its name
+ * @deprecated Use removeByTag instead
+ */
 -(void) removeByName: (NSString*)name;
-/** Removes all children from the container */
+/** Removes all children from the container
+ */
 -(void) removeAll;
-/** Gets a child from the container given its name */
+/** Gets a child from the container given its name 
+ * @deprecated Use getByTag instead
+ */
 -(CocosNode*) get: (NSString*) name;
+/** Removes a child from the container given its tag */
+-(void) removeByTag:(int) tag;
+/** Gets a child from the container given its tag */
+-(CocosNode*) getByTag:(int) tag;
 
 
 // draw
