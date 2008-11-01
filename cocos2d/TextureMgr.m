@@ -61,7 +61,7 @@ static TextureMgr *sharedTextureMgr;
 
 -(id) init
 {
-	if( ! [super init])
+	if( ! (self=[super init]) )
 		return nil;
 	
 	textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];

@@ -30,7 +30,7 @@
 
 -(id) init
 {
-	if( ![super init] )
+	if( !(self=[super init]) )
 		return nil;
 	
 	duration = 0;
@@ -101,7 +101,7 @@
 
 -(id) initWithPosition: (cpVect) pos
 {
-	if( ! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	position = pos;
 	return self;
@@ -131,7 +131,7 @@
 
 -(id) initWithTarget: (id) t selector:(SEL) s
 {
-	if( ! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	targetCallback = [t retain];
@@ -187,7 +187,7 @@
 
 -(id) initWithTarget:(id) t selector:(SEL) s data:(void*) d
 {
-	if(! [super initWithTarget:t selector:s])
+	if( !(self=[super initWithTarget:t selector:s]) )
 		return nil;
 	data = d;
 	

@@ -44,7 +44,7 @@
 	[self loadTGAfile: map];
 	[self calculateItemsToRender];
 
-	if( ![super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender] )
+	if( !(self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender]) )
 		return nil;
 
 	[self updateAltasValues];

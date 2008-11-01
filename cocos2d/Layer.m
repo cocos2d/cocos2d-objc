@@ -28,7 +28,7 @@
 @implementation Layer
 -(id) init
 {
-	if( ! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	CGRect s = [[Director sharedDirector] winSize];
@@ -91,7 +91,7 @@
 
 - (id) initWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
 {
-	if (![super init])
+	if( ! (self=[super init]) )
 		return nil;
 
 	[self changeColor: aColor];
@@ -194,7 +194,7 @@
 
 -(id) initWithLayers: (Layer*) layer vaList:(va_list) params
 {
-	if( ![super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	layers = [[NSMutableArray array] retain];

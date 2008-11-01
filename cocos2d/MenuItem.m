@@ -45,7 +45,7 @@ static BOOL _fontNameRelease = NO;
 
 -(id) initWithTarget:(id) rec selector:(SEL) cb
 {
-	if(! [super init])
+	if(!(self=[super init]) )
 		return nil;
 	
 	NSMethodSignature * sig = nil;
@@ -147,7 +147,7 @@ static BOOL _fontNameRelease = NO;
 
 -(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
 {
-	if(! [super initWithTarget:rec selector:cb] )
+	if(!(self=[super initWithTarget:rec selector:cb]) )
 		return nil;
 	
 	if( [value length] == 0 ) {
@@ -256,7 +256,7 @@ static BOOL _fontNameRelease = NO;
 
 -(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id) t selector:(SEL) sel
 {
-	if( ![super initWithTarget:t selector:sel] )
+	if( !(self=[super initWithTarget:t selector:sel]) )
 		return nil;
 
 	normalImage = [[Sprite spriteWithFile:normalI] retain];

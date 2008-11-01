@@ -39,7 +39,7 @@
 
 -(id) initWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c
 {
-	if (! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	textureAtlas = [[TextureAtlas textureAtlasWithFile:tile capacity:c] retain];

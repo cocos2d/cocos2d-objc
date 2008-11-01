@@ -1,4 +1,5 @@
 version 0.5.2 - dd-MMM-YYYY
+ . All: assign [super init] to self (issue #61)
  . Director: able to remove event enabled nodes (issue #56)
  . Director: can be hidden / unhidden (issue #55)
  . License: Explicit paragraphs that allows cocos2d + closed source projects (issue #57)

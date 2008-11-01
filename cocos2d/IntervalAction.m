@@ -47,7 +47,7 @@
 
 -(id) initWithDuration: (ccTime) d
 {
-	if( ![super init] )
+	if( !(self=[super init]) )
 		return nil;
 	
 	duration = d;
@@ -216,8 +216,9 @@
 -(id) initWithAction: (IntervalAction*) action times: (unsigned int) t
 {
 	int d = [action duration] * t;
-	if(! [super initWithDuration: d ] )
+	if( !(self=[super initWithDuration: d ]) )
 		return nil;
+
 	times = t;
 	other = [action retain];
 
@@ -359,9 +360,8 @@
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
-	if( ! [super initWithDuration: t] )
+	if( !(self=[super initWithDuration: t]) )
 		return nil;
-	[super initWithDuration: t];
 	
 	angle = a;
 	return self;
@@ -401,9 +401,8 @@
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
-	if( ! [super initWithDuration: t] )
+	if( !(self=[super initWithDuration: t]) )
 		return nil;
-	[super initWithDuration: t];
 
 	angle = a;
 	return self;
@@ -445,7 +444,7 @@
 
 -(id) initWithDuration: (ccTime) t position: (cpVect) p
 {
-	if( ![super initWithDuration: t] )
+	if( !(self=[super initWithDuration: t]) )
 		return nil;
 	
 	endPosition = p;
@@ -482,7 +481,7 @@
 
 -(id) initWithDuration: (ccTime) t position: (cpVect) p
 {
-	if( ![super initWithDuration: t] )
+	if( !(self=[super initWithDuration: t]) )
 		return nil;
 
 	delta = p;
@@ -519,7 +518,9 @@
 
 -(id) initWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j
 {
-	[super initWithDuration:t];
+	if( !(self=[super initWithDuration:t]) )
+		return nil;
+
 	delta = pos;
 	height = h;
 	jumps = j;
@@ -574,7 +575,7 @@
 
 -(id) initWithDuration: (ccTime) t scale:(float) s
 {
-	if( ![super initWithDuration: t] )
+	if( !(self=[super initWithDuration: t]) )
 		return nil;
 	
 	endScale = s;
@@ -627,7 +628,8 @@
 
 -(id) initWithDuration: (ccTime) t blinks: (int) b
 {
-	[super initWithDuration: t];
+	if( ! (self=[super initWithDuration: t] ) )
+		return nil;
 	times = b;
 	return self;
 }
@@ -691,7 +693,8 @@
 
 -(id) initWithDuration: (ccTime) t opacity: (GLubyte) o
 {
-	[super initWithDuration: t];
+	if( ! (self=[super initWithDuration: t] ) )
+		return nil;
 	toOpacity = o;
 	return self;
 }
@@ -727,7 +730,7 @@
 {	
 	NSAssert( action!=nil, @"Accelerate: argument action must be non-nil");
 
-	if( ! [super initWithDuration: [action duration]] )
+	if( ! (self=[super initWithDuration: [action duration]]) )
 		return nil;
 
 	other = [action retain];
@@ -779,7 +782,8 @@
 {
 	NSAssert( action!=nil, @"AccelDeccel: argument action must be non-nil");
 
-	[super initWithDuration: action.duration ];
+	if( !(self=[super initWithDuration: action.duration ]) )
+		return nil;
 
 	other = [action retain];
 	
@@ -831,7 +835,8 @@
 {
 	NSAssert( action!=nil, @"Speed: argument action must be non-nil");
 
-	[super initWithDuration: action.duration / s ];
+	if( !(self=[super initWithDuration: action.duration / s ]) )
+		return nil;
 	
 	other = [action retain];
 	
@@ -896,9 +901,10 @@
 
 -(id) initWithAction: (IntervalAction*) action
 {
-	[super initWithDuration: [action duration]];
-	other = [action retain];
+	if( !(self=[super initWithDuration: [action duration]]) )
+		return nil;
 	
+	other = [action retain];
 	return self;
 }
 
@@ -962,8 +968,9 @@
 {
 	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
 
-	if( ! [super initWithDuration: [[a frames] count] * [a delay]] )
+	if( !(self=[super initWithDuration: [[a frames] count] * [a delay]]) )
 		return nil;
+
 	restoreOriginalFrame = b;
 	animation = [a retain];
 	origFrame = nil;

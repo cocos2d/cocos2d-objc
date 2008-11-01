@@ -56,7 +56,7 @@
 
 -(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) i
 {
-	if(! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	interval = i;
@@ -124,7 +124,7 @@ static Scheduler *sharedScheduler;
 
 - (id) init
 {
-	if( ! [super init] )
+	if( ! (self=[super init]) )
 		return nil;
 	
 	scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];

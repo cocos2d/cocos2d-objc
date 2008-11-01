@@ -53,7 +53,7 @@
 
 -(id) initWithItems: (MenuItem*) item vaList: (va_list) args
 {
-	if( ![super init] )
+	if( !(self=[super init]) )
 		return nil;
 	
 	// menu in the center of the screen
