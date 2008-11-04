@@ -46,7 +46,7 @@
  *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
  *
  * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
- * bpp can only be 2 or 4. 2 more compression, lower quality.
+ * bpp can only be 2 or 4. 2 means more compression but lower quality.
  * hasAlpha: whether or not the image contains alpha channel
  */
 -(Texture2D*) addPVRTCImage: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;

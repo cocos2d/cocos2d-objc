@@ -24,7 +24,7 @@
  * @image html cocos2d-Icon.png
  *
  * @section intro Introduction
- * Here you will find the API reference
+ * cocos2d API reference
  *
  * <hr>
  *
