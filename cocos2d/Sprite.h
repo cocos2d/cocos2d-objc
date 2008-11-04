@@ -56,8 +56,21 @@
 
 /** creates an sprite with an image file */
 + (id) spriteWithFile:(NSString *)imageFile;
+/** creates an sprite with a PVRTC image file
+ * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
+ * bpp can only be 2 or 4. 2 more compression, lower quality.
+ * hasAlpha: whether or not the image contains alpha channel
+ */
++ (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
+
 /** initializes the sprite with an image file */
 - (id) initWithFile:(NSString *) imageFile;
+/** creates an sprite with a PVRTC image file
+ * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
+ * bpp can only be 2 or 4. 2 more compression, lower quality.
+ * hasAlpha: whether or not the image contains alpha channel
+ */
+- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (Animation*) animation;

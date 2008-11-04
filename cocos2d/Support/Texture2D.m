@@ -346,3 +346,39 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 @end
+
+@implementation Texture2D (PVRTC)
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
+{
+	GLint					saveName;
+
+	if((self = [super init])) {
+		glGenTextures(1, &_name);
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
+		glBindTexture(GL_TEXTURE_2D, _name);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		
+		GLenum format;
+		GLsizei size = length * length * bpp / 8;
+		if(hasAlpha) {
+			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+		} else {
+			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+		}
+		if(size < 32) {
+			size = 32;
+		}
+		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
+		
+		glBindTexture(GL_TEXTURE_2D, saveName);
+		
+		_size = CGSizeMake(length, length);
+		_width = length;
+		_height = length;
+		_maxS = 1.0;
+		_maxT = 1.0;
+	}					
+	return self;
+}
+@end
+

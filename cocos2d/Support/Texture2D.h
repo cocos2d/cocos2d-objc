@@ -128,3 +128,12 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 @interface Texture2D (Text)
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
+
+/*
+ Extensions to make it easy to create a Texture2D object from a PVRTC file
+ */
+@interface Texture2D (PVRTC)
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
+@end
+
+

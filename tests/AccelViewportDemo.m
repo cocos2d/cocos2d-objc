@@ -14,7 +14,7 @@ float randfloat() {
 	return ((float)random())/RAND_MAX;
 }
 
-#define CLOUDS_SCALE 1.6
+#define CLOUDS_SCALE 1.3
 
 @implementation AccelViewportDemo
 -(id) init
@@ -23,7 +23,8 @@ float randfloat() {
 
 	isTouchEnabled = YES;
 	isAccelerometerEnabled = YES;
-	clouds = [[Sprite spriteWithFile:@"clouds.jpg"] retain];
+//	clouds = [[Sprite spriteWithFile:@"clouds.jpg"] retain];
+	clouds = [[Sprite spriteWithPVRTCFile:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024] retain];
 	[clouds setScale: CLOUDS_SCALE];
 	
 	CGSize cs = clouds.texture.contentSize;
