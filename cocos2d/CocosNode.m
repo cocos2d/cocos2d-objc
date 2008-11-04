@@ -103,6 +103,9 @@
 
 	[actionsToAdd release];
 	actionsToAdd = nil;
+	
+	[scheduledSelectors release];
+	scheduledSelectors = nil;
 }
 
 
