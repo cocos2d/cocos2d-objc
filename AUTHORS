@@ -3,9 +3,9 @@ cocos2d for iPhone authors
 
 Maintainer / main developer: Ricardo Quesada
 
-Special thanks to: Lucio Torre, Daniel Moisset, Rayentray Tappa & Alejandro Cura.
+Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
 
-Contributors with patches (alphabetically ordered):
+Contributors (alphabetically ordered):
     * Brian Hammond: patches for Demos
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director
@@ -15,4 +15,4 @@ Contributors with patches (alphabetically ordered):
     * yarrington: patches for Director
 
 
-Am I missing someone ? Oops, sorry. Send me an email
+Am I missing someone ? Oops, sorry. Send me an email.

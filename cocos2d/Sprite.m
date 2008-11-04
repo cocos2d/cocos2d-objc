@@ -35,6 +35,11 @@
 	return [[[self alloc] initWithFile:filename] autorelease];
 }
 
++ (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
+{
+	return [[[self alloc] initWithPVRTCFile:fileimage bpp:bpp hasAlpha:alpha width:w] autorelease];
+}
+
 - (id) initWithFile: (NSString*) filename
 {
 	if( ! (self=[super init]) )
@@ -43,6 +48,21 @@
 	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
 
 	texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
+	
+	CGSize s = texture.contentSize;
+	transformAnchor = cpv( s.width/2, s.height/2);
+	
+	return self;
+}
+
+- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
+{
+	if( ! (self=[super init]) )
+		return nil;
+	
+	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+	
+	texture = [[[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w] retain];
 	
 	CGSize s = texture.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2);

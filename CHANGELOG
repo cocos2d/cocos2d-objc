@@ -6,6 +6,7 @@ version 0.5.2 - dd-MMM-YYYY
  . Director: can be hidden / unhidden (issue #55)
  . License: Explicit paragraphs that allows cocos2d + closed source projects (issue #57)
  . MenuItemImage: able to modify inner sprites (issue #58)
+ . OpenGLSupport: added PowerVR Texture Compress (PVRTC) format support (issue #66)
  . Transitions: don't flicker (issue #60)
 
 version 0.5.1 - 20-Oct-2008

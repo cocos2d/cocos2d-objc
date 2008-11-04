@@ -90,6 +90,39 @@ static TextureMgr *sharedTextureMgr;
 	return [tex autorelease];
 }
 
+-(Texture2D*) addPVRTCImage: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
+{
+	NSAssert(fileimage != nil, @"TextureMgr: fileimage MUST not be nill");
+	NSAssert( bpp==2 || bpp==4, @"TextureMgr: bpp must be either 2 or 4");
+	
+#if !TARGET_IPHONE_SIMULATOR
+	Texture2D * tex;
+	
+	if( (tex=[textures objectForKey: fileimage] ) ) {
+		return tex;
+	}
+	
+	NSBundle *bundle = [NSBundle mainBundle];
+	if (bundle)  {
+		NSString *imagePath = [bundle pathForResource:fileimage ofType:nil];
+		if (imagePath) {
+			NSData *nsdata = [[NSData alloc] initWithContentsOfFile:imagePath];
+			tex = [[Texture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
+			[textures setObject: tex forKey:fileimage];
+			[nsdata release];
+		}
+	}
+
+	return [tex autorelease];
+
+#else // SIMULATOR
+	// append .png
+	NSString *png = [NSString stringWithFormat:@"%@.png", fileimage];
+	return [self addImage:png];
+#endif
+}
+
+
 -(void) removeAllTextures
 {
 	[textures removeAllObjects];

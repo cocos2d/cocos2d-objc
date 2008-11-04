@@ -41,6 +41,17 @@
  */
 -(Texture2D*) addImage: (NSString*) fileimage;
 
+/** Returns a Texture2D object given an PVRTC filename
+ * If the file image was not previously loaded, it will create a new Texture2D
+ *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+ *
+ * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
+ * bpp can only be 2 or 4. 2 more compression, lower quality.
+ * hasAlpha: whether or not the image contains alpha channel
+ */
+-(Texture2D*) addPVRTCImage: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
+
+
 /** Purges the dictionary of loaded textures.
  * Call this method if you receive the "Memory Warning"
  * In the short term: it will free some resources preventing your app from being killed
