@@ -113,7 +113,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFireworks node];
-	[self add: emitter];	
+	[self add: emitter];
 }
 -(NSString *) title
 {

@@ -99,7 +99,7 @@
 		
 	glGenBuffers(1, &verticesID);
 	glGenBuffers(1, &colorsID);	
-	
+
 	[self schedule:@selector(step:)];
 
 	return self;
