@@ -1,4 +1,4 @@
-version 0.5.2 - dd-MMM-YYYY
+version 0.5.2 - 04-Nov-2008
  . All: assign [super init] to self (issue #61)
  . Documentation: Add AUTHORS file with the cocos2d's contributors (issue #62)
  . CocosNode: added tags (getByTag, removeByTag)  (issue #52)
@@ -7,7 +7,7 @@ version 0.5.2 - dd-MMM-YYYY
  . Director: can be hidden / unhidden (issue #55)
  . License: Explicit paragraphs that allows cocos2d + closed source projects (issue #57)
  . MenuItemImage: able to modify inner sprites (issue #58)
- . OpenGLSupport: added PowerVR Texture Compress (PVRTC) format support (issue #66)
+ . OpenGLSupport: added PowerVR Texture Compression (PVRTC) format support (issue #66)
  . Transitions: don't flicker (issue #60)
 
 version 0.5.1 - 20-Oct-2008
