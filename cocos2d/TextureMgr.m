@@ -95,7 +95,6 @@ static TextureMgr *sharedTextureMgr;
 	NSAssert(fileimage != nil, @"TextureMgr: fileimage MUST not be nill");
 	NSAssert( bpp==2 || bpp==4, @"TextureMgr: bpp must be either 2 or 4");
 	
-#if !TARGET_IPHONE_SIMULATOR
 	Texture2D * tex;
 	
 	if( (tex=[textures objectForKey: fileimage] ) ) {
@@ -114,12 +113,6 @@ static TextureMgr *sharedTextureMgr;
 	}
 
 	return [tex autorelease];
-
-#else // SIMULATOR
-	// append .png
-	NSString *png = [NSString stringWithFormat:@"%@.png", fileimage];
-	return [self addImage:png];
-#endif
 }
 
 
