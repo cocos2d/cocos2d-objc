@@ -255,7 +255,11 @@
 		[c setParent: nil];
 		if( isRunning )
 			[c onExit];
-	}	
+	}
+	
+	// issue #74
+	[children makeObjectsPerformSelector:@selector(cleanup)];
+
 	[children removeAllObjects];
 	[childrenNames removeAllObjects];
 }

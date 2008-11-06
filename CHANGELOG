@@ -1,3 +1,6 @@
+version 0.5.3 - dd-mmm-yyyy
+ . TextureMgr: Simulator supports PVRTC images (issue #75)
+
 version 0.5.2 - 04-Nov-2008
  . All: assign [super init] to self (issue #61)
  . Documentation: Add AUTHORS file with the cocos2d's contributors (issue #62)
