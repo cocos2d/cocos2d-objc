@@ -195,6 +195,12 @@ enum {
 -(void) stopAllActions;
 /** Removes one action from the running action list */
 -(void) stopAction: (Action*) action;
+/** Returns the numbers of actions that's will be run and that's are running (actions in actionsToAdd and actions arrays). 
+ * Composable actions are counted as 1 actions. Example:
+ *    If you are running 1 Sequence of 7 actions, it will return 1.
+ *    If you are running 7 Sequences of 2 actions, it will return 7.
+ */
+-(int) numberOfRunningActions;
 
 
 // timers
