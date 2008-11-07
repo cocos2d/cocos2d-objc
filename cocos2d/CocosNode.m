@@ -413,6 +413,12 @@
 	}
 }
 
+-(int) numberOfRunningActions
+{
+	return [actionsToAdd count]+[actions count];
+}
+
+
 -(void) step_: (ccTime) dt
 {
 	// remove 'removed' actions

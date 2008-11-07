@@ -6,9 +6,11 @@ Maintainer / main developer: Ricardo Quesada
 Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
 
 Contributors (alphabetically ordered):
+    * Alejandro Cura: author of AccelViewPortDemo
     * Brian Hammond: patches for Demos
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director
+	* Fradj Johann: patches for CocosNode
     * lukeman: patches for MenuItem
     * Serge Kolgan: patches for CocosNode
     * Steve Israelson: patches for Scheduler, Actions, Transitions
