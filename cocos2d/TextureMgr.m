@@ -115,7 +115,6 @@ static TextureMgr *sharedTextureMgr;
 	return [tex autorelease];
 }
 
-
 -(void) removeAllTextures
 {
 	[textures removeAllObjects];
@@ -124,8 +123,11 @@ static TextureMgr *sharedTextureMgr;
 -(void) removeTexture: (Texture2D*) tex
 {
 	NSAssert(tex != nil, @"TextureMgr: tex MUST not be nill");
-
-	[textures removeObjectForKey:tex];
+	
+	NSArray *keys = [textures allKeysForObject:tex];
+	
+	for( int i = 0; i < [keys count]; i++ )
+		[textures removeObjectForKey:[keys objectAtIndex:i]];
 }
 
 @end

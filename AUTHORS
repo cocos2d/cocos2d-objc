@@ -10,7 +10,7 @@ Contributors (alphabetically ordered):
     * Brian Hammond: patches for Demos
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director
-	* Ernesto Corvi: added TGA RLE support
+	* Ernesto Corvi: added TGA RLE support, patches for TextureMgr
 	* Fradj Johann: patches for CocosNode, Layer, MultiplexLayer
     * Ishaq Malik: patches for CocosNode
     * lukeman: patches for MenuItem
