@@ -141,7 +141,8 @@ Class restartAction()
 	[super onEnter];
 
 	tamara.scaleX = 2.5;
-	tamara.scaleY = 0.5;
+	tamara.scaleY = -1.0;
+	
 	grossini.rotation = 120;
 	grossini.opacity = 128;
 	grossini.position = cpv(240,160);
