@@ -22,6 +22,11 @@
 -(void) restartCallback:(id) sender;
 @end
 
+@interface SpriteManual : SpriteDemo
+{
+}
+@end
+
 @interface SpriteMove : SpriteDemo
 {
 }

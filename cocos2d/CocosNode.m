@@ -34,7 +34,7 @@
 
 @implementation CocosNode
 
-@synthesize rotation, scale, position;
+@synthesize rotation, scaleX, scaleY, position;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
 #if USING_CHILDREN_ANCHOR
@@ -60,7 +60,8 @@
 	position = cpvzero;
 	
 	rotation = 0.0f;		// 0 degrees	
-	scale = 1.0f;			// scale factor
+	scaleX = 1.0f;			// scale factor
+	scaleY = 1.0f;
 
 	camera = [[Camera alloc] init];
 	
@@ -291,40 +292,6 @@
 	// override me
 }
 
--(void) transform
-{
-	
-	[camera locate];
-	
-	// transformations
-	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
-		glTranslatef( -transformAnchor.x, -transformAnchor.y, 0);
-	
-	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
-		glTranslatef( position.x + transformAnchor.x, position.y + transformAnchor.y, 0);
-	else if ( position.x !=0 || position.y !=0 )
-		glTranslatef( position.x, position.y, 0 );
-		
-	if (scale != 1.0f)
-		glScalef( scale, scale, 1.0f );
-		
-	if (rotation != 0.0f )
-		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
-
-	// restore and re-position point
-	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
-#if USING_CHILDREN_ANCHOR
-	{
-		if ( !( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y) )
-			glTranslatef( childrenAnchor.x - transformAnchor.x, childrenAnchor.y - transformAnchor.y, 0);
-	}
-	else if (childrenAnchor.x != 0 || childrenAnchor.y !=0 )
-		glTranslatef( childrenAnchor.x, childrenAnchor.y, 0 );
-#else
-		glTranslatef(-transformAnchor.x, -transformAnchor.y, 0);
-#endif
-}
-
 -(void) visit
 {
 	if (!visible)
@@ -351,6 +318,58 @@
 	glPopMatrix();
 
 }
+
+#pragma mark CocosNode - Transformations
+
+-(void) transform
+{
+	
+	[camera locate];
+	
+	// transformations
+	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
+		glTranslatef( -transformAnchor.x, -transformAnchor.y, 0);
+	
+	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
+		glTranslatef( position.x + transformAnchor.x, position.y + transformAnchor.y, 0);
+	else if ( position.x !=0 || position.y !=0 )
+		glTranslatef( position.x, position.y, 0 );
+	
+	if (scaleX != 1.0f || scaleY != 1.0f)
+		glScalef( scaleX, scaleY, 1.0f );
+	
+	if (rotation != 0.0f )
+		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
+	
+	// restore and re-position point
+	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
+#if USING_CHILDREN_ANCHOR
+	{
+		if ( !( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y) )
+			glTranslatef( childrenAnchor.x - transformAnchor.x, childrenAnchor.y - transformAnchor.y, 0);
+	}
+	else if (childrenAnchor.x != 0 || childrenAnchor.y !=0 )
+		glTranslatef( childrenAnchor.x, childrenAnchor.y, 0 );
+#else
+	glTranslatef(-transformAnchor.x, -transformAnchor.y, 0);
+#endif
+}
+
+-(float) scale
+{
+	if( scaleX == scaleY)
+		return scaleX;
+	else
+		[NSException raise:@"CocosNode scale:" format:@"scaleX is different from scaleY"];
+	
+	return 0;
+}
+
+-(void) setScale:(float) s
+{
+	scaleX = scaleY = s;
+}
+
 
 #pragma mark CocosNode SceneManagement
 

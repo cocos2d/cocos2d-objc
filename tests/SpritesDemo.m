@@ -9,6 +9,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+						 @"SpriteManual",
 						 @"SpriteMove",
 						 @"SpriteRotate",
 						 @"SpriteScale",
@@ -132,6 +133,25 @@ Class restartAction()
 	return @"No title";
 }
 @end
+
+
+@implementation SpriteManual
+-(void) onEnter
+{
+	[super onEnter];
+
+	tamara.scaleX = 2.5;
+	tamara.scaleY = 0.5;
+	grossini.rotation = 120;
+	grossini.opacity = 128;
+	grossini.position = cpv(240,160);
+}
+-(NSString *) title
+{
+	return @"Manual Transformation";
+}
+@end
+
 
 @implementation SpriteMove
 -(void) onEnter

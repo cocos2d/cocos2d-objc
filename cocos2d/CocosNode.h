@@ -60,6 +60,12 @@ enum {
 	/// scale factor
 	float scale;
 	
+	/// scale X factor
+	float scaleX;
+	
+	/// scale Y factor
+	float scaleY;
+	
 	/// position of the node
 	cpVect position;
 
@@ -110,7 +116,7 @@ enum {
 
 @property(readwrite,assign) int zOrder;
 @property(readwrite,assign) float rotation;
-@property(readwrite,assign) float scale;
+@property(readwrite,assign) float scale, scaleX, scaleY;
 @property(readwrite,assign) cpVect position;
 @property(readwrite,assign) Camera* camera;
 @property(readwrite,assign) BOOL visible;
@@ -191,6 +197,10 @@ enum {
 -(void) draw;
 /** recursive method that visit its children and draw them */
 -(void) visit;
+
+
+// transformations
+
 /** performs opengl view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
 
