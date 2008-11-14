@@ -8,6 +8,7 @@ version 0.5.3 - dd-mmm-yyyy
  . MultiplexLayer: added switchToAndReleaseMe (issue #71)
  . OpenGLSupport: performance improvments (issue #84)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
+ . TextureMgr: removeTexture fixed (issue #85)
  . TileMapAtlas: supports TGA RLE format (issue #38)
 
 version 0.5.2 - 04-Nov-2008
