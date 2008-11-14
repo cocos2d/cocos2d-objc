@@ -244,8 +244,7 @@
 	if( n >= [layers count] ) {
 		NSException* myException = [NSException
 									exceptionWithName:@"MultiplexLayerInvalidIndex"
-									reason:@"Invalid index in MultiplexLayer switchTo 
-									message"
+									reason:@"Invalid index in MultiplexLayer switchTo message"
 									userInfo:nil];
 		@throw myException;		
 	}
