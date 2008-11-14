@@ -216,7 +216,8 @@
 			[c setParent: nil];
 			if( isRunning )
 				[c onExit];
-			
+
+			[c cleanup]; // issue #74
 			[children removeObject: c];
 			
 			break;
@@ -231,7 +232,7 @@
 	
 	id child = [childrenNames objectForKey: name];
 	[self remove: child];
-	[childrenNames removeObjectForKey: name];
+	[childrenNames removeObjectForKey: name];	
 }
 
 -(void) removeByTag:(int) aTag
@@ -257,8 +258,7 @@
 			[c onExit];
 	}
 	
-	// issue #74
-	[children makeObjectsPerformSelector:@selector(cleanup)];
+	[children makeObjectsPerformSelector:@selector(cleanup)]; // issue #74
 
 	[children removeAllObjects];
 	[childrenNames removeAllObjects];
