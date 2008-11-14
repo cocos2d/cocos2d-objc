@@ -2,6 +2,7 @@ version 0.5.3 - dd-mmm-yyyy
  . CocosNode: added numberOfRunningActions (issue #72)
  . CocosNode: removeAll, remove fixes (issue #74)
  . CocosNode: stopAction fix (issue #82)
+ . Layer: isTouchEnabled, isAccelerometerEnabled are properties (issue #70)
  . Menu: supports CocosNodeOpacity protocol (issue #76)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
 

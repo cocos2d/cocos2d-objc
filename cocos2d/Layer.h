@@ -35,6 +35,10 @@
 	//! whether or not it will receive Accelerometer events
 	BOOL isAccelerometerEnabled;
 }
+
+@property(nonatomic,assign) BOOL isTouchEnabled;
+@property(nonatomic,assign) BOOL isAccelerometerEnabled;
+
 @end
 
 //
