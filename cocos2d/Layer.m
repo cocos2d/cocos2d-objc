@@ -238,4 +238,25 @@
 	
 	[self add: [layers objectAtIndex:n]];		
 }
+
+-(void) switchToAndReleaseMe: (unsigned int) n
+{
+	if( n >= [layers count] ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"MultiplexLayerInvalidIndex"
+									reason:@"Invalid index in MultiplexLayer switchTo 
+									message"
+									userInfo:nil];
+		@throw myException;		
+	}
+	
+	[self remove: [layers objectAtIndex:enabledLayer]];
+	
+	[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
+	
+	enabledLayer = n;
+	
+	[self add: [layers objectAtIndex:n]];		
+}
+
 @end
