@@ -74,7 +74,9 @@
 -(void) changeHeight: (GLfloat)h;
 
 // CocosNodeOpacity protocol
-/** returns the opacity */
+/** returns the opacity
+ @return 
+ */
 -(GLubyte) opacity;
 /** sets the opacity of the layer */
 -(void) setOpacity: (GLubyte) opacity;
