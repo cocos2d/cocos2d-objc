@@ -29,6 +29,8 @@ static BOOL _fontNameRelease = NO;
 
 @implementation MenuItem
 
+@synthesize opacity;
+
 -(id) init
 {
 	NSException* myException = [NSException
@@ -58,7 +60,8 @@ static BOOL _fontNameRelease = NO;
 	[invocation setArgument:&self atIndex:2];
 	[invocation retain];
     
-    isEnabled = YES;
+  isEnabled = YES;
+  opacity = 255;
 	
 	return self;
 }
@@ -161,7 +164,8 @@ static BOOL _fontNameRelease = NO;
 	
 	label = [Label labelWithString:value dimensions:CGSizeMake((_fontSize+2)*[value length], (_fontSize+5)) alignment:UITextAlignmentCenter fontName:_fontName fontSize:_fontSize];
 
-	[label retain];	
+	[label retain];
+  [label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2 );
@@ -237,6 +241,13 @@ static BOOL _fontNameRelease = NO;
 {
 	[label draw];
 }
+
+- (void) setOpacity: (GLubyte)newOpacity
+{
+  opacity = newOpacity;
+  [label setOpacity:opacity];
+}
+
 @end
 
 
@@ -266,6 +277,10 @@ static BOOL _fontNameRelease = NO;
 		disabledImage = nil;
 	else
 		disabledImage = [[Sprite spriteWithFile:disabledI] retain];
+  
+  [normalImage setOpacity:opacity];
+  [selectedImage setOpacity:opacity];
+  [disabledImage setOpacity:opacity];
 	
 	CGSize s = [normalImage contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );
@@ -277,7 +292,7 @@ static BOOL _fontNameRelease = NO;
 {
 	[normalImage release];
 	[selectedImage release];
-    [disabledImage release];
+  [disabledImage release];
 
 	[super dealloc];
 }
@@ -322,4 +337,13 @@ static BOOL _fontNameRelease = NO;
 			[normalImage draw];
 	}
 }
+
+- (void) setOpacity: (GLubyte)newOpacity
+{
+  opacity = newOpacity;
+  [normalImage setOpacity:opacity];
+  [selectedImage setOpacity:opacity];
+  [disabledImage setOpacity:opacity];
+}
+
 @end

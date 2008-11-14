@@ -24,9 +24,10 @@
 #import "Layer.h"
 
 /** A Menu */
-@interface Menu : Layer
+@interface Menu : Layer <CocosNodeOpacity>
 {
 	int selectedItem;
+	GLubyte opacity;
 }
 
 /** creates a menu with it's items */
@@ -34,4 +35,7 @@
 
 /** initializes a menu with it's items */
 - (id) initWithItems: (MenuItem*) item vaList: (va_list) args;
+
+@property (readwrite,assign) GLubyte opacity;
+
 @end
