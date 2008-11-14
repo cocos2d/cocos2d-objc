@@ -408,7 +408,7 @@
 		// do nothing
 	} else if( [actionsToAdd containsObject:action] ) {
 		[actionsToAdd removeObject:action];
-	} else if( [actions containsObject:actions] ) {
+	} else if( [actions containsObject:action] ) {
 		[actionsToRemove addObject:action];
 	}
 }
