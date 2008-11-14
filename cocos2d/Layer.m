@@ -26,6 +26,9 @@
 #import "Director.h"
 
 @implementation Layer
+
+@synthesize isTouchEnabled, isAccelerometerEnabled;
+
 -(id) init
 {
 	if( ! (self=[super init]) )
