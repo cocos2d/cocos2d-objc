@@ -96,6 +96,8 @@
 +(id) layerWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
 /** initializes a MultiplexLayer with one or more layers */
 -(id) initWithLayers: (Layer*) layer vaList:(va_list) params;
-/** switches to a certain layer */
+/** switches to a certain layer indexed by n*/
 -(void) switchTo: (unsigned int) n;
+/** release the current layer and switches to another layer indexed by n */
+-(void) switchToAndReleaseMe: (unsigned int) n;
 @end
