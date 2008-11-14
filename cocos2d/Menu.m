@@ -31,6 +31,8 @@
 
 @implementation Menu
 
+@synthesize opacity;
+
 - (id) init
 {
 	NSException* myException = [NSException
@@ -80,6 +82,14 @@
 -(void) dealloc
 {
 	[super dealloc];
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)newOpacity
+{
+	opacity = newOpacity;
+	for(id<CocosNodeOpacity> item in children)
+		[item setOpacity:opacity];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

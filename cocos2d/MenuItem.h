@@ -32,7 +32,8 @@
 @interface MenuItem : CocosNode
 {
 	NSInvocation *invocation;
-    BOOL isEnabled;
+  BOOL isEnabled;
+  GLubyte opacity;
 }
 /** creates a menu item with a target/selector */
 +(id) itemWithTarget:(id) r selector:(SEL) s;
@@ -60,6 +61,7 @@
 /** returns the height of the item */
 -(unsigned int) height;
 
+@property (readwrite,assign) GLubyte opacity;
 
 @end
 
