@@ -1,7 +1,7 @@
 version 0.5.3 - dd-mmm-yyyy
  . CocosNode: added numberOfRunningActions (issue #72)
+ . CocosNode: stopAction fix (issue #82)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
- 
 
 version 0.5.2 - 04-Nov-2008
  . All: assign [super init] to self (issue #61)
