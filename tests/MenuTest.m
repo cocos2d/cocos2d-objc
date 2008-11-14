@@ -76,6 +76,8 @@
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
+	
+	menu.opacity = 128;
 
 	CGRect s = [[Director sharedDirector] winSize];
 	menu.position = cpv( s.size.width -100, s.size.height-100);
