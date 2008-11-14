@@ -1,5 +1,6 @@
 version 0.5.3 - dd-mmm-yyyy
  . CocosNode: added numberOfRunningActions (issue #72)
+ . CocosNode: removeAll, remove fixes (issue #74)
  . CocosNode: stopAction fix (issue #82)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
 
