@@ -6,6 +6,7 @@ version 0.5.3 - dd-mmm-yyyy
  . Layer: isTouchEnabled, isAccelerometerEnabled are properties (issue #70)
  . Menu: supports CocosNodeOpacity protocol (issue #76)
  . MultiplexLayer: added switchToAndReleaseMe (issue #71)
+ . OpenGLSupport: performance improvments (issue #84)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
  . TileMapAtlas: supports TGA RLE format (issue #38)
 

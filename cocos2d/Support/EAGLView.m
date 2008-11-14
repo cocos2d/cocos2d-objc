@@ -124,6 +124,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
 	}
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
+
 	
 	CHECK_GL_ERROR();
 	
@@ -239,14 +240,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) swapBuffers
 {
 	EAGLContext *oldContext = [EAGLContext currentContext];
-	GLuint oldRenderbuffer;
+//	GLuint oldRenderbuffer;
 	
 	if(oldContext != _context)
 		[EAGLContext setCurrentContext:_context];
-	
+
+#if DEBUG
 	CHECK_GL_ERROR();
+#endif
 	
-	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
+//	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _renderbuffer);
 	
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER_OES])
