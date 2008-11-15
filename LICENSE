@@ -1,7 +1,7 @@
-cocos2d license extension:
---------------------------
+cocos2d for iPhone license extension:
+-------------------------------------
 
-cocos2d is licensed under the GNU LGPL v3.
+cocos2d for iPhone is licensed under the GNU LGPL v3.
 But since it is impossible to distribute 3rd party dynamic libraries
 for the iPhone you are allowed to use cocos2d as a static library
 or by including all the cocos2d sources inside your project.

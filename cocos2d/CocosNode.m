@@ -218,7 +218,8 @@
 			if( isRunning )
 				[c onExit];
 
-			[c cleanup]; // issue #74
+// DONT CLEANUP INDIVIDUAL REMOVES
+//			[c cleanup]; // issue #74
 			[children removeObject: c];
 			
 			break;
@@ -480,7 +481,7 @@
 	
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
 #if DEBUG
-		NSLog(@"CocosNode.schedule: Selector already scheduled");
+		NSLog(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
 #endif
 		return;
 	}
@@ -501,7 +502,7 @@
 	
 	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
 	{
-		NSLog(@"selector not scheduled");
+		NSLog(@"selector not scheduled: %@",NSStringFromSelector(selector));
 		NSException* myException = [NSException
 									exceptionWithName:@"SelectorNotScheduled"
 									reason:@"Selector not scheduled"
