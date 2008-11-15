@@ -163,12 +163,12 @@ enum {
  */
 -(id) add: (CocosNode*)node z:(int)z tag:(int)tag;
 /** Removes a child from the container
- * It stops all running actions from the removed object and unschedules all scheduled selectors 
+ * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
  * If you have added a 'named' child, you MUST remove it using removeByName instead
  */
 -(void) remove: (CocosNode*)node;
 /** Removes a child from the container given its name
- * It stops all running actions from the removed object and unschedules all scheduled selectors 
+ * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
  * @deprecated Use removeByTag instead
  */
 -(void) removeByName: (NSString*)name;
@@ -182,6 +182,7 @@ enum {
  */
 -(CocosNode*) get: (NSString*) name;
 /** Removes a child from the container given its tag
+ * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
  */
 -(void) removeByTag:(int) tag;
 /** Gets a child from the container given its tag

@@ -33,8 +33,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 05 00
-#define COCOS2D_VERSION 0x00000502
+// 00   00 05 03
+#define COCOS2D_VERSION 0x00000503
 
 //
 // all cocos2d include files

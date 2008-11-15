@@ -1,6 +1,6 @@
 version 0.5.3 - dd-mmm-yyyy
  . CocosNode: added numberOfRunningActions (issue #72)
- . CocosNode: removeAll, remove fixes (issue #74)
+ . CocosNode: removeAll fixes (issue #74)
  . CocosNode: stopAction fix (issue #82)
  . CocosNode: supports flipX and flipY (issue #53)
  . CocosNode: supports scaleX and scaleY (issue #54) 
@@ -8,9 +8,11 @@ version 0.5.3 - dd-mmm-yyyy
  . Menu: supports CocosNodeOpacity protocol (issue #76)
  . MultiplexLayer: added switchToAndReleaseMe (issue #71)
  . OpenGLSupport: performance improvments (issue #84)
+ . Texture2D: images & RGBA8 fixes (issue #86)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
  . TextureMgr: removeTexture fixed (issue #85)
  . TileMapAtlas: supports TGA RLE format (issue #38)
+ 
 
 version 0.5.2 - 04-Nov-2008
  . All: assign [super init] to self (issue #61)

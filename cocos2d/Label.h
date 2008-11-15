@@ -40,7 +40,7 @@
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 
 /** changes the string to render
- * @warning: Changing the string is as expensive as creating a new Label. To obtain better performance use LabelAtlas
+ * @warning Changing the string is as expensive as creating a new Label. To obtain better performance use LabelAtlas
  */
 - (void) setString:(NSString*)string;
 

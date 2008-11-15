@@ -112,6 +112,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) dealloc
 {
+#if DEBUG
+	NSLog(@"deallocing: %@", self);
+#endif
 	if(_name)
 		glDeleteTextures(1, &_name);
 	
@@ -160,8 +163,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
+	size_t bpp = CGImageGetBitsPerComponent(image);
 	if(CGImageGetColorSpace(image)) {
-		if(hasAlpha)
+		if(hasAlpha || bpp >= 8)
 			pixelFormat = kTexture2DPixelFormat_RGBA8888;
 		else
 			pixelFormat = kTexture2DPixelFormat_RGB565;

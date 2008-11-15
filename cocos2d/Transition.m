@@ -28,6 +28,10 @@
 #import "Layer.h"
 #import "Camera.h"
 
+enum {
+	kSceneFade = 0xFADEFADE,
+};
+
 @implementation TransitionScene
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s
 {
@@ -654,10 +658,10 @@
 	ColorLayer *l = [ColorLayer layerWithColor: 0x00000000];
 	[inScene setVisible: NO];
 	
-	[self add: l z:2 name:@"fade"];
+	[self add: l z:2 tag:kSceneFade];
 	
 	
-	CocosNode *f = [self get:@"fade"];
+	CocosNode *f = [self getByTag:kSceneFade];
 
 	IntervalAction *a = [Sequence actions:
 							[FadeIn actionWithDuration:duration/2],
@@ -671,7 +675,7 @@
 -(void) onExit
 {
 	[super onExit];
-	[self removeByName: @"fade"];
+	[self removeByTag:kSceneFade];
 }
 
 -(void) hideOutShowIn
