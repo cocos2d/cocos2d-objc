@@ -232,7 +232,6 @@
     return copy;
 }
 
-
 -(void) dealloc
 {
 	[other release];
@@ -241,6 +240,7 @@
 
 -(void) start
 {
+	total = 0;
 	[super start];
 	other.target = target;
 	[other start];
@@ -251,9 +251,10 @@
 	[other step: dt];
 	if( [other isDone] ) {
 		total++;
-		[self start];
+		[other start];
 	}
 }
+
 -(BOOL) isDone
 {
 	// times == 0, Always repeat

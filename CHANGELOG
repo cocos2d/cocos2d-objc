@@ -1,4 +1,5 @@
 version 0.5.3 - dd-mmm-yyyy
+ . Actions: Repeat fixes (issue #81)
  . CocosNode: added numberOfRunningActions (issue #72)
  . CocosNode: removeAll fixes (issue #74)
  . CocosNode: stopAction fix (issue #82)
@@ -7,7 +8,7 @@ version 0.5.3 - dd-mmm-yyyy
  . Layer: isTouchEnabled, isAccelerometerEnabled are properties (issue #70)
  . Menu: supports CocosNodeOpacity protocol (issue #76)
  . MultiplexLayer: added switchToAndReleaseMe (issue #71)
- . OpenGLSupport: performance improvments (issue #84)
+ . OpenGLSupport: performance improvements (issue #84)
  . Texture2D: images & RGBA8 fixes (issue #86)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
  . TextureMgr: removeTexture fixed (issue #85)
