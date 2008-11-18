@@ -40,6 +40,11 @@
 	return [[[self alloc] initWithPVRTCFile:fileimage bpp:bpp hasAlpha:alpha width:w] autorelease];
 }
 
++ (id) spriteWithCGImage: (CGImageRef) image
+{
+	return [[[self alloc] initWithCGImage:image] autorelease];
+}
+
 - (id) initWithFile: (NSString*) filename
 {
 	if( ! (self=[super init]) )
@@ -69,6 +74,22 @@
 	
 	return self;
 }
+
+- (id) initWithCGImage: (CGImageRef) image
+{
+	if( ! (self=[super init]) )
+		return nil;
+	
+	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+	
+	texture = [[[TextureMgr sharedTextureMgr] addCGImage: image] retain];
+	
+	CGSize s = texture.contentSize;
+	transformAnchor = cpv( s.width/2, s.height/2);
+	
+	return self;
+}
+
 
 -(void) dealloc
 {
