@@ -12,8 +12,8 @@ version 0.5.3 - dd-mmm-yyyy
  . Texture2D: images & RGBA8 fixes (issue #86)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
  . TextureMgr: removeTexture fixed (issue #85)
+ . TextureMgr: supports CGImageRef (issue #87)
  . TileMapAtlas: supports TGA RLE format (issue #38)
- 
 
 version 0.5.2 - 04-Nov-2008
  . All: assign [super init] to self (issue #61)

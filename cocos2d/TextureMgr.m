@@ -115,6 +115,23 @@ static TextureMgr *sharedTextureMgr;
 	return [tex autorelease];
 }
 
+-(Texture2D*) addCGImage: (CGImageRef) image
+{
+	NSAssert(image != nil, @"TextureMgr: image MUST not be nill");
+	
+	Texture2D * tex;
+	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
+	
+	if( (tex=[textures objectForKey: key] ) ) {
+		return tex;
+	}
+	
+	tex = [[Texture2D alloc] initWithImage: [UIImage imageWithCGImage:image]];
+	[textures setObject: tex forKey:key];
+	
+	return [tex autorelease];
+}
+
 -(void) removeAllTextures
 {
 	[textures removeAllObjects];
@@ -129,5 +146,4 @@ static TextureMgr *sharedTextureMgr;
 	for( int i = 0; i < [keys count]; i++ )
 		[textures removeObjectForKey:[keys objectAtIndex:i]];
 }
-
 @end

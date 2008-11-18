@@ -62,6 +62,8 @@
  * hasAlpha: whether or not the image contains alpha channel
  */
 + (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
+/** creates an sprite from a CGImageRef image */
++ (id) spriteWithCGImage:(CGImageRef)image;
 
 /** initializes the sprite with an image file */
 - (id) initWithFile:(NSString *) imageFile;
@@ -71,6 +73,9 @@
  * hasAlpha: whether or not the image contains alpha channel
  */
 - (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
+/** creates an sprite from a CGImageRef image */
+- (id) initWithCGImage:(CGImageRef)image;
+
 
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (Animation*) animation;

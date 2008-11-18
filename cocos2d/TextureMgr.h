@@ -51,6 +51,12 @@
  */
 -(Texture2D*) addPVRTCImage: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 
+/** Returns a Texture2D object given an CGImageRef image
+ * If the image was not previously loaded, it will create a new Texture2D
+ *  object and it will return it.
+ * Otherwise it will return a reference of a previosly loaded image
+ */
+-(Texture2D*) addCGImage: (CGImageRef) image;
 
 /** Purges the dictionary of loaded textures.
  * Call this method if you receive the "Memory Warning"
@@ -63,5 +69,4 @@
 /** Deletes a texture from the Texture Manager
  */
 -(void) removeTexture: (Texture2D*) tex;
-
 @end
