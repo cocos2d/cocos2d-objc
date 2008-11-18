@@ -142,6 +142,7 @@ Class restartAction()
 
 	tamara.scaleX = 2.5;
 	tamara.scaleY = -1.0;
+	tamara.position = cpv(100,100);
 	
 	grossini.rotation = 120;
 	grossini.opacity = 128;
