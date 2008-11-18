@@ -43,6 +43,7 @@
 @implementation ParticleSystem
 @synthesize active, duration;
 @synthesize posVar;
+@synthesize particleCount;
 @synthesize life, lifeVar;
 @synthesize angle, angleVar;
 @synthesize speed, speedVar;
@@ -67,7 +68,7 @@
 {
 	if( !(self=[super init]) )
 		return nil;
-	
+
 	totalParticles = numberOfParticles;
 	
 	particles = malloc( sizeof(Particle) * totalParticles );
@@ -194,15 +195,15 @@
 	}
 		
 	particleIdx = 0;
-	
+
 	while( particleIdx < particleCount )
 	{
 		Particle *p = &particles[particleIdx];
 		
 		if( p->life > 0 ) {
-		
+			
 			cpVect tmp, radial, tangential;
-		
+			
 			radial = cpvzero;
 			// radial acceleration
 			if(p->pos.x || p->pos.y)
@@ -229,7 +230,7 @@
 			p->color.a += (p->deltaColor.a * dt);
 			
 			p->life -= dt;
-
+			
 			// place vertices and colos in array
 			vertices[particleIdx].x = p->pos.x;
 			vertices[particleIdx].y = p->pos.y;
@@ -237,7 +238,7 @@
 			
 			// colors
 			colors[particleIdx] = p->color;
-		
+			
 			// update particle counter
 			particleIdx++;
 			
@@ -245,7 +246,7 @@
 			// life < 0
 			if( particleIdx != particleCount-1 )
 				particles[particleIdx] = particles[particleCount-1];
-			particleCount--;			
+			particleCount--;
 		}
 	}
 }

@@ -100,7 +100,7 @@ typedef struct sParticle
 	Particle *particles;
 	/// Maximum particles
 	int totalParticles;
-	/// Count of particles
+	/// Count of active particles
 	int particleCount;
 	
 	// additive color or blend
@@ -128,7 +128,8 @@ typedef struct sParticle
 	int particleIdx;
 }
 
-@property (readonly)	BOOL active;
+@property (readonly) BOOL active;
+@property (readonly) int	particleCount;
 @property (readwrite,assign) cpVect gravity;
 @property (readwrite,assign) float duration;
 @property (readwrite,assign) cpVect posVar;
