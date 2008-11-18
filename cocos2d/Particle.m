@@ -188,60 +188,60 @@
 			[self addParticle];
 			emitCounter -= rate;
 		}
-		
+
 		elapsed += dt;
 		if(duration != -1 && duration < elapsed)
 			[self stopSystem];
 	}
-		
+
 	particleIdx = 0;
 
 	while( particleIdx < particleCount )
 	{
 		Particle *p = &particles[particleIdx];
-		
+
 		if( p->life > 0 ) {
-			
+
 			cpVect tmp, radial, tangential;
-			
+
 			radial = cpvzero;
 			// radial acceleration
 			if(p->pos.x || p->pos.y)
 				radial = cpvnormalize(p->pos);
 			tangential = radial;
 			radial = cpvmult(radial, p->radialAccel);
-			
+
 			// tangential acceleration
 			float newy = tangential.x;
 			tangential.x = -tangential.y;
 			tangential.y = newy;
 			tangential = cpvmult(tangential, p->tangentialAccel);
-			
+
 			// (gravity + radial + tangential) * dt
 			tmp = cpvadd( cpvadd( radial, tangential), gravity);
 			tmp = cpvmult( tmp, dt);
 			p->dir = cpvadd( p->dir, tmp);
 			tmp = cpvmult(p->dir, dt);
 			p->pos = cpvadd( p->pos, tmp );
-			
+
 			p->color.r += (p->deltaColor.r * dt);
 			p->color.g += (p->deltaColor.g * dt);
 			p->color.b += (p->deltaColor.b * dt);
 			p->color.a += (p->deltaColor.a * dt);
-			
+
 			p->life -= dt;
-			
+
 			// place vertices and colos in array
 			vertices[particleIdx].x = p->pos.x;
 			vertices[particleIdx].y = p->pos.y;
 			vertices[particleIdx].size = p->size;
-			
+
 			// colors
 			colors[particleIdx] = p->color;
-			
+
 			// update particle counter
 			particleIdx++;
-			
+
 		} else {
 			// life < 0
 			if( particleIdx != particleCount-1 )
