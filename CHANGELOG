@@ -9,6 +9,7 @@ version 0.5.3 - dd-mmm-yyyy
  . Menu: supports CocosNodeOpacity protocol (issue #76)
  . MultiplexLayer: added switchToAndReleaseMe (issue #71)
  . OpenGLSupport: performance improvements (issue #84)
+ . Particles: ParticleCount is a property (issue #68)
  . Texture2D: images & RGBA8 fixes (issue #86)
  . TextureMgr: Simulator supports PVRTC images (issue #75)
  . TextureMgr: removeTexture fixed (issue #85)
