@@ -1,4 +1,4 @@
-version 0.5.3 - dd-mmm-yyyy
+version 0.5.3 - 18-Nov-2008
  . Actions: Repeat fixes (issue #81)
  . CocosNode: added numberOfRunningActions (issue #72)
  . CocosNode: removeAll fixes (issue #74)
