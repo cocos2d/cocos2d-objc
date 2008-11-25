@@ -246,12 +246,33 @@
 	[other start];
 }
 
--(void) step:(ccTime) dt
+//-(void) step:(ccTime) dt
+//{
+//	[other step: dt];
+//	if( [other isDone] ) {
+//		total++;
+//		[other start];
+//	}
+//}
+
+// issue #80. Instead of hooking step:, hook update: since it can be called by any 
+// container action like Repeat, Sequence, AccelDeccel, etc..
+-(void) update:(ccTime) dt
 {
-	[other step: dt];
-	if( [other isDone] ) {
+	ccTime t = dt * times;	
+	float r = fmodf(t, 1.0f);
+	if( t > total+1 ) {
+		[other update:1.0f];
 		total++;
+		[other stop];
 		[other start];
+		[other update:0.0];
+	} else {
+		// fix last repeat position
+		// else it could be 0.
+		if( dt== 1.0f)
+			r=1.0f;
+		[other update: MIN(r,1)];
 	}
 }
 

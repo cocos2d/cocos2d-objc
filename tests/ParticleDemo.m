@@ -104,9 +104,15 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+//	Scene *s = [Scene node];
+//	[s add: [restartAction() node]];
+//	[[Director sharedDirector] replaceScene: s];
+	
+	CocosNode *e = [self getByTag:kTagEmitter];
+	[e stopAllActions];
+	[e deactivateTimers];
+	[e cleanup];
+	[self removeByTag:kTagEmitter];
 }
 
 -(void) nextCallback: (id) sender

@@ -40,7 +40,8 @@ Class nextAction()
 Class backAction()
 {
 	sceneIdx--;
-	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
+	if( sceneIdx < 0 )
+		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;	
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
