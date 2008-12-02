@@ -216,6 +216,7 @@
 -(id) initWithAction: (IntervalAction*) action times: (unsigned int) t
 {
 	int d = [action duration] * t;
+
 	if( !(self=[super initWithDuration: d ]) )
 		return nil;
 
@@ -259,7 +260,7 @@
 // container action like Repeat, Sequence, AccelDeccel, etc..
 -(void) update:(ccTime) dt
 {
-	ccTime t = dt * times;	
+	ccTime t = dt * times;
 	float r = fmodf(t, 1.0f);
 	if( t > total+1 ) {
 		[other update:1.0f];
@@ -278,10 +279,12 @@
 
 -(BOOL) isDone
 {
-	// times == 0, Always repeat
-	if( !times )
-		return NO;
 	return ( total == times );
+}
+
+- (IntervalAction *) reverse
+{
+	return [Repeat actionWithAction:[other reverse] times: times];
 }
 @end
 

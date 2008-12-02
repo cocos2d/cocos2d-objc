@@ -64,7 +64,6 @@
 #import "LabelAtlas.h"
 #import "TileMapAtlas.h"
 #import "AtlasNode.h"
-#import "ParallaxNode.h"
 
 //
 // cocos2d helper files

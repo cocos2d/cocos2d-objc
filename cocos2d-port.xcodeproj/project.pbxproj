@@ -123,8 +123,6 @@
 		506144030E589A2E003CCDB7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506144040E589A2E003CCDB7 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		5061440D0E589A7B003CCDB7 /* TestAnchor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* TestAnchor.m */; };
-		5061BD010EE4A47F006B29E8 /* ParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5061BCFF0EE4A47F006B29E8 /* ParallaxNode.h */; };
-		5061BD020EE4A47F006B29E8 /* ParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061BD000EE4A47F006B29E8 /* ParallaxNode.m */; };
 		506602110E38A70D000B500E /* Scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* Scheduler.h */; };
 		506602120E38A70D000B500E /* Scheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* Scheduler.m */; };
 		506881F80E95761200F943E5 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -555,8 +553,6 @@
 		506144080E589A2E003CCDB7 /* AnchorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5061440B0E589A7B003CCDB7 /* TestAnchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestAnchor.h; path = tests/TestAnchor.h; sourceTree = "<group>"; };
 		5061440C0E589A7B003CCDB7 /* TestAnchor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestAnchor.m; path = tests/TestAnchor.m; sourceTree = "<group>"; };
-		5061BCFF0EE4A47F006B29E8 /* ParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxNode.h; sourceTree = "<group>"; };
-		5061BD000EE4A47F006B29E8 /* ParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxNode.m; sourceTree = "<group>"; };
 		50637A150E95397A000C9182 /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
 		50637A160E95397A000C9182 /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
@@ -999,12 +995,12 @@
 				506C78EB0E0178FD00B48100 /* MenuItem.m */,
 				506C78A50E016A7300B48100 /* Menu.h */,
 				506C78A60E016A7300B48100 /* Menu.m */,
-				5018F2520DFDEAFF00C013A5 /* Action.h */,
-				5018F2530DFDEAFF00C013A5 /* Action.m */,
 				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
 				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				5018F2560DFDEAFF00C013A5 /* Director.h */,
 				5018F2570DFDEAFF00C013A5 /* Director.m */,
+				5018F2520DFDEAFF00C013A5 /* Action.h */,
+				5018F2530DFDEAFF00C013A5 /* Action.m */,
 				5018F2580DFDEAFF00C013A5 /* InstantAction.h */,
 				5018F2590DFDEAFF00C013A5 /* InstantAction.m */,
 				5018F25A0DFDEAFF00C013A5 /* IntervalAction.h */,
@@ -1028,8 +1024,6 @@
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
 				506887D70E96C90000F943E5 /* AtlasNode.h */,
 				506887D80E96C90000F943E5 /* AtlasNode.m */,
-				5061BCFF0EE4A47F006B29E8 /* ParallaxNode.h */,
-				5061BD000EE4A47F006B29E8 /* ParallaxNode.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -1243,7 +1237,6 @@
 				501CCFB10E99657C00B86F68 /* OpenGL_Internal.h in Headers */,
 				501CCFB20E99657C00B86F68 /* Texture2D.h in Headers */,
 				501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */,
-				5061BD010EE4A47F006B29E8 /* ParallaxNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1927,7 +1920,6 @@
 				501CCFAF0E99657C00B86F68 /* glu.c in Sources */,
 				501CCFB30E99657C00B86F68 /* Texture2D.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.c in Sources */,
-				5061BD020EE4A47F006B29E8 /* ParallaxNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

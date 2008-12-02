@@ -30,7 +30,6 @@ enum {
 	kCocosNodeTagInvalid = -1,
 };
 
-
 @class Camera;
 
 /** CocosNode is the main element. Anything thats gets drawn or contains things that get drawn is a CocosNode.
@@ -65,6 +64,12 @@ enum {
 	/// position of the node
 	cpVect position;
 
+	/// parallax X factor
+	float parallaxRatioX;
+	
+	/// parallax Y factor
+	float parallaxRatioY;
+
 	/// is visible
 	BOOL visible;
 	
@@ -81,16 +86,10 @@ enum {
 
 	/// transformation anchor point
 	cpVect transformAnchor;
-	
-	/// where are the children placed (anchor)
-//	cpVect childrenAnchor;
-	
+		
 	/// array of children
 	NSMutableArray *children;
-	
-	/// dictionary of child name -> child
-	NSMutableDictionary *childrenNames;
-	
+		
 	/// is running
 	BOOL isRunning;
 	
@@ -113,6 +112,7 @@ enum {
 @property(readwrite,assign) int zOrder;
 @property(readwrite,assign) float rotation;
 @property(readwrite,assign) float scale, scaleX, scaleY;
+@property(readwrite,assign) float parallaxRatio, parallaxRatioX, parallaxRatioY;
 @property(readwrite,assign) cpVect position;
 @property(readwrite,assign) Camera* camera;
 @property(readwrite,assign) BOOL visible;
@@ -150,6 +150,10 @@ enum {
  @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z tag:(int)tag;
+/** Adds a child to the container with a z-order and a parallax ratio
+ @return returns self
+ */
+-(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
 /** Removes a child from the container
  * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
  * If you have added a 'named' child, you MUST remove it using removeByName instead
