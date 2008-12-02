@@ -18,11 +18,20 @@
  *
  */
 
-#import <UIKit/UIKit.h>
 
-static NSString *version = @"cocos2d v0.6.0";
+#import "cocos2d.h"
 
-NSString *cocos2dVersion()
-{
-	return version;
+@interface ParallaxNode : CocosNode {
+	NSMutableArray *parallaxChildren;
 }
+
+/** Adds a child to the ParallaxNode with z order, tag and parallax ratio
+ @return returns self
+ */
+-(id) add: (CocosNode*)node z:(int)z tag:(int)tag parallaxRatio:(cpVect)p;
+
+/** Adds a child to the ParallaxNode with z order and parallax ratio
+ @return returns self
+ */
+-(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)p;
+@end

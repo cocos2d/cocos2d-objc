@@ -30,10 +30,6 @@ enum {
 	kCocosNodeTagInvalid = -1,
 };
 
-// XXX: children anchor is not working
-// but since cocos2d-iphone uses a different way to call it's children
-// it is not necesary to have children anchor
-//#define USING_CHILDREN_ANCHOR 1
 
 @class Camera;
 
@@ -124,9 +120,6 @@ enum {
 @property(readwrite,assign) CocosNode* parent;
 @property(readwrite,assign) BOOL relativeTransformAnchor;
 @property(readwrite,assign) int tag;
-#if USING_CHILDREN_ANCHOR
-@property(readwrite,assign) cpVect childrenAnchor;
-#endif
 
 // initializators
 //! creates a node
@@ -153,11 +146,6 @@ enum {
  @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z;
-/** Adds a child to the container with z order and name
- @return returns self
- @deprecated Use add:z:tag instead
- */
--(id) add: (CocosNode*)node z:(int)z name:(NSString*)name;
 /** Adds a child to the container with z order and tag
  @return returns self
  */
@@ -167,20 +155,10 @@ enum {
  * If you have added a 'named' child, you MUST remove it using removeByName instead
  */
 -(void) remove: (CocosNode*)node;
-/** Removes a child from the container given its name
- * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
- * @deprecated Use removeByTag instead
- */
--(void) removeByName: (NSString*)name;
 /** Removes all children from the container.
  * It stops all running actions from the removed objects and unschedules all scheduled selectors
  */
 -(void) removeAll;
-/** Gets a child from the container given its name 
- * @return returns a CocosNode object
- * @deprecated Use getByTag instead
- */
--(CocosNode*) get: (NSString*) name;
 /** Removes a child from the container given its tag
  * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
  */

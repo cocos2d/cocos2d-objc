@@ -37,9 +37,6 @@
 @synthesize rotation, scaleX, scaleY, position;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
-#if USING_CHILDREN_ANCHOR
-	@synthesize childrenAnchor;
-#endif
 @synthesize parent;
 @synthesize camera;
 @synthesize zOrder;
@@ -67,9 +64,6 @@
 	
 	visible = YES;
 
-#if USING_CHILDREN_ANCHOR
-	childrenAnchor = cpvzero;
-#endif
 	transformAnchor = cpvzero;
 	
 	tag = kCocosNodeTagInvalid;
@@ -137,42 +131,12 @@
 
 #pragma mark CocosNode Composition
 
-// XXX: deprecated
--(id) add: (CocosNode*) child z:(int)z name:(NSString*)name
-{	
-	NSAssert( child != nil, @"Argument must be non-nil");
-	
-	child.zOrder=z;
-	
-	int index=0;
-	BOOL added = NO;
-	for( CocosNode *a in children ) {
-		if ( a.zOrder > z ) {
-			added = YES;
-			[ children insertObject:child atIndex:index];
-			break;
-		}
-		index++;
-	}
-	if( ! added )
-		[children addObject:child];
-	
-	if( name )
-		[childrenNames setObject:child forKey:name];
-	
-	[child setParent: self];
-	
-	if( isRunning )
-		[child onEnter];
-	return self;
-}
-
 -(id) add: (CocosNode*) child z:(int)z tag:(int) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
 	child.zOrder=z;
-	
+
 	int index=0;
 	BOOL added = NO;
 	for( CocosNode *a in children ) {
@@ -227,16 +191,6 @@
 	}
 }
 
-// XXX: deprecated method. Use removeByTag instead
--(void) removeByName: (NSString*) name
-{
-	NSAssert( name != nil, @"Argument must be non-nil");
-	
-	id child = [childrenNames objectForKey: name];
-	[self remove: child];
-	[childrenNames removeObjectForKey: name];	
-}
-
 -(void) removeByTag:(int) aTag
 {
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
@@ -264,13 +218,6 @@
 
 	[children removeAllObjects];
 	[childrenNames removeAllObjects];
-}
-
-// XXX: deprecated method. Use getByTag instead
--(CocosNode*) get: (NSString*) name
-{
-	NSAssert( name != nil, @"Argument must be non-nil");
-	return [childrenNames objectForKey:name];
 }
 
 -(CocosNode*) getByTag:(int) aTag
@@ -344,16 +291,7 @@
 	
 	// restore and re-position point
 	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
-#if USING_CHILDREN_ANCHOR
-	{
-		if ( !( transformAnchor.x == childrenAnchor.x && transformAnchor.y == childrenAnchor.y) )
-			glTranslatef( childrenAnchor.x - transformAnchor.x, childrenAnchor.y - transformAnchor.y, 0);
-	}
-	else if (childrenAnchor.x != 0 || childrenAnchor.y !=0 )
-		glTranslatef( childrenAnchor.x, childrenAnchor.y, 0 );
-#else
-	glTranslatef(-transformAnchor.x, -transformAnchor.y, 0);
-#endif
+		glTranslatef(-transformAnchor.x, -transformAnchor.y, 0);
 }
 
 -(float) scale

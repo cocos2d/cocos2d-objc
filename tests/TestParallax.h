@@ -1,0 +1,19 @@
+#import "cocos2d.h"
+
+//CLASS INTERFACE
+@interface AppController : NSObject
+{
+}
+@end
+
+@interface ParallaxDemo: Layer
+{
+    TextureAtlas *atlas;
+}
+-(NSString*) title;
+@end
+
+@interface Parallax1 : ParallaxDemo
+{
+}
+@end
