@@ -30,7 +30,7 @@ enum
 	
 	[sprite do: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
 	
-	[layer do: [RepeatForEver actionWithAction: 
+	[layer do: [RepeatForever actionWithAction: 
 								[Sequence actions:
 								[FadeIn actionWithDuration:1],
 								[FadeOut actionWithDuration:1],
