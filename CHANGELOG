@@ -6,6 +6,7 @@ version 0.6.0 - dd-MMM-yyy
  . CocosNode: added support for Parallax scroller (issue #89)
  . CocosNode: removed deprecated 'named' methods (issue #91)
  . CocosNode: lazy allocations with timers, children & actions (issue #94)
+ . Menu: support both vertical & horizontal alignment (issue #97)
 
 version 0.5.3 - 18-Nov-2008
  . Actions: Repeat fixes (issue #81)

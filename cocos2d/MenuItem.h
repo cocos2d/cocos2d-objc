@@ -60,6 +60,8 @@
 
 /** returns the height of the item */
 -(unsigned int) height;
+/** returns the width of the item */
+-(unsigned int) width;
 
 @property (readwrite,assign) GLubyte opacity;
 

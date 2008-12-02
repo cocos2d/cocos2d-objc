@@ -24,6 +24,7 @@
 	[[item5 label] setRGB:255:0:32];
 
 	Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, nil];
+	[menu alignItemsVertically];
 
 	disabledItem = [item3 retain];
 	disabledItem.isEnabled = NO;
@@ -68,34 +69,38 @@
 {
 	[super init];
 	
-	[MenuItemFont setFontSize:48];
-	[MenuItemFont setFontName: @"Marker Felt"];
+	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
+	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackH:)];
+	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackV:)];
+	
+	menu = [Menu menuWithItems:item1, item2, item3, nil];
+	
+	[menu alignItemsHorizontally];
 
-	
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2:)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback:)];
-	
-	menu = [Menu menuWithItems: item1, item2, nil];
-	
 	menu.opacity = 128;
 
-	CGRect s = [[Director sharedDirector] winSize];
-	menu.position = cpv( s.size.width -100, s.size.height-100);
-	
 	[self add: menu];
 	
 	
 	return self;
 }
 
--(void) menuCallback: (id) sender
+-(void) menuCallbackBack: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:0];
 }
 
--(void) menuCallback2: (id) sender
+-(void) menuCallbackH: (id) sender
 {
+	menu.opacity = 255;
+	[menu alignItemsHorizontally];
 }
+-(void) menuCallbackV: (id) sender
+{
+	menu.opacity = 255;
+	[menu alignItemsVertically];
+}
+
 @end
 
 @implementation Layer3

@@ -29,6 +29,8 @@
 #import "Texture2D.h"
 #import "LabelAtlas.h"
 
+#import "Layer.h"
+
 #define kDefaultFPS		60.0	// 60 frames per second
 
 
@@ -43,6 +45,8 @@
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
+
+
 @end
 
 @implementation Director
@@ -541,25 +545,26 @@ static int _pixelFormat = RGB565;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		NSMutableArray *copyArray = [eventHandlers copy];
+		NSEnumerator *copyArray = [eventHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-				[eventHandler touchesBegan:touches withEvent:event];
+			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
+				if( [eventHandler ccTouchesBegan:touches withEvent:event] == kEventHandled )
+					break;
 		}
 		
 		[copyArray release];
-	}
+	}	
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		NSMutableArray *copyArray = [eventHandlers copy];
+		NSEnumerator *copyArray = [eventHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-				[eventHandler touchesMoved:touches withEvent:event];
+			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
+				if( [eventHandler ccTouchesMoved:touches withEvent:event] == kEventHandled )
+					break;
 		}
-		
 		[copyArray release];
 	}
 }
@@ -567,21 +572,24 @@ static int _pixelFormat = RGB565;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		NSMutableArray *copyArray = [eventHandlers copy];
+		NSEnumerator *copyArray = [eventHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-				[eventHandler touchesEnded:touches withEvent:event];
+			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
+				if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
+					break;
 		}
 		[copyArray release];
 	}
 }
+
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled )  {
-		NSMutableArray *copyArray = [eventHandlers copy];
+		NSEnumerator *copyArray = [eventHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:_cmd] )
-				[eventHandler touchesCancelled:touches withEvent:event];
+			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
+				if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
+					break;
 		}
 		[copyArray release];
 	}

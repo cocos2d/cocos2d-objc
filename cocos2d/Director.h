@@ -28,6 +28,11 @@
 // cocos2d related
 #import "Scene.h"
 
+enum {
+	kEventHandled = YES,
+	kEventIgnored = NO,
+};
+
 // Landscape is right or left ?
 #define LANDSCAPE_LEFT 1
 
