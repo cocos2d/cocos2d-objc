@@ -7,6 +7,11 @@
 
 #import "OpenGL_Internal.h"
 
+enum
+{
+	kTagSprite = 0xaabbccdd,
+};
+
 @implementation MainLayer
 -(id) init
 {
@@ -18,20 +23,19 @@
 	Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
 	
 	id layer = [ColorLayer layerWithColor: 0xffff00ff];
-	[self add: layer];
+	[self add: layer z:-1];
 		
-	[self add: sprite z:0 name:@"sprite"];
+	[self add: sprite z:0 tag:kTagSprite];
 	[sprite setPosition: cpv(20,150)];
 	
 	[sprite do: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
 	
-	[layer do: [Repeat actionWithAction: 
+	[layer do: [RepeatForEver actionWithAction: 
 								[Sequence actions:
 								[FadeIn actionWithDuration:1],
 								[FadeOut actionWithDuration:1],
 								nil]
-					times: 0]
-					];
+					] ];
 	
 	return self;
 }
@@ -48,7 +52,7 @@
 	[sprite do: [RotateBy actionWithDuration:2*4 angle:360*4]];
 	[self add: sprite];
  */
-	CocosNode *s = [self get: @"sprite"];
+	CocosNode *s = [self getByTag:kTagSprite];
 	[s stopAllActions];
 	[s do: [MoveTo actionWithDuration:1 position:cpv(location.x, 480-location.y)]];
 	float o = location.x - [s position].x;

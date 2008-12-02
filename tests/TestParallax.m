@@ -11,6 +11,7 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Parallax1",
+			@"Parallax2",
 };
 
 Class nextAction()
@@ -120,14 +121,21 @@ Class restartAction()
 	background.scale = 1.5;
 	background.transformAnchor = cpv(0,0);
 
+	Sprite *cocosImage = [Sprite spriteWithFile:@"powered.png"];
+	cocosImage.scale = 2.5;
+	cocosImage.transformAnchor = cpv(0,0);
+	cocosImage.position = cpv(200,1000);
+	
+	
 	CocosNode *voidNode = [CocosNode node];
 	
 	[voidNode add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
 	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2,1.0)];
+	[voidNode add:cocosImage z:2 parallaxRatio:cpv(3.0,2.5)];
 	
 	id goUp = [MoveBy actionWithDuration:4 position:cpv(0,-500)];
 	id goDown = [goUp reverse];
-	id go = [MoveBy actionWithDuration:10 position:cpv(-1000,0)];
+	id go = [MoveBy actionWithDuration:8 position:cpv(-1000,0)];
 	id goBack = [go reverse];
 	id seq = [Sequence actions:
 			  goUp,
@@ -145,9 +153,49 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Parallax Example 1";
+	return @"Parallax: parent and 3 children";
+}
+@end
+
+#pragma mark Example Parallax 2
+
+@implementation Parallax2
+-(id) init
+{
+	if( ![super init] )
+		return nil;
+	
+	
+	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	
+	tilemap.transformAnchor = cpv(0, 0);
+	tilemap.position = cpv(0,-200);
+	
+	Sprite *background = [Sprite spriteWithFile:@"background.png"];
+	background.scale = 1.5;
+	background.transformAnchor = cpv(0,0);
+	
+	
+	[tilemap add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
+	
+	id goUp = [MoveBy actionWithDuration:2 position:cpv(-1000,-500)];
+	id goDown = [goUp reverse];
+	id seq = [Sequence actions:
+			  goUp,
+			  goDown,
+			  nil];	
+	[tilemap do: [RepeatForEver actionWithAction:seq ] ];
+	
+	[self add:tilemap];
+	
+	return self;
+	
 }
 
+-(NSString *) title
+{
+	return @"Parallax: parent & child";
+}
 @end
 
 

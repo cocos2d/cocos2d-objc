@@ -115,9 +115,9 @@
 	item2.position = cpv(100,200);
 	
 	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
-	[item2 do: [Repeat actionWithAction:
+	[item2 do: [RepeatForEver actionWithAction:
 				 [Sequence actions: jump, [jump reverse], nil]
-								   times:-1]
+								   ]
 	 ];
 	
 	[self add: menu];
