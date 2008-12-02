@@ -49,7 +49,7 @@
 
 	opacity = 255;
 	r = g = b = 255;
-	
+		
 	[self calculateMaxItems];
 	[self calculateTexCoordsSteps];
 	

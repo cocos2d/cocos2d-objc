@@ -2,6 +2,7 @@ version 0.6.0 - dd-MMM-yyy
  . Actions: Sequences of Repeats fixes (issue #80)
  . Actions: Added RepeatForEver (issue #93)
  . Actions: Repeat can be reversed (issue #92)
+ . AtlasNode: artifacts issue fixed (issue #47)
  . CocosNode: added support for Parallax scroller (issue #89)
  . CocosNode: removed deprecated 'named' methods (issue #91)
  . CocosNode: lazy allocations with timers, children & actions (issue #94)
