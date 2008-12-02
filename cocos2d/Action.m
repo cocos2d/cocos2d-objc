@@ -22,6 +22,8 @@
 #import "Action.h"
 #import "CocosNode.h"
 
+#import "IntervalAction.h"
+
 //
 // Action Base Class
 //
@@ -87,5 +89,65 @@
 {
 	NSLog(@"[Action update]. override me");
 }
+@end
+
+//
+// RepeatForEver
+//
+@implementation RepeatForEver
++(id) actionWithAction: (IntervalAction*) action
+{
+	return [[[self alloc] initWithAction: action] autorelease];
+}
+
+-(id) initWithAction: (IntervalAction*) action
+{
+	if( !(self=[super init]) )
+		return nil;
+	
+	other = [action retain];
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] ];
+    return copy;
+}
+
+-(void) dealloc
+{
+	[other release];
+	[super dealloc];
+}
+
+-(void) start
+{
+	[super start];
+	other.target = target;
+	[other start];
+}
+
+-(void) step:(ccTime) dt
+{
+	[other step: dt];
+	if( [other isDone] ) {
+		[other start];
+	}
+}
+
+
+-(BOOL) isDone
+{
+	return NO;
+}
+
+- (IntervalAction *) reverse
+{
+	return [RepeatForEver actionWithAction:[other reverse]];
+}
 
 @end
+
+
+

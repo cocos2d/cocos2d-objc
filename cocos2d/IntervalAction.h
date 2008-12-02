@@ -82,7 +82,8 @@ Example:
 @end
 
 
-/** Repeats an action a number of times
+/** Repeats an action a number of times.
+ * To repeat an action infinity number of times use the RepeatForEver action.
  */
 @interface Repeat : IntervalAction <NSCopying>
 {

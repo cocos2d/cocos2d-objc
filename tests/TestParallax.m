@@ -113,27 +113,32 @@ Class restartAction()
 	
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 	
-	CGSize size = tilemap.contentSize;
-	tilemap.transformAnchor = cpv(0, size.height-100);
-	tilemap.position = cpv(0,size.height-100);
+	tilemap.transformAnchor = cpv(0, 0);
+	tilemap.position = cpv(0,-200);
 
 	Sprite *background = [Sprite spriteWithFile:@"background.png"];
-	background.scale = 2.0;
-	background.transformAnchor = cpv(0,300);
+	background.scale = 1.5;
+	background.transformAnchor = cpv(0,0);
 
-	ParallaxNode *p = [ParallaxNode node];
-	[self add:p];
-	[p add:tilemap z:0 parallaxRatio:cpv(1.0f, 1.0f)];
-	[p add:background z:-10 parallaxRatio:cpv(0.02f, 0.5f)];
+	CocosNode *voidNode = [CocosNode node];
 	
-	id go = [MoveBy actionWithDuration:10 position:cpv(-1000,300)];
+	[voidNode add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
+	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2,1.0)];
+	
+	id goUp = [MoveBy actionWithDuration:4 position:cpv(0,-500)];
+	id goDown = [goUp reverse];
+	id go = [MoveBy actionWithDuration:10 position:cpv(-1000,0)];
 	id goBack = [go reverse];
 	id seq = [Sequence actions:
+			  goUp,
 			  go,
+			  goDown,
 			  goBack,
 			  nil];	
-	[p do:seq];
-		
+	[voidNode do: [RepeatForEver actionWithAction:seq ] ];
+	
+	[self add:voidNode];
+	
 	return self;
 	
 }

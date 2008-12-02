@@ -34,7 +34,7 @@
 
 @implementation CocosNode
 
-@synthesize rotation, scaleX, scaleY, position;
+@synthesize rotation, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent;
@@ -59,6 +59,8 @@
 	rotation = 0.0f;		// 0 degrees	
 	scaleX = 1.0f;			// scale factor
 	scaleY = 1.0f;
+	parallaxRatioX = 1.0f;
+	parallaxRatioY = 1.0f;
 
 	camera = [[Camera alloc] init];
 	
@@ -70,7 +72,6 @@
 	
 	// children
 	children = [[NSMutableArray arrayWithCapacity:4] retain];
-	childrenNames = [[NSMutableDictionary dictionaryWithCapacity:4] retain];
 
 	// actions
 	actions = [[NSMutableArray arrayWithCapacity:4] retain];
@@ -116,7 +117,6 @@
 	// children
 	[children makeObjectsPerformSelector:@selector(cleanup)];
 	[children release];
-	[childrenNames release];
 	
 	// timers
 	[scheduledSelectors release];
@@ -136,7 +136,7 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
 	child.zOrder=z;
-
+	
 	int index=0;
 	BOOL added = NO;
 	for( CocosNode *a in children ) {
@@ -157,6 +157,14 @@
 	if( isRunning )
 		[child onEnter];
 	return self;
+}
+
+-(id) add: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	child.parallaxRatioX = c.x;
+	child.parallaxRatioY = c.y;
+	return [self add: child z:z tag:kCocosNodeTagInvalid];
 }
 
 // add a node to the array
@@ -217,7 +225,6 @@
 	[children makeObjectsPerformSelector:@selector(cleanup)]; // issue #74
 
 	[children removeAllObjects];
-	[childrenNames removeAllObjects];
 }
 
 -(CocosNode*) getByTag:(int) aTag
@@ -274,14 +281,24 @@
 	
 	[camera locate];
 	
+	float parallaxOffsetX = 0;
+	float parallaxOffsetY = 0;
+
+	if( (parallaxRatioX != 1.0f || parallaxRatioY != 1.0) && parent ) {
+		parallaxOffsetX = -parent.position.x + parent.position.x * parallaxRatioX;
+		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;
+		
+		NSLog(@"para off x:%f y:%f", parallaxOffsetX, parallaxOffsetY);
+	}
+	
 	// transformations
 	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
-		glTranslatef( -transformAnchor.x, -transformAnchor.y, 0);
+		glTranslatef( -transformAnchor.x + parallaxOffsetX, -transformAnchor.y + parallaxOffsetY, 0);
 	
 	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
-		glTranslatef( position.x + transformAnchor.x, position.y + transformAnchor.y, 0);
-	else if ( position.x !=0 || position.y !=0 )
-		glTranslatef( position.x, position.y, 0 );
+		glTranslatef( position.x + transformAnchor.x + parallaxOffsetX, position.y + transformAnchor.y + parallaxOffsetY, 0);
+	else if ( position.x !=0 || position.y !=0 || parallaxOffsetX != 0 || parallaxOffsetY != 0)
+		glTranslatef( position.x + parallaxOffsetX, position.y + parallaxOffsetY, 0 );
 	
 	if (scaleX != 1.0f || scaleY != 1.0f)
 		glScalef( scaleX, scaleY, 1.0f );
@@ -291,7 +308,7 @@
 	
 	// restore and re-position point
 	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
-		glTranslatef(-transformAnchor.x, -transformAnchor.y, 0);
+		glTranslatef(-transformAnchor.x + parallaxOffsetX, -transformAnchor.y + parallaxOffsetY, 0);
 }
 
 -(float) scale
@@ -307,6 +324,21 @@
 -(void) setScale:(float) s
 {
 	scaleX = scaleY = s;
+}
+
+-(float) parallaxRatio
+{
+	if( parallaxRatioX == parallaxRatioY)
+		return parallaxRatioX;
+	else
+		[NSException raise:@"CocosNode parallaxRatio:" format:@"parallaxRatioX is different from parallaxRatioY"];
+	
+	return 0;
+}
+
+-(void) setParallaxRatio:(float) p
+{
+	parallaxRatioX = parallaxRatioY = p;
 }
 
 

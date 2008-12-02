@@ -402,17 +402,17 @@ Class restartAction()
 	id a1 = [MoveBy actionWithDuration:1 position:cpv(150,0)];
 	id action1 = [Repeat actionWithAction:
 						[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil]
-									times:10];
-	id action2 = [Repeat actionWithAction:
+									times:3];
+	id action2 = [RepeatForEver actionWithAction:
 						[Sequence actions: [a1 copy], [a1 reverse], nil]
-									times:5];
+					];
 	
 	[grossini do:action1];
 	[tamara do:action2];
 }
 -(NSString *) title
 {
-	return @"Repeat actions";
+	return @"Repeat / RepeatForEver actions";
 }
 @end
 

@@ -1,5 +1,8 @@
 version 0.6.0 - dd-MMM-yyy
  . Actions: Sequences of Repeats fixes (issue #80)
+ . Actions: Added RepeatForEver (issue #93)
+ . Actions: Repeat can be reversed (issue #92)
+ . CocosNode: added support for Parallax scroller (issue #89)
 
 version 0.5.3 - 18-Nov-2008
  . Actions: Repeat fixes (issue #81)

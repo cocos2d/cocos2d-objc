@@ -53,3 +53,18 @@
 -(void) update: (ccTime) time;
 
 @end
+
+
+/** Repeats an action for ever.
+ * To repeat the an action for a limited number of times use the Repeat action.
+ */
+@class IntervalAction;
+@interface RepeatForEver : Action <NSCopying>
+{
+	IntervalAction *other;
+}
+/** creates the action */
++(id) actionWithAction: (IntervalAction*) action;
+/** initializes the action */
+-(id) initWithAction: (IntervalAction*) action;
+@end
