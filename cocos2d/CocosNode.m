@@ -30,6 +30,10 @@
 -(void) activateTimers;
 // deactivate all scheduled timers
 -(void) deactivateTimers;
+// lazy allocs
+-(void) actionAlloc;
+-(void) childrenAlloc;
+-(void) timerAlloc;
 @end
 
 @implementation CocosNode
@@ -70,16 +74,16 @@
 	
 	tag = kCocosNodeTagInvalid;
 	
-	// children
-	children = [[NSMutableArray arrayWithCapacity:4] retain];
+	// children (lazy allocs)
+	children = nil;
 
-	// actions
-	actions = [[NSMutableArray arrayWithCapacity:4] retain];
-	actionsToRemove = [[NSMutableArray arrayWithCapacity:4] retain];
-	actionsToAdd = [[NSMutableArray arrayWithCapacity:4] retain];
+	// actions (lazy allocs)
+	actions = nil;
+	actionsToRemove = nil;
+	actionsToAdd = nil;
 	
-	// scheduled selectors
-	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
+	// scheduled selectors (lazy allocs)
+	scheduledSelectors = nil;
 	
 	// default.
 	// "whole screen" objects should set it to NO, like Scenes and Layers
@@ -131,10 +135,18 @@
 
 #pragma mark CocosNode Composition
 
+-(void) childrenAlloc
+{
+	children = [[NSMutableArray arrayWithCapacity:4] retain];
+}
+
 -(id) add: (CocosNode*) child z:(int)z tag:(int) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
+	if( ! children )
+		[self childrenAlloc];
+
 	child.zOrder=z;
 	
 	int index=0;
@@ -286,9 +298,7 @@
 
 	if( (parallaxRatioX != 1.0f || parallaxRatioY != 1.0) && parent ) {
 		parallaxOffsetX = -parent.position.x + parent.position.x * parallaxRatioX;
-		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;
-		
-		NSLog(@"para off x:%f y:%f", parallaxOffsetX, parallaxOffsetY);
+		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;		
 	}
 	
 	// transformations
@@ -368,12 +378,24 @@
 
 #pragma mark CocosNode Actions
 
+-(void) actionAlloc
+{
+	// actions
+	actions = [[NSMutableArray arrayWithCapacity:4] retain];
+	actionsToRemove = [[NSMutableArray arrayWithCapacity:4] retain];
+	actionsToAdd = [[NSMutableArray arrayWithCapacity:4] retain];
+}
+
 -(Action*) do: (Action*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
 	action.target = self;
 	[action start];
+
+	// lazy alloc
+	if( !actionsToAdd )
+		[self actionAlloc];
 
 	[actionsToAdd addObject: action];
 	[self schedule: @selector(step_:)];
@@ -439,6 +461,11 @@
 
 #pragma mark CocosNode Timers 
 
+-(void) timerAlloc
+{
+	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
+}
+
 -(void) schedule: (SEL) selector
 {
 	[self schedule:selector interval:0];
@@ -449,6 +476,9 @@
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
+	if( !scheduledSelectors )
+		[self timerAlloc];
+
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
 #if DEBUG
 		NSLog(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );

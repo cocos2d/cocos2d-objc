@@ -44,9 +44,9 @@
 	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
 	
 	[self add:sprite];
-	[sprite do: [Repeat actionWithAction:
+	[sprite do: [RepeatForEver actionWithAction:
 					[Sequence actions: jump, [jump reverse], nil]
-						times:-1]
+						]
 	 ];
 
 	// pause button

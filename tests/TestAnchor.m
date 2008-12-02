@@ -132,12 +132,12 @@ Class restartAction()
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
 	id a2 = [ScaleBy actionWithDuration:2 scale:2];
 
-	id action1 = [Repeat actionWithAction:
+	id action1 = [RepeatForEver actionWithAction:
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
-									times:-1];
-	id action2 = [Repeat actionWithAction:
+									];
+	id action2 = [RepeatForEver actionWithAction:
 				  [Sequence actions: [a1 copy], [a2 copy], [a2 reverse], nil]
-									times:-1];
+									];
 	
 	tamara.transformAnchor = cpvzero;
 	
@@ -169,12 +169,12 @@ Class restartAction()
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
 	id a2 = [ScaleBy actionWithDuration:2 scale:2];
 	
-	id action1 = [Repeat actionWithAction:
+	id action1 = [RepeatForEver actionWithAction:
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
-									times:-1];
-	id action2 = [Repeat actionWithAction:
+									];
+	id action2 = [RepeatForEver actionWithAction:
 				  [Sequence actions: [a1 copy], [a2 copy], [a2 reverse], nil]
-									times:-1];
+									];
 	
 	tamara.transformAnchor = cpvzero;
 	
@@ -206,7 +206,7 @@ Class restartAction()
 	[grossini add:sp2 z:1];
 	
 	id a1 = [RotateBy actionWithDuration:4 angle:360];
-	id action1 = [Repeat actionWithAction:a1 times:-1];
+	id action1 = [RepeatForEver actionWithAction:a1];
 	[grossini do:action1];	
 	
 	
