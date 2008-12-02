@@ -23,8 +23,6 @@
 #import "Director.h"
 
 @interface Menu (Private)
-// align items
--(void) alignItems;
 // if a point in inside an item, in returns the item
 -(id) itemInPoint: (CGPoint) p idx:(int*)idx;
 @end
@@ -74,7 +72,7 @@
 		[self add: i z:z];
 		i = va_arg(args, MenuItem*);
 	}
-	[self alignItems];
+//	[self alignItemsVertically];
 	
 	return self;
 }
@@ -92,7 +90,7 @@
 		[item setOpacity:opacity];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint point = [touch locationInView: [touch view]];
@@ -103,10 +101,13 @@
 	if( item ) {
 		[item selected];
 		selectedItem = idx;
+		return kEventHandled;
 	}
+	
+	return kEventIgnored;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint point = [touch locationInView: [touch view]];
@@ -116,13 +117,16 @@
 	if( item ) {
 		[item unselected];
 		[item activate];
+		return kEventHandled;
 	} else if( selectedItem != -1 ) {
 		[[children objectAtIndex:selectedItem] unselected];
 		selectedItem = -1;
+		return kEventHandled;
 	}
+	return kEventIgnored;
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint point = [touch locationInView: [touch view]];
@@ -137,6 +141,7 @@
 				[[children objectAtIndex:selectedItem] unselected];
 			[item selected];
 			selectedItem = idx;
+			return kEventHandled;
 		}
 
 	// "mouse" draged outside the selected button
@@ -144,11 +149,14 @@
 		if( selectedItem != -1 ) {
 			[[children objectAtIndex:selectedItem] unselected];
 			selectedItem = -1;
+			return kEventHandled;
 		}
 	}
+	
+	return kEventIgnored;
 }
 
--(void) alignItems
+-(void) alignItemsVertically
 {
 	int incY = [[children objectAtIndex:0] height] + 5;
 	int initialY =  (incY * [children count])/2;
@@ -156,6 +164,27 @@
 	for( MenuItem* item in children ) {
 		[item setPosition:cpv(0,initialY)];
 		initialY -= incY;
+	}
+}
+
+-(void) alignItemsHorizontally
+{
+	
+	int totalX = 0;
+	BOOL first = YES;
+	for( MenuItem* item in children ) {
+		if( first )
+			first = NO;
+		else
+			totalX += [item width] + 5;
+	}
+
+	int initialX = totalX / 2;
+	
+	int offsetX = 0;
+	for( MenuItem* item in children ) {
+		[item setPosition:cpv(-initialX+offsetX,0)];
+		offsetX += [item width] + 5;
 	}
 }
 

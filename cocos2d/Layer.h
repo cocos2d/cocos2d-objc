@@ -24,10 +24,26 @@
 #import "CocosNode.h"
 
 //
+// TouchEventDelegate
+//
+/**Touch event delegate
+ * return YES if the event was handled
+ * return NO if the event was not handled
+ */
+@protocol TouchEventsDelegate
+@optional
+- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+@end
+
+
+//
 // Layer
 //
 /** a Layer */
-@interface Layer : CocosNode <UIAccelerometerDelegate>
+@interface Layer : CocosNode <UIAccelerometerDelegate, TouchEventsDelegate>
 {
 	//! whether or not it will receive Touch events
 	BOOL isTouchEnabled;

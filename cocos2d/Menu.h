@@ -36,6 +36,12 @@
 /** initializes a menu with it's items */
 - (id) initWithItems: (MenuItem*) item vaList: (va_list) args;
 
+/** align items vertically */
+-(void) alignItemsVertically;
+
+/** align items horizontally */
+-(void) alignItemsHorizontally;
+
 @property (readwrite,assign) GLubyte opacity;
 
 @end

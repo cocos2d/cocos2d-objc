@@ -112,6 +112,13 @@ static BOOL _fontNameRelease = NO;
 	NSAssert(1,@"MenuItem.height must be overriden");
 	return 0;
 }
+
+-(unsigned int) width
+{
+	NSAssert(1,@"MenuItem.width must be overriden");
+	return 0;
+}
+
 @end
 
 
@@ -237,6 +244,11 @@ static BOOL _fontNameRelease = NO;
 	return [label contentSize].height;
 }
 
+-(unsigned int) width
+{
+	return [label contentSize].width;
+}
+
 -(void) draw
 {
 	[label draw];
@@ -318,6 +330,10 @@ static BOOL _fontNameRelease = NO;
 -(unsigned int) height
 {
 	return [normalImage contentSize].height;
+}
+-(unsigned int) width
+{
+	return [normalImage contentSize].width;
 }
 
 -(void) draw
