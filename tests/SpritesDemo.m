@@ -403,7 +403,7 @@ Class restartAction()
 	id action1 = [Repeat actionWithAction:
 						[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil]
 									times:3];
-	id action2 = [RepeatForEver actionWithAction:
+	id action2 = [RepeatForever actionWithAction:
 						[Sequence actions: [a1 copy], [a1 reverse], nil]
 					];
 	
@@ -412,7 +412,7 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"Repeat / RepeatForEver actions";
+	return @"Repeat / RepeatForever actions";
 }
 @end
 

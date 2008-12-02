@@ -132,10 +132,10 @@ Class restartAction()
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
 	id a2 = [ScaleBy actionWithDuration:2 scale:2];
 
-	id action1 = [RepeatForEver actionWithAction:
+	id action1 = [RepeatForever actionWithAction:
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
 									];
-	id action2 = [RepeatForEver actionWithAction:
+	id action2 = [RepeatForever actionWithAction:
 				  [Sequence actions: [a1 copy], [a2 copy], [a2 reverse], nil]
 									];
 	
@@ -169,10 +169,10 @@ Class restartAction()
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
 	id a2 = [ScaleBy actionWithDuration:2 scale:2];
 	
-	id action1 = [RepeatForEver actionWithAction:
+	id action1 = [RepeatForever actionWithAction:
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
 									];
-	id action2 = [RepeatForEver actionWithAction:
+	id action2 = [RepeatForever actionWithAction:
 				  [Sequence actions: [a1 copy], [a2 copy], [a2 reverse], nil]
 									];
 	
@@ -206,7 +206,7 @@ Class restartAction()
 	[grossini add:sp2 z:1];
 	
 	id a1 = [RotateBy actionWithDuration:4 angle:360];
-	id action1 = [RepeatForEver actionWithAction:a1];
+	id action1 = [RepeatForever actionWithAction:a1];
 	[grossini do:action1];	
 	
 	

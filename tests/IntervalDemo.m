@@ -44,7 +44,7 @@
 	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
 	
 	[self add:sprite];
-	[sprite do: [RepeatForEver actionWithAction:
+	[sprite do: [RepeatForever actionWithAction:
 					[Sequence actions: jump, [jump reverse], nil]
 						]
 	 ];

@@ -92,9 +92,9 @@
 @end
 
 //
-// RepeatForEver
+// RepeatForever
 //
-@implementation RepeatForEver
+@implementation RepeatForever
 +(id) actionWithAction: (IntervalAction*) action
 {
 	return [[[self alloc] initWithAction: action] autorelease];
@@ -144,7 +144,7 @@
 
 - (IntervalAction *) reverse
 {
-	return [RepeatForEver actionWithAction:[other reverse]];
+	return [RepeatForever actionWithAction:[other reverse]];
 }
 
 @end

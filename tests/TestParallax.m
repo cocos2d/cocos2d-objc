@@ -143,7 +143,7 @@ Class restartAction()
 			  goDown,
 			  goBack,
 			  nil];	
-	[voidNode do: [RepeatForEver actionWithAction:seq ] ];
+	[voidNode do: [RepeatForever actionWithAction:seq ] ];
 	
 	[self add:voidNode];
 	
@@ -184,7 +184,7 @@ Class restartAction()
 			  goUp,
 			  goDown,
 			  nil];	
-	[tilemap do: [RepeatForEver actionWithAction:seq ] ];
+	[tilemap do: [RepeatForever actionWithAction:seq ] ];
 	
 	[self add:tilemap];
 	

@@ -59,7 +59,7 @@
  * To repeat the an action for a limited number of times use the Repeat action.
  */
 @class IntervalAction;
-@interface RepeatForEver : Action <NSCopying>
+@interface RepeatForever : Action <NSCopying>
 {
 	IntervalAction *other;
 }
