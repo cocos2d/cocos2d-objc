@@ -28,13 +28,13 @@
  *
  * <hr>
  *
- * @todo A native english speaker shall check the grammar. We need your help!
+ * @todo A native english speaker should check the grammar. We need your help!
  *
  */
 
 // 0x00 HI ME LO
-// 00   00 05 03
-#define COCOS2D_VERSION 0x00000503
+// 00   00 06 00
+#define COCOS2D_VERSION 0x00000600
 
 //
 // all cocos2d include files
@@ -64,6 +64,7 @@
 #import "LabelAtlas.h"
 #import "TileMapAtlas.h"
 #import "AtlasNode.h"
+#import "ParallaxNode.h"
 
 //
 // cocos2d helper files
