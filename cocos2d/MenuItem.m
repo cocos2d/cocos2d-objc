@@ -107,16 +107,10 @@ static BOOL _fontNameRelease = NO;
 	return a;
 }
 
--(unsigned int) height
+-(CGSize) contentSize
 {
-	NSAssert(1,@"MenuItem.height must be overriden");
-	return 0;
-}
-
--(unsigned int) width
-{
-	NSAssert(1,@"MenuItem.width must be overriden");
-	return 0;
+	NSAssert(1,@"MenuItem.contentSize must be overriden");
+	return CGSizeMake(0,0);
 }
 
 @end
@@ -239,14 +233,9 @@ static BOOL _fontNameRelease = NO;
 	[super setIsEnabled:enabled];
 }
 
--(unsigned int) height
+-(CGSize) contentSize
 {
-	return [label contentSize].height;
-}
-
--(unsigned int) width
-{
-	return [label contentSize].width;
+	return [label contentSize];
 }
 
 -(void) draw
@@ -327,13 +316,9 @@ static BOOL _fontNameRelease = NO;
 	return r;
 }
 
--(unsigned int) height
+-(CGSize) contentSize
 {
-	return [normalImage contentSize].height;
-}
--(unsigned int) width
-{
-	return [normalImage contentSize].width;
+	return [normalImage contentSize];
 }
 
 -(void) draw

@@ -158,7 +158,7 @@
 
 -(void) alignItemsVertically
 {
-	int incY = [[children objectAtIndex:0] height] + 5;
+	int incY = [[children objectAtIndex:0] contentSize].height + 5;
 	int initialY =  (incY * ([children count]-1))/2;
 	
 	for( MenuItem* item in children ) {
@@ -170,7 +170,7 @@
 // XXX: deprecated
 -(void) alignItemsVerticallyOld
 {
-	int incY = [[children objectAtIndex:0] height] + 5;
+	int incY = [[children objectAtIndex:0] contentSize].height + 5;
 	int initialY =  (incY * [children count])/2;
 	
 	for( MenuItem* item in children ) {
@@ -188,7 +188,7 @@
 		if( first )
 			first = NO;
 		else
-			totalX += [item width] + 5;
+			totalX += [item contentSize].width + 5;
 	}
 
 	int initialX = totalX / 2;
@@ -196,7 +196,7 @@
 	int offsetX = 0;
 	for( MenuItem* item in children ) {
 		[item setPosition:cpv(-initialX+offsetX,0)];
-		offsetX += [item width] + 5;
+		offsetX += [item contentSize].width + 5;
 	}
 }
 
