@@ -81,7 +81,7 @@ float randfloat() {
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint touchLocation = [touch locationInView: [touch view]];
@@ -99,6 +99,8 @@ float randfloat() {
 	[label setString: info];
 	
 	[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
+	
+	return kEventHandled;
 }
 
 // Implement this method to get the lastest data from the accelerometer 
@@ -120,9 +122,9 @@ float randfloat() {
 	cloudsPos = newPos;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	[self touchesMoved:touches withEvent:event];
+	return [self ccTouchesMoved:touches withEvent:event];
 }
 
 -(NSString *) title

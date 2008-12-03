@@ -83,6 +83,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+		
 		switch(pixelFormat) {
 			
 			case kTexture2DPixelFormat_RGBA8888:
@@ -361,6 +366,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 		
 		GLenum format;
 		GLsizei size = length * length * bpp / 8;

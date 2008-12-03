@@ -121,15 +121,15 @@
 					texCoord.tr_y = col + texStepY;					// D - y
 					
 #ifdef DEBUG
-					NSLog(@"Tex coords: (%f,%f), (%f,%f), (%f,%f), (%f,%f)",
-						  texCoord.bl_x,
-						  texCoord.bl_y,
-						  texCoord.br_x,
-						  texCoord.br_y,
-						  texCoord.tl_x,
-						  texCoord.tl_y,
-						  texCoord.tr_x,
-						  texCoord.tr_y );
+//					NSLog(@"Tex coords: (%f,%f), (%f,%f), (%f,%f), (%f,%f)",
+//						  texCoord.bl_x,
+//						  texCoord.bl_y,
+//						  texCoord.br_x,
+//						  texCoord.br_y,
+//						  texCoord.tl_x,
+//						  texCoord.tl_y,
+//						  texCoord.tr_x,
+//						  texCoord.tr_y );
 #endif
 					
 					vertex.bl_x = x * itemWidth;					// A - x
