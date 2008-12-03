@@ -110,32 +110,49 @@ Class restartAction()
 {
 	if( ![super init] )
 		return nil;
-	
-	
-	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
-	
-	tilemap.transformAnchor = cpv(0, 0);
-	tilemap.position = cpv(0,-200);
 
-	Sprite *background = [Sprite spriteWithFile:@"background.png"];
-	background.scale = 1.5;
-	background.transformAnchor = cpv(0,0);
-
+	// Top Layer, a simple image
 	Sprite *cocosImage = [Sprite spriteWithFile:@"powered.png"];
+	// scale the image (optional)
 	cocosImage.scale = 2.5;
+	// change the transform anchor point to 0,0 (optional)
 	cocosImage.transformAnchor = cpv(0,0);
+	// position the image somewhere (optional)
 	cocosImage.position = cpv(200,1000);
 	
-	// the parent is a void node. a node only used as a reference
+	// Middle layer: a Tile map atlas
+	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	// change the transform anchor to 0,0 (optional)
+	tilemap.transformAnchor = cpv(0, 0);
+	// position the tilemap (optional)
+	tilemap.position = cpv(0,-200);
+
+	// background layer: another image
+	Sprite *background = [Sprite spriteWithFile:@"background.png"];
+	// scale the image (optional)
+	background.scale = 1.5;
+	// change the transform anchor point (optional)
+	background.transformAnchor = cpv(0,0);
+
+	
+	// create a void node, a parent node
 	CocosNode *voidNode = [CocosNode node];
 	
+	// NOW add the 3 layers to the 'void' node
+
 	// background image is moved at a ratio of 0.4x, 0.5y
 	[voidNode add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
+	
 	// tiles are moved at a ratio of 2.2x, 1.0y
 	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2,1.0)];
-	// 'powered by cocos2d' image is moved at a ratio of 3.0x, 2.5y
+	
+	// top image is moved at a ratio of 3.0x, 2.5y
 	[voidNode add:cocosImage z:2 parallaxRatio:cpv(3.0,2.5)];
 	
+	
+	// now create some actions that will move the 'void' node
+	// and the children of the 'void' node will move at different
+	// speed, thus, simulation the 3D environment
 	id goUp = [MoveBy actionWithDuration:4 position:cpv(0,-500)];
 	id goDown = [goUp reverse];
 	id go = [MoveBy actionWithDuration:8 position:cpv(-1000,0)];
