@@ -52,7 +52,6 @@
 	disabledItem.isEnabled = ~disabledItem.isEnabled;
 }
 
-
 -(void) menuCallback2: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:2];
@@ -68,6 +67,8 @@
 -(id) init
 {
 	[super init];
+	
+	isTouchEnabled = YES;
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackH:)];
@@ -87,6 +88,7 @@
 
 -(void) menuCallbackBack: (id) sender
 {
+	menu.opacity = 128;
 	[(MultiplexLayer*)parent switchTo:0];
 }
 
@@ -99,6 +101,18 @@
 {
 	menu.opacity = 255;
 	[menu alignItemsVertically];
+
+// XXX: this method is deprecated and will be removed in v0.7
+//	[menu alignItemsVerticallyOld];
+
+}
+
+-(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	// you will only receive this message if Menu doesn't handle the touchesBegan event
+	// new in v0.6
+	NSLog(@"touches received");
+	return kEventHandled;
 }
 
 @end
