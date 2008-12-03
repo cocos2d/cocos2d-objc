@@ -7,6 +7,7 @@ Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa
 
 Contributors (alphabetically ordered):
     * Alejandro Cura: author of AccelViewPortDemo
+	* Andy Fitter: patches for Texture2D
     * Brian Hammond: patches for Demos
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director

@@ -244,7 +244,7 @@ void drawCollisions(void *ptr, void *data)
 	cpArrayEach(space->arbiters, &drawCollisions, NULL);
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 //	UITouch *touch = [touches anyObject];	
 //	CGPoint location = [touch locationInView: [touch view]];
@@ -256,6 +256,8 @@ void drawCollisions(void *ptr, void *data)
 	
 	ticks = 0;
 	init_funcs[demo_index]();
+	
+	return kEventHandled;
 }
 @end
 

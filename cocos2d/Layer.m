@@ -48,6 +48,7 @@
 
 -(void) onEnter
 {
+
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
 	if( isTouchEnabled )

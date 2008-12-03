@@ -500,14 +500,18 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
-			 
+	
 	[[Director sharedDirector] runScene: scene];
 }
 
