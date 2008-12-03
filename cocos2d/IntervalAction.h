@@ -83,7 +83,7 @@ Example:
 
 
 /** Repeats an action a number of times.
- * To repeat an action infinity number of times use the RepeatForever action.
+ * To repeat an action forever use the RepeatForever action.
  */
 @interface Repeat : IntervalAction <NSCopying>
 {
@@ -91,9 +91,9 @@ Example:
 	unsigned int total;
 	IntervalAction *other;
 }
-/** creates the action */
+/** creates the Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
 +(id) actionWithAction: (IntervalAction*) action times: (unsigned int) t;
-/** initializes the action */
+/** initializes the action. Times is an unsigned integer between 1 and pow(2,30) */
 -(id) initWithAction: (IntervalAction*) action times: (unsigned int) t;
 @end
 
@@ -106,13 +106,13 @@ Example:
 }
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (IntervalAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
-/** creates the action */
+/** creates the Spawn action */
 +(id) actionOne: (IntervalAction*) one two:(IntervalAction*) two;
-/** initializes the action */
+/** initializes the Spawn action with the 2 actions to spawn */
 -(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
 @end
 
-/**  Rotates a `CocosNode` object to a certain angle by modifying it's
+/**  Rotates a CocosNode object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
 */ 
@@ -182,7 +182,7 @@ Example:
 -(id) initWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j;
 @end
 
-/** Moves a `CocosNode` object to a position simulating a jump movement by modifying it's position attribute.
+/** Moves a CocosNode object to a position simulating a jump movement by modifying it's position attribute.
 */ 
  @interface JumpTo : JumpBy <NSCopying>
 {

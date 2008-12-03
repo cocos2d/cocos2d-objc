@@ -126,11 +126,14 @@ Class restartAction()
 	cocosImage.transformAnchor = cpv(0,0);
 	cocosImage.position = cpv(200,1000);
 	
-	
+	// the parent is a void node. a node only used as a reference
 	CocosNode *voidNode = [CocosNode node];
 	
+	// background image is moved at a ratio of 0.4x, 0.5y
 	[voidNode add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
+	// tiles are moved at a ratio of 2.2x, 1.0y
 	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2,1.0)];
+	// 'powered by cocos2d' image is moved at a ratio of 3.0x, 2.5y
 	[voidNode add:cocosImage z:2 parallaxRatio:cpv(3.0,2.5)];
 	
 	id goUp = [MoveBy actionWithDuration:4 position:cpv(0,-500)];
@@ -166,6 +169,7 @@ Class restartAction()
 		return nil;
 	
 	
+	// this node will be used as the parent (reference) for the parallax scroller
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 	
 	tilemap.transformAnchor = cpv(0, 0);
@@ -175,7 +179,8 @@ Class restartAction()
 	background.scale = 1.5;
 	background.transformAnchor = cpv(0,0);
 	
-	
+	// the parent contains data. The parent moves at (1,1)
+	// while the child moves at the ratio of (0.4, 0.5)
 	[tilemap add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
 	
 	id goUp = [MoveBy actionWithDuration:2 position:cpv(-1000,-500)];
