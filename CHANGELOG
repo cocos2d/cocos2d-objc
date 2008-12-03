@@ -6,6 +6,7 @@ version 0.6.0 - dd-MMM-yyy
  . CocosNode: added support for Parallax scroller (issue #89)
  . CocosNode: removed deprecated 'named' methods (issue #91)
  . CocosNode: lazy allocations with timers, children & actions (issue #94)
+ . Director: propagation of Touch events can be stopped (issue #96)
  . Documentation: properties are documented (issue #100)
  . Menu: conforms to CocosNodeSize protocol (issue #99)
  . Menu: support both vertical & horizontal alignment (issue #97)
