@@ -545,11 +545,13 @@ static int _pixelFormat = RGB565;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		NSEnumerator *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
+		NSArray *copyArray = [eventHandlers copy];
+		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
+		for( id eventHandler in enumerator ) {
+			if( [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] ) {
 				if( [eventHandler ccTouchesBegan:touches withEvent:event] == kEventHandled )
 					break;
+			}
 		}
 		
 		[copyArray release];
@@ -559,11 +561,13 @@ static int _pixelFormat = RGB565;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		NSEnumerator *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
+		NSArray *copyArray = [eventHandlers copy];
+		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
+		for( id eventHandler in enumerator ) {
+			if( [eventHandler respondsToSelector:@selector(ccTouchesMoved:withEvent:)] ) {
 				if( [eventHandler ccTouchesMoved:touches withEvent:event] == kEventHandled )
 					break;
+			}
 		}
 		[copyArray release];
 	}
@@ -572,11 +576,13 @@ static int _pixelFormat = RGB565;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled ) {
-		NSEnumerator *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
+		NSArray *copyArray = [eventHandlers copy];
+		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
+		for( id eventHandler in enumerator ) {
+			if( [eventHandler respondsToSelector:@selector(ccTouchesEnded:withEvent:)] ) {
 				if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
 					break;
+			}
 		}
 		[copyArray release];
 	}
@@ -585,11 +591,13 @@ static int _pixelFormat = RGB565;
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( eventsEnabled )  {
-		NSEnumerator *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( eventHandler && [eventHandler respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
+		NSArray *copyArray = [eventHandlers copy];
+		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
+		for( id eventHandler in enumerator ) {
+			if( [eventHandler respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] ) {
 				if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
 					break;
+			}
 		}
 		[copyArray release];
 	}

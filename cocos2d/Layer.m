@@ -48,11 +48,14 @@
 
 -(void) onEnter
 {
-	[super onEnter];
-	
+	// register 'parent' nodes first
+	// since events are propagated in reverse order
 	if( isTouchEnabled )
 		[[Director sharedDirector] addEventHandler:self];
-	
+
+	// the iterate over all the children
+	[super onEnter];
+
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
