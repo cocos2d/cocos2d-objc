@@ -59,10 +59,10 @@ and when to execute the Scenes
 	NSTimeInterval animationInterval;
 	NSTimeInterval oldAnimationInterval;
 
-	/** landscape mode ? */
+	/* landscape mode ? */
 	BOOL landscape;
 	
-	/** display FPS ? */
+	/* display FPS ? */
 	BOOL displayFPS;
 	int frames;
 	ccTime accumDt;
@@ -71,36 +71,41 @@ and when to execute the Scenes
 	LabelAtlas *FPSLabel;
 #endif
 	
-	/** is the running scene paused */
+	/* is the running scene paused */
 	BOOL paused;
 	
-	/** running scene */
+	/* running scene */
 	Scene *runningScene;
 	
-	/** will be the next 'runningScene' in the next frame */
+	/* will be the next 'runningScene' in the next frame */
 	Scene *nextScene;
 	
-	/** event handler */
+	/* event handler */
 	NSMutableArray	*eventHandlers;
 
-	/** scheduled scenes */
+	/* scheduled scenes */
 	NSMutableArray *scenes;
 	
-	/** last time the main loop was updated */
+	/* last time the main loop was updated */
 	struct timeval lastUpdate;
-	/** delta time since last tick to main loop */
+	/* delta time since last tick to main loop */
 	ccTime dt;
-	/** whether or not the next delta time will be zero */
+	/* whether or not the next delta time will be zero */
 	 BOOL nextDeltaTimeZero;
 	
-	/** are touch events enabled. Default is YES */
+	/* are touch events enabled. Default is YES */
 	BOOL eventsEnabled;
 }
 
+/** The current running Scene. Director can only run one Scene at the time */
 @property (readonly, assign) Scene* runningScene;
+/** The FPS value */
 @property (readwrite, assign) NSTimeInterval animationInterval;
+/** The UIKit window. Use it to embed UIKit object within cocos2d */
 @property (readwrite,assign) UIWindow* window;
+/** Whether or not to display the FPS on the bottom-left corner */
 @property (readwrite, assign) BOOL displayFPS;
+/** Whether or not to propagate the touch events to the running Scene. Default YES */
 @property (readwrite, assign) BOOL eventsEnabled;
 
 /** returns a shared instance of the director */

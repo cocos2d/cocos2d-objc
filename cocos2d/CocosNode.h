@@ -49,76 +49,94 @@ enum {
 */ 
 @interface CocosNode : NSObject {
 	
-	/// rotation angle
+	// rotation angle
 	float rotation;	
 	
-	/// scale factor
+	// scale factor
 	float scale;
 	
-	/// scale X factor
+	// scale X factor
 	float scaleX;
 	
-	/// scale Y factor
+	// scale Y factor
 	float scaleY;
 	
-	/// position of the node
+	// position of the node
 	cpVect position;
 
-	/// parallax X factor
+	// parallax X factor
 	float parallaxRatioX;
 	
-	/// parallax Y factor
+	// parallax Y factor
 	float parallaxRatioY;
 
-	/// is visible
+	// is visible
 	BOOL visible;
 	
-	/// a Camera
+	// a Camera
 	Camera *camera;
 	
-	/// z-order value
+	// z-order value
 	int zOrder;
 
-	/// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	/// Sprites, Labels and any other "small" object uses it.
-	/// Scenes, Layers and other "whole screen" object don't use it.
+	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// Sprites, Labels and any other "small" object uses it.
+	// Scenes, Layers and other "whole screen" object don't use it.
 	BOOL relativeTransformAnchor;
 
-	/// transformation anchor point
+	// transformation anchor point
 	cpVect transformAnchor;
 		
-	/// array of children
+	// array of children
 	NSMutableArray *children;
 		
-	/// is running
+	// is running
 	BOOL isRunning;
 	
-	/// weakref to parent
+	// weakref to parent
 	CocosNode *parent;
 	
-	/// a tag. any number you want to assign to the node
+	// a tag. any number you want to assign to the node
 	int tag;
 	
 	// actions
 	NSMutableArray *actions;
 	NSMutableArray *actionsToRemove;
 	NSMutableArray *actionsToAdd;
-
 	
 	// scheduled selectors
 	NSMutableDictionary *scheduledSelectors;
 }
 
+/** The z order of the node relative to it's "brothers": children of the same parent */
 @property(readwrite,assign) int zOrder;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle */
 @property(readwrite,assign) float rotation;
+/** The scale factor of the node. 1.0 is the default scale factor */
 @property(readwrite,assign) float scale, scaleX, scaleY;
-@property(readwrite,assign) float parallaxRatio, parallaxRatioX, parallaxRatioY;
+/** The parallax ratio of the node. 1.0 is the default ratio */
+@property(readwrite,assign) float parallaxRatio;
+/** The X parallax ratio of the node. 1.0 is the default ratio */
+@property(readwrite,assign) float parallaxRatioY;
+/** The Y parallax ratio of the node. 1.0 is the default ratio */
+@property(readwrite,assign) float parallaxRatioX;
+/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner */
 @property(readwrite,assign) cpVect position;
+/** A Camera object that lets you move the node using camera coordinates.
+ * If you use the Camera then position, scale & rotation won't be used */
 @property(readwrite,assign) Camera* camera;
+/** Whether of not the node is visible. Default is YES */
 @property(readwrite,assign) BOOL visible;
+/** The transformation anchor point. For Sprite and Label the transform anchor point is (width/2, height/2) */
 @property(readwrite,assign) cpVect transformAnchor;
+/** A weak reference to the parent */
 @property(readwrite,assign) CocosNode* parent;
+/** If YES the transformtions will be relative to (-transform.x, -transform.y).
+ * Sprites, Labels and any other sizeble object use it.
+ * Scenes, Layers and other "whole screen" object don't use it.
+ */
 @property(readwrite,assign) BOOL relativeTransformAnchor;
+/** A tag used to identify the node easily */
 @property(readwrite,assign) int tag;
 
 // initializators

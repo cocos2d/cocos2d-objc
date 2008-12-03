@@ -29,41 +29,43 @@
 
 /** Menu Item base class
  */
-@interface MenuItem : CocosNode
+@interface MenuItem : CocosNode <CocosNodeSize, CocosNodeOpacity>
 {
 	NSInvocation *invocation;
-  BOOL isEnabled;
-  GLubyte opacity;
+	BOOL isEnabled;
+	GLubyte opacity;
 }
-/** creates a menu item with a target/selector */
+
+/** Opacity property. Conforms to CocosNodeOpacity protocol */
+@property (readwrite,assign) GLubyte opacity;
+
+/** Creates a menu item with a target/selector */
 +(id) itemWithTarget:(id) r selector:(SEL) s;
 
-/** initializes a menu item with a target/selector */
+/** Initializes a menu item with a target/selector */
 -(id) initWithTarget:(id) r selector:(SEL) s;
 
-/** returns the outside box */
+/** Returns the outside box */
 -(CGRect) rect;
 
-/** activate the item */
+/** Activate the item */
 -(void) activate;
 
-/** the item was selected (not activated), similar to "mouse-over" */
+/** The item was selected (not activated), similar to "mouse-over" */
 -(void) selected;
 
-/** the item was unselected */
+/** The item was unselected */
 -(void) unselected;
 
-/** enable or disabled the MenuItem */
+/** Enable or disabled the MenuItem */
 -(void) setIsEnabled: (BOOL)enabled;
-/** returns whether or not the MenuItem is enabled */
+/** Returns whether or not the MenuItem is enabled */
 -(BOOL) isEnabled;
 
-/** returns the height of the item */
--(unsigned int) height;
-/** returns the width of the item */
--(unsigned int) width;
-
-@property (readwrite,assign) GLubyte opacity;
+/** Returns the size in pixels of the texture.
+ * Conforms to the CocosNodeSize protocol
+ */
+-(CGSize) contentSize;
 
 @end
 
