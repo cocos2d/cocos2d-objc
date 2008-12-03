@@ -39,6 +39,12 @@
 /** align items vertically */
 -(void) alignItemsVertically;
 
+/** align items vertically using the v0.5 algorithm
+ * @deprecated This method will be removed in v0.7
+ */
+-(void) alignItemsVerticallyOld;
+
+
 /** align items horizontally */
 -(void) alignItemsHorizontally;
 

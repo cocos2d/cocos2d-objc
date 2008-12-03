@@ -18,11 +18,13 @@ Main features
     * Text rendering support
     * Texture Atlas support
     * Tile Map support
+	* Parallax scroller support
     * Touch/Accelerometer support
     * Portrait and Landscape mode
     * Integrated Pause/Resume
+    * Supports PowerVR Texture Compression (PVRTC) format
     * Language: objective-c
-    * Open Source
+    * Open Source: Compatible with open and closed source projects
     * OpenGL ES 1.1 based 
 
 

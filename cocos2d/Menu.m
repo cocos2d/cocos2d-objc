@@ -159,6 +159,18 @@
 -(void) alignItemsVertically
 {
 	int incY = [[children objectAtIndex:0] height] + 5;
+	int initialY =  (incY * ([children count]-1))/2;
+	
+	for( MenuItem* item in children ) {
+		[item setPosition:cpv(0,initialY)];
+		initialY -= incY;
+	}
+}
+
+// XXX: deprecated
+-(void) alignItemsVerticallyOld
+{
+	int incY = [[children objectAtIndex:0] height] + 5;
 	int initialY =  (incY * [children count])/2;
 	
 	for( MenuItem* item in children ) {
