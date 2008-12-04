@@ -9,6 +9,7 @@ version 0.6.0 - 05-Dec-2008
  . Documentation: properties are documented (issue #100)
  . Menu: conforms to CocosNodeSize protocol (issue #99)
  . Menu: support both vertical & horizontal alignment (issue #97)
+ . Menu: added MenuItemToggle (issue #83)
  . Misc: misc fixes detected by static analyzer (issue #90)
  . Texture2D: creates the textures with clamp to edge and mag filter to linear (issue #95)
 
