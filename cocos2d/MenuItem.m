@@ -27,7 +27,15 @@ static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
+enum {
+	kCurrentItem = 0x01234567,
+};
+
+#pragma mark MenuItem
+
 @implementation MenuItem
+
+@synthesize opacity;
 
 @synthesize opacity;
 
@@ -51,17 +59,20 @@ static BOOL _fontNameRelease = NO;
 		return nil;
 	
 	NSMethodSignature * sig = nil;
-	sig = [[rec class] instanceMethodSignatureForSelector:cb];
 	
-	invocation = nil;
-	invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:rec];
-	[invocation setSelector:cb];
-	[invocation setArgument:&self atIndex:2];
-	[invocation retain];
+	if( rec && cb ) {
+		sig = [[rec class] instanceMethodSignatureForSelector:cb];
+		
+		invocation = nil;
+		invocation = [NSInvocation invocationWithMethodSignature:sig];
+		[invocation setTarget:rec];
+		[invocation setSelector:cb];
+		[invocation setArgument:&self atIndex:2];
+		[invocation retain];
+	}
     
-  isEnabled = YES;
-  opacity = 255;
+	isEnabled = YES;
+	opacity = 255;
 	
 	return self;
 }
@@ -116,6 +127,9 @@ static BOOL _fontNameRelease = NO;
 @end
 
 
+#pragma mark MenuItemFont
+
+
 @implementation MenuItemFont
 
 @synthesize label;
@@ -147,6 +161,11 @@ static BOOL _fontNameRelease = NO;
 +(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s
 {
 	return [[[self alloc] initFromString: value target:r selector:s] autorelease];
+}
+
++(id) itemFromString: (NSString*) value
+{
+	return [[[self alloc] initFromString: value target:nil selector:nil] autorelease];
 }
 
 -(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
@@ -251,14 +270,25 @@ static BOOL _fontNameRelease = NO;
 
 @end
 
+#pragma mark MenuItemImage
 
 @implementation MenuItemImage
 
 @synthesize selectedImage, normalImage, disabledImage;
 
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2
+{
+	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:nil selector:nil];
+}
+
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) t selector:(SEL) s
 {
 	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:t selector:s];
+}
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3
+{
+	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:nil selector:nil] autorelease];
 }
 
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3 target:(id) t selector:(SEL) s
@@ -279,9 +309,9 @@ static BOOL _fontNameRelease = NO;
 	else
 		disabledImage = [[Sprite spriteWithFile:disabledI] retain];
   
-  [normalImage setOpacity:opacity];
-  [selectedImage setOpacity:opacity];
-  [disabledImage setOpacity:opacity];
+	[normalImage setOpacity:opacity];
+	[selectedImage setOpacity:opacity];
+	[disabledImage setOpacity:opacity];
 	
 	CGSize s = [normalImage contentSize];
 	transformAnchor = cpv( s.width/2, s.height/2 );
@@ -293,7 +323,7 @@ static BOOL _fontNameRelease = NO;
 {
 	[normalImage release];
 	[selectedImage release];
-  [disabledImage release];
+	[disabledImage release];
 
 	[super dealloc];
 }
@@ -341,10 +371,121 @@ static BOOL _fontNameRelease = NO;
 
 - (void) setOpacity: (GLubyte)newOpacity
 {
-  opacity = newOpacity;
-  [normalImage setOpacity:opacity];
-  [selectedImage setOpacity:opacity];
-  [disabledImage setOpacity:opacity];
+	opacity = newOpacity;
+	[normalImage setOpacity:opacity];
+	[selectedImage setOpacity:opacity];
+	[disabledImage setOpacity:opacity];
 }
 
+@end
+
+#pragma mark MenuItemToggle
+
+//
+// MenuItemToggle
+//
+@implementation MenuItemToggle
+
+@synthesize selectedIndex;
+
++(id) itemWithTarget: (id)t selector: (SEL)sel items: (MenuItem*) item, ...
+{
+	va_list args;
+	va_start(args, item);
+	
+	id s = [[[self alloc] initWithTarget: t selector:sel items: item vaList:args] autorelease];
+	
+	va_end(args);
+	return s;
+}
+
+-(id) initWithTarget: (id)t selector: (SEL)sel items:(MenuItem*) item vaList: (va_list) args
+{
+	if( !(self=[super initWithTarget:t selector:sel]) )
+		return nil;
+	
+	selectedIndex = 0;
+	subItems = [[NSMutableArray arrayWithCapacity:2] retain];
+	
+	int z = 0;
+	MenuItem *i = item;
+	while(i) {
+		z++;
+		[subItems addObject:i];
+		i = va_arg(args, MenuItem*);
+	}
+
+	[self add: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+	
+	return self;
+}
+
+-(void) dealloc
+{
+	[subItems release];
+	[super dealloc];
+}
+
+-(void) selected
+{
+	[[subItems objectAtIndex:selectedIndex] selected];
+}
+
+-(void) unselected
+{
+	[[subItems objectAtIndex:selectedIndex] unselected];
+}
+
+-(void) activate
+{
+	// update index
+	
+	if( isEnabled ) {
+		[self removeByTag:kCurrentItem];
+
+		selectedIndex++;
+		if(selectedIndex >= [subItems count])
+			selectedIndex = 0;
+
+		[self add: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+
+		[invocation invoke];
+	}
+}
+
+-(void) setIsEnabled: (BOOL)enabled
+{
+	[super setIsEnabled:enabled];
+	for(MenuItem* item in subItems)
+		[item setIsEnabled:enabled];
+}
+
+-(MenuItem*) selectedItem
+{
+	return [subItems objectAtIndex:selectedIndex];
+}
+
+-(CGRect) rect
+{
+	MenuItem* selectedItem = [self selectedItem];
+
+	CGRect r = [selectedItem rect];
+	r.origin.x = position.x - r.size.width / 2;
+	r.origin.y = position.y - r.size.height / 2;
+	
+	return r;
+}
+
+-(CGSize) contentSize
+{
+	MenuItem* selectedItem = [self selectedItem];
+	return [selectedItem contentSize];
+}
+
+- (void) setOpacity: (GLubyte)newOpacity
+{
+	[super setOpacity:newOpacity];
+	for(MenuItem* item in subItems)
+		[item setOpacity:newOpacity];
+}
 @end

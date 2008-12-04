@@ -66,10 +66,7 @@
  * Conforms to the CocosNodeSize protocol
  */
 -(CGSize) contentSize;
-
 @end
-
-
 
 /** A MenuItemFont */
 @interface MenuItemFont : MenuItem
@@ -92,13 +89,15 @@
 /** get the font name */
 +(NSString*) fontName;
 
-/** creates a menu item from a string */
+/** creates a menu item from a string. Use it with MenuItemToggle */
++(id) itemFromString: (NSString*) value;
+
+/** creates a menu item from a string with a target/selector */
 +(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s;
 
-/** initializes a menu item from a string */
+/** initializes a menu item from a string with a target/selector */
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
-
 
 
 /** A MenuItemImage */
@@ -108,13 +107,42 @@
 	Sprite *normalImage, *selectedImage, *disabledImage;
 }
 
-@property (readonly) Sprite *normalImage, *selectedImage, *disabledImage;
+/// Sprite (image) that is displayed when the MenuItem is not selected
+@property (readonly) Sprite *normalImage;
+/// Sprite (image) that is displayed when the MenuItem is selected
+@property (readonly) Sprite *selectedImage;
+/// Sprite (image) that is displayed when the MenuItem is disabled
+@property (readonly) Sprite *disabledImage;
 
-/** creates a menu item from a string */
+/** creates a menu item with a normal and selected image*/
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2;
+/** creates a menu item with a normal and selected image with target/selector */
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
+/** creates a menu item with a normal,selected  and disabled image with target/selector */
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
-
-/** initializes a menu item from a string */
+/** initializes a menu item with a normal, selected  and disabled image with target/selector */
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
+@end
+
+
+
+/** A MenuItemToggle */
+@interface MenuItemToggle : MenuItem
+{
+	int selectedIndex;
+	NSMutableArray* subItems;
+}
+
+/** returns the selected item */
+@property (readwrite) int selectedIndex;
+
+/** creates a menu item from a list of items with a target/selector */
++(id) itemWithTarget:(id)t selector:(SEL)s items:(MenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
+
+/** initializes a menu item from a list of items with a target selector */
+-(id) initWithTarget:(id)t selector:(SEL)s items:(MenuItem*) item vaList:(va_list) args;
+
+/** return the selected item */
+-(MenuItem*) selectedItem;
 @end
 

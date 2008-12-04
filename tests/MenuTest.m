@@ -19,11 +19,18 @@
 	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
 	MenuItem *item4 = [MenuItemFont itemFromString: @"I toogle enable items" target: self selector:@selector(menuCallbackEnable:)];
-	MenuItemFont *item5 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
-	[[item5 label] setRGB:255:0:32];
+	id t1 = [MenuItemFont itemFromString: @"Volume Off"];
+	id t2 = [MenuItemFont itemFromString: @"Volume 33%"];
+	id t3 = [MenuItemFont itemFromString: @"Volume 66%"];
+	id t4 = [MenuItemFont itemFromString: @"Volume 100%"];
+	MenuItemToggle *item5 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallbackVolume:) items:t1,t2,t3,t4,nil];
 
-	Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, nil];
+	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
+	
+	[[item6 label] setRGB:255:0:32];
+
+	Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
 	[menu alignItemsVertically];
 
 	disabledItem = [item3 retain];
@@ -43,6 +50,15 @@
 -(void) menuCallback: (id) sender
 {
 	[(MultiplexLayer*)parent switchTo:1];
+}
+
+-(void) menuCallbackVolume:(id) sender
+{
+
+//	if( [sender selectedIndex] == 3 )
+//		[sender setIsEnabled:NO];
+
+	NSLog(@"selected item: %@ index:%d", [sender selectedItem], [sender selectedIndex] );
 }
 
 -(void) menuCallbackDisabled:(id) sender {
@@ -81,8 +97,7 @@
 	menu.opacity = 128;
 
 	[self add: menu];
-	
-	
+
 	return self;
 }
 
