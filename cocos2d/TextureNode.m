@@ -43,6 +43,12 @@
 	return self;
 }
 
+-(void) dealloc
+{
+	// texture is retained and release by super
+	[super dealloc];
+}
+
 -(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
 {
 	r=rr;

@@ -152,12 +152,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CGSize					imageSize;
 	Texture2DPixelFormat    pixelFormat;
 	CGImageRef				image;
-	UIImageOrientation		orientation;
 	BOOL					sizeToFit = NO;
 	
 	
 	image = [uiImage CGImage];
-	orientation = [uiImage imageOrientation]; 
 	
 	if(image == NULL) {
 		[self release];

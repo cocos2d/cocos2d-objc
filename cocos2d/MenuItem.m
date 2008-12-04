@@ -166,7 +166,7 @@ static BOOL _fontNameRelease = NO;
 	label = [Label labelWithString:value dimensions:CGSizeMake((_fontSize+2)*[value length], (_fontSize+5)) alignment:UITextAlignmentCenter fontName:_fontName fontSize:_fontSize];
 
 	[label retain];
-  [label setOpacity:opacity];
+	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2 );

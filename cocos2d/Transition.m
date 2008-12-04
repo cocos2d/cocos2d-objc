@@ -105,6 +105,11 @@ enum {
 
 	[self schedule:@selector(step:) interval:0];
 }
+
+-(void) dealloc
+{
+	[super dealloc];
+}
 @end
 
 //
