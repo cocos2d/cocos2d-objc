@@ -62,3 +62,8 @@
 {
 }
 @end
+
+@interface DemoSnow : ParticleDemo
+{
+}
+@end

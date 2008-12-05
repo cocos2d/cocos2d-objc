@@ -545,12 +545,10 @@
 	
 	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
 	{
-		NSLog(@"selector not scheduled: %@",NSStringFromSelector(selector));
-		NSException* myException = [NSException
-									exceptionWithName:@"SelectorNotScheduled"
-									reason:@"Selector not scheduled"
-									userInfo:nil];
-		@throw myException;
+#if DEBUG
+		NSLog(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
+#endif		
+		return;
 	}
 
 	[scheduledSelectors removeObjectForKey: NSStringFromSelector(selector) ];

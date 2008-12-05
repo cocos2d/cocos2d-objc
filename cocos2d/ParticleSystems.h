@@ -73,3 +73,9 @@
 {
 }
 @end
+
+//! Snow particle system
+@interface ParticleSnow : ParticleSystem
+{
+}
+@end
