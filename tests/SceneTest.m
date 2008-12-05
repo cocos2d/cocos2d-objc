@@ -14,6 +14,7 @@
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
+	[menu alignItemsVertically];
 	
 	[self add: menu];
 
@@ -46,6 +47,7 @@
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
 	
 	menu = [Menu menuWithItems: item1, item2, nil];
+	[menu alignItemsVertically];
 	
 	[self add: menu];
 	
@@ -72,9 +74,10 @@
 	return self;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[[Director sharedDirector] popScene];
+	return kEventHandled;
 }
 @end
 

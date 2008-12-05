@@ -18,7 +18,7 @@ Main features
     * Text rendering support
     * Texture Atlas support
     * Tile Map support
-	* Parallax scroller support
+	* Parallax scrolling support
     * Touch/Accelerometer support
     * Portrait and Landscape mode
     * Integrated Pause/Resume

@@ -779,7 +779,7 @@
 	
 	// emitter position
 	position.x = 160;
-	position.y = 500;
+	position.y = 490;
 	posVar.x = 160;
 	posVar.y = 00;
 	

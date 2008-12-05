@@ -91,13 +91,6 @@ Class restartAction()
 	[atlas setString:str];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
-}
-
 -(NSString*) title
 {
 	return @"No title";
