@@ -136,7 +136,7 @@ Class restartAction()
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
 									];
 	id action2 = [RepeatForever actionWithAction:
-				  [Sequence actions: [a1 copy], [a2 copy], [a2 reverse], nil]
+				  [Sequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
 									];
 	
 	tamara.transformAnchor = cpvzero;
@@ -173,7 +173,7 @@ Class restartAction()
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
 									];
 	id action2 = [RepeatForever actionWithAction:
-				  [Sequence actions: [a1 copy], [a2 copy], [a2 reverse], nil]
+				  [Sequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
 									];
 	
 	tamara.transformAnchor = cpvzero;
