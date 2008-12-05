@@ -174,17 +174,26 @@ enum {
 -(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
 /** Removes a child from the container
  * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
- * If you have added a 'named' child, you MUST remove it using removeByName instead
  */
 -(void) remove: (CocosNode*)node;
-/** Removes all children from the container.
- * It stops all running actions from the removed objects and unschedules all scheduled selectors
- */
--(void) removeAll;
 /** Removes a child from the container given its tag
  * @warning It DOESN'T stop all running actions from the removed object and unschedules all scheduled selectors 
  */
 -(void) removeByTag:(int) tag;
+/** Removes all children from the container.
+ * @warning It DOESN'T stop all running actions from the removed objecst and unschedules all scheduled selectors 
+ */
+-(void) removeAll;
+/** Removes a child from the container by reference and stops all running actions and scheduled functions
+ */
+-(void) removeAndStop: (CocosNode*)node;
+/** Removes a child from the container by tag and stops all running actions and scheduled functions
+ */
+-(void) removeAndStopByTag:(int) tag;
+/** Removes all children from the container.
+ * It stops all running actions from the removed objects and unschedules all scheduled selectors
+ */
+-(void) removeAndStopAll;
 /** Gets a child from the container given its tag
  * It stops all running actions from the removed object and unschedules all scheduled selectors 
  * @return returns a CocosNode object

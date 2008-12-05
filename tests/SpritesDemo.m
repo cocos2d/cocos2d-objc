@@ -7,6 +7,7 @@
 #import "cocos2d.h"
 #import "SpritesDemo.h"
 
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 						 @"SpriteManual",
@@ -25,7 +26,7 @@ static NSString *transitions[] = {
 						 @"SpriteReverseSequence",
 						 @"SpriteAccelerate",
 						 @"SpriteCallFunc",
-						@"SpriteOrbit" };
+						 @"SpriteOrbit" };
 
 Class nextAction()
 {
@@ -141,14 +142,16 @@ Class restartAction()
 {
 	[super onEnter];
 
+	
 	tamara.scaleX = 2.5;
 	tamara.scaleY = -1.0;
 	tamara.position = cpv(100,100);
 	
 	grossini.rotation = 120;
 	grossini.opacity = 128;
-	grossini.position = cpv(240,160);
+	grossini.position = cpv(240,160);	
 }
+
 -(NSString *) title
 {
 	return @"Manual Transformation";
@@ -404,7 +407,7 @@ Class restartAction()
 						[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil]
 									times:3];
 	id action2 = [RepeatForever actionWithAction:
-						[Sequence actions: [a1 copy], [a1 reverse], nil]
+						[Sequence actions: [[a1 copy] autorelease], [a1 reverse], nil]
 					];
 	
 	[grossini do:action1];
@@ -423,7 +426,7 @@ Class restartAction()
 	
 	id a1 = [MoveBy actionWithDuration:3 position:cpv(350,0)];
 	id seq =[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil];
-	id seq2 =[Sequence actions: [Place actionWithPosition:cpv(60,260)], [a1 copy], nil];
+	id seq2 =[Sequence actions: [Place actionWithPosition:cpv(60,260)], [[a1 copy] autorelease], nil];
 	id rep = [Repeat actionWithAction:seq times:10];
 	id action = [Accelerate actionWithAction:seq2 rate:2];
 	id rep2 = [Repeat actionWithAction:action times:10];

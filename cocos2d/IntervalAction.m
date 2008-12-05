@@ -142,7 +142,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initOne: [[actions objectAtIndex:0] copy] two: [[actions objectAtIndex:1] copy] ];
+	Action *copy = [[[self class] allocWithZone:zone] initOne:[[[actions objectAtIndex:0] copy] autorelease] two:[[[actions objectAtIndex:1] copy] autorelease] ];
     return copy;
 }
 
@@ -229,7 +229,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] times: times];
+	Action *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] times:times];
     return copy;
 }
 
@@ -341,7 +341,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initOne: [one copy] two: [two copy] ];
+	Action *copy = [[[self class] allocWithZone: zone] initOne: [[one copy] autorelease] two: [[two copy] autorelease] ];
     return copy;
 }
 
@@ -766,7 +766,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] rate: rate];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [[other copy] autorelease] rate: rate];
     return copy;
 }
 
@@ -817,7 +817,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] ];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [[other copy] autorelease] ];
     return copy;
 }
 
@@ -871,7 +871,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] speed: speed];
+	Action *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] speed:speed];
     return copy;
 }
 
@@ -935,7 +935,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAction: [other copy] ];
+	return [[[self class] allocWithZone: zone] initWithAction:[[other copy] autorelease] ];
 }
 
 -(void) dealloc
