@@ -82,13 +82,7 @@
 	[super dealloc];
 }
 
-/** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)newOpacity
-{
-	opacity = newOpacity;
-	for(id<CocosNodeOpacity> item in children)
-		[item setOpacity:opacity];
-}
+#pragma mark Menu - Events
 
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -118,10 +112,12 @@
 		[item unselected];
 		[item activate];
 		return kEventHandled;
+
 	} else if( selectedItem != -1 ) {
 		[[children objectAtIndex:selectedItem] unselected];
 		selectedItem = -1;
-		return kEventHandled;
+		
+		// don't return kEventHandled here, since we are not handling it!
 	}
 	return kEventIgnored;
 }
@@ -149,13 +145,15 @@
 		if( selectedItem != -1 ) {
 			[[children objectAtIndex:selectedItem] unselected];
 			selectedItem = -1;
-			return kEventHandled;
+			
+			// don't return kEventHandled here, since we are not handling it!
 		}
 	}
 	
 	return kEventIgnored;
 }
 
+#pragma mark Menu - Alignment
 -(void) alignItemsVertically
 {
 	int incY = [[children objectAtIndex:0] contentSize].height + 5;
@@ -200,10 +198,22 @@
 	}
 }
 
+#pragma mark Menu - Opacity Protocol
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)newOpacity
+{
+	opacity = newOpacity;
+	for(id<CocosNodeOpacity> item in children)
+		[item setOpacity:opacity];
+}
+
+#pragma mark Menu - Private
+
 -(id) itemInPoint: (CGPoint) point idx:(int*)idx
 {
 	point = [[Director sharedDirector] convertCoordinate: point];
-
+	
 	int i=0;
 	for( MenuItem* item in children ) {
 		*idx = i;
@@ -216,4 +226,7 @@
 	}
 	return nil;
 }
+
+
+
 @end
