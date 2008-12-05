@@ -2,15 +2,16 @@ version 0.6.0 - 05-Dec-2008
  . Actions: Sequences of Repeats fixes (issue #80)
  . Actions: Added RepeatForEver. Added example in SpritesDemo example (issue #93)
  . Actions: Repeat can be reversed (issue #92)
+ . Actions: Memory leaks detected by static analyzer (issue #90)
  . CocosNode: added support for Parallax scroller. Created ParallaxDemo example (issue #89)
  . CocosNode: removed deprecated 'named' methods (issue #91)
  . CocosNode: lazy allocations with timers, children & actions (issue #94)
+ . CocosNode: added removeAndStop, removeAndStopByTag and removeAndStopAll (issue #101)
  . Director: propagation of Touch events can be stopped (issue #96)
  . Documentation: properties are documented (issue #100)
  . Menu: conforms to CocosNodeSize protocol (issue #99)
  . Menu: support both vertical & horizontal alignment (issue #97)
  . Menu: added MenuItemToggle (issue #83)
- . Misc: misc fixes detected by static analyzer (issue #90)
  . Texture2D: creates the textures with clamp to edge and mag filter to linear (issue #95)
 
 version 0.5.3 - 18-Nov-2008

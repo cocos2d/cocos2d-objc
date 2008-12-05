@@ -202,10 +202,7 @@
 			if( isRunning )
 				[c onExit];
 
-// DONT CLEANUP INDIVIDUAL REMOVES
-//			[c cleanup]; // issue #74
-			[children removeObject: c];
-			
+			[children removeObject: c];			
 			break;
 		}
 	}
@@ -233,9 +230,55 @@
 		if( isRunning )
 			[c onExit];
 	}
+
+	[children removeAllObjects];
+}
+
+-(void) removeAndStop: (CocosNode*)child
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	
+	for( CocosNode * c in children) {
+		if( [c isEqual: child] ) {
+			[c setParent: nil];
+
+			if( isRunning )
+				[c onExit];
+
+			[c stopAllActions];
+			[c cleanup];
+			[children removeObject: c];
+
+			break;
+		}
+	}
+}
+
+-(void) removeAndStopByTag:(int) aTag
+{
+	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
+	
+	CocosNode *toRemove = nil;
+	for( CocosNode *node in children ) {
+		if( node.tag == aTag ) {
+			toRemove = node;
+			break;
+		}
+	}
+	if( toRemove )
+		[self removeAndStop:toRemove];
+	
+}
+
+-(void) removeAndStopAll {
+	for( CocosNode * c in children) {
+		[c setParent: nil];
+		if( isRunning )
+			[c onExit];
+	}
 	
 	[children makeObjectsPerformSelector:@selector(cleanup)]; // issue #74
-
+	
 	[children removeAllObjects];
 }
 
@@ -443,7 +486,7 @@
 		[actions addObject: action];
 	[actionsToAdd removeAllObjects];
 		
-	// unschedule if it is no longer necesary
+	// unschedule if it is no longer necessary
 	if ( [actions count] == 0 ) {
 		[self unschedule: @selector(step_:)];
 		return;
@@ -491,7 +534,7 @@
 	if( isRunning )
 		[[Scheduler sharedScheduler] scheduleTimer:timer];
 	
-	[scheduledSelectors setObject: timer forKey: NSStringFromSelector(selector) ];
+	[scheduledSelectors setObject:timer forKey:NSStringFromSelector(selector) ];
 }
 
 -(void) unschedule: (SEL) selector

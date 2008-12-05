@@ -74,6 +74,9 @@
 
 -(void) dealloc
 {
+#if DEBUG
+	NSLog( @"deallocing %@", self);
+#endif
 	[invocation release];
 	[super dealloc];
 }
@@ -136,6 +139,9 @@ static Scheduler *sharedScheduler;
 
 - (void) dealloc
 {
+#if DEBUG
+	NSLog( @"deallocing %@", self);
+#endif	
 	[scheduledMethods release];
 	[methodsToRemove release];
 	[methodsToAdd release];
@@ -186,7 +192,7 @@ static Scheduler *sharedScheduler;
 
 -(void) unscheduleTimer: (Timer*) t;
 {
-	// some wants to remove it before it was added
+	// someone wants to remove it before it was added
 	if( [methodsToAdd containsObject:t] ) {
 		[methodsToAdd removeObject:t];
 		return;
@@ -207,6 +213,7 @@ static Scheduler *sharedScheduler;
 {
 	for( id k in methodsToRemove )
 		[scheduledMethods removeObject:k];
+
 	[methodsToRemove removeAllObjects];
 
 	for( id k in methodsToAdd )
