@@ -111,7 +111,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [other copy] ];
+	Action *copy = [[[self class] allocWithZone: zone] initWithAction:[[other copy] autorelease] ];
     return copy;
 }
 
