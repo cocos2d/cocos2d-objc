@@ -199,6 +199,7 @@ static Scheduler *sharedScheduler;
 	}
 	
 	if( ![scheduledMethods containsObject:t] ) {
+		NSLog(@"Scheduler.unscheduleTimer: timer not scheduled");
 		NSException* myException = [NSException
 									exceptionWithName:@"SchedulerTimerNotFound"
 									reason:@"Scheduler.unscheduleTimer not found"

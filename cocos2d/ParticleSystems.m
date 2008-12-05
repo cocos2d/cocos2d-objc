@@ -742,3 +742,82 @@
 	return self;
 }
 @end
+
+@implementation ParticleSnow
+-(id) init
+{
+	return [self initWithTotalParticles:700];
+}
+
+-(id) initWithTotalParticles:(int)p
+{
+	if( !(self=[super initWithTotalParticles:p]) )
+		return nil;
+	
+	// duration
+	duration = -1;
+	
+	// gravity
+	gravity.x = 0;
+	gravity.y = -1;
+	
+	// angle
+	angle = 90;
+	angleVar = 5;
+	
+	// speed of particles
+	speed = 1;
+	speedVar = 1;
+	
+	// radial
+	radialAccel = 0;
+	radialAccelVar = 1;
+	
+	// tagential
+	tangentialAccel = 0;
+	tangentialAccelVar = 1;
+	
+	// emitter position
+	position.x = 160;
+	position.y = 500;
+	posVar.x = 160;
+	posVar.y = 00;
+	
+	// life of particles
+	life = 45;
+	lifeVar = 15;
+	
+	// size, in pixels
+	size = 15.0f;
+	sizeVar = 10.0f;
+	
+	// emits per second
+	emissionRate = 10;
+	
+	// color of particles
+	startColor.r = 1.0f;
+	startColor.g = 1.0f;
+	startColor.b = 1.0f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.0f;
+	startColorVar.g = 0.0f;
+	startColorVar.b = 0.0f;
+	startColorVar.a = 0.0f;
+	endColor.r = 1.0f;
+	endColor.g = 1.0f;
+	endColor.b = 1.0f;
+	endColor.a = 0.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// additive
+	blendAdditive = NO;
+	
+	return self;
+}
+@end
