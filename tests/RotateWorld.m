@@ -70,10 +70,10 @@
 	IntervalAction *rot2 = [rot1 reverse];
 	
 	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions:jump2, jump1, nil] times:5 ] ];
-	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions:[jump1 copy], [jump2 copy], nil] times:5 ] ];
+	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions:[[jump1 copy] autorelease], [[jump2 copy] autorelease], nil] times:5 ] ];
 	
 	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions: rot1, rot2, nil] times:5 ] ];
-	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions: [rot2 copy], [rot1 copy], nil] times:5 ] ];
+	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions: [[rot2 copy] autorelease], [[rot1 copy] autorelease], nil] times:5 ] ];
 	
 	
 	return self;
@@ -119,9 +119,9 @@
 	Action * rot = [RotateBy actionWithDuration:8 angle:720];
 	
 	[blue do: rot];
-	[red do: [rot copy]];
-	[green do: [rot copy]];
-	[white do: [rot copy]];
+	[red do: [[rot copy] autorelease]];
+	[green do: [[rot copy] autorelease]];
+	[white do: [[rot copy] autorelease]];
 	
 	return self;
 }
