@@ -22,7 +22,7 @@
 /// draws a point given x and y coordinate
 void drawPoint( float x, float y );
 /// draws a line given x1,y1 and x2,y2 coordinates
-void drawLine( float x1, float x2, float y1, float y2);
+void drawLine(float x1, float y1, float x2, float y2);
 /// draws a poligon given a pointer to float coordiantes and the number of vertices
 void drawPoly( float *poli, int points );
 /// draws a circle given the center, radius and number of segments

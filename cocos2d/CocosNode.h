@@ -195,7 +195,6 @@ enum {
  */
 -(void) removeAndStopAll;
 /** Gets a child from the container given its tag
- * It stops all running actions from the removed object and unschedules all scheduled selectors 
  * @return returns a CocosNode object
  */
 -(CocosNode*) getByTag:(int) tag;
@@ -223,8 +222,8 @@ enum {
 -(void) stopAllActions;
 /** Removes one action from the running action list */
 -(void) stopAction: (Action*) action;
-/** Returns the numbers of actions that's will be run and that's are running (actions in actionsToAdd and actions arrays). 
- * Composable actions are counted as 1 actions. Example:
+/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
+ * Composable actions are counted as 1 action. Example:
  *    If you are running 1 Sequence of 7 actions, it will return 1.
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
