@@ -10,6 +10,7 @@ Contributors (alphabetically ordered):
 	* Alex Winston: author of ParticleSnow
 	* Andy Fitter: patches for Texture2D
     * Brian Hammond: patches for Demos
+	* Clinth Harris: patches for Doc generator script
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director
 	* Ernesto Corvi: author of TGA RLE support, patches for TextureMgr, Sprite
