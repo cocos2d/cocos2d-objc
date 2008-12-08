@@ -1,3 +1,7 @@
+version 0.6.1 - 08-Dec-2008
+ . Primitives: drawLine prototype fixed (issue #103)
+ . XCode: all projects have "thumb compilation" turned off (issue #104)
+ 
 version 0.6.0 - 05-Dec-2008
  . Actions: Sequences of Repeats fixes (issue #80)
  . Actions: Added RepeatForEver. Added example in SpritesDemo example (issue #93)

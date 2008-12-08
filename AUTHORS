@@ -7,16 +7,17 @@ Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa
 
 Contributors (alphabetically ordered):
     * Alejandro Cura: author of AccelViewPortDemo
-	* Alex Winston: added ParticleSnow
+	* Alex Winston: author of ParticleSnow
 	* Andy Fitter: patches for Texture2D
     * Brian Hammond: patches for Demos
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director
-	* Ernesto Corvi: added TGA RLE support, patches for TextureMgr, Sprite
+	* Ernesto Corvi: author of TGA RLE support, patches for TextureMgr, Sprite
 	* Fradj Johann: patches for CocosNode, Layer, MultiplexLayer
     * Ishaq Malik: patches for CocosNode
+	* Jacob Eiting: patches for Primitives
     * lukeman: patches for MenuItem
-	* Mitch: patches for Menu, added MenuItemToggle
+	* Mitch: patches for Menu, author of MenuItemToggle
     * Serge Kolgan: patches for CocosNode
     * Steve Israelson: patches for Scheduler, Actions, Transitions
 	* Steve Oldmeadow: patches for Texture2D
