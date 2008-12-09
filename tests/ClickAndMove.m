@@ -74,6 +74,15 @@ enum
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
 
+	// multiple touches or not ?
+//	[[[Director sharedDirector] window] setMultipleTouchEnabled:YES];
+
+	// frames per second
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+	
+	// display frames ?
+	[[Director sharedDirector] setDisplayFPS:YES];
+
 	UIAlertView*			alertView;
 
 	alertView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Start", nil];
@@ -86,10 +95,6 @@ enum
 	MainLayer * mainLayer =[MainLayer node];
 	
 	[scene add: mainLayer z:2];
-
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	[[Director sharedDirector] runScene: scene];
 }
