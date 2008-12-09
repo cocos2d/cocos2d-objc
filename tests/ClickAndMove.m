@@ -45,18 +45,13 @@ enum
 	UITouch *touch = [touches anyObject];
 	
 	CGPoint location = [touch locationInView: [touch view]];
+	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
 
-/*
-	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
-	[sprite setPosition: CGPointMake(location.x, 480-location.y)];
-	[sprite do: [RotateBy actionWithDuration:2*4 angle:360*4]];
-	[self add: sprite];
- */
 	CocosNode *s = [self getByTag:kTagSprite];
 	[s stopAllActions];
-	[s do: [MoveTo actionWithDuration:1 position:cpv(location.x, 480-location.y)]];
-	float o = location.x - [s position].x;
-	float a = (480-location.y) - [s position].y;
+	[s do: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
+	float o = convertedLocation.x - [s position].x;
+	float a = convertedLocation.y - [s position].y;
 	float at = RADIANS_TO_DEGREES( atan(o/a) );
 	
 	if( a < 0 )
