@@ -141,8 +141,12 @@ float randfloat() {
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// multiple touches or not ?
+//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	
+	// frames per second
+	[[Director sharedDirector] setAnimationInterval:1.0/60];	
+
 
 	Scene *scene = [Scene node];
 	AccelViewportDemo *layer = [AccelViewportDemo node];

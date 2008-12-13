@@ -511,9 +511,9 @@ Class restartAction()
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
+	// multiple touches or not ?
+//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
 	

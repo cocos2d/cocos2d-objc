@@ -252,6 +252,10 @@ Class restartAction()
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
+	// multiple touches or not ?
+//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	
+	
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
 			 
