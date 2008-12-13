@@ -270,6 +270,10 @@ void drawCollisions(void *ptr, void *data)
 	[[Director sharedDirector] setDisplayFPS:YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	
+	// multiple touches or not ?
+//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	
+	
 	Scene *scene = [Scene node];
 	
 	MainLayer * mainLayer =[MainLayer node];

@@ -135,6 +135,13 @@
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setDisplayFPS:YES];
+	
+	// multiple touches or not ?
+//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+
+	// frames per second
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+
 
 	Scene *scene = [Scene node];
 
