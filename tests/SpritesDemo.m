@@ -428,6 +428,8 @@ Class restartAction()
 	id seq =[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil];
 	id seq2 =[Sequence actions: [Place actionWithPosition:cpv(60,260)], [[a1 copy] autorelease], nil];
 	id rep = [Repeat actionWithAction:seq times:10];
+	
+	// To deaccelerate use rate:1/accel_value
 	id action = [Accelerate actionWithAction:seq2 rate:2];
 	id rep2 = [Repeat actionWithAction:action times:10];
 	

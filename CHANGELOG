@@ -1,3 +1,6 @@
+version 0.6.2 -
+ . License: removed "GNU LGPL" from sources files (issue #115)
+
 version 0.6.1 - 08-Dec-2008
  . Documentation: Generation of doc fixes (issue #105)
  . Primitives: drawLine prototype fixed (issue #103)
