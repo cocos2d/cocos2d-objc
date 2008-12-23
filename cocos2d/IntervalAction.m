@@ -740,6 +740,7 @@
 // Accelerate
 //
 @implementation Accelerate
+@synthesize rate;
 + (id) actionWithAction: (IntervalAction*) action rate: (float) r
 {
 	return [[[self alloc] initWithAction:action rate:r ] autorelease];
@@ -845,6 +846,7 @@
 // Speed
 //
 @implementation Speed
+@synthesize speed;
 +(id) actionWithAction: (IntervalAction*) action speed:(ccTime) s
 {
 	return [[[self alloc] initWithAction: action speed:s] autorelease ];

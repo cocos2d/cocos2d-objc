@@ -1,4 +1,5 @@
 version 0.6.2 - xx-Dec-2008
+ . Actions: Accelerate & Speed can ratios can be modified at runtime (issue #127)
  . CocosNode: added absolutePosition (issue #9 & issue #122)
  . Demos: shows how to set multiple Touches and other options (issue #116)
  . Demos: fixed type (issue #111)
