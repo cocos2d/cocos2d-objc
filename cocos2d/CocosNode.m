@@ -170,20 +170,20 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	child.parallaxRatioX = c.x;
 	child.parallaxRatioY = c.y;
-	return [self add: child z:z tag:kCocosNodeTagInvalid];
+	return [self add: child z:z tag:child.tag];
 }
 
 // add a node to the array
 -(id) add: (CocosNode*) child z:(int)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:z tag:kCocosNodeTagInvalid];
+	return [self add: child z:z tag:child.tag];
 }
 
 -(id) add: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:0 tag:kCocosNodeTagInvalid];
+	return [self add: child z:0 tag:child.tag];
 }
 
 -(void) remove: (CocosNode*)child
