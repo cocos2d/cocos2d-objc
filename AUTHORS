@@ -7,7 +7,7 @@ Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa
 
 Contributors (alphabetically ordered):
     * Alejandro Cura: author of AccelViewPortDemo
-	* Alex Winston: author of ParticleSnow
+	* Alex Winston: author of ParticleSnow, patches for CocosNode
 	* Andy Fitter: patches for Texture2D
     * Brian Hammond: patches for Demos
 	* Clinth Harris: patches for Doc generator script
@@ -17,6 +17,7 @@ Contributors (alphabetically ordered):
 	* Fradj Johann: patches for CocosNode, Layer, MultiplexLayer
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
+	* Joe Vennix: patches for CocosNode
     * lukeman: patches for MenuItem
 	* Mitch: patches for Menu, author of MenuItemToggle
     * Serge Kolgan: patches for CocosNode
