@@ -1,5 +1,8 @@
 version 0.6.2 -
+ . Demos: shows how to set multiple Touches and other options (issue #116)
+ . Director: Touches work fast again (issue #126)
  . License: removed "GNU LGPL" from sources files (issue #115)
+ . TextureMgr: Avois duplicate cache (issue #121)
 
 version 0.6.1 - 08-Dec-2008
  . Documentation: Generation of doc fixes (issue #105)

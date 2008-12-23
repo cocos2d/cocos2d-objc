@@ -77,8 +77,8 @@ static TextureMgr *sharedTextureMgr;
 	if( (tex=[textures objectForKey: fileimage] ) ) {
 		return tex;
 	}
-	
-	tex = [[Texture2D alloc] initWithImage: [UIImage imageNamed:fileimage]];
+
+	tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:fileimage ofType:nil] ] ];
 	[textures setObject: tex forKey:fileimage];
 	
 	return [tex autorelease];
