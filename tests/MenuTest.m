@@ -18,7 +18,7 @@
 	MenuItem *item1 = [MenuItemFont itemFromString: @"Start" target:self selector:@selector(menuCallback:)];
 	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
-	MenuItem *item4 = [MenuItemFont itemFromString: @"I toogle enable items" target: self selector:@selector(menuCallbackEnable:)];
+	MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
 	
 	id t1 = [MenuItemFont itemFromString: @"Volume Off"];
 	id t2 = [MenuItemFont itemFromString: @"Volume 33%"];
