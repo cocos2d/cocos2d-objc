@@ -524,7 +524,7 @@ static int _pixelFormat = RGB565;
 -(void) addEventHandler:(CocosNode*) node
 {
 	NSAssert( node != nil, @"Director.AddEventHandler: Node must be non nil");	
-	[eventHandlers addObject:node];
+	[eventHandlers insertObject:node atIndex:0];
 }
 
 -(void) removeEventHandler:(CocosNode*) node
@@ -540,8 +540,7 @@ static int _pixelFormat = RGB565;
 {
 	if( eventsEnabled ) {
 		NSArray *copyArray = [eventHandlers copy];
-		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
-		for( id eventHandler in enumerator ) {
+		for( id eventHandler in copyArray ) {
 			if( [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] ) {
 				if( [eventHandler ccTouchesBegan:touches withEvent:event] == kEventHandled )
 					break;
@@ -556,8 +555,7 @@ static int _pixelFormat = RGB565;
 {
 	if( eventsEnabled ) {
 		NSArray *copyArray = [eventHandlers copy];
-		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
-		for( id eventHandler in enumerator ) {
+		for( id eventHandler in copyArray ) {
 			if( [eventHandler respondsToSelector:@selector(ccTouchesMoved:withEvent:)] ) {
 				if( [eventHandler ccTouchesMoved:touches withEvent:event] == kEventHandled )
 					break;
@@ -571,8 +569,7 @@ static int _pixelFormat = RGB565;
 {
 	if( eventsEnabled ) {
 		NSArray *copyArray = [eventHandlers copy];
-		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
-		for( id eventHandler in enumerator ) {
+		for( id eventHandler in copyArray ) {
 			if( [eventHandler respondsToSelector:@selector(ccTouchesEnded:withEvent:)] ) {
 				if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
 					break;
@@ -586,8 +583,7 @@ static int _pixelFormat = RGB565;
 {
 	if( eventsEnabled )  {
 		NSArray *copyArray = [eventHandlers copy];
-		NSEnumerator *enumerator = [copyArray reverseObjectEnumerator];
-		for( id eventHandler in enumerator ) {
+		for( id eventHandler in copyArray ) {
 			if( [eventHandler respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] ) {
 				if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
 					break;
