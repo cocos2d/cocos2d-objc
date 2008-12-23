@@ -251,6 +251,9 @@ Example:
 	IntervalAction *other;
 	float rate;
 }
+/** rate for the acceleration. Can be changed in runtime */
+@property (readwrite) float rate;
+
 /** creates the action */
 +(id) actionWithAction: (IntervalAction*) action rate: (float) rate;
 /** initializes the action */
@@ -277,6 +280,9 @@ Example:
 	ccTime speed;
 	IntervalAction * other;
 }
+/** speed factor. Can be changed in runtime */
+@property (readwrite) ccTime speed;
+
 /** creates the action */
 +(id) actionWithAction: (IntervalAction*) action speed:(ccTime)s;
 /** initializes the action */
