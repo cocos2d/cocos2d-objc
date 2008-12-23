@@ -288,6 +288,20 @@
 	return nil;
 }
 
+-(cpVect) absolutePosition
+{
+	cpVect ret = position;
+	
+	CocosNode *cn = self;
+	
+	while (cn.parent != nil) {
+		cn = cn.parent;
+		cpvadd( ret,  cn.position );
+	}
+	
+	return ret;
+}
+
 
 #pragma mark CocosNode Draw
 

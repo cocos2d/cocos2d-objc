@@ -192,7 +192,10 @@ enum {
  * @return returns a CocosNode object
  */
 -(CocosNode*) getByTag:(int) tag;
-
+/** Returns the absolute position of the CocosNode
+ * return a cpVect value with the absolute position of the noe
+ */
+-(cpVect) absolutePosition;
 
 // draw
 

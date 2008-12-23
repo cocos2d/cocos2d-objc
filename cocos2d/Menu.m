@@ -212,8 +212,10 @@
 	for( MenuItem* item in children ) {
 		*idx = i;
 		CGRect r = [item rect];
-		r.origin.x += position.x;
-		r.origin.y += position.y;
+		
+		cpVect offset = [self absolutePosition];		
+		r.origin.x += offset.x;
+		r.origin.y += offset.y;
 		if( CGRectContainsPoint( r, point ) )
 			return item;
 		i++;
