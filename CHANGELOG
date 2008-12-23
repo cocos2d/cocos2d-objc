@@ -1,11 +1,12 @@
-version 0.6.2 -
+version 0.6.2 - xx-Dec-2008
  . CocosNode: added absolutePosition (issue #9 & issue #122)
  . Demos: shows how to set multiple Touches and other options (issue #116)
+ . Demos: fixed type (issue #111)
  . Director: Touches work fast again (issue #126)
  . License: removed "GNU LGPL" from sources files (issue #115)
+ . License: fixed grammar errors (issue #120)
  . TextureMgr: Avois duplicate cache (issue #121)
  
-
 version 0.6.1 - 08-Dec-2008
  . Documentation: Generation of doc fixes (issue #105)
  . Primitives: drawLine prototype fixed (issue #103)

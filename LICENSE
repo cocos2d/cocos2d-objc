@@ -10,10 +10,10 @@ for the iPhone, this license extends the GNU LGPL v3 license by allowing you:
 This means that if you do a) and/or b) you are NOT forced to release your 
 source code under the GNU LGPL v3 license.
 
-What is a library's improvement and what's part of your game is
-decided by the your good faith.
+What is an improvement to the library and what's part of your game is
+decided by the your own good faith.
 
-Remeber that cocos2d for iPhone follows the copyleft idea. So if you think that
+Remember that cocos2d for iPhone follows the copyleft idea. So if you think that
 you're improving the library, share your changes with the community with this same
 license.
 
