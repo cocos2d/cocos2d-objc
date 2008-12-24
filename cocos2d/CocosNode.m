@@ -28,6 +28,8 @@
 -(void) actionAlloc;
 -(void) childrenAlloc;
 -(void) timerAlloc;
+/* reorder child according to it's new zorder. DON'T call it manually */
+-(void) reorderChild:(CocosNode*)child z:(int)zOrder;
 @end
 
 @implementation CocosNode
@@ -37,7 +39,6 @@
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent;
 @synthesize camera;
-@synthesize zOrder;
 @synthesize tag;
 
 +(id) node
@@ -68,6 +69,8 @@
 	
 	tag = kCocosNodeTagInvalid;
 	
+	zOrder = 0;
+
 	// children (lazy allocs)
 	children = nil;
 
@@ -183,7 +186,7 @@
 -(id) add: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:0 tag:child.tag];
+	return [self add: child z:child.zOrder tag:child.tag];
 }
 
 -(void) remove: (CocosNode*)child
@@ -302,6 +305,42 @@
 	return ret;
 }
 
+-(int) zOrder
+{
+	return zOrder;
+}
+
+-(void) setZOrder:(int) z
+{
+	if( self.parent )
+		[parent reorderChild:self z:z];
+
+	zOrder = z;
+}
+
+-(void) reorderChild:(CocosNode*) child z:(int)z
+{
+	NSAssert( child != nil, @"Child must be non-nil");
+	
+	[child retain];
+	[children removeObject:child];
+
+	int index=0;
+	BOOL added = NO;
+	for( CocosNode *a in children ) {
+		if ( a.zOrder > z ) {
+			added = YES;
+			[ children insertObject:child atIndex:index];
+			break;
+		}
+		index++;
+	}
+	
+	if( ! added )
+		[children addObject:child];
+
+	[child release];
+}
 
 #pragma mark CocosNode Draw
 

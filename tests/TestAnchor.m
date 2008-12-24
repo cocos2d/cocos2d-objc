@@ -6,6 +6,11 @@
 // cocos import
 #import "cocos2d.h"
 
+enum {
+	kTagSprite1 = 1,
+	kTagSprite2 = 2,
+};
+
 // local import
 #import "TestAnchor.h"
 static int sceneIdx=-1;
@@ -202,15 +207,26 @@ Class restartAction()
 	sp1.position = cpv(20,80);
 	sp2.position = cpv(70,50);
 	
-	[grossini add:sp1 z:-1];
-	[grossini add:sp2 z:1];
+	[grossini add:sp1 z:-1 tag:kTagSprite1];
+	[grossini add:sp2 z:1 tag:kTagSprite2];
 	
 	id a1 = [RotateBy actionWithDuration:4 angle:360];
 	id action1 = [RepeatForever actionWithAction:a1];
 	[grossini do:action1];	
 	
-	
+	[self schedule:@selector(changeZOrder:) interval:2.0];
 }
+
+-(void) changeZOrder:(ccTime) dt
+{
+	CocosNode *sprite1 = [grossini getByTag:kTagSprite1];
+	CocosNode *sprite2 = [grossini getByTag:kTagSprite2];
+	
+	int zt = sprite1.zOrder;
+	sprite1.zOrder = sprite2.zOrder;
+	sprite2.zOrder = zt;
+}
+
 -(NSString *) title
 {
 	return @"z order";
