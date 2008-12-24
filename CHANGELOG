@@ -1,10 +1,10 @@
-version 0.6.2 - xx-Dec-2008
+version 0.6.2 - 24-Dec-2008
  . Actions: Accelerate & Speed ratios can be modified at runtime (issue #127)
  . CocosNode: added absolutePosition (issue #9 & issue #122)
  . CocosNode: tag is propagated when adding children (issue #118)
  . CocosNode: change change z-order at runtime (issue #59)
  . Demos: Chipmunk_Accel supports multiple touches (issue #129)
- . Demos: fixed type (issue #111)
+ . Demos: fixed typo in MenuTest (issue #111)
  . Demos: shows how to set multiple Touches and other options (issue #116)
  . Director: Touches work fast again (issue #126)
  . License: removed "GNU LGPL" from sources files (issue #115)
