@@ -233,7 +233,8 @@ void drawCollisions(void *ptr, void *data)
 	
 	cpArray *bodies = space->bodies;
 	int num = bodies->num;
-	
+
+#if 1	// comment this block for better performance
 	glColor4f(0.0, 0.0, 1.0, 1.0);
 	for(int i=0; i<num; i++){
 		cpBody *body = (cpBody *)bodies->arr[i];
@@ -242,6 +243,7 @@ void drawCollisions(void *ptr, void *data)
 	
 	glColor4f(1.0, 0.0, 0.0, 1.0);
 	cpArrayEach(space->arbiters, &drawCollisions, NULL);
+#endif
 }
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
