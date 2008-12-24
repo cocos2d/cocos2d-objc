@@ -31,14 +31,23 @@
 @property (readwrite,assign) float delay;
 @property (readwrite,assign) NSMutableArray *frames;
 
-/** creates an Animation with name, delay and frames */
-+(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
-/** initializes an Animation with name, delay and frames */
--(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
 /** initializes an Animation with name and delay */
 -(id) initWithName: (NSString*) name delay:(float)delay;
+
+/** creates an Animation with name, delay and frames from image files */
++(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
+/** initializes an Animation with name, delay and frames from image files */
+-(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
 /** adds a frame to an Animation */
 -(void) addFrame: (NSString*) filename;
+
+/** creates an Animation with name, delay and frames from Texture2D objects */
++(id) animationWithName: (NSString*) name delay:(float)delay textures:tex1,... NS_REQUIRES_NIL_TERMINATION;
+/** initializes an Animation with name, delay and frames from Texture2D objects */
+-(id) initWithName: (NSString*) name delay:(float)delay firstTexture:(Texture2D*)tex vaList:(va_list) args;
+/** adds a frame from a Texture2D object to an Animation */
+-(void) addFrameWithTexture: (Texture2D*) tex;
+
 @end
 
 
@@ -69,6 +78,10 @@
 - (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 /** creates an sprite from a CGImageRef image */
 - (id) initWithCGImage:(CGImageRef)image;
+/** creates an sprite with a Texture2D instance */
++(id) spriteWithTexture:(Texture2D*) tex;
+/** initializes the sprite with a Texture2D instance */
+-(id) initWithTexture:(Texture2D*) tex;
 
 
 /** adds an Animation to the Sprite */

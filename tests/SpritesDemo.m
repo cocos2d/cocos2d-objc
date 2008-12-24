@@ -64,7 +64,14 @@ Class restartAction()
 {
 	[super init];
 
-	grossini = [[Sprite spriteWithFile:@"grossini.png"] retain];
+	// Example:
+	// You can create a sprite using a Texture2D
+	Texture2D *tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
+	grossini = [[Sprite spriteWithTexture:tex] retain];
+	[tex release];
+	
+	// Example:
+	// Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
 	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	
 	[self add: grossini z:1];
