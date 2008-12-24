@@ -29,7 +29,7 @@ typedef enum {
 	kOrientationDownOver = 1,
 } tOrientation;
 
-/** Base class for actions
+/** Base class for Transition scenes
  */
 @interface TransitionScene : Scene {
 	Scene * inScene;
@@ -66,7 +66,7 @@ typedef enum {
 }
 @end
 
-/** JumpZoom Transition
+/** JumpZoom Transition.
  Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
 */
 @interface JumpZoomTransition : TransitionScene
@@ -74,7 +74,7 @@ typedef enum {
 }
 @end
 
-/** MoveInL Transition
+/** MoveInL Transition.
  Move in from to the left the incoming scene.
 */
 @interface MoveInLTransition : TransitionScene
@@ -86,7 +86,7 @@ typedef enum {
 -(IntervalAction*) action;
 @end
 
-/** MoveInR Transition
+/** MoveInR Transition.
  Move in from to the right the incoming scene.
  */
 @interface MoveInRTransition : MoveInLTransition
@@ -94,7 +94,7 @@ typedef enum {
 }
 @end
 
-/** MoveInT Transition
+/** MoveInT Transition.
  Move in from to the top the incoming scene.
  */
 @interface MoveInTTransition : MoveInLTransition
@@ -102,7 +102,7 @@ typedef enum {
 }
 @end
 
-/** MoveInB Transition
+/** MoveInB Transition.
  Move in from to the bottom the incoming scene.
  */
 @interface MoveInBTransition : MoveInLTransition
@@ -110,7 +110,7 @@ typedef enum {
 }
 @end
 
-/** SlideInL Transition
+/** SlideInL Transition.
  Slide in the incoming scene from the left border.
  */
 @interface SlideInLTransition : TransitionScene
@@ -122,7 +122,7 @@ typedef enum {
 -(IntervalAction*) action;
 @end
 
-/** SlideInR Transition
+/** SlideInR Transition.
  Slide in the incoming scene from the right border.
  */
 @interface SlideInRTransition : SlideInLTransition
@@ -130,7 +130,7 @@ typedef enum {
 }
 @end
 
-/** SlideInB Transition
+/** SlideInB Transition.
  Slide in the incoming scene from the bottom border.
  */
 @interface SlideInBTransition : SlideInLTransition
@@ -138,7 +138,7 @@ typedef enum {
 }
 @end
 
-/** SlideInT Transition
+/** SlideInT Transition.
  Slide in the incoming scene from the top border.
  */
 @interface SlideInTTransition : SlideInLTransition
@@ -154,7 +154,7 @@ typedef enum {
 }
 @end
 
-/** FlipX Transition
+/** FlipX Transition.
  Flips the screen horizontally.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -163,7 +163,7 @@ typedef enum {
 }
 @end
 
-/** FlipY Transition
+/** FlipY Transition.
  Flips the screen vertically.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -172,7 +172,7 @@ typedef enum {
 }
 @end
 
-/** FlipAngular Transition
+/** FlipAngular Transition.
  Flips the screen half horizontally and half vertically.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -181,7 +181,7 @@ typedef enum {
 }
 @end
 
-/** ZoomFlipX Transition
+/** ZoomFlipX Transition.
  Flips the screen horizontally doing a zoom out/in
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -190,7 +190,7 @@ typedef enum {
 }
 @end
 
-/** ZoomFlipY Transition
+/** ZoomFlipY Transition.
  Flips the screen vertically doing a little zooming out/in
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -199,7 +199,7 @@ typedef enum {
 }
 @end
 
-/** ZoomFlipAngular Transition
+/** ZoomFlipAngular Transition.
  Flips the screen half horizontally and half vertically doing a little zooming out/in.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -208,11 +208,19 @@ typedef enum {
 }
 @end
 
-/** Fade Transition
+/** Fade Transition.
  Fade out the outgoing scene and then fade in the incoming scene.'''
  */
 @interface FadeTransition : TransitionScene
 {
+	unsigned int RGBA;
 }
+/** creates the transition with a duration and with an RGB color
+ * Example: [FadeTransition transitionWithDuration:2 scene:s withColorRGB:0xff0000]; // red color
+ */
++(id) transitionWithDuration:(ccTime)duration scene:(Scene*)scene withColorRGB:(unsigned int)rgb;
+/** initializes the transition with a duration and with an RGB color */
+-(id) initWithDuration:(ccTime)duration scene:(Scene*)scene withColorRGB:(unsigned int)rgb;
+
 -(void) hideOutShowIn;
 @end
