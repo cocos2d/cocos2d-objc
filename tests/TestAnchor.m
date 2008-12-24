@@ -223,8 +223,8 @@ Class restartAction()
 	CocosNode *sprite2 = [grossini getByTag:kTagSprite2];
 	
 	int zt = sprite1.zOrder;
-	sprite1.zOrder = sprite2.zOrder;
-	sprite2.zOrder = zt;
+	[grossini reorderChild:sprite1 z:sprite2.zOrder];
+	[grossini reorderChild:sprite2 z:zt];
 }
 
 -(NSString *) title
