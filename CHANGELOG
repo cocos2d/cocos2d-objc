@@ -9,6 +9,7 @@ version 0.6.2 - xx-Dec-2008
  . License: removed "GNU LGPL" from sources files (issue #115)
  . License: fixed grammar errors (issue #120)
  . TextureMgr: Avois duplicate cache (issue #121)
+ . Transitions: FadeTransition supports variable color. Updated TransitionsDemo (issue #129)
  
 version 0.6.1 - 08-Dec-2008
  . Documentation: Generation of doc fixes (issue #105)

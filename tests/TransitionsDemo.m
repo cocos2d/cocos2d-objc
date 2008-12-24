@@ -7,6 +7,9 @@
 #import "cocos2d.h"
 #import "TransitionsDemo.h"
 
+@interface FadeWhiteTransition : FadeTransition 
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
 @interface FlipXLeftOver : FlipXTransition 
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
 @end
@@ -49,6 +52,12 @@
 	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
 }
 @end
+@implementation FadeWhiteTransition
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s withColorRGB:0xffffff];
+}
+@end
+
 @implementation FlipXRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
 	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
@@ -110,6 +119,7 @@
 static int sceneIdx=0;
 static NSString *transitions[] = {
 						 @"FadeTransition",
+						 @"FadeWhiteTransition",
 						 @"FlipXLeftOver",
 						 @"FlipXRightOver",
 						 @"FlipYUpOver",
