@@ -103,7 +103,7 @@ enum {
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
-@property(readwrite,assign) int zOrder;
+@property(readonly) int zOrder;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle */
 @property(readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor */
@@ -193,9 +193,13 @@ enum {
  */
 -(CocosNode*) getByTag:(int) tag;
 /** Returns the absolute position of the CocosNode
- * return a cpVect value with the absolute position of the noe
+ * @return a cpVect value with the absolute position of the noe
  */
 -(cpVect) absolutePosition;
+/** Reorders a child according to a new z value.
+ * The child MUST be already added.
+ */
+-(void) reorderChild:(CocosNode*)child z:(int)zOrder;
 
 // draw
 

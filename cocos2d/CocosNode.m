@@ -28,8 +28,10 @@
 -(void) actionAlloc;
 -(void) childrenAlloc;
 -(void) timerAlloc;
-/* reorder child according to it's new zorder. DON'T call it manually */
--(void) reorderChild:(CocosNode*)child z:(int)zOrder;
+// helper that reorder a child
+-(void) insertChild:(CocosNode*)child z:(int)z;
+// used internally to alter the zOrder variable. DON'T call this method manually
+-(void) _setZOrder:(int) z;
 @end
 
 @implementation CocosNode
@@ -39,6 +41,7 @@
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent;
 @synthesize camera;
+@synthesize zOrder;
 @synthesize tag;
 
 +(id) node
@@ -144,20 +147,7 @@
 	if( ! children )
 		[self childrenAlloc];
 
-	child.zOrder=z;
-	
-	int index=0;
-	BOOL added = NO;
-	for( CocosNode *a in children ) {
-		if ( a.zOrder > z ) {
-			added = YES;
-			[ children insertObject:child atIndex:index];
-			break;
-		}
-		index++;
-	}
-	if( ! added )
-		[children addObject:child];
+	[self insertChild:child z:z];
 
 	child.tag = aTag;
 	
@@ -305,26 +295,15 @@
 	return ret;
 }
 
--(int) zOrder
+// used internally to alter the zOrder variable. DON'T call this method manually
+-(void) _setZOrder:(int) z
 {
-	return zOrder;
-}
-
--(void) setZOrder:(int) z
-{
-	if( self.parent )
-		[parent reorderChild:self z:z];
-
 	zOrder = z;
 }
 
--(void) reorderChild:(CocosNode*) child z:(int)z
+// helper used by reorderChild & add
+-(void) insertChild:(CocosNode*) child z:(int)z
 {
-	NSAssert( child != nil, @"Child must be non-nil");
-	
-	[child retain];
-	[children removeObject:child];
-
 	int index=0;
 	BOOL added = NO;
 	for( CocosNode *a in children ) {
@@ -339,6 +318,18 @@
 	if( ! added )
 		[children addObject:child];
 
+	[child _setZOrder:z];
+}
+
+-(void) reorderChild:(CocosNode*) child z:(int)z
+{
+	NSAssert( child != nil, @"Child must be non-nil");
+	
+	[child retain];
+	[children removeObject:child];
+
+	[self insertChild:child z:z];
+	
 	[child release];
 }
 
