@@ -22,68 +22,105 @@
 #import "TextureMgr.h"
 #import "Sprite.h"
 
+#pragma mark Sprite
+
+@interface Sprite (Private)
+// lazy allocation
+-(void) initAnimationDictionary;
+@end
+
 @implementation Sprite
 
+#pragma mark Sprite - image file
 + (id) spriteWithFile: (NSString*) filename
 {
 	return [[[self alloc] initWithFile:filename] autorelease];
 }
+
+- (id) initWithFile: (NSString*) filename
+{
+	self = [super init];
+	if( self ) {
+		
+		texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
+		
+		CGSize s = texture.contentSize;
+		transformAnchor = cpv( s.width/2, s.height/2);
+	}
+	
+	return self;
+}
+
+#pragma mark Sprite - PVRTC RAW
 
 + (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
 {
 	return [[[self alloc] initWithPVRTCFile:fileimage bpp:bpp hasAlpha:alpha width:w] autorelease];
 }
 
+- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
+{
+	self=[super init];
+	if( self ) {
+		
+		texture = [[[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w] retain];
+		
+		CGSize s = texture.contentSize;
+		transformAnchor = cpv( s.width/2, s.height/2);
+		
+		// lazy alloc
+		animations = nil;
+	}
+	
+	return self;
+}
+
+#pragma mark Sprite - CGImageRef
+
 + (id) spriteWithCGImage: (CGImageRef) image
 {
 	return [[[self alloc] initWithCGImage:image] autorelease];
 }
 
-- (id) initWithFile: (NSString*) filename
-{
-	if( ! (self=[super init]) )
-		return nil;
-
-	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
-
-	texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
-	
-	CGSize s = texture.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2);
-	
-	return self;
-}
-
-- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
-{
-	if( ! (self=[super init]) )
-		return nil;
-	
-	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
-	
-	texture = [[[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w] retain];
-	
-	CGSize s = texture.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2);
-	
-	return self;
-}
-
 - (id) initWithCGImage: (CGImageRef) image
 {
-	if( ! (self=[super init]) )
-		return nil;
-	
-	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
-	
-	texture = [[[TextureMgr sharedTextureMgr] addCGImage: image] retain];
-	
-	CGSize s = texture.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2);
+	self = [super init];
+	if( self ) {
+		texture = [[[TextureMgr sharedTextureMgr] addCGImage: image] retain];
+		
+		CGSize s = texture.contentSize;
+		transformAnchor = cpv( s.width/2, s.height/2);
+		
+		// lazy alloc
+		animations = nil;
+	}
 	
 	return self;
 }
 
+#pragma mark Sprite - Texture2D
+
++ (id)  spriteWithTexture:(Texture2D*) tex
+{
+	return [[[self alloc] initWithTexture:tex] autorelease];
+}
+
+- (id) initWithTexture:(Texture2D*) tex
+{
+	self = [super init];
+	if( self ) {
+		texture = [tex retain];
+		
+		CGSize s = texture.contentSize;
+		transformAnchor = cpv( s.width/2, s.height/2);
+		
+		// lazy alloc
+		animations = nil;
+	}
+	return self;
+}	
+
+#pragma mark Sprite
 
 -(void) dealloc
 {
@@ -92,13 +129,25 @@
 	[super dealloc];
 }
 
+-(void) initAnimationDictionary
+{
+	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+}
+
 -(void) addAnimation: (Animation*) anim
 {
+	// lazy alloc
+	if( ! animations )
+		[self initAnimationDictionary];
+	
 	[animations setObject:anim forKey:[anim name]];
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
 {
+	if( ! animations )
+		[self initAnimationDictionary];
+
 	Animation *a = [animations objectForKey: animationName];
 	Texture2D *tex = [[a frames] objectAtIndex:frameIndex];
 	if( tex == texture )
@@ -108,8 +157,23 @@
 }
 @end
 
+#pragma mark Animation
+
 @implementation Animation
 @synthesize name, delay, frames;
+
+-(id) initWithName: (NSString*) n delay:(float)d
+{
+	return [self initWithName:n delay:d firstImage:nil vaList:nil];
+}
+
+-(void) dealloc
+{
+	[frames release];
+	[super dealloc];
+}
+
+#pragma mark Animation - image files
 
 +(id) animationWithName: (NSString*) name delay:(float)delay images:image1,...
 {
@@ -146,21 +210,51 @@
 	return self;
 }
 
--(id) initWithName: (NSString*) n delay:(float)d
-{
-	return [self initWithName:n delay:d firstImage:nil vaList:nil];
-}
-
--(void) dealloc
-{
-	[frames release];
-	[super dealloc];
-}
-
 -(void) addFrame: (NSString*) filename
 {
 	Texture2D *tex = [[TextureMgr sharedTextureMgr] addImage: filename];
 	[frames addObject:tex];
 }
+
+#pragma mark Animation - Texture2D
+
++(id) animationWithName: (NSString*) name delay:(float)delay textures:tex1,...
+{
+	va_list args;
+	va_start(args,tex1);
+	
+	id s = [[[self alloc] initWithName:name delay:delay firstTexture:tex1 vaList:args] autorelease];
+	
+	va_end(args);
+	return s;
+}
+
+-(id) initWithName: (NSString*) n delay:(float)d firstTexture:(Texture2D*)tex vaList:(va_list)args
+{
+	self = [super init];
+	if( self ) {
+		name = [n retain];
+		frames = [[NSMutableArray array] retain];
+		delay = d;
+		
+		if( tex ) {
+			[frames addObject:tex];
+			
+			Texture2D *newTex = va_arg(args, Texture2D*);
+			while(newTex) {
+				[frames addObject:newTex];
+				
+				newTex = va_arg(args, Texture2D*);
+			}	
+		}
+	}
+	return self;
+}
+
+-(void) addFrameWithTexture: (Texture2D*) tex
+{
+	[frames addObject:tex];
+}
+
 @end
 
