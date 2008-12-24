@@ -116,12 +116,13 @@ eachShape(void *ptr, void* unused)
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];	
-	CGPoint location = [touch locationInView: [touch view]];
-	
-	location = [[Director sharedDirector] convertCoordinate: location];
-	
-	[self addNewSpriteX: location.x y:location.y];
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[Director sharedDirector] convertCoordinate: location];
+		
+		[self addNewSpriteX: location.x y:location.y];
+	}
 	return kEventHandled;
 }
 
@@ -154,7 +155,7 @@ eachShape(void *ptr, void* unused)
 	[[Director sharedDirector] setDisplayFPS:YES];
 
 	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];	
+	[[Director sharedDirector] setMultipleTouchEnabled:YES];	
 	
 		
 	Scene *scene = [Scene node];
