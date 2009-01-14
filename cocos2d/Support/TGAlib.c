@@ -33,6 +33,9 @@ void tgaLoadHeader(FILE *file, tImageTGA *info) {
 	fread(&info->pixelDepth, sizeof(unsigned char), 1, file);
 
 	fread(&cGarbage, sizeof(unsigned char), 1, file);
+	
+	info->flipped = 0;
+	if ( cGarbage & 0x20 ) info->flipped = 1;
 }
 
 // loads the image pixels. You shouldn't call this function directly
@@ -116,6 +119,27 @@ void tgaLoadRLEImageData(FILE *file, tImageTGA *info)
 	}
 }
 
+void tgaFlipImage( tImageTGA *info )
+{
+	// mode equal the number of components for each pixel
+	int mode = info->pixelDepth / 8;
+	int rowbytes = info->width*mode;
+	unsigned char *row = (unsigned char *)malloc(rowbytes);
+	int y;
+	
+	if (row == NULL) return;
+	
+	for( y = 0; y < (info->height/2); y++ )
+	{
+		memcpy(row, &info->imageData[y*rowbytes],rowbytes);
+		memcpy(&info->imageData[y*rowbytes], &info->imageData[(info->height-(y+1))*rowbytes], rowbytes);
+		memcpy(&info->imageData[(info->height-(y+1))*rowbytes], row, rowbytes);
+	}
+	
+	free(row);
+	info->flipped = 0;
+}
+
 // this is the function to call when we want to load an image
 tImageTGA * tgaLoad(const char *filename) {
 	
@@ -187,6 +211,13 @@ tImageTGA * tgaLoad(const char *filename) {
 	}
 	fclose(file);
 	info->status = TGA_OK;
+	
+	if ( info->flipped )
+	{
+		tgaFlipImage( info );
+		if ( info->flipped ) info->status = TGA_ERROR_MEMORY;
+	}
+	
 	return(info);
 }
 

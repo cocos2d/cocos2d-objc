@@ -24,6 +24,7 @@ typedef struct sImageTGA {
 	unsigned char type, pixelDepth;
 	short int width, height;
 	unsigned char *imageData;
+	int flipped;
 } tImageTGA;
 
 // load the image header fields. We only keep those that matter!
