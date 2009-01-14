@@ -289,7 +289,7 @@
 	
 	while (cn.parent != nil) {
 		cn = cn.parent;
-		cpvadd( ret,  cn.position );
+		ret = cpvadd( ret,  cn.position );
 	}
 	
 	return ret;

@@ -48,6 +48,8 @@ typedef struct sParticle
 	cpVect gravity;
 
 	// position is from "superclass" CocosNode
+	// Emitter source position
+	cpVect source;
 	// Position variance
 	cpVect posVar;
 	
@@ -130,6 +132,8 @@ typedef struct sParticle
 @property (readwrite,assign) cpVect gravity;
 /** How many seconds the emitter wil run. -1 means 'forever' */
 @property (readwrite,assign) float duration;
+/** Source location of particles respective to emitter location */
+@property (readwrite,assign) cpVect source;
 /** Position variance of the emitter */
 @property (readwrite,assign) cpVect posVar;
 /** life, and life variation of each particle */
