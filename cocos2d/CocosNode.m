@@ -590,7 +590,8 @@
 	}
 
 	[scheduledSelectors removeObjectForKey: NSStringFromSelector(selector) ];
-	[[Scheduler sharedScheduler] unscheduleTimer:timer];
+	if( isRunning )
+		[[Scheduler sharedScheduler] unscheduleTimer:timer];
 }
 
 - (void) activateTimers

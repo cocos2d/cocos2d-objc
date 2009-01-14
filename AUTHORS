@@ -14,10 +14,13 @@ Contributors (alphabetically ordered):
     * Codemattic: patches for CocosNode, MenuItemFont
     * effervens: patches for Director
 	* Ernesto Corvi: author of TGA RLE support, patches for TextureMgr, Sprite
+	* Favo Young: patch for unschedule timer in CocosNode
 	* Fradj Johann: patches for CocosNode, Layer, MultiplexLayer
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
 	* Joe Vennix: patches for CocosNode
+	* kermidt.zed: patches for absolutePosition in CocosNode
+	* lhunath: added ParticleRain, added source for particles
     * lukeman: patches for MenuItem
 	* Mitch: patches for Menu, author of MenuItemToggle
 	* Math Sephton: patches for Demos & License
