@@ -16,6 +16,7 @@
 // cocos2d
 #import "ParticleSystems.h"
 #import "TextureMgr.h"
+#import "Director.h"
 
 //
 // ParticleFireworks
@@ -756,11 +757,11 @@
 	gravity.y = -1;
 	
 	// angle
-	angle = 90;
+	angle = -90;
 	angleVar = 5;
 	
 	// speed of particles
-	speed = 1;
+	speed = 5;
 	speedVar = 1;
 	
 	// radial
@@ -772,9 +773,9 @@
 	tangentialAccelVar = 1;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 490;
-	posVar.x = 160;
+	position.x = [[Director sharedDirector] winSize].size.width / 2;
+	position.y = [[Director sharedDirector] winSize].size.height + 10;
+	posVar.x = [[Director sharedDirector] winSize].size.width / 2;
 	posVar.y = 00;
 	
 	// life of particles
@@ -782,8 +783,8 @@
 	lifeVar = 15;
 	
 	// size, in pixels
-	size = 15.0f;
-	sizeVar = 10.0f;
+	size = 10.0f;
+	sizeVar = 5.0f;
 	
 	// emits per second
 	emissionRate = 10;
@@ -801,6 +802,85 @@
 	endColor.g = 1.0f;
 	endColor.b = 1.0f;
 	endColor.a = 0.0f;
+	endColorVar.r = 0.0f;
+	endColorVar.g = 0.0f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
+	
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	[texture retain];
+	
+	// additive
+	blendAdditive = NO;
+	
+	return self;
+}
+@end
+
+@implementation ParticleRain
+-(id) init
+{
+	return [self initWithTotalParticles:1000];
+}
+
+-(id) initWithTotalParticles:(int)p
+{
+	if( !(self=[super initWithTotalParticles:p]) )
+		return nil;
+	
+	// duration
+	duration = -1;
+	
+	// gravity
+	gravity.x = 10;
+	gravity.y = -10;
+	
+	// angle
+	angle = -90;
+	angleVar = 5;
+	
+	// speed of particles
+	speed = 130;
+	speedVar = 30;
+	
+	// radial
+	radialAccel = 0;
+	radialAccelVar = 1;
+	
+	// tagential
+	tangentialAccel = 0;
+	tangentialAccelVar = 1;
+	
+	// emitter position
+	position.x = [[Director sharedDirector] winSize].size.width / 2;
+	position.y = [[Director sharedDirector] winSize].size.height;
+	posVar.x = [[Director sharedDirector] winSize].size.width / 2;
+	posVar.y = 00;
+	
+	// life of particles
+	life = 4.5f;
+	lifeVar = 0;
+	
+	// size, in pixels
+	size = 4.0f;
+	sizeVar = 2.0f;
+	
+	// emits per second
+	emissionRate = 20;
+	
+	// color of particles
+	startColor.r = 0.7f;
+	startColor.g = 0.8f;
+	startColor.b = 1.0f;
+	startColor.a = 1.0f;
+	startColorVar.r = 0.0f;
+	startColorVar.g = 0.0f;
+	startColorVar.b = 0.0f;
+	startColorVar.a = 0.0f;
+	endColor.r = 0.7f;
+	endColor.g = 0.8f;
+	endColor.b = 1.0f;
+	endColor.a = 0.5f;
 	endColorVar.r = 0.0f;
 	endColorVar.g = 0.0f;
 	endColorVar.b = 0.0f;

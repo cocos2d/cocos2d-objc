@@ -36,7 +36,7 @@
 
 @implementation ParticleSystem
 @synthesize active, duration;
-@synthesize posVar;
+@synthesize source, posVar;
 @synthesize particleCount;
 @synthesize life, lifeVar;
 @synthesize angle, angleVar;
@@ -131,8 +131,8 @@
 	cpVect v;
 
 	// position
-	particle->pos.x = posVar.x * RANDOM_FLOAT();
-	particle->pos.y = posVar.y * RANDOM_FLOAT();
+	particle->pos.x = source.x + posVar.x * RANDOM_FLOAT();
+	particle->pos.y = source.y + posVar.y * RANDOM_FLOAT();
 	
 	// direction
 	float a = DEGREES_TO_RADIANS( angle + angleVar * RANDOM_FLOAT() );

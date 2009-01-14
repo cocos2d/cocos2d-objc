@@ -73,3 +73,9 @@
 {
 }
 @end
+
+//! Rain particle system
+@interface ParticleRain : ParticleSystem
+{
+}
+@end
