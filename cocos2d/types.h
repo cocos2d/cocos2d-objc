@@ -19,18 +19,18 @@
 //! RGB color composed of bytes. 3 chars
 typedef struct _ccRGBB
 {
-	char	r;
-	char	g;
-	char	b;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 } ccRGBB;
 
 //! RGBA color composed of bytes. 4 chars
 typedef struct _ccColorB
 {
-	char r;
-	char g;
-	char b;
-	char a;
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
 } ccColorB;
 
 //! RGBA color composed of floats. 4 floats
