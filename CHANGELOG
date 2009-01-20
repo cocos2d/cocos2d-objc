@@ -3,6 +3,8 @@ version 0.6.3 - xx-Jan-2009
  . CocosNode: unschedule timers only when running (issue #142)
  . Particles: added ParticleRain (issue #136)
  . Particles: center of emitter can be moved independently from position (issue #138)
+ . TileMapAtlas: fixed bug when using TGA files (issue #124)
+ . TileMapAtlas: supports up to 255 chars (issue #153)
 
 version 0.6.2 - 24-Dec-2008
  . Actions: Accelerate & Speed ratios can be modified at runtime (issue #127)
