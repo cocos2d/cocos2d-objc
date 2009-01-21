@@ -77,8 +77,14 @@ static TextureMgr *sharedTextureMgr;
 	if( (tex=[textures objectForKey: fileimage] ) ) {
 		return tex;
 	}
+	
+	// Split up directory and filename
+	NSMutableArray *imagePathComponents = [NSMutableArray arrayWithArray:[fileimage pathComponents]];
+	NSString *imageFilename = [imagePathComponents lastObject];
+	[imagePathComponents removeLastObject];
+	NSString *imageDirectory = [NSString pathWithComponents:imagePathComponents];
 
-	tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:fileimage ofType:nil] ] ];
+	tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:imageFilename ofType:nil inDirectory:imageDirectory] ] ];
 	[textures setObject: tex forKey:fileimage];
 	
 	return [tex autorelease];
