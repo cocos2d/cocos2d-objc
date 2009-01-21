@@ -2,6 +2,7 @@ version 0.6.3 - xx-Jan-2009
  . Actions: ScaleTo & ScaleBy supports X and Y factors (issue #156)
  . CocosNode: fixed absolutePosition (issue #140)
  . CocosNode: unschedule timers only when running (issue #142)
+ . Menu: MenuItemToggle supports assigning the selectedIndex (issue #154)
  . Particles: added ParticleRain (issue #136)
  . Particles: center of emitter can be moved independently from position (issue #138)
  . TileMapAtlas: fixed bug when using TGA files (issue #124)

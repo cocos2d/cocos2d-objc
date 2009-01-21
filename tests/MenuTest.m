@@ -26,6 +26,9 @@
 	id t4 = [MenuItemFont itemFromString: @"Volume 100%"];
 	MenuItemToggle *item5 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallbackVolume:) items:t1,t2,t3,t4,nil];
 
+	// you can change the one of the items by doing this
+	item5.selectedIndex = 2;
+
 	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	[[item6 label] setRGB:255:0:32];
