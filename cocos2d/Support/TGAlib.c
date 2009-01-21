@@ -3,6 +3,7 @@
 //
 // sources from: http://www.lighthouse3d.com/opengl/terrain/index.php3?tgasource
 //
+// TGA RLE compression support by Ernesto Corvi
 
 #include <stdio.h>
 #include <stdlib.h>

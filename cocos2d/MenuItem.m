@@ -380,8 +380,6 @@ enum {
 //
 @implementation MenuItemToggle
 
-@synthesize selectedIndex;
-
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (MenuItem*) item, ...
 {
 	va_list args;
@@ -419,6 +417,21 @@ enum {
 	[subItems release];
 	[super dealloc];
 }
+
+-(void)setSelectedIndex:(int)index
+{
+	if( index != selectedIndex ) {
+		selectedIndex=index;
+		[self removeByTag:kCurrentItem];
+		[self add: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+	}
+}
+
+-(int) selectedIndex
+{
+	return selectedIndex;
+}
+
 
 -(void) selected
 {

@@ -9,6 +9,7 @@ Contributors (alphabetically ordered):
     * Alejandro Cura: author of AccelViewPortDemo
 	* Alex Winston: author of ParticleSnow, patches for CocosNode
 	* Andy Fitter: patches for Texture2D
+	* Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
     * Brian Hammond: patches for Demos
 	* Clinth Harris: patches for Doc generator script
     * Codemattic: patches for CocosNode, MenuItemFont
