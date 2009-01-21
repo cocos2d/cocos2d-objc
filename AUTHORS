@@ -1,36 +1,53 @@
 cocos2d for iPhone authors
 --------------------------
 
-Maintainer / main developer: Ricardo Quesada
+Main developer: Ricardo Quesada
 
 Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
 
+Big thanks to the cocos2d for iPhone community:
+       http://groups.google.com/group/cocos2d-iphone-discuss
+
+
 Contributors (alphabetically ordered):
     * Alejandro Cura: author of AccelViewPortDemo
-	* Alex Winston: author of ParticleSnow, patches for CocosNode
+	* Alex Winston: author of ParticleSnow
+	                patches for CocosNode
 	* Andy Fitter: patches for Texture2D
 	* Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
     * Brian Hammond: patches for Demos
 	* Clinth Harris: patches for Doc generator script
-    * Codemattic: patches for CocosNode, MenuItemFont
+    * Codemattic: patches for CocosNode
+	              patches fro MenuItemFont
     * effervens: patches for Director
-	* Ernesto Corvi: author of TGA RLE support, patches for TextureMgr, Sprite
+	* Ernesto Corvi: author of TGA RLE support
+	                 patches for TextureMgr
+					 patches for Sprite
 	* Favo Yang: patch for unschedule timer in CocosNode
-	* Fradj Johann: patches for CocosNode, Layer, MultiplexLayer
+	* Fradj Johann: patches for CocosNode
+	                patches for Layer
+					patches for MultiplexLayer
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
-	* lhunath: added ParticleRain, added source for particles
+	* lhunath: author of ParticleRain
+	           added suport for particles' source
     * lukeman: patches for MenuItem
-	* Mitch: patches for Menu, author of MenuItemToggle
-	* Math Sephton: patches for Demos & License
+	* Mitch: patches for Menu
+	         author of MenuItemToggle
+	* Math Sephton: patches for Demos
+	                patches for License
     * ratman: patch for TileMapAtlas: it works with 255 tiles
+			  patch for TextureMgr: supports directory within image names
     * Serge Kolgan: patches for CocosNode
 	* slipster216: patch for ScaleTo/By action to support X and Y.
-    * Steve Israelson: patches for Scheduler, Actions, Transitions
+    * Steve Israelson: patches for Scheduler
+				pactches for Actions
+				patches for Transitions
 	* Steve Oldmeadow: patches for Texture2D
     * yarrington: patches for Director
+
 
 
 Am I missing someone ? Oops, sorry. Send me an email.

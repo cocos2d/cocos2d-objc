@@ -5,6 +5,7 @@ version 0.6.3 - xx-Jan-2009
  . Menu: MenuItemToggle supports assigning the selectedIndex (issue #152)
  . Particles: added ParticleRain (issue #136)
  . Particles: center of emitter can be moved independently from position (issue #138)
+ . TextureMgr: supports directories withing the image name (issue #151)
  . TileMapAtlas: fixed bug when using TGA files (issue #124)
  . TileMapAtlas: supports up to 255 chars (issue #153)
 
