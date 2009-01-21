@@ -57,6 +57,7 @@ Example:
 -(BOOL) isDone;
 /** returns a reversed action */
 - (IntervalAction*) reverse;
+
 @end
 
 /** Runs actions sequentially, one after another
@@ -188,15 +189,23 @@ Example:
  */
 @interface ScaleTo : IntervalAction <NSCopying>
 {
-	float scale;
-	float startScale;
-	float endScale;
-	float delta;
+	float scaleX;
+	float scaleY;
+	float startScaleX;
+	float startScaleY;
+	float endScaleX;
+	float endScaleY;
+	float deltaX;
+	float deltaY;
 }
-/** creates the action */
+/** creates the action with the same scale factor for X and Y */
 +(id) actionWithDuration: (ccTime) t scale:(float) s;
-/** initializes the action */
+/** initializes the action with the same scale factor for X and Y */
 -(id) initWithDuration: (ccTime) t scale:(float) s;
+/** creates the action with and X factor and a Y factor */
++(id) actionWithDuration: (ccTime) t scaleX:(float) sx scaleY:(float)sy;
+/** initializes the action with and X factor and a Y factor */
+-(id) initWithDuration: (ccTime) t scaleX:(float) sx scaleY:(float)sy;
 @end
 
 /** Scales a CocosNode object a zoom factor by modifying it's scale attribute.
@@ -288,6 +297,7 @@ Example:
 /** initializes the action */
 -(id) initWithAction: (IntervalAction*) action speed:(ccTime)s;
 @end
+
 
 /** Delays the action a certain amount of seconds
 */

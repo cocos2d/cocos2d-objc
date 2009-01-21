@@ -1,4 +1,5 @@
 version 0.6.3 - xx-Jan-2009
+ . Actions: ScaleTo & ScaleBy supports X and Y factors (issue #156)
  . CocosNode: fixed absolutePosition (issue #140)
  . CocosNode: unschedule timers only when running (issue #142)
  . Particles: added ParticleRain (issue #136)
