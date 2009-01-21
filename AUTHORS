@@ -26,6 +26,7 @@ Contributors (alphabetically ordered):
 	* Math Sephton: patches for Demos & License
     * ratman: patch for TileMapAtlas: it works with 255 tiles
     * Serge Kolgan: patches for CocosNode
+	* slipster216: patch for ScaleTo/By action to support X and Y.
     * Steve Israelson: patches for Scheduler, Actions, Transitions
 	* Steve Oldmeadow: patches for Texture2D
     * yarrington: patches for Director
