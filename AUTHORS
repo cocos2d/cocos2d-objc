@@ -29,6 +29,8 @@ Contributors (alphabetically ordered):
 					patches for MultiplexLayer
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
+	* Jason Booth: author of EaseAction
+			patch for ScaleTo/By action to support X and Y.
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
 			patches for Labels in Texture2D
@@ -42,7 +44,6 @@ Contributors (alphabetically ordered):
     * ratman: patch for TileMapAtlas: it works with 255 tiles
 			  patch for TextureMgr: supports directory within image names
     * Serge Kolgan: patches for CocosNode
-	* slipster216: patch for ScaleTo/By action to support X and Y.
     * Steve Israelson: patches for Scheduler
 				pactches for Actions
 				patches for Transitions
