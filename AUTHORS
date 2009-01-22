@@ -31,6 +31,7 @@ Contributors (alphabetically ordered):
 	* Jacob Eiting: patches for Primitives
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
+			patches for Labels in Texture2D
 	* lhunath: author of ParticleRain
 	           added suport for particles' source
     * lukeman: patches for MenuItem
