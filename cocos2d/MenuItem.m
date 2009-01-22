@@ -106,10 +106,8 @@ enum {
 -(CGRect) rect
 {
 	NSAssert(1,@"MenuItem.rect must be overriden");
-	
-	// to make the compiler happy
-	CGRect a;
-	return a;
+
+	return CGRectNull;
 }
 
 -(CGSize) contentSize
