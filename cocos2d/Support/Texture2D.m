@@ -266,6 +266,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	font = [UIFont fontWithName:name size:size];
 	
+	// issue #154
+	dimensions = [string sizeWithFont:font constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
+	if (dimensions.width == 0 || dimensions.height == 0)
+	{
+		dimensions.width = 1;
+		dimensions.height = 1;
+	}
+	
 	width = dimensions.width;
 	if((width != 1) && (width & (width - 1))) {
 		i = 1;
