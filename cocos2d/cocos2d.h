@@ -40,6 +40,7 @@
 #import "Director.h"
 #import "InstantAction.h"
 #import "IntervalAction.h"
+#import "EaseAction.h"
 #import "Label.h"
 #import "Layer.h"
 #import "Menu.h"
