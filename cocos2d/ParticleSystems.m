@@ -536,8 +536,8 @@
 	// emitter position
 	position.x = 160;
 	position.y = 240;
-	posVar.x = 00;
-	posVar.y = 00;
+	posVar.x = 0;
+	posVar.y = 0;
 	
 	// life of particles
 	life = 12;
@@ -618,8 +618,8 @@
 	// emitter position
 	position.x = 160;
 	position.y = 240;
-	posVar.x = 00;
-	posVar.y = 00;
+	posVar.x = 0;
+	posVar.y = 0;
 	
 	// life of particles
 	life = 5.0f;
@@ -776,7 +776,7 @@
 	position.x = [[Director sharedDirector] winSize].size.width / 2;
 	position.y = [[Director sharedDirector] winSize].size.height + 10;
 	posVar.x = [[Director sharedDirector] winSize].size.width / 2;
-	posVar.y = 00;
+	posVar.y = 0;
 	
 	// life of particles
 	life = 45;
@@ -855,7 +855,7 @@
 	position.x = [[Director sharedDirector] winSize].size.width / 2;
 	position.y = [[Director sharedDirector] winSize].size.height;
 	posVar.x = [[Director sharedDirector] winSize].size.width / 2;
-	posVar.y = 00;
+	posVar.y = 0;
 	
 	// life of particles
 	life = 4.5f;
