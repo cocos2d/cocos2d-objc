@@ -27,9 +27,9 @@
 	NSMutableArray *frames;
 }
 
-@property (readwrite,assign) NSString * name;
+@property (readwrite,copy) NSString * name;
 @property (readwrite,assign) float delay;
-@property (readwrite,assign) NSMutableArray *frames;
+@property (readwrite,retain) NSMutableArray *frames;
 
 /** initializes an Animation with name and delay */
 -(id) initWithName: (NSString*) name delay:(float)delay;

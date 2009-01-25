@@ -118,7 +118,7 @@ enum {
 @property(readwrite,assign) cpVect position;
 /** A Camera object that lets you move the node using camera coordinates.
  * If you use the Camera then position, scale & rotation won't be used */
-@property(readwrite,assign) Camera* camera;
+@property(readwrite,retain) Camera* camera;
 /** Whether of not the node is visible. Default is YES */
 @property(readwrite,assign) BOOL visible;
 /** The transformation anchor point. For Sprite and Label the transform anchor point is (width/2, height/2) */
