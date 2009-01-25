@@ -532,11 +532,18 @@
 	
 	// call all actions
 	for( Action *action in actions ) {
-		[action step: dt];
+        [[action retain] step: dt];
+        if(actions == nil) {
+            [action release];
+            return;
+        }
+        
 		if( [action isDone] ) {
 			[action stop];
 			[actionsToRemove addObject: action];
 		}
+        
+        [action release];
 	}
 }
 
