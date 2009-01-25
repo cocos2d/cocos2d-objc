@@ -186,7 +186,7 @@ cpSegmentShapePointQuery(cpShape *shape, cpVect p){
 	
 	// Calculate normal distance from segment.
 	cpFloat dn = cpvdot(seg->tn, p) - cpvdot(seg->ta, seg->tn);
-	cpFloat dist = fabs(dn) - seg->r;
+	cpFloat dist = fabsf(dn) - seg->r;
 	if(dist > 0.0f) return 0;
 	
 	// Calculate tangential distance along segment.

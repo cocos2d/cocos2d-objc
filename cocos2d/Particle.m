@@ -31,7 +31,7 @@
 // support
 #import "OpenGL_Internal.h"
 
-#define RANDOM_FLOAT() (((float)random() / (float)0x3fffffff )-1.0f)
+#define RANDOM_FLOAT() ((random() / (float)0x3fffffff )-1.0f)
 
 
 @implementation ParticleSystem
@@ -135,7 +135,7 @@
 	particle->pos.y = source.y + posVar.y * RANDOM_FLOAT();
 	
 	// direction
-	float a = DEGREES_TO_RADIANS( angle + angleVar * RANDOM_FLOAT() );
+	float a = (cpFloat)DEGREES_TO_RADIANS( angle + angleVar * RANDOM_FLOAT() );
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * RANDOM_FLOAT();
@@ -175,8 +175,8 @@
 
 -(void) step: (ccTime) dt
 {
-	if( active ) {
-		float rate = 1.0 / emissionRate;
+	if( active && emissionRate ) {
+		float rate = 1.0f / emissionRate;
 		emitCounter += dt;
 		while( particleCount < totalParticles && emitCounter > rate ) {
 			[self addParticle];

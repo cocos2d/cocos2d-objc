@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 	
-typedef double cpFloat;
+typedef float cpFloat;
 	
 static inline cpFloat
 cpfmax(cpFloat a, cpFloat b)
