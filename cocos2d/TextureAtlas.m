@@ -26,12 +26,12 @@
 
 #pragma mark TextureAtlas - alloc & init
 
-+(id) textureAtlasWithFile:(NSString*) file capacity: (int) n
++(id) textureAtlasWithFile:(NSString*) file capacity: (NSUInteger) n
 {
 	return [[[self alloc] initWithFile:file capacity:n] autorelease];
 }
 
--(id) initWithFile:(NSString*)file capacity:(int)n
+-(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
 {
 	if( ! (self=[super init]) )
 		return nil;
@@ -78,7 +78,7 @@
 
 -(void) initIndices
 {
-	for( int i=0;i<totalQuads;i++) {
+	for( NSUInteger i=0;i<totalQuads;i++) {
 		indices[i*6+0] = i*4+0;
 		indices[i*6+1] = i*4+1;
 		indices[i*6+2] = i*4+2;
@@ -91,7 +91,7 @@
 
 #pragma mark TextureAtlas - Updates
 
--(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(int) n
+-(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(NSUInteger) n
 {
 	
 	NSAssert( n >= 0 && n < totalQuads, @"updateQuadWithTexture: Invalid index");
@@ -102,7 +102,7 @@
 
 #pragma mark TextureAtlas - Resize
 
--(void) resizeCapacity: (int) n
+-(void) resizeCapacity: (NSUInteger) n
 {
 	if( n == totalQuads )
 		return;
@@ -138,7 +138,7 @@
 	return [self drawNumberOfQuads: totalQuads];
 }
 
--(void) drawNumberOfQuads: (int) n
+-(void) drawNumberOfQuads: (NSUInteger) n
 {
 //	int	minFilter, magFilter;
 //	int	wrapS, wrapT;

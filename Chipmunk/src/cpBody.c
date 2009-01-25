@@ -89,7 +89,7 @@ cpBodySetMoment(cpBody *body, cpFloat i)
 void
 cpBodySetAngle(cpBody *body, cpFloat a)
 {
-	body->a = fmod(a, (cpFloat)M_PI*2.0f);
+	body->a = fmodf(a, (cpFloat)M_PI*2.0f);
 	body->rot = cpvforangle(a);
 }
 
@@ -97,7 +97,7 @@ void
 cpBodySlew(cpBody *body, cpVect pos, cpFloat dt)
 {
 	cpVect delta = cpvsub(pos, body->p);
-	body->v = cpvmult(delta, 1.0/dt);
+	body->v = cpvmult(delta, 1.0f/dt);
 }
 
 void

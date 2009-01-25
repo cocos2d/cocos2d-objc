@@ -74,7 +74,7 @@
 +(float) getZEye
 {
 	CGRect s = [[Director sharedDirector] displaySize];
-	return ( s.size.height / 1.1566 );
+	return ( s.size.height / 1.1566f );
 }
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z

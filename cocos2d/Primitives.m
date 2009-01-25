@@ -60,7 +60,7 @@ void drawPoly( float *poli, int points )
 
 void drawCircle( float x, float y, float r, float a, int segs)
 {
-	const float coef = 2.0*M_PI/(float)segs;
+	const float coef = 2.0f * (float)M_PI/segs;
 	
 	float *vertices = malloc( sizeof(float)*2*(segs+2));
 	if( ! vertices )
@@ -71,8 +71,8 @@ void drawCircle( float x, float y, float r, float a, int segs)
 	for(int i=0;i<=segs;i++)
 	{
 		float rads = i*coef;
-		float j = r*cos(rads + a) + x;
-		float k = r*sin(rads + a) + y;
+		float j = r * cosf(rads + a) + x;
+		float k = r * sinf(rads + a) + y;
 
 		vertices[i*2] = j;
 		vertices[i*2+1] =k;

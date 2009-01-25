@@ -131,7 +131,7 @@
 	b = (color>>8) & 0xff;
 	a = (color) & 0xff;
 
-	for( int i=0; i < sizeof(squareColors) / sizeof(squareColors[0]);i++ )
+	for( NSUInteger i=0; i < sizeof(squareColors) / sizeof(squareColors[0]);i++ )
 	{
 		if( i % 4 == 0 )
 			squareColors[i] = r;
@@ -157,7 +157,7 @@
 
 - (void) initWidth: (GLfloat) w height:(GLfloat) h
 {
-	for (int i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
+	for (NSUInteger i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
 		squareVertices[i] = 0.0f;
 	
 	squareVertices[2] = w;

@@ -65,9 +65,9 @@ void tgaLoadImageData(FILE *file, tImageTGA *info) {
 // loads the RLE encoded image pixels. You shouldn't call this function directly
 void tgaLoadRLEImageData(FILE *file, tImageTGA *info)
 {
-	int mode,total,i, index = 0;
+	unsigned int mode,total,i, index = 0;
 	unsigned char aux[4], runlength = 0;
-	int skip = 0, flag = 0;
+	unsigned int skip = 0, flag = 0;
 	
 	// mode equal the number of components for each pixel
 	mode = info->pixelDepth / 8;

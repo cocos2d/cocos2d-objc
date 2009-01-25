@@ -45,13 +45,13 @@ cpvnormalize(const cpVect v)
 cpVect
 cpvforangle(const cpFloat a)
 {
-	return cpv(cos(a), sin(a));
+	return cpv(cosf(a), sinf(a));
 }
 
 cpFloat
 cpvtoangle(const cpVect v)
 {
-	return atan2(v.y, v.x);
+	return atan2f(v.y, v.x);
 }
 
 char*

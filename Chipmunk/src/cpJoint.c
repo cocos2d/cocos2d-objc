@@ -163,7 +163,7 @@ cpPinJointInit(cpPinJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVect an
 	cpVect p2 = cpvadd(b->p, cpvrotate(anchr2, b->rot));
 	joint->dist = cpvlength(cpvsub(p2, p1));
 
-	joint->jnAcc = 0.0;
+	joint->jnAcc = 0.0f;
 	
 	return joint;
 }
@@ -189,7 +189,7 @@ slideJointPreStep(cpJoint *joint, cpFloat dt_inv)
 	
 	cpVect delta = cpvsub(cpvadd(b->p, jnt->r2), cpvadd(a->p, jnt->r1));
 	cpFloat dist = cpvlength(delta);
-	cpFloat pdist = 0.0;
+	cpFloat pdist = 0.0f;
 	if(dist > jnt->max) {
 		pdist = dist - jnt->max;
 	} else if(dist < jnt->min) {
@@ -277,7 +277,7 @@ cpSlideJointInit(cpSlideJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVec
 	joint->min = min;
 	joint->max = max;
 	
-	joint->jnAcc = 0.0;
+	joint->jnAcc = 0.0f;
 	
 	return joint;
 }

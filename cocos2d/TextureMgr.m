@@ -143,7 +143,7 @@ static TextureMgr *sharedTextureMgr;
 	
 	NSArray *keys = [textures allKeysForObject:tex];
 	
-	for( int i = 0; i < [keys count]; i++ )
+	for( NSUInteger i = 0; i < [keys count]; i++ )
 		[textures removeObjectForKey:[keys objectAtIndex:i]];
 }
 @end

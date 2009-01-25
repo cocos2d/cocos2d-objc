@@ -204,7 +204,7 @@ static int _pixelFormat = RGB565;
 		dt = 0;
 		nextDeltaTimeZero = NO;
 	} else {
-		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0;
+		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0f;
 		dt = MAX(0,dt);
 	}
 	
