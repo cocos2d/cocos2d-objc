@@ -173,15 +173,10 @@ static int _pixelFormat = RGB565;
 	
 	/* draw the scene */
 	[runningScene visit];
-	
-	glPopMatrix();
-	
-	if( displayFPS ) {
-		glPushMatrix();
-		[self applyLandscape];
+	if( displayFPS )
 		[self showFPS];
+	
 		glPopMatrix();
-	}
 	
 	/* swap buffers */
 	[self swapBuffers];	
