@@ -94,6 +94,9 @@
 	// multiple touches or not ?
 //	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 	
+	// show FPS
+	[[Director sharedDirector] setDisplayFPS:YES];
+	
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
 	

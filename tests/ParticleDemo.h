@@ -67,3 +67,8 @@
 {
 }
 @end
+
+@interface DemoRain : ParticleDemo
+{
+}
+@end

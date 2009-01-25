@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 		@"DemoSmoke",
 		@"DemoExplosion",
 		@"DemoSnow",
+		@"DemoRain",
 };
 
 Class nextAction()
@@ -246,6 +247,19 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"ParticleSnow";
+}
+@end
+
+@implementation DemoRain
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [ParticleRain node];
+	[self add: emitter z:0 tag:kTagEmitter];
+}
+-(NSString *) title
+{
+	return @"ParticleRain";
 }
 @end
 

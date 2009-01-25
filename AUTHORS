@@ -36,11 +36,17 @@ Contributors (alphabetically ordered):
 			patches for Labels in Texture2D
 	* lhunath: author of ParticleRain
 	           added suport for particles' source
+			   fixed memory leaks in Sprite
+			   fixed possible crashes in Sprite, Particles
+			   optimizations in the whole code (using floats, not doubles)
+			   removed useless GL commands in director
+			   fixed Menu aligments
     * lukeman: patches for MenuItem
 	* Mitch: patches for Menu
 	         author of MenuItemToggle
 	* Math Sephton: patches for Demos
 	                patches for License
+	* rac5372: compiler warning in MenuItem
     * ratman: patch for TileMapAtlas: it works with 255 tiles
 			  patch for TextureMgr: supports directory within image names
     * Serge Kolgan: patches for CocosNode

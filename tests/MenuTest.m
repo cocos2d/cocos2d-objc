@@ -183,6 +183,9 @@
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 
+	// show FPS
+	[[Director sharedDirector] setDisplayFPS:YES];
+
 	// multiple touches or not ?
 //	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 	
