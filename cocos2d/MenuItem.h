@@ -123,12 +123,12 @@
 /** A MenuItemToggle */
 @interface MenuItemToggle : MenuItem
 {
-	int selectedIndex;
+	NSUInteger selectedIndex;
 	NSMutableArray* subItems;
 }
 
 /** returns the selected item */
-@property (readwrite) int selectedIndex;
+@property (readwrite) NSUInteger selectedIndex;
 
 /** creates a menu item from a list of items with a target/selector */
 +(id) itemWithTarget:(id)t selector:(SEL)s items:(MenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
