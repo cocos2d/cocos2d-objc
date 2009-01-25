@@ -364,6 +364,8 @@
 		50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DB1BD10E1C1EF000A89DFF /* ParticleDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */; };
+		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
+		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* types.h */; };
 /* End PBXBuildFile section */
 
@@ -690,6 +692,8 @@
 		50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DB1BCE0E1C1EF000A89DFF /* ParticleDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleDemo.h; path = tests/ParticleDemo.h; sourceTree = "<group>"; };
 		50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleDemo.m; path = tests/ParticleDemo.m; sourceTree = "<group>"; };
+		50F7B2760F28DE7C00057537 /* EaseAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseAction.h; sourceTree = "<group>"; };
+		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -979,6 +983,8 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50F7B2760F28DE7C00057537 /* EaseAction.h */,
+				50F7B2770F28DE7C00057537 /* EaseAction.m */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 				5066020F0E38A70D000B500E /* Scheduler.h */,
@@ -1250,6 +1256,7 @@
 				501CCFB10E99657C00B86F68 /* OpenGL_Internal.h in Headers */,
 				501CCFB20E99657C00B86F68 /* Texture2D.h in Headers */,
 				501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */,
+				50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1934,6 +1941,7 @@
 				501CCFAF0E99657C00B86F68 /* glu.c in Sources */,
 				501CCFB30E99657C00B86F68 /* Texture2D.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.c in Sources */,
+				50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

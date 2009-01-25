@@ -52,6 +52,9 @@
 	
 	// menu in the center of the screen
 	CGRect r = [[Director sharedDirector] winSize];
+	
+	// XXX: in v0.7, winSize should return the visible size
+	// XXX: so the bar calculation should be done there
 	CGRect s = [[UIApplication sharedApplication] statusBarFrame];
 	if([[Director sharedDirector] landscape])
 	    r.size.height -= s.size.width;

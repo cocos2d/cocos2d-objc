@@ -416,7 +416,7 @@ enum {
 	[super dealloc];
 }
 
--(void)setSelectedIndex:(int)index
+-(void)setSelectedIndex:(NSUInteger)index
 {
 	if( index != selectedIndex ) {
 		selectedIndex=index;
@@ -425,7 +425,7 @@ enum {
 	}
 }
 
--(int) selectedIndex
+-(NSUInteger) selectedIndex
 {
 	return selectedIndex;
 }
