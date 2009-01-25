@@ -96,7 +96,7 @@ and when to execute the Scenes
 /** The FPS value */
 @property (readwrite, assign) NSTimeInterval animationInterval;
 /** The UIKit window. Use it to embed UIKit object within cocos2d */
-@property (readwrite,assign) UIWindow* window;
+@property (readwrite, retain) UIWindow* window;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (readwrite, assign) BOOL displayFPS;
 /** Whether or not to propagate the touch events to the running Scene. Default YES */

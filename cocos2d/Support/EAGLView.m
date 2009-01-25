@@ -153,6 +153,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	if (oldContext != _context)
 		[EAGLContext setCurrentContext:oldContext];
+    else
+        [EAGLContext setCurrentContext:nil];
 }
 
 - (id) initWithFrame:(CGRect)frame
