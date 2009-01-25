@@ -30,7 +30,7 @@ static TextureMgr *sharedTextureMgr;
 
 + (TextureMgr *)sharedTextureMgr
 {
-	@synchronized(self)
+	@synchronized([TextureMgr class])
 	{
 		if (!sharedTextureMgr)
 			[[TextureMgr alloc] init];
@@ -43,7 +43,7 @@ static TextureMgr *sharedTextureMgr;
 
 +(id)alloc
 {
-	@synchronized(self)
+	@synchronized([TextureMgr class])
 	{
 		NSAssert(sharedTextureMgr == nil, @"Attempted to allocate a second instance of a singleton.");
 		sharedTextureMgr = [super alloc];

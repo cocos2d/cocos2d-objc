@@ -58,7 +58,7 @@ static int _pixelFormat = RGB565;
 
 + (Director *)sharedDirector
 {
-	@synchronized(self)
+	@synchronized([Director class])
 	{
 		if (!sharedDirector)
 			[[Director alloc] init];
@@ -71,7 +71,7 @@ static int _pixelFormat = RGB565;
 
 +(id)alloc
 {
-	@synchronized(self)
+	@synchronized([Director class])
 	{
 		NSAssert(sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
 		sharedDirector = [super alloc];
