@@ -431,18 +431,18 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id a1 = [MoveBy actionWithDuration:3 position:cpv(350,0)];
-	id seq =[Sequence actions: [Place actionWithPosition:cpv(60,60)], a1, nil];
-	id seq2 =[Sequence actions: [Place actionWithPosition:cpv(60,260)], [[a1 copy] autorelease], nil];
-	id rep = [Repeat actionWithAction:seq times:10];
+	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move_back = [move reverse];
 	
-	// To deaccelerate use rate:1/accel_value
-	id action = [Accelerate actionWithAction:seq2 rate:2];
-	id rep2 = [Repeat actionWithAction:action times:10];
+	id move_accel = [Accelerate actionWithAction:[[move copy] autorelease] rate:2];
+	id move_accel_back = [move_accel reverse];
 	
+	id seq1 = [Sequence actions: move, move_back, nil];
+	id seq2 = [Sequence actions: move_accel, move_accel_back, nil];
+		
 
-	[grossini do:rep];
-	[tamara do:rep2];
+	[grossini do: [RepeatForever actionWithAction:seq1]];
+	[tamara do: [RepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
