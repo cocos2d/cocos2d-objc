@@ -1,4 +1,4 @@
-version 0.6.3 - xx-Jan-2009
+version 0.6.3 - 28-Jan-2009
  . Actions: ScaleTo & ScaleBy supports X and Y factors (issue #156)
  . Actions: Added collections of Ease Actions (issue #157)
  . Chipmunk: cpFlaot is a float, not a double (issue #130)
