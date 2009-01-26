@@ -55,6 +55,7 @@
 //
 static Director *sharedDirector = nil;
 static int _pixelFormat = RGB565;
+static int _depthBufferFormat = DepthBufferNone;
 
 + (Director *)sharedDirector
 {
@@ -84,6 +85,8 @@ static int _pixelFormat = RGB565;
 - (id) init
 {
 	NSString *format;
+   GLuint depthBuffer = 0;
+   
 	//Create a full-screen window
 	winSize = [[UIScreen mainScreen] bounds];
 	window = [[UIWindow alloc] initWithFrame:winSize];
@@ -92,8 +95,13 @@ static int _pixelFormat = RGB565;
 		format = kEAGLColorFormatRGB565;
 	else
 		format = kEAGLColorFormatRGBA8;
-	
-	if( ! (self = [super initWithFrame:[window bounds] pixelFormat:format] ) )
+
+   if( _depthBufferFormat == DepthBuffer16 )
+      depthBuffer = GL_DEPTH_COMPONENT16_OES;
+   else if( _depthBufferFormat == DepthBuffer24 )
+      depthBuffer = GL_DEPTH_COMPONENT24_OES;
+
+	if( ! (self = [super initWithFrame:[window bounds] pixelFormat:format depthFormat:depthBuffer preserveBackbuffer:NO] ) )
 		return nil;
 
 	[window addSubview:self];
@@ -136,7 +144,9 @@ static int _pixelFormat = RGB565;
 
 - (void) dealloc
 {
+#if DEBUG
 	NSLog( @"deallocing %@", self);
+#endif
 
 #ifdef FAST_FPS_DISPLAY
 	[FPSLabel release];
@@ -234,6 +244,27 @@ static int _pixelFormat = RGB565;
 	_pixelFormat = format;
 }
 
++(void) setDepthBufferFormat: (int) format
+{
+   if( format != DepthBuffer16 && format != DepthBuffer24 && format != DepthBufferNone ) {
+		NSException* myException = [NSException
+                                  exceptionWithName:@"DirectorInvalidPixelFormat"
+                                  reason:@"Invalid Pixel Format for GL view"
+                                  userInfo:nil];
+		@throw myException;		
+	}
+
+   if( sharedDirector ) {
+		NSException* myException = [NSException
+                                  exceptionWithName:@"DirectorAlreadyInitialized"
+                                  reason:@"Can't change the depth buffer format after the director was initialized"
+                                  userInfo:nil];
+		@throw myException;		
+	}
+
+   _depthBufferFormat = format;
+}
+
 #pragma mark Director Scene OpenGL Helper
 
 - (void) setDefaultProjection
@@ -321,6 +352,7 @@ static int _pixelFormat = RGB565;
 	return ret;
 }
 
+// XXX: StatusBar should be considered
 - (CGRect) winSize
 {
 	CGRect r = winSize;
@@ -332,6 +364,7 @@ static int _pixelFormat = RGB565;
 	return r;
 }
 
+// XXX: StatusBar should be considered
 -(CGRect) displaySize
 {
 	return winSize;

@@ -39,6 +39,12 @@ enum {
 	RGBA8
 };
 
+enum {
+   DepthBufferNone,
+   DepthBuffer16,
+   DepthBuffer24,
+};
+
 @class LabelAtlas;
 
 /**Class that creates and handle the main Window and manages how
@@ -107,11 +113,17 @@ and when to execute the Scenes
 
 // iPhone Specific
 
-/** change default pixel format
+/** change default pixel format.
  Call this class method before any other call to the Director.
  Default pixel format: RGB565. Supported pixel formats: RGBA8 and RGB565
  */
 +(void) setPixelFormat: (int) p;
+
+/** change depth buffer format.
+ Call this class method before any other call to the Director.
+ Default depth buffer: 0 (none).  Supported: DepthBufferNone, DepthBuffer16, and DepthBuffer24
+ */
++(void) setDepthBufferFormat: (int) db;
 
 // Landscape
 

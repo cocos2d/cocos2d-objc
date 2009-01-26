@@ -29,7 +29,7 @@ Contributors (alphabetically ordered):
 					patches for MultiplexLayer
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
-	* Jason Booth: author of EaseAction
+	* Jason Booth (slipster216): author of EaseAction
 			patch for ScaleTo/By action to support X and Y.
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
@@ -46,6 +46,7 @@ Contributors (alphabetically ordered):
 	         author of MenuItemToggle
 	* Math Sephton: patches for Demos
 	                patches for License
+    * moswald: fix to set depthbuffer size on Director
 	* rac5372: compiler warning in MenuItem
     * ratman: patch for TileMapAtlas: it works with 255 tiles
 			  patch for TextureMgr: supports directory within image names
