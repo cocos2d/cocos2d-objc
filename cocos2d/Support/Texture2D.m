@@ -267,8 +267,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	font = [UIFont fontWithName:name size:size];
 	
 	// issue #154
-	dimensions = [string sizeWithFont:font constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
-	if (dimensions.width == 0 || dimensions.height == 0)
+	CGSize new_dim = [string sizeWithFont:font constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
+	if (new_dim.width == 0 || new_dim.height == 0)
 	{
 		dimensions.width = 1;
 		dimensions.height = 1;
@@ -316,10 +316,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) drawAtPoint:(CGPoint)point 
 {
-	GLfloat		coordinates[] = { 0,	_maxT,
+	GLfloat		coordinates[] = { 0.0f,	_maxT,
 								_maxS,	_maxT,
-								0,		0,
-								_maxS,	0 };
+								0.0f,	0.0f,
+								_maxS,	0.0f };
 	GLfloat		width = (GLfloat)_width * _maxS,
 				height = (GLfloat)_height * _maxT;
 
@@ -345,10 +345,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) drawInRect:(CGRect)rect
 {
-	GLfloat	 coordinates[] = {  0,		_maxT,
+	GLfloat	 coordinates[] = {  0.0f,	_maxT,
 								_maxS,	_maxT,
-								0,		0,
-								_maxS,	0  };
+								0.0f,	0.0f,
+								_maxS,	0.0f  };
 	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							0.0f,
 							rect.origin.x + rect.size.width,		rect.origin.y,							0.0f,
 							rect.origin.x,							rect.origin.y + rect.size.height,		0.0f,

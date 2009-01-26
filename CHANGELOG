@@ -5,6 +5,7 @@ version 0.6.3 - 28-Jan-2009
  . CocosNode: fixed absolutePosition (issue #140)
  . CocosNode: unschedule timers only when running (issue #142)
  . CocosNode: prevents crash under certain circumstances while executing actions (issue #141)
+ . Demos: Added Texture2dDemo example (issue #169)
  . Demos: SpritesDemo has an improved Accelerate example (issue #168)
  . Demos: ParticlesDemo has the Rain Particle example (issue #136)
  . Director: allow cleanup when deallocing the director (issue #144)
