@@ -8,6 +8,7 @@ version 0.6.3 - 28-Jan-2009
  . Demos: Added Texture2dDemo example (issue #169)
  . Demos: SpritesDemo has an improved Accelerate example (issue #168)
  . Demos: ParticlesDemo has the Rain Particle example (issue #136)
+ . Demos: Added EaseDemo showing all the ease capabilities (issue #158)
  . Director: allow cleanup when deallocing the director (issue #144)
  . Director: avoid useless GL commands when displaying FPS (issue #162)
  . Director: possibility to change the DepthBuffer size (issue #160)
