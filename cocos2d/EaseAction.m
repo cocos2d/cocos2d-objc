@@ -40,7 +40,7 @@
 -(id) copyWithZone: (NSZone*) zone
 {
 	Action *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease]];
-  return copy;
+	return copy;
 }
 
 -(void) dealloc
@@ -75,7 +75,7 @@
 {
 	[other update: (t==0) ? 0 : pow(2, 10 * (t/1 - 1)) - 1 * 0.001];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseExponentialOut actionWithAction: [other reverse]];
 }
@@ -89,7 +89,7 @@
 {
 	[other update: (t==1) ? 1 : (-pow(2, -10 * t/1) + 1)];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseExponentialIn actionWithAction: [other reverse]];
 }
@@ -120,7 +120,7 @@
 {
 	[other update: t*t];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseCubicOut actionWithAction: [other reverse]];
 }
@@ -134,10 +134,11 @@
 {
 	[other update: -1 * t * (t-2)];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseCubicIn actionWithAction: [other reverse]];
 }
+
 @end
 
 //
@@ -151,45 +152,6 @@
 }
 @end
 
-//
-// EaseBackIn
-//
-@implementation EaseBackIn
--(void) update: (ccTime) t
-{
-	[other update: t*t*(2.70158*t-1.70158)];
-}
--(IntervalAction*) reverse
-{
-	return [EaseBackOut actionWithAction: [other reverse]];
-}
-@end
-
-//
-// EaseBackOut
-//
-@implementation EaseBackOut
--(void) update: (ccTime) t
-{
-	[other update: ((t-=1)*t*(2.70158*t+1.70158)+1)];
-}
--(IntervalAction*) reverse
-{
-	return [EaseBackIn actionWithAction: [other reverse]];
-}
-@end
-
-//
-// EaseBackInOut
-//
-@implementation EaseBackInOut
--(void) update: (ccTime) t
-{
-  float s = 1.70158;
-  if (t*0.5 < 1) [other update:0.5*(t*t*(((s*=1.525)+1)*t - s))];
-  else [other update:0.5*((t-=2)*t*(((s*=1.525)+1)*t+s)+2)];
-}
-@end
 
 //
 // EaseQuadIn
@@ -199,7 +161,7 @@
 {
 	[other update: t*t];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseQuadOut actionWithAction: [other reverse]];
 }
@@ -213,7 +175,7 @@
 {
 	[other update: -1*t*(t-2)];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseQuadIn actionWithAction: [other reverse]];
 }
@@ -225,7 +187,7 @@
 @implementation EaseQuadInOut
 -(void) update: (ccTime) t
 {
-  if (t*0.5 < 1) [other update:(0.5*t*t)];
+  if ((t/=0.5) < 1) [other update:(0.5*t*t)];
   else [other update:-0.5*((--t)*(t-2)-1)];
 }
 @end
@@ -238,7 +200,7 @@
 {
   [other update:-1*cos(t * 1.57079633) +1];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseSineOut actionWithAction: [other reverse]];
 }
@@ -252,7 +214,7 @@
 {
   [other update:sin(t * 1.57079633)];
 }
--(IntervalAction*) reverse
+- (IntervalAction*) reverse
 {
 	return [EaseSineIn actionWithAction: [other reverse]];
 }
