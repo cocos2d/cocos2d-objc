@@ -59,6 +59,7 @@
 #import "LabelAtlas.h"
 #import "TileMapAtlas.h"
 #import "AtlasNode.h"
+#import "EaseAction.h"
 
 //
 // cocos2d helper files

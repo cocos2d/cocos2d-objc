@@ -65,13 +65,4 @@
 /** Ease Cubic InOut
  */
 @interface EaseCubicInOut : EaseAction <NSCopying> {} @end
-/** Ease Back In
- */
-@interface EaseBackIn : EaseAction <NSCopying> {} @end
-/** Ease Back Out
- */
-@interface EaseBackOut : EaseAction <NSCopying> {} @end
-/** Ease Back InOut
- */
-@interface EaseBackInOut : EaseAction <NSCopying> {} @end
 
