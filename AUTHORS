@@ -30,11 +30,12 @@ Contributors (alphabetically ordered):
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
 	* Jason Booth (slipster216): author of EaseAction
+	        author of EaseAction demos
 			patch for ScaleTo/By action to support X and Y.
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
 			patches for Labels in Texture2D
-	* lhunath: author of ParticleRain
+	* Maarten Billemont (lhunath): author of ParticleRain
 	           added suport for particles' source
 			   fixed memory leaks in Sprite
 			   fixed possible crashes in Sprite, Particles
