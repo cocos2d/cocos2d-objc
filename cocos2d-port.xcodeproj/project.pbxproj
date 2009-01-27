@@ -636,11 +636,9 @@
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		50405A1F0E32A15500213FEF /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		505B62D60F2E6A0F001B4104 /* Texture2dDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Texture2dDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B62D80F2E6A0F001B4104 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		505B62DE0F2E6A66001B4104 /* Texture2dDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dDemo.h; path = tests/Texture2dDemo.h; sourceTree = "<group>"; };
 		505B62DF0F2E6A66001B4104 /* Texture2dDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dDemo.m; path = tests/Texture2dDemo.m; sourceTree = "<group>"; };
 		505B63A30F2F4210001B4104 /* EaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B63A50F2F4210001B4104 /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy 2.plist"; path = "Resources/Info copy 2.plist"; sourceTree = "<group>"; };
 		505B63A60F2F4295001B4104 /* EaseDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseDemo.h; path = tests/EaseDemo.h; sourceTree = "<group>"; };
 		505B63A70F2F4295001B4104 /* EaseDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseDemo.m; path = tests/EaseDemo.m; sourceTree = "<group>"; };
 		506144080E589A2E003CCDB7 /* AnchorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1082,8 +1080,6 @@
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
-				505B62D80F2E6A0F001B4104 /* Info copy.plist */,
-				505B63A50F2F4210001B4104 /* Info copy 2.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2615,7 +2611,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2640,7 +2636,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2666,7 +2662,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy 2.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2691,7 +2687,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy 2.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
