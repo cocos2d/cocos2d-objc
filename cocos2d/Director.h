@@ -144,22 +144,27 @@ and when to execute the Scenes
 // Scene Management
 
 /**Runs a scene, entering in the Director's main loop. 
+ * Call it to run only your FIRST scene.
+ * Don't call it if there is already a running scene.
  */
 - (void) runScene:(Scene*) scene;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
- The new scene will be executed.
- Try to avoid big stacks of pushed scenes to reduce memory allocation. 
+ * The new scene will be executed.
+ * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
+ * ONLY call it if there is a running scene.
  */
 - (void) pushScene:(Scene*) scene;
 
 /**Pops out a scene from the queue.
- This scene will replace the running one.
- The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+ * This scene will replace the running one.
+ * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+ * ONLY call it if there is a running scene.
  */
 - (void) popScene;
 
 /** Replaces the running scene with a new one. The running scene is terminated.
+ * ONLY call it if there is a running scene.
  */
 -(void) replaceScene: (Scene*) scene;
 
