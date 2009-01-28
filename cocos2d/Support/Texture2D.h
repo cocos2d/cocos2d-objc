@@ -91,20 +91,28 @@ typedef enum {
 	GLfloat						_maxS,
 								_maxT;
 }
+/** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
+/** pixelFormat */
 @property(readonly) Texture2DPixelFormat pixelFormat;
+/** width in pixels */
 @property(readonly) NSUInteger pixelsWide;
+/** hight in pixels */
 @property(readonly) NSUInteger pixelsHigh;
 
+/** texture name */
 @property(readonly) GLuint name;
 
+/** content size */
 @property(readonly, nonatomic) CGSize contentSize;
+/** texture max S */
 @property(readonly) GLfloat maxS;
+/** texture max T */
 @property(readonly) GLfloat maxT;
 @end
 
-/*
+/**
 Drawing extensions to make it easy to draw basic quads using a Texture2D object.
 These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 */
@@ -113,7 +121,7 @@ These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_CO
 - (void) drawInRect:(CGRect)rect;
 @end
 
-/*
+/**
 Extensions to make it easy to create a Texture2D object from an image file.
 Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 */
@@ -121,15 +129,16 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 - (id) initWithImage:(UIImage *)uiImage;
 @end
 
-/*
+/**
 Extensions to make it easy to create a Texture2D object from a string of text.
 Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface Texture2D (Text)
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
 
-/*
+/**
  Extensions to make it easy to create a Texture2D object from a PVRTC file
  */
 @interface Texture2D (PVRTC)

@@ -24,7 +24,7 @@
 }
 @end
 
-@interface TextureImage : TextureDemo
+@interface TextureLabel2 : TextureDemo
 {
 }
 @end

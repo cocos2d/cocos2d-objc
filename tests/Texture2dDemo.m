@@ -11,6 +11,7 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 						 @"TextureLabel",
+						 @"TextureLabel2",
 };
 
 #pragma mark Callbacks
@@ -42,9 +43,7 @@ Class restartAction()
 	return c;
 }
 
-
-#pragma mark -
-#pragma mark Demo examples
+#pragma mark Demo examples start here
 
 @implementation TextureDemo
 -(id) init
@@ -103,6 +102,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Examples
 
 @implementation TextureLabel
 -(void) onEnter
@@ -128,6 +129,29 @@ Class restartAction()
 }
 @end
 
+@implementation TextureLabel2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	Label *center1 = [Label labelWithString:@"Marker Felt 32" fontName:@"Marker Felt" fontSize:32];
+	Label *center2 = [Label labelWithString:@"Times New Roman 48" fontName:@"Times New Roman" fontSize:48];
+	Label *center3 = [Label labelWithString:@"Courier 64" fontName:@"Courier" fontSize:64];
+	
+	center1.position = cpv(240,200);
+	center2.position = cpv(240,150);
+	center3.position = cpv(240,100);
+	
+	[[[self add:center1]
+	  add:center2]
+	 add:center3];
+}
+
+-(NSString *) title
+{
+	return @"Label Dynamic Size";
+}
+@end
 
 #pragma mark -
 #pragma mark AppController - Main
