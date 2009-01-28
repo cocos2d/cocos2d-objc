@@ -254,6 +254,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation Texture2D (Text)
 
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	CGSize dim = [string sizeWithFont: [UIFont fontWithName:name size:size]];
+	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];
+}
+
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	NSUInteger				width,
@@ -265,15 +271,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	UIFont *				font;
 	
 	font = [UIFont fontWithName:name size:size];
-	
-	// issue #154
-	CGSize new_dim = [string sizeWithFont:font constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
-	if (new_dim.width == 0 || new_dim.height == 0)
-	{
-		dimensions.width = 1;
-		dimensions.height = 1;
-	}
-	
+
 	width = dimensions.width;
 	if((width != 1) && (width & (width - 1))) {
 		i = 1;

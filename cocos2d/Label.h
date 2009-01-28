@@ -28,10 +28,14 @@
 	CGFloat _fontSize;
 }
 
-/** creates a label from a fontname and font size */
+/** creates a label from a fontname, alignment, dimension and font size */
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** initializes the label with a font name and font size */
+/** creates a label from a fontname and font size */
++ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
+/** initializes the label with a font name, alignment, dimension and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+/** initializes the label with a font name and font size */
+- (id) initWithString:(NSString*)string  fontName:(NSString*)name fontSize:(CGFloat)size;
 
 /** changes the string to render
  * @warning Changing the string is as expensive as creating a new Label. To obtain better performance use LabelAtlas

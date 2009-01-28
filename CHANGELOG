@@ -12,6 +12,7 @@ version 0.6.3 - 28-Jan-2009
  . Director: allow cleanup when deallocing the director (issue #144)
  . Director: avoid useless GL commands when displaying FPS (issue #162)
  . Director: possibility to change the DepthBuffer size (issue #160)
+ . Label: possibility to create Label without dimensions and aligment (issue #154)
  . Menu: MenuItemToggle supports assigning the selectedIndex (issue #152)
  . Menu: aligment takes into account if status bar is present (issue #131)
  . MenuItem: improved compiler warning (issue #147)

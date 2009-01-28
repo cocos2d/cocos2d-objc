@@ -38,6 +38,11 @@
 	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size]autorelease];
 }
 
++ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [[[self alloc] initWithString: string fontName:name fontSize:size]autorelease];
+}
+
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 {
@@ -53,12 +58,28 @@
 	return self;
 }
 
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
+{
+	if( ! (self=[super init]) )
+		return nil;
+	
+	_dimensions = CGSizeZero;
+	_fontName = [name retain];
+	_fontSize = size;
+	
+	[self setString:string];
+	return self;
+}
+
 - (void) setString:(NSString*)string
 {
 	if (texture)
 		[texture release];
 
-	texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
+	if( CGSizeEqualToSize( _dimensions, CGSizeZero ) )
+		texture = [[Texture2D alloc] initWithString:string fontName:_fontName fontSize:_fontSize];
+	else
+		texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
 	CGSize s = texture.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2);
 }
