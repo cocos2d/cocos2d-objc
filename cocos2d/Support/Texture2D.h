@@ -65,6 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CONSTANTS:
 
+/** Possible texture pixel formats */
 typedef enum {
 	kTexture2DPixelFormat_Automatic = 0,
 	kTexture2DPixelFormat_RGBA8888,
@@ -117,7 +118,9 @@ Drawing extensions to make it easy to draw basic quads using a Texture2D object.
 These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 */
 @interface Texture2D (Drawing)
+/** draws a texture at a given point */
 - (void) drawAtPoint:(CGPoint)point;
+/** draws a texture inside a rect */
 - (void) drawInRect:(CGRect)rect;
 @end
 
@@ -126,6 +129,7 @@ Extensions to make it easy to create a Texture2D object from an image file.
 Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface Texture2D (Image)
+/** Initializes a texture from a UIImage object */
 - (id) initWithImage:(UIImage *)uiImage;
 @end
 
@@ -134,7 +138,9 @@ Extensions to make it easy to create a Texture2D object from a string of text.
 Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface Texture2D (Text)
+/** Initializes a texture from a string with dimensions, alignment, font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+/** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
 
@@ -142,6 +148,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  Extensions to make it easy to create a Texture2D object from a PVRTC file
  */
 @interface Texture2D (PVRTC)
+/** Initializes a texture from a PVRTC buffer */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
 @end
 
