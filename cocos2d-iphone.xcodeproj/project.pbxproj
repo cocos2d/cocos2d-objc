@@ -268,6 +268,35 @@
 		5084D4820EE5C7D100BD237C /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
 		5084D4830EE5C7D100BD237C /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
 		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
+		509B39F60F31023000F2FB95 /* CDataScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39E40F31023000F2FB95 /* CDataScanner.h */; };
+		509B39F70F31023000F2FB95 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39E50F31023000F2FB95 /* CDataScanner.m */; };
+		509B39F80F31023000F2FB95 /* CDataScanner_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39E70F31023000F2FB95 /* CDataScanner_Extensions.h */; };
+		509B39F90F31023000F2FB95 /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39E80F31023000F2FB95 /* CDataScanner_Extensions.m */; };
+		509B39FA0F31023000F2FB95 /* NSCharacterSet_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39E90F31023000F2FB95 /* NSCharacterSet_Extensions.h */; };
+		509B39FB0F31023000F2FB95 /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39EA0F31023000F2FB95 /* NSCharacterSet_Extensions.m */; };
+		509B39FC0F31023000F2FB95 /* NSDictionary_JSONExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39EB0F31023000F2FB95 /* NSDictionary_JSONExtensions.h */; };
+		509B39FD0F31023000F2FB95 /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39EC0F31023000F2FB95 /* NSDictionary_JSONExtensions.m */; };
+		509B39FE0F31023000F2FB95 /* NSScanner_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39ED0F31023000F2FB95 /* NSScanner_Extensions.h */; };
+		509B39FF0F31023000F2FB95 /* NSScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39EE0F31023000F2FB95 /* NSScanner_Extensions.m */; };
+		509B3A000F31023000F2FB95 /* CJSONDeserializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39F00F31023000F2FB95 /* CJSONDeserializer.h */; };
+		509B3A010F31023000F2FB95 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39F10F31023000F2FB95 /* CJSONDeserializer.m */; };
+		509B3A020F31023000F2FB95 /* CJSONScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39F20F31023000F2FB95 /* CJSONScanner.h */; };
+		509B3A030F31023000F2FB95 /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39F30F31023000F2FB95 /* CJSONScanner.m */; };
+		509B3A040F31023000F2FB95 /* CJSONSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B39F40F31023000F2FB95 /* CJSONSerializer.h */; };
+		509B3A050F31023000F2FB95 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B39F50F31023000F2FB95 /* CJSONSerializer.m */; };
+		509B3A170F31027600F2FB95 /* cocoslive.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A110F31027600F2FB95 /* cocoslive.h */; };
+		509B3A180F31027600F2FB95 /* cocoslive.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A120F31027600F2FB95 /* cocoslive.m */; };
+		509B3A190F31027600F2FB95 /* ScoreServerPost.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A130F31027600F2FB95 /* ScoreServerPost.h */; };
+		509B3A1A0F31027600F2FB95 /* ScoreServerPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A140F31027600F2FB95 /* ScoreServerPost.m */; };
+		509B3A1B0F31027600F2FB95 /* ScoreServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A150F31027600F2FB95 /* ScoreServerRequest.h */; };
+		509B3A1C0F31027600F2FB95 /* ScoreServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A160F31027600F2FB95 /* ScoreServerRequest.m */; };
+		509B3A200F31029C00F2FB95 /* libTouchJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B39DF0F31020900F2FB95 /* libTouchJSON.a */; };
+		509B3A300F31030F00F2FB95 /* libTouchJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B39DF0F31020900F2FB95 /* libTouchJSON.a */; };
+		509B3A310F31031300F2FB95 /* libcocos Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A0D0F31024E00F2FB95 /* libcocos Live.a */; };
+		509B3A4F0F31058400F2FB95 /* cocosLiveDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A4D0F31058400F2FB95 /* cocosLiveDemo.m */; };
+		509B3A510F3105B900F2FB95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		509B3A630F31065C00F2FB95 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A620F31065C00F2FB95 /* UIKit.framework */; };
+		509B3A650F31067500F2FB95 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A640F31067500F2FB95 /* Foundation.framework */; };
 		509E574C0E36234300BD7F09 /* TextureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E574A0E36234300BD7F09 /* TextureNode.h */; };
 		509E574D0E36234300BD7F09 /* TextureNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E574B0E36234300BD7F09 /* TextureNode.m */; };
 		509E665E0E06CD940050992C /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* Camera.h */; };
@@ -515,6 +544,20 @@
 			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
 			remoteInfo = Chipmunk;
 		};
+		509B3A1E0F31029300F2FB95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 509B39DE0F31020900F2FB95 /* TouchJSON */;
+			remoteInfo = TouchJSON;
+		};
+		509B3A2E0F31030400F2FB95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 509B3A0C0F31024E00F2FB95 /* cocos Live */;
+			remoteInfo = "cocos Live";
+		};
 		50B2C5D20E100EF000AE9530 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -683,6 +726,35 @@
 		5084D47B0EE5C7D100BD237C /* btn-highscores-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-highscores-selected.png"; sourceTree = "<group>"; };
 		5084D47C0EE5C7D100BD237C /* btn-play-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-play-normal.png"; sourceTree = "<group>"; };
 		5084D47D0EE5C7D100BD237C /* btn-play-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-play-selected.png"; sourceTree = "<group>"; };
+		509B39DF0F31020900F2FB95 /* libTouchJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		509B39E40F31023000F2FB95 /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
+		509B39E50F31023000F2FB95 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
+		509B39E70F31023000F2FB95 /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
+		509B39E80F31023000F2FB95 /* CDataScanner_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner_Extensions.m; sourceTree = "<group>"; };
+		509B39E90F31023000F2FB95 /* NSCharacterSet_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCharacterSet_Extensions.h; sourceTree = "<group>"; };
+		509B39EA0F31023000F2FB95 /* NSCharacterSet_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCharacterSet_Extensions.m; sourceTree = "<group>"; };
+		509B39EB0F31023000F2FB95 /* NSDictionary_JSONExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionary_JSONExtensions.h; sourceTree = "<group>"; };
+		509B39EC0F31023000F2FB95 /* NSDictionary_JSONExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionary_JSONExtensions.m; sourceTree = "<group>"; };
+		509B39ED0F31023000F2FB95 /* NSScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScanner_Extensions.h; sourceTree = "<group>"; };
+		509B39EE0F31023000F2FB95 /* NSScanner_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSScanner_Extensions.m; sourceTree = "<group>"; };
+		509B39F00F31023000F2FB95 /* CJSONDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDeserializer.h; sourceTree = "<group>"; };
+		509B39F10F31023000F2FB95 /* CJSONDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONDeserializer.m; sourceTree = "<group>"; };
+		509B39F20F31023000F2FB95 /* CJSONScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONScanner.h; sourceTree = "<group>"; };
+		509B39F30F31023000F2FB95 /* CJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONScanner.m; sourceTree = "<group>"; };
+		509B39F40F31023000F2FB95 /* CJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONSerializer.h; sourceTree = "<group>"; };
+		509B39F50F31023000F2FB95 /* CJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializer.m; sourceTree = "<group>"; };
+		509B3A0D0F31024E00F2FB95 /* libcocos Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		509B3A110F31027600F2FB95 /* cocoslive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoslive.h; sourceTree = "<group>"; };
+		509B3A120F31027600F2FB95 /* cocoslive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocoslive.m; sourceTree = "<group>"; };
+		509B3A130F31027600F2FB95 /* ScoreServerPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreServerPost.h; sourceTree = "<group>"; };
+		509B3A140F31027600F2FB95 /* ScoreServerPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreServerPost.m; sourceTree = "<group>"; };
+		509B3A150F31027600F2FB95 /* ScoreServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreServerRequest.h; sourceTree = "<group>"; };
+		509B3A160F31027600F2FB95 /* ScoreServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreServerRequest.m; sourceTree = "<group>"; };
+		509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosLiveDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		509B3A4D0F31058400F2FB95 /* cocosLiveDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocosLiveDemo.m; path = tests/cocosLiveDemo.m; sourceTree = "<group>"; };
+		509B3A4E0F31058400F2FB95 /* cocosLiveDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocosLiveDemo.h; path = tests/cocosLiveDemo.h; sourceTree = "<group>"; };
+		509B3A620F31065C00F2FB95 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		509B3A640F31067500F2FB95 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		509E574A0E36234300BD7F09 /* TextureNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureNode.h; sourceTree = "<group>"; };
 		509E574B0E36234300BD7F09 /* TextureNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureNode.m; sourceTree = "<group>"; };
 		509E665C0E06CD940050992C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
@@ -937,6 +1009,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		509B39DD0F31020900F2FB95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B3A0B0F31024E00F2FB95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B3A200F31029C00F2FB95 /* libTouchJSON.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B3A260F3102FD00F2FB95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B3A300F31030F00F2FB95 /* libTouchJSON.a in Frameworks */,
+				509B3A310F31031300F2FB95 /* libcocos Live.a in Frameworks */,
+				509B3A630F31065C00F2FB95 /* UIKit.framework in Frameworks */,
+				509B3A650F31067500F2FB95 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B2C4CF0E100AEA00AE9530 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1049,6 +1147,9 @@
 				50C195600EE4B57E00829067 /* ParallaxDemo.app */,
 				505B62D60F2E6A0F001B4104 /* Texture2dDemo.app */,
 				505B63A30F2F4210001B4104 /* EaseDemo.app */,
+				509B39DF0F31020900F2FB95 /* libTouchJSON.a */,
+				509B3A0D0F31024E00F2FB95 /* libcocos Live.a */,
+				509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1062,12 +1163,16 @@
 				50B2C9C00E109A5900AE9530 /* LICENSE */,
 				50B2C9C10E109A5900AE9530 /* README */,
 				50B130FC0DFE0923003BAB56 /* tests */,
+				509B3A100F31027600F2FB95 /* cocoslive */,
+				509B39E30F31023000F2FB95 /* TouchJSON */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				501CCFA30E99657C00B86F68 /* Support */,
 				50B2C4D50E100B1100AE9530 /* Chipmunk */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				509B3A620F31065C00F2FB95 /* UIKit.framework */,
+				509B3A640F31067500F2FB95 /* Foundation.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1189,9 +1294,63 @@
 			name = ImageSupport;
 			sourceTree = "<group>";
 		};
+		509B39E30F31023000F2FB95 /* TouchJSON */ = {
+			isa = PBXGroup;
+			children = (
+				509B39E40F31023000F2FB95 /* CDataScanner.h */,
+				509B39E50F31023000F2FB95 /* CDataScanner.m */,
+				509B39E60F31023000F2FB95 /* Extensions */,
+				509B39EF0F31023000F2FB95 /* JSON */,
+			);
+			path = TouchJSON;
+			sourceTree = "<group>";
+		};
+		509B39E60F31023000F2FB95 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				509B39E70F31023000F2FB95 /* CDataScanner_Extensions.h */,
+				509B39E80F31023000F2FB95 /* CDataScanner_Extensions.m */,
+				509B39E90F31023000F2FB95 /* NSCharacterSet_Extensions.h */,
+				509B39EA0F31023000F2FB95 /* NSCharacterSet_Extensions.m */,
+				509B39EB0F31023000F2FB95 /* NSDictionary_JSONExtensions.h */,
+				509B39EC0F31023000F2FB95 /* NSDictionary_JSONExtensions.m */,
+				509B39ED0F31023000F2FB95 /* NSScanner_Extensions.h */,
+				509B39EE0F31023000F2FB95 /* NSScanner_Extensions.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		509B39EF0F31023000F2FB95 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				509B39F00F31023000F2FB95 /* CJSONDeserializer.h */,
+				509B39F10F31023000F2FB95 /* CJSONDeserializer.m */,
+				509B39F20F31023000F2FB95 /* CJSONScanner.h */,
+				509B39F30F31023000F2FB95 /* CJSONScanner.m */,
+				509B39F40F31023000F2FB95 /* CJSONSerializer.h */,
+				509B39F50F31023000F2FB95 /* CJSONSerializer.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		509B3A100F31027600F2FB95 /* cocoslive */ = {
+			isa = PBXGroup;
+			children = (
+				509B3A110F31027600F2FB95 /* cocoslive.h */,
+				509B3A120F31027600F2FB95 /* cocoslive.m */,
+				509B3A130F31027600F2FB95 /* ScoreServerPost.h */,
+				509B3A140F31027600F2FB95 /* ScoreServerPost.m */,
+				509B3A150F31027600F2FB95 /* ScoreServerRequest.h */,
+				509B3A160F31027600F2FB95 /* ScoreServerRequest.m */,
+			);
+			path = cocoslive;
+			sourceTree = "<group>";
+		};
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				509B3A4D0F31058400F2FB95 /* cocosLiveDemo.m */,
+				509B3A4E0F31058400F2FB95 /* cocosLiveDemo.h */,
 				505B63A60F2F4295001B4104 /* EaseDemo.h */,
 				505B63A70F2F4295001B4104 /* EaseDemo.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dDemo.h */,
@@ -1384,6 +1543,31 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B39DB0F31020900F2FB95 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B39F60F31023000F2FB95 /* CDataScanner.h in Headers */,
+				509B39F80F31023000F2FB95 /* CDataScanner_Extensions.h in Headers */,
+				509B39FA0F31023000F2FB95 /* NSCharacterSet_Extensions.h in Headers */,
+				509B39FC0F31023000F2FB95 /* NSDictionary_JSONExtensions.h in Headers */,
+				509B39FE0F31023000F2FB95 /* NSScanner_Extensions.h in Headers */,
+				509B3A000F31023000F2FB95 /* CJSONDeserializer.h in Headers */,
+				509B3A020F31023000F2FB95 /* CJSONScanner.h in Headers */,
+				509B3A040F31023000F2FB95 /* CJSONSerializer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B3A090F31024E00F2FB95 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B3A170F31027600F2FB95 /* cocoslive.h in Headers */,
+				509B3A190F31027600F2FB95 /* ScoreServerPost.h in Headers */,
+				509B3A1B0F31027600F2FB95 /* ScoreServerRequest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1627,6 +1811,59 @@
 			productReference = 50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		509B39DE0F31020900F2FB95 /* TouchJSON */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 509B3A060F31023000F2FB95 /* Build configuration list for PBXNativeTarget "TouchJSON" */;
+			buildPhases = (
+				509B39DB0F31020900F2FB95 /* Headers */,
+				509B39DC0F31020900F2FB95 /* Sources */,
+				509B39DD0F31020900F2FB95 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TouchJSON;
+			productName = TouchJSON;
+			productReference = 509B39DF0F31020900F2FB95 /* libTouchJSON.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		509B3A0C0F31024E00F2FB95 /* cocosLive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 509B3A1D0F31027600F2FB95 /* Build configuration list for PBXNativeTarget "cocosLive" */;
+			buildPhases = (
+				509B3A090F31024E00F2FB95 /* Headers */,
+				509B3A0A0F31024E00F2FB95 /* Sources */,
+				509B3A0B0F31024E00F2FB95 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				509B3A1F0F31029300F2FB95 /* PBXTargetDependency */,
+			);
+			name = cocosLive;
+			productName = "cocos Live";
+			productReference = 509B3A0D0F31024E00F2FB95 /* libcocos Live.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		509B3A270F3102FD00F2FB95 /* cocosLiveDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 509B3A2D0F3102FE00F2FB95 /* Build configuration list for PBXNativeTarget "cocosLiveDemo" */;
+			buildPhases = (
+				509B3A240F3102FD00F2FB95 /* Resources */,
+				509B3A250F3102FD00F2FB95 /* Sources */,
+				509B3A260F3102FD00F2FB95 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				509B3A2F0F31030400F2FB95 /* PBXTargetDependency */,
+			);
+			name = cocosLiveDemo;
+			productName = cocosLiveDemo;
+			productReference = 509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		50B2C4D00E100AEA00AE9530 /* Chipmunk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50B2C4D40E100B0000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk" */;
@@ -1759,13 +1996,15 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-port" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-iphone" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				509B3A0C0F31024E00F2FB95 /* cocosLive */,
+				509B39DE0F31020900F2FB95 /* TouchJSON */,
 				50B2C4D00E100AEA00AE9530 /* Chipmunk */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
@@ -1785,6 +2024,7 @@
 				50C1953E0EE4B57E00829067 /* ParallaxDemo */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dDemo */,
 				505B63780F2F4210001B4104 /* EaseDemo */,
+				509B3A270F3102FD00F2FB95 /* cocosLiveDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -1985,6 +2225,13 @@
 				5078B5200E3E43540004233A /* grossinis_sister2.png in Resources */,
 				5078B5210E3E43540004233A /* fire.png in Resources */,
 				501CD1750E99873000B86F68 /* fps_images.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B3A240F3102FD00F2FB95 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2257,6 +2504,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		509B39DC0F31020900F2FB95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B39F70F31023000F2FB95 /* CDataScanner.m in Sources */,
+				509B39F90F31023000F2FB95 /* CDataScanner_Extensions.m in Sources */,
+				509B39FB0F31023000F2FB95 /* NSCharacterSet_Extensions.m in Sources */,
+				509B39FD0F31023000F2FB95 /* NSDictionary_JSONExtensions.m in Sources */,
+				509B39FF0F31023000F2FB95 /* NSScanner_Extensions.m in Sources */,
+				509B3A010F31023000F2FB95 /* CJSONDeserializer.m in Sources */,
+				509B3A030F31023000F2FB95 /* CJSONScanner.m in Sources */,
+				509B3A050F31023000F2FB95 /* CJSONSerializer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B3A0A0F31024E00F2FB95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B3A180F31027600F2FB95 /* cocoslive.m in Sources */,
+				509B3A1A0F31027600F2FB95 /* ScoreServerPost.m in Sources */,
+				509B3A1C0F31027600F2FB95 /* ScoreServerRequest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		509B3A250F3102FD00F2FB95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509B3A510F3105B900F2FB95 /* main.m in Sources */,
+				509B3A4F0F31058400F2FB95 /* cocosLiveDemo.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B2C4CE0E100AEA00AE9530 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2394,6 +2675,16 @@
 			isa = PBXTargetDependency;
 			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
 			targetProxy = 508D48F00E1C76840091E768 /* PBXContainerItemProxy */;
+		};
+		509B3A1F0F31029300F2FB95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 509B39DE0F31020900F2FB95 /* TouchJSON */;
+			targetProxy = 509B3A1E0F31029300F2FB95 /* PBXContainerItemProxy */;
+		};
+		509B3A2F0F31030400F2FB95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 509B3A0C0F31024E00F2FB95 /* cocosLive */;
+			targetProxy = 509B3A2E0F31030400F2FB95 /* PBXContainerItemProxy */;
 		};
 		50B2C5D10E100EF000AE9530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3008,6 +3299,115 @@
 			};
 			name = Release;
 		};
+		509B39E00F31020B00F2FB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = TouchJSON;
+			};
+			name = Debug;
+		};
+		509B39E10F31020B00F2FB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = TouchJSON;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		509B3A0E0F31024F00F2FB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "cocos Live";
+			};
+			name = Debug;
+		};
+		509B3A0F0F31024F00F2FB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "cocos Live";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		509B3A2B0F3102FE00F2FB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = cocosLiveDemo;
+				SDKROOT = iphoneos2.2;
+			};
+			name = Debug;
+		};
+		509B3A2C0F3102FE00F2FB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = cocosLiveDemo;
+				SDKROOT = iphoneos2.2;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		50B2C4D20E100AEB00AE9530 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3493,6 +3893,33 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		509B3A060F31023000F2FB95 /* Build configuration list for PBXNativeTarget "TouchJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				509B39E00F31020B00F2FB95 /* Debug */,
+				509B39E10F31020B00F2FB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		509B3A1D0F31027600F2FB95 /* Build configuration list for PBXNativeTarget "cocosLive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				509B3A0E0F31024F00F2FB95 /* Debug */,
+				509B3A0F0F31024F00F2FB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		509B3A2D0F3102FE00F2FB95 /* Build configuration list for PBXNativeTarget "cocosLiveDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				509B3A2B0F3102FE00F2FB95 /* Debug */,
+				509B3A2C0F3102FE00F2FB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		50B2C4D40E100B0000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3556,7 +3983,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-port" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-iphone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
