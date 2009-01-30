@@ -57,79 +57,14 @@
 	return RANDOM_FLOAT() * max;
 }
 
--(void) testPost
-{
-	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame" gameKey:@"e8e0765de336f46b17a39ad652ee4d39" delegate:nil];
-
-	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-	
-	// usr_ are fields that can be modified.
-	// set score
-	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:20000] ] forKey:@"cc_score"];
-	// set speed
-	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:2000] ] forKey:@"usr_speed"];
-	// set angle
-	[dict setObject: [NSNumber numberWithInt:[self getRandomWithMax:360] ] forKey:@"usr_angle"];
-	// set playername
-	[dict setObject: @"Tito" forKey:@"usr_playername"];
-	// set player type
-	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:2] ] forKey:@"usr_playertype"];
-
-	// cc_ are fields that cannot be modified. cocos fields
-	// set category... it can be "easy", "medium", whatever you want.
-	int r = [self getRandomWithMax:3];
-	NSString *cat;
-	switch(r) {
-		case 0:
-			cat = @"easy";
-			break;
-		case 1:
-			cat = @"medium";
-			break;
-		case 2:
-		default:
-			cat = @"hard";
-			break;
-	}
-	
-	[dict setObject:cat forKey:@"cc_category"];
-	
-	[server sendScore:dict];
-	[server release];
-}
-
-#pragma mark -
-#pragma mark ScoreRequest Delegate
-
--(void) scoreRequestOk: (id) sender
-{
-	NSLog(@"score request OK");	
-	NSArray *scores = [sender parseScores];	
-	NSMutableArray *mutable = [NSMutableArray arrayWithArray:scores];
-	
-	// use the property (retain is needed)
-	self.globalScores = mutable;
-	
-	NSLog(@"%@", mutable);
-
-	[sender release];
-	[myTableView reloadData];
-}
-
--(void) scoreRequestFail: (id) sender
-{
-#if DEBUG
-	NSLog(@"score request fail");
-#endif
-	[sender release];
-}
-
 -(void) requestScore
 {
+	NSLog(@"Requesting scores...");
+
 	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame" delegate:self];
 	
 	NSString *cat = @"easy";
-
+	
 	switch( category ) {
 		case kCategoryEasy:
 			cat = @"easy";
@@ -147,6 +82,119 @@
 	
 	// Ask for World scores
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
+}
+
+-(void) postScore:(NSInteger)cate
+{
+	NSLog(@"Posting Score");
+	
+	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame" gameKey:@"e8e0765de336f46b17a39ad652ee4d39" delegate:self];
+
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+
+	// Name at random
+	NSArray *names = [NSArray arrayWithObjects:@"Pamela", @"Vicky", @"Sandra", @"Kathia", @"Grossini", @"Great Grossini", nil];
+	NSString *name = [names objectAtIndex: RANDOM_FLOAT() * 6];
+
+	// usr_ are fields that can be modified.
+	// set score
+	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:20000] ] forKey:@"cc_score"];
+	// set speed
+	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:2000] ] forKey:@"usr_speed"];
+	// set angle
+	[dict setObject: [NSNumber numberWithInt:[self getRandomWithMax:360] ] forKey:@"usr_angle"];
+	// set playername
+	[dict setObject:name forKey:@"usr_playername"];
+	// set player type
+	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:2] ] forKey:@"usr_playertype"];
+
+
+	// cc_ are fields that cannot be modified. cocos fields
+	// set category... it can be "easy", "medium", whatever you want.
+	NSString *cat = @"easy";
+	switch(cate) {
+		case 0:
+			cat = @"easy";
+			break;
+		case 1:
+			cat = @"medium";
+			break;
+		case 2:
+		default:
+			cat = @"hard";
+			break;
+	}
+	
+	[dict setObject:cat forKey:@"cc_category"];
+	
+#if DEBUG
+	NSLog(@"Sending data: %@", dict);
+#endif
+	[server sendScore:dict];
+	[server release];
+}
+
+#pragma mark -
+#pragma mark ScorePost Delegate
+
+-(void) scorePostOk: (id) sender
+{
+	NSLog(@"score post OK");
+}
+
+-(void) scorePostFail: (id) sender
+{
+	NSString *message;
+	tPostStatus status = [sender postStatus];
+	if( status == kPostStatusPostFailed )
+		message = @"score post Failed. Retry posting";
+	else if( status == kPostStatusConnectionFailed )
+		message = @"score post Failed. Don't retry posting";
+	
+	NSLog(message);
+
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Post Failed" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+	alert.tag = 0;
+	[alert show];
+	[alert release];		
+}
+
+#pragma mark -
+#pragma mark ScoreRequest Delegate
+
+-(void) scoreRequestOk: (id) sender
+{
+	NSLog(@"score request OK");	
+	NSArray *scores = [sender parseScores];	
+	NSMutableArray *mutable = [NSMutableArray arrayWithArray:scores];
+	
+	// use the property (retain is needed)
+	self.globalScores = mutable;
+		
+	[sender release];
+	[myTableView reloadData];
+}
+
+-(void) scoreRequestFail: (id) sender
+{
+	NSLog(@"score request fail");
+
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Request Failed" message:@"Score Request Failed" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+	alert.tag = 0;
+	[alert show];
+	[alert release];	
+}
+
+
+#pragma mark -
+#pragma mark Button Delegate
+-(void) buttonCallback:(id) sender
+{
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post Score" message:@"A random score will be posted. Select category"
+												   delegate:self cancelButtonTitle:nil otherButtonTitles:@"easy", @"medium", @"hard", nil];
+	alert.tag = 1;
+	[alert show];
+	[alert release];	
 }
 
 #pragma mark -
@@ -170,6 +218,15 @@
 }
 
 #pragma mark -
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)view clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if( [view tag] == 1 )
+		[self postScore:buttonIndex];
+}
+
+#pragma mark -
 #pragma mark Application Delegate
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
@@ -185,6 +242,8 @@
 	self.globalScores = [[NSMutableArray alloc] initWithCapacity:50];
 	category = kCategoryEasy;
 	world = kWorld;
+	
+	[self initRandom];
 
 	[window makeKeyAndVisible];
 	
