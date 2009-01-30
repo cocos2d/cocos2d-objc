@@ -8,7 +8,7 @@
 #define ACC_FACTOR 5.0
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate>
+@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
 {
 }
 @end

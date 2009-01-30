@@ -7,7 +7,7 @@
 #import "cocos2d.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate>
+@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
 {
 }
 @end

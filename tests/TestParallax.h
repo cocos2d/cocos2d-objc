@@ -1,7 +1,7 @@
 #import "cocos2d.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject
+@interface AppController : NSObject <UIApplicationDelegate>
 {
 }
 @end
