@@ -77,3 +77,9 @@ typedef enum {
 /** parse the received JSON scores and convert it to objective-c objects */
 -(NSArray*) parseScores;
 @end
+
+/** CocosLiveRequest protocol */
+@protocol CocosLiveRequestDelegate
+-(void) scoreRequestOk:(id) sender;
+-(void) scoreRequestFail:(id) sender;
+@end

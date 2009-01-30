@@ -31,7 +31,11 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 -(NSString*) encodeData:(NSString*)data;
 @end
 
+
 @implementation ScoreServerPost
+
+@synthesize postStatus;
+
 +(id) serverWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id) delegate
 {
 	return [[[self alloc] initWithGameName:name gameKey:key delegate:delegate] autorelease];
@@ -222,8 +226,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     // release the connection, and the data object
     [connection release];
 	
-	if( [delegate respondsToSelector:@selector(scoreRequestFail:) ] )
-		[delegate scoreRequestFail:self];
+	if( [delegate respondsToSelector:@selector(scorePostFail:) ] )
+		[delegate scorePostFail:self];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -236,8 +240,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		// Ok
 		postStatus = kPostStatusOK;
 
-		if( [delegate respondsToSelector:@selector(scoreRequestOk:) ] )
-			[delegate scoreRequestOk:self];
+		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
+			[delegate scorePostOk:self];
 	} else {
 #if DEBUG
 		NSLog(@"Post Score failed. Reason: %@", dataString);
@@ -245,8 +249,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		// Error parsing answer
 		postStatus = kPostStatusPostFailed;
 
-		if( [delegate respondsToSelector:@selector(scoreRequestFail:) ] )
-			[delegate scoreRequestFail:self];
+		if( [delegate respondsToSelector:@selector(scorePostFail:) ] )
+			[delegate scorePostFail:self];
 	}
 }
 

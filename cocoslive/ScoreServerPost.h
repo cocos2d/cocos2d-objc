@@ -70,6 +70,8 @@ typedef enum {
 	CC_MD5_CTX		md5Ctx;
 }
 
+@property (readonly) tPostStatus postStatus;
+
 /** creates a cocos server with a game name and a game key */
 +(id) serverWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id)delegate;
 
@@ -81,8 +83,8 @@ typedef enum {
 
 @end
 
-/** CocosLiveConnection protocol */
-@protocol CocosLiveConnection
--(void) scoreRequestOk:(id) sender;
--(void) scoreRequestFail:(id) sender;
+/** CocosLivePost protocol */
+@protocol CocosLivePostDelegate
+-(void) scorePostOk:(id) sender;
+-(void) scorePostFail:(id) sender;
 @end

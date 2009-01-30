@@ -40,6 +40,6 @@ enum {
 - (void)segmentAction:(id)sender;
 
 // button delegate
-
+- (void)buttonCallback:(id)sender;
 
 @end
