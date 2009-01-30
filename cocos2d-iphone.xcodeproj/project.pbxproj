@@ -548,14 +548,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 509B39DE0F31020900F2FB95 /* TouchJSON */;
+			remoteGlobalIDString = 509B39DE0F31020900F2FB95;
 			remoteInfo = TouchJSON;
 		};
 		509B3A2E0F31030400F2FB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 509B3A0C0F31024E00F2FB95 /* cocos Live */;
+			remoteGlobalIDString = 509B3A0C0F31024E00F2FB95;
 			remoteInfo = "cocos Live";
 		};
 		50B2C5D20E100EF000AE9530 /* PBXContainerItemProxy */ = {
