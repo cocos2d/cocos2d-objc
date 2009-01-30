@@ -3,10 +3,28 @@
 // a cocos2d example
 //
 
+//
+// To view these scores online, go here:
+// http://www.cocoslive.net/game-scores?gamename=DemoGame
+//
+
+//
+// CocosLive client can be used within cocos2d
+// or without it.
+// This example shows how to use it without cocos2d
+//
+// To use cocos live in your game you need to link against these
+// static libraries (or include the these sources in your game):
+//   * cocosLive
+//   * TouchJSON
+
+
 #import <UIKit/UIKit.h>
 #include <sys/time.h>
 
-// cocos import
+
+// cocos live import
+//   This is the only import you need to use "pure" cocosLive
 #import "cocoslive.h"
 
 // local import
@@ -21,6 +39,9 @@
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
+
+@synthesize window, mainView;
+@synthesize globalScores;
 
 -(void) initRandom {
 	struct timeval t;
@@ -57,44 +78,42 @@
 	// cc_ are fields that cannot be modified. cocos fields
 	// set category... it can be "easy", "medium", whatever you want.
 	int r = [self getRandomWithMax:3];
-	NSString *category;
+	NSString *cat;
 	switch(r) {
 		case 0:
-			category = @"easy";
+			cat = @"easy";
 			break;
 		case 1:
-			category = @"medium";
+			cat = @"medium";
 			break;
 		case 2:
 		default:
-			category = @"hard";
+			cat = @"hard";
 			break;
 	}
 	
-	[dict setObject:category forKey:@"cc_category"];
+	[dict setObject:cat forKey:@"cc_category"];
 	
 	[server sendScore:dict];
 	[server release];
 }
 
--(void) testRequest
-{
-	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame" delegate:self];
-//	[request requestScores:kQueryAllTime limit:25 offset:0 flags:kQueryFlagIgnore category:@"easy"];
-
-	// Only ask for the scores from certain country... in this case, from "your" country
-	[request requestScores:kQueryAllTime limit:25 offset:0 flags:kQueryFlagByCountry category:@"easy"];
-
-}
+#pragma mark -
+#pragma mark ScoreRequest Delegate
 
 -(void) scoreRequestOk: (id) sender
 {
-	NSLog(@"score request OK");
-	
+	NSLog(@"score request OK");	
 	NSArray *scores = [sender parseScores];	
-	NSLog(@"%@", scores);
-	[sender release];
+	NSMutableArray *mutable = [NSMutableArray arrayWithArray:scores];
+	
+	// use the property (retain is needed)
+	self.globalScores = mutable;
+	
+	NSLog(@"%@", mutable);
 
+	[sender release];
+	[myTableView reloadData];
 }
 
 -(void) scoreRequestFail: (id) sender
@@ -105,12 +124,78 @@
 	[sender release];
 }
 
+-(void) requestScore
+{
+	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame" delegate:self];
+	
+	NSString *cat = @"easy";
+
+	switch( category ) {
+		case kCategoryEasy:
+			cat = @"easy";
+			break;
+		case kCategoryMedium:
+			cat = @"medium";
+			break;
+		case kCategoryHard:
+			cat = @"hard";
+			break;
+	}
+	tQueryFlags flags = kQueryFlagIgnore;
+	if( world == kCountry )
+		flags = kQueryFlagByCountry;
+	
+	// Ask for World scores
+	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
+}
+
+#pragma mark -
+#pragma mark Segment Delegate
+- (void)segmentAction:(id)sender
+{	
+	int idx = [sender selectedSegmentIndex];
+	// category 
+	if( [sender tag] == 0 ) {
+		// 0: easy
+		// 1: med
+		// 2: hard
+		category = idx;
+	} else if( [sender tag] == 1 ) {
+		// 0 = scores world wide
+		// 1 = scores by country
+		world = idx;
+	}
+
+	[self requestScore];
+}
+
+#pragma mark -
+#pragma mark Application Delegate
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	[self initRandom];
-	for( int i=0; i< 15;i++)
-		[self testPost];
-	[self testRequest];
+//	[self initRandom];
+//	for( int i=0; i< 15;i++)
+//		[self testPost];
+//	[self testRequest];
+
+
+//	[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
+
+	self.globalScores = [[NSMutableArray alloc] initWithCapacity:50];
+	category = kCategoryEasy;
+	world = kWorld;
+
+	[window makeKeyAndVisible];
+	
+	[self requestScore];
+}
+
+#pragma mark -
+#pragma mark Init
+-(void) dealloc
+{
+	[globalScores release];
+	[super dealloc];
 }
 @end
