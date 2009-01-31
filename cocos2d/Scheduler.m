@@ -13,6 +13,7 @@
  */
 
 
+#import "ccMacros.h"
 #import "Scheduler.h"
 
 
@@ -68,9 +69,7 @@
 
 -(void) dealloc
 {
-#if DEBUG
-	NSLog( @"deallocing %@", self);
-#endif
+	CCLOG( @"deallocing %@", self);
 	[invocation release];
 	[super dealloc];
 }

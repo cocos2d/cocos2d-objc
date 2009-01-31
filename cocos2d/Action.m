@@ -15,6 +15,7 @@
 
 #import "Action.h"
 #import "CocosNode.h"
+#import "ccMacros.h"
 
 #import "IntervalAction.h"
 
@@ -41,9 +42,7 @@
 
 -(void) dealloc
 {
-#if DEBUG
-	NSLog(@"deallocing %@", self);
-#endif
+	CCLOG(@"deallocing %@", self);
 	if( target ) {
 		[target release];
 		target = nil;

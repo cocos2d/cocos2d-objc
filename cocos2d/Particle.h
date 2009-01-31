@@ -16,7 +16,7 @@
 
 #import "chipmunk.h"
 #import "CocosNode.h"
-#import "types.h"
+#import "ccTypes.h"
 
 typedef struct sParticle
 {

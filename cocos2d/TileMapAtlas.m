@@ -114,8 +114,7 @@
 					texCoord.tr_x = row + texStepX;					// D - x
 					texCoord.tr_y = col + texStepY;					// D - y
 					
-#ifdef DEBUG
-//					NSLog(@"Tex coords: (%f,%f), (%f,%f), (%f,%f), (%f,%f)",
+//					CCLOG(@"Tex coords: (%f,%f), (%f,%f), (%f,%f), (%f,%f)",
 //						  texCoord.bl_x,
 //						  texCoord.bl_y,
 //						  texCoord.br_x,
@@ -124,7 +123,6 @@
 //						  texCoord.tl_y,
 //						  texCoord.tr_x,
 //						  texCoord.tr_y );
-#endif
 					
 					vertex.bl_x = x * itemWidth;					// A - x
 					vertex.bl_y = y * itemHeight;					// A - y

@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 #include <sys/time.h>
 
-#import "types.h"
+#import "ccTypes.h"
 #import "chipmunk.h"
 
 @class CocosNode;

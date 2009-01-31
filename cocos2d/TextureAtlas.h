@@ -13,7 +13,7 @@
  */
 
 #import "Texture2D.h"
-#import "types.h"
+#import "ccTypes.h"
 
 /** A class that implements a basic Texture Atlas */
 @interface TextureAtlas : NSObject {
