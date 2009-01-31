@@ -12,7 +12,6 @@
 
 @interface Layer1 : Layer
 {
-	Menu * menu;
 }
 -(void) onOptions: (id) sender;
 -(void) onVoid: (id) sender;
@@ -21,7 +20,6 @@
 
 @interface Layer2 : Layer
 {
-	Menu * menu;
 }
 -(void) onGoBack: (id) sender;
 -(void) onFullscreen: (id) sender;

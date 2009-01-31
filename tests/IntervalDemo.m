@@ -59,17 +59,23 @@
 	return self;
 }
 
+- (void) dealloc
+{
+	[super dealloc];
+}
+
 -(void) pause: (id) sender
 {
 	[[Director sharedDirector] pause];
 	
 	// Dialog
-	UIAlertView* dialog = [[[UIAlertView alloc] init] retain];
+	UIAlertView* dialog = [[UIAlertView alloc] init];
 	[dialog setDelegate:self];
 	[dialog setTitle:@"Game Paused"];
 	[dialog setMessage:@"Game paused"];
 	[dialog addButtonWithTitle:@"Resume"];
 	[dialog show];	
+	[dialog release];
 }
 
 - (void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex

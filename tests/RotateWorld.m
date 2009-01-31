@@ -29,6 +29,12 @@
 	[self add: label];
 	return self;
 }
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
 @end
 
 @implementation SpriteLayer
@@ -78,6 +84,11 @@
 	
 	return self;
 }
+
+- (void) dealloc
+{
+	[super dealloc];
+}
 @end
 
 @implementation MainLayer
@@ -125,6 +136,11 @@
 	
 	return self;
 }
+- (void) dealloc
+{
+	[super dealloc];
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS

@@ -13,6 +13,7 @@
  */
 
 #import "ScoreServerPost.h"
+#import "ccMacros.h"
 
 // free function used to sort
 NSInteger alphabeticSort(id string1, id string2, void *reverse)
@@ -57,9 +58,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 -(void) dealloc
 {
-#if DEBUG
-	NSLog( @"deallocing %@", self);
-#endif
+	CCLOG( @"deallocing %@", self);
 	[delegate release];
 	[gameKey release];
 	[gameName release];
@@ -112,6 +111,9 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	if ( ! theConnection)
 		return NO;
 	
+	// XXX: Don't release 'theConnection' here
+	// XXX: It will be released by the delegate
+
 	return YES;
 }
 
@@ -209,17 +211,14 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     // receivedData is declared as a method instance elsewhere
 	[receivedData appendData:data];
 	
-#if DEBUG
 //	NSString *dataString = [NSString stringWithCString:[data bytes] length: [data length]];
-//	NSLog( @"data: %@", dataString);
-#endif
+//	CCLOG( @"data: %@", dataString);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-#if DEBUG
-	NSLog(@"Connection failed");
-#endif
+	CCLOG(@"Connection failed");
+
 	// wifi problems ?
 	postStatus = kPostStatusConnectionFailed;
 
@@ -243,9 +242,9 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
 			[delegate scorePostOk:self];
 	} else {
-#if DEBUG
-		NSLog(@"Post Score failed. Reason: %@", dataString);
-#endif
+		
+		CCLOG(@"Post Score failed. Reason: %@", dataString);
+
 		// Error parsing answer
 		postStatus = kPostStatusPostFailed;
 

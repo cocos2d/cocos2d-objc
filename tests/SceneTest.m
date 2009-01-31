@@ -13,12 +13,17 @@
 	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Options" target:self selector:@selector(onOptions:)];
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
-	menu = [Menu menuWithItems: item1, item2, nil];
+	Menu *menu = [Menu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
 	
 	[self add: menu];
 
 	return self;
+}
+
+-(void) dealloc
+{
+	[super dealloc];
 }
 
 -(void) onOptions: (id) sender
@@ -35,7 +40,6 @@
 -(void) onVoid: (id) sender
 {
 }
-
 @end
 
 @implementation Layer2
@@ -46,13 +50,18 @@
 	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Fullscreen" target:self selector:@selector(onFullscreen:)];
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
 	
-	menu = [Menu menuWithItems: item1, item2, nil];
+	Menu *menu = [Menu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
 	
 	[self add: menu];
 	
 	
 	return self;
+}
+
+-(void) dealloc
+{
+	[super dealloc];
 }
 
 -(void) onGoBack:(id) sender

@@ -22,7 +22,6 @@
 
 @interface Layer2 : Layer
 {
-	Menu * menu;
 }
 -(void) menuCallbackBack: (id) sender;
 -(void) menuCallbackH: (id) sender;
@@ -31,7 +30,6 @@
 
 @interface Layer3 : Layer
 {
-	Menu * menu;
 }
 -(void) menuCallback: (id) sender;
 -(void) menuCallback2: (id) sender;
