@@ -6,6 +6,10 @@
 
 #import "MenuTest.h"
 
+enum {
+	kTagMenu = 1,
+};
+
 @implementation Layer1
 -(id) init
 {
@@ -93,8 +97,9 @@
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackH:)];
 	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackV:)];
 	
-	menu = [Menu menuWithItems:item1, item2, item3, nil];
+	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 	
+	menu.tag = kTagMenu;
 	[menu alignItemsHorizontally];
 
 	menu.opacity = 128;
@@ -104,20 +109,34 @@
 	return self;
 }
 
+-(void) dealloc
+{
+	[super dealloc];
+}
+
 -(void) menuCallbackBack: (id) sender
 {
-	menu.opacity = 128;
+	// One way to obtain the menu is:
+	//    [self  getByTag:xxx]
+	id menu = [self getByTag:kTagMenu];
+	[menu setOpacity: 128];
+
 	[(MultiplexLayer*)parent switchTo:0];
 }
 
 -(void) menuCallbackH: (id) sender
 {
-	menu.opacity = 255;
+	// Another way to obtain the menu
+	// in this particular case is:
+	// self.parent
+
+	id menu = [sender parent];
+	[menu setOpacity: 255];
 	[menu alignItemsHorizontally];
 }
 -(void) menuCallbackV: (id) sender
 {
-	menu.opacity = 255;
+	id menu = [self getByTag:kTagMenu];
 	[menu alignItemsVertically];
 
 // XXX: this method is deprecated and will be removed in v0.7
@@ -145,7 +164,7 @@
 	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2:)];
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback:)];
 	
-	menu = [Menu menuWithItems: item1, item2, nil];	
+	Menu *menu = [Menu menuWithItems: item1, item2, nil];	
 	menu.position = cpv(0,0);
 	
 	item1.position = cpv(100,100);
@@ -161,6 +180,11 @@
 	
 	
 	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
 }
 
 -(void) menuCallback: (id) sender

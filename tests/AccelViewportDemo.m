@@ -50,9 +50,8 @@ float randfloat() {
 		[grossini[n] do:[Repeat actionWithAction:[RotateBy actionWithDuration:.5*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
 	}
 		
-	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
-
-	info = @"Grossini's iPhone";
+//	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
+	NSString *info = @"Grossini's iPhone";
 	
 	label = [Label labelWithString:info dimensions:CGSizeMake(s.size.width, 20) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:16];
 	[self add: label];

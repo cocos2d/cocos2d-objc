@@ -79,9 +79,14 @@
 	tQueryFlags flags = kQueryFlagIgnore;
 	if( world == kCountry )
 		flags = kQueryFlagByCountry;
-	
+
+	NSLog( @"request count: %d", [request retainCount]);
+
 	// Ask for World scores
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
+
+	// Release. It won't be freed from memory until the connection fails or suceeds
+	[request release];
 }
 
 -(void) postScore:(NSInteger)cate
@@ -127,10 +132,11 @@
 	
 	[dict setObject:cat forKey:@"cc_category"];
 	
-#if DEBUG
 	NSLog(@"Sending data: %@", dict);
-#endif
+
 	[server sendScore:dict];
+	
+	// Release. It won't be freed from memory until the connection fails or suceeds
 	[server release];
 }
 
@@ -144,14 +150,14 @@
 
 -(void) scorePostFail: (id) sender
 {
-	NSString *message;
+	NSString *message = nil;
 	tPostStatus status = [sender postStatus];
 	if( status == kPostStatusPostFailed )
 		message = @"score post Failed. Retry posting";
 	else if( status == kPostStatusConnectionFailed )
 		message = @"score post Failed. Don't retry posting";
 	
-	NSLog(message);
+	NSLog(@"%@", message);
 
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Post Failed" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
 	alert.tag = 0;
@@ -171,7 +177,6 @@
 	// use the property (retain is needed)
 	self.globalScores = mutable;
 		
-	[sender release];
 	[myTableView reloadData];
 }
 
@@ -255,6 +260,8 @@
 -(void) dealloc
 {
 	[globalScores release];
+	[mainView release];
+	[window release];
 	[super dealloc];
 }
 @end

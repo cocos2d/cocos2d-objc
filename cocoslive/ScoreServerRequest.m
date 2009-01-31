@@ -18,7 +18,7 @@
 // local imports
 #import "ScoreServerPost.h"
 #import "ScoreServerRequest.h"
-
+#import "ccMacros.h"
 
 @implementation ScoreServerRequest
 +(id) serverWithGameName:(NSString*) name delegate:(id)delegate
@@ -39,9 +39,7 @@
 
 -(void) dealloc
 {
-#if DEBUG
-	NSLog( @"deallocing %@", self);
-#endif
+	CCLOG( @"deallocing %@", self);
 
 	[delegate release];
 	[gameName release];
@@ -82,6 +80,9 @@
 	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
 	if (! theConnection)
 		return NO;
+
+	// XXX: Don't release 'theConnection' here
+	// XXX: It will be released by the delegate
 	
 	return YES;
 }
@@ -114,7 +115,7 @@
 	if( ! error ) {
 		array = [dictionary objectForKey:@"scores"];
 	} else {
-		NSLog(@"Error parsing scores: %@", error);
+		CCLOG(@"Error parsing scores: %@", error);
 	}
 	return array;
 }
@@ -146,7 +147,7 @@
 	// release the connection, and the data object
     [connection release];
 
-	NSLog(@"Error getting scores: %@", error);
+	CCLOG(@"Error getting scores: %@", error);
 
 	if( [delegate respondsToSelector:@selector(scoreRequestFail:) ] )
 		[delegate scoreRequestFail:self];
