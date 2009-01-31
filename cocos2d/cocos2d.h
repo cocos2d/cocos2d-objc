@@ -27,7 +27,7 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 06 02
+// 00   00 07 00
 #define COCOS2D_VERSION 0x00000603
 
 //
@@ -54,12 +54,17 @@
 #import "TextureMgr.h"
 #import "TextureNode.h"
 #import "Transition.h"
-#import "types.h"
 #import "TextureAtlas.h"
 #import "LabelAtlas.h"
 #import "TileMapAtlas.h"
 #import "AtlasNode.h"
 #import "EaseAction.h"
+
+//
+// cocos2d macros
+//
+#import "ccTypes.h"
+#import "ccMacros.h"
 
 //
 // cocos2d helper files

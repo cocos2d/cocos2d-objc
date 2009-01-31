@@ -16,6 +16,7 @@
 #import "Director.h"
 #import "Camera.h"
 #import "Scheduler.h"
+#import "ccMacros.h"
 
 // support imports
 #import "glu.h"
@@ -144,9 +145,7 @@ static int _depthBufferFormat = DepthBufferNone;
 
 - (void) dealloc
 {
-#if DEBUG
-	NSLog( @"deallocing %@", self);
-#endif
+	CCLOG( @"deallocing %@", self);
 
 #ifdef FAST_FPS_DISPLAY
 	[FPSLabel release];

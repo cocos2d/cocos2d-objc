@@ -18,7 +18,7 @@
 
 #import "Action.h"
 #import "chipmunk.h"
-#import "types.h"
+#import "ccTypes.h"
 
 enum {
 	kCocosNodeTagInvalid = -1,

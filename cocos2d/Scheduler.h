@@ -16,7 +16,7 @@
 // cocoa related
 #import <UIKit/UIKit.h>
 
-#import "types.h"
+#import "ccTypes.h"
 
 //
 // Timer
