@@ -71,31 +71,34 @@ enum
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
-
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
-
-	// frames per second
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	
-	// display frames ?
-	[[Director sharedDirector] setDisplayFPS:YES];
-
 	UIAlertView*			alertView;
-
 	alertView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Start", nil];
 	[alertView setMessage:[NSString stringWithFormat:@"Click on the screen\nto move and rotate Grossini", [[UIDevice currentDevice] model]]];
 	[alertView show];
 	[alertView release];
-		
-	Scene *scene = [Scene node];
 
-	MainLayer * mainLayer =[MainLayer node];
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:YES];
 	
+	// Attach cocos2d to the window
+	[[Director sharedDirector] attachInWindow:window];	
+	
+	// Setup the layout Propertys
+//	[[Director sharedDirector] setLandscape:YES];
+	
+	// Show FPS, useful when debugging performance
+	[[Director sharedDirector] setDisplayFPS:YES];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
+	
+	Scene *scene = [Scene node];
+	MainLayer * mainLayer =[MainLayer node];	
 	[scene add: mainLayer z:2];
-
+	
 	[[Director sharedDirector] runScene: scene];
 }
 
@@ -114,6 +117,12 @@ enum
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
 }
 
 @end

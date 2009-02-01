@@ -137,6 +137,13 @@ float randfloat() {
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	// cocos2d will inherit these values
+	[window setUserInteractionEnabled:YES];	
+	[window setMultipleTouchEnabled:NO];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 
@@ -146,10 +153,14 @@ float randfloat() {
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
 
-
+	// create OpenGL context and add it to window
+	[[Director sharedDirector] attachInView:window];
+	
 	Scene *scene = [Scene node];
 	AccelViewportDemo *layer = [AccelViewportDemo node];
 	[scene add: layer];
+	
+	[window makeKeyAndVisible];
 			 
 	[[Director sharedDirector] runScene: scene];
 }
@@ -169,6 +180,12 @@ float randfloat() {
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
 }
 
 @end

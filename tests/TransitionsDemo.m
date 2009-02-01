@@ -296,19 +296,24 @@ Class restartTransition()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:NO];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	[[Director sharedDirector] attachInView:window];
 	
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
 	
-
 	Scene *scene = [Scene node];
 	[scene add: [TextLayer node]];
+	
+	[window makeKeyAndVisible];
 			 
 	[[Director sharedDirector] runScene: scene];
 }
@@ -329,4 +334,11 @@ Class restartTransition()
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
 }
+
+- (void) dealloc
+{
+	[window dealloc];
+	[super dealloc];
+}
+
 @end

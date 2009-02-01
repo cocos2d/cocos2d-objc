@@ -267,20 +267,27 @@ void drawCollisions(void *ptr, void *data)
 @implementation AppController
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	// cocos2d will inherit these values
+	[window setUserInteractionEnabled:YES];	
+	[window setMultipleTouchEnabled:NO];
+	
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setDisplayFPS:YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
-	
+	[[Director sharedDirector] attachInView:window];
 	
 	Scene *scene = [Scene node];
 	
 	MainLayer * mainLayer =[MainLayer node];
 	
 	[scene add: mainLayer];
+	
+	[window makeKeyAndVisible];
 
 	[[Director sharedDirector] runScene: scene];
 }
@@ -296,6 +303,13 @@ void drawCollisions(void *ptr, void *data)
 {
 	[[Director sharedDirector] resume];
 }
+
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
+}
+
 
 @end
 

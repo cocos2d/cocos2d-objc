@@ -3,6 +3,7 @@
 //CLASS INTERFACE
 @interface AppController : NSObject <UIApplicationDelegate>
 {
+	UIWindow	*window;
 }
 @end
 

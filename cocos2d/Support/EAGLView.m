@@ -70,7 +70,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation EAGLView
 
-@synthesize delegate=_delegate, autoresizesSurface=_autoresize, surfaceSize=_size, framebuffer = _framebuffer, pixelFormat = _format, depthFormat = _depthFormat, context = _context;
+@synthesize delegate=_delegate, autoresizesSurface=_autoresize, surfaceSize=_size, framebuffer = _framebuffer, pixelFormat = _format, depthFormat = _depthFormat, context = _context, touchDelegate;
 
 + (Class) layerClass
 {
@@ -153,8 +153,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	if (oldContext != _context)
 		[EAGLContext setCurrentContext:oldContext];
-    else
-        [EAGLContext setCurrentContext:nil];
+	else
+		[EAGLContext setCurrentContext:nil];
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -169,7 +169,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
 {
-	if((self = [super initWithFrame:frame])) {
+	if((self = [super initWithFrame:frame]))
+	{
+		
+		[self setOpaque:YES];
+		
 		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
 
 		[eaglLayer setDrawableProperties:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:retained], kEAGLDrawablePropertyRetainedBacking, format, kEAGLDrawablePropertyColorFormat, nil]];
@@ -203,7 +207,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	CGRect				bounds = [self bounds];
+	CGRect bounds = [self bounds];
 	
 	if(_autoresize && ((roundf(bounds.size.width) != _size.width) || (roundf(bounds.size.height) != _size.height))) {
 		[self _destroySurface];
@@ -242,7 +246,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) swapBuffers
 {
 	EAGLContext *oldContext = [EAGLContext currentContext];
-//	GLuint oldRenderbuffer;
+	//GLuint oldRenderbuffer;
 	
 	if(oldContext != _context)
 		[EAGLContext setCurrentContext:_context];
@@ -251,8 +255,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CHECK_GL_ERROR();
 #endif
 	
-//	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
+	//glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _renderbuffer);
+	//glBindRenderbufferOES(GL_RENDERBUFFER_OES, _framebuffer);
 	
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER_OES])
 		printf("Failed to swap renderbuffer in %s\n", __FUNCTION__);
@@ -273,6 +278,39 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CGRect				bounds = [self bounds];
 	
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
+}
+
+// Pass the touches to the superview
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if(touchDelegate)
+	{
+		[touchDelegate touchesBegan:touches withEvent:event];
+	}
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if(touchDelegate)
+	{
+		[touchDelegate touchesMoved:touches withEvent:event];
+	}
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if(touchDelegate)
+	{
+		[touchDelegate touchesEnded:touches withEvent:event];
+	}
+}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if(touchDelegate)
+	{
+		[touchDelegate touchesCancelled:touches withEvent:event];
+	}
 }
 
 @end

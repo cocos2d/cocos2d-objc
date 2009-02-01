@@ -270,17 +270,25 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	// cocos2d will inherit these values
+	[window setUserInteractionEnabled:YES];	
+	[window setMultipleTouchEnabled:NO];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: NO];
 	[[Director sharedDirector] setDisplayFPS: YES];
 	[[Director sharedDirector] setAnimationInterval: 1.0/60];
 
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
-
+	// create OpenGL view and attach it to a window
+	[[Director sharedDirector] attachInView:window];
 
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
+	
+	[window makeKeyAndVisible];
 			 
 	[[Director sharedDirector] runScene: scene];
 }

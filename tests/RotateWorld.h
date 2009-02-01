@@ -6,7 +6,9 @@
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
 {
+    UIWindow *window;
 }
+@property (nonatomic, retain) UIWindow *window;
 @end
 
 @interface SpriteLayer: Layer

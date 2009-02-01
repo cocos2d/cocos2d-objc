@@ -325,6 +325,9 @@
 		5084D4810EE5C7D100BD237C /* btn-highscores-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47B0EE5C7D100BD237C /* btn-highscores-selected.png */; };
 		5084D4820EE5C7D100BD237C /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
 		5084D4830EE5C7D100BD237C /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
+		50851BF60F35FB0F00978029 /* ccExceptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851BF40F35FB0F00978029 /* ccExceptions.h */; };
+		50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851C380F35FE7D00978029 /* UIColor-OpenGL.h */; };
+		50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50851C390F35FE7D00978029 /* UIColor-OpenGL.m */; };
 		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		509B3A170F31027600F2FB95 /* cocoslive.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A110F31027600F2FB95 /* cocoslive.h */; };
 		509B3A180F31027600F2FB95 /* cocoslive.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A120F31027600F2FB95 /* cocoslive.m */; };
@@ -791,6 +794,9 @@
 		5084D47B0EE5C7D100BD237C /* btn-highscores-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-highscores-selected.png"; sourceTree = "<group>"; };
 		5084D47C0EE5C7D100BD237C /* btn-play-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-play-normal.png"; sourceTree = "<group>"; };
 		5084D47D0EE5C7D100BD237C /* btn-play-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-play-selected.png"; sourceTree = "<group>"; };
+		50851BF40F35FB0F00978029 /* ccExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccExceptions.h; sourceTree = "<group>"; };
+		50851C380F35FE7D00978029 /* UIColor-OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-OpenGL.h"; sourceTree = "<group>"; };
+		50851C390F35FE7D00978029 /* UIColor-OpenGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-OpenGL.m"; sourceTree = "<group>"; };
 		509B39DF0F31020900F2FB95 /* libTouchJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A0D0F31024E00F2FB95 /* libcocos Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A110F31027600F2FB95 /* cocoslive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoslive.h; sourceTree = "<group>"; };
@@ -1384,6 +1390,7 @@
 				506887D70E96C90000F943E5 /* AtlasNode.h */,
 				506887D80E96C90000F943E5 /* AtlasNode.m */,
 				50BAF3970F33CCD8003F654C /* ccMacros.h */,
+				50851BF40F35FB0F00978029 /* ccExceptions.h */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -1401,6 +1408,8 @@
 		501CCFB60E99658900B86F68 /* OpenGLSupport */ = {
 			isa = PBXGroup;
 			children = (
+				50851C380F35FE7D00978029 /* UIColor-OpenGL.h */,
+				50851C390F35FE7D00978029 /* UIColor-OpenGL.m */,
 				501CCFA40E99657C00B86F68 /* EAGLView.h */,
 				501CCFA50E99657C00B86F68 /* EAGLView.m */,
 				501CCFA60E99657C00B86F68 /* glu.c */,
@@ -1560,6 +1569,8 @@
 				501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */,
 				50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
+				50851BF60F35FB0F00978029 /* ccExceptions.h in Headers */,
+				50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2438,6 +2449,7 @@
 				501CCFB30E99657C00B86F68 /* Texture2D.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.c in Sources */,
 				50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */,
+				50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
