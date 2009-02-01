@@ -204,6 +204,9 @@ enum {
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 
@@ -215,12 +218,16 @@ enum {
 	
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
-		
+
+	// attach cocos2d to a window
+	[[Director sharedDirector] attachInView:window];
+
 	Scene *scene = [Scene node];
 
 	MultiplexLayer *layer = [MultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], nil];
 	[scene add: layer z:0];
 
+	[window makeKeyAndVisible];
 	[[Director sharedDirector] runScene: scene];
 }
 
@@ -239,6 +246,12 @@ enum {
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
+- (void) dealloc
+{
+	[window dealloc];
+	[super dealloc];
 }
 
 @end

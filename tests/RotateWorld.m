@@ -146,18 +146,32 @@
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:YES];
+		
+	// Attach cocos2d to the window
+	[[Director sharedDirector] attachInWindow:window];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
+
+	// Setup the OpenGL Propertys
+	[[Director sharedDirector] set3Dprojection];
+	[[Director sharedDirector] setAlphaBlending:YES];
+//	[[Director sharedDirector] setDepthTest:YES];
+//	[[Director sharedDirector] setTexture2D:YES];
+		
+	// Show FPS, useful when debugging performance
 	[[Director sharedDirector] setDisplayFPS:YES];
-	
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
-
 
 	Scene *scene = [Scene node];
 
@@ -165,10 +179,10 @@
 	
 	[scene add: mainLayer];
 	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
 	[scene do: [RotateBy actionWithDuration: 4 angle:-360]];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	 
 	[[Director sharedDirector] runScene: scene];
 }
@@ -188,6 +202,12 @@
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
 }
 
 @end

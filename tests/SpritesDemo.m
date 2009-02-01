@@ -512,19 +512,31 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:YES];
+	
+	// Attach cocos2d to the window
+	[[Director sharedDirector] attachInWindow:window];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
-
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 	
+	// display FPS (useful when debugging)
+	[[Director sharedDirector] setDisplayFPS:YES];
+	
+	// frames per second
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+
+	// Make the window visible
+	[window makeKeyAndVisible];
+
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
 	
 	[[Director sharedDirector] runScene: scene];
+		
 }
 
 // getting a call, pause the game
@@ -543,5 +555,12 @@ Class restartAction()
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
 }
+
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
+}
+
 
 @end

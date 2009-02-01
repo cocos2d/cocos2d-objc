@@ -7,6 +7,7 @@
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
 {
+	UIWindow	*window;
 }
 @end
 
@@ -19,56 +20,45 @@
 @end
 
 @interface DemoFirework : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoFire : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoSun : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoGalaxy : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoFlower : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoMeteor : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoSpiral : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoExplosion : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoSmoke : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoSnow : ParticleDemo
-{
-}
+{}
 @end
 
 @interface DemoRain : ParticleDemo
-{
-}
+{}
 @end

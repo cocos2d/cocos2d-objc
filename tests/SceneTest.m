@@ -97,11 +97,16 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:NO];
+	
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
 
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	// attach the OpenGL view to a window
+	[[Director sharedDirector] attachInView:window];
 	
 	// show FPS
 	[[Director sharedDirector] setDisplayFPS:YES];
@@ -109,10 +114,12 @@
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
 	
-		
+	
 	Scene *scene = [Scene node];
 
 	[scene add: [Layer1 node] z:0];
+	
+	[window makeKeyAndVisible];
 
 	[[Director sharedDirector] runScene: scene];
 }
@@ -132,6 +139,12 @@
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
+}
+
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
 }
 
 @end

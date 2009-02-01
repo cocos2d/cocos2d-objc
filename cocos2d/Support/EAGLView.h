@@ -77,6 +77,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) didResizeEAGLSurfaceForView:(EAGLView*)view; //Called whenever the EAGL surface has been resized
 @end
 
+@protocol EAGLTouchDelegate <NSObject>
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+@end
+
 //CLASS INTERFACE:
 
 /** EAGLView Class
@@ -97,6 +104,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CGSize					_size;
 	BOOL					_hasBeenCurrent;
 	id<EAGLViewDelegate>	_delegate;
+	id<EAGLTouchDelegate>   touchDelegate;
 }
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
@@ -111,6 +119,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(readonly, nonatomic) CGSize surfaceSize;
 
 @property(assign) id<EAGLViewDelegate> delegate;
+@property(assign) id<EAGLTouchDelegate> touchDelegate;
+
+- (void) setAutoresizesEAGLSurface:(BOOL)autoresizesEAGLSurface;
 
 - (void) setCurrentContext;
 - (BOOL) isCurrentContext;

@@ -149,23 +149,32 @@ eachShape(void *ptr, void* unused)
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+	// cocos2d will inherit these values
+	[window setUserInteractionEnabled:YES];	
+	[window setMultipleTouchEnabled:YES];
+	
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
-	// multiple touches or not ?
-	[[Director sharedDirector] setMultipleTouchEnabled:YES];	
+	// create an openGL view inside a window
+	[[Director sharedDirector] attachInView:window];
+
+	// And you can later, once the openGLView was created
+	// you can change it's properties
+	[[[Director sharedDirector] openGLView] setMultipleTouchEnabled:YES];
 	
 		
 	Scene *scene = [Scene node];
 
 	[scene add: [Layer1 node] z:0];
 
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	
+	[window makeKeyAndVisible];
+
 	[[Director sharedDirector] runScene: scene];
 }
 

@@ -80,8 +80,6 @@
 	if( world == kCountry )
 		flags = kQueryFlagByCountry;
 
-	NSLog( @"request count: %d", [request retainCount]);
-
 	// Ask for World scores
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
 

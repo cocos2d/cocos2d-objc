@@ -34,30 +34,35 @@ enum {
 // uncomment this line to use the old method that updated
 #define FAST_FPS_DISPLAY 1
 
-enum {
+/** Possible Pixel Formats for the EAGLView */
+typedef enum {
 	RGB565,
 	RGBA8
-};
+} tPixelFormat;
 
-enum {
+/** Possible DepthBuffer Formats for the EAGLView */
+typedef enum {
    DepthBufferNone,
    DepthBuffer16,
    DepthBuffer24,
-};
+} tDepthBufferFormat;
 
 @class LabelAtlas;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes
 */
-@interface Director : EAGLView
+@interface Director : NSObject <EAGLTouchDelegate>
 {
-	UIWindow*	window;
-	CGRect		winSize;
+	EAGLView	*_openGLView;
 
+	// internal timer
 	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
 	NSTimeInterval oldAnimationInterval;
+
+	tPixelFormat _pixelFormat;
+	tDepthBufferFormat _depthBufferFormat;
 
 	/* landscape mode ? */
 	BOOL landscape;
@@ -101,12 +106,12 @@ and when to execute the Scenes
 @property (readonly, assign) Scene* runningScene;
 /** The FPS value */
 @property (readwrite, assign) NSTimeInterval animationInterval;
-/** The UIKit window. Use it to embed UIKit object within cocos2d */
-@property (readwrite, retain) UIWindow* window;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (readwrite, assign) BOOL displayFPS;
 /** Whether or not to propagate the touch events to the running Scene. Default YES */
 @property (readwrite, assign) BOOL eventsEnabled;
+/** The OpenGL view */
+@property (readonly) EAGLView *openGLView;
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
@@ -114,22 +119,35 @@ and when to execute the Scenes
 // iPhone Specific
 
 /** change default pixel format.
- Call this class method before any other call to the Director.
+ Call this class method before attaching it to a UIWindow/UIView
  Default pixel format: RGB565. Supported pixel formats: RGBA8 and RGB565
  */
-+(void) setPixelFormat: (int) p;
+-(void) setPixelFormat: (tPixelFormat) p;
 
 /** change depth buffer format.
- Call this class method before any other call to the Director.
+ Call this class method before attaching it to a UIWindow/UIView
  Default depth buffer: 0 (none).  Supported: DepthBufferNone, DepthBuffer16, and DepthBuffer24
  */
-+(void) setDepthBufferFormat: (int) db;
+-(void) setDepthBufferFormat: (tDepthBufferFormat) db;
+
+// Integration with UIKit
+/** detach or attach to a view or a window */
+-(BOOL)detach;
+
+/** attach in UIWindow using the full frame */
+-(BOOL)attachInWindow:(UIWindow *)window;
+
+/** attach in UIView using the full frame */
+-(BOOL)attachInView:(UIView *)view;
+
+/** attach in UIView using the given frame */
+-(BOOL)attachInView:(UIView *)view with:(CGRect)frame;
 
 // Landscape
 
-/** returns the size of the screen 480x320 or 320x480 depeding if landscape mode is activated or not */
+/** returns the size of the OpenGL view according to the landspace */
 - (CGRect) winSize;
-/** returns 320x480, always */
+/** returns the display size of the OpenGL view */
 -(CGRect) displaySize;
 
 /** returns whether or not the screen is in landscape mode */

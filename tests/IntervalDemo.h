@@ -9,6 +9,7 @@
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
 {
+	UIWindow	*window;
 }
 @end
 
