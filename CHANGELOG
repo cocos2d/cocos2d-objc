@@ -1,4 +1,5 @@
 version 0.7.0 - XX-Feb-2009
+ . Atlas: Works when GL_CULL_FACE is enabled (issue #179)
  . CocosLive: added client and example that uses the CocosLive service (issue #175)
  . Demos: Creating Window and attaching cocos2d to it (issue #180)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)
