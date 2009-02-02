@@ -30,6 +30,7 @@ Contributors (alphabetically ordered):
 	* Fradj Johann: patches for CocosNode
 	                patches for Layer
 					patches for MultiplexLayer
+	* Graham Perks: Atlas works with GL_CULL_FACE
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
 	* Jason Booth (slipster216): author of EaseAction
