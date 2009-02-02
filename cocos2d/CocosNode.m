@@ -17,6 +17,7 @@
 #import "Camera.h"
 #import "Grid.h"
 #import "Scheduler.h"
+#import "ccMacros.h"
 
 
 @interface CocosNode (Private)
@@ -114,9 +115,7 @@
 
 - (void) dealloc
 {
-#if DEBUG
-	NSLog( @"deallocing %@", self);
-#endif
+	CCLOG( @"deallocing %@", self);
 	
 	// attributes
 	[camera release];
@@ -577,9 +576,7 @@
 		[self timerAlloc];
 
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
-#if DEBUG
-		NSLog(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
-#endif
+		CCLOG(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
 		return;
 	}
 
@@ -599,9 +596,7 @@
 	
 	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
 	{
-#if DEBUG
-		NSLog(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
-#endif		
+		CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
 		return;
 	}
 
