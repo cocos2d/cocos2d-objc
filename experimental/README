@@ -1,0 +1,9 @@
+Place in this directory things that are experimental.
+
+And by experimental I mean:
+  * features that needs more testing. eg: something that breaks compatibility
+  * features that are not complete. eg: Actions that don't support reverse
+  * features that have important bugs. eg: memory leaks
+
+
+Please, add a way to test these features
