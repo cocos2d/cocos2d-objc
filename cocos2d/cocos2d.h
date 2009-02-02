@@ -59,6 +59,11 @@
 #import "TileMapAtlas.h"
 #import "AtlasNode.h"
 #import "EaseAction.h"
+#import "TiledGridAction.h"
+#import "Grabber.h"
+#import "Grid.h"
+#import "Grid3DAction.h"
+#import "GridAction.h"
 
 //
 // cocos2d macros

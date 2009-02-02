@@ -12,9 +12,10 @@
  *
  */
 
-#import "ccMacros.h"
+
 #import "CocosNode.h"
 #import "Camera.h"
+#import "Grid.h"
 #import "Scheduler.h"
 
 
@@ -41,6 +42,7 @@
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent;
 @synthesize camera;
+@synthesize grid;
 @synthesize zOrder;
 @synthesize tag;
 
@@ -65,6 +67,7 @@
 	parallaxRatioY = 1.0f;
 
 	camera = [[Camera alloc] init];
+	grid = nil;
 	
 	visible = YES;
 
@@ -111,10 +114,13 @@
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+#if DEBUG
+	NSLog( @"deallocing %@", self);
+#endif
 	
 	// attributes
 	[camera release];
+	if ( grid ) grid = nil;
 	
 	// children
 	[children makeObjectsPerformSelector:@selector(cleanup)];
@@ -342,6 +348,9 @@
 {
 	if (!visible)
 		return;
+	
+	if ( grid && grid.active)
+		[grid beforeDraw];
 
 	glPushMatrix();
 	
@@ -362,15 +371,17 @@
 	}
 	
 	glPopMatrix();
-
+	
+	if ( grid && grid.active)
+		[grid afterDraw:self.camera];
 }
 
 #pragma mark CocosNode - Transformations
 
 -(void) transform
 {
-	
-	[camera locate];
+	if ( !(grid && grid.active) )
+		[camera locate];
 	
 	float parallaxOffsetX = 0;
 	float parallaxOffsetY = 0;
@@ -566,7 +577,9 @@
 		[self timerAlloc];
 
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
-		CCLOG(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
+#if DEBUG
+		NSLog(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
+#endif
 		return;
 	}
 
@@ -586,7 +599,9 @@
 	
 	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
 	{
-		CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
+#if DEBUG
+		NSLog(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
+#endif		
 		return;
 	}
 

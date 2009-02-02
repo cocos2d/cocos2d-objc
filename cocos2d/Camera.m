@@ -19,6 +19,9 @@
 #import "glu.h"
 
 @implementation Camera
+
+@synthesize dirty;
+
 -(id) init
 {
 	if( !(self=[super init]) )
