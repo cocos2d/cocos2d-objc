@@ -42,6 +42,8 @@
 	BOOL dirty;
 }
 
+@property BOOL dirty;
+
 /** returns the Z eye */
 +(float) getZEye;
 

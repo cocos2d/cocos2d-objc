@@ -112,7 +112,8 @@ and when to execute the Scenes
 @property (readwrite, assign) BOOL eventsEnabled;
 /** The OpenGL view */
 @property (readonly) EAGLView *openGLView;
-
+/** Pixel format used to create the context */
+@property (readonly) tPixelFormat pixelFormat;
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
 

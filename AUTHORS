@@ -23,6 +23,9 @@ Contributors (alphabetically ordered):
 	* Ernesto Corvi: author of TGA RLE support
 	                 patches for TextureMgr
 					 patches for Sprite
+	* Ernesto Corvi & On-Core (company): author of Effects
+	          all the code regarding Effects: Grid, Grid3d, EffectsDemo,
+			                                  Grabber, patches for CocosNode
 	* Favo Yang: patch for unschedule timer in CocosNode
 	* Fradj Johann: patches for CocosNode
 	                patches for Layer

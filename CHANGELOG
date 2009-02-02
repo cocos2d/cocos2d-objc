@@ -1,8 +1,9 @@
 version 0.7.0 - XX-Feb-2009
  . CocosLive: added client and example that uses the CocosLive service (issue #175)
-  . Demos: Creating Window and attaching cocos2d to it (issue #180)
+ . Demos: Creating Window and attaching cocos2d to it (issue #180)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)
-
+ . Effects:
+ 
 version 0.6.3 - 28-Jan-2009
  . Actions: ScaleTo & ScaleBy supports X and Y factors (issue #156)
  . Actions: Added collections of Ease Actions (issue #157)

@@ -18,13 +18,14 @@
 
 #import "Action.h"
 #import "chipmunk.h"
-#import "ccTypes.h"
+#import "cctypes.h"
 
 enum {
 	kCocosNodeTagInvalid = -1,
 };
 
 @class Camera;
+@class GridBase;
 
 /** CocosNode is the main element. Anything thats gets drawn or contains things that get drawn is a CocosNode.
  The most popular CocosNodes are: Scene, Layer, Sprite.
@@ -69,6 +70,9 @@ enum {
 	
 	// a Camera
 	Camera *camera;
+	
+	// a Grid
+	GridBase *grid;
 	
 	// z-order value
 	int zOrder;
@@ -119,6 +123,8 @@ enum {
 /** A Camera object that lets you move the node using camera coordinates.
  * If you use the Camera then position, scale & rotation won't be used */
 @property(readwrite,retain) Camera* camera;
+/** A Grid object that is used when applying Effects */
+@property(readwrite,retain) GridBase* grid;
 /** Whether of not the node is visible. Default is YES */
 @property(readwrite,assign) BOOL visible;
 /** The transformation anchor point. For Sprite and Label the transform anchor point is (width/2, height/2) */

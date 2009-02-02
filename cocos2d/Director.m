@@ -59,6 +59,7 @@
 @synthesize runningScene;
 @synthesize displayFPS, eventsEnabled;
 @synthesize openGLView=_openGLView;
+@synthesize pixelFormat=_pixelFormat;
 
 //
 // singleton stuff
@@ -398,11 +399,11 @@ static Director *sharedDirector = nil;
 	if(!_openGLView)
 	{
 		// define the pixel format
-		NSString	*pixelFormat = kEAGLColorFormatRGB565;
+		NSString	*pFormat = kEAGLColorFormatRGB565;
 	    GLuint		depthFormat = 0;
 		
 		if(_pixelFormat==RGBA8)
-			pixelFormat = kEAGLColorFormatRGBA8;
+			pFormat = kEAGLColorFormatRGBA8;
 		
 		if(_depthBufferFormat == DepthBuffer16)
 			depthFormat = GL_DEPTH_COMPONENT16_OES;
@@ -410,7 +411,7 @@ static Director *sharedDirector = nil;
 			depthFormat = GL_DEPTH_COMPONENT24_OES;
 		
 		// alloc and init the opengl view
-		_openGLView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat depthFormat:depthFormat preserveBackbuffer:NO];
+		_openGLView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
 		
 		// check if the view was alloced and initialized
 		if(!_openGLView)
