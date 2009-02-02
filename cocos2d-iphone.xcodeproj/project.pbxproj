@@ -1417,26 +1417,12 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50A24F010F3788C6007CAEB0 /* Nodes */,
+				50A24E890F378119007CAEB0 /* Particles */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
-				50A24E880F3780FE007CAEB0 /* Atlas */,
-				50A24E890F378119007CAEB0 /* Particles */,
-				509E574A0E36234300BD7F09 /* TextureNode.h */,
-				509E574B0E36234300BD7F09 /* TextureNode.m */,
-				506C78EA0E0178FD00B48100 /* MenuItem.h */,
-				506C78EB0E0178FD00B48100 /* MenuItem.m */,
-				506C78A50E016A7300B48100 /* Menu.h */,
-				506C78A60E016A7300B48100 /* Menu.m */,
-				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
-				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
-				5018F25C0DFDEAFF00C013A5 /* Label.h */,
-				5018F25D0DFDEAFF00C013A5 /* Label.m */,
-				5018F25E0DFDEAFF00C013A5 /* Layer.h */,
-				5018F25F0DFDEAFF00C013A5 /* Layer.m */,
-				5018F2600DFDEAFF00C013A5 /* Scene.h */,
-				5018F2610DFDEAFF00C013A5 /* Scene.m */,
-				5018F2620DFDEAFF00C013A5 /* Sprite.h */,
-				5018F2630DFDEAFF00C013A5 /* Sprite.m */,
+				50637A150E95397A000C9182 /* TextureAtlas.h */,
+				50637A160E95397A000C9182 /* TextureAtlas.m */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 				5066020F0E38A70D000B500E /* Scheduler.h */,
@@ -1540,21 +1526,6 @@
 			name = Actions;
 			sourceTree = "<group>";
 		};
-		50A24E880F3780FE007CAEB0 /* Atlas */ = {
-			isa = PBXGroup;
-			children = (
-				50637A150E95397A000C9182 /* TextureAtlas.h */,
-				50637A160E95397A000C9182 /* TextureAtlas.m */,
-				506884700E96734A00F943E5 /* LabelAtlas.h */,
-				506884710E96734A00F943E5 /* LabelAtlas.m */,
-				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
-				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
-				506887D70E96C90000F943E5 /* AtlasNode.h */,
-				506887D80E96C90000F943E5 /* AtlasNode.m */,
-			);
-			name = Atlas;
-			sourceTree = "<group>";
-		};
 		50A24E890F378119007CAEB0 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1564,6 +1535,35 @@
 				5038B6B10E196CD8009A621E /* Particle.m */,
 			);
 			name = Particles;
+			sourceTree = "<group>";
+		};
+		50A24F010F3788C6007CAEB0 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
+				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
+				506884700E96734A00F943E5 /* LabelAtlas.h */,
+				506884710E96734A00F943E5 /* LabelAtlas.m */,
+				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
+				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
+				506887D70E96C90000F943E5 /* AtlasNode.h */,
+				506887D80E96C90000F943E5 /* AtlasNode.m */,
+				509E574A0E36234300BD7F09 /* TextureNode.h */,
+				509E574B0E36234300BD7F09 /* TextureNode.m */,
+				506C78EA0E0178FD00B48100 /* MenuItem.h */,
+				506C78EB0E0178FD00B48100 /* MenuItem.m */,
+				506C78A50E016A7300B48100 /* Menu.h */,
+				506C78A60E016A7300B48100 /* Menu.m */,
+				5018F25C0DFDEAFF00C013A5 /* Label.h */,
+				5018F25D0DFDEAFF00C013A5 /* Label.m */,
+				5018F25E0DFDEAFF00C013A5 /* Layer.h */,
+				5018F25F0DFDEAFF00C013A5 /* Layer.m */,
+				5018F2600DFDEAFF00C013A5 /* Scene.h */,
+				5018F2610DFDEAFF00C013A5 /* Scene.m */,
+				5018F2620DFDEAFF00C013A5 /* Sprite.h */,
+				5018F2630DFDEAFF00C013A5 /* Sprite.m */,
+			);
+			name = Nodes;
 			sourceTree = "<group>";
 		};
 		50B130FC0DFE0923003BAB56 /* tests */ = {
