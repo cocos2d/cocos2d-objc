@@ -311,10 +311,18 @@ Class restartAction()
 	
 	Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
 	[bg add:grossini z:1];
-	grossini.position = cpv(320,200);
+	grossini.position = cpv(230,200);
 	id sc = [ScaleBy actionWithDuration:2 scale:5];
 	id sc_back = [sc reverse];
 	[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
+
+	Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+	[bg add:tamara z:1];
+	tamara.position = cpv(430,200);
+	id sc2 = [ScaleBy actionWithDuration:2 scale:5];
+	id sc2_back = [sc2 reverse];
+	[tamara do: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
+	
 	
 	Label* label = [Label labelWithString:effectsList[actionIdx] dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
 	
@@ -342,7 +350,8 @@ Class restartAction()
 
 -(void)checkAnim:(ccTime)t
 {
-	Scene *s2 = [Director sharedDirector].runningScene;
+//	Scene *s2 = [Director sharedDirector].runningScene;
+	CocosNode *s2 = [self getByTag:kTagBackground];
 	if ( [s2 numberOfRunningActions] == 0 && s2.grid != nil )
 		s2.grid = nil;
 }
