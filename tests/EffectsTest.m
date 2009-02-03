@@ -2,12 +2,23 @@
 // Effects Demo
 // a cocos2d example
 //
+// Demo by Ernesto Corvi and On-Core
+//
 
 // local import
 #import "cocos2d.h"
 #import "EffectsTest.h"
 #import "Grid3DAction.h"
 #import "TiledGridAction.h"
+
+enum {
+	kTagTextLayer = 1,
+
+	kTagBackground = 1,
+	kTagLabel = 2,
+};
+
+#pragma mark - Classes
 
 @interface Shaky3DDemo : Shaky3D 
 +(id) actionWithDuration:(ccTime)t;
@@ -201,6 +212,7 @@
 }
 @end
 
+#pragma mark Demo - order
 
 static int actionIdx=0;
 static NSString *actionList[] =
@@ -294,14 +306,21 @@ Class restartAction()
 	y = size.size.height;
 	
 	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
-	[self add: bg];
+	[self add: bg z:0 tag:kTagBackground];
 	bg.position = cpv(x/2,y/2);
+	
+	Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
+	[bg add:grossini z:1];
+	grossini.position = cpv(320,200);
+	id sc = [ScaleBy actionWithDuration:2 scale:5];
+	id sc_back = [sc reverse];
+	[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 	
 	Label* label = [Label labelWithString:effectsList[actionIdx] dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
 	
-	[label setPosition: cpv(x/2,y/2)];
+	[label setPosition: cpv(x/2,y-80)];
 	[self add: label];
-	label.tag = 1000;
+	label.tag = kTagLabel;
 	
 	// menu
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -330,30 +349,33 @@ Class restartAction()
 
 -(void) nextCallback:(id) sender
 {
-	Scene *s2 = [Director sharedDirector].runningScene;
+//	Scene *s = [Director sharedDirector].runningScene;
+	id s2 = [self getByTag:kTagBackground];
 	[s2 stopAllActions];
 	Class effect = nextAction();
-	Label *label = (Label *)[self getByTag:1000];
+	Label *label = (Label *)[self getByTag:kTagLabel];
 	[label setString:effectsList[actionIdx]];
 	[s2 do:[effect actionWithDuration:3]];
 }	
 
 -(void) backCallback:(id) sender
 {
-	Scene *s2 = [Director sharedDirector].runningScene;
+//	Scene *s = [Director sharedDirector].runningScene;
+	id s2 = [self getByTag:kTagBackground];
 	[s2 stopAllActions];
 	Class effect = backAction();
-	Label *label = (Label *)[self getByTag:1000];
+	Label *label = (Label *)[self getByTag:kTagLabel];
 	[label setString:effectsList[actionIdx]];
 	[s2 do:[effect actionWithDuration:3]];
 }	
 
 -(void) restartCallback:(id) sender
 {
-	Scene *s2 = [Director sharedDirector].runningScene;
+//	Scene *s = [Director sharedDirector].runningScene;
+	id s2 = [self getByTag:kTagBackground];
 	[s2 stopAllActions];
 	Class effect = restartAction();
-	Label *label = (Label *)[self getByTag:1000];
+	Label *label = (Label *)[self getByTag:kTagLabel];
 	[label setString:effectsList[actionIdx]];
 	[s2 do:[effect actionWithDuration:3]];
 }	
@@ -381,7 +403,7 @@ Class restartAction()
 	[window makeKeyAndVisible];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [TextLayer node]];
+	[scene add: [TextLayer node] z:0 tag:kTagTextLayer];
 	
 	[[Director sharedDirector] runScene: scene];
 }
