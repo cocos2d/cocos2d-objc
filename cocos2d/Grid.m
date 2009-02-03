@@ -46,13 +46,13 @@
 			void *data = malloc((int)(512 * 512 * 4));
 			memset(data, 0, (int)(512 * 512 * 4));
 			
-			self.texture = [[[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:512 pixelsHigh:512 contentSize:win.size] autorelease];
+			texture = [[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:512 pixelsHigh:512 contentSize:win.size];
 			free( data );
 		}
 		
-		self.grabber = [[[Grabber alloc] init] autorelease];
+		grabber = [[Grabber alloc] init];
 		[grabber grab:self.texture];
-		
+
 		step.x = win.size.width / grid.x;
 		step.y = win.size.height / grid.y;
 	}
@@ -69,6 +69,7 @@
 	CCLOG( @"deallocing %@", self);
 
 	[texture release];
+	[grabber release];
 	[super dealloc];
 }
 
