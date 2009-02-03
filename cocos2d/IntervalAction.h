@@ -308,7 +308,7 @@ Example:
 
 /** Executes an action in reverse order, from time=duration to time=0
  
- WARNING: Use this action carefully. This action is not
+ @warning Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
