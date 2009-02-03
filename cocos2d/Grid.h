@@ -16,6 +16,7 @@
 
 #import "CocosNode.h"
 #import "Camera.h"
+#import "ccTypes.h"
 
 @class Texture2D;
 @class Grabber;
@@ -48,13 +49,6 @@
 @end
 
 ////////////////////////////////////////////////////////////
-
-typedef struct
-{
-	float x;
-	float y;
-	float z;
-} ccVertex3D;
 
 /**
  Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z

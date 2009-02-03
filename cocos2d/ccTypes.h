@@ -65,6 +65,14 @@ typedef struct _ccQuad3 {
 	float	tr_x, tr_y, tr_z;
 } ccQuad3;
 
+//! A 3D vertex
+typedef struct _ccVertex3D
+{
+	float x;
+	float y;
+	float z;
+} ccVertex3D;
+
 
 //! delta time type
 //! if you want more resolution redefine it as a double
