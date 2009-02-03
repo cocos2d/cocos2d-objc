@@ -10,13 +10,13 @@
 }
 @end
 
-@interface TextLayer: ColorLayer
+@interface TextLayer: Layer
 {
 }
 @end
 
 
-@interface TextLayer2: ColorLayer
+@interface TextLayer2: Layer
 {
 }
 @end

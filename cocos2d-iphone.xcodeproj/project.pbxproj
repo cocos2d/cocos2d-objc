@@ -392,6 +392,8 @@
 		50A24E740F378087007CAEB0 /* TiledGridAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E720F378087007CAEB0 /* TiledGridAction.h */; };
 		50A24E750F378087007CAEB0 /* TiledGridAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E730F378087007CAEB0 /* TiledGridAction.m */; };
 		50A24EE70F378525007CAEB0 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
+		50A2522B0F38B8DC007CAEB0 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
+		50A2522C0F38B8DC007CAEB0 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
 		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -880,6 +882,8 @@
 		50A24E700F377FE8007CAEB0 /* EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsTest.m; path = tests/EffectsTest.m; sourceTree = "<group>"; };
 		50A24E720F378087007CAEB0 /* TiledGridAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiledGridAction.h; sourceTree = "<group>"; };
 		50A24E730F378087007CAEB0 /* TiledGridAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiledGridAction.m; sourceTree = "<group>"; };
+		50A252290F38B8DC007CAEB0 /* background1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background1.jpg; sourceTree = "<group>"; };
+		50A2522A0F38B8DC007CAEB0 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chipmunk_Accel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1609,6 +1613,8 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50A252290F38B8DC007CAEB0 /* background1.jpg */,
+				50A2522A0F38B8DC007CAEB0 /* background2.jpg */,
 				5084D4780EE5C7D100BD237C /* btn-about-normal.png */,
 				5084D4790EE5C7D100BD237C /* btn-about-selected.png */,
 				5084D47A0EE5C7D100BD237C /* btn-highscores-normal.png */,
@@ -2509,6 +2515,8 @@
 				500165A70E72DB470085673F /* f1.png in Resources */,
 				500165A80E72DB470085673F /* f2.png in Resources */,
 				501CD16F0E99873000B86F68 /* fps_images.png in Resources */,
+				50A2522B0F38B8DC007CAEB0 /* background1.jpg in Resources */,
+				50A2522C0F38B8DC007CAEB0 /* background2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

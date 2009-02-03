@@ -21,10 +21,16 @@
 #import "CameraAction.h"
 #import "Layer.h"
 #import "Camera.h"
+#import "TiledGridAction.h"
+#import "EaseAction.h"
 
 enum {
 	kSceneFade = 0xFADEFADE,
 };
+
+@interface TransitionScene (Private)
+-(void) addScenes;
+@end
 
 @implementation TransitionScene
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s
@@ -56,11 +62,15 @@ enum {
 	// disable events while transitions
 	[[Director sharedDirector] setEventsEnabled: NO];
 
+	[self addScenes];
+	return self;
+}
+
+-(void) addScenes
+{
 	// add both scenes
 	[self add: inScene z:1];
 	[self add: outScene z:0];
-	
-	return self;
 }
 
 -(void) step: (ccTime) dt {
@@ -99,6 +109,13 @@ enum {
 
 	[self schedule:@selector(step:) interval:0];
 }
+
+-(void) hideOutShowIn
+{
+	[inScene setVisible:YES];
+	[outScene setVisible:NO];
+}
+
 
 -(void) dealloc
 {
@@ -695,12 +712,152 @@ enum {
 	[super onExit];
 	[self removeByTag:kSceneFade];
 }
+@end
 
--(void) hideOutShowIn
+//
+// TurnOffTilesTransition
+//
+@implementation TurnOffTilesTransition
+
+// override addScenes, and change the order
+-(void) addScenes
 {
-	[inScene setVisible:YES];
-	[outScene setVisible:NO];
+	// add both scenes
+	[self add: inScene z:0];
+	[self add: outScene z:1];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	CGRect s = [[Director sharedDirector] winSize];
+	float aspect = s.size.width / s.size.height;
+	int x = 12 * aspect;
+	int y = 12;
+	
+	id toff = [TurnOffTiles actionWithSize: cpv(x,y) duration:duration];
+	[outScene do: [Sequence actions: toff,
+				   [CallFunc actionWithTarget:self selector:@selector(finish)],
+				   [StopGrid action],
+				   nil]
+	 ];
+
 }
 @end
+
+#pragma mark Split Transitions
+
+//
+// SplitCols Transition
+//
+@implementation SplitColsTransition
+
+-(void) onEnter
+{
+	[super onEnter];
+
+	inScene.visible = NO;
+	
+	id split = [self action];
+	id seq = [Sequence actions:
+				split,
+				[CallFunc actionWithTarget:self selector:@selector(hideOutShowIn)],
+				[split reverse],
+				nil
+			  ];
+	[self do: [Sequence actions:
+			   [EaseCubicInOut actionWithAction:seq],
+			   [CallFunc actionWithTarget:self selector:@selector(finish)],
+			   [StopGrid action],
+			   nil]
+	 ];
+}
+
+-(IntervalAction*) action
+{
+	return [SplitCols actionWithCols:3 duration:duration/2.0f];
+}
+@end
+
+//
+// SplitRows Transition
+//
+@implementation SplitRowsTransition
+-(IntervalAction*) action
+{
+	return [SplitRows actionWithRows:3 duration:duration/2.0f];
+}
+@end
+
+
+#pragma mark Fade Grid Transitions
+
+//
+// FadeTR Transition
+//
+@implementation FadeTRTransition
+// override addScenes, and change the order
+-(void) addScenes
+{
+	// add both scenes
+	[self add: inScene z:0];
+	[self add: outScene z:1];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGRect s = [[Director sharedDirector] winSize];
+	float aspect = s.size.width / s.size.height;
+	int x = 12 * aspect;
+	int y = 12;
+	
+	id action  = [self actionWithSize:cpv(x,y)];
+
+	[outScene do: [Sequence actions:
+					action,
+				    [CallFunc actionWithTarget:self selector:@selector(finish)],
+				    [StopGrid action],
+				    nil]
+	 ];
+}
+
+-(IntervalAction*) actionWithSize: (cpVect) v
+{
+	return [FadeOutTRTiles actionWithSize:v duration:duration];
+}
+@end
+
+//
+// FadeBL Transition
+//
+@implementation FadeBLTransition
+-(IntervalAction*) actionWithSize: (cpVect) v
+{
+	return [FadeOutBLTiles actionWithSize:v duration:duration];
+}
+@end
+
+//
+// FadeUp Transition
+//
+@implementation FadeUpTransition
+-(IntervalAction*) actionWithSize: (cpVect) v
+{
+	return [FadeOutUpTiles actionWithSize:v duration:duration];
+}
+@end
+
+//
+// FadeDown Transition
+//
+@implementation FadeDownTransition
+-(IntervalAction*) actionWithSize: (cpVect) v
+{
+	return [FadeOutDownTiles actionWithSize:v duration:duration];
+}
+@end
+
 
 

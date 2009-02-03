@@ -42,6 +42,8 @@ typedef enum {
 -(id) initWithDuration:(ccTime) t scene:(Scene*)s;
 /** called after the transition finishes */
 -(void) finish;
+/** used by some transitions to hide the outter scene */
+-(void) hideOutShowIn;
 @end
 
 /** A Transition that supports orientation like.
@@ -62,24 +64,21 @@ typedef enum {
  Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
  */
 @interface RotoZoomTransition : TransitionScene
-{
-}
+{}
 @end
 
 /** JumpZoom Transition.
  Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
 */
 @interface JumpZoomTransition : TransitionScene
-{
-}
+{}
 @end
 
 /** MoveInL Transition.
  Move in from to the left the incoming scene.
 */
 @interface MoveInLTransition : TransitionScene
-{
-}
+{}
 /** initializes the scenes */
 -(void) initScenes;
 /** returns the action that will be performed */
@@ -90,32 +89,28 @@ typedef enum {
  Move in from to the right the incoming scene.
  */
 @interface MoveInRTransition : MoveInLTransition
-{
-}
+{}
 @end
 
 /** MoveInT Transition.
  Move in from to the top the incoming scene.
  */
 @interface MoveInTTransition : MoveInLTransition
-{
-}
+{}
 @end
 
 /** MoveInB Transition.
  Move in from to the bottom the incoming scene.
  */
 @interface MoveInBTransition : MoveInLTransition
-{
-}
+{}
 @end
 
 /** SlideInL Transition.
  Slide in the incoming scene from the left border.
  */
 @interface SlideInLTransition : TransitionScene
-{
-}
+{}
 /** initializes the scenes */
 -(void) initScenes;
 /** returns the action that will be performed */
@@ -126,32 +121,28 @@ typedef enum {
  Slide in the incoming scene from the right border.
  */
 @interface SlideInRTransition : SlideInLTransition
-{
-}
+{}
 @end
 
 /** SlideInB Transition.
  Slide in the incoming scene from the bottom border.
  */
 @interface SlideInBTransition : SlideInLTransition
-{
-}
+{}
 @end
 
 /** SlideInT Transition.
  Slide in the incoming scene from the top border.
  */
 @interface SlideInTTransition : SlideInLTransition
-{
-}
+{}
 @end
 
 /**
  Shrink the outgoing scene while grow the incoming scene
  */
 @interface ShrinkGrowTransition : TransitionScene
-{
-}
+{}
 @end
 
 /** FlipX Transition.
@@ -159,8 +150,7 @@ typedef enum {
  The front face is the outgoing scene and the back face is the incoming scene.
  */
 @interface FlipXTransition : OrientedTransitionScene
-{
-}
+{}
 @end
 
 /** FlipY Transition.
@@ -168,8 +158,7 @@ typedef enum {
  The front face is the outgoing scene and the back face is the incoming scene.
  */
 @interface FlipYTransition : OrientedTransitionScene
-{
-}
+{}
 @end
 
 /** FlipAngular Transition.
@@ -177,8 +166,7 @@ typedef enum {
  The front face is the outgoing scene and the back face is the incoming scene.
  */
 @interface FlipAngularTransition : OrientedTransitionScene
-{
-}
+{}
 @end
 
 /** ZoomFlipX Transition.
@@ -195,8 +183,7 @@ typedef enum {
  The front face is the outgoing scene and the back face is the incoming scene.
  */
 @interface ZoomFlipYTransition : OrientedTransitionScene
-{
-}
+{}
 @end
 
 /** ZoomFlipAngular Transition.
@@ -204,8 +191,7 @@ typedef enum {
  The front face is the outgoing scene and the back face is the incoming scene.
  */
 @interface ZoomFlipAngularTransition : OrientedTransitionScene
-{
-}
+{}
 @end
 
 /** Fade Transition.
@@ -221,6 +207,55 @@ typedef enum {
 +(id) transitionWithDuration:(ccTime)duration scene:(Scene*)scene withColorRGB:(unsigned int)rgb;
 /** initializes the transition with a duration and with an RGB color */
 -(id) initWithDuration:(ccTime)duration scene:(Scene*)scene withColorRGB:(unsigned int)rgb;
+@end
 
--(void) hideOutShowIn;
+/** TurnOffTiles Transition.
+ Turn off the tiles of the outgoing scene in random order
+ */
+@interface TurnOffTilesTransition : TransitionScene
+{}
+@end
+
+/** SplitCols Transition.
+ The odd columns goes upwards while the even columns goes downwards.
+ */
+@interface SplitColsTransition : TransitionScene
+{}
+-(IntervalAction*) action;
+@end
+
+/** SplitRows Transition.
+ The odd rows goes to the left while the even rows goes to the right.
+ */
+@interface SplitRowsTransition : SplitColsTransition
+{}
+@end
+
+/** FadeTRTransition.
+ Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
+ */
+@interface FadeTRTransition : TransitionScene
+{}
+-(IntervalAction*) actionWithSize:(cpVect) vector;
+@end
+
+/** FadeBLTransition.
+ Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
+ */
+@interface FadeBLTransition : FadeTRTransition
+{}
+@end
+
+/** FadeUp Transition.
+ * Fade the tiles of the outgoing scene from the bottom to the top.
+ */
+@interface FadeUpTransition : FadeTRTransition
+{}
+@end
+
+/** FadeDown Transition.
+ * Fade the tiles of the outgoing scene from the top to the bottom.
+ */
+@interface FadeDownTransition : FadeTRTransition
+{}
 @end
