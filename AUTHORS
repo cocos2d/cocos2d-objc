@@ -5,11 +5,12 @@ Main developer: Ricardo Quesada
 
 Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
 
-Big thanks to the cocos2d for iPhone community:
+cocos2d for iPhone wouldn't be possible without the help of the community who is
+ constantly adding new features, sending patches, opening issues:
        http://groups.google.com/group/cocos2d-iphone-discuss
 
+Poeple/companies who were/are contributing code to cocos2d-iphone:
 
-Contributors (alphabetically ordered):
     * Alejandro Cura: author of AccelViewPortDemo
 	* Alex Winston: author of ParticleSnow
 	                patches for CocosNode
@@ -23,9 +24,10 @@ Contributors (alphabetically ordered):
 	* Ernesto Corvi: author of TGA RLE support
 	                 patches for TextureMgr
 					 patches for Sprite
-	* Ernesto Corvi & On-Core (company): author of Effects
+	* Ernesto Corvi & On-Core (http://www.on-core.com/): author of Effects
 	          all the code regarding Effects: Grid, Grid3d, EffectsDemo,
-			                                  Grabber, patches for CocosNode
+					Grabber, patches for CocosNode, Grid Actions,
+					TiledGrid actions, etc.
 	* Favo Yang: patch for unschedule timer in CocosNode
 	* Fradj Johann: patches for CocosNode
 	                patches for Layer
@@ -39,14 +41,14 @@ Contributors (alphabetically ordered):
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
 			patches for Labels in Texture2D
-	* Maarten Billemont (lhunath): author of ParticleRain
-	           added suport for particles' source
-			   fixed memory leaks in Sprite
-			   fixed possible crashes in Sprite, Particles
-			   optimizations in the whole code (using floats, not doubles)
-			   removed useless GL commands in director
-			   fixed Menu aligments
     * lukeman: patches for MenuItem
+	* Maarten Billemont (lhunath): author of ParticleRain
+		   added suport for particles' source
+		   fixed memory leaks in Sprite
+		   fixed possible crashes in Sprite, Particles
+		   optimizations in the whole code (using floats, not doubles)
+		   removed useless GL commands in director
+		   fixed Menu aligments
 	* Mitch: patches for Menu
 	         author of MenuItemToggle
 	* Math Sephton: patches for Demos
@@ -61,7 +63,6 @@ Contributors (alphabetically ordered):
 				patches for Transitions
 	* Steve Oldmeadow: patches for Texture2D
     * yarrington: patches for Director
-
 
 
 Am I missing someone ? Oops, sorry. Send me an email.
