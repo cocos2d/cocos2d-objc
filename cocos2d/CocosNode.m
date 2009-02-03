@@ -119,7 +119,10 @@
 	
 	// attributes
 	[camera release];
-	if ( grid ) grid = nil;
+
+// XXX: Ask Ernesto if this is needed
+//	if ( grid ) grid = nil;
+	[grid release];
 	
 	// children
 	[children makeObjectsPerformSelector:@selector(cleanup)];

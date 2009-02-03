@@ -15,6 +15,7 @@
 #import "Grabber.h"
 #import "Texture2D.h"
 #import "OpenGL_Internal.h"
+#import "ccMacros.h"
 
 @implementation Grabber
 
@@ -49,6 +50,12 @@
 -(void)afterRender:(Texture2D*)texture
 {
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+}
+
+- (void) dealloc
+{
+	CCLOG( @"deallocing %@", self);
+	[super dealloc];
 }
 
 @end

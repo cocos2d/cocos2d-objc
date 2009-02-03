@@ -12,7 +12,5 @@
 
 
 @interface MainLayer : Layer
-{
-	Label *hello;
-}
+{}
 @end

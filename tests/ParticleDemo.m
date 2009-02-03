@@ -293,6 +293,13 @@ Class restartAction()
 	[[Director sharedDirector] runScene: scene];
 }
 
+- (void) dealloc
+{
+	[window release];
+	[super dealloc];
+}
+
+
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {

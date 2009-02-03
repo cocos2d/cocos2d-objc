@@ -40,6 +40,11 @@ enum
 	return self;
 }
 
+- (void) dealloc
+{
+	[super dealloc];
+}
+
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
