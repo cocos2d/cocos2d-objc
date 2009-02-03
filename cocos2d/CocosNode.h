@@ -138,6 +138,8 @@ enum {
 @property(readwrite,assign) BOOL relativeTransformAnchor;
 /** A tag used to identify the node easily */
 @property(readwrite,assign) int tag;
+/** An array with the children */
+@property (readonly) NSArray *children;
 
 // initializators
 //! creates a node

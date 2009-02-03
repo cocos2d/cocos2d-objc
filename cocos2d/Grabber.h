@@ -18,6 +18,7 @@
 
 @class Texture2D;
 
+/** FBO class that grabs the the contents of the screen */
 @interface Grabber : NSObject
 {
 	GLuint	fbo;

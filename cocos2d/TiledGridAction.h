@@ -14,6 +14,7 @@
 
 #import "GridAction.h"
 
+/** ShakyTiles3D action */
 @interface ShakyTiles3D : TiledGrid3DAction
 {
 	int randrange;
@@ -26,6 +27,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** ShatteredTiles3D action */
 @interface ShatteredTiles3D : TiledGrid3DAction
 {
 	int randrange;
@@ -39,6 +41,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** ShuffleTiles action */
 @interface ShuffleTiles : TiledGrid3DAction
 {
 	int	seed;
@@ -54,6 +57,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** FadeOutTRTiles action */
 @interface FadeOutTRTiles : TiledGrid3DAction
 {
 }
@@ -61,6 +65,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** FadeOutBLTiles action */
 @interface FadeOutBLTiles : FadeOutTRTiles
 {
 }
@@ -68,6 +73,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** FadeOutUpTiles action */
 @interface FadeOutUpTiles : FadeOutTRTiles
 {
 }
@@ -75,6 +81,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** FadeOutDownTiles action */
 @interface FadeOutDownTiles : FadeOutUpTiles
 {
 }
@@ -82,6 +89,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** TurnOffTiles action */
 @interface TurnOffTiles : TiledGrid3DAction
 {
 	int	seed;
@@ -95,6 +103,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** WavesTiles3D action */
 @interface WavesTiles3D : TiledGrid3DAction
 {
 	int waves;
@@ -112,6 +121,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** JumpTiles3D action */
 @interface JumpTiles3D : TiledGrid3DAction
 {
 	int jumps;
@@ -129,6 +139,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** SplitRows action */
 @interface SplitRows : TiledGrid3DAction
 {
 }
@@ -140,6 +151,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** SplitCols action */
 @interface SplitCols : TiledGrid3DAction
 {
 }

@@ -14,6 +14,7 @@
 
 #import "GridAction.h"
 
+/** Waves3D action */
 @interface Waves3D : Grid3DAction
 {
 	int waves;
@@ -31,6 +32,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** FlipX3D action */
 @interface FlipX3D : Grid3DAction
 {
 }
@@ -39,6 +41,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** FlipY3D action */
 @interface FlipY3D : Grid3DAction
 {
 }
@@ -47,6 +50,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Lens3D action */
 @interface Lens3D : Grid3DAction
 {
 	cpVect	position;
@@ -66,6 +70,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Ripple3D action */
 @interface Ripple3D : Grid3DAction
 {
 	cpVect	position;
@@ -86,6 +91,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Shaky3D action */
 @interface Shaky3D : Grid3DAction
 {
 	int randrange;
@@ -98,6 +104,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Liquid action */
 @interface Liquid : Grid3DAction
 {
 	int waves;
@@ -116,6 +123,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Waves action */
 @interface Waves : Grid3DAction
 {
 	int		waves;
@@ -135,6 +143,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Twirl action */
 @interface Twirl : Grid3DAction
 {
 	cpVect	position;
