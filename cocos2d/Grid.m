@@ -12,11 +12,13 @@
  *
  */
 
+#import "ccMacros.h"
 #import "Grid.h"
 #import "Texture2D.h"
 #import "Director.h"
 #import "Grabber.h"
-#include "glu.h"
+
+#import "Support/glu.h"
 
 @implementation GridBase
 
@@ -57,6 +59,19 @@
 	
 	return self;
 }
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Dimensions = %ix%i>", [self class], self, (int)grid.x, (int)grid.y];
+}
+
+- (void) dealloc
+{
+	CCLOG( @"deallocing %@", self);
+
+	[texture release];
+	[super dealloc];
+}
+
 
 // This routine can be merged with Director
 -(void)applyLandscape
