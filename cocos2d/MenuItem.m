@@ -31,8 +31,6 @@ enum {
 
 @synthesize opacity;
 
-@synthesize opacity;
-
 -(id) init
 {
 	NSException* myException = [NSException
