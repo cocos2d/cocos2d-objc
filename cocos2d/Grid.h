@@ -20,6 +20,8 @@
 @class Texture2D;
 @class Grabber;
 
+/** Base class for other
+ */
 @interface GridBase : NSObject
 {
 	BOOL		active;
@@ -47,10 +49,6 @@
 
 ////////////////////////////////////////////////////////////
 
-/*
- 'Grid3D' is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
-*/
-
 typedef struct
 {
 	float x;
@@ -58,6 +56,9 @@ typedef struct
 	float z;
 } ccVertex3D;
 
+/**
+ Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+ */
 @interface Grid3D : GridBase
 {
 	GLvoid		*texCoordinates;
@@ -79,11 +80,10 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
-/*
- 'TiledGrid3D' is a 3D grid implementation. It differs from `Grid3D` in that
- the tiles can be separated from the grid. 
+/**
+ TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
+ the tiles can be separated from the grid.
 */
-
 @interface TiledGrid3D : GridBase
 {
 	GLvoid		*texCoordinates;

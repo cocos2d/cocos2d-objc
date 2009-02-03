@@ -41,7 +41,7 @@
 @synthesize rotation, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
-@synthesize parent;
+@synthesize parent, children;
 @synthesize camera;
 @synthesize grid;
 @synthesize zOrder;

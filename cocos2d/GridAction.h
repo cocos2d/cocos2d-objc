@@ -20,6 +20,7 @@
 
 @class GridBase;
 
+/** Base class for Grid actions */
 @interface GridAction : IntervalAction
 {
 	cpVect grid;
@@ -28,16 +29,18 @@
 
 @property cpVect size;
 
-/** creates the action */
+/** creates the action with size and duration */
 +(id) actionWithSize:(cpVect)size duration:(ccTime)d;
+/** initializes the action with size and duration */
 -(id) initWithSize:(cpVect)gridSize duration:(ccTime)d;
-
+/** returns the grid */
 -(GridBase *)getGrid;
 
 @end
 
 ////////////////////////////////////////////////////////////
 
+/** Base class for Grid3D actions */
 @interface Grid3DAction : GridAction
 {
 	
@@ -52,6 +55,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** Base class for TiledGrid3D actions */
 @interface TiledGrid3DAction : GridAction
 {
 	
@@ -66,6 +70,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** AccelDeccelAmplitude action */
 @interface AccelDeccelAmplitude : IntervalAction
 {
 	float			rate;
@@ -81,6 +86,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** AccelAmplitude action */
 @interface AccelAmplitude : IntervalAction
 {
 	float			rate;
@@ -96,6 +102,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** DeccelAmplitude action */
 @interface DeccelAmplitude : IntervalAction
 {
 	float			rate;
@@ -111,6 +118,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** StopGrid action */
 @interface StopGrid : InstantAction
 {
 }
@@ -118,6 +126,7 @@
 
 ////////////////////////////////////////////////////////////
 
+/** ReuseGrid action */
 @interface ReuseGrid : InstantAction
 {
 	int t;
