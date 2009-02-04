@@ -69,15 +69,15 @@ Class restartAction()
 	[self add: kathia z:2];
 	[self add: tamara z:1];
 
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
 	[grossini setPosition: cpv(60, 50)];
 	[kathia setPosition: cpv(60, 150)];
 	[tamara setPosition: cpv(60, 250)];
 	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
-	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];

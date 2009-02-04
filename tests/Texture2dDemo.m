@@ -50,10 +50,10 @@ Class restartAction()
 {
 	[super init];
 
-	CGRect s = [[Director sharedDirector] winSize];	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	CGSize s = [[Director sharedDirector] winSize];	
+	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
-	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];

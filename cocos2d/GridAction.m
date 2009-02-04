@@ -57,10 +57,10 @@
 		target.grid.active = YES;
 	}
 	
-	CGRect	win = [[Director sharedDirector] winSize];
+	CGSize	win = [[Director sharedDirector] winSize];
 	
-	size.x = win.size.width;
-	size.y = win.size.height;
+	size.x = win.width;
+	size.y = win.height;
 }
 
 -(GridBase *)getGrid

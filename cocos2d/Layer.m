@@ -28,11 +28,11 @@
 	if( ! (self=[super init]) )
 		return nil;
 	
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	relativeTransformAnchor = NO;
 
-	transformAnchor.x = s.size.width / 2;
-	transformAnchor.y = s.size.height / 2;
+	transformAnchor.x = s.width / 2;
+	transformAnchor.y = s.height / 2;
 	
 	isTouchEnabled = NO;
 	isAccelerometerEnabled = NO;
@@ -102,9 +102,9 @@
 
 - (id) initWithColor: (GLuint) aColor
 {
-	CGRect size = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
-	return [self initWithColor: aColor width:size.size.width height:size.size.height];
+	return [self initWithColor: aColor width:s.width height:s.height];
 }
 
 -(void) changeWidth: (GLfloat) w

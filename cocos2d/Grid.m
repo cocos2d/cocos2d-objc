@@ -37,7 +37,7 @@
 		reuseGrid = 0;
 		grid = gridSize;
 		
-		CGRect	win = [[Director sharedDirector] winSize];
+		CGSize	win = [[Director sharedDirector] winSize];
 	
 		if ( self.texture == nil )
 		{
@@ -46,15 +46,15 @@
 			void *data = malloc((int)(512 * 512 * 4));
 			memset(data, 0, (int)(512 * 512 * 4));
 			
-			texture = [[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:512 pixelsHigh:512 contentSize:win.size];
+			texture = [[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:512 pixelsHigh:512 contentSize:win];
 			free( data );
 		}
 		
 		grabber = [[Grabber alloc] init];
 		[grabber grab:self.texture];
 
-		step.x = win.size.width / grid.x;
-		step.y = win.size.height / grid.y;
+		step.x = win.width / grid.x;
+		step.y = win.height / grid.y;
 	}
 	
 	return self;
@@ -95,30 +95,30 @@
 
 -(void)set2DProjection
 {
-	CGRect	winSize = [[Director sharedDirector] winSize];
+	CGSize	winSize = [[Director sharedDirector] winSize];
 	
 	glLoadIdentity();
-	glViewport(0, 0, winSize.size.width, winSize.size.height);
+	glViewport(0, 0, winSize.width, winSize.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, winSize.size.width, 0, winSize.size.height, -100, 100);
+	glOrthof(0, winSize.width, 0, winSize.height, -100, 100);
 	glMatrixMode(GL_MODELVIEW);
 }
 
 // This routine can be merged with Director
 -(void)set3DProjection
 {
-	CGRect	winSize = [[Director sharedDirector] displaySize];
+	CGSize	winSize = [[Director sharedDirector] displaySize];
 	
-	glViewport(0, 0, winSize.size.width, winSize.size.height);
+	glViewport(0, 0, winSize.width, winSize.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, (GLfloat)winSize.size.width/winSize.size.height, 0.5f, 1500.0f);
+	gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 	
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
-	gluLookAt( winSize.size.width/2, winSize.size.height/2, [Camera getZEye],
-			  winSize.size.width/2, winSize.size.height/2, 0,
+	gluLookAt( winSize.width/2, winSize.height/2, [Camera getZEye],
+			  winSize.width/2, winSize.height/2, 0,
 			  0.0f, 1.0f, 0.0f
 			  );
 }
