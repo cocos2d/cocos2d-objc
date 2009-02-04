@@ -31,8 +31,8 @@ float randfloat() {
 	cloudsSize = cpv(cs.width, cs.height);
 	[self add: clouds z:0];
 
-	CGRect s = [[Director sharedDirector] winSize];
-	screenSize = cpv(s.size.width, s.size.height);
+	CGSize s = [[Director sharedDirector] winSize];
+	screenSize = cpv(s.width, s.height);
 	
 	halfCloudsSize = cpvmult(cloudsSize, 0.5*CLOUDS_SCALE);
 	cpVect halfScreenSize = cpvmult(screenSize, 0.5);
@@ -53,9 +53,9 @@ float randfloat() {
 //	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
 	NSString *info = @"Grossini's iPhone";
 	
-	label = [Label labelWithString:info dimensions:CGSizeMake(s.size.width, 20) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:16];
+	label = [Label labelWithString:info dimensions:CGSizeMake(s.width, 20) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:16];
 	[self add: label];
-	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.width/2, s.height-50)];
 	return self;
 }
 

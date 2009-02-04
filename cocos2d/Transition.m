@@ -149,13 +149,13 @@ enum {
 -(void) onEnter
 {
 	[super onEnter];
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
 	[inScene setScale:0.001f];
 	[outScene setScale:1.0f];
 	
-	[inScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
-	[outScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
+	[inScene setTransformAnchor: cpv( s.width/2, s.height/2) ];
+	[outScene setTransformAnchor: cpv( s.width/2, s.height/2) ];
 	
 	IntervalAction *rotozoom = [Sequence actions: [Spawn actions:
 								   [ScaleBy actionWithDuration:duration/2 scale:0.001f],
@@ -180,15 +180,15 @@ enum {
 -(void) onEnter
 {
 	[super onEnter];
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
 	[inScene setScale:0.5f];
-	[inScene setPosition:cpv( s.size.width,0 )];
+	[inScene setPosition:cpv( s.width,0 )];
 	
-	[inScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
-	[outScene setTransformAnchor: cpv( s.size.width/2, s.size.height/2) ];
+	[inScene setTransformAnchor: cpv( s.width/2, s.height/2) ];
+	[outScene setTransformAnchor: cpv( s.width/2, s.height/2) ];
 
-	IntervalAction *jump = [JumpBy actionWithDuration:duration/4 position:cpv(-s.size.width,0) height:s.size.width/4 jumps:2];
+	IntervalAction *jump = [JumpBy actionWithDuration:duration/4 position:cpv(-s.width,0) height:s.width/4 jumps:2];
 	IntervalAction *scaleIn = [ScaleTo actionWithDuration:duration/4 scale:1.0f];
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration/4 scale:0.5f];
 	
@@ -230,8 +230,8 @@ enum {
 
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv( -s.size.width,0) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv( -s.width,0) ];
 }
 @end
 
@@ -241,8 +241,8 @@ enum {
 @implementation MoveInRTransition
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv( s.size.width,0) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv( s.width,0) ];
 }
 @end
 
@@ -252,8 +252,8 @@ enum {
 @implementation MoveInTTransition
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv( 0, s.size.height) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv( 0, s.height) ];
 }
 @end
 
@@ -263,8 +263,8 @@ enum {
 @implementation MoveInBTransition
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv( 0, -s.size.height) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv( 0, -s.height) ];
 }
 @end
 
@@ -292,14 +292,14 @@ enum {
 
 -(IntervalAction*) action
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:cpv(s.size.width,0)];
+	CGSize s = [[Director sharedDirector] winSize];
+	return [MoveBy actionWithDuration:duration position:cpv(s.width,0)];
 }
 
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv( -s.size.width,0) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv( -s.width,0) ];
 }
 @end
 
@@ -309,14 +309,14 @@ enum {
 @implementation SlideInRTransition
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv( s.size.width,0) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv( s.width,0) ];
 }
 
 -(IntervalAction*) action
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:cpv(-s.size.width,0)];
+	CGSize s = [[Director sharedDirector] winSize];
+	return [MoveBy actionWithDuration:duration position:cpv(-s.width,0)];
 }
 
 @end
@@ -327,14 +327,14 @@ enum {
 @implementation SlideInTTransition
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv(0,s.size.height) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv(0,s.height) ];
 }
 
 -(IntervalAction*) action
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:cpv(0,-s.size.height)];
+	CGSize s = [[Director sharedDirector] winSize];
+	return [MoveBy actionWithDuration:duration position:cpv(0,-s.height)];
 }
 
 @end
@@ -345,14 +345,14 @@ enum {
 @implementation SlideInBTransition
 -(void) initScenes
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	[inScene setPosition: cpv(0,-s.size.height) ];
+	CGSize s = [[Director sharedDirector] winSize];
+	[inScene setPosition: cpv(0,-s.height) ];
 }
 
 -(IntervalAction*) action
 {
-	CGRect s = [[Director sharedDirector] winSize];
-	return [MoveBy actionWithDuration:duration position:cpv(0,s.size.height)];
+	CGSize s = [[Director sharedDirector] winSize];
+	return [MoveBy actionWithDuration:duration position:cpv(0,s.height)];
 }
 @end
 
@@ -364,13 +364,13 @@ enum {
 {
 	[super onEnter];
 	
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
 	[inScene setScale:0.001f];
 	[outScene setScale:1.0f];
 	
-	[inScene setTransformAnchor:cpv(2*s.size.width/3,s.size.height/2) ];
-	[outScene setTransformAnchor:cpv(s.size.width/3,s.size.height/2) ];
+	[inScene setTransformAnchor:cpv(2*s.width/3,s.height/2) ];
+	[outScene setTransformAnchor:cpv(s.width/3,s.height/2) ];
 	
 	
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration scale:0.01f];
@@ -730,8 +730,8 @@ enum {
 -(void) onEnter
 {
 	[super onEnter];
-	CGRect s = [[Director sharedDirector] winSize];
-	float aspect = s.size.width / s.size.height;
+	CGSize s = [[Director sharedDirector] winSize];
+	float aspect = s.width / s.height;
 	int x = 12 * aspect;
 	int y = 12;
 	
@@ -808,8 +808,8 @@ enum {
 {
 	[super onEnter];
 	
-	CGRect s = [[Director sharedDirector] winSize];
-	float aspect = s.size.width / s.size.height;
+	CGSize s = [[Director sharedDirector] winSize];
+	float aspect = s.width / s.height;
 	int x = 12 * aspect;
 	int y = 12;
 	

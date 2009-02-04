@@ -298,12 +298,11 @@ Class restartAction()
 	if( ! [super initWithColor: 0x202020ff] )
 		return nil;
 	
-	CGRect size;
 	float x,y;
 	
-	size = [[Director sharedDirector] winSize];
-	x = size.size.width;
-	y = size.size.height;
+	CGSize size = [[Director sharedDirector] winSize];
+	x = size.width;
+	y = size.height;
 	
 	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
 	[self add: bg z:0 tag:kTagBackground];

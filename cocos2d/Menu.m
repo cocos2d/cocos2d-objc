@@ -51,16 +51,16 @@
 		return nil;
 	
 	// menu in the center of the screen
-	CGRect r = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
 	// XXX: in v0.7, winSize should return the visible size
 	// XXX: so the bar calculation should be done there
-	CGRect s = [[UIApplication sharedApplication] statusBarFrame];
+	CGRect r = [[UIApplication sharedApplication] statusBarFrame];
 	if([[Director sharedDirector] landscape])
-	    r.size.height -= s.size.width;
+		s.height -= r.size.width;
 	else
-	    r.size.height -= s.size.height;
-	position = cpv(r.size.width/2, r.size.height/2);
+	    s.height -= r.size.height;
+	position = cpv(s.width/2, s.height/2);
 
 	isTouchEnabled = YES;
 	selectedItem = -1;

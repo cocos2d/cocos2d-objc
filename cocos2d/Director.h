@@ -147,9 +147,9 @@ and when to execute the Scenes
 // Landscape
 
 /** returns the size of the OpenGL view according to the landspace */
-- (CGRect) winSize;
+- (CGSize) winSize;
 /** returns the display size of the OpenGL view */
--(CGRect) displaySize;
+-(CGSize) displaySize;
 
 /** returns whether or not the screen is in landscape mode */
 - (BOOL) landscape;

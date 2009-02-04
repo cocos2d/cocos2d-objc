@@ -510,21 +510,21 @@ static Director *sharedDirector = nil;
 }
 
 // get the current size of the glview
--(CGRect)winSize
+-(CGSize)winSize
 {
-	CGRect r = _openGLView.frame;
+	CGSize s = _openGLView.frame.size;
 	if( landscape ) {
 		// swap x,y in landscape mode
-		r.size.width = _openGLView.frame.size.height;
-		r.size.height = _openGLView.frame.size.width;
+		s.width = _openGLView.frame.size.height;
+		s.height = _openGLView.frame.size.width;
 	}
-	return r;
+	return s;
 }
 
 // return  the current frame size
--(CGRect)displaySize
+-(CGSize)displaySize
 {
-	return _openGLView.frame;
+	return _openGLView.frame.size;
 }
 
 - (BOOL) landscape

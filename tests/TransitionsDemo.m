@@ -193,12 +193,11 @@ Class restartTransition()
 {
 	if( [super init] ) {
 
-		CGRect size;
 		float x,y;
 		
-		size = [[Director sharedDirector] winSize];
-		x = size.size.width;
-		y = size.size.height;
+		CGSize size = [[Director sharedDirector] winSize];
+		x = size.width;
+		y = size.height;
 
 		Sprite *bg1 = [Sprite spriteWithFile:@"background1.jpg"];
 		bg1.transformAnchor = cpvzero;
@@ -253,12 +252,11 @@ Class restartTransition()
 			
 		isTouchEnabled = YES;
 		
-		CGRect size;
 		float x,y;
 		
-		size = [[Director sharedDirector] winSize];
-		x = size.size.width;
-		y = size.size.height;
+		CGSize size = [[Director sharedDirector] winSize];
+		x = size.width;
+		y = size.height;
 		
 		Sprite *bg2 = [Sprite spriteWithFile:@"background2.jpg"];
 		bg2.transformAnchor = cpvzero;

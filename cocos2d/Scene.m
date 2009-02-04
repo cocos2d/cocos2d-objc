@@ -22,11 +22,11 @@
 	if( ! (self=[super init]) )
 		return nil;
 	
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	relativeTransformAnchor = NO;
 
-	transformAnchor.x = s.size.width / 2;
-	transformAnchor.y = s.size.height / 2;
+	transformAnchor.x = s.width / 2;
+	transformAnchor.y = s.height / 2;
 	
 	return self;
 }

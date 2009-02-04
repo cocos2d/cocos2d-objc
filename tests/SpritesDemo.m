@@ -69,22 +69,23 @@ Class restartAction()
 	Texture2D *tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
 	grossini = [[Sprite spriteWithTexture:tex] retain];
 	[tex release];
+
 	
 	// Example:
-	// Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
+	// Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
 	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	
 	[self add: grossini z:1];
 	[self add: tamara z:2];
 
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: cpv(60, s.size.height/3)];
-	[tamara setPosition: cpv(60, 2*s.size.height/3)];
+	[grossini setPosition: cpv(60, s.height/3)];
+	[tamara setPosition: cpv(60, 2*s.height/3)];
 	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
-	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -132,10 +133,10 @@ Class restartAction()
 
 -(void) centerSprites
 {
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: cpv(s.size.width/3, s.size.height/2)];
-	[tamara setPosition: cpv(2*s.size.width/3, s.size.height/2)];
+	[grossini setPosition: cpv(s.width/3, s.height/2)];
+	[tamara setPosition: cpv(2*s.width/3, s.height/2)];
 }
 -(NSString*) title
 {
@@ -171,10 +172,10 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
 
 	
-	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.size.width-40, s.size.height-40)];
+	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.width-40, s.height-40)];
 	id actionBy = [MoveBy actionWithDuration:2  position: cpv(80,80)];
 	
 	[tamara do: actionTo];

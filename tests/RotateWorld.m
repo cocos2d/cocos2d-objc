@@ -12,12 +12,11 @@
 {
 	if( ! [super init] )
 		return nil;
-	CGRect size;
 	float x,y;
 	
-	size = [[Director sharedDirector] winSize];
-	x = size.size.width;
-	y = size.size.height;
+	CGSize size = [[Director sharedDirector] winSize];
+	x = size.width;
+	y = size.height;
 
 	NSArray *array = [UIFont familyNames];
 	for( NSString *s in array )
@@ -42,12 +41,11 @@
 {
 	if( ! [super init] )
 		return nil;
-	CGRect size;
 	float x,y;
 	
-	size = [[Director sharedDirector] winSize];
-	x = size.size.width;
-	y = size.size.height;
+	CGSize size = [[Director sharedDirector] winSize];
+	x = size.width;
+	y = size.height;
 	
 	Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
 	Sprite *spriteSister1 = [Sprite spriteWithFile: @"grossinis_sister1.png"];
@@ -96,12 +94,11 @@
 {
 	if( ! [super init] )
 		return nil;
-	CGRect size;
 	float x,y;
 	
-	size = [[Director sharedDirector] winSize];
-	x = size.size.width;
-	y = size.size.height;
+	CGSize size = [[Director sharedDirector] winSize];
+	x = size.width;
+	y = size.height;
 	
 	id blue =  [ColorLayer layerWithColor: 0x0000ffff];
 	id red =   [ColorLayer layerWithColor: 0xff0000ff];

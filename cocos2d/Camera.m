@@ -33,14 +33,14 @@
 
 -(void) restore
 {
-	CGRect s = [[Director sharedDirector] displaySize];
+	CGSize s = [[Director sharedDirector] displaySize];
 
-	eyeX = s.size.width/2;
-	eyeY = s.size.height/2;
+	eyeX = s.width/2;
+	eyeY = s.height/2;
 	eyeZ = [Camera getZEye];
 	
-	centerX = s.size.width/2;
-	centerY = s.size.height/2;
+	centerX = s.width/2;
+	centerY = s.height/2;
 	centerZ = 0.0f;
 	
 	upX = 0.0f;
@@ -76,8 +76,8 @@
 
 +(float) getZEye
 {
-	CGRect s = [[Director sharedDirector] displaySize];
-	return ( s.size.height / 1.1566f );
+	CGSize s = [[Director sharedDirector] displaySize];
+	return ( s.height / 1.1566f );
 }
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z

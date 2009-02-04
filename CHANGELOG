@@ -12,6 +12,7 @@ version 0.7.0 - XX-Feb-2009
  . CocosNode: children is a property (issue #185)
  . Demos: Creating Window and attaching cocos2d to it (issue #180)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)
+ . Director: winSize returns a CGSize (not a CGRect) (issue #159)
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
  . Transitions: added new transitions: 
 	 SplitRowsTransition, SplitColsTransition, TurnOffTilesTransition,

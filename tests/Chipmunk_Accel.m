@@ -54,7 +54,7 @@ eachShape(void *ptr, void* unused)
 	isTouchEnabled = YES;
 	isAccelerometerEnabled = YES;
 	
-	CGRect wins = [[Director sharedDirector] winSize];
+	CGSize wins = [[Director sharedDirector] winSize];
 	cpInitChipmunk();
 	
 	cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
@@ -68,22 +68,22 @@ eachShape(void *ptr, void* unused)
 	cpShape *shape;
 	
 	// bottom
-	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(wins.size.width,0), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(wins.width,0), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 
 	// top
-	shape = cpSegmentShapeNew(staticBody, cpv(0,wins.size.height), cpv(wins.size.width,wins.size.height), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, cpv(0,wins.height), cpv(wins.width,wins.height), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 
 	// left
-	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(0,wins.size.height), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(0,wins.height), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 
 	// right
-	shape = cpSegmentShapeNew(staticBody, cpv(wins.size.width,0), cpv(wins.size.width,wins.size.height), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, cpv(wins.width,0), cpv(wins.width,wins.height), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
 	cpSpaceAddStaticShape(space, shape);
 	
