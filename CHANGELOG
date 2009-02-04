@@ -1,4 +1,5 @@
 version 0.7.0 - XX-Feb-2009
+ . Atlas: Fixed black line (issue #135 and issue #47)
  . Actions: Added Effects actions:
     Basic: StopGrid
     Grid: Waves3D, FlipX3D, FlipY3D, Lens3D, Ripple3D, Liquid, Shaky3D, Waves, Twirl

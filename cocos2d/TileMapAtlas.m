@@ -101,7 +101,7 @@
 				ccRGBB value = ptr[x + y * tgaInfo->width];
 				
 				if( value.r != 0 ) {
-				
+
 					float row = (value.r % itemsPerRow) * texStepX;
 					float col = (value.r / itemsPerRow) * texStepY;
 					
