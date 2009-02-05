@@ -44,9 +44,9 @@
     mPath = path;
     mWidth = width;
     mTextureLength = length;
+    mLastLocation = cpvzero;
     mColor = color;
-    mLastLocation = [self absolutePosition];
-    mRibbon = [Ribbon ribbonWithLocation:[self position] width:mWidth image:mPath length:mTextureLength color:color fade:fade];
+    mRibbon = [Ribbon ribbonWithWidth: mWidth image:mPath length:mTextureLength color:color fade:fade];
     [self add:mRibbon];
     
     // manually add timer to scheduler

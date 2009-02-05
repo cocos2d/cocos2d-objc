@@ -39,13 +39,13 @@
 //
 @implementation Ribbon
 
-+(id)ribbonWithLocation:(cpVect)location width:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade
++(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade
 {
-  self = [[[Ribbon alloc] initWithLocation:location width:w image:path length:l color:color fade:fade] autorelease];
+  self = [[[Ribbon alloc] initWithWidth:w image:path length:l color:color fade:fade] autorelease];
   return self;
 }
 
--(id)initWithLocation:(cpVect)location width:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade
+-(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade
 {
   self = [super init];
   if (self)
@@ -54,7 +54,7 @@
     mTexture = [[[TextureMgr sharedTextureMgr] addImage:path] retain];
     mColor = color;
     mFadeTime = fade;
-    mLastLocation = location;
+    mLastLocation = cpvzero;
     mLastWidth = w/2;
     mTexVPos = 0.0;
     mSegments = [[[NSMutableArray alloc] init] retain];
@@ -62,6 +62,7 @@
     RibbonSegment* seg = [[[RibbonSegment alloc] init] autorelease];
     [mSegments addObject:seg];
     mCurTime = 0;
+    mPastFirstPoint = NO;
   }
   return self;
 }
@@ -100,11 +101,19 @@
 -(void)addPointAt:(cpVect)location width:(float)w
 {
   w=w*0.5;
+  // if this is the first point added, cache it and return
+  if (!mPastFirstPoint)
+  {
+    mLastWidth = w;
+    mLastLocation = location;
+    mPastFirstPoint = YES;
+    return;
+  }
+  
   cpVect sub = cpvsub(mLastLocation, location);
   float r = cpvtoangle(sub) + 1.57079637;
   cpVect p1 = cpvadd([self rotatePoint:cpv(-w, 0) rotation:r], location);
   cpVect p2 = cpvadd([self rotatePoint:cpv(w, 0) rotation:r], location);
-  
   float len = sqrt(pow(mLastLocation.x - location.x, 2) + pow(mLastLocation.y - location.y, 2));
   float tend = mTexVPos + len/mTextureLength;
   RibbonSegment* seg;
