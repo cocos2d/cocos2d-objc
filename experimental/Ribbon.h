@@ -50,12 +50,13 @@
   float mDelta;
   float mLastWidth;
   float mLastSign;
+  bool mPastFirstPoint;
 }
 
 /** creates the ribbon */
-+(id)ribbonWithLocation:(cpVect)location width:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
++(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
 /** init the ribbon */
--(id)initWithLocation:(cpVect)location width:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
+-(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
 /** add a point to the ribbon */
 -(void)addPointAt:(cpVect)location width:(float)w;
 /** polling function */
