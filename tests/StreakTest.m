@@ -60,8 +60,8 @@
 
 -(void)onUpdate:(ccTime)delta
 {
-  cpVect p = [target absolutePosition];
-  float r = [root rotation];
+//  cpVect p = [target absolutePosition];
+//  float r = [root rotation];
   [streak setPosition:[target absolutePosition]];
 }
 
