@@ -323,7 +323,7 @@ Class restartAction()
 	[tamara do: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
 	
 	
-	Label* label = [Label labelWithString:effectsList[actionIdx] dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
+	Label* label = [Label labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
 	
 	[label setPosition: cpv(x/2,y-80)];
 	[self add: label];
