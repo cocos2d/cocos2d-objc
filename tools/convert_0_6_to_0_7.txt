@@ -1,0 +1,66 @@
+Steps to convert a game based on cocos2d v0.6 to v0.7
+
+
+Director winSize
+================
+
+v.0.6 (old way):
+    CGRect s = [[Director sharedDirector] winSize]
+    int x = s.size.width;
+    int y = s.size.height;
+
+v0.7 (new way)
+    CGSize s = [[Director sharedDirector] winSize]
+    int x = s.width;
+    int y = s.height;
+
+
+Director initialization
+=======================
+
+v0.6 (old way):
+- (void) applicationDidFinishLaunching:(UIApplication*)application
+{
+
+	// before creating any layer, set the landscape mode
+	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+	[[Director sharedDirector] setDisplayFPS:YES];
+
+	// multiple touches or not ?
+	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	
+	Scene *scene = [Scene node];
+	[scene add: scene]];
+	
+	[[Director sharedDirector] runScene: scene];
+}
+
+v0.7 (new way):
+- (void) applicationDidFinishLaunching:(UIApplication*)application
+{
+	// NEW: Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:YES];
+	
+	// Attach cocos2d to the window
+	[[Director sharedDirector] attachInWindow:window];
+	
+	// before creating any layer, set the landscape mode
+	[[Director sharedDirector] setLandscape: YES];
+	
+	// display FPS (useful when debugging)
+	[[Director sharedDirector] setDisplayFPS:YES];
+	
+	// frames per second
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+
+	// NEW: Make the window visible
+	[window makeKeyAndVisible];
+
+	Scene *scene = [Scene node];
+	[scene add: scene];
+	
+	[[Director sharedDirector] runScene: scene];
+}
