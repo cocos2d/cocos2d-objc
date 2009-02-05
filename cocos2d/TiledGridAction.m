@@ -13,6 +13,7 @@
  */
 
 #import "TiledGridAction.h"
+#import "ccMacros.h"
 
 typedef struct
 {
@@ -252,8 +253,8 @@ typedef struct
 -(float)testFunc:(cpVect)pos time:(ccTime)time
 {
 	cpVect	n = cpvmult(grid, time);
-	if ( (n.x+n.y) == 0 )
-		return 1.0;
+	if ( (n.x+n.y) == 0.0f )
+		return 1.0f;
 	return powf( (pos.x+pos.y) / (n.x+n.y), 6 );
 }
 
@@ -264,8 +265,7 @@ typedef struct
 
 -(void)turnOffTile:(cpVect)pos
 {
-	ccQuad3	coords;
-	
+	ccQuad3	coords;	
 	bzero(&coords, sizeof(ccQuad3));
 	[self setTile:pos coords:coords];
 }
@@ -274,17 +274,17 @@ typedef struct
 {
 	ccQuad3	coords = [self getOriginalTile:pos];
 	
-	coords.bl_x += (target.grid.step.x / 2) * (1.0 - distance);
-	coords.bl_y += (target.grid.step.y / 2) * (1.0 - distance);
+	coords.bl_x += (target.grid.step.x / 2) * (1.0f - distance);
+	coords.bl_y += (target.grid.step.y / 2) * (1.0f - distance);
 
-	coords.br_x -= (target.grid.step.x / 2) * (1.0 - distance);
-	coords.br_y += (target.grid.step.y / 2) * (1.0 - distance);
+	coords.br_x -= (target.grid.step.x / 2) * (1.0f - distance);
+	coords.br_y += (target.grid.step.y / 2) * (1.0f - distance);
 
-	coords.tl_x -= (target.grid.step.x / 2) * (1.0 - distance);
-	coords.tl_y -= (target.grid.step.y / 2) * (1.0 - distance);
+	coords.tl_x += (target.grid.step.x / 2) * (1.0f - distance);
+	coords.tl_y -= (target.grid.step.y / 2) * (1.0f - distance);
 
-	coords.tr_x += (target.grid.step.x / 2) * (1.0 - distance);
-	coords.tr_y -= (target.grid.step.y / 2) * (1.0 - distance);
+	coords.tr_x -= (target.grid.step.x / 2) * (1.0f - distance);
+	coords.tr_y -= (target.grid.step.y / 2) * (1.0f - distance);
 
 	[self setTile:pos coords:coords];
 }
