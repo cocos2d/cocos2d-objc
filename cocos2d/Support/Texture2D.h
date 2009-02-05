@@ -152,4 +152,19 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
 @end
 
+/**
+ Extension to set the Min / Mag filter
+ */
+@interface Texture2D (GLFilter)
+/** sets the Min/Mag filter that will be used to create the textures.
+ The default one is GL_LINEAR
+ */
++(void) setMinMagFilter:(GLuint) filter;
+/** returns the Min/Mag filter that is being used to create the textures
+ */
++(GLuint) minMagFilter;
+/** apply the setted min/mag filter to the current texture */
+- (void) applyMinMagFilter;
+@end
+
 

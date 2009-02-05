@@ -71,10 +71,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
+static GLuint _minMagFilter = GL_LINEAR;
+
 @implementation Texture2D
 
 @synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
-
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	GLint					saveName;
@@ -82,8 +83,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glGenTextures(1, &_name);
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		[self applyMinMagFilter];
 		
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
@@ -369,8 +370,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glGenTextures(1, &_name);
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		[self applyMinMagFilter];
 
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
@@ -396,6 +397,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_maxT = 1.0f;
 	}					
 	return self;
+}
+@end
+
+@implementation Texture2D (GLFilter)
+
++(void) setMinMagFilter: (GLuint) filter
+{
+	_minMagFilter = filter;
+}
+
++(GLuint) minMagFilter
+{
+	return _minMagFilter;
+}
+
+-(void) applyMinMagFilter
+{
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minMagFilter );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _minMagFilter );
 }
 @end
 
