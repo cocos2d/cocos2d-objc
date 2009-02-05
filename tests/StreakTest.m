@@ -2,6 +2,7 @@
 // Streak Demo
 // a cocos2d example
 //
+// Example by Jason Booth (slipster216)
 
 // cocos import
 #import "cocos2d.h"
@@ -13,11 +14,11 @@
 -(id) init
 {
 	[super init];
-  CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
   
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.size.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
 	[self add: label];
-	[label setPosition: cpv(s.size.width/2, s.size.height-50)];
+	[label setPosition: cpv(s.width/2, s.height-50)];
   
 	return self;
 }
@@ -32,12 +33,12 @@
 -(void) onEnter
 {
 	[super onEnter];
-  CGRect s = [[Director sharedDirector] winSize];
+	CGSize s = [[Director sharedDirector] winSize];
   
   // the root object just rotates around
 	root = [[Sprite spriteWithFile:@"r1.png"] retain];
 	[self add: root z:1];
-	[root setPosition: cpv(s.size.width/2, s.size.height/2)];
+	[root setPosition: cpv(s.width/2, s.height/2)];
   
   // the target object is offset from root, and the streak is moved to follow it
   target = [Sprite spriteWithFile:@"r1.png"];

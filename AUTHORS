@@ -37,6 +37,7 @@ Poeple/companies who were/are contributing code to cocos2d-iphone:
 	* Jacob Eiting: patches for Primitives
 	* Jason Booth (slipster216): author of EaseAction
 	        author of EaseAction demos
+			author of StreakDemo, MotionStreak
 			patch for ScaleTo/By action to support X and Y.
 	* Joe Vennix: patches for CocosNode
 	* kermidt.zed: patches for absolutePosition in CocosNode
