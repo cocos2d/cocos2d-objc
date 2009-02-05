@@ -64,28 +64,37 @@
 //
 // singleton stuff
 //
-static Director *sharedDirector = nil;
+static Director *_sharedDirector = nil;
 
 + (Director *)sharedDirector
 {
 	@synchronized([Director class])
 	{
-		if (!sharedDirector)
-			[[Director alloc] init];
+		if (!_sharedDirector)
+			[[self alloc] init];
 		
-		return sharedDirector;
+		return _sharedDirector;
 	}
 	// to avoid compiler warning
 	return nil;
+}
+
+// This function was created to avoid confussion for the users
+// Calling [FastDirector sharedDirector] is enough, but is somewhat
+// confusing since the user needs to understand what's under the hood
++ (void) useFastDirector
+{
+	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Fast Director this must be the first call to Director");
+	[FastDirector sharedDirector];
 }
 
 +(id)alloc
 {
 	@synchronized([Director class])
 	{
-		NSAssert(sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
-		sharedDirector = [super alloc];
-		return sharedDirector;
+		NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
+		_sharedDirector = [super alloc];
+		return _sharedDirector;
 	}
 	// to avoid compiler warning
 	return nil;
@@ -185,7 +194,10 @@ static Director *sharedDirector = nil;
 		glPopMatrix();
 	
 	/* swap buffers */
-	[_openGLView swapBuffers];	
+	[_openGLView swapBuffers];
+	
+	// dispatch missing events
+	while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
 }
 
 -(void) calculateDeltaTime
@@ -570,7 +582,7 @@ static Director *sharedDirector = nil;
 - (void)runScene:(Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert( runningScene == nil, @"You can't run an scene if another Scene is running");
+	NSAssert( runningScene == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
 		
 //	[self pushScene: scene];
 	[self replaceScene: scene];
@@ -835,6 +847,52 @@ static Director *sharedDirector = nil;
 }
 #endif
 
+@end
 
+#pragma mark Director FastDirector
+
+@implementation FastDirector
+
+- (id) init
+{
+	if( self = [super init] )
+		isRunning = NO;
+
+	CCLOG(@"Using Fast Director");
+
+	return self;
+}
+
+- (void) startAnimation
+{
+	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"GetTimeOfDay"
+									reason:@"GetTimeOfDay abnormal error"
+									userInfo:nil];
+		@throw myException;
+	}
+	
+	isRunning = YES;
+	while (isRunning) {
+		if (paused) {
+			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
+		}
+		
+		[self mainLoop];
+		
+		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
+	}
+}
+
+- (void) stopAnimation
+{
+	isRunning = NO;
+}
+
+- (void)setAnimationInterval:(NSTimeInterval)interval
+{
+	NSAssert(NO,@"FastDirectory doesn't support setAnimationInterval, yet");
+}
 @end
 

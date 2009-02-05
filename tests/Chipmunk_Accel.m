@@ -156,9 +156,15 @@ eachShape(void *ptr, void* unused)
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:YES];
 	
+	// must be called before any othe call to the director
+	// FastDirector is faster, but consumes more battery
+	[Director useFastDirector];
+	
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
+	
+	// AnimationInterval doesn't work with FastDirector, yet
+//	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
 	// create an openGL view inside a window
