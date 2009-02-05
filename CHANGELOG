@@ -13,6 +13,8 @@ version 0.7.0 - XX-Feb-2009
  . Demos: Creating Window and attaching cocos2d to it (issue #180)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)
  . Director: winSize returns a CGSize (not a CGRect) (issue #159)
+ . Director: add FastDirector (issue #145)
+ . Director: dispatch missing events in main loop (issue #146)
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
  . Experimental: Added StreakDemo (issue #171)
  . MenuItemFont: assign correct size and documented isEnabled (issue #132)

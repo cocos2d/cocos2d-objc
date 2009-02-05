@@ -152,6 +152,10 @@
 	[window setUserInteractionEnabled:YES];
 	[window setMultipleTouchEnabled:YES];
 		
+	// must be called before any othe call to the director
+	// FastDirector is faster, but consumes more battery
+//	[Director useFastDirector];
+	
 	// Attach cocos2d to the window
 	[[Director sharedDirector] attachInWindow:window];
 	

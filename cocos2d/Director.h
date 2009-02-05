@@ -30,6 +30,10 @@ enum {
 // Landscape is right or left ?
 #define LANDSCAPE_LEFT 1
 
+// Intervaled Director ?
+// Consumes less battery but it is slower
+// #define FPS_DIRECTOR 1
+
 // Fast FPS display. FPS are updated 10 times per second without consuming resources
 // uncomment this line to use the old method that updated
 #define FAST_FPS_DISPLAY 1
@@ -116,6 +120,12 @@ and when to execute the Scenes
 @property (readonly) tPixelFormat pixelFormat;
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
+/** Uses a Director that triggers the main loop as fast as it can.
+ * Although it is faster, it will consume more battery
+ * To use it, it must be called before calling any director function
+ */
++(void) useFastDirector;
+ 
 
 // iPhone Specific
 
@@ -229,6 +239,16 @@ and when to execute the Scenes
 -(void) set2Dprojection;
 /** sets a 3D projection */
 -(void) set3Dprojection;
+@end
+
+/** FastDirector is a Director that triggers the main loop
+ * as fast as possible.
+ * It is faster than Director but it also consumes more battery
+ */
+@interface FastDirector : Director
+{
+	BOOL isRunning;
+}
 @end
 
 

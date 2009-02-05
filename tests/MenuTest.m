@@ -207,6 +207,10 @@ enum {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
+	// must be called before any othe call to the director
+	// FastDirector is faster, but consumes more battery
+//	[Director useFastDirector];
+	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 
