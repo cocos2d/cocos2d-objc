@@ -67,7 +67,7 @@ Class restartAction()
 	[grossini setPosition: cpv(60, s.height/3)];
 	[tamara setPosition: cpv(60, 2*s.height/3)];
 	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self add: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	

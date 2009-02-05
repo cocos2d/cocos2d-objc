@@ -53,7 +53,7 @@ float randfloat() {
 //	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
 	NSString *info = @"Grossini's iPhone";
 	
-	label = [Label labelWithString:info dimensions:CGSizeMake(s.width, 20) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:16];
+	label = [Label labelWithString:info fontName:@"Arial" fontSize:16];
 	[self add: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	return self;

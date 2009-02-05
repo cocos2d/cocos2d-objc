@@ -63,7 +63,7 @@ Class restartAction()
 -(id) init
 {
 	[super init];
-
+	
 	// Example:
 	// You can create a sprite using a Texture2D
 	Texture2D *tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
@@ -83,7 +83,7 @@ Class restartAction()
 	[grossini setPosition: cpv(60, s.height/3)];
 	[tamara setPosition: cpv(60, 2*s.height/3)];
 	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self add: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 
@@ -532,7 +532,7 @@ Class restartAction()
 
 	// Make the window visible
 	[window makeKeyAndVisible];
-
+	
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
 	

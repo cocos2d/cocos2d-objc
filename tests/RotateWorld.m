@@ -21,7 +21,7 @@
 	NSArray *array = [UIFont familyNames];
 	for( NSString *s in array )
 		NSLog( s );
-	Label* label = [Label labelWithString:@"cocos2d" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
+	Label* label = [Label labelWithString:@"cocos2d" fontName:@"Marker Felt" fontSize:64];
 
 	[label setPosition: cpv(x/2,y/2)];
 	

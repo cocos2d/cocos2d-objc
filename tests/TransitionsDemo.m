@@ -203,7 +203,7 @@ Class restartTransition()
 		bg1.transformAnchor = cpvzero;
 		[self add:bg1 z:-1];
 
-		Label* label = [Label labelWithString:@"SCENE 1" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
+		Label* label = [Label labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
 
 		[label setPosition: cpv(x/2,y/2)];	
 		[self add: label];
@@ -262,7 +262,7 @@ Class restartTransition()
 		bg2.transformAnchor = cpvzero;
 		[self add:bg2 z:-1];
 		
-		Label* label = [Label labelWithString:@"SCENE 2" dimensions:CGSizeMake(280, 64) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:64];
+		Label* label = [Label labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];
 		
 		[label setPosition: cpv(x/2,y/2)];
 		[self add: label];

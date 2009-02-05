@@ -75,7 +75,7 @@ Class restartAction()
 	[kathia setPosition: cpv(60, 150)];
 	[tamara setPosition: cpv(60, 250)];
 	
-	Label* label = [Label labelWithString:[self title] dimensions:CGSizeMake(s.width, 40) alignment:UITextAlignmentCenter fontName:@"Arial" fontSize:32];
+	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self add: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 

@@ -21,9 +21,9 @@
 	[self add:sun];
 
 	// timers
-	label1 = [Label labelWithString:@"0" dimensions:CGSizeMake(120,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
-	label2 = [Label labelWithString:@"0" dimensions:CGSizeMake(120,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
-	label3 = [Label labelWithString:@"0" dimensions:CGSizeMake(120,32) alignment:UITextAlignmentCenter fontName:@"Courier" fontSize:32];
+	label1 = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
+	label2 = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
+	label3 = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
 	
 	[self schedule: @selector(step1:) interval: 0.5];
 	[self schedule: @selector(step2:) interval:1.0];
