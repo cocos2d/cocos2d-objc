@@ -394,6 +394,44 @@
 		50A24EE70F378525007CAEB0 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50A2522B0F38B8DC007CAEB0 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
 		50A2522C0F38B8DC007CAEB0 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
+		50A7839D0F3AFCE500104C45 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		50A7839E0F3AFCE500104C45 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		50A7839F0F3AFCE500104C45 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		50A783A00F3AFCE500104C45 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		50A783A10F3AFCE500104C45 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		50A783A20F3AFCE500104C45 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		50A783A30F3AFCE500104C45 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		50A783A40F3AFCE500104C45 /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E00E13296F00AE9530 /* grossini_dance_01.png */; };
+		50A783A50F3AFCE500104C45 /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E10E13296F00AE9530 /* grossini_dance_02.png */; };
+		50A783A60F3AFCE500104C45 /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E20E13296F00AE9530 /* grossini_dance_03.png */; };
+		50A783A70F3AFCE500104C45 /* grossini_dance_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E30E13296F00AE9530 /* grossini_dance_04.png */; };
+		50A783A80F3AFCE500104C45 /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E40E13296F00AE9530 /* grossini_dance_05.png */; };
+		50A783A90F3AFCE500104C45 /* grossini_dance_06.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E50E13296F00AE9530 /* grossini_dance_06.png */; };
+		50A783AA0F3AFCE500104C45 /* grossini_dance_07.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E60E13296F00AE9530 /* grossini_dance_07.png */; };
+		50A783AB0F3AFCE500104C45 /* grossini_dance_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E70E13296F00AE9530 /* grossini_dance_08.png */; };
+		50A783AC0F3AFCE500104C45 /* grossini_dance_09.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E80E13296F00AE9530 /* grossini_dance_09.png */; };
+		50A783AD0F3AFCE500104C45 /* grossini_dance_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E90E13296F00AE9530 /* grossini_dance_10.png */; };
+		50A783AE0F3AFCE500104C45 /* grossini_dance_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0EA0E13296F00AE9530 /* grossini_dance_11.png */; };
+		50A783AF0F3AFCE500104C45 /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0EB0E13296F00AE9530 /* grossini_dance_12.png */; };
+		50A783B00F3AFCE500104C45 /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0EC0E13296F00AE9530 /* grossini_dance_13.png */; };
+		50A783B10F3AFCE500104C45 /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0ED0E13296F00AE9530 /* grossini_dance_14.png */; };
+		50A783B20F3AFCE500104C45 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		50A783B30F3AFCE500104C45 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		50A783B40F3AFCE500104C45 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		50A783B50F3AFCE500104C45 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		50A783B60F3AFCE500104C45 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		50A783B80F3AFCE500104C45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		50A783BB0F3AFCE500104C45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50A783BC0F3AFCE500104C45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50A783BD0F3AFCE500104C45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50A783BE0F3AFCE500104C45 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50A783C00F3AFCE500104C45 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		50A783CC0F3AFD5D00104C45 /* StreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783CB0F3AFD5D00104C45 /* StreakTest.m */; };
+		50A783D90F3AFDB300104C45 /* MotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783D50F3AFDB300104C45 /* MotionStreak.m */; };
+		50A783DA0F3AFDB300104C45 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 50A783D60F3AFDB300104C45 /* README */; };
+		50A783DB0F3AFDB300104C45 /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783D80F3AFDB300104C45 /* Ribbon.m */; };
+		50A783DD0F3AFDD700104C45 /* streak.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A783DC0F3AFDD700104C45 /* streak.png */; };
 		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -615,6 +653,13 @@
 			remoteInfo = "cocos Live";
 		};
 		50A24E1B0F377FA1007CAEB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		50A7839B0F3AFCE500104C45 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -884,6 +929,16 @@
 		50A24E730F378087007CAEB0 /* TiledGridAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiledGridAction.m; sourceTree = "<group>"; };
 		50A252290F38B8DC007CAEB0 /* background1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background1.jpg; sourceTree = "<group>"; };
 		50A2522A0F38B8DC007CAEB0 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
+		50A783C40F3AFCE500104C45 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A783C60F3AFCE500104C45 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
+		50A783CA0F3AFD5D00104C45 /* StreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreakTest.h; path = tests/StreakTest.h; sourceTree = "<group>"; };
+		50A783CB0F3AFD5D00104C45 /* StreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreakTest.m; path = tests/StreakTest.m; sourceTree = "<group>"; };
+		50A783D40F3AFDB300104C45 /* MotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreak.h; sourceTree = "<group>"; };
+		50A783D50F3AFDB300104C45 /* MotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionStreak.m; sourceTree = "<group>"; };
+		50A783D60F3AFDB300104C45 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		50A783D70F3AFDB300104C45 /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
+		50A783D80F3AFDB300104C45 /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
+		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chipmunk_Accel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1133,6 +1188,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50A783BA0F3AFCE500104C45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A783BB0F3AFCE500104C45 /* Foundation.framework in Frameworks */,
+				50A783BC0F3AFCE500104C45 /* UIKit.framework in Frameworks */,
+				50A783BD0F3AFCE500104C45 /* CoreGraphics.framework in Frameworks */,
+				50A783BE0F3AFCE500104C45 /* OpenGLES.framework in Frameworks */,
+				50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */,
+				50A783C00F3AFCE500104C45 /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B2C4CF0E100AEA00AE9530 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1249,6 +1317,7 @@
 				509B3A0D0F31024E00F2FB95 /* libcocos Live.a */,
 				509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */,
 				50A24E440F377FA1007CAEB0 /* EaseDemo.app */,
+				50A783C40F3AFCE500104C45 /* StreakTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1261,6 +1330,7 @@
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
 				50B2C9C00E109A5900AE9530 /* LICENSE */,
 				50B2C9C10E109A5900AE9530 /* README */,
+				50A783D30F3AFDB300104C45 /* experimental */,
 				501756090F335CE900624901 /* external */,
 				50B130FC0DFE0923003BAB56 /* tests */,
 				509B3A100F31027600F2FB95 /* cocoslive */,
@@ -1284,6 +1354,7 @@
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
+				50A783C60F3AFCE500104C45 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1568,10 +1639,24 @@
 			name = Nodes;
 			sourceTree = "<group>";
 		};
+		50A783D30F3AFDB300104C45 /* experimental */ = {
+			isa = PBXGroup;
+			children = (
+				50A783D40F3AFDB300104C45 /* MotionStreak.h */,
+				50A783D50F3AFDB300104C45 /* MotionStreak.m */,
+				50A783D60F3AFDB300104C45 /* README */,
+				50A783D70F3AFDB300104C45 /* Ribbon.h */,
+				50A783D80F3AFDB300104C45 /* Ribbon.m */,
+			);
+			path = experimental;
+			sourceTree = "<group>";
+		};
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
 				50175B240F33B22300624901 /* cocosLive */,
+				50A783CA0F3AFD5D00104C45 /* StreakTest.h */,
+				50A783CB0F3AFD5D00104C45 /* StreakTest.m */,
 				50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */,
 				50A24E700F377FE8007CAEB0 /* EffectsTest.m */,
 				505B63A60F2F4295001B4104 /* EaseDemo.h */,
@@ -1613,6 +1698,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50A783DC0F3AFDD700104C45 /* streak.png */,
 				50A252290F38B8DC007CAEB0 /* background1.jpg */,
 				50A2522A0F38B8DC007CAEB0 /* background2.jpg */,
 				5084D4780EE5C7D100BD237C /* btn-about-normal.png */,
@@ -2051,6 +2137,24 @@
 			productReference = 50A24E440F377FA1007CAEB0 /* EaseDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50A783990F3AFCE500104C45 /* StreakTest (experimental) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50A783C10F3AFCE500104C45 /* Build configuration list for PBXNativeTarget "StreakTest (experimental)" */;
+			buildPhases = (
+				50A7839C0F3AFCE500104C45 /* Resources */,
+				50A783B70F3AFCE500104C45 /* Sources */,
+				50A783BA0F3AFCE500104C45 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50A7839A0F3AFCE500104C45 /* PBXTargetDependency */,
+			);
+			name = "StreakTest (experimental)";
+			productName = playground;
+			productReference = 50A783C40F3AFCE500104C45 /* StreakTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		50B2C4D00E100AEA00AE9530 /* Chipmunk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50B2C4D40E100B0000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk" */;
@@ -2213,6 +2317,7 @@
 				505B63780F2F4210001B4104 /* EaseDemo */,
 				509B3A270F3102FD00F2FB95 /* cocosLiveDemo */,
 				50A24E190F377FA1007CAEB0 /* EffectsDemo */,
+				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 			);
 		};
 /* End PBXProject section */
@@ -2455,6 +2560,41 @@
 				50A24E340F377FA1007CAEB0 /* f1.png in Resources */,
 				50A24E350F377FA1007CAEB0 /* f2.png in Resources */,
 				50A24E360F377FA1007CAEB0 /* fps_images.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50A7839C0F3AFCE500104C45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A7839D0F3AFCE500104C45 /* r1.png in Resources */,
+				50A7839E0F3AFCE500104C45 /* r2.png in Resources */,
+				50A7839F0F3AFCE500104C45 /* Default.png in Resources */,
+				50A783A00F3AFCE500104C45 /* Icon.png in Resources */,
+				50A783A10F3AFCE500104C45 /* grossini.png in Resources */,
+				50A783A20F3AFCE500104C45 /* grossinis_sister1.png in Resources */,
+				50A783A30F3AFCE500104C45 /* grossinis_sister2.png in Resources */,
+				50A783A40F3AFCE500104C45 /* grossini_dance_01.png in Resources */,
+				50A783A50F3AFCE500104C45 /* grossini_dance_02.png in Resources */,
+				50A783A60F3AFCE500104C45 /* grossini_dance_03.png in Resources */,
+				50A783A70F3AFCE500104C45 /* grossini_dance_04.png in Resources */,
+				50A783A80F3AFCE500104C45 /* grossini_dance_05.png in Resources */,
+				50A783A90F3AFCE500104C45 /* grossini_dance_06.png in Resources */,
+				50A783AA0F3AFCE500104C45 /* grossini_dance_07.png in Resources */,
+				50A783AB0F3AFCE500104C45 /* grossini_dance_08.png in Resources */,
+				50A783AC0F3AFCE500104C45 /* grossini_dance_09.png in Resources */,
+				50A783AD0F3AFCE500104C45 /* grossini_dance_10.png in Resources */,
+				50A783AE0F3AFCE500104C45 /* grossini_dance_11.png in Resources */,
+				50A783AF0F3AFCE500104C45 /* grossini_dance_12.png in Resources */,
+				50A783B00F3AFCE500104C45 /* grossini_dance_13.png in Resources */,
+				50A783B10F3AFCE500104C45 /* grossini_dance_14.png in Resources */,
+				50A783B20F3AFCE500104C45 /* b1.png in Resources */,
+				50A783B30F3AFCE500104C45 /* b2.png in Resources */,
+				50A783B40F3AFCE500104C45 /* f1.png in Resources */,
+				50A783B50F3AFCE500104C45 /* f2.png in Resources */,
+				50A783B60F3AFCE500104C45 /* fps_images.png in Resources */,
+				50A783DA0F3AFDB300104C45 /* README in Resources */,
+				50A783DD0F3AFDD700104C45 /* streak.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2779,6 +2919,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50A783B70F3AFCE500104C45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A783B80F3AFCE500104C45 /* main.m in Sources */,
+				50A783CC0F3AFD5D00104C45 /* StreakTest.m in Sources */,
+				50A783D90F3AFDB300104C45 /* MotionStreak.m in Sources */,
+				50A783DB0F3AFDB300104C45 /* Ribbon.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50B2C4CE0E100AEA00AE9530 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2931,6 +3082,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50A24E1B0F377FA1007CAEB0 /* PBXContainerItemProxy */;
+		};
+		50A7839A0F3AFCE500104C45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 50A7839B0F3AFCE500104C45 /* PBXContainerItemProxy */;
 		};
 		50B2C5D10E100EF000AE9530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3710,6 +3866,57 @@
 			};
 			name = Release;
 		};
+		50A783C20F3AFCE500104C45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = StreakTest;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		50A783C30F3AFCE500104C45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = StreakTest;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		50B2C4D20E100AEB00AE9530 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4233,6 +4440,15 @@
 			buildConfigurations = (
 				50A24E420F377FA1007CAEB0 /* Debug */,
 				50A24E430F377FA1007CAEB0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50A783C10F3AFCE500104C45 /* Build configuration list for PBXNativeTarget "StreakTest (experimental)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50A783C20F3AFCE500104C45 /* Debug */,
+				50A783C30F3AFCE500104C45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
