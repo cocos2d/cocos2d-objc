@@ -12,8 +12,12 @@
  *
  */
 
+// cocos2d
 #import "TextureAtlas.h"
 #import "TextureMgr.h"
+
+// support
+#import "Support/Texture2D.h"
 
 @interface TextureAtlas (Private)
 -(void) initIndices;
@@ -38,8 +42,13 @@
 	
 	totalQuads = n;
 	
+	GLuint oldFilter = [Texture2D minMagFilter];
+	[Texture2D setMinMagFilter:GL_NEAREST];
+
 	// retained in property
 	self.texture = [[TextureMgr sharedTextureMgr] addImage:file];
+	
+	[Texture2D setMinMagFilter:oldFilter];
 	
 	texCoordinates = malloc( sizeof(texCoordinates[0]) * totalQuads );
 	vertices = malloc( sizeof(vertices[0]) * totalQuads );
@@ -141,32 +150,11 @@
 }
 
 -(void) drawNumberOfQuads: (NSUInteger) n
-{
-	int	minFilter, magFilter;
-//	int	wrapS, wrapT;
-	
-	glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, &minFilter);
-	glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, &magFilter);
-//	glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, &wrapS);
-//	glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, &wrapT);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		
+{		
 	glBindTexture(GL_TEXTURE_2D, [texture name]);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
+	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	
 }
 
 @end
