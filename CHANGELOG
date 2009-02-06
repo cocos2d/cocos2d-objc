@@ -11,6 +11,7 @@ version 0.7.0 - XX-Feb-2009
  . CocosLive: added client and example that uses the CocosLive service (issue #175)
  . CocosNode: children is a property (issue #185)
  . Demos: Creating Window and attaching cocos2d to it (issue #180)
+ . Demos: Texture2dDemo shows how to load PVR images (issue #112)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)
  . Director: winSize returns a CGSize (not a CGRect) (issue #159)
  . Director: added FastDirector (issue #145)
@@ -19,6 +20,7 @@ version 0.7.0 - XX-Feb-2009
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
  . Experimental: Added StreakDemo (issue #171)
  . MenuItemFont: assign correct size and documented isEnabled (issue #132)
+ . Texture: Support for full PVRTC (issue #112)
  . Transitions: added new transitions: 
 	 SplitRowsTransition, SplitColsTransition, TurnOffTilesTransition,
 	 FadeTRTransition, FadeBLTransition, FadeUpTransition, FadeDownTransition

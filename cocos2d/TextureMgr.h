@@ -31,11 +31,12 @@
 /** Returns a Texture2D object given an file image
  * If the file image was not previously loaded, it will create a new Texture2D
  *  object and it will return it.
- * Otherwise it will return a reference of a previosly loaded image
+ * Otherwise it will return a reference of a previosly loaded image.
+ * Supported images extensions: .png, .bmp, .tiff, .jpeg, .pvr
  */
 -(Texture2D*) addImage: (NSString*) fileimage;
 
-/** Returns a Texture2D object given an PVRTC filename
+/** Returns a Texture2D object given an PVRTC RAW filename
  * If the file image was not previously loaded, it will create a new Texture2D
  *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
  *
@@ -44,6 +45,13 @@
  * hasAlpha: whether or not the image contains alpha channel
  */
 -(Texture2D*) addPVRTCImage: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
+
+/** Returns a Texture2D object given an PVRTC filename
+ * If the file image was not previously loaded, it will create a new Texture2D
+ *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+ */
+-(Texture2D*) addPVRTCImage: (NSString*) filename;
+
 
 /** Returns a Texture2D object given an CGImageRef image
  * If the image was not previously loaded, it will create a new Texture2D

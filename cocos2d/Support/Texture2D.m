@@ -63,6 +63,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES1/glext.h>
 
 #import "Texture2D.h"
+#import "PVRTexture.h"
 
 
 //CONSTANTS:
@@ -71,6 +72,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
+// Default Min/Mag texture filter
 static GLuint _minMagFilter = GL_LINEAR;
 
 @implementation Texture2D
@@ -398,8 +400,43 @@ static GLuint _minMagFilter = GL_LINEAR;
 	}					
 	return self;
 }
+
+-(id) initWithPVRTCFile: (NSString*) file
+{
+	GLint saveName;
+
+	if( (self = [super init]) ) {
+		PVRTexture *pvr = [[PVRTexture alloc] initWithContentsOfFile:file];
+		pvr.retainName = YES;	// don't dealloc texture on release
+		
+		_name = pvr.name;	// texture id
+		_maxS = 1.0f;
+		_maxT = 1.0f;
+		_width = pvr.width;		// width
+		_height = pvr.height;	// height
+		_size = CGSizeMake(_width, _height);
+
+		
+		// apply Min/Mag filter to the newly created texture
+
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
+		glBindTexture(GL_TEXTURE_2D, _name);
+		
+		[self applyMinMagFilter];
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+		
+		glBindTexture(GL_TEXTURE_2D, saveName);
+		
+		[pvr release];
+	}
+	return self;
+}
 @end
 
+//
+// Used to apply MIN/MAG filter
+//
 @implementation Texture2D (GLFilter)
 
 +(void) setMinMagFilter: (GLuint) filter
