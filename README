@@ -10,10 +10,13 @@ design:
 Main features
     * Scene management (workflow)
     * Transitions between scenes
+	* Sprites
 	* Effects: Lens, Ripple, Waves, etc.
-    * Sprites
-    * Movement Actions
-	* Ease Actions
+    * Actions (behaviours): 
+		* Trasformation Actions: Move, Rotate, Scale, Jump, etc.
+		* Composable actions: Sequence, Spawn, Repeat
+		* Ease Actions: Exp, Sin, Cubic, etc.
+		* Misc actions: Reverse, CallFunc
     * Basic menus and buttons
     * Integrated Chipmunk 2d physics engine
     * Particle system

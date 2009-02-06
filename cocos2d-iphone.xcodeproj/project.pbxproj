@@ -938,7 +938,7 @@
 		50A24E0E0F377E8E007CAEB0 /* Grid3DAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grid3DAction.m; sourceTree = "<group>"; };
 		50A24E0F0F377E8E007CAEB0 /* GridAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridAction.h; sourceTree = "<group>"; };
 		50A24E100F377E8E007CAEB0 /* GridAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridAction.m; sourceTree = "<group>"; };
-		50A24E440F377FA1007CAEB0 /* EaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A24E440F377FA1007CAEB0 /* EffectsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsTest.h; path = tests/EffectsTest.h; sourceTree = "<group>"; };
 		50A24E700F377FE8007CAEB0 /* EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsTest.m; path = tests/EffectsTest.m; sourceTree = "<group>"; };
 		50A24E720F378087007CAEB0 /* TiledGridAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiledGridAction.h; sourceTree = "<group>"; };
@@ -1331,7 +1331,7 @@
 				509B39DF0F31020900F2FB95 /* libTouchJSON.a */,
 				509B3A0D0F31024E00F2FB95 /* libcocos Live.a */,
 				509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */,
-				50A24E440F377FA1007CAEB0 /* EaseDemo.app */,
+				50A24E440F377FA1007CAEB0 /* EffectsDemo.app */,
 				50A783C40F3AFCE500104C45 /* StreakTest.app */,
 			);
 			name = Products;
@@ -2157,7 +2157,7 @@
 			);
 			name = EffectsDemo;
 			productName = playground;
-			productReference = 50A24E440F377FA1007CAEB0 /* EaseDemo.app */;
+			productReference = 50A24E440F377FA1007CAEB0 /* EffectsDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50A783990F3AFCE500104C45 /* StreakTest (experimental) */ = {
@@ -3865,7 +3865,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EaseDemo;
+				PRODUCT_NAME = EffectsDemo;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -3890,7 +3890,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EaseDemo;
+				PRODUCT_NAME = EffectsDemo;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
