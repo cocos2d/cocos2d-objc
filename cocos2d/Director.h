@@ -172,11 +172,11 @@ and when to execute the Scenes
 
 // Scene Management
 
-/**Runs a scene, entering in the Director's main loop. 
+/**Enters the Director's main loop with the given Scene. 
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
  */
-- (void) runScene:(Scene*) scene;
+- (void) runWithScene:(Scene*) scene;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.

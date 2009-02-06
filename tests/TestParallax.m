@@ -234,7 +234,6 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
@@ -249,7 +248,7 @@ Class restartAction()
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
 			 
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game

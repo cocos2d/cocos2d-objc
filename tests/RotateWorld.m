@@ -153,7 +153,6 @@
 	[window setMultipleTouchEnabled:YES];
 		
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 //	[Director useFastDirector];
 	
 	// Attach cocos2d to the window
@@ -185,7 +184,7 @@
 	// Make the window visible
 	[window makeKeyAndVisible];
 	 
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game

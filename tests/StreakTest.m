@@ -98,7 +98,7 @@
 	Scene *scene = [Scene node];
 	[scene add: [StreakTest node]];
   
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game

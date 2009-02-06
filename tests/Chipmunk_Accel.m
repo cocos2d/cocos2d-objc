@@ -157,7 +157,6 @@ eachShape(void *ptr, void* unused)
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
@@ -181,7 +180,7 @@ eachShape(void *ptr, void* unused)
 
 	[window makeKeyAndVisible];
 
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc

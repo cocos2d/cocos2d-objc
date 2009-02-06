@@ -402,7 +402,6 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
@@ -417,7 +416,7 @@ Class restartAction()
 	Scene *scene = [Scene node];
 	[scene add: [TextLayer node] z:0 tag:kTagTextLayer];
 	
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc
