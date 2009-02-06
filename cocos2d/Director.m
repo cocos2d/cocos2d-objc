@@ -579,7 +579,7 @@ static Director *_sharedDirector = nil;
 
 #pragma mark Director Scene Management
 
-- (void)runScene:(Scene*) scene
+- (void)runWithScene:(Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	NSAssert( runningScene == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
@@ -879,9 +879,7 @@ static Director *_sharedDirector = nil;
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		}
 		
-		[self mainLoop];
-		
-		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
+		[self mainLoop];		
 	}
 }
 

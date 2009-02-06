@@ -89,7 +89,6 @@ enum
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 //	[Director useFastDirector];
 	
 	// Attach cocos2d to the window
@@ -108,7 +107,7 @@ enum
 	MainLayer * mainLayer =[MainLayer node];	
 	[scene add: mainLayer z:2];
 	
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game

@@ -64,3 +64,15 @@ v0.7 (new way):
 	
 	[[Director sharedDirector] runScene: scene];
 }
+
+
+Director main loop
+==================
+
+To prevent some confusion the 'trigger main loop' selector was renamed:
+
+v0.6 (old way):
+  [[Director sharedDirector] runScene: firstScene];
+
+v0.7 (new way):
+  [[Director sharedDirector] runWithScene: firstScene];

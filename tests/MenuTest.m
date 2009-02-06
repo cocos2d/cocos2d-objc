@@ -208,7 +208,6 @@ enum {
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
@@ -232,7 +231,7 @@ enum {
 	[scene add: layer z:0];
 
 	[window makeKeyAndVisible];
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game

@@ -519,7 +519,6 @@ Class restartAction()
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
 //	[Director useFastDirector];
 	
 	// Attach cocos2d to the window
@@ -540,7 +539,7 @@ Class restartAction()
 	Scene *scene = [Scene node];
 	[scene add: [nextAction() node]];
 	
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 		
 }
 

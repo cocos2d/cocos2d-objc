@@ -278,13 +278,14 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
-//	[Director useFastDirector];
+	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: NO];
 	[[Director sharedDirector] setDisplayFPS: YES];
-	[[Director sharedDirector] setAnimationInterval: 1.0/60];
+
+	// AnimationInterval doesn't work with FastDirector, yet
+//	[[Director sharedDirector] setAnimationInterval: 1.0/60];
 
 	// create OpenGL view and attach it to a window
 	[[Director sharedDirector] attachInView:window];
@@ -294,7 +295,7 @@ Class restartAction()
 	
 	[window makeKeyAndVisible];
 			 
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc
