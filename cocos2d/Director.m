@@ -890,7 +890,7 @@ static Director *_sharedDirector = nil;
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	NSAssert(NO,@"FastDirectory doesn't support setAnimationInterval, yet");
+	NSLog(@"FastDirectory doesn't support setAnimationInterval, yet");
 }
 @end
 
