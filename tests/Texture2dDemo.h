@@ -11,8 +11,8 @@
 @end
 
 @interface TextureDemo : Layer
-{
-}
+{}
+
 -(NSString*) title;
 
 -(void) backCallback:(id) sender;
@@ -21,11 +21,33 @@
 @end
 
 @interface TextureLabel : TextureDemo
-{
-}
+{}
 @end
 
 @interface TextureLabel2 : TextureDemo
-{
-}
+{}
+@end
+
+@interface TexturePNG : TextureDemo
+{}
+@end
+
+@interface TextureJPEG : TextureDemo
+{}
+@end
+
+@interface TextureBMP : TextureDemo
+{}
+@end
+
+@interface TextureTIFF : TextureDemo
+{}
+@end
+
+@interface TexturePVR : TextureDemo
+{}
+@end
+
+@interface TexturePVRRaw : TextureDemo
+{}
 @end

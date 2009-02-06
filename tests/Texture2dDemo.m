@@ -10,8 +10,14 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-						 @"TextureLabel",
-						 @"TextureLabel2",
+						@"TextureLabel",
+						@"TextureLabel2",
+						@"TexturePNG",
+						@"TextureBMP",
+						@"TextureJPEG",
+						@"TextureTIFF",
+						@"TexturePVR",
+						@"TexturePVRRaw",
 };
 
 #pragma mark Callbacks
@@ -152,6 +158,120 @@ Class restartAction()
 	return @"Label Dynamic Size";
 }
 @end
+
+@implementation TexturePNG
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+
+	Sprite *img = [Sprite spriteWithFile:@"test_image.png"];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"PNG Test";
+}
+@end
+
+@implementation TextureJPEG
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *img = [Sprite spriteWithFile:@"test_image.jpeg"];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"JPEG Test";
+}
+@end
+
+@implementation TextureBMP
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *img = [Sprite spriteWithFile:@"test_image.bmp"];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"BMP Test";
+}
+@end
+
+@implementation TextureTIFF
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *img = [Sprite spriteWithFile:@"test_image.tiff"];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"TIFF Test";
+}
+@end
+
+// To generate PVR images read this article:
+// http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
+@implementation TexturePVR
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *img = [Sprite spriteWithFile:@"test_image.pvr"];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR Test";
+}
+@end
+
+// To generate PVR images read this article:
+// http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
+@implementation TexturePVRRaw
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *img = [Sprite spriteWithPVRTCFile:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR Raw Test";
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark AppController - Main

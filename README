@@ -10,8 +10,10 @@ design:
 Main features
     * Scene management (workflow)
     * Transitions between scenes
+	* Effects: Lens, Ripple, Waves, etc.
     * Sprites
-    * Actions
+    * Movement Actions
+	* Ease Actions
     * Basic menus and buttons
     * Integrated Chipmunk 2d physics engine
     * Particle system
@@ -19,6 +21,7 @@ Main features
     * Texture Atlas support
     * Tile Map support
 	* Parallax scrolling support
+	* High Score server
     * Touch/Accelerometer support
     * Portrait and Landscape mode
     * Integrated Pause/Resume

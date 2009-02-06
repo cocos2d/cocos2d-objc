@@ -20,6 +20,14 @@
 		317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportDemo.m */; };
+		500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 500043210F3C9FBA00A5FBF4 /* PVRTexture.h */; };
+		500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 500043220F3C9FBA00A5FBF4 /* PVRTexture.m */; };
+		500043750F3CB58600A5FBF4 /* test_image.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 500043710F3CB58600A5FBF4 /* test_image.bmp */; };
+		500043760F3CB58600A5FBF4 /* test_image.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 500043720F3CB58600A5FBF4 /* test_image.jpeg */; };
+		500043770F3CB58600A5FBF4 /* test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 500043730F3CB58600A5FBF4 /* test_image.png */; };
+		500043780F3CB58600A5FBF4 /* test_image.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 500043740F3CB58600A5FBF4 /* test_image.tiff */; };
+		500044040F3CC15D00A5FBF4 /* test_image.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 500044020F3CC15D00A5FBF4 /* test_image.pvr */; };
+		500044050F3CC15D00A5FBF4 /* test_image.pvrraw in Resources */ = {isa = PBXBuildFile; fileRef = 500044030F3CC15D00A5FBF4 /* test_image.pvrraw */; };
 		500165A10E72DB470085673F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500165A20E72DB470085673F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500165A30E72DB470085673F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -733,6 +741,14 @@
 		317070350E29409E00DD3360 /* AccelViewportDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportDemo.m; path = tests/AccelViewportDemo.m; sourceTree = "<group>"; };
 		317070360E29409E00DD3360 /* AccelViewportDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportDemo.h; path = tests/AccelViewportDemo.h; sourceTree = "<group>"; };
 		3170705B0E2940C900DD3360 /* AccelViewportDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		500043210F3C9FBA00A5FBF4 /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
+		500043220F3C9FBA00A5FBF4 /* PVRTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVRTexture.m; sourceTree = "<group>"; };
+		500043710F3CB58600A5FBF4 /* test_image.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = test_image.bmp; sourceTree = "<group>"; };
+		500043720F3CB58600A5FBF4 /* test_image.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_image.jpeg; sourceTree = "<group>"; };
+		500043730F3CB58600A5FBF4 /* test_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image.png; sourceTree = "<group>"; };
+		500043740F3CB58600A5FBF4 /* test_image.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test_image.tiff; sourceTree = "<group>"; };
+		500044020F3CC15D00A5FBF4 /* test_image.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvr; sourceTree = "<group>"; };
+		500044030F3CC15D00A5FBF4 /* test_image.pvrraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvrraw; sourceTree = "<group>"; };
 		500165990E72DB0E0085673F /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r1.png; sourceTree = "<group>"; };
 		5001659A0E72DB0E0085673F /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
 		5001659D0E72DB470085673F /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b1.png; sourceTree = "<group>"; };
@@ -1544,6 +1560,8 @@
 		501CCFB70E99659400B86F68 /* ImageSupport */ = {
 			isa = PBXGroup;
 			children = (
+				500043210F3C9FBA00A5FBF4 /* PVRTexture.h */,
+				500043220F3C9FBA00A5FBF4 /* PVRTexture.m */,
 				501CCFAB0E99657C00B86F68 /* TGAlib.c */,
 				501CCFAC0E99657C00B86F68 /* TGAlib.h */,
 			);
@@ -1696,6 +1714,12 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
+				500044030F3CC15D00A5FBF4 /* test_image.pvrraw */,
+				500043710F3CB58600A5FBF4 /* test_image.bmp */,
+				500043720F3CB58600A5FBF4 /* test_image.jpeg */,
+				500043730F3CB58600A5FBF4 /* test_image.png */,
+				500043740F3CB58600A5FBF4 /* test_image.tiff */,
 				50A783DC0F3AFDD700104C45 /* streak.png */,
 				50A252290F38B8DC007CAEB0 /* background1.jpg */,
 				50A2522A0F38B8DC007CAEB0 /* background2.jpg */,
@@ -1789,6 +1813,7 @@
 				50A24E150F377E8E007CAEB0 /* Grid3DAction.h in Headers */,
 				50A24E170F377E8E007CAEB0 /* GridAction.h in Headers */,
 				50A24E740F378087007CAEB0 /* TiledGridAction.h in Headers */,
+				500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2378,6 +2403,12 @@
 				505B62C60F2E6A0F001B4104 /* f1.png in Resources */,
 				505B62C70F2E6A0F001B4104 /* f2.png in Resources */,
 				505B62C80F2E6A0F001B4104 /* fps_images.png in Resources */,
+				500043750F3CB58600A5FBF4 /* test_image.bmp in Resources */,
+				500043760F3CB58600A5FBF4 /* test_image.jpeg in Resources */,
+				500043770F3CB58600A5FBF4 /* test_image.png in Resources */,
+				500043780F3CB58600A5FBF4 /* test_image.tiff in Resources */,
+				500044040F3CC15D00A5FBF4 /* test_image.pvr in Resources */,
+				500044050F3CC15D00A5FBF4 /* test_image.pvrraw in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2782,6 +2813,7 @@
 				50A24E160F377E8E007CAEB0 /* Grid3DAction.m in Sources */,
 				50A24E180F377E8E007CAEB0 /* GridAction.m in Sources */,
 				50A24E750F378087007CAEB0 /* TiledGridAction.m in Sources */,
+				500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

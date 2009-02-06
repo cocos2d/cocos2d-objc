@@ -50,7 +50,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone:
 		   optimizations in the whole code (using floats, not doubles)
 		   removed useless GL commands in director
 		   fixed Menu aligments
-	* mark@abitofthought.com: author of Fast Director
+	* mark at abitofthought: author of Fast Director
 	* Mitch: patches for Menu
 	         author of MenuItemToggle
 	* Math Sephton: patches for Demos

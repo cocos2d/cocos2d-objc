@@ -150,6 +150,8 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 @interface Texture2D (PVRTC)
 /** Initializes a texture from a PVRTC buffer */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
+/** Initializes a texture from a PVRTC file */
+-(id) initWithPVRTCFile: (NSString*) file;
 @end
 
 /**
