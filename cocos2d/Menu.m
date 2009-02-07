@@ -169,18 +169,6 @@
 	}
 }
 
-// XXX: deprecated
--(void) alignItemsVerticallyOld
-{
-	int incY = [[children objectAtIndex:0] contentSize].height + 5;
-	int initialY =  (incY * [children count])/2;
-	
-	for( MenuItem* item in children ) {
-		[item setPosition:cpv(0,initialY)];
-		initialY -= incY;
-	}
-}
-
 -(void) alignItemsHorizontally
 {
 	

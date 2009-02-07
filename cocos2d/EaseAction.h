@@ -47,13 +47,13 @@
 /** Ease Sine InOut
  */
 @interface EaseSineInOut : EaseAction <NSCopying> {} @end
-/** Ease Quad In
+/** Ease Quadratic In
  */
 @interface EaseQuadIn : EaseAction <NSCopying> {} @end
-/** Ease Quad Out
+/** Ease Quadratic Out
  */
 @interface EaseQuadOut : EaseAction <NSCopying> {} @end
-/** Ease Quad InOut
+/** Ease Quadratic InOut
  */
 @interface EaseQuadInOut : EaseAction <NSCopying> {} @end
 /** Ease Cubic In

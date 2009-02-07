@@ -73,7 +73,7 @@
 @implementation EaseExponentialIn
 -(void) update: (ccTime) t
 {
-	[other update: (t==0) ? 0 : pow(2, 10 * (t/1 - 1)) - 1 * 0.001];
+	[other update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001];
 }
 - (IntervalAction*) reverse
 {
@@ -87,7 +87,7 @@
 @implementation EaseExponentialOut
 -(void) update: (ccTime) t
 {
-	[other update: (t==1) ? 1 : (-pow(2, -10 * t/1) + 1)];
+	[other update: (t==1) ? 1 : (-powf(2, -10 * t/1) + 1)];
 }
 - (IntervalAction*) reverse
 {
@@ -104,9 +104,9 @@
   if (t==0) t = 0;
   if (t==1) t = 1;
   else if ((t/=0.5) < 1)
-    t = 0.5 * pow(2, 10 * (t - 1));
+    t = 0.5 * powf(2, 10 * (t - 1));
   else
-    t = 0.5 * (-pow(2, -10 * --t) + 2);
+    t = 0.5 * (-powf(2, -10 * --t) + 2);
   [other update:t];
 }
 @end
@@ -118,7 +118,7 @@
 @implementation EaseCubicIn
 -(void) update: (ccTime) t
 {
-	[other update: t*t];
+	[other update: powf(t,3)];
 }
 - (IntervalAction*) reverse
 {
