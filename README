@@ -14,9 +14,9 @@ Main features
 	* Effects: Lens, Ripple, Waves, etc.
     * Actions (behaviours): 
 		* Trasformation Actions: Move, Rotate, Scale, Jump, etc.
-		* Composable actions: Sequence, Spawn, Repeat
+		* Composable actions: Sequence, Spawn, Repeat, Reverse
 		* Ease Actions: Exp, Sin, Cubic, etc.
-		* Misc actions: Reverse, CallFunc
+		* Misc actions: CallFunc, OrbitCamera
     * Basic menus and buttons
     * Integrated Chipmunk 2d physics engine
     * Particle system

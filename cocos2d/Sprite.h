@@ -63,6 +63,7 @@
  * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
  * bpp can only be 2 or 4. 2 means more compression but lower quality.
  * hasAlpha: whether or not the image contains alpha channel
+ * @deprecated This method will be removed in v0.8. Use spriteWithFile instead. It supports PVRTC (non Raw) format
  */
 + (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 /** creates an sprite from a CGImageRef image */
@@ -74,6 +75,7 @@
  * It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
  * bpp can only be 2 or 4. 2 means more compression but lower quality.
  * hasAlpha: whether or not the image contains alpha channel
+ * @deprecated This method will be removed in v0.8. Use initWithFile instead. It supports PVRTC (non Raw) format
  */
 - (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 /** creates an sprite from a CGImageRef image */

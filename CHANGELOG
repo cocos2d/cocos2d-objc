@@ -19,7 +19,9 @@ version 0.7.0 - XX-Feb-2009
  . Director: renamed runScene with runWithScene (issue #194)
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
  . Experimental: Added StreakDemo (issue #171)
+ . Menu: aligItemsVerticallyOld removed. (issue #196)
  . MenuItemFont: assign correct size and documented isEnabled (issue #132)
+ . Sprite: initWithPVRTCFile is deprecated. will be removed in v0.8 (issue #197)
  . Texture: Support for full PVRTC (issue #112)
  . Transitions: added new transitions: 
 	 SplitRowsTransition, SplitColsTransition, TurnOffTilesTransition,
