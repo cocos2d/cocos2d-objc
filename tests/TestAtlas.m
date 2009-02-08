@@ -210,7 +210,14 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
+	// Create an Aliased Atlas
+	[Texture2D saveTexParameters];
+	[Texture2D setAliasTexParameters];
+	
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	
+	[Texture2D restoreTexParameters];
+	
 	[self add:tilemap];
 	
 	CGSize size = tilemap.contentSize;

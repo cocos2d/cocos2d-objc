@@ -41,14 +41,9 @@
 		return nil;
 	
 	totalQuads = n;
-	
-	GLuint oldFilter = [Texture2D minMagFilter];
-	[Texture2D setMinMagFilter:GL_NEAREST];
 
 	// retained in property
-	self.texture = [[TextureMgr sharedTextureMgr] addImage:file];
-	
-	[Texture2D setMinMagFilter:oldFilter];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage:file];	
 	
 	texCoordinates = malloc( sizeof(texCoordinates[0]) * totalQuads );
 	vertices = malloc( sizeof(vertices[0]) * totalQuads );

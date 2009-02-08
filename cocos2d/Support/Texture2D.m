@@ -73,7 +73,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS IMPLEMENTATIONS:
 
 // Default Min/Mag texture filter
-static GLuint _minMagFilter = GL_LINEAR;
+static ccTexParams _texParams = { GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+static ccTexParams _texParamsCopy;
 
 @implementation Texture2D
 
@@ -86,10 +87,7 @@ static GLuint _minMagFilter = GL_LINEAR;
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 
-		[self applyMinMagFilter];
-		
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+		[Texture2D applyTexParameters];
 		
 		switch(pixelFormat) {
 			
@@ -373,10 +371,7 @@ static GLuint _minMagFilter = GL_LINEAR;
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 
-		[self applyMinMagFilter];
-
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+		[Texture2D applyTexParameters];
 		
 		GLenum format;
 		GLsizei size = length * length * bpp / 8;
@@ -403,7 +398,6 @@ static GLuint _minMagFilter = GL_LINEAR;
 
 -(id) initWithPVRTCFile: (NSString*) file
 {
-	GLint saveName;
 
 	if( (self = [super init]) ) {
 		PVRTexture *pvr = [[PVRTexture alloc] initWithContentsOfFile:file];
@@ -416,18 +410,6 @@ static GLuint _minMagFilter = GL_LINEAR;
 		_height = pvr.height;	// height
 		_size = CGSizeMake(_width, _height);
 
-		
-		// apply Min/Mag filter to the newly created texture
-
-		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
-		glBindTexture(GL_TEXTURE_2D, _name);
-		
-		[self applyMinMagFilter];
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-		
-		glBindTexture(GL_TEXTURE_2D, saveName);
-		
 		[pvr release];
 	}
 	return self;
@@ -439,20 +421,43 @@ static GLuint _minMagFilter = GL_LINEAR;
 //
 @implementation Texture2D (GLFilter)
 
-+(void) setMinMagFilter: (GLuint) filter
++(void) setTexParameters: (ccTexParams*) texParams
 {
-	_minMagFilter = filter;
+	_texParams = *texParams;
 }
 
-+(GLuint) minMagFilter
++(ccTexParams) texParameters
 {
-	return _minMagFilter;
+	return _texParams;
 }
 
--(void) applyMinMagFilter
++(void) applyTexParameters
 {
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minMagFilter );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _minMagFilter );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _texParams.minFilter );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _texParams.magFilter );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _texParams.wrapS );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _texParams.wrapT );
 }
+
++(void) restoreTexParameters
+{
+	_texParams = _texParamsCopy;
+}
+
++(void) saveTexParameters
+{
+	_texParamsCopy = _texParams;
+}
+
++(void) setAliasTexParameters
+{
+	_texParams.magFilter = _texParams.minFilter = GL_NEAREST;
+}
+
++(void) setAntiAliasTexParameters
+{
+	_texParams.magFilter = _texParams.minFilter = GL_LINEAR;
+}
+
 @end
 

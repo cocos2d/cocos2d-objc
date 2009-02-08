@@ -302,28 +302,27 @@ Class restartAction()
 	// Sprite 1: GL_LINEAR
 	//
 	// Default filter is GL_LINEAR
-	GLuint oldFilter = [Texture2D minMagFilter];
-	[Texture2D setMinMagFilter:GL_LINEAR];
+	[Texture2D saveTexParameters];
+	[Texture2D setAntiAliasTexParameters];
 	
 	Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	sprite.position = cpv( s.width/3.0f, s.height/2.0f);
 	[self add:sprite];
 	
-	[Texture2D setMinMagFilter:oldFilter];
-
+	[Texture2D restoreTexParameters];
 	
 	//
 	// Sprite 1: GL_NEAREST
 	//	
 	// Use Nearest in this one
-	oldFilter = [Texture2D minMagFilter];
-	[Texture2D setMinMagFilter:GL_NEAREST];
+	[Texture2D saveTexParameters];
+	[Texture2D setAliasTexParameters];
 	
 	Sprite *sprite2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	sprite2.position = cpv( 2*s.width/3.0f, s.height/2.0f);
 	[self add:sprite2];
 	
-	[Texture2D setMinMagFilter:oldFilter];
+	[Texture2D restoreTexParameters];
 	
 	// scale them to show
 	id sc = [ScaleBy actionWithDuration:3 scale:3.0f];
