@@ -62,7 +62,7 @@ v0.7 (new way):
 	Scene *scene = [Scene node];
 	[scene add: scene];
 	
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 
