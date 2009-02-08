@@ -12,6 +12,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 						@"TextureLabel",
 						@"TextureLabel2",
+						@"TextureAlias",
 						@"TexturePVR",
 						@"TexturePVRRaw",
 						@"TexturePNG",
@@ -288,6 +289,54 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PVR Raw Test";
+}
+@end
+
+@implementation TextureAlias
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	//
+	// Sprite 1: GL_LINEAR
+	//
+	// Default filter is GL_LINEAR
+	GLuint oldFilter = [Texture2D minMagFilter];
+	[Texture2D setMinMagFilter:GL_LINEAR];
+	
+	Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+	sprite.position = cpv( s.width/3.0f, s.height/2.0f);
+	[self add:sprite];
+	
+	[Texture2D setMinMagFilter:oldFilter];
+
+	
+	//
+	// Sprite 1: GL_NEAREST
+	//	
+	// Use Nearest in this one
+	oldFilter = [Texture2D minMagFilter];
+	[Texture2D setMinMagFilter:GL_NEAREST];
+	
+	Sprite *sprite2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	sprite2.position = cpv( 2*s.width/3.0f, s.height/2.0f);
+	[self add:sprite2];
+	
+	[Texture2D setMinMagFilter:oldFilter];
+	
+	// scale them to show
+	id sc = [ScaleBy actionWithDuration:3 scale:3.0f];
+	id sc_back = [sc reverse];
+	id scaleforever = [RepeatForever actionWithAction: [Sequence actions: sc, sc_back, nil]];
+	
+	[sprite2 do:scaleforever];
+	[sprite do: [[scaleforever copy] autorelease]];
+}
+
+-(NSString *) title
+{
+	return @"AntiAlias / Alias textures";
 }
 @end
 

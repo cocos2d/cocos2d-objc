@@ -55,3 +55,7 @@
 @interface TexturePVRRaw : TextureDemo
 {}
 @end
+
+@interface TextureAlias : TextureDemo
+{}
+@end
