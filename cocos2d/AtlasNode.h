@@ -56,7 +56,7 @@
 /** updates the Atlas (indexed vertex array).
  * Shall be overriden in subclasses
  */
--(void) updateAltasValues;
+-(void) updateAtlasValues;
 
 
 /** set the color of the texture.

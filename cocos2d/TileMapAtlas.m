@@ -41,7 +41,7 @@
 	if( !(self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender]) )
 		return nil;
 
-	[self updateAltasValues];
+	[self updateAtlasValues];
 	
 	contentSize.width = tgaInfo->width * itemWidth;
 	contentSize.height = tgaInfo->height * itemHeight;
@@ -87,7 +87,7 @@
 
 #pragma mark TileMapAtlas - Atlas generation
 
--(void) updateAltasValues
+-(void) updateAtlasValues
 {	
 	ccQuad2 texCoord;
 	ccQuad3 vertex;
