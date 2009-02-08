@@ -28,6 +28,7 @@
 		500043780F3CB58600A5FBF4 /* test_image.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 500043740F3CB58600A5FBF4 /* test_image.tiff */; };
 		500044040F3CC15D00A5FBF4 /* test_image.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 500044020F3CC15D00A5FBF4 /* test_image.pvr */; };
 		500044050F3CC15D00A5FBF4 /* test_image.pvrraw in Resources */ = {isa = PBXBuildFile; fileRef = 500044030F3CC15D00A5FBF4 /* test_image.pvrraw */; };
+		5000450B0F3F261F00A5FBF4 /* StreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5000450A0F3F261F00A5FBF4 /* StreakTest.m */; };
 		500165A10E72DB470085673F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500165A20E72DB470085673F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500165A30E72DB470085673F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -435,7 +436,6 @@
 		50A783BE0F3AFCE500104C45 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50A783C00F3AFCE500104C45 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50A783CC0F3AFD5D00104C45 /* StreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783CB0F3AFD5D00104C45 /* StreakTest.m */; };
 		50A783D90F3AFDB300104C45 /* MotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783D50F3AFDB300104C45 /* MotionStreak.m */; };
 		50A783DA0F3AFDB300104C45 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 50A783D60F3AFDB300104C45 /* README */; };
 		50A783DB0F3AFDB300104C45 /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783D80F3AFDB300104C45 /* Ribbon.m */; };
@@ -749,6 +749,8 @@
 		500043740F3CB58600A5FBF4 /* test_image.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test_image.tiff; sourceTree = "<group>"; };
 		500044020F3CC15D00A5FBF4 /* test_image.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvr; sourceTree = "<group>"; };
 		500044030F3CC15D00A5FBF4 /* test_image.pvrraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvrraw; sourceTree = "<group>"; };
+		500045090F3F261F00A5FBF4 /* StreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreakTest.h; sourceTree = "<group>"; };
+		5000450A0F3F261F00A5FBF4 /* StreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreakTest.m; sourceTree = "<group>"; };
 		500165990E72DB0E0085673F /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r1.png; sourceTree = "<group>"; };
 		5001659A0E72DB0E0085673F /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
 		5001659D0E72DB470085673F /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b1.png; sourceTree = "<group>"; };
@@ -946,8 +948,6 @@
 		50A252290F38B8DC007CAEB0 /* background1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background1.jpg; sourceTree = "<group>"; };
 		50A2522A0F38B8DC007CAEB0 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
 		50A783C40F3AFCE500104C45 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50A783CA0F3AFD5D00104C45 /* StreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreakTest.h; path = tests/StreakTest.h; sourceTree = "<group>"; };
-		50A783CB0F3AFD5D00104C45 /* StreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreakTest.m; path = tests/StreakTest.m; sourceTree = "<group>"; };
 		50A783D40F3AFDB300104C45 /* MotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreak.h; sourceTree = "<group>"; };
 		50A783D50F3AFDB300104C45 /* MotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionStreak.m; sourceTree = "<group>"; };
 		50A783D60F3AFDB300104C45 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -1658,6 +1658,8 @@
 		50A783D30F3AFDB300104C45 /* experimental */ = {
 			isa = PBXGroup;
 			children = (
+				500045090F3F261F00A5FBF4 /* StreakTest.h */,
+				5000450A0F3F261F00A5FBF4 /* StreakTest.m */,
 				50A783D40F3AFDB300104C45 /* MotionStreak.h */,
 				50A783D50F3AFDB300104C45 /* MotionStreak.m */,
 				50A783D60F3AFDB300104C45 /* README */,
@@ -1671,8 +1673,6 @@
 			isa = PBXGroup;
 			children = (
 				50175B240F33B22300624901 /* cocosLive */,
-				50A783CA0F3AFD5D00104C45 /* StreakTest.h */,
-				50A783CB0F3AFD5D00104C45 /* StreakTest.m */,
 				50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */,
 				50A24E700F377FE8007CAEB0 /* EffectsTest.m */,
 				505B63A60F2F4295001B4104 /* EaseDemo.h */,
@@ -2954,9 +2954,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				50A783B80F3AFCE500104C45 /* main.m in Sources */,
-				50A783CC0F3AFD5D00104C45 /* StreakTest.m in Sources */,
 				50A783D90F3AFDB300104C45 /* MotionStreak.m in Sources */,
 				50A783DB0F3AFDB300104C45 /* Ribbon.m in Sources */,
+				5000450B0F3F261F00A5FBF4 /* StreakTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
