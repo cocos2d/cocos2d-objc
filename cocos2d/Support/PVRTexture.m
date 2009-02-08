@@ -46,6 +46,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 */
 
 #import "PVRTexture.h"
+#import "Texture2D.h"		// cocos2d integration
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 
@@ -191,6 +192,8 @@ typedef struct _PVRTexHeader
 		glBindTexture(GL_TEXTURE_2D, _name);
 	}
 	
+	[Texture2D applyTexParameters];	// cocos2d integration
+
 	for (int i=0; i < [_imageData count]; i++)
 	{
 		data = [_imageData objectAtIndex:i];

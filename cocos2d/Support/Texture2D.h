@@ -157,16 +157,49 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 /**
  Extension to set the Min / Mag filter
  */
+typedef struct _ccTexParams {
+	GLuint	minFilter;
+	GLuint	magFilter;
+	GLuint	wrapS;
+	GLuint	wrapT;
+} ccTexParams;
+
 @interface Texture2D (GLFilter)
-/** sets the Min/Mag filter that will be used to create the textures.
- The default one is GL_LINEAR
+/** sets the min filter, mag filter, wrap s and wrap t texture parameters
+ @warning this function is not thread safe
  */
-+(void) setMinMagFilter:(GLuint) filter;
-/** returns the Min/Mag filter that is being used to create the textures
++(void) setTexParameters: (ccTexParams*) texParams;
+
+/** returns the min filter, mag filter, wrap s and wrap t texture parameters
+ @warning this function is not thread safe
  */
-+(GLuint) minMagFilter;
-/** apply the setted min/mag filter to the current texture */
-- (void) applyMinMagFilter;
++(ccTexParams) texParameters;
+
+/** apply the setted min/mag filter to the current texture
+ @warning this function is not thread safe
+ */
++ (void) applyTexParameters;
+
+/** saves in an internal variable the current tex parameters
+ @warning this function is not thread safe and it is not re-entrat
+ */
++ (void) saveTexParameters;
+
+/** restores from the internal variable the tex parameters
+ @warning this function is not thread safe and it is not re-entrat
+ */
++ (void) restoreTexParameters;
+
+/** sets antialias texture parameters
+ @warning this function is not thread safe and it is not re-entrat
+ */
++ (void) setAntiAliasTexParameters;
+
+/** sets alias texture parameters
+ @warning this function is not thread safe and it is not re-entrat
+ */
++ (void) setAliasTexParameters;
+
 @end
 
 
