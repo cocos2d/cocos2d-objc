@@ -100,7 +100,7 @@ and when to execute the Scenes
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */
-	 BOOL nextDeltaTimeZero;
+	BOOL _nextDeltaTimeZero;
 	
 	/* are touch events enabled. Default is YES */
 	BOOL eventsEnabled;
@@ -118,6 +118,9 @@ and when to execute the Scenes
 @property (readonly) EAGLView *openGLView;
 /** Pixel format used to create the context */
 @property (readonly) tPixelFormat pixelFormat;
+/** whether or not the next delta time will be zero */
+@property (readwrite,assign) BOOL nextDeltaTimeZero;
+
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
 /** Uses a Director that triggers the main loop as fast as it can.

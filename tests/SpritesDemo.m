@@ -566,5 +566,10 @@ Class restartAction()
 	[super dealloc];
 }
 
+// next delta time will be zero
+-(void) applicationSignificantTimeChange:(UIApplication *)application
+{
+	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+}
 
 @end

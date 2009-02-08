@@ -60,6 +60,7 @@
 @synthesize displayFPS, eventsEnabled;
 @synthesize openGLView=_openGLView;
 @synthesize pixelFormat=_pixelFormat;
+@synthesize nextDeltaTimeZero=_nextDeltaTimeZero;
 
 //
 // singleton stuff
@@ -213,20 +214,15 @@ static Director *_sharedDirector = nil;
 	}
 	
 	// new delta time
-	if( nextDeltaTimeZero ) {
+	if( _nextDeltaTimeZero ) {
 		dt = 0;
-		nextDeltaTimeZero = NO;
+		_nextDeltaTimeZero = NO;
 	} else {
 		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0f;
 		dt = MAX(0,dt);
 	}
 	
 	lastUpdate = now;	
-}
-
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	nextDeltaTimeZero = YES;
 }
 
 #pragma mark Director Scene iPhone Specific
