@@ -72,7 +72,7 @@
 	texStepY = itemHeight / (float) [[textureAtlas texture] pixelsHigh]; 	
 }
 
--(void) updateAltasValues
+-(void) updateAtlasValues
 {
 	[NSException raise:@"AtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
 }

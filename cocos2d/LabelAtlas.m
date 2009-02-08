@@ -33,7 +33,7 @@
 	string = [theString retain];
 	mapStartChar = c;	
 	
-	[self updateAltasValues];
+	[self updateAtlasValues];
 
 	return self;
 }
@@ -47,7 +47,7 @@
 
 #pragma mark LabelAtlas - Atlas generation
 
--(void) updateAltasValues
+-(void) updateAtlasValues
 {
 	int n = [string length];
 	
@@ -94,7 +94,7 @@
 
 	[string release];
 	string = [newString retain];
-	[self updateAltasValues];
+	[self updateAtlasValues];
 }
 
 
