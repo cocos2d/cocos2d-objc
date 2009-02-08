@@ -875,7 +875,9 @@ static Director *_sharedDirector = nil;
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		}
 		
-		[self mainLoop];		
+		[self mainLoop];
+		
+		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 	}
 }
 
