@@ -12,12 +12,13 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 						@"TextureLabel",
 						@"TextureLabel2",
+						@"TexturePVR",
+						@"TexturePVRRaw",
 						@"TexturePNG",
 						@"TextureBMP",
 						@"TextureJPEG",
 						@"TextureTIFF",
-						@"TexturePVR",
-						@"TexturePVRRaw",
+						@"TextureGIF",
 };
 
 #pragma mark Callbacks
@@ -54,24 +55,25 @@ Class restartAction()
 @implementation TextureDemo
 -(id) init
 {
-	[super init];
+	if( self = [super initWithColor:0x202020FF] ) {
 
-	CGSize s = [[Director sharedDirector] winSize];	
-	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label];
-	[label setPosition: cpv(s.width/2, s.height-50)];
+		CGSize s = [[Director sharedDirector] winSize];	
+		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self add: label];
+		[label setPosition: cpv(s.width/2, s.height-50)];
 
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-	
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-	menu.position = cpvzero;
-	item1.position = cpv(480/2-100,30);
-	item2.position = cpv(480/2, 30);
-	item3.position = cpv(480/2+100,30);
-	[self add: menu z:1];
+		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		
+		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		menu.position = cpvzero;
+		item1.position = cpv(480/2-100,30);
+		item2.position = cpv(480/2, 30);
+		item3.position = cpv(480/2+100,30);
+		[self add: menu z:1];
 
+	}
 	return self;
 }
 
@@ -228,6 +230,24 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"TIFF Test";
+}
+@end
+
+@implementation TextureGIF
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *img = [Sprite spriteWithFile:@"test_image.gif"];
+	img.position = cpv( s.width/2.0f, s.height/2.0f);
+	[self add:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"GIF Test";
 }
 @end
 

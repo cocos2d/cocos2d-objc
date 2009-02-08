@@ -10,7 +10,7 @@
 }
 @end
 
-@interface TextureDemo : Layer
+@interface TextureDemo : ColorLayer
 {}
 
 -(NSString*) title;
@@ -41,6 +41,10 @@
 @end
 
 @interface TextureTIFF : TextureDemo
+{}
+@end
+
+@interface TextureGIF : TextureDemo
 {}
 @end
 
