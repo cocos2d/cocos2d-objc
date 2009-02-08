@@ -38,7 +38,7 @@
 #include <stdio.h>
 #include <math.h>
 
-
+#import "cocos2d.h"
 #include "chipmunk.h"
 
 #define SLEEP_TICKS 16
@@ -295,7 +295,7 @@ void drawCollisions(void *ptr, void *data)
 	
 	[window makeKeyAndVisible];
 
-	[[Director sharedDirector] runScene: scene];
+	[[Director sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
@@ -308,6 +308,12 @@ void drawCollisions(void *ptr, void *data)
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[Director sharedDirector] resume];
+}
+
+// next delta time will be zero
+-(void) applicationSignificantTimeChange:(UIApplication *)application
+{
+	[[Director sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

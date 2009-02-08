@@ -18,6 +18,7 @@ version 0.7.0 - XX-Feb-2009
  . Director: added FastDirector (issue #145)
  . Director: dispatch missing events in main loop (issue #146)
  . Director: renamed runScene with runWithScene (issue #194)
+ . Director: SignificantTimeChange fixed (issue #6)
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
  . Experimental: Added StreakDemo (issue #171)
  . Menu: aligItemsVerticallyOld removed. (issue #196)

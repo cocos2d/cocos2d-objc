@@ -251,6 +251,12 @@ enum {
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
 }
 
+// next delta time will be zero
+-(void) applicationSignificantTimeChange:(UIApplication *)application
+{
+	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+}
+
 - (void) dealloc
 {
 	[window dealloc];
