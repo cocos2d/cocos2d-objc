@@ -325,7 +325,7 @@ Class restartAction()
 	[Texture2D restoreTexParameters];
 	
 	// scale them to show
-	id sc = [ScaleBy actionWithDuration:3 scale:3.0f];
+	id sc = [ScaleBy actionWithDuration:3 scale:8.0f];
 	id sc_back = [sc reverse];
 	id scaleforever = [RepeatForever actionWithAction: [Sequence actions: sc, sc_back, nil]];
 	
