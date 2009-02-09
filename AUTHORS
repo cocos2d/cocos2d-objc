@@ -50,6 +50,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
     * lukeman: patches for MenuItem
 	* Maarten Billemont (lhunath): author of ParticleRain
 		   added suport for particles' source
+		   "Particles are updated on update, not draw" patch
 		   fixed memory leaks in Sprite
 		   fixed possible crashes in Sprite, Particles
 		   optimizations in the whole code (using floats, not doubles)

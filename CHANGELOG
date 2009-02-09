@@ -21,6 +21,7 @@ version 0.7.0 - XX-Feb-2009
  . Experimental: Added StreakDemo (issue #171)
  . Menu: aligItemsVerticallyOld removed. (issue #196)
  . MenuItemFont: assign correct size and documented isEnabled (issue #132)
+ . Particle: Buffers updated on update (issue #163)
  . Sprite: initWithPVRTCFile is deprecated. will be removed in v0.8 (issue #197)
  . Texture: Support for full PVRTC (issue #112)
  . Texture: Easier to set Alias and/or AntiAlias texture parameters (issue #135 and issue #47)
