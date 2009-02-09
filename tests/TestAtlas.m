@@ -278,7 +278,7 @@ Class restartAction()
 		[self add:tilemap z:0 tag:kTagTileMap];
 		
 		tilemap.transformAnchor = cpv(0, 0);
-		tilemap.position = cpv(-50,-50);
+		tilemap.position = cpv(-20,-200);
 	}	
 	return self;
 }
@@ -307,7 +307,7 @@ Class restartAction()
 	// NEW since v0.7
 	ccRGBB c =[tilemap tileAt:ccg(13,21)];		
 	c.r++;
-	c.r %= 10;
+	c.r %= 50;
 	if( c.r==0)
 		c.r=1;
 	
