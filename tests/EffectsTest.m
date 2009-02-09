@@ -88,115 +88,115 @@ enum {
 @implementation Shaky3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 grid:cpv(10,10) duration:t];
+	return [self actionWithRange:5 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation Waves3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:5 amplitude:40 grid:cpv(10,10) duration:t];
+	return [self actionWithWaves:5 amplitude:40 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation FlipX3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:cpv(1,1) duration:t];
+	return [self actionWithSize:ccg(1,1) duration:t];
 }
 @end
 @implementation FlipY3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:cpv(1,1) duration:t];
+	return [self actionWithSize:ccg(1,1) duration:t];
 }
 @end
 @implementation Lens3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) radius:240 grid:cpv(10,10) duration:t];
+	return [self actionWithPosition:cpv(240,160) radius:240 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation Ripple3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) radius:240 waves:8 amplitude:60 grid:cpv(20,20) duration:t];
+	return [self actionWithPosition:cpv(240,160) radius:240 waves:8 amplitude:60 grid:ccg(20,20) duration:t];
 }
 @end
 @implementation LiquidDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 grid:cpv(10,10) duration:t];
+	return [self actionWithWaves:4 amplitude:20 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation WavesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:cpv(10,10) duration:t];
+	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:ccg(10,10) duration:t];
 }
 @end
 @implementation TwirlDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) twirls:4 amplitude:1 grid:cpv(12,8) duration:t];
+	return [self actionWithPosition:cpv(240,160) twirls:4 amplitude:1 grid:ccg(12,8) duration:t];
 }
 @end
 @implementation ShakyTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 grid:cpv(10,10) duration:t];
+	return [self actionWithRange:5 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation ShatteredTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 grid:cpv(10,10) duration:t];
+	return [self actionWithRange:5 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation ShuffleTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSeed:25 grid:cpv(4,4) duration:t];
+	return [self actionWithSeed:25 grid:ccg(4,4) duration:t];
 }
 @end
 @implementation FadeOutTRTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:cpv(16,12) duration:t];
+	return [self actionWithSize:ccg(16,12) duration:t];
 }
 @end
 @implementation FadeOutBLTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:cpv(16,12) duration:t];
+	return [self actionWithSize:ccg(16,12) duration:t];
 }
 @end
 @implementation FadeOutUpTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:cpv(16,12) duration:t];
+	return [self actionWithSize:ccg(16,12) duration:t];
 }
 @end
 @implementation FadeOutDownTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:cpv(16,12) duration:t];
+	return [self actionWithSize:ccg(16,12) duration:t];
 }
 @end
 @implementation TurnOffTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSeed:25 grid:cpv(48,32) duration:t];
+	return [self actionWithSeed:25 grid:ccg(48,32) duration:t];
 }
 @end
 @implementation WavesTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:120 grid:cpv(10,10) duration:t];
+	return [self actionWithWaves:4 amplitude:120 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation JumpTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithJumps:5 amplitude:40 grid:cpv(10,10) duration:t];
+	return [self actionWithJumps:5 amplitude:40 grid:ccg(10,10) duration:t];
 }
 @end
 @implementation SplitRowsDemo

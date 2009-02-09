@@ -23,16 +23,16 @@
 /** Base class for Grid actions */
 @interface GridAction : IntervalAction
 {
-	cpVect grid;
-	cpVect size;
+	ccGrid grid;
+	ccGrid size;
 }
 
-@property cpVect size;
+@property ccGrid size;
 
 /** creates the action with size and duration */
-+(id) actionWithSize:(cpVect)size duration:(ccTime)d;
++(id) actionWithSize:(ccGrid)size duration:(ccTime)d;
 /** initializes the action with size and duration */
--(id) initWithSize:(cpVect)gridSize duration:(ccTime)d;
+-(id) initWithSize:(ccGrid)gridSize duration:(ccTime)d;
 /** returns the grid */
 -(GridBase *)getGrid;
 
@@ -47,9 +47,9 @@
 }
 
 -(GridBase *)getGrid;
--(ccVertex3D)getVertex:(cpVect)pos;
--(ccVertex3D)getOriginalVertex:(cpVect)pos;
--(void)setVertex:(cpVect)pos vertex:(ccVertex3D)vertex;
+-(ccVertex3D)getVertex:(ccGrid)pos;
+-(ccVertex3D)getOriginalVertex:(ccGrid)pos;
+-(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex;
 
 @end
 
@@ -62,9 +62,9 @@
 }
 
 -(GridBase *)getGrid;
--(ccQuad3)getTile:(cpVect)pos;
--(ccQuad3)getOriginalTile:(cpVect)pos;
--(void)setTile:(cpVect)pos coords:(ccQuad3)coords;
+-(ccQuad3)getTile:(ccGrid)pos;
+-(ccQuad3)getOriginalTile:(ccGrid)pos;
+-(void)setTile:(ccGrid)pos coords:(ccQuad3)coords;
 
 @end
 

@@ -30,7 +30,7 @@
 @synthesize step;
 
 #define kTextureSize 512
--(id)initWithSize:(cpVect)gridSize
+-(id)initWithSize:(ccGrid)gridSize
 {
 	if ( (self = [super init] ) )
 	{
@@ -62,7 +62,7 @@
 }
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Dimensions = %ix%i>", [self class], self, (int)grid.x, (int)grid.y];
+	return [NSString stringWithFormat:@"<%@ = %08X | Dimensions = %ix%i>", [self class], self, grid.x, grid.y];
 }
 
 - (void) dealloc
@@ -166,12 +166,12 @@
 
 @implementation Grid3D
 
-+(id)gridWithSize:(cpVect)gridSize
++(id)gridWithSize:(ccGrid)gridSize
 {
 	return [[[Grid3D alloc] initWithSize:gridSize] autorelease];
 }
 
--(id)initWithSize:(cpVect)gridSize
+-(id)initWithSize:(ccGrid)gridSize
 {
 	if ( (self = [super initWithSize:gridSize] ) )
 	{
@@ -281,7 +281,7 @@
 	memcpy(originalVertices, vertices, (grid.x+1)*(grid.y+1)*sizeof(ccVertex3D));
 }
 
--(ccVertex3D)getVertex:(cpVect)pos
+-(ccVertex3D)getVertex:(ccGrid)pos
 {
 	int	index = (pos.x * (grid.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
@@ -291,7 +291,7 @@
 	return vert;
 }
 
--(ccVertex3D)getOriginalVertex:(cpVect)pos
+-(ccVertex3D)getOriginalVertex:(ccGrid)pos
 {
 	int	index = (pos.x * (grid.y+1) + pos.y) * 3;
 	float *vertArray = (float *)originalVertices;
@@ -301,7 +301,7 @@
 	return vert;
 }
 
--(void)setVertex:(cpVect)pos vertex:(ccVertex3D)vertex
+-(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex
 {
 	int	index = (pos.x * (grid.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
@@ -325,12 +325,12 @@
 
 @implementation TiledGrid3D
 
-+(id)gridWithSize:(cpVect)gridSize
++(id)gridWithSize:(ccGrid)gridSize
 {
 	return [[[TiledGrid3D alloc] initWithSize:gridSize] autorelease];
 }
 
--(id)initWithSize:(cpVect)gridSize
+-(id)initWithSize:(ccGrid)gridSize
 {
 	if ( (self = [super initWithSize:gridSize] ) )
 	{
@@ -429,14 +429,14 @@
 	memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 }
 
--(void)setTile:(cpVect)pos coords:(ccQuad3)coords
+-(void)setTile:(ccGrid)pos coords:(ccQuad3)coords
 {
 	int idx = (grid.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 	memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 }
 
--(ccQuad3)getOriginalTile:(cpVect)pos
+-(ccQuad3)getOriginalTile:(ccGrid)pos
 {
 	int idx = (grid.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)originalVertices;
@@ -447,7 +447,7 @@
 	return ret;
 }
 
--(ccQuad3)getTile:(cpVect)pos
+-(ccQuad3)getTile:(ccGrid)pos
 {
 	int idx = (grid.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;

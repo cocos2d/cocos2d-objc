@@ -25,8 +25,8 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -63,8 +63,8 @@
 @property float lensEffect;
 @property cpVect position;
 
-+(id)actionWithPosition:(cpVect)pos radius:(float)r grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithPosition:(cpVect)pos radius:(float)r grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithPosition:(cpVect)pos radius:(float)r grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithPosition:(cpVect)pos radius:(float)r grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -84,8 +84,8 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithPosition:(cpVect)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithPosition:(cpVect)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithPosition:(cpVect)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithPosition:(cpVect)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -97,8 +97,8 @@
 	int randrange;
 }
 
-+(id)actionWithRange:(int)range grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithRange:(int)range grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -116,8 +116,8 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -136,8 +136,8 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -156,7 +156,7 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithPosition:(cpVect)pos twirls:(int)t amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithPosition:(cpVect)pos twirls:(int)t amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithPosition:(cpVect)pos twirls:(int)t amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithPosition:(cpVect)pos twirls:(int)t amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
