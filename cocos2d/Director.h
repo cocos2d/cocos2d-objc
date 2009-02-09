@@ -40,15 +40,15 @@ enum {
 
 /** Possible Pixel Formats for the EAGLView */
 typedef enum {
-	RGB565,
-	RGBA8
+	kRGB565,
+	kRGBA8
 } tPixelFormat;
 
 /** Possible DepthBuffer Formats for the EAGLView */
 typedef enum {
-   DepthBufferNone,
-   DepthBuffer16,
-   DepthBuffer24,
+   kDepthBufferNone,
+   kDepthBuffer16,
+   kDepthBuffer24,
 } tDepthBufferFormat;
 
 @class LabelAtlas;

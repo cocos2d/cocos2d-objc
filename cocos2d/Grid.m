@@ -41,7 +41,7 @@
 	
 		if ( self.texture == nil )
 		{
-			Texture2DPixelFormat	format = [Director sharedDirector].pixelFormat == RGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
+			Texture2DPixelFormat	format = [Director sharedDirector].pixelFormat == kRGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
 			
 			void *data = malloc((int)(512 * 512 * 4));
 			memset(data, 0, (int)(512 * 512 * 4));

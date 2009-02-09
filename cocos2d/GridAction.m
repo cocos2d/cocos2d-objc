@@ -40,7 +40,7 @@
 	
 	if ( target.grid && target.grid.reuseGrid > 0 )
 	{
-		if ( target.grid.active && target.grid.grid.x == grid.x && target.grid.grid.y == grid.y && [target.grid isEqual:newgrid] )
+		if ( target.grid.active && target.grid.grid.x == grid.x && target.grid.grid.y == grid.y && [target.grid isKindOfClass:[newgrid class]] )
 		{
 			[target.grid reuse];
 		}
