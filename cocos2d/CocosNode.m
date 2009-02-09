@@ -350,11 +350,11 @@
 {
 	if (!visible)
 		return;
-	
-	if ( grid && grid.active)
-		[grid beforeDraw];
 
 	glPushMatrix();
+
+	if ( grid && grid.active)
+		[grid beforeDraw];
 	
 	[self transform];
 
@@ -371,11 +371,11 @@
 		if ( child.zOrder >= 0 )
 			[child visit];
 	}
-	
-	glPopMatrix();
-	
+		
 	if ( grid && grid.active)
 		[grid afterDraw:self.camera];
+
+	glPopMatrix();
 }
 
 #pragma mark CocosNode - Transformations

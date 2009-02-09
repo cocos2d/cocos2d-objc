@@ -185,7 +185,7 @@ Class restartAction()
 	// must be called before any othe call to the director
 //	[Director useFastDirector];
 	
-	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];

@@ -1045,7 +1045,7 @@
 		50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesDemo.h; path = tests/SpritesDemo.h; sourceTree = "<group>"; };
 		50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesDemo.m; path = tests/SpritesDemo.m; sourceTree = "<group>"; };
-		50D56FD20F3FABEC007CD6B9 /* EffectsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsAdvancedDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsAdvancedTest.h; path = tests/EffectsAdvancedTest.h; sourceTree = "<group>"; };
 		50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsAdvancedTest.m; path = tests/EffectsAdvancedTest.m; sourceTree = "<group>"; };
 		50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1393,7 +1393,7 @@
 				509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */,
 				50A24E440F377FA1007CAEB0 /* EffectsDemo.app */,
 				50A783C40F3AFCE500104C45 /* StreakTest.app */,
-				50D56FD20F3FABEC007CD6B9 /* EffectsDemo.app */,
+				50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2366,7 +2366,7 @@
 			);
 			name = EffectsAdvancedDemo;
 			productName = playground;
-			productReference = 50D56FD20F3FABEC007CD6B9 /* EffectsDemo.app */;
+			productReference = 50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50DB1BB10E1C1E5900A89DFF /* ParticleDemo */ = {
@@ -4396,7 +4396,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EffectsDemo;
+				PRODUCT_NAME = EffectsAdvancedDemo;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -4421,7 +4421,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EffectsDemo;
+				PRODUCT_NAME = EffectsAdvancedDemo;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
