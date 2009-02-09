@@ -115,7 +115,7 @@ enum {
 	id turnon = [turnoff reverse];
 	id shaky = [Shaky3D actionWithRange:4 grid:cpv(15,10) duration:5];
 	
-//	[target1 do: [RepeatForever actionWithAction: [Sequence actions: turnoff, turnon, nil]]];
+	[target1 do: [RepeatForever actionWithAction: [Sequence actions: turnoff, turnon, nil]]];
 	[target2 do: [RepeatForever actionWithAction: shaky]];
 	
 }
@@ -176,18 +176,20 @@ Class restartAction()
 		
 		Sprite *bg = [Sprite spriteWithFile:@"background.png"];
 		[self add: bg z:0 tag:kTagBackground];
-		bg.position = cpv(x/2,y/2);
+		bg.transformAnchor = cpvzero;
+//		bg.position = cpv(x/2,y/2);
 		
 		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 		[bg add:grossini z:1 tag:kTagSprite1];
-		grossini.position = cpv(230,200);
+		grossini.position = cpv(x/3.0,200);
 		id sc = [ScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
+	
 		[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 
 		Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 		[bg add:tamara z:1 tag:kTagSprite2];
-		tamara.position = cpv(430,200);
+		tamara.position = cpv(2*x/3.0f,200);
 		id sc2 = [ScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];
 		[tamara do: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
