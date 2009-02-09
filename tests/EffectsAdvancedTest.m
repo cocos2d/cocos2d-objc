@@ -111,17 +111,16 @@ enum {
 	id target2 = [bg getByTag:kTagSprite2];
 	
 	
-	id turnoff = [TurnOffTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
-	id turnon = [turnoff reverse];
+	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:cpv(15,10) duration:5];
 	id shaky = [Shaky3D actionWithRange:4 grid:cpv(15,10) duration:5];
 	
-	[target1 do: [RepeatForever actionWithAction: [Sequence actions: turnoff, turnon, nil]]];
+	[target1 do: [RepeatForever actionWithAction: waves]];
 	[target2 do: [RepeatForever actionWithAction: shaky]];
 	
 }
 -(NSString*) title
 {
-	return @"Effect on sprite";
+	return @"Effects on 2 sprites";
 }
 @end
 
@@ -263,11 +262,14 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[Director useFastDirector];
 	
 	// Use this pixel format to have transparent buffers
 	[[Director sharedDirector] setPixelFormat:kRGBA8];
-	
+
+	// It seems that Orbit + 3d Effects needs DepthBuffer
+	// But this breaks other FBO examples. Any idea ?
+	// XXX: Help needed
 //	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
 	
 	// before creating any layer, set the landscape mode

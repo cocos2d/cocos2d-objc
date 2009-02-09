@@ -36,6 +36,8 @@
 
 -(void)start
 {
+	[super start];
+
 	GridBase *newgrid = [self getGrid];
 	
 	if ( target.grid && target.grid.reuseGrid > 0 )
@@ -183,6 +185,7 @@
 
 -(void)start
 {
+	[super start];
 	other.target = self.target;
 	[other start];
 }
@@ -238,6 +241,7 @@
 
 -(void)start
 {
+	[super start];
 	other.target = self.target;
 	[other start];
 }
@@ -285,6 +289,7 @@
 
 -(void)start
 {
+	[super start];
 	other.target = self.target;
 	[other start];
 }
@@ -308,6 +313,8 @@
 
 -(void)start
 {
+	[super start];
+
 	if ( self.target.grid && self.target.grid.active )
 		self.target.grid.active = NO;
 }
@@ -335,6 +342,8 @@
 
 -(void)start
 {
+	[super start];
+
 	if ( self.target.grid && self.target.grid.active )
 		self.target.grid.reuseGrid += t;
 }

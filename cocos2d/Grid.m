@@ -29,7 +29,7 @@
 @synthesize grid;
 @synthesize step;
 
-#define kTextureSize 1024
+#define kTextureSize 512
 -(id)initWithSize:(cpVect)gridSize
 {
 	if ( (self = [super init] ) )
