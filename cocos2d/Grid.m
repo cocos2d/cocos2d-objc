@@ -125,8 +125,8 @@
 
 -(void)beforeDraw
 {
-	[grabber beforeRender:self.texture];
 	[self set2DProjection];
+	[grabber beforeRender:self.texture];
 }
 
 -(void)afterDraw:(Camera *)camera
@@ -135,8 +135,11 @@
 	
 	[self set3DProjection];
 	[self applyLandscape];
+
+	BOOL cDirty = camera.dirty;
 	camera.dirty = YES;
 	[camera locate];
+	camera.dirty = cDirty;
 		
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, self.texture.name);

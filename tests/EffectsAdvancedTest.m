@@ -14,7 +14,8 @@
 enum {
 	kTagTextLayer = 1,
 
-	kTagSprite = 1,
+	kTagSprite1 = 1,
+	kTagSprite2 = 2,
 
 	kTagBackground = 1,
 	kTagLabel = 2,
@@ -106,14 +107,17 @@ enum {
 	[super onEnter];
 	
 	id bg = [self getByTag:kTagBackground];
-	id target = [bg getByTag:kTagSprite];
+	id target1 = [bg getByTag:kTagSprite1];
+	id target2 = [bg getByTag:kTagSprite2];
 	
 	
 	id turnoff = [TurnOffTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
 	id turnon = [turnoff reverse];
+	id shaky = [Shaky3D actionWithRange:4 grid:cpv(15,10) duration:5];
 	
-	[target do: [RepeatForever actionWithAction: [Sequence actions: turnoff, turnon, nil]]];
-
+//	[target1 do: [RepeatForever actionWithAction: [Sequence actions: turnoff, turnon, nil]]];
+	[target2 do: [RepeatForever actionWithAction: shaky]];
+	
 }
 -(NSString*) title
 {
@@ -127,9 +131,9 @@ enum {
 static int actionIdx=-1;
 static NSString *actionList[] =
 {
+	@"Effect3",
 	@"Effect1",
 	@"Effect2",
-	@"Effect3",
 };
 
 Class nextAction()
@@ -175,14 +179,14 @@ Class restartAction()
 		bg.position = cpv(x/2,y/2);
 		
 		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-		[bg add:grossini z:1 tag:kTagSprite];
+		[bg add:grossini z:1 tag:kTagSprite1];
 		grossini.position = cpv(230,200);
 		id sc = [ScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
 		[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 
 		Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-		[bg add:tamara z:1];
+		[bg add:tamara z:1 tag:kTagSprite2];
 		tamara.position = cpv(430,200);
 		id sc2 = [ScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];

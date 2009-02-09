@@ -30,10 +30,6 @@ enum {
 // Landscape is right or left ?
 #define LANDSCAPE_LEFT 1
 
-// Intervaled Director ?
-// Consumes less battery but it is slower
-// #define FPS_DIRECTOR 1
-
 // Fast FPS display. FPS are updated 10 times per second without consuming resources
 // uncomment this line to use the old method that updated
 #define FAST_FPS_DISPLAY 1
