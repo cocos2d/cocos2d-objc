@@ -13,18 +13,26 @@
  */
 
 #import "Grabber.h"
-#import "Texture2D.h"
-#import "OpenGL_Internal.h"
 #import "ccMacros.h"
+
+#import "Support/Texture2D.h"
+#import "Support/OpenGL_Internal.h"
 
 @implementation Grabber
 
+-(id) init
+{
+	if( self = [super init] ) {
+		// generate FBO
+		glGenFramebuffersOES(1, &fbo);		
+	}
+	return self;
+}
 -(void)grab:(Texture2D*)texture
 {
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
 	
-	// generate FBO
-	glGenFramebuffersOES(1, &fbo);
+	// bind
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
 
 	// associate texture with FBO
@@ -56,6 +64,7 @@
 - (void) dealloc
 {
 	CCLOG( @"deallocing %@", self);
+	glDeleteFramebuffersOES(1, &fbo);
 	[super dealloc];
 }
 

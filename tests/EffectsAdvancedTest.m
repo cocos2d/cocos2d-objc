@@ -14,6 +14,8 @@
 enum {
 	kTagTextLayer = 1,
 
+	kTagSprite = 1,
+
 	kTagBackground = 1,
 	kTagLabel = 2,
 };
@@ -21,8 +23,7 @@ enum {
 #pragma mark - Classes
 
 @interface Effect1 : TextLayer
-{
-}
+{}
 @end
 
 @implementation Effect1
@@ -32,10 +33,15 @@ enum {
 	
 	id target = [self getByTag:kTagBackground];
 	
+	// To reuse a grid the grid size and the grid type must be the same.
+	// in this case:
+	//     Lens3D is Grid3D and it's size is (15,10)
+	//     Waves3D is Grid3D and it's size is (15,10)
 	id lens = [Lens3D actionWithPosition:cpv(240,160) radius:240 grid:cpv(15,10) duration:0.0f];
+	id waves = [Waves3D actionWithWaves:18 amplitude:80 grid:cpv(15,10) duration:10];
+
 	id reuse = [ReuseGrid actionWithTimes:1];
 	id delay = [DelayTime actionWithDuration:8];
-	id waves = [Waves3D actionWithWaves:18 amplitude:80 grid:cpv(15,10) duration:10];
 
 	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 	id orbit_back = [orbit reverse];
@@ -45,17 +51,85 @@ enum {
 }
 -(NSString*) title
 {
-	return @"Lens + Waves3d";
+	return @"Lens + Waves3d and OrbitCamera";
+}
+@end
+
+@interface Effect2 : TextLayer
+{}
+@end
+
+@implementation Effect2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id target = [self getByTag:kTagBackground];
+	
+	// To reuse a grid the grid size and the grid type must be the same.
+	// in this case:
+	//     ShakyTiles3D is TiledGrid3D and it's size is (15,10)
+	//     Shuffletiles is TiledGrid3D and it's size is (15,10)
+	//	   TurnOfftiles is TiledGrid3D and it's size is (15,10)
+	id shaky = [ShakyTiles3D actionWithRange:4 grid:cpv(15,10) duration:5];
+	id shuffle = [ShuffleTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
+	id turnoff = [TurnOffTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
+	id turnon = [turnoff reverse];
+	
+	// reuse 2 times:
+	//   1 for shuffle
+	//   2 for turn off
+	//   turnon tiles will use a new grid
+	id reuse = [ReuseGrid actionWithTimes:2];
+
+	id delay = [DelayTime actionWithDuration:1];
+	
+//	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
+//	id orbit_back = [orbit reverse];
+//
+//	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
+	[target do: [Sequence actions: shaky, delay, reuse, shuffle, [[delay copy] autorelease], turnoff, turnon, nil]];
+}
+-(NSString*) title
+{
+	return @"ShakyTiles + ShuffleTiles + TurnOffTiles";
+}
+@end
+
+@interface Effect3 : TextLayer
+{}
+@end
+
+@implementation Effect3
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id bg = [self getByTag:kTagBackground];
+	id target = [bg getByTag:kTagSprite];
+	
+	
+	id turnoff = [TurnOffTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
+	id turnon = [turnoff reverse];
+	
+	[target do: [RepeatForever actionWithAction: [Sequence actions: turnoff, turnon, nil]]];
+
+}
+-(NSString*) title
+{
+	return @"Effect on sprite";
 }
 @end
 
 
 #pragma mark Demo - order
 
-static int actionIdx=0;
+static int actionIdx=-1;
 static NSString *actionList[] =
 {
 	@"Effect1",
+	@"Effect2",
+	@"Effect3",
 };
 
 Class nextAction()
@@ -100,8 +174,8 @@ Class restartAction()
 		[self add: bg z:0 tag:kTagBackground];
 		bg.position = cpv(x/2,y/2);
 		
-		Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
-		[bg add:grossini z:1];
+		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+		[bg add:grossini z:1 tag:kTagSprite];
 		grossini.position = cpv(230,200);
 		id sc = [ScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
@@ -185,7 +259,10 @@ Class restartAction()
 	// must be called before any othe call to the director
 //	[Director useFastDirector];
 	
-	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
+	// Use this pixel format to have transparent buffers
+	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	
+//	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
