@@ -24,10 +24,15 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Ernesto Corvi: author of TGA RLE support
 	                 patches for TextureMgr
 					 patches for Sprite
-	* Ernesto Corvi & On-Core (http://www.on-core.com/): author of Effects
-	          all the code regarding Effects: Grid, Grid3d, EffectsDemo,
-					Grabber, patches for CocosNode, Grid Actions,
-					TiledGrid actions, etc.
+	* Ernesto Corvi & On-Core (http://www.on-core.com/): author of Effects and EffectsDemo
+	    Added Support classes: Grabber, Grid, GridAction
+		Added Basic Effects: StopGrid, ReuseGrid
+		Added Grid Effects: Waves3D, FlipX3D, FlipY3D, Lens3D, Ripple3D, Liquid,
+							Shaky3D, Waves, Twirl
+		Added Tiled Grid Effects: ShakyTiles3D, ShatteredTiles3D, ShuffleTiles,
+								  FadeOutTRTiles, FadeOutBLTiles, FadeOutUpTiles, FadeOutDownTiles,
+								  TurnOffTiles, WavesTiles3D, JumpTiles3D, SplitRows, SplitCols
+		Added Composite actions: AccelAmplitude, AccelDeccelAmplitude, DeccelAmplitude
 	* Favo Yang: patch for unschedule timer in CocosNode
 	* Fradj Johann: patches for CocosNode
 	                patches for Layer

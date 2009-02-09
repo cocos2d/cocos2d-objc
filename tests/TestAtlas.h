@@ -31,3 +31,8 @@
 {
 }
 @end
+
+@interface Atlas4 : AtlasDemo
+{
+}
+@end

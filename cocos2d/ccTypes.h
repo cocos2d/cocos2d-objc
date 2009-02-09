@@ -80,6 +80,7 @@ typedef struct _ccGrid
 	int	y;
 } ccGrid;
 
+//! helper function to create a ccGrid
 static inline ccGrid
 ccg(const int x, const int y)
 {
