@@ -15,7 +15,7 @@ void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
 {	
 	GLfloat xmin, xmax, ymin, ymax;
 		
-	ymax = zNear * (GLfloat)tan(fovy * M_PI / 360);
+	ymax = zNear * (GLfloat)tanf(fovy * M_PI / 360);
 	ymin = -ymax;
 	xmin = ymin * aspect;
 	xmax = ymax * aspect;
@@ -39,7 +39,7 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
     z[0] = eyex - centerx;
     z[1] = eyey - centery;
     z[2] = eyez - centerz;
-    mag = (float)sqrt(z[0] * z[0] + z[1] * z[1] + z[2] * z[2]);
+    mag = (float)sqrtf(z[0] * z[0] + z[1] * z[1] + z[2] * z[2]);
     if (mag) {
         z[0] /= mag;
         z[1] /= mag;
@@ -65,14 +65,14 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
      * non-perpendicular unit-length vectors; so normalize x, y here
      */
 	
-    mag = (float)sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
+    mag = (float)sqrtf(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
     if (mag) {
         x[0] /= mag;
         x[1] /= mag;
         x[2] /= mag;
     }
 	
-    mag = (float)sqrt(y[0] * y[0] + y[1] * y[1] + y[2] * y[2]);
+    mag = (float)sqrtf(y[0] * y[0] + y[1] * y[1] + y[2] * y[2]);
     if (mag) {
         y[0] /= mag;
         y[1] /= mag;
