@@ -304,20 +304,24 @@ Class restartAction()
 	x = size.width;
 	y = size.height;
 	
-	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
-	[self add: bg z:0 tag:kTagBackground];
-	bg.position = cpv(x/2,y/2);
+	CocosNode *node = [CocosNode node];
+	[self add: node z:0 tag:kTagBackground];
 	
-	Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
-	[bg add:grossini z:1];
-	grossini.position = cpv(230,200);
+	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
+	[node add: bg z:0];
+	bg.transformAnchor = cpvzero;
+	bg.position = cpv(-100,-100);
+	
+	Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	[node add:grossini z:1];
+	grossini.position = cpv(x/3,y/2);
 	id sc = [ScaleBy actionWithDuration:2 scale:5];
 	id sc_back = [sc reverse];
 	[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 
 	Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	[bg add:tamara z:1];
-	tamara.position = cpv(430,200);
+	[node add:tamara z:1];
+	tamara.position = cpv(2*x/3,y/2);
 	id sc2 = [ScaleBy actionWithDuration:2 scale:5];
 	id sc2_back = [sc2 reverse];
 	[tamara do: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
