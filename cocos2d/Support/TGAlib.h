@@ -19,10 +19,18 @@ enum {
 	TGA_ERROR_COMPRESSED_FILE,
 };
 
+/** TGA format */
 typedef struct sImageTGA {
 	int status;
 	unsigned char type, pixelDepth;
-	short int width, height;
+	
+	/** map width */
+	short int width;
+	
+	/** map height */
+	short int height;
+	
+	/** raw data */
 	unsigned char *imageData;
 	int flipped;
 } tImageTGA;

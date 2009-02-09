@@ -126,6 +126,8 @@ Class restartAction()
 
 	// Middle layer: a Tile map atlas
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	[tilemap releaseMap];
+	
 	// change the transform anchor to 0,0 (optional)
 	tilemap.transformAnchor = cpv(0, 0);
 	// position the tilemap (optional)
@@ -197,6 +199,7 @@ Class restartAction()
 	
 	// this node will be used as the parent (reference) for the parallax scroller
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	[tilemap releaseMap];
 	
 	[Texture2D restoreTexParameters];
 	

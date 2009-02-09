@@ -13,6 +13,11 @@ static NSString *transitions[] = {
 			@"Atlas1",
 			@"Atlas2",
 			@"Atlas3",
+			@"Atlas4",
+};
+
+enum {
+	kTagTileMap = 1,
 };
 
 Class nextAction()
@@ -207,38 +212,40 @@ Class restartAction()
 @implementation Atlas3
 -(id) init
 {
-	if( ![super init] )
-		return nil;
+	if( (self=[super init]) ) {
 	
-	// Create an Aliased Atlas
-	[Texture2D saveTexParameters];
-	[Texture2D setAliasTexParameters];
-	
-	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
-	
-	[Texture2D restoreTexParameters];
-	
-	[self add:tilemap];
-	
-	CGSize size = tilemap.contentSize;
-	tilemap.transformAnchor = cpv(0, size.height/2);
-	tilemap.position = cpv(0,0);
-	
-	id s = [ScaleBy actionWithDuration:4 scale:0.8];
-	id scaleBack = [s reverse];
-	id go = [MoveBy actionWithDuration:8 position:cpv(-1650,0)];
-	id goBack = [go reverse];
-	
-	id seq = [Sequence actions: s,
-							go,
-							goBack,
-							scaleBack,
-							nil];
-	
-	[tilemap do:seq];
+		// Create an Aliased Atlas
+		[Texture2D saveTexParameters];
+		[Texture2D setAliasTexParameters];
 		
-	return self;
+		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+				
+		[Texture2D restoreTexParameters];
+		
+		// If you are not going to use the Map, you can free it now
+		// NEW since v0.7
+		[tilemap releaseMap];
+		
+		[self add:tilemap z:0 tag:kTagTileMap];
+		
+		CGSize size = tilemap.contentSize;
+		tilemap.transformAnchor = cpv(0, size.height/2);
+		
+		id s = [ScaleBy actionWithDuration:4 scale:0.8];
+		id scaleBack = [s reverse];
+		id go = [MoveBy actionWithDuration:8 position:cpv(-1650,0)];
+		id goBack = [go reverse];
+		
+		id seq = [Sequence actions: s,
+								go,
+								goBack,
+								scaleBack,
+								nil];
+		
+		[tilemap do:seq];
+	}
 	
+	return self;
 }
 
 -(NSString *) title
@@ -246,6 +253,73 @@ Class restartAction()
 	return @"Atlas: TileMapAtlas";
 }
 
+@end
+
+#pragma mark Example Atlas 4
+
+@implementation Atlas4
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		// Create an Aliased Atlas
+		[Texture2D saveTexParameters];
+		[Texture2D setAliasTexParameters];
+		
+		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		
+		[Texture2D restoreTexParameters];
+		
+		// If you are not going to use the Map, you can free it now
+		// [tilemap releaseMap];
+		// And if you are going to use, it you can access the data with:
+		[self schedule:@selector(updateMap:) interval:0.2f];
+		
+		[self add:tilemap z:0 tag:kTagTileMap];
+		
+		tilemap.transformAnchor = cpv(0, 0);
+		tilemap.position = cpv(-50,-50);
+	}	
+	return self;
+}
+
+-(void) updateMap:(ccTime) dt
+{
+	// IMPORTANT
+	//   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
+	//   The value 0 not rendered so don't assign or change a tile with value 0
+
+	TileMapAtlas *tilemap = (TileMapAtlas*) [self getByTag:kTagTileMap];
+	
+	//
+	// For example you can iterate over all the tiles
+	// using this code, but try to avoid the iteration
+	// over all your tiles in every frame. It's very expensive
+	//	for(int x=0; x < tilemap.tgaInfo->width; x++) {
+	//		for(int y=0; y < tilemap.tgaInfo->height; y++) {
+	//			ccRGBB c =[tilemap tileAt:ccg(x,y)];
+	//			if( c.r != 0 ) {
+	//				NSLog(@"%d,%d = %d", x,y,c.r);
+	//			}
+	//		}
+	//	}
+	
+	// NEW since v0.7
+	ccRGBB c =[tilemap tileAt:ccg(13,21)];		
+	c.r++;
+	c.r %= 10;
+	if( c.r==0)
+		c.r=1;
+	
+	// NEW since v0.7
+	[tilemap setTile:c at:ccg(13,21)];			
+	
+}
+
+-(NSString *) title
+{
+	return @"Atlas: Editable TileMapAtlas";
+}
 @end
 
 
