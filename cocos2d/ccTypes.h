@@ -73,6 +73,20 @@ typedef struct _ccVertex3D
 	float z;
 } ccVertex3D;
 
+//! A 2D grid
+typedef struct _ccGrid
+{
+	int	x;
+	int	y;
+} ccGrid;
+
+static inline ccGrid
+ccg(const int x, const int y)
+{
+	ccGrid v = {x, y};
+	return v;
+}
+
 
 //! delta time type
 //! if you want more resolution redefine it as a double

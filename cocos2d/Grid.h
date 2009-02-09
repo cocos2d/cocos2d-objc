@@ -27,7 +27,7 @@
 {
 	BOOL		active;
 	int			reuseGrid;
-	cpVect		grid;
+	ccGrid		grid;
 	Texture2D *	texture;
 	cpVect		step;
 	Grabber *	grabber;
@@ -35,12 +35,12 @@
 
 @property BOOL active;
 @property int reuseGrid;
-@property cpVect grid;
+@property ccGrid grid;
 @property cpVect step;
 @property (nonatomic, retain) Texture2D *texture;
 @property (nonatomic, retain) Grabber *grabber;
 
--(id)initWithSize:(cpVect)gridSize;
+-(id)initWithSize:(ccGrid)gridSize;
 -(void)beforeDraw;
 -(void)afterDraw:(Camera*)camera;
 -(void)blit;
@@ -61,12 +61,12 @@
 	GLushort	*indices;
 }
 
-+(id)gridWithSize:(cpVect)gridSize;
--(id)initWithSize:(cpVect)gridSize;
++(id)gridWithSize:(ccGrid)gridSize;
+-(id)initWithSize:(ccGrid)gridSize;
 
--(ccVertex3D)getVertex:(cpVect)pos;
--(ccVertex3D)getOriginalVertex:(cpVect)pos;
--(void)setVertex:(cpVect)pos vertex:(ccVertex3D)vertex;
+-(ccVertex3D)getVertex:(ccGrid)pos;
+-(ccVertex3D)getOriginalVertex:(ccGrid)pos;
+-(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex;
 
 -(void)calculate_vertex_points;
 
@@ -86,12 +86,12 @@
 	GLushort	*indices;
 }
 
-+(id)gridWithSize:(cpVect)gridSize;
--(id)initWithSize:(cpVect)gridSize;
++(id)gridWithSize:(ccGrid)gridSize;
+-(id)initWithSize:(ccGrid)gridSize;
 
--(ccQuad3)getTile:(cpVect)pos;
--(ccQuad3)getOriginalTile:(cpVect)pos;
--(void)setTile:(cpVect)pos coords:(ccQuad3)coords;
+-(ccQuad3)getTile:(ccGrid)pos;
+-(ccQuad3)getOriginalTile:(ccGrid)pos;
+-(void)setTile:(ccGrid)pos coords:(ccQuad3)coords;
 
 -(void)calculate_vertex_points;
 

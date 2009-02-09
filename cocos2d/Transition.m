@@ -735,7 +735,7 @@ enum {
 	int x = 12 * aspect;
 	int y = 12;
 	
-	id toff = [TurnOffTiles actionWithSize: cpv(x,y) duration:duration];
+	id toff = [TurnOffTiles actionWithSize: ccg(x,y) duration:duration];
 	[outScene do: [Sequence actions: toff,
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
 				   [StopGrid action],
@@ -813,7 +813,7 @@ enum {
 	int x = 12 * aspect;
 	int y = 12;
 	
-	id action  = [self actionWithSize:cpv(x,y)];
+	id action  = [self actionWithSize:ccg(x,y)];
 
 	[outScene do: [Sequence actions:
 					action,
@@ -823,7 +823,7 @@ enum {
 	 ];
 }
 
--(IntervalAction*) actionWithSize: (cpVect) v
+-(IntervalAction*) actionWithSize: (ccGrid) v
 {
 	return [FadeOutTRTiles actionWithSize:v duration:duration];
 }
@@ -833,7 +833,7 @@ enum {
 // FadeBL Transition
 //
 @implementation FadeBLTransition
--(IntervalAction*) actionWithSize: (cpVect) v
+-(IntervalAction*) actionWithSize: (ccGrid) v
 {
 	return [FadeOutBLTiles actionWithSize:v duration:duration];
 }
@@ -843,7 +843,7 @@ enum {
 // FadeUp Transition
 //
 @implementation FadeUpTransition
--(IntervalAction*) actionWithSize: (cpVect) v
+-(IntervalAction*) actionWithSize: (ccGrid) v
 {
 	return [FadeOutUpTiles actionWithSize:v duration:duration];
 }
@@ -853,7 +853,7 @@ enum {
 // FadeDown Transition
 //
 @implementation FadeDownTransition
--(IntervalAction*) actionWithSize: (cpVect) v
+-(IntervalAction*) actionWithSize: (ccGrid) v
 {
 	return [FadeOutDownTiles actionWithSize:v duration:duration];
 }

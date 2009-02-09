@@ -19,12 +19,12 @@
 
 @synthesize size;
 
-+(id) actionWithSize:(cpVect)size duration:(ccTime)d
++(id) actionWithSize:(ccGrid)size duration:(ccTime)d
 {
 	return [[[self alloc] initWithSize:size duration:d ] autorelease];
 }
 
--(id) initWithSize:(cpVect)gridSize duration:(ccTime)d
+-(id) initWithSize:(ccGrid)gridSize duration:(ccTime)d
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
@@ -86,19 +86,19 @@
 	return [Grid3D gridWithSize:grid];
 }
 
--(ccVertex3D)getVertex:(cpVect)pos
+-(ccVertex3D)getVertex:(ccGrid)pos
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g getVertex:pos];
 }
 
--(ccVertex3D)getOriginalVertex:(cpVect)pos
+-(ccVertex3D)getOriginalVertex:(ccGrid)pos
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g getOriginalVertex:pos];
 }
 
--(void)setVertex:(cpVect)pos vertex:(ccVertex3D)vertex
+-(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g setVertex:pos vertex:vertex];
@@ -115,19 +115,19 @@
 	return [TiledGrid3D gridWithSize:grid];
 }
 
--(ccQuad3)getTile:(cpVect)pos
+-(ccQuad3)getTile:(ccGrid)pos
 {
 	TiledGrid3D *g = (TiledGrid3D *)target.grid;
 	return [g getTile:pos];
 }
 
--(ccQuad3)getOriginalTile:(cpVect)pos
+-(ccQuad3)getOriginalTile:(ccGrid)pos
 {
 	TiledGrid3D *g = (TiledGrid3D *)target.grid;
 	return [g getOriginalTile:pos];
 }
 
--(void)setTile:(cpVect)pos coords:(ccQuad3)coords
+-(void)setTile:(ccGrid)pos coords:(ccQuad3)coords
 {
 	TiledGrid3D *g = (TiledGrid3D *)target.grid;
 	[g setTile:pos coords:coords];

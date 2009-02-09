@@ -20,8 +20,8 @@
 	int randrange;
 }
 
-+(id)actionWithRange:(int)range grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithRange:(int)range grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -34,8 +34,8 @@
 	BOOL once;
 }
 
-+(id)actionWithRange:(int)range grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithRange:(int)range grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -50,8 +50,8 @@
 	void *tiles;
 }
 
-+(id)actionWithSeed:(int)s grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithSeed:(int)s grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -97,8 +97,8 @@
 	int *tilesOrder;
 }
 
-+(id)actionWithSeed:(int)s grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithSeed:(int)s grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
 @end
 
 ////////////////////////////////////////////////////////////
@@ -114,8 +114,8 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -132,8 +132,8 @@
 @property float amplitude;
 @property float amplitudeRate;
 
-+(id)actionWithJumps:(int)j amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
--(id)initWithJumps:(int)j amplitude:(float)amp grid:(cpVect)gridSize duration:(ccTime)d;
++(id)actionWithJumps:(int)j amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithJumps:(int)j amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 

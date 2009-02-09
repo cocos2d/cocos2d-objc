@@ -38,8 +38,8 @@ enum {
 	// in this case:
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
-	id lens = [Lens3D actionWithPosition:cpv(240,160) radius:240 grid:cpv(15,10) duration:0.0f];
-	id waves = [Waves3D actionWithWaves:18 amplitude:80 grid:cpv(15,10) duration:10];
+	id lens = [Lens3D actionWithPosition:cpv(240,160) radius:240 grid:ccg(15,10) duration:0.0f];
+	id waves = [Waves3D actionWithWaves:18 amplitude:80 grid:ccg(15,10) duration:10];
 
 	id reuse = [ReuseGrid actionWithTimes:1];
 	id delay = [DelayTime actionWithDuration:8];
@@ -72,9 +72,9 @@ enum {
 	//     ShakyTiles3D is TiledGrid3D and it's size is (15,10)
 	//     Shuffletiles is TiledGrid3D and it's size is (15,10)
 	//	   TurnOfftiles is TiledGrid3D and it's size is (15,10)
-	id shaky = [ShakyTiles3D actionWithRange:4 grid:cpv(15,10) duration:5];
-	id shuffle = [ShuffleTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
-	id turnoff = [TurnOffTiles actionWithSeed:0 grid:cpv(15,10) duration:3];
+	id shaky = [ShakyTiles3D actionWithRange:4 grid:ccg(15,10) duration:5];
+	id shuffle = [ShuffleTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
+	id turnoff = [TurnOffTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
 	id turnon = [turnoff reverse];
 	
 	// reuse 2 times:
@@ -111,8 +111,8 @@ enum {
 	id target2 = [bg getByTag:kTagSprite2];
 	
 	
-	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:cpv(15,10) duration:5];
-	id shaky = [Shaky3D actionWithRange:4 grid:cpv(15,10) duration:5];
+	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:ccg(15,10) duration:5];
+	id shaky = [Shaky3D actionWithRange:4 grid:ccg(15,10) duration:5];
 	
 	[target1 do: [RepeatForever actionWithAction: waves]];
 	[target2 do: [RepeatForever actionWithAction: shaky]];
