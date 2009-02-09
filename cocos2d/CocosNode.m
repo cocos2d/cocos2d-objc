@@ -376,7 +376,6 @@
 		[grid afterDraw:self.camera];
 
 	glPopMatrix();
-
 }
 
 #pragma mark CocosNode - Transformations

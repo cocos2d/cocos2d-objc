@@ -29,6 +29,7 @@
 @synthesize grid;
 @synthesize step;
 
+#define kTextureSize 1024
 -(id)initWithSize:(cpVect)gridSize
 {
 	if ( (self = [super init] ) )
@@ -43,10 +44,10 @@
 		{
 			Texture2DPixelFormat	format = [Director sharedDirector].pixelFormat == kRGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
 			
-			void *data = malloc((int)(512 * 512 * 4));
-			memset(data, 0, (int)(512 * 512 * 4));
+			void *data = malloc((int)(kTextureSize * kTextureSize * 4));
+			memset(data, 0, (int)(kTextureSize * kTextureSize * 4));
 			
-			texture = [[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:512 pixelsHigh:512 contentSize:win];
+			texture = [[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:kTextureSize pixelsHigh:kTextureSize contentSize:win];
 			free( data );
 		}
 		
