@@ -355,7 +355,7 @@
 
 	if ( grid && grid.active)
 		[grid beforeDraw];
-	
+
 	[self transform];
 
 	for (CocosNode * child in children) {
@@ -371,11 +371,12 @@
 		if ( child.zOrder >= 0 )
 			[child visit];
 	}
-		
+
 	if ( grid && grid.active)
 		[grid afterDraw:self.camera];
 
 	glPopMatrix();
+
 }
 
 #pragma mark CocosNode - Transformations

@@ -31,7 +31,6 @@ v0.6 (old way):
 	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 	
 	Scene *scene = [Scene node];
-	[scene add: scene]];
 	
 	[[Director sharedDirector] runScene: scene];
 }
@@ -60,7 +59,6 @@ v0.7 (new way):
 	[window makeKeyAndVisible];
 
 	Scene *scene = [Scene node];
-	[scene add: scene];
 	
 	[[Director sharedDirector] runWithScene: scene];
 }
@@ -76,3 +74,43 @@ v0.6 (old way):
 
 v0.7 (new way):
   [[Director sharedDirector] runWithScene: firstScene];
+
+
+Director constants
+==================
+
+DepthBuffer and PixelFormat constans now stars with a 'k'
+
+v0.6 (old way):
+Pixel Format constants:
+    RGB565
+    RGBA8
+
+Depth buffer constants:
+    DepthBufferNone
+    DepthBuffer16
+    DepthBuffer24
+
+v0.7 (new way):
+Pixel Format constants:
+    kRGB565
+    kRGBA8
+
+Depth buffer constants:
+    kDepthBufferNone
+    kDepthBuffer16
+    kDepthBuffer24
+
+
+Director instance methods
+=========================
+
+Some Director's class methods are now instance methods
+
+v0.6 (old way)
+    [Director setPixelFormat:xxx]
+    [Director setDepthBufferFormat:xxx]
+
+v0.7 (new way)
+    [[Director sharedDirector] setPixelFormat:xxx]
+    [[Director sharedDirector] setDepthBufferFormat:xxx]

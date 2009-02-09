@@ -17,7 +17,7 @@
 #import "CocosNode.h"
 
 /** 
-    A Camera is used in every `CocosNode`.
+    A Camera is used in every CocosNode.
     Useful to look at the object from different views.
     The OpenGL gluLookAt() function is used to locate the
     camera.
