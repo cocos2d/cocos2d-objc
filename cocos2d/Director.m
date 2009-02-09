@@ -106,7 +106,7 @@ static Director *_sharedDirector = nil;
 	//Create a full-screen window
 
 	// default values
-	_pixelFormat = RGB565;
+	_pixelFormat = kRGB565;
 	_depthBufferFormat = 0;
 
 	// scenes
@@ -410,12 +410,12 @@ static Director *_sharedDirector = nil;
 		NSString	*pFormat = kEAGLColorFormatRGB565;
 	    GLuint		depthFormat = 0;
 		
-		if(_pixelFormat==RGBA8)
+		if(_pixelFormat==kRGBA8)
 			pFormat = kEAGLColorFormatRGBA8;
 		
-		if(_depthBufferFormat == DepthBuffer16)
+		if(_depthBufferFormat == kDepthBuffer16)
 			depthFormat = GL_DEPTH_COMPONENT16_OES;
-		else if(_depthBufferFormat == DepthBuffer24)
+		else if(_depthBufferFormat == kDepthBuffer24)
 			depthFormat = GL_DEPTH_COMPONENT24_OES;
 		
 		// alloc and init the opengl view

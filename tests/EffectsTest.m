@@ -5,11 +5,11 @@
 // Demo by Ernesto Corvi and On-Core
 //
 
-// local import
+// cocos2d import
 #import "cocos2d.h"
+
+// local import
 #import "EffectsTest.h"
-#import "Grid3DAction.h"
-#import "TiledGridAction.h"
 
 enum {
 	kTagTextLayer = 1,
