@@ -472,7 +472,7 @@ typedef struct
 	{
 		waves = wav;
 		amplitude = amp;
-		amplitudeRate = 1.0;
+		amplitudeRate = 1.0f;
 	}
 	
 	return self;
@@ -488,7 +488,7 @@ typedef struct
 		{
 			ccQuad3 coords = [self getOriginalTile:cpv(i,j)];
 			
-			coords.bl_z = (sinf(time*M_PI*waves*2 + (coords.bl_y+coords.bl_x) * .01) * amplitude * amplitudeRate );
+			coords.bl_z = (sinf(time*M_PI*waves*2 + (coords.bl_y+coords.bl_x) * .01f) * amplitude * amplitudeRate );
 			coords.br_z	= coords.bl_z;
 			coords.tl_z = coords.bl_z;
 			coords.tr_z = coords.bl_z;
@@ -517,7 +517,7 @@ typedef struct
 	{
 		jumps = j;
 		amplitude = amp;
-		amplitudeRate = 1.0;
+		amplitudeRate = 1.0f;
 	}
 	
 	return self;

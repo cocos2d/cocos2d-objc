@@ -30,7 +30,7 @@
 	{
 		waves = wav;
 		amplitude = amp;
-		amplitudeRate = 1.0;
+		amplitudeRate = 1.0f;
 	}
 	
 	return self;
@@ -45,7 +45,7 @@
 		for( j = 0; j < (grid.y+1); j++ )
 		{
 			ccVertex3D	v = [self getOriginalVertex:cpv(i,j)];
-			v.z += (sinf(time*M_PI*waves*2 + (v.y+v.x) * .01) * amplitude * amplitudeRate);
+			v.z += (sinf(time*M_PI*waves*2 + (v.y+v.x) * .01f) * amplitude * amplitudeRate);
 			[self setVertex:cpv(i,j) vertex:v];
 		}
 	}
@@ -70,7 +70,7 @@
 {
 	cpFloat angle = M_PI * time; // 180 degrees
 	cpFloat mz = sinf( angle );
-	angle = angle / 2.0;     // x calculates degrees from 0 to 90
+	angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 	cpFloat mx = cosf( angle );
 	
 	ccVertex3D	v0, v1, v, diff;
@@ -103,7 +103,7 @@
 	}
 	
 	diff.x = ( x - x * mx );
-	diff.z = fabs( floorf( (x * mz) / 4.0 ) );
+	diff.z = fabs( floorf( (x * mz) / 4.0f ) );
 	
 // bottom-left
 	v = [self getOriginalVertex:a];
@@ -150,7 +150,7 @@
 {
 	cpFloat angle = M_PI * time; // 180 degrees
 	cpFloat mz = sinf( angle );
-	angle = angle / 2.0;     // x calculates degrees from 0 to 90
+	angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 	cpFloat my = cosf( angle );
 	
 	ccVertex3D	v0, v1, v, diff;
@@ -183,7 +183,7 @@
 	}
 	
 	diff.y = y - y * my;
-	diff.z = fabs( floorf( (y * mz) / 4.0 ) );
+	diff.z = fabs( floorf( (y * mz) / 4.0f ) );
 	
 	// bottom-left
 	v = [self getOriginalVertex:a];
@@ -230,7 +230,7 @@
 	{
 		position = pos;
 		radius = r;
-		lensEffect = 0.7;
+		lensEffect = 0.7f;
 		lastPosition = cpv(-1,-1);
 	}
 	
@@ -255,7 +255,7 @@
 				{
 					r = radius - r;
 					cpFloat pre_log = r / radius;
-					if ( pre_log == 0 ) pre_log = 0.001;
+					if ( pre_log == 0 ) pre_log = 0.001f;
 					float l = logf(pre_log) * lensEffect;
 					float new_r = expf( l ) * radius;
 					
@@ -298,7 +298,7 @@
 		radius = r;
 		waves = wav;
 		amplitude = amp;
-		amplitudeRate = 1.0;
+		amplitudeRate = 1.0f;
 	}
 	
 	return self;
@@ -320,7 +320,7 @@
 			{
 				r = radius - r;
 				cpFloat rate = powf( r / radius, 2);
-				v.z += (sinf( time*M_PI*waves*2 + r * 0.1) * amplitude * amplitudeRate * rate );
+				v.z += (sinf( time*M_PI*waves*2 + r * 0.1f) * amplitude * amplitudeRate * rate );
 			}
 			
 			[self setVertex:cpv(i,j) vertex:v];
@@ -387,7 +387,7 @@
 	{
 		waves = wav;
 		amplitude = amp;
-		amplitudeRate = 1.0;
+		amplitudeRate = 1.0f;
 	}
 	
 	return self;
@@ -402,8 +402,8 @@
 		for( j = 1; j < grid.y; j++ )
 		{
 			ccVertex3D	v = [self getOriginalVertex:cpv(i,j)];
-			v.x = (v.x + (sinf(time*M_PI*waves*2 + v.x * .01) * amplitude * amplitudeRate));
-			v.y = (v.y + (sinf(time*M_PI*waves*2 + v.y * .01) * amplitude * amplitudeRate));
+			v.x = (v.x + (sinf(time*M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
+			v.y = (v.y + (sinf(time*M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
 			[self setVertex:cpv(i,j) vertex:v];
 		}
 	}
@@ -429,7 +429,7 @@
 	{
 		waves = wav;
 		amplitude = amp;
-		amplitudeRate = 1.0;
+		amplitudeRate = 1.0f;
 		horizontal = h;
 		vertical = v;
 	}
@@ -448,10 +448,10 @@
 			ccVertex3D	v = [self getOriginalVertex:cpv(i,j)];
 			
 			if ( vertical )
-				v.x = (v.x + (sinf(time*M_PI*waves*2 + v.y * .01) * amplitude * amplitudeRate));
+				v.x = (v.x + (sinf(time*M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
 			
 			if ( horizontal )
-				v.y = (v.y + (sinf(time*M_PI*waves*2 + v.x * .01) * amplitude * amplitudeRate));
+				v.y = (v.y + (sinf(time*M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
 					
 			[self setVertex:cpv(i,j) vertex:v];
 		}
