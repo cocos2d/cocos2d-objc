@@ -243,6 +243,12 @@
 			particleCount--;
 		}
 	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, colorsID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ccColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 -(void) stopSystem
@@ -271,7 +277,6 @@
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
 	glVertexPointer(2,GL_FLOAT,sizeof(ccPointSprite),0);
 	
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
@@ -279,7 +284,6 @@
 	
 	glEnableClientState(GL_COLOR_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, colorsID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
 	glColorPointer(4,GL_FLOAT,0,0);
 
 	// save blend state
@@ -303,6 +307,7 @@
 	
 	// restore blend state
 	glBlendFunc( blendSrc, blendDst );
+//	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
 #if 0
 	// restore color mode
