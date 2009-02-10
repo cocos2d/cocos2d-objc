@@ -44,6 +44,9 @@ v0.7 (new way):
 	[window setMultipleTouchEnabled:YES];
 	
 	// Attach cocos2d to the window
+    // The OpenGL context will be created here
+    // DON'T call any OpenGL code (like a CocosNode)
+    // before this call
 	[[Director sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
@@ -58,6 +61,9 @@ v0.7 (new way):
 	// NEW: Make the window visible
 	[window makeKeyAndVisible];
 
+    // IMPORTANT:
+    // DON'T INSTANTIATE A COCOSNODE BEFORE THE ATTACH
+    // IT WILL CRASH BECAUSE THE OPENGL CONTEXT IS NOT CREATED
 	Scene *scene = [Scene node];
 	
 	[[Director sharedDirector] runWithScene: scene];
@@ -114,3 +120,20 @@ v0.6 (old way)
 v0.7 (new way)
     [[Director sharedDirector] setPixelFormat:xxx]
     [[Director sharedDirector] setDepthBufferFormat:xxx]
+
+
+TileMapAtlas memory
+===================
+
+v0.7 supports a read-write TileMapAtlas.
+If you are not going to read/write the atlas, you might want to
+free the extra used memory.
+
+v0.6 (old way)
+    TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+
+
+v0.7 (new way):
+    TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+    [tilemap releaseMap];  // NEW SINCE v0.7
+
