@@ -118,7 +118,7 @@ enum {
 @implementation Ripple3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) radius:240 waves:8 amplitude:60 grid:ccg(20,20) duration:t];
+	return [self actionWithPosition:cpv(240,160) radius:240 waves:4 amplitude:160 grid:ccg(20,20) duration:t];
 }
 @end
 @implementation LiquidDemo
