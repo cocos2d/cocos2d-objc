@@ -316,10 +316,10 @@ typedef struct
 
 -(float)testFunc:(ccGrid)pos time:(ccTime)time
 {
-	cpVect	n = cpvmult( cpv(grid.x, grid.y), (1.0-time));
+	cpVect	n = cpvmult(cpv(grid.x, grid.y), (1.0f-time));
 	
 	if ( (pos.x+pos.y) == 0 )
-		return 1.0;
+		return 1.0f;
 	return powf( (n.x+n.y) / (pos.x+pos.y), 6 );
 }
 
@@ -333,7 +333,7 @@ typedef struct
 {
 	cpVect	n = cpvmult(cpv(grid.x, grid.y), time);
 	if ( n.y == 0 )
-		return 1.0;
+		return 1.0f;
 	return powf( pos.y / n.y, 6 );
 }
 
@@ -341,10 +341,10 @@ typedef struct
 {
 	ccQuad3	coords = [self getOriginalTile:pos];
 	
-	coords.bl_y += (target.grid.step.y / 2) * (1.0 - distance);
-	coords.br_y += (target.grid.step.y / 2) * (1.0 - distance);
-	coords.tl_y -= (target.grid.step.y / 2) * (1.0 - distance);
-	coords.tr_y -= (target.grid.step.y / 2) * (1.0 - distance);
+	coords.bl_y += (target.grid.step.y / 2) * (1.0f - distance);
+	coords.br_y += (target.grid.step.y / 2) * (1.0f - distance);
+	coords.tl_y -= (target.grid.step.y / 2) * (1.0f - distance);
+	coords.tr_y -= (target.grid.step.y / 2) * (1.0f - distance);
 	
 	[self setTile:pos coords:coords];
 }
@@ -357,9 +357,9 @@ typedef struct
 
 -(float)testFunc:(ccGrid)pos time:(ccTime)time
 {
-	cpVect	n = cpvmult(cpv(grid.x,grid.y), (1.0-time));
+	cpVect	n = cpvmult(cpv(grid.x,grid.y), (1.0f - time));
 	if ( pos.y == 0 )
-		return 1.0;
+		return 1.0f;
 	return powf( n.y / pos.y, 6 );
 }
 
@@ -488,7 +488,7 @@ typedef struct
 		{
 			ccQuad3 coords = [self getOriginalTile:ccg(i,j)];
 			
-			coords.bl_z = (sinf(time*M_PI*waves*2 + (coords.bl_y+coords.bl_x) * .01f) * amplitude * amplitudeRate );
+			coords.bl_z = (sinf(time*(cpFloat)M_PI*waves*2 + (coords.bl_y+coords.bl_x) * .01f) * amplitude * amplitudeRate );
 			coords.br_z	= coords.bl_z;
 			coords.tl_z = coords.bl_z;
 			coords.tr_z = coords.bl_z;
@@ -527,8 +527,8 @@ typedef struct
 {
 	int i, j;
 	
-	float sinz = (sinf(time*M_PI*jumps*2) * amplitude * amplitudeRate );
-	float sinz2 = (sinf(M_PI+time*M_PI*jumps*2) * amplitude * amplitudeRate );
+	float sinz =  (sinf((cpFloat)M_PI*time*jumps*2) * amplitude * amplitudeRate );
+	float sinz2 = (sinf((cpFloat)M_PI*(time*jumps*2 + 1)) * amplitude * amplitudeRate );
 	
 	for( i = 0; i < grid.x; i++ )
 	{

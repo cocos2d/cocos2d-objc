@@ -73,7 +73,7 @@
 @implementation EaseExponentialIn
 -(void) update: (ccTime) t
 {
-	[other update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001];
+	[other update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f];
 }
 - (IntervalAction*) reverse
 {
@@ -103,10 +103,10 @@
 {
   if (t==0) t = 0;
   if (t==1) t = 1;
-  else if ((t/=0.5) < 1)
-    t = 0.5 * powf(2, 10 * (t - 1));
+  else if ((t/=0.5f) < 1)
+    t = 0.5f * powf(2, 10 * (t - 1));
   else
-    t = 0.5 * (-powf(2, -10 * --t) + 2);
+    t = 0.5f * (-powf(2, -10 * --t) + 2);
   [other update:t];
 }
 @end
@@ -147,8 +147,8 @@
 @implementation EaseCubicInOut
 -(void) update: (ccTime) t
 {
-  if ((t/=0.5) < 1) [other update: 0.5*t*t];
-  else [other update: -0.5 * ((--t)*(t-2) - 1)];
+  if ((t/=0.5f) < 1) [other update: 0.5f*t*t];
+  else [other update: -0.5f * ((--t)*(t-2) - 1)];
 }
 @end
 
@@ -187,8 +187,8 @@
 @implementation EaseQuadInOut
 -(void) update: (ccTime) t
 {
-  if ((t/=0.5) < 1) [other update:(0.5*t*t)];
-  else [other update:-0.5*((--t)*(t-2)-1)];
+  if ((t/=0.5f) < 1) [other update:(0.5f*t*t)];
+  else [other update:-0.5f*((--t)*(t-2)-1)];
 }
 @end
 
@@ -198,7 +198,7 @@
 @implementation EaseSineIn
 -(void) update: (ccTime) t
 {
-  [other update:-1*cos(t * 1.57079633) +1];
+  [other update:-1*cosf(t * 1.57079633f) +1];
 }
 - (IntervalAction*) reverse
 {
@@ -212,7 +212,7 @@
 @implementation EaseSineOut
 -(void) update: (ccTime) t
 {
-  [other update:sin(t * 1.57079633)];
+  [other update:sinf(t * 1.57079633f)];
 }
 - (IntervalAction*) reverse
 {
@@ -226,7 +226,7 @@
 @implementation EaseSineInOut
 -(void) update: (ccTime) t
 {
-  [other update:-0.5*(cos(3.14159265*t) - 1)];
+  [other update:-0.5f*(cosf(3.14159265f*t) - 1)];
 }
 @end
 

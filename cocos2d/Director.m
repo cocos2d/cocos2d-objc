@@ -170,6 +170,8 @@ static Director *_sharedDirector = nil;
 //
 - (void) mainLoop
 {
+    while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
+    
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -851,7 +853,7 @@ static Director *_sharedDirector = nil;
 
 - (id) init
 {
-	if( self = [super init] )
+	if(( self = [super init] ))
 		isRunning = NO;
 
 	CCLOG(@"Using Fast Director");
