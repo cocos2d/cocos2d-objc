@@ -170,7 +170,7 @@
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		rate = 1.0;
+		rate = 1.0f;
 		other = [action retain];
 	}
 	
@@ -226,7 +226,7 @@
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		rate = 1.0;
+		rate = 1.0f;
 		other = [action retain];
 	}
 	
@@ -274,7 +274,7 @@
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		rate = 1.0;
+		rate = 1.0f;
 		other = [action retain];
 	}
 	

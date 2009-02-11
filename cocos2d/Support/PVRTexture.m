@@ -103,10 +103,10 @@ typedef struct _PVRTexHeader
 	
 	pvrTag = CFSwapInt32LittleToHost(header->pvrTag);
 
-	if (gPVRTexIdentifier[0] != ((pvrTag >>  0) & 0xff) ||
-		gPVRTexIdentifier[1] != ((pvrTag >>  8) & 0xff) ||
-		gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
-		gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
+	if ((uint32_t)gPVRTexIdentifier[0] != ((pvrTag >>  0) & 0xff) ||
+		(uint32_t)gPVRTexIdentifier[1] != ((pvrTag >>  8) & 0xff) ||
+		(uint32_t)gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
+		(uint32_t)gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
 	{
 		return FALSE;
 	}
@@ -218,7 +218,7 @@ typedef struct _PVRTexHeader
 
 - (id)initWithContentsOfFile:(NSString *)path
 {
-	if (self = [super init])
+	if((self = [super init]))
 	{
 		NSData *data = [NSData dataWithContentsOfFile:path];
 		
