@@ -22,7 +22,7 @@
 
 -(id) init
 {
-	if( self = [super init] ) {
+	if(( self = [super init] )) {
 		// generate FBO
 		glGenFramebuffersOES(1, &fbo);		
 	}

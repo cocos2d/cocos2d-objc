@@ -320,7 +320,7 @@
 			{
 				r = radius - r;
 				cpFloat rate = powf( r / radius, 2);
-				v.z += (sinf( time*M_PI*waves*2 + r * 0.1f) * amplitude * amplitudeRate * rate );
+				v.z += (sinf( time*(cpFloat)M_PI*waves*2 + r * 0.1f) * amplitude * amplitudeRate * rate );
 			}
 			
 			[self setVertex:ccg(i,j) vertex:v];
