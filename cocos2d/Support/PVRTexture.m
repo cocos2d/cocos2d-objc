@@ -194,7 +194,7 @@ typedef struct _PVRTexHeader
 	
 	[Texture2D applyTexParameters];	// cocos2d integration
 
-	for (int i=0; i < [_imageData count]; i++)
+	for (NSUInteger i=0; i < [_imageData count]; i++)
 	{
 		data = [_imageData objectAtIndex:i];
 		glCompressedTexImage2D(GL_TEXTURE_2D, i, _internalFormat, width, height, 0, [data length], [data bytes]);
