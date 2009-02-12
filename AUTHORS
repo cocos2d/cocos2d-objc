@@ -57,6 +57,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		   removed useless GL commands in director
 		   fixed Menu aligments
 		   Treat warnings as errors patch
+		   Action's elapsed is property patch
+		   MenuItemFont label can be changed
 	* mark at abitofthought: author of Fast Director
 	* Mitch: patches for Menu
 	         author of MenuItemToggle

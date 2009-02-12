@@ -1,4 +1,5 @@
 version 0.7.0 - XX-Feb-2009
+ . Action: elapsed is a property (issue #203)
  . Atlas: Fixed black line (issue #135 and issue #47)
  . Atlas: Works when GL_CULL_FACE is enabled (issue #179)
  . Atlas: updateAltasValues renamed to updateAtlasValues (issue #198)
@@ -20,6 +21,7 @@ version 0.7.0 - XX-Feb-2009
 				SplitRows, SplitCols
  . Experimental: Added StreakDemo (issue #171)
  . Menu: aligItemsVerticallyOld removed. (issue #196)
+ . MenuItemFont: can be changed in runtime (issue #202)
  . MenuItemFont: assign correct size and documented isEnabled (issue #132)
  . Particle: Buffers updated on update (issue #163)
  . Sprite: initWithPVRTCFile is deprecated. will be removed in v0.8 (issue #197)

@@ -92,6 +92,9 @@
 /** initializes a menu item from a string with a target/selector */
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 
+/** Change this menuitem's label's string **/
+-(void) setString:(NSString *)string;
+
 /** Enable or disabled the MenuItemFont
  @warning setIsEnabled changes the RGB color of the font
  */

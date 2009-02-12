@@ -183,6 +183,13 @@ enum {
 	return self;
 }
 
+-(void) setString:(NSString *)string
+{
+    [label setString:string];
+	CGSize s = label.contentSize;
+    transformAnchor = cpv( s.width/2, s.height/2 );
+}
+
 -(void) dealloc
 {
 	[label release];
