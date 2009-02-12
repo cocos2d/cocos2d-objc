@@ -36,7 +36,7 @@ cpBody *chassis, *wheel1, *wheel2;
 void demo7_update(int ticks)
 {
 	int steps = 3;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpBodyResetForces(chassis);
@@ -60,12 +60,12 @@ make_box(cpFloat x, cpFloat y)
 		cpv( 15,-7),
 	};
 	
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpv(0,0)));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpv(0,0)));
 	//	cpBody *body1 = cpBodyNew(1.0/0.0, 1.0/0.0);
 	body->p = cpv(x, y);
 	cpSpaceAddBody(space, body);
 	cpShape *shape = cpPolyShapeNew(body, num, verts, cpv(0,0));
-	shape->e = 0.0; shape->u = 1.0;
+	shape->e = 0.0f; shape->u = 1.0f;
 	cpSpaceAddShape(space, shape);
 	
 	return body;
@@ -78,34 +78,34 @@ void demo7_init(void)
 	cpResetShapeIdCounter();
 	space = cpSpaceNew();
 	space->iterations = 10;
-	cpSpaceResizeActiveHash(space, 50.0, 999);
-	cpSpaceResizeStaticHash(space, 50.0, 999);
+	cpSpaceResizeActiveHash(space, 50.0f, 999);
+	cpSpaceResizeStaticHash(space, 50.0f, 999);
 	space->gravity = cpv(0, -300);
 
 	cpShape *shape;
 	
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,70), cpv(0,-240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	shape = cpSegmentShapeNew(staticBody, cpv(0,-240), cpv(320,-200), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	shape = cpSegmentShapeNew(staticBody, cpv(200,-240), cpv(320,-100), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	//	shape = cpShapeNew(CP_SEGMENT_SHAPE, cpSegmentNew(cpv(-320,240), cpv(320,240)), space->staticBody);
@@ -226,35 +226,35 @@ void demo7_init(void)
 		cpv( 20,-15),
 	};
 	
-	chassis = cpBodyNew(10.0, cpMomentForPoly(10.0, num, verts, cpv(0,0)));
+	chassis = cpBodyNew(10.0f, cpMomentForPoly(10.0f, num, verts, cpv(0,0)));
 	chassis->p = cpv(-200, 100);
 //	body->v = cpv(200, 0);
 	cpSpaceAddBody(space, chassis);
 	shape = cpPolyShapeNew(chassis, num, verts, cpv(0,0));
-	shape->e = 0.0; shape->u = 1.0;
+	shape->e = 0.0f; shape->u = 1.0f;
 	cpSpaceAddShape(space, shape);
 	
 	cpFloat radius = 15;
-	cpFloat wheel_mass = 0.3;
+	cpFloat wheel_mass = 0.3f;
 	cpVect offset = cpv(radius + 30, -25);
-	wheel1 = cpBodyNew(wheel_mass, cpMomentForCircle(wheel_mass, 0.0, radius, cpvzero));
+	wheel1 = cpBodyNew(wheel_mass, cpMomentForCircle(wheel_mass, 0.0f, radius, cpvzero));
 	wheel1->p = cpvadd(chassis->p, offset);
 	wheel1->v = chassis->v;
 	cpSpaceAddBody(space, wheel1);
 	shape = cpCircleShapeNew(wheel1, radius, cpvzero);
-	shape->e = 0.0; shape->u = 2.5;
+	shape->e = 0.0f; shape->u = 2.5f;
 	cpSpaceAddShape(space, shape);
 	
 	joint = cpPinJointNew(chassis, wheel1, cpvzero, cpvzero);
 	cpSpaceAddJoint(space, joint);
 	
 	
-	wheel2 = cpBodyNew(wheel_mass, cpMomentForCircle(wheel_mass, 0.0, radius, cpvzero));
+	wheel2 = cpBodyNew(wheel_mass, cpMomentForCircle(wheel_mass, 0.0f, radius, cpvzero));
 	wheel2->p = cpvadd(chassis->p, cpv(-offset.x, offset.y));
 	wheel2->v = chassis->v;
 	cpSpaceAddBody(space, wheel2);
 	shape = cpCircleShapeNew(wheel2, radius, cpvzero);
-	shape->e = 0.0; shape->u = 2.5;
+	shape->e = 0.0f; shape->u = 2.5f;
 	cpSpaceAddShape(space, shape);
 	
 	joint = cpPinJointNew(chassis, wheel2, cpvzero, cpvzero);

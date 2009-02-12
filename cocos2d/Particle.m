@@ -266,7 +266,7 @@
 
 -(void) draw
 {
-	int blendSrc, blendDst;
+//	int blendSrc, blendDst;
 //	int colorMode;
 	
 	glEnable(GL_TEXTURE_2D);
@@ -287,8 +287,8 @@
 	glColorPointer(4,GL_FLOAT,0,0);
 
 	// save blend state
-	glGetIntegerv(GL_BLEND_DST, &blendDst);
-	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+//	glGetIntegerv(GL_BLEND_DST, &blendDst);
+//	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	else
@@ -306,8 +306,10 @@
 	glDrawArrays(GL_POINTS, 0, particleIdx);
 	
 	// restore blend state
-	glBlendFunc( blendSrc, blendDst );
-//	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+//	glBlendFunc( blendSrc, blendDst );
+	// XXX: restoring the default blend function
+	// XXX: this should be in sync with Director setAlphaBlending
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
 #if 0
 	// restore color mode

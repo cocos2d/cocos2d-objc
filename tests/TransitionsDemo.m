@@ -227,21 +227,21 @@ Class restartTransition()
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2 scene:s2]];
+	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) backCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [backTransition() transitionWithDuration:1.2 scene:s2]];
+	[[Director sharedDirector] replaceScene: [backTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2 scene:s2]];
+	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 @end
 
@@ -287,21 +287,21 @@ Class restartTransition()
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2 scene:s2]];
+	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) backCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [backTransition() transitionWithDuration:1.2 scene:s2]];
+	[[Director sharedDirector] replaceScene: [backTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
 	[s2 add: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2 scene:s2]];
+	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 @end
 

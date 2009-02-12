@@ -122,9 +122,9 @@ Class restartAction()
 	textureAtlas = [[TextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
 
 	ccQuad2 texCoords[] = {
-		{0.0,0.2,	0.5,0.2,	0.0,0.0,	0.5,0.0},
-		{0.2,0.6,	0.6,0.6,	0.2,0.2,	0.6,0.2},
-		{0.0,1.0,	1.0,1.0,	0.0,0.0,	1.0,0.0},
+		{0.0f,0.2f,	0.5f,0.2f,	0.0f,0.0f,	0.5f,0.0f},
+		{0.2f,0.6f,	0.6f,0.6f,	0.2f,0.2f,	0.6f,0.2f},
+		{0.0f,1.0f,	1.0f,1.0f,	0.0f,0.0f,	1.0f,0.0f},
 	};
 	
 	ccQuad3	vertices[] = {
@@ -231,7 +231,7 @@ Class restartAction()
 		CGSize size = tilemap.contentSize;
 		tilemap.transformAnchor = cpv(0, size.height/2);
 		
-		id s = [ScaleBy actionWithDuration:4 scale:0.8];
+		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
 		id scaleBack = [s reverse];
 		id go = [MoveBy actionWithDuration:8 position:cpv(-1650,0)];
 		id goBack = [go reverse];

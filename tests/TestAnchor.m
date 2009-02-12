@@ -165,8 +165,8 @@ Class restartAction()
 	Sprite *sp1 = [Sprite spriteWithFile:@"grossini.png"];
 	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	
-	sp1.scale = 0.25;
-	sp2.scale = 0.25;
+	sp1.scale = 0.25f;
+	sp2.scale = 0.25f;
 	
 	[tamara add:sp1];
 	[grossini add:sp2];
@@ -214,7 +214,7 @@ Class restartAction()
 	id action1 = [RepeatForever actionWithAction:a1];
 	[grossini do:action1];	
 	
-	[self schedule:@selector(changeZOrder:) interval:2.0];
+	[self schedule:@selector(changeZOrder:) interval:2.0f];
 }
 
 -(void) changeZOrder:(ccTime) dt
@@ -253,8 +253,8 @@ Class restartAction()
 	[self add:sp1 z:0 tag:2];
 	[self add:sp2 z:0 tag:3];
 	
-	[self schedule:@selector(delay2:) interval:2.0];
-	[self schedule:@selector(delay4:) interval:4.0];
+	[self schedule:@selector(delay2:) interval:2.0f];
+	[self schedule:@selector(delay4:) interval:4.0f];
 	
 	return self;
 }

@@ -14,7 +14,7 @@ float randfloat() {
 	return ((float)random())/RAND_MAX;
 }
 
-#define CLOUDS_SCALE 1.3
+#define CLOUDS_SCALE 1.3f
 
 @implementation AccelViewportDemo
 -(id) init
@@ -34,8 +34,8 @@ float randfloat() {
 	CGSize s = [[Director sharedDirector] winSize];
 	screenSize = cpv(s.width, s.height);
 	
-	halfCloudsSize = cpvmult(cloudsSize, 0.5*CLOUDS_SCALE);
-	cpVect halfScreenSize = cpvmult(screenSize, 0.5);
+	halfCloudsSize = cpvmult(cloudsSize, 0.5f*CLOUDS_SCALE);
+	cpVect halfScreenSize = cpvmult(screenSize, 0.5f);
 	cloudsCentered = halfScreenSize;
 	cpVect tl = cpvadd(cpvsub(cloudsCentered, halfCloudsSize), halfScreenSize);
 	cpVect br = cpvsub(cpvadd(cloudsCentered, halfCloudsSize), halfScreenSize);
@@ -47,7 +47,7 @@ float randfloat() {
 	for (int n=0; n<NUM_GROSSINIS; n++) {
 		cpVect pos = cpv((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
 		grossini[n] = [self addNewSpritePosition:pos scale:0.15];
-		[grossini[n] do:[Repeat actionWithAction:[RotateBy actionWithDuration:.5*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
+		[grossini[n] do:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
 	}
 		
 //	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
@@ -63,7 +63,7 @@ float randfloat() {
 {
 	Sprite *g = [[Sprite spriteWithFile:@"grossini.png"] retain];
 	[clouds add: g];
-	[g setScale: scle];
+	[g setScale: (float) scle];
 	[g setPosition: pos ];
 	return g;
 }
@@ -88,8 +88,8 @@ float randfloat() {
 	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
 	cpVect location = cpv(touchLocation.x, touchLocation.y);
 	location = cpvsub(location, cloudsPos);
-	location = cpvmult(location, 1.0/CLOUDS_SCALE);
-	location = cpvadd(location, cpvmult(cloudsSize, 0.5));
+	location = cpvmult(location, 1.0f/CLOUDS_SCALE);
+	location = cpvadd(location, cpvmult(cloudsSize, 0.5f));
 
 	NSString *info = [ NSString stringWithFormat: @"(%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f)", 
 					   touchLocation.x, touchLocation.y, cloudsSize.x, cloudsSize.y,
@@ -104,19 +104,20 @@ float randfloat() {
 
 // Implement this method to get the lastest data from the accelerometer 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration {
-	double kFilteringFactor = 0.01;
+	float kFilteringFactor = 0.01f;
 	
-	accels[0] = acceleration.x * kFilteringFactor + accels[0] * (1.0 - kFilteringFactor);
-	accels[1] = acceleration.y * kFilteringFactor + accels[1] * (1.0 - kFilteringFactor);
-	accels[2] = acceleration.z * kFilteringFactor + accels[2] * (1.0 - kFilteringFactor);
+	accels[0] = acceleration.x * kFilteringFactor + accels[0] * (1.0f - kFilteringFactor);
+	accels[1] = acceleration.y * kFilteringFactor + accels[1] * (1.0f - kFilteringFactor);
+	accels[2] = acceleration.z * kFilteringFactor + accels[2] * (1.0f - kFilteringFactor);
 	
-	cpVect dest = cpvadd(cloudsCentered, cpv(cloudsSize.x*ACC_FACTOR*accels[1], cloudsSize.y*ACC_FACTOR*-accels[0]));
+	cpVect tmp = cpv( (float) (cloudsSize.x*ACC_FACTOR*accels[1]), (float) (cloudsSize.y*ACC_FACTOR*-accels[0]));
+	cpVect dest = cpvadd( cloudsCentered, tmp );
 	
 	// comentar esta linea para no limitar el area scrolleable
 	dest = cpBBClampVect(visibleArea, dest);
 	
 	// velocidad inv. prop. a la distancia a recorrer
-	cpVect newPos = cpvadd(cloudsPos, cpvmult(cpvsub(dest, cloudsPos), 0.1) );
+	cpVect newPos = cpvadd(cloudsPos, cpvmult(cpvsub(dest, cloudsPos), 0.1f) );
 	[clouds setPosition:newPos];
 	cloudsPos = newPos;
 }

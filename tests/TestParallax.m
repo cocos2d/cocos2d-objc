@@ -114,7 +114,7 @@ Class restartAction()
 	// Top Layer, a simple image
 	Sprite *cocosImage = [Sprite spriteWithFile:@"powered.png"];
 	// scale the image (optional)
-	cocosImage.scale = 2.5;
+	cocosImage.scale = 2.5f;
 	// change the transform anchor point to 0,0 (optional)
 	cocosImage.transformAnchor = cpv(0,0);
 	// position the image somewhere (optional)
@@ -138,7 +138,7 @@ Class restartAction()
 	// background layer: another image
 	Sprite *background = [Sprite spriteWithFile:@"background.png"];
 	// scale the image (optional)
-	background.scale = 1.5;
+	background.scale = 1.5f;
 	// change the transform anchor point (optional)
 	background.transformAnchor = cpv(0,0);
 
@@ -149,13 +149,13 @@ Class restartAction()
 	// NOW add the 3 layers to the 'void' node
 
 	// background image is moved at a ratio of 0.4x, 0.5y
-	[voidNode add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
+	[voidNode add:background z:-1 parallaxRatio:cpv(0.4f,0.5f)];
 	
 	// tiles are moved at a ratio of 2.2x, 1.0y
-	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2,1.0)];
+	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2f,1.0f)];
 	
 	// top image is moved at a ratio of 3.0x, 2.5y
-	[voidNode add:cocosImage z:2 parallaxRatio:cpv(3.0,2.5)];
+	[voidNode add:cocosImage z:2 parallaxRatio:cpv(3.0f,2.5f)];
 	
 	
 	// now create some actions that will move the 'void' node
@@ -207,12 +207,12 @@ Class restartAction()
 	tilemap.position = cpv(0,-200);
 	
 	Sprite *background = [Sprite spriteWithFile:@"background.png"];
-	background.scale = 1.5;
+	background.scale = 1.5f;
 	background.transformAnchor = cpv(0,0);
 	
 	// the parent contains data. The parent moves at (1,1)
 	// while the child moves at the ratio of (0.4, 0.5)
-	[tilemap add:background z:-1 parallaxRatio:cpv(0.4,0.5)];
+	[tilemap add:background z:-1 parallaxRatio:cpv(0.4f,0.5f)];
 	
 	id goUp = [MoveBy actionWithDuration:2 position:cpv(-1000,-500)];
 	id goDown = [goUp reverse];

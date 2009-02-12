@@ -56,7 +56,7 @@
     mFadeTime = fade;
     mLastLocation = cpvzero;
     mLastWidth = w/2;
-    mTexVPos = 0.0;
+    mTexVPos = 0.0f;
     mSegments = [[[NSMutableArray alloc] init] retain];
     dSegments = [[[NSMutableArray alloc] init] retain];
     RibbonSegment* seg = [[[RibbonSegment alloc] init] autorelease];
@@ -78,8 +78,8 @@
 // rotates a point around 0, 0
 -(cpVect)rotatePoint:(cpVect)vec rotation:(float)a
 {
-  float xtemp = (vec.x * cos(a)) - (vec.y * sin(a));
-  vec.y = (vec.x * sin(a)) + (vec.y * cos(a));
+  float xtemp = (vec.x * cosf(a)) - (vec.y * sinf(a));
+  vec.y = (vec.x * sinf(a)) + (vec.y * cosf(a));
   vec.x = xtemp;
   return vec;
 }
@@ -100,7 +100,7 @@
 // adds a new segment to the ribbon
 -(void)addPointAt:(cpVect)location width:(float)w
 {
-  w=w*0.5;
+  w=w*0.5f;
   // if this is the first point added, cache it and return
   if (!mPastFirstPoint)
   {
@@ -111,10 +111,10 @@
   }
   
   cpVect sub = cpvsub(mLastLocation, location);
-  float r = cpvtoangle(sub) + 1.57079637;
+  float r = cpvtoangle(sub) + 1.57079637f;
   cpVect p1 = cpvadd([self rotatePoint:cpv(-w, 0) rotation:r], location);
   cpVect p2 = cpvadd([self rotatePoint:cpv(w, 0) rotation:r], location);
-  float len = sqrt(pow(mLastLocation.x - location.x, 2) + pow(mLastLocation.y - location.y, 2));
+  float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
   float tend = mTexVPos + len/mTextureLength;
   RibbonSegment* seg;
   // first lets kill old segments
@@ -249,7 +249,7 @@
     {
       // generate alpha/color for each point
       glEnableClientState(GL_COLOR_ARRAY);
-      int i = begin;
+      uint i = begin;
       for (; i < end; ++i)
       {
         int idx = i*8;

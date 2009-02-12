@@ -56,7 +56,7 @@ Class restartAction()
 @implementation TextureDemo
 -(id) init
 {
-	if( self = [super initWithColor:0x202020FF] ) {
+	if( (self = [super initWithColor:0x202020FF]) ) {
 
 		CGSize s = [[Director sharedDirector] winSize];	
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];

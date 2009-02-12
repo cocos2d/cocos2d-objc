@@ -17,7 +17,7 @@
 	sun.position = cpv(480-32,320-32);
 
 	sun.totalParticles = 130;
-	sun.life = 0.6;
+	sun.life = 0.6f;
 	[self add:sun];
 
 	// timers
@@ -25,9 +25,9 @@
 	label2 = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
 	label3 = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
 	
-	[self schedule: @selector(step1:) interval: 0.5];
-	[self schedule: @selector(step2:) interval:1.0];
-	[self schedule: @selector(step3:) interval: 1.5];
+	[self schedule: @selector(step1:) interval: 0.5f];
+	[self schedule: @selector(step2:) interval:1.0f];
+	[self schedule: @selector(step3:) interval: 1.5f];
 	
 	label1.position = cpv(80,160);
 	label2.position = cpv(240,160);

@@ -5,7 +5,7 @@
 @class Sprite;
 
 #define NUM_GROSSINIS 20
-#define ACC_FACTOR 5.0
+#define ACC_FACTOR 5.0f
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>

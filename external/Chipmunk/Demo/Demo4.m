@@ -33,7 +33,7 @@ extern cpBody *staticBody;
 void demo4_update(int ticks)
 {
 	int steps = 3;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
@@ -55,8 +55,8 @@ void demo4_init(void)
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
-	cpSpaceResizeActiveHash(space, 30.0, 999);
-	cpSpaceResizeStaticHash(space, 200.0, 99);
+	cpSpaceResizeActiveHash(space, 30.0f, 999);
+	cpSpaceResizeStaticHash(space, 200.0f, 99);
 	space->gravity = cpv(0, -600);
 	
 	cpBody *body;
@@ -78,19 +78,19 @@ void demo4_init(void)
 	cpVect d = cpv( 200, -200);
 	
 	shape = cpSegmentShapeNew(staticBody, a, b, 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, b, c, 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, c, d, 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, d, a, 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	// Give the box a little spin.
@@ -98,16 +98,16 @@ void demo4_init(void)
 	// update it ourselves. (see above).
 	// NOTE: Normally you would want to add the segments as normal and not static shapes.
 	// I'm just doing it to demonstrate the cpSpaceRehashStatic() function.
-	staticBody->w = 0.4;
+	staticBody->w = 0.4f;
 	
 	// Add the bricks.
 	for(int i=0; i<3; i++){
 		for(int j=0; j<7; j++){
-			body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
+			body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 			body->p = cpv(i*60 - 150, j*30 - 150);
 			cpSpaceAddBody(space, body);
 			shape = cpPolyShapeNew(body, num, verts, cpvzero);
-			shape->e = 0.0; shape->u = 0.7;
+			shape->e = 0.0f; shape->u = 0.7f;
 			cpSpaceAddShape(space, shape);
 		}
 	}
