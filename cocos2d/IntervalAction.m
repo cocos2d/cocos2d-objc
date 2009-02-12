@@ -22,7 +22,7 @@
 //
 @implementation IntervalAction
 
-@synthesize duration;
+@synthesize elapsed, duration;
 
 -(id) init
 {

@@ -24,6 +24,14 @@
 -(void) restartCallback:(id) sender;
 @end
 
+@interface SpriteEase : SpriteDemo
+{}
+@end
+
+@interface SpriteEaseInOut : SpriteDemo
+{}
+@end
+
 
 @interface SpriteEaseExponential : SpriteDemo
 {}

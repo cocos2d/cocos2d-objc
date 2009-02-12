@@ -45,6 +45,7 @@ Example:
 	ccTime duration;
 }
 
+@property (readonly) ccTime elapsed;
 @property (readwrite,assign) ccTime duration;
 
 /** creates the action */
@@ -254,6 +255,7 @@ Example:
 
 
 /** Changes the acceleration of an action
+ @deprecated Use EaseIn or EaseOut instead. This Action will be removed in v0.8
  */
 @interface Accelerate: IntervalAction <NSCopying>
 {
@@ -270,6 +272,7 @@ Example:
 @end
 
 /** Makes an action change the travel speed but retain near normal speed at the beginning and ending.
+ @deprecated Use EaseInOut instead. This Action will be removed in v0.8
 */
 @interface AccelDeccel: IntervalAction <NSCopying>
 {
