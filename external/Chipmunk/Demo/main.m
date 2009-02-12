@@ -199,17 +199,17 @@ void drawCollisions(void *ptr, void *data)
 {
 	[super onEnter];
 		
-	float factor = 1.0;
+	float factor = 1.0f;
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0, 1.0);
+	glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
 	if( [[Director sharedDirector] landscape] )
-		glTranslatef(0.5, -480.5, 0.0);
+		glTranslatef(0.5f, -480.5f, 0.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glPointSize(3.0);
+	glPointSize(3.0f);
     glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POINT_SMOOTH);
     glEnable(GL_BLEND);
@@ -227,7 +227,7 @@ void drawCollisions(void *ptr, void *data)
 
 -(void) draw
 {
-	glColor4f(1.0, 1.0, 1.0, 1.0);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	cpSpaceHashEach(space->activeShapes, &drawObject, NULL);
 	cpSpaceHashEach(space->staticShapes, &drawObject, NULL);
 	
@@ -235,13 +235,13 @@ void drawCollisions(void *ptr, void *data)
 	int num = bodies->num;
 
 #if 1	// comment this block for better performance
-	glColor4f(0.0, 0.0, 1.0, 1.0);
+	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 	for(int i=0; i<num; i++){
 		cpBody *body = (cpBody *)bodies->arr[i];
 		drawPoint(body->p.x, body->p.y);
 	}
 	
-	glColor4f(1.0, 0.0, 0.0, 1.0);
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 	cpArrayEach(space->arbiters, &drawCollisions, NULL);
 #endif
 }

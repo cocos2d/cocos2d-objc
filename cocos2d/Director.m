@@ -170,6 +170,7 @@ static Director *_sharedDirector = nil;
 //
 - (void) mainLoop
 {
+	// dispatch missing events
     while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
     
 	/* clear window */
@@ -197,10 +198,7 @@ static Director *_sharedDirector = nil;
 		glPopMatrix();
 	
 	/* swap buffers */
-	[_openGLView swapBuffers];
-	
-	// dispatch missing events
-	while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
+	[_openGLView swapBuffers];	
 }
 
 -(void) calculateDeltaTime
@@ -292,6 +290,12 @@ static Director *_sharedDirector = nil;
 	if (on) {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+//		You might want to use this blend function instead
+//		XXX: Some things needs to be fixed
+//		XXX: Particles is setting the default blend function
+//		XXX: to GL_SRC_ALPHA. Modify the blend parameters
+//		XXX: there too
 //		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 	} else
@@ -702,6 +706,14 @@ static Director *_sharedDirector = nil;
 	
 
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
+
+//
+//	If you want to attach the opengl view into UIScrollView
+//  uncomment this line to prevent 'freezing'.
+//	It doesn't work on with the Fast Director
+//
+//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
+//								 forMode:NSRunLoopCommonModes];
 }
 
 - (void)stopAnimation

@@ -57,13 +57,14 @@ enum
 	[s do: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
-	float at = RADIANS_TO_DEGREES( atan(o/a) );
+	float at = (float) RADIANS_TO_DEGREES( atanf( o/a) );
 	
-	if( a < 0 )
+	if( a < 0 ) {
 		if(  o < 0 )
 			at = 180 + abs(at);
 		else
 			at = 180 - abs(at);	
+	}
 	
 	[s do: [RotateTo actionWithDuration:1 angle: at]];
 	

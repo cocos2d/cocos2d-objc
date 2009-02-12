@@ -56,6 +56,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		   optimizations in the whole code (using floats, not doubles)
 		   removed useless GL commands in director
 		   fixed Menu aligments
+		   Treat warnings as errors patch
 	* mark at abitofthought: author of Fast Director
 	* Mitch: patches for Menu
 	         author of MenuItemToggle

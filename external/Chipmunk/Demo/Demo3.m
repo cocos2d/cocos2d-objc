@@ -43,7 +43,7 @@ eachBody(cpBody *body, void *unused)
 void demo3_update(int ticks)
 {
 	int steps = 1;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
@@ -63,8 +63,8 @@ void demo3_init(void)
 	space->iterations = 5;
 	space->gravity = cpv(0, -100);
 	
-	cpSpaceResizeStaticHash(space, 40.0, 999);
-	cpSpaceResizeActiveHash(space, 30.0, 2999);
+	cpSpaceResizeStaticHash(space, 40.0f, 999);
+	cpSpaceResizeActiveHash(space, 30.0f, 2999);
 	
 	cpBody *body;
 	cpShape *shape;
@@ -72,8 +72,8 @@ void demo3_init(void)
 	// Create vertexes for a pentagon shape.
 	cpVect verts[NUM_VERTS];
 	for(int i=0; i<NUM_VERTS; i++){
-		cpFloat angle = -2*M_PI*i/((cpFloat) NUM_VERTS);
-		verts[i] = cpv(10*cos(angle), 10*sin(angle));
+		cpFloat angle = (cpFloat) (-2*M_PI*i/((cpFloat) NUM_VERTS));
+		verts[i] = cpv(10*cosf(angle), 10*sinf(angle));
 	}
 	
 	// Vertexes for a triangle shape.
@@ -89,20 +89,20 @@ void demo3_init(void)
 			cpFloat stagger = (j%2)*40;
 			cpVect offset = cpv(i*80 - 320 + stagger, j*70 - 240);
 			shape = cpPolyShapeNew(staticBody, 3, tris, offset);
-			shape->e = 1.0; shape->u = 1.0;
+			shape->e = 1.0f; shape->u = 1.0f;
 			cpSpaceAddStaticShape(space, shape);
 		}
 	}
 	
 	// Add lots of pentagons.
 	for(int i=0; i<300; i++){
-		body = cpBodyNew(1.0, cpMomentForPoly(1.0, NUM_VERTS, verts, cpvzero));
+		body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, NUM_VERTS, verts, cpvzero));
 		cpFloat x = rand()/(cpFloat)RAND_MAX*640 - 320;
 		body->p = cpv(x, 350);
 		
 		cpSpaceAddBody(space, body);
 		shape = cpPolyShapeNew(body, NUM_VERTS, verts, cpvzero);
-		shape->e = 0.0; shape->u = 0.4;
+		shape->e = 0.0f; shape->u = 0.4f;
 		cpSpaceAddShape(space, shape);
 	}
 }

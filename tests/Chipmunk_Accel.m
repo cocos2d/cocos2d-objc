@@ -17,7 +17,7 @@ eachShape(void *ptr, void* unused)
 	if( sprite ) {
 		cpBody *body = shape->body;
 		[sprite setPosition: cpv( body->p.x, body->p.y)];
-		[sprite setRotation: RADIANS_TO_DEGREES( -body->a )];
+		[sprite setRotation: (float) RADIANS_TO_DEGREES( -body->a )];
 	}
 }
 
@@ -37,12 +37,12 @@ eachShape(void *ptr, void* unused)
 		cpv( 24,-54),
 	};
 	
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 	body->p = cpv(x, y);
 	cpSpaceAddBody(space, body);
 	
 	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	shape->e = 0.5; shape->u = 0.5;
+	shape->e = 0.5f; shape->u = 0.5f;
 	shape->data = sprite;
 	cpSpaceAddShape(space, shape);
 	
@@ -59,7 +59,7 @@ eachShape(void *ptr, void* unused)
 	
 	cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
 	space = cpSpaceNew();
-	cpSpaceResizeStaticHash(space, 400.0, 40);
+	cpSpaceResizeStaticHash(space, 400.0f, 40);
 	cpSpaceResizeActiveHash(space, 100, 600);
 
 	space->gravity = cpv(0, 0);
@@ -69,22 +69,22 @@ eachShape(void *ptr, void* unused)
 	
 	// bottom
 	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(wins.width,0), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// top
 	shape = cpSegmentShapeNew(staticBody, cpv(0,wins.height), cpv(wins.width,wins.height), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// left
 	shape = cpSegmentShapeNew(staticBody, cpv(0,0), cpv(0,wins.height), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// right
 	shape = cpSegmentShapeNew(staticBody, cpv(wins.width,0), cpv(wins.width,wins.height), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	[self addNewSpriteX: 200 y:200];
@@ -130,10 +130,10 @@ eachShape(void *ptr, void* unused)
 {	
 	static float prevX=0, prevY=0;
 	
-#define kFilterFactor 0.05
+#define kFilterFactor 0.05f
 	
-	float accelX = acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-	float accelY = acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
+	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
+	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
 	
 	prevX = accelX;
 	prevY = accelY;

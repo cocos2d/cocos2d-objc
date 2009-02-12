@@ -30,6 +30,7 @@ version 0.7.0 - XX-Feb-2009
 	 SplitRowsTransition, SplitColsTransition, TurnOffTilesTransition,
 	 FadeTRTransition, FadeBLTransition, FadeUpTransition, FadeDownTransition
      (issue #187)
+  . Xcode: treat warnings as errors (issue #201)
 
  
 version 0.6.3 - 28-Jan-2009

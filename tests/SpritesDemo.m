@@ -151,8 +151,8 @@ Class restartAction()
 	[super onEnter];
 
 	
-	tamara.scaleX = 2.5;
-	tamara.scaleY = -1.0;
+	tamara.scaleX = 2.5f;
+	tamara.scaleY = -1.0f;
 	tamara.position = cpv(100,100);
 	
 	grossini.rotation = 120;
@@ -214,7 +214,7 @@ Class restartAction()
 
 	[self centerSprites];
 	
-	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5];
+	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5f];
 	id actionBy = [ScaleBy actionWithDuration:2  scale: 2];
 	
 //	grossini.transformAnchor = cpv( [grossini transformAnchor].x, 0 );
@@ -273,8 +273,8 @@ Class restartAction()
 	[self centerSprites];
 	
 	tamara.opacity = 0;
-	id action1 = [FadeIn actionWithDuration:1.0];
-	id action2 = [FadeOut actionWithDuration:1.0];
+	id action1 = [FadeIn actionWithDuration:1.0f];
+	id action2 = [FadeOut actionWithDuration:1.0f];
 	
 	[tamara do: action1];
 	[grossini do:action2];
@@ -294,7 +294,7 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-	id animation = [[Animation alloc] initWithName:@"dance" delay:0.2];
+	id animation = [[Animation alloc] initWithName:@"dance" delay:0.2f];
 	for( int i=1;i<15;i++)
 		[animation addFrame: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	

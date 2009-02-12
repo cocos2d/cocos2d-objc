@@ -165,7 +165,7 @@ Class restartAction()
 @implementation TextLayer
 -(id) init
 {
-	if( self = [super init] ) {
+	if( (self = [super init]) ) {
 	
 		float x,y;
 		
@@ -180,7 +180,7 @@ Class restartAction()
 		
 		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 		[bg add:grossini z:1 tag:kTagSprite1];
-		grossini.position = cpv(x/3.0,200);
+		grossini.position = cpv(x/3.0f,200);
 		id sc = [ScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
 	

@@ -60,7 +60,7 @@
 {
   cpVect location = [self absolutePosition];
   [mRibbon setPosition:cpv(-1*location.x, -1*location.y)];
-  float len = sqrt(pow(mLastLocation.x - location.x, 2) + pow(mLastLocation.y - location.y, 2));
+  float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
   if (len > mSegThreshold)
   {
     [mRibbon addPointAt:location width:mWidth];

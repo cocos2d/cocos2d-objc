@@ -48,14 +48,14 @@ apply_buoyancy(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 //	glBegin(GL_POINTS);
 	for(int x=0; x<numx; x++){
 		for(int y=0; y<numy; y++){
-			cpVect p_sample = cpv((x + 0.5)*stepx - WIDTH/2, (y + 0.5)*stepy - HEIGHT/2);
+			cpVect p_sample = cpv((x + 0.5f)*stepx - WIDTH/2, (y + 0.5f)*stepy - HEIGHT/2);
 			cpVect p = cpBodyLocal2World(body, p_sample);
 			cpVect r = cpvsub(p, body->p);
 			
 			if(p.y < 0){
 				cpVect v = cpvadd(body->v, cpvmult(cpvperp(r), body->w));
-				cpVect f_damp = cpvmult(v, -0.0003*cpvlength(v));
-				cpVect f = cpvadd(cpv(0, 2.0), f_damp);
+				cpVect f_damp = cpvmult(v, -0.0003f*cpvlength(v));
+				cpVect f = cpvadd(cpv(0, 2.0f), f_damp);
 				cpBodyApplyForce(body, f, r);
 
 //				glVertex2f(p.x, p.y);
@@ -70,7 +70,7 @@ apply_buoyancy(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 void demo6_update(int ticks)
 {
 	int steps = 1;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
@@ -81,13 +81,13 @@ static void
 make_box(cpVect p, cpVect v, cpFloat a, cpFloat w)
 {
 	cpVect verts[] = {
-		cpv(-WIDTH/2.0,-HEIGHT/2.0),
-		cpv(-WIDTH/2.0, HEIGHT/2.0),
-		cpv( WIDTH/2.0, HEIGHT/2.0),
-		cpv( WIDTH/2.0,-HEIGHT/2.0),
+		cpv(-WIDTH/2.0f,-HEIGHT/2.0f),
+		cpv(-WIDTH/2.0f, HEIGHT/2.0f),
+		cpv( WIDTH/2.0f, HEIGHT/2.0f),
+		cpv( WIDTH/2.0f,-HEIGHT/2.0f),
 	};
 
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, 4, verts, cpvzero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, 4, verts, cpvzero));
 	body->p = p;
 	body->v = v;
 	cpBodySetAngle(body, a);
@@ -96,7 +96,7 @@ make_box(cpVect p, cpVect v, cpFloat a, cpFloat w)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, 4, verts, cpvzero);
-	shape->e = 0.0; shape->u = 0.7;
+	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 
@@ -109,22 +109,22 @@ void demo6_init(void)
 	space->iterations = 5;
 	space->gravity = cpv(0, -100);
 	
-	cpSpaceResizeStaticHash(space, 40.0, 999);
-	cpSpaceResizeActiveHash(space, 30.0, 2999);
+	cpSpaceResizeStaticHash(space, 40.0f, 999);
+	cpSpaceResizeActiveHash(space, 30.0f, 2999);
 	
 	cpShape *shape;
 	
 	// Screen border
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	// Reference line
@@ -136,8 +136,8 @@ void demo6_init(void)
 	cpSpaceAddCollisionPairFunc(space, 0, 1, NULL, NULL);
 	
 	// Create boxes
-	make_box(cpv(-150, 150), cpv(200, -100), M_PI/2.0, 0.0);
-	make_box(cpv(150, 150), cpv(0, -300), M_PI/4.0, 0.0);
-	make_box(cpv(0, 150), cpv(0, 200), 0.0, 0.0);
-	make_box(cpv(0, 250), cpv(50, 100), 0.0, 3.0);
+	make_box(cpv(-150, 150), cpv(200, -100), (cpFloat) M_PI/2.0f, 0.0f);
+	make_box(cpv(150, 150), cpv(0, -300), (cpFloat) M_PI/4.0f, 0.0f);
+	make_box(cpv(0, 150), cpv(0, 200), 0.0f, 0.0f);
+	make_box(cpv(0, 250), cpv(50, 100), 0.0f, 3.0f);
 }

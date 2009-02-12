@@ -33,7 +33,7 @@ extern cpBody *staticBody;
 void demo2_update(int ticks)
 {
 	int steps = 1;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
@@ -48,8 +48,8 @@ void demo2_init(void)
 	
 	space = cpSpaceNew();
 	space->iterations = 20;
-	cpSpaceResizeStaticHash(space, 40.0, 1000);
-	cpSpaceResizeActiveHash(space, 40.0, 1000);
+	cpSpaceResizeStaticHash(space, 40.0f, 1000);
+	cpSpaceResizeActiveHash(space, 40.0f, 1000);
 	space->gravity = cpv(0, -100);
 	
 	cpBody *body;
@@ -65,36 +65,36 @@ void demo2_init(void)
 	
 	// Create segments around the edge of the screen.
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
 	// Add lots of boxes.
 	for(int i=0; i<14; i++){
 		for(int j=0; j<=i; j++){
-			body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
+			body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 			body->p = cpv(j*32 - i*16, 300 - i*32);
 			cpSpaceAddBody(space, body);
 			shape = cpPolyShapeNew(body, num, verts, cpvzero);
-			shape->e = 0.0; shape->u = 0.8;
+			shape->e = 0.0f; shape->u = 0.8f;
 			cpSpaceAddShape(space, shape);
 		}
 	}
 	
 	// Add a ball to make things more interesting
-	cpFloat radius = 15.0;
-	body = cpBodyNew(10.0, cpMomentForCircle(10.0, 0.0, radius, cpvzero));
+	cpFloat radius = 15.0f;
+	body = cpBodyNew(10.0f, cpMomentForCircle(10.0f, 0.0f, radius, cpvzero));
 	body->p = cpv(0, -240 + radius);
 //	body->v = cpv(10, 0);
 	cpSpaceAddBody(space, body);
 	shape = cpCircleShapeNew(body, radius, cpvzero);
-	shape->e = 0.0; shape->u = 0.9;
+	shape->e = 0.0f; shape->u = 0.9f;
 	cpSpaceAddShape(space, shape);
 }

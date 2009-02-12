@@ -31,7 +31,7 @@ extern cpBody *staticBody;
 void demo1_update(int ticks)
 {
 	int steps = 2;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
@@ -43,7 +43,7 @@ int some_value = 42;
 static int
 collFunc(cpShape *a, cpShape *b, cpContact *contacts, int numContacts, cpFloat normal_coef, void *data)
 {
-	int *some_ptr = (int *)data;
+//	int *some_ptr = (int *)data;
 
 // Do various things with the contact information. 
 // Make particle effects, estimate the impact damage from the relative velocities, etc.
@@ -65,7 +65,7 @@ void demo1_init(void)
 	
 	// Create a space and adjust some of it's parameters.
 	space = cpSpaceNew();
-	cpSpaceResizeStaticHash(space, 20.0, 999);
+	cpSpaceResizeStaticHash(space, 20.0f, 999);
 	space->gravity = cpv(0, -100);
 	
 	cpBody *body;
@@ -83,15 +83,15 @@ void demo1_init(void)
 	
 	// Create some segments around the edges of the screen.
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody,cpv(-320,-240), cpv(320,-240), 0.0f);
-	shape->e = 1.0; shape->u = 1.0;
+	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// Create the stair steps.
@@ -102,20 +102,20 @@ void demo1_init(void)
 		cpVect c = cpv(j*10 - 320, j*-10 + 240);
 		
 		shape = cpSegmentShapeNew(staticBody, a, b, 0.0f);
-		shape->e = 1.0; shape->u = 1.0;
+		shape->e = 1.0f; shape->u = 1.0f;
 		cpSpaceAddStaticShape(space, shape);
 		
 		shape = cpSegmentShapeNew(staticBody, b, c, 0.0f);
-		shape->e = 1.0; shape->u = 1.0;
+		shape->e = 1.0f; shape->u = 1.0f;
 		cpSpaceAddStaticShape(space, shape);
 	}
 	
 	// Create a box and initialize some of its parameters.
-	body = cpBodyNew(1.0, cpMomentForPoly(1.0, num, verts, cpvzero));
+	body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 	body->p = cpv(-280, 240);
 	cpSpaceAddBody(space, body);
 	shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	shape->e = 0.0; shape->u = 1.5;
+	shape->e = 0.0f; shape->u = 1.5f;
 	shape->collision_type = 1;
 	cpSpaceAddShape(space, shape);
 	

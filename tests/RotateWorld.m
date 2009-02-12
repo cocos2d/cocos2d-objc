@@ -51,9 +51,9 @@
 	Sprite *spriteSister1 = [Sprite spriteWithFile: @"grossinis_sister1.png"];
 	Sprite *spriteSister2 = [Sprite spriteWithFile: @"grossinis_sister2.png"];
 	
-	[sprite setScale: 1.5];
-	[spriteSister1 setScale: 1.5];
-	[spriteSister2 setScale: 1.5];
+	[sprite setScale: 1.5f];
+	[spriteSister1 setScale: 1.5f];
+	[spriteSister2 setScale: 1.5f];
 	
 	[sprite setPosition: cpv(x/2,y/2)];
 	[spriteSister1 setPosition: cpv(40,y/2)];
@@ -105,18 +105,18 @@
 	id green = [ColorLayer layerWithColor: 0x00ff00ff];
 	id white = [ColorLayer layerWithColor: 0xffffffff];
 
-	[blue setScale: 0.5];
+	[blue setScale: 0.5f];
 	[blue setPosition: cpv(-x/4,-y/4)];
 	[blue add: [SpriteLayer node]];
 	
-	[red setScale: 0.5];
+	[red setScale: 0.5f];
 	[red setPosition: cpv(x/4,-y/4)];
 
-	[green setScale: 0.5];
+	[green setScale: 0.5f];
 	[green setPosition: cpv(-x/4,y/4)];
 	[green add: [TextLayer node]];
 
-	[white setScale: 0.5];
+	[white setScale: 0.5f];
 	[white setPosition: cpv(x/4,y/4)];
 
 	[self add: blue z:-1];
