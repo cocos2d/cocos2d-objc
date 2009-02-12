@@ -18,3 +18,10 @@
 #else
 #define CCLOG(...) do {} while (0)
 #endif
+
+
+/// returns a random float between -1 and 1
+#define CCRANDOM_FLOAT_MINUS1_1() ((random() / (float)0x3fffffff )-1.0f)
+
+/// returns a random float between 0 and 1
+#define CCRANDOM_FLOAT_0_1() ((random() / (float)0x7fffffff ))
