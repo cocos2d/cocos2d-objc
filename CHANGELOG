@@ -7,6 +7,8 @@ version 0.7.0 - XX-Feb-2009
  . CocosNode: children is a property (issue #185)
  . Demos: Creating Window and attaching cocos2d to it (issue #180)
  . Demos: Texture2dDemo shows how to load PVR images (issue #112)
+ . Demos: Added AttachDemo (issue #180)
+ . Demos: Added EffectsDemo and EffectsAdvancedDemo (issue #183)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)
  . Director: winSize returns a CGSize (not a CGRect) (issue #159)
  . Director: added FastDirector (issue #145)
@@ -14,11 +16,12 @@ version 0.7.0 - XX-Feb-2009
  . Director: renamed runScene with runWithScene (issue #194)
  . Director: SignificantTimeChange fixed (issue #6)
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
- . Effects: Basic: StopGrid, ReuseGrid,
- . Effects: Grid: Waves3D, FlipX3D, FlipY3D, Lens3D, Ripple3D, Liquid, Shaky3D, Waves, Twirl
+ . Effects: Basic: StopGrid, ReuseGrid (issue #183)
+ . Effects: Grid: Waves3D, FlipX3D, FlipY3D, Lens3D, Ripple3D, Liquid, Shaky3D, Waves
+				 Twirl (issue #183)
  . Effects:	Tiled: ShakyTiles3D, ShatteredTiles3D, ShuffleTiles, FadeOutTRTiles, FadeOutBLTiles,
-				FadeOutUpTiles, FadeOutDownTiles, TurnOffTiles, WavesTiles3D, JumpTiles3D,
-				SplitRows, SplitCols
+				FadeOutUpTiles, FadeOutDownTiles, TurnOffTiles, WavesTiles3D, JumpTiles3D
+				SplitRows, SplitCols (issue #183)
  . Experimental: Added StreakDemo (issue #171)
  . Menu: aligItemsVerticallyOld removed. (issue #196)
  . MenuItemFont: can be changed in runtime (issue #202)

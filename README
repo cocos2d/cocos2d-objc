@@ -11,7 +11,7 @@ Main features
     * Scene management (workflow)
     * Transitions between scenes
 	* Sprites
-	* Effects: Lens, Ripple, Waves, etc.
+	* Effects: Lens, Ripple, Waves, Liquid, etc.
     * Actions (behaviours): 
 		* Trasformation Actions: Move, Rotate, Scale, Jump, etc.
 		* Composable actions: Sequence, Spawn, Repeat, Reverse

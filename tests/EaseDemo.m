@@ -1,6 +1,7 @@
 //
 // Ease Demo
 // a cocos2d example
+// http://code.google.com/p/cocos2d-iphone
 //
 
 // local import

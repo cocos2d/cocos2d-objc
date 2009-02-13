@@ -1,6 +1,7 @@
 //
-// cocos2d for iphone
 // Accelerometer + physics example
+// a cocos2d example
+// http://code.google.com/p/cocos2d-iphone
 //
 
 

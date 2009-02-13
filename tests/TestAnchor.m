@@ -1,6 +1,7 @@
 //
 // Anchor Demo
 // a cocos2d example
+// http://code.google.com/p/cocos2d-iphone
 //
 
 // cocos import

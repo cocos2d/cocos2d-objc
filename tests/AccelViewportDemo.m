@@ -1,6 +1,7 @@
 //
 // AccelViewport Demo
 // a cocos2d example by Alecu
+// http://code.google.com/p/cocos2d-iphone
 //
 // To use the virtual accelerometer version, please go here:
 // http://code.google.com/p/remote-accel/

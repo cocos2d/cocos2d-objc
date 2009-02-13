@@ -141,7 +141,7 @@ and when to execute the Scenes
 -(void) setDepthBufferFormat: (tDepthBufferFormat) db;
 
 // Integration with UIKit
-/** detach or attach to a view or a window */
+/** detach the cocos2d view from the view/window */
 -(BOOL)detach;
 
 /** attach in UIWindow using the full frame */
@@ -151,7 +151,7 @@ and when to execute the Scenes
 -(BOOL)attachInView:(UIView *)view;
 
 /** attach in UIView using the given frame */
--(BOOL)attachInView:(UIView *)view with:(CGRect)frame;
+-(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame;
 
 // Landscape
 
@@ -196,7 +196,7 @@ and when to execute the Scenes
  */
 -(void) replaceScene: (Scene*) scene;
 
-/** Ends the execution */
+/** Ends the execution, releases the running scene */
 -(void) end;
 
 /** Pauses the running scene.
@@ -211,11 +211,16 @@ and when to execute the Scenes
  */
 -(void) resume;
 
-/** Hides the Director Window & stops animation */
--(void) hide;
+/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
+ If you wan't to pause your animation call [pause] instead.
+ */
+-(void) stopAnimation;
 
-/** UnHides the Director Window & starts animation*/
--(void) unhide;
+/** The main loop is triggered again.
+ Call this function only if [stopAnimation] was called earlier
+ */
+ -(void) startAnimation;
+
 
 // Events
 
@@ -240,9 +245,9 @@ and when to execute the Scenes
 -(void) set3Dprojection;
 @end
 
-/** FastDirector is a Director that triggers the main loop
- * as fast as possible.
- * It is faster than Director but it also consumes more battery
+/** FastDirector is a Director that triggers the main loop as fast as possible.
+ * In some circumstances it is faster than the normal Director.
+ @warning BUG: Don't use the FastDirector if you are going the detach and then re-attach the opengl view again.
  */
 @interface FastDirector : Director
 {
