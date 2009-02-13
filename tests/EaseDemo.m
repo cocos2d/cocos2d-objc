@@ -1,7 +1,6 @@
 //
 // Ease Demo
 // a cocos2d example
-// http://code.google.com/p/cocos2d-iphone
 //
 
 // local import
@@ -11,10 +10,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-						 @"SpriteEaseCubic",
-						 @"SpriteEaseCubicInOut",
-						 @"SpriteEaseQuad",
-						 @"SpriteEaseQuadInOut",
+						@"SpriteEase",
+						@"SpriteEaseInOut",
 						 @"SpriteEaseExponential",
 						 @"SpriteEaseExponentialInOut",
 						 @"SpriteEaseSine",
@@ -140,7 +137,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark Ease Actions
 
-@implementation SpriteEaseCubic
+@implementation SpriteEase
 -(void) onEnter
 {
 	[super onEnter];
@@ -148,12 +145,12 @@ Class restartAction()
 	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseCubicIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in = [EaseIn actionWithAction:[[move copy] autorelease] rate:3.0f];
 	id move_ease_in_back = [move_ease_in reverse];
-
-	id move_ease_out = [EaseCubicOut actionWithAction:[[move copy] autorelease]];
+	
+	id move_ease_out = [EaseOut actionWithAction:[[move copy] autorelease] rate:3.0f];
 	id move_ease_out_back = [move_ease_out reverse];
-
+	
 	
 	id seq1 = [Sequence actions: move, move_back, nil];
 	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
@@ -166,32 +163,39 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"EaseCubicIn - EaseCubicOut";
+	return @"EaseIn - EaseOut";
 }
 @end
 
-@implementation SpriteEaseCubicInOut
+@implementation SpriteEaseInOut
 -(void) onEnter
 {
 	[super onEnter];
 	
 	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
-	id move_back = [move reverse];
+//	id move_back = [move reverse];
 	
-	id move_ease = [EaseCubicInOut actionWithAction:[[move copy] autorelease]];
-	id move_ease_back = [move_ease reverse];
+	id move_ease_inout1 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
+	id move_ease_inout_back1 = [move_ease_inout1 reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	id move_ease_inout2 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:3.0f];
+	id move_ease_inout_back2 = [move_ease_inout2 reverse];
+
+	id move_ease_inout3 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:4.0f];
+	id move_ease_inout_back3 = [move_ease_inout3 reverse];
+
 	
-	[self positionForTwo];
-	
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
+	id seq1 = [Sequence actions: move_ease_inout1, move_ease_inout_back1, nil];
+	id seq2 = [Sequence actions: move_ease_inout2, move_ease_inout_back2, nil];
+	id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+		
+	[tamara do: [RepeatForever actionWithAction:seq1]];
+	[kathia do: [RepeatForever actionWithAction:seq2]];
+	[grossini do: [RepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
-	return @"EaseCubicInOut action";
+	return @"EaseInOut and rates";
 }
 @end
 
@@ -251,60 +255,6 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteEaseQuad
--(void) onEnter
-{
-	[super onEnter];
-	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
-	id move_back = [move reverse];
-	
-	id move_ease_in = [EaseQuadIn actionWithAction:[[move copy] autorelease]];
-	id move_ease_in_back = [move_ease_in reverse];
-	
-	id move_ease_out = [EaseQuadOut actionWithAction:[[move copy] autorelease]];
-	id move_ease_out_back = [move_ease_out reverse];
-	
-	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
-	
-	
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
-	[kathia do: [RepeatForever actionWithAction:seq3]];
-}
--(NSString *) title
-{
-	return @"EaseQuadIn - EaseQuadOut";
-}
-@end
-
-@implementation SpriteEaseQuadInOut
--(void) onEnter
-{
-	[super onEnter];
-	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
-	id move_back = [move reverse];
-	
-	id move_ease = [EaseQuadInOut actionWithAction:[[move copy] autorelease]];
-	id move_ease_back = [move_ease reverse];
-	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
-
-	[self positionForTwo];
-
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
-}
--(NSString *) title
-{
-	return @"EaseQuadInOut action";
-}
-@end
 
 @implementation SpriteEaseExponential
 -(void) onEnter

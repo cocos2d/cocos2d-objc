@@ -41,22 +41,6 @@
 {}
 @end
 
-@interface SpriteEaseCubic : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseCubicInOut : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseQuad : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseQuadInOut : SpriteDemo
-{}
-@end
-
 @interface SpriteEaseSine : SpriteDemo
 {}
 @end

@@ -1,5 +1,6 @@
 version 0.7.0 - XX-Feb-2009
  . Action: elapsed is a property (issue #203)
+ . Actions: EaseIn/Out added. Cubic/Quad removed (issue #195)
  . Atlas: Fixed black line (issue #135 and issue #47)
  . Atlas: Works when GL_CULL_FACE is enabled (issue #179)
  . Atlas: updateAltasValues renamed to updateAtlasValues (issue #198)

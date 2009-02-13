@@ -22,12 +22,37 @@
 {
 	IntervalAction * other;
 }
-
 /** creates the action */
 +(id) actionWithAction: (IntervalAction*) action;
 /** initializes the action */
 -(id) initWithAction: (IntervalAction*) action;
 @end
+
+/** Base class for Easing actions with rate parameters
+ */
+@interface EaseRateAction :  EaseAction <NSCopying>
+{
+	float	rate;
+}
+/** rate value for the actions */
+@property (readwrite,assign) float rate;
+/** Creates the action with the inner action and the rate parameter */
++(id) actionWithAction: (IntervalAction*) action rate:(float)rate;
+/** Initializes the action with the inner action and the rate parameter */
+-(id) initWithAction: (IntervalAction*) action rate:(float)rate;
+@end
+
+/** EaseIn action with a rate
+ */
+@interface EaseIn : EaseRateAction <NSCopying> {} @end
+
+/** EaseOut action with a rate
+ */
+@interface EaseOut : EaseRateAction <NSCopying> {} @end
+
+/** EaseInOut action with a rate
+ */
+@interface EaseInOut : EaseRateAction <NSCopying> {} @end
 
 /** Ease Exponential In
  */
@@ -47,22 +72,3 @@
 /** Ease Sine InOut
  */
 @interface EaseSineInOut : EaseAction <NSCopying> {} @end
-/** Ease Quadratic In
- */
-@interface EaseQuadIn : EaseAction <NSCopying> {} @end
-/** Ease Quadratic Out
- */
-@interface EaseQuadOut : EaseAction <NSCopying> {} @end
-/** Ease Quadratic InOut
- */
-@interface EaseQuadInOut : EaseAction <NSCopying> {} @end
-/** Ease Cubic In
- */
-@interface EaseCubicIn : EaseAction <NSCopying> {} @end
-/** Ease Cubic Out
- */
-@interface EaseCubicOut : EaseAction <NSCopying> {} @end
-/** Ease Cubic InOut
- */
-@interface EaseCubicInOut : EaseAction <NSCopying> {} @end
-

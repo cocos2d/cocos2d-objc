@@ -766,7 +766,7 @@ enum {
 				nil
 			  ];
 	[self do: [Sequence actions:
-			   [EaseCubicInOut actionWithAction:seq],
+			   [EaseInOut actionWithAction:seq rate:3.0f],
 			   [CallFunc actionWithTarget:self selector:@selector(finish)],
 			   [StopGrid action],
 			   nil]

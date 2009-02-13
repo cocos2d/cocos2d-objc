@@ -1581,7 +1581,7 @@
 			path = external/Chipmunk/Demo;
 			sourceTree = "<group>";
 		};
-		50175B240F33B22300624901 /* cocosLive */ = {
+		50175B240F33B22300624901 /* cocosLiveDemo */ = {
 			isa = PBXGroup;
 			children = (
 				50175B250F33B22300624901 /* cocoslive.xib */,
@@ -1591,7 +1591,7 @@
 				50175B290F33B22300624901 /* dataDelegate.h */,
 				50175B2A0F33B22300624901 /* dataDelegate.m */,
 			);
-			name = cocosLive;
+			name = cocosLiveDemo;
 			path = tests/cocosLive;
 			sourceTree = "<group>";
 		};
@@ -1779,7 +1779,7 @@
 			isa = PBXGroup;
 			children = (
 				504828C70F45B15700A30CEF /* attachDemo */,
-				50175B240F33B22300624901 /* cocosLive */,
+				50175B240F33B22300624901 /* cocosLiveDemo */,
 				50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */,
 				50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */,
 				50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */,
