@@ -67,6 +67,87 @@
 }
 @end
 
+
+//
+// EaseRateAction
+//
+@implementation EaseRateAction
+@synthesize rate;
++(id) actionWithAction: (IntervalAction*) action rate:(float)aRate
+{
+	return [[[self alloc] initWithAction: action rate:aRate] autorelease ];
+}
+
+-(id) initWithAction: (IntervalAction*) action rate:(float)aRate
+{
+	if( (self=[super initWithAction:action ]) ) {
+		self.rate = aRate;
+	}
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] rate:rate];
+	return copy;
+}
+
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+-(IntervalAction*) reverse
+{
+	return [[self class] actionWithAction: [other reverse] rate:1/rate];
+}
+@end
+
+//
+// EeseIn
+//
+@implementation EaseIn
+-(void) update: (ccTime) t
+{
+	[other update: powf(t,rate)];
+}
+@end
+
+//
+// EaseOut
+//
+@implementation EaseOut
+-(void) update: (ccTime) t
+{
+	[other update: powf(t,1/rate)];
+}
+@end
+
+//
+// EaseInOut
+//
+@implementation EaseInOut
+-(void) update: (ccTime) t
+{	
+	int sign =1;
+	int r = (int) rate;
+	if (r % 2 == 0)
+		sign = -1;
+
+	if ((t*=2) < 1) 
+		[other update: 0.5f * powf (t, rate)];
+	else
+		[other update: sign*0.5f * (powf (t-2, rate) + sign*2)];	
+}
+
+// InOut and OutIn are symmetrical
+-(IntervalAction*) reverse
+{
+	return [[self class] actionWithAction: [other reverse] rate:rate];
+}
+
+@end
+
 //
 // EaseExponentialIn
 //
@@ -101,94 +182,11 @@
 @implementation EaseExponentialInOut
 -(void) update: (ccTime) t
 {
-  if (t==0) t = 0;
-  if (t==1) t = 1;
-  else if ((t/=0.5f) < 1)
-    t = 0.5f * powf(2, 10 * (t - 1));
-  else
-    t = 0.5f * (-powf(2, -10 * --t) + 2);
-  [other update:t];
-}
-@end
-
-
-//
-// EaseCubicIn
-//
-@implementation EaseCubicIn
--(void) update: (ccTime) t
-{
-	[other update: powf(t,3)];
-}
-- (IntervalAction*) reverse
-{
-	return [EaseCubicOut actionWithAction: [other reverse]];
-}
-@end
-
-//
-// EaseCubicOut
-//
-@implementation EaseCubicOut
--(void) update: (ccTime) t
-{
-	[other update: -1 * t * (t-2)];
-}
-- (IntervalAction*) reverse
-{
-	return [EaseCubicIn actionWithAction: [other reverse]];
-}
-
-@end
-
-//
-// EaseCubicInOut
-//
-@implementation EaseCubicInOut
--(void) update: (ccTime) t
-{
-  if ((t/=0.5f) < 1) [other update: 0.5f*t*t];
-  else [other update: -0.5f * ((--t)*(t-2) - 1)];
-}
-@end
-
-
-//
-// EaseQuadIn
-//
-@implementation EaseQuadIn
--(void) update: (ccTime) t
-{
-	[other update: t*t];
-}
-- (IntervalAction*) reverse
-{
-	return [EaseQuadOut actionWithAction: [other reverse]];
-}
-@end
-
-//
-// EaseQuadOut
-//
-@implementation EaseQuadOut
--(void) update: (ccTime) t
-{
-	[other update: -1*t*(t-2)];
-}
-- (IntervalAction*) reverse
-{
-	return [EaseQuadIn actionWithAction: [other reverse]];
-}
-@end
-
-//
-// EaseQuadInOut
-//
-@implementation EaseQuadInOut
--(void) update: (ccTime) t
-{
-  if ((t/=0.5f) < 1) [other update:(0.5f*t*t)];
-  else [other update:-0.5f*((--t)*(t-2)-1)];
+	if ((t/=0.5f) < 1)
+		t = 0.5f * powf(2, 10 * (t - 1));
+	else
+		t = 0.5f * (-powf(2, -10 * --t) + 2);
+	[other update:t];
 }
 @end
 
@@ -198,7 +196,7 @@
 @implementation EaseSineIn
 -(void) update: (ccTime) t
 {
-  [other update:-1*cosf(t * 1.57079633f) +1];
+	[other update:-1*cosf(t * (float)M_PI_2) +1];
 }
 - (IntervalAction*) reverse
 {
@@ -212,7 +210,7 @@
 @implementation EaseSineOut
 -(void) update: (ccTime) t
 {
-  [other update:sinf(t * 1.57079633f)];
+	[other update:sinf(t * (float)M_PI_2)];
 }
 - (IntervalAction*) reverse
 {
@@ -226,7 +224,7 @@
 @implementation EaseSineInOut
 -(void) update: (ccTime) t
 {
-  [other update:-0.5f*(cosf(3.14159265f*t) - 1)];
+	[other update:-0.5f*(cosf( (float)M_PI*t) - 1)];
 }
 @end
 
