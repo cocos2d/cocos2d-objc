@@ -1,6 +1,7 @@
 //
-// cocos2d for iphone
-// main file
+// Click and Move demo
+// a cocos2d example
+// http://code.google.com/p/cocos2d-iphone
 //
 
 #import "ClickAndMove.h"

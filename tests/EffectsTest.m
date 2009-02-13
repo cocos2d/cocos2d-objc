@@ -1,6 +1,7 @@
 //
 // Effects Demo
 // a cocos2d example
+// http://code.google.com/p/cocos2d-iphone
 //
 // Demo by Ernesto Corvi and On-Core
 //

@@ -35,13 +35,11 @@
 
 @interface Director (Private)
 -(BOOL)isOpenGLAttached;
--(BOOL)initOpenGLViewWithView:(UIView *)view andRect:(CGRect)rect;
+-(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
 
 -(void) initGLDefaultValues;
 
 -(void) mainLoop;
--(void) startAnimation;
--(void) stopAnimation;
 -(void) setNextScene;
 // rotates the screen if Landscape mode is activated
 -(void) applyLandscape;
@@ -366,7 +364,7 @@ static Director *_sharedDirector = nil;
 
 -(BOOL)attachInWindow:(UIWindow *)window
 {
-	if([self initOpenGLViewWithView:window andRect:[window frame]])
+	if([self initOpenGLViewWithView:window withFrame:[window frame]])
 	{
 		return YES;
 	}
@@ -376,7 +374,7 @@ static Director *_sharedDirector = nil;
 
 -(BOOL)attachInView:(UIView *)view
 {
-	if([self initOpenGLViewWithView:view andRect:[view frame]])
+	if([self initOpenGLViewWithView:view withFrame:[view frame]])
 	{
 		return YES;
 	}
@@ -384,9 +382,9 @@ static Director *_sharedDirector = nil;
 	return NO;
 }
 
--(BOOL)attachInView:(UIView *)view with:(CGRect)frame
+-(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame
 {
-	if([self initOpenGLViewWithView:view andRect:frame])
+	if([self initOpenGLViewWithView:view withFrame:frame])
 	{
 		return YES;
 	}
@@ -394,7 +392,7 @@ static Director *_sharedDirector = nil;
 	return NO;
 }
 
--(BOOL)initOpenGLViewWithView:(UIView *)view andRect:(CGRect)rect
+-(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
 {
 	// check if the view is not attached
 	if([self isOpenGLAttached])
@@ -632,9 +630,16 @@ static Director *_sharedDirector = nil;
 	
 	[eventHandlers release];
 	eventHandlers = nil;
+	
+	[self stopAnimation];
+	[self detach];
+	
 
-	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
+	// dont call terminate
+	// an application might want to kill the director
+	// without quiting the application
+//	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
+//		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 
 -(void) setNextScene
@@ -678,21 +683,6 @@ static Director *_sharedDirector = nil;
 	paused = NO;
 	dt = 0;
 }
-
-/** Hides the Director Window & stops animation */
--(void) hide
-{
-	[self stopAnimation];
-//	window.hidden = YES;
-}
-
-/** UnHides the Director Window & starts animation*/
--(void) unhide
-{
-	[self startAnimation];
-//	[window makeKeyAndVisible];
-}
-
 
 - (void)startAnimation
 {
