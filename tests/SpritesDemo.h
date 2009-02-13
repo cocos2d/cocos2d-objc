@@ -88,11 +88,6 @@
 }
 @end
 
-@interface SpriteAccelerate : SpriteDemo
-{
-}
-@end
-
 @interface SpriteCallFunc : SpriteDemo
 {
 }

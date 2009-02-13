@@ -38,20 +38,22 @@ enum {
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
 	id lens = [Lens3D actionWithPosition:cpv(240,160) radius:240 grid:ccg(15,10) duration:0.0f];
-	id waves = [Waves3D actionWithWaves:18 amplitude:80 grid:ccg(15,10) duration:10];
+	id waves = [Waves3D actionWithWaves:18 amplitude:15 grid:ccg(15,10) duration:10];
 
 	id reuse = [ReuseGrid actionWithTimes:1];
 	id delay = [DelayTime actionWithDuration:8];
 
-	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
-	id orbit_back = [orbit reverse];
+	// XXX BUG: orbit disabled until orbit+depth buffer+fbo is fixed
+//	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
+//	id orbit_back = [orbit reverse];
 
-	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
+//	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
 	[target do: [Sequence actions: lens, delay, reuse, waves, nil]];
 }
 -(NSString*) title
 {
-	return @"Lens + Waves3d and OrbitCamera";
+//	return @"Lens + Waves3d and OrbitCamera";
+	return @"Lens + Waves3d";
 }
 @end
 
@@ -264,16 +266,16 @@ Class restartAction()
 	[Director useFastDirector];
 	
 	// Use this pixel format to have transparent buffers
+	// BUG: glClearColor() in FBO needs to be converted to RGB565
 	[[Director sharedDirector] setPixelFormat:kRGBA8];
 
 	// It seems that Orbit + 3d Effects needs DepthBuffer
 	// But this breaks other FBO examples. Any idea ?
-	// XXX: Help needed
+	// BUG XXX: Help needed
 //	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 	
 	// create an openGL view inside a window
