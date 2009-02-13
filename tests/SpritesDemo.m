@@ -25,7 +25,6 @@ static NSString *transitions[] = {
 						 @"SpriteDelayTime",
 						 @"SpriteRepeat",
 						 @"SpriteReverseSequence",
-						 @"SpriteAccelerate",
 						 @"SpriteCallFunc",
 						 @"SpriteOrbit" };
 
@@ -425,30 +424,6 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Repeat / RepeatForever actions";
-}
-@end
-
-@implementation SpriteAccelerate
--(void) onEnter
-{
-	[super onEnter];
-	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
-	id move_back = [move reverse];
-	
-	id move_accel = [Accelerate actionWithAction:[[move copy] autorelease] rate:2];
-	id move_accel_back = [move_accel reverse];
-	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_accel, move_accel_back, nil];
-		
-
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
-}
--(NSString *) title
-{
-	return @"Accelerate actions";
 }
 @end
 

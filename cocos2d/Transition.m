@@ -218,7 +218,7 @@ enum {
 	IntervalAction *a = [self action];
 
 	[inScene do: [Sequence actions:
-		[Accelerate actionWithAction:a rate:0.5f],
+		[EaseOut actionWithAction:a rate:2.0f],
 		[CallFunc actionWithTarget:self selector:@selector(finish)],
 		nil] ];
 	 		
@@ -281,9 +281,9 @@ enum {
 	IntervalAction *in = [self action];
 	IntervalAction *out = [in copy];
 
-	[inScene do: [Accelerate actionWithAction:in rate:0.5f]];
+	[inScene do: [EaseOut actionWithAction:in rate:2.0f]];
 	[outScene do: [Sequence actions:
-				   [Accelerate actionWithAction:out rate:0.5f],
+				   [EaseOut actionWithAction:out rate:2.0f],
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
 				   nil] ];
 	
@@ -376,9 +376,9 @@ enum {
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration scale:0.01f];
 	IntervalAction *scaleIn = [ScaleTo actionWithDuration:duration scale:1.0f];
 
-	[inScene do: [Accelerate actionWithAction:scaleIn rate:0.5f]];
+	[inScene do: [EaseOut actionWithAction:scaleIn rate:2.0f]];
 	[outScene do: [Sequence actions:
-					[Accelerate actionWithAction:scaleOut rate:0.5f],
+					[EaseOut actionWithAction:scaleOut rate:2.0f],
 					[CallFunc actionWithTarget:self selector:@selector(finish)],
 					nil] ];
 }

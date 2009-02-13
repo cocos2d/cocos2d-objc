@@ -2487,8 +2487,8 @@
 				509B3A270F3102FD00F2FB95 /* cocosLiveDemo */,
 				50A24E190F377FA1007CAEB0 /* EffectsDemo */,
 				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedDemo */,
-				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 				5048287F0F45AED700A30CEF /* AttachDemo */,
+				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 			);
 		};
 /* End PBXProject section */
