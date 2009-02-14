@@ -36,6 +36,8 @@
 -(void) onQuit: (id) sender
 {
 	[[Director sharedDirector] popScene];
+	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
+		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 
 -(void) onVoid: (id) sender

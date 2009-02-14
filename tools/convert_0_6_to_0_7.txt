@@ -122,6 +122,21 @@ v0.7 (new way)
     [[Director sharedDirector] setDepthBufferFormat:xxx]
 
 
+Director end
+============
+
+Since now it is possible to end / re-run / end / etc the Director
+[Director end] doesn't quit the application.
+
+v0.6 (old way)
+    [[Director sharedDirector] end]
+
+v0.7 (new way)
+    [[Director sharedDirector] end]
+	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
+		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
+
+
 TileMapAtlas memory
 ===================
 
