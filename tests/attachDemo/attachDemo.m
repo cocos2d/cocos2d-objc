@@ -38,6 +38,11 @@ enum {
 	kTagDettach = 2,
 };
 
+//
+// Use runWithScene / end
+// to remove /add the cocos2d view
+// This is the recommended way since it removes the Scenes from memory
+//
 -(void) runCocos2d
 {
 	if( state == kStateEnd ) {
@@ -75,6 +80,12 @@ enum {
 		NSLog(@"Run or Attach the view before calling end");
 }
 
+//
+// Use attach / detach
+// To hide / unhide the cocos2d view.
+// If you want to remove them, use runWithScene / end
+// IMPORTANT: Memory is not released if you use attach / detach
+//
 -(void) attachView
 {
 	if( state == kStateDetach ) {
@@ -123,9 +134,9 @@ enum {
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
 	//
-	// BUG: Important: DONT use Fast Director
-	// BUG: If you are going to attach / detach / end / run the application
-	// BUG: Your application might crash
+	// XXX BUG: Important: DONT use Fast Director
+	// XXX BUG: If you are going to attach / detach / end / run the application
+	// XXX BUG: Your application might crash
 	//
 	[[Director sharedDirector] setDisplayFPS:YES];
 
