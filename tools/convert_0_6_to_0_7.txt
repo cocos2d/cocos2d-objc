@@ -4,12 +4,12 @@ Steps to convert a game based on cocos2d v0.6 to v0.7
 Director winSize
 ================
 
-v.0.6 (old way):
+v0.6:
     CGRect s = [[Director sharedDirector] winSize]
     int x = s.size.width;
     int y = s.size.height;
 
-v0.7 (new way)
+v0.7:
     CGSize s = [[Director sharedDirector] winSize]
     int x = s.width;
     int y = s.height;
@@ -18,14 +18,9 @@ v0.7 (new way)
 Director initialization
 =======================
 
-v0.6 (old way):
+v0.6:
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-
-	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
 
 	// multiple touches or not ?
 	[[Director sharedDirector] setMultipleTouchEnabled:YES];
@@ -35,7 +30,7 @@ v0.6 (old way):
 	[[Director sharedDirector] runScene: scene];
 }
 
-v0.7 (new way):
+v0.7:
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// NEW: Init the window
@@ -49,14 +44,6 @@ v0.7 (new way):
     // before this call
 	[[Director sharedDirector] attachInWindow:window];
 	
-	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
-	
-	// display FPS (useful when debugging)
-	[[Director sharedDirector] setDisplayFPS:YES];
-	
-	// frames per second
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
 
 	// NEW: Make the window visible
 	[window makeKeyAndVisible];
@@ -75,10 +62,10 @@ Director main loop
 
 To prevent some confusion the 'trigger main loop' selector was renamed:
 
-v0.6 (old way):
+v0.6:
   [[Director sharedDirector] runScene: firstScene];
 
-v0.7 (new way):
+v0.7:
   [[Director sharedDirector] runWithScene: firstScene];
 
 
@@ -87,7 +74,7 @@ Director constants
 
 DepthBuffer and PixelFormat constans now stars with a 'k'
 
-v0.6 (old way):
+v0.6:
 Pixel Format constants:
     RGB565
     RGBA8
@@ -97,7 +84,7 @@ Depth buffer constants:
     DepthBuffer16
     DepthBuffer24
 
-v0.7 (new way):
+v0.7:
 Pixel Format constants:
     kRGB565
     kRGBA8
@@ -113,11 +100,11 @@ Director instance methods
 
 Some Director's class methods are now instance methods
 
-v0.6 (old way)
+v0.6:
     [Director setPixelFormat:xxx]
     [Director setDepthBufferFormat:xxx]
 
-v0.7 (new way)
+v0.7:
     [[Director sharedDirector] setPixelFormat:xxx]
     [[Director sharedDirector] setDepthBufferFormat:xxx]
 
@@ -128,13 +115,37 @@ Director end
 Since now it is possible to end / re-run / end / etc the Director
 [Director end] doesn't quit the application.
 
-v0.6 (old way)
+v0.6:
     [[Director sharedDirector] end]
 
-v0.7 (new way)
+v0.7:
     [[Director sharedDirector] end]
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
+
+
+Director hide / unhide
+======================
+
+It's easier to remove the opengl view in v0.7 so the hide/unhide methods were removed
+
+v0.6:
+    [[Director sharedDirector] hide]
+
+    [[Director sharedDirector] unhide]
+
+v0.7:
+    // hide
+    [[Director sharedDirector] detach];
+    [[Director sharedDirector] stopAnimation];
+
+    // unhide
+    [[Director sharedDirector] attachInView:view];
+    [[Director sharedDirector] startAnimation];
+
+    But these new methods to hide/unhide are not recommended unless you really want
+    to hide/unhide the cocos2d view.
+    If you want to remove the cocos2d view, use end/runWithScene instead
 
 
 TileMapAtlas memory
@@ -144,11 +155,11 @@ v0.7 supports a read-write TileMapAtlas.
 If you are not going to read/write the atlas, you might want to
 free the extra used memory.
 
-v0.6 (old way)
+v0.6:
     TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 
 
-v0.7 (new way):
+v0.7:
     TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
     [tilemap releaseMap];  // NEW SINCE v0.7
 
