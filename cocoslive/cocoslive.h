@@ -18,7 +18,7 @@
 #define COCOSLIVE_VERSION 0x00000100
 
 // to use localserver. DEBUG ONLY
-#define USE_LOCAL_SERVER 1
+// #define USE_LOCAL_SERVER 1
 
 // all cocos live include files
 //
