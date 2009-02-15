@@ -148,6 +148,32 @@ v0.7:
     If you want to remove the cocos2d view, use end/runWithScene instead
 
 
+Ease Actions
+============
+
+EaseQuad* and EaseCubic* has been removed. EaseIn, EaseOut, EaseInOut should be used instead:
+
+v0.6. Quad:
+[EaseQuadIn actionWithAction: (id) a]
+[EaseQuadOut actionWithAction: (id) a]
+[EaseQuadInOut actionWithAction: (id) a]
+
+v0.7
+[EaseIn actionWithAction: (id) a rate:2]
+[EaseOut actionWithAction: (id) a rate:2]
+[EaseInOut actionWithAction: (id) a rate:2]
+
+v0.6. Cubic:
+[EaseCubicIn actionWithAction: (id) a]
+[EaseCubicOut actionWithAction: (id) a]
+[EaseCubicInOut actionWithAction: (id) a]
+
+v0.7
+[EaseIn actionWithAction: (id) a rate:3]
+[EaseOut actionWithAction: (id) a rate:3]
+[EaseInOut actionWithAction: (id) a rate:3]
+
+
 TileMapAtlas memory
 ===================
 
@@ -162,4 +188,3 @@ v0.6:
 v0.7:
     TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
     [tilemap releaseMap];  // NEW SINCE v0.7
-
