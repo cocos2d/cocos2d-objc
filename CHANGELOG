@@ -7,7 +7,7 @@ version 0.7.0 - XX-Feb-2009
  . CocosLive: added client and example that uses the CocosLive service (issue #175)
  . CocosNode: children is a property (issue #185)
  . Demos: Creating Window and attaching cocos2d to it (issue #180)
- . Demos: Texture2dDemo shows how to load PVR images (issue #112)
+ . Demos: Texture2dDemo shows how to load PVR images and PVR Mipmap images (issue #112)
  . Demos: Added AttachDemo (issue #180)
  . Demos: Added EffectsDemo and EffectsAdvancedDemo (issue #183)
  . Director: OpenGLview is attached to a given UIView/UIWindow (issue #180)

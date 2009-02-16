@@ -52,6 +52,10 @@
 {}
 @end
 
+@interface TexturePVRMipMap : TextureDemo
+{}
+@end
+
 @interface TexturePVRRaw : TextureDemo
 {}
 @end
