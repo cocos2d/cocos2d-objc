@@ -14,6 +14,7 @@ static NSString *transitions[] = {
 						@"TextureLabel",
 						@"TextureLabel2",
 						@"TextureAlias",
+						@"TexturePVRMipMap",
 						@"TexturePVR",
 						@"TexturePVRRaw",
 						@"TexturePNG",
@@ -250,6 +251,45 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"GIF Test";
+}
+@end
+
+// To generate PVR images read this article:
+// http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
+@implementation TexturePVRMipMap
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	[Texture2D saveTexParameters];
+	ccTexParams params = [Texture2D texParameters];
+	params.minFilter = GL_LINEAR_MIPMAP_LINEAR;
+	[Texture2D setTexParameters:&params];
+	
+	Sprite *imgMipMap = [Sprite spriteWithFile:@"logo-mipmap.pvr"];
+	imgMipMap.position = cpv( s.width/2.0f-100, s.height/2.0f);
+	[self add:imgMipMap];
+	
+	[Texture2D restoreTexParameters];
+
+	Sprite *img = [Sprite spriteWithFile:@"logo-nomipmap.pvr"];
+	img.position = cpv( s.width/2.0f+100, s.height/2.0f);
+	[self add:img];
+	
+	id scale1 = [EaseOut actionWithAction: [ScaleBy actionWithDuration:4 scale:0.01f] rate:3];
+	id sc_back = [scale1 reverse];
+	
+	id scale2 = [[scale1 copy] autorelease];
+	id sc_back2 = [scale2 reverse];
+	
+	[imgMipMap do: [RepeatForever actionWithAction: [Sequence actions: scale1, sc_back, nil]]];
+	[img do: [RepeatForever actionWithAction: [Sequence actions: scale2, sc_back2, nil]]];
+}
+
+-(NSString *) title
+{
+	return @"PVR MipMap Test";
 }
 @end
 
