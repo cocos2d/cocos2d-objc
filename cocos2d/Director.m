@@ -509,7 +509,7 @@ static Director *_sharedDirector = nil;
 	}
 	else 
 	{
-#if LANDSCAPE_LEFT
+#ifdef LANDSCAPE_LEFT
 		ret.x = p.y;
 		ret.y = p.x;
 #else
@@ -549,7 +549,7 @@ static Director *_sharedDirector = nil;
 	if( on != landscape ) {
 		landscape = on;
 		if( landscape )
-#if LANDSCAPE_LEFT
+#ifdef LANDSCAPE_LEFT
 			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated:NO];
 #else
 			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
@@ -566,7 +566,7 @@ static Director *_sharedDirector = nil;
 	if( landscape ) {
 		glTranslatef(160,240,0);
 		
-#if LANDSCAPE_LEFT
+#ifdef LANDSCAPE_LEFT
 		glRotatef(-90,0,0,1);
 		glTranslatef(-240,-160,0);
 #else		
@@ -627,10 +627,12 @@ static Director *_sharedDirector = nil;
 	[runningScene release];
 	runningScene = nil;
 	[self stopAnimation];
-	
-	[eventHandlers release];
-	eventHandlers = nil;
-	
+
+	// don't release the event handlers
+	// They are needed in case the director is run again
+//	[eventHandlers release];
+//	eventHandlers = nil;
+
 	[self stopAnimation];
 	[self detach];
 	

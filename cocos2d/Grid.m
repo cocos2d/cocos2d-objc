@@ -83,7 +83,7 @@
 	if( landscape ) {
 		glTranslatef(160,240,0);
 		
-#if LANDSCAPE_LEFT
+#ifdef LANDSCAPE_LEFT
 		glRotatef(-90,0,0,1);
 		glTranslatef(-240,-160,0);
 #else		

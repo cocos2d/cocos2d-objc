@@ -16,28 +16,27 @@ enum
 @implementation MainLayer
 -(id) init
 {
-	if( ! [super init] )
-		return nil;
-	
-	isTouchEnabled = YES;
-	
-	Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
-	
-	id layer = [ColorLayer layerWithColor: 0xffff00ff];
-	[self add: layer z:-1];
+	if( ( self=[super init] ))
+	{
+		isTouchEnabled = YES;
 		
-	[self add: sprite z:0 tag:kTagSprite];
-	[sprite setPosition: cpv(20,150)];
-	
-	[sprite do: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
-	
-	[layer do: [RepeatForever actionWithAction: 
-								[Sequence actions:
-								[FadeIn actionWithDuration:1],
-								[FadeOut actionWithDuration:1],
-								nil]
-					] ];
-	
+		Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
+		
+		id layer = [ColorLayer layerWithColor: 0xffff00ff];
+		[self add: layer z:-1];
+			
+		[self add: sprite z:0 tag:kTagSprite];
+		[sprite setPosition: cpv(20,150)];
+		
+		[sprite do: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
+		
+		[layer do: [RepeatForever actionWithAction: 
+									[Sequence actions:
+									[FadeIn actionWithDuration:1],
+									[FadeOut actionWithDuration:1],
+									nil]
+						] ];
+	}	
 	return self;
 }
 

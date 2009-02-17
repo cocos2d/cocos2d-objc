@@ -21,6 +21,73 @@ enum {
 	kStateDetach,
 };
 
+enum {
+	kTagSprite = 1,
+};
+
+@interface LayerExample : Layer
+{}
+@end
+
+@implementation LayerExample
+-(id) init
+{
+	if( (self=[super init] ) )
+	{
+		isTouchEnabled = YES;
+		
+		CGSize s = [[Director sharedDirector] winSize];
+
+		Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
+		Label *label = [Label labelWithString:[NSString stringWithFormat:@"%dx%d",(int)s.width, (int)s.height] fontName:@"Marker Felt" fontSize:28];
+		
+		[self add:label];
+		[self add:grossini z:0 tag:kTagSprite];
+		
+		grossini.position = cpv( s.width/2, s.height/2);
+		label.position = cpv( s.width/2, s.height-40);
+		
+		id sc = [ScaleBy actionWithDuration:2 scale:1.5f];
+		id sc_back = [sc reverse];
+		[grossini do: [RepeatForever actionWithAction:
+					   [Sequence actions: sc, sc_back, nil]]];
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+	
+	CGPoint location = [touch locationInView: [touch view]];
+	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+	
+	CocosNode *s = [self getByTag:kTagSprite];
+	[s stopAllActions];
+	[s do: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
+	float o = convertedLocation.x - [s position].x;
+	float a = convertedLocation.y - [s position].y;
+	float at = (float) RADIANS_TO_DEGREES( atanf( o/a) );
+	
+	if( a < 0 ) {
+		if(  o < 0 )
+			at = 180 + abs(at);
+		else
+			at = 180 - abs(at);	
+	}
+	
+	[s do: [RotateTo actionWithDuration:1 angle: at]];
+	
+	return kEventHandled;
+}
+@end
+
+
 @interface AppController (Private)
 -(void) attachView;
 -(void) detachView;
@@ -46,22 +113,13 @@ enum {
 -(void) runCocos2d
 {
 	if( state == kStateEnd ) {
-		[[Director sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 200,200)];
-		CGSize s = [[Director sharedDirector] winSize];
+		[[Director sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
 		
 		Scene *scene = [Scene node];
-		Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
-		Label *label = [Label labelWithString:[NSString stringWithFormat:@"%dx%d",(int)s.width, (int)s.height] fontName:@"Marker Felt" fontSize:28];
+		id node = [LayerExample node];
+		[scene add: node];
 		
-		[scene add:label];
-		[scene add:grossini];
-		
-		grossini.position = cpv( s.width/2, s.height/2);
-		label.position = cpv( s.width/2, s.height-40);
-		
-		[grossini do: [RepeatForever actionWithAction: [RotateBy actionWithDuration:2 angle:360]]];
-		
-		[[Director sharedDirector] runWithScene:scene];	
+		[[Director sharedDirector] runWithScene:scene];
 		
 		state = kStateRun;
 	}
@@ -73,6 +131,7 @@ enum {
 -(void) endCocos2d
 {
 	if( state == kStateRun || state == kStateAttach) {
+		// Director end releases the "inner" objects from memory
 		[[Director sharedDirector] end];
 		state = kStateEnd;
 	}
@@ -89,7 +148,7 @@ enum {
 -(void) attachView
 {
 	if( state == kStateDetach ) {
-		[[Director sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 200,200)];
+		[[Director sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
 		[[Director sharedDirector] startAnimation];
 
 		state = kStateAttach;
