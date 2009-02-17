@@ -15,9 +15,6 @@
 #import "TileMapAtlas.h"
 #import "ccMacros.h"
 
-#import "Support/TGAlib.h"
-
-
 @interface TileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
 -(void) calculateItemsToRender;

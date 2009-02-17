@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "TGAlib.h"
+#import "TGAlib.h"
 
 
 // load the image header fields. We only keep those that matter!
