@@ -21,7 +21,7 @@
 @interface TileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
 -(void) calculateItemsToRender;
--(void) updateAtlasValueAt:(ccGrid)pos withValue:(ccRGBB)value withIndex:(int)idx;
+-(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccRGBB)value withIndex:(int)idx;
 @end
 
 
@@ -109,7 +109,7 @@
 
 #pragma mark TileMapAtlas - Atlas generation / updates
 
--(void) setTile:(ccRGBB) tile at:(ccGrid) pos
+-(void) setTile:(ccRGBB) tile at:(ccGridSize) pos
 {
 	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
 	NSAssert( posToAtlasIndex != nil, @"posToAtlasIndex must not be nil");
@@ -131,7 +131,7 @@
 	}	
 }
 
--(ccRGBB) tileAt:(ccGrid) pos
+-(ccRGBB) tileAt:(ccGridSize) pos
 {
 	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
 	NSAssert( pos.x < tgaInfo->width, @"Invalid position.x");
@@ -143,7 +143,7 @@
 	return value;	
 }
 
--(void) updateAtlasValueAt:(ccGrid)pos withValue:(ccRGBB)value withIndex:(int)idx
+-(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccRGBB)value withIndex:(int)idx
 {
 	ccQuad2 texCoord;
 	ccQuad3 vertex;

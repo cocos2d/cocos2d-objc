@@ -27,7 +27,7 @@
 {
 	BOOL		active;
 	int			reuseGrid;
-	ccGrid		grid;
+	ccGridSize	gridSize;
 	Texture2D *	texture;
 	cpVect		step;
 	Grabber *	grabber;
@@ -35,12 +35,12 @@
 
 @property BOOL active;
 @property int reuseGrid;
-@property ccGrid grid;
+@property (readonly) ccGridSize gridSize;
 @property cpVect step;
 @property (nonatomic, retain) Texture2D *texture;
 @property (nonatomic, retain) Grabber *grabber;
 
--(id)initWithSize:(ccGrid)gridSize;
+-(id)initWithSize:(ccGridSize)gridSize;
 -(void)beforeDraw;
 -(void)afterDraw:(Camera*)camera;
 -(void)blit;
@@ -61,14 +61,19 @@
 	GLushort	*indices;
 }
 
-+(id)gridWithSize:(ccGrid)gridSize;
--(id)initWithSize:(ccGrid)gridSize;
+/** creates a Grid3D (non-tiled) grid with a grid size */
++(id)gridWithSize:(ccGridSize)gridSize;
+/** initizlies a Grid3D (non-tiled) grid with a grid size */
+-(id)initWithSize:(ccGridSize)gridSize;
 
--(ccVertex3D)getVertex:(ccGrid)pos;
--(ccVertex3D)getOriginalVertex:(ccGrid)pos;
--(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex;
+/** returns the vertex at a given position */
+-(ccVertex3D)vertex:(ccGridSize)pos;
+/** returns the original (non-transformed) vertex at a given position */
+-(ccVertex3D)originalVertex:(ccGridSize)pos;
+/** sets a new vertex at a given position */
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex;
 
--(void)calculate_vertex_points;
+-(void)calculateVertexPoints;
 
 @end
 
@@ -86,13 +91,18 @@
 	GLushort	*indices;
 }
 
-+(id)gridWithSize:(ccGrid)gridSize;
--(id)initWithSize:(ccGrid)gridSize;
+/** creates a TiledGrid3D with a grid size */
++(id)gridWithSize:(ccGridSize)gridSize;
+/** initializes a TiledGrid3D with a grid size */
+-(id)initWithSize:(ccGridSize)gridSize;
 
--(ccQuad3)getTile:(ccGrid)pos;
--(ccQuad3)getOriginalTile:(ccGrid)pos;
--(void)setTile:(ccGrid)pos coords:(ccQuad3)coords;
+/** returns the tile at the given position */
+-(ccQuad3)tile:(ccGridSize)pos;
+/** returns the original tile (untransformed) at the given position */
+-(ccQuad3)originalTile:(ccGridSize)pos;
+/** sets a new tile */
+-(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords;
 
--(void)calculate_vertex_points;
+-(void)calculateVertexPoints;
 
 @end

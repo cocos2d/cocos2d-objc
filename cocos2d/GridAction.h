@@ -23,33 +23,36 @@
 /** Base class for Grid actions */
 @interface GridAction : IntervalAction
 {
-	ccGrid grid;
-	ccGrid size;
+	ccGridSize gridSize;
 }
 
-@property ccGrid size;
+@property ccGridSize gridSize;
 
 /** creates the action with size and duration */
-+(id) actionWithSize:(ccGrid)size duration:(ccTime)d;
++(id) actionWithSize:(ccGridSize)size duration:(ccTime)d;
 /** initializes the action with size and duration */
--(id) initWithSize:(ccGrid)gridSize duration:(ccTime)d;
+-(id) initWithSize:(ccGridSize)gridSize duration:(ccTime)d;
 /** returns the grid */
--(GridBase *)getGrid;
+-(GridBase *)grid;
 
 @end
 
 ////////////////////////////////////////////////////////////
 
-/** Base class for Grid3D actions */
+/** Base class for Grid3D actions.
+ Grid3D actions can modify a non-tiled grid.
+ */
 @interface Grid3DAction : GridAction
 {
 	
 }
 
--(GridBase *)getGrid;
--(ccVertex3D)getVertex:(ccGrid)pos;
--(ccVertex3D)getOriginalVertex:(ccGrid)pos;
--(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex;
+/** returns the vertex than belongs to certain position in the grid */
+-(ccVertex3D)vertex:(ccGridSize)pos;
+/** returns the non-transformed vertex than belongs to certain position in the grid */
+-(ccVertex3D)originalVertex:(ccGridSize)pos;
+/** sets a new vertex to a certain position of the grid */
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex;
 
 @end
 
@@ -61,10 +64,12 @@
 	
 }
 
--(GridBase *)getGrid;
--(ccQuad3)getTile:(ccGrid)pos;
--(ccQuad3)getOriginalTile:(ccGrid)pos;
--(void)setTile:(ccGrid)pos coords:(ccQuad3)coords;
+/** returns the tile that belongs to a certain position of the grid */
+-(ccQuad3)tile:(ccGridSize)pos;
+/** returns the non-transformed tile that belongs to a certain position of the grid */
+-(ccQuad3)originalTile:(ccGridSize)pos;
+/** sets a new tile to a certain position of the grid */
+-(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords;
 
 @end
 
@@ -77,9 +82,12 @@
 	IntervalAction *other;
 }
 
+/** amplitude rate */
 @property float rate;
 
+/** creates the action with an inner action that has the amplitude property, and a duration time */
 +(id)actionWithAction:(Action*)action duration:(ccTime)d;
+/** initializes the action with an inner action that has the amplitude property, and a duration time */
 -(id)initWithAction:(Action*)action duration:(ccTime)d;
 
 @end
@@ -93,9 +101,12 @@
 	IntervalAction *other;
 }
 
+/** amplitude rate */
 @property float rate;
 
+/** creates the action with an inner action that has the amplitude property, and a duration time */
 +(id)actionWithAction:(Action*)action duration:(ccTime)d;
+/** initializes the action with an inner action that has the amplitude property, and a duration time */
 -(id)initWithAction:(Action*)action duration:(ccTime)d;
 
 @end
@@ -109,16 +120,23 @@
 	IntervalAction *other;
 }
 
+/** amplitude rate */
 @property float rate;
 
+/** creates the action with an inner action that has the amplitude property, and a duration time */
 +(id)actionWithAction:(Action*)action duration:(ccTime)d;
+/** initializes the action with an inner action that has the amplitude property, and a duration time */
 -(id)initWithAction:(Action*)action duration:(ccTime)d;
 
 @end
 
 ////////////////////////////////////////////////////////////
 
-/** StopGrid action */
+/** StopGrid action.
+ Don't call this action if another grid action is active.
+ Call if you want to remove the the grid effect. Example:
+ [Sequence actions:[Lens ...], [StopGrid action], nil];
+ */
 @interface StopGrid : InstantAction
 {
 }
@@ -131,8 +149,8 @@
 {
 	int t;
 }
-/** creates a Place action with a position */
+/** creates an action with the number of times that the current grid will be reused */
 +(id) actionWithTimes: (int) times;
-/** Initializes a Place action with a position */
+/** initializes an action with the number of times that the current grid will be reused */
 -(id) initWithTimes: (int) times;
 @end

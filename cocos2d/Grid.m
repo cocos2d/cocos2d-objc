@@ -26,17 +26,17 @@
 @synthesize reuseGrid;
 @synthesize texture;
 @synthesize grabber;
-@synthesize grid;
+@synthesize gridSize;
 @synthesize step;
 
 #define kTextureSize 512
--(id)initWithSize:(ccGrid)gridSize
+-(id)initWithSize:(ccGridSize)gSize
 {
 	if ( (self = [super init] ) )
 	{
 		active = NO;
 		reuseGrid = 0;
-		grid = gridSize;
+		gridSize = gSize;
 		
 		CGSize	win = [[Director sharedDirector] winSize];
 	
@@ -54,15 +54,15 @@
 		grabber = [[Grabber alloc] init];
 		[grabber grab:self.texture];
 
-		step.x = win.width / grid.x;
-		step.y = win.height / grid.y;
+		step.x = win.width / gridSize.x;
+		step.y = win.height / gridSize.y;
 	}
 	
 	return self;
 }
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Dimensions = %ix%i>", [self class], self, grid.x, grid.y];
+	return [NSString stringWithFormat:@"<%@ = %08X | Dimensions = %ix%i>", [self class], self, gridSize.x, gridSize.y];
 }
 
 - (void) dealloc
@@ -166,16 +166,16 @@
 
 @implementation Grid3D
 
-+(id)gridWithSize:(ccGrid)gridSize
++(id)gridWithSize:(ccGridSize)gridSize
 {
 	return [[[Grid3D alloc] initWithSize:gridSize] autorelease];
 }
 
--(id)initWithSize:(ccGrid)gridSize
+-(id)initWithSize:(ccGridSize)gSize
 {
-	if ( (self = [super initWithSize:gridSize] ) )
+	if ( (self = [super initWithSize:gSize] ) )
 	{
-		[self calculate_vertex_points];
+		[self calculateVertexPoints];
 	}
 	
 	return self;
@@ -192,7 +192,7 @@
 
 -(void)blit
 {
-	int n = grid.x * grid.y;
+	int n = gridSize.x * gridSize.y;
 	
 	glEnableClientState( GL_VERTEX_ARRAY);
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -205,27 +205,27 @@
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
--(void)calculate_vertex_points
+-(void)calculateVertexPoints
 {
 	float width = (float)self.texture.pixelsWide;
 	float height = (float)self.texture.pixelsHigh;
 	
 	int x, y, i;
 	
-	vertices = malloc((grid.x+1)*(grid.y+1)*sizeof(ccVertex3D));
-	originalVertices = malloc((grid.x+1)*(grid.y+1)*sizeof(ccVertex3D));
-	texCoordinates = malloc((grid.x+1)*(grid.y+1)*sizeof(cpVect));
-	indices = malloc(grid.x*grid.y*sizeof(GLushort)*6);
+	vertices = malloc((gridSize.x+1)*(gridSize.y+1)*sizeof(ccVertex3D));
+	originalVertices = malloc((gridSize.x+1)*(gridSize.y+1)*sizeof(ccVertex3D));
+	texCoordinates = malloc((gridSize.x+1)*(gridSize.y+1)*sizeof(cpVect));
+	indices = malloc(gridSize.x*gridSize.y*sizeof(GLushort)*6);
 	
 	float *vertArray = (float*)vertices;
 	float *texArray = (float*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
 	
-	for( y = 0; y < (grid.y+1); y++ )
+	for( y = 0; y < (gridSize.y+1); y++ )
 	{
-		for( x = 0; x < (grid.x+1); x++ )
+		for( x = 0; x < (gridSize.x+1); x++ )
 		{
-			int idx = (y * (grid.x+1)) + x;
+			int idx = (y * (gridSize.x+1)) + x;
 			
 			vertArray[idx*3] = -1;
 			vertArray[idx*3+1] = -1;
@@ -235,21 +235,21 @@
 		}
 	}
 	
-	for( x = 0; x < grid.x; x++ )
+	for( x = 0; x < gridSize.x; x++ )
 	{
-		for( y = 0; y < grid.y; y++ )
+		for( y = 0; y < gridSize.y; y++ )
 		{
-			int idx = (y * grid.x) + x;
+			int idx = (y * gridSize.x) + x;
 			
 			float x1 = x * step.x;
 			float x2 = x1 + step.x;
 			float y1 = y * step.y;
 			float y2 = y1 + step.y;
 			
-			GLushort a = x * (grid.y+1) + y;
-			GLushort b = (x+1) * (grid.y+1) + y;
-			GLushort c = (x+1) * (grid.y+1) + (y+1);
-			GLushort d = x * (grid.y+1) + (y+1);
+			GLushort a = x * (gridSize.y+1) + y;
+			GLushort b = (x+1) * (gridSize.y+1) + y;
+			GLushort c = (x+1) * (gridSize.y+1) + (y+1);
+			GLushort d = x * (gridSize.y+1) + (y+1);
 			
 			GLushort	tempidx[6] = { a, b, d, b, c, d };
 			
@@ -278,12 +278,12 @@
 		}
 	}
 	
-	memcpy(originalVertices, vertices, (grid.x+1)*(grid.y+1)*sizeof(ccVertex3D));
+	memcpy(originalVertices, vertices, (gridSize.x+1)*(gridSize.y+1)*sizeof(ccVertex3D));
 }
 
--(ccVertex3D)getVertex:(ccGrid)pos
+-(ccVertex3D)vertex:(ccGridSize)pos
 {
-	int	index = (pos.x * (grid.y+1) + pos.y) * 3;
+	int	index = (pos.x * (gridSize.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
 	
 	ccVertex3D	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
@@ -291,9 +291,9 @@
 	return vert;
 }
 
--(ccVertex3D)getOriginalVertex:(ccGrid)pos
+-(ccVertex3D)originalVertex:(ccGridSize)pos
 {
-	int	index = (pos.x * (grid.y+1) + pos.y) * 3;
+	int	index = (pos.x * (gridSize.y+1) + pos.y) * 3;
 	float *vertArray = (float *)originalVertices;
 	
 	ccVertex3D	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
@@ -301,9 +301,9 @@
 	return vert;
 }
 
--(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex
 {
-	int	index = (pos.x * (grid.y+1) + pos.y) * 3;
+	int	index = (pos.x * (gridSize.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
 	vertArray[index] = vertex.x;
 	vertArray[index+1] = vertex.y;
@@ -314,7 +314,7 @@
 {
 	if ( reuseGrid > 0 )
 	{
-		memcpy(originalVertices, vertices, (grid.x+1)*(grid.y+1)*sizeof(ccVertex3D));
+		memcpy(originalVertices, vertices, (gridSize.x+1)*(gridSize.y+1)*sizeof(ccVertex3D));
 		reuseGrid--;
 	}
 }
@@ -325,16 +325,16 @@
 
 @implementation TiledGrid3D
 
-+(id)gridWithSize:(ccGrid)gridSize
++(id)gridWithSize:(ccGridSize)gridSize
 {
 	return [[[TiledGrid3D alloc] initWithSize:gridSize] autorelease];
 }
 
--(id)initWithSize:(ccGrid)gridSize
+-(id)initWithSize:(ccGridSize)gSize
 {
-	if ( (self = [super initWithSize:gridSize] ) )
+	if ( (self = [super initWithSize:gSize] ) )
 	{
-		[self calculate_vertex_points];
+		[self calculateVertexPoints];
 	}
 	
 	return self;
@@ -351,7 +351,7 @@
 
 -(void)blit
 {
-	int n = grid.x * grid.y;
+	int n = gridSize.x * gridSize.y;
 	
 	glEnableClientState( GL_VERTEX_ARRAY);
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -364,12 +364,12 @@
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
--(void)calculate_vertex_points
+-(void)calculateVertexPoints
 {
 	float width = (float)self.texture.pixelsWide;
 	float height = (float)self.texture.pixelsHigh;
 	
-	int numQuads = grid.x * grid.y;
+	int numQuads = gridSize.x * gridSize.y;
 	
 	vertices = malloc(numQuads*12*sizeof(GLfloat));
 	originalVertices = malloc(numQuads*12*sizeof(GLfloat));
@@ -382,9 +382,9 @@
 	
 	int x, y;
 	
-	for( x = 0; x < grid.x; x++ )
+	for( x = 0; x < gridSize.x; x++ )
 	{
-		for( y = 0; y < grid.y; y++ )
+		for( y = 0; y < gridSize.y; y++ )
 		{
 			float x1 = x * step.x;
 			float x2 = x1 + step.x;
@@ -429,16 +429,16 @@
 	memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 }
 
--(void)setTile:(ccGrid)pos coords:(ccQuad3)coords
+-(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
 {
-	int idx = (grid.y * pos.x + pos.y) * 4 * 3;
+	int idx = (gridSize.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 	memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 }
 
--(ccQuad3)getOriginalTile:(ccGrid)pos
+-(ccQuad3)originalTile:(ccGridSize)pos
 {
-	int idx = (grid.y * pos.x + pos.y) * 4 * 3;
+	int idx = (gridSize.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)originalVertices;
 	
 	ccQuad3 ret;
@@ -447,9 +447,9 @@
 	return ret;
 }
 
--(ccQuad3)getTile:(ccGrid)pos
+-(ccQuad3)tile:(ccGridSize)pos
 {
-	int idx = (grid.y * pos.x + pos.y) * 4 * 3;
+	int idx = (gridSize.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 	
 	ccQuad3 ret;
@@ -462,7 +462,7 @@
 {
 	if ( reuseGrid > 0 )
 	{
-		int numQuads = grid.x * grid.y;
+		int numQuads = gridSize.x * gridSize.y;
 		
 		memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 		reuseGrid--;

@@ -101,7 +101,7 @@ enum {
 @implementation FlipX3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id flipx  = [FlipX3D actionWithSize:ccg(1,1) duration:t];
+	id flipx  = [FlipX3D actionWithDuration:t];
 	id flipx_back = [flipx reverse];
 	id delay = [DelayTime actionWithDuration:2];
 	
@@ -111,7 +111,7 @@ enum {
 @implementation FlipY3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id flipy = [FlipY3D actionWithSize:ccg(1,1) duration:t];
+	id flipy = [FlipY3D actionWithDuration:t];
 	id flipy_back = [flipy reverse];
 	id delay = [DelayTime actionWithDuration:2];
 	
