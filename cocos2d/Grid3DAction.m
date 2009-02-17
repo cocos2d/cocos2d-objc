@@ -334,16 +334,17 @@
 
 @implementation Shaky3D
 
-+(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d
++(id)actionWithRange:(int)range shakeZ:(BOOL)sz grid:(ccGrid)gridSize duration:(ccTime)d
 {
-	return [[[self alloc] initWithRange:range grid:gridSize duration:d] autorelease];
+	return [[[self alloc] initWithRange:range shakeZ:sz grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d
+-(id)initWithRange:(int)range shakeZ:(BOOL)sz grid:(ccGrid)gridSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gridSize duration:d]) )
 	{
 		randrange = range;
+		shakeZ = sz;
 	}
 	
 	return self;
@@ -360,7 +361,8 @@
 			ccVertex3D	v = [self getOriginalVertex:ccg(i,j)];
 			v.x += ( rand() % (randrange*2) ) - randrange;
 			v.y += ( rand() % (randrange*2) ) - randrange;
-			v.z += ( rand() % (randrange*2) ) - randrange;
+			if( shakeZ )
+				v.z += ( rand() % (randrange*2) ) - randrange;
 			
 			[self setVertex:ccg(i,j) vertex:v];
 		}

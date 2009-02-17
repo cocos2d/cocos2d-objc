@@ -89,73 +89,85 @@ enum {
 @implementation Shaky3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 grid:ccg(10,10) duration:t];
+	return [self actionWithRange:5 shakeZ:YES grid:ccg(15,10) duration:t];
 }
 @end
 @implementation Waves3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:5 amplitude:40 grid:ccg(10,10) duration:t];
+	return [self actionWithWaves:5 amplitude:40 grid:ccg(15,10) duration:t];
 }
 @end
 @implementation FlipX3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(1,1) duration:t];
+	id flipx  = [FlipX3D actionWithSize:ccg(1,1) duration:t];
+	id flipx_back = [flipx reverse];
+	id delay = [DelayTime actionWithDuration:2];
+	
+	return [Sequence actions: flipx, delay, flipx_back, nil];	
 }
 @end
 @implementation FlipY3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(1,1) duration:t];
+	id flipy = [FlipY3D actionWithSize:ccg(1,1) duration:t];
+	id flipy_back = [flipy reverse];
+	id delay = [DelayTime actionWithDuration:2];
+	
+	return [Sequence actions: flipy, delay, flipy_back, nil];
 }
 @end
 @implementation Lens3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) radius:240 grid:ccg(10,10) duration:t];
+	return [self actionWithPosition:cpv(240,160) radius:240 grid:ccg(15,10) duration:t];
 }
 @end
 @implementation Ripple3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) radius:240 waves:4 amplitude:160 grid:ccg(20,20) duration:t];
+	return [self actionWithPosition:cpv(240,160) radius:240 waves:4 amplitude:160 grid:ccg(32,24) duration:t];
 }
 @end
 @implementation LiquidDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 grid:ccg(10,10) duration:t];
+	return [self actionWithWaves:4 amplitude:20 grid:ccg(16,12) duration:t];
 }
 @end
 @implementation WavesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:ccg(10,10) duration:t];
+	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:ccg(16,12) duration:t];
 }
 @end
 @implementation TwirlDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithPosition:cpv(240,160) twirls:4 amplitude:1 grid:ccg(12,8) duration:t];
+	return [self actionWithPosition:cpv(240,160) twirls:1 amplitude:2.5f grid:ccg(12,8) duration:t];
 }
 @end
 @implementation ShakyTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 grid:ccg(10,10) duration:t];
+	return [self actionWithRange:5 shakeZ:YES grid:ccg(16,12) duration:t];
 }
 @end
 @implementation ShatteredTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 grid:ccg(10,10) duration:t];
+	return [self actionWithRange:5 shatterZ:YES grid:ccg(16,12) duration:t];
 }
 @end
 @implementation ShuffleTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSeed:25 grid:ccg(4,4) duration:t];
+	id shuffle = [ShuffleTiles actionWithSeed:25 grid:ccg(16,12) duration:t];
+	id shuffle_back = [shuffle reverse];
+	id delay = [DelayTime actionWithDuration:2];
+
+	return [Sequence actions: shuffle, delay, shuffle_back, nil];
 }
 @end
 @implementation FadeOutTRTilesDemo
@@ -191,13 +203,13 @@ enum {
 @implementation WavesTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:120 grid:ccg(10,10) duration:t];
+	return [self actionWithWaves:4 amplitude:120 grid:ccg(15,10) duration:t];
 }
 @end
 @implementation JumpTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithJumps:5 amplitude:40 grid:ccg(10,10) duration:t];
+	return [self actionWithJumps:5 amplitude:40 grid:ccg(15,10) duration:t];
 }
 @end
 @implementation SplitRowsDemo

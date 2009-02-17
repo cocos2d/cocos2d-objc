@@ -25,16 +25,17 @@ typedef struct
 
 @implementation ShakyTiles3D
 
-+(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d
++(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGrid)gridSize duration:(ccTime)d
 {
-	return [[[self alloc] initWithRange:range grid:gridSize duration:d] autorelease];
+	return [[[self alloc] initWithRange:range shakeZ:shakeZ grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d
+-(id)initWithRange:(int)range shakeZ:(BOOL)sz grid:(ccGrid)gridSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gridSize duration:d]) )
 	{
 		randrange = range;
+		shakeZ = sz;
 	}
 	
 	return self;
@@ -49,19 +50,25 @@ typedef struct
 		for( j = 0; j < grid.y; j++ )
 		{
 			ccQuad3 coords = [self getOriginalTile:ccg(i,j)];
-			
+
+			// X
 			coords.bl_x += ( rand() % (randrange*2) ) - randrange;
-			coords.bl_y += ( rand() % (randrange*2) ) - randrange;
-			coords.bl_z += ( rand() % (randrange*2) ) - randrange;
 			coords.br_x += ( rand() % (randrange*2) ) - randrange;
-			coords.br_y += ( rand() % (randrange*2) ) - randrange;
-			coords.br_z += ( rand() % (randrange*2) ) - randrange;
 			coords.tl_x += ( rand() % (randrange*2) ) - randrange;
-			coords.tl_y += ( rand() % (randrange*2) ) - randrange;
-			coords.tl_z += ( rand() % (randrange*2) ) - randrange;
 			coords.tr_x += ( rand() % (randrange*2) ) - randrange;
+
+			// Y
+			coords.bl_y += ( rand() % (randrange*2) ) - randrange;
+			coords.br_y += ( rand() % (randrange*2) ) - randrange;
+			coords.tl_y += ( rand() % (randrange*2) ) - randrange;
 			coords.tr_y += ( rand() % (randrange*2) ) - randrange;
-			coords.tr_z += ( rand() % (randrange*2) ) - randrange;
+
+			if( shakeZ ) {
+				coords.bl_z += ( rand() % (randrange*2) ) - randrange;
+				coords.br_z += ( rand() % (randrange*2) ) - randrange;
+				coords.tl_z += ( rand() % (randrange*2) ) - randrange;
+				coords.tr_z += ( rand() % (randrange*2) ) - randrange;
+			}
 						
 			[self setTile:ccg(i,j) coords:coords];
 		}
@@ -74,17 +81,18 @@ typedef struct
 
 @implementation ShatteredTiles3D
 
-+(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d
++(id)actionWithRange:(int)range shatterZ:(BOOL)sz grid:(ccGrid)gridSize duration:(ccTime)d
 {
-	return [[[self alloc] initWithRange:range grid:gridSize duration:d] autorelease];
+	return [[[self alloc] initWithRange:range shatterZ:sz grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d
+-(id)initWithRange:(int)range shatterZ:(BOOL)sz grid:(ccGrid)gridSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gridSize duration:d]) )
 	{
 		once = NO;
 		randrange = range;
+		shatterZ = sz;
 	}
 	
 	return self;
@@ -102,18 +110,24 @@ typedef struct
 			{
 				ccQuad3 coords = [self getOriginalTile:ccg(i,j)];
 				
+				// X
 				coords.bl_x += ( rand() % (randrange*2) ) - randrange;
-				coords.bl_y += ( rand() % (randrange*2) ) - randrange;
-				coords.bl_z += ( rand() % (randrange*2) ) - randrange;
 				coords.br_x += ( rand() % (randrange*2) ) - randrange;
-				coords.br_y += ( rand() % (randrange*2) ) - randrange;
-				coords.br_z += ( rand() % (randrange*2) ) - randrange;
 				coords.tl_x += ( rand() % (randrange*2) ) - randrange;
-				coords.tl_y += ( rand() % (randrange*2) ) - randrange;
-				coords.tl_z += ( rand() % (randrange*2) ) - randrange;
 				coords.tr_x += ( rand() % (randrange*2) ) - randrange;
+				
+				// Y
+				coords.bl_y += ( rand() % (randrange*2) ) - randrange;
+				coords.br_y += ( rand() % (randrange*2) ) - randrange;
+				coords.tl_y += ( rand() % (randrange*2) ) - randrange;
 				coords.tr_y += ( rand() % (randrange*2) ) - randrange;
-				coords.tr_z += ( rand() % (randrange*2) ) - randrange;
+
+				if( shatterZ ) {
+					coords.bl_z += ( rand() % (randrange*2) ) - randrange;
+					coords.br_z += ( rand() % (randrange*2) ) - randrange;				
+					coords.tl_z += ( rand() % (randrange*2) ) - randrange;
+					coords.tr_z += ( rand() % (randrange*2) ) - randrange;
+				}
 				
 				[self setTile:ccg(i,j) coords:coords];
 			}
