@@ -17,11 +17,14 @@
 /** ShakyTiles3D action */
 @interface ShakyTiles3D : TiledGrid3DAction
 {
-	int randrange;
+	int		randrange;
+	BOOL	shakeZ;
 }
 
-+(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a range, shake Z vertices, a grid and duration */
++(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGrid)gridSize duration:(ccTime)d;
+/** initializes the action with a range, shake Z vertices, a grid and duration */
+-(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 
@@ -30,12 +33,14 @@
 /** ShatteredTiles3D action */
 @interface ShatteredTiles3D : TiledGrid3DAction
 {
-	int randrange;
-	BOOL once;
+	int		randrange;
+	BOOL	once;
+	BOOL	shatterZ;
 }
 
-+(id)actionWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithRange:(int)range grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a range, shatter Z vertices, a grid and duration */
++(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGrid)gridSize duration:(ccTime)d;
+-(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGrid)gridSize duration:(ccTime)d;
 
 @end
 

@@ -43,17 +43,15 @@ enum {
 	id reuse = [ReuseGrid actionWithTimes:1];
 	id delay = [DelayTime actionWithDuration:8];
 
-	// XXX BUG: orbit disabled until orbit+depth buffer+fbo is fixed
-//	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
-//	id orbit_back = [orbit reverse];
+	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
+	id orbit_back = [orbit reverse];
 
-//	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
+	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
 	[target do: [Sequence actions: lens, delay, reuse, waves, nil]];
 }
 -(NSString*) title
 {
-//	return @"Lens + Waves3d and OrbitCamera";
-	return @"Lens + Waves3d";
+	return @"Lens + Waves3d and OrbitCamera";
 }
 @end
 
@@ -70,10 +68,10 @@ enum {
 	
 	// To reuse a grid the grid size and the grid type must be the same.
 	// in this case:
-	//     ShakyTiles3D is TiledGrid3D and it's size is (15,10)
+	//     ShakyTiles is TiledGrid3D and it's size is (15,10)
 	//     Shuffletiles is TiledGrid3D and it's size is (15,10)
 	//	   TurnOfftiles is TiledGrid3D and it's size is (15,10)
-	id shaky = [ShakyTiles3D actionWithRange:4 grid:ccg(15,10) duration:5];
+	id shaky = [ShakyTiles3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
 	id shuffle = [ShuffleTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
 	id turnoff = [TurnOffTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
 	id turnon = [turnoff reverse];
@@ -113,7 +111,7 @@ enum {
 	
 	
 	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:ccg(15,10) duration:5];
-	id shaky = [Shaky3D actionWithRange:4 grid:ccg(15,10) duration:5];
+	id shaky = [Shaky3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
 	
 	[target1 do: [RepeatForever actionWithAction: waves]];
 	[target2 do: [RepeatForever actionWithAction: shaky]];
@@ -269,10 +267,10 @@ Class restartAction()
 	// BUG: glClearColor() in FBO needs to be converted to RGB565
 	[[Director sharedDirector] setPixelFormat:kRGBA8];
 
-	// It seems that Orbit + 3d Effects needs DepthBuffer
-	// But this breaks other FBO examples. Any idea ?
-	// BUG XXX: Help needed
-//	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
+	// Create a depth buffer of 24 bits
+	// Needed for the orbit + lens + waves examples
+	// These means that openGL z-order will be taken into account
+	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
