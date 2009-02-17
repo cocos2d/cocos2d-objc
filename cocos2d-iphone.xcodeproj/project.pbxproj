@@ -137,7 +137,7 @@
 		501CCFB10E99657C00B86F68 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */; };
 		501CCFB20E99657C00B86F68 /* Texture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA90E99657C00B86F68 /* Texture2D.h */; };
 		501CCFB30E99657C00B86F68 /* Texture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAA0E99657C00B86F68 /* Texture2D.m */; };
-		501CCFB40E99657C00B86F68 /* TGAlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAB0E99657C00B86F68 /* TGAlib.c */; };
+		501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAB0E99657C00B86F68 /* TGAlib.m */; };
 		501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFAC0E99657C00B86F68 /* TGAlib.h */; };
 		501CD16B0E99873000B86F68 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		501CD16C0E99873000B86F68 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
@@ -894,7 +894,7 @@
 		501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		501CCFA90E99657C00B86F68 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2D.h; sourceTree = "<group>"; };
 		501CCFAA0E99657C00B86F68 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture2D.m; sourceTree = "<group>"; };
-		501CCFAB0E99657C00B86F68 /* TGAlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TGAlib.c; sourceTree = "<group>"; };
+		501CCFAB0E99657C00B86F68 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		501CCFAC0E99657C00B86F68 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
 		501CD16A0E99873000B86F68 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
 		502B3E980E09A59500886982 /* Transition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transition.h; sourceTree = "<group>"; };
@@ -1660,7 +1660,7 @@
 			children = (
 				500043210F3C9FBA00A5FBF4 /* PVRTexture.h */,
 				500043220F3C9FBA00A5FBF4 /* PVRTexture.m */,
-				501CCFAB0E99657C00B86F68 /* TGAlib.c */,
+				501CCFAB0E99657C00B86F68 /* TGAlib.m */,
 				501CCFAC0E99657C00B86F68 /* TGAlib.h */,
 			);
 			name = ImageSupport;
@@ -2992,7 +2992,7 @@
 				501CCFAE0E99657C00B86F68 /* EAGLView.m in Sources */,
 				501CCFAF0E99657C00B86F68 /* glu.c in Sources */,
 				501CCFB30E99657C00B86F68 /* Texture2D.m in Sources */,
-				501CCFB40E99657C00B86F68 /* TGAlib.c in Sources */,
+				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
 				50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */,
 				50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */,
 				50A24E120F377E8E007CAEB0 /* Grabber.m in Sources */,
