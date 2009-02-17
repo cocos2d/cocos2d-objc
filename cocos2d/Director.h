@@ -218,8 +218,9 @@ and when to execute the Scenes
 
 /** The main loop is triggered again.
  Call this function only if [stopAnimation] was called earlier
+ @warning Dont' call this function to start the main loop. To run the main loop call runWithScene
  */
- -(void) startAnimation;
+-(void) startAnimation;
 
 
 // Events
