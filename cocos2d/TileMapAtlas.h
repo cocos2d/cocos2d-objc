@@ -47,12 +47,12 @@
 /** returns a tile from position x,y.
  For the moment only channel R is used
  */
--(ccRGBB) tileAt: (ccGrid) position;
+-(ccRGBB) tileAt: (ccGridSize) position;
 
 /** sets a tile at position x,y.
  For the moment only channel R is used
  */
--(void) setTile:(ccRGBB)tile at:(ccGrid)position;
+-(void) setTile:(ccRGBB)tile at:(ccGridSize)position;
 /** dealloc the map from memory */
 -(void) releaseMap;
 @end

@@ -17,18 +17,18 @@
 
 @implementation GridAction
 
-@synthesize size;
+@synthesize gridSize;
 
-+(id) actionWithSize:(ccGrid)size duration:(ccTime)d
++(id) actionWithSize:(ccGridSize)size duration:(ccTime)d
 {
 	return [[[self alloc] initWithSize:size duration:d ] autorelease];
 }
 
--(id) initWithSize:(ccGrid)gridSize duration:(ccTime)d
+-(id) initWithSize:(ccGridSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		grid = gridSize;
+		gridSize = gSize;
 	}
 	
 	return self;
@@ -38,11 +38,11 @@
 {
 	[super start];
 
-	GridBase *newgrid = [self getGrid];
+	GridBase *newgrid = [self grid];
 	
 	if ( target.grid && target.grid.reuseGrid > 0 )
 	{
-		if ( target.grid.active && target.grid.grid.x == grid.x && target.grid.grid.y == grid.y && [target.grid isKindOfClass:[newgrid class]] )
+		if ( target.grid.active && target.grid.gridSize.x == gridSize.x && target.grid.gridSize.y == gridSize.y && [target.grid isKindOfClass:[newgrid class]] )
 		{
 			[target.grid reuse];
 		}
@@ -57,15 +57,10 @@
 			target.grid.active = NO;
 		target.grid = newgrid;
 		target.grid.active = YES;
-	}
-	
-	CGSize	win = [[Director sharedDirector] winSize];
-	
-	size.x = win.width;
-	size.y = win.height;
+	}	
 }
 
--(GridBase *)getGrid
+-(GridBase *)grid
 {
 	[NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
 	return nil;
@@ -81,24 +76,24 @@
 
 @implementation Grid3DAction
 
--(GridBase *)getGrid
+-(GridBase *)grid
 {
-	return [Grid3D gridWithSize:grid];
+	return [Grid3D gridWithSize:gridSize];
 }
 
--(ccVertex3D)getVertex:(ccGrid)pos
-{
-	Grid3D *g = (Grid3D *)target.grid;
-	return [g getVertex:pos];
-}
-
--(ccVertex3D)getOriginalVertex:(ccGrid)pos
+-(ccVertex3D)vertex:(ccGridSize)pos
 {
 	Grid3D *g = (Grid3D *)target.grid;
-	return [g getOriginalVertex:pos];
+	return [g vertex:pos];
 }
 
--(void)setVertex:(ccGrid)pos vertex:(ccVertex3D)vertex
+-(ccVertex3D)originalVertex:(ccGridSize)pos
+{
+	Grid3D *g = (Grid3D *)target.grid;
+	return [g originalVertex:pos];
+}
+
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g setVertex:pos vertex:vertex];
@@ -110,24 +105,24 @@
 
 @implementation TiledGrid3DAction
 
--(GridBase *)getGrid
+-(GridBase *)grid
 {
-	return [TiledGrid3D gridWithSize:grid];
+	return [TiledGrid3D gridWithSize:gridSize];
 }
 
--(ccQuad3)getTile:(ccGrid)pos
-{
-	TiledGrid3D *g = (TiledGrid3D *)target.grid;
-	return [g getTile:pos];
-}
-
--(ccQuad3)getOriginalTile:(ccGrid)pos
+-(ccQuad3)tile:(ccGridSize)pos
 {
 	TiledGrid3D *g = (TiledGrid3D *)target.grid;
-	return [g getOriginalTile:pos];
+	return [g tile:pos];
 }
 
--(void)setTile:(ccGrid)pos coords:(ccQuad3)coords
+-(ccQuad3)originalTile:(ccGridSize)pos
+{
+	TiledGrid3D *g = (TiledGrid3D *)target.grid;
+	return [g originalTile:pos];
+}
+
+-(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
 {
 	TiledGrid3D *g = (TiledGrid3D *)target.grid;
 	[g setTile:pos coords:coords];

@@ -823,7 +823,7 @@ enum {
 	 ];
 }
 
--(IntervalAction*) actionWithSize: (ccGrid) v
+-(IntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [FadeOutTRTiles actionWithSize:v duration:duration];
 }
@@ -833,7 +833,7 @@ enum {
 // FadeBL Transition
 //
 @implementation FadeBLTransition
--(IntervalAction*) actionWithSize: (ccGrid) v
+-(IntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [FadeOutBLTiles actionWithSize:v duration:duration];
 }
@@ -843,7 +843,7 @@ enum {
 // FadeUp Transition
 //
 @implementation FadeUpTransition
--(IntervalAction*) actionWithSize: (ccGrid) v
+-(IntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [FadeOutUpTiles actionWithSize:v duration:duration];
 }
@@ -853,7 +853,7 @@ enum {
 // FadeDown Transition
 //
 @implementation FadeDownTransition
--(IntervalAction*) actionWithSize: (ccGrid) v
+-(IntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [FadeOutDownTiles actionWithSize:v duration:duration];
 }

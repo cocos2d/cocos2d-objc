@@ -21,10 +21,10 @@
 	BOOL	shakeZ;
 }
 
-/** creates the action with a range, shake Z vertices, a grid and duration */
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGrid)gridSize duration:(ccTime)d;
-/** initializes the action with a range, shake Z vertices, a grid and duration */
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
++(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGridSize)gridSize duration:(ccTime)d;
+/** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
+-(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
 
@@ -38,15 +38,18 @@
 	BOOL	shatterZ;
 }
 
-/** creates the action with a range, shatter Z vertices, a grid and duration */
-+(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
++(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGridSize)gridSize duration:(ccTime)d;
+/** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
+-(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
 
 ////////////////////////////////////////////////////////////
 
-/** ShuffleTiles action */
+/** ShuffleTiles action
+ Shuffle the tiles in random order
+ */
 @interface ShuffleTiles : TiledGrid3DAction
 {
 	int	seed;
@@ -55,14 +58,18 @@
 	void *tiles;
 }
 
-+(id)actionWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a random seed, the grid size and the duration */
++(id)actionWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
+/** initializes the action with a random seed, the grid size and the duration */
+-(id)initWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutTRTiles action */
+/** FadeOutTRTiles action
+ Fades out the tiles in a Top-Right direction
+ */
 @interface FadeOutTRTiles : TiledGrid3DAction
 {
 }
@@ -70,7 +77,9 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutBLTiles action */
+/** FadeOutBLTiles action.
+ Fades out the tiles in a Bottom-Left direction
+ */
 @interface FadeOutBLTiles : FadeOutTRTiles
 {
 }
@@ -78,7 +87,9 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutUpTiles action */
+/** FadeOutUpTiles action.
+ Fades out the tiles in upwards direction
+ */
 @interface FadeOutUpTiles : FadeOutTRTiles
 {
 }
@@ -86,7 +97,9 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutDownTiles action */
+/** FadeOutDownTiles action.
+ Fades out the tiles in downwards direction
+ */
 @interface FadeOutDownTiles : FadeOutUpTiles
 {
 }
@@ -94,7 +107,9 @@
 
 ////////////////////////////////////////////////////////////
 
-/** TurnOffTiles action */
+/** TurnOffTiles action.
+ Turn off the files in random order
+ */
 @interface TurnOffTiles : TiledGrid3DAction
 {
 	int	seed;
@@ -102,13 +117,15 @@
 	int *tilesOrder;
 }
 
-+(id)actionWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithSeed:(int)s grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a random seed, the grid size and the duration */
++(id)actionWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
+/** initializes the action with a random seed, the grid size and the duration */
+-(id)initWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
 @end
 
 ////////////////////////////////////////////////////////////
 
-/** WavesTiles3D action */
+/** WavesTiles3D action. */
 @interface WavesTiles3D : TiledGrid3DAction
 {
 	int waves;
@@ -116,17 +133,23 @@
 	float amplitudeRate;
 }
 
+/** waves amplitude */
 @property float amplitude;
+/** waves amplitude rate */
 @property float amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
+/** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
 
 ////////////////////////////////////////////////////////////
 
-/** JumpTiles3D action */
+/** JumpTiles3D action.
+ A sin function is executed to move the tiles across the Z axis
+ */
 @interface JumpTiles3D : TiledGrid3DAction
 {
 	int jumps;
@@ -134,11 +157,15 @@
 	float amplitudeRate;
 }
 
+/** amplitude of the sin*/
 @property float amplitude;
+/** amplitude rate */
 @property float amplitudeRate;
 
-+(id)actionWithJumps:(int)j amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
--(id)initWithJumps:(int)j amplitude:(float)amp grid:(ccGrid)gridSize duration:(ccTime)d;
+/** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
++(id)actionWithJumps:(int)j amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
+/** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
+-(id)initWithJumps:(int)j amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
 
@@ -147,9 +174,11 @@
 /** SplitRows action */
 @interface SplitRows : TiledGrid3DAction
 {
+	CGSize	winSize;
 }
-
+/** creates the action with the number of rows to split and the duration */
 +(id)actionWithRows:(int)r duration:(ccTime)d;
+/** initializes the action with the number of rows to split and the duration */
 -(id)initWithRows:(int)r duration:(ccTime)d;
 
 @end
@@ -159,9 +188,11 @@
 /** SplitCols action */
 @interface SplitCols : TiledGrid3DAction
 {
+	CGSize	winSize;
 }
-
+/** creates the action with the number of columns to split and the duration */
 +(id)actionWithCols:(int)c duration:(ccTime)d;
+/** initializes the action with the number of columns to split and the duration */
 -(id)initWithCols:(int)c duration:(ccTime)d;
 
 @end
