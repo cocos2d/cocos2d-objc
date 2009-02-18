@@ -394,6 +394,8 @@
 	}
 	
 	// transformations
+	
+	// transalte
 	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
 		glTranslatef( -transformAnchor.x + parallaxOffsetX, -transformAnchor.y + parallaxOffsetY, 0);
 	
@@ -401,12 +403,14 @@
 		glTranslatef( position.x + transformAnchor.x + parallaxOffsetX, position.y + transformAnchor.y + parallaxOffsetY, 0);
 	else if ( position.x !=0 || position.y !=0 || parallaxOffsetX != 0 || parallaxOffsetY != 0)
 		glTranslatef( position.x + parallaxOffsetX, position.y + parallaxOffsetY, 0 );
-	
-	if (scaleX != 1.0f || scaleY != 1.0f)
-		glScalef( scaleX, scaleY, 1.0f );
-	
+
+	// rotate
 	if (rotation != 0.0f )
 		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
+	
+	// scale
+	if (scaleX != 1.0f || scaleY != 1.0f)
+		glScalef( scaleX, scaleY, 1.0f );	
 	
 	// restore and re-position point
 	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)

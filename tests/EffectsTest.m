@@ -173,31 +173,51 @@ enum {
 @implementation FadeOutTRTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [FadeOutTRTiles actionWithSize:ccg(16,12) duration:t];
+	id back = [fadeout reverse];
+	id delay = [DelayTime actionWithDuration:0.5f];
+
+	return [Sequence actions: fadeout, delay, back, nil];
 }
 @end
 @implementation FadeOutBLTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [FadeOutBLTiles actionWithSize:ccg(16,12) duration:t];
+	id back = [fadeout reverse];
+	id delay = [DelayTime actionWithDuration:0.5f];
+	
+	return [Sequence actions: fadeout, delay, back, nil];
 }
 @end
 @implementation FadeOutUpTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [FadeOutUpTiles actionWithSize:ccg(16,12) duration:t];
+	id back = [fadeout reverse];
+	id delay = [DelayTime actionWithDuration:0.5f];
+	
+	return [Sequence actions: fadeout, delay, back, nil];
 }
 @end
 @implementation FadeOutDownTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [FadeOutDownTiles actionWithSize:ccg(16,12) duration:t];
+	id back = [fadeout reverse];
+	id delay = [DelayTime actionWithDuration:0.5f];
+	
+	return [Sequence actions: fadeout, delay, back, nil];
 }
 @end
 @implementation TurnOffTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSeed:25 grid:ccg(48,32) duration:t];
+	id action = [TurnOffTiles actionWithSeed:25 grid:ccg(48,32) duration:t];
+	id back = [action reverse];
+	id delay = [DelayTime actionWithDuration:0.5f];
+	
+	return [Sequence actions: action, delay, back, nil];
 }
 @end
 @implementation WavesTiles3DDemo
@@ -209,7 +229,7 @@ enum {
 @implementation JumpTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithJumps:5 amplitude:40 grid:ccg(15,10) duration:t];
+	return [self actionWithJumps:2 amplitude:30 grid:ccg(15,10) duration:t];
 }
 @end
 @implementation SplitRowsDemo
