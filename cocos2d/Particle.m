@@ -129,37 +129,37 @@
 	cpVect v;
 
 	// position
-	particle->pos.x = source.x + posVar.x * CCRANDOM_FLOAT_MINUS1_1();
-	particle->pos.y = source.y + posVar.y * CCRANDOM_FLOAT_MINUS1_1();
+	particle->pos.x = source.x + posVar.x * CCRANDOM_MINUS1_1();
+	particle->pos.y = source.y + posVar.y * CCRANDOM_MINUS1_1();
 	
 	// direction
-	float a = (cpFloat)DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_FLOAT_MINUS1_1() );
+	float a = (cpFloat)DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
 	v.y = sinf( a );
 	v.x = cosf( a );
-	float s = speed + speedVar * CCRANDOM_FLOAT_MINUS1_1();
+	float s = speed + speedVar * CCRANDOM_MINUS1_1();
 	particle->dir = cpvmult( v, s );
 	
 	// radial accel
-	particle->radialAccel = radialAccel + radialAccelVar * CCRANDOM_FLOAT_MINUS1_1();
+	particle->radialAccel = radialAccel + radialAccelVar * CCRANDOM_MINUS1_1();
 	
 	// tangential accel
-	particle->tangentialAccel = tangentialAccel + tangentialAccelVar * CCRANDOM_FLOAT_MINUS1_1();
+	particle->tangentialAccel = tangentialAccel + tangentialAccelVar * CCRANDOM_MINUS1_1();
 	
 	// life
-	particle->life = life + lifeVar * CCRANDOM_FLOAT_MINUS1_1();
+	particle->life = life + lifeVar * CCRANDOM_MINUS1_1();
 	
 	// Color
 	ccColorF start;
-	start.r = startColor.r + startColorVar.r * CCRANDOM_FLOAT_MINUS1_1();
-	start.g = startColor.g + startColorVar.g * CCRANDOM_FLOAT_MINUS1_1();
-	start.b = startColor.b + startColorVar.b * CCRANDOM_FLOAT_MINUS1_1();
-	start.a = startColor.a + startColorVar.a * CCRANDOM_FLOAT_MINUS1_1();
+	start.r = startColor.r + startColorVar.r * CCRANDOM_MINUS1_1();
+	start.g = startColor.g + startColorVar.g * CCRANDOM_MINUS1_1();
+	start.b = startColor.b + startColorVar.b * CCRANDOM_MINUS1_1();
+	start.a = startColor.a + startColorVar.a * CCRANDOM_MINUS1_1();
 
 	ccColorF end;
-	end.r = endColor.r + endColorVar.r * CCRANDOM_FLOAT_MINUS1_1();
-	end.g = endColor.g + endColorVar.g * CCRANDOM_FLOAT_MINUS1_1();
-	end.b = endColor.b + endColorVar.b * CCRANDOM_FLOAT_MINUS1_1();
-	end.a = endColor.a + endColorVar.a * CCRANDOM_FLOAT_MINUS1_1();
+	end.r = endColor.r + endColorVar.r * CCRANDOM_MINUS1_1();
+	end.g = endColor.g + endColorVar.g * CCRANDOM_MINUS1_1();
+	end.b = endColor.b + endColorVar.b * CCRANDOM_MINUS1_1();
+	end.a = endColor.a + endColorVar.a * CCRANDOM_MINUS1_1();
 	
 	particle->color = start;
 	particle->deltaColor.r = (end.r - start.r) / particle->life;
@@ -168,7 +168,7 @@
 	particle->deltaColor.a = (end.a - start.a) / particle->life;
 
 	// size
-	particle->size = size + sizeVar * CCRANDOM_FLOAT_MINUS1_1();	
+	particle->size = size + sizeVar * CCRANDOM_MINUS1_1();	
 }
 
 -(void) step: (ccTime) dt
