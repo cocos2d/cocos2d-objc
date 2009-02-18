@@ -188,3 +188,13 @@ v0.6:
 v0.7:
     TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
     [tilemap releaseMap];  // NEW SINCE v0.7
+
+
+TGALib file
+===========
+
+v0.6:
+    Include "TGAlib.c" file in your XCode project
+
+v0.7:
+    Remove "TGAlib.c" file and include "TGAlib.m" in your XCode project
