@@ -77,11 +77,13 @@
 			cat = @"hard";
 			break;
 	}
+	// The only supported flag as of v0.1 is kQueryFlagByCountry
 	tQueryFlags flags = kQueryFlagIgnore;
 	if( world == kCountry )
 		flags = kQueryFlagByCountry;
 
-	// Ask for World scores
+	// request All time Scores: the only supported version as of v0.1
+	// request best 15 scores (limit:15, offset:0)
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
 
 	// Release. It won't be freed from memory until the connection fails or suceeds
@@ -91,7 +93,10 @@
 -(void) postScore:(NSInteger)cate
 {
 	NSLog(@"Posting Score");
-	
+
+	// Create que "post" object for the game "DemoGame"
+	// The gameKey is the secret key that is generated when you create you game in cocos live.
+	// This secret key is used to prevent spoofing the high scores
 	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame" gameKey:@"e8e0765de336f46b17a39ad652ee4d39" delegate:self];
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
