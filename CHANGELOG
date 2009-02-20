@@ -1,4 +1,4 @@
-version 0.7.0 - XX-Feb-2009
+version 0.7.0 - 19-Feb-2009
  . Action: elapsed is a property (issue #203)
  . Actions: EaseIn/Out added. Cubic/Quad removed (issue #195)
  . Atlas: Fixed black line (issue #135 and issue #47)

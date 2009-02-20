@@ -57,6 +57,16 @@ v0.7:
 }
 
 
+Director window
+===============
+
+v0.6:
+[[[Director sharedDirector] window] addSubview:view];
+
+v0.7:
+[[[Director sharedDirector] openGLView] addSubview:view];
+
+
 Director main loop
 ==================
 
