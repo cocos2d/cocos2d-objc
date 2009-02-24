@@ -877,6 +877,9 @@ static Director *_sharedDirector = nil;
 	
 	isRunning = YES;
 	while (isRunning) {
+	
+		NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+
 		if (paused) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		}
@@ -884,6 +887,8 @@ static Director *_sharedDirector = nil;
 		[self mainLoop];
 		
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
+
+		[loopPool release];
 	}
 }
 

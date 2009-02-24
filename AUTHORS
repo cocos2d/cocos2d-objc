@@ -39,6 +39,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	                patches for Layer
 					patches for MultiplexLayer
 	* Graham Perks: Atlas works with GL_CULL_FACE
+					FastDirector doesn't leak autorelease pool patch
     * Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
 	* Jason Booth (slipster216): author of EaseAction

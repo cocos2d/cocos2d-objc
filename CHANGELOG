@@ -1,3 +1,6 @@
+version 0.7.1 - ??
+ . Director: FastDirector doesn't leak autoreleased objects (issue #221)
+
 version 0.7.0 - 19-Feb-2009
  . Action: elapsed is a property (issue #203)
  . Actions: EaseIn/Out added. Cubic/Quad removed (issue #195)
