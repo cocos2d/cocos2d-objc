@@ -253,6 +253,8 @@ and when to execute the Scenes
 @interface FastDirector : Director
 {
 	BOOL isRunning;
+	
+	NSAutoreleasePool	*autoreleasePool;
 }
 @end
 

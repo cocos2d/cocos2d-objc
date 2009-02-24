@@ -851,22 +851,32 @@ static Director *_sharedDirector = nil;
 
 @end
 
+#pragma mark -
 #pragma mark Director FastDirector
 
 @implementation FastDirector
 
 - (id) init
 {
-	if(( self = [super init] ))
-		isRunning = NO;
-
 	CCLOG(@"Using Fast Director");
+
+	if(( self = [super init] )) {
+		isRunning = NO;
+		
+		// first scene will be created using this autorelease pool
+		autoreleasePool = [NSAutoreleasePool new];
+	}
 
 	return self;
 }
 
 - (void) startAnimation
 {
+	// release the autoreleased objects that were created
+	// in the first scene
+	[autoreleasePool release];
+	autoreleasePool = nil;
+
 	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
 		NSException* myException = [NSException
 									exceptionWithName:@"GetTimeOfDay"
@@ -875,10 +885,11 @@ static Director *_sharedDirector = nil;
 		@throw myException;
 	}
 	
+
 	isRunning = YES;
 	while (isRunning) {
 	
-		NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
 		if (paused) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
