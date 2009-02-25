@@ -38,6 +38,7 @@ typedef enum {
 typedef enum {
 	kQueryFlagIgnore = 0,
 	kQueryFlagByCountry = 1 << 0,
+	kQueryFlagByDevice = 1 << 1,
 } tQueryFlags;
 
 /**

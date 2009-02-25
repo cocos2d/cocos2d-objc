@@ -56,21 +56,26 @@
 	// create the request	
 	[receivedData setLength:0];
 	
+	NSString *device = [[UIDevice currentDevice] uniqueIdentifier];
 	// arguments:
 	//  query: type of query
 	//  limit: how many scores are being requested. Default is 25. Maximun is 100
 	//  offset: offset of the scores
 	//  flags: bring only country scores, world scores, etc.
 	//  category: string user defined string used to filter
-	NSString *url= [NSString stringWithFormat:@"%@?gamename=%@&querytype=%d&offset=%d&limit=%d&flags=%d&category=%@",
+	NSString *url= [NSString stringWithFormat:@"%@?gamename=%@&querytype=%d&offset=%d&limit=%d&flags=%d&category=%@&device=%@",
 					SCORE_SERVER_REQUEST_URL,
 					gameName,
 					type,
 					offset,
 					limit,
 					flags,
-					category];
-		
+					category,
+					device
+	];
+	
+//	NSLog(@"%@", url);
+
 	NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]
 										   cachePolicy:NSURLRequestUseProtocolCachePolicy
 											timeoutInterval:10.0];

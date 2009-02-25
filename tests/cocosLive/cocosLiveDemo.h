@@ -11,8 +11,9 @@ enum {
 };
 
 enum {
-	kWorld = 0,
+	kAll = 0,
 	kCountry = 1,
+	kDevice = 2,
 };
 
 //CLASS INTERFACE
