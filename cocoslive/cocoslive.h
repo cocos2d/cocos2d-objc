@@ -15,7 +15,7 @@
 
 // 0x00 HI ME LO
 // 00   00 01 00
-#define COCOSLIVE_VERSION 0x00000100
+#define COCOSLIVE_VERSION 0x00000101
 
 // to use localserver. DEBUG ONLY
 // #define USE_LOCAL_SERVER 1

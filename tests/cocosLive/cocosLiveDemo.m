@@ -28,10 +28,11 @@
 //   This is the only import you need to use "pure" cocosLive
 #import "cocoslive.h"
 
+// CCLOG and CCRANDOM_0_1
+#import "ccMacros.h"
+
 // local import
 #import "cocosLiveDemo.h"
-
-#define RANDOM_FLOAT() (((float)random() / (float)0x7fffffff))
 
 @interface AppController (Private)
 -(void) testRequest;
@@ -55,7 +56,7 @@
 
 -(int) getRandomWithMax:(int)max 
 {
-	return RANDOM_FLOAT() * max;
+	return CCRANDOM_0_1() * max;
 }
 
 -(void) requestScore
@@ -81,6 +82,8 @@
 	tQueryFlags flags = kQueryFlagIgnore;
 	if( world == kCountry )
 		flags = kQueryFlagByCountry;
+	else if(world == kDevice )
+		flags = kQueryFlagByDevice;
 
 	// request All time Scores: the only supported version as of v0.1
 	// request best 15 scores (limit:15, offset:0)
@@ -103,7 +106,7 @@
 
 	// Name at random
 	NSArray *names = [NSArray arrayWithObjects:@"Pamela", @"Vicky", @"Sandra", @"Kathia", @"Grossini", @"Great Grossini", nil];
-	NSString *name = [names objectAtIndex: RANDOM_FLOAT() * 6];
+	NSString *name = [names objectAtIndex: CCRANDOM_0_1() * 6];
 
 	// usr_ are fields that can be modified.
 	// set score
@@ -250,7 +253,7 @@
 
 	self.globalScores = [[NSMutableArray alloc] initWithCapacity:50];
 	category = kCategoryEasy;
-	world = kWorld;
+	world = kAll;
 	
 	[self initRandom];
 

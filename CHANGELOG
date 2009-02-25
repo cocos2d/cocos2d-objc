@@ -1,4 +1,5 @@
 version 0.7.1 - ??
+ . CocosLive: filter by device id (issue #223)
  . Director: FastDirector doesn't leak autoreleased objects (issue #221)
 
 version 0.7.0 - 19-Feb-2009
