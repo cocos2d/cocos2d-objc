@@ -18,12 +18,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+#import <math.h>
  
 typedef struct cpVect{
 	cpFloat x,y;
 } cpVect;
 
 static const cpVect cpvzero={0.0f,0.0f};
+
+static inline float
+cpvdistance(const cpVect v1, const cpVect v2)
+{
+  return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2));
+}
 
 static inline cpVect
 cpv(const cpFloat x, const cpFloat y)
