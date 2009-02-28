@@ -117,31 +117,56 @@
   float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
   float tend = mTexVPos + len/mTextureLength;
   RibbonSegment* seg;
-  // first lets kill old segments
-  for (seg in mSegments)
-  {
-    if (seg->finished)
-    {
-      [dSegments addObject:seg];
-    }
-  }
+	// grab last segment
+	seg = [mSegments objectAtIndex:[mSegments count]-1];
+	// lets kill old segments
+	for (RibbonSegment* seg2 in mSegments)
+	{
+		if (seg2 != seg && seg2->finished)
+		{
+			[dSegments addObject:seg2];
+		}
+	}
+	[mSegments removeObjectsInArray:dSegments];
+	// is the segment full?
+	if (seg->end >= 50)
   [mSegments removeObjectsInArray:dSegments];
   // grab last segment and appent to it if it's not full
   seg = [mSegments objectAtIndex:[mSegments count]-1];
   // is the segment full?
   if (seg->end >= 50)
-  {
-    // grab it from the cache if we can
-    if ([dSegments count] > 0)
-    {
-      seg = [dSegments objectAtIndex:0];
-      [dSegments removeObject:seg];
-      [seg reset];
-    }
-    else
-      seg = [[[RibbonSegment alloc] init] autorelease];
-    [mSegments addObject:seg];
-  }
+	{
+		RibbonSegment* newSeg;
+		// grab it from the cache if we can
+		if ([dSegments count] > 0)
+		{
+			newSeg = [dSegments objectAtIndex:0];
+			[dSegments removeObject:newSeg];
+			[newSeg reset];
+		}
+		else
+		{
+			newSeg = [[[RibbonSegment alloc] init] autorelease];
+		}
+		
+		newSeg->creationTime[0] = seg->creationTime[seg->end - 1];
+		int v = (seg->end-1)*6;
+		int c = (seg->end-1)*4;	
+		newSeg->verts[0] = seg->verts[v];
+		newSeg->verts[1] = seg->verts[v+1];
+		newSeg->verts[2] = seg->verts[v+2];
+		newSeg->verts[3] = seg->verts[v+3];
+		newSeg->verts[4] = seg->verts[v+4];
+		newSeg->verts[5] = seg->verts[v+5];
+		
+		newSeg->coords[0] = seg->coords[c];
+		newSeg->coords[1] = seg->coords[c+1];
+		newSeg->coords[2] = seg->coords[c+2];
+		newSeg->coords[3] = seg->coords[c+3];	  
+		newSeg->end++;
+		seg = newSeg;
+		[mSegments addObject:seg];
+	}  
   if (seg->end == 0)
   {
     // first edge has to get rotation from the first real polygon
