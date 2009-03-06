@@ -348,8 +348,8 @@ Class restartAction()
 {
 	id mgr = [self getByTag:kTagSpriteManager];
 	
-	int x = CCRANDOM_0_1() * 7;
-	int y = CCRANDOM_0_1() * 1;
+	int x = CCRANDOM_0_1() * 70 / 10;
+	int y = CCRANDOM_0_1() * 20 / 10;
 	x *= 85;
 	y *= 121;
 	
@@ -360,10 +360,12 @@ Class restartAction()
 	id action;
 	float r = CCRANDOM_0_1();
 	
-	if( r < 0.5 )
-		action = [ScaleBy actionWithDuration:1 scale:2];
+	if( r < 0.33 )
+		action = [ScaleBy actionWithDuration:3 scale:2];
+	else if(r < 0.66)
+		action = [RotateBy actionWithDuration:3 angle:360];
 	else
-		action = [RotateBy actionWithDuration:1 angle:360];
+		action = [Blink actionWithDuration:1 blinks:3];
 	id action_back = [action reverse];
 	id seq = [Sequence actions:action, action_back, nil];
 	
@@ -384,7 +386,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Atlas: AtlasSprite (fast)";
+	return @"AtlasSprite (fast sprites)";
 }
 @end
 
