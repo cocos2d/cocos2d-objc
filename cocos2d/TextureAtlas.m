@@ -35,20 +35,33 @@
 	return [[[self alloc] initWithFile:file capacity:n] autorelease];
 }
 
++(id) textureAtlasWithTexture:(Texture2D *)tex capacity:(NSUInteger)n
+{
+	return [[[self alloc] initWithTexture:tex capacity:n] autorelease];
+}
+
 -(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
+{
+	// retained in property
+	Texture2D *tex = [[TextureMgr sharedTextureMgr] addImage:file];	
+	
+	return [self initWithTexture:tex capacity:n];
+}
+
+-(id) initWithTexture:(Texture2D*)tex capacity:(NSUInteger)n
 {
 	if( ! (self=[super init]) )
 		return nil;
 	
 	totalQuads = n;
-
+	
 	// retained in property
-	self.texture = [[TextureMgr sharedTextureMgr] addImage:file];	
+	self.texture = tex;
 	
 	texCoordinates = malloc( sizeof(texCoordinates[0]) * totalQuads );
 	vertices = malloc( sizeof(vertices[0]) * totalQuads );
 	indices = malloc( sizeof(indices[0]) * totalQuads * 6 );
-
+	
 	if( ! ( texCoordinates && vertices && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");
 		if( texCoordinates )
