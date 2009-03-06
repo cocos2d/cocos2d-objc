@@ -39,6 +39,18 @@
  */
 -(id) initWithFile: (NSString*) file capacity:(NSUInteger)n;
 
+/** creates a TextureAtlas with a previously initialized Texture2D object, and
+ * with an initial capacity for n Quads.  n is the number of Quads that can be rendered
+ * at once with this Atlas.
+ */
++(id) textureAtlasWithTexture:(Texture2D *)tex capacity:(NSUInteger)n;
+
+/** initializes a TextureAtlas with a previously initialized Texture2D object, and
+ * with an initial capacity for n Quads.  n is the number of Quads that can be rendered
+ * at once with this Atlas.
+ */
+-(id) initWithTexture:(Texture2D *)tex capacity:(NSUInteger)n;
+
 /** updates a certain texture coordinate & vertex with new Quads.
  * n must be between 0 and the atlas capacity - 1
  * The default value of all of the Quads is 0,0,0,0,0,0,0,0, so this selector
