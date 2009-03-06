@@ -12,10 +12,15 @@
  *
  */
 
-#import "cocos2d/cocos2d.h"
+#import "CocosNode.h"
+#import "TextureAtlas.h"
+#import "ccMacros.h"
 
 @class AtlasSprite;
 
+/** AtlasSpriteManager is the object that draws all the AtlasSprite objects
+ * that belongs to this Manager. Use 1 AtlasSpriteManager per TextureAtlas
+ */
 @interface AtlasSpriteManager : CocosNode
 {
 @private
@@ -24,22 +29,38 @@
 	NSMutableArray *mSprites;
 }
 
-+(id)allocWithTexture:(Texture2D *)tex;
-+(id)allocWithTexture:(Texture2D *)tex withCapacity:(int)capacity;
--(id)initWithTexture:(Texture2D *)tex withCapacity:(int)capacity;
+/** returns the TextureAtlas that is used */
+@property (readonly) TextureAtlas * atlas;
 
--(AtlasSprite *)createNewSpriteWithParameters:(NSDictionary *)parameters;
+/** creates an AtlasSpriteManager with a texture2d */
++(id)spriteManagerWithTexture:(Texture2D *)tex;
+/** creates an AtlasSpriteManager with a texture2d and capacity */
++(id)spriteManagerWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity;
+/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
++(id)spriteManagerWithFile:(NSString*) fileImage;
+/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) and capacity */
++(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
+
+/** initializes an AtlasSpriteManager with a texture2d and capacity */
+-(id)initWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity;
+/** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
+-(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
+
+/** creates and add a new AtlasSprite in the AtlasSpriteManger given a rect */
+-(AtlasSprite *)createNewSpriteWithRect:(CGRect)rect;
 -(int)reserveIndexForSprite;
 -(AtlasSprite *)addSprite:(AtlasSprite *)newSprite;
 
+/** removes an AtlasSprite from the AtlasSpriteManager giving an AtlasSprite reference */
 -(void)removeSprite:(AtlasSprite *)sprite;
+/** removes an AtlasSprite from the AtlasSpriteManager giving an index */
 -(void)removeSpriteAtIndex:(int)index;
+/** removes all the AltasSprites from the AtlasSpriteManager */
 -(void)removeAllSprites;
 
--(TextureAtlas *)atlas;
-
+/* returns the number of AtlasSprites */
 -(int)numberOfSprites;
+/* returns an AtlasSprite reference giving for an index */
 -(AtlasSprite *)spriteAtIndex:(int)index;
--(NSEnumerator *)spriteEnumerator;
 
 @end

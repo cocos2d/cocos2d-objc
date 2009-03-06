@@ -1,5 +1,7 @@
 version 0.7.1 - ??
+ . AtlasSprite: new feature (issue #238)
  . CocosLive: filter by device id (issue #223)
+ . TextureAtlas: support for texture2D (issue #161)
  . Director: FastDirector doesn't leak autoreleased objects (issue #221)
 
 version 0.7.0 - 19-Feb-2009

@@ -64,6 +64,8 @@
 #import "Grid.h"
 #import "Grid3DAction.h"
 #import "GridAction.h"
+#import "AtlasSprite.h"
+#import "AtlasSpriteManager.h"
 
 //
 // cocos2d macros

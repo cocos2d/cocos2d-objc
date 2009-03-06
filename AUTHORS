@@ -66,7 +66,9 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	         author of MenuItemToggle
 	* Math Sephton: patches for Demos
 	                patches for License
-    * moswald: fix to set depthbuffer size on Director
+    * Matt Oswald: fix to set depthbuffer size on Director
+	               TextureAtlas supports Texture2D objects
+				   author of AtlasSprite and AtlasSpriteManager
 	* rac5372: compiler warning in MenuItem
     * ratman: patch for TileMapAtlas: it works with 255 tiles
 			  patch for TextureMgr: supports directory within image names

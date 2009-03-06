@@ -351,6 +351,11 @@
 		50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851C380F35FE7D00978029 /* UIColor-OpenGL.h */; };
 		50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50851C390F35FE7D00978029 /* UIColor-OpenGL.m */; };
 		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
+		509A79970F6188420032F449 /* AtlasSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* AtlasSprite.h */; };
+		509A79980F6188420032F449 /* AtlasSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* AtlasSprite.m */; };
+		509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* AtlasSpriteManager.h */; };
+		509A799C0F6188500032F449 /* AtlasSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A799A0F6188500032F449 /* AtlasSpriteManager.m */; };
+		509A7A980F61A2400032F449 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		509B3A170F31027600F2FB95 /* cocoslive.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A110F31027600F2FB95 /* cocoslive.h */; };
 		509B3A180F31027600F2FB95 /* cocoslive.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A120F31027600F2FB95 /* cocoslive.m */; };
 		509B3A190F31027600F2FB95 /* ScoreServerPost.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A130F31027600F2FB95 /* ScoreServerPost.h */; };
@@ -975,6 +980,11 @@
 		50851BF40F35FB0F00978029 /* ccExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccExceptions.h; sourceTree = "<group>"; };
 		50851C380F35FE7D00978029 /* UIColor-OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-OpenGL.h"; sourceTree = "<group>"; };
 		50851C390F35FE7D00978029 /* UIColor-OpenGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-OpenGL.m"; sourceTree = "<group>"; };
+		509A79950F6188420032F449 /* AtlasSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasSprite.h; sourceTree = "<group>"; };
+		509A79960F6188420032F449 /* AtlasSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasSprite.m; sourceTree = "<group>"; };
+		509A79990F6188500032F449 /* AtlasSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasSpriteManager.h; sourceTree = "<group>"; };
+		509A799A0F6188500032F449 /* AtlasSpriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasSpriteManager.m; sourceTree = "<group>"; };
+		509A7A970F61A2400032F449 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		509B39DF0F31020900F2FB95 /* libTouchJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A0D0F31024E00F2FB95 /* libcocos Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A110F31027600F2FB95 /* cocoslive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoslive.h; sourceTree = "<group>"; };
@@ -1737,6 +1747,10 @@
 		50A24F010F3788C6007CAEB0 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				509A79990F6188500032F449 /* AtlasSpriteManager.h */,
+				509A799A0F6188500032F449 /* AtlasSpriteManager.m */,
+				509A79950F6188420032F449 /* AtlasSprite.h */,
+				509A79960F6188420032F449 /* AtlasSprite.m */,
 				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
 				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				506884700E96734A00F943E5 /* LabelAtlas.h */,
@@ -1827,6 +1841,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
 				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
 				5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */,
 				50B53B640F3F28DC00E81F83 /* test_image.gif */,
@@ -1930,6 +1945,8 @@
 				50A24E170F377E8E007CAEB0 /* GridAction.h in Headers */,
 				50A24E740F378087007CAEB0 /* TiledGridAction.h in Headers */,
 				500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */,
+				509A79970F6188420032F449 /* AtlasSprite.h in Headers */,
+				509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2653,6 +2670,7 @@
 				506886530E96C2D800F943E5 /* tiles.png in Resources */,
 				506888A30E96D7A200F943E5 /* levelmap.tga in Resources */,
 				501CD1760E99873000B86F68 /* fps_images.png in Resources */,
+				509A7A980F61A2400032F449 /* grossini_dance_atlas.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3001,6 +3019,8 @@
 				50A24E180F377E8E007CAEB0 /* GridAction.m in Sources */,
 				50A24E750F378087007CAEB0 /* TiledGridAction.m in Sources */,
 				500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */,
+				509A79980F6188420032F449 /* AtlasSprite.m in Sources */,
+				509A799C0F6188500032F449 /* AtlasSpriteManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

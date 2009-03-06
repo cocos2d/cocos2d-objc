@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 			@"Atlas2",
 			@"Atlas3",
 			@"Atlas4",
+			@"Atlas5",
 };
 
 enum {
@@ -320,6 +321,62 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Atlas: Editable TileMapAtlas";
+}
+@end
+
+#pragma mark Example Atlas 5
+
+@implementation Atlas5
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		AtlasSprite *sprite1 = [AtlasSprite spriteWithSpriteManager:mgr withRect:CGRectMake(0, 0, 85, 121)];
+		
+		sprite1.position = cpv( 480/2, 320/2);
+
+		[self add:mgr];
+	}	
+	return self;
+}
+
+-(void) updateMap:(ccTime) dt
+{
+	// IMPORTANT
+	//   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
+	//   The value 0 not rendered so don't assign or change a tile with value 0
+	
+	TileMapAtlas *tilemap = (TileMapAtlas*) [self getByTag:kTagTileMap];
+	
+	//
+	// For example you can iterate over all the tiles
+	// using this code, but try to avoid the iteration
+	// over all your tiles in every frame. It's very expensive
+	//	for(int x=0; x < tilemap.tgaInfo->width; x++) {
+	//		for(int y=0; y < tilemap.tgaInfo->height; y++) {
+	//			ccRGBB c =[tilemap tileAt:ccg(x,y)];
+	//			if( c.r != 0 ) {
+	//				NSLog(@"%d,%d = %d", x,y,c.r);
+	//			}
+	//		}
+	//	}
+	
+	// NEW since v0.7
+	ccRGBB c =[tilemap tileAt:ccg(13,21)];		
+	c.r++;
+	c.r %= 50;
+	if( c.r==0)
+		c.r=1;
+	
+	// NEW since v0.7
+	[tilemap setTile:c at:ccg(13,21)];			
+	
+}
+
+-(NSString *) title
+{
+	return @"Atlas: AtlasSprite (fast)";
 }
 @end
 
