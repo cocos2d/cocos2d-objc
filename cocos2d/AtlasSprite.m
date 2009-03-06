@@ -30,26 +30,24 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 @implementation AtlasSprite
 
 @synthesize atlasIndex = mAtlasIndex;
+@synthesize textureRect = mRect;
 
 /////////////////////////////////////////////////
-+(id)createWithSpriteManager:(AtlasSpriteManager *)manager withParameters:(NSDictionary *)parameters
++(id)spriteWithSpriteManager:(AtlasSpriteManager *)manager withRect:(CGRect)rect
 {
-	return [manager createNewSpriteWithParameters:parameters];
+	return [manager createNewSpriteWithRect:rect];
 }
 
 /////////////////////////////////////////////////
--(id)initWithSpriteManager:(AtlasSpriteManager *)manager withParameters:(NSDictionary *)parameters
+-(id)initWithSpriteManager:(AtlasSpriteManager *)manager withRect:(CGRect)rect
 {
 	mAtlas = [manager atlas];
 	mAtlasIndex = [manager reserveIndexForSprite];
 	[manager addSprite:self];
 
-	mLeft = [[parameters objectForKey:@"left"] intValue];
-	mTop = [[parameters objectForKey:@"top"] intValue];
-	mRight = [[parameters objectForKey:@"right"] intValue];
-	mBottom = [[parameters objectForKey:@"bottom"] intValue];
+	mRect = rect;
 
-	transformAnchor = cpv(0, 0);
+	transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
 
 	[self updateTextureCoords];
 	[self updatePosition];
@@ -59,24 +57,9 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 }
 
 /////////////////////////////////////////////////
--(void)setTextureRectLeft:(int)left top:(int)top right:(int)right bottom:(int)bottom
+-(void)setTextureRect:(CGRect) rect
 {
-	mLeft = left;
-	mTop = top;
-	mRight = right;
-	mBottom = bottom;
-
-	[self updateTextureCoords];
-	[self updateAtlas];
-}
-
-/////////////////////////////////////////////////
--(void)setTextureRectWithParameters:(NSDictionary *)parameters
-{
-	mLeft = [[parameters objectForKey:@"left"] intValue];
-	mTop = [[parameters objectForKey:@"top"] intValue];
-	mRight = [[parameters objectForKey:@"right"] intValue];
-	mBottom = [[parameters objectForKey:@"bottom"] intValue];
+	mRect = rect;
 
 	[self updateTextureCoords];
 	[self updateAtlas];
@@ -85,10 +68,8 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 /////////////////////////////////////////////////
 -(void)offsetTextureRect:(cpVect)offset
 {
-	mLeft += offset.x;
-	mTop += offset.y;
-	mRight += offset.x;
-	mBottom += offset.y;
+	mRect.origin.x += offset.x;
+	mRect.origin.y += offset.y;
 
 	[self updateTextureCoords];
 	[self updateAtlas];
@@ -97,10 +78,8 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 /////////////////////////////////////////////////
 -(void)moveTextureRect:(cpVect)pos
 {
-	mRight = pos.x + (mRight - mLeft);
-	mBottom = pos.y + (mBottom - mTop);
-	mLeft = pos.x;
-	mTop = pos.y;
+	mRect.origin.x = pos.x;
+	mRect.origin.y = pos.y;
 
 	[self updateTextureCoords];
 	[self updateAtlas];
@@ -108,11 +87,8 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 
 /////////////////////////////////////////////////
 -(id)makeCopyOfSprite:(AtlasSprite *)sprite
-{
-	mLeft = sprite->mLeft;
-	mTop = sprite->mTop;
-	mRight = sprite->mRight;
-	mBottom = sprite->mBottom;
+{	
+	mRect = sprite.textureRect;
 
 	[self updateTextureCoords];
 	[self updatePosition];
@@ -126,12 +102,18 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 {
 	float atlasWidth = mAtlas.texture.pixelsWide;
 	float atlasHeight = mAtlas.texture.pixelsHigh;
+
+	float left = mRect.origin.x / atlasWidth;
+	float right = (mRect.origin.x + mRect.size.width) / atlasWidth;
+	float top = mRect.origin.y / atlasHeight;
+	float bottom = (mRect.origin.y + mRect.size.height) / atlasHeight;
+
 	
 	ccQuad2 newCoords = {
-		mLeft / atlasWidth, mBottom / atlasHeight,
-		mRight / atlasWidth, mBottom / atlasHeight,
-		mLeft / atlasWidth, mTop / atlasHeight,
-		mRight / atlasWidth, mTop / atlasHeight,
+		left, bottom,
+		right, bottom,
+		left, top,
+		right, top,
 	};
 
 	mTexCoords = newCoords;
@@ -140,13 +122,10 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 /////////////////////////////////////////////////
 -(void)updatePosition
 {
-	int myWidth = mRight - mLeft;
-	int myHeight = mBottom - mTop;
-
 	float left = position.x;
 	float top = position.y;
-	float right = position.x + myWidth;
-	float bottom = position.y + myHeight;
+	float right = position.x + mRect.size.width;
+	float bottom = position.y + mRect.size.height;
 
 	// account for anchor point
 	if(relativeTransformAnchor)
@@ -167,14 +146,14 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 		// account for scale
 		if(scaleX != 1)
 		{
-			float scaleOffset = (myWidth - (myWidth * scaleX)) / 2;
+			float scaleOffset = (mRect.size.width - (mRect.size.width * scaleX)) / 2;
 			left += scaleOffset;
 			right -= scaleOffset;
 		}
 
 		if(scaleY != 1)
 		{
-			float scaleOffset = (myHeight - (myHeight * scaleY)) / 2;
+			float scaleOffset = (mRect.size.height - (mRect.size.height * scaleY)) / 2;
 			top += scaleOffset;
 			bottom -= scaleOffset;
 		}
@@ -209,56 +188,6 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 -(cpVect)screenPosition
 {
 	return cpv(mVertices.bl_x, mVertices.bl_y);
-}
-
-/////////////////////////////////////////////////
--(cpVect)textureTopLeft
-{
-	return cpv(mLeft, mTop);
-}
-
-/////////////////////////////////////////////////
--(cpVect)textureBottomRight
-{
-	return cpv(mRight, mBottom);
-}
-
-/////////////////////////////////////////////////
--(float)height
-{
-	return mBottom - mTop;
-}
-
-/////////////////////////////////////////////////
--(float)width
-{
-	return mRight - mLeft;
-}
-
-/////////////////////////////////////////////////
--(float)scaledHeight
-{
-	return (mBottom - mTop) * scaleY;
-}
-
-/////////////////////////////////////////////////
--(float)scaledWidth
-{
-	return (mRight - mLeft) * scaleX;
-}
-
-/////////////////////////////////////////////////
--(float)scaleOffsetX
-{
-	float width = mRight - mLeft;
-	return (width - (width * scaleX)) / 2;
-}
-
-/////////////////////////////////////////////////
--(float)scaleOffsetY
-{
-	float height = mBottom - mTop;
-	return (height - (height * scaleY)) / 2;
 }
 
 /////////////////////////////////////////////////
@@ -365,16 +294,6 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 /////////////////////////////////////////////////
 -(CGSize)contentSize
 {
-	return CGSizeMake([self scaledWidth], [self scaledHeight]);
+	return mRect.size;
 }
-
-/////////////////////////////////////////////////
-//-(void)setZOrder:(int)z
-//{
-//	[super setZOrder:z];
-//
-//	[self UpdatePosition];
-//	[self UpdateAtlas];
-//}
-
 @end

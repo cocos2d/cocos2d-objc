@@ -41,6 +41,8 @@ const int defaultCapacity = 10;
 /////////////////////////////////////////////////
 @implementation AtlasSpriteManager
 
+@synthesize atlas = mAtlas;
+
 /////////////////////////////////////////////////
 -(void)dealloc
 {
@@ -49,21 +51,37 @@ const int defaultCapacity = 10;
 	[super dealloc];
 }
 
-/////////////////////////////////////////////////
-+(id)allocWithTexture:(Texture2D *)tex
+/*
+ * creation with Texture2D
+ */
++(id)spriteManagerWithTexture:(Texture2D *)tex
 {
-	return [[AtlasSpriteManager new] initWithTexture:tex withCapacity:defaultCapacity];
+	return [[AtlasSpriteManager new] initWithTexture:tex capacity:defaultCapacity];
+}
+
++(id)spriteManagerWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity
+{
+	return [[AtlasSpriteManager new] initWithTexture:tex capacity:capacity];
+}
+
+/*
+ * creation with File Image
+ */
++(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
+{
+	return [[AtlasSpriteManager new] initWithFile:fileImage capacity:capacity];
+}
+
++(id)spriteManagerWithFile:(NSString*) imageFile
+{
+	return [[AtlasSpriteManager new] initWithFile:imageFile capacity:defaultCapacity];
 }
 
 
-/////////////////////////////////////////////////
-+(id)allocWithTexture:(Texture2D *)tex withCapacity:(int)capacity
-{
-	return [[AtlasSpriteManager new] initWithTexture:tex withCapacity:capacity];
-}
-
-/////////////////////////////////////////////////
--(id)initWithTexture:(Texture2D *)tex withCapacity:(int)capacity
+/*
+ * init with Texture2D
+ */
+-(id)initWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity
 {
 	mTotalSprites = 0;
 	mAtlas = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
@@ -72,11 +90,23 @@ const int defaultCapacity = 10;
 	return self;
 }
 
-/////////////////////////////////////////////////
--(AtlasSprite *)createNewSpriteWithParameters:(NSDictionary *)parameters
+/*
+ * init with FileImage
+ */
+-(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
-	assert(parameters != nil);
-	return [[AtlasSprite new] initWithSpriteManager:self withParameters:parameters];
+	mTotalSprites = 0;
+	mAtlas = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
+	mSprites = [[NSMutableArray alloc] initWithCapacity:mAtlas.totalQuads];
+	
+	return self;
+}
+
+
+/////////////////////////////////////////////////
+-(AtlasSprite *)createNewSpriteWithRect:(CGRect)rect
+{
+	return [[AtlasSprite new] initWithSpriteManager:self withRect:(CGRect)rect];
 }
 
 /////////////////////////////////////////////////
@@ -91,8 +121,7 @@ const int defaultCapacity = 10;
 
 		[mAtlas resizeCapacity:mAtlas.totalQuads * 3 / 2];
 		
-		NSEnumerator *e = [mSprites objectEnumerator];
-		for(AtlasSprite *sprite in e)
+		for(AtlasSprite *sprite in mSprites)
 		{
 			[sprite updateAtlas];
 		}
@@ -137,8 +166,7 @@ const int defaultCapacity = 10;
 /////////////////////////////////////////////////
 -(void)removeAllSprites
 {
-	NSEnumerator *e = [mSprites objectEnumerator];
-	for(AtlasSprite *sprite in e)
+	for(AtlasSprite *sprite in mSprites)
 	{
 		[sprite release];
 	}
@@ -166,11 +194,6 @@ const int defaultCapacity = 10;
 	}
 }
 
-/////////////////////////////////////////////////
--(TextureAtlas *)atlas
-{
-	return mAtlas;
-}
 
 /////////////////////////////////////////////////
 -(int)numberOfSprites
@@ -182,12 +205,6 @@ const int defaultCapacity = 10;
 -(AtlasSprite *)spriteAtIndex:(int)index
 {
 	return [mSprites objectAtIndex:index];
-}
-
-/////////////////////////////////////////////////
--(NSEnumerator *)spriteEnumerator
-{
-	return [mSprites objectEnumerator];
 }
 
 @end

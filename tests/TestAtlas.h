@@ -28,11 +28,13 @@
 @end
 
 @interface Atlas3 : AtlasDemo
-{
-}
+{}
 @end
 
 @interface Atlas4 : AtlasDemo
-{
-}
+{}
+@end
+
+@interface Atlas5 : AtlasDemo
+{}
 @end
