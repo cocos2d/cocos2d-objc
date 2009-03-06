@@ -61,10 +61,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-/* Degrees / Radians conversion */
-#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0f * M_PI)
-#define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0f)
-
 /* Generic error reporting */
 #define REPORT_ERROR(__FORMAT__, ...) printf("%s: %s\n", __FUNCTION__, [[NSString stringWithFormat:__FORMAT__, __VA_ARGS__] UTF8String])
 

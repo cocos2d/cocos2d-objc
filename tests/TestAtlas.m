@@ -20,6 +20,7 @@ static NSString *transitions[] = {
 
 enum {
 	kTagTileMap = 1,
+	kTagSpriteManager = 1,
 };
 
 Class nextAction()
@@ -327,51 +328,58 @@ Class restartAction()
 #pragma mark Example Atlas 5
 
 @implementation Atlas5
+
 -(id) init
 {
 	if( (self=[super init]) ) {
+		
+		isTouchEnabled = YES;
 
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
-		AtlasSprite *sprite1 = [AtlasSprite spriteWithSpriteManager:mgr withRect:CGRectMake(0, 0, 85, 121)];
+		[self add:mgr z:0 tag:kTagSpriteManager];
 		
-		sprite1.position = cpv( 480/2, 320/2);
-
-		[self add:mgr];
+		[self addNewSpriteWithCoords:CGPointMake(480/2, 320/2)];
+		
 	}	
 	return self;
 }
 
--(void) updateMap:(ccTime) dt
+-(void) addNewSpriteWithCoords:(CGPoint)p
 {
-	// IMPORTANT
-	//   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
-	//   The value 0 not rendered so don't assign or change a tile with value 0
+	id mgr = [self getByTag:kTagSpriteManager];
 	
-	TileMapAtlas *tilemap = (TileMapAtlas*) [self getByTag:kTagTileMap];
+	int x = CCRANDOM_0_1() * 7;
+	int y = CCRANDOM_0_1() * 1;
+	x *= 85;
+	y *= 121;
 	
-	//
-	// For example you can iterate over all the tiles
-	// using this code, but try to avoid the iteration
-	// over all your tiles in every frame. It's very expensive
-	//	for(int x=0; x < tilemap.tgaInfo->width; x++) {
-	//		for(int y=0; y < tilemap.tgaInfo->height; y++) {
-	//			ccRGBB c =[tilemap tileAt:ccg(x,y)];
-	//			if( c.r != 0 ) {
-	//				NSLog(@"%d,%d = %d", x,y,c.r);
-	//			}
-	//		}
-	//	}
+	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x, y, 85, 121) spriteManager:mgr];
 	
-	// NEW since v0.7
-	ccRGBB c =[tilemap tileAt:ccg(13,21)];		
-	c.r++;
-	c.r %= 50;
-	if( c.r==0)
-		c.r=1;
+	sprite.position = cpv( p.x, p.y);
+
+	id action;
+	float r = CCRANDOM_0_1();
 	
-	// NEW since v0.7
-	[tilemap setTile:c at:ccg(13,21)];			
+	if( r < 0.5 )
+		action = [ScaleBy actionWithDuration:1 scale:2];
+	else
+		action = [RotateBy actionWithDuration:1 angle:360];
+	id action_back = [action reverse];
+	id seq = [Sequence actions:action, action_back, nil];
 	
+	[sprite do: [RepeatForever actionWithAction:seq]];
+}
+
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[Director sharedDirector] convertCoordinate: location];
+		
+		[self addNewSpriteWithCoords: location];
+	}
+	return kEventHandled;
 }
 
 -(NSString *) title

@@ -15,8 +15,6 @@
 #import "AtlasSpriteManager.h"
 #import "AtlasSprite.h"
 
-static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
-
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 @interface AtlasSprite ()
@@ -33,25 +31,27 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 @synthesize textureRect = mRect;
 
 /////////////////////////////////////////////////
-+(id)spriteWithSpriteManager:(AtlasSpriteManager *)manager withRect:(CGRect)rect
++(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
-	return [manager createNewSpriteWithRect:rect];
+	return [[[self alloc] initWithRect:rect spriteManager:manager] autorelease];
 }
 
 /////////////////////////////////////////////////
--(id)initWithSpriteManager:(AtlasSpriteManager *)manager withRect:(CGRect)rect
+-(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
-	mAtlas = [manager atlas];
-	mAtlasIndex = [manager reserveIndexForSprite];
-	[manager addSprite:self];
+	if( (self = [super init])) {
+		mAtlas = [manager atlas];
+		mAtlasIndex = [manager reserveIndexForSprite];
+		[manager addSprite:self];
 
-	mRect = rect;
+		mRect = rect;
 
-	transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
+		transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
 
-	[self updateTextureCoords];
-	[self updatePosition];
-	[self updateAtlas];
+		[self updateTextureCoords];
+		[self updatePosition];
+		[self updateAtlas];
+	}
 
 	return self;
 }
@@ -122,11 +122,64 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 /////////////////////////////////////////////////
 -(void)updatePosition
 {
+	// algorithm from pyglet (http://www.pyglet.org)
+
+	// if not visible
+	// then everything is 0
+	if( ! visible ) {		
+		ccQuad3 newVertices = {
+			0,0,0,
+			0,0,0,
+			0,0,0,
+			0,0,0,			
+		};
+		
+		mVertices = newVertices;
+		return;
+	}
+	
+	// rotation ?
+	if( rotation ) {
+		// rotation algorithm from pyglet (http://www.pyglet.org)
+		float x1 = -transformAnchor.x * scaleX;
+		float y1 = -transformAnchor.y * scaleY;
+
+		float x2 = x1 + mRect.size.width * scaleX;
+		float y2 = y1 + mRect.size.height * scaleY;
+		float x = position.x;
+		float y = position.y;
+//		if (relativeTransformAnchor) {
+//			x -= transformAnchor.x;
+//			y -= transformAnchor.y;
+//		}
+		
+		float r = (float)-CC_DEGREES_TO_RADIANS(rotation);
+		float cr = cosf(r);
+		float sr = sinf(r);
+		float ax = x1 * cr - y1 * sr + x;
+		float ay = x1 * sr + y1 * cr + y;
+		float bx = x2 * cr - y1 * sr + x;
+		float by = x2 * sr + y1 * cr + y;
+		float cx = x2 * cr - y2 * sr + x;
+		float cy = x2 * sr + y2 * cr + y;
+		float dx = x1 * cr - y2 * sr + x;
+		float dy = x1 * sr + y2 * cr + y;
+		
+		ccQuad3 newVertices = 
+					{ax, ay, 0, 
+					bx, by, 0,
+					dx, dy, 0,
+					cx, cy, 0};
+		mVertices = newVertices;
+		
+		return;
+	}
+	
 	float left = position.x;
 	float top = position.y;
 	float right = position.x + mRect.size.width;
 	float bottom = position.y + mRect.size.height;
-
+	
 	// account for anchor point
 	if(relativeTransformAnchor)
 	{
@@ -138,44 +191,53 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 
 	if(scaleX != 1 || scaleY != 1)
 	{
-		left += transformAnchor.x;
-		right += transformAnchor.x;
-		top += transformAnchor.y;
-		bottom += transformAnchor.y;
+		float x = position.x;
+		float y = position.y;
+//		if (relativeTransformAnchor) {
+//			x -= transformAnchor.x;
+//			y -= transformAnchor.y;
+//		}
+		
+		float x1 = (x- transformAnchor.x * scaleX);
+		float y1 = (y- transformAnchor.y * scaleY);
+		float x2 = (x1 + mRect.size.width * scaleX);
+		float y2 = (y1 + mRect.size.height * scaleY);
+		ccQuad3 newVertices = {
+			x1,y1,0,
+			x2,y1,0,
+			x1,y2,0,
+			x2,y2,0,
+		};
 
-		// account for scale
-		if(scaleX != 1)
-		{
-			float scaleOffset = (mRect.size.width - (mRect.size.width * scaleX)) / 2;
-			left += scaleOffset;
-			right -= scaleOffset;
-		}
-
-		if(scaleY != 1)
-		{
-			float scaleOffset = (mRect.size.height - (mRect.size.height * scaleY)) / 2;
-			top += scaleOffset;
-			bottom -= scaleOffset;
-		}
-
-		//
-		// account for rotation here
-		//
-
-		left -= transformAnchor.x;
-		right -= transformAnchor.x;
-		top -= transformAnchor.y;
-		bottom -= transformAnchor.y;
+		mVertices = newVertices;
+	
+		return;
 	}
-
-	ccQuad3 newVertices = {
-		left,	top,		0,
-		right,	top,		0,
-		left,	bottom,		0,
-		right,	bottom,		0,
-	};
-
-	mVertices = newVertices;
+	
+	/* else */
+	{
+		float x = position.x;
+		float y = position.y;
+//		if (relativeTransformAnchor) {
+//			x -= transformAnchor.x;
+//			y -= transformAnchor.y;
+//		}
+		
+		float x1 = (x-transformAnchor.x);
+		float y1 = (y-transformAnchor.y);
+		float x2 = (x1 + mRect.size.width);
+		float y2 = (y1 + mRect.size.height);
+		ccQuad3 newVertices = {
+			x1,y1,0,
+			x2,y1,0,
+			x1,y2,0,
+			x2,y2,0,
+		};
+		
+		mVertices = newVertices;
+	}
+	
+	return;
 }
 
 /////////////////////////////////////////////////
@@ -209,16 +271,12 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 }
 
 /////////////////////////////////////////////////
--(void)setRotation:(float)rotation
+-(void)setRotation:(float)rot
 {
-	NSException *e = [NSException exceptionWithName:@"setRotation" reason:@"AtlasSprite can not be rotated (yet)" userInfo:nil];
-	@throw e;
-/*
-	[super setRotation:rotation];
+	[super setRotation:rot];
 
 	[self updatePosition];
 	[self updateAtlas];
-*/
 }
 
 /////////////////////////////////////////////////
@@ -269,26 +327,9 @@ static const cpVect offscreenPosition = { -10000.0f, -10000.0f };
 /////////////////////////////////////////////////
 -(void)setVisible:(BOOL)v
 {
-	if(v == [super visible])
-	{
-		return;
-	}
-
-	if(!v)
-	{
-		mRealPosition = [self position];
-	}
-
 	[super setVisible:v];
-
-	if(!v)
-	{
-		[self setPosition:offscreenPosition];
-	}
-	else
-	{
-		[self setPosition:mRealPosition];
-	}
+	[self updatePosition];
+	[self updateAtlas];
 }
 
 /////////////////////////////////////////////////

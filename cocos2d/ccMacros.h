@@ -12,6 +12,8 @@
  *
  */
 
+#import <math.h>
+
 #ifdef DEBUG
 //#define CCLOG(s, …) NSLog((@”%s %s:%d ” s), __func__, basename(__FILE__), __LINE__, ## __VA_ARGS__);
 #define CCLOG(...) NSLog(__VA_ARGS__)
@@ -25,3 +27,9 @@
 
 /// returns a random float between 0 and 1
 #define CCRANDOM_0_1() ((random() / (float)0x7fffffff ))
+
+/// converts degrees to radians
+#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0f * M_PI)
+
+/// converts radians to degrees
+#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0f)

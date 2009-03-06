@@ -52,6 +52,23 @@ const int defaultCapacity = 10;
 }
 
 /*
+ * cocos2d scene management
+ */
+-(void) onEnter
+{
+	[super onEnter];
+	for( AtlasSprite *s in mSprites)
+		[s onEnter];
+}
+
+-(void) onExit
+{
+	for( AtlasSprite *s in mSprites)
+		[s onExit];
+	[super onExit];
+}
+
+/*
  * creation with Texture2D
  */
 +(id)spriteManagerWithTexture:(Texture2D *)tex
@@ -104,12 +121,6 @@ const int defaultCapacity = 10;
 
 
 /////////////////////////////////////////////////
--(AtlasSprite *)createNewSpriteWithRect:(CGRect)rect
-{
-	return [[AtlasSprite new] initWithSpriteManager:self withRect:(CGRect)rect];
-}
-
-/////////////////////////////////////////////////
 -(int)reserveIndexForSprite
 {
 	// if we're going beyond the current TextureAtlas's capacity,
@@ -134,6 +145,10 @@ const int defaultCapacity = 10;
 -(AtlasSprite *)addSprite:(AtlasSprite *)newSprite
 {
 	[mSprites insertObject:newSprite atIndex:[newSprite atlasIndex]];
+	
+	if( isRunning )
+		[newSprite onEnter];
+
 	return newSprite;
 }
 
@@ -155,6 +170,9 @@ const int defaultCapacity = 10;
 		assert([other atlasIndex] == index + 1);
 		[other setIndex:index];
 	}
+	
+	if( isRunning )
+		[sprite onExit];
 }
 
 /////////////////////////////////////////////////
@@ -168,7 +186,8 @@ const int defaultCapacity = 10;
 {
 	for(AtlasSprite *sprite in mSprites)
 	{
-		[sprite release];
+		if( isRunning )
+			[sprite onExit];
 	}
 
 	[mSprites removeAllObjects];

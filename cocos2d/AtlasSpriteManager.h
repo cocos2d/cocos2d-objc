@@ -46,8 +46,6 @@
 /** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
-/** creates and add a new AtlasSprite in the AtlasSpriteManger given a rect */
--(AtlasSprite *)createNewSpriteWithRect:(CGRect)rect;
 -(int)reserveIndexForSprite;
 -(AtlasSprite *)addSprite:(AtlasSprite *)newSprite;
 

@@ -16,7 +16,7 @@
 #import "CameraAction.h"
 #import "CocosNode.h"
 #import "Camera.h"
-#import "OpenGL_Internal.h"
+#import "ccMacros.h"
 
 //
 // CameraAction
@@ -60,8 +60,8 @@
 	angleX = x;
 	deltaAngleX = dx;
 
-	radDeltaZ = (cpFloat)DEGREES_TO_RADIANS(dz);
-	radDeltaX = (cpFloat)DEGREES_TO_RADIANS(dx);
+	radDeltaZ = (cpFloat)CC_DEGREES_TO_RADIANS(dz);
+	radDeltaX = (cpFloat)CC_DEGREES_TO_RADIANS(dx);
 	
 	return self;
 }
@@ -75,12 +75,12 @@
 	if( isnan(radius) )
 		radius = r;
 	if( isnan(angleZ) )
-		angleZ = (cpFloat)RADIANS_TO_DEGREES(zenith);
+		angleZ = (cpFloat)CC_RADIANS_TO_DEGREES(zenith);
 	if( isnan(angleX) )
-		angleX = (cpFloat)RADIANS_TO_DEGREES(azimuth);
+		angleX = (cpFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
-	radZ = (cpFloat)DEGREES_TO_RADIANS(angleZ);
-	radX = (cpFloat)DEGREES_TO_RADIANS(angleX);
+	radZ = (cpFloat)CC_DEGREES_TO_RADIANS(angleZ);
+	radX = (cpFloat)CC_DEGREES_TO_RADIANS(angleX);
 }
 
 -(void) update: (ccTime) t
