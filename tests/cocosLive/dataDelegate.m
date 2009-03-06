@@ -131,7 +131,7 @@ enum {
 	
 	NSDictionary	*s = [[appDelegate globalScores] objectAtIndex:i];
 
-	name.text = [s objectForKey:@"usr_playername"];
+	name.text = [s objectForKey:@"cc_playername"];
 	// this is an NSNumber... convert it to string
 	score.text = [[s objectForKey:@"cc_score"] stringValue];
 	speed.text = [[s objectForKey:@"usr_speed"] stringValue];

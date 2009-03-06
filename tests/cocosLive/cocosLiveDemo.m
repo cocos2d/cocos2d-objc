@@ -6,7 +6,7 @@
 
 //
 // To view these scores online, go here:
-// http://www.cocoslive.net/game-scores?gamename=DemoGame
+// http://www.cocoslive.net/game-scores?gamename=DemoGame%202
 //
 
 //
@@ -63,7 +63,7 @@
 {
 	NSLog(@"Requesting scores...");
 
-	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame" delegate:self];
+	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame 2" delegate:self];
 	
 	NSString *cat = @"easy";
 	
@@ -78,14 +78,15 @@
 			cat = @"hard";
 			break;
 	}
-	// The only supported flag as of v0.1 is kQueryFlagByCountry
+	cat = @"";
+	// The only supported flag as of v0.2 is kQueryFlagByCountry and kQueryFlagByDevice
 	tQueryFlags flags = kQueryFlagIgnore;
 	if( world == kCountry )
 		flags = kQueryFlagByCountry;
 	else if(world == kDevice )
 		flags = kQueryFlagByDevice;
 
-	// request All time Scores: the only supported version as of v0.1
+	// request All time Scores: the only supported version as of v0.2
 	// request best 15 scores (limit:15, offset:0)
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
 
@@ -97,28 +98,28 @@
 {
 	NSLog(@"Posting Score");
 
-	// Create que "post" object for the game "DemoGame"
+	// Create que "post" object for the game "DemoGame 2"
 	// The gameKey is the secret key that is generated when you create you game in cocos live.
 	// This secret key is used to prevent spoofing the high scores
-	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame" gameKey:@"e8e0765de336f46b17a39ad652ee4d39" delegate:self];
+	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame 2" gameKey:@"1ad0ba5afd763c6bdaa2429cfc99b3be" delegate:self];
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
 
 	// Name at random
-	NSArray *names = [NSArray arrayWithObjects:@"Pamela", @"Vicky", @"Sandra", @"Kathia", @"Grossini", @"Great Grossini", nil];
-	NSString *name = [names objectAtIndex: CCRANDOM_0_1() * 6];
+	NSArray *names = [NSArray arrayWithObjects:@"いすの上に猫がいる", @"Carrière", @"Iñaqui", @"Clemensstraße München ", @"有一只猫在椅子上", nil];
+	NSString *name = [names objectAtIndex: CCRANDOM_0_1() * 5];
 
-	// usr_ are fields that can be modified.
+	// cc_ files are predefined cocoslive fields.
 	// set score
 	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:20000] ] forKey:@"cc_score"];
+	// set playername
+	[dict setObject:name forKey:@"cc_playername"];
+
+	// usr_ are fields that can be modified.
 	// set speed
 	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:2000] ] forKey:@"usr_speed"];
 	// set angle
 	[dict setObject: [NSNumber numberWithInt:[self getRandomWithMax:360] ] forKey:@"usr_angle"];
-	// set playername
-	[dict setObject:name forKey:@"usr_playername"];
-	// set player type
-	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:2] ] forKey:@"usr_playertype"];
 
 
 	// cc_ are fields that cannot be modified. cocos fields

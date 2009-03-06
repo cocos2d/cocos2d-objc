@@ -30,7 +30,7 @@ static const cpVect cpvzero={0.0f,0.0f};
 static inline cpFloat
 cpvdistance(const cpVect v1, const cpVect v2)
 {
-  return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2));
+  return sqrtf(powf(v1.x - v2.x, 2) + powf(v1.y - v2.y, 2));
 }
 
 static inline cpVect
