@@ -133,7 +133,7 @@
 	particle->pos.y = source.y + posVar.y * CCRANDOM_MINUS1_1();
 	
 	// direction
-	float a = (cpFloat)DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
+	float a = (cpFloat)CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * CCRANDOM_MINUS1_1();

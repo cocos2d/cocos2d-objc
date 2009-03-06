@@ -37,4 +37,5 @@
 
 @interface Atlas5 : AtlasDemo
 {}
+-(void) addNewSpriteWithCoords:(CGPoint)p;
 @end

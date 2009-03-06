@@ -46,9 +46,6 @@
 	// screen pixels
 	// stored as pixel locations
 	ccQuad3 mVertices;
-
-	// because CocosNode::visible doesn't work with this derived class, we have to have this hack
-	cpVect mRealPosition;
 }
 
 /** returns the altas index of the AtlasSprite */
@@ -57,9 +54,9 @@
 @property (readonly) CGRect textureRect;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
-+(id)spriteWithSpriteManager:(AtlasSpriteManager *)manager withRect:(CGRect)rect;
++(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
 /** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */
--(id)initWithSpriteManager:(AtlasSpriteManager *)manager withRect:(CGRect)rect;
+-(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
 
 /** updates the Quad in the TextureAtlas with it's new position, scale and rotation */
 -(void)updateAtlas;
