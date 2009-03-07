@@ -74,7 +74,7 @@
 					offset,
 					limit,
 					flags,
-					category,
+					[category stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
 					device
 	];
 	
