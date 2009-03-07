@@ -119,7 +119,7 @@ static ccTexParams _texParamsCopy;
 - (void) dealloc
 {
 #if DEBUG
-	NSLog(@"deallocing: %@", self);
+	NSLog(@"deallocing %@", self);
 #endif
 	if(_name)
 		glDeleteTextures(1, &_name);

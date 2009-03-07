@@ -15,6 +15,7 @@
 // cocos2d
 #import "TextureAtlas.h"
 #import "TextureMgr.h"
+#import "ccMacros.h"
 
 // support
 #import "Support/Texture2D.h"
@@ -82,8 +83,15 @@
 	return self;
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, totalQuads];
+}
+
 -(void) dealloc
 {
+	CCLOG(@"deallocing %@",self);
+
 	free(vertices);
 	free(texCoordinates);
 	free(indices);

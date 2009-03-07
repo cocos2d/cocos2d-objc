@@ -122,7 +122,7 @@ enum {
 @property(readwrite,assign) cpVect position;
 /** A Camera object that lets you move the node using camera coordinates.
  * If you use the Camera then position, scale & rotation won't be used */
-@property(readwrite,retain) Camera* camera;
+@property(readonly) Camera* camera;
 /** A Grid object that is used when applying Effects */
 @property(readwrite,retain) GridBase* grid;
 /** Whether of not the node is visible. Default is YES */
@@ -267,7 +267,7 @@ enum {
 
 /// Size CocosNode protocol
 @protocol CocosNodeSize
-/// returns the size in pixels of a CocosNode
+/// returns the size in pixels of the un-tranformted texture.
 -(CGSize) contentSize;
 @end
 

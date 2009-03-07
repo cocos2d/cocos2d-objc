@@ -56,10 +56,13 @@
 	return self;
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%i,%i,%i,%i) | Tag = %i>", [self class], self, (int) mRect.origin.x, (int) mRect.origin.y, (int) mRect.size.width, (int) mRect.size.height, tag];
+}
+
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@",self);
-
 	[super dealloc];
 }
 
@@ -94,18 +97,6 @@
 }
 
 /////////////////////////////////////////////////
--(id)makeCopyOfSprite:(AtlasSprite *)sprite
-{	
-	mRect = sprite.textureRect;
-
-	[self updateTextureCoords];
-	[self updatePosition];
-	[self updateAtlas];
-
-	return self;
-}
-
-/////////////////////////////////////////////////
 -(void)updateTextureCoords
 {
 	float atlasWidth = mAtlas.texture.pixelsWide;
@@ -130,7 +121,7 @@
 /////////////////////////////////////////////////
 -(void)updatePosition
 {
-	// algorithm from pyglet (http://www.pyglet.org)
+	// algorithm from pyglet ( http://www.pyglet.org ) 
 
 	// if not visible
 	// then everything is 0
@@ -146,9 +137,8 @@
 		return;
 	}
 	
-	// rotation ?
+	// rotation ? -> update: rotation, scale, position
 	if( rotation ) {
-		// rotation algorithm from pyglet (http://www.pyglet.org)
 		float x1 = -transformAnchor.x * scaleX;
 		float y1 = -transformAnchor.y * scaleY;
 
@@ -183,6 +173,7 @@
 		return;
 	}
 	
+	// scale ? -> update: scale, position
 	if(scaleX != 1 || scaleY != 1)
 	{
 		float x = position.x;
@@ -208,7 +199,7 @@
 		return;
 	}
 	
-	/* else */
+	// update position
 	{
 		float x = position.x;
 		float y = position.y;
@@ -238,18 +229,6 @@
 -(void)updateAtlas
 {
 	[mAtlas updateQuadWithTexture:&mTexCoords vertexQuad:&mVertices atIndex:mAtlasIndex];
-}
-
-/////////////////////////////////////////////////
--(cpVect)screenPosition
-{
-	return cpv(mVertices.bl_x, mVertices.bl_y);
-}
-
-/////////////////////////////////////////////////
--(CGRect)getCGRect
-{
-	return CGRectMake(mVertices.bl_x, mVertices.bl_y, mVertices.br_x - mVertices.bl_x, mVertices.tr_y - mVertices.bl_y);
 }
 
 //
@@ -312,10 +291,7 @@
 /////////////////////////////////////////////////
 -(void)setRelativeTransformAnchor:(BOOL)relative
 {
-	[super setRelativeTransformAnchor:relative];
-
-	[self updatePosition];
-	[self updateAtlas];
+	CCLOG(@"relativeTransformAnchor is ignored in AtlasSprite");
 }
 
 /////////////////////////////////////////////////

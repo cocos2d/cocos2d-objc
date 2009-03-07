@@ -149,6 +149,11 @@ const int defaultCapacity = 10;
 	return mTotalSprites++;
 }
 
+-(AtlasSprite*) createSpriteWithRect:(CGRect)rect
+{
+	return [AtlasSprite spriteWithRect:rect spriteManager:self];
+}
+
 /////////////////////////////////////////////////
 -(AtlasSprite *)addSprite:(AtlasSprite *)newSprite
 {

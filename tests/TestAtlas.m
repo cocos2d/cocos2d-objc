@@ -346,14 +346,15 @@ Class restartAction()
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
-	id mgr = [self getByTag:kTagSpriteManager];
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getByTag:kTagSpriteManager];
 	
 	int x = CCRANDOM_0_1() * 70 / 10;
 	int y = CCRANDOM_0_1() * 20 / 10;
 	x *= 85;
 	y *= 121;
 	
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x, y, 85, 121) spriteManager:mgr];
+
+	AtlasSprite *sprite = [mgr createSpriteWithRect:CGRectMake(x, y, 85, 121)];
 	
 	sprite.position = cpv( p.x, p.y);
 

@@ -42,7 +42,6 @@
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent, children;
-@synthesize camera;
 @synthesize grid;
 @synthesize zOrder;
 @synthesize tag;
@@ -67,7 +66,8 @@
 	parallaxRatioX = 1.0f;
 	parallaxRatioY = 1.0f;
 
-	camera = [[Camera alloc] init];
+//	camera = [[Camera alloc] init];
+	camera = nil;
 	grid = nil;
 	
 	visible = YES;
@@ -112,6 +112,11 @@
 	scheduledSelectors = nil;
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Pos = (%i,%i) | Tag = %i>", [self class], self, (int) position.x, (int) position.y, tag];
+}
+
 
 - (void) dealloc
 {
@@ -144,6 +149,16 @@
 -(void) childrenAlloc
 {
 	children = [[NSMutableArray arrayWithCapacity:4] retain];
+}
+
+// camera: lazy alloc
+-(Camera*) camera
+{
+	if( ! camera ) {
+		camera = [[Camera alloc] init];
+	}
+
+	return camera;
 }
 
 -(id) add: (CocosNode*) child z:(int)z tag:(int) aTag

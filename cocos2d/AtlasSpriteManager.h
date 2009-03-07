@@ -47,8 +47,11 @@
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 -(int)reserveIndexForSprite;
--(AtlasSprite *)addSprite:(AtlasSprite *)newSprite;
 
+/** creates an sprite with a rect in the AtlasSpriteManage */
+-(AtlasSprite*) createSpriteWithRect:(CGRect)rect;
+/** adds an AtlasSprite to the Atlas */
+-(AtlasSprite *)addSprite:(AtlasSprite *)newSprite;
 /** removes an AtlasSprite from the AtlasSpriteManager giving an AtlasSprite reference */
 -(void)removeSprite:(AtlasSprite *)sprite;
 /** removes an AtlasSprite from the AtlasSpriteManager giving an index */
