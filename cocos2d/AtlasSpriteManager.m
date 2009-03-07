@@ -46,8 +46,12 @@ const int defaultCapacity = 10;
 /////////////////////////////////////////////////
 -(void)dealloc
 {
-	[mAtlas release];
+	// "children"
+	[mSprites makeObjectsPerformSelector:@selector(cleanup)];
 	[mSprites release];
+	
+	[mAtlas release];
+
 	[super dealloc];
 }
 
@@ -73,12 +77,12 @@ const int defaultCapacity = 10;
  */
 +(id)spriteManagerWithTexture:(Texture2D *)tex
 {
-	return [[AtlasSpriteManager new] initWithTexture:tex capacity:defaultCapacity];
+	return [[[AtlasSpriteManager alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
 
 +(id)spriteManagerWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity
 {
-	return [[AtlasSpriteManager new] initWithTexture:tex capacity:capacity];
+	return [[[AtlasSpriteManager alloc] initWithTexture:tex capacity:capacity] autorelease];
 }
 
 /*
@@ -86,12 +90,12 @@ const int defaultCapacity = 10;
  */
 +(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[AtlasSpriteManager new] initWithFile:fileImage capacity:capacity];
+	return [[[AtlasSpriteManager alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
 
 +(id)spriteManagerWithFile:(NSString*) imageFile
 {
-	return [[AtlasSpriteManager new] initWithFile:imageFile capacity:defaultCapacity];
+	return [[[AtlasSpriteManager alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
 
 
@@ -100,9 +104,11 @@ const int defaultCapacity = 10;
  */
 -(id)initWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity
 {
-	mTotalSprites = 0;
-	mAtlas = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
-	mSprites = [[NSMutableArray alloc] initWithCapacity:mAtlas.totalQuads];
+	if( (self=[super init])) {
+		mTotalSprites = 0;
+		mAtlas = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
+		mSprites = [[NSMutableArray alloc] initWithCapacity:capacity];
+	}
 
 	return self;
 }
@@ -112,9 +118,11 @@ const int defaultCapacity = 10;
  */
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
-	mTotalSprites = 0;
-	mAtlas = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
-	mSprites = [[NSMutableArray alloc] initWithCapacity:mAtlas.totalQuads];
+	if( (self=[super init]) ) {
+		mTotalSprites = 0;
+		mAtlas = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
+		mSprites = [[NSMutableArray alloc] initWithCapacity:capacity];
+	}
 	
 	return self;
 }
@@ -159,15 +167,12 @@ const int defaultCapacity = 10;
 	[mSprites removeObjectAtIndex:index];
 	--mTotalSprites;
 
-	assert([sprite retainCount] == 1);
-	[sprite release];
-
 	// update all sprites beyond this one
 	int count = [mSprites count];
 	for(; index != count; ++index)
 	{
 		AtlasSprite *other = (AtlasSprite *)[mSprites objectAtIndex:index];
-		assert([other atlasIndex] == index + 1);
+		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
 		[other setIndex:index];
 	}
 	

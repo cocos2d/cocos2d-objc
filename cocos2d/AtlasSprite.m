@@ -40,7 +40,7 @@
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
-		mAtlas = [manager atlas];
+		mAtlas = [manager atlas];	// XXX: shall be retained
 		mAtlasIndex = [manager reserveIndexForSprite];
 		[manager addSprite:self];
 
@@ -55,6 +55,14 @@
 
 	return self;
 }
+
+- (void) dealloc
+{
+	CCLOG(@"deallocing %@",self);
+
+	[super dealloc];
+}
+
 
 /////////////////////////////////////////////////
 -(void)setTextureRect:(CGRect) rect
@@ -175,20 +183,6 @@
 		return;
 	}
 	
-	float left = position.x;
-	float top = position.y;
-	float right = position.x + mRect.size.width;
-	float bottom = position.y + mRect.size.height;
-	
-	// account for anchor point
-	if(relativeTransformAnchor)
-	{
-		left -= transformAnchor.x;
-		right -= transformAnchor.x;
-		top -= transformAnchor.y;
-		bottom -= transformAnchor.y;
-	}
-
 	if(scaleX != 1 || scaleY != 1)
 	{
 		float x = position.x;
