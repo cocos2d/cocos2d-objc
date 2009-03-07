@@ -42,7 +42,7 @@
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
 
 
-/** returns the size in pixels of the texture
+/** returns the size in pixels of the texture without transformations.
  * Conforms to the CocosNodeSize protocol
  */
 -(CGSize) contentSize;

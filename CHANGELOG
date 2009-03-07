@@ -1,6 +1,8 @@
 version 0.7.1 - ??
  . AtlasSprite: new feature (issue #238)
+ . CocosNode: Camera is lazy alloced (issue #96)
  . CocosLive: filter by device id (issue #223)
+ . CocosLive: using cc_playername instead of usr_playername (issue #242)
  . TextureAtlas: support for texture2D (issue #161)
  . Director: FastDirector doesn't leak autoreleased objects (issue #221)
 

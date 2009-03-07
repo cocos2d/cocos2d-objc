@@ -66,10 +66,5 @@
 
 -(void)offsetTextureRect:(cpVect)offset;
 -(void)moveTextureRect:(cpVect)pos;
--(id)makeCopyOfSprite:(AtlasSprite *)sprite;
-
--(cpVect)screenPosition;
-
--(CGRect)getCGRect;
 
 @end
