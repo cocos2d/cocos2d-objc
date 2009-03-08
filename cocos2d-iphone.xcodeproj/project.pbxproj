@@ -273,6 +273,21 @@
 		505CC1D20F62BD24000EDF26 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505CC1D10F62BD24000EDF26 /* UIKit.framework */; };
 		505CC1D40F62BD2B000EDF26 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505CC1D30F62BD2B000EDF26 /* QuartzCore.framework */; };
 		505CC1D70F62BD59000EDF26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		505CC4860F63511F000EDF26 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		505CC4AB0F6356BB000EDF26 /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E00E13296F00AE9530 /* grossini_dance_01.png */; };
+		505CC4AC0F6356BB000EDF26 /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E10E13296F00AE9530 /* grossini_dance_02.png */; };
+		505CC4AD0F6356BB000EDF26 /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E20E13296F00AE9530 /* grossini_dance_03.png */; };
+		505CC4AE0F6356BB000EDF26 /* grossini_dance_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E30E13296F00AE9530 /* grossini_dance_04.png */; };
+		505CC4AF0F6356BB000EDF26 /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E40E13296F00AE9530 /* grossini_dance_05.png */; };
+		505CC4B00F6356BB000EDF26 /* grossini_dance_06.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E50E13296F00AE9530 /* grossini_dance_06.png */; };
+		505CC4B10F6356BB000EDF26 /* grossini_dance_07.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E60E13296F00AE9530 /* grossini_dance_07.png */; };
+		505CC4B20F6356BB000EDF26 /* grossini_dance_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E70E13296F00AE9530 /* grossini_dance_08.png */; };
+		505CC4B30F6356BB000EDF26 /* grossini_dance_09.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E80E13296F00AE9530 /* grossini_dance_09.png */; };
+		505CC4B40F6356BB000EDF26 /* grossini_dance_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0E90E13296F00AE9530 /* grossini_dance_10.png */; };
+		505CC4B50F6356BB000EDF26 /* grossini_dance_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0EA0E13296F00AE9530 /* grossini_dance_11.png */; };
+		505CC4B60F6356BB000EDF26 /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0EB0E13296F00AE9530 /* grossini_dance_12.png */; };
+		505CC4B70F6356BB000EDF26 /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0EC0E13296F00AE9530 /* grossini_dance_13.png */; };
+		505CC4B80F6356BB000EDF26 /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2D0ED0E13296F00AE9530 /* grossini_dance_14.png */; };
 		506046A20E75CEFB0044A29B /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		506046A30E75CEFB0044A29B /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		506046A40E75CEFB0044A29B /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -972,7 +987,6 @@
 		505B63A60F2F4295001B4104 /* EaseDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseDemo.h; path = tests/EaseDemo.h; sourceTree = "<group>"; };
 		505B63A70F2F4295001B4104 /* EaseDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseDemo.m; path = tests/EaseDemo.m; sourceTree = "<group>"; };
 		505CC1590F62BB03000EDF26 /* PerformanceTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505CC15B0F62BB03000EDF26 /* PerformanceTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerformanceTest-Info.plist"; sourceTree = "<group>"; };
 		505CC17C0F62BB7A000EDF26 /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
 		505CC17D0F62BB7A000EDF26 /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodePerformance.m; sourceTree = "<group>"; };
 		505CC17E0F62BB7A000EDF26 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -1530,7 +1544,6 @@
 				5048289B0F45AF7A00A30CEF /* OpenGLES.framework */,
 				5048289F0F45AF8800A30CEF /* CoreGraphics.framework */,
 				504828A30F45AF9100A30CEF /* QuartzCore.framework */,
-				505CC15B0F62BB03000EDF26 /* PerformanceTest-Info.plist */,
 				505CC1C90F62BCEE000EDF26 /* CoreFoundation.framework */,
 				505CC1CB0F62BCEF000EDF26 /* CoreGraphics.framework */,
 				505CC1CD0F62BCEF000EDF26 /* OpenGLES.framework */,
@@ -2740,6 +2753,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				505CC4AB0F6356BB000EDF26 /* grossini_dance_01.png in Resources */,
+				505CC4AC0F6356BB000EDF26 /* grossini_dance_02.png in Resources */,
+				505CC4AD0F6356BB000EDF26 /* grossini_dance_03.png in Resources */,
+				505CC4AE0F6356BB000EDF26 /* grossini_dance_04.png in Resources */,
+				505CC4AF0F6356BB000EDF26 /* grossini_dance_05.png in Resources */,
+				505CC4B00F6356BB000EDF26 /* grossini_dance_06.png in Resources */,
+				505CC4B10F6356BB000EDF26 /* grossini_dance_07.png in Resources */,
+				505CC4B20F6356BB000EDF26 /* grossini_dance_08.png in Resources */,
+				505CC4B30F6356BB000EDF26 /* grossini_dance_09.png in Resources */,
+				505CC4B40F6356BB000EDF26 /* grossini_dance_10.png in Resources */,
+				505CC4B50F6356BB000EDF26 /* grossini_dance_11.png in Resources */,
+				505CC4B60F6356BB000EDF26 /* grossini_dance_12.png in Resources */,
+				505CC4B70F6356BB000EDF26 /* grossini_dance_13.png in Resources */,
+				505CC4B80F6356BB000EDF26 /* grossini_dance_14.png in Resources */,
+				505CC4860F63511F000EDF26 /* Icon.png in Resources */,
 				505CC1BB0F62BCA6000EDF26 /* fps_images.png in Resources */,
 				505CC1BC0F62BCA6000EDF26 /* grossini_dance_atlas.png in Resources */,
 				505CC1B90F62BC8A000EDF26 /* grossinis_sister1.png in Resources */,

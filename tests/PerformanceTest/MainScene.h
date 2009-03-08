@@ -15,20 +15,60 @@ Class nextAction();
 
 -(void)updateNodes;
 -(NSString*) title;
+
+-(void) doTest:(id) sprite;
+-(id) createSprite;
 @end
 
 
 
-@interface PerformanceTest1 : MainScene
+@interface PerformanceSprite1 : MainScene
 {}
 @end
 
-@interface PerformanceTest2 : MainScene
+@interface PerformanceSprite2 : PerformanceSprite1
+{}
+@end
+
+@interface PerformanceSprite3 : PerformanceSprite1
+{}
+@end
+
+@interface PerformanceSprite4 : PerformanceSprite1
+{}
+@end
+
+@interface PerformanceSprite5 : PerformanceSprite4
+{}
+@end
+
+@interface PerformanceSprite6 : PerformanceSprite4
+{}
+@end
+
+@interface PerformanceAtlasSprite1 : MainScene
 {
 	AtlasSpriteManager	*spriteManager;
 }
+-(id) createSpriteManager;
 @end
 
-@interface PerformanceTest3 : MainScene
+@interface PerformanceAtlasSprite2 : PerformanceAtlasSprite1
+{}
+@end
+
+@interface PerformanceAtlasSprite3 : PerformanceAtlasSprite1
+{}
+@end
+
+@interface PerformanceAtlasSprite4 : PerformanceAtlasSprite1
+{}
+@end
+
+@interface PerformanceAtlasSprite5 : PerformanceAtlasSprite4
+{}
+@end
+
+@interface PerformanceAtlasSprite6 : PerformanceAtlasSprite4
 {}
 @end

@@ -18,12 +18,11 @@ enum {
 
 @implementation CocosNode (PerformanceTest)
 
-- (void)initPerformance
+- (void)performanceActions
 {
 	CGSize size = [[Director sharedDirector] winSize];
 	self.position = cpv(random() % (int)size.width, random() % (int)size.height);
-	
-	
+
 	float period = 0.5f + (random() % 1000) / 500.0f;
 	float degrees = 360.0f * ((random() % 2) * 2 - 1);
 	Action *permanentRotation = [RepeatForever actionWithAction:[RotateBy actionWithDuration:period angle:degrees]];
@@ -33,15 +32,29 @@ enum {
 	IntervalAction *grow = [ScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
 	Action *permanentScaleLoop = [RepeatForever actionWithAction:[Sequence actionOne:grow two:[grow reverse]]];
 	[self do:permanentScaleLoop];
-	
-//	float fadeDuration = 0.5f + (random() % 1000) / 500.0f;
-//	IntervalAction *fadeOut = [FadeTo actionWithDuration:fadeDuration opacity:255];
-//	IntervalAction *fadeIn = [FadeTo actionWithDuration:fadeDuration opacity:50];
-//	Action *permanentFadeOutInLoop = [RepeatForever actionWithAction:[Sequence actionOne:fadeOut two:fadeIn]];
-//	[self do:permanentFadeOutInLoop];
-//	[self setOpacity:0];
-	
 }
+
+- (void)performanceRotationScale
+{
+	CGSize size = [[Director sharedDirector] winSize];
+	self.position = cpv(random() % (int)size.width, random() % (int)size.height);
+	self.rotation = CCRANDOM_0_1() * 360;
+	self.scale = CCRANDOM_0_1() * 100 / 50;
+}
+
+- (void)performancePosition
+{
+	CGSize size = [[Director sharedDirector] winSize];
+	self.position = cpv(random() % (int)size.width, random() % (int)size.height);	
+}
+
+- (void)performanceScale
+{
+	CGSize size = [[Director sharedDirector] winSize];
+	self.position = cpv(random() % (int)size.width, random() % (int)size.height);	
+	self.scale = CCRANDOM_0_1() * 100 / 50;
+}
+
 
 - (void)die
 {

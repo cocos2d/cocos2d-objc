@@ -169,7 +169,7 @@ static Director *_sharedDirector = nil;
 - (void) mainLoop
 {
 	// dispatch missing events
-    while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
+//    while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
     
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

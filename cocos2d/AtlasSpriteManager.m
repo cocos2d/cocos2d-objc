@@ -18,32 +18,26 @@
 
 const int defaultCapacity = 10;
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-@interface AtlasSprite (Remove)
+#pragma mark AtlasSprite
 
+@interface AtlasSprite (Remove)
 -(void)setIndex:(int)index;
 @end
 
 @implementation AtlasSprite (Remove)
-
-/////////////////////////////////////////////////
 -(void)setIndex:(int)index
 {
 	mAtlasIndex = index;
 	[self updateAtlas];
 }
-
 @end
 
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
+#pragma mark AtlasSpriteManager
 @implementation AtlasSpriteManager
 
 @synthesize atlas = mAtlas;
 
-/////////////////////////////////////////////////
 -(void)dealloc
 {
 	// "children"
@@ -158,6 +152,8 @@ const int defaultCapacity = 10;
 -(AtlasSprite *)addSprite:(AtlasSprite *)newSprite
 {
 	[mSprites insertObject:newSprite atIndex:[newSprite atlasIndex]];
+	
+	newSprite.parent = self;
 	
 	if( isRunning )
 		[newSprite onEnter];

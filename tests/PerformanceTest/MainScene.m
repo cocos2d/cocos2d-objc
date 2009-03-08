@@ -8,7 +8,7 @@
 
 enum {
 	kMaxNodes = 2000,
-	kNodesIncrease = 10,
+	kNodesIncrease = 30,
 };
 
 enum {
@@ -18,8 +18,18 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-		@"PerformanceTest1",
-		@"PerformanceTest2",
+		@"PerformanceSprite1",
+		@"PerformanceAtlasSprite1",
+		@"PerformanceSprite2",
+		@"PerformanceAtlasSprite2",
+		@"PerformanceSprite3",
+		@"PerformanceAtlasSprite3",
+		@"PerformanceSprite4",
+		@"PerformanceAtlasSprite4",
+		@"PerformanceSprite5",
+		@"PerformanceAtlasSprite5",
+		@"PerformanceSprite6",
+		@"PerformanceAtlasSprite6",
 };
 
 Class nextAction()
@@ -57,6 +67,8 @@ Class restartAction()
 - (id)init
 {
 	if ((self = [super init]) != nil) {
+		
+		srandom(0);
 		
 		CGSize s = [[Director sharedDirector] winSize];
 
@@ -143,15 +155,25 @@ Class restartAction()
 	}
 }
 
+-(void) doTest:(id) sprite
+{
+	// override
+}
+
+-(id) createSprite
+{
+	// override
+	return nil;
+}
 @end
 
-#pragma mark PerformanceTest1
+#pragma mark Sprite 1
 
-@implementation PerformanceTest1
+@implementation PerformanceSprite1
 
 -(NSString*) title
 {
-	return @"Sprite performance";
+	return @"Sprite position";
 }
 -(void) onIncrease:(id) sender
 {
@@ -159,10 +181,12 @@ Class restartAction()
 		return;
 	
 	for( int i=0;i< kNodesIncrease;i++) {
-		Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		
+		Sprite *sprite = [self createSprite];
 
 		[self add:sprite z:0 tag:quantityNodes + 100];
-		[sprite initPerformance];
+
+		[self doTest:sprite];
 		
 		quantityNodes++;
 	}
@@ -182,43 +206,121 @@ Class restartAction()
 	
 	[self updateNodes];
 }
+-(void) doTest:(id) sprite
+{
+	[sprite performancePosition];
+}
+
+-(id) createSprite
+{
+	return [Sprite spriteWithFile:@"grossinis_sister1.png"];
+}
 @end
 
-#pragma mark PerformanceTest2
-@implementation PerformanceTest2
+#pragma mark Sprite 2
+@implementation PerformanceSprite2
+-(NSString*) title
+{
+	return @"Sprite scale";
+}
+-(void) doTest:(id) sprite
+{
+	[sprite performanceScale];
+}
+@end
+
+#pragma mark Sprite 3
+@implementation PerformanceSprite3
+-(NSString*) title
+{
+	return @"Sprite scale + rotation";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceRotationScale];
+}
+@end
+
+#pragma mark Sprite 4
+@implementation PerformanceSprite4
+-(NSString*) title
+{
+	return @"Sprite Textures";
+}
+-(void) doTest:(id) sprite
+{
+	[sprite performancePosition];
+}
+-(id) createSprite
+{
+	int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
+	return [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
+}
+@end
+
+#pragma mark Sprite 5
+@implementation PerformanceSprite5
+-(NSString*) title
+{
+	return @"Sprite Textures + scale";
+}
+-(void) doTest:(id) sprite
+{
+	[sprite performanceScale];
+}
+@end
+
+#pragma mark Sprite 6
+@implementation PerformanceSprite6
+-(NSString*) title
+{
+	return @"Sprite tex + scale + rotation";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceRotationScale];
+}
+@end
+
+
+#pragma mark AtlasSprite 1
+@implementation PerformanceAtlasSprite1
 -(id) init
 {
 	if( (self=[super init]) )
 	{
-		spriteManager = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png"];
+		spriteManager = [self createSpriteManager];
 		[self add:spriteManager];
 	}
 	return self;
 }
 
+-(id) createSpriteManager
+{
+	return [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:250];
+}
+
 - (void) dealloc
 {
-	[spriteManager release];
 	[super dealloc];
 }
 
 -(NSString*) title
 {
-	return @"AtlasSprite performance";
+	return @"AtlasSprite position";
 }
+
 -(void) onIncrease:(id) sender
 {
 	if( quantityNodes >= kMaxNodes)
 		return;
 	
 	for( int i=0;i< kNodesIncrease;i++) {
-		int x = CCRANDOM_0_1() * 70 / 10;
-		int y = CCRANDOM_0_1() * 20 / 10;
-		x *= 85;
-		y *= 121;
-		
-		AtlasSprite *sprite = [spriteManager createSpriteWithRect:CGRectMake(x,y,85,121)];
-		[sprite initPerformance];
+
+		AtlasSprite *sprite = [self createSprite];		
+		[self doTest:sprite];
 		
 		quantityNodes++;
 	}
@@ -238,4 +340,96 @@ Class restartAction()
 	
 	[self updateNodes];
 }
+-(void) doTest:(id) sprite
+{
+	[sprite performancePosition];
+}
+-(id) createSprite
+{
+	return [spriteManager createSpriteWithRect:CGRectMake(0,0,52,139)];
+}
 @end
+
+#pragma mark AtlasSprite 2
+@implementation PerformanceAtlasSprite2
+-(NSString*) title
+{
+	return @"AtlasSprite scale";
+}
+-(void) doTest:(id) sprite
+{
+	[sprite performanceScale];
+}
+@end
+
+#pragma mark AtlasSprite 3
+@implementation PerformanceAtlasSprite3
+-(NSString*) title
+{
+	return @"AtlasSprite rotation + scale";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceRotationScale];
+}
+@end
+
+#pragma mark AtlasSprite 4
+@implementation PerformanceAtlasSprite4
+-(NSString*) title
+{
+	return @"AtlasSprite Textures";
+}
+-(void) doTest:(id) sprite
+{
+	[sprite performancePosition];
+}
+
+-(id) createSpriteManager
+{
+	return [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:250];
+}
+
+-(id) createSprite
+{
+	int y = 0;
+	int x = (CCRANDOM_0_1() * 1400 / 100);
+	
+	if( x > 6 ) {
+		x %= 7;
+		y = 1;
+	}
+	x *= 85;
+	y *= 121;
+	return [spriteManager createSpriteWithRect:CGRectMake(x,y,85,121)];
+}
+@end
+
+#pragma mark AtlasSprite 5
+@implementation PerformanceAtlasSprite5
+-(NSString*) title
+{
+	return @"AtlasSprite textures + scale";
+}
+-(void) doTest:(id) sprite
+{
+	[sprite performanceScale];
+}
+@end
+
+#pragma mark AtlasSprite 6
+@implementation PerformanceAtlasSprite6
+-(NSString*) title
+{
+	return @"AtlasSprite tex + rotation + scale";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceRotationScale];
+}
+@end
+
+
+
