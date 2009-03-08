@@ -39,31 +39,10 @@ const int defaultCapacity = 10;
 @synthesize atlas = mAtlas;
 
 -(void)dealloc
-{
-	// "children"
-	[mSprites makeObjectsPerformSelector:@selector(cleanup)];
-	[mSprites release];
-	
+{	
 	[mAtlas release];
 
 	[super dealloc];
-}
-
-/*
- * cocos2d scene management
- */
--(void) onEnter
-{
-	[super onEnter];
-	for( AtlasSprite *s in mSprites)
-		[s onEnter];
-}
-
--(void) onExit
-{
-	for( AtlasSprite *s in mSprites)
-		[s onExit];
-	[super onExit];
 }
 
 /*
@@ -101,7 +80,9 @@ const int defaultCapacity = 10;
 	if( (self=[super init])) {
 		mTotalSprites = 0;
 		mAtlas = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
-		mSprites = [[NSMutableArray alloc] initWithCapacity:capacity];
+		
+		// no lazy alloc in this node
+		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 
 	return self;
@@ -115,15 +96,18 @@ const int defaultCapacity = 10;
 	if( (self=[super init]) ) {
 		mTotalSprites = 0;
 		mAtlas = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
-		mSprites = [[NSMutableArray alloc] initWithCapacity:capacity];
+		
+		// no lazy alloc in this node
+		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 	
 	return self;
 }
 
 
-/////////////////////////////////////////////////
--(int)reserveIndexForSprite
+#pragma mark AtlasSpriteManager - composition
+
+-(int)indexForNewChild
 {
 	// if we're going beyond the current TextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
@@ -134,13 +118,13 @@ const int defaultCapacity = 10;
 
 		[mAtlas resizeCapacity:mAtlas.totalQuads * 3 / 2];
 		
-		for(AtlasSprite *sprite in mSprites)
+		for(AtlasSprite *sprite in children)
 		{
 			[sprite updateAtlas];
 		}
 	}
 
-	return mTotalSprites++;
+	return mTotalSprites;
 }
 
 -(AtlasSprite*) createSpriteWithRect:(CGRect)rect
@@ -148,59 +132,42 @@ const int defaultCapacity = 10;
 	return [AtlasSprite spriteWithRect:rect spriteManager:self];
 }
 
-/////////////////////////////////////////////////
--(AtlasSprite *)addSprite:(AtlasSprite *)newSprite
+-(id) addChild:(AtlasSprite*) node
 {
-	[mSprites insertObject:newSprite atIndex:[newSprite atlasIndex]];
-	
-	newSprite.parent = self;
-	
-	if( isRunning )
-		[newSprite onEnter];
+	[node setIndex: [self indexForNewChild] ];
 
-	return newSprite;
+	mTotalSprites++;
+	return [super add:node];
 }
 
-/////////////////////////////////////////////////
--(void)removeSprite:(AtlasSprite *)sprite
+-(void)removeChild: (AtlasSprite *)sprite
 {
-	int index = [sprite atlasIndex];
-	[mSprites removeObjectAtIndex:index];
-	--mTotalSprites;
+	int index= sprite.atlasIndex;
+	[super remove:sprite];
 
 	// update all sprites beyond this one
-	int count = [mSprites count];
-	for(; index != count; ++index)
+	int count = [children count];
+	for(; index < count; index++)
 	{
-		AtlasSprite *other = (AtlasSprite *)[mSprites objectAtIndex:index];
+		AtlasSprite *other = (AtlasSprite *)[children objectAtIndex:index];
 		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
 		[other setIndex:index];
-	}
-	
-	if( isRunning )
-		[sprite onExit];
+	}	
+	mTotalSprites--;
 }
 
-/////////////////////////////////////////////////
--(void)removeSpriteAtIndex:(int)index
+-(void)removeChildAtIndex:(NSUInteger)index
 {
-	[self removeSprite:(AtlasSprite *)[mSprites objectAtIndex:index]];
+	[self removeChild:(AtlasSprite *)[children objectAtIndex:index]];
 }
 
-/////////////////////////////////////////////////
--(void)removeAllSprites
+-(void)removeAllChildren
 {
-	for(AtlasSprite *sprite in mSprites)
-	{
-		if( isRunning )
-			[sprite onExit];
-	}
-
-	[mSprites removeAllObjects];
+	[super removeAll];
 	mTotalSprites = 0;
 }
 
-/////////////////////////////////////////////////
+#pragma mark AtlasSpriteManager - draw
 -(void)draw
 {
 	if(mTotalSprites > 0)
@@ -217,19 +184,6 @@ const int defaultCapacity = 10;
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
-}
-
-
-/////////////////////////////////////////////////
--(int)numberOfSprites
-{
-	return [mSprites count];
-}
-
-/////////////////////////////////////////////////
--(AtlasSprite *)spriteAtIndex:(int)index
-{
-	return [mSprites objectAtIndex:index];
 }
 
 @end

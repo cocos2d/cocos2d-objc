@@ -15,34 +15,33 @@
 #import "AtlasSpriteManager.h"
 #import "AtlasSprite.h"
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-@interface AtlasSprite ()
+#pragma mark AltasSprite
 
+@interface AtlasSprite (Private)
 -(void)updateTextureCoords;
 -(void)updatePosition;
 @end
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 @implementation AtlasSprite
 
 @synthesize atlasIndex = mAtlasIndex;
 @synthesize textureRect = mRect;
 
-/////////////////////////////////////////////////
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	return [[[self alloc] initWithRect:rect spriteManager:manager] autorelease];
 }
 
-/////////////////////////////////////////////////
++(id)spriteWithRect:(CGRect)rect
+{
+	return [[[self alloc] initWithRect:rect]autorelease];
+}
+
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
 		mAtlas = [manager atlas];	// XXX: shall be retained
-		mAtlasIndex = [manager reserveIndexForSprite];
-		[manager addSprite:self];
+		[manager addChild:self];
 
 		mRect = rect;
 
@@ -56,6 +55,22 @@
 	return self;
 }
 
+-(id)initWithRect:(CGRect)rect
+{
+	if( (self = [super init])) {
+		
+		mRect = rect;
+		
+		transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
+		
+//		[self updateTextureCoords];
+		[self updatePosition];
+		[self updateAtlas];
+	}
+	
+	return self;
+}
+
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%i,%i,%i,%i) | Tag = %i>", [self class], self, (int) mRect.origin.x, (int) mRect.origin.y, (int) mRect.size.width, (int) mRect.size.height, tag];
@@ -66,31 +81,10 @@
 	[super dealloc];
 }
 
-
 /////////////////////////////////////////////////
 -(void)setTextureRect:(CGRect) rect
 {
 	mRect = rect;
-
-	[self updateTextureCoords];
-	[self updateAtlas];
-}
-
-/////////////////////////////////////////////////
--(void)offsetTextureRect:(cpVect)offset
-{
-	mRect.origin.x += offset.x;
-	mRect.origin.y += offset.y;
-
-	[self updateTextureCoords];
-	[self updateAtlas];
-}
-
-/////////////////////////////////////////////////
--(void)moveTextureRect:(cpVect)pos
-{
-	mRect.origin.x = pos.x;
-	mRect.origin.y = pos.y;
 
 	[self updateTextureCoords];
 	[self updateAtlas];
@@ -107,7 +101,6 @@
 	float top = mRect.origin.y / atlasHeight;
 	float bottom = (mRect.origin.y + mRect.size.height) / atlasHeight;
 
-	
 	ccQuad2 newCoords = {
 		left, bottom,
 		right, bottom,

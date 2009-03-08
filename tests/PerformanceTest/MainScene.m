@@ -99,7 +99,7 @@ Class restartAction()
 		
 
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self add: label];
+		[self add:label z:1];
 		[label setPosition: cpv(s.width/2, s.height-50)];
 		
 		menu.position = cpvzero;
@@ -173,7 +173,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"Sprite position";
+	return @"#1 Sprite";
 }
 -(void) onIncrease:(id) sender
 {
@@ -221,7 +221,7 @@ Class restartAction()
 @implementation PerformanceSprite2
 -(NSString*) title
 {
-	return @"Sprite scale";
+	return @"#2 Sprite scale";
 }
 -(void) doTest:(id) sprite
 {
@@ -233,7 +233,7 @@ Class restartAction()
 @implementation PerformanceSprite3
 -(NSString*) title
 {
-	return @"Sprite scale + rotation";
+	return @"#3 Sprite scale + rotation";
 }
 
 -(void) doTest:(id) sprite
@@ -246,7 +246,7 @@ Class restartAction()
 @implementation PerformanceSprite4
 -(NSString*) title
 {
-	return @"Sprite Textures";
+	return @"#4 Sprite Textures";
 }
 -(void) doTest:(id) sprite
 {
@@ -263,7 +263,7 @@ Class restartAction()
 @implementation PerformanceSprite5
 -(NSString*) title
 {
-	return @"Sprite Textures + scale";
+	return @"#5 Sprite Textures + scale";
 }
 -(void) doTest:(id) sprite
 {
@@ -275,7 +275,7 @@ Class restartAction()
 @implementation PerformanceSprite6
 -(NSString*) title
 {
-	return @"Sprite tex + scale + rotation";
+	return @"#6 Sprite tex + scale + rotation";
 }
 
 -(void) doTest:(id) sprite
@@ -309,7 +309,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"AtlasSprite position";
+	return @"#1 AtlasSprite";
 }
 
 -(void) onIncrease:(id) sender
@@ -335,7 +335,7 @@ Class restartAction()
 	
 	for( int i=0;i < kNodesIncrease;i++) {
 		quantityNodes--;
-		[spriteManager removeSpriteAtIndex:quantityNodes];
+		[spriteManager removeChildAtIndex:quantityNodes];
 	}
 	
 	[self updateNodes];
@@ -354,7 +354,7 @@ Class restartAction()
 @implementation PerformanceAtlasSprite2
 -(NSString*) title
 {
-	return @"AtlasSprite scale";
+	return @"#2 AtlasSprite scale";
 }
 -(void) doTest:(id) sprite
 {
@@ -366,7 +366,7 @@ Class restartAction()
 @implementation PerformanceAtlasSprite3
 -(NSString*) title
 {
-	return @"AtlasSprite rotation + scale";
+	return @"#3 AtlasSprite rotation + scale";
 }
 
 -(void) doTest:(id) sprite
@@ -379,7 +379,7 @@ Class restartAction()
 @implementation PerformanceAtlasSprite4
 -(NSString*) title
 {
-	return @"AtlasSprite Textures";
+	return @"#4 AtlasSprite Textures";
 }
 -(void) doTest:(id) sprite
 {
@@ -410,7 +410,7 @@ Class restartAction()
 @implementation PerformanceAtlasSprite5
 -(NSString*) title
 {
-	return @"AtlasSprite textures + scale";
+	return @"#5 AtlasSprite textures + scale";
 }
 -(void) doTest:(id) sprite
 {
@@ -422,7 +422,7 @@ Class restartAction()
 @implementation PerformanceAtlasSprite6
 -(NSString*) title
 {
-	return @"AtlasSprite tex + rotation + scale";
+	return @"#6 AtlasSprite tex + rotation + scale";
 }
 
 -(void) doTest:(id) sprite
