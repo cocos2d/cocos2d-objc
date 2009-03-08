@@ -114,7 +114,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Pos = (%i,%i) | Tag = %i>", [self class], self, (int) position.x, (int) position.y, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag];
 }
 
 

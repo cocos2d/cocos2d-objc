@@ -26,7 +26,6 @@
 @private
 	unsigned int mTotalSprites;
 	TextureAtlas *mAtlas;
-	NSMutableArray *mSprites;
 }
 
 /** returns the TextureAtlas that is used */
@@ -46,22 +45,18 @@
 /** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
--(int)reserveIndexForSprite;
+-(int)indexForNewChild;
 
 /** creates an sprite with a rect in the AtlasSpriteManage */
 -(AtlasSprite*) createSpriteWithRect:(CGRect)rect;
 /** adds an AtlasSprite to the Atlas */
--(AtlasSprite *)addSprite:(AtlasSprite *)newSprite;
+-(id)addChild:(AtlasSprite *)newSprite;
 /** removes an AtlasSprite from the AtlasSpriteManager giving an AtlasSprite reference */
--(void)removeSprite:(AtlasSprite *)sprite;
-/** removes an AtlasSprite from the AtlasSpriteManager giving an index */
--(void)removeSpriteAtIndex:(int)index;
+-(void)removeChild:(AtlasSprite *)sprite;
 /** removes all the AltasSprites from the AtlasSpriteManager */
--(void)removeAllSprites;
+-(void)removeAllChildren;
+/** removes a child given a certain index */
+-(void)removeChildAtIndex:(NSUInteger)index;
 
-/* returns the number of AtlasSprites */
--(int)numberOfSprites;
-/* returns an AtlasSprite reference giving for an index */
--(AtlasSprite *)spriteAtIndex:(int)index;
 
 @end

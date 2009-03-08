@@ -53,6 +53,13 @@
 /** returns the rect of the AtlasSprite */
 @property (readonly) CGRect textureRect;
 
+// NEW API
+/** creates an AtlasSprite inidicating the Rect of the Atlas */
++(id)spriteWithRect:(CGRect)rect;
+/** initializes an AtlasSprite inidicating the Rect of the Atlas */
+-(id)initWithRect:(CGRect)rect;
+
+// DEPRECATED
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
 /** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */
@@ -63,8 +70,5 @@
 
 /** updates the texture rect of the AtlasSprite */
 -(void) setTextureRect:(CGRect) rect;
-
--(void)offsetTextureRect:(cpVect)offset;
--(void)moveTextureRect:(cpVect)pos;
 
 @end
