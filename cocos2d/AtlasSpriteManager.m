@@ -12,11 +12,11 @@
  *
  */
 
-#import <assert.h>
 #import "AtlasSprite.h"
 #import "AtlasSpriteManager.h"
+#import "Grid.h"
 
-const int defaultCapacity = 10;
+const int defaultCapacity = 29;
 
 #pragma mark AtlasSprite
 
@@ -107,6 +107,36 @@ const int defaultCapacity = 10;
 
 #pragma mark AtlasSpriteManager - composition
 
+// override visit.
+// Don't call visit on it's children
+-(void) visit
+{
+//	if (!visible)
+//		return;
+//	
+//	glPushMatrix();
+//	
+//	if ( grid && grid.active)
+//		[grid beforeDraw];
+//	
+//	[self transform];
+
+	// don't iterate over it's children
+	// the only valid children are AtlasSprites
+	// and are drawn in the atlas
+	
+	[self draw];
+
+	// don't iterate over it's children
+	// the only valid children are AtlasSprites
+	// and are drawn in the atlas
+	
+//	if ( grid && grid.active)
+//		[grid afterDraw:self.camera];
+//	
+//	glPopMatrix();
+}
+
 -(int)indexForNewChild
 {
 	// if we're going beyond the current TextureAtlas's capacity,
@@ -136,6 +166,8 @@ const int defaultCapacity = 10;
 {
 	[node setIndex: [self indexForNewChild] ];
 
+	[node updateAtlas];
+
 	mTotalSprites++;
 	return [super add:node];
 }
@@ -156,9 +188,30 @@ const int defaultCapacity = 10;
 	mTotalSprites--;
 }
 
+-(void)removeAndStopChild: (AtlasSprite *)sprite
+{
+	int index= sprite.atlasIndex;
+	[super removeAndStop:sprite];
+	
+	// update all sprites beyond this one
+	int count = [children count];
+	for(; index < count; index++)
+	{
+		AtlasSprite *other = (AtlasSprite *)[children objectAtIndex:index];
+		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
+		[other setIndex:index];
+	}	
+	mTotalSprites--;
+}
+
 -(void)removeChildAtIndex:(NSUInteger)index
 {
 	[self removeChild:(AtlasSprite *)[children objectAtIndex:index]];
+}
+
+-(void)removeAndStopChildAtIndex:(NSUInteger)index
+{
+	[self removeAndStopChild:(AtlasSprite *)[children objectAtIndex:index]];
 }
 
 -(void)removeAllChildren

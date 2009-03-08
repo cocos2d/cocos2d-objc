@@ -1846,12 +1846,12 @@
 		50A24F010F3788C6007CAEB0 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
+				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				509A79990F6188500032F449 /* AtlasSpriteManager.h */,
 				509A799A0F6188500032F449 /* AtlasSpriteManager.m */,
 				509A79950F6188420032F449 /* AtlasSprite.h */,
 				509A79960F6188420032F449 /* AtlasSprite.m */,
-				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
-				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				506884700E96734A00F943E5 /* LabelAtlas.h */,
 				506884710E96734A00F943E5 /* LabelAtlas.m */,
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,

@@ -9,7 +9,9 @@
 - (void)performanceRotationScale;
 - (void)performanceScale;
 - (void)performancePosition;
+- (void)performanceOut100;
+- (void)performanceout20;
+
 
 - (void)performanceActions;
-- (void) die;	
 @end

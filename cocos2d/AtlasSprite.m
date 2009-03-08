@@ -32,42 +32,18 @@
 	return [[[self alloc] initWithRect:rect spriteManager:manager] autorelease];
 }
 
-+(id)spriteWithRect:(CGRect)rect
-{
-	return [[[self alloc] initWithRect:rect]autorelease];
-}
-
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
-		mAtlas = [manager atlas];	// XXX: shall be retained
-		[manager addChild:self];
+		mAtlas = [manager atlas];	// XXX: shall be retained ? probably not
 
 		mRect = rect;
 
 		transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
 
 		[self updateTextureCoords];
-		[self updatePosition];
-		[self updateAtlas];
 	}
 
-	return self;
-}
-
--(id)initWithRect:(CGRect)rect
-{
-	if( (self = [super init])) {
-		
-		mRect = rect;
-		
-		transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
-		
-//		[self updateTextureCoords];
-		[self updatePosition];
-		[self updateAtlas];
-	}
-	
 	return self;
 }
 
@@ -218,7 +194,6 @@
 	return;
 }
 
-/////////////////////////////////////////////////
 -(void)updateAtlas
 {
 	[mAtlas updateQuadWithTexture:&mTexCoords vertexQuad:&mVertices atIndex:mAtlasIndex];
@@ -227,7 +202,7 @@
 //
 // CocosNode property overloads
 //
-/////////////////////////////////////////////////
+#pragma mark AltasSprite - property overloads
 -(void)setPosition:(cpVect)pos
 {
 	[super setPosition:pos];
@@ -236,7 +211,6 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
@@ -245,7 +219,6 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
@@ -254,7 +227,6 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
@@ -263,7 +235,6 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)setScale:(float) s
 {
 	[super setScale:s];
@@ -272,7 +243,6 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)setTransformAnchor:(cpVect)anchor
 {
 	[super setTransformAnchor:anchor];
@@ -281,13 +251,11 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)setRelativeTransformAnchor:(BOOL)relative
 {
 	CCLOG(@"relativeTransformAnchor is ignored in AtlasSprite");
 }
 
-/////////////////////////////////////////////////
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
@@ -295,7 +263,6 @@
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(CGSize)contentSize
 {
 	return mRect.size;

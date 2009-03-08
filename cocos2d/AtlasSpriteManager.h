@@ -57,6 +57,8 @@
 -(void)removeAllChildren;
 /** removes a child given a certain index */
 -(void)removeChildAtIndex:(NSUInteger)index;
+/** removes and stop child given a certain index */
+-(void)removeAndStopChildAtIndex:(NSUInteger)index;
 
 
 @end
