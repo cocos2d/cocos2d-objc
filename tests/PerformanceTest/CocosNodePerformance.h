@@ -12,6 +12,6 @@
 - (void)performanceOut100;
 - (void)performanceout20;
 
-
 - (void)performanceActions;
+- (void)performanceActions20;
 @end

@@ -58,6 +58,10 @@ Class nextAction();
 {}
 @end
 
+@interface PerformanceSprite10 : PerformanceSprite4
+{}
+@end
+
 @interface PerformanceAtlasSprite1 : MainScene
 {
 	AtlasSpriteManager	*spriteManager;
@@ -94,5 +98,9 @@ Class nextAction();
 @end
 
 @interface PerformanceAtlasSprite9 : PerformanceAtlasSprite4
+{}
+@end
+
+@interface PerformanceAtlasSprite10 : PerformanceAtlasSprite4
 {}
 @end

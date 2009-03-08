@@ -131,9 +131,9 @@
 		float cy = x2 * sr + y2 * cr + y;
 		float dx = x1 * cr - y2 * sr + x;
 		float dy = x1 * sr + y2 * cr + y;
-		
+
 		ccQuad3 newVertices = 
-					{ax, ay, 0, 
+					{ax, ay, 0,
 					bx, by, 0,
 					dx, dy, 0,
 					cx, cy, 0};
