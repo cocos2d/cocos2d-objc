@@ -24,15 +24,6 @@
  */
 @interface AtlasSprite : CocosNode <CocosNodeSize>
 {
-	// rect point layout:
-	//
-	// 2---3
-	// |	 |
-	// |	 |
-	// 0---1
-	//
-
-@private
 	TextureAtlas *mAtlas;
 	int mAtlasIndex;
 
@@ -53,13 +44,6 @@
 /** returns the rect of the AtlasSprite */
 @property (readonly) CGRect textureRect;
 
-// NEW API
-/** creates an AtlasSprite inidicating the Rect of the Atlas */
-+(id)spriteWithRect:(CGRect)rect;
-/** initializes an AtlasSprite inidicating the Rect of the Atlas */
--(id)initWithRect:(CGRect)rect;
-
-// DEPRECATED
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
 /** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */

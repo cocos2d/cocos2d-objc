@@ -66,8 +66,6 @@
 	parallaxRatioX = 1.0f;
 	parallaxRatioY = 1.0f;
 
-//	camera = [[Camera alloc] init];
-	camera = nil;
 	grid = nil;
 	
 	visible = YES;
@@ -77,6 +75,9 @@
 	tag = kCocosNodeTagInvalid;
 	
 	zOrder = 0;
+
+	// lazy alloc
+	camera = nil;
 
 	// children (lazy allocs)
 	children = nil;
@@ -125,8 +126,6 @@
 	// attributes
 	[camera release];
 
-// XXX: Ask Ernesto if this is needed
-//	if ( grid ) grid = nil;
 	[grid release];
 	
 	// children
@@ -154,9 +153,8 @@
 // camera: lazy alloc
 -(Camera*) camera
 {
-	if( ! camera ) {
+	if( ! camera )
 		camera = [[Camera alloc] init];
-	}
 
 	return camera;
 }

@@ -7,8 +7,8 @@
 #import "CocosNodePerformance.h"
 
 enum {
-	kMaxNodes = 2000,
-	kNodesIncrease = 30,
+	kMaxNodes = 5000,
+	kNodesIncrease = 50,
 };
 
 enum {
@@ -30,6 +30,12 @@ static NSString *transitions[] = {
 		@"PerformanceAtlasSprite5",
 		@"PerformanceSprite6",
 		@"PerformanceAtlasSprite6",
+		@"PerformanceSprite7",
+		@"PerformanceAtlasSprite7",
+		@"PerformanceSprite8",
+		@"PerformanceAtlasSprite8",
+		@"PerformanceSprite9",
+		@"PerformanceAtlasSprite9",
 };
 
 Class nextAction()
@@ -83,12 +89,12 @@ Class restartAction()
 		
 		Menu *menu = [Menu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
-		menu.position = cpv(s.width/2, s.height-40);
+		menu.position = cpv(s.width/2, s.height-65);
 		[self add:menu z:1];
 		
-		Label *infoLabel = [Label labelWithString:@"" fontName:@"Marker Felt" fontSize:30];
+		Label *infoLabel = [Label labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setRGB:0 :200 :20];
-		infoLabel.position = cpv(s.width/2, s.height-80);
+		infoLabel.position = cpv(s.width/2, s.height-90);
 		[self add:infoLabel z:1 tag:kTagInfoLayer];
 				
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -100,7 +106,7 @@ Class restartAction()
 
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self add:label z:1];
-		[label setPosition: cpv(s.width/2, s.height-50)];
+		[label setPosition: cpv(s.width/2, s.height-32)];
 		
 		menu.position = cpvzero;
 		item1.position = cpv( s.width/2 - 100,30);
@@ -284,6 +290,44 @@ Class restartAction()
 }
 @end
 
+#pragma mark Sprite 7
+@implementation PerformanceSprite7
+-(NSString*) title
+{
+	return @"#7 Sprite out 100%";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceOut100];
+}
+@end
+
+#pragma mark Sprite 8
+@implementation PerformanceSprite8
+-(NSString*) title
+{
+	return @"#8 Sprite out 20%";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceout20];
+}
+@end
+
+#pragma mark Sprite 9
+@implementation PerformanceSprite9
+-(NSString*) title
+{
+	return @"#9 Sprite actions";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceActions];
+}
+@end
 
 #pragma mark AtlasSprite 1
 @implementation PerformanceAtlasSprite1
@@ -319,7 +363,9 @@ Class restartAction()
 	
 	for( int i=0;i< kNodesIncrease;i++) {
 
-		AtlasSprite *sprite = [self createSprite];		
+		AtlasSprite *sprite = [self createSprite];
+		[spriteManager addChild: sprite];
+
 		[self doTest:sprite];
 		
 		quantityNodes++;
@@ -335,7 +381,7 @@ Class restartAction()
 	
 	for( int i=0;i < kNodesIncrease;i++) {
 		quantityNodes--;
-		[spriteManager removeChildAtIndex:quantityNodes];
+		[spriteManager removeAndStopChildAtIndex:quantityNodes];
 	}
 	
 	[self updateNodes];
@@ -346,7 +392,7 @@ Class restartAction()
 }
 -(id) createSprite
 {
-	return [spriteManager createSpriteWithRect:CGRectMake(0,0,52,139)];
+	return [AtlasSprite spriteWithRect:CGRectMake(0,0,52,139) spriteManager:spriteManager];
 }
 @end
 
@@ -402,7 +448,7 @@ Class restartAction()
 	}
 	x *= 85;
 	y *= 121;
-	return [spriteManager createSpriteWithRect:CGRectMake(x,y,85,121)];
+	return [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:spriteManager];
 }
 @end
 
@@ -422,12 +468,51 @@ Class restartAction()
 @implementation PerformanceAtlasSprite6
 -(NSString*) title
 {
-	return @"#6 AtlasSprite tex + rotation + scale";
+	return @"#6 AtlasSprite tex + scale + rot";
 }
 
 -(void) doTest:(id) sprite
 {
 	[sprite performanceRotationScale];
+}
+@end
+
+#pragma mark AtlasSprite 7
+@implementation PerformanceAtlasSprite7
+-(NSString*) title
+{
+	return @"#7 AtlasSprite out 100%";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceOut100];
+}
+@end
+
+#pragma mark AtlasSprite 8
+@implementation PerformanceAtlasSprite8
+-(NSString*) title
+{
+	return @"#8 AtlasSprite out 20%";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceout20];
+}
+@end
+
+#pragma mark AtlasSprite 9
+@implementation PerformanceAtlasSprite9
+-(NSString*) title
+{
+	return @"#9 AtlasSprite actions";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceActions];
 }
 @end
 

@@ -5,17 +5,6 @@
 
 #import "CocosNodePerformance.h"
 
-enum {
-	kScaleFactor = 5
-};
-
-//static float actorShape[] = {
-//	 kScaleFactor,  kScaleFactor,
-//	-kScaleFactor,  kScaleFactor,
-//	-kScaleFactor, -kScaleFactor,
-//	 kScaleFactor, -kScaleFactor
-//};
-
 @implementation CocosNode (PerformanceTest)
 
 - (void)performanceActions
@@ -24,8 +13,9 @@ enum {
 	self.position = cpv(random() % (int)size.width, random() % (int)size.height);
 
 	float period = 0.5f + (random() % 1000) / 500.0f;
-	float degrees = 360.0f * ((random() % 2) * 2 - 1);
-	Action *permanentRotation = [RepeatForever actionWithAction:[RotateBy actionWithDuration:period angle:degrees]];
+	id rot = [RotateBy actionWithDuration:period angle: 360.0f * CCRANDOM_0_1()];
+	id rot_back = [rot reverse];
+	Action *permanentRotation = [RepeatForever actionWithAction:[Sequence actions: rot, rot_back, nil]];
 	[self do:permanentRotation];
 	
 	float growDuration = 0.5f + (random() % 1000) / 500.0f;
@@ -48,17 +38,27 @@ enum {
 	self.position = cpv(random() % (int)size.width, random() % (int)size.height);	
 }
 
+- (void)performanceout20
+{
+	CGSize size = [[Director sharedDirector] winSize];
+	
+	if( CCRANDOM_0_1() < 0.2f )
+		self.position = cpv(random() % (int)size.width, random() % (int)size.height);	
+	else
+		self.position = cpv( -1000, -1000);
+}
+
+- (void)performanceOut100
+{
+	
+	self.position = cpv( -1000, -1000);
+}
+
+
 - (void)performanceScale
 {
 	CGSize size = [[Director sharedDirector] winSize];
 	self.position = cpv(random() % (int)size.width, random() % (int)size.height);	
 	self.scale = CCRANDOM_0_1() * 100 / 50;
-}
-
-
-- (void)die
-{
-	CallFuncN *selfRemovalAction = [CallFuncN actionWithTarget:self.parent selector:@selector(removeAndStop:)];
-	[self do: selfRemovalAction];
 }
 @end
