@@ -36,6 +36,8 @@ static NSString *transitions[] = {
 		@"PerformanceAtlasSprite8",
 		@"PerformanceSprite9",
 		@"PerformanceAtlasSprite9",
+		@"PerformanceSprite10",
+		@"PerformanceAtlasSprite10",
 };
 
 Class nextAction()
@@ -329,6 +331,19 @@ Class restartAction()
 }
 @end
 
+#pragma mark Sprite 10
+@implementation PerformanceSprite10
+-(NSString*) title
+{
+	return @"#10 Sprite actions 20% out";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceActions20];
+}
+@end
+
 #pragma mark AtlasSprite 1
 @implementation PerformanceAtlasSprite1
 -(id) init
@@ -513,6 +528,19 @@ Class restartAction()
 -(void) doTest:(id) sprite
 {
 	[sprite performanceActions];
+}
+@end
+
+#pragma mark AtlasSprite 10
+@implementation PerformanceAtlasSprite10
+-(NSString*) title
+{
+	return @"#10 AtlasSprite actions 20% out";
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceActions20];
 }
 @end
 
