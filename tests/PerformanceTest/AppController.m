@@ -14,7 +14,7 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[window setUserInteractionEnabled:YES];
 	
-	[Director useFastDirector];
+//	[Director useFastDirector];
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
 	[[Director sharedDirector] setLandscape:YES];

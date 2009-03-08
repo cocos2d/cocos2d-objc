@@ -6,6 +6,10 @@
 #import "cocos2d.h"
 
 @interface CocosNode (PerformanceTest)
-- (void)initPerformance;
+- (void)performanceRotationScale;
+- (void)performanceScale;
+- (void)performancePosition;
+
+- (void)performanceActions;
 - (void) die;	
 @end
