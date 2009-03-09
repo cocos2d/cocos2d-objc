@@ -37,8 +37,13 @@
 	// screen pixels
 	// stored as pixel locations
 	ccQuad3 mVertices;
+	
+	// whether or not this Sprite needs to be updated in the Atlas
+	BOOL	dirty;
 }
 
+/** whether or not the Sprite needs to be updated in the Atlas */
+@property (readonly) BOOL dirty;
 /** returns the altas index of the AtlasSprite */
 @property (readonly) int atlasIndex;
 /** returns the rect of the AtlasSprite */
@@ -51,6 +56,8 @@
 
 /** updates the Quad in the TextureAtlas with it's new position, scale and rotation */
 -(void)updateAtlas;
+
+-(void)updatePosition;
 
 /** updates the texture rect of the AtlasSprite */
 -(void) setTextureRect:(CGRect) rect;

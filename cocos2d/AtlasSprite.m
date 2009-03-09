@@ -24,6 +24,7 @@
 
 @implementation AtlasSprite
 
+@synthesize dirty;
 @synthesize atlasIndex = mAtlasIndex;
 @synthesize textureRect = mRect;
 
@@ -38,6 +39,8 @@
 		mAtlas = [manager atlas];	// XXX: shall be retained ? probably not
 
 		mRect = rect;
+		
+		dirty = YES;
 
 		transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
 
@@ -103,11 +106,10 @@
 		};
 		
 		mVertices = newVertices;
-		return;
 	}
 	
 	// rotation ? -> update: rotation, scale, position
-	if( rotation ) {
+	else if( rotation ) {
 		float x1 = -transformAnchor.x * scaleX;
 		float y1 = -transformAnchor.y * scaleY;
 
@@ -137,13 +139,11 @@
 					bx, by, 0,
 					dx, dy, 0,
 					cx, cy, 0};
-		mVertices = newVertices;
-		
-		return;
+		mVertices = newVertices;		
 	}
 	
 	// scale ? -> update: scale, position
-	if(scaleX != 1 || scaleY != 1)
+	else if(scaleX != 1 || scaleY != 1)
 	{
 		float x = position.x;
 		float y = position.y;
@@ -163,13 +163,11 @@
 			x2,y2,0,
 		};
 
-		mVertices = newVertices;
-	
-		return;
+		mVertices = newVertices;	
 	}
 	
 	// update position
-	{
+	else {
 		float x = position.x;
 		float y = position.y;
 //		if (relativeTransformAnchor) {
@@ -190,7 +188,9 @@
 		
 		mVertices = newVertices;
 	}
-	
+
+	[mAtlas updateQuadWithTexture:&mTexCoords vertexQuad:&mVertices atIndex:mAtlasIndex];
+	dirty = NO;
 	return;
 }
 
@@ -206,49 +206,55 @@
 -(void)setPosition:(cpVect)pos
 {
 	[super setPosition:pos];
+	dirty = YES;
 	
-	[self updatePosition];
-	[self updateAtlas];
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
+	dirty = YES;
 
-	[self updatePosition];
-	[self updateAtlas];
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
+	dirty = YES;
 
-	[self updatePosition];
-	[self updateAtlas];
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
+	dirty = YES;
 
-	[self updatePosition];
-	[self updateAtlas];
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
+	dirty = YES;
 
-	[self updatePosition];
-	[self updateAtlas];
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(void)setTransformAnchor:(cpVect)anchor
 {
 	[super setTransformAnchor:anchor];
+	dirty = YES;
 
-	[self updatePosition];
-	[self updateAtlas];
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(void)setRelativeTransformAnchor:(BOOL)relative
@@ -259,8 +265,9 @@
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	[self updatePosition];
-	[self updateAtlas];
+	dirty = YES;
+//	[self updatePosition];
+//	[self updateAtlas];
 }
 
 -(CGSize)contentSize
