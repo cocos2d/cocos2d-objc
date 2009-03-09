@@ -8,99 +8,55 @@
 Class nextAction();
 
 
+@interface SubTest : NSObject
+{
+	int					subtestNumber;
+	AtlasSpriteManager	*sheet;
+	id					parent;
+}
+-(id) createSpriteWithTag:(int)tag;
+-(void) removeByTag:(int)tag;
+-(id) initWithSubTest:(int) subtest parent:(id)parent;
+@end
+
 @interface MainScene : Scene {
-	int		lastRenderedCount;
-	int		quantityNodes;
+	int			lastRenderedCount;
+	int			quantityNodes;
+	SubTest		*subTest;
+	int			subtestNumber;
 }
 
++(id) testWithSubTest:(int)subtest nodes:(int)nodes;
+-(id) initWithSubTest:(int)subtest nodes:(int)nodes;
 -(void)updateNodes;
 -(NSString*) title;
 
+-(void) onIncrease:(id) sender;
+-(void) onDecrease:(id) sender;
+
 -(void) doTest:(id) sprite;
--(id) createSprite;
 @end
 
 
-
-@interface PerformanceSprite1 : MainScene
+@interface PerformanceTest1 : MainScene
+{}
+@end
+@interface PerformanceTest2 : MainScene
+{}
+@end
+@interface PerformanceTest3 : MainScene
+{}
+@end
+@interface PerformanceTest4 : MainScene
+{}
+@end
+@interface PerformanceTest5 : MainScene
+{}
+@end
+@interface PerformanceTest6 : MainScene
+{}
+@end
+@interface PerformanceTest7 : MainScene
 {}
 @end
 
-@interface PerformanceSprite2 : PerformanceSprite1
-{}
-@end
-
-@interface PerformanceSprite3 : PerformanceSprite1
-{}
-@end
-
-@interface PerformanceSprite4 : PerformanceSprite1
-{}
-@end
-
-@interface PerformanceSprite5 : PerformanceSprite4
-{}
-@end
-
-@interface PerformanceSprite6 : PerformanceSprite4
-{}
-@end
-
-@interface PerformanceSprite7 : PerformanceSprite4
-{}
-@end
-
-@interface PerformanceSprite8 : PerformanceSprite4
-{}
-@end
-
-@interface PerformanceSprite9 : PerformanceSprite4
-{}
-@end
-
-@interface PerformanceSprite10 : PerformanceSprite4
-{}
-@end
-
-@interface PerformanceAtlasSprite1 : MainScene
-{
-	AtlasSpriteManager	*spriteManager;
-}
--(id) createSpriteManager;
-@end
-
-@interface PerformanceAtlasSprite2 : PerformanceAtlasSprite1
-{}
-@end
-
-@interface PerformanceAtlasSprite3 : PerformanceAtlasSprite1
-{}
-@end
-
-@interface PerformanceAtlasSprite4 : PerformanceAtlasSprite1
-{}
-@end
-
-@interface PerformanceAtlasSprite5 : PerformanceAtlasSprite4
-{}
-@end
-
-@interface PerformanceAtlasSprite6 : PerformanceAtlasSprite4
-{}
-@end
-
-@interface PerformanceAtlasSprite7 : PerformanceAtlasSprite4
-{}
-@end
-
-@interface PerformanceAtlasSprite8 : PerformanceAtlasSprite4
-{}
-@end
-
-@interface PerformanceAtlasSprite9 : PerformanceAtlasSprite4
-{}
-@end
-
-@interface PerformanceAtlasSprite10 : PerformanceAtlasSprite4
-{}
-@end
