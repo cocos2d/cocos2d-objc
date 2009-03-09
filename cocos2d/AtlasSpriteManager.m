@@ -223,6 +223,13 @@ const int defaultCapacity = 29;
 #pragma mark AtlasSpriteManager - draw
 -(void)draw
 {
+	for( AtlasSprite *child in children )
+	{
+		if( child.dirty ) {
+			[child updatePosition];
+		}
+	}
+
 	if(mTotalSprites > 0)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);

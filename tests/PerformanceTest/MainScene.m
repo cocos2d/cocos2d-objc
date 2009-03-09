@@ -81,38 +81,38 @@ Class restartAction()
  * 8: 64 PVRTC AtlasSprites of 32 x 32 each
  */
 		switch( subtestNumber) {
-			case 0:
-			case 3:
-			case 6:
-				break;
 			case 1:
+			case 4:
+			case 7:
+				break;
+			case 2:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
 				[p add:sheet z:0];
 				[sheet retain];
 				break;
-			case 2:
+			case 3:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p add:sheet z:0];
 				[sheet retain];
 				break;
 				
-			case 4:
+			case 5:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p add:sheet z:0];
 				[sheet retain];
 				break;				
-			case 5:
+			case 6:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p add:sheet z:0];
 				[sheet retain];
 				break;
 
-			case 7:
+			case 8:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
 				[p add:sheet z:0];
 				[sheet retain];
 				break;
-			case 8:
+			case 9:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
 				[p add:sheet z:0];
 				[sheet retain];
@@ -135,27 +135,27 @@ Class restartAction()
 {
 	id sprite;
 	switch (subtestNumber) {
-		case 0: {
+		case 1: {
 			sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 			[parent add:sprite z:0 tag:tag+100];
 			break;
 		}
-		case 1:
-		case 2: {
+		case 2:
+		case 3: {
 			sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 52, 139) spriteManager:sheet];
 			[sheet addChild:sprite];
 			break;
 		}
 
-		case 3:
+		case 4:
 		{
 			int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
 			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
 			[parent add:sprite z:0 tag:tag+100];
 			break;
 		}
-		case 4:
 		case 5:
+		case 6:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 1400 / 100);
@@ -170,7 +170,7 @@ Class restartAction()
 			break;
 		}
 
-		case 6:
+		case 7:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 6400 / 100);
@@ -183,8 +183,8 @@ Class restartAction()
 			break;
 		}
 			
-		case 7:
 		case 8:
+		case 9:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 6400 / 100);
@@ -209,17 +209,17 @@ Class restartAction()
 -(void) removeByTag:(int) tag
 {
 	switch (subtestNumber) {
-		case 0:
-		case 3:
-		case 6:
+		case 1:
+		case 4:
+		case 7:
 			[parent removeByTag:tag+100];
 			break;
-		case 1:
 		case 2:
-		case 4:
+		case 3:
 		case 5:
-		case 7:
+		case 6:
 		case 8:
+		case 9:
 			[sheet removeAndStopChildAtIndex:tag];
 			break;
 		default:
@@ -280,7 +280,6 @@ Class restartAction()
 		
 		// Sub Tests
 		[MenuItemFont setFontSize:40];
-		MenuItemFont  *itemF0 = [MenuItemFont itemFromString:@"0 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF1 = [MenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
@@ -289,8 +288,8 @@ Class restartAction()
 		MenuItemFont  *itemF6 = [MenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF7 = [MenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF8 = [MenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF9 = [MenuItemFont itemFromString:@"9 " target:self selector:@selector(testNCallback:)];
 
-		itemF0.tag = 0;
 		itemF1.tag = 1;
 		itemF2.tag = 2;
 		itemF3.tag = 3;
@@ -299,8 +298,10 @@ Class restartAction()
 		itemF6.tag = 6;
 		itemF7.tag = 7;
 		itemF8.tag = 8;
+		itemF9.tag = 9;
 
-		menu = [Menu menuWithItems:itemF0,itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, nil];
+
+		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, nil];
 		
 		int i=0;
 		for( id child in menu.children ) {
@@ -427,7 +428,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#1(%d) position", subtestNumber];
+	return [NSString stringWithFormat:@"A (%d) position", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -440,7 +441,7 @@ Class restartAction()
 @implementation PerformanceTest2
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#2(%d) scale", subtestNumber];
+	return [NSString stringWithFormat:@"B (%d) scale", subtestNumber];
 }
 -(void) doTest:(id) sprite
 {
@@ -452,7 +453,7 @@ Class restartAction()
 @implementation PerformanceTest3
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#3(%d) scale + rot", subtestNumber];
+	return [NSString stringWithFormat:@"C (%d) scale + rot", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -466,7 +467,7 @@ Class restartAction()
 @implementation PerformanceTest4
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#4(%d) 100%% out", subtestNumber];
+	return [NSString stringWithFormat:@"D (%d) 100%% out", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -479,7 +480,7 @@ Class restartAction()
 @implementation PerformanceTest5
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#5(%d) 80%% out", subtestNumber];
+	return [NSString stringWithFormat:@"E (%d) 80%% out", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -492,7 +493,7 @@ Class restartAction()
 @implementation PerformanceTest6
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#6(%d) actions", subtestNumber];
+	return [NSString stringWithFormat:@"F (%d) actions", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -505,7 +506,7 @@ Class restartAction()
 @implementation PerformanceTest7
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"#7(%d) actions 80%% out", subtestNumber];
+	return [NSString stringWithFormat:@"G (%d) actions 80%% out", subtestNumber];
 }
 
 -(void) doTest:(id) sprite

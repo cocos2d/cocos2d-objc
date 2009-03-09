@@ -60,5 +60,4 @@
 /** removes and stop child given a certain index */
 -(void)removeAndStopChildAtIndex:(NSUInteger)index;
 
-
 @end
