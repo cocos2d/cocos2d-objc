@@ -302,14 +302,27 @@ Class restartAction()
 
 		menu = [Menu menuWithItems:itemF0,itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, nil];
 		
+		int i=0;
+		for( id child in menu.children ) {
+			if( i<3)
+				[[child label] setRGB:200 :20 :20];
+			else if(i<6)
+				[[child label] setRGB:0 :200 :20];
+			else
+				[[child label] setRGB:0 :20 :200];
+			i++;
+		}
+		
 		[menu alignItemsHorizontally];
 		menu.position = cpv(s.width/2, 80);
 		[self add:menu z:2];
 		
 
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self add:label z:1];
 		[label setPosition: cpv(s.width/2, s.height-32)];
+		[label setRGB:255 :255 :40];
+
 		
 		while(quantityNodes < nodes )
 			[self onIncrease:self];
