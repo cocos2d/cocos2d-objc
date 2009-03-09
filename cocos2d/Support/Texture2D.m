@@ -348,13 +348,13 @@ static ccTexParams _texParamsCopy;
 								_maxS,	_maxT,
 								0.0f,	0.0f,
 								_maxS,	0.0f  };
-	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							0.0f,
-							rect.origin.x + rect.size.width,		rect.origin.y,							0.0f,
-							rect.origin.x,							rect.origin.y + rect.size.height,		0.0f,
-							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		0.0f };
+	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							/*0.0f,*/
+							rect.origin.x + rect.size.width,		rect.origin.y,							/*0.0f,*/
+							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
+							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 	
 	glBindTexture(GL_TEXTURE_2D, _name);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }

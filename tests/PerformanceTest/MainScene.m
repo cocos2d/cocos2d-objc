@@ -449,18 +449,17 @@ Class restartAction()
 
 -(id) createSpriteManager
 {
-	return [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:250];
+	return [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:250];
 }
 
 -(id) createSprite
 {
-	int y = 0;
-	int x = (CCRANDOM_0_1() * 1400 / 100);
+	int y,x;
+	int r = (CCRANDOM_0_1() * 1400 / 100);
 	
-	if( x > 6 ) {
-		x %= 7;
-		y = 1;
-	}
+	y = r / 5;
+	x = r % 5;
+
 	x *= 85;
 	y *= 121;
 	return [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:spriteManager];
