@@ -18,26 +18,13 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-		@"PerformanceSprite1",
-		@"PerformanceAtlasSprite1",
-		@"PerformanceSprite2",
-		@"PerformanceAtlasSprite2",
-		@"PerformanceSprite3",
-		@"PerformanceAtlasSprite3",
-		@"PerformanceSprite4",
-		@"PerformanceAtlasSprite4",
-		@"PerformanceSprite5",
-		@"PerformanceAtlasSprite5",
-		@"PerformanceSprite6",
-		@"PerformanceAtlasSprite6",
-		@"PerformanceSprite7",
-		@"PerformanceAtlasSprite7",
-		@"PerformanceSprite8",
-		@"PerformanceAtlasSprite8",
-		@"PerformanceSprite9",
-		@"PerformanceAtlasSprite9",
-		@"PerformanceSprite10",
-		@"PerformanceAtlasSprite10",
+		@"PerformanceTest1",
+		@"PerformanceTest2",
+		@"PerformanceTest3",
+		@"PerformanceTest4",
+		@"PerformanceTest5",
+		@"PerformanceTest6",
+		@"PerformanceTest7",
 };
 
 Class nextAction()
@@ -69,15 +56,197 @@ Class restartAction()
 	return c;
 }
 
+#pragma mark SubTest
+@implementation SubTest
+
+-(id) initWithSubTest:(int) subtest parent:(id)p
+{
+	if( (self=[super init]) ) {
+		
+		subtestNumber = subtest;
+		parent = p;
+		sheet = nil;
+/*
+ * Tests:
+ * 0: 1 PNG sprite of 52 x 139
+ * 1: 1 PNG Atlas sprite using 1 sprite of 52 x 139
+ * 2: 1 PVRTC (4bpp, linear) Atlas sprite using 1 sprite of 52 x 139
+
+ * 3: 14 PNG sprites of 85 x 121 each
+ * 4: 14 PNG Atlassprites of 85 x 121 each
+ * 5: 14 PVRTC (4bpp, linear) Atlassprites of 85 x 121 each
+ 
+ * 6: 64 sprites of 32 x 32 each
+ * 7: 64 PNG AtlasSprites of 32 x 32 each
+ * 8: 64 PVRTC AtlasSprites of 32 x 32 each
+ */
+		switch( subtestNumber) {
+			case 0:
+			case 3:
+			case 6:
+				break;
+			case 1:
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
+				[p add:sheet z:0];
+				[sheet retain];
+				break;
+			case 2:
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
+				[p add:sheet z:0];
+				[sheet retain];
+				break;
+				
+			case 4:
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+				[p add:sheet z:0];
+				[sheet retain];
+				break;				
+			case 5:
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
+				[p add:sheet z:0];
+				[sheet retain];
+				break;
+
+			case 7:
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
+				[p add:sheet z:0];
+				[sheet retain];
+				break;
+			case 8:
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
+				[p add:sheet z:0];
+				[sheet retain];
+				break;
+				
+			default:
+				break;
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[sheet release];
+	[super dealloc];
+}
+
+-(id) createSpriteWithTag:(int)tag
+{
+	id sprite;
+	switch (subtestNumber) {
+		case 0: {
+			sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+			[parent add:sprite z:0 tag:tag+100];
+			break;
+		}
+		case 1:
+		case 2: {
+			sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 52, 139) spriteManager:sheet];
+			[sheet addChild:sprite];
+			break;
+		}
+
+		case 3:
+		{
+			int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
+			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
+			[parent add:sprite z:0 tag:tag+100];
+			break;
+		}
+		case 4:
+		case 5:
+		{
+			int y,x;
+			int r = (CCRANDOM_0_1() * 1400 / 100);
+			
+			y = r / 5;
+			x = r % 5;
+
+			x *= 85;
+			y *= 121;
+			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:sheet];
+			[sheet addChild:sprite];
+			break;
+		}
+
+		case 6:
+		{
+			int y,x;
+			int r = (CCRANDOM_0_1() * 6400 / 100);
+			
+			y = r / 8;
+			x = r % 8;
+			
+			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"sprite-%d-%d.png", x, y]];
+			[parent add:sprite z:0 tag:tag+100];
+			break;
+		}
+			
+		case 7:
+		case 8:
+		{
+			int y,x;
+			int r = (CCRANDOM_0_1() * 6400 / 100);
+			
+			y = r / 8;
+			x = r % 8;
+			
+			x *= 32;
+			y *= 32;
+			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,32,32) spriteManager:sheet];
+			[sheet addChild:sprite];
+			break;
+		}
+			
+		default:
+			break;
+	}
+			
+	return sprite;
+}
+
+-(void) removeByTag:(int) tag
+{
+	switch (subtestNumber) {
+		case 0:
+		case 3:
+		case 6:
+			[parent removeByTag:tag+100];
+			break;
+		case 1:
+		case 2:
+		case 4:
+		case 5:
+		case 7:
+		case 8:
+			[sheet removeAndStopChildAtIndex:tag];
+			break;
+		default:
+			break;
+	}
+}
+@end
+
+
+#pragma mark MainScene
 
 @implementation MainScene
 
-- (id)init
++(id) testWithSubTest:(int) subtest nodes:(int)nodes
+{
+	return [[[self alloc] initWithSubTest:subtest nodes:nodes] autorelease];
+}
+
+- (id)initWithSubTest:(int) asubtest nodes:(int)nodes
 {
 	if ((self = [super init]) != nil) {
 		
 		srandom(0);
 		
+		subtestNumber = asubtest;
+		subTest = [[SubTest alloc] initWithSubTest:asubtest parent:self];
+
 		CGSize s = [[Director sharedDirector] winSize];
 
 		lastRenderedCount = 0;
@@ -99,23 +268,51 @@ Class restartAction()
 		infoLabel.position = cpv(s.width/2, s.height-90);
 		[self add:infoLabel z:1 tag:kTagInfoLayer];
 				
+		
+		// Next Prev Test
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
 		menu = [Menu menuWithItems:item1, item2, item3, nil];
+		[menu alignItemsHorizontally];
+		menu.position = cpv(s.width/2, 30);
+		[self add: menu z:1];	
+		
+		// Sub Tests
+		[MenuItemFont setFontSize:40];
+		MenuItemFont  *itemF0 = [MenuItemFont itemFromString:@"0 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF1 = [MenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF4 = [MenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF5 = [MenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF6 = [MenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF7 = [MenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF8 = [MenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
+
+		itemF0.tag = 0;
+		itemF1.tag = 1;
+		itemF2.tag = 2;
+		itemF3.tag = 3;
+		itemF4.tag = 4;
+		itemF5.tag = 5;
+		itemF6.tag = 6;
+		itemF7.tag = 7;
+		itemF8.tag = 8;
+
+		menu = [Menu menuWithItems:itemF0,itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, nil];
+		
+		[menu alignItemsHorizontally];
+		menu.position = cpv(s.width/2, 80);
+		[self add:menu z:2];
 		
 
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self add:label z:1];
 		[label setPosition: cpv(s.width/2, s.height-32)];
 		
-		menu.position = cpvzero;
-		item1.position = cpv( s.width/2 - 100,30);
-		item2.position = cpv( s.width/2, 30);
-		item3.position = cpv( s.width/2 + 100,30);
-		[self add: menu z:1];	
-		
+		while(quantityNodes < nodes )
+			[self onIncrease:self];
 	}
 	
 	return self;
@@ -128,28 +325,40 @@ Class restartAction()
 
 -(void) dealloc
 {
+	[subTest release];
 	[super dealloc];
 }
 
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	id scene = [restartAction() testWithSubTest:subtestNumber nodes:quantityNodes];
+	[s add:scene];
+
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	id scene = [nextAction() testWithSubTest:subtestNumber nodes:quantityNodes];
+	[s add:scene];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	id scene = [backAction() testWithSubTest:subtestNumber nodes:quantityNodes];
+	[s add:scene];
+
 	[[Director sharedDirector] replaceScene: s];
+}
+
+-(void) testNCallback:(id) sender
+{
+	subtestNumber = [sender tag];
+	[self restartCallback:sender];
 }
 
 - (void)updateNodes
@@ -168,21 +377,6 @@ Class restartAction()
 	// override
 }
 
--(id) createSprite
-{
-	// override
-	return nil;
-}
-@end
-
-#pragma mark Sprite 1
-
-@implementation PerformanceSprite1
-
--(NSString*) title
-{
-	return @"#1 Sprite";
-}
 -(void) onIncrease:(id) sender
 {
 	if( quantityNodes >= kMaxNodes)
@@ -190,10 +384,7 @@ Class restartAction()
 	
 	for( int i=0;i< kNodesIncrease;i++) {
 		
-		Sprite *sprite = [self createSprite];
-
-		[self add:sprite z:0 tag:quantityNodes + 100];
-
+		Sprite *sprite = [subTest createSpriteWithTag: quantityNodes];
 		[self doTest:sprite];
 		
 		quantityNodes++;
@@ -209,27 +400,34 @@ Class restartAction()
 	
 	for( int i=0;i < kNodesIncrease;i++) {
 		quantityNodes--;
-		[self removeByTag:quantityNodes + 100];
+		[subTest removeByTag:quantityNodes];
 	}
 	
 	[self updateNodes];
 }
+
+@end
+
+#pragma mark Test 1
+
+@implementation PerformanceTest1
+
+-(NSString*) title
+{
+	return [NSString stringWithFormat:@"#1(%d) position", subtestNumber];
+}
+
 -(void) doTest:(id) sprite
 {
 	[sprite performancePosition];
 }
-
--(id) createSprite
-{
-	return [Sprite spriteWithFile:@"grossinis_sister1.png"];
-}
 @end
 
-#pragma mark Sprite 2
-@implementation PerformanceSprite2
+#pragma mark Test 2
+@implementation PerformanceTest2
 -(NSString*) title
 {
-	return @"#2 Sprite scale";
+	return [NSString stringWithFormat:@"#2(%d) scale", subtestNumber];
 }
 -(void) doTest:(id) sprite
 {
@@ -237,11 +435,11 @@ Class restartAction()
 }
 @end
 
-#pragma mark Sprite 3
-@implementation PerformanceSprite3
+#pragma mark Test 3
+@implementation PerformanceTest3
 -(NSString*) title
 {
-	return @"#3 Sprite scale + rotation";
+	return [NSString stringWithFormat:@"#3(%d) scale + rot", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -250,53 +448,12 @@ Class restartAction()
 }
 @end
 
-#pragma mark Sprite 4
-@implementation PerformanceSprite4
+
+#pragma mark Test 4
+@implementation PerformanceTest4
 -(NSString*) title
 {
-	return @"#4 Sprite Textures";
-}
--(void) doTest:(id) sprite
-{
-	[sprite performancePosition];
-}
--(id) createSprite
-{
-	int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
-	return [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
-}
-@end
-
-#pragma mark Sprite 5
-@implementation PerformanceSprite5
--(NSString*) title
-{
-	return @"#5 Sprite Textures + scale";
-}
--(void) doTest:(id) sprite
-{
-	[sprite performanceScale];
-}
-@end
-
-#pragma mark Sprite 6
-@implementation PerformanceSprite6
--(NSString*) title
-{
-	return @"#6 Sprite tex + scale + rotation";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceRotationScale];
-}
-@end
-
-#pragma mark Sprite 7
-@implementation PerformanceSprite7
--(NSString*) title
-{
-	return @"#7 Sprite out 100%";
+	return [NSString stringWithFormat:@"#4(%d) 100%% out", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -305,11 +462,11 @@ Class restartAction()
 }
 @end
 
-#pragma mark Sprite 8
-@implementation PerformanceSprite8
+#pragma mark Test 5
+@implementation PerformanceTest5
 -(NSString*) title
 {
-	return @"#8 Sprite out 20%";
+	return [NSString stringWithFormat:@"#5(%d) 80%% out", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -318,11 +475,11 @@ Class restartAction()
 }
 @end
 
-#pragma mark Sprite 9
-@implementation PerformanceSprite9
+#pragma mark Test 6
+@implementation PerformanceTest6
 -(NSString*) title
 {
-	return @"#9 Sprite actions";
+	return [NSString stringWithFormat:@"#6(%d) actions", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -331,11 +488,11 @@ Class restartAction()
 }
 @end
 
-#pragma mark Sprite 10
-@implementation PerformanceSprite10
+#pragma mark Test 7
+@implementation PerformanceTest7
 -(NSString*) title
 {
-	return @"#10 Sprite actions 20% out";
+	return [NSString stringWithFormat:@"#7(%d) actions 80%% out", subtestNumber];
 }
 
 -(void) doTest:(id) sprite
@@ -343,205 +500,5 @@ Class restartAction()
 	[sprite performanceActions20];
 }
 @end
-
-#pragma mark AtlasSprite 1
-@implementation PerformanceAtlasSprite1
--(id) init
-{
-	if( (self=[super init]) )
-	{
-		spriteManager = [self createSpriteManager];
-		[self add:spriteManager];
-	}
-	return self;
-}
-
--(id) createSpriteManager
-{
-	return [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:250];
-}
-
-- (void) dealloc
-{
-	[super dealloc];
-}
-
--(NSString*) title
-{
-	return @"#1 AtlasSprite";
-}
-
--(void) onIncrease:(id) sender
-{
-	if( quantityNodes >= kMaxNodes)
-		return;
-	
-	for( int i=0;i< kNodesIncrease;i++) {
-
-		AtlasSprite *sprite = [self createSprite];
-		[spriteManager addChild: sprite];
-
-		[self doTest:sprite];
-		
-		quantityNodes++;
-	}
-	
-	[self updateNodes];
-}
-
--(void) onDecrease:(id) sender
-{
-	if( quantityNodes <= 0 )
-		return;
-	
-	for( int i=0;i < kNodesIncrease;i++) {
-		quantityNodes--;
-		[spriteManager removeAndStopChildAtIndex:quantityNodes];
-	}
-	
-	[self updateNodes];
-}
--(void) doTest:(id) sprite
-{
-	[sprite performancePosition];
-}
--(id) createSprite
-{
-	return [AtlasSprite spriteWithRect:CGRectMake(0,0,52,139) spriteManager:spriteManager];
-}
-@end
-
-#pragma mark AtlasSprite 2
-@implementation PerformanceAtlasSprite2
--(NSString*) title
-{
-	return @"#2 AtlasSprite scale";
-}
--(void) doTest:(id) sprite
-{
-	[sprite performanceScale];
-}
-@end
-
-#pragma mark AtlasSprite 3
-@implementation PerformanceAtlasSprite3
--(NSString*) title
-{
-	return @"#3 AtlasSprite rotation + scale";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceRotationScale];
-}
-@end
-
-#pragma mark AtlasSprite 4
-@implementation PerformanceAtlasSprite4
--(NSString*) title
-{
-	return @"#4 AtlasSprite Textures";
-}
--(void) doTest:(id) sprite
-{
-	[sprite performancePosition];
-}
-
--(id) createSpriteManager
-{
-	return [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:250];
-}
-
--(id) createSprite
-{
-	int y,x;
-	int r = (CCRANDOM_0_1() * 1400 / 100);
-	
-	y = r / 5;
-	x = r % 5;
-
-	x *= 85;
-	y *= 121;
-	return [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:spriteManager];
-}
-@end
-
-#pragma mark AtlasSprite 5
-@implementation PerformanceAtlasSprite5
--(NSString*) title
-{
-	return @"#5 AtlasSprite textures + scale";
-}
--(void) doTest:(id) sprite
-{
-	[sprite performanceScale];
-}
-@end
-
-#pragma mark AtlasSprite 6
-@implementation PerformanceAtlasSprite6
--(NSString*) title
-{
-	return @"#6 AtlasSprite tex + scale + rot";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceRotationScale];
-}
-@end
-
-#pragma mark AtlasSprite 7
-@implementation PerformanceAtlasSprite7
--(NSString*) title
-{
-	return @"#7 AtlasSprite out 100%";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceOut100];
-}
-@end
-
-#pragma mark AtlasSprite 8
-@implementation PerformanceAtlasSprite8
--(NSString*) title
-{
-	return @"#8 AtlasSprite out 20%";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceout20];
-}
-@end
-
-#pragma mark AtlasSprite 9
-@implementation PerformanceAtlasSprite9
--(NSString*) title
-{
-	return @"#9 AtlasSprite actions";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceActions];
-}
-@end
-
-#pragma mark AtlasSprite 10
-@implementation PerformanceAtlasSprite10
--(NSString*) title
-{
-	return @"#10 AtlasSprite actions 20% out";
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceActions20];
-}
-@end
-
 
 

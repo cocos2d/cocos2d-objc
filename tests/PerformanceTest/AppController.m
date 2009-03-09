@@ -22,7 +22,7 @@
 	[window makeKeyAndVisible];
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene add: [nextAction() testWithSubTest:0 nodes:50]];
 	
 	[[Director sharedDirector] runWithScene:scene];
 }
