@@ -22,7 +22,7 @@
 
 @implementation AtlasNode
 
-@synthesize	opacity;
+@synthesize	opacity, r, g, b;
 
 #pragma mark AtlasNode - Creation & Init
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c

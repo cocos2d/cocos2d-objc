@@ -21,7 +21,7 @@
 
 
 /** A CocosNode that knows how to render a texture */
-@interface TextureNode : CocosNode <CocosNodeOpacity, CocosNodeSize> {
+@interface TextureNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize> {
 
 	/// texture
 	Texture2D *texture;
@@ -35,11 +35,6 @@
 
 @property (readwrite,assign) Texture2D *texture;
 @property (readwrite,assign) GLubyte r, g, b, opacity;
-
-/** set the color of the texture.
- * example:  [node setRGB: 255:128:25];
- */
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
 
 
 /** returns the size in pixels of the texture without transformations.
