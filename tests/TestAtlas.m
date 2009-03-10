@@ -348,10 +348,9 @@ Class restartAction()
 {
 	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
-	int x = CCRANDOM_0_1() * 70 / 10;
-	int y = CCRANDOM_0_1() * 20 / 10;
-	x *= 85;
-	y *= 121;
+	int idx = CCRANDOM_0_1() * 1400 / 100;
+	int x = (idx%5) * 81;
+	int y = (idx/5) * 121;
 	
 
 	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
@@ -388,7 +387,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"AtlasSprite (fast sprites)";
+	return @"AtlasSprite (tap screen)";
 }
 @end
 
