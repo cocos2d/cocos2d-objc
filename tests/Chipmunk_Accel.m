@@ -174,10 +174,16 @@ eachShape(void *ptr, void* unused)
 	// you can change it's properties
 	[[[Director sharedDirector] openGLView] setMultipleTouchEnabled:YES];
 	
-		
+	
+	// add layer
 	Scene *scene = [Scene node];
-
 	[scene addChild: [Layer1 node] z:0];
+	
+	// add the label
+	CGSize s = [[Director sharedDirector] winSize];
+	Label* label = [Label labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
+	label.position = cpv( s.width / 2, s.height - 30);
+	[scene addChild:label z:-1];
 
 	[window makeKeyAndVisible];
 
