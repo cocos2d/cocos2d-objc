@@ -87,34 +87,34 @@ Class restartAction()
 				break;
 			case 2:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
-				[p add:sheet z:0];
+				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 			case 3:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
-				[p add:sheet z:0];
+				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 				
 			case 5:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
-				[p add:sheet z:0];
+				[p addChild:sheet z:0];
 				[sheet retain];
 				break;				
 			case 6:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
-				[p add:sheet z:0];
+				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 
 			case 8:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
-				[p add:sheet z:0];
+				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 			case 9:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
-				[p add:sheet z:0];
+				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 				
@@ -137,7 +137,7 @@ Class restartAction()
 	switch (subtestNumber) {
 		case 1: {
 			sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-			[parent add:sprite z:0 tag:tag+100];
+			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 		case 2:
@@ -151,7 +151,7 @@ Class restartAction()
 		{
 			int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
 			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
-			[parent add:sprite z:0 tag:tag+100];
+			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 		case 5:
@@ -179,7 +179,7 @@ Class restartAction()
 			x = r % 8;
 			
 			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"sprite-%d-%d.png", x, y]];
-			[parent add:sprite z:0 tag:tag+100];
+			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 			
@@ -261,12 +261,12 @@ Class restartAction()
 		Menu *menu = [Menu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
 		menu.position = cpv(s.width/2, s.height-65);
-		[self add:menu z:1];
+		[self addChild:menu z:1];
 		
 		Label *infoLabel = [Label labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setRGB:0 :200 :20];
 		infoLabel.position = cpv(s.width/2, s.height-90);
-		[self add:infoLabel z:1 tag:kTagInfoLayer];
+		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 				
 		
 		// Next Prev Test
@@ -276,7 +276,7 @@ Class restartAction()
 		menu = [Menu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
 		menu.position = cpv(s.width/2, 30);
-		[self add: menu z:1];	
+		[self addChild: menu z:1];	
 		
 		// Sub Tests
 		[MenuItemFont setFontSize:40];
@@ -316,11 +316,11 @@ Class restartAction()
 		
 		[menu alignItemsHorizontally];
 		menu.position = cpv(s.width/2, 80);
-		[self add:menu z:2];
+		[self addChild:menu z:2];
 		
 
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:40];
-		[self add:label z:1];
+		[self addChild:label z:1];
 		[label setPosition: cpv(s.width/2, s.height-32)];
 		[label setRGB:255 :255 :40];
 
@@ -347,7 +347,7 @@ Class restartAction()
 {
 	Scene *s = [Scene node];
 	id scene = [restartAction() testWithSubTest:subtestNumber nodes:quantityNodes];
-	[s add:scene];
+	[s addChild:scene];
 
 	[[Director sharedDirector] replaceScene: s];
 }
@@ -356,7 +356,7 @@ Class restartAction()
 {
 	Scene *s = [Scene node];
 	id scene = [nextAction() testWithSubTest:subtestNumber nodes:quantityNodes];
-	[s add:scene];
+	[s addChild:scene];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -364,7 +364,7 @@ Class restartAction()
 {
 	Scene *s = [Scene node];
 	id scene = [backAction() testWithSubTest:subtestNumber nodes:quantityNodes];
-	[s add:scene];
+	[s addChild:scene];
 
 	[[Director sharedDirector] replaceScene: s];
 }
@@ -379,7 +379,7 @@ Class restartAction()
 {
 	if( quantityNodes != lastRenderedCount ) {
 
-		Label *infoLabel = (Label *) [self getByTag:kTagInfoLayer];
+		Label *infoLabel = (Label *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u nodes", quantityNodes] ];
 		
 		lastRenderedCount = quantityNodes;

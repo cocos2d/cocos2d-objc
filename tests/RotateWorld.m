@@ -26,7 +26,7 @@
 
 	[label setPosition: cpv(x/2,y/2)];
 	
-	[self add: label];
+	[self addChild: label];
 	return self;
 }
 
@@ -62,11 +62,11 @@
 
 	Action *rot = [RotateBy actionWithDuration:16 angle:-3600];
 	
-	[self add: sprite];
-	[self add: spriteSister1];
-	[self add: spriteSister2];
+	[self addChild: sprite];
+	[self addChild: spriteSister1];
+	[self addChild: spriteSister2];
 	
-	[sprite do: rot];
+	[sprite runAction: rot];
 
 	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:cpv(-400,0) height:100 jumps:4];
 	IntervalAction *jump2 = [jump1 reverse];
@@ -74,11 +74,11 @@
 	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
 	IntervalAction *rot2 = [rot1 reverse];
 	
-	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions:jump2, jump1, nil] times:5 ] ];
-	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions:[[jump1 copy] autorelease], [[jump2 copy] autorelease], nil] times:5 ] ];
+	[spriteSister1 runAction: [Repeat actionWithAction: [Sequence actions:jump2, jump1, nil] times:5 ] ];
+	[spriteSister2 runAction: [Repeat actionWithAction: [Sequence actions:[[jump1 copy] autorelease], [[jump2 copy] autorelease], nil] times:5 ] ];
 	
-	[spriteSister1 do: [Repeat actionWithAction: [Sequence actions: rot1, rot2, nil] times:5 ] ];
-	[spriteSister2 do: [Repeat actionWithAction: [Sequence actions: [[rot2 copy] autorelease], [[rot1 copy] autorelease], nil] times:5 ] ];
+	[spriteSister1 runAction: [Repeat actionWithAction: [Sequence actions: rot1, rot2, nil] times:5 ] ];
+	[spriteSister2 runAction: [Repeat actionWithAction: [Sequence actions: [[rot2 copy] autorelease], [[rot1 copy] autorelease], nil] times:5 ] ];
 	
 	
 	return self;
@@ -101,36 +101,36 @@
 	x = size.width;
 	y = size.height;
 	
-	id blue =  [ColorLayer layerWithColor: 0x0000ffff];
-	id red =   [ColorLayer layerWithColor: 0xff0000ff];
-	id green = [ColorLayer layerWithColor: 0x00ff00ff];
-	id white = [ColorLayer layerWithColor: 0xffffffff];
+	CocosNode* blue =  [ColorLayer layerWithColor: 0x0000ffff];
+	CocosNode* red =   [ColorLayer layerWithColor: 0xff0000ff];
+	CocosNode* green = [ColorLayer layerWithColor: 0x00ff00ff];
+	CocosNode* white = [ColorLayer layerWithColor: 0xffffffff];
 
 	[blue setScale: 0.5f];
 	[blue setPosition: cpv(-x/4,-y/4)];
-	[blue add: [SpriteLayer node]];
+	[blue addChild: [SpriteLayer node]];
 	
 	[red setScale: 0.5f];
 	[red setPosition: cpv(x/4,-y/4)];
 
 	[green setScale: 0.5f];
 	[green setPosition: cpv(-x/4,y/4)];
-	[green add: [TextLayer node]];
+	[green addChild: [TextLayer node]];
 
 	[white setScale: 0.5f];
 	[white setPosition: cpv(x/4,y/4)];
 
-	[self add: blue z:-1];
-	[self add: white];
-	[self add: green];
-	[self add: red];
+	[self addChild: blue z:-1];
+	[self addChild: white];
+	[self addChild: green];
+	[self addChild: red];
 
 	Action * rot = [RotateBy actionWithDuration:8 angle:720];
 	
-	[blue do: rot];
-	[red do: [[rot copy] autorelease]];
-	[green do: [[rot copy] autorelease]];
-	[white do: [[rot copy] autorelease]];
+	[blue runAction: rot];
+	[red runAction: [[rot copy] autorelease]];
+	[green runAction: [[rot copy] autorelease]];
+	[white runAction: [[rot copy] autorelease]];
 	
 	return self;
 }
@@ -178,9 +178,9 @@
 
 	MainLayer * mainLayer =[MainLayer node];
 	
-	[scene add: mainLayer];
+	[scene addChild: mainLayer];
 	
-	[scene do: [RotateBy actionWithDuration: 4 angle:-360]];
+	[scene runAction: [RotateBy actionWithDuration: 4 angle:-360]];
 	
 	// Make the window visible
 	[window makeKeyAndVisible];

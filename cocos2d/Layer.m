@@ -209,7 +209,7 @@
 	}
 	
 	enabledLayer = 0;
-	[self add: [layers objectAtIndex: enabledLayer]];		
+	[self addChild: [layers objectAtIndex: enabledLayer]];		
 	
 	return self;
 }
@@ -230,11 +230,11 @@
 		@throw myException;		
 	}
 		
-	[self remove: [layers objectAtIndex:enabledLayer]];
+	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:NO];
 	
 	enabledLayer = n;
 	
-	[self add: [layers objectAtIndex:n]];		
+	[self addChild: [layers objectAtIndex:n]];		
 }
 
 -(void) switchToAndReleaseMe: (unsigned int) n
@@ -247,13 +247,13 @@
 		@throw myException;		
 	}
 	
-	[self remove: [layers objectAtIndex:enabledLayer]];
+	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:NO];
 	
 	[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
 	
 	enabledLayer = n;
 	
-	[self add: [layers objectAtIndex:n]];		
+	[self addChild: [layers objectAtIndex:n]];		
 }
 
 @end

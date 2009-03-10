@@ -61,7 +61,7 @@ Class restartAction()
 
 	CGSize s = [[Director sharedDirector] winSize];
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label];
+	[self addChild: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -74,10 +74,10 @@ Class restartAction()
 	item1.position = cpv( s.width/2 - 100,30);
 	item2.position = cpv( s.width/2, 30);
 	item3.position = cpv( s.width/2 + 100,30);
-	[self add: menu z:-1];	
+	[self addChild: menu z:-1];	
 	
 	LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-	[self add:labelAtlas z:0 tag:kTagLabelAtlas];
+	[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
 	labelAtlas.position = cpv(254,50);
 		
 	[self schedule:@selector(step:)];
@@ -86,8 +86,8 @@ Class restartAction()
 
 -(void) step:(ccTime) dt
 {
-	LabelAtlas *atlas = (LabelAtlas*) [self getByTag:kTagLabelAtlas];
-	ParticleSystem *emitter = (ParticleSystem*) [self getByTag:kTagEmitter];
+	LabelAtlas *atlas = (LabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagEmitter];
 
 	NSString *str = [NSString stringWithFormat:@"%4d", emitter.particleCount];
 	[atlas setString:str];
@@ -101,21 +101,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];	
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -126,7 +126,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFireworks node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -139,7 +139,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFire node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -152,7 +152,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSun node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -165,7 +165,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleGalaxy node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -178,7 +178,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFlower node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -191,7 +191,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleMeteor node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -204,7 +204,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSpiral node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -217,7 +217,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleExplosion node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -230,7 +230,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSmoke node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -243,7 +243,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSnow node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -256,7 +256,7 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleRain node];
-	[self add: emitter z:0 tag:kTagEmitter];
+	[self addChild: emitter z:0 tag:kTagEmitter];
 }
 -(NSString *) title
 {
@@ -292,7 +292,7 @@ Class restartAction()
 	[[Director sharedDirector] attachInView:window];
 
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene addChild: [nextAction() node]];
 	
 	[window makeKeyAndVisible];
 			 

@@ -60,8 +60,8 @@ Class restartAction()
 	grossini = [[Sprite spriteWithFile:@"grossini.png"] retain];
 	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	
-	[self add: grossini z:1];
-	[self add: tamara z:2];
+	[self addChild: grossini z:1];
+	[self addChild: tamara z:2];
 
 	CGSize s = [[Director sharedDirector] winSize];
 	
@@ -69,7 +69,7 @@ Class restartAction()
 	[tamara setPosition: cpv(60, 2*s.height/3)];
 	
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label];
+	[self addChild: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -82,7 +82,7 @@ Class restartAction()
 	item1.position = cpv( s.width/2 - 100,30);
 	item2.position = cpv( s.width/2, 30);
 	item3.position = cpv( s.width/2 + 100,30);
-	[self add: menu z:-1];	
+	[self addChild: menu z:-1];	
 
 	return self;
 }
@@ -97,21 +97,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -147,8 +147,8 @@ Class restartAction()
 	
 	tamara.transformAnchor = cpvzero;
 	
-	[tamara do: action1];
-	[grossini do:action2];
+	[tamara runAction: action1];
+	[grossini runAction:action2];
 }
 -(NSString *) title
 {
@@ -169,8 +169,8 @@ Class restartAction()
 	sp1.scale = 0.25f;
 	sp2.scale = 0.25f;
 	
-	[tamara add:sp1];
-	[grossini add:sp2];
+	[tamara addChild:sp1];
+	[grossini addChild:sp2];
 	
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
 	id a2 = [ScaleBy actionWithDuration:2 scale:2];
@@ -184,8 +184,8 @@ Class restartAction()
 	
 	tamara.transformAnchor = cpvzero;
 	
-	[tamara do: action1];
-	[grossini do:action2];	
+	[tamara runAction: action1];
+	[grossini runAction:action2];	
 }
 -(NSString *) title
 {
@@ -208,20 +208,20 @@ Class restartAction()
 	sp1.position = cpv(20,80);
 	sp2.position = cpv(70,50);
 	
-	[grossini add:sp1 z:-1 tag:kTagSprite1];
-	[grossini add:sp2 z:1 tag:kTagSprite2];
+	[grossini addChild:sp1 z:-1 tag:kTagSprite1];
+	[grossini addChild:sp2 z:1 tag:kTagSprite2];
 	
 	id a1 = [RotateBy actionWithDuration:4 angle:360];
 	id action1 = [RepeatForever actionWithAction:a1];
-	[grossini do:action1];	
+	[grossini runAction:action1];	
 	
 	[self schedule:@selector(changeZOrder:) interval:2.0f];
 }
 
 -(void) changeZOrder:(ccTime) dt
 {
-	CocosNode *sprite1 = [grossini getByTag:kTagSprite1];
-	CocosNode *sprite2 = [grossini getByTag:kTagSprite2];
+	CocosNode *sprite1 = [grossini getChildByTag:kTagSprite1];
+	CocosNode *sprite2 = [grossini getChildByTag:kTagSprite2];
 	
 	int zt = sprite1.zOrder;
 	[grossini reorderChild:sprite1 z:sprite2.zOrder];
@@ -251,8 +251,8 @@ Class restartAction()
 	sp1.position = cpv(100,160);
 	sp2.position = cpv(380,160);
 	
-	[self add:sp1 z:0 tag:2];
-	[self add:sp2 z:0 tag:3];
+	[self addChild:sp1 z:0 tag:2];
+	[self addChild:sp2 z:0 tag:3];
 	
 	[self schedule:@selector(delay2:) interval:2.0f];
 	[self schedule:@selector(delay4:) interval:4.0f];
@@ -262,9 +262,9 @@ Class restartAction()
 
 -(void) delay2:(ccTime) dt
 {
-	id node = [self getByTag:2];
+	id node = [self getChildByTag:2];
 	id action1 = [RotateBy actionWithDuration:1 angle:360];
-	[node do:action1];
+	[node runAction:action1];
 }
 
 -(void) delay4:(ccTime) dt
@@ -306,7 +306,7 @@ Class restartAction()
 	[window makeKeyAndVisible];		
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene addChild: [nextAction() node]];
 			 
 	[[Director sharedDirector] runWithScene: scene];
 }

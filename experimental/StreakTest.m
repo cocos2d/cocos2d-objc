@@ -17,7 +17,7 @@
 	CGSize s = [[Director sharedDirector] winSize];
   
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label];
+	[self addChild: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
   
 	return self;
@@ -37,16 +37,16 @@
   
   // the root object just rotates around
 	root = [[Sprite spriteWithFile:@"r1.png"] retain];
-	[self add: root z:1];
+	[self addChild: root z:1];
 	[root setPosition: cpv(s.width/2, s.height/2)];
   
   // the target object is offset from root, and the streak is moved to follow it
   target = [Sprite spriteWithFile:@"r1.png"];
-  [root add:target];
+  [root addChild:target];
   [target setPosition:cpv(100,0)];
   // create the streak object and add it to the scene
   streak = [MotionStreak streakWithFade:3 minSeg:3 image:@"streak.png" width:32 length:32 color:0xFFFFFF];
-  [self add:streak];
+  [self addChild:streak];
   // schedule an update on each frame so we can syncronize the streak with the target
   [self schedule:@selector(onUpdate:)];
   
@@ -54,8 +54,8 @@
   
 	id action1 = [RepeatForever actionWithAction:a1];
 	id motion = [MoveBy actionWithDuration:2 position:cpv(100,0)];
-  [root do:[RepeatForever actionWithAction:[Sequence actions:motion, [motion reverse], nil]]];
-	[root do:action1];
+	[root runAction:[RepeatForever actionWithAction:[Sequence actions:motion, [motion reverse], nil]]];
+	[root runAction:action1];
 }
 
 -(void)onUpdate:(ccTime)delta
@@ -96,7 +96,7 @@
 	[window makeKeyAndVisible];		
 	
 	Scene *scene = [Scene node];
-	[scene add: [StreakTest node]];
+	[scene addChild: [StreakTest node]];
   
 	[[Director sharedDirector] runWithScene: scene];
 }

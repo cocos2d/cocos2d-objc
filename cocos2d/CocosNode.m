@@ -253,7 +253,7 @@
 {
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
 
-	CocosNode *child = [self getByTag:aTag];
+	CocosNode *child = [self getChildByTag:aTag];
 	[self detachChild:child cleanup:cleanup];
 }
 
@@ -523,6 +523,11 @@
 }
 
 -(Action*) do: (Action*) action
+{
+	CCLOG(@"do: is deprecated. Use runAction: instead");
+	return [self runAction:action];
+}
+-(Action*) runAction:(Action*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	

@@ -350,7 +350,7 @@ enum {
 		[self stopAction: zoomAction];
 		[zoomAction release];
 		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.2f] retain];
-		[self do:zoomAction];
+		[self runAction:zoomAction];
 	}
 }
 
@@ -361,7 +361,7 @@ enum {
 		[self stopAction: zoomAction];
 		[zoomAction release];
 		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.0f] retain];
-		[self do:zoomAction];
+		[self runAction:zoomAction];
 	}
 }
 
@@ -536,7 +536,7 @@ enum {
 		i = va_arg(args, MenuItem*);
 	}
 
-	[self add: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+	[self addChild: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
 	
 	return self;
 }
@@ -551,8 +551,8 @@ enum {
 {
 	if( index != selectedIndex ) {
 		selectedIndex=index;
-		[self removeByTag:kCurrentItem];
-		[self add: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+		[self removeChildByTag:kCurrentItem cleanup:NO];
+		[self addChild: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
 	}
 }
 
@@ -577,13 +577,13 @@ enum {
 	// update index
 	
 	if( isEnabled ) {
-		[self removeByTag:kCurrentItem];
+		[self removeChildByTag:kCurrentItem cleanup:NO];
 
 		selectedIndex++;
 		if(selectedIndex >= [subItems count])
 			selectedIndex = 0;
 
-		[self add: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+		[self addChild: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
 
 		[invocation invoke];
 	}

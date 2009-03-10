@@ -30,7 +30,7 @@ float randfloat() {
 	
 	CGSize cs = clouds.texture.contentSize;
 	cloudsSize = cpv(cs.width, cs.height);
-	[self add: clouds z:0];
+	[self addChild: clouds z:0];
 
 	CGSize s = [[Director sharedDirector] winSize];
 	screenSize = cpv(s.width, s.height);
@@ -48,14 +48,14 @@ float randfloat() {
 	for (int n=0; n<NUM_GROSSINIS; n++) {
 		cpVect pos = cpv((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
 		grossini[n] = [self addNewSpritePosition:pos scale:0.15];
-		[grossini[n] do:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
+		[grossini[n] runAction:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
 	}
 		
 //	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
 	NSString *info = @"Grossini's iPhone";
 	
 	label = [Label labelWithString:info fontName:@"Arial" fontSize:16];
-	[self add: label];
+	[self addChild: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	return self;
 }
@@ -63,7 +63,7 @@ float randfloat() {
 -(Sprite *) addNewSpritePosition:(cpVect)pos scale:(double)scle
 {
 	Sprite *g = [[Sprite spriteWithFile:@"grossini.png"] retain];
-	[clouds add: g];
+	[clouds addChild: g];
 	[g setScale: (float) scle];
 	[g setPosition: pos ];
 	return g;
@@ -163,7 +163,7 @@ float randfloat() {
 	
 	Scene *scene = [Scene node];
 	AccelViewportDemo *layer = [AccelViewportDemo node];
-	[scene add: layer];
+	[scene addChild: layer];
 	
 	[window makeKeyAndVisible];
 			 

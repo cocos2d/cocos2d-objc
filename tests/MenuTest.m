@@ -44,7 +44,7 @@ enum {
 	disabledItem = [item3 retain];
 	disabledItem.isEnabled = NO;
 
-	[self add: menu];
+	[self addChild: menu];
 
 	return self;
 }
@@ -107,7 +107,7 @@ enum {
 
 	menu.opacity = 128;
 
-	[self add: menu];
+	[self addChild: menu];
 
 	return self;
 }
@@ -120,8 +120,8 @@ enum {
 -(void) menuCallbackBack: (id) sender
 {
 	// One way to obtain the menu is:
-	//    [self  getByTag:xxx]
-	id menu = [self getByTag:kTagMenu];
+	//    [self  getChildByTag:xxx]
+	id menu = [self getChildByTag:kTagMenu];
 	[menu setOpacity: 128];
 
 	[(MultiplexLayer*)parent switchTo:0];
@@ -139,7 +139,7 @@ enum {
 }
 -(void) menuCallbackV: (id) sender
 {
-	id menu = [self getByTag:kTagMenu];
+	id menu = [self getChildByTag:kTagMenu];
 	[menu alignItemsVertically];
 
 // XXX: this method is deprecated and will be removed in v0.7
@@ -174,12 +174,12 @@ enum {
 	item2.position = cpv(100,200);
 	
 	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
-	[item2 do: [RepeatForever actionWithAction:
+	[item2 runAction: [RepeatForever actionWithAction:
 				 [Sequence actions: jump, [jump reverse], nil]
 								   ]
 	 ];
 	
-	[self add: menu];
+	[self addChild: menu];
 	
 	
 	return self;
@@ -231,7 +231,7 @@ enum {
 	Scene *scene = [Scene node];
 
 	MultiplexLayer *layer = [MultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], nil];
-	[scene add: layer z:0];
+	[scene addChild: layer z:0];
 
 	[window makeKeyAndVisible];
 	[[Director sharedDirector] runWithScene: scene];

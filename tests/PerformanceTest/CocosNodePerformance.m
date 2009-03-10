@@ -16,12 +16,12 @@
 	id rot = [RotateBy actionWithDuration:period angle: 360.0f * CCRANDOM_0_1()];
 	id rot_back = [rot reverse];
 	Action *permanentRotation = [RepeatForever actionWithAction:[Sequence actions: rot, rot_back, nil]];
-	[self do:permanentRotation];
+	[self runAction:permanentRotation];
 	
 	float growDuration = 0.5f + (random() % 1000) / 500.0f;
 	IntervalAction *grow = [ScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
 	Action *permanentScaleLoop = [RepeatForever actionWithAction:[Sequence actionOne:grow two:[grow reverse]]];
-	[self do:permanentScaleLoop];
+	[self runAction:permanentScaleLoop];
 }
 
 - (void)performanceActions20
@@ -36,12 +36,12 @@
 	id rot = [RotateBy actionWithDuration:period angle: 360.0f * CCRANDOM_0_1()];
 	id rot_back = [rot reverse];
 	Action *permanentRotation = [RepeatForever actionWithAction:[Sequence actions: rot, rot_back, nil]];
-	[self do:permanentRotation];
+	[self runAction:permanentRotation];
 	
 	float growDuration = 0.5f + (random() % 1000) / 500.0f;
 	IntervalAction *grow = [ScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
 	Action *permanentScaleLoop = [RepeatForever actionWithAction:[Sequence actionOne:grow two:[grow reverse]]];
-	[self do:permanentScaleLoop];
+	[self runAction:permanentScaleLoop];
 }
 
 - (void)performanceRotationScale

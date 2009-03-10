@@ -338,32 +338,32 @@ Class restartAction()
 	y = size.height;
 	
 	CocosNode *node = [CocosNode node];
-	[self add: node z:0 tag:kTagBackground];
+	[self addChild: node z:0 tag:kTagBackground];
 	
 	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
-	[node add: bg z:0];
+	[node addChild: bg z:0];
 	bg.transformAnchor = cpvzero;
 	bg.position = cpv(-100,-100);
 	
 	Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	[node add:grossini z:1];
+	[node addChild:grossini z:1];
 	grossini.position = cpv(x/3,y/2);
 	id sc = [ScaleBy actionWithDuration:2 scale:5];
 	id sc_back = [sc reverse];
-	[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
+	[grossini runAction: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 
 	Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	[node add:tamara z:1];
+	[node addChild:tamara z:1];
 	tamara.position = cpv(2*x/3,y/2);
 	id sc2 = [ScaleBy actionWithDuration:2 scale:5];
 	id sc2_back = [sc2 reverse];
-	[tamara do: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
+	[tamara runAction: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
 	
 	
 	Label* label = [Label labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
 	
 	[label setPosition: cpv(x/2,y-80)];
-	[self add: label];
+	[self addChild: label];
 	label.tag = kTagLabel;
 	
 	// menu
@@ -375,7 +375,7 @@ Class restartAction()
 	item1.position = cpv(480/2-100,30);
 	item2.position = cpv(480/2, 30);
 	item3.position = cpv(480/2+100,30);
-	[self add: menu z:1];
+	[self addChild: menu z:1];
 	
 	[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
 	
@@ -387,7 +387,7 @@ Class restartAction()
 -(void)checkAnim:(ccTime)t
 {
 //	Scene *s2 = [Director sharedDirector].runningScene;
-	CocosNode *s2 = [self getByTag:kTagBackground];
+	CocosNode *s2 = [self getChildByTag:kTagBackground];
 	if ( [s2 numberOfRunningActions] == 0 && s2.grid != nil )
 		s2.grid = nil;
 }
@@ -395,34 +395,34 @@ Class restartAction()
 -(void) nextCallback:(id) sender
 {
 //	Scene *s = [Director sharedDirector].runningScene;
-	id s2 = [self getByTag:kTagBackground];
+	id s2 = [self getChildByTag:kTagBackground];
 	[s2 stopAllActions];
 	Class effect = nextAction();
-	Label *label = (Label *)[self getByTag:kTagLabel];
+	Label *label = (Label *)[self getChildByTag:kTagLabel];
 	[label setString:effectsList[actionIdx]];
-	[s2 do:[effect actionWithDuration:3]];
+	[s2 runAction:[effect actionWithDuration:3]];
 }	
 
 -(void) backCallback:(id) sender
 {
 //	Scene *s = [Director sharedDirector].runningScene;
-	id s2 = [self getByTag:kTagBackground];
+	id s2 = [self getChildByTag:kTagBackground];
 	[s2 stopAllActions];
 	Class effect = backAction();
-	Label *label = (Label *)[self getByTag:kTagLabel];
+	Label *label = (Label *)[self getChildByTag:kTagLabel];
 	[label setString:effectsList[actionIdx]];
-	[s2 do:[effect actionWithDuration:3]];
+	[s2 runAction:[effect actionWithDuration:3]];
 }	
 
 -(void) restartCallback:(id) sender
 {
 //	Scene *s = [Director sharedDirector].runningScene;
-	id s2 = [self getByTag:kTagBackground];
+	id s2 = [self getChildByTag:kTagBackground];
 	[s2 stopAllActions];
 	Class effect = restartAction();
-	Label *label = (Label *)[self getByTag:kTagLabel];
+	Label *label = (Label *)[self getChildByTag:kTagLabel];
 	[label setString:effectsList[actionIdx]];
-	[s2 do:[effect actionWithDuration:3]];
+	[s2 runAction:[effect actionWithDuration:3]];
 }	
 @end
 
@@ -451,7 +451,7 @@ Class restartAction()
 	[window makeKeyAndVisible];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [TextLayer node] z:0 tag:kTagTextLayer];
+	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];
 	
 	[[Director sharedDirector] runWithScene: scene];
 }

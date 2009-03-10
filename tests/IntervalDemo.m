@@ -19,7 +19,7 @@
 
 	sun.totalParticles = 130;
 	sun.life = 0.6f;
-	[self add:sun];
+	[self addChild:sun];
 
 	// timers
 	label1 = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
@@ -34,9 +34,9 @@
 	label2.position = cpv(240,160);
 	label3.position = cpv(400,160);
 	
-	[self add:label1];
-	[self add:label2];
-	[self add:label3];
+	[self addChild:label1];
+	[self addChild:label2];
+	[self addChild:label3];
 	
 	// Sprite
 	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
@@ -44,8 +44,8 @@
 	
 	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
 	
-	[self add:sprite];
-	[sprite do: [RepeatForever actionWithAction:
+	[self addChild:sprite];
+	[sprite runAction: [RepeatForever actionWithAction:
 					[Sequence actions: jump, [jump reverse], nil]
 						]
 	 ];
@@ -55,7 +55,7 @@
 	Menu *menu = [Menu menuWithItems: item1, nil];
 	menu.position = cpv(480/2, 270);
 
-	[self add: menu];
+	[self addChild: menu];
 		
 	return self;
 }
@@ -134,7 +134,7 @@
 
 	Scene *scene = [Scene node];
 
-	[scene add: [Layer1 node] z:0];
+	[scene addChild: [Layer1 node] z:0];
 
 	[window makeKeyAndVisible];	
 

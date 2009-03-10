@@ -54,7 +54,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 		
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label z:1];
+	[self addChild: label z:1];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -67,7 +67,7 @@ Class restartAction()
 	item1.position = cpv( s.width/2 - 100,30);
 	item2.position = cpv( s.width/2, 30);
 	item3.position = cpv( s.width/2 + 100,30);
-	[self add: menu z:1];	
+	[self addChild: menu z:1];	
 
 	return self;
 }
@@ -80,21 +80,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -150,13 +150,13 @@ Class restartAction()
 	// NOW add the 3 layers to the 'void' node
 
 	// background image is moved at a ratio of 0.4x, 0.5y
-	[voidNode add:background z:-1 parallaxRatio:cpv(0.4f,0.5f)];
+	[voidNode addChild:background z:-1 parallaxRatio:cpv(0.4f,0.5f)];
 	
 	// tiles are moved at a ratio of 2.2x, 1.0y
-	[voidNode add:tilemap z:1 parallaxRatio:cpv(2.2f,1.0f)];
+	[voidNode addChild:tilemap z:1 parallaxRatio:cpv(2.2f,1.0f)];
 	
 	// top image is moved at a ratio of 3.0x, 2.5y
-	[voidNode add:cocosImage z:2 parallaxRatio:cpv(3.0f,2.5f)];
+	[voidNode addChild:cocosImage z:2 parallaxRatio:cpv(3.0f,2.5f)];
 	
 	
 	// now create some actions that will move the 'void' node
@@ -172,9 +172,9 @@ Class restartAction()
 			  goDown,
 			  goBack,
 			  nil];	
-	[voidNode do: [RepeatForever actionWithAction:seq ] ];
+	[voidNode runAction: [RepeatForever actionWithAction:seq ] ];
 	
-	[self add:voidNode];
+	[self addChild:voidNode];
 	
 	return self;
 	
@@ -213,7 +213,7 @@ Class restartAction()
 	
 	// the parent contains data. The parent moves at (1,1)
 	// while the child moves at the ratio of (0.4, 0.5)
-	[tilemap add:background z:-1 parallaxRatio:cpv(0.4f,0.5f)];
+	[tilemap addChild:background z:-1 parallaxRatio:cpv(0.4f,0.5f)];
 	
 	id goUp = [MoveBy actionWithDuration:2 position:cpv(-1000,-500)];
 	id goDown = [goUp reverse];
@@ -221,9 +221,9 @@ Class restartAction()
 			  goUp,
 			  goDown,
 			  nil];	
-	[tilemap do: [RepeatForever actionWithAction:seq ] ];
+	[tilemap runAction: [RepeatForever actionWithAction:seq ] ];
 	
-	[self add:tilemap];
+	[self addChild:tilemap];
 	
 	return self;
 	
@@ -261,7 +261,7 @@ Class restartAction()
 	[window makeKeyAndVisible];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene addChild: [nextAction() node]];
 			 
 	[[Director sharedDirector] runWithScene: scene];
 }

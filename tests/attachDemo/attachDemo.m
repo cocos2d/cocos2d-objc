@@ -41,15 +41,15 @@ enum {
 		Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
 		Label *label = [Label labelWithString:[NSString stringWithFormat:@"%dx%d",(int)s.width, (int)s.height] fontName:@"Marker Felt" fontSize:28];
 		
-		[self add:label];
-		[self add:grossini z:0 tag:kTagSprite];
+		[self addChild:label];
+		[self addChild:grossini z:0 tag:kTagSprite];
 		
 		grossini.position = cpv( s.width/2, s.height/2);
 		label.position = cpv( s.width/2, s.height-40);
 		
 		id sc = [ScaleBy actionWithDuration:2 scale:1.5f];
 		id sc_back = [sc reverse];
-		[grossini do: [RepeatForever actionWithAction:
+		[grossini runAction: [RepeatForever actionWithAction:
 					   [Sequence actions: sc, sc_back, nil]]];
 	}
 	return self;
@@ -67,12 +67,12 @@ enum {
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
 	
-	CocosNode *s = [self getByTag:kTagSprite];
+	CocosNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
-	[s do: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
+	[s runAction: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
-	float at = (float) RADIANS_TO_DEGREES( atanf( o/a) );
+	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
 	
 	if( a < 0 ) {
 		if(  o < 0 )
@@ -81,7 +81,7 @@ enum {
 			at = 180 - abs(at);	
 	}
 	
-	[s do: [RotateTo actionWithDuration:1 angle: at]];
+	[s runAction: [RotateTo actionWithDuration:1 angle: at]];
 	
 	return kEventHandled;
 }
@@ -117,7 +117,7 @@ enum {
 		
 		Scene *scene = [Scene node];
 		id node = [LayerExample node];
-		[scene add: node];
+		[scene addChild: node];
 		
 		[[Director sharedDirector] runWithScene:scene];
 		

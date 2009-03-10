@@ -17,7 +17,7 @@
 	Menu *menu = [Menu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
 	
-	[self add: menu];
+	[self addChild: menu];
 
 	return self;
 }
@@ -29,7 +29,7 @@
 
 -(void) onOptions: (id) sender
 {
-	Scene * scene = [[Scene node] add: [Layer2 node]];
+	Scene * scene = [[Scene node] addChild: [Layer2 node] z:0];
 	[[Director sharedDirector] pushScene: scene];
 }
 
@@ -56,7 +56,7 @@
 	Menu *menu = [Menu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
 	
-	[self add: menu];
+	[self addChild: menu];
 	
 	
 	return self;
@@ -74,7 +74,7 @@
 
 -(void) onFullscreen:(id) sender
 {
-	[[Director sharedDirector] replaceScene: [ [Scene node] add: [Layer3 node]] ];
+	[[Director sharedDirector] replaceScene: [ [Scene node] addChild: [Layer3 node] z:0] ];
 }
 @end
 
@@ -123,7 +123,7 @@
 	
 	Scene *scene = [Scene node];
 
-	[scene add: [Layer1 node] z:0];
+	[scene addChild: [Layer1 node] z:0];
 	
 	[window makeKeyAndVisible];
 
