@@ -79,6 +79,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
                 pactches for Actions
                 patches for Transitions
     * Steve Oldmeadow: patches for Texture2D
+	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
     * yarrington: patches for Director
 
 
