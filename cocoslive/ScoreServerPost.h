@@ -22,7 +22,7 @@
 #import "cocoslive.h"
 
 // Score Server protocol version
-#define SCORE_SERVER_PROTOCOL_VERSION @"1.0"
+#define SCORE_SERVER_PROTOCOL_VERSION @"1.1"
 
 // Server URL
 #ifdef USE_LOCAL_SERVER

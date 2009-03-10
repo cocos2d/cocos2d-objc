@@ -41,7 +41,7 @@ enum {
  - overriding init to initialize resources and schedule calbacks
  - create callbacks to handle the advancement of time
  - overriding draw to render the node    
-*/ 
+ */ 
 @interface CocosNode : NSObject {
 	
 	// rotation angle
@@ -58,13 +58,13 @@ enum {
 	
 	// position of the node
 	cpVect position;
-
+	
 	// parallax X factor
 	float parallaxRatioX;
 	
 	// parallax Y factor
 	float parallaxRatioY;
-
+	
 	// is visible
 	BOOL visible;
 	
@@ -76,18 +76,18 @@ enum {
 	
 	// z-order value
 	int zOrder;
-
+	
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
 	BOOL relativeTransformAnchor;
-
+	
 	// transformation anchor point
 	cpVect transformAnchor;
-		
+	
 	// array of children
 	NSMutableArray *children;
-		
+	
 	// is running
 	BOOL isRunning;
 	
@@ -99,6 +99,8 @@ enum {
 	
 	// actions
 	NSMutableArray *actions;
+	
+	// (vali) make the following 3 @private?
 	NSMutableArray *actionsToRemove;
 	NSMutableArray *actionsToAdd;
 	
@@ -156,54 +158,116 @@ enum {
 -(void) onExit;
 
 
-// composition
+// composition: ADD
 
 /** Adds a child to the container with z-order as 0 
  @return returns self
  */
+-(id) addChild: (CocosNode*)node;
+
+/** Adds a child to the container with a z-order
+ @return returns self
+ */
+-(id) addChild: (CocosNode*)node z:(int)z;
+
+/** Adds a child to the container with z order and tag
+ @deprecated Will be removed in v0.8. Used addChild:z:tag instead
+ @return returns self
+ */
+-(id) addChild: (CocosNode*)node z:(int)z tag:(int)tag;
+
+/** Adds a child to the container with a z-order and a parallax ratio
+ @return returns self
+ */
+-(id) addChild: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
+
+// composition: ADD (deprecated)
+
+/** Adds a child to the container with z-order as 0 
+ @deprecated Will be removed in v0.8. Used addChild instead
+ @return returns self
+ */
 -(id) add: (CocosNode*)node;
 /** Adds a child to the container with a z-order
+ @deprecated Will be removed in v0.8. Used addChild:z instead
  @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z;
 /** Adds a child to the container with z order and tag
+ @deprecated Will be removed in v0.8. Used addChild:z:tag instead
  @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z tag:(int)tag;
 /** Adds a child to the container with a z-order and a parallax ratio
+ @deprecated Will be removed in v0.8. Used addChild:z:tag:paralalxRatio instead
  @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
+
+// composition: REMOVE
+
+/** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+ */
+-(void) removeChild: (CocosNode*)node cleanup:(BOOL)cleanup;
+
+/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+ */
+-(void) removeChildByTag:(int) tag cleanup:(BOOL)cleanup;
+
+/** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
+ */
+-(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
+
+// composition: REMOVE (deprecated)
+
 /** Removes a child from the container
- * @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
+ @deprecated Will be removed in v0.8. Used removeChild:cleanup:NO instead
+ @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
  */
 -(void) remove: (CocosNode*)node;
 /** Removes a child from the container given its tag
- * @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
+ @deprecated Will be removed in v0.8. Used removeChildByTag:cleanup:NO instead
+ @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
  */
 -(void) removeByTag:(int) tag;
 /** Removes all children from the container.
- * @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
+ @deprecated Will be removed in v0.8. Used removeAllChildrenWithCleanup:NO instead
+ @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
  */
 -(void) removeAll;
 /** Removes a child from the container by reference and stops all running actions and scheduled functions
+ @deprecated Will be removed in v0.8. Used removeChild:cleanup:YES instead
  */
 -(void) removeAndStop: (CocosNode*)node;
 /** Removes a child from the container by tag and stops all running actions and scheduled functions
+ @deprecated Will be removed in v0.8. Used removeChildByTag:cleanup:YES instead
  */
 -(void) removeAndStopByTag:(int) tag;
 /** Removes all children from the container.
- * It stops all running actions from the removed objects and unschedules all scheduled selectors
+ It stops all running actions from the removed objects and unschedules all scheduled selectors
+ @deprecated Will be removed in v0.8. Used removeAllChildrenWithCleanup:YES instead
  */
 -(void) removeAndStopAll;
+
+// composition: GET
 /** Gets a child from the container given its tag
- * @return returns a CocosNode object
+ @return returns a CocosNode object
+ */
+-(CocosNode*) getChildByTag:(int) tag;
+
+// composition: GET (deprecated)
+
+/** Gets a child from the container given its tag
+ @deprecated Will be removed in v0.8. Used getChildByTag instead
+ @return returns a CocosNode object
  */
 -(CocosNode*) getByTag:(int) tag;
+
 /** Returns the absolute position of the CocosNode
  * @return a cpVect value with the absolute position of the noe
  */
 -(cpVect) absolutePosition;
+
 /** Reorders a child according to a new z value.
  * The child MUST be already added.
  */
@@ -225,7 +289,9 @@ enum {
 
 // actions
 
-/** Executes an action, and returns the action that is executed */
+/** Executes an action, and returns the action that is executed
+ @deprecated Will be removed in v0.8. Used runAction instead
+ */
 -(Action*) do: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
