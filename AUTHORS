@@ -36,6 +36,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 								  TurnOffTiles, WavesTiles3D, JumpTiles3D, SplitRows, SplitCols
 		Added Composite actions: AccelAmplitude, AccelDeccelAmplitude, DeccelAmplitude
 	* Favo Yang: patch for unschedule timer in CocosNode
+	* Florin Dumitrescu: added "update score" in cocosLive
 	* Fradj Johann: patches for CocosNode
 	                patches for Layer
 					patches for MultiplexLayer
