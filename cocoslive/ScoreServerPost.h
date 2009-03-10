@@ -27,8 +27,10 @@
 // Server URL
 #ifdef USE_LOCAL_SERVER
 #define SCORE_SERVER_SEND_URL @"http://localhost:8080/api/post-score"
+#define SCORE_SERVER_UPDATE_URL @"http://localhost:8080/api/update-score"
 #else
 #define SCORE_SERVER_SEND_URL @"http://www.cocoslive.net/api/post-score"
+#define SCORE_SERVER_UPDATE_URL @"http://www.cocoslive.net/api/update-score"
 #endif
 
 /// Type of errors from the Post Score request
@@ -78,8 +80,14 @@ typedef enum {
 /** initializes a cocos server with a game name and a game key */
 -(id) initWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id)delegate;
 
-/** send the scores to the server */
+/** send the scores to the server. A new entre will be created on the server */
 -(BOOL) sendScore: (NSDictionary*) dict;
+
+/** 
+ * Sends a score dictionary to the server for updating an existing entry by playername and device id, or creating a new one.
+ * The passed dictionary must contain a cc_playername key, otherwise it will raise and exception.
+ */
+-(BOOL) updateScore: (NSDictionary*) dict;
 
 @end
 

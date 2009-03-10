@@ -30,6 +30,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 -(NSString*) getHashForData;
 -(NSData*) getBodyValues;
 -(NSString*) encodeData:(NSString*)data;
+-(NSMutableURLRequest *) scoreServerRequestWithURLString:(NSString *)url;
+-(BOOL) submitScore:(NSDictionary*)dict forUpdate:(BOOL)isUpdate;
 @end
 
 
@@ -69,7 +71,21 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 
 #pragma mark ScoreServer send scores
--(BOOL) sendScore: (NSDictionary*) dict
+-(BOOL) sendScore: (NSDictionary*) dict 
+{
+    return [self submitScore:dict forUpdate:NO];
+}
+
+-(BOOL) updateScore: (NSDictionary*) dict
+{	
+    if (![dict objectForKey:@"cc_playername"]) {
+		// fail. cc_playername + cc_device_id are needed to update an score
+		[NSException raise:@"cocosLive:updateScore" format:@"cc_playername not found"]; 
+	}
+    return [self submitScore:dict forUpdate:YES];
+}
+
+-(BOOL) submitScore: (NSDictionary*)dict forUpdate:(BOOL)isUpdate
 {	
     [receivedData setLength:0];
 	
@@ -77,31 +93,25 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	postStatus = kPostStatusOK;
 		
 	// create the request
-	NSMutableURLRequest *post=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: SCORE_SERVER_SEND_URL]
-													cachePolicy:NSURLRequestUseProtocolCachePolicy
-													timeoutInterval:10.0];
-	
-	[post setHTTPMethod: @"POST"];
-	[post setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	NSMutableURLRequest *post = [self scoreServerRequestWithURLString:(isUpdate ? SCORE_SERVER_UPDATE_URL : SCORE_SERVER_SEND_URL)];
 	
 	CC_MD5_Init( &md5Ctx);
 
-	// hash SHALL be calculated in certain order
+    // hash SHALL be calculated in certain order
 	NSArray *keys = [dict allKeys];
 	int reverseSort = NO;
 	NSArray *sortedKeys = [keys sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
 	for( id key in sortedKeys )
-		[self calculateHashAndAddValue:[dict objectForKey:key] key:key];
+		[self calculateHashAndAddValue:[dict objectForKey:key] key:key];    
 
-	// device id is hashed to prevent spoofing this same score from different devices
+    // device id is hashed to prevent spoofing this same score from different devices
 	// one way to prevent a replay attack is to send cc_id & cc_time and use it as primary keys
-
-	
+    
 	[self addValue:[[UIDevice currentDevice] uniqueIdentifier] key:@"cc_device_id"];
 	[self addValue:gameName key:@"cc_gamename"];
 	[self addValue:[self getHashForData] key:@"cc_hash"];
 	[self addValue:SCORE_SERVER_PROTOCOL_VERSION key:@"cc_prot_ver"];
-
+    
 	[post setHTTPBody: [self getBodyValues] ];
 	
 	// create the connection with the request
@@ -115,6 +125,16 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	// XXX: It will be released by the delegate
 
 	return YES;
+}
+
+-(NSMutableURLRequest *) scoreServerRequestWithURLString:(NSString *)url {
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: url]
+                                                      cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                  timeoutInterval:10.0];
+	
+	[request setHTTPMethod: @"POST"];
+	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    return request;
 }
 
 -(void) calculateHashAndAddValue:(id) value key:(NSString*) key
