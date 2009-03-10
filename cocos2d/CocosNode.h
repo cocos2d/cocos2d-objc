@@ -307,6 +307,9 @@ enum {
 
 // timers
 
+/** check whether a selector is scheduled. */
+-(BOOL) isScheduled: (SEL) selector;
+
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
@@ -336,6 +339,24 @@ enum {
 /// returns the size in pixels of the un-tranformted texture.
 -(CGSize) contentSize;
 @end
+
+/// Size CocosNode protocol
+@protocol CocosNodeRGB
+
+/** set the color of the node.
+ * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
+ */
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
+
+/// The red component of the node's color.
+-(GLubyte) r;
+/// The green component of the node's color.
+-(GLubyte) g;
+/// The blue component of the node's color.
+-(GLubyte) b;
+
+@end
+
 
 
 
