@@ -69,8 +69,8 @@ enum {
 -(void) addScenes
 {
 	// add both scenes
-	[self add: inScene z:1];
-	[self add: outScene z:0];
+	[self addChild: inScene z:1];
+	[self addChild: outScene z:0];
 }
 
 -(void) step: (ccTime) dt {
@@ -82,8 +82,8 @@ enum {
 	// enable events while transitions
 	[[Director sharedDirector] setEventsEnabled: YES];
 	
-	[self remove: inScene];
-	[self remove: outScene];
+	[self removeChild:inScene cleanup:NO];
+	[self removeChild:outScene cleanup:NO];
 	
 	inScene = nil;
 	outScene = nil;
@@ -165,8 +165,8 @@ enum {
 							nil];
 	
 	
-	[outScene do: rotozoom];
-	[inScene do: [Sequence actions:
+	[outScene runAction: rotozoom];
+	[inScene runAction: [Sequence actions:
 					[rotozoom reverse],
 					[CallFunc actionWithTarget:self selector:@selector(finish)],
 				  nil]];
@@ -197,8 +197,8 @@ enum {
 	
 	IntervalAction *delay = [DelayTime actionWithDuration:duration/2];
 	
-	[outScene do: jumpZoomOut];
-	[inScene do: [Sequence actions: delay,
+	[outScene runAction: jumpZoomOut];
+	[inScene runAction: [Sequence actions: delay,
 								jumpZoomIn,
 								[CallFunc actionWithTarget:self selector:@selector(finish)],
 								nil] ];
@@ -217,7 +217,7 @@ enum {
 	
 	IntervalAction *a = [self action];
 
-	[inScene do: [Sequence actions:
+	[inScene runAction: [Sequence actions:
 		[EaseOut actionWithAction:a rate:2.0f],
 		[CallFunc actionWithTarget:self selector:@selector(finish)],
 		nil] ];
@@ -281,8 +281,8 @@ enum {
 	IntervalAction *in = [self action];
 	IntervalAction *out = [in copy];
 
-	[inScene do: [EaseOut actionWithAction:in rate:2.0f]];
-	[outScene do: [Sequence actions:
+	[inScene runAction: [EaseOut actionWithAction:in rate:2.0f]];
+	[outScene runAction: [Sequence actions:
 				   [EaseOut actionWithAction:out rate:2.0f],
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
 				   nil] ];
@@ -376,8 +376,8 @@ enum {
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration scale:0.01f];
 	IntervalAction *scaleIn = [ScaleTo actionWithDuration:duration scale:1.0f];
 
-	[inScene do: [EaseOut actionWithAction:scaleIn rate:2.0f]];
-	[outScene do: [Sequence actions:
+	[inScene runAction: [EaseOut actionWithAction:scaleIn rate:2.0f]];
+	[outScene runAction: [Sequence actions:
 					[EaseOut actionWithAction:scaleOut rate:2.0f],
 					[CallFunc actionWithTarget:self selector:@selector(finish)],
 					nil] ];
@@ -421,8 +421,8 @@ enum {
 			[DelayTime actionWithDuration:duration/2],							
 			nil ];
 	
-	[inScene do: inA];
-	[outScene do: outA];
+	[inScene runAction: inA];
+	[outScene runAction: outA];
 	
 }
 @end
@@ -464,8 +464,8 @@ enum {
 			[DelayTime actionWithDuration:duration/2],							
 			nil ];
 	
-	[inScene do: inA];
-	[outScene do: outA];
+	[inScene runAction: inA];
+	[outScene runAction: outA];
 	
 }
 @end
@@ -507,8 +507,8 @@ enum {
 				[DelayTime actionWithDuration:duration/2],							
 				nil ];
 
-	[inScene do: inA];
-	[outScene do: outA];
+	[inScene runAction: inA];
+	[outScene runAction: outA];
 }
 @end
 
@@ -556,8 +556,8 @@ enum {
 			nil ];
 	
 	inScene.scale = 0.5f;
-	[inScene do: inA];
-	[outScene do: outA];
+	[inScene runAction: inA];
+	[outScene runAction: outA];
 }
 @end
 
@@ -606,8 +606,8 @@ enum {
 				nil ];
 
 	inScene.scale = 0.5f;
-	[inScene do: inA];
-	[outScene do: outA];
+	[inScene runAction: inA];
+	[outScene runAction: outA];
 }
 @end
 
@@ -657,8 +657,8 @@ enum {
 			nil ];
 	
 	inScene.scale = 0.5f;
-	[inScene do: inA];
-	[outScene do: outA];
+	[inScene runAction: inA];
+	[outScene runAction: outA];
 }
 @end
 
@@ -693,10 +693,10 @@ enum {
 	ColorLayer *l = [ColorLayer layerWithColor:RGBA];
 	[inScene setVisible: NO];
 	
-	[self add: l z:2 tag:kSceneFade];
+	[self addChild: l z:2 tag:kSceneFade];
 	
 	
-	CocosNode *f = [self getByTag:kSceneFade];
+	CocosNode *f = [self getChildByTag:kSceneFade];
 
 	IntervalAction *a = [Sequence actions:
 							[FadeIn actionWithDuration:duration/2],
@@ -704,13 +704,13 @@ enum {
 							[FadeOut actionWithDuration:duration/2],
 							[CallFunc actionWithTarget:self selector:@selector(finish)],
 						 nil ];
-	[f do: a];
+	[f runAction: a];
 }
 
 -(void) onExit
 {
 	[super onExit];
-	[self removeByTag:kSceneFade];
+	[self removeChildByTag:kSceneFade cleanup:NO];
 }
 @end
 
@@ -723,8 +723,8 @@ enum {
 -(void) addScenes
 {
 	// add both scenes
-	[self add: inScene z:0];
-	[self add: outScene z:1];
+	[self addChild: inScene z:0];
+	[self addChild: outScene z:1];
 }
 
 -(void) onEnter
@@ -736,7 +736,7 @@ enum {
 	int y = 12;
 	
 	id toff = [TurnOffTiles actionWithSize: ccg(x,y) duration:duration];
-	[outScene do: [Sequence actions: toff,
+	[outScene runAction: [Sequence actions: toff,
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
 				   [StopGrid action],
 				   nil]
@@ -765,7 +765,7 @@ enum {
 				[split reverse],
 				nil
 			  ];
-	[self do: [Sequence actions:
+	[self runAction: [Sequence actions:
 			   [EaseInOut actionWithAction:seq rate:3.0f],
 			   [CallFunc actionWithTarget:self selector:@selector(finish)],
 			   [StopGrid action],
@@ -800,8 +800,8 @@ enum {
 -(void) addScenes
 {
 	// add both scenes
-	[self add: inScene z:0];
-	[self add: outScene z:1];
+	[self addChild: inScene z:0];
+	[self addChild: outScene z:1];
 }
 
 -(void) onEnter
@@ -815,7 +815,7 @@ enum {
 	
 	id action  = [self actionWithSize:ccg(x,y)];
 
-	[outScene do: [Sequence actions:
+	[outScene runAction: [Sequence actions:
 					action,
 				    [CallFunc actionWithTarget:self selector:@selector(finish)],
 				    [StopGrid action],

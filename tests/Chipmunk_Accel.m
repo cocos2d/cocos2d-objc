@@ -18,7 +18,7 @@ eachShape(void *ptr, void* unused)
 	if( sprite ) {
 		cpBody *body = shape->body;
 		[sprite setPosition: cpv( body->p.x, body->p.y)];
-		[sprite setRotation: (float) RADIANS_TO_DEGREES( -body->a )];
+		[sprite setRotation: (float) CC_RADIANS_TO_DEGREES( -body->a )];
 	}
 }
 
@@ -26,7 +26,7 @@ eachShape(void *ptr, void* unused)
 -(void) addNewSpriteX: (float)x y:(float)y
 {
 	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
-	[self add: sprite];
+	[self addChild: sprite];
 	
 	sprite.position = cpv(x,y);
 	
@@ -177,7 +177,7 @@ eachShape(void *ptr, void* unused)
 		
 	Scene *scene = [Scene node];
 
-	[scene add: [Layer1 node] z:0];
+	[scene addChild: [Layer1 node] z:0];
 
 	[window makeKeyAndVisible];
 

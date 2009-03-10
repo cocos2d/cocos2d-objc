@@ -291,7 +291,7 @@ void drawCollisions(void *ptr, void *data)
 	
 	MainLayer * mainLayer =[MainLayer node];
 	
-	[scene add: mainLayer];
+	[scene addChild: mainLayer];
 	
 	[window makeKeyAndVisible];
 

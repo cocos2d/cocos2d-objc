@@ -67,11 +67,11 @@
 	
 	int z=0;
 	
-	[self add: item z:z];
+	[self addChild: item z:z];
 	MenuItem *i = va_arg(args, MenuItem*);
 	while(i) {
 		z++;
-		[self add: i z:z];
+		[self addChild: i z:z];
 		i = va_arg(args, MenuItem*);
 	}
 //	[self alignItemsVertically];

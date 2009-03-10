@@ -31,7 +31,7 @@ enum {
 {
 	[super onEnter];
 	
-	id target = [self getByTag:kTagBackground];
+	id target = [self getChildByTag:kTagBackground];
 	
 	// To reuse a grid the grid size and the grid type must be the same.
 	// in this case:
@@ -46,8 +46,8 @@ enum {
 	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 	id orbit_back = [orbit reverse];
 
-	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
-	[target do: [Sequence actions: lens, delay, reuse, waves, nil]];
+	[target runAction: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
+	[target runAction: [Sequence actions: lens, delay, reuse, waves, nil]];
 }
 -(NSString*) title
 {
@@ -64,7 +64,7 @@ enum {
 {
 	[super onEnter];
 	
-	id target = [self getByTag:kTagBackground];
+	id target = [self getChildByTag:kTagBackground];
 	
 	// To reuse a grid the grid size and the grid type must be the same.
 	// in this case:
@@ -87,8 +87,8 @@ enum {
 //	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 //	id orbit_back = [orbit reverse];
 //
-//	[target do: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
-	[target do: [Sequence actions: shaky, delay, reuse, shuffle, [[delay copy] autorelease], turnoff, turnon, nil]];
+//	[target runAction: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
+	[target runAction: [Sequence actions: shaky, delay, reuse, shuffle, [[delay copy] autorelease], turnoff, turnon, nil]];
 }
 -(NSString*) title
 {
@@ -105,16 +105,16 @@ enum {
 {
 	[super onEnter];
 	
-	id bg = [self getByTag:kTagBackground];
-	id target1 = [bg getByTag:kTagSprite1];
-	id target2 = [bg getByTag:kTagSprite2];
+	id bg = [self getChildByTag:kTagBackground];
+	id target1 = [bg getChildByTag:kTagSprite1];
+	id target2 = [bg getChildByTag:kTagSprite2];
 	
 	
 	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:ccg(15,10) duration:5];
 	id shaky = [Shaky3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
 	
-	[target1 do: [RepeatForever actionWithAction: waves]];
-	[target2 do: [RepeatForever actionWithAction: shaky]];
+	[target1 runAction: [RepeatForever actionWithAction: waves]];
+	[target2 runAction: [RepeatForever actionWithAction: shaky]];
 	
 }
 -(NSString*) title
@@ -173,30 +173,30 @@ Class restartAction()
 		y = size.height;
 		
 		Sprite *bg = [Sprite spriteWithFile:@"background.png"];
-		[self add: bg z:0 tag:kTagBackground];
+		[self addChild: bg z:0 tag:kTagBackground];
 		bg.transformAnchor = cpvzero;
 //		bg.position = cpv(x/2,y/2);
 		
 		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-		[bg add:grossini z:1 tag:kTagSprite1];
+		[bg addChild:grossini z:1 tag:kTagSprite1];
 		grossini.position = cpv(x/3.0f,200);
 		id sc = [ScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
 	
-		[grossini do: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
+		[grossini runAction: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 
 		Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-		[bg add:tamara z:1 tag:kTagSprite2];
+		[bg addChild:tamara z:1 tag:kTagSprite2];
 		tamara.position = cpv(2*x/3.0f,200);
 		id sc2 = [ScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];
-		[tamara do: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
+		[tamara runAction: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
 		
 		
 		Label* label = [Label labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
 		
 		[label setPosition: cpv(x/2,y-80)];
-		[self add: label];
+		[self addChild: label];
 		label.tag = kTagLabel;
 		
 		// menu
@@ -208,7 +208,7 @@ Class restartAction()
 		item1.position = cpv(480/2-100,30);
 		item2.position = cpv(480/2, 30);
 		item3.position = cpv(480/2+100,30);
-		[self add: menu z:1];
+		[self addChild: menu z:1];
 
 	}
 	
@@ -223,21 +223,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -281,7 +281,7 @@ Class restartAction()
 	[window makeKeyAndVisible];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];	
+	[scene addChild: [nextAction() node]];	
 	
 	[[Director sharedDirector] runWithScene: scene];
 }

@@ -349,8 +349,8 @@
 -(void) start
 {
 	[super start];
-	[target do: one];
-	[target do: two];
+	[target runAction: one];
+	[target runAction: two];
 }
 
 -(BOOL) isDone

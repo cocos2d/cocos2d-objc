@@ -202,12 +202,12 @@ Class restartTransition()
 
 		Sprite *bg1 = [Sprite spriteWithFile:@"background1.jpg"];
 		bg1.transformAnchor = cpvzero;
-		[self add:bg1 z:-1];
+		[self addChild:bg1 z:-1];
 
 		Label* label = [Label labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
 
 		[label setPosition: cpv(x/2,y/2)];	
-		[self add: label];
+		[self addChild: label];
 		
 		// menu
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -218,7 +218,7 @@ Class restartTransition()
 		item1.position = cpv(480/2-100,30);
 		item2.position = cpv(480/2, 30);
 		item3.position = cpv(480/2+100,30);
-		[self add: menu z:1];
+		[self addChild: menu z:1];
 	}
 	
 	return self;
@@ -227,21 +227,21 @@ Class restartTransition()
 -(void) nextCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
-	[s2 add: [TextLayer2 node]];
+	[s2 addChild: [TextLayer2 node]];
 	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) backCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
-	[s2 add: [TextLayer2 node]];
+	[s2 addChild: [TextLayer2 node]];
 	[[Director sharedDirector] replaceScene: [backTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
-	[s2 add: [TextLayer2 node]];
+	[s2 addChild: [TextLayer2 node]];
 	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 @end
@@ -261,12 +261,12 @@ Class restartTransition()
 		
 		Sprite *bg2 = [Sprite spriteWithFile:@"background2.jpg"];
 		bg2.transformAnchor = cpvzero;
-		[self add:bg2 z:-1];
+		[self addChild:bg2 z:-1];
 		
 		Label* label = [Label labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];
 		
 		[label setPosition: cpv(x/2,y/2)];
-		[self add: label];
+		[self addChild: label];
 		
 		// menu
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -277,7 +277,7 @@ Class restartTransition()
 		item1.position = cpv(480/2-100,30);
 		item2.position = cpv(480/2, 30);
 		item3.position = cpv(480/2+100,30);
-		[self add: menu z:1];
+		[self addChild: menu z:1];
 
 	}
 	
@@ -287,21 +287,21 @@ Class restartTransition()
 -(void) nextCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
-	[s2 add: [TextLayer node]];
+	[s2 addChild: [TextLayer node]];
 	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) backCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
-	[s2 add: [TextLayer node]];
+	[s2 addChild: [TextLayer node]];
 	[[Director sharedDirector] replaceScene: [backTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
-	[s2 add: [TextLayer node]];
+	[s2 addChild: [TextLayer node]];
 	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
 }	
 @end
@@ -329,7 +329,7 @@ Class restartTransition()
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [TextLayer node]];
+	[scene addChild: [TextLayer node]];
 	
 	[window makeKeyAndVisible];
 			 

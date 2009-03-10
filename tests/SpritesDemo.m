@@ -75,8 +75,8 @@ Class restartAction()
 	// Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
 	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	
-	[self add: grossini z:1];
-	[self add: tamara z:2];
+	[self addChild: grossini z:1];
+	[self addChild: tamara z:2];
 
 	CGSize s = [[Director sharedDirector] winSize];
 	
@@ -84,7 +84,7 @@ Class restartAction()
 	[tamara setPosition: cpv(60, 2*s.height/3)];
 	
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label];
+	[self addChild: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -96,7 +96,7 @@ Class restartAction()
 	item1.position = cpv(480/2-100,30);
 	item2.position = cpv(480/2, 30);
 	item3.position = cpv(480/2+100,30);
-	[self add: menu z:1];
+	[self addChild: menu z:1];
 
 	return self;
 }
@@ -112,21 +112,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -178,8 +178,8 @@ Class restartAction()
 	id actionTo = [MoveTo actionWithDuration: 2 position:cpv(s.width-40, s.height-40)];
 	id actionBy = [MoveBy actionWithDuration:2  position: cpv(80,80)];
 	
-	[tamara do: actionTo];
-	[grossini do:actionBy];
+	[tamara runAction: actionTo];
+	[grossini runAction:actionBy];
 }
 -(NSString *) title
 {
@@ -197,8 +197,8 @@ Class restartAction()
 	id actionTo = [RotateTo actionWithDuration: 2 angle:45];
 	id actionBy = [RotateBy actionWithDuration:2  angle: 360];
 	
-	[tamara do: actionTo];
-	[grossini do:actionBy];
+	[tamara runAction: actionTo];
+	[grossini runAction:actionBy];
 }
 -(NSString *) title
 {
@@ -219,8 +219,8 @@ Class restartAction()
 	
 //	grossini.transformAnchor = cpv( [grossini transformAnchor].x, 0 );
 	
-	[tamara do: actionTo];
-	[grossini do:actionBy];
+	[tamara runAction: actionTo];
+	[grossini runAction:actionBy];
 }
 -(NSString *) title
 {
@@ -237,8 +237,8 @@ Class restartAction()
 	id actionTo = [JumpTo actionWithDuration:2 position:cpv(300,300) height:50 jumps:4];
 	id actionBy = [JumpBy actionWithDuration:2 position:cpv(300,0) height:50 jumps:4];
 	
-	[tamara do: actionTo];
-	[grossini do:actionBy];
+	[tamara runAction: actionTo];
+	[grossini runAction:actionBy];
 }
 -(NSString *) title
 {
@@ -256,8 +256,8 @@ Class restartAction()
 	id action1 = [Blink actionWithDuration:2 blinks:10];
 	id action2 = [Blink actionWithDuration:2 blinks:5];
 	
-	[tamara do: action1];
-	[grossini do:action2];
+	[tamara runAction: action1];
+	[grossini runAction:action2];
 }
 -(NSString *) title
 {
@@ -276,8 +276,8 @@ Class restartAction()
 	id action1 = [FadeIn actionWithDuration:1.0f];
 	id action2 = [FadeOut actionWithDuration:1.0f];
 	
-	[tamara do: action1];
-	[grossini do:action2];
+	[tamara runAction: action1];
+	[grossini runAction:action2];
 }
 -(NSString *) title
 {
@@ -300,7 +300,7 @@ Class restartAction()
 	
 	id action = [Animate actionWithAnimation: animation];
 	
-	[grossini do:action];
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -321,7 +321,7 @@ Class restartAction()
 				 [RotateBy actionWithDuration: 2 angle: 540],
 				 nil];
 	
-	[grossini do:action];
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -341,7 +341,7 @@ Class restartAction()
 				 [RotateBy actionWithDuration: 2 angle: 720],
 				 nil];
 	
-	[grossini do:action];
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -359,7 +359,7 @@ Class restartAction()
 	id jump = [JumpBy actionWithDuration:2 position:cpv(300,0) height:50 jumps:4];
 	id action = [Sequence actions: jump, [jump reverse], nil];
 	
-	[grossini do:action];
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -377,7 +377,7 @@ Class restartAction()
 	id move = [MoveBy actionWithDuration:1 position:cpv(150,0)];
 	id action = [Sequence actions: move, [DelayTime actionWithDuration:2], move, nil];
 	
-	[grossini do:action];
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -397,7 +397,7 @@ Class restartAction()
 	id seq = [Sequence actions: move1, move2, [move1 reverse], nil];
 	id action = [Sequence actions: seq, [seq reverse], nil];
 	
-	[grossini do:action];
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -418,8 +418,8 @@ Class restartAction()
 						[Sequence actions: [[a1 copy] autorelease], [a1 reverse], nil]
 					];
 	
-	[grossini do:action1];
-	[tamara do:action2];
+	[grossini runAction:action1];
+	[tamara runAction:action2];
 }
 -(NSString *) title
 {
@@ -438,7 +438,7 @@ Class restartAction()
 				 [MoveBy actionWithDuration:2 position:cpv(200,0)],
 				 [CallFunc actionWithTarget:self selector:@selector(callback)],
 				nil];
-	[grossini do:action];
+	[grossini runAction:action];
 }
 
 -(void) callback
@@ -472,8 +472,8 @@ Class restartAction()
 				  nil ];
 	
 	
-	[grossini do:action1];
-	[tamara do:action2];
+	[grossini runAction:action1];
+	[tamara runAction:action2];
 }
 
 
@@ -513,7 +513,7 @@ Class restartAction()
 	[window makeKeyAndVisible];
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene addChild: [nextAction() node]];
 	
 	[[Director sharedDirector] runWithScene: scene];
 		

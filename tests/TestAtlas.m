@@ -62,7 +62,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 		
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label z:1];
+	[self addChild: label z:1];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -75,7 +75,7 @@ Class restartAction()
 	item1.position = cpv( s.width/2 - 100,30);
 	item2.position = cpv( s.width/2, 30);
 	item3.position = cpv( s.width/2 + 100,30);
-	[self add: menu z:1];	
+	[self addChild: menu z:1];	
 
 	return self;
 }
@@ -88,21 +88,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -181,7 +181,7 @@ Class restartAction()
 	
 	label = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	
-	[self add:label];
+	[self addChild:label];
 	[label retain];
 
 	label.position = cpv(10,100);
@@ -229,7 +229,7 @@ Class restartAction()
 		// NEW since v0.7
 		[tilemap releaseMap];
 		
-		[self add:tilemap z:0 tag:kTagTileMap];
+		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
 		CGSize size = tilemap.contentSize;
 		tilemap.transformAnchor = cpv(0, size.height/2);
@@ -245,7 +245,7 @@ Class restartAction()
 								scaleBack,
 								nil];
 		
-		[tilemap do:seq];
+		[tilemap runAction:seq];
 	}
 	
 	return self;
@@ -278,7 +278,7 @@ Class restartAction()
 		// And if you are going to use, it you can access the data with:
 		[self schedule:@selector(updateMap:) interval:0.2f];
 		
-		[self add:tilemap z:0 tag:kTagTileMap];
+		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
 		tilemap.transformAnchor = cpv(0, 0);
 		tilemap.position = cpv(-20,-200);
@@ -292,7 +292,7 @@ Class restartAction()
 	//   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
 	//   The value 0 not rendered so don't assign or change a tile with value 0
 
-	TileMapAtlas *tilemap = (TileMapAtlas*) [self getByTag:kTagTileMap];
+	TileMapAtlas *tilemap = (TileMapAtlas*) [self getChildByTag:kTagTileMap];
 	
 	//
 	// For example you can iterate over all the tiles
@@ -336,7 +336,7 @@ Class restartAction()
 		isTouchEnabled = YES;
 
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self add:mgr z:0 tag:kTagSpriteManager];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		[self addNewSpriteWithCoords:CGPointMake(480/2, 320/2)];
 		
@@ -346,7 +346,7 @@ Class restartAction()
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getByTag:kTagSpriteManager];
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
 	int x = CCRANDOM_0_1() * 70 / 10;
 	int y = CCRANDOM_0_1() * 20 / 10;
@@ -354,8 +354,9 @@ Class restartAction()
 	y *= 121;
 	
 
-	AtlasSprite *sprite = [mgr createSpriteWithRect:CGRectMake(x, y, 85, 121)];
-	
+	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
+	[mgr addChild:sprite];
+
 	sprite.position = cpv( p.x, p.y);
 
 	id action;
@@ -370,7 +371,7 @@ Class restartAction()
 	id action_back = [action reverse];
 	id seq = [Sequence actions:action, action_back, nil];
 	
-	[sprite do: [RepeatForever actionWithAction:seq]];
+	[sprite runAction: [RepeatForever actionWithAction:seq]];
 }
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -417,7 +418,7 @@ Class restartAction()
 	[window makeKeyAndVisible];		
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene addChild: [nextAction() node]];
 			 
 	[[Director sharedDirector] runWithScene: scene];
 }

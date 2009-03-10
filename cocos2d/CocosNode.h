@@ -293,6 +293,9 @@ enum {
  @deprecated Will be removed in v0.8. Used runAction instead
  */
 -(Action*) do: (Action*) action;
+/** Executes an action, and returns the action that is executed
+ */
+-(Action*) runAction: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
 /** Removes one action from the running action list */
@@ -308,7 +311,7 @@ enum {
 // timers
 
 /** check whether a selector is scheduled. */
--(BOOL) isScheduled: (SEL) selector;
+//-(BOOL) isScheduled: (SEL) selector;
 
 /** schedules a selector.
  The scheduled selector will be ticked every frame

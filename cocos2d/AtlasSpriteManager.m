@@ -169,7 +169,7 @@ const int defaultCapacity = 29;
 	[node updateAtlas];
 
 	mTotalSprites++;
-	return [super add:node];
+	return [super addChild:node];
 }
 
 -(void)removeChild: (AtlasSprite *)sprite

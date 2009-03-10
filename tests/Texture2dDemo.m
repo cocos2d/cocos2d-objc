@@ -62,7 +62,7 @@ Class restartAction()
 
 		CGSize s = [[Director sharedDirector] winSize];	
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self add: label];
+		[self addChild: label];
 		[label setPosition: cpv(s.width/2, s.height-50)];
 
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -74,7 +74,7 @@ Class restartAction()
 		item1.position = cpv(480/2-100,30);
 		item2.position = cpv(480/2, 30);
 		item3.position = cpv(480/2+100,30);
-		[self add: menu z:1];
+		[self addChild: menu z:1];
 
 	}
 	return self;
@@ -89,21 +89,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -129,9 +129,9 @@ Class restartAction()
 	center.position = cpv(240,150);
 	right.position = cpv(240,100);
 
-	[[[self add:left]
-			add:right]
-			add:center];
+	[[[self addChild:left z:0]
+			addChild:right z:0]
+			addChild:center z:0];
 }
 
 -(NSString *) title
@@ -153,9 +153,9 @@ Class restartAction()
 	center2.position = cpv(240,150);
 	center3.position = cpv(240,100);
 	
-	[[[self add:center1]
-	  add:center2]
-	 add:center3];
+	[[[self addChild:center1 z:0]
+			addChild:center2 z:0]
+			addChild:center3 z:0];
 }
 
 -(NSString *) title
@@ -172,7 +172,7 @@ Class restartAction()
 
 	Sprite *img = [Sprite spriteWithFile:@"test_image.png"];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -190,7 +190,7 @@ Class restartAction()
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.jpeg"];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -208,7 +208,7 @@ Class restartAction()
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.bmp"];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -226,7 +226,7 @@ Class restartAction()
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.tiff"];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -244,7 +244,7 @@ Class restartAction()
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.gif"];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -269,13 +269,13 @@ Class restartAction()
 	
 	Sprite *imgMipMap = [Sprite spriteWithFile:@"logo-mipmap.pvr"];
 	imgMipMap.position = cpv( s.width/2.0f-100, s.height/2.0f);
-	[self add:imgMipMap];
+	[self addChild:imgMipMap];
 	
 	[Texture2D restoreTexParameters];
 
 	Sprite *img = [Sprite spriteWithFile:@"logo-nomipmap.pvr"];
 	img.position = cpv( s.width/2.0f+100, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 	id scale1 = [EaseOut actionWithAction: [ScaleBy actionWithDuration:4 scale:0.01f] rate:3];
 	id sc_back = [scale1 reverse];
@@ -283,8 +283,8 @@ Class restartAction()
 	id scale2 = [[scale1 copy] autorelease];
 	id sc_back2 = [scale2 reverse];
 	
-	[imgMipMap do: [RepeatForever actionWithAction: [Sequence actions: scale1, sc_back, nil]]];
-	[img do: [RepeatForever actionWithAction: [Sequence actions: scale2, sc_back2, nil]]];
+	[imgMipMap runAction: [RepeatForever actionWithAction: [Sequence actions: scale1, sc_back, nil]]];
+	[img runAction: [RepeatForever actionWithAction: [Sequence actions: scale2, sc_back2, nil]]];
 }
 
 -(NSString *) title
@@ -303,7 +303,7 @@ Class restartAction()
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.pvr"];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -323,7 +323,7 @@ Class restartAction()
 	
 	Sprite *img = [Sprite spriteWithPVRTCFile:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
 	img.position = cpv( s.width/2.0f, s.height/2.0f);
-	[self add:img];
+	[self addChild:img];
 	
 }
 
@@ -348,7 +348,7 @@ Class restartAction()
 	
 	Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	sprite.position = cpv( s.width/3.0f, s.height/2.0f);
-	[self add:sprite];
+	[self addChild:sprite];
 	
 	[Texture2D restoreTexParameters];
 	
@@ -361,7 +361,7 @@ Class restartAction()
 	
 	Sprite *sprite2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	sprite2.position = cpv( 2*s.width/3.0f, s.height/2.0f);
-	[self add:sprite2];
+	[self addChild:sprite2];
 	
 	[Texture2D restoreTexParameters];
 	
@@ -370,8 +370,8 @@ Class restartAction()
 	id sc_back = [sc reverse];
 	id scaleforever = [RepeatForever actionWithAction: [Sequence actions: sc, sc_back, nil]];
 	
-	[sprite2 do:scaleforever];
-	[sprite do: [[scaleforever copy] autorelease]];
+	[sprite2 runAction:scaleforever];
+	[sprite runAction: [[scaleforever copy] autorelease]];
 }
 
 -(NSString *) title
@@ -411,7 +411,7 @@ Class restartAction()
 	[window makeKeyAndVisible];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];
+	[scene addChild: [nextAction() node]];
 	
 	[[Director sharedDirector] runWithScene: scene];
 }

@@ -23,14 +23,14 @@ enum
 		Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
 		
 		id layer = [ColorLayer layerWithColor: 0xffff00ff];
-		[self add: layer z:-1];
+		[self addChild: layer z:-1];
 			
-		[self add: sprite z:0 tag:kTagSprite];
+		[self addChild: sprite z:0 tag:kTagSprite];
 		[sprite setPosition: cpv(20,150)];
 		
-		[sprite do: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
+		[sprite runAction: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
 		
-		[layer do: [RepeatForever actionWithAction: 
+		[layer runAction: [RepeatForever actionWithAction: 
 									[Sequence actions:
 									[FadeIn actionWithDuration:1],
 									[FadeOut actionWithDuration:1],
@@ -52,12 +52,12 @@ enum
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
 
-	CocosNode *s = [self getByTag:kTagSprite];
+	CocosNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
-	[s do: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
+	[s runAction: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
-	float at = (float) RADIANS_TO_DEGREES( atanf( o/a) );
+	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
 	
 	if( a < 0 ) {
 		if(  o < 0 )
@@ -66,7 +66,7 @@ enum
 			at = 180 - abs(at);	
 	}
 	
-	[s do: [RotateTo actionWithDuration:1 angle: at]];
+	[s runAction: [RotateTo actionWithDuration:1 angle: at]];
 	
 	return kEventHandled;
 }
@@ -106,7 +106,7 @@ enum
 	
 	Scene *scene = [Scene node];
 	MainLayer * mainLayer =[MainLayer node];	
-	[scene add: mainLayer z:2];
+	[scene addChild: mainLayer z:2];
 	
 	[[Director sharedDirector] runWithScene: scene];
 }

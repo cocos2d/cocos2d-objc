@@ -47,7 +47,7 @@
     mLastLocation = cpvzero;
     mColor = color;
     mRibbon = [Ribbon ribbonWithWidth: mWidth image:mPath length:mTextureLength color:color fade:fade];
-    [self add:mRibbon];
+    [self addChild:mRibbon];
     
     // manually add timer to scheduler
     Timer *timer = [Timer timerWithTarget:self selector:@selector(update:) interval:0];
@@ -72,8 +72,6 @@
 
 -(void)dealloc
 {
-  [self remove:mRibbon];
-  [mRibbon release];
   [super dealloc];
 }
 

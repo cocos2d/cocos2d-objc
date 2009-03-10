@@ -63,9 +63,9 @@ Class restartAction()
 	tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
 	kathia = [[Sprite spriteWithFile:@"grossinis_sister2.png"] retain];
 	
-	[self add: grossini z:3];
-	[self add: kathia z:2];
-	[self add: tamara z:1];
+	[self addChild: grossini z:3];
+	[self addChild: kathia z:2];
+	[self addChild: tamara z:1];
 
 	CGSize s = [[Director sharedDirector] winSize];
 	
@@ -74,7 +74,7 @@ Class restartAction()
 	[tamara setPosition: cpv(60, 250)];
 	
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self add: label];
+	[self addChild: label];
 	[label setPosition: cpv(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -86,7 +86,7 @@ Class restartAction()
 	item1.position = cpv(480/2-100,30);
 	item2.position = cpv(480/2, 30);
 	item3.position = cpv(480/2+100,30);
-	[self add: menu z:1];
+	[self addChild: menu z:1];
 
 	return self;
 }
@@ -103,21 +103,21 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [restartAction() node]];
+	[s addChild: [restartAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [nextAction() node]];
+	[s addChild: [nextAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	[s add: [backAction() node]];
+	[s addChild: [backAction() node]];
 	[[Director sharedDirector] replaceScene: s];
 }
 
@@ -157,9 +157,9 @@ Class restartAction()
 	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
 	
 	
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
-	[kathia do: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[kathia runAction: [RepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -189,9 +189,9 @@ Class restartAction()
 	id seq2 = [Sequence actions: move_ease_inout2, move_ease_inout_back2, nil];
 	id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
 		
-	[tamara do: [RepeatForever actionWithAction:seq1]];
-	[kathia do: [RepeatForever actionWithAction:seq2]];
-	[grossini do: [RepeatForever actionWithAction:seq3]];
+	[tamara runAction: [RepeatForever actionWithAction:seq1]];
+	[kathia runAction: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [RepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -220,9 +220,9 @@ Class restartAction()
 	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
 	
 	
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
-	[kathia do: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[kathia runAction: [RepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -246,8 +246,8 @@ Class restartAction()
 
 	[self positionForTwo];
 
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
@@ -276,9 +276,9 @@ Class restartAction()
 	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
 	
 
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
-	[kathia do: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[kathia runAction: [RepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -302,8 +302,8 @@ Class restartAction()
 	
 	[self positionForTwo];
 	
-	[grossini do: [RepeatForever actionWithAction:seq1]];
-	[tamara do: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
@@ -341,7 +341,7 @@ Class restartAction()
 	[window makeKeyAndVisible];	
 	
 	Scene *scene = [Scene node];
-	[scene add: [nextAction() node]];	
+	[scene addChild: [nextAction() node]];	
 	
 	[[Director sharedDirector] runWithScene: scene];
 }
