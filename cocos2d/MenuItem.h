@@ -17,6 +17,7 @@
 #import "CocosNode.h"
 
 @class Label;
+@class LabelAtlas;
 @class Sprite;
 
 #define kItemSize 32
@@ -60,6 +61,34 @@
  * Conforms to the CocosNodeSize protocol
  */
 -(CGSize) contentSize;
+@end
+
+/** A MenuItemAtlasFont */
+@interface MenuItemAtlasFont : MenuItem
+{
+	LabelAtlas *label;
+	Action *zoomAction;
+}
+
+@property (readwrite, retain) LabelAtlas* label;
+
+/** creates a menu item from a string and atlas with a target/selector */
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap;
+
+/** creates a menu item from a string and atlas. Use it with MenuItemToggle */
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb;
+
+/** initializes a menu item from a string and atlas with a target/selector */
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb;
+
+/** Change this menuitem's label's string **/
+-(void) setString:(NSString *)string;
+
+/** Enable or disabled the MenuItemFont
+ @warning setIsEnabled changes the RGB color of the font
+ */
+-(void) setIsEnabled: (BOOL)enabled;
+
 @end
 
 /** A MenuItemFont */

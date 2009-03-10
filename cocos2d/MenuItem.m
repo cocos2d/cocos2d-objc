@@ -14,6 +14,7 @@
 
 #import "MenuItem.h"
 #import "Label.h"
+#import "LabelAtlas.h"
 #import "IntervalAction.h"
 #import "Sprite.h"
 
@@ -112,6 +113,131 @@ enum {
 {
 	NSAssert(1,@"MenuItem.contentSize must be overriden");
 	return CGSizeMake(0,0);
+}
+
+@end
+
+
+#pragma mark MenuItemAtlasFont
+
+
+@implementation MenuItemAtlasFont
+
+@synthesize label;
+
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap
+{
+	return [MenuItemAtlasFont itemFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:nil selector:nil];
+}
+
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb
+{
+	return [[[self alloc] initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:rec selector:cb] autorelease];
+}
+
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb
+{
+	if(!(self=[super initWithTarget:rec selector:cb]) )
+		return nil;
+	
+	if( [value length] == 0 ) {
+		NSException* myException = [NSException
+									exceptionWithName:@"MenuItemInvalid"
+									reason:@"Can't create a MenuItem without value"
+									userInfo:nil];
+		@throw myException;
+	}
+	
+	
+	label = [[LabelAtlas alloc] initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
+	[label setOpacity:opacity];
+	
+	CGSize s = label.contentSize;
+	transformAnchor = cpv( s.width/2, s.height/2 );
+	
+	return self;
+}
+
+-(void) setString:(NSString *)string
+{
+    [label setString:string];
+	CGSize s = label.contentSize;
+    transformAnchor = cpv( s.width/2, s.height/2 );
+}
+
+-(void) dealloc
+{
+	[label release];
+	[zoomAction release];
+	[super dealloc];
+}
+
+-(CGRect) rect
+{
+	CGSize s = label.contentSize;
+	
+	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
+	return r;
+}
+
+-(void) activate {
+	if(isEnabled) {
+		[self stopAllActions];
+		[zoomAction release];
+		zoomAction = nil;
+        
+		self.scale = 1.0f;
+        
+		[super activate];
+	}
+}
+
+-(void) selected
+{
+	// subclass to change the default action
+	if(isEnabled) {
+		[self stopAction: zoomAction];
+		[zoomAction release];
+		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.2f] retain];
+		[self do:zoomAction];
+	}
+}
+
+-(void) unselected
+{
+	// subclass to change the default action
+	if(isEnabled) {
+		[self stopAction: zoomAction];
+		[zoomAction release];
+		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.0f] retain];
+		[self do:zoomAction];
+	}
+}
+
+-(void) setIsEnabled: (BOOL)enabled
+{
+	if(enabled == NO)
+		[label setRGB:126 :126 :126];
+	else
+		[label setRGB:255 :255 :255];
+    
+	[super setIsEnabled:enabled];
+}
+
+-(CGSize) contentSize
+{
+	return [label contentSize];
+}
+
+-(void) draw
+{
+	[label draw];
+}
+
+- (void) setOpacity: (GLubyte)newOpacity
+{
+    opacity = newOpacity;
+    [label setOpacity:opacity];
 }
 
 @end
