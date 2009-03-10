@@ -34,6 +34,7 @@
 -(void) insertChild:(CocosNode*)child z:(int)z;
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(int) z;
+-(void) detachChild:(CocosNode *)child cleanup:(BOOL)doCleanup;
 @end
 
 @implementation CocosNode
@@ -55,7 +56,7 @@
 {
 	if (!(self=[super init]) )
 		return nil;
-
+	
 	isRunning = NO;
 	
 	position = cpvzero;
@@ -102,13 +103,14 @@
 	// actions
 	[actions release];
 	actions = nil;
-
+	
 	[actionsToRemove release];
 	actionsToRemove = nil;
-
+	
 	[actionsToAdd release];
 	actionsToAdd = nil;
 	
+	// timers
 	[scheduledSelectors release];
 	scheduledSelectors = nil;
 }
@@ -160,14 +162,19 @@
 }
 
 -(id) add: (CocosNode*) child z:(int)z tag:(int) aTag
+{
+	CCLOG(@"add:child:z:tag is deprecated");
+	return [self addChild:child z:z tag:aTag];
+}
+-(id) addChild: (CocosNode*) child z:(int)z tag:(int) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
 	if( ! children )
 		[self childrenAlloc];
-
+	
 	[self insertChild:child z:z];
-
+	
 	child.tag = aTag;
 	
 	[child setParent: self];
@@ -179,116 +186,108 @@
 
 -(id) add: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
 {
+	CCLOG(@"add:child:z:tag:parallaxRatio is deprecated");
+	return [self addChild:child z:z parallaxRatio:c];
+}
+-(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
+{
 	NSAssert( child != nil, @"Argument must be non-nil");
 	child.parallaxRatioX = c.x;
 	child.parallaxRatioY = c.y;
-	return [self add: child z:z tag:child.tag];
+	return [self addChild: child z:z tag:child.tag];
 }
 
 // add a node to the array
 -(id) add: (CocosNode*) child z:(int)z
 {
+	CCLOG(@"add:child:z: is deprecated");
+	return [self addChild:child z:z];
+}
+-(id) addChild: (CocosNode*) child z:(int)z
+{
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:z tag:child.tag];
+	return [self addChild:child z:z tag:child.tag];
 }
 
 -(id) add: (CocosNode*) child
 {
-	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self add: child z:child.zOrder tag:child.tag];
+	CCLOG(@"add:child is deprecated");
+	return [self addChild:child];
 }
+-(id) addChild: (CocosNode*) child
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	return [self addChild:child z:child.zOrder tag:child.tag];
+}
+
 
 -(void) remove: (CocosNode*)child
 {
+	CCLOG(@"remove: is deprecated");
+	return [self removeChild:child cleanup:NO];
+}
+-(void) removeAndStop: (CocosNode*)child
+{
+	CCLOG(@"removeAndStop: is deprecated");
+	return [self removeChild:child cleanup:YES];
+}
+-(void) removeChild: (CocosNode*)child cleanup:(BOOL)cleanup
+{
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
-	for( CocosNode * c in children) {
-		if( [c isEqual: child] ) {
-			[c setParent: nil];
-			if( isRunning )
-				[c onExit];
-
-			[children removeObject: c];			
-			break;
-		}
-	}
+	if ( [children containsObject:child] )
+		[self detachChild:child cleanup:cleanup];
 }
 
 -(void) removeByTag:(int) aTag
 {
-	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
-
-	CocosNode *toRemove = nil;
-	for( CocosNode *node in children ) {
-		if( node.tag == aTag ) {
-			toRemove = node;
-			break;
-		}
-	}
-	if( toRemove )
-		[self remove:toRemove];
-
+	CCLOG(@"removeByTag is deprecated");
+	return [self removeChildByTag:aTag cleanup:NO];
 }
-
--(void) removeAll {
-	for( CocosNode * c in children) {
-		[c setParent: nil];
-		if( isRunning )
-			[c onExit];
-	}
-
-	[children removeAllObjects];
-}
-
--(void) removeAndStop: (CocosNode*)child
-{
-	NSAssert( child != nil, @"Argument must be non-nil");
-	
-	for( CocosNode * c in children) {
-		if( [c isEqual: child] ) {
-			[c setParent: nil];
-
-			if( isRunning )
-				[c onExit];
-
-			[c stopAllActions];
-			[c cleanup];
-			[children removeObject: c];
-
-			break;
-		}
-	}
-}
-
 -(void) removeAndStopByTag:(int) aTag
 {
+	CCLOG(@"removeAndStopByTag is deprecated");
+	return [self removeChildByTag:aTag cleanup:YES];
+}
+-(void) removeChildByTag:(int)aTag cleanup:(BOOL)cleanup
+{
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
-	
-	CocosNode *toRemove = nil;
-	for( CocosNode *node in children ) {
-		if( node.tag == aTag ) {
-			toRemove = node;
-			break;
-		}
-	}
-	if( toRemove )
-		[self removeAndStop:toRemove];
-	
+
+	CocosNode *child = [self getByTag:aTag];
+	[self detachChild:child cleanup:cleanup];
 }
 
--(void) removeAndStopAll {
+-(void) removeAll
+{
+	CCLOG(@"removeAll is deprecated");
+	return [self removeAllChildrenWithCleanup:NO];
+}
+-(void) removeAndStopAll
+{
+	CCLOG(@"removeAndStopAll is deprecated");
+	return [self removeAllChildrenWithCleanup:YES];
+}
+-(void) removeAllChildrenWithCleanup:(BOOL)cleanup
+{
+	// not using detachChild improves speed here
 	for( CocosNode * c in children) {
+		if( cleanup) {
+			[c cleanup];
+		}
 		[c setParent: nil];
 		if( isRunning )
 			[c onExit];
 	}
-	
-	[children makeObjectsPerformSelector:@selector(cleanup)]; // issue #74
 	
 	[children removeAllObjects];
 }
 
 -(CocosNode*) getByTag:(int) aTag
+{
+	CCLOG(@"getByTag is deprecated");
+	return [self getChildByTag:aTag];
+}
+-(CocosNode*) getChildByTag:(int) aTag
 {
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
 	
@@ -314,6 +313,22 @@
 	return ret;
 }
 
+-(void) detachChild:(CocosNode *) child cleanup:(BOOL) doCleanup
+{
+	[child setParent: nil];
+	
+	// stop timers
+	if( isRunning )
+		[child onExit];
+	
+	// If you don't do cleanup, the child's actions will not get removed and the
+	// its scheduledSelectors dict will not get released!
+	if (doCleanup)
+		[child cleanup];
+	
+	[children removeObject: child];
+}
+
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(int) z
 {
@@ -336,7 +351,7 @@
 	
 	if( ! added )
 		[children addObject:child];
-
+	
 	[child _setZOrder:z];
 }
 
@@ -346,7 +361,7 @@
 	
 	[child retain];
 	[children removeObject:child];
-
+	
 	[self insertChild:child z:z];
 	
 	[child release];
@@ -363,14 +378,14 @@
 {
 	if (!visible)
 		return;
-
+	
 	glPushMatrix();
-
+	
 	if ( grid && grid.active)
 		[grid beforeDraw];
-
+	
 	[self transform];
-
+	
 	for (CocosNode * child in children) {
 		if ( child.zOrder < 0 )
 			[child visit];
@@ -379,15 +394,15 @@
 	}
 	
 	[self draw];
-
+	
 	for (CocosNode * child in children) {		
 		if ( child.zOrder >= 0 )
 			[child visit];
 	}
-
+	
 	if ( grid && grid.active)
 		[grid afterDraw:self.camera];
-
+	
 	glPopMatrix();
 }
 
@@ -400,7 +415,7 @@
 	
 	float parallaxOffsetX = 0;
 	float parallaxOffsetY = 0;
-
+	
 	if( (parallaxRatioX != 1.0f || parallaxRatioY != 1.0) && parent ) {
 		parallaxOffsetX = -parent.position.x + parent.position.x * parallaxRatioX;
 		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;		
@@ -416,14 +431,14 @@
 		glTranslatef( position.x + transformAnchor.x + parallaxOffsetX, position.y + transformAnchor.y + parallaxOffsetY, 0);
 	else if ( position.x !=0 || position.y !=0 || parallaxOffsetX != 0 || parallaxOffsetY != 0)
 		glTranslatef( position.x + parallaxOffsetX, position.y + parallaxOffsetY, 0 );
-
+	
 	// rotate
 	if (rotation != 0.0f )
 		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
 	
 	// scale
 	if (scaleX != 1.0f || scaleY != 1.0f)
-		glScalef( scaleX, scaleY, 1.0f );	
+		glScalef( scaleX, scaleY, 1.0f );
 	
 	// restore and re-position point
 	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
@@ -477,7 +492,7 @@
 -(void) onExit
 {
 	isRunning = NO;
-
+	
 	[self deactivateTimers];
 	
 	for( id child in children )
@@ -489,6 +504,18 @@
 
 -(void) actionAlloc
 {
+	// Reason for having actionsToAdd & actionsToRemove:
+	// While iterating through the actions array it's possible that one of the
+	// actions will call do or stopAction on current node. If these methods were
+	// to alter the array directly (remember you're still inside the loop), you'd
+	// get undefined behaviour. So instead these 2 arrays are used as buffers.
+	//
+	// Another solution would be to make a copy of actions on each step_ and
+	// iterate over the copy, but that leads to other complications (you need to
+	// manage a fast buffer in which to save the copy, and you need to accomodate
+	// the possibility of actions accidentally releasing themselves, which leads
+	// to retain/release hell and, ultimately, a slow loop).
+	
 	// actions
 	actions = [[NSMutableArray arrayWithCapacity:4] retain];
 	actionsToRemove = [[NSMutableArray arrayWithCapacity:4] retain];
@@ -498,17 +525,21 @@
 -(Action*) do: (Action*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
-
+	
+	// (vali) should this be added?
+	// if ( [actions containsObject:action] || [actionsToAdd containsObject:action] )
+	//   return nil;
+	
 	action.target = self;
 	[action start];
-
+	
 	// lazy alloc
 	if( !actionsToAdd )
 		[self actionAlloc];
-
+	
 	[actionsToAdd addObject: action];
 	[self schedule: @selector(step_:)];
-		
+	
 	return action;
 }
 
@@ -516,11 +547,8 @@
 {
 	[actionsToAdd removeAllObjects];
 	
-	for( Action* action in actions) {
-		// prevents double release
-		if( ! [actionsToRemove containsObject: action] )
-			[actionsToRemove addObject: action];
-	}
+	[actionsToRemove removeAllObjects];
+	[actionsToRemove addObjectsFromArray:actions];
 }
 
 -(void) stopAction: (Action*) action
@@ -546,33 +574,52 @@
 	for( Action* action in actionsToRemove )
 		[actions removeObject: action];
 	[actionsToRemove removeAllObjects];
-
+	
 	// add actions that needs to be added
 	for( Action* action in actionsToAdd )
 		[actions addObject: action];
 	[actionsToAdd removeAllObjects];
-		
-	// unschedule if it is no longer necessary
+	
+	// Unschedule if it is no longer necessary. Note that if step_ is still
+	// scheduled onExit (this happens if the node has actions when it's
+	// removed/removedAndStopped from its parent), it will get descheduled there.
 	if ( [actions count] == 0 ) {
 		[self unschedule: @selector(step_:)];
 		return;
 	}
 	
+	// Assume the instructions inside [action step: dt] end up calling cleanup on
+	// the current node. This could happen, for example, if the action is a CallFunc
+	// which tells the current node's parent to removeAndStop our node.
+	//
+	// Cleanup releases and nullifies the actions array. As a result all the actions
+	// inside the array get released, including the currently executing one. If
+	// the action had a retain count of 1, it has now deallocated itself!
+	// 
+	// To prevent such accidental deallocs, we could:
+	// a. Retain each action inside the loop before calling step, release it after step.
+	// b. Retain actions array before loop, release it after loop. Only 1 retain,
+	//    slightly better performance when there are many actions. Need to keep original
+	//    value because actions might get nullified and you don't want [nil release].
+	
+	id actionsBackup = [actions retain];
+	
 	// call all actions
 	for( Action *action in actions ) {
-        [[action retain] step: dt];
-        if(actions == nil) {
-            [action release];
-            return;
-        }
-        
+		[action step: dt];
+		
+		// Note: There's no danger of our node being deallocated inside the loop (because
+		// the current action has retained it) so it's safe to access the actions ivar.
+		if (actions == nil)
+			break;
+		
 		if( [action isDone] ) {
 			[action stop];
 			[actionsToRemove addObject: action];
 		}
-        
-        [action release];
 	}
+	
+	[actionsBackup release];
 }
 
 #pragma mark CocosNode Timers 
@@ -594,14 +641,14 @@
 	
 	if( !scheduledSelectors )
 		[self timerAlloc];
-
+	
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
 		CCLOG(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
 		return;
 	}
-
+	
 	Timer *timer = [Timer timerWithTarget:self selector:selector interval:interval];
-
+	
 	if( isRunning )
 		[[Scheduler sharedScheduler] scheduleTimer:timer];
 	
@@ -615,11 +662,11 @@
 	Timer *timer = nil;
 	
 	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
-	{
-		CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
-		return;
-	}
-
+	 {
+		 CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
+		 return;
+	 }
+	
 	[scheduledSelectors removeObjectForKey: NSStringFromSelector(selector) ];
 	if( isRunning )
 		[[Scheduler sharedScheduler] unscheduleTimer:timer];

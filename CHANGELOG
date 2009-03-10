@@ -31,10 +31,10 @@ version 0.7.0 - 19-Feb-2009
  . Effects: Added Effects support (Grid and TiledGrid) (issue #183)
  . Effects: Basic: StopGrid, ReuseGrid (issue #183)
  . Effects: Grid: Waves3D, FlipX3D, FlipY3D, Lens3D, Ripple3D, Liquid, Shaky3D, Waves
-				 Twirl (issue #183)
- . Effects:	Tiled: ShakyTiles3D, ShatteredTiles3D, ShuffleTiles, FadeOutTRTiles, FadeOutBLTiles,
-				FadeOutUpTiles, FadeOutDownTiles, TurnOffTiles, WavesTiles3D, JumpTiles3D
-				SplitRows, SplitCols (issue #183)
+            Twirl (issue #183)
+ . Effects: Tiled: ShakyTiles3D, ShatteredTiles3D, ShuffleTiles, FadeOutTRTiles, FadeOutBLTiles,
+            FadeOutUpTiles, FadeOutDownTiles, TurnOffTiles, WavesTiles3D, JumpTiles3D
+            SplitRows, SplitCols (issue #183)
  . Experimental: Added StreakDemo (issue #171)
  . Menu: aligItemsVerticallyOld removed. (issue #196)
  . MenuItemFont: can be changed in runtime (issue #202)
@@ -45,9 +45,8 @@ version 0.7.0 - 19-Feb-2009
  . Texture: Easier to set Alias and/or AntiAlias texture parameters (issue #135 and issue #47)
  . TileMapAtlas: it is readable / writeable now (issue #200)
  . Transitions: added new Effects transitions
-	 SplitRowsTransition, SplitColsTransition, TurnOffTilesTransition,
-	 FadeTRTransition, FadeBLTransition, FadeUpTransition, FadeDownTransition
-     (issue #187)
+                SplitRowsTransition, SplitColsTransition, TurnOffTilesTransition,
+                FadeTRTransition, FadeBLTransition, FadeUpTransition, FadeDownTransition (issue #187)
   . Xcode: treat warnings as errors (issue #201)
 
  
@@ -304,7 +303,7 @@ version 0.2 - 5-Jul-2008
  . Added particle system.
     . uses VBO + POINT_SPRITES
     . Built-in systems: Fire, Fireworks, Sun, Galaxy, Flower, Meteor, Spiral, Explosion
-	. supports: system duration, paticle duration, gravity, radial, tangential, color, size, texture, direction, spread (all of them with its variation)
+    . supports: system duration, paticle duration, gravity, radial, tangential, color, size, texture, direction, spread (all of them with its variation)
  . added support to display FPS
 
 
