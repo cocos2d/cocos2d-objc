@@ -246,7 +246,6 @@
         rowHeight = fmaxf(rowHeight, [item contentSize].height);
         [item setPosition:cpv(x - winSize.width / 2,
                               y - [item contentSize].height / 2)];
-        NSLog(@"item r:%d, c:%d placed at: %s", row, columnsOccupied, cpvstr([item position]));
             
         x += w + 10;
         ++columnsOccupied;
@@ -333,7 +332,6 @@
         columnWidth = fmaxf(columnWidth, [item contentSize].width);
         [item setPosition:cpv(x + [(NSNumber *) [columnWidths objectAtIndex:column] unsignedIntegerValue] / 2,
                               y - winSize.height / 2)];
-        NSLog(@"item r:%d, c:%d placed at: %s", rowsOccupied, column, cpvstr([item position]));
         
         y -= [item contentSize].height + 10;
         ++rowsOccupied;
