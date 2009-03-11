@@ -35,3 +35,10 @@
 -(void) menuCallback: (id) sender;
 -(void) menuCallback2: (id) sender;
 @end
+
+@interface Layer4 : Layer
+{
+}
+-(void) menuCallback: (id) sender;
+-(void) backCallback: (id) sender;
+@end
