@@ -90,5 +90,6 @@
 -(void) addAnimation: (Animation*) animation;
 /** changes the display frame based on an animation and an index */
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
-
+/** returns an Animation given it's name */
+-(Animation *)animationByName: (NSString*) animationName;
 @end
