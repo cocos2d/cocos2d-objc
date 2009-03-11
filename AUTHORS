@@ -13,76 +13,78 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
     * Alejandro Cura: author of AccelViewPortDemo
     * Alex Winston: author of ParticleSnow
-                    patches for CocosNode
+		patches for CocosNode
     * Alia Mc.Cutcheon: scale & rotate order fixed in CocosNode.m
-                        category is cocosLive is UTF8'ized
+		category is cocosLive is UTF8'ized
     * Andy Fitter: patches for Texture2D
     * Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
     * Brian Hammond: patches for Demos
     * Clinth Harris: patches for Doc generator script
     * Codemattic: patches for CocosNode
-                  patches fro MenuItemFont
+		patches fro MenuItemFont
     * effervens: patches for Director
     * Ernesto Corvi: author of TGA RLE support
-                     patches for TextureMgr
-                     patches for Sprite
+		patches for TextureMgr
+		patches for Sprite
     * Ernesto Corvi & On-Core (http://www.on-core.com/): author of Effects and EffectsDemo
         Added Support classes: Grabber, Grid, GridAction
         Added Basic Effects: StopGrid, ReuseGrid
         Added Grid Effects: Waves3D, FlipX3D, FlipY3D, Lens3D, Ripple3D, Liquid,
-                            Shaky3D, Waves, Twirl
+			Shaky3D, Waves, Twirl
         Added Tiled Grid Effects: ShakyTiles3D, ShatteredTiles3D, ShuffleTiles,
-                                  FadeOutTRTiles, FadeOutBLTiles, FadeOutUpTiles, FadeOutDownTiles,
-                                  TurnOffTiles, WavesTiles3D, JumpTiles3D, SplitRows, SplitCols
+			FadeOutTRTiles, FadeOutBLTiles, FadeOutUpTiles, FadeOutDownTiles,
+			TurnOffTiles, WavesTiles3D, JumpTiles3D, SplitRows, SplitCols
         Added Composite actions: AccelAmplitude, AccelDeccelAmplitude, DeccelAmplitude
     * Favo Yang: patch for unschedule timer in CocosNode
     * Florin Dumitrescu: added "update score" in cocosLive
     * Fradj Johann: patches for CocosNode
-                    patches for Layer
-                    patches for MultiplexLayer
+		patches for Layer
+		patches for MultiplexLayer
     * Graham Perks: Atlas works with GL_CULL_FACE
-                    FastDirector doesn't leak autorelease pool patch
+		FastDirector doesn't leak autorelease pool patch
     * Ishaq Malik: patches for CocosNode
     * Jacob Eiting: patches for Primitives
     * Jason Booth (slipster216): author of EaseAction
-            author of EaseAction demos
-            author of StreakDemo, MotionStreak
-            patch for ScaleTo/By action to support X and Y.
+		author of EaseAction demos
+		author of StreakDemo, MotionStreak
+		patch for ScaleTo/By action to support X and Y.
     * Joe Vennix: patches for CocosNode
     * kermidt.zed: patches for absolutePosition in CocosNode
-            patches for Labels in Texture2D
+		patches for Labels in Texture2D
     * lukeman: patches for MenuItem
     * Maarten Billemont (lhunath): author of ParticleRain
-           added suport for particles' source
-           "Particles are updated on update, not draw" patch
-           fixed memory leaks in Sprite
-           fixed possible crashes in Sprite, Particles
-           optimizations in the whole code (using floats, not doubles)
-           removed useless GL commands in director
-           fixed Menu aligments
-           Treat warnings as errors patch
-           Action's elapsed is property patch
-           MenuItemFont label can be changed
-		   Menu can be aligned in Columns
-		   MenuItem supports LabelAtlas
-		   Added RGB protocol in CocosNode, Atlas, Texture
+		added suport for particles' source
+		"Particles are updated on update, not draw" patch
+		fixed memory leaks in Sprite
+		fixed possible crashes in Sprite, Particles
+		optimizations in the whole code (using floats, not doubles)
+		removed useless GL commands in director
+		fixed Menu aligments
+		Treat warnings as errors patch
+		Action's elapsed is property patch
+		MenuItemFont label can be changed
+		Menu can be aligned in Columns
+		MenuItem supports LabelAtlas
+		Added RGB protocol in CocosNode, Atlas, Texture
     * mark at abitofthought: author of Fast Director
     * Mitch: patches for Menu
-             author of MenuItemToggle
+		 author of MenuItemToggle
     * Math Sephton: patches for Demos
-                    patches for License
+		patches for License
     * Matt Oswald: fix to set depthbuffer size on Director
-                   TextureAtlas supports Texture2D objects
-                   author of AtlasSprite and AtlasSpriteManager
+		TextureAtlas supports Texture2D objects
+		author of AtlasSprite and AtlasSpriteManager
     * rac5372: compiler warning in MenuItem
     * ratman: patch for TileMapAtlas: it works with 255 tiles
-              patch for TextureMgr: supports directory within image names
+		  patch for TextureMgr: supports directory within image names
     * Serge Kolgan: patches for CocosNode
     * Steve Israelson: patches for Scheduler
-                pactches for Actions
-                patches for Transitions
+		pactches for Actions
+		patches for Transitions
     * Steve Oldmeadow: patches for Texture2D
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
+		Set transformAnchor point in Sprite
+		animtionByName in Sprite
     * yarrington: patches for Director
 
 
