@@ -11,6 +11,7 @@ version 0.7.1 - ??
  . CocosLive: supports "update score" (issue #250)
  . Demos: added performance test (issue #243)
  . Director: FastDirector doesn't leak autoreleased objects (issue #221)
+ . Director: prevents calling startAnimation twice in a row (issue #215)
  . Menu: can be aligned in columns (issue #206)
  . Menu: MenuItem supports LabelAtlas (issue #235)
  . Sprite: correct transform anchor point (issue #216)

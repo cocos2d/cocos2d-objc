@@ -84,7 +84,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
     * Steve Oldmeadow: patches for Texture2D
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
-		animtionByName in Sprite
     * yarrington: patches for Director
 
 
