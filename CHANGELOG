@@ -14,6 +14,7 @@ version 0.7.1 - ??
  . Director: prevents calling startAnimation twice in a row (issue #215)
  . Menu: can be aligned in columns (issue #206)
  . Menu: MenuItem supports LabelAtlas (issue #235)
+ . Scheduler: if signature is not correct Assert (issue #218)
  . Sprite: correct transform anchor point (issue #216)
  . TextureAtlas: support for texture2D (issue #161)
 
