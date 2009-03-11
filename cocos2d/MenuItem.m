@@ -199,7 +199,7 @@ enum {
 		[self stopAction: zoomAction];
 		[zoomAction release];
 		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.2f] retain];
-		[self do:zoomAction];
+		[self runAction:zoomAction];
 	}
 }
 
@@ -210,7 +210,7 @@ enum {
 		[self stopAction: zoomAction];
 		[zoomAction release];
 		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.0f] retain];
-		[self do:zoomAction];
+		[self runAction:zoomAction];
 	}
 }
 

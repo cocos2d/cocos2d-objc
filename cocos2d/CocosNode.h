@@ -187,22 +187,22 @@ enum {
  @deprecated Will be removed in v0.8. Used addChild instead
  @return returns self
  */
--(id) add: (CocosNode*)node;
+-(id) add: (CocosNode*)node __attribute__ ((deprecated));
 /** Adds a child to the container with a z-order
  @deprecated Will be removed in v0.8. Used addChild:z instead
  @return returns self
  */
--(id) add: (CocosNode*)node z:(int)z;
+-(id) add: (CocosNode*)node z:(int)z __attribute__ ((deprecated));
 /** Adds a child to the container with z order and tag
  @deprecated Will be removed in v0.8. Used addChild:z:tag instead
  @return returns self
  */
--(id) add: (CocosNode*)node z:(int)z tag:(int)tag;
+-(id) add: (CocosNode*)node z:(int)z tag:(int)tag __attribute__ ((deprecated));
 /** Adds a child to the container with a z-order and a parallax ratio
  @deprecated Will be removed in v0.8. Used addChild:z:tag:paralalxRatio instead
  @return returns self
  */
--(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
+-(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c __attribute__ ((deprecated));
 
 // composition: REMOVE
 
@@ -224,30 +224,30 @@ enum {
  @deprecated Will be removed in v0.8. Used removeChild:cleanup:NO instead
  @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
  */
--(void) remove: (CocosNode*)node;
+-(void) remove: (CocosNode*)node __attribute__ ((deprecated));
 /** Removes a child from the container given its tag
  @deprecated Will be removed in v0.8. Used removeChildByTag:cleanup:NO instead
  @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
  */
--(void) removeByTag:(int) tag;
+-(void) removeByTag:(int) tag __attribute__ ((deprecated));
 /** Removes all children from the container.
  @deprecated Will be removed in v0.8. Used removeAllChildrenWithCleanup:NO instead
  @warning It DOESN'T stop all running actions from the removed object and it DOESN'T unschedules all scheduled selectors 
  */
--(void) removeAll;
+-(void) removeAll __attribute__ ((deprecated));
 /** Removes a child from the container by reference and stops all running actions and scheduled functions
  @deprecated Will be removed in v0.8. Used removeChild:cleanup:YES instead
  */
--(void) removeAndStop: (CocosNode*)node;
+-(void) removeAndStop: (CocosNode*)node __attribute__ ((deprecated));
 /** Removes a child from the container by tag and stops all running actions and scheduled functions
  @deprecated Will be removed in v0.8. Used removeChildByTag:cleanup:YES instead
  */
--(void) removeAndStopByTag:(int) tag;
+-(void) removeAndStopByTag:(int) tag __attribute__ ((deprecated));
 /** Removes all children from the container.
  It stops all running actions from the removed objects and unschedules all scheduled selectors
  @deprecated Will be removed in v0.8. Used removeAllChildrenWithCleanup:YES instead
  */
--(void) removeAndStopAll;
+-(void) removeAndStopAll __attribute__ ((deprecated));
 
 // composition: GET
 /** Gets a child from the container given its tag
@@ -261,7 +261,7 @@ enum {
  @deprecated Will be removed in v0.8. Used getChildByTag instead
  @return returns a CocosNode object
  */
--(CocosNode*) getByTag:(int) tag;
+-(CocosNode*) getByTag:(int) tag __attribute__ ((deprecated));
 
 /** Returns the absolute position of the CocosNode
  * @return a cpVect value with the absolute position of the noe
@@ -292,7 +292,7 @@ enum {
 /** Executes an action, and returns the action that is executed
  @deprecated Will be removed in v0.8. Used runAction instead
  */
--(Action*) do: (Action*) action;
+-(Action*) do: (Action*) action __attribute__ ((deprecated));
 /** Executes an action, and returns the action that is executed
  */
 -(Action*) runAction: (Action*) action;

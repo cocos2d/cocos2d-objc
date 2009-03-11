@@ -268,6 +268,7 @@
 }
 
 -(void) removeAll
+
 {
 	CCLOG(@"removeAll is deprecated. Use removeAllChildrenWithCleanup:");
 	return [self removeAllChildrenWithCleanup:NO];

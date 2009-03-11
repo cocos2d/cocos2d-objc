@@ -257,6 +257,7 @@ Example:
 /** Changes the acceleration of an action
  @deprecated Use EaseIn or EaseOut instead. This Action will be removed in v0.8
  */
+__attribute__((deprecated))
 @interface Accelerate: IntervalAction <NSCopying>
 {
 	IntervalAction *other;
@@ -274,6 +275,7 @@ Example:
 /** Makes an action change the travel speed but retain near normal speed at the beginning and ending.
  @deprecated Use EaseInOut instead. This Action will be removed in v0.8
 */
+__attribute__((deprecated))
 @interface AccelDeccel: IntervalAction <NSCopying>
 {
 	IntervalAction *other;
