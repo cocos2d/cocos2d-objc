@@ -308,7 +308,7 @@
 		506144020E589A2E003CCDB7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		506144030E589A2E003CCDB7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506144040E589A2E003CCDB7 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		5061440D0E589A7B003CCDB7 /* TestAnchor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* TestAnchor.m */; };
+		5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */; };
 		506602110E38A70D000B500E /* Scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* Scheduler.h */; };
 		506602120E38A70D000B500E /* Scheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* Scheduler.m */; };
 		506881F80E95761200F943E5 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -1068,9 +1068,9 @@
 		505CC1CF0F62BD1C000EDF26 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		505CC1D10F62BD24000EDF26 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		505CC1D30F62BD2B000EDF26 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		506144080E589A2E003CCDB7 /* AnchorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5061440B0E589A7B003CCDB7 /* TestAnchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestAnchor.h; path = tests/TestAnchor.h; sourceTree = "<group>"; };
-		5061440C0E589A7B003CCDB7 /* TestAnchor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestAnchor.m; path = tests/TestAnchor.m; sourceTree = "<group>"; };
+		506144080E589A2E003CCDB7 /* cocosnodeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosnodeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocosnodeTest.h; path = tests/cocosnodeTest.h; sourceTree = "<group>"; };
+		5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocosnodeTest.m; path = tests/cocosnodeTest.m; sourceTree = "<group>"; };
 		50637A150E95397A000C9182 /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
 		50637A160E95397A000C9182 /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
@@ -1637,7 +1637,7 @@
 				50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */,
 				50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */,
 				3170705B0E2940C900DD3360 /* AccelViewportDemo.app */,
-				506144080E589A2E003CCDB7 /* AnchorDemo.app */,
+				506144080E589A2E003CCDB7 /* cocosnodeDemo.app */,
 				50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */,
 				506882110E95761200F943E5 /* AtlasDemo.app */,
 				50C195600EE4B57E00829067 /* ParallaxDemo.app */,
@@ -2046,8 +2046,8 @@
 				50C195640EE4B5B700829067 /* TestParallax.m */,
 				506881E60E9575E100F943E5 /* TestAtlas.h */,
 				506881E70E9575E100F943E5 /* TestAtlas.m */,
-				5061440B0E589A7B003CCDB7 /* TestAnchor.h */,
-				5061440C0E589A7B003CCDB7 /* TestAnchor.m */,
+				5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */,
+				5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */,
 				5078B5320E3E437F0004233A /* IntervalDemo.h */,
 				5078B5330E3E437F0004233A /* IntervalDemo.m */,
 				317070360E29409E00DD3360 /* AccelViewportDemo.h */,
@@ -2463,9 +2463,9 @@
 			productReference = 505CC1590F62BB03000EDF26 /* PerformanceTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		506143F10E589A2E003CCDB7 /* AnchorDemo */ = {
+		506143F10E589A2E003CCDB7 /* cocosnodeDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "AnchorDemo" */;
+			buildConfigurationList = 506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "cocosnodeDemo" */;
 			buildPhases = (
 				506143F40E589A2E003CCDB7 /* Resources */,
 				506143FB0E589A2E003CCDB7 /* Sources */,
@@ -2476,9 +2476,9 @@
 			dependencies = (
 				506143F20E589A2E003CCDB7 /* PBXTargetDependency */,
 			);
-			name = AnchorDemo;
+			name = cocosnodeDemo;
 			productName = playground;
-			productReference = 506144080E589A2E003CCDB7 /* AnchorDemo.app */;
+			productReference = 506144080E589A2E003CCDB7 /* cocosnodeDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506881F40E95761200F943E5 /* AtlasDemo */ = {
@@ -2833,7 +2833,7 @@
 				50DB1BB10E1C1E5900A89DFF /* ParticleDemo */,
 				317070410E2940C900DD3360 /* AccelViewportDemo */,
 				5078B5170E3E43540004233A /* IntervalDemo */,
-				506143F10E589A2E003CCDB7 /* AnchorDemo */,
+				506143F10E589A2E003CCDB7 /* cocosnodeDemo */,
 				506881F40E95761200F943E5 /* AtlasDemo */,
 				50C1953E0EE4B57E00829067 /* ParallaxDemo */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dDemo */,
@@ -3516,7 +3516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				506143FD0E589A2E003CCDB7 /* main.m in Sources */,
-				5061440D0E589A7B003CCDB7 /* TestAnchor.m in Sources */,
+				5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4232,7 +4232,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AnchorDemo;
+				PRODUCT_NAME = cocosnodeDemo;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -4257,7 +4257,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AnchorDemo;
+				PRODUCT_NAME = cocosnodeDemo;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -5280,7 +5280,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "AnchorDemo" */ = {
+		506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "cocosnodeDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				506144060E589A2E003CCDB7 /* Debug */,

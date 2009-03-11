@@ -9,31 +9,32 @@
 }
 @end
 
-@interface AnchorDemo : Layer
+@interface TestDemo : Layer
 {
-	Sprite * grossini;
-	Sprite *tamara;
 }
--(void) centerSprites;
 -(NSString*) title;
 @end
 
-@interface Anchor1 : AnchorDemo
-{
-}
+@interface Test1 : TestDemo
+{}
 @end
 
-@interface Anchor2 : AnchorDemo
-{
-}
+@interface Test2 : TestDemo
+{}
 @end
 
-@interface Anchor3 : AnchorDemo
-{
-}
+@interface Test3 : TestDemo
+{}
 @end
 
-@interface Anchor4 : AnchorDemo
-{
-}
+@interface Test4 : TestDemo
+{}
+@end
+
+@interface Test5 : TestDemo
+{}
+@end
+
+@interface Test6 : TestDemo
+{}
 @end

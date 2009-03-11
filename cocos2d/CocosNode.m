@@ -113,6 +113,8 @@
 	// timers
 	[scheduledSelectors release];
 	scheduledSelectors = nil;
+	
+	[children makeObjectsPerformSelector:@selector(cleanup)];
 }
 
 - (NSString*) description
@@ -163,7 +165,7 @@
 
 -(id) add: (CocosNode*) child z:(int)z tag:(int) aTag
 {
-	CCLOG(@"add:child:z:tag is deprecated");
+	CCLOG(@"add:z:tag: is deprecated. Use addChild:z:tag:");
 	return [self addChild:child z:z tag:aTag];
 }
 /* Add logic MUST only be on this selector
@@ -190,7 +192,7 @@
 
 -(id) add: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
 {
-	CCLOG(@"add:child:z:tag:parallaxRatio is deprecated");
+	CCLOG(@"add:z:tag:parallaxRatio: is deprecated. Use addChild:z:parallaxRatio:");
 	return [self addChild:child z:z parallaxRatio:c];
 }
 -(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
@@ -204,7 +206,7 @@
 // add a node to the array
 -(id) add: (CocosNode*) child z:(int)z
 {
-	CCLOG(@"add:child:z: is deprecated");
+	CCLOG(@"add:z: is deprecated. Use addChild:z:");
 	return [self addChild:child z:z];
 }
 -(id) addChild: (CocosNode*) child z:(int)z
@@ -215,7 +217,7 @@
 
 -(id) add: (CocosNode*) child
 {
-	CCLOG(@"add:child is deprecated");
+	CCLOG(@"add: is deprecated. Use addChild:");
 	return [self addChild:child];
 }
 -(id) addChild: (CocosNode*) child
@@ -227,12 +229,12 @@
 
 -(void) remove: (CocosNode*)child
 {
-	CCLOG(@"remove: is deprecated");
+	CCLOG(@"remove: is deprecated. Use removeChild:cleanup:");
 	return [self removeChild:child cleanup:NO];
 }
 -(void) removeAndStop: (CocosNode*)child
 {
-	CCLOG(@"removeAndStop: is deprecated");
+	CCLOG(@"removeAndStop: is deprecated. Use removeChild:cleanup:");
 	return [self removeChild:child cleanup:YES];
 }
 /* Remove logic MUST only be on this selector
@@ -249,12 +251,12 @@
 
 -(void) removeByTag:(int) aTag
 {
-	CCLOG(@"removeByTag is deprecated");
+	CCLOG(@"removeByTag: is deprecated. Use removeChildByTag:cleanup:");
 	return [self removeChildByTag:aTag cleanup:NO];
 }
 -(void) removeAndStopByTag:(int) aTag
 {
-	CCLOG(@"removeAndStopByTag is deprecated");
+	CCLOG(@"removeAndStopByTag: is deprecated. Use removeChildByTag:cleanup:");
 	return [self removeChildByTag:aTag cleanup:YES];
 }
 -(void) removeChildByTag:(int)aTag cleanup:(BOOL)cleanup
@@ -267,12 +269,12 @@
 
 -(void) removeAll
 {
-	CCLOG(@"removeAll is deprecated");
+	CCLOG(@"removeAll is deprecated. Use removeAllChildrenWithCleanup:");
 	return [self removeAllChildrenWithCleanup:NO];
 }
 -(void) removeAndStopAll
 {
-	CCLOG(@"removeAndStopAll is deprecated");
+	CCLOG(@"removeAndStopAll is deprecated. Use removeAllChildrenCleanup:");
 	return [self removeAllChildrenWithCleanup:YES];
 }
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
@@ -292,7 +294,7 @@
 
 -(CocosNode*) getByTag:(int) aTag
 {
-	CCLOG(@"getByTag is deprecated");
+	CCLOG(@"getByTag: is deprecated. Use getChildByTag:");
 	return [self getChildByTag:aTag];
 }
 -(CocosNode*) getChildByTag:(int) aTag
@@ -540,10 +542,11 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
+#ifdef DEBUG
 	if ( [actions containsObject:action] || [actionsToAdd containsObject:action] ) {
-		CCLOG(@"action already scheduled");
-		return action;
+		CCLOG(@"WARNING: action already scheduled.");
 	}
+#endif
 	
 	action.target = self;
 	[action start];

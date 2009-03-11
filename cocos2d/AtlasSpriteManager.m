@@ -167,8 +167,9 @@ const int defaultCapacity = 29;
  */
 -(id) addChild:(AtlasSprite*)child z:(int)z tag:(int) aTag
 {
+	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
+	
 	[child setIndex: [self indexForNewChild] ];
-
 	[child updateAtlas];
 
 	mTotalSprites++;
