@@ -688,6 +688,8 @@ static Director *_sharedDirector = nil;
 
 - (void)startAnimation
 {
+	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
+
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
 		NSException* myException = [NSException
 									exceptionWithName:@"GetTimeOfDay"
@@ -695,6 +697,7 @@ static Director *_sharedDirector = nil;
 									userInfo:nil];
 		@throw myException;
 	}
+	
 	
 
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
@@ -863,7 +866,10 @@ static Director *_sharedDirector = nil;
 	if(( self = [super init] )) {
 		isRunning = NO;
 		
-		// first scene will be created using this autorelease pool
+		// XXX:
+		// XXX: Don't create any autorelease object before calling "fast director"
+		// XXX: else it will be leaked
+		// XXX:
 		autoreleasePool = [NSAutoreleasePool new];
 	}
 
@@ -872,8 +878,10 @@ static Director *_sharedDirector = nil;
 
 - (void) startAnimation
 {
-	// release the autoreleased objects that were created
-	// in the first scene
+	// XXX:
+	// XXX: release autorelease objects created
+	// XXX: between "use fast director" and "runWithScene"
+	// XXX:
 	[autoreleasePool release];
 	autoreleasePool = nil;
 
@@ -890,6 +898,8 @@ static Director *_sharedDirector = nil;
 	while (isRunning) {
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
+
+		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 
 		if (paused) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
