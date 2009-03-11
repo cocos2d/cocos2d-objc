@@ -317,10 +317,10 @@ enum {
  The scheduled selector will be ticked every frame
  */
 -(void) schedule: (SEL) s;
-/** schedules a selector with an interval time.
+/** schedules a selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
  */
--(void) schedule: (SEL) s interval:(ccTime) i;
+-(void) schedule: (SEL) s interval:(ccTime)seconds;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
 @end
@@ -337,27 +337,26 @@ enum {
 -(void) setOpacity: (GLubyte) opacity;
 @end
 
+
 /// Size CocosNode protocol
 @protocol CocosNodeSize
 /// returns the size in pixels of the un-tranformted texture.
 -(CGSize) contentSize;
 @end
 
+
 /// Size CocosNode protocol
 @protocol CocosNodeRGB
-
 /** set the color of the node.
  * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
  */
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
-
 /// The red component of the node's color.
 -(GLubyte) r;
 /// The green component of the node's color.
 -(GLubyte) g;
 /// The blue component of the node's color.
 -(GLubyte) b;
-
 @end
 
 
