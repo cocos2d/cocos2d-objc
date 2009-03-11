@@ -16,6 +16,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
     * Alia Mc.Cutcheon: scale & rotate order fixed in CocosNode.m
 		category is cocosLive is UTF8'ized
+		added sanity in scheduler
     * Andy Fitter: patches for Texture2D
     * Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
     * Brian Hammond: patches for Demos

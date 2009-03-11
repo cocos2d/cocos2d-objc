@@ -12,7 +12,7 @@
  *
  */
 
-
+// cocos2d imports
 #import "ccMacros.h"
 #import "Scheduler.h"
 
@@ -49,21 +49,23 @@
 	return [self initWithTarget:t selector:s interval:0];
 }
 
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) i
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds
 {
-	if( ! (self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 	
-	interval = i;
-	elapsed = 0;
-	
-	NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
-	invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setTarget:t];
-	[invocation setSelector:s];
-	[invocation retainArguments];
-	
-	[invocation retain];
+		interval = seconds;
+		elapsed = 0;
+
+		NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
+		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
+		
+		invocation = [NSInvocation invocationWithMethodSignature:sig];
+		[invocation setTarget:t];
+		[invocation setSelector:s];
+		[invocation retainArguments];
+		
+		[invocation retain];
+	}
 	return self;
 }
 
