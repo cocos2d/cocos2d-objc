@@ -606,6 +606,18 @@
 		[self unschedule: @selector(step_:)];
 		return;
 	}
+    
+    // linear time scaling
+    if(timeScaleDuration) {
+        if(timeScale - timeScaleTarget < 0.1f) {
+            timeScale = timeScaleTarget;
+            timeScaleDuration = 0;
+        }
+        else
+            timeScale += (timeScaleTarget - timeScale) * dt / timeScaleDuration;
+    }
+    for(CocosNode *node = self; node; node = node.parent)
+        dt *= [node timeScale];
 	
 	// Assume the instructions inside [action step: dt] end up calling cleanup on
 	// the current node. This could happen, for example, if the action is a CallFunc
