@@ -417,7 +417,7 @@ static ccTexParams _texParamsCopy;
 @end
 
 //
-// Used to apply MIN/MAG filter
+// Use to apply MIN/MAG filter
 //
 @implementation Texture2D (GLFilter)
 
