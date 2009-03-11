@@ -29,7 +29,7 @@
 #define CCRANDOM_0_1() ((random() / (float)0x7fffffff ))
 
 /// converts degrees to radians
-#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0f * M_PI)
+#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0f * (float)M_PI)
 
 /// converts radians to degrees
-#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / M_PI * 180.0f)
+#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / (float)M_PI * 180.0f)
