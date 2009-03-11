@@ -63,6 +63,9 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
            Treat warnings as errors patch
            Action's elapsed is property patch
            MenuItemFont label can be changed
+		   Menu can be aligned in Columns
+		   MenuItem supports LabelAtlas
+		   Added RGB protocol in CocosNode, Atlas, Texture
     * mark at abitofthought: author of Fast Director
     * Mitch: patches for Menu
              author of MenuItemToggle

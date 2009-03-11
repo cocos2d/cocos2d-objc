@@ -49,15 +49,8 @@
 
 /** creates an sprite with a rect in the AtlasSpriteManage */
 -(AtlasSprite*) createSpriteWithRect:(CGRect)rect;
-/** adds an AtlasSprite to the Atlas */
--(id)addChild:(AtlasSprite *)newSprite;
-/** removes an AtlasSprite from the AtlasSpriteManager giving an AtlasSprite reference */
--(void)removeChild:(AtlasSprite *)sprite;
-/** removes all the AltasSprites from the AtlasSpriteManager */
--(void)removeAllChildren;
-/** removes a child given a certain index */
--(void)removeChildAtIndex:(NSUInteger)index;
-/** removes and stop child given a certain index */
--(void)removeAndStopChildAtIndex:(NSUInteger)index;
+
+/** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter */
+-(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup;
 
 @end
