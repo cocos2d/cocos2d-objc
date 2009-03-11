@@ -133,7 +133,7 @@ Class restartAction()
 
 -(id) createSpriteWithTag:(int)tag
 {
-	id sprite;
+	id sprite = nil;
 	switch (subtestNumber) {
 		case 1: {
 			sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];

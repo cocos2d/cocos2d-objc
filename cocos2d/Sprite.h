@@ -65,7 +65,7 @@
  * hasAlpha: whether or not the image contains alpha channel
  * @deprecated This method will be removed in v0.8. Use spriteWithFile instead. It supports PVRTC (non Raw) format
  */
-+ (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
++ (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w __attribute__ ((deprecated));
 /** creates an sprite from a CGImageRef image */
 + (id) spriteWithCGImage:(CGImageRef)image;
 
@@ -77,7 +77,7 @@
  * hasAlpha: whether or not the image contains alpha channel
  * @deprecated This method will be removed in v0.8. Use initWithFile instead. It supports PVRTC (non Raw) format
  */
-- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
+- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w __attribute__ ((deprecated));
 /** creates an sprite from a CGImageRef image */
 - (id) initWithCGImage:(CGImageRef)image;
 /** creates an sprite with a Texture2D instance */
