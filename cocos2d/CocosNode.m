@@ -166,6 +166,10 @@
 	CCLOG(@"add:child:z:tag is deprecated");
 	return [self addChild:child z:z tag:aTag];
 }
+/* Add logic MUST only be on this selector
+ * If a class want's to extend the 'addChild' behaviour it only needs
+ * to override this selector
+ */
 -(id) addChild: (CocosNode*) child z:(int)z tag:(int) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
@@ -231,6 +235,10 @@
 	CCLOG(@"removeAndStop: is deprecated");
 	return [self removeChild:child cleanup:YES];
 }
+/* Remove logic MUST only be on this selector
+ * If a class want's to extend the 'removeChild' behaviour it only needs
+ * to override this selector
+ */
 -(void) removeChild: (CocosNode*)child cleanup:(BOOL)cleanup
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
@@ -254,7 +262,7 @@
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
 
 	CocosNode *child = [self getChildByTag:aTag];
-	[self detachChild:child cleanup:cleanup];
+	[self removeChild:child cleanup:cleanup];
 }
 
 -(void) removeAll
@@ -416,6 +424,7 @@
 	float parallaxOffsetX = 0;
 	float parallaxOffsetY = 0;
 	
+	// XXX: Parallax code should be moved to a ParallaxNode node
 	if( (parallaxRatioX != 1.0f || parallaxRatioY != 1.0) && parent ) {
 		parallaxOffsetX = -parent.position.x + parent.position.x * parallaxRatioX;
 		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;		
@@ -531,9 +540,10 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	// (vali) should this be added?
-	// if ( [actions containsObject:action] || [actionsToAdd containsObject:action] )
-	//   return nil;
+	if ( [actions containsObject:action] || [actionsToAdd containsObject:action] ) {
+		CCLOG(@"action already scheduled");
+		return action;
+	}
 	
 	action.target = self;
 	[action start];

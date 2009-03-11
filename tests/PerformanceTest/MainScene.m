@@ -212,7 +212,7 @@ Class restartAction()
 		case 1:
 		case 4:
 		case 7:
-			[parent removeByTag:tag+100];
+			[parent removeChildByTag:tag+100 cleanup:YES];
 			break;
 		case 2:
 		case 3:
@@ -220,7 +220,7 @@ Class restartAction()
 		case 6:
 		case 8:
 		case 9:
-			[sheet removeAndStopChildAtIndex:tag];
+			[sheet removeChildAtIndex:tag cleanup:YES];
 			break;
 		default:
 			break;

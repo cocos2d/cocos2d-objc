@@ -162,20 +162,23 @@ const int defaultCapacity = 29;
 	return [AtlasSprite spriteWithRect:rect spriteManager:self];
 }
 
--(id) addChild:(AtlasSprite*) node
+/*
+ * override add:
+ */
+-(id) addChild:(AtlasSprite*)child z:(int)z tag:(int) aTag
 {
-	[node setIndex: [self indexForNewChild] ];
+	[child setIndex: [self indexForNewChild] ];
 
-	[node updateAtlas];
+	[child updateAtlas];
 
 	mTotalSprites++;
-	return [super addChild:node];
+	return [super addChild:child z:z tag:aTag];
 }
 
--(void)removeChild: (AtlasSprite *)sprite
+-(void)removeChild: (AtlasSprite *)sprite cleanup:(BOOL)doCleanup
 {
 	int index= sprite.atlasIndex;
-	[super remove:sprite];
+	[super removeChild:sprite cleanup:doCleanup];
 
 	// update all sprites beyond this one
 	int count = [children count];
@@ -188,35 +191,14 @@ const int defaultCapacity = 29;
 	mTotalSprites--;
 }
 
--(void)removeAndStopChild: (AtlasSprite *)sprite
+-(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
 {
-	int index= sprite.atlasIndex;
-	[super removeAndStop:sprite];
-	
-	// update all sprites beyond this one
-	int count = [children count];
-	for(; index < count; index++)
-	{
-		AtlasSprite *other = (AtlasSprite *)[children objectAtIndex:index];
-		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
-		[other setIndex:index];
-	}	
-	mTotalSprites--;
+	[self removeChild:(AtlasSprite *)[children objectAtIndex:index] cleanup:doCleanup];
 }
 
--(void)removeChildAtIndex:(NSUInteger)index
+-(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	[self removeChild:(AtlasSprite *)[children objectAtIndex:index]];
-}
-
--(void)removeAndStopChildAtIndex:(NSUInteger)index
-{
-	[self removeAndStopChild:(AtlasSprite *)[children objectAtIndex:index]];
-}
-
--(void)removeAllChildren
-{
-	[super removeAll];
+	[super removeAllChildrenWithCleanup:doCleanup];
 	mTotalSprites = 0;
 }
 
