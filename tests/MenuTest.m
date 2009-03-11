@@ -263,7 +263,7 @@ enum {
      nil
     ]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
     
-	[self add: menu];
+	[self addChild: menu];
 	
 	return self;
 }
