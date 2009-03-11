@@ -24,16 +24,8 @@ enum {
 	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
 	MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+	MenuItem *item5 = [MenuItemFont itemFromString: @"Configuration" target: self selector:@selector(menuCallbackConfig:)];
 	
-	id t1 = [MenuItemFont itemFromString: @"Volume Off"];
-	id t2 = [MenuItemFont itemFromString: @"Volume 33%"];
-	id t3 = [MenuItemFont itemFromString: @"Volume 66%"];
-	id t4 = [MenuItemFont itemFromString: @"Volume 100%"];
-	MenuItemToggle *item5 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallbackVolume:) items:t1,t2,t3,t4,nil];
-
-	// you can change the one of the items by doing this
-	item5.selectedIndex = 2;
-
 	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	[[item6 label] setRGB:255:0:32];
@@ -60,13 +52,9 @@ enum {
 	[(MultiplexLayer*)parent switchTo:1];
 }
 
--(void) menuCallbackVolume:(id) sender
+-(void) menuCallbackConfig:(id) sender
 {
-
-//	if( [sender selectedIndex] == 3 )
-//		[sender setIsEnabled:NO];
-
-	NSLog(@"selected item: %@ index:%d", [sender selectedItem], [sender selectedIndex] );
+	[(MultiplexLayer*)parent switchTo:3];
 }
 
 -(void) menuCallbackDisabled:(id) sender {
@@ -202,6 +190,103 @@ enum {
 @end
 
 
+@implementation Layer4
+-(id) init
+{
+	[super init];
+
+	[MenuItemFont setFontName: @"American Typewriter"];
+	[MenuItemFont setFontSize:18];
+	MenuItemFont *title1 = [MenuItemFont itemFromString: @"Sound"];
+    [title1 setIsEnabled:NO];
+	[MenuItemFont setFontName: @"Marker Felt"];
+	[MenuItemFont setFontSize:34];
+    MenuItemToggle *item1 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+                             [MenuItemFont itemFromString: @"On"],
+                             [MenuItemFont itemFromString: @"Off"],
+                             nil];
+    
+	[MenuItemFont setFontName: @"American Typewriter"];
+	[MenuItemFont setFontSize:18];
+	MenuItemFont *title2 = [MenuItemFont itemFromString: @"Music"];
+    [title2 setIsEnabled:NO];
+	[MenuItemFont setFontName: @"Marker Felt"];
+	[MenuItemFont setFontSize:34];
+    MenuItemToggle *item2 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+                             [MenuItemFont itemFromString: @"On"],
+                             [MenuItemFont itemFromString: @"Off"],
+                             nil];
+    
+	[MenuItemFont setFontName: @"American Typewriter"];
+	[MenuItemFont setFontSize:18];
+	MenuItemFont *title3 = [MenuItemFont itemFromString: @"Quality"];
+    [title3 setIsEnabled:NO];
+	[MenuItemFont setFontName: @"Marker Felt"];
+	[MenuItemFont setFontSize:34];
+    MenuItemToggle *item3 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+                             [MenuItemFont itemFromString: @"High"],
+                             [MenuItemFont itemFromString: @"Low"],
+                             nil];
+    
+	[MenuItemFont setFontName: @"American Typewriter"];
+	[MenuItemFont setFontSize:18];
+	MenuItemFont *title4 = [MenuItemFont itemFromString: @"Volume"];
+    [title4 setIsEnabled:NO];
+	[MenuItemFont setFontName: @"Marker Felt"];
+	[MenuItemFont setFontSize:34];
+    MenuItemToggle *item4 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+                             [MenuItemFont itemFromString: @"Off"],
+                             [MenuItemFont itemFromString: @"33%"],
+                             [MenuItemFont itemFromString: @"66%"],
+                             [MenuItemFont itemFromString: @"100%"],
+                             nil];
+    // you can change the one of the items by doing this
+    item4.selectedIndex = 2;
+    
+    [MenuItemFont setFontName: @"Marker Felt"];
+	[MenuItemFont setFontSize:34];
+	MenuItemFont *back = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(backCallback:)];
+
+    
+	Menu *menu = [Menu menuWithItems:
+                  title1, title2,
+                  item1, item2,
+                  title3, title4,
+                  item3, item4,
+                  back, nil]; // 9 items.
+    [menu alignItemsInColumns:
+     [NSNumber numberWithUnsignedInt:2],
+     [NSNumber numberWithUnsignedInt:2],
+     [NSNumber numberWithUnsignedInt:2],
+     [NSNumber numberWithUnsignedInt:2],
+     [NSNumber numberWithUnsignedInt:1],
+     nil
+    ]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
+    
+	[self add: menu];
+	
+	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+-(void) menuCallback: (id) sender
+{
+	NSLog(@"selected item: %@ index:%d", [sender selectedItem], [sender selectedIndex] );
+}
+
+-(void) backCallback: (id) sender
+{
+	[(MultiplexLayer*)parent switchTo:0];
+}
+
+@end
+
+
+
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
@@ -230,7 +315,7 @@ enum {
 
 	Scene *scene = [Scene node];
 
-	MultiplexLayer *layer = [MultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], nil];
+	MultiplexLayer *layer = [MultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
 	[window makeKeyAndVisible];
