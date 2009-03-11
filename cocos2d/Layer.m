@@ -18,6 +18,10 @@
 
 #import "Layer.h"
 #import "Director.h"
+#import "ccMacros.h"
+
+#pragma mark -
+#pragma mark Layer
 
 @implementation Layer
 
@@ -67,9 +71,18 @@
 }
 @end
 
+#pragma mark -
+#pragma mark ColorLayer
+
+@interface ColorLayer (Private)
+-(void) updateColor;
+@end
+
 @implementation ColorLayer
 
-@synthesize color;
+// Opacity and RGB color protocol
+@synthesize r,g,b,opacity;
+
 
 - (id) init
 {
@@ -92,11 +105,16 @@
 
 - (id) initWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
 {
-	if( ! (self=[super init]) )
-		return nil;
-
-	[self changeColor: aColor];
-	[self initWidth:w height:h];
+	if( (self=[super init]) ) {
+		r = (aColor >> 24) & 0xff;
+		g = (aColor >> 16) & 0xff;
+		b = (aColor >> 8) & 0xff;
+		opacity = (aColor) & 0xff;
+		
+		[self updateColor];
+		
+		[self initWidth:w height:h];
+	}
 	return self;
 }
 
@@ -119,18 +137,8 @@
 	squareVertices[7] = h;
 }
 
-
-- (void) changeColor: (GLuint) aColor
+- (void) updateColor
 {
-	GLubyte r, g, b, a;
-	
-	color = aColor;
-	
-	r = (color>>24) & 0xff;
-	g = (color>>16) & 0xff;
-	b = (color>>8) & 0xff;
-	a = (color) & 0xff;
-
 	for( NSUInteger i=0; i < sizeof(squareColors) / sizeof(squareColors[0]);i++ )
 	{
 		if( i % 4 == 0 )
@@ -140,19 +148,22 @@
 		else if( i % 4 ==2  )
 			squareColors[i] = b;
 		else
-			squareColors[i] = a;
+			squareColors[i] = opacity;
 	}
+}
+
+-(void) setRGB: (GLubyte)rr :(GLubyte)gg :(GLubyte)bb
+{
+	r = rr;
+	g = gg;
+	b = bb;
+	[self updateColor];
 }
 
 -(void) setOpacity: (GLubyte) o
 {
-	GLuint c = (color & 0xffffff00) | o;
-	[self changeColor:c];
-}
-
--(GLubyte) opacity
-{
-	return (color & 0xff);
+	opacity = o;
+	[self updateColor];
 }
 
 - (void) initWidth: (GLfloat) w height:(GLfloat) h
@@ -179,7 +190,31 @@
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 }
+/** XXX Deprecated **/
+-(void) changeColor: (GLuint) aColor
+{
+	CCLOG(@"ColorLayer:changeColor is deprecated. using setRGB::: instead");
+	r = (aColor >> 24) & 0xff;
+	g = (aColor >> 16) & 0xff;
+	b = (aColor >> 8) & 0xff;
+	opacity = (aColor) & 0xff;	
+	[self updateColor];
+}
+
+//-(void) setColor:(GLuint)aColor
+//{
+//	return [self changeColor:aColor];
+//}
+-(GLuint) color
+{
+	GLuint ret;
+	ret = (r << 24) | (g << 16) | (b << 8) | opacity;
+	return ret;
+}
 @end
+
+#pragma mark -
+#pragma mark MultiplexLayer
 
 @implementation MultiplexLayer
 +(id) layerWithLayers: (Layer*) layer, ... 

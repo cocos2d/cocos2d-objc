@@ -10,7 +10,7 @@
 
 enum
 {
-	kTagSprite = 0xaabbccdd,
+	kTagSprite = 1,
 };
 
 @implementation MainLayer
