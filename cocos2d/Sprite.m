@@ -143,6 +143,12 @@
 	[animations setObject:anim forKey:[anim name]];
 }
 
+-(Animation *)animationByName: (NSString*) animationName
+{
+	NSAssert( animationName != nil, @"animationName parameter must be non nil");
+    return [animations objectForKey:animationName];
+}
+
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
 {
 	if( ! animations )
