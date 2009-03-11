@@ -41,11 +41,7 @@
 {
 	self = [super init];
 	if( self ) {
-		
-		texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
-		
-		CGSize s = texture.contentSize;
-		transformAnchor = cpv( s.width/2, s.height/2);
+		self.texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
 	}
 	
 	return self;
@@ -62,11 +58,7 @@
 {
 	self=[super init];
 	if( self ) {
-		
-		texture = [[[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w] retain];
-		
-		CGSize s = texture.contentSize;
-		transformAnchor = cpv( s.width/2, s.height/2);
+		self.texture = [[[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w] retain];
 		
 		// lazy alloc
 		animations = nil;
@@ -86,10 +78,7 @@
 {
 	self = [super init];
 	if( self ) {
-		texture = [[[TextureMgr sharedTextureMgr] addCGImage: image] retain];
-		
-		CGSize s = texture.contentSize;
-		transformAnchor = cpv( s.width/2, s.height/2);
+		self.texture = [[[TextureMgr sharedTextureMgr] addCGImage: image] retain];
 		
 		// lazy alloc
 		animations = nil;
@@ -109,16 +98,22 @@
 {
 	self = [super init];
 	if( self ) {
-		texture = [tex retain];
-		
-		CGSize s = texture.contentSize;
-		transformAnchor = cpv( s.width/2, s.height/2);
+		self.texture = [tex retain];
 		
 		// lazy alloc
 		animations = nil;
 	}
 	return self;
 }	
+
+#pragma mark Sprite - TextureNode override
+
+-(void) setTexture: (Texture2D *) aTexture
+{
+	super.texture = aTexture;
+	CGSize s = aTexture.contentSize;
+	self.transformAnchor = cpv(s.width/2, s.height/2);
+}
 
 #pragma mark Sprite
 
