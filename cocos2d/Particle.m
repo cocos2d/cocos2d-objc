@@ -173,6 +173,23 @@
 
 -(void) step: (ccTime) dt
 {
+    if(timeScaleDuration) {
+        if(timeScale - timeScaleTarget < 0.1f) {
+            timeScale = timeScaleTarget;
+            timeScaleDuration = 0;
+        }
+        else
+            timeScale += (timeScaleTarget - timeScale) * dt / timeScaleDuration;
+    }
+    for(CocosNode *node = self; node; node = node.parent)
+        dt *= [node timeScale];
+    
+    if(dt)
+        [self update:dt];
+}
+
+-(void) update: (ccTime) dt
+{
 	if( active && emissionRate ) {
 		float rate = 1.0f / emissionRate;
 		emitCounter += dt;
