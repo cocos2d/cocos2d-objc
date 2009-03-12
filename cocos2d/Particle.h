@@ -178,7 +178,7 @@ typedef struct sParticle
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Update all particles
--(void) step:(ccTime)dt;
+-(void) update:(ccTime)dt;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
 //! draw all the particles
