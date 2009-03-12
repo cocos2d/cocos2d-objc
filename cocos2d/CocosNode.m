@@ -39,7 +39,7 @@
 
 @implementation CocosNode
 
-@synthesize rotation, timeScale, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
+@synthesize rotation, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent, children;
@@ -94,11 +94,7 @@
 	// default.
 	// "whole screen" objects should set it to NO, like Scenes and Layers
 	relativeTransformAnchor = YES;
-    
-    // default time scale.
-    timeScale = 1;
-    timeScaleDuration = 0;
-	
+
 	return self;
 }
 
@@ -569,31 +565,66 @@
 -(void) stopAllActions
 {
 	[actionsToAdd removeAllObjects];
-	
+
 	[actionsToRemove removeAllObjects];
 	[actionsToRemove addObjectsFromArray:actions];
 }
 
 -(void) stopAction: (Action*) action
 {
-	if( [actionsToRemove containsObject:action] ) {
-		// do nothing
-	} else if( [actionsToAdd containsObject:action] ) {
-		[actionsToAdd removeObject:action];
-	} else if( [actions containsObject:action] ) {
+	if( [actions containsObject:action] )
 		[actionsToRemove addObject:action];
+
+	else if( [actionsToAdd containsObject:action] )
+		[actionsToAdd removeObject:action];
+	else
+		CCLOG(@"stopAction: action not found!");
+}
+
+-(void) stopActionByTag:(int) aTag
+{
+	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	
+	// is running ?
+	for( Action *a in actions ) {
+		if( a.tag == aTag ) {
+			[actionsToRemove addObject:a];
+			return; 
+		}
 	}
+	// is going to be added ?
+	for( Action *a in actionsToAdd ) {
+		if( a.tag == aTag ) {
+			[actionsToAdd removeObject:a];
+			return;
+		}
+	}
+	CCLOG(@"stopActionByTag: action not found!");
+}
+
+-(Action*) getActionByTag:(int) aTag
+{
+	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	
+	// is running ?
+	for( Action *a in actions ) {
+		if( a.tag == aTag )
+			return a;
+	}
+
+	// is going to be added ?
+	for( Action *a in actionsToAdd ) {
+		if( a.tag == aTag )
+			return a;
+	}
+
+	CCLOG(@"getActionByTag: action not found");
+	return nil;
 }
 
 -(int) numberOfRunningActions
 {
 	return [actionsToAdd count]+[actions count];
-}
-
--(void) scaleTimeTo:(float)aTimeScale duration:(ccTime)aTimeScaleDuration
-{
-    timeScaleTarget = aTimeScale;
-    timeScaleDuration = aTimeScaleDuration;
 }
 
 -(void) step_: (ccTime) dt
@@ -615,19 +646,7 @@
 		[self unschedule: @selector(step_:)];
 		return;
 	}
-    
-    // linear time scaling
-    if(timeScaleDuration) {
-        if(timeScale - timeScaleTarget < 0.1f) {
-            timeScale = timeScaleTarget;
-            timeScaleDuration = 0;
-        }
-        else
-            timeScale += (timeScaleTarget - timeScale) * dt / timeScaleDuration;
-    }
-    for(CocosNode *node = self; node; node = node.parent)
-        dt *= node.timeScale;
-	
+ 	
 	// Assume the instructions inside [action step: dt] end up calling cleanup on
 	// the current node. This could happen, for example, if the action is a CallFunc
 	// which tells the current node's parent to removeAndStop our node.

@@ -1,4 +1,7 @@
-version 0.7.1 - ??
+version 0.7.1 - ??-Mar-2009
+ . Actions: added tags to actions (issue #222)
+ . Actions: Spawns can be Speeded (issue #257)
+ . Actions: Speed can be altered in runtime (part of issue #236)
  . AtlasSprite: new feature (issue #238)
  . CocosNode: Camera is lazy alloced (issue #94)
  . CocosNode: addChild, removeChild:cleanup, getChildByTag family functions (issue #253)
@@ -12,7 +15,7 @@ version 0.7.1 - ??
  . Demos: added performance test (issue #243)
  . Director: FastDirector doesn't leak autoreleased objects (issue #221)
  . Director: prevents calling startAnimation twice in a row (issue #215)
- . Menu: can be aligned in columns (issue #206)
+ . Menu: can be aligned in columns / rows. Updated menu example (issue #206)
  . Menu: MenuItem supports LabelAtlas (issue #235)
  . Scheduler: if signature is not correct Assert (issue #218)
  . Sprite: correct transform anchor point (issue #216)

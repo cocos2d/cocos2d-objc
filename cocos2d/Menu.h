@@ -37,11 +37,11 @@
 -(void) alignItemsHorizontally;
 
 /** align items in rows of columns */
--(void) alignItemsInColumns: (NSNumber *) columns, ...;
+-(void) alignItemsInColumns: (NSNumber *) columns, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInColumns: (NSNumber *) columns vaList: (va_list) args;
 
 /** align items in columns of rows */
--(void) alignItemsInRows: (NSNumber *) rows, ...;
+-(void) alignItemsInRows: (NSNumber *) rows, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
 
 

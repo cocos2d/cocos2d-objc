@@ -64,7 +64,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Treat warnings as errors patch
 		Action's elapsed is property patch
 		MenuItemFont label can be changed
-		Menu can be aligned in Columns
+		Menu can be aligned in Columns and Rows
 		MenuItem supports LabelAtlas
 		Added RGB protocol in CocosNode, Atlas, Texture
     * mark at abitofthought: author of Fast Director
@@ -85,6 +85,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
     * Steve Oldmeadow: patches for Texture2D
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
+		Actions can have tags
     * yarrington: patches for Director
 
 

@@ -99,17 +99,11 @@ enum {
 	
 	// actions
 	NSMutableArray *actions;
-	
-	// (vali) make the following 3 @private?
 	NSMutableArray *actionsToRemove;
 	NSMutableArray *actionsToAdd;
 	
 	// scheduled selectors
-	NSMutableDictionary *scheduledSelectors;
-    
-    // time scaling.
-    ccTime timeScaleDuration;
-    float timeScale, timeScaleTarget;
+	NSMutableDictionary *scheduledSelectors;    
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
@@ -118,8 +112,6 @@ enum {
 @property(readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor */
 @property(readwrite,assign) float scale, scaleX, scaleY;
-/** The time scale factor of the node. 1.0 is the default scale factor.  Higher scale causes time to progress faster while lower scale causes slowmotion. */
-@property(readwrite,assign) float timeScale;
 /** The parallax ratio of the node. 1.0 is the default ratio */
 @property(readwrite,assign) float parallaxRatio;
 /** The X parallax ratio of the node. 1.0 is the default ratio */
@@ -304,20 +296,18 @@ enum {
 -(Action*) runAction: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
-/** Removes one action from the running action list */
+/** Removes an action from the running action list */
 -(void) stopAction: (Action*) action;
+/** Removes an action from the running action list given its tag */
+-(void) stopActionByTag:(int) tag;
+/** Gets an action from the running action list given its tag */
+-(Action*) getActionByTag:(int) tag;
 /** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
  * Composable actions are counted as 1 action. Example:
  *    If you are running 1 Sequence of 7 actions, it will return 1.
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(int) numberOfRunningActions;
-/** Start time scaling on this node and its children.
- * Time scale values higher than 1 will speed up this node's actions' time progression relative to its siblings'.
- * Time scale values lower than 1 will make this node appear to run its actions in slow motion.
- */
--(void) scaleTimeTo:(float)aTimeScale duration:(ccTime)aTimeScaleDuration;
-
 
 // timers
 

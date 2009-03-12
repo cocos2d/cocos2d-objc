@@ -107,8 +107,8 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	// One way to obtain the menu is:
-	//    [self  getChildByTag:xxx]
+// One way to obtain the menu is:
+//	[self  getChildByTag:xxx]
 	id menu = [self getChildByTag:kTagMenu];
 	[menu setOpacity: 128];
 
@@ -129,10 +129,6 @@ enum {
 {
 	id menu = [self getChildByTag:kTagMenu];
 	[menu alignItemsVertically];
-
-// XXX: this method is deprecated and will be removed in v0.7
-//	[menu alignItemsVerticallyOld];
-
 }
 
 -(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
