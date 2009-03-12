@@ -322,25 +322,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
-	id move_back = [move reverse];
 
-	id move2 = [[move copy] autorelease];
-	id move_back2 = [[move_back copy] autorelease];
-
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move2, move_back2, nil];
-		
-	id a1 = [Speed actionWithAction: [RepeatForever actionWithAction:seq1] speed:1.0f];
-	id a2 = [Speed actionWithAction: [RepeatForever actionWithAction:seq2] speed:1.0f];
-
-	[a1 setTag:kTagAction1];
-	[a2 setTag:kTagAction1];
-	
-	[grossini runAction: a1 ];
-	[tamara runAction: a2];
-	
-	// sprite 3
 	// rotate and jump
 	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:cpv(-400,0) height:100 jumps:4];
 	IntervalAction *jump2 = [jump1 reverse];
@@ -350,9 +332,19 @@ Class restartAction()
 	id seq3_1 = [Sequence actions:jump2, jump1, nil];
 	id seq3_2 = [Sequence actions: rot1, rot2, nil];
 	id spawn = [Spawn actions:seq3_1, seq3_2, nil];
-	id action3 = [Speed actionWithAction: [RepeatForever actionWithAction:spawn] speed:1.0f];
-	[action3 setTag: kTagAction1];
-	[kathia runAction:action3];
+	id action = [Speed actionWithAction: [RepeatForever actionWithAction:spawn] speed:1.0f];
+	[action setTag: kTagAction1];
+	
+	id action2 = [[action copy] autorelease];
+	id action3 = [[action copy] autorelease];
+
+	[action2 setTag:kTagAction1];
+	[action3 setTag:kTagAction1];
+	
+	[grossini runAction: action2 ];
+	[tamara runAction: action3];
+	[kathia runAction:action];
+	
 	
 	[self schedule:@selector(altertime:) interval:1.0f];
 }
