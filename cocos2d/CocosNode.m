@@ -39,7 +39,7 @@
 
 @implementation CocosNode
 
-@synthesize rotation, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
+@synthesize rotation, timeScale, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent, children;
@@ -617,7 +617,7 @@
             timeScale += (timeScaleTarget - timeScale) * dt / timeScaleDuration;
     }
     for(CocosNode *node = self; node; node = node.parent)
-        dt *= [node timeScale];
+        dt *= node.timeScale;
 	
 	// Assume the instructions inside [action step: dt] end up calling cleanup on
 	// the current node. This could happen, for example, if the action is a CallFunc

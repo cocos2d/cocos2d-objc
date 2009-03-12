@@ -106,6 +106,10 @@ enum {
 	
 	// scheduled selectors
 	NSMutableDictionary *scheduledSelectors;
+    
+    // time scaling.
+    ccTime timeScaleDuration;
+    float timeScale, timeScaleTarget;
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
@@ -114,6 +118,8 @@ enum {
 @property(readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor */
 @property(readwrite,assign) float scale, scaleX, scaleY;
+/** The time scale factor of the node. 1.0 is the default scale factor.  Higher scale causes time to progress faster while lower scale causes slowmotion. */
+@property(readwrite,assign) float timeScale;
 /** The parallax ratio of the node. 1.0 is the default ratio */
 @property(readwrite,assign) float parallaxRatio;
 /** The X parallax ratio of the node. 1.0 is the default ratio */

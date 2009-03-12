@@ -182,7 +182,7 @@
             timeScale += (timeScaleTarget - timeScale) * dt / timeScaleDuration;
     }
     for(CocosNode *node = self; node; node = node.parent)
-        dt *= [node timeScale];
+        dt *= node.timeScale;
     
     if(dt)
         [self update:dt];
