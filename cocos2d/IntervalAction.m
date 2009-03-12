@@ -349,8 +349,10 @@
 -(void) start
 {
 	[super start];
-	[target runAction: one];
-	[target runAction: two];
+	one.target = target;
+	two.target = target;
+	[one start];
+	[two start];
 }
 
 -(BOOL) isDone
@@ -359,7 +361,8 @@
 }
 -(void) update: (ccTime) t
 {
-	// ignore. not needed
+	[one update:t];
+	[two update:t];
 }
 
 - (IntervalAction *) reverse
@@ -859,59 +862,6 @@
 -(IntervalAction*) reverse
 {
 	return [AccelDeccel actionWithAction: [other reverse]];
-}
-@end
-
-//
-// Speed
-//
-@implementation Speed
-@synthesize speed;
-+(id) actionWithAction: (IntervalAction*) action speed:(ccTime) s
-{
-	return [[[self alloc] initWithAction: action speed:s] autorelease ];
-}
-
--(id) initWithAction: (IntervalAction*) action speed:(ccTime) s
-{
-	NSAssert( action!=nil, @"Speed: argument action must be non-nil");
-
-	if( !(self=[super initWithDuration: action.duration / s ]) )
-		return nil;
-	
-	other = [action retain];
-	
-	speed = s;
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	Action *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] speed:speed];
-	return copy;
-}
-
--(void) dealloc
-{
-	[other release];
-	[super dealloc];
-}
-
--(void) start
-{
-	[super start];
-	other.target = target;
-	[other start];
-}
-
--(void) update: (ccTime) t
-{
-	[other update: t];
-}
-
--(IntervalAction*) reverse
-{
-	return [Speed actionWithAction: [other reverse] speed:speed];
 }
 @end
 
