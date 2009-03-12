@@ -286,24 +286,6 @@ __attribute__((deprecated))
 -(id) initWithAction: (IntervalAction*) action;
 @end
 
-/** Changes the speed of an action, making it take longer (speed>1)
- or less (speed<1)
- */
-@interface Speed : IntervalAction <NSCopying>
-{
-	ccTime speed;
-	IntervalAction * other;
-}
-/** speed factor. Can be changed in runtime */
-@property (readwrite) ccTime speed;
-
-/** creates the action */
-+(id) actionWithAction: (IntervalAction*) action speed:(ccTime)s;
-/** initializes the action */
--(id) initWithAction: (IntervalAction*) action speed:(ccTime)s;
-@end
-
-
 /** Delays the action a certain amount of seconds
 */
 @interface DelayTime : IntervalAction <NSCopying>
