@@ -94,6 +94,10 @@
 	// default.
 	// "whole screen" objects should set it to NO, like Scenes and Layers
 	relativeTransformAnchor = YES;
+    
+    // default time scale.
+    timeScale = 1;
+    timeScaleDuration = 0;
 	
 	return self;
 }
