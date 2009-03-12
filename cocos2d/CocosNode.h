@@ -360,6 +360,21 @@ enum {
 -(GLubyte) b;
 @end
 
+/// Nodes supports frames protocol
+@protocol CocosNodeFrames
+/** sets a new display frame to the node */
+-(void) setDisplayFrame:(id)newFrame;
+/** returns the current displayed frame */
+-(BOOL) isFrameDisplayed:(id)frame;
+/** returns the current displayed frame */
+-(id) displayFrame;
+@end
+
+/// Objects that supports the Animation protocol
+@protocol CocosAnimation
+-(NSArray*) frames;
+-(float) delay;
+@end
 
 
 

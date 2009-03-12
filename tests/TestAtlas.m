@@ -16,11 +16,13 @@ static NSString *transitions[] = {
 			@"Atlas3",
 			@"Atlas4",
 			@"Atlas5",
+			@"Atlas6",
 };
 
 enum {
 	kTagTileMap = 1,
 	kTagSpriteManager = 1,
+	kTagAnimation1 = 1,
 };
 
 Class nextAction()
@@ -388,6 +390,47 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"AtlasSprite (tap screen)";
+}
+@end
+
+#pragma mark Example Atlas 6
+
+@implementation Atlas6
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];
+		
+		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		
+		AtlasAnimation *animation = [AtlasAnimation animationWithSpriteManager:mgr tag:kTagAnimation1 delay:0.2f];
+		for(int i=0;i<14;i++) {
+			int x= i % 5;
+			int y= i / 5;
+			[animation addFrameWithRect: CGRectMake(x*85, y*121, 85, 121) ];
+
+		}
+		
+		[mgr addChild:sprite];
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		sprite.position = cpv( s.width /2, s.height/2);
+		
+		id action = [Animate actionWithAnimation: animation];
+		
+		[sprite runAction:action];
+		
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"AtlasSprite: Animation";
 }
 @end
 

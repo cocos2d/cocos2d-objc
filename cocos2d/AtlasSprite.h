@@ -16,17 +16,22 @@
 #import "TextureAtlas.h"
 
 @class AtlasSpriteManager;
-@class NSDictionary;
+
+#pragma mark AltasSprite
 
 /** AtlasSprite object is an sprite that is rendered using a TextureAtlas object.
  * In particular, the AtlasSpriteManger renders it. It supports all the basic CocosNode transformations like
  * scale, position, rotation, visibility, etc.
  */
-@interface AtlasSprite : CocosNode <CocosNodeSize>
+@interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames>
 {
+	// weak reference
 	TextureAtlas *mAtlas;
 	int mAtlasIndex;
-
+	
+	// spriteManager. weak ref
+	AtlasSpriteManager *spriteManager;
+	
 	// texture pixels
 	CGRect mRect;
 
@@ -62,4 +67,36 @@
 /** updates the texture rect of the AtlasSprite */
 -(void) setTextureRect:(CGRect) rect;
 
+@end
+
+#pragma mark AtlasAnimation
+/** an Animation object used within Sprites to perform animations */
+@interface AtlasAnimation : NSObject <CocosAnimation>
+{
+	int					tag;
+	float				delay;
+	NSMutableArray		*frames;
+	AtlasSpriteManager	*spriteManager;
+}
+
+@property (readwrite) int tag;
+
+/* cocos animation */
+@property (readwrite,assign) float delay;
+@property (readwrite,retain) NSMutableArray *frames;
+
+/** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames */
++(id) animationWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay;
+
+/** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames and the frames from altas rects */
++(id) animationWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay rects:rect1,... NS_REQUIRES_NIL_TERMINATION;
+
+/** initializes an Animation with an AtlasSpriteManger, a tag and delay between frames */
+-(id) initWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay;
+
+/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the frames from altas rects */
+-(id) initWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay firstRect:(void*)rect vaList:(va_list) args;
+
+/** adds a frame to an Animation */
+-(void) addFrameWithRect:(CGRect)rect;
 @end

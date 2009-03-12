@@ -32,12 +32,12 @@
 @implementation Sprite
 
 #pragma mark Sprite - image file
-+ (id) spriteWithFile: (NSString*) filename
++ (id) spriteWithFile:(NSString*) filename
 {
 	return [[[self alloc] initWithFile:filename] autorelease];
 }
 
-- (id) initWithFile: (NSString*) filename
+- (id) initWithFile:(NSString*) filename
 {
 	self = [super init];
 	if( self ) {
@@ -155,6 +155,25 @@
 		return;
 	[texture release];
 	texture = [tex retain];
+}
+
+//
+// CocosNodeFrames protocol
+//
+-(void) setDisplayFrame:(id)frame
+{
+	if( frame == texture )
+		return;
+	[texture release];
+	texture = [frame retain];	
+}
+-(BOOL) isFrameDisplayed:(id)frame
+{
+	return texture == frame;
+}
+-(id) displayFrame
+{
+	return texture;
 }
 @end
 

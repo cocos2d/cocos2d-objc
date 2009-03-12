@@ -15,6 +15,7 @@
 #import "AtlasSpriteManager.h"
 #import "AtlasSprite.h"
 
+#pragma mark -
 #pragma mark AltasSprite
 
 @interface AtlasSprite (Private)
@@ -36,15 +37,12 @@
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
-		mAtlas = [manager atlas];	// XXX: shall be retained ? probably not
-
-		mRect = rect;
+		mAtlas = [manager atlas];	// weak reference. Don't release
+		spriteManager = manager;	// weak reference. Dont' release
 		
 		dirty = YES;
 
-		transformAnchor = cpv( rect.size.width / 2, rect.size.height /2 );
-
-		[self updateTextureCoords];
+		[self setTextureRect:rect];
 	}
 
 	return self;
@@ -60,16 +58,15 @@
 	[super dealloc];
 }
 
-/////////////////////////////////////////////////
 -(void)setTextureRect:(CGRect) rect
 {
 	mRect = rect;
+	transformAnchor = cpv( mRect.size.width / 2, mRect.size.height /2 );
 
 	[self updateTextureCoords];
 	[self updateAtlas];
 }
 
-/////////////////////////////////////////////////
 -(void)updateTextureCoords
 {
 	float atlasWidth = mAtlas.texture.pixelsWide;
@@ -90,7 +87,6 @@
 	mTexCoords = newCoords;
 }
 
-/////////////////////////////////////////////////
 -(void)updatePosition
 {
 	// algorithm from pyglet ( http://www.pyglet.org ) 
@@ -207,54 +203,36 @@
 {
 	[super setPosition:pos];
 	dirty = YES;
-	
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
 	dirty = YES;
-
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
 	dirty = YES;
-
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
 	dirty = YES;
-
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
 	dirty = YES;
-
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
 -(void)setTransformAnchor:(cpVect)anchor
 {
 	[super setTransformAnchor:anchor];
 	dirty = YES;
-
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
 -(void)setRelativeTransformAnchor:(BOOL)relative
@@ -266,12 +244,108 @@
 {
 	[super setVisible:v];
 	dirty = YES;
-//	[self updatePosition];
-//	[self updateAtlas];
 }
 
+//
+// CocosNodeSize protocol
+//
 -(CGSize)contentSize
 {
 	return mRect.size;
+}
+
+//
+// CocosNodeFrames protocol
+//
+-(void) setDisplayFrame:(id)newFrame
+{
+	AtlasSprite *spr = (AtlasSprite*)newFrame;
+	[self setTextureRect: [spr textureRect]];
+}
+-(BOOL) isFrameDisplayed:(id)frame 
+{
+	AtlasSprite *spr = (AtlasSprite*)frame;
+	CGRect r = [spr textureRect];
+	return ( r.size.width == mRect.size.width &&
+			r.size.height == mRect.size.height &&
+			r.origin.x == mRect.origin.x &&
+			r.origin.y == mRect.origin.y );
+}
+-(id) displayFrame
+{
+	// XXX: hack
+	// returns a copy of self since setDisplayFrame doesn't set a new frame
+	// instead if modifies self.mrect and self.mrect is used to compare if
+	// the display frame is equal to a saved one.
+	return [[[[self class]  alloc] initWithRect:mRect spriteManager:spriteManager] autorelease];
+}
+@end
+
+
+#pragma mark -
+#pragma mark AltasAnimation
+
+@implementation AtlasAnimation
+@synthesize tag, delay, frames;
+
++(id) animationWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)aTag delay:(float)d rects:rect1,...
+{
+	va_list args;
+	va_start(args,rect1);
+	
+	id s = [[[self alloc] initWithSpriteManager:mgr tag:aTag delay:d firstRect:rect1 vaList:args] autorelease];
+	
+	va_end(args);
+	return s;
+}
+
++(id) animationWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)aTag delay:(float)d
+{
+	return [[[self alloc] initWithSpriteManager:mgr tag:aTag delay:d] autorelease];
+}
+
+-(id) initWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)t delay:(float)d
+{
+	return [self initWithSpriteManager:mgr tag:t delay:d firstRect:nil vaList:nil];
+}
+
+/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the frames from altas rects */
+-(id) initWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)t delay:(float)d firstRect:(void*)rect vaList:(va_list)args
+{
+	if( (self=[super init]) ) {
+	
+		spriteManager = mgr;
+		tag = t;
+		frames = [[NSMutableArray array] retain];
+		delay = d;
+		
+		if( rect ) {
+			AtlasSprite *spr = [AtlasSprite spriteWithRect:*((CGRect*)rect) spriteManager:mgr];
+			[frames addObject:spr];
+			
+			CGRect *rect2 = va_arg(args, CGRect*);
+			while(rect2) {
+				spr = [AtlasSprite spriteWithRect:*rect2 spriteManager:mgr];
+				[frames addObject:spr];
+				
+				rect2 = va_arg(args, CGRect*);
+			}	
+		}
+	}
+	return self;
+}
+
+-(void) dealloc
+{
+	[frames release];
+	[super dealloc];
+}
+
+
+
+-(void) addFrameWithRect:(CGRect)rect
+{
+	AtlasSprite *spr = [AtlasSprite spriteWithRect:rect spriteManager:spriteManager];
+	[frames addObject:spr];
 }
 @end

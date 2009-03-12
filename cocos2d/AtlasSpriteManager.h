@@ -16,6 +16,8 @@
 #import "TextureAtlas.h"
 #import "ccMacros.h"
 
+#pragma mark AtlasSpriteManager
+
 @class AtlasSprite;
 
 /** AtlasSpriteManager is the object that draws all the AtlasSprite objects
