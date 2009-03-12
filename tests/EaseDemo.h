@@ -48,3 +48,7 @@
 @interface SpriteEaseSineInOut : SpriteDemo
 {}
 @end
+
+@interface Speed1 : SpriteDemo
+{}
+@end

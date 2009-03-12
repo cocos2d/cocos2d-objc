@@ -324,9 +324,9 @@
 	two = two_;
 
 	if( d1 > d2 )
-		two = [Sequence actions: two_, [DelayTime actionWithDuration: (d1-d2)], nil];
+		two = [Sequence actionOne: two_ two:[DelayTime actionWithDuration: (d1-d2)] ];
 	else if( d1 < d2)
-		one = [Sequence actions: one_, [DelayTime actionWithDuration: (d2-d1)], nil];
+		one = [Sequence actionOne: one_ two: [DelayTime actionWithDuration: (d2-d1)] ];
 	
 	[one retain];
 	[two retain];
@@ -355,10 +355,6 @@
 	[two start];
 }
 
--(BOOL) isDone
-{
-	return [one isDone] && [two isDone];	
-}
 -(void) update: (ccTime) t
 {
 	[one update:t];
