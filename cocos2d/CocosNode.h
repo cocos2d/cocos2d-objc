@@ -312,6 +312,11 @@ enum {
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(int) numberOfRunningActions;
+/** Start time scaling on this node and its children.
+ * Time scale values higher than 1 will speed up this node's actions' time progression relative to its siblings'.
+ * Time scale values lower than 1 will make this node appear to run its actions in slow motion.
+ */
+-(void) scaleTimeTo:(float)aTimeScale duration:(ccTime)aTimeScaleDuration;
 
 
 // timers

@@ -586,6 +586,11 @@
 	return [actionsToAdd count]+[actions count];
 }
 
+-(void) scaleTimeTo:(float)aTimeScale duration:(ccTime)aTimeScaleDuration
+{
+    timeScaleTarget = aTimeScale;
+    timeScaleDuration = aTimeScaleDuration;
+}
 
 -(void) step_: (ccTime) dt
 {
