@@ -12,12 +12,11 @@
  *
  */
 
-#import <UIKit/UIKit.h>
+#import "CocosNode.h"
+#import "Action.h"
 
 #import "chipmunk.h"
 
-#import <OpenGLES/ES1/gl.h>
-#import "Action.h"
 
 #include <sys/time.h>
 
@@ -317,17 +316,17 @@ __attribute__((deprecated))
 @interface Animate : IntervalAction <NSCopying>
 {
 	Animation *animation;
-	Texture2D *origFrame;
+	id origFrame;
 	BOOL restoreOriginalFrame;
 }
 /** creates the action with an Animation and will restore the original frame when the animation is over */
-+(id) actionWithAnimation:(Animation*) a;
++(id) actionWithAnimation:(id<CocosAnimation>) a;
 /** initializes the action with an Animation and will restore the original frame when the animtion is over */
--(id) initWithAnimation:(Animation*) a;
+-(id) initWithAnimation:(id<CocosAnimation>) a;
 /** creates the action with an Animation */
-+(id) actionWithAnimation:(Animation*) a restoreOriginalFrame:(BOOL)b;
++(id) actionWithAnimation:(id<CocosAnimation>) a restoreOriginalFrame:(BOOL)b;
 /** initializes the action with an Animation */
--(id) initWithAnimation:(Animation*) a restoreOriginalFrame:(BOOL)b;
+-(id) initWithAnimation:(id<CocosAnimation>) a restoreOriginalFrame:(BOOL)b;
 @end
 
 

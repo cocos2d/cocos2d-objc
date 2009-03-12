@@ -936,23 +936,23 @@
 //
 @implementation Animate
 
-+(id) actionWithAnimation: (Animation*) a
++(id) actionWithAnimation: (id<CocosAnimation>) a
 {
 	return [[[self alloc] initWithAnimation: a restoreOriginalFrame:YES] autorelease];
 }
 
-+(id) actionWithAnimation: (Animation*) a restoreOriginalFrame:(BOOL)b
++(id) actionWithAnimation: (id<CocosAnimation>) a restoreOriginalFrame:(BOOL)b
 {
 	return [[[self alloc] initWithAnimation: a restoreOriginalFrame:b] autorelease];
 }
 
--(id) initWithAnimation: (Animation*) a
+-(id) initWithAnimation: (id<CocosAnimation>) a
 {
 	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
 	return [self initWithAnimation:a restoreOriginalFrame:YES];
 }
 
--(id) initWithAnimation: (Animation*) a restoreOriginalFrame:(BOOL) b
+-(id) initWithAnimation: (id<CocosAnimation>) a restoreOriginalFrame:(BOOL) b
 {
 	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
 
@@ -960,7 +960,7 @@
 		return nil;
 
 	restoreOriginalFrame = b;
-	animation = [a retain];
+	animation = [(NSObject*)a retain];
 	origFrame = nil;
 	return self;
 }
@@ -980,25 +980,18 @@
 -(void) start
 {
 	[super start];
-	Sprite *s = (Sprite*) target;
+	id<CocosNodeFrames> sprite = (id<CocosNodeFrames>) target;
 
-	[[s texture] retain];
 	[origFrame release];
-	origFrame = [s texture];
+
+	origFrame = [[sprite displayFrame] retain];
 }
 
 -(void) stop
 {
-	
 	if( restoreOriginalFrame ) {
-		Sprite *s = (Sprite*) target;
-
-		// XXX TODO should I retain ?
-		// XXX NO, I should not retain it
-		// TextureNode.texture shall be (retain) property
-		[origFrame retain];
-		[[s texture] release];
-		[s setTexture: origFrame];
+		id<CocosNodeFrames> sprite = (id<CocosNodeFrames>) target;
+		[sprite setDisplayFrame:origFrame];
 	}
 	
 	[super stop];
@@ -1016,15 +1009,9 @@
 	if( idx >= [[animation frames] count] ) {
 		idx = [[animation frames] count] -1;
 	}
-	Sprite *s = (Sprite*) target;
-	if ( s.texture != [[animation frames] objectAtIndex: idx] ) {
-		// XXX TODO should I retain ?
-		// XXX NO, I should not retain it
-		// TextureNode.texture shall be (retain) property
-		id obj = [[animation frames] objectAtIndex:idx];
-		[obj retain];
-		[[s texture] release];
-		[s setTexture: obj];
+	id<CocosNodeFrames> sprite = (id<CocosNodeFrames>) target;
+	if (! [sprite isFrameDisplayed: [[animation frames] objectAtIndex: idx]] ) {
+		[sprite setDisplayFrame: [[animation frames] objectAtIndex:idx]];
 	}
 }
 @end

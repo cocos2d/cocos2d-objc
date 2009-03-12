@@ -39,3 +39,7 @@
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
+
+@interface Atlas6 : AtlasDemo
+{}
+@end

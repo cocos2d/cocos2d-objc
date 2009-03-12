@@ -19,40 +19,11 @@
 
 #import "TextureNode.h"
 
-/** an Animation object used within Sprites to perform animations */
-@interface Animation : NSObject
-{
-	NSString *name;
-	float	delay;
-	NSMutableArray *frames;
-}
+#pragma mark Sprite
 
-@property (readwrite,copy) NSString * name;
-@property (readwrite,assign) float delay;
-@property (readwrite,retain) NSMutableArray *frames;
-
-/** initializes an Animation with name and delay */
--(id) initWithName: (NSString*) name delay:(float)delay;
-
-/** creates an Animation with name, delay and frames from image files */
-+(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
-/** initializes an Animation with name, delay and frames from image files */
--(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
-/** adds a frame to an Animation */
--(void) addFrame: (NSString*) filename;
-
-/** creates an Animation with name, delay and frames from Texture2D objects */
-+(id) animationWithName: (NSString*) name delay:(float)delay textures:tex1,... NS_REQUIRES_NIL_TERMINATION;
-/** initializes an Animation with name, delay and frames from Texture2D objects */
--(id) initWithName: (NSString*) name delay:(float)delay firstTexture:(Texture2D*)tex vaList:(va_list) args;
-/** adds a frame from a Texture2D object to an Animation */
--(void) addFrameWithTexture: (Texture2D*) tex;
-
-@end
-
-
+@class Animation;
 /** a 2D sprite */
-@interface Sprite : TextureNode
+@interface Sprite : TextureNode <CocosNodeFrames>
 {
 	NSMutableDictionary *animations;	
 }
@@ -93,3 +64,38 @@
 /** returns an Animation given it's name */
 -(Animation *)animationByName: (NSString*) animationName;
 @end
+
+#pragma mark Animation
+
+/** an Animation object used within Sprites to perform animations */
+@interface Animation : NSObject <CocosAnimation>
+{
+	NSString *name;
+	float	delay;
+	NSMutableArray *frames;
+}
+
+@property (readwrite,copy) NSString * name;
+
+// CocosAnimation
+@property (readwrite,assign) float delay;
+@property (readwrite,retain) NSMutableArray *frames;
+
+/** initializes an Animation with name and delay */
+-(id) initWithName: (NSString*) name delay:(float)delay;
+
+/** creates an Animation with name, delay and frames from image files */
++(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
+/** initializes an Animation with name, delay and frames from image files */
+-(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
+/** adds a frame to an Animation */
+-(void) addFrame: (NSString*) filename;
+
+/** creates an Animation with name, delay and frames from Texture2D objects */
++(id) animationWithName: (NSString*) name delay:(float)delay textures:tex1,... NS_REQUIRES_NIL_TERMINATION;
+/** initializes an Animation with name, delay and frames from Texture2D objects */
+-(id) initWithName: (NSString*) name delay:(float)delay firstTexture:(Texture2D*)tex vaList:(va_list) args;
+/** adds a frame from a Texture2D object to an Animation */
+-(void) addFrameWithTexture: (Texture2D*) tex;
+@end
+
