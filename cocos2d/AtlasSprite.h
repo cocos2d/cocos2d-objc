@@ -16,6 +16,7 @@
 #import "TextureAtlas.h"
 
 @class AtlasSpriteManager;
+@class AtlasSpriteFrame;
 
 #pragma mark AltasSprite
 
@@ -76,7 +77,6 @@
 	int					tag;
 	float				delay;
 	NSMutableArray		*frames;
-	AtlasSpriteManager	*spriteManager;
 }
 
 @property (readwrite) int tag;
@@ -86,17 +86,35 @@
 @property (readwrite,retain) NSMutableArray *frames;
 
 /** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames */
-+(id) animationWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay;
++(id) animationWithTag:(int)tag delay:(float)delay;
 
-/** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames and the frames from altas rects */
-+(id) animationWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay rects:rect1,... NS_REQUIRES_NIL_TERMINATION;
+/** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames and the AtlasSpriteFrames */
++(id) animationWithTag:(int)tag delay:(float)delay frames:frame1,... NS_REQUIRES_NIL_TERMINATION;
 
 /** initializes an Animation with an AtlasSpriteManger, a tag and delay between frames */
--(id) initWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay;
+-(id) initWithTag:(int)tag delay:(float)delay;
 
-/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the frames from altas rects */
--(id) initWithSpriteManager:(AtlasSpriteManager*)atlasSpriteManager tag:(int)tag delay:(float)delay firstRect:(void*)rect vaList:(va_list) args;
+/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the AltasSpriteFrames */
+-(id) initWithTag:(int)tag delay:(float)delay firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list) args;
 
 /** adds a frame to an Animation */
 -(void) addFrameWithRect:(CGRect)rect;
 @end
+
+#pragma mark AltasSpriteFrame
+/** An AtlasSpriteFrame is an NSObject that encapsulates a CGRect.
+ * And a CGRect represents a frame within the AtlasSpriteManager
+ */
+@interface AtlasSpriteFrame : NSObject
+{
+	CGRect	rect;
+}
+/** rect of the frame */
+@property (readwrite) CGRect rect;
+
+/** create an AtlasSpriteFrame with a CGRect */
++(id) frameWithRect:(CGRect)frame;
+/** initializes an AtlasSpriteFrame with a CGRect */
+-(id) initWithRect:(CGRect)frame;
+@end
+
