@@ -23,9 +23,16 @@ static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
 enum {
-	kCurrentItem = 0x01234567,
+	kCurrentItem = 0xc0c05001,
 };
 
+enum {
+	kZoomActionTag = 0xc0c05002,
+};
+
+
+
+#pragma mark -
 #pragma mark MenuItem
 
 @implementation MenuItem
@@ -118,6 +125,7 @@ enum {
 @end
 
 
+#pragma mark  -
 #pragma mark MenuItemAtlasFont
 
 
@@ -168,7 +176,6 @@ enum {
 -(void) dealloc
 {
 	[label release];
-	[zoomAction release];
 	[super dealloc];
 }
 
@@ -183,8 +190,6 @@ enum {
 -(void) activate {
 	if(isEnabled) {
 		[self stopAllActions];
-		[zoomAction release];
-		zoomAction = nil;
         
 		self.scale = 1.0f;
         
@@ -195,10 +200,10 @@ enum {
 -(void) selected
 {
 	// subclass to change the default action
-	if(isEnabled) {
-		[self stopAction: zoomAction];
-		[zoomAction release];
-		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.2f] retain];
+	if(isEnabled) {		
+		[self stopActionByTag:kZoomActionTag];
+		Action *zoomAction = [ScaleTo actionWithDuration:0.1f scale:1.2f];
+		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
 }
@@ -207,9 +212,9 @@ enum {
 {
 	// subclass to change the default action
 	if(isEnabled) {
-		[self stopAction: zoomAction];
-		[zoomAction release];
-		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.0f] retain];
+		[self stopActionByTag:kZoomActionTag];
+		Action *zoomAction = [ScaleTo actionWithDuration:0.1f scale:1.0f];
+		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
 }
@@ -243,8 +248,8 @@ enum {
 @end
 
 
+#pragma mark -
 #pragma mark MenuItemFont
-
 
 @implementation MenuItemFont
 
@@ -311,15 +316,14 @@ enum {
 
 -(void) setString:(NSString *)string
 {
-    [label setString:string];
+	[label setString:string];
 	CGSize s = label.contentSize;
-    transformAnchor = cpv( s.width/2, s.height/2 );
+	transformAnchor = cpv( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
 {
 	[label release];
-	[zoomAction release];
 	[super dealloc];
 }
 
@@ -334,11 +338,7 @@ enum {
 -(void) activate {
 	if(isEnabled) {
 		[self stopAllActions];
-		[zoomAction release];
-		zoomAction = nil;
-
 		self.scale = 1.0f;
-
 		[super activate];
 	}
 }
@@ -347,9 +347,9 @@ enum {
 {
 	// subclass to change the default action
 	if(isEnabled) {
-		[self stopAction: zoomAction];
-		[zoomAction release];
-		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.2f] retain];
+		[self stopActionByTag:kZoomActionTag];
+		Action *zoomAction = [ScaleTo actionWithDuration:0.1f scale:1.2f];
+		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
 }
@@ -358,9 +358,11 @@ enum {
 {
 	// subclass to change the default action
 	if(isEnabled) {
-		[self stopAction: zoomAction];
-		[zoomAction release];
-		zoomAction = [[ScaleTo actionWithDuration:0.1f scale:1.0f] retain];
+		[self stopActionByTag:kZoomActionTag];
+
+		Action *zoomAction = [ScaleTo actionWithDuration:0.1f scale:1.0f];
+		zoomAction.tag = kZoomActionTag;
+
 		[self runAction:zoomAction];
 	}
 }

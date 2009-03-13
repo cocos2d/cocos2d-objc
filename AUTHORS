@@ -86,6 +86,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
 		Actions can have tags
+		Fixed memory leak in MenuItemFont
     * yarrington: patches for Director
 
 
