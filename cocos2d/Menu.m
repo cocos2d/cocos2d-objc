@@ -372,8 +372,7 @@
 	for( MenuItem* item in children ) {
 		*idx = i;
 		CGRect r = [item rect];
-//		CGPoint offset = [self convertToWorldSpace:CGPointZero];
-		CGPoint offset = [self absolutePosition];
+		CGPoint offset = [self convertToWorldSpace:CGPointMake(0,0)];
 		r.origin.x += offset.x;
 		r.origin.y += offset.y;
 		if( CGRectContainsPoint( r, point ) )
