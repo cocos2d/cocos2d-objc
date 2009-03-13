@@ -71,6 +71,7 @@
 @interface Animation : NSObject <CocosAnimation>
 {
 	NSString *name;
+	int		tag;
 	float	delay;
 	NSMutableArray *frames;
 }
@@ -81,20 +82,54 @@
 @property (readwrite,assign) float delay;
 @property (readwrite,retain) NSMutableArray *frames;
 
-/** initializes an Animation with name and delay */
--(id) initWithName: (NSString*) name delay:(float)delay;
+/** creates an Animation with name, delay and frames from image files
+ @deprecated Use animationWithTag instead. Will be removed in v0.8
+ */
++(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION __attribute__((deprecated));
 
-/** creates an Animation with name, delay and frames from image files */
-+(id) animationWithName: (NSString*) name delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
-/** initializes an Animation with name, delay and frames from image files */
--(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
-/** adds a frame to an Animation */
--(void) addFrame: (NSString*) filename;
+/** creates an Animation with tag, delay and frames from image files */
++(id) animationWithTag:(int)tag delay:(float)delay images:image1,... NS_REQUIRES_NIL_TERMINATION;
+
+/** creates an Animation with tag, delay */
++(id) animationWithTag:(int)tag delay:(float)delay;
 
 /** creates an Animation with name, delay and frames from Texture2D objects */
-+(id) animationWithName: (NSString*) name delay:(float)delay textures:tex1,... NS_REQUIRES_NIL_TERMINATION;
++(id) animationWithName: (NSString*) name delay:(float)delay textures:tex1,... NS_REQUIRES_NIL_TERMINATION __attribute__((deprecated));
+
+/** creates an Animation with tag, delay and frames from Texture2D objects */
++(id) animationWithTag:(int)tag delay:(float)delay textures:tex1,... NS_REQUIRES_NIL_TERMINATION;
+
 /** initializes an Animation with name, delay and frames from Texture2D objects */
--(id) initWithName: (NSString*) name delay:(float)delay firstTexture:(Texture2D*)tex vaList:(va_list) args;
+-(id) initWithName: (NSString*) name delay:(float)delay firstTexture:(Texture2D*)tex vaList:(va_list) args __attribute__((deprecated));
+
+/** initializes an Animation with name, delay and frames from Texture2D objects */
+-(id) initWithTag:(int)tag delay:(float)delay firstTexture:(Texture2D*)tex vaList:(va_list) args;
+
+
+/** initializes an Animation with name and delay
+ @deprecated use initWithTag instead. Will be removed in v0.8
+ */
+-(id) initWithName: (NSString*) name delay:(float)delay __attribute__((deprecated));
+
+/** initializes an Animation with a tag and delay */
+-(id) initWithTag:(int)tag delay:(float)delay;
+
+/** initializes an Animation with name, delay and frames from image files
+ @deprecated use initWithTag instead. Will be removed in v0.8
+ */
+-(id) initWithName: (NSString*) name delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
+
+/** initializes an Animation with tag, delay and frames from image files */
+-(id) initWithTag:(int)tag delay:(float)delay firstImage:(NSString*)filename vaList:(va_list) args;
+
+/** adds a frame to an Animation
+ @deprecated use addFrameWithFilename. Will be removed in v0.8
+ */
+-(void) addFrame: (NSString*) filename __attribute__((deprecated));
+
+/** adds a frame to an Animation */
+-(void) addFrameWithFilename: (NSString*) filename;
+
 /** adds a frame from a Texture2D object to an Animation */
 -(void) addFrameWithTexture: (Texture2D*) tex;
 @end

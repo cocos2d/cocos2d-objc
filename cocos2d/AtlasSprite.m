@@ -259,25 +259,20 @@
 //
 -(void) setDisplayFrame:(id)newFrame
 {
-	AtlasSprite *spr = (AtlasSprite*)newFrame;
-	[self setTextureRect: [spr textureRect]];
+	AtlasSpriteFrame *frame = (AtlasSpriteFrame*)newFrame;
+	[self setTextureRect: [frame rect]];
 }
+
 -(BOOL) isFrameDisplayed:(id)frame 
 {
-	AtlasSprite *spr = (AtlasSprite*)frame;
-	CGRect r = [spr textureRect];
-	return ( r.size.width == mRect.size.width &&
-			r.size.height == mRect.size.height &&
-			r.origin.x == mRect.origin.x &&
-			r.origin.y == mRect.origin.y );
+	AtlasSpriteFrame *spr = (AtlasSpriteFrame*)frame;
+	CGRect r = [spr rect];
+	return CGRectEqualToRect(r, mRect);
 }
+
 -(id) displayFrame
 {
-	// XXX: hack
-	// returns a copy of self since setDisplayFrame doesn't set a new frame
-	// instead if modifies self.mrect and self.mrect is used to compare if
-	// the display frame is equal to a saved one.
-	return [[[[self class]  alloc] initWithRect:mRect spriteManager:spriteManager] autorelease];
+	return [AtlasSpriteFrame frameWithRect:mRect];
 }
 @end
 
@@ -288,47 +283,43 @@
 @implementation AtlasAnimation
 @synthesize tag, delay, frames;
 
-+(id) animationWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)aTag delay:(float)d rects:rect1,...
++(id) animationWithTag:(int)aTag delay:(float)d frames:rect1,...
 {
 	va_list args;
 	va_start(args,rect1);
 	
-	id s = [[[self alloc] initWithSpriteManager:mgr tag:aTag delay:d firstRect:rect1 vaList:args] autorelease];
+	id s = [[[self alloc] initWithTag:aTag delay:d firstFrame:rect1 vaList:args] autorelease];
 	
 	va_end(args);
 	return s;
 }
 
-+(id) animationWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)aTag delay:(float)d
++(id) animationWithTag:(int)aTag delay:(float)d
 {
-	return [[[self alloc] initWithSpriteManager:mgr tag:aTag delay:d] autorelease];
+	return [[[self alloc] initWithTag:aTag delay:d] autorelease];
 }
 
--(id) initWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)t delay:(float)d
+-(id) initWithTag:(int)t delay:(float)d
 {
-	return [self initWithSpriteManager:mgr tag:t delay:d firstRect:nil vaList:nil];
+	return [self initWithTag:t delay:d firstFrame:nil vaList:nil];
 }
 
-/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the frames from altas rects */
--(id) initWithSpriteManager:(AtlasSpriteManager*)mgr tag:(int)t delay:(float)d firstRect:(void*)rect vaList:(va_list)args
+/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the frames from AtlasSpriteFrames */
+-(id) initWithTag:(int)t delay:(float)d firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list)args
 {
 	if( (self=[super init]) ) {
 	
-		spriteManager = mgr;
 		tag = t;
 		frames = [[NSMutableArray array] retain];
 		delay = d;
 		
-		if( rect ) {
-			AtlasSprite *spr = [AtlasSprite spriteWithRect:*((CGRect*)rect) spriteManager:mgr];
-			[frames addObject:spr];
+		if( frame ) {
+			[frames addObject:frame];
 			
-			CGRect *rect2 = va_arg(args, CGRect*);
-			while(rect2) {
-				spr = [AtlasSprite spriteWithRect:*rect2 spriteManager:mgr];
-				[frames addObject:spr];
-				
-				rect2 = va_arg(args, CGRect*);
+			AtlasSpriteFrame *frame2 = va_arg(args, AtlasSpriteFrame*);
+			while(frame2) {
+				[frames addObject:frame2];
+				frame2 = va_arg(args, AtlasSpriteFrame*);
 			}	
 		}
 	}
@@ -337,15 +328,48 @@
 
 -(void) dealloc
 {
+	CCLOG( @"deallocing %@",self);
 	[frames release];
 	[super dealloc];
 }
 
-
-
 -(void) addFrameWithRect:(CGRect)rect
 {
-	AtlasSprite *spr = [AtlasSprite spriteWithRect:rect spriteManager:spriteManager];
-	[frames addObject:spr];
+	AtlasSpriteFrame *frame = [AtlasSpriteFrame frameWithRect:rect];
+	[frames addObject:frame];
 }
 @end
+
+#pragma mark -
+#pragma mark AtlasSpriteFrame
+@implementation AtlasSpriteFrame
+@synthesize rect;
+
++(id) frameWithRect:(CGRect)frame
+{
+	return [[[self alloc] initWithRect:(CGRect)frame] autorelease];
+}
+-(id) initWithRect:(CGRect)frame
+{
+	if( ([super init]) ) {
+		rect = frame;
+	}
+	return self;
+}
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f)>", [self class], self,
+			rect.origin.x,
+			rect.origin.y,
+			rect.size.width,
+			rect.size.height];
+}
+
+- (void) dealloc
+{
+	CCLOG( @"deallocing %@",self);
+	[super dealloc];
+}
+@end
+

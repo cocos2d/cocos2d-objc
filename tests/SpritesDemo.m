@@ -8,6 +8,9 @@
 #import "cocos2d.h"
 #import "SpritesDemo.h"
 
+enum {
+	kTagAnimationDance = 1,
+};
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -294,7 +297,7 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-	id animation = [[Animation alloc] initWithName:@"dance" delay:0.2f];
+	id animation = [Animation animationWithTag:kTagAnimationDance delay:0.2f];
 	for( int i=1;i<15;i++)
 		[animation addFrame: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
