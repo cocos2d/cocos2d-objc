@@ -21,6 +21,7 @@
 @interface AtlasSprite (Private)
 -(void)updateTextureCoords;
 -(void)updatePosition;
+-(void) initAnimationDictionary;
 @end
 
 @implementation AtlasSprite
@@ -38,10 +39,10 @@
 {
 	if( (self = [super init])) {
 		mAtlas = [manager atlas];	// weak reference. Don't release
-		spriteManager = manager;	// weak reference. Dont' release
 		
 		dirty = YES;
 
+		animations = nil;		// lazy alloc
 		[self setTextureRect:rect];
 	}
 
@@ -50,11 +51,12 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%i,%i,%i,%i) | Tag = %i>", [self class], self, (int) mRect.origin.x, (int) mRect.origin.y, (int) mRect.size.width, (int) mRect.size.height, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i>", [self class], self, mRect.origin.x, mRect.origin.y, mRect.size.width, mRect.size.height, tag];
 }
 
 - (void) dealloc
 {
+	[animations release];
 	[super dealloc];
 }
 
@@ -274,6 +276,21 @@
 {
 	return [AtlasSpriteFrame frameWithRect:mRect];
 }
+// XXX: duplicated code. Sprite.m and AtlasSprite.m share this same piece of code
+-(void) addAnimation: (id<CocosAnimation>) anim
+{
+	// lazy alloc
+	if( ! animations )
+		[self initAnimationDictionary];
+	
+	[animations setObject:anim forKey:[anim name]];
+}
+// XXX: duplicated code. Sprite.m and AtlasSprite.m share this same piece of code
+-(id<CocosAnimation>)animationByName: (NSString*) animationName
+{
+	NSAssert( animationName != nil, @"animationName parameter must be non nil");
+    return [animations objectForKey:animationName];
+}
 @end
 
 
@@ -281,35 +298,35 @@
 #pragma mark AltasAnimation
 
 @implementation AtlasAnimation
-@synthesize tag, delay, frames;
+@synthesize name, delay, frames;
 
-+(id) animationWithTag:(int)aTag delay:(float)d frames:rect1,...
++(id) animationWithName:(NSString*)aname delay:(float)d frames:rect1,...
 {
 	va_list args;
 	va_start(args,rect1);
 	
-	id s = [[[self alloc] initWithTag:aTag delay:d firstFrame:rect1 vaList:args] autorelease];
+	id s = [[[self alloc] initWithName:aname delay:d firstFrame:rect1 vaList:args] autorelease];
 	
 	va_end(args);
 	return s;
 }
 
-+(id) animationWithTag:(int)aTag delay:(float)d
++(id) animationWithName:(NSString*)aname delay:(float)d
 {
-	return [[[self alloc] initWithTag:aTag delay:d] autorelease];
+	return [[[self alloc] initWithName:aname delay:d] autorelease];
 }
 
--(id) initWithTag:(int)t delay:(float)d
+-(id) initWithName:(NSString*)t delay:(float)d
 {
-	return [self initWithTag:t delay:d firstFrame:nil vaList:nil];
+	return [self initWithName:t delay:d firstFrame:nil vaList:nil];
 }
 
-/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the frames from AtlasSpriteFrames */
--(id) initWithTag:(int)t delay:(float)d firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list)args
+/** initializes an AtlasAnimation with an AtlasSpriteManager, a name, and the frames from AtlasSpriteFrames */
+-(id) initWithName:(NSString*)t delay:(float)d firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list)args
 {
 	if( (self=[super init]) ) {
 	
-		tag = t;
+		name = t;
 		frames = [[NSMutableArray array] retain];
 		delay = d;
 		

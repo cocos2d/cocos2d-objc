@@ -123,21 +123,6 @@
 	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
 }
 
--(void) addAnimation: (Animation*) anim
-{
-	// lazy alloc
-	if( ! animations )
-		[self initAnimationDictionary];
-	
-	[animations setObject:anim forKey:[anim name]];
-}
-
--(Animation *)animationByName: (NSString*) animationName
-{
-	NSAssert( animationName != nil, @"animationName parameter must be non nil");
-    return [animations objectForKey:animationName];
-}
-
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
 {
 	if( ! animations )
@@ -169,25 +154,35 @@
 {
 	return texture;
 }
+-(void) addAnimation: (id<CocosAnimation>) anim
+{
+	// lazy alloc
+	if( ! animations )
+		[self initAnimationDictionary];
+	
+	[animations setObject:anim forKey:[anim name]];
+}
+-(id<CocosAnimation>)animationByName: (NSString*) animationName
+{
+	NSAssert( animationName != nil, @"animationName parameter must be non nil");
+    return [animations objectForKey:animationName];
+}
 @end
 
+#pragma mark -
 #pragma mark Animation
 
 @implementation Animation
 @synthesize name, delay, frames;
 
-+(id) animationWithTag:(int)t delay:(float)d
++(id) animationWithName:(NSString*)n delay:(float)d
 {
-	return [[[self alloc] initWithTag:t delay:d] autorelease];
+	return [[[self alloc] initWithName:n delay:d] autorelease];
 }
+
 -(id) initWithName: (NSString*) n delay:(float)d
 {
 	return [self initWithName:n delay:d firstImage:nil vaList:nil];
-}
-
--(id) initWithTag:(int)t delay:(float)d
-{
-	return [self initWithTag:t delay:d firstImage:nil vaList:nil];
 }
 
 -(void) dealloc
@@ -206,17 +201,6 @@
 	va_start(args,image1);
 	
 	id s = [[[self alloc] initWithName:name delay:delay firstImage:image1 vaList:args] autorelease];
-	
-	va_end(args);
-	return s;
-}
-
-+(id) animationWithTag:(int)t delay:(float)delay images:image1,...
-{
-	va_list args;
-	va_start(args,image1);
-	
-	id s = [[[self alloc] initWithTag:t delay:delay firstImage:image1 vaList:args] autorelease];
 	
 	va_end(args);
 	return s;
@@ -246,30 +230,6 @@
 	return self;
 }
 
--(id) initWithTag:(int)t delay:(float)d firstImage:(NSString*)image vaList: (va_list) args
-{
-	if( ! (self=[super init]) )
-		return nil;
-	
-	tag = t;
-	frames = [[NSMutableArray array] retain];
-	delay = d;
-	
-	if( image ) {
-		Texture2D *tex = [[TextureMgr sharedTextureMgr] addImage: image];
-		[frames addObject:tex];
-		
-		NSString *filename = va_arg(args, NSString*);
-		while(filename) {
-			tex = [[TextureMgr sharedTextureMgr] addImage: filename];
-			[frames addObject:tex];
-			
-			filename = va_arg(args, NSString*);
-		}	
-	}
-	return self;
-}
-
 -(void) addFrame: (NSString*) filename
 {
 	return [self addFrameWithFilename:filename];
@@ -292,44 +252,12 @@
 	va_end(args);
 	return s;
 }
-+(id) animationWithTag:(int)t delay:(float)delay textures:tex1,...
-{
-	va_list args;
-	va_start(args,tex1);
-	
-	id s = [[[self alloc] initWithTag:t delay:delay firstTexture:tex1 vaList:args] autorelease];
-	
-	va_end(args);
-	return s;
-}
 
 -(id) initWithName:(NSString*)n delay:(float)d firstTexture:(Texture2D*)tex vaList:(va_list)args
 {
 	self = [super init];
 	if( self ) {
 		name = [n retain];
-		frames = [[NSMutableArray array] retain];
-		delay = d;
-		
-		if( tex ) {
-			[frames addObject:tex];
-			
-			Texture2D *newTex = va_arg(args, Texture2D*);
-			while(newTex) {
-				[frames addObject:newTex];
-				
-				newTex = va_arg(args, Texture2D*);
-			}	
-		}
-	}
-	return self;
-}
-
--(id) initWithTag:(int)t delay:(float)d firstTexture:(Texture2D*)tex vaList:(va_list)args
-{
-	self = [super init];
-	if( self ) {
-		tag = t;
 		frames = [[NSMutableArray array] retain];
 		delay = d;
 		
