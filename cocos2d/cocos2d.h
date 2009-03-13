@@ -37,6 +37,7 @@
 #import "Camera.h"
 #import "CameraAction.h"
 #import "CocosNode.h"
+#import "CocosNodeExtras.h"
 #import "Director.h"
 #import "InstantAction.h"
 #import "IntervalAction.h"

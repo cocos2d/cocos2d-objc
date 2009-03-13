@@ -12,14 +12,11 @@
  *
  */
 
+
 #import "CocosNodeExtras.h"
+#import "Director.h"
 
 #define F_RADIANS_PER_DEGREE ((float) M_PI / 180.0f)
-
-static inline cpVect vectFromPoint(CGPoint point)
-{
-	return cpv(point.x, point.y);
-}
 
 @implementation CocosNode (CocosExtrasTransforms)
 
@@ -76,28 +73,6 @@ static inline cpVect vectFromPoint(CGPoint point)
 	return [self convertToWorldSpace:nodePoint];
 }
 
-// convenience methods which return cpVect instead of CGPoint
-
-- (cpVect)convertToNodeSpaceVect:(CGPoint)worldPoint
-{
-	return vectFromPoint( [self convertToNodeSpace:worldPoint] );
-}
-
-- (cpVect)convertToWorldSpaceVect:(CGPoint)nodePoint
-{
-	return vectFromPoint( [self convertToWorldSpace:nodePoint] );
-}
-
-- (cpVect)convertToNodeSpaceVectAR:(CGPoint)worldPoint
-{
-	return vectFromPoint( [self convertToNodeSpaceAR:worldPoint] );
-}
-
-- (cpVect)convertToWorldSpaceVectAR:(CGPoint)nodePoint
-{
-	return vectFromPoint( [self convertToWorldSpaceAR:nodePoint] );
-}
-
 // convenience methods which take a UITouch instead of CGPoint
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
@@ -112,20 +87,6 @@ static inline cpVect vectFromPoint(CGPoint point)
 	CGPoint point = [touch locationInView: [touch view]];
 	point = [[Director sharedDirector] convertCoordinate: point];
 	return [self convertToNodeSpaceAR:point];
-}
-
-- (cpVect)convertTouchToNodeSpaceVect:(UITouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[Director sharedDirector] convertCoordinate: point];
-	return [self convertToNodeSpaceVect:point];
-}
-
-- (cpVect)convertTouchToNodeSpaceVectAR:(UITouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[Director sharedDirector] convertCoordinate: point];
-	return [self convertToNodeSpaceVectAR:point];
 }
 
 @end
