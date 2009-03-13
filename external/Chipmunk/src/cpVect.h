@@ -21,9 +21,11 @@
 
 #import <math.h>
  
-typedef struct cpVect{
-	cpFloat x,y;
-} cpVect;
+#import <CoreGraphics/CGGeometry.h>
+#define cpVect CGPoint
+//typedef struct cpVect{
+//	cpFloat x,y;
+//} cpVect;
 
 static const cpVect cpvzero={0.0f,0.0f};
 
