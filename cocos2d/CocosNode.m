@@ -122,7 +122,6 @@
 	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag];
 }
 
-
 - (void) dealloc
 {
 	CCLOG( @"deallocing %@", self);

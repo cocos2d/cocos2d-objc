@@ -67,7 +67,6 @@
 @interface MenuItemAtlasFont : MenuItem
 {
 	LabelAtlas *label;
-	Action *zoomAction;
 }
 
 @property (readwrite, retain) LabelAtlas* label;
@@ -95,7 +94,6 @@
 @interface MenuItemFont : MenuItem
 {
 	Label *label;
-	Action *zoomAction;
 }
 
 @property (readwrite, retain) Label* label;

@@ -34,7 +34,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | center = (%i,%i,%i)>", [self class], self, (int)centerX, (int)centerY,(int)centerZ];
+	return [NSString stringWithFormat:@"<%@ = %08X | center = (%.2f,%.2f,%.2f)>", [self class], self, centerX, centerY, centerZ];
 }
 
 
