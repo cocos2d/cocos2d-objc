@@ -18,8 +18,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-#import <math.h>
  
 #import <CoreGraphics/CGGeometry.h>
 #define cpVect CGPoint
@@ -28,12 +26,6 @@
 //} cpVect;
 
 static const cpVect cpvzero={0.0f,0.0f};
-
-static inline cpFloat
-cpvdistance(const cpVect v1, const cpVect v2)
-{
-  return sqrtf(powf(v1.x - v2.x, 2) + powf(v1.y - v2.y, 2));
-}
 
 static inline cpVect
 cpv(const cpFloat x, const cpFloat y)
