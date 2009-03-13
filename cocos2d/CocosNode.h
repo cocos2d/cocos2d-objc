@@ -262,9 +262,10 @@ enum {
 -(CocosNode*) getByTag:(int) tag __attribute__ ((deprecated));
 
 /** Returns the absolute position of the CocosNode
- * @return a cpVect value with the absolute position of the noe
+ @deprecated Use convertToWorldSpace:CGPointZero instead. Will be removed in v0.8
+ @return a cpVect value with the absolute position of the noe
  */
--(cpVect) absolutePosition;
+-(cpVect) absolutePosition; // __attribute__ ((deprecated))
 
 /** Reorders a child according to a new z value.
  * The child MUST be already added.

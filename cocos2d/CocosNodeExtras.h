@@ -12,7 +12,9 @@
  *
  */
 
-#import "cocos2d.h"
+#import "CocosNode.h"
+#import <CoreGraphics/CGGeometry.h>
+#import <CoreGraphics/CGAffineTransform.h>
 
 /** CocosNode Extension */
 @interface CocosNode (CocosExtrasTransforms)
@@ -23,21 +25,16 @@
 
 // conversions
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
+/// converts local coordinate to world space
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
+
 // treat returned/received node point as anchor relative
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
-// convenience methods which return a cpVect instead of CGPoint
-- (cpVect)convertToNodeSpaceVect:(CGPoint)worldPoint;
-- (cpVect)convertToWorldSpaceVect:(CGPoint)nodePoint;
-- (cpVect)convertToNodeSpaceVectAR:(CGPoint)worldPoint;
-- (cpVect)convertToWorldSpaceVectAR:(CGPoint)nodePoint;
 
 // convenience methods which take a UITouch instead of CGPoint
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
-- (cpVect)convertTouchToNodeSpaceVect:(UITouch *)touch;
-- (cpVect)convertTouchToNodeSpaceVectAR:(UITouch *)touch;
 
 @end

@@ -15,6 +15,7 @@
 
 #import "Menu.h"
 #import "Director.h"
+#import "CocosNodeExtras.h"
 
 @interface Menu (Private)
 // if a point in inside an item, in returns the item
@@ -371,8 +372,8 @@
 	for( MenuItem* item in children ) {
 		*idx = i;
 		CGRect r = [item rect];
-		
-		cpVect offset = [self absolutePosition];		
+//		CGPoint offset = [self convertToWorldSpace:CGPointZero];
+		CGPoint offset = [self absolutePosition];
 		r.origin.x += offset.x;
 		r.origin.y += offset.y;
 		if( CGRectContainsPoint( r, point ) )
