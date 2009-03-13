@@ -3,6 +3,7 @@ version 0.7.1 - ??-Mar-2009
  . Actions: Spawns can be Speeded (issue #257)
  . Actions: Speed can be altered in runtime (part of issue #236)
  . AtlasSprite: new feature (issue #238)
+ . Chipmunk: cpVect is defined as a CGPoint (issue #260)
  . CocosNode: Camera is lazy alloced (issue #94)
  . CocosNode: addChild, removeChild:cleanup, getChildByTag family functions (issue #253)
  . CocosNode: added better comments, cleanup code (issue #219)
