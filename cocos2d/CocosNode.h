@@ -360,6 +360,18 @@ enum {
 -(GLubyte) b;
 @end
 
+
+/// Objects that supports the Animation protocol
+@protocol CocosAnimation
+/** reaonly array with the frames */
+-(NSArray*) frames;
+/** delay of the animations */
+-(float) delay;
+/** name of the animation */
+-(NSString*) name;
+@end
+
+
 /// Nodes supports frames protocol
 @protocol CocosNodeFrames
 /** sets a new display frame to the node */
@@ -368,13 +380,9 @@ enum {
 -(BOOL) isFrameDisplayed:(id)frame;
 /** returns the current displayed frame */
 -(id) displayFrame;
+/** returns an Animation given it's name */
+-(id<CocosAnimation>)animationByName: (NSString*) animationName;
+/** adds an Animation to the Sprite */
+-(void) addAnimation: (id<CocosAnimation>) animation;
 @end
-
-/// Objects that supports the Animation protocol
-@protocol CocosAnimation
--(NSArray*) frames;
--(float) delay;
-@end
-
-
 

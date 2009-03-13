@@ -29,10 +29,7 @@
 	// weak reference
 	TextureAtlas *mAtlas;
 	int mAtlasIndex;
-	
-	// spriteManager. weak ref
-	AtlasSpriteManager *spriteManager;
-	
+
 	// texture pixels
 	CGRect mRect;
 
@@ -46,6 +43,9 @@
 	
 	// whether or not this Sprite needs to be updated in the Atlas
 	BOOL	dirty;
+	
+	// Animations that belong to the sprite
+	NSMutableDictionary *animations;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -74,28 +74,28 @@
 /** an Animation object used within Sprites to perform animations */
 @interface AtlasAnimation : NSObject <CocosAnimation>
 {
-	int					tag;
+	NSString			*name;
 	float				delay;
 	NSMutableArray		*frames;
 }
 
-@property (readwrite) int tag;
+@property (readwrite,assign) NSString *name;
 
 /* cocos animation */
 @property (readwrite,assign) float delay;
-@property (readwrite,retain) NSMutableArray *frames;
+@property (readonly) NSMutableArray *frames;
 
-/** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames */
-+(id) animationWithTag:(int)tag delay:(float)delay;
+/** creates an AtlasAnimation with an AtlasSpriteManager, a name, delay between frames */
++(id) animationWithName:(NSString*)name delay:(float)delay;
 
-/** creates an AtlasAnimation with an AtlasSpriteManager, a tag, delay between frames and the AtlasSpriteFrames */
-+(id) animationWithTag:(int)tag delay:(float)delay frames:frame1,... NS_REQUIRES_NIL_TERMINATION;
+/** creates an AtlasAnimation with an AtlasSpriteManager, a name, delay between frames and the AtlasSpriteFrames */
++(id) animationWithName:(NSString*)name delay:(float)delay frames:frame1,... NS_REQUIRES_NIL_TERMINATION;
 
-/** initializes an Animation with an AtlasSpriteManger, a tag and delay between frames */
--(id) initWithTag:(int)tag delay:(float)delay;
+/** initializes an Animation with an AtlasSpriteManger, a name and delay between frames */
+-(id) initWithName:(NSString*)name delay:(float)delay;
 
-/** initializes an AtlasAnimation with an AtlasSpriteManager, a tag, and the AltasSpriteFrames */
--(id) initWithTag:(int)tag delay:(float)delay firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list) args;
+/** initializes an AtlasAnimation with an AtlasSpriteManager, a name, and the AltasSpriteFrames */
+-(id) initWithName:(NSString*)name delay:(float)delay firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list) args;
 
 /** adds a frame to an Animation */
 -(void) addFrameWithRect:(CGRect)rect;

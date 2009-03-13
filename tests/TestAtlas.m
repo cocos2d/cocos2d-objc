@@ -406,7 +406,7 @@ Class restartAction()
 		
 		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
 		
-		AtlasAnimation *animation = [AtlasAnimation animationWithTag:kTagAnimation1 delay:0.2f];
+		AtlasAnimation *animation = [AtlasAnimation animationWithName:@"dance" delay:0.2f];
 		for(int i=0;i<14;i++) {
 			int x= i % 5;
 			int y= i / 5;
