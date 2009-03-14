@@ -47,9 +47,6 @@ enum {
 	// rotation angle
 	float rotation;	
 	
-	// scale factor
-	float scale;
-	
 	// scale X factor
 	float scaleX;
 	
