@@ -729,16 +729,16 @@ static Director *_sharedDirector = nil;
 
 #pragma mark Director Events
 
--(void) addEventHandler:(CocosNode*) node
+-(void) addEventHandler:(id<TouchEventsDelegate>) delegate
 {
-	NSAssert( node != nil, @"Director.AddEventHandler: Node must be non nil");	
-	[eventHandlers insertObject:node atIndex:0];
+	NSAssert( delegate != nil, @"Director.addEventHandler: delegate must be non nil");	
+	[eventHandlers insertObject:delegate atIndex:0];
 }
 
--(void) removeEventHandler:(CocosNode*) node
+-(void) removeEventHandler:(id<TouchEventsDelegate>) delegate
 {
-	NSAssert( node != nil, @"Director.removeEventHandler: Node must be non nil");
-	[eventHandlers removeObject:node];
+	NSAssert( delegate != nil, @"Director.removeEventHandler: delegate must be non nil");
+	[eventHandlers removeObject:delegate];
 }
 
 //
