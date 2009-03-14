@@ -572,9 +572,12 @@
 
 -(void) stopAction: (Action*) action
 {
-	if( [actions containsObject:action] )
-		[actionsToRemove addObject:action];
+	if( [actionsToRemove containsObject:action] )
+		CCLOG(@"stopAction: action already scheduled for removal!");
 
+	else if( [actions containsObject:action] )
+		[actionsToRemove addObject:action];
+	
 	else if( [actionsToAdd containsObject:action] )
 		[actionsToAdd removeObject:action];
 	else
@@ -585,6 +588,12 @@
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	
+	for( Action *a in actionsToRemove ) {
+		if( a.tag == aTag ) {
+			CCLOG(@"stopActionByTag: action already scheduled for removal!");
+			return; 
+		}
+	}
 	// is running ?
 	for( Action *a in actions ) {
 		if( a.tag == aTag ) {
@@ -606,6 +615,12 @@
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	
+	for( Action *a in actionsToRemove ) {
+		if( a.tag == aTag ) {
+			CCLOG(@"getActionByTag: action unavailable, scheduled for removal!");
+			return nil; 
+		}
+	}
 	// is running ?
 	for( Action *a in actions ) {
 		if( a.tag == aTag )
