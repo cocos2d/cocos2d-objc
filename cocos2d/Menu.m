@@ -18,8 +18,8 @@
 #import "CocosNodeExtras.h"
 
 @interface Menu (Private)
-// if a point in inside an item, in returns the item
--(id) itemInPoint: (CGPoint) p idx:(int*)idx;
+// returns touched menu item, if any
+-(MenuItem *) itemForTouch: (UITouch *) touch idx: (int*) idx;
 @end
 
 @implementation Menu
@@ -90,10 +90,8 @@
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
-	CGPoint point = [touch locationInView: [touch view]];
 	int idx;
-
-	MenuItem *item = [self itemInPoint: point idx:&idx];
+	MenuItem *item = [self itemForTouch:touch idx:&idx];
 
 	if( item ) {
 		[item selected];
@@ -107,10 +105,9 @@
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
-	CGPoint point = [touch locationInView: [touch view]];
 	int idx;
-
-	MenuItem *item = [self itemInPoint: point idx:&idx];
+	MenuItem *item = [self itemForTouch:touch idx:&idx];
+	
 	if( item ) {
 		[item unselected];
 		[item activate];
@@ -128,10 +125,8 @@
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
-	CGPoint point = [touch locationInView: [touch view]];
 	int idx;
-	
-	MenuItem *item = [self itemInPoint: point idx:&idx];
+	MenuItem *item = [self itemForTouch:touch idx:&idx];
 	
 	// "mouse" draged inside a button
 	if( item ) {
@@ -364,19 +359,23 @@
 
 #pragma mark Menu - Private
 
--(id) itemInPoint: (CGPoint) point idx:(int*)idx
+-(MenuItem *) itemForTouch: (UITouch *) touch idx: (int*) idx;
 {
-	point = [[Director sharedDirector] convertCoordinate: point];
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
 	
 	int i=0;
 	for( MenuItem* item in children ) {
-		*idx = i;
+		CGPoint local = [item convertToNodeSpace:touchLocation];
+
 		CGRect r = [item rect];
-		CGPoint offset = [self convertToWorldSpace:CGPointMake(0,0)];
-		r.origin.x += offset.x;
-		r.origin.y += offset.y;
-		if( CGRectContainsPoint( r, point ) )
+		r.origin = CGPointZero;
+		
+		if( CGRectContainsPoint( r, local ) ) {
+			*idx = i;
 			return item;
+		}
+		
 		i++;
 	}
 	return nil;
