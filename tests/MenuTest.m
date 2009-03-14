@@ -162,6 +162,8 @@ enum {
 				 [Sequence actions: jump, [jump reverse], nil]
 								   ]
 	 ];
+	id spin = [RotateBy actionWithDuration:3 angle:360];
+	[item2 runAction: [RepeatForever actionWithAction:spin]];
 	
 	[self addChild: menu];
 	
