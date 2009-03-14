@@ -15,15 +15,12 @@
 
 #import "CocosNodeExtras.h"
 #import "Director.h"
-
-#define F_RADIANS_PER_DEGREE ((float) M_PI / 180.0f)
+#import "ccMacros.h"
 
 @implementation CocosNode (CocosExtrasTransforms)
 
 - (CGAffineTransform)nodeToWorldTransform
 {
-	// NOTE: should add parallaxing following pattern in CocosNode#transform
-	
 	CGAffineTransform t = CGAffineTransformIdentity;
 	
 	if (parent != nil) {
@@ -35,7 +32,7 @@
 	}
 	
 	t = CGAffineTransformTranslate(t, position.x, position.y);
-	t = CGAffineTransformRotate(t, rotation * -F_RADIANS_PER_DEGREE);
+	t = CGAffineTransformRotate(t, -CC_DEGREES_TO_RADIANS(rotation));
 	t = CGAffineTransformScale(t, scaleX, scaleY);
 	
 	t = CGAffineTransformTranslate(t, -transformAnchor.x, -transformAnchor.y);

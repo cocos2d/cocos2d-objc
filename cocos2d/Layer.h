@@ -24,7 +24,7 @@
  * return YES if the event was handled
  * return NO if the event was not handled
  */
-@protocol TouchEventsDelegate
+@protocol TouchEventsDelegate <NSObject>
 @optional
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
