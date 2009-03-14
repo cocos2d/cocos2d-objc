@@ -34,7 +34,15 @@
 }
 - (void)setPosition:(cpVect)pos {
     position = pos;
-    float listenerPosAL[] = {pos.x - 240.0, 160.0 - pos.y, 0.};
+    float x,y;
+    if ([[Director sharedDirector] landscape]) {
+        x = pos.x - 240.0;
+        y = 160.0 - pos.y;
+    } else {
+        x = pos.x;
+        y = pos.y;
+    }
+    float listenerPosAL[] = {x, y, 0.};
 	// Move our listener coordinates
 	alListenerfv(AL_POSITION, listenerPosAL);    
 }

@@ -208,8 +208,16 @@ Exit:
     return position;
 }
 - (void)setPosition:(cpVect)pos {
+    float x,y;
     position = pos;
-    float sourcePosAL[] = {position.x - 240, 160 - position.y, 0.};
+    if ([[Director sharedDirector] landscape]) {
+        x = pos.x - 240.0;
+        y = 160.0 - pos.y;
+    } else {
+        x = pos.x;
+        y = pos.y;
+    }    
+    float sourcePosAL[] = {x, y, 0.};
 	alSourcefv(source, AL_POSITION, sourcePosAL);
 }
 
