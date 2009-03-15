@@ -46,19 +46,19 @@ static PASoundMgr *sharedSoundManager = nil;
 }
 
 - (id)init {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         sounds = [[NSMutableDictionary alloc] initWithCapacity:3];
         soundsMasterGain = 1.0f;
         // setup our audio session
 		OSStatus result = AudioSessionInitialize(NULL, NULL, NULL, self);
-		if (result) printf("Error initializing audio session! %d\n", result);
+		if (result) printf("Error initializing audio session! %d\n", (int)result);
 		else {
 			UInt32 category = kAudioSessionCategory_AmbientSound;
 			result = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
-			if (result) printf("Error setting audio session category! %d\n", result);
+			if (result) printf("Error setting audio session category! %d\n", (int)result);
 			else {
 				result = AudioSessionSetActive(true);
-				if (result) printf("Error setting audio session active! %d\n", result);
+				if (result) printf("Error setting audio session active! %d\n", (int)result);
 			}
 		}
 		

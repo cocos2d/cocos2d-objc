@@ -481,7 +481,6 @@
 		50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50A783C00F3AFCE500104C45 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50A783D90F3AFDB300104C45 /* MotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783D50F3AFDB300104C45 /* MotionStreak.m */; };
-		50A783DA0F3AFDB300104C45 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 50A783D60F3AFDB300104C45 /* README */; };
 		50A783DB0F3AFDB300104C45 /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A783D80F3AFDB300104C45 /* Ribbon.m */; };
 		50A783DD0F3AFDD700104C45 /* streak.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A783DC0F3AFDD700104C45 /* streak.png */; };
 		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -1202,7 +1201,6 @@
 		50A783C40F3AFCE500104C45 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783D40F3AFDB300104C45 /* MotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreak.h; sourceTree = "<group>"; };
 		50A783D50F3AFDB300104C45 /* MotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionStreak.m; sourceTree = "<group>"; };
-		50A783D60F3AFDB300104C45 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		50A783D70F3AFDB300104C45 /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
 		50A783D80F3AFDB300104C45 /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
@@ -2116,7 +2114,6 @@
 				5000450A0F3F261F00A5FBF4 /* StreakTest.m */,
 				50A783D40F3AFDB300104C45 /* MotionStreak.h */,
 				50A783D50F3AFDB300104C45 /* MotionStreak.m */,
-				50A783D60F3AFDB300104C45 /* README */,
 				50A783D70F3AFDB300104C45 /* Ribbon.h */,
 				50A783D80F3AFDB300104C45 /* Ribbon.m */,
 			);
@@ -3406,7 +3403,6 @@
 				50A783B40F3AFCE500104C45 /* f1.png in Resources */,
 				50A783B50F3AFCE500104C45 /* f2.png in Resources */,
 				50A783B60F3AFCE500104C45 /* fps_images.png in Resources */,
-				50A783DA0F3AFDB300104C45 /* README in Resources */,
 				50A783DD0F3AFDD700104C45 /* streak.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5415,7 +5411,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				INFOPLIST_FILE = "/Users/florind/Desktop/Xcode Projects/iPhone/Engines/cocos2d-iphone/Resources/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -5441,7 +5437,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/florind/Desktop/Xcode Projects/iPhone/Engines/cocos2d-iphone/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
