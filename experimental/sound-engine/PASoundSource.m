@@ -93,7 +93,7 @@ Exit:
     return nil;
 }
 - (id)initWithPosition:(cpVect)pos file:(NSString *)f looped:(BOOL)yn{
-    if (self = [super init]) {
+    if ((self = [super init])) {
         self.file = f;
         self.looped = yn;
         self.isPlaying = NO;
