@@ -527,7 +527,6 @@ enum {
 	if( !(self=[super initWithTarget:t selector:sel]) )
 		return nil;
 	
-	selectedIndex = 0;
 	subItems = [[NSMutableArray arrayWithCapacity:2] retain];
 	
 	int z = 0;
@@ -538,7 +537,8 @@ enum {
 		i = va_arg(args, MenuItem*);
 	}
 
-	[self addChild: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+	selectedIndex = NSUIntegerMax;
+	[self setSelectedIndex:0];
 	
 	return self;
 }
@@ -554,7 +554,12 @@ enum {
 	if( index != selectedIndex ) {
 		selectedIndex=index;
 		[self removeChildByTag:kCurrentItem cleanup:NO];
-		[self addChild: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+		
+		MenuItem *item = [subItems objectAtIndex:selectedIndex];
+		[self addChild:item z:0 tag:kCurrentItem];
+		
+		CGSize s = [item contentSize];
+		item.position = self.transformAnchor = cpv( s.width/2, s.height/2 );
 	}
 }
 
@@ -579,13 +584,8 @@ enum {
 	// update index
 	
 	if( isEnabled ) {
-		[self removeChildByTag:kCurrentItem cleanup:NO];
-
-		selectedIndex++;
-		if(selectedIndex >= [subItems count])
-			selectedIndex = 0;
-
-		[self addChild: [subItems objectAtIndex:selectedIndex] z:0 tag:kCurrentItem];
+		NSUInteger newIndex = (selectedIndex + 1) % [subItems count];
+		[self setSelectedIndex:newIndex];
 
 		[invocation invoke];
 	}
