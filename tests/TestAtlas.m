@@ -401,10 +401,16 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		[Texture2D saveTexParameters];
+		[Texture2D setAliasTexParameters];
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
+		[Texture2D restoreTexParameters];
+		
 		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite3 = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
 		
 		AtlasAnimation *animation = [AtlasAnimation animationWithName:@"dance" delay:0.2f];
 		for(int i=0;i<14;i++) {
@@ -415,13 +421,25 @@ Class restartAction()
 		}
 		
 		[mgr addChild:sprite];
+		[mgr addChild:sprite2];
+		[mgr addChild:sprite3];
 		
 		CGSize s = [[Director sharedDirector] winSize];
 		sprite.position = cpv( s.width /2, s.height/2);
+		sprite2.position = cpv( s.width /2 - 100, s.height/2);
+		sprite3.position = cpv( s.width /2 + 100, s.height/2);
 		
 		id action = [Animate actionWithAnimation: animation];
+		id action2 = [[action copy] autorelease];
+		id action3 = [[action copy] autorelease];
+		
+		sprite.scale = 0.5f;
+		sprite2.scale = 1.0f;
+		sprite3.scale = 1.5f;
 		
 		[sprite runAction:action];
+		[sprite2 runAction:action2];
+		[sprite3 runAction:action3];
 		
 		
 	}	
