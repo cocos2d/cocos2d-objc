@@ -243,7 +243,9 @@
  */
 -(void) removeChild: (CocosNode*)child cleanup:(BOOL)cleanup
 {
-	NSAssert( child != nil, @"Argument must be non-nil");
+	// explicit nil handling
+	if (child == nil)
+		return;
 	
 	if ( [children containsObject:child] )
 		[self detachChild:child cleanup:cleanup];
@@ -264,7 +266,11 @@
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
 
 	CocosNode *child = [self getChildByTag:aTag];
-	[self removeChild:child cleanup:cleanup];
+	
+	if (child == nil)
+		CCLOG(@"removeChildByTag: child not found!");
+	else
+		[self removeChild:child cleanup:cleanup];
 }
 
 -(void) removeAll
@@ -731,7 +737,9 @@
 
 -(void) unschedule: (SEL) selector
 {
-	NSAssert( selector != nil, @"Argument must be non-nil");
+	// explicit nil handling
+	if (selector == nil)
+		return;
 	
 	Timer *timer = nil;
 	
