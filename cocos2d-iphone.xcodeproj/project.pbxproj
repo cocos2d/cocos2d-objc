@@ -3018,8 +3018,8 @@
 				50A24E190F377FA1007CAEB0 /* EffectsDemo */,
 				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedDemo */,
 				5048287F0F45AED700A30CEF /* AttachDemo */,
-				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 				505CC1580F62BB03000EDF26 /* PerformanceTest */,
+				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 				8EDF3EA90F6BDA0000F54643 /* SoundEngineTest (experimental) */,
 			);
 		};
