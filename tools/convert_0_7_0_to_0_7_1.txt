@@ -25,6 +25,17 @@ Linking parameters
           -ObjC -framework Foundation -framework UIKit
 
 
+Are you loosing Touch Events ?
+------------------------------
+
+If you are using the "normal" Director (not the "Fast" Director) and you are loosing touch events,
+add this line in your main loop:
+     while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
+
+That line was part of the Director's main loop but was removed since it was causing the opposite effect:
+  When mixing UIKit objects with cocos2d some Touch Events were lost when that line was executed.
+
+
 //
 // OPTIONAL CHANGES, BUT RECOMMENDED
 //
@@ -88,3 +99,10 @@ CocosNode actions
 
 [self do: action];          // OLD
 [self runAction: action];   // NEW
+
+
+CocosNode position
+==================
+
+[self absolutePosition];                   // OLD. Takes into account position
+[self convertToWorldSpace:CGPointZero];    // NEW: Takes into account position, scale and rotation
