@@ -13,9 +13,6 @@
  */
 
 
-// cocoa related
-#import <UIKit/UIKit.h>
-
 // OpenGL related
 #import "Support/EAGLView.h"
 

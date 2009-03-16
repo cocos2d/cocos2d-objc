@@ -184,6 +184,7 @@
 		504828EE0F45B71A00A30CEF /* attachDemo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 504828ED0F45B71A00A30CEF /* attachDemo.xib */; };
 		504829620F45BBCF00A30CEF /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
 		504829720F45BBFC00A30CEF /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		5057B1C80F6E85790019C38F /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		505B62AF0F2E6A0F001B4104 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		505B62B00F2E6A0F001B4104 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		505B62B10F2E6A0F001B4104 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
@@ -530,8 +531,6 @@
 		50B2CB940E10EE4A00AE9530 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50B2CB950E10EE4A00AE9530 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50B2CB970E10EE4A00AE9530 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
-		50B2CB980E10EE4A00AE9530 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
-		50B2CB990E10EE4A00AE9530 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
 		50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2CCC20E119B8E00AE9530 /* Primitives.h */; };
 		50B2CCCF0E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
 		50B2CE500E12A01C00AE9530 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
@@ -1344,7 +1343,7 @@
 		8EDF3E9D0F6BD8E600F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
 		8EDF3EA50F6BD90B00F54643 /* SoundEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEngineTest.h; sourceTree = "<group>"; };
 		8EDF3EA60F6BD90B00F54643 /* SoundEngineTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEngineTest.m; sourceTree = "<group>"; };
-		8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundEngineTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EDF3ED80F6BDA0000F54643 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDF3EF60F6BDAE400F54643 /* chicken.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chicken.wav; sourceTree = "<group>"; };
 		8EDF3EF70F6BDAE400F54643 /* clank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clank.wav; sourceTree = "<group>"; };
 		8EDF3EF80F6BDAE400F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
@@ -1736,7 +1735,7 @@
 				50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */,
 				504828800F45AED700A30CEF /* AttachDemo.app */,
 				505CC1590F62BB03000EDF26 /* PerformanceTest.app */,
-				8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */,
+				8EDF3ED80F6BDA0000F54643 /* StreakTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2978,7 +2977,7 @@
 			);
 			name = "SoundEngineTest (experimental)";
 			productName = playground;
-			productReference = 8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */;
+			productReference = 8EDF3ED80F6BDA0000F54643 /* StreakTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -3411,11 +3410,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5057B1C80F6E85790019C38F /* grossini_dance_atlas.png in Resources */,
 				50B2CB940E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB950E10EE4A00AE9530 /* Icon.png in Resources */,
 				50B2CB970E10EE4A00AE9530 /* grossini.png in Resources */,
-				50B2CB980E10EE4A00AE9530 /* grossinis_sister1.png in Resources */,
-				50B2CB990E10EE4A00AE9530 /* grossinis_sister2.png in Resources */,
 				501CD1710E99873000B86F68 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
