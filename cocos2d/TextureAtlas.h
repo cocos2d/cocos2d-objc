@@ -15,17 +15,23 @@
 #import "Texture2D.h"
 #import "ccTypes.h"
 
-/** A class that implements a basic Texture Atlas */
+/** A class that implements a basic Texture Atlas
+ * The Texture Atlas supports vertex array and color array.
+ */
 @interface TextureAtlas : NSObject {
 	NSUInteger			totalQuads;
 	ccQuad2		*texCoordinates;
 	ccQuad3		*vertices;
+	ccColorB	*colors;			// RGBA for each vertex
 	GLushort	*indices;
 	Texture2D	*texture;
+	
+	BOOL		_withColorArray;
 }
 
 @property (readonly) NSUInteger totalQuads;
 @property (nonatomic,retain) Texture2D *texture;
+@property (readonly) BOOL withColorArray;
 
 /** creates a TextureAtlas with an iname filename and with a capacity for n Quads
  * n is the number of Quads that will be rendered at once from this Atlas
@@ -58,6 +64,10 @@
  */
 -(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(NSUInteger) n;
 
+/** updates the color (RGBA) for a certain quad
+ * The 4 vertices of the Quad will be updated with this new quad color
+ */
+-(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n;
 
 /** draws n quads
  * n can't be greater than the capacity of the Atlas

@@ -20,13 +20,12 @@
 
 @interface AtlasSprite (Private)
 -(void)updateTextureCoords;
--(void)updatePosition;
 -(void) initAnimationDictionary;
 @end
 
 @implementation AtlasSprite
 
-@synthesize dirty;
+@synthesize dirtyColor, dirtyPosition;
 @synthesize atlasIndex = mAtlasIndex;
 @synthesize textureRect = mRect;
 
@@ -40,7 +39,12 @@
 	if( (self = [super init])) {
 		mAtlas = [manager atlas];	// weak reference. Don't release
 		
-		dirty = YES;
+		dirtyPosition = YES;
+		dirtyColor = NO;			// optimization. If the color is not changed
+									// gl_color_array is not sent to the GPU
+		
+		// RGB and opacity
+		_r = _g = _b = _opacity = 255;
 
 		animations = nil;		// lazy alloc
 		[self setTextureRect:rect];
@@ -89,6 +93,13 @@
 	mTexCoords = newCoords;
 }
 
+-(void) updateColor
+{
+	ccColorB colorQuad = { _r, _g, _b, _opacity};
+	[mAtlas updateColorWithColorQuad:&colorQuad atIndex:mAtlasIndex];
+	dirtyColor = NO;
+}
+
 -(void)updatePosition
 {
 	// algorithm from pyglet ( http://www.pyglet.org ) 
@@ -115,10 +126,6 @@
 		float y2 = y1 + mRect.size.height * scaleY;
 		float x = position.x;
 		float y = position.y;
-//		if (relativeTransformAnchor) {
-//			x -= transformAnchor.x;
-//			y -= transformAnchor.y;
-//		}
 		
 		float r = (float)-CC_DEGREES_TO_RADIANS(rotation);
 		float cr = cosf(r);
@@ -145,10 +152,6 @@
 	{
 		float x = position.x;
 		float y = position.y;
-//		if (relativeTransformAnchor) {
-//			x -= transformAnchor.x;
-//			y -= transformAnchor.y;
-//		}
 		
 		float x1 = (x- transformAnchor.x * scaleX);
 		float y1 = (y- transformAnchor.y * scaleY);
@@ -168,10 +171,6 @@
 	else {
 		float x = position.x;
 		float y = position.y;
-//		if (relativeTransformAnchor) {
-//			x -= transformAnchor.x;
-//			y -= transformAnchor.y;
-//		}
 		
 		float x1 = (x-transformAnchor.x);
 		float y1 = (y-transformAnchor.y);
@@ -188,7 +187,7 @@
 	}
 
 	[mAtlas updateQuadWithTexture:&mTexCoords vertexQuad:&mVertices atIndex:mAtlasIndex];
-	dirty = NO;
+	dirtyPosition = NO;
 	return;
 }
 
@@ -204,37 +203,37 @@
 -(void)setPosition:(cpVect)pos
 {
 	[super setPosition:pos];
-	dirty = YES;
+	dirtyPosition = YES;
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
-	dirty = YES;
+	dirtyPosition = YES;
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
-	dirty = YES;
+	dirtyPosition = YES;
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
-	dirty = YES;
+	dirtyPosition = YES;
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
-	dirty = YES;
+	dirtyPosition = YES;
 }
 
 -(void)setTransformAnchor:(cpVect)anchor
 {
 	[super setTransformAnchor:anchor];
-	dirty = YES;
+	dirtyPosition = YES;
 }
 
 -(void)setRelativeTransformAnchor:(BOOL)relative
@@ -245,7 +244,43 @@
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	dirty = YES;
+	dirtyPosition = YES;
+}
+
+//
+// Opacity protocol
+//
+-(void) setOpacity:(GLubyte) anOpacity
+{
+	_opacity = anOpacity;
+	dirtyColor = YES;
+}
+-(GLubyte)opacity
+{
+	return _opacity;
+}
+
+//
+// RGB protocol
+//
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
+{
+	_r = r;
+	_g = g;
+	_b = b;
+	dirtyColor = YES;
+}
+-(GLubyte) r
+{
+	return _r;
+}
+-(GLubyte) g
+{
+	return _g;
+}
+-(GLubyte) b
+{
+	return _b;
 }
 
 //

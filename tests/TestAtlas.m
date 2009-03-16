@@ -17,6 +17,7 @@ static NSString *transitions[] = {
 			@"Atlas4",
 			@"Atlas5",
 			@"Atlas6",
+			@"Atlas7",
 };
 
 enum {
@@ -449,6 +450,66 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"AtlasSprite: Animation";
+}
+@end
+
+#pragma mark Example Atlas 7
+
+@implementation Atlas7
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		// small capacity. Testing resizing
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];		
+		
+		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*0, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite3 = [AtlasSprite spriteWithRect:CGRectMake(85*2, 121*0, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite4 = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite5 = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite6 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite7 = [AtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
+		AtlasSprite *sprite8 = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		sprite1.position = cpv( (s.width/5)*1, (s.height/3)*1);
+		sprite2.position = cpv( (s.width/5)*2, (s.height/3)*1);
+		sprite3.position = cpv( (s.width/5)*3, (s.height/3)*1);
+		sprite4.position = cpv( (s.width/5)*4, (s.height/3)*1);
+		sprite5.position = cpv( (s.width/5)*1, (s.height/3)*2);
+		sprite6.position = cpv( (s.width/5)*2, (s.height/3)*2);
+		sprite7.position = cpv( (s.width/5)*3, (s.height/3)*2);
+		sprite8.position = cpv( (s.width/5)*4, (s.height/3)*2);
+
+		id action = [FadeIn actionWithDuration:2];
+		id action_back = [action reverse];
+		id fade = [RepeatForever actionWithAction: [Sequence actions: action, action_back, nil]];
+		
+		[sprite5 setRGB:255 :0 :0];
+		[sprite6 setRGB:0 :255 :0];
+		[sprite7 setRGB:0 :0 :255];		
+		[sprite8 runAction:fade];
+		
+		// late add: test dirtyColor and dirtyPosition
+		[mgr addChild:sprite1];
+		[mgr addChild:sprite2];
+		[mgr addChild:sprite3];
+		[mgr addChild:sprite4];
+		[mgr addChild:sprite5];
+		[mgr addChild:sprite6];
+		[mgr addChild:sprite7];
+		[mgr addChild:sprite8];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"AtlasSprite: Color & Opacity";
 }
 @end
 

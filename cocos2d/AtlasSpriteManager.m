@@ -208,15 +208,19 @@ const int defaultCapacity = 29;
 {
 	for( AtlasSprite *child in children )
 	{
-		if( child.dirty ) {
+		if( child.dirtyPosition )
 			[child updatePosition];
-		}
+		if( child.dirtyColor )
+			[child updateColor];
 	}
 
 	if(mTotalSprites > 0)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		
+		if( mAtlas.withColorArray )
+			glEnableClientState(GL_COLOR_ARRAY);
 
 		glEnable(GL_TEXTURE_2D);
 
@@ -224,6 +228,8 @@ const int defaultCapacity = 29;
 
 		glDisable(GL_TEXTURE_2D);
 
+		if( mAtlas.withColorArray )
+			glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}

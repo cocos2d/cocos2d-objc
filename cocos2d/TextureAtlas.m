@@ -22,12 +22,14 @@
 
 @interface TextureAtlas (Private)
 -(void) initIndices;
+-(void) initColorArray;
 @end
 
 
 @implementation TextureAtlas
 
 @synthesize totalQuads, texture;
+@synthesize withColorArray = _withColorArray;
 
 #pragma mark TextureAtlas - alloc & init
 
@@ -58,7 +60,9 @@
 	
 	// retained in property
 	self.texture = tex;
-	
+
+	_withColorArray = NO;
+
 	texCoordinates = malloc( sizeof(texCoordinates[0]) * totalQuads );
 	vertices = malloc( sizeof(vertices[0]) * totalQuads );
 	indices = malloc( sizeof(indices[0]) * totalQuads * 6 );
@@ -73,11 +77,12 @@
 			free(vertices);
 		return nil;
 	}
-	
-	bzero( texCoordinates, sizeof(texCoordinates[0]) * totalQuads );
-	bzero( vertices, sizeof(vertices[0]) * totalQuads );	
-	bzero( indices, sizeof(indices[0]) * totalQuads );	
-	
+		
+	if( _withColorArray && ! colors ) {
+		NSLog(@"TextureAtlas: not enough memory");
+		return nil;
+	}
+
 	[self initIndices];
 	
 	return self;
@@ -99,6 +104,15 @@
 	[texture release];
 
 	[super dealloc];
+}
+
+-(void) initColorArray
+{
+	if( ! _withColorArray ) {
+		colors = malloc( sizeof(colors[0]) * totalQuads * 4 );
+		memset(colors, 0xFF,  totalQuads * 4 * sizeof(colors[0]));
+		_withColorArray = YES;
+	}
 }
 
 -(void) initIndices
@@ -127,6 +141,16 @@
 	vertices[n] = *quadV;
 }
 
+-(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n
+{
+	NSAssert( n >= 0 && n < totalQuads, @"updateColorWithQuadColor: Invalid index");
+
+	if( ! _withColorArray )
+		[self initColorArray];
+	for( int i=0;i<4;i++)
+		colors[n*4+i] = *color;
+}
+
 #pragma mark TextureAtlas - Resize
 
 -(void) resizeCapacity: (NSUInteger) n
@@ -140,6 +164,9 @@
 	vertices = realloc( vertices, sizeof(vertices[0]) * totalQuads );
 	indices = realloc( indices, sizeof(indices[0]) * totalQuads * 6 );
 	
+	if( _withColorArray )
+		colors = realloc( colors, sizeof(colors[0]) * totalQuads * 4 );
+	
 	if( ! ( texCoordinates && vertices && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");
 		if( texCoordinates )
@@ -148,12 +175,10 @@
 			free(vertices);
 		if( indices )
 			free(vertices);
+		if( colors )
+			free( colors );
 		[NSException raise:@"TextureAtlas:NoMemory" format:@"Texture Atlas. Not enough memory to resize the capacity"];
 	}
-	
-	bzero( texCoordinates, sizeof(texCoordinates[0]) * totalQuads );
-	bzero( vertices, sizeof(vertices[0]) * totalQuads );	
-	bzero( indices, sizeof(indices[0]) * totalQuads );
 	
 	[self initIndices];
 }
@@ -170,6 +195,8 @@
 	glBindTexture(GL_TEXTURE_2D, [texture name]);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
+	if( _withColorArray )
+		glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	
 }
 
