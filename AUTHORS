@@ -87,6 +87,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Set transformAnchor point in Sprite
 		Actions can have tags
 		Fixed memory leak in MenuItemFont
+		local to world coordinates (rotation,scale&position) functions
+		removed unused scale ivar in CocosNode
+		Layer conforms to TouchDelegate protocol
+		Ability to remove nil objects
     * yarrington: patches for Director
 
 

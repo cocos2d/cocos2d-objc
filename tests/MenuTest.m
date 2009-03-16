@@ -148,8 +148,8 @@ enum {
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:28];
 
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Option 1" target:self selector:@selector(menuCallback2:)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(menuCallback:)];
+	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Another option" target:self selector:@selector(menuCallback2:)];
+	MenuItemFont *item2 = [MenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
 	Menu *menu = [Menu menuWithItems: item1, item2, nil];	
 	menu.position = cpv(0,0);
@@ -162,8 +162,11 @@ enum {
 				 [Sequence actions: jump, [jump reverse], nil]
 								   ]
 	 ];
-	id spin = [RotateBy actionWithDuration:3 angle:360];
-	[item2 runAction: [RepeatForever actionWithAction:spin]];
+	id spin1 = [RotateBy actionWithDuration:3 angle:360];
+	id spin2 = [[spin1 copy] autorelease];
+	
+	[item1 runAction: [RepeatForever actionWithAction:spin1]];
+	[item2 runAction: [RepeatForever actionWithAction:spin2]];
 	
 	[self addChild: menu];
 	
