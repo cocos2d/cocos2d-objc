@@ -33,3 +33,9 @@
 
 /// converts radians to degrees
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / (float)M_PI * 180.0f)
+
+/// default gl blend src function
+#define CC_BLEND_SRC GL_SRC_ALPHA
+/// default gl blend dst function
+#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+

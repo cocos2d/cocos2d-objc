@@ -287,15 +287,7 @@ static Director *_sharedDirector = nil;
 {
 	if (on) {
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-//		You might want to use this blend function instead
-//		XXX: Some things needs to be fixed
-//		XXX: Particles is setting the default blend function
-//		XXX: to GL_SRC_ALPHA. Modify the blend parameters
-//		XXX: there too
-//		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	} else
 		glDisable(GL_BLEND);
 }

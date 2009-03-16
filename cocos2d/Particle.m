@@ -304,10 +304,7 @@
 	glDrawArrays(GL_POINTS, 0, particleIdx);
 	
 	// restore blend state
-//	glBlendFunc( blendSrc, blendDst );
-	// XXX: restoring the default blend function
-	// XXX: this should be in sync with Director setAlphaBlending
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
 
 #if 0
 	// restore color mode

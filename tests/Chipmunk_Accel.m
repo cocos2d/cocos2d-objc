@@ -9,6 +9,9 @@
 
 #import "Chipmunk_Accel.h"
 
+enum {
+	kTagAtlasSpriteManager = 1,
+};
 
 static void
 eachShape(void *ptr, void* unused)
@@ -25,8 +28,18 @@ eachShape(void *ptr, void* unused)
 @implementation Layer1
 -(void) addNewSpriteX: (float)x y:(float)y
 {
-	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
-	[self addChild: sprite];
+	int posx, posy;
+
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagAtlasSpriteManager];
+	
+	posx = (CCRANDOM_0_1() * 200);
+	posy = (CCRANDOM_0_1() * 200);
+	
+	posx = (posx % 5) * 85;
+	posy = (posy % 2) * 121;
+	
+	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
+	[mgr addChild: sprite];
 	
 	sprite.position = cpv(x,y);
 	
@@ -87,6 +100,9 @@ eachShape(void *ptr, void* unused)
 	shape = cpSegmentShapeNew(staticBody, cpv(wins.width,0), cpv(wins.width,wins.height), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
+	
+	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+	[self addChild:mgr z:0 tag:kTagAtlasSpriteManager];
 	
 	[self addNewSpriteX: 200 y:200];
 

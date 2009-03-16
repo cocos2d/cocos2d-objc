@@ -10,7 +10,7 @@ design:
 Main features
     * Scene management (workflow)
     * Transitions between scenes
-	* Sprites
+	* Sprites and Sprite Sheets
 	* Effects: Lens, Ripple, Waves, Liquid, etc.
     * Actions (behaviours): 
 		* Trasformation Actions: Move, Rotate, Scale, Jump, etc.
