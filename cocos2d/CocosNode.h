@@ -374,6 +374,8 @@ enum {
 @protocol CocosNodeFrames
 /** sets a new display frame to the node */
 -(void) setDisplayFrame:(id)newFrame;
+/** changes the display frame based on an animation and an index */
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
 /** returns the current displayed frame */
 -(BOOL) isFrameDisplayed:(id)frame;
 /** returns the current displayed frame */

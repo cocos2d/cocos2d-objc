@@ -123,19 +123,6 @@
 	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
 }
 
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
-{
-	if( ! animations )
-		[self initAnimationDictionary];
-
-	Animation *a = [animations objectForKey: animationName];
-	Texture2D *tex = [[a frames] objectAtIndex:frameIndex];
-	if( tex == texture )
-		return;
-	[texture release];
-	texture = [tex retain];
-}
-
 //
 // CocosNodeFrames protocol
 //
@@ -146,6 +133,20 @@
 	[texture release];
 	texture = [frame retain];	
 }
+
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
+{
+	if( ! animations )
+		[self initAnimationDictionary];
+	
+	Animation *a = [animations objectForKey: animationName];
+	Texture2D *tex = [[a frames] objectAtIndex:frameIndex];
+	if( tex == texture )
+		return;
+	[texture release];
+	texture = [tex retain];
+}
+
 -(BOOL) isFrameDisplayed:(id)frame
 {
 	return texture == frame;
