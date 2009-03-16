@@ -64,6 +64,11 @@
 	[super dealloc];
 }
 
+-(void) initAnimationDictionary
+{
+	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+}
+
 -(void)setTextureRect:(CGRect) rect
 {
 	mRect = rect;
@@ -297,6 +302,16 @@
 -(void) setDisplayFrame:(id)newFrame
 {
 	AtlasSpriteFrame *frame = (AtlasSpriteFrame*)newFrame;
+	[self setTextureRect: [frame rect]];
+}
+
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
+{
+	if( ! animations )
+		[self initAnimationDictionary];
+	
+	AtlasAnimation *a = [animations objectForKey: animationName];
+	AtlasSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	[self setTextureRect: [frame rect]];
 }
 

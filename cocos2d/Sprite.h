@@ -55,10 +55,6 @@
 +(id) spriteWithTexture:(Texture2D*) tex;
 /** initializes the sprite with a Texture2D instance */
 -(id) initWithTexture:(Texture2D*) tex;
-
-
-/** changes the display frame based on an animation and an index */
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
 @end
 
 #pragma mark Animation
