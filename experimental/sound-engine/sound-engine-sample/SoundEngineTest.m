@@ -26,7 +26,7 @@
 @implementation SoundEngineTest
 
 - (id)init {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         isTouchEnabled = YES;
         
         // init sound manager/OpenAL support

@@ -21,7 +21,7 @@
     return [self initWithPosition:cpv(240,160)]; // middle of screen
 }
 - (id)initWithPosition:(cpVect)pos {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         self.position = pos;
         self.orientation = 0;
     }
