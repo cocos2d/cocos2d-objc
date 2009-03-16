@@ -9,7 +9,7 @@ version 0.7.1 - ??-Mar-2009
  . CocosNode: added better comments, cleanup code (issue #219)
  . CocosNode: added RGB protocol: Atlas,Texture & ColorLayer conforms it (issue #234)
  . CocosNode: fixed memory leak when removeAndStop a node with children with actions (issue #254)
- . CocosNode: added transform local to world coordinates (issue #207)
+ . CocosNode: added transform local to world coordinates that supports rotation,scale & position (issue #207)
  . CocosNode: removed scale ivar (issue #231)
  . CocosNode: improved handling of nil parameters (issue #262)
  . CocosLive: filter by device id (issue #223)
