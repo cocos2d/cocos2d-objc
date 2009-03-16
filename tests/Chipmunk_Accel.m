@@ -35,8 +35,8 @@ eachShape(void *ptr, void* unused)
 	posx = (CCRANDOM_0_1() * 200);
 	posy = (CCRANDOM_0_1() * 200);
 	
-	posx = (posx % 5) * 85;
-	posy = (posy % 2) * 121;
+	posx = (posx % 4) * 85;
+	posy = (posy % 3) * 121;
 	
 	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
 	[mgr addChild: sprite];
