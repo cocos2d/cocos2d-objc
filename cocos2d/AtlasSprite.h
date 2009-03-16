@@ -24,7 +24,7 @@
  * In particular, the AtlasSpriteManger renders it. It supports all the basic CocosNode transformations like
  * scale, position, rotation, visibility, etc.
  */
-@interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames>
+@interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames, CocosNodeOpacity, CocosNodeRGB>
 {
 	// weak reference
 	TextureAtlas *mAtlas;
@@ -42,14 +42,21 @@
 	ccQuad3 mVertices;
 	
 	// whether or not this Sprite needs to be updated in the Atlas
-	BOOL	dirty;
+	BOOL	dirtyPosition;
+	
+	// opacity and RGB protocol
+	GLubyte _opacity;
+	GLubyte _r, _g, _b;
+	BOOL	dirtyColor;
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
-@property (readonly) BOOL dirty;
+@property (readonly) BOOL dirtyPosition;
+/** whether or not the Sprite's color needs to be updated in the Atlas */
+@property (readonly) BOOL dirtyColor;
 /** returns the altas index of the AtlasSprite */
 @property (readonly) int atlasIndex;
 /** returns the rect of the AtlasSprite */
@@ -64,6 +71,7 @@
 -(void)updateAtlas;
 
 -(void)updatePosition;
+-(void)updateColor;
 
 /** updates the texture rect of the AtlasSprite */
 -(void) setTextureRect:(CGRect) rect;
