@@ -1,0 +1,90 @@
+Steps to convert a game based on cocos2d v0.7 to v0.8
+
+//
+// NEEDED CHANGES
+//
+New files:
+---------
+  * Add these files to your project
+    - CocosNodesExtra.m
+    - CocosNodesExtra.h
+    - AtlasSprite.m
+    - AtlasSprite.h
+    - AtlasSpriteManager.m
+    - AtlasSpriteManager.h
+
+
+Linking parameters
+------------------
+  * If you are using cocos2d as an static library add the following parameter:
+    In XCode -> Project -> Edit Active Target -> Build (All Configurations) -> 
+             -> Linking -> Other Linker Flags:
+          -ObjC 
+
+    After adding it you should see something like this:
+          -ObjC -framework Foundation -framework UIKit
+
+
+//
+// OPTIONAL CHANGES, BUT RECOMMENDED
+//
+CocosNode children
+==================
+
+
+Add
+---
+
+[self add:node];        // OLD
+[self addChild:node];   // NEW
+
+[self add:node z:0];          // OLD
+[self addChild:node z:0];     // NEW
+
+[self add:node z:0 tag:t];          // OLD
+[self addChild:node z:0 tag:t];     // NEW
+
+[self add:node z:0 tag:t parallaxRatio];        // OLD
+[self addChild:node z:0 tag:t parallaxRatio];   // NEW
+
+Add Warning
+-----------
+
+Are you getting a warning saying that 'addChild:' selector is already defined in NSXML ?
+If you want to get rid of the warning you can simply add 'z:0'. eg:
+[self addChild:child z:0];
+
+
+Get
+---
+
+[self getByTag:tag];        // OLD
+[self getChildByTag:tag];   // NEW
+
+Remove
+------
+
+[self remove:node];                    // OLD
+[self removeChild:node cleanup:NO];    // NEW
+
+[self removeAndStop:node];                  // OLD
+[self removeChild:node cleanup:YES];        // NEW
+
+[self removeByTag:tag];                    // OLD
+[self removeChildByTag:tag cleanup:NO];    // NEW
+
+[self removeAndStopByTag:tag];              // OLD
+[self removeChildByTag:tag cleanup:YES];    // NEW
+
+[self removeAll];                           // OLD
+[self removeAllChildrenWithCleanup: NO];    // NEW
+
+[self removeAndStopAll];                    // OLD
+[self removeAllChildrenWithCleanup: YES];    // NEW
+
+
+CocosNode actions
+=================
+
+[self do: action];          // OLD
+[self runAction: action];   // NEW
