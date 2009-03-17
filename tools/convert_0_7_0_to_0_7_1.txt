@@ -3,6 +3,8 @@ Steps to convert a game based on cocos2d v0.7 to v0.8
 //
 // NEEDED CHANGES
 //
+
+
 New files:
 ---------
   * Add these files to your project
@@ -34,6 +36,16 @@ add this line in your main loop:
 
 That line was part of the Director's main loop but was removed since it was causing the opposite effect:
   When mixing UIKit objects with cocos2d some Touch Events were lost when that line was executed.
+
+
+Renamed Macros:
+---------------
+
+RADIANS_TO_DEGREES      // OLD
+DEGREES_TO_RADIANS      // OLD 
+
+CC_RADIANS_TO_DEGREES   // NEW
+CC_DEGREES_TO_RADIANS   // NEW 
 
 
 //
