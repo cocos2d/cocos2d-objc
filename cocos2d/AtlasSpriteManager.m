@@ -29,6 +29,9 @@ const int defaultCapacity = 29;
 {
 	mAtlasIndex = index;
 	[self updateAtlas];
+
+	if( mAtlas.withColorArray )
+		[self updateColor];
 }
 @end
 

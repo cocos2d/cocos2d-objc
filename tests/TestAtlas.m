@@ -26,6 +26,17 @@ enum {
 	kTagAnimation1 = 1,
 };
 
+enum {
+	kTagSprite1,
+	kTagSprite2,
+	kTagSprite3,
+	kTagSprite4,
+	kTagSprite5,
+	kTagSprite6,
+	kTagSprite7,
+	kTagSprite8,
+};
+
 Class nextAction()
 {
 	
@@ -494,17 +505,35 @@ Class restartAction()
 		[sprite8 runAction:fade];
 		
 		// late add: test dirtyColor and dirtyPosition
-		[mgr addChild:sprite1];
-		[mgr addChild:sprite2];
-		[mgr addChild:sprite3];
-		[mgr addChild:sprite4];
-		[mgr addChild:sprite5];
-		[mgr addChild:sprite6];
-		[mgr addChild:sprite7];
-		[mgr addChild:sprite8];
+		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
+		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
+		[mgr addChild:sprite3 z:0 tag:kTagSprite3];
+		[mgr addChild:sprite4 z:0 tag:kTagSprite4];
+		[mgr addChild:sprite5 z:0 tag:kTagSprite5];
+		[mgr addChild:sprite6 z:0 tag:kTagSprite6];
+		[mgr addChild:sprite7 z:0 tag:kTagSprite7];
+		[mgr addChild:sprite8 z:0 tag:kTagSprite8];
+		
+		
+		[self schedule:@selector(removeAndAddSprite:) interval:2];
 		
 	}	
 	return self;
+}
+
+// this function test if remove and add works as expected:
+//   color array and vertex array should be reindexed
+-(void) removeAndAddSprite:(ccTime) dt
+{
+	id mgr = [self getChildByTag:kTagSpriteManager];
+	id sprite = [mgr getChildByTag:kTagSprite5];
+	
+	[sprite retain];
+
+	[mgr removeChild:sprite cleanup:NO];
+	[mgr addChild:sprite z:0 tag:kTagSprite5];
+	
+	[sprite release];
 }
 
 -(NSString *) title
