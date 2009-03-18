@@ -161,9 +161,9 @@
 	NSString *message = nil;
 	tPostStatus status = [sender postStatus];
 	if( status == kPostStatusPostFailed )
-		message = @"score post Failed. Retry posting";
+		message = @"Cannot post the score to the server. Retry";
 	else if( status == kPostStatusConnectionFailed )
-		message = @"score post Failed. Don't retry posting";
+		message = @"Internet connection not available. Enable wi-fi / 3g to post your scores to the server";
 	
 	NSLog(@"%@", message);
 
@@ -192,7 +192,7 @@
 {
 	NSLog(@"score request fail");
 
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Request Failed" message:@"Score Request Failed" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Request Failed" message:@"Internet connection not available, cannot view world scores" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
 	alert.tag = 0;
 	[alert show];
 	[alert release];	
