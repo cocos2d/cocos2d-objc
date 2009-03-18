@@ -36,13 +36,13 @@
     position = pos;
     float x,y;
     if ([[Director sharedDirector] landscape]) {
-        x = pos.x - 240.0;
-        y = 160.0 - pos.y;
+        x = pos.x - 240.0f;
+        y = 160.0f - pos.y;
     } else {
         x = pos.x;
         y = pos.y;
     }
-    float listenerPosAL[] = {x, y, 0.};
+    float listenerPosAL[] = {x, y, 0.0f};
 	// Move our listener coordinates
 	alListenerfv(AL_POSITION, listenerPosAL);    
 }
@@ -53,7 +53,7 @@
 - (void)setOrientation:(float)o {
     orientation = o;
 //    float ori[] = {cos(o + M_PI_2), sin(o + M_PI_2), 0., 0., 0., 1.};
-    float ori[] = {0., 1., 0., 0., 0., 1.}; // I want my listener to stay heads-up always, regardless of the ship's orientation
+    float ori[] = {0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f}; // I want my listener to stay heads-up always, regardless of the ship's orientation
 	// Set our listener orientation (rotation)
 	alListenerfv(AL_ORIENTATION, ori);
 }
