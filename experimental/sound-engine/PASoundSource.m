@@ -58,7 +58,7 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 	if(err) { printf("MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld\n", err); goto Exit; }
 	
 	// Read all the data into memory
-	UInt32		dataSize = fileDataSize;
+	UInt32		dataSize = (UInt32) fileDataSize;
 	theData = malloc(dataSize);
 	if (theData)
 	{
@@ -101,7 +101,7 @@ Exit:
         [self initSource];
         self.position = pos;
         self.orientation = 0.0f;
-        gain = 1.0;
+        gain = 1.0f;
     }
     return self;
 }
@@ -211,13 +211,13 @@ Exit:
     float x,y;
     position = pos;
     if ([[Director sharedDirector] landscape]) {
-        x = pos.x - 240.0;
-        y = 160.0 - pos.y;
+        x = pos.x - 240.0f;
+        y = 160.0f - pos.y;
     } else {
         x = pos.x;
         y = pos.y;
     }    
-    float sourcePosAL[] = {x, y, 0.};
+    float sourcePosAL[] = {x, y, 0.0f};
 	alSourcefv(source, AL_POSITION, sourcePosAL);
 }
 
