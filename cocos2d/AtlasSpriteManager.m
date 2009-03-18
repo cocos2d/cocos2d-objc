@@ -114,30 +114,11 @@ const int defaultCapacity = 29;
 // Don't call visit on it's children
 -(void) visit
 {
-//	if (!visible)
-//		return;
-//	
-//	glPushMatrix();
-//	
-//	if ( grid && grid.active)
-//		[grid beforeDraw];
-//	
-//	[self transform];
-
 	// don't iterate over it's children
 	// the only valid children are AtlasSprites
 	// and are drawn in the atlas
 	
 	[self draw];
-
-	// don't iterate over it's children
-	// the only valid children are AtlasSprites
-	// and are drawn in the atlas
-	
-//	if ( grid && grid.active)
-//		[grid afterDraw:self.camera];
-//	
-//	glPopMatrix();
 }
 
 -(int)indexForNewChild
