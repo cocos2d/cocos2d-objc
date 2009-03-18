@@ -15,6 +15,8 @@
 	[window setUserInteractionEnabled:YES];
 	
 //	[Director useFastDirector];
+//	[[Director sharedDirector] setPixelFormat:kRGBA8];
+
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
 	[[Director sharedDirector] setLandscape:YES];

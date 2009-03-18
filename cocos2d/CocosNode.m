@@ -682,7 +682,7 @@
 	//    slightly better performance when there are many actions. Need to keep original
 	//    value because actions might get nullified and you don't want [nil release].
 	
-	id actionsBackup = [actions retain];
+	[actions retain];
 	
 	// call all actions
 	for( Action *action in actions ) {
@@ -699,7 +699,7 @@
 		}
 	}
 	
-	[actionsBackup release];
+	[actions release];
 }
 
 #pragma mark CocosNode Timers 
