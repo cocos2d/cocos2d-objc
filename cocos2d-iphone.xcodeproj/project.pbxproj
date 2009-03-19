@@ -1343,7 +1343,7 @@
 		8EDF3E9D0F6BD8E600F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
 		8EDF3EA50F6BD90B00F54643 /* SoundEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEngineTest.h; sourceTree = "<group>"; };
 		8EDF3EA60F6BD90B00F54643 /* SoundEngineTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEngineTest.m; sourceTree = "<group>"; };
-		8EDF3ED80F6BDA0000F54643 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundEngineTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDF3F7F0F6BDEB400F54643 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		8EDF3F850F6BDEDA00F54643 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8EDF3FD90F6BE3F400F54643 /* listener-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listener-marker.png"; path = "experimental/sound-engine/sound-engine-sample/listener-marker.png"; sourceTree = SOURCE_ROOT; };
@@ -1732,7 +1732,7 @@
 				50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */,
 				504828800F45AED700A30CEF /* AttachDemo.app */,
 				505CC1590F62BB03000EDF26 /* PerformanceTest.app */,
-				8EDF3ED80F6BDA0000F54643 /* StreakTest.app */,
+				8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2962,7 +2962,7 @@
 			);
 			name = "SoundEngineTest (experimental)";
 			productName = playground;
-			productReference = 8EDF3ED80F6BDA0000F54643 /* StreakTest.app */;
+			productReference = 8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2982,29 +2982,29 @@
 				50B2C4D00E100AEA00AE9530 /* Chipmunk */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
-				502C66170DFEFCCA00E4107D /* RotateWorld */,
-				506C77CB0E01520900B48100 /* ClickAndMove */,
-				506C79F20E01C73A00B48100 /* MenuTest */,
-				506C7FF70E041C9300B48100 /* SceneTest */,
-				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
-				50C93A930E0BF6E000517B01 /* SpritesDemo */,
+				317070410E2940C900DD3360 /* AccelViewportDemo */,
+				506881F40E95761200F943E5 /* AtlasDemo */,
+				5048287F0F45AED700A30CEF /* AttachDemo */,
 				50B2C5CE0E100EF000AE9530 /* Chipmunk_Accel */,
 				50B2CE450E129FD900AE9530 /* ChipmunkDemo */,
-				50DB1BB10E1C1E5900A89DFF /* ParticleDemo */,
-				317070410E2940C900DD3360 /* AccelViewportDemo */,
-				5078B5170E3E43540004233A /* IntervalDemo */,
-				506143F10E589A2E003CCDB7 /* cocosnodeDemo */,
-				506881F40E95761200F943E5 /* AtlasDemo */,
-				50C1953E0EE4B57E00829067 /* ParallaxDemo */,
-				505B62AB0F2E6A0F001B4104 /* Texture2dDemo */,
-				505B63780F2F4210001B4104 /* EaseDemo */,
+				506C77CB0E01520900B48100 /* ClickAndMove */,
 				509B3A270F3102FD00F2FB95 /* cocosLiveDemo */,
+				506143F10E589A2E003CCDB7 /* cocosnodeDemo */,
+				505B63780F2F4210001B4104 /* EaseDemo */,
 				50A24E190F377FA1007CAEB0 /* EffectsDemo */,
 				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedDemo */,
-				5048287F0F45AED700A30CEF /* AttachDemo */,
+				5078B5170E3E43540004233A /* IntervalDemo */,
+				506C79F20E01C73A00B48100 /* MenuTest */,
+				50C1953E0EE4B57E00829067 /* ParallaxDemo */,
+				50DB1BB10E1C1E5900A89DFF /* ParticleDemo */,
 				505CC1580F62BB03000EDF26 /* PerformanceTest */,
-				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
+				502C66170DFEFCCA00E4107D /* RotateWorld */,
+				506C7FF70E041C9300B48100 /* SceneTest */,
 				8EDF3EA90F6BDA0000F54643 /* SoundEngineTest (experimental) */,
+				50C93A930E0BF6E000517B01 /* SpritesDemo */,
+				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
+				505B62AB0F2E6A0F001B4104 /* Texture2dDemo */,
+				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -4823,7 +4823,6 @@
 				INFOPLIST_FILE = tests/cocosLive/cocosLiveInfo.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -4848,7 +4847,6 @@
 				INFOPLIST_FILE = tests/cocosLive/cocosLiveInfo.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-framework",
 					Foundation,
 					"-framework",
