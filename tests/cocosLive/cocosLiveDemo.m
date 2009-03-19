@@ -142,7 +142,13 @@
 	
 	NSLog(@"Sending data: %@", dict);
 
-	[server sendScore:dict];
+	// You can add a new score to the database
+//	[server sendScore:dict];
+	
+	// Or you can "update" your score instead of adding a new one.
+	// To do that, cc_playername must exists.
+	// The score will be udpated only if it is better than the previous one
+	[server updateScore:dict];
 	
 	// Release. It won't be freed from memory until the connection fails or suceeds
 	[server release];
