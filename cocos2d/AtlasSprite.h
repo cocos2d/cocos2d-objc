@@ -20,30 +20,23 @@
 
 #pragma mark AltasSprite
 
-/** AtlasSprite object is  textured 2d object is rendered using a TextureAtlas object.
- * In particular, the AtlasSpriteManager renders it. It supports the basic CocosNode transformations like
- * scale, position, rotation, visibility, etc.
+/** AtlasSprite is a CocosNode object that implements the CocosNodeSize, CocosNodeFrames, CocosNodeOpacity and
+ * CocosNodeRGB protocols.
+ * 
+ * AtlasSprite can be used as a replacement of Sprite.
  *
- * Features:
- *  - AtlasSprite are much faster than Sprites.
- *  - They support these transformations
- *    -# rotation
- *    -# position
- *    -# scale (x,y)
- *    -# opacity
- *    -# RGB ( setRGB:::)
- *    -# visibility
- *  - Anchor point 
+ * AtlasSprite has all the features from CocosNode with the following additions and limitations:
+ *	- New features
+ *		- It is MUCH faster than Sprite
  *
- * Limitations of AtlasSprite:
- *  - All of the AltasSprites
- *  - They all use z-order 0.
- *  - They can't have children
- *  - Camera is not supported yet ( OrbitCamera action doesn't work)
- *  - Grid actions are supported
- *  - Alias or AntiAlias is a property of AtlasSpriteManager
- *  - They only can be added to a AtlasSpriteManager
- *  - They can't be "parallaxed", but AtlasSpriteManager can
+ *	- Limitations
+ *		- Their parent can only be an AtlasSpriteManager
+ *		- They all use z-order 0
+ *		- They can't have children
+ *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
+ *		- GridBase actions are supported (eg: Lens, Ripple, Twirl)
+ *		- They can't Aliased or AntiAliased (but AtlasSpriteManager can)
+ *		- They can't be "parallaxed" (but AtlasSpriteManager can)
  *
  * @since v0.7.1
  */

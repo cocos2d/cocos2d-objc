@@ -15,7 +15,16 @@
 #import "AtlasNode.h"
 #import "TextureAtlas.h"
 
-/** A Label that laods the font from a Texture Atlas */
+/** LabelAtlas is a subclass of AtlasNode.
+ 
+ It can be as a replacement of Label since it is MUCH faster that it.
+ 
+ LabelAtlas versus Label:
+ - LabelAtlas is MUCH faster than Label
+ - LabelAtlas can't be created with an NSString
+ - LabelAtlas "characters" have a fixed height and width
+ - LabelAtlas "characters" can anything you want since they are taken from an image file
+ */
 @interface LabelAtlas : AtlasNode {
 		
 	/// string to render
