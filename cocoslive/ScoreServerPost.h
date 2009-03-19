@@ -86,6 +86,7 @@ typedef enum {
 /** 
  * Sends a score dictionary to the server for updating an existing entry by playername and device id, or creating a new one.
  * The passed dictionary must contain a cc_playername key, otherwise it will raise and exception.
+ * @since v0.7.1
  */
 -(BOOL) updateScore: (NSDictionary*) dict;
 
