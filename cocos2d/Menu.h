@@ -17,7 +17,12 @@
 #import "MenuItem.h"
 #import "Layer.h"
 
-/** A Menu */
+/** A Menu
+ * 
+ * Features and Limitation:
+ *  - You can add MenuItem objects in runtime using addChild:
+ *  - But the only accecpted children are MenuItem objects
+ */
 @interface Menu : Layer <CocosNodeOpacity>
 {
 	int selectedItem;

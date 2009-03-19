@@ -22,7 +22,30 @@
 #pragma mark Sprite
 
 @class Animation;
-/** a 2D sprite */
+/** Sprite object is a textured 2D sprite.
+ * Sprite supports ALL CocosNode transformations, but in contrast to AtlasSprite it is much slower.
+ * ONLY use Sprite if you can't achieve the same with effect with AtlasSprite, otherwise the use of
+ * AtlasSprite is recommended.
+ *
+ * Features:
+ *  - They support these transformations
+ *    -# rotation
+ *    -# position
+ *    -# scale (x,y)
+ *    -# opacity
+ *    -# RGB ( setRGB:::)
+ *    -# visibility
+ *    -# camera transformation (eg: OrbitCamera action)
+ *    -# grid effects (eg: Lens, Ripple, Waves, Twirl, etc)
+ *  - Sprite can can a z-order
+ *  - Sprite can have children
+ *  - Anchor point
+ *  - Aliased or AntiAliased
+ *  - They can be used to build a Parallax Scroll
+ *
+ * Limitations of Sprite:
+ *  - It doesn't perform as well as AtlasSprite
+ */
 @interface Sprite : TextureNode <CocosNodeFrames>
 {
 	NSMutableDictionary *animations;	

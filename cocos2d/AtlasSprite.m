@@ -253,6 +253,15 @@
 }
 
 //
+// Composition overload
+//
+-(id) addChild:(CocosNode*)child z:(int)z tag:(int) aTag
+{
+	NSAssert(NO, @"AtlasSprite can't have children");
+	return nil;
+}
+
+//
 // Opacity protocol
 //
 -(void) setOpacity:(GLubyte) anOpacity

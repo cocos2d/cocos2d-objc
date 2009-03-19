@@ -16,7 +16,7 @@
 #import "AtlasNode.h"
 #import "Support/TGAlib.h"
 
-/** A TileMap that laods the font from a Texture Atlas */
+/** A TileMap that laods the texture from a Texture Atlas */
 @interface TileMapAtlas : AtlasNode {
 	
 	/// info about the map file

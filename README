@@ -34,8 +34,8 @@ Main features
     * OpenGL ES 1.1 based 
 
 Experimental features:
-    * Ribbon / Motion Streak support
-	* Sound support
+    * Motion Streak / Ribbon support
+	* Sound Engine support
 
 This library does not work with the toolchain, but it
 should be easy to port it to it.
