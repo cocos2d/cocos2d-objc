@@ -19,7 +19,10 @@
 
 #import "TextureNode.h"
 
-/** A Label */
+/** Label is a subclass of TextureNode that knows how to render text labels
+ *
+ * All features from TextureNode are valid in Label
+ */
 @interface Label : TextureNode
 {
 	CGSize _dimensions;

@@ -36,7 +36,12 @@
 //
 // Layer
 //
-/** a Layer */
+/** Layer is a subclass of CocosNode that implements the TouchEventsDelegate protocol.
+ 
+ All features from CocosNode are valid, plus the following new features:
+ - It can receive iPhone Touches
+ - It can receive Accelerometer input
+*/
 @interface Layer : CocosNode <UIAccelerometerDelegate, TouchEventsDelegate>
 {
 	//! whether or not it will receive Touch events
@@ -54,8 +59,14 @@
 //
 // ColorLayer
 //
-/** a Layer with color and opacity */
-@interface ColorLayer : Layer <CocosNodeOpacity, CocosNodeRGB>
+/** ColorLayer is a subclass of Layer that implements the CocosNodeSize, CocosNodeOpacity and CocosNodeRGB protocol.
+ 
+ All features from Layer are valid, plus the following new features:
+ - opacity
+ - RGB colors
+ - contentSize
+ */
+@interface ColorLayer : Layer <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize>
 {
 	GLubyte r,g,b,opacity;
 	GLfloat squareVertices[4 * 2];
@@ -93,9 +104,7 @@
 
 @end
 
-//
-// MultiplexLayer
-//
+/** A Layer with the ability to multiplex it's children */
 @interface MultiplexLayer : Layer
 {
 	unsigned int enabledLayer;

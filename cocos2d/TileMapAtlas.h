@@ -16,7 +16,16 @@
 #import "AtlasNode.h"
 #import "Support/TGAlib.h"
 
-/** A TileMap that laods the texture from a Texture Atlas */
+/** TileMapAtlas is a subclass of AtlasNode.
+ 
+ It knows how to render a map based of tiles.
+ The tiles must be in a .PNG format while the map must be a .TGA file.
+ 
+ For more information regarding the format, please see this post:
+ http://blog.sapusmedia.com/2008/12/how-to-use-tilemap-editor-for-cocos2d.html
+ 
+ All features from AtlasNode are valid in TileMapAtlas
+ */
 @interface TileMapAtlas : AtlasNode {
 	
 	/// info about the map file

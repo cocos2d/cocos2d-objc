@@ -152,20 +152,6 @@
 	}
 }
 
--(void) setRGB: (GLubyte)rr :(GLubyte)gg :(GLubyte)bb
-{
-	r = rr;
-	g = gg;
-	b = bb;
-	[self updateColor];
-}
-
--(void) setOpacity: (GLubyte) o
-{
-	opacity = o;
-	[self updateColor];
-}
-
 - (void) initWidth: (GLfloat) w height:(GLfloat) h
 {
 	for (NSUInteger i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
@@ -209,6 +195,32 @@
 {
 	GLuint ret;
 	ret = (r << 24) | (g << 16) | (b << 8) | opacity;
+	return ret;
+}
+
+#pragma mark Protocols
+// Color Protocol
+-(void) setRGB: (GLubyte)rr :(GLubyte)gg :(GLubyte)bb
+{
+	r = rr;
+	g = gg;
+	b = bb;
+	[self updateColor];
+}
+
+// Opacity Protocol
+-(void) setOpacity: (GLubyte) o
+{
+	opacity = o;
+	[self updateColor];
+}
+
+// Size protocol
+-(CGSize) contentSize
+{
+	CGSize ret;
+	ret.width = squareVertices[2];
+	ret.height = squareVertices[5];
 	return ret;
 }
 @end

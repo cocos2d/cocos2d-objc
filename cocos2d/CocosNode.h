@@ -40,7 +40,24 @@ enum {
  Subclassing a CocosNode usually means (one/all) of:
  - overriding init to initialize resources and schedule callbacks
  - create callbacks to handle the advancement of time
- - overriding draw to render the node    
+ - overriding draw to render the node
+ 
+ Features of CocosNode:
+ - position
+ - scale (x, y)
+ - rotation (in degrees)
+ - Camera ( using spherical coordinates )
+ - GridBase (to do mesh transformations)
+ - anchor point
+ - visible
+ - z-order
+ - parallax ratio
+ 
+ Limitations:
+ - A CocosNode is a "void" object. It doesn't have a texture
+ - Since it has no texture, is has no size
+ - It can't receive touches
+ - It can't receive accelerometer values
  */ 
 @interface CocosNode : NSObject {
 	
