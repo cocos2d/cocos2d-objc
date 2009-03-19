@@ -23,13 +23,24 @@
 - (CGAffineTransform)nodeToWorldTransform;
 - (CGAffineTransform)worldToNodeTransform;
 
-// conversions
+/** converts a world coordinate to local coordinate
+@since v0.7.1
+*/
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
-/// converts local coordinate to world space
+/** converts local coordinate to world space
+ @since v0.7.1
+ */
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
 
-// treat returned/received node point as anchor relative
+/** converts a world coordinate to local coordinate
+ treating the returned/received node point as anchor relative
+ @since v0.7.1
+ */
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
+/** converts local coordinate to world space
+ treating the returned/received node point as anchor relative
+ @since v0.7.1
+ */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
 

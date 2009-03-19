@@ -28,17 +28,17 @@ enum {
 @class GridBase;
 
 /** CocosNode is the main element. Anything thats gets drawn or contains things that get drawn is a CocosNode.
- The most popular CocosNodes are: Scene, Layer, Sprite.
+ The most popular CocosNodes are: Scene, Layer, Sprite, Menu.
  
- The main features of a cocosnode are:
- - They can contain other cocos nodes (add, get, remove, etc)
+ The main features of a CocosNode are:
+ - They can contain other cocos nodes (addChild, getChildByTag, removeChild, etc)
  - They can schedule periodic callback (schedule, unschedule, etc)
- - They can execute actions (do, pause, stop, etc)
+ - They can execute actions (runAction, stopAction, etc)
  
  Some CocosNodes provide extra functionality for them or their children.
  
  Subclassing a CocosNode usually means (one/all) of:
- - overriding init to initialize resources and schedule calbacks
+ - overriding init to initialize resources and schedule callbacks
  - create callbacks to handle the advancement of time
  - overriding draw to render the node    
  */ 
@@ -155,24 +155,27 @@ enum {
 
 // composition: ADD
 
-/** Adds a child to the container with z-order as 0 
- @return returns self
+/** Adds a child to the container with z-order as 0.
+ It returns self, so you can chain several addChilds.
+ @since v0.7.1
  */
 -(id) addChild: (CocosNode*)node;
 
 /** Adds a child to the container with a z-order
- @return returns self
+ It returns self, so you can chain several addChilds.
+ @since v0.7.1
  */
 -(id) addChild: (CocosNode*)node z:(int)z;
 
 /** Adds a child to the container with z order and tag
- @deprecated Will be removed in v0.8. Use addChild:z:tag instead
- @return returns self
+ It returns self, so you can chain several addChilds.
+ @since v0.7.1
  */
 -(id) addChild: (CocosNode*)node z:(int)z tag:(int)tag;
 
 /** Adds a child to the container with a z-order and a parallax ratio
- @return returns self
+ It returns self, so you can chain several addChilds.
+ @since v0.7.1
  */
 -(id) addChild: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
 
@@ -180,36 +183,35 @@ enum {
 
 /** Adds a child to the container with z-order as 0 
  @deprecated Will be removed in v0.8. Use addChild instead
- @return returns self
  */
 -(id) add: (CocosNode*)node __attribute__ ((deprecated));
 /** Adds a child to the container with a z-order
  @deprecated Will be removed in v0.8. Use addChild:z instead
- @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z __attribute__ ((deprecated));
 /** Adds a child to the container with z order and tag
  @deprecated Will be removed in v0.8. Use addChild:z:tag instead
- @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z tag:(int)tag __attribute__ ((deprecated));
 /** Adds a child to the container with a z-order and a parallax ratio
  @deprecated Will be removed in v0.8. Use addChild:z:tag:paralalxRatio instead
- @return returns self
  */
 -(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c __attribute__ ((deprecated));
 
 // composition: REMOVE
 
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+ @since v0.7.1
  */
 -(void) removeChild: (CocosNode*)node cleanup:(BOOL)cleanup;
 
 /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+ @since v0.7.1
  */
 -(void) removeChildByTag:(int) tag cleanup:(BOOL)cleanup;
 
 /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
+ @since v0.7.1
  */
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
@@ -247,6 +249,7 @@ enum {
 // composition: GET
 /** Gets a child from the container given its tag
  @return returns a CocosNode object
+ @since v0.7.1
  */
 -(CocosNode*) getChildByTag:(int) tag;
 
@@ -260,7 +263,7 @@ enum {
 
 /** Returns the absolute position of the CocosNode
  @deprecated Use convertToWorldSpace:CGPointZero instead. Will be removed in v0.8
- @return a cpVect value with the absolute position of the noe
+ @return a cpVect value
  */
 -(cpVect) absolutePosition __attribute__ ((deprecated));
 
@@ -290,15 +293,22 @@ enum {
  */
 -(Action*) do: (Action*) action __attribute__ ((deprecated));
 /** Executes an action, and returns the action that is executed
+ @since v0.7.1
+ @return An Action pointer
  */
 -(Action*) runAction: (Action*) action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
 /** Removes an action from the running action list */
 -(void) stopAction: (Action*) action;
-/** Removes an action from the running action list given its tag */
+/** Removes an action from the running action list given its tag
+ @since v0.7.1
+*/
 -(void) stopActionByTag:(int) tag;
-/** Gets an action from the running action list given its tag */
+/** Gets an action from the running action list given its tag
+ @since v0.7.1
+ @return the Action the with the given tag
+ */
 -(Action*) getActionByTag:(int) tag;
 /** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
  * Composable actions are counted as 1 action. Example:
@@ -348,6 +358,7 @@ enum {
 @protocol CocosNodeRGB
 /** set the color of the node.
  * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
+ @since v0.7.1
  */
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
 /// The red component of the node's color.
@@ -360,6 +371,7 @@ enum {
 
 
 /// Objects that supports the Animation protocol
+/// @since v0.7.1
 @protocol CocosAnimation
 /** reaonly array with the frames */
 -(NSArray*) frames;
@@ -371,6 +383,7 @@ enum {
 
 
 /// Nodes supports frames protocol
+/// @since v0.7.1
 @protocol CocosNodeFrames
 /** sets a new display frame to the node */
 -(void) setDisplayFrame:(id)newFrame;

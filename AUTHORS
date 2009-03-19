@@ -38,6 +38,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
         Added Composite actions: AccelAmplitude, AccelDeccelAmplitude, DeccelAmplitude
     * Favo Yang: patch for unschedule timer in CocosNode
     * Florin Dumitrescu: added "update score" in cocosLive
+	    author of the sound engine: PASoundListener, PASoundMgr, PASoundSource
     * Fradj Johann: patches for CocosNode
 		patches for Layer
 		patches for MultiplexLayer
@@ -47,7 +48,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
     * Jacob Eiting: patches for Primitives
     * Jason Booth (slipster216): author of EaseAction
 		author of EaseAction demos
-		author of StreakDemo, MotionStreak
+		author of StreakDemo, MotionStreak and Ribbon
 		patch for ScaleTo/By action to support X and Y.
     * Joe Vennix: patches for CocosNode
     * kermidt.zed: patches for absolutePosition in CocosNode
@@ -74,7 +75,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for License
     * Matt Oswald: fix to set depthbuffer size on Director
 		TextureAtlas supports Texture2D objects
-		author of AtlasSprite and AtlasSpriteManager
+		author of the original AtlasSprite and AtlasSpriteManager
     * rac5372: compiler warning in MenuItem
     * ratman: patch for TileMapAtlas: it works with 255 tiles
 		  patch for TextureMgr: supports directory within image names

@@ -22,6 +22,13 @@
 
 /** AtlasSpriteManager is the object that draws all the AtlasSprite objects
  * that belongs to this Manager. Use 1 AtlasSpriteManager per TextureAtlas
+*
+ * Limitations:
+ *  - The only object that is accepted as child is AtlasSprite
+ *  - All it's children are Aliased or Antialiased. They can't be some Aliased and some Antialiased
+ *  - All it's children will have the same z-order: 0
+ * 
+ * @since v0.7.1
  */
 @interface AtlasSpriteManager : CocosNode
 {

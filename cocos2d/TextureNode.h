@@ -20,7 +20,12 @@
 #import "CocosNode.h"
 
 
-/** A CocosNode that knows how to render a texture */
+/** A CocosNode that knows how to render a texture
+ * Features:
+ *  - opacity
+ *  - contentSize
+ *  - RGB (setRGB:::)
+ */
 @interface TextureNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize> {
 
 	/// texture
