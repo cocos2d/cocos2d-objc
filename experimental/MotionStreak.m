@@ -23,6 +23,7 @@
 
 #import "MotionStreak.h"
 #import "Scheduler.h"
+#import "CocosNodeExtras.h"
 
 @implementation MotionStreak
 
@@ -56,7 +57,7 @@
 
 -(void)update:(ccTime)delta
 {
-  cpVect location = [self absolutePosition];
+	cpVect location = [self convertToWorldSpace:CGPointZero];
   [mRibbon setPosition:cpv(-1*location.x, -1*location.y)];
   float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
   if (len > mSegThreshold)

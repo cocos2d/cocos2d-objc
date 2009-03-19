@@ -7,8 +7,10 @@
 // local import
 #import "ParticleDemo.h"
 
-#define kTagLabelAtlas	0xAABBCCDD
-#define kTagEmitter		0xAABBCCDE
+enum {
+	kTagLabelAtlas = 1,
+	kTagEmitter	= 2,
+};
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {

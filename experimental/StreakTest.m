@@ -62,7 +62,8 @@
 {
 //  cpVect p = [target absolutePosition];
 //  float r = [root rotation];
-  [streak setPosition:[target absolutePosition]];
+	[streak setPosition:[target convertToWorldSpace:CGPointZero]];
+
 }
 
 -(NSString *) title
