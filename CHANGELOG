@@ -1,4 +1,4 @@
-version 0.7.1 - ??-Mar-2009
+version 0.7.1 - 20-Mar-2009
  . Actions: added tags to actions (issue #222)
  . Actions: Spawns can be Speeded (issue #257)
  . Actions: Speed can be altered in runtime (part of issue #236)
@@ -26,6 +26,7 @@ version 0.7.1 - ??-Mar-2009
  . Scheduler: if signature is not correct Assert (issue #218)
  . Sprite: correct transform anchor point (issue #216)
  . TextureAtlas: support for texture2D (issue #161)
+ . Tools: Added perf-test results (issue #243)
 
 version 0.7.0 - 19-Feb-2009
  . Action: elapsed is a property (issue #203)
