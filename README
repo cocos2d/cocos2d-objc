@@ -10,21 +10,21 @@ design:
 Main features
     * Scene management (workflow)
     * Transitions between scenes
-	* Sprites and Sprite Sheets
-	* Effects: Lens, Ripple, Waves, Liquid, etc.
+    * Sprites and Sprite Sheets
+    * Effects: Lens, Ripple, Waves, Liquid, etc.
     * Actions (behaviours): 
-		* Trasformation Actions: Move, Rotate, Scale, Jump, etc.
-		* Composable actions: Sequence, Spawn, Repeat, Reverse
-		* Ease Actions: Exp, Sin, Cubic, etc.
-		* Misc actions: CallFunc, OrbitCamera
+        * Trasformation Actions: Move, Rotate, Scale, Jump, etc.
+        * Composable actions: Sequence, Spawn, Repeat, Reverse
+        * Ease Actions: Exp, Sin, Cubic, etc.
+        * Misc actions: CallFunc, OrbitCamera
     * Basic menus and buttons
     * Integrated Chipmunk 2d physics engine
     * Particle system
     * Text rendering support
     * Texture Atlas support
     * Tile Map support
-	* Parallax scrolling support
-	* High Score server
+    * Parallax scrolling support
+    * High Score server
     * Touch/Accelerometer support
     * Portrait and Landscape mode
     * Integrated Pause/Resume
@@ -35,7 +35,7 @@ Main features
 
 Experimental features:
     * Motion Streak / Ribbon support
-	* Sound Engine support
+    * Sound Engine support
 
 This library does not work with the toolchain, but it
 should be easy to port it to it.

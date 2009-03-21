@@ -77,11 +77,6 @@
 			free(vertices);
 		return nil;
 	}
-		
-	if( _withColorArray && ! colors ) {
-		NSLog(@"TextureAtlas: not enough memory");
-		return nil;
-	}
 
 	[self initIndices];
 	
@@ -100,6 +95,8 @@
 	free(vertices);
 	free(texCoordinates);
 	free(indices);
+	if(_withColorArray)
+		free(colors);
 	
 	[texture release];
 
