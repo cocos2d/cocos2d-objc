@@ -1343,7 +1343,7 @@
 		8EDF3E9D0F6BD8E600F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
 		8EDF3EA50F6BD90B00F54643 /* SoundEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEngineTest.h; sourceTree = "<group>"; };
 		8EDF3EA60F6BD90B00F54643 /* SoundEngineTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEngineTest.m; sourceTree = "<group>"; };
-		8EDF3ED80F6BDA0000F54643 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundEngineTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDF3F7F0F6BDEB400F54643 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		8EDF3F850F6BDEDA00F54643 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8EDF3FD90F6BE3F400F54643 /* listener-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listener-marker.png"; path = "experimental/sound-engine/sound-engine-sample/listener-marker.png"; sourceTree = SOURCE_ROOT; };
@@ -1732,7 +1732,7 @@
 				50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */,
 				504828800F45AED700A30CEF /* AttachDemo.app */,
 				505CC1590F62BB03000EDF26 /* PerformanceTest.app */,
-				8EDF3ED80F6BDA0000F54643 /* StreakTest.app */,
+				8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2962,7 +2962,7 @@
 			);
 			name = "SoundEngineTest (experimental)";
 			productName = playground;
-			productReference = 8EDF3ED80F6BDA0000F54643 /* StreakTest.app */;
+			productReference = 8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

@@ -363,7 +363,7 @@ Class restartAction()
 	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
-	int x = (idx%5) * 81;
+	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 
