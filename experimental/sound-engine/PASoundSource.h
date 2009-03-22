@@ -23,6 +23,7 @@
     cpVect position;
     float orientation;
     NSString *file;
+    NSString *extension;
     BOOL looped;
     BOOL isPlaying;
     
@@ -35,15 +36,27 @@
 @property (readwrite, assign) cpVect position;
 @property (readwrite, assign) float orientation;
 @property (readwrite, copy) NSString *file;
+@property (readwrite, copy) NSString *extension;
 @property (readwrite, assign) BOOL looped;
 @property (readwrite, assign) BOOL isPlaying;
 
+- (id)initWithPosition:(cpVect)pos file:(NSString *)f extension:(NSString *)e looped:(BOOL)yn;
 - (id)initWithPosition:(cpVect)pos file:(NSString *)f looped:(BOOL)yn;
 - (id)initWithPosition:(cpVect)pos file:(NSString *)f;
+- (id)initWithFile:(NSString *)f extension:(NSString *)e looped:(BOOL)yn;
+- (id)initWithFile:(NSString *)f looped:(BOOL)yn;
+- (id)initWithFile:(NSString *)f;
+
 - (void)initSource;
 - (void)initBuffer;
 
+- (void)playAtPosition:(cpVect)p restart:(BOOL)r;
+- (void)playAtPosition:(cpVect)p;
+- (void)playWithRestart:(BOOL)r;
 - (void)play;
+- (void)playAtListenerPositionWithRestart:(BOOL)r;
+- (void)playAtListenerPosition;
+
 - (void)stop;
 
 - (void)setGain:(float)g;

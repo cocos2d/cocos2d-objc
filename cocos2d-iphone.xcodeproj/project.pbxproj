@@ -711,6 +711,7 @@
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
+		8E60F0DB0F766499005FCEAC /* waterfall.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8E60F0DA0F766499005FCEAC /* waterfall.caf */; };
 		8EDF3E9E0F6BD8E600F54643 /* MyOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EDF3E920F6BD8E600F54643 /* MyOpenALSupport.h */; };
 		8EDF3E9F0F6BD8E600F54643 /* PASoundListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EDF3E930F6BD8E600F54643 /* PASoundListener.h */; };
 		8EDF3EA00F6BD8E600F54643 /* PASoundListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDF3E940F6BD8E600F54643 /* PASoundListener.m */; };
@@ -1328,6 +1329,7 @@
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		8E60F0DA0F766499005FCEAC /* waterfall.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waterfall.caf; sourceTree = "<group>"; };
 		8EDF3E8E0F6BD8CD00F54643 /* chicken.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chicken.wav; sourceTree = "<group>"; };
 		8EDF3E8F0F6BD8CD00F54643 /* clank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clank.wav; sourceTree = "<group>"; };
 		8EDF3E900F6BD8CD00F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
@@ -2305,6 +2307,7 @@
 		8EDF3E8D0F6BD8CD00F54643 /* sfx */ = {
 			isa = PBXGroup;
 			children = (
+				8E60F0DA0F766499005FCEAC /* waterfall.caf */,
 				8EDF3E8E0F6BD8CD00F54643 /* chicken.wav */,
 				8EDF3E8F0F6BD8CD00F54643 /* clank.wav */,
 				8EDF3E900F6BD8CD00F54643 /* waterfall.wav */,
@@ -3560,6 +3563,7 @@
 				8EDF3FDD0F6BE3FC00F54643 /* listener-marker.png in Resources */,
 				8EDF3FDE0F6BE3FC00F54643 /* source-marker.png in Resources */,
 				8EDF40240F6BED9900F54643 /* ATTRIBUTION in Resources */,
+				8E60F0DB0F766499005FCEAC /* waterfall.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

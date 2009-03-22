@@ -28,9 +28,15 @@
 
 + (PASoundMgr *)sharedSoundManager;
 
-- (void)addSound:(NSString *)name withPosition:(cpVect)pos looped:(BOOL)yn;
+- (PASoundSource *)addSound:(NSString *)name withExtension:(NSString *)ext position:(cpVect)pos looped:(BOOL)yn;
+- (PASoundSource *)addSound:(NSString *)name withPosition:(cpVect)pos looped:(BOOL)yn;
+
+- (PASoundSource *)sound:(NSString *)name withExtension:(NSString *)ext;
 - (PASoundSource *)sound:(NSString *)name;
+
+- (BOOL)play:(NSString *)name withExtension:(NSString *)ext;
 - (BOOL)play:(NSString *)name;
+- (BOOL)stop:(NSString *)name withExtension:(NSString *)ext;
 - (BOOL)stop:(NSString *)name;
 
 - (void)initOpenAL;
