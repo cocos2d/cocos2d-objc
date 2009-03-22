@@ -94,33 +94,51 @@ static PASoundMgr *sharedSoundManager = nil;
     listener = [[PASoundListener alloc] init];
 }
 
-- (void)addSound:(NSString *)name withPosition:(cpVect)pos looped:(BOOL)yn {
-    PASoundSource *sound = [[PASoundSource alloc] initWithPosition:pos file:name looped:yn];
+- (PASoundSource *)addSound:(NSString *)name withExtension:(NSString *)ext position:(cpVect)pos looped:(BOOL)yn {
+    PASoundSource *sound = [[PASoundSource alloc] initWithPosition:pos file:name extension:ext looped:yn];
     if (sound) {
-        [sounds setObject:sound forKey:name];
+        [sounds setObject:sound forKey:[NSString stringWithFormat:@"%@.%@",name,ext]];
         [sound release];
     }
+    return sound;
 }
-- (PASoundSource *)sound:(NSString *)name {
-    if ([[sounds allKeys] containsObject:name]) {
-        return [sounds objectForKey:name];
-    }
-    return nil;    
+- (PASoundSource *)addSound:(NSString *)name withPosition:(cpVect)pos looped:(BOOL)yn {
+    return [self addSound:name withExtension:@"wav" position:pos looped:yn];
 }
 
+- (PASoundSource *)sound:(NSString *)name withExtension:(NSString *)ext {
+    NSString *key = [NSString stringWithFormat:@"%@.%@",name,ext];
+    if ([[sounds allKeys] containsObject:key]) {
+        return [sounds objectForKey:key];
+    }
+    return nil;
+}
+- (PASoundSource *)sound:(NSString *)name {
+    return [self sound:name withExtension:@"wav"];
+}
+
+- (BOOL)play:(NSString *)name withExtension:(NSString *)ext {
+    PASoundSource *sound = [self sound:name withExtension:ext];
+    if (sound) {
+        [sound playAtListenerPosition];
+        return YES;
+    }
+    return NO;
+}
 - (BOOL)play:(NSString *)name {
-    if ([[sounds allKeys] containsObject:name]) {
-        [[sounds objectForKey:name] play];
+    return [self play:name withExtension:@"wav"];
+}
+
+- (BOOL)stop:(NSString *)name withExtension:(NSString *)ext {
+    PASoundSource *sound = [self sound:name withExtension:ext];
+    if (sound) {
+        [sound stop];
         return YES;
     }
     return NO;
 }
 - (BOOL)stop:(NSString *)name {
-    if ([[sounds allKeys] containsObject:name]) {
-        [[sounds objectForKey:name] stop];
-        return YES;
-    }
-    return NO;
+    return [self stop:name withExtension:@"wav"];
 }
 
 - (void)dealloc {

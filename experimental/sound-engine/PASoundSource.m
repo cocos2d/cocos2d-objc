@@ -20,6 +20,7 @@
 
 #import "PASoundSource.h"
 #import "PASoundMgr.h"
+#import "PASoundListener.h"
 
 #define kSoundReferenceDistance 20.0f
 
@@ -87,14 +88,17 @@ Exit:
 
 @implementation PASoundSource
 
-@synthesize file, looped, isPlaying;
+@synthesize file, extension, looped, isPlaying;
 
 - (id)init {
     return nil;
 }
-- (id)initWithPosition:(cpVect)pos file:(NSString *)f looped:(BOOL)yn{
+
+// initializers with position
+- (id)initWithPosition:(cpVect)pos file:(NSString *)f extension:(NSString *)e looped:(BOOL)yn {
     if ((self = [super init])) {
         self.file = f;
+        self.extension = e;
         self.looped = yn;
         self.isPlaying = NO;
         [self initBuffer];
@@ -105,8 +109,22 @@ Exit:
     }
     return self;
 }
+- (id)initWithPosition:(cpVect)pos file:(NSString *)f looped:(BOOL)yn{
+    return [self initWithPosition:pos file:f extension:@"wav" looped:yn];
+}
 - (id)initWithPosition:(cpVect)pos file:(NSString *)f {
-    return [self initWithPosition:pos file:f looped:NO];
+    return [self initWithPosition:pos file:f extension:@"wav" looped:NO];
+}
+
+// initializers without position (will have to be spcified at play time) -- defaulting to cpvzero
+- (id)initWithFile:(NSString *)f extension:(NSString *)e looped:(BOOL)yn {
+    return [self initWithPosition:cpvzero file:f extension:e looped:yn];
+}
+- (id)initWithFile:(NSString *)f looped:(BOOL)yn {
+    return [self initWithPosition:cpvzero file:f extension:@"wav" looped:yn];
+}
+- (id)initWithFile:(NSString *)f {
+    return [self initWithPosition:cpvzero file:f extension:@"wav" looped:NO];
 }
 
 - (void)initBuffer {
@@ -119,7 +137,7 @@ Exit:
 	NSBundle*				bundle = [NSBundle mainBundle];
 	
 	// get some audio data from a wave file
-	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:self.file ofType:@"wav"]] retain];
+	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:self.file ofType:self.extension]] retain];
 	
 	if (fileURL)
 	{	
@@ -176,6 +194,7 @@ Exit:
     alSourcef(source, AL_PITCH, factor);
 }
 
+/*
 - (void)play {
     ALint state;
     alGetSourcei(source, AL_SOURCE_STATE, &state);
@@ -192,6 +211,51 @@ Exit:
         }        
     }
 }
+*/
+
+// play messages
+- (void)playAtPosition:(cpVect)p restart:(BOOL)r {
+    cpVect currentPos = [self position];
+    ALint state;
+    if ((p.x != currentPos.x) || (p.y != currentPos.y)) {
+        [self setPosition:p];
+    }
+    alGetSourcei(source, AL_SOURCE_STATE, &state);
+    if ((state == AL_PLAYING) && r) {
+        // stop it before replaying
+        [self stop];
+        // get current state
+        alGetSourcei(source, AL_SOURCE_STATE, &state);
+    }
+    if (state != AL_PLAYING) {
+        alGetError();
+        ALenum error;
+        [self setGain:gain];
+        alSourcePlay(source);
+        if((error = alGetError()) != AL_NO_ERROR) {
+            printf("error starting source: %x\n", error);
+        } else {
+            // Mark our state as playing (the view looks at this)
+            self.isPlaying = YES;
+        }        
+    }    
+}
+- (void)playAtPosition:(cpVect)p {
+    return [self playAtPosition:p restart:NO];
+}
+- (void)playWithRestart:(BOOL)r {
+    return [self playAtPosition:self.position restart:r];
+}
+- (void)play {
+    return [self playAtPosition:self.position restart:NO];    
+}
+- (void)playAtListenerPositionWithRestart:(BOOL)r {
+    return [self playAtPosition:[[[PASoundMgr sharedSoundManager] listener] position] restart:r];
+}
+- (void)playAtListenerPosition {
+    return [self playAtListenerPositionWithRestart:NO];
+}
+
 - (void)stop {
     alGetError();
     ALenum error;

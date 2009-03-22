@@ -57,20 +57,21 @@
         listenerSprite.position = cpv(160,240);
         
         // set first sound source (static waterfall)
-        source1 = [[PASoundSource alloc] initWithPosition:cpv(50, 100) file:@"waterfall" looped:YES];
+        source1 = [[PASoundSource alloc] initWithFile:@"waterfall" extension:@"caf" looped:YES];
         source1Sprite = [Sprite spriteWithFile:@"source-marker.png"];
         [self addChild:source1Sprite z:0];
         source1Sprite.position = cpv(50,100);
         [source1 setGain:.5f];
-        [source1 play];
+        [source1 playAtPosition:source1Sprite.position];
         
         // set the 2nd sound source (moving chicken)
-        source2 = [[PASoundSource alloc] initWithPosition:cpv(270, 400) file:@"chicken" looped:YES];
+        source2 = [[PASoundSource alloc] initWithFile:@"chicken" looped:YES];
         source2Sprite = [Sprite spriteWithFile:@"source-marker.png"];
         [self addChild:source2Sprite z:0];
         source2Sprite.position = cpv(270,400);
         [source2 setGain:.5f];
-        [source2 play];
+        [source2 playAtPosition:source2.position];
+        
         id move = [MoveBy actionWithDuration:2 position:cpv(-220,0)];
         id sequence = [Sequence actions:move,[move reverse],nil];
         [source2Sprite runAction:[RepeatForever actionWithAction:sequence]];
@@ -94,7 +95,7 @@
     [[[PASoundMgr sharedSoundManager] listener] setPosition:listenerSprite.position];
     
     // update the chicken's sound source position with the moving sprite's position
-    [source2 setPosition:source2Sprite.position];
+    [source2 playAtPosition:source2Sprite.position];
 }
 
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
