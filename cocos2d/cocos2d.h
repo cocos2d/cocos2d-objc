@@ -80,6 +80,7 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/Texture2D.h"
 #import "Support/EAGLView.h"
+#import "Support/FileUtils.h"
 
 
 // free functions

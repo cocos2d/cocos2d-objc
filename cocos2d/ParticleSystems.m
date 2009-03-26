@@ -84,7 +84,7 @@
 	size = 8.0f;
 	sizeVar = 2.0f;
 
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 
 	// additive
@@ -162,7 +162,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 	
 	// additive
@@ -243,7 +243,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 	
 	return self;
@@ -322,7 +322,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 
 	// additive
@@ -404,7 +404,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 
 	// additive
@@ -486,7 +486,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 	
 	// additive
@@ -568,7 +568,7 @@
 	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 
 	// additive
@@ -650,7 +650,7 @@
 	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 
 	// additive
@@ -728,7 +728,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 	
 	// additive
@@ -807,7 +807,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 	
 	// additive
@@ -886,7 +886,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	[texture retain];
 	
 	// additive
