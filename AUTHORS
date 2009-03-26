@@ -17,6 +17,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
     * Alia Mc.Cutcheon: scale & rotate order fixed in CocosNode.m
 		category is cocosLive is UTF8'ized
 		added sanity in scheduler
+		TileMapAtlas supports fullpath
     * Andy Fitter: patches for Texture2D
     * Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
     * Brian Hammond: patches for Demos
@@ -68,6 +69,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Menu can be aligned in Columns and Rows
 		MenuItem supports LabelAtlas
 		Added RGB protocol in CocosNode, Atlas, Texture
+		Particle reset system works as expected
     * mark at abitofthought: author of Fast Director
     * Mitch: patches for Menu
 		 author of MenuItemToggle

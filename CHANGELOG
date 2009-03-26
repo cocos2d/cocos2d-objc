@@ -1,6 +1,7 @@
 version 0.7.2 - xxx
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
  . Particles: Use by default fire.pvr (issue #276)
+ . Particles: resetSystem actually resets the system (issue #252)
  . TextureAtlas: fixed colorarray memory leak (issue #272)
  . TileMapAtlas: supports fullpath (issue #220)
  

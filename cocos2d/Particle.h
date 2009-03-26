@@ -179,12 +179,10 @@ typedef struct sParticle
 -(BOOL) addParticle;
 //! Initializes a particle
 -(void) initParticle: (Particle*) particle;
-//! draw all the particles
--(void) draw;
-//! stop the running system
+//! stop emitting particles. Running particles will continue to run until they die
 -(void) stopSystem;
-//! reset the system
+//! Kill all living particles.
 -(void) resetSystem;
-//! is the system full ?
+//! whether or not the system is full
 -(BOOL) isFull;
 @end

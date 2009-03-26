@@ -258,8 +258,12 @@
 
 -(void) resetSystem
 {
-	elapsed = duration;
-	emitCounter = 0;
+	active = YES;
+	elapsed = 0;
+	for(particleIdx = 0; particleIdx < particleCount; ++particleIdx) {
+		Particle *p = &particles[particleIdx];
+		p->life = 0;
+	}
 }
 
 -(void) draw
