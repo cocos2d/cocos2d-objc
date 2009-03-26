@@ -59,31 +59,55 @@ Class restartAction()
 @implementation ParticleDemo
 -(id) init
 {
-	[super init];
+	if( (self=[super init]) ) {
 
-	CGSize s = [[Director sharedDirector] winSize];
-	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self addChild: label];
-	[label setPosition: cpv(s.width/2, s.height-50)];
-	
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-	
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		isTouchEnabled = YES;
+
+		CGSize s = [[Director sharedDirector] winSize];
+		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label];
+		[label setPosition: cpv(s.width/2, s.height-50)];
 		
-	menu.position = cpvzero;
-	item1.position = cpv( s.width/2 - 100,30);
-	item2.position = cpv( s.width/2, 30);
-	item3.position = cpv( s.width/2 + 100,30);
-	[self addChild: menu z:-1];	
-	
-	LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-	[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
-	labelAtlas.position = cpv(254,50);
+		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-	[self schedule:@selector(step:)];
+		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+			
+		menu.position = cpvzero;
+		item1.position = cpv( s.width/2 - 100,30);
+		item2.position = cpv( s.width/2, 30);
+		item3.position = cpv( s.width/2 + 100,30);
+		[self addChild: menu z:-1];	
+		
+		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
+		labelAtlas.position = cpv(254,50);
+			
+		[self schedule:@selector(step:)];
+	}
+
 	return self;
+}
+
+- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	return [self ccTouchesEnded:touches withEvent:event];
+}
+
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+	
+	CGPoint location = [touch locationInView: [touch view]];
+	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+	
+	ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
+	
+	cpVect source = cpvsub( convertedLocation, s.position );
+	s.source = source;
+	
+	return kEventHandled;
 }
 
 -(void) step:(ccTime) dt
