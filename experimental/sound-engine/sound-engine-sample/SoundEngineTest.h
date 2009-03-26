@@ -32,6 +32,7 @@
     
     PASoundSource *source1;
     PASoundSource *source2;
+    PASoundSource *bgTrack;
 }
 
 - (void)selectedBackForwardMenuItem:(id)sender;

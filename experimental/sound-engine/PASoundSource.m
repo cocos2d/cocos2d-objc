@@ -21,6 +21,8 @@
 #import "PASoundSource.h"
 #import "PASoundMgr.h"
 #import "PASoundListener.h"
+#import "ivorbiscodec.h"
+#import "ivorbisfile.h"
 
 #define kSoundReferenceDistance 20.0f
 
@@ -130,7 +132,7 @@ Exit:
 - (void)initBuffer {
 	ALenum  error = AL_NO_ERROR;
 	ALenum  format;
-	ALvoid* data;
+	ALvoid* data = NULL;
 	ALsizei size;
 	ALsizei freq;
 	
@@ -139,15 +141,66 @@ Exit:
 	// get some audio data from a wave file
 	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:self.file ofType:self.extension]] retain];
 	
-	if (fileURL)
-	{	
-		data = MyGetOpenALAudioData(fileURL, &size, &format, &freq);
-		CFRelease(fileURL);
+	if (fileURL) {
         
-		if((error = alGetError()) != AL_NO_ERROR) {
+        // load buffer data based on the file format guessed from the extension
+        if ([self.extension isEqualToString:@"wav"]) {
+            // WAV
+            data = MyGetOpenALAudioData(fileURL, &size, &format, &freq);            
+        } else if ([self.extension isEqualToString:@"ogg"]) {
+            // OGG
+            NSString *fsPath = [(NSURL *)fileURL path];
+            FILE *fh;
+            if ((fh = fopen([fsPath UTF8String], "r")) != NULL) {
+                // open ogg file
+                OggVorbis_File vf;
+                int eof = 0;
+                int current_section;
+                
+                if(ov_open(fh, &vf, NULL, 0) < 0) {
+                    fprintf(stderr,"Input does not appear to be an Ogg bitstream.\n");
+                    exit(1);
+                }
+                
+                // get meta info (sample rate & mono/stereo format)
+                vorbis_info *vi = ov_info(&vf,-1);
+                freq = (ALsizei)vi->rate;
+                format = (vi->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+                
+                // decode data
+                size = 0;
+                const int buffSize = 4096;
+                while(!eof){
+                    char tempBuff[buffSize];
+                    int ret = ov_read(&vf, tempBuff, buffSize, &current_section);
+                    if (ret == 0) {
+                        eof = 1;
+                    } else if (ret > 0) {
+                        void *newData = (char *)malloc(size + ret);
+                        if (data) memcpy(newData, data, size);
+                        memcpy(newData + size, tempBuff, ret);
+                        if (data) free(data);
+                        data = newData;
+                        size += ret;
+                    }
+                }
+
+                // close ogg file
+                ov_clear(&vf);
+            } else {
+                fprintf(stderr,"Could not open file.\n");
+                exit(1);
+            }
+            fclose(fh);
+        }
+		
+        CFRelease(fileURL);
+        
+        if((error = alGetError()) != AL_NO_ERROR) {
 			printf("error loading sound: %x\n", error);
 			exit(1);
 		}
+        
 		alGenBuffers(1, &buffer);
         alBufferData(buffer, format, data, size, freq);
 		free(data);
@@ -193,25 +246,6 @@ Exit:
 - (void)setPitch:(float)factor {
     alSourcef(source, AL_PITCH, factor);
 }
-
-/*
-- (void)play {
-    ALint state;
-    alGetSourcei(source, AL_SOURCE_STATE, &state);
-    if (state != AL_PLAYING) {
-        alGetError();
-        ALenum error;
-        [self setGain:gain];
-        alSourcePlay(source);
-        if((error = alGetError()) != AL_NO_ERROR) {
-            printf("error starting source: %x\n", error);
-        } else {
-            // Mark our state as playing (the view looks at this)
-            self.isPlaying = YES;
-        }        
-    }
-}
-*/
 
 // play messages
 - (void)playAtPosition:(cpVect)p restart:(BOOL)r {
