@@ -14,6 +14,7 @@
 
 #import "TileMapAtlas.h"
 #import "ccMacros.h"
+#import "Support/FileUtils.h"
 
 @interface TileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
@@ -91,10 +92,12 @@
 {
 	NSAssert( file != nil, @"file must be non-nil");
 
-	//Find the path of the file
-	NSBundle *mainBndl = [NSBundle mainBundle];
-	NSString *resourcePath = [mainBndl resourcePath];
-	NSString * path = [resourcePath stringByAppendingPathComponent:file];
+	NSString *path = [FileUtils fullPathFromRelativePath:file ];
+
+//	//Find the path of the file
+//	NSBundle *mainBndl = [NSBundle mainBundle];
+//	NSString *resourcePath = [mainBndl resourcePath];
+//	NSString * path = [resourcePath stringByAppendingPathComponent:file];
 	
 	tgaInfo = tgaLoad( [path UTF8String] );
 #if 1
