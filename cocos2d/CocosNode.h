@@ -309,7 +309,9 @@ enum {
  @deprecated Will be removed in v0.8. Use runAction instead
  */
 -(Action*) do: (Action*) action __attribute__ ((deprecated));
-/** Executes an action, and returns the action that is executed
+/** Executes an action, and returns the action that is executed.
+ The target will be retained.
+ @warning in v0.8 the target won't be reatained anymore
  @since v0.7.1
  @return An Action pointer
  */

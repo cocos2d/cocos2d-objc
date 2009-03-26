@@ -68,6 +68,10 @@ Class restartAction()
 		[self addChild: label];
 		[label setPosition: cpv(s.width/2, s.height-50)];
 		
+		Label *tapScreen = [Label labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
+		[tapScreen setPosition: cpv(s.width/2, s.height-80)];
+		[self addChild:tapScreen];
+		
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
@@ -126,9 +130,13 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
-	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];	
+//	Scene *s = [Scene node];
+//	[s addChild: [restartAction() node]];
+//	[[Director sharedDirector] replaceScene: s];
+	
+	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagEmitter];
+	[emitter resetSystem];
+//	[emitter stopSystem];
 }
 
 -(void) nextCallback: (id) sender
