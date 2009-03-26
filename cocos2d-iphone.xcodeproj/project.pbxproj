@@ -3279,6 +3279,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				8E6CBEEE0F7A758000D47B3A /* vorbis */,
 				509B3A0C0F31024E00F2FB95 /* cocosLive */,
 				509B39DE0F31020900F2FB95 /* TouchJSON */,
 				50B2C4D00E100AEA00AE9530 /* Chipmunk */,
@@ -3307,7 +3308,6 @@
 				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dDemo */,
 				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
-				8E6CBEEE0F7A758000D47B3A /* vorbis */,
 			);
 		};
 /* End PBXProject section */
