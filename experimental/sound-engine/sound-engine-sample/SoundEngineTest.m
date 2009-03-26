@@ -34,6 +34,11 @@
         // preload interface-like sounds
         [[PASoundMgr sharedSoundManager] addSound:@"clank" withPosition:cpv(160,240) looped:NO];
         [[PASoundMgr sharedSoundManager] addSound:@"chicken" withPosition:cpv(160,240) looped:NO];
+        bgTrack = [[PASoundMgr sharedSoundManager] addSound:@"trance-loop" withExtension:@"ogg" position:cpvzero looped:YES];
+        
+        // lower music track volume and play it
+        [bgTrack setGain:0.3f];
+        [bgTrack playAtListenerPosition];
 
         Label *info = [Label labelWithString:@"Tap and move your finger to update\nthe listener's position." dimensions:CGSizeMake(320, 40) alignment:UITextAlignmentCenter fontName:@"TrebuchetMS-Bold" fontSize:14];
         [self addChild:info z:1];
@@ -57,7 +62,7 @@
         listenerSprite.position = cpv(160,240);
         
         // set first sound source (static waterfall)
-        source1 = [[PASoundSource alloc] initWithFile:@"waterfall" extension:@"caf" looped:YES];
+        source1 = [[PASoundSource alloc] initWithFile:@"waterfall" looped:YES];
         source1Sprite = [Sprite spriteWithFile:@"source-marker.png"];
         [self addChild:source1Sprite z:0];
         source1Sprite.position = cpv(50,100);
@@ -96,6 +101,9 @@
     
     // update the chicken's sound source position with the moving sprite's position
     [source2 playAtPosition:source2Sprite.position];
+    
+    // update bg. track with listener position
+    [bgTrack playAtListenerPosition];
 }
 
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
