@@ -132,7 +132,12 @@
 	[grid release];
 	
 	// children
-	[children makeObjectsPerformSelector:@selector(cleanup)];
+	
+	for (CocosNode *child in children) {
+		child.parent = nil;
+		[child cleanup];
+	}
+	
 	[children release];
 	
 	// timers
