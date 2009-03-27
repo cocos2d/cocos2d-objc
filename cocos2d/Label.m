@@ -74,11 +74,14 @@
 - (void) setString:(NSString*)string
 {
 	if( CGSizeEqualToSize( _dimensions, CGSizeZero ) )
-		// DON'T use property to prevent double retain
-		texture = [[Texture2D alloc] initWithString:string fontName:_fontName fontSize:_fontSize];
+		// WARNING: double retain
+		self.texture = [[Texture2D alloc] initWithString:string fontName:_fontName fontSize:_fontSize];
 	else
-		// DON'T use property to prevent double retain
-		texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
+		// WARNING: double retain
+		self.texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
+	
+	// end of warning. 1 retain only
+	[self.texture release];
 
 	CGSize s = texture.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2);
