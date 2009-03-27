@@ -356,7 +356,7 @@ static Director *_sharedDirector = nil;
 
 -(BOOL)attachInWindow:(UIWindow *)window
 {
-	if([self initOpenGLViewWithView:window withFrame:[window frame]])
+	if([self initOpenGLViewWithView:window withFrame:[window bounds]])
 	{
 		return YES;
 	}
@@ -366,7 +366,7 @@ static Director *_sharedDirector = nil;
 
 -(BOOL)attachInView:(UIView *)view
 {
-	if([self initOpenGLViewWithView:view withFrame:[view frame]])
+	if([self initOpenGLViewWithView:view withFrame:[view bounds]])
 	{
 		return YES;
 	}
