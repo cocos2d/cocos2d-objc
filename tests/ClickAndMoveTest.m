@@ -4,9 +4,7 @@
 // http://code.google.com/p/cocos2d-iphone
 //
 
-#import "ClickAndMove.h"
-
-#import "OpenGL_Internal.h"
+#import "ClickAndMoveTest.h"
 
 enum
 {

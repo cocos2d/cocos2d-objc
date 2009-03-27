@@ -8,7 +8,7 @@
 #import "cocos2d.h"
 
 // local import
-#import "TestAtlas.h"
+#import "AtlasTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Atlas1",

@@ -6,7 +6,7 @@
 
 // local import
 #import "cocos2d.h"
-#import "SpritesDemo.h"
+#import "SpritesTest.h"
 
 enum {
 	kTagAnimationDance = 1,

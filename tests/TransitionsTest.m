@@ -6,7 +6,7 @@
 
 // local import
 #import "cocos2d.h"
-#import "TransitionsDemo.h"
+#import "TransitionsTesth"
 
 @interface FadeWhiteTransition : FadeTransition 
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;

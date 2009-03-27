@@ -1,7 +1,4 @@
-#import <UIKit/UIKit.h>
 #import "cocos2d.h"
-
-@class Sprite;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>

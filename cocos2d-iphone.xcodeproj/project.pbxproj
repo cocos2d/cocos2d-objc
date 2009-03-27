@@ -19,7 +19,7 @@
 		317070550E2940C900DD3360 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportDemo.m */; };
+		3170705E0E29410900DD3360 /* AccelViewportTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportTest.m */; };
 		500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 500043210F3C9FBA00A5FBF4 /* PVRTexture.h */; };
 		500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 500043220F3C9FBA00A5FBF4 /* PVRTexture.m */; };
 		500043750F3CB58600A5FBF4 /* test_image.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 500043710F3CB58600A5FBF4 /* test_image.bmp */; };
@@ -173,7 +173,7 @@
 		502AAD050F79715E001E3F87 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
 		502B3E9A0E09A59500886982 /* Transition.h in Headers */ = {isa = PBXBuildFile; fileRef = 502B3E980E09A59500886982 /* Transition.h */; };
 		502B3E9B0E09A59500886982 /* Transition.m in Sources */ = {isa = PBXBuildFile; fileRef = 502B3E990E09A59500886982 /* Transition.m */; };
-		502C664F0DFEFD6800E4107D /* RotateWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C664E0DFEFD6800E4107D /* RotateWorld.m */; };
+		502C664F0DFEFD6800E4107D /* RotateWorldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C664E0DFEFD6800E4107D /* RotateWorldTest.m */; };
 		502C67020DFEFE1000E4107D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		502C67030DFEFE1000E4107D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		502C67040DFEFE1000E4107D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -237,7 +237,7 @@
 		505B62D00F2E6A0F001B4104 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		505B62D10F2E6A0F001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B62D20F2E6A0F001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		505B62E00F2E6A66001B4104 /* Texture2dDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B62DF0F2E6A66001B4104 /* Texture2dDemo.m */; };
+		505B62E00F2E6A66001B4104 /* Texture2dTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B62DF0F2E6A66001B4104 /* Texture2dTest.m */; };
 		505B637C0F2F4210001B4104 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		505B637D0F2F4210001B4104 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		505B637E0F2F4210001B4104 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
@@ -271,7 +271,7 @@
 		505B639D0F2F4210001B4104 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		505B63A80F2F4295001B4104 /* EaseDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseDemo.m */; };
+		505B63A80F2F4295001B4104 /* EaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseTest.m */; };
 		505CC1840F62BB7A000EDF26 /* CocosNodePerformance.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CC17D0F62BB7A000EDF26 /* CocosNodePerformance.m */; };
 		505CC1850F62BB7A000EDF26 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CC17F0F62BB7A000EDF26 /* AppController.m */; };
 		505CC1860F62BB7A000EDF26 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CC1810F62BB7A000EDF26 /* MainScene.m */; };
@@ -350,7 +350,7 @@
 		5068820B0E95761200F943E5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		5068820C0E95761200F943E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		5068820D0E95761200F943E5 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		506882140E95763E00F943E5 /* TestAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506881E70E9575E100F943E5 /* TestAtlas.m */; };
+		506882140E95763E00F943E5 /* AtlasTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506881E70E9575E100F943E5 /* AtlasTest.m */; };
 		506882160E95770400F943E5 /* TextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50637A160E95397A000C9182 /* TextureAtlas.m */; };
 		506882690E957C4A00F943E5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		506884D70E96921100F943E5 /* LabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506884710E96734A00F943E5 /* LabelAtlas.m */; };
@@ -365,7 +365,7 @@
 		506C77DC0E01520900B48100 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		506C77DD0E01520900B48100 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506C77DE0E01520900B48100 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		506C77E70E01524200B48100 /* ClickAndMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C77E60E01524200B48100 /* ClickAndMove.m */; };
+		506C77E70E01524200B48100 /* ClickAndMoveTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C77E60E01524200B48100 /* ClickAndMoveTest.m */; };
 		506C78A70E016A7300B48100 /* Menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 506C78A50E016A7300B48100 /* Menu.h */; };
 		506C78A80E016A7300B48100 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C78A60E016A7300B48100 /* Menu.m */; };
 		506C78EC0E0178FD00B48100 /* MenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 506C78EA0E0178FD00B48100 /* MenuItem.h */; };
@@ -399,7 +399,7 @@
 		5078B5290E3E43540004233A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		5078B52A0E3E43540004233A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		5078B52B0E3E43540004233A /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		5078B5340E3E437F0004233A /* IntervalDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5078B5330E3E437F0004233A /* IntervalDemo.m */; };
+		5078B5340E3E437F0004233A /* IntervalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5078B5330E3E437F0004233A /* IntervalTest.m */; };
 		5084D25D0EE5906100BD237C /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D25C0EE5906100BD237C /* powered.png */; };
 		5084D47E0EE5C7D100BD237C /* btn-about-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D4780EE5C7D100BD237C /* btn-about-normal.png */; };
 		5084D47F0EE5C7D100BD237C /* btn-about-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D4790EE5C7D100BD237C /* btn-about-selected.png */; };
@@ -509,7 +509,7 @@
 		50B2C5E10E100EF000AE9530 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50B2C5E20E100EF000AE9530 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50B2C5E30E100EF000AE9530 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50B2C5ED0E100F8800AE9530 /* Chipmunk_Accel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */; };
+		50B2C5ED0E100F8800AE9530 /* ChipmunkAccelTouchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2C5EC0E100F8800AE9530 /* ChipmunkAccelTouchTest.m */; };
 		50B2C60C0E1014AE00AE9530 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		50B2CB1A0E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50B2CB1B0E10EE0800AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
@@ -594,7 +594,7 @@
 		50C1955A0EE4B57E00829067 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50C1955B0EE4B57E00829067 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C1955C0EE4B57E00829067 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50C195650EE4B5B700829067 /* TestParallax.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C195640EE4B5B700829067 /* TestParallax.m */; };
+		50C195650EE4B5B700829067 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C195640EE4B5B700829067 /* ParallaxTest.m */; };
 		50C1959D0EE4B90800829067 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50C508C60F7C194400799124 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C508C40F7C194400799124 /* FileUtils.h */; };
 		50C508C70F7C194400799124 /* FileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C508C50F7C194400799124 /* FileUtils.m */; };
@@ -605,14 +605,14 @@
 		50C938D90E0A9DBB00517B01 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50C938DA0E0A9DBB00517B01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C938DB0E0A9DBB00517B01 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50C938E50E0A9E1100517B01 /* TransitionsDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C938E40E0A9E1100517B01 /* TransitionsDemo.m */; };
+		50C938E50E0A9E1100517B01 /* TransitionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C938E40E0A9E1100517B01 /* TransitionsTest.m */; };
 		50C93AA30E0BF6E000517B01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50C93AA40E0BF6E000517B01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50C93AA50E0BF6E000517B01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		50C93AA60E0BF6E000517B01 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C93AA80E0BF6E000517B01 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50C93AC50E0BF8FC00517B01 /* SpritesDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */; };
+		50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* SpritesTest.m */; };
 		50D56FAA0F3FABEC007CD6B9 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50D56FAB0F3FABEC007CD6B9 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		50D56FAC0F3FABEC007CD6B9 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
@@ -661,7 +661,7 @@
 		50DB1BC40E1C1E5900A89DFF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50DB1BD10E1C1EF000A89DFF /* ParticleDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */; };
+		50DB1BD10E1C1EF000A89DFF /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */; };
 		50E675070F65628C003DAA90 /* spritesheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675060F65628C003DAA90 /* spritesheet1.png */; };
 		50E6760E0F65857D003DAA90 /* sprite-0-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675CE0F65857D003DAA90 /* sprite-0-0.png */; };
 		50E6760F0F65857D003DAA90 /* sprite-0-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675CF0F65857D003DAA90 /* sprite-0-1.png */; };
@@ -1020,8 +1020,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		317070350E29409E00DD3360 /* AccelViewportDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportDemo.m; path = tests/AccelViewportDemo.m; sourceTree = "<group>"; };
-		317070360E29409E00DD3360 /* AccelViewportDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportDemo.h; path = tests/AccelViewportDemo.h; sourceTree = "<group>"; };
+		317070350E29409E00DD3360 /* AccelViewportTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportTest.m; path = tests/AccelViewportTest.m; sourceTree = "<group>"; };
+		317070360E29409E00DD3360 /* AccelViewportTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportTest.h; path = tests/AccelViewportTest.h; sourceTree = "<group>"; };
 		3170705B0E2940C900DD3360 /* AccelViewportDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		500043210F3C9FBA00A5FBF4 /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
 		500043220F3C9FBA00A5FBF4 /* PVRTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVRTexture.m; sourceTree = "<group>"; };
@@ -1135,8 +1135,8 @@
 		502B3E990E09A59500886982 /* Transition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transition.m; sourceTree = "<group>"; };
 		502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-documentation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		502C66180DFEFCCA00E4107D /* RotateWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RotateWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		502C664D0DFEFD6800E4107D /* RotateWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotateWorld.h; path = tests/RotateWorld.h; sourceTree = "<group>"; };
-		502C664E0DFEFD6800E4107D /* RotateWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorld.m; path = tests/RotateWorld.m; sourceTree = "<group>"; };
+		502C664D0DFEFD6800E4107D /* RotateWorldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotateWorldTest.h; path = tests/RotateWorldTest.h; sourceTree = "<group>"; };
+		502C664E0DFEFD6800E4107D /* RotateWorldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorldTest.m; path = tests/RotateWorldTest.m; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
@@ -1160,11 +1160,11 @@
 		504828DE0F45B1B800A30CEF /* AttachDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AttachDemo-Info.plist"; sourceTree = "<group>"; };
 		504828ED0F45B71A00A30CEF /* attachDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = attachDemo.xib; sourceTree = "<group>"; };
 		505B62D60F2E6A0F001B4104 /* Texture2dDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Texture2dDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B62DE0F2E6A66001B4104 /* Texture2dDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dDemo.h; path = tests/Texture2dDemo.h; sourceTree = "<group>"; };
-		505B62DF0F2E6A66001B4104 /* Texture2dDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dDemo.m; path = tests/Texture2dDemo.m; sourceTree = "<group>"; };
+		505B62DE0F2E6A66001B4104 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
+		505B62DF0F2E6A66001B4104 /* Texture2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dTest.m; path = tests/Texture2dTest.m; sourceTree = "<group>"; };
 		505B63A30F2F4210001B4104 /* EaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B63A60F2F4295001B4104 /* EaseDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseDemo.h; path = tests/EaseDemo.h; sourceTree = "<group>"; };
-		505B63A70F2F4295001B4104 /* EaseDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseDemo.m; path = tests/EaseDemo.m; sourceTree = "<group>"; };
+		505B63A60F2F4295001B4104 /* EaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseTest.h; path = tests/EaseTest.h; sourceTree = "<group>"; };
+		505B63A70F2F4295001B4104 /* EaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseTest.m; path = tests/EaseTest.m; sourceTree = "<group>"; };
 		505CC1590F62BB03000EDF26 /* PerformanceTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505CC17C0F62BB7A000EDF26 /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
 		505CC17D0F62BB7A000EDF26 /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodePerformance.m; sourceTree = "<group>"; };
@@ -1185,8 +1185,8 @@
 		50637A160E95397A000C9182 /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
 		506602100E38A70D000B500E /* Scheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scheduler.m; sourceTree = "<group>"; };
-		506881E60E9575E100F943E5 /* TestAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestAtlas.h; path = tests/TestAtlas.h; sourceTree = "<group>"; };
-		506881E70E9575E100F943E5 /* TestAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestAtlas.m; path = tests/TestAtlas.m; sourceTree = "<group>"; };
+		506881E60E9575E100F943E5 /* AtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasTest.h; path = tests/AtlasTest.h; sourceTree = "<group>"; };
+		506881E70E9575E100F943E5 /* AtlasTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtlasTest.m; path = tests/AtlasTest.m; sourceTree = "<group>"; };
 		506882110E95761200F943E5 /* AtlasDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtlasDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506882680E957C4A00F943E5 /* atlastest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlastest.png; sourceTree = "<group>"; };
 		506884700E96734A00F943E5 /* LabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelAtlas.h; sourceTree = "<group>"; };
@@ -1199,8 +1199,8 @@
 		506887D80E96C90000F943E5 /* AtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasNode.m; sourceTree = "<group>"; };
 		506888A20E96D7A200F943E5 /* levelmap.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelmap.tga; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		506C77E50E01524200B48100 /* ClickAndMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMove.h; path = tests/ClickAndMove.h; sourceTree = "<group>"; };
-		506C77E60E01524200B48100 /* ClickAndMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMove.m; path = tests/ClickAndMove.m; sourceTree = "<group>"; };
+		506C77E50E01524200B48100 /* ClickAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMoveTest.h; path = tests/ClickAndMoveTest.h; sourceTree = "<group>"; };
+		506C77E60E01524200B48100 /* ClickAndMoveTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMoveTest.m; path = tests/ClickAndMoveTest.m; sourceTree = "<group>"; };
 		506C78A50E016A7300B48100 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
 		506C78A60E016A7300B48100 /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
 		506C78EA0E0178FD00B48100 /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
@@ -1213,8 +1213,8 @@
 		506C80120E041CDB00B48100 /* SceneTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneTest.m; path = tests/SceneTest.m; sourceTree = "<group>"; };
 		5072E63B0F69E6E9001B4BB2 /* CocosNodeExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodeExtras.h; sourceTree = "<group>"; };
 		5072E63C0F69E6E9001B4BB2 /* CocosNodeExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodeExtras.m; sourceTree = "<group>"; };
-		5078B5320E3E437F0004233A /* IntervalDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalDemo.h; path = tests/IntervalDemo.h; sourceTree = "<group>"; };
-		5078B5330E3E437F0004233A /* IntervalDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalDemo.m; path = tests/IntervalDemo.m; sourceTree = "<group>"; };
+		5078B5320E3E437F0004233A /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalTest.h; path = tests/IntervalTest.h; sourceTree = "<group>"; };
+		5078B5330E3E437F0004233A /* IntervalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalTest.m; path = tests/IntervalTest.m; sourceTree = "<group>"; };
 		5084D25C0EE5906100BD237C /* powered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powered.png; sourceTree = "<group>"; };
 		5084D4780EE5C7D100BD237C /* btn-about-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-about-normal.png"; sourceTree = "<group>"; };
 		5084D4790EE5C7D100BD237C /* btn-about-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-about-selected.png"; sourceTree = "<group>"; };
@@ -1272,8 +1272,8 @@
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chipmunk_Accel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chipmunk_Accel.h; path = tests/Chipmunk_Accel.h; sourceTree = "<group>"; };
-		50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Chipmunk_Accel.m; path = tests/Chipmunk_Accel.m; sourceTree = "<group>"; };
+		50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkAccelTouchTest.h; path = tests/ChipmunkAccelTouchTest.h; sourceTree = "<group>"; };
+		50B2C5EC0E100F8800AE9530 /* ChipmunkAccelTouchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkAccelTouchTest.m; path = tests/ChipmunkAccelTouchTest.m; sourceTree = "<group>"; };
 		50B2C9BF0E109A5900AE9530 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		50B2C9C00E109A5900AE9530 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		50B2C9C10E109A5900AE9530 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -1306,25 +1306,25 @@
 		50B53B640F3F28DC00E81F83 /* test_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test_image.gif; sourceTree = "<group>"; };
 		50BAF3970F33CCD8003F654C /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		50C195600EE4B57E00829067 /* ParallaxDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParallaxDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C195630EE4B5B700829067 /* TestParallax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestParallax.h; path = tests/TestParallax.h; sourceTree = "<group>"; };
-		50C195640EE4B5B700829067 /* TestParallax.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestParallax.m; path = tests/TestParallax.m; sourceTree = "<group>"; };
+		50C195630EE4B5B700829067 /* ParallaxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParallaxTest.h; path = tests/ParallaxTest.h; sourceTree = "<group>"; };
+		50C195640EE4B5B700829067 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParallaxTest.m; path = tests/ParallaxTest.m; sourceTree = "<group>"; };
 		50C1959C0EE4B90800829067 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		50C508C40F7C194400799124 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
 		50C508C50F7C194400799124 /* FileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtils.m; sourceTree = "<group>"; };
 		50C723DB0EC062680046C5DB /* clouds.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = text; path = clouds.pvrtc; sourceTree = "<group>"; };
 		50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntervalDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C938E30E0A9E1100517B01 /* TransitionsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsDemo.h; path = tests/TransitionsDemo.h; sourceTree = "<group>"; };
-		50C938E40E0A9E1100517B01 /* TransitionsDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsDemo.m; path = tests/TransitionsDemo.m; sourceTree = "<group>"; };
+		50C938E30E0A9E1100517B01 /* TransitionsTesth */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TransitionsTesth; path = tests/TransitionsTesth; sourceTree = "<group>"; };
+		50C938E40E0A9E1100517B01 /* TransitionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsTest.m; path = tests/TransitionsTest.m; sourceTree = "<group>"; };
 		50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesDemo.h; path = tests/SpritesDemo.h; sourceTree = "<group>"; };
-		50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesDemo.m; path = tests/SpritesDemo.m; sourceTree = "<group>"; };
+		50C93AC30E0BF8FC00517B01 /* SpritesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesTest.h; path = tests/SpritesTest.h; sourceTree = "<group>"; };
+		50C93AC40E0BF8FC00517B01 /* SpritesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesTest.m; path = tests/SpritesTest.m; sourceTree = "<group>"; };
 		50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsAdvancedDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsAdvancedTest.h; path = tests/EffectsAdvancedTest.h; sourceTree = "<group>"; };
 		50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsAdvancedTest.m; path = tests/EffectsAdvancedTest.m; sourceTree = "<group>"; };
 		50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50DB1BCE0E1C1EF000A89DFF /* ParticleDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleDemo.h; path = tests/ParticleDemo.h; sourceTree = "<group>"; };
-		50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleDemo.m; path = tests/ParticleDemo.m; sourceTree = "<group>"; };
+		50DB1BCE0E1C1EF000A89DFF /* ParticleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleTest.h; path = tests/ParticleTest.h; sourceTree = "<group>"; };
+		50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = tests/ParticleTest.m; sourceTree = "<group>"; };
 		50E675060F65628C003DAA90 /* spritesheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet1.png; sourceTree = "<group>"; };
 		50E675CE0F65857D003DAA90 /* sprite-0-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-0.png"; sourceTree = "<group>"; };
 		50E675CF0F65857D003DAA90 /* sprite-0-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-1.png"; sourceTree = "<group>"; };
@@ -2286,40 +2286,40 @@
 				505CC17B0F62BB7A000EDF26 /* PerformanceTest */,
 				504828C70F45B15700A30CEF /* attachDemo */,
 				50175B240F33B22300624901 /* cocosLiveDemo */,
+				317070360E29409E00DD3360 /* AccelViewportTest.h */,
+				317070350E29409E00DD3360 /* AccelViewportTest.m */,
+				506881E60E9575E100F943E5 /* AtlasTest.h */,
+				506881E70E9575E100F943E5 /* AtlasTest.m */,
+				506C77E50E01524200B48100 /* ClickAndMoveTest.h */,
+				506C77E60E01524200B48100 /* ClickAndMoveTest.m */,
+				50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */,
+				50B2C5EC0E100F8800AE9530 /* ChipmunkAccelTouchTest.m */,
+				5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */,
+				5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */,
+				505B63A60F2F4295001B4104 /* EaseTest.h */,
+				505B63A70F2F4295001B4104 /* EaseTest.m */,
 				50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */,
 				50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */,
 				50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */,
 				50A24E700F377FE8007CAEB0 /* EffectsTest.m */,
-				505B63A60F2F4295001B4104 /* EaseDemo.h */,
-				505B63A70F2F4295001B4104 /* EaseDemo.m */,
-				505B62DE0F2E6A66001B4104 /* Texture2dDemo.h */,
-				505B62DF0F2E6A66001B4104 /* Texture2dDemo.m */,
-				50C195630EE4B5B700829067 /* TestParallax.h */,
-				50C195640EE4B5B700829067 /* TestParallax.m */,
-				506881E60E9575E100F943E5 /* TestAtlas.h */,
-				506881E70E9575E100F943E5 /* TestAtlas.m */,
-				5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */,
-				5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */,
-				5078B5320E3E437F0004233A /* IntervalDemo.h */,
-				5078B5330E3E437F0004233A /* IntervalDemo.m */,
-				317070360E29409E00DD3360 /* AccelViewportDemo.h */,
-				317070350E29409E00DD3360 /* AccelViewportDemo.m */,
-				50B2C5EB0E100F8800AE9530 /* Chipmunk_Accel.h */,
-				50B2C5EC0E100F8800AE9530 /* Chipmunk_Accel.m */,
-				50DB1BCE0E1C1EF000A89DFF /* ParticleDemo.h */,
-				50DB1BCF0E1C1EF000A89DFF /* ParticleDemo.m */,
-				50C93AC30E0BF8FC00517B01 /* SpritesDemo.h */,
-				50C93AC40E0BF8FC00517B01 /* SpritesDemo.m */,
-				50C938E30E0A9E1100517B01 /* TransitionsDemo.h */,
-				50C938E40E0A9E1100517B01 /* TransitionsDemo.m */,
-				506C80110E041CDB00B48100 /* SceneTest.h */,
-				506C80120E041CDB00B48100 /* SceneTest.m */,
+				5078B5320E3E437F0004233A /* IntervalTest.h */,
+				5078B5330E3E437F0004233A /* IntervalTest.m */,
 				506C7A0C0E01C78700B48100 /* MenuTest.h */,
 				506C7A0D0E01C78700B48100 /* MenuTest.m */,
-				506C77E50E01524200B48100 /* ClickAndMove.h */,
-				506C77E60E01524200B48100 /* ClickAndMove.m */,
-				502C664D0DFEFD6800E4107D /* RotateWorld.h */,
-				502C664E0DFEFD6800E4107D /* RotateWorld.m */,
+				50C195630EE4B5B700829067 /* ParallaxTest.h */,
+				50C195640EE4B5B700829067 /* ParallaxTest.m */,
+				50DB1BCE0E1C1EF000A89DFF /* ParticleTest.h */,
+				50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */,
+				502C664D0DFEFD6800E4107D /* RotateWorldTest.h */,
+				502C664E0DFEFD6800E4107D /* RotateWorldTest.m */,
+				506C80110E041CDB00B48100 /* SceneTest.h */,
+				506C80120E041CDB00B48100 /* SceneTest.m */,
+				50C93AC30E0BF8FC00517B01 /* SpritesTest.h */,
+				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
+				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
+				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
+				50C938E30E0A9E1100517B01 /* TransitionsTesth */,
+				50C938E40E0A9E1100517B01 /* TransitionsTest.m */,
 				50B2CB170E10EE0800AE9530 /* main.m */,
 				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
 			);
@@ -2744,9 +2744,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		317070410E2940C900DD3360 /* AccelViewportDemo */ = {
+		317070410E2940C900DD3360 /* AccelViewportTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 317070580E2940C900DD3360 /* Build configuration list for PBXNativeTarget "AccelViewportDemo" */;
+			buildConfigurationList = 317070580E2940C900DD3360 /* Build configuration list for PBXNativeTarget "AccelViewportTest" */;
 			buildPhases = (
 				317070440E2940C900DD3360 /* Resources */,
 				3170704C0E2940C900DD3360 /* Sources */,
@@ -2757,7 +2757,7 @@
 			dependencies = (
 				317070420E2940C900DD3360 /* PBXTargetDependency */,
 			);
-			name = AccelViewportDemo;
+			name = AccelViewportTest;
 			productName = playground;
 			productReference = 3170705B0E2940C900DD3360 /* AccelViewportDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -2798,9 +2798,9 @@
 			productReference = 502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		502C66170DFEFCCA00E4107D /* RotateWorld */ = {
+		502C66170DFEFCCA00E4107D /* RotateWorldTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "RotateWorld" */;
+			buildConfigurationList = 502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "RotateWorldTest" */;
 			buildPhases = (
 				502C66140DFEFCCA00E4107D /* Resources */,
 				502C66150DFEFCCA00E4107D /* Sources */,
@@ -2811,14 +2811,14 @@
 			dependencies = (
 				502C661F0DFEFCDF00E4107D /* PBXTargetDependency */,
 			);
-			name = RotateWorld;
+			name = RotateWorldTest;
 			productName = "demo-rotate-world";
 			productReference = 502C66180DFEFCCA00E4107D /* RotateWorld.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5048287F0F45AED700A30CEF /* AttachDemo */ = {
+		5048287F0F45AED700A30CEF /* AttachTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5048288F0F45AED800A30CEF /* Build configuration list for PBXNativeTarget "AttachDemo" */;
+			buildConfigurationList = 5048288F0F45AED800A30CEF /* Build configuration list for PBXNativeTarget "AttachTest" */;
 			buildPhases = (
 				5048287C0F45AED700A30CEF /* Resources */,
 				5048287D0F45AED700A30CEF /* Sources */,
@@ -2829,14 +2829,14 @@
 			dependencies = (
 				504828910F45AF2F00A30CEF /* PBXTargetDependency */,
 			);
-			name = AttachDemo;
+			name = AttachTest;
 			productName = AttachDemo;
 			productReference = 504828800F45AED700A30CEF /* AttachDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		505B62AB0F2E6A0F001B4104 /* Texture2dDemo */ = {
+		505B62AB0F2E6A0F001B4104 /* Texture2dTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 505B62D30F2E6A0F001B4104 /* Build configuration list for PBXNativeTarget "Texture2dDemo" */;
+			buildConfigurationList = 505B62D30F2E6A0F001B4104 /* Build configuration list for PBXNativeTarget "Texture2dTest" */;
 			buildPhases = (
 				505B62AE0F2E6A0F001B4104 /* Resources */,
 				505B62C90F2E6A0F001B4104 /* Sources */,
@@ -2847,14 +2847,14 @@
 			dependencies = (
 				505B62AC0F2E6A0F001B4104 /* PBXTargetDependency */,
 			);
-			name = Texture2dDemo;
+			name = Texture2dTest;
 			productName = playground;
 			productReference = 505B62D60F2E6A0F001B4104 /* Texture2dDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		505B63780F2F4210001B4104 /* EaseDemo */ = {
+		505B63780F2F4210001B4104 /* EaseActionsTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "EaseDemo" */;
+			buildConfigurationList = 505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "EaseActionsTest" */;
 			buildPhases = (
 				505B637B0F2F4210001B4104 /* Resources */,
 				505B63960F2F4210001B4104 /* Sources */,
@@ -2865,7 +2865,7 @@
 			dependencies = (
 				505B63790F2F4210001B4104 /* PBXTargetDependency */,
 			);
-			name = EaseDemo;
+			name = EaseActionsTest;
 			productName = playground;
 			productReference = 505B63A30F2F4210001B4104 /* EaseDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -2889,9 +2889,9 @@
 			productReference = 505CC1590F62BB03000EDF26 /* PerformanceTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		506143F10E589A2E003CCDB7 /* cocosnodeDemo */ = {
+		506143F10E589A2E003CCDB7 /* cocosnodeTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "cocosnodeDemo" */;
+			buildConfigurationList = 506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "cocosnodeTest" */;
 			buildPhases = (
 				506143F40E589A2E003CCDB7 /* Resources */,
 				506143FB0E589A2E003CCDB7 /* Sources */,
@@ -2902,14 +2902,14 @@
 			dependencies = (
 				506143F20E589A2E003CCDB7 /* PBXTargetDependency */,
 			);
-			name = cocosnodeDemo;
+			name = cocosnodeTest;
 			productName = playground;
 			productReference = 506144080E589A2E003CCDB7 /* cocosnodeDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		506881F40E95761200F943E5 /* AtlasDemo */ = {
+		506881F40E95761200F943E5 /* AtlasTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "AtlasDemo" */;
+			buildConfigurationList = 5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "AtlasTest" */;
 			buildPhases = (
 				506881F70E95761200F943E5 /* Resources */,
 				506882040E95761200F943E5 /* Sources */,
@@ -2920,14 +2920,14 @@
 			dependencies = (
 				506881F50E95761200F943E5 /* PBXTargetDependency */,
 			);
-			name = AtlasDemo;
+			name = AtlasTest;
 			productName = playground;
 			productReference = 506882110E95761200F943E5 /* AtlasDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		506C77CB0E01520900B48100 /* ClickAndMove */ = {
+		506C77CB0E01520900B48100 /* ClickAndMoveTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 506C77DF0E01520900B48100 /* Build configuration list for PBXNativeTarget "ClickAndMove" */;
+			buildConfigurationList = 506C77DF0E01520900B48100 /* Build configuration list for PBXNativeTarget "ClickAndMoveTest" */;
 			buildPhases = (
 				506C77CE0E01520900B48100 /* Resources */,
 				506C77D50E01520900B48100 /* Sources */,
@@ -2938,7 +2938,7 @@
 			dependencies = (
 				506C77CC0E01520900B48100 /* PBXTargetDependency */,
 			);
-			name = ClickAndMove;
+			name = ClickAndMoveTest;
 			productName = playground;
 			productReference = 506C77E20E01520900B48100 /* ClickAndMove.app */;
 			productType = "com.apple.product-type.application";
@@ -2979,9 +2979,9 @@
 			productReference = 506C800E0E041C9300B48100 /* SceneTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5078B5170E3E43540004233A /* IntervalDemo */ = {
+		5078B5170E3E43540004233A /* IntervalTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5078B52C0E3E43540004233A /* Build configuration list for PBXNativeTarget "IntervalDemo" */;
+			buildConfigurationList = 5078B52C0E3E43540004233A /* Build configuration list for PBXNativeTarget "IntervalTest" */;
 			buildPhases = (
 				5078B51A0E3E43540004233A /* Resources */,
 				5078B5220E3E43540004233A /* Sources */,
@@ -2992,7 +2992,7 @@
 			dependencies = (
 				5078B5180E3E43540004233A /* PBXTargetDependency */,
 			);
-			name = IntervalDemo;
+			name = IntervalTest;
 			productName = playground;
 			productReference = 50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -3032,9 +3032,9 @@
 			productReference = 509B3A0D0F31024E00F2FB95 /* libcocos Live.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		509B3A270F3102FD00F2FB95 /* cocosLiveDemo */ = {
+		509B3A270F3102FD00F2FB95 /* cocosLiveTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 509B3A2D0F3102FE00F2FB95 /* Build configuration list for PBXNativeTarget "cocosLiveDemo" */;
+			buildConfigurationList = 509B3A2D0F3102FE00F2FB95 /* Build configuration list for PBXNativeTarget "cocosLiveTest" */;
 			buildPhases = (
 				509B3A240F3102FD00F2FB95 /* Resources */,
 				509B3A250F3102FD00F2FB95 /* Sources */,
@@ -3045,14 +3045,14 @@
 			dependencies = (
 				509B3A2F0F31030400F2FB95 /* PBXTargetDependency */,
 			);
-			name = cocosLiveDemo;
+			name = cocosLiveTest;
 			productName = cocosLiveDemo;
 			productReference = 509B3A280F3102FD00F2FB95 /* cocosLiveDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50A24E190F377FA1007CAEB0 /* EffectsDemo */ = {
+		50A24E190F377FA1007CAEB0 /* EffectsTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50A24E410F377FA1007CAEB0 /* Build configuration list for PBXNativeTarget "EffectsDemo" */;
+			buildConfigurationList = 50A24E410F377FA1007CAEB0 /* Build configuration list for PBXNativeTarget "EffectsTest" */;
 			buildPhases = (
 				50A24E1C0F377FA1007CAEB0 /* Resources */,
 				50A24E370F377FA1007CAEB0 /* Sources */,
@@ -3063,7 +3063,7 @@
 			dependencies = (
 				50A24E1A0F377FA1007CAEB0 /* PBXTargetDependency */,
 			);
-			name = EffectsDemo;
+			name = EffectsTest;
 			productName = playground;
 			productReference = 50A24E440F377FA1007CAEB0 /* EffectsDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -3103,9 +3103,9 @@
 			productReference = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		50B2C5CE0E100EF000AE9530 /* Chipmunk_Accel */ = {
+		50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk_Accel" */;
+			buildConfigurationList = 50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkAccelTouchTest" */;
 			buildPhases = (
 				50B2C5D30E100EF000AE9530 /* Resources */,
 				50B2C5DA0E100EF000AE9530 /* Sources */,
@@ -3117,14 +3117,14 @@
 				50B2C5D10E100EF000AE9530 /* PBXTargetDependency */,
 				50B2C60B0E1014A700AE9530 /* PBXTargetDependency */,
 			);
-			name = Chipmunk_Accel;
+			name = ChipmunkAccelTouchTest;
 			productName = playground;
 			productReference = 50B2C5E80E100EF000AE9530 /* Chipmunk_Accel.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50B2CE450E129FD900AE9530 /* ChipmunkDemo */ = {
+		50B2CE450E129FD900AE9530 /* ChipmunkTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkDemo" */;
+			buildConfigurationList = 50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkTest" */;
 			buildPhases = (
 				50B2CE420E129FD900AE9530 /* Resources */,
 				50B2CE430E129FD900AE9530 /* Sources */,
@@ -3136,14 +3136,14 @@
 				50B2CE4D0E12A01400AE9530 /* PBXTargetDependency */,
 				50B2CE4F0E12A01700AE9530 /* PBXTargetDependency */,
 			);
-			name = ChipmunkDemo;
+			name = ChipmunkTest;
 			productName = ChipmunkDemo;
 			productReference = 50B2CE460E129FD900AE9530 /* ChipmunkDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50C1953E0EE4B57E00829067 /* ParallaxDemo */ = {
+		50C1953E0EE4B57E00829067 /* ParallaxTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50C1955D0EE4B57E00829067 /* Build configuration list for PBXNativeTarget "ParallaxDemo" */;
+			buildConfigurationList = 50C1955D0EE4B57E00829067 /* Build configuration list for PBXNativeTarget "ParallaxTest" */;
 			buildPhases = (
 				50C195410EE4B57E00829067 /* Resources */,
 				50C195530EE4B57E00829067 /* Sources */,
@@ -3154,14 +3154,14 @@
 			dependencies = (
 				50C1953F0EE4B57E00829067 /* PBXTargetDependency */,
 			);
-			name = ParallaxDemo;
+			name = ParallaxTest;
 			productName = playground;
 			productReference = 50C195600EE4B57E00829067 /* ParallaxDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50C938C60E0A9DBB00517B01 /* TransitionsDemo */ = {
+		50C938C60E0A9DBB00517B01 /* TransitionsTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50C938DD0E0A9DBB00517B01 /* Build configuration list for PBXNativeTarget "TransitionsDemo" */;
+			buildConfigurationList = 50C938DD0E0A9DBB00517B01 /* Build configuration list for PBXNativeTarget "TransitionsTest" */;
 			buildPhases = (
 				50C938CB0E0A9DBB00517B01 /* Resources */,
 				50C938D20E0A9DBB00517B01 /* Sources */,
@@ -3172,14 +3172,14 @@
 			dependencies = (
 				50C938C90E0A9DBB00517B01 /* PBXTargetDependency */,
 			);
-			name = TransitionsDemo;
+			name = TransitionsTest;
 			productName = playground;
 			productReference = 50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50C93A930E0BF6E000517B01 /* SpritesDemo */ = {
+		50C93A930E0BF6E000517B01 /* SpritesTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "SpritesDemo" */;
+			buildConfigurationList = 50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "SpritesTest" */;
 			buildPhases = (
 				50C93A980E0BF6E000517B01 /* Resources */,
 				50C93A9F0E0BF6E000517B01 /* Sources */,
@@ -3190,14 +3190,14 @@
 			dependencies = (
 				50C93A960E0BF6E000517B01 /* PBXTargetDependency */,
 			);
-			name = SpritesDemo;
+			name = SpritesTest;
 			productName = playground;
 			productReference = 50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedDemo */ = {
+		50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50D56FCF0F3FABEC007CD6B9 /* Build configuration list for PBXNativeTarget "EffectsAdvancedDemo" */;
+			buildConfigurationList = 50D56FCF0F3FABEC007CD6B9 /* Build configuration list for PBXNativeTarget "EffectsAdvancedTest" */;
 			buildPhases = (
 				50D56FA90F3FABEC007CD6B9 /* Resources */,
 				50D56FC50F3FABEC007CD6B9 /* Sources */,
@@ -3208,14 +3208,14 @@
 			dependencies = (
 				50D56FA70F3FABEC007CD6B9 /* PBXTargetDependency */,
 			);
-			name = EffectsAdvancedDemo;
+			name = EffectsAdvancedTest;
 			productName = playground;
 			productReference = 50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50DB1BB10E1C1E5900A89DFF /* ParticleDemo */ = {
+		50DB1BB10E1C1E5900A89DFF /* ParticleTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50DB1BC70E1C1E5900A89DFF /* Build configuration list for PBXNativeTarget "ParticleDemo" */;
+			buildConfigurationList = 50DB1BC70E1C1E5900A89DFF /* Build configuration list for PBXNativeTarget "ParticleTest" */;
 			buildPhases = (
 				50DB1BB40E1C1E5900A89DFF /* Resources */,
 				50DB1BBC0E1C1E5900A89DFF /* Sources */,
@@ -3226,7 +3226,7 @@
 			dependencies = (
 				50DB1BB20E1C1E5900A89DFF /* PBXTargetDependency */,
 			);
-			name = ParticleDemo;
+			name = ParticleTest;
 			productName = playground;
 			productReference = 50DB1BCA0E1C1E5900A89DFF /* ParticleDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -3285,29 +3285,29 @@
 				50B2C4D00E100AEA00AE9530 /* Chipmunk */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
-				317070410E2940C900DD3360 /* AccelViewportDemo */,
-				506881F40E95761200F943E5 /* AtlasDemo */,
-				5048287F0F45AED700A30CEF /* AttachDemo */,
-				50B2C5CE0E100EF000AE9530 /* Chipmunk_Accel */,
-				50B2CE450E129FD900AE9530 /* ChipmunkDemo */,
-				506C77CB0E01520900B48100 /* ClickAndMove */,
-				509B3A270F3102FD00F2FB95 /* cocosLiveDemo */,
-				506143F10E589A2E003CCDB7 /* cocosnodeDemo */,
-				505B63780F2F4210001B4104 /* EaseDemo */,
-				50A24E190F377FA1007CAEB0 /* EffectsDemo */,
-				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedDemo */,
-				5078B5170E3E43540004233A /* IntervalDemo */,
+				317070410E2940C900DD3360 /* AccelViewportTest */,
+				506881F40E95761200F943E5 /* AtlasTest */,
+				5048287F0F45AED700A30CEF /* AttachTest */,
+				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
+				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
+				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
+				509B3A270F3102FD00F2FB95 /* cocosLiveTest */,
+				506143F10E589A2E003CCDB7 /* cocosnodeTest */,
+				505B63780F2F4210001B4104 /* EaseActionsTest */,
+				50A24E190F377FA1007CAEB0 /* EffectsTest */,
+				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedTest */,
+				5078B5170E3E43540004233A /* IntervalTest */,
 				506C79F20E01C73A00B48100 /* MenuTest */,
-				50C1953E0EE4B57E00829067 /* ParallaxDemo */,
-				50DB1BB10E1C1E5900A89DFF /* ParticleDemo */,
+				50C1953E0EE4B57E00829067 /* ParallaxTest */,
+				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
 				505CC1580F62BB03000EDF26 /* PerformanceTest */,
-				502C66170DFEFCCA00E4107D /* RotateWorld */,
+				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
 				8EDF3EA90F6BDA0000F54643 /* SoundEngineTest (experimental) */,
-				50C93A930E0BF6E000517B01 /* SpritesDemo */,
+				50C93A930E0BF6E000517B01 /* SpritesTest */,
 				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
-				505B62AB0F2E6A0F001B4104 /* Texture2dDemo */,
-				50C938C60E0A9DBB00517B01 /* TransitionsDemo */,
+				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
+				50C938C60E0A9DBB00517B01 /* TransitionsTest */,
 			);
 		};
 /* End PBXProject section */
@@ -3911,7 +3911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3170705E0E29410900DD3360 /* AccelViewportDemo.m in Sources */,
+				3170705E0E29410900DD3360 /* AccelViewportTest.m in Sources */,
 				3170704F0E2940C900DD3360 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3975,7 +3975,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				502C664F0DFEFD6800E4107D /* RotateWorld.m in Sources */,
+				502C664F0DFEFD6800E4107D /* RotateWorldTest.m in Sources */,
 				50B2CB200E10EE0800AE9530 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3994,7 +3994,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				505B62CB0F2E6A0F001B4104 /* main.m in Sources */,
-				505B62E00F2E6A66001B4104 /* Texture2dDemo.m in Sources */,
+				505B62E00F2E6A66001B4104 /* Texture2dTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4003,7 +4003,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				505B63980F2F4210001B4104 /* main.m in Sources */,
-				505B63A80F2F4295001B4104 /* EaseDemo.m in Sources */,
+				505B63A80F2F4295001B4104 /* EaseTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4031,7 +4031,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506882140E95763E00F943E5 /* TestAtlas.m in Sources */,
+				506882140E95763E00F943E5 /* AtlasTest.m in Sources */,
 				506882050E95761200F943E5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4040,7 +4040,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506C77E70E01524200B48100 /* ClickAndMove.m in Sources */,
+				506C77E70E01524200B48100 /* ClickAndMoveTest.m in Sources */,
 				50B2CB1F0E10EE0800AE9530 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4068,7 +4068,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5078B5240E3E43540004233A /* main.m in Sources */,
-				5078B5340E3E437F0004233A /* IntervalDemo.m in Sources */,
+				5078B5340E3E437F0004233A /* IntervalTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4156,7 +4156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B2CE580E12A0B400AE9530 /* main.m in Sources */,
-				50B2C5ED0E100F8800AE9530 /* Chipmunk_Accel.m in Sources */,
+				50B2C5ED0E100F8800AE9530 /* ChipmunkAccelTouchTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4180,7 +4180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50C195550EE4B57E00829067 /* main.m in Sources */,
-				50C195650EE4B5B700829067 /* TestParallax.m in Sources */,
+				50C195650EE4B5B700829067 /* ParallaxTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4188,7 +4188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C938E50E0A9E1100517B01 /* TransitionsDemo.m in Sources */,
+				50C938E50E0A9E1100517B01 /* TransitionsTest.m in Sources */,
 				50B2CB1B0E10EE0800AE9530 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4197,7 +4197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C93AC50E0BF8FC00517B01 /* SpritesDemo.m in Sources */,
+				50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */,
 				50B2CB1A0E10EE0800AE9530 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4216,7 +4216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50DB1BBE0E1C1E5900A89DFF /* main.m in Sources */,
-				50DB1BD10E1C1EF000A89DFF /* ParticleDemo.m in Sources */,
+				50DB1BD10E1C1EF000A89DFF /* ParticleTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5889,7 +5889,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		317070580E2940C900DD3360 /* Build configuration list for PBXNativeTarget "AccelViewportDemo" */ = {
+		317070580E2940C900DD3360 /* Build configuration list for PBXNativeTarget "AccelViewportTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				317070590E2940C900DD3360 /* Debug */,
@@ -5916,7 +5916,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "RotateWorld" */ = {
+		502C661D0DFEFCCA00E4107D /* Build configuration list for PBXNativeTarget "RotateWorldTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				502C661B0DFEFCCA00E4107D /* Debug */,
@@ -5925,7 +5925,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5048288F0F45AED800A30CEF /* Build configuration list for PBXNativeTarget "AttachDemo" */ = {
+		5048288F0F45AED800A30CEF /* Build configuration list for PBXNativeTarget "AttachTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5048288D0F45AED800A30CEF /* Debug */,
@@ -5934,7 +5934,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		505B62D30F2E6A0F001B4104 /* Build configuration list for PBXNativeTarget "Texture2dDemo" */ = {
+		505B62D30F2E6A0F001B4104 /* Build configuration list for PBXNativeTarget "Texture2dTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				505B62D40F2E6A0F001B4104 /* Debug */,
@@ -5943,7 +5943,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "EaseDemo" */ = {
+		505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "EaseActionsTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				505B63A10F2F4210001B4104 /* Debug */,
@@ -5961,7 +5961,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "cocosnodeDemo" */ = {
+		506144050E589A2E003CCDB7 /* Build configuration list for PBXNativeTarget "cocosnodeTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				506144060E589A2E003CCDB7 /* Debug */,
@@ -5970,7 +5970,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "AtlasDemo" */ = {
+		5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "AtlasTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5068820F0E95761200F943E5 /* Debug */,
@@ -5979,7 +5979,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		506C77DF0E01520900B48100 /* Build configuration list for PBXNativeTarget "ClickAndMove" */ = {
+		506C77DF0E01520900B48100 /* Build configuration list for PBXNativeTarget "ClickAndMoveTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				506C77E00E01520900B48100 /* Debug */,
@@ -6006,7 +6006,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5078B52C0E3E43540004233A /* Build configuration list for PBXNativeTarget "IntervalDemo" */ = {
+		5078B52C0E3E43540004233A /* Build configuration list for PBXNativeTarget "IntervalTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5078B52D0E3E43540004233A /* Debug */,
@@ -6033,7 +6033,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		509B3A2D0F3102FE00F2FB95 /* Build configuration list for PBXNativeTarget "cocosLiveDemo" */ = {
+		509B3A2D0F3102FE00F2FB95 /* Build configuration list for PBXNativeTarget "cocosLiveTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				509B3A2B0F3102FE00F2FB95 /* Debug */,
@@ -6042,7 +6042,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50A24E410F377FA1007CAEB0 /* Build configuration list for PBXNativeTarget "EffectsDemo" */ = {
+		50A24E410F377FA1007CAEB0 /* Build configuration list for PBXNativeTarget "EffectsTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50A24E420F377FA1007CAEB0 /* Debug */,
@@ -6069,7 +6069,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "Chipmunk_Accel" */ = {
+		50B2C5E50E100EF000AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkAccelTouchTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50B2C5E60E100EF000AE9530 /* Debug */,
@@ -6078,7 +6078,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkDemo" */ = {
+		50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50B2CE490E129FDA00AE9530 /* Debug */,
@@ -6087,7 +6087,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50C1955D0EE4B57E00829067 /* Build configuration list for PBXNativeTarget "ParallaxDemo" */ = {
+		50C1955D0EE4B57E00829067 /* Build configuration list for PBXNativeTarget "ParallaxTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50C1955E0EE4B57E00829067 /* Debug */,
@@ -6096,7 +6096,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50C938DD0E0A9DBB00517B01 /* Build configuration list for PBXNativeTarget "TransitionsDemo" */ = {
+		50C938DD0E0A9DBB00517B01 /* Build configuration list for PBXNativeTarget "TransitionsTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50C938DE0E0A9DBB00517B01 /* Debug */,
@@ -6105,7 +6105,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "SpritesDemo" */ = {
+		50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "SpritesTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50C93AAB0E0BF6E000517B01 /* Debug */,
@@ -6114,7 +6114,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50D56FCF0F3FABEC007CD6B9 /* Build configuration list for PBXNativeTarget "EffectsAdvancedDemo" */ = {
+		50D56FCF0F3FABEC007CD6B9 /* Build configuration list for PBXNativeTarget "EffectsAdvancedTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50D56FD00F3FABEC007CD6B9 /* Debug */,
@@ -6123,7 +6123,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50DB1BC70E1C1E5900A89DFF /* Build configuration list for PBXNativeTarget "ParticleDemo" */ = {
+		50DB1BC70E1C1E5900A89DFF /* Build configuration list for PBXNativeTarget "ParticleTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50DB1BC80E1C1E5900A89DFF /* Debug */,

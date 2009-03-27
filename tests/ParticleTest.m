@@ -5,7 +5,7 @@
 //
 
 // local import
-#import "ParticleDemo.h"
+#import "ParticleTest.h"
 
 enum {
 	kTagLabelAtlas = 1,

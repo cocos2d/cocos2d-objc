@@ -5,7 +5,7 @@
 
 // local import
 #import "cocos2d.h"
-#import "EaseDemo.h"
+#import "EaseTest.h"
 
 
 static int sceneIdx=-1;

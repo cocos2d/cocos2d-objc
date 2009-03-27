@@ -8,7 +8,8 @@
 #import "cocos2d.h"
 
 // local import
-#import "TestParallax.h"
+#import "ParallaxTest.h"
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Parallax1",

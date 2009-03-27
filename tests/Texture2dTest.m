@@ -6,7 +6,7 @@
 
 // local import
 #import "cocos2d.h"
-#import "Texture2dDemo.h"
+#import "Texture2dTest.h"
 
 
 static int sceneIdx=-1;

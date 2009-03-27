@@ -1,13 +1,10 @@
 //
-// Accelerometer + physics example
+// Accelerometer + physics + touches example
 // a cocos2d example
 // http://code.google.com/p/cocos2d-iphone
 //
 
-
-#import "OpenGL_Internal.h"
-
-#import "Chipmunk_Accel.h"
+#import "ChipmunkAccelTouchTest.h"
 
 enum {
 	kTagAtlasSpriteManager = 1,
