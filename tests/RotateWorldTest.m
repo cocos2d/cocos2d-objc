@@ -6,7 +6,7 @@
 
 
 // local import
-#import "RotateWorld.h"
+#import "RotateWorldTest.h"
 
 @implementation TextLayer
 -(id) init

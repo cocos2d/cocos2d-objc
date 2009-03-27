@@ -2,9 +2,8 @@
 // cocos2d
 //
 
-#import <UIKit/UIKit.h>
-
 #import "cocos2d.h"
+#import "chipmunk.h"
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
@@ -15,15 +14,9 @@
 
 @interface Layer1 : Layer
 {
-	Label *label1;
-	Label *label2;
-	Label *label3;
-	
-	ccTime time1, time2, time3;
+	cpSpace *space;
 }
-
--(void) step1: (ccTime) dt;
--(void) step2: (ccTime) dt;
--(void) step3: (ccTime) dt;
-
+-(void) step: (ccTime) dt;
+-(void) addNewSpriteX:(float)x y:(float)y;
 @end
+	

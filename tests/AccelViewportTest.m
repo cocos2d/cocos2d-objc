@@ -9,7 +9,7 @@
 
 // local import
 //#import "VirtualAccelerometer.h"
-#import "AccelViewportDemo.h"
+#import "AccelViewportTest.h"
 
 float randfloat() {
 	return ((float)random())/RAND_MAX;
