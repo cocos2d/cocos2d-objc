@@ -172,6 +172,8 @@ typedef struct sParticle
 @property (readwrite,assign) float emissionRate;
 /** maximum particles of the system */
 @property (readwrite,assign) int totalParticles;
+/** texture used to render the particles */
+@property (readwrite, retain) Texture2D * texture;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;

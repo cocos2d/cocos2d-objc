@@ -5,6 +5,7 @@ version 0.7.2 - xxx
  . Menu: an empty menu can be crated (issue #277)
  . Particles: Use by default fire.pvr (issue #276)
  . Particles: resetSystem actually resets the system (issue #252)
+ . Particles: texture is a property (issue #282)
  . SoundSupport: supports vorbis codec (issue #XXX)      <------------- XXX CREATE ISSUE XXX
  . TextureAtlas: fixed colorarray memory leak (issue #272)
  . TileMapAtlas: supports fullpath (issue #220)

@@ -47,6 +47,7 @@
 @synthesize totalParticles;
 @synthesize size, sizeVar;
 @synthesize gravity;
+@synthesize texture;
 
 -(id) init {
 	NSException* myException = [NSException
@@ -129,8 +130,8 @@
 	cpVect v;
 
 	// position
-	particle->pos.x = source.x + posVar.x * CCRANDOM_MINUS1_1();
-	particle->pos.y = source.y + posVar.y * CCRANDOM_MINUS1_1();
+	particle->pos.x = (int) (source.x + posVar.x * CCRANDOM_MINUS1_1());
+	particle->pos.y = (int) (source.y + posVar.y * CCRANDOM_MINUS1_1());
 	
 	// direction
 	float a = (cpFloat)CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
