@@ -271,7 +271,7 @@
 		505B639D0F2F4210001B4104 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		505B63A80F2F4295001B4104 /* EaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseTest.m */; };
+		505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseActionsTest.m */; };
 		505CC1840F62BB7A000EDF26 /* CocosNodePerformance.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CC17D0F62BB7A000EDF26 /* CocosNodePerformance.m */; };
 		505CC1850F62BB7A000EDF26 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CC17F0F62BB7A000EDF26 /* AppController.m */; };
 		505CC1860F62BB7A000EDF26 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CC1810F62BB7A000EDF26 /* MainScene.m */; };
@@ -1163,8 +1163,8 @@
 		505B62DE0F2E6A66001B4104 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
 		505B62DF0F2E6A66001B4104 /* Texture2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dTest.m; path = tests/Texture2dTest.m; sourceTree = "<group>"; };
 		505B63A30F2F4210001B4104 /* EaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B63A60F2F4295001B4104 /* EaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseTest.h; path = tests/EaseTest.h; sourceTree = "<group>"; };
-		505B63A70F2F4295001B4104 /* EaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseTest.m; path = tests/EaseTest.m; sourceTree = "<group>"; };
+		505B63A60F2F4295001B4104 /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseActionsTest.h; path = tests/EaseActionsTest.h; sourceTree = "<group>"; };
+		505B63A70F2F4295001B4104 /* EaseActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseActionsTest.m; path = tests/EaseActionsTest.m; sourceTree = "<group>"; };
 		505CC1590F62BB03000EDF26 /* PerformanceTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505CC17C0F62BB7A000EDF26 /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
 		505CC17D0F62BB7A000EDF26 /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodePerformance.m; sourceTree = "<group>"; };
@@ -1314,7 +1314,7 @@
 		50C723DB0EC062680046C5DB /* clouds.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = text; path = clouds.pvrtc; sourceTree = "<group>"; };
 		50C7D4950E5C2ED80035ACA2 /* IntervalDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntervalDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E00E0A9DBB00517B01 /* TransitionsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C938E30E0A9E1100517B01 /* TransitionsTesth */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TransitionsTesth; path = tests/TransitionsTesth; sourceTree = "<group>"; };
+		50C938E30E0A9E1100517B01 /* TransitionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsTest.h; path = tests/TransitionsTest.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsTest.m; path = tests/TransitionsTest.m; sourceTree = "<group>"; };
 		50C93AAD0E0BF6E000517B01 /* SpritesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* SpritesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesTest.h; path = tests/SpritesTest.h; sourceTree = "<group>"; };
@@ -2296,8 +2296,8 @@
 				50B2C5EC0E100F8800AE9530 /* ChipmunkAccelTouchTest.m */,
 				5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */,
 				5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */,
-				505B63A60F2F4295001B4104 /* EaseTest.h */,
-				505B63A70F2F4295001B4104 /* EaseTest.m */,
+				505B63A60F2F4295001B4104 /* EaseActionsTest.h */,
+				505B63A70F2F4295001B4104 /* EaseActionsTest.m */,
 				50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */,
 				50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */,
 				50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */,
@@ -2318,7 +2318,7 @@
 				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
-				50C938E30E0A9E1100517B01 /* TransitionsTesth */,
+				50C938E30E0A9E1100517B01 /* TransitionsTest.h */,
 				50C938E40E0A9E1100517B01 /* TransitionsTest.m */,
 				50B2CB170E10EE0800AE9530 /* main.m */,
 				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
@@ -4003,7 +4003,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				505B63980F2F4210001B4104 /* main.m in Sources */,
-				505B63A80F2F4295001B4104 /* EaseTest.m in Sources */,
+				505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

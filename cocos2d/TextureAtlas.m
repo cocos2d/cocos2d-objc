@@ -28,7 +28,8 @@
 
 @implementation TextureAtlas
 
-@synthesize totalQuads, texture;
+@synthesize totalQuads = _totalQuads, capacity = _capacity;
+@synthesize texture;
 @synthesize withColorArray = _withColorArray;
 
 #pragma mark TextureAtlas - alloc & init
@@ -56,16 +57,16 @@
 	if( ! (self=[super init]) )
 		return nil;
 	
-	totalQuads = n;
+	_capacity = n;
 	
 	// retained in property
 	self.texture = tex;
 
 	_withColorArray = NO;
 
-	texCoordinates = malloc( sizeof(texCoordinates[0]) * totalQuads );
-	vertices = malloc( sizeof(vertices[0]) * totalQuads );
-	indices = malloc( sizeof(indices[0]) * totalQuads * 6 );
+	texCoordinates = malloc( sizeof(texCoordinates[0]) * _capacity );
+	vertices = malloc( sizeof(vertices[0]) * _capacity );
+	indices = malloc( sizeof(indices[0]) * _capacity * 6 );
 	
 	if( ! ( texCoordinates && vertices && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");
@@ -85,7 +86,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, totalQuads];
+	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, _totalQuads];
 }
 
 -(void) dealloc
@@ -106,15 +107,16 @@
 -(void) initColorArray
 {
 	if( ! _withColorArray ) {
-		colors = malloc( sizeof(colors[0]) * totalQuads * 4 );
-		memset(colors, 0xFF,  totalQuads * 4 * sizeof(colors[0]));
+		colors = malloc( sizeof(colors[0]) * _capacity * 4 );
+		// default color: 255,255,255,255
+		memset(colors, 0xFF,  _capacity * 4 * sizeof(colors[0]));
 		_withColorArray = YES;
 	}
 }
 
 -(void) initIndices
 {
-	for( NSUInteger i=0;i<totalQuads;i++) {
+	for( NSUInteger i=0;i< _capacity;i++) {
 		indices[i*6+0] = i*4+0;
 		indices[i*6+1] = i*4+1;
 		indices[i*6+2] = i*4+2;
@@ -127,12 +129,14 @@
 	}
 }
 
-#pragma mark TextureAtlas - Updates
+#pragma mark TextureAtlas - Updates & Remove
 
 -(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(NSUInteger) n
 {
 	
-	NSAssert( n >= 0 && n < totalQuads, @"updateQuadWithTexture: Invalid index");
+	NSAssert( n >= 0 && n < _capacity, @"updateQuadWithTexture: Invalid index");
+
+	_totalQuads =  MAX( n+1, _totalQuads);
 
 	texCoordinates[n] = *quadT;
 	vertices[n] = *quadV;
@@ -140,29 +144,51 @@
 
 -(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n
 {
-	NSAssert( n >= 0 && n < totalQuads, @"updateColorWithQuadColor: Invalid index");
+	NSAssert( n >= 0 && n < _capacity, @"updateColorWithQuadColor: Invalid index");
 
+	_totalQuads =  MAX( n+1, _totalQuads);
+	
 	if( ! _withColorArray )
 		[self initColorArray];
 	for( int i=0;i<4;i++)
 		colors[n*4+i] = *color;
 }
 
+-(void) removeQuadAtIndex:(NSUInteger) index
+{
+	NSAssert( index >= 0 && index < _totalQuads, @"removeQuadAtIndex: Invalid index");
+	
+	NSUInteger remaining = (_totalQuads-1) - index;
+	
+	// last object doesn't need to be moved
+	if( remaining ) {
+		// tex coordinates
+		memmove( &texCoordinates[index],&texCoordinates[index+1], sizeof(texCoordinates[0]) * remaining );
+		// vertices
+		memmove( &vertices[index], &vertices[index+1], sizeof(vertices[0]) * remaining );
+		// colors
+		if(_withColorArray)
+			memmove(&colors[index*4], &colors[(index+1)*4], sizeof(colors[0]) * remaining * 4);
+	}
+	
+	_totalQuads--;
+}
+
 #pragma mark TextureAtlas - Resize
 
 -(void) resizeCapacity: (NSUInteger) n
 {
-	if( n == totalQuads )
+	if( n == _capacity )
 		return;
 	
-	totalQuads = n;
+	_capacity = n;
 
-	texCoordinates = realloc( texCoordinates, sizeof(texCoordinates[0]) * totalQuads );
-	vertices = realloc( vertices, sizeof(vertices[0]) * totalQuads );
-	indices = realloc( indices, sizeof(indices[0]) * totalQuads * 6 );
+	texCoordinates = realloc( texCoordinates, sizeof(texCoordinates[0]) * _capacity );
+	vertices = realloc( vertices, sizeof(vertices[0]) * _capacity );
+	indices = realloc( indices, sizeof(indices[0]) * _capacity * 6 );
 	
 	if( _withColorArray )
-		colors = realloc( colors, sizeof(colors[0]) * totalQuads * 4 );
+		colors = realloc( colors, sizeof(colors[0]) * _capacity * 4 );
 	
 	if( ! ( texCoordinates && vertices && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");
@@ -184,7 +210,7 @@
 
 -(void) drawQuads
 {
-	return [self drawNumberOfQuads: totalQuads];
+	return [self drawNumberOfQuads: _totalQuads];
 }
 
 -(void) drawNumberOfQuads: (NSUInteger) n

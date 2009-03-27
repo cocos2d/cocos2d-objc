@@ -28,10 +28,10 @@ const int defaultCapacity = 29;
 -(void)setIndex:(int)index
 {
 	mAtlasIndex = index;
-	[self updateAtlas];
-
-	if( mAtlas.withColorArray )
-		[self updateColor];
+//	[self updateAtlas];
+//
+//	if( mAtlas.withColorArray )
+//		[self updateColor];
 }
 @end
 
@@ -126,7 +126,7 @@ const int defaultCapacity = 29;
 	// if we're going beyond the current TextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
 	// this is likely computationally expensive
-	if(mTotalSprites == mAtlas.totalQuads)
+	if(mTotalSprites == mAtlas.capacity)
 	{
 		CCLOG(@"Resizing TextureAtlas capacity, from [%d] to [%d].", mAtlas.totalQuads, mAtlas.totalQuads * 3 / 2);
 
@@ -156,6 +156,8 @@ const int defaultCapacity = 29;
 	
 	[child setIndex: [self indexForNewChild] ];
 	[child updateAtlas];
+	if( mAtlas.withColorArray )
+		[child updateColor];
 
 	mTotalSprites++;
 	return [super addChild:child z:z tag:aTag];
@@ -172,6 +174,9 @@ const int defaultCapacity = 29;
 
 	// update all sprites beyond this one
 	int count = [children count];
+	
+	[mAtlas removeQuadAtIndex:index];
+
 	for(; index < count; index++)
 	{
 		AtlasSprite *other = (AtlasSprite *)[children objectAtIndex:index];
@@ -189,6 +194,8 @@ const int defaultCapacity = 29;
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	[super removeAllChildrenWithCleanup:doCleanup];
+	
+	// BUG XXX: atlas should be purged as well
 	mTotalSprites = 0;
 }
 
@@ -213,7 +220,7 @@ const int defaultCapacity = 29;
 
 		glEnable(GL_TEXTURE_2D);
 
-		[mAtlas drawNumberOfQuads:mTotalSprites];
+		[mAtlas drawQuads];
 
 		glDisable(GL_TEXTURE_2D);
 
