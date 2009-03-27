@@ -73,13 +73,13 @@
 
 - (void) setString:(NSString*)string
 {
-	if (texture)
-		[texture release];
-
 	if( CGSizeEqualToSize( _dimensions, CGSizeZero ) )
+		// DON'T use property to prevent double retain
 		texture = [[Texture2D alloc] initWithString:string fontName:_fontName fontSize:_fontSize];
 	else
+		// DON'T use property to prevent double retain
 		texture = [[Texture2D alloc] initWithString:string dimensions:_dimensions alignment:_alignment fontName:_fontName fontSize:_fontSize];
+
 	CGSize s = texture.contentSize;
 	transformAnchor = cpv( s.width/2, s.height/2);
 }
@@ -87,7 +87,6 @@
 - (void) dealloc
 {
 	[_fontName release];
-	[texture release];
 	[super dealloc];
 }
 @end

@@ -12,9 +12,9 @@
  *
  */
 
-#import "Texture2D.h"
 #import "TextureMgr.h"
 #import "Support/FileUtils.h"
+#import "Support/Texture2D.h"
 
 
 @implementation TextureMgr
@@ -50,10 +50,9 @@ static TextureMgr *sharedTextureMgr;
 
 -(id) init
 {
-	if( ! (self=[super init]) )
-		return nil;
-	
-	textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
+	if( (self=[super init]) )
+		textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
+
 	return self;
 }
 
@@ -153,7 +152,8 @@ static TextureMgr *sharedTextureMgr;
 
 -(void) removeTexture: (Texture2D*) tex
 {
-	NSAssert(tex != nil, @"TextureMgr: tex MUST not be nill");
+	if( ! tex )
+		return;
 	
 	NSArray *keys = [textures allKeysForObject:tex];
 	

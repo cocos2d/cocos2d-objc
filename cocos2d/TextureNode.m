@@ -39,7 +39,7 @@
 
 -(void) dealloc
 {
-	// texture is retained and release by super
+	[texture release];
 	[super dealloc];
 }
 
