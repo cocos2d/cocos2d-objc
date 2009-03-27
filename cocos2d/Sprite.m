@@ -35,7 +35,8 @@
 {
 	self = [super init];
 	if( self ) {
-		self.texture = [[[TextureMgr sharedTextureMgr] addImage: filename] retain];
+		// texture is retained
+		self.texture = [[TextureMgr sharedTextureMgr] addImage: filename];
 	}
 	
 	return self;
@@ -50,9 +51,9 @@
 
 - (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
 {
-	self=[super init];
-	if( self ) {
-		self.texture = [[[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w] retain];
+	if((self=[super init])) {
+		// texture is retained
+		self.texture = [[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w];
 		
 		// lazy alloc
 		animations = nil;
@@ -72,7 +73,8 @@
 {
 	self = [super init];
 	if( self ) {
-		self.texture = [[[TextureMgr sharedTextureMgr] addCGImage: image] retain];
+		// texture is retained
+		self.texture = [[TextureMgr sharedTextureMgr] addCGImage: image];
 		
 		// lazy alloc
 		animations = nil;
@@ -90,9 +92,9 @@
 
 - (id) initWithTexture:(Texture2D*) tex
 {
-	self = [super init];
-	if( self ) {
-		self.texture = [tex retain];
+	if( (self = [super init]) ) {
+		// texture is retained
+		self.texture = tex;
 		
 		// lazy alloc
 		animations = nil;
@@ -113,7 +115,6 @@
 
 -(void) dealloc
 {
-	[texture release];
 	[animations release];
 	[super dealloc];
 }

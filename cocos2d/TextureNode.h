@@ -44,7 +44,7 @@
 }
 
 /** The texture that is rendered */
-@property (readwrite,assign) Texture2D *texture;
+@property (readwrite,retain) Texture2D *texture;
 
 /** conforms to CocosNodeOpacity and CocosNodeRGB protocol */
 @property (readwrite,assign) GLubyte r, g, b, opacity;
