@@ -8,6 +8,7 @@ version 0.7.2 - xxx
  . Particles: texture is a property (issue #282)
  . SoundSupport: supports vorbis codec (issue #XXX)      <------------- XXX CREATE ISSUE XXX
  . TextureAtlas: fixed colorarray memory leak (issue #272)
+ . TextureNode: texture is "retain" not "assign" (issue #230 and issue #274)
  . TileMapAtlas: supports fullpath (issue #220)
  
 version 0.7.1 - 20-Mar-2009
