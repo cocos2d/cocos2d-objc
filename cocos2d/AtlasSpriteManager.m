@@ -151,6 +151,7 @@ const int defaultCapacity = 29;
  */
 -(id) addChild:(AtlasSprite*)child z:(int)z tag:(int) aTag
 {
+	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
 	[child setIndex: [self indexForNewChild] ];
@@ -162,6 +163,10 @@ const int defaultCapacity = 29;
 
 -(void)removeChild: (AtlasSprite *)sprite cleanup:(BOOL)doCleanup
 {
+	// explicit nil handling
+	if (sprite == nil)
+		return;
+	
 	int index= sprite.atlasIndex;
 	[super removeChild:sprite cleanup:doCleanup];
 
