@@ -19,7 +19,8 @@
  * The Texture Atlas supports vertex array and color array.
  */
 @interface TextureAtlas : NSObject {
-	NSUInteger			totalQuads;
+	NSUInteger			_totalQuads;
+	NSUInteger			_capacity;
 	ccQuad2		*texCoordinates;
 	ccQuad3		*vertices;
 	ccColorB	*colors;			// RGBA for each vertex
@@ -29,8 +30,13 @@
 	BOOL		_withColorArray;
 }
 
+/** quantity of quads that are going to be drawn */
 @property (readonly) NSUInteger totalQuads;
+/** quantity of quads that can be stored with the current texture atlas size */
+@property (readonly) NSUInteger capacity;
+/** Texture of the texture atlas */
 @property (nonatomic,retain) Texture2D *texture;
+/** whether or not the TextureAtlas object is using a color array */
 @property (readonly) BOOL withColorArray;
 
 /** creates a TextureAtlas with an iname filename and with a capacity for n Quads
@@ -78,6 +84,11 @@
  */
 -(void) drawQuads;
 
+/** removes a quad at a given index number.
+ The capacity remains the same, but the total number of quads to be drawn is reduced in 1
+ @since v0.7.2
+ */
+-(void) removeQuadAtIndex:(NSUInteger) index;
 
 /** resize the capacity of the Texture Atlas.
  * The new capacity can be lower or higher

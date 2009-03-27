@@ -154,6 +154,8 @@ Class restartAction()
 		[textureAtlas updateQuadWithTexture: &texCoords[i] vertexQuad: &vertices[i] atIndex:i];
 	}
 	
+	[textureAtlas removeQuadAtIndex:2];
+
 	return self;
 }
 
@@ -170,8 +172,10 @@ Class restartAction()
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	
 	glEnable( GL_TEXTURE_2D);
-	
-	[textureAtlas drawNumberOfQuads:3];
+
+	[textureAtlas drawQuads];
+
+//	[textureAtlas drawNumberOfQuads:3];
 		
 	glDisable( GL_TEXTURE_2D);
 	
