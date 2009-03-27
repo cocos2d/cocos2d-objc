@@ -410,6 +410,7 @@
 		50851BF60F35FB0F00978029 /* ccExceptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851BF40F35FB0F00978029 /* ccExceptions.h */; };
 		50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851C380F35FE7D00978029 /* UIColor-OpenGL.h */; };
 		50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50851C390F35FE7D00978029 /* UIColor-OpenGL.m */; };
+		5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5085BFAD0F7D67FF008DBA21 /* snow.png */; };
 		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		509A79970F6188420032F449 /* AtlasSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* AtlasSprite.h */; };
 		509A79980F6188420032F449 /* AtlasSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* AtlasSprite.m */; };
@@ -1225,6 +1226,7 @@
 		50851BF40F35FB0F00978029 /* ccExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccExceptions.h; sourceTree = "<group>"; };
 		50851C380F35FE7D00978029 /* UIColor-OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-OpenGL.h"; sourceTree = "<group>"; };
 		50851C390F35FE7D00978029 /* UIColor-OpenGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-OpenGL.m"; sourceTree = "<group>"; };
+		5085BFAD0F7D67FF008DBA21 /* snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snow.png; sourceTree = "<group>"; };
 		509A79950F6188420032F449 /* AtlasSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* AtlasSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasSprite.m; sourceTree = "<group>"; };
 		509A79990F6188500032F449 /* AtlasSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasSpriteManager.h; sourceTree = "<group>"; };
@@ -1939,11 +1941,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
+				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 			);
 			name = Resources;
@@ -2329,10 +2331,11 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50E675CD0F65857D003DAA90 /* sprites_test */,
+				5085BFAD0F7D67FF008DBA21 /* snow.png */,
 				502AACF20F79715D001E3F87 /* fire.pvr */,
 				8EDF3FD90F6BE3F400F54643 /* listener-marker.png */,
 				8EDF3FDA0F6BE3F400F54643 /* source-marker.png */,
-				50E675CD0F65857D003DAA90 /* sprites_test */,
 				50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */,
 				50E676960F6587FD003DAA90 /* spritesheet1.pvr */,
 				50E675060F65628C003DAA90 /* spritesheet1.png */,
@@ -3860,6 +3863,7 @@
 				50405A200E32A15500213FEF /* smoke.png in Resources */,
 				501CD1730E99873000B86F68 /* fps_images.png in Resources */,
 				502AACF30F79715E001E3F87 /* fire.pvr in Resources */,
+				5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
