@@ -129,10 +129,7 @@
 //
 -(void) setDisplayFrame:(id)frame
 {
-	if( frame == texture )
-		return;
-	[texture release];
-	texture = [frame retain];	
+	self.texture = frame;
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
@@ -141,11 +138,8 @@
 		[self initAnimationDictionary];
 	
 	Animation *a = [animations objectForKey: animationName];
-	Texture2D *tex = [[a frames] objectAtIndex:frameIndex];
-	if( tex == texture )
-		return;
-	[texture release];
-	texture = [tex retain];
+	Texture2D *frame = [[a frames] objectAtIndex:frameIndex];
+	self.texture = frame;
 }
 
 -(BOOL) isFrameDisplayed:(id)frame
