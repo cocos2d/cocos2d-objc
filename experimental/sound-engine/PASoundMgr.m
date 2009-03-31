@@ -25,9 +25,9 @@ static PASoundMgr *sharedSoundManager = nil;
 
 + (PASoundMgr *)sharedSoundManager {
 	@synchronized(self)	{
-		if (!sharedSoundManager)
-			[[PASoundMgr alloc] init];
-		
+		if (!sharedSoundManager){
+			sharedSoundManager = [[PASoundMgr alloc] init];            
+        }
 		return sharedSoundManager;
 	}
 	// to avoid compiler warning
