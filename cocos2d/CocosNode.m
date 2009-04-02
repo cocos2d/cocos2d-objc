@@ -59,7 +59,7 @@
 	
 	isRunning = NO;
 	
-	position = cpvzero;
+	position = CGPointZero;
 	
 	rotation = 0.0f;		// 0 degrees	
 	scaleX = 1.0f;			// scale factor
@@ -71,7 +71,7 @@
 	
 	visible = YES;
 
-	transformAnchor = cpvzero;
+	transformAnchor = CGPointZero;
 	
 	tag = kCocosNodeTagInvalid;
 	

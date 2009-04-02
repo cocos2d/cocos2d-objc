@@ -61,7 +61,7 @@
 		s.height -= r.size.width;
 	else
 	    s.height -= r.size.height;
-	position = cpv(s.width/2, s.height/2);
+	position = CGPointMake(s.width/2, s.height/2);
 
 	isTouchEnabled = YES;
 	selectedItem = -1;
@@ -172,7 +172,7 @@
 
 	float y = height / 2;
 	for(MenuItem *item in children) {
-	    [item setPosition:cpv(0, y - [item contentSize].height / 2)];
+	    [item setPosition:CGPointMake(0, y - [item contentSize].height / 2)];
 	    y -= [item contentSize].height + 5;
 	}
 }
@@ -186,7 +186,7 @@
 
 	int x = -width / 2;
 	for(MenuItem* item in children) {
-		[item setPosition:cpv(x + [item contentSize].width / 2, 0)];
+		[item setPosition:CGPointMake(x + [item contentSize].width / 2, 0)];
 		x += [item contentSize].width + 5;
 	}
 }
@@ -252,7 +252,7 @@
         }
 
         rowHeight = fmaxf(rowHeight, [item contentSize].height);
-        [item setPosition:cpv(x - winSize.width / 2,
+        [item setPosition:CGPointMake(x - winSize.width / 2,
                               y - [item contentSize].height / 2)];
             
         x += w + 10;
@@ -338,7 +338,7 @@
         }
         
         columnWidth = fmaxf(columnWidth, [item contentSize].width);
-        [item setPosition:cpv(x + [(NSNumber *) [columnWidths objectAtIndex:column] unsignedIntegerValue] / 2,
+        [item setPosition:CGPointMake(x + [(NSNumber *) [columnWidths objectAtIndex:column] unsignedIntegerValue] / 2,
                               y - winSize.height / 2)];
         
         y -= [item contentSize].height + 10;

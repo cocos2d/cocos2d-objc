@@ -484,7 +484,7 @@
 
 -(void) update: (ccTime) t
 {	
-	target.position = cpv( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
+	target.position = CGPointMake( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
 }
 @end
 
@@ -521,7 +521,7 @@
 
 -(IntervalAction*) reverse
 {
-	return [MoveBy actionWithDuration: duration position: cpv( -delta.x, -delta.y)];
+	return [MoveBy actionWithDuration: duration position: CGPointMake( -delta.x, -delta.y)];
 }
 @end
 
@@ -562,12 +562,12 @@
 	ccTime y = height * fabsf( sinf(t * (cpFloat)M_PI * jumps ) );
 	y += delta.y * t;
 	ccTime x = delta.x * t;
-	target.position = cpv( startPosition.x + x, startPosition.y + y );
+	target.position = CGPointMake( startPosition.x + x, startPosition.y + y );
 }
 
 -(IntervalAction*) reverse
 {
-	return [JumpBy actionWithDuration: duration position: cpv(-delta.x,-delta.y) height: height jumps:jumps];
+	return [JumpBy actionWithDuration: duration position: CGPointMake(-delta.x,-delta.y) height: height jumps:jumps];
 }
 @end
 
@@ -578,7 +578,7 @@
 -(void) start
 {
 	[super start];
-	delta = cpv( delta.x - startPosition.x, delta.y - startPosition.y );
+	delta = CGPointMake( delta.x - startPosition.x, delta.y - startPosition.y );
 }
 @end
 
@@ -1026,32 +1026,32 @@
 //
 @implementation Animate
 
-+(id) actionWithAnimation: (id<CocosAnimation>) a
++(id) actionWithAnimation: (id<CocosAnimation>)anim
 {
-	return [[[self alloc] initWithAnimation: a restoreOriginalFrame:YES] autorelease];
+	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:YES] autorelease];
 }
 
-+(id) actionWithAnimation: (id<CocosAnimation>) a restoreOriginalFrame:(BOOL)b
++(id) actionWithAnimation: (id<CocosAnimation>)anim restoreOriginalFrame:(BOOL)b
 {
-	return [[[self alloc] initWithAnimation: a restoreOriginalFrame:b] autorelease];
+	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:b] autorelease];
 }
 
--(id) initWithAnimation: (id<CocosAnimation>) a
+-(id) initWithAnimation: (id<CocosAnimation>)anim
 {
-	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
-	return [self initWithAnimation:a restoreOriginalFrame:YES];
+	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+	return [self initWithAnimation:anim restoreOriginalFrame:YES];
 }
 
--(id) initWithAnimation: (id<CocosAnimation>) a restoreOriginalFrame:(BOOL) b
+-(id) initWithAnimation: (id<CocosAnimation>)anim restoreOriginalFrame:(BOOL) b
 {
-	NSAssert( a!=nil, @"Animate: argument Animation must be non-nil");
+	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
-	if( !(self=[super initWithDuration: [[a frames] count] * [a delay]]) )
-		return nil;
+	if( (self=[super initWithDuration: [[anim frames] count] * [anim delay]]) ) {
 
-	restoreOriginalFrame = b;
-	animation = [(NSObject*)a retain];
-	origFrame = nil;
+		restoreOriginalFrame = b;
+		animation = [anim retain];
+		origFrame = nil;
+	}
 	return self;
 }
 

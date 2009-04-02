@@ -390,7 +390,7 @@ enum {
 
 /// Objects that supports the Animation protocol
 /// @since v0.7.1
-@protocol CocosAnimation
+@protocol CocosAnimation <NSObject>
 /** reaonly array with the frames */
 -(NSArray*) frames;
 /** delay of the animations */

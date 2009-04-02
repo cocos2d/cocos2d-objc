@@ -161,7 +161,7 @@ enum {
 	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2 );
+	transformAnchor = CGPointMake( s.width/2, s.height/2 );
 	
 	return self;
 }
@@ -170,7 +170,7 @@ enum {
 {
     [label setString:string];
 	CGSize s = label.contentSize;
-    transformAnchor = cpv( s.width/2, s.height/2 );
+    transformAnchor = CGPointMake( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
@@ -309,7 +309,7 @@ enum {
 	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2 );
+	transformAnchor = CGPointMake( s.width/2, s.height/2 );
 	
 	return self;
 }
@@ -318,7 +318,7 @@ enum {
 {
 	[label setString:string];
 	CGSize s = label.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2 );
+	transformAnchor = CGPointMake( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
@@ -439,7 +439,7 @@ enum {
 	[disabledImage setOpacity:opacity];
 	
 	CGSize s = [normalImage contentSize];
-	transformAnchor = cpv( s.width/2, s.height/2 );
+	transformAnchor = CGPointMake( s.width/2, s.height/2 );
 
 	return self;
 }
@@ -559,7 +559,7 @@ enum {
 		[self addChild:item z:0 tag:kCurrentItem];
 		
 		CGSize s = [item contentSize];
-		item.position = self.transformAnchor = cpv( s.width/2, s.height/2 );
+		item.position = self.transformAnchor = CGPointMake( s.width/2, s.height/2 );
 	}
 }
 

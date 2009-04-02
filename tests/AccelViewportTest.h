@@ -17,11 +17,11 @@
 {
 	Sprite * grossini[NUM_GROSSINIS];
 	Sprite * clouds;
-	cpVect cloudsCentered;
-	cpVect cloudsPos;
-	cpVect cloudsSize;
-	cpVect screenSize;
-	cpVect halfCloudsSize;
+	CGPoint cloudsCentered;
+	CGPoint cloudsPos;
+	CGPoint cloudsSize;
+	CGPoint screenSize;
+	CGPoint halfCloudsSize;
 	cpBB visibleArea;
 	Action * rotateForever;
 	Label * label;
@@ -30,6 +30,6 @@
 }
 //-(void) centerSprites;
 -(NSString*) title;
--(Sprite *) addNewSpritePosition:(cpVect)pos scale:(double)scle;
+-(Sprite *) addNewSpritePosition:(CGPoint)pos scale:(double)scle;
 
 @end

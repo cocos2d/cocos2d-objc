@@ -29,14 +29,14 @@
 	int			reuseGrid;
 	ccGridSize	gridSize;
 	Texture2D *	texture;
-	cpVect		step;
+	CGPoint		step;
 	Grabber *	grabber;
 }
 
 @property BOOL active;
 @property int reuseGrid;
 @property (readonly) ccGridSize gridSize;
-@property cpVect step;
+@property CGPoint step;
 @property (nonatomic, retain) Texture2D *texture;
 @property (nonatomic, retain) Grabber *grabber;
 

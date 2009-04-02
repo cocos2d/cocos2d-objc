@@ -108,7 +108,7 @@
 {
 	super.texture = aTexture;
 	CGSize s = aTexture.contentSize;
-	self.transformAnchor = cpv(s.width/2, s.height/2);
+	self.transformAnchor = CGPointMake(s.width/2, s.height/2);
 }
 
 #pragma mark Sprite

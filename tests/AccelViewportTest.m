@@ -36,17 +36,17 @@ float randfloat() {
 	screenSize = cpv(s.width, s.height);
 	
 	halfCloudsSize = cpvmult(cloudsSize, 0.5f*CLOUDS_SCALE);
-	cpVect halfScreenSize = cpvmult(screenSize, 0.5f);
+	CGPoint halfScreenSize = cpvmult(screenSize, 0.5f);
 	cloudsCentered = halfScreenSize;
-	cpVect tl = cpvadd(cpvsub(cloudsCentered, halfCloudsSize), halfScreenSize);
-	cpVect br = cpvsub(cpvadd(cloudsCentered, halfCloudsSize), halfScreenSize);
+	CGPoint tl = cpvadd(cpvsub(cloudsCentered, halfCloudsSize), halfScreenSize);
+	CGPoint br = cpvsub(cpvadd(cloudsCentered, halfCloudsSize), halfScreenSize);
 	visibleArea = cpBBNew(tl.x, tl.y, br.x, br.y);
 	
 	[clouds setPosition: cloudsCentered];
 	cloudsPos = cloudsCentered;
 
 	for (int n=0; n<NUM_GROSSINIS; n++) {
-		cpVect pos = cpv((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
+		CGPoint pos = cpv((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
 		grossini[n] = [self addNewSpritePosition:pos scale:0.15];
 		[grossini[n] runAction:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
 	}
@@ -60,7 +60,7 @@ float randfloat() {
 	return self;
 }
 
--(Sprite *) addNewSpritePosition:(cpVect)pos scale:(double)scle
+-(Sprite *) addNewSpritePosition:(CGPoint)pos scale:(double)scle
 {
 	Sprite *g = [[Sprite spriteWithFile:@"grossini.png"] retain];
 	[clouds addChild: g];
@@ -87,7 +87,7 @@ float randfloat() {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 
 	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
-	cpVect location = cpv(touchLocation.x, touchLocation.y);
+	CGPoint location = cpv(touchLocation.x, touchLocation.y);
 	location = cpvsub(location, cloudsPos);
 	location = cpvmult(location, 1.0f/CLOUDS_SCALE);
 	location = cpvadd(location, cpvmult(cloudsSize, 0.5f));
@@ -111,14 +111,14 @@ float randfloat() {
 	accels[1] = acceleration.y * kFilteringFactor + accels[1] * (1.0f - kFilteringFactor);
 	accels[2] = acceleration.z * kFilteringFactor + accels[2] * (1.0f - kFilteringFactor);
 	
-	cpVect tmp = cpv( (float) (cloudsSize.x*ACC_FACTOR*accels[1]), (float) (cloudsSize.y*ACC_FACTOR*-accels[0]));
-	cpVect dest = cpvadd( cloudsCentered, tmp );
+	CGPoint tmp = cpv( (float) (cloudsSize.x*ACC_FACTOR*accels[1]), (float) (cloudsSize.y*ACC_FACTOR*-accels[0]));
+	CGPoint dest = cpvadd( cloudsCentered, tmp );
 	
 	// comentar esta linea para no limitar el area scrolleable
 	dest = cpBBClampVect(visibleArea, dest);
 	
 	// velocidad inv. prop. a la distancia a recorrer
-	cpVect newPos = cpvadd(cloudsPos, cpvmult(cpvsub(dest, cloudsPos), 0.1f) );
+	CGPoint newPos = cpvadd(cloudsPos, cpvmult(cpvsub(dest, cloudsPos), 0.1f) );
 	[clouds setPosition:newPos];
 	cloudsPos = newPos;
 }
