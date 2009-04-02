@@ -1,4 +1,5 @@
 version 0.7.2 - xxx
+ . All: removed chipmunk macros. using CG macros (issue #290)
  . Actions: Added TintTo and TintBy (issue #204)
  . AtlasSprite: don't overwrite index 0 (issue #283)
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
