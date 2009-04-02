@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 						 @"SpriteJump",
 						 @"SpriteBlink",
 						 @"SpriteFade",
+						 @"SpriteTint",
 						 @"SpriteAnimate",
 						 @"SpriteSequence",
 						 @"SpriteSpawn",
@@ -285,6 +286,25 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"FadeIn / FadeOut";
+}
+@end
+
+@implementation SpriteTint
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites];
+	
+	id action1 = [TintTo actionWithDuration:2 red:255 green:0 blue:255];
+	id action2 = [TintBy actionWithDuration:2 red:0 green:-127 blue:-127];
+	
+	[tamara runAction: action1];
+	[grossini runAction:action2];
+}
+-(NSString *) title
+{
+	return @"TintTo / TintBy";
 }
 @end
 

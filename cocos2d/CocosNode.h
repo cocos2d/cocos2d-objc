@@ -358,7 +358,7 @@ enum {
 //
 
 /// CocosNode opacity protocol
-@protocol CocosNodeOpacity
+@protocol CocosNodeOpacity <NSObject>
 /// returns the opacity
 -(GLubyte) opacity;
 /// sets the opacity
@@ -367,14 +367,14 @@ enum {
 
 
 /// Size CocosNode protocol
-@protocol CocosNodeSize
+@protocol CocosNodeSize <NSObject>
 /// returns the size in pixels of the un-tranformted texture.
 -(CGSize) contentSize;
 @end
 
 
 /// Size CocosNode protocol
-@protocol CocosNodeRGB
+@protocol CocosNodeRGB <NSObject>
 /** set the color of the node.
  * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
  @since v0.7.1
@@ -403,7 +403,7 @@ enum {
 
 /// Nodes supports frames protocol
 /// @since v0.7.1
-@protocol CocosNodeFrames
+@protocol CocosNodeFrames <NSObject>
 /** sets a new display frame to the node */
 -(void) setDisplayFrame:(id)newFrame;
 /** changes the display frame based on an animation and an index */
