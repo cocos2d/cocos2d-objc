@@ -502,10 +502,23 @@ Class restartAction()
 		id action = [FadeIn actionWithDuration:2];
 		id action_back = [action reverse];
 		id fade = [RepeatForever actionWithAction: [Sequence actions: action, action_back, nil]];
+
+		id tintred = [TintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+		id tintred_back = [tintred reverse];
+		id red = [RepeatForever actionWithAction: [Sequence actions: tintred, tintred_back, nil]];
+
+		id tintgreen = [TintBy actionWithDuration:2 red:-255 green:0 blue:-255];
+		id tintgreen_back = [tintgreen reverse];
+		id green = [RepeatForever actionWithAction: [Sequence actions: tintgreen, tintgreen_back, nil]];
+
+		id tintblue = [TintBy actionWithDuration:2 red:-255 green:-255 blue:0];
+		id tintblue_back = [tintblue reverse];
+		id blue = [RepeatForever actionWithAction: [Sequence actions: tintblue, tintblue_back, nil]];
 		
-		[sprite5 setRGB:255 :0 :0];
-		[sprite6 setRGB:0 :255 :0];
-		[sprite7 setRGB:0 :0 :255];		
+		
+		[sprite5 runAction:red];
+		[sprite6 runAction:green];
+		[sprite7 runAction:blue];
 		[sprite8 runAction:fade];
 		
 		// late add: test dirtyColor and dirtyPosition

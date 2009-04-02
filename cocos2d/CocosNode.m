@@ -195,12 +195,12 @@
 	return self;
 }
 
--(id) add: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
+-(id) add: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)c
 {
 	CCLOG(@"add:z:tag:parallaxRatio: is deprecated. Use addChild:z:parallaxRatio:");
 	return [self addChild:child z:z parallaxRatio:c];
 }
--(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(cpVect)c
+-(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)c
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	child.parallaxRatioX = c.x;
@@ -321,9 +321,9 @@
 	return nil;
 }
 
--(cpVect) absolutePosition
+-(CGPoint) absolutePosition
 {
-	cpVect ret = position;
+	CGPoint ret = position;
 	
 	CocosNode *cn = self;
 	
