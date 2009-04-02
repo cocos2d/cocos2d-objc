@@ -1,4 +1,5 @@
 version 0.7.2 - xxx
+ . Actions: Added TintTo and TintBy (issue #204)
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
  . Demos: organized tests folder (issue #280)
  . Director: Attach uses 'bounds' not 'frame' (issue #233)

@@ -107,7 +107,7 @@
 
 	// Name at random
 	NSArray *names = [NSArray arrayWithObjects:@"いすの上に猫がいる", @"Carrière", @"Iñaqui", @"Clemensstraße München ", @"有一只猫在椅子上", nil];
-	NSString *name = [names objectAtIndex: CCRANDOM_0_1() * 5];
+	NSString *name = [names objectAtIndex: CCRANDOM_0_1() * 1];
 
 	// cc_ files are predefined cocoslive fields.
 	// set score

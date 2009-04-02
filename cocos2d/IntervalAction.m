@@ -455,12 +455,12 @@
 // MoveTo
 //
 @implementation MoveTo
-+(id) actionWithDuration: (ccTime) t position: (cpVect) p
++(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {	
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (ccTime) t position: (cpVect) p
+-(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
 	if( !(self=[super initWithDuration: t]) )
 		return nil;
@@ -492,12 +492,12 @@
 // MoveBy
 //
 @implementation MoveBy
-+(id) actionWithDuration: (ccTime) t position: (cpVect) p
++(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {	
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
 }
 
--(id) initWithDuration: (ccTime) t position: (cpVect) p
+-(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
 	if( !(self=[super initWithDuration: t]) )
 		return nil;
@@ -514,7 +514,7 @@
 
 -(void) start
 {
-	cpVect dTmp = delta;
+	CGPoint dTmp = delta;
 	[super start];
 	delta = dTmp;
 }
@@ -529,12 +529,12 @@
 // JumpBy
 //
 @implementation JumpBy
-+(id) actionWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j
++(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(int)j
 {
 	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
 }
 
--(id) initWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j
+-(id) initWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(int)j
 {
 	if( !(self=[super initWithDuration:t]) )
 		return nil;
@@ -618,7 +618,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] scaleX: endScaleX scaleY:endScaleY];
+	Action *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] scaleX:endScaleX scaleY:endScaleY];
 	return copy;
 }
 
@@ -659,12 +659,12 @@
 // Blink
 //
 @implementation Blink
-+(id) actionWithDuration: (ccTime) t blinks: (int) b
++(id) actionWithDuration: (ccTime) t blinks: (unsigned int) b
 {
 	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
 }
 
--(id) initWithDuration: (ccTime) t blinks: (int) b
+-(id) initWithDuration: (ccTime) t blinks: (unsigned int) b
 {
 	if( ! (self=[super initWithDuration: t] ) )
 		return nil;
@@ -731,9 +731,8 @@
 
 -(id) initWithDuration: (ccTime) t opacity: (GLubyte) o
 {
-	if( ! (self=[super initWithDuration: t] ) )
-		return nil;
-	toOpacity = o;
+	if( (self=[super initWithDuration: t] ) )
+		toOpacity = o;
 	return self;
 }
 
@@ -756,8 +755,99 @@
 @end
 
 //
+// TintTo
+//
+#pragma mark TintTo
+@implementation TintTo
++(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
+{
+	return [[(TintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];
+}
+
+-(id) initWithDuration: (ccTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
+{
+	if( (self=[super initWithDuration: t] ) ) {
+		toR = r;
+		toG = g;
+		toB = b;
+	}
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [(TintTo*)[[self class] allocWithZone: zone] initWithDuration: [self duration] red:toR green:toG blue:toB];
+	return copy;
+}
+
+-(void) start
+{
+	[super start];
+	
+	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	
+	fromR = [tn r];
+	fromG = [tn g];
+	fromB = [tn b];
+}
+
+-(void) update: (ccTime) t
+{
+	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	[tn setRGB:fromR + (toR - fromR) * t :fromG + (toG - fromG) * t :fromB + (toB - fromB) * t];
+}
+@end
+
+//
+// TintBy
+//
+#pragma mark TintBy
+@implementation TintBy
++(id) actionWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
+{
+	return [[(TintBy*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];
+}
+
+-(id) initWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
+{
+	if( (self=[super initWithDuration: t] ) ) {
+		deltaR = r;
+		deltaG = g;
+		deltaB = b;
+	}
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	return[(TintBy*)[[self class] allocWithZone: zone] initWithDuration: [self duration] red:deltaR green:deltaG blue:deltaB];
+}
+
+-(void) start
+{
+	[super start];
+	
+	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	fromR = [tn r];
+	fromG = [tn g];
+	fromB = [tn b];
+}
+
+-(void) update: (ccTime) t
+{
+	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	[tn setRGB:fromR + deltaR * t :fromG + deltaG * t :fromB + deltaB * t];
+}
+- (IntervalAction*) reverse
+{
+	return [TintBy actionWithDuration:duration red:-deltaR green:-deltaG blue:-deltaB];
+}
+@end
+
+//
 // Accelerate
 //
+#pragma mark Accelerate
 @implementation Accelerate
 @synthesize rate;
 + (id) actionWithAction: (IntervalAction*) action rate: (float) r
@@ -1015,4 +1105,3 @@
 	}
 }
 @end
-

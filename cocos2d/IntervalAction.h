@@ -15,9 +15,6 @@
 #import "CocosNode.h"
 #import "Action.h"
 
-#import "chipmunk.h"
-
-
 #include <sys/time.h>
 
 /** An interval action is an action that takes place within a certain period of time.
@@ -71,9 +68,9 @@ Example:
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (IntervalAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** creates the action */
-+(id) actionOne: (IntervalAction*) one two:(IntervalAction*) two;
++(id) actionOne:(IntervalAction*)actionOne two:(IntervalAction*)actionTwo;
 /** initializes the action */
--(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
+-(id) initOne:(IntervalAction*)actionOne two:(IntervalAction*)actionTwo;
 @end
 
 
@@ -87,9 +84,9 @@ Example:
 	IntervalAction *other;
 }
 /** creates the Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
-+(id) actionWithAction: (IntervalAction*) action times: (unsigned int) t;
++(id) actionWithAction:(IntervalAction*)action times: (unsigned int)times;
 /** initializes the action. Times is an unsigned integer between 1 and pow(2,30) */
--(id) initWithAction: (IntervalAction*) action times: (unsigned int) t;
+-(id) initWithAction:(IntervalAction*)action times: (unsigned int)times;
 @end
 
 /** Spawn a new action immediately
@@ -117,9 +114,9 @@ Example:
 	float startAngle;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime) t angle:(float) a;
++(id) actionWithDuration:(ccTime)duration angle:(float)angle;
 /** initializes the action */
--(id) initWithDuration: (ccTime) t angle:(float) a;
+-(id) initWithDuration:(ccTime)duration angle:(float)angle;
 @end
 
 /** Rotates a CocosNode object clockwise a number of degrees by modiying it's rotation attribute.
@@ -130,23 +127,23 @@ Example:
 	float startAngle;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime) t angle:(float) a;
++(id) actionWithDuration:(ccTime)duration angle:(float)deltaAngle;
 /** initializes the action */
--(id) initWithDuration: (ccTime) t angle:(float) a;
+-(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
 @end
 
 /** Moves a CocosNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
 */
 @interface MoveTo : IntervalAction <NSCopying>
 {
-	cpVect endPosition;
-	cpVect startPosition;
-	cpVect delta;
+	CGPoint endPosition;
+	CGPoint startPosition;
+	CGPoint delta;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime) t position: (cpVect) pos;
++(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
 /** initializes the action */
--(id) initWithDuration: (ccTime) t position: (cpVect) pos;
+-(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
 @end
 
 /**  Moves a CocosNode object x,y pixels by modifying it's position attribute.
@@ -157,24 +154,24 @@ Example:
 {
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime) t position: (cpVect) delta;
++(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 /** initializes the action */
--(id) initWithDuration: (ccTime) t position: (cpVect) delta;
+-(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
 /** Moves a CocosNode object simulating a jump movement by modifying it's position attribute.
 */
  @interface JumpBy : IntervalAction <NSCopying>
 {
-	cpVect startPosition;
-	cpVect delta;
+	CGPoint startPosition;
+	CGPoint delta;
 	ccTime height;
 	int jumps;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j;
++(id) actionWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(int)jumps;
 /** initializes the action */
--(id) initWithDuration: (ccTime) t position: (cpVect) pos height: (ccTime) h jumps:(int)j;
+-(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(int)jumps;
 @end
 
 /** Moves a CocosNode object to a position simulating a jump movement by modifying it's position attribute.
@@ -186,6 +183,7 @@ Example:
 
 
 /** Scales a CocosNode object to a zoom factor by modifying it's scale attribute.
+ @warning This action doesn't support "reverse"
  */
 @interface ScaleTo : IntervalAction <NSCopying>
 {
@@ -199,13 +197,13 @@ Example:
 	float deltaY;
 }
 /** creates the action with the same scale factor for X and Y */
-+(id) actionWithDuration: (ccTime) t scale:(float) s;
++(id) actionWithDuration: (ccTime)duration scale:(float) s;
 /** initializes the action with the same scale factor for X and Y */
--(id) initWithDuration: (ccTime) t scale:(float) s;
+-(id) initWithDuration: (ccTime)duration scale:(float) s;
 /** creates the action with and X factor and a Y factor */
-+(id) actionWithDuration: (ccTime) t scaleX:(float) sx scaleY:(float)sy;
++(id) actionWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
 /** initializes the action with and X factor and a Y factor */
--(id) initWithDuration: (ccTime) t scaleX:(float) sx scaleY:(float)sy;
+-(id) initWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
 @end
 
 /** Scales a CocosNode object a zoom factor by modifying it's scale attribute.
@@ -222,35 +220,69 @@ Example:
 	int times;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime) t blinks: (int) blinks;
++(id) actionWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
 /** initilizes the action */
--(id) initWithDuration: (ccTime) t blinks: (int) blinks;
+-(id) initWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
 @end
 
-/** Fades in a CocosNode, from opacity 0 to 255 */
+/** Fades in a CocosNode that implements the CocosNodeOpacity protocol, from opacity 0 to 255.
+ The "reverse" of this action is FadeOut
+ */
 @interface FadeIn : IntervalAction <NSCopying>
 {
 }
 @end
 
-/** Fades out a CocosNode, from opacity 255 to 0 */
+/** Fades out a CocosNode that implements the CocosNodeOpacity protocol, from opacity 255 to 0.
+ The "reverse" of this action is FadeIn
+*/
 @interface FadeOut : IntervalAction <NSCopying>
 {
 }
 @end
 
-/** Fades a CocosNode from current opacity to a custom one */
+/** Fades a CocosNode that implements the CocosNodeOpacity protocol from current opacity to a custom one.
+ @warning This action doesn't support "reverse"
+ */
 @interface FadeTo : IntervalAction <NSCopying>
 {
 	GLubyte toOpacity;
 	GLubyte fromOpacity;
 }
 /** creates an action with duration and opactiy */
-+(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o;
++(id) actionWithDuration:(ccTime)duration opacity:(GLubyte)opactiy;
 /** initializes the action with duration and opacity */
--(id) initWithDuration: (ccTime) t opacity: (GLubyte) o;
+-(id) initWithDuration:(ccTime)duration opacity:(GLubyte)opacity;
 @end
 
+/** Tints a CocosNode that implements the CocosNodeRGB protocol from current tint to a custom one.
+ @warning This action doesn't support "reverse"
+ @since v0.7.2
+*/
+@interface TintTo : IntervalAction <NSCopying>
+{
+	GLubyte toR, toG, toB;
+	GLubyte fromR, fromG, fromB;
+}
+/** creates an action with duration and opactiy */
++(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
+/** initializes the action with duration and opacity */
+-(id) initWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
+@end
+
+/** Tints a CocosNode that implements the CocosNodeRGB protocol from current tint to a custom one.
+ @since v0.7.2
+ */
+@interface TintBy : IntervalAction <NSCopying>
+{
+	GLshort deltaR, deltaG, deltaB;
+	GLshort fromR, fromG, fromB;
+}
+/** creates an action with duration and opactiy */
++(id) actionWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
+/** initializes the action with duration and opacity */
+-(id) initWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
+@end
 
 
 /** Changes the acceleration of an action
