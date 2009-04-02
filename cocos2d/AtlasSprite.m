@@ -39,13 +39,14 @@
 	if( (self = [super init])) {
 		mAtlas = [manager atlas];	// weak reference. Don't release
 		
+		mAtlasIndex = -1;
+
 		dirtyPosition = YES;
-		dirtyColor = NO;			// optimization. If the color is not changed
-									// gl_color_array is not sent to the GPU
+		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
 		
 		// RGB and opacity
 		_r = _g = _b = _opacity = 255;
-
+		
 		animations = nil;		// lazy alloc
 		[self setTextureRect:rect];
 	}
@@ -75,7 +76,12 @@
 	transformAnchor = cpv( mRect.size.width / 2, mRect.size.height /2 );
 
 	[self updateTextureCoords];
-	[self updateAtlas];
+	
+	// Don't update Atlas. issue #283
+	if( mAtlasIndex != -1)
+		[self updateAtlas];
+	else
+		dirtyPosition = YES;
 }
 
 -(void)updateTextureCoords
@@ -205,7 +211,7 @@
 // CocosNode property overloads
 //
 #pragma mark AltasSprite - property overloads
--(void)setPosition:(cpVect)pos
+-(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
 	dirtyPosition = YES;
@@ -235,7 +241,7 @@
 	dirtyPosition = YES;
 }
 
--(void)setTransformAnchor:(cpVect)anchor
+-(void)setTransformAnchor:(CGPoint)anchor
 {
 	[super setTransformAnchor:anchor];
 	dirtyPosition = YES;

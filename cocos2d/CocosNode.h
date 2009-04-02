@@ -17,7 +17,6 @@
 #import <UIKit/UIKit.h>
 
 #import "Action.h"
-#import "chipmunk.h"
 #import "cctypes.h"
 
 enum {
@@ -71,7 +70,7 @@ enum {
 	float scaleY;
 	
 	// position of the node
-	cpVect position;
+	CGPoint position;
 	
 	// parallax X factor
 	float parallaxRatioX;
@@ -97,7 +96,7 @@ enum {
 	BOOL relativeTransformAnchor;
 	
 	// transformation anchor point
-	cpVect transformAnchor;
+	CGPoint transformAnchor;
 	
 	// array of children
 	NSMutableArray *children;
@@ -133,7 +132,7 @@ enum {
 /** The Y parallax ratio of the node. 1.0 is the default ratio */
 @property(readwrite,assign) float parallaxRatioX;
 /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner */
-@property(readwrite,assign) cpVect position;
+@property(readwrite,assign) CGPoint position;
 /** A Camera object that lets you move the node using camera coordinates.
  * If you use the Camera then position, scale & rotation won't be used */
 @property(readonly) Camera* camera;
@@ -142,7 +141,7 @@ enum {
 /** Whether of not the node is visible. Default is YES */
 @property(readwrite,assign) BOOL visible;
 /** The transformation anchor point. For Sprite and Label the transform anchor point is (width/2, height/2) */
-@property(readwrite,assign) cpVect transformAnchor;
+@property(readwrite,assign) CGPoint transformAnchor;
 /** A weak reference to the parent */
 @property(readwrite,assign) CocosNode* parent;
 /** If YES the transformtions will be relative to (-transform.x, -transform.y).
@@ -194,7 +193,7 @@ enum {
  It returns self, so you can chain several addChilds.
  @since v0.7.1
  */
--(id) addChild: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c;
+-(id) addChild: (CocosNode*)node z:(int)z parallaxRatio:(CGPoint)c;
 
 // composition: ADD (deprecated)
 
@@ -213,7 +212,7 @@ enum {
 /** Adds a child to the container with a z-order and a parallax ratio
  @deprecated Will be removed in v0.8. Use addChild:z:tag:paralalxRatio instead
  */
--(id) add: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c __attribute__ ((deprecated));
+-(id) add: (CocosNode*)node z:(int)z parallaxRatio:(CGPoint)c __attribute__ ((deprecated));
 
 // composition: REMOVE
 
@@ -280,9 +279,9 @@ enum {
 
 /** Returns the absolute position of the CocosNode
  @deprecated Use convertToWorldSpace:CGPointZero instead. Will be removed in v0.8
- @return a cpVect value
+ @return a CGPoint value
  */
--(cpVect) absolutePosition __attribute__ ((deprecated));
+-(CGPoint) absolutePosition __attribute__ ((deprecated));
 
 /** Reorders a child according to a new z value.
  * The child MUST be already added.
