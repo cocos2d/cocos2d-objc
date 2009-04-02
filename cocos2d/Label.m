@@ -84,7 +84,7 @@
 	[self.texture release];
 
 	CGSize s = texture.contentSize;
-	transformAnchor = cpv( s.width/2, s.height/2);
+	transformAnchor = CGPointMake( s.width/2, s.height/2);
 }
 
 - (void) dealloc

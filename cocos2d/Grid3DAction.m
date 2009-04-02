@@ -219,19 +219,19 @@
 @synthesize lensEffect;
 @synthesize position;
 
-+(id)actionWithPosition:(cpVect)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithPosition:pos radius:r grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithPosition:(cpVect)pos radius:(float)r grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
 		position = pos;
 		radius = r;
 		lensEffect = 0.7f;
-		lastPosition = cpv(-1,-1);
+		lastPosition = CGPointMake(-1,-1);
 	}
 	
 	return self;
@@ -248,7 +248,7 @@
 			for( j = 0; j < gridSize.y+1; j++ )
 			{
 				ccVertex3D	v = [self originalVertex:ccg(i,j)];
-				cpVect vect = cpvsub(position, cpv(v.x,v.y));
+				CGPoint vect = cpvsub(position, CGPointMake(v.x,v.y));
 				cpFloat r = cpvlength(vect);
 				
 				if ( r < radius )
@@ -262,7 +262,7 @@
 					if ( cpvlength(vect) > 0 )
 					{
 						vect = cpvnormalize(vect);
-						cpVect new_vect = cpvmult(vect, new_r);
+						CGPoint new_vect = cpvmult(vect, new_r);
 						v.z += cpvlength(new_vect) * lensEffect;
 					}
 				}
@@ -285,12 +285,12 @@
 @synthesize amplitude;
 @synthesize amplitudeRate;
 
-+(id)actionWithPosition:(cpVect)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithPosition:pos radius:r waves:wav amplitude:amp grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithPosition:(cpVect)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -313,7 +313,7 @@
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
 			ccVertex3D	v = [self originalVertex:ccg(i,j)];
-			cpVect vect = cpvsub(position, cpv(v.x,v.y));
+			CGPoint vect = cpvsub(position, CGPointMake(v.x,v.y));
 			cpFloat r = cpvlength(vect);
 			
 			if ( r < radius )
@@ -470,12 +470,12 @@
 @synthesize amplitude;
 @synthesize amplitudeRate;
 
-+(id)actionWithPosition:(cpVect)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithPosition:pos twirls:t amplitude:amp grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithPosition:(cpVect)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -491,7 +491,7 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	cpVect		c = position;
+	CGPoint		c = position;
 	
 	for( i = 0; i < (gridSize.x+1); i++ )
 	{
@@ -499,13 +499,13 @@
 		{
 			ccVertex3D	v = [self originalVertex:ccg(i,j)];
 			
-			cpVect	avg = cpv(i-(gridSize.x/2.0f), j-(gridSize.y/2.0f));
+			CGPoint	avg = CGPointMake(i-(gridSize.x/2.0f), j-(gridSize.y/2.0f));
 			cpFloat r = cpvlength( avg );
 			
 			cpFloat amp = 0.1f * amplitude * amplitudeRate;
 			cpFloat a = r * cosf( (cpFloat)M_PI/2.0f + time * (cpFloat)M_PI * twirls * 2 ) * amp;
 			
-			cpVect	d;
+			CGPoint	d;
 			
 			d.x = sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x);
 			d.y = cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x);

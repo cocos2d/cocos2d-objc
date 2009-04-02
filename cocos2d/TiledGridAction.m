@@ -18,8 +18,8 @@
 
 typedef struct
 {
-	cpVect	position;
-	cpVect	startPosition;
+	CGPoint	position;
+	CGPoint	startPosition;
 	ccGridSize	delta;
 } Tile;
 
@@ -182,7 +182,7 @@ typedef struct
 
 -(ccGridSize)getDelta:(ccGridSize)pos
 {
-	cpVect	pos2;
+	CGPoint	pos2;
 	
 	int idx = pos.x * gridSize.y + pos.y;
 	
@@ -234,8 +234,8 @@ typedef struct
 	{
 		for( j = 0; j < gridSize.y; j++ )
 		{
-			tileArray->position = cpv(i,j);
-			tileArray->startPosition = cpv(i,j);
+			tileArray->position = CGPointMake(i,j);
+			tileArray->startPosition = CGPointMake(i,j);
 			tileArray->delta = [self getDelta:ccg(i,j)];
 			tileArray++;
 		}
@@ -252,7 +252,7 @@ typedef struct
 	{
 		for( j = 0; j < gridSize.y; j++ )
 		{
-			tileArray->position = cpvmult( cpv(tileArray->delta.x, tileArray->delta.y), time);
+			tileArray->position = cpvmult( CGPointMake(tileArray->delta.x, tileArray->delta.y), time);
 			[self placeTile:ccg(i,j) tile:*tileArray];
 			tileArray++;
 		}
@@ -267,7 +267,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	cpVect	n = cpvmult( cpv(gridSize.x,gridSize.y), time);
+	CGPoint	n = cpvmult( CGPointMake(gridSize.x,gridSize.y), time);
 	if ( (n.x+n.y) == 0.0f )
 		return 1.0f;
 	return powf( (pos.x+pos.y) / (n.x+n.y), 6 );
@@ -331,7 +331,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	cpVect	n = cpvmult(cpv(gridSize.x, gridSize.y), (1.0f-time));
+	CGPoint	n = cpvmult(CGPointMake(gridSize.x, gridSize.y), (1.0f-time));
 	
 	if ( (pos.x+pos.y) == 0 )
 		return 1.0f;
@@ -346,7 +346,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	cpVect	n = cpvmult(cpv(gridSize.x, gridSize.y), time);
+	CGPoint	n = cpvmult(CGPointMake(gridSize.x, gridSize.y), time);
 	if ( n.y == 0 )
 		return 1.0f;
 	return powf( pos.y / n.y, 6 );
@@ -372,7 +372,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	cpVect	n = cpvmult(cpv(gridSize.x,gridSize.y), (1.0f - time));
+	CGPoint	n = cpvmult(CGPointMake(gridSize.x,gridSize.y), (1.0f - time));
 	if ( pos.y == 0 )
 		return 1.0f;
 	return powf( n.y / pos.y, 6 );

@@ -98,7 +98,6 @@
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g setVertex:pos vertex:vertex];
 }
-
 @end
 
 ////////////////////////////////////////////////////////////

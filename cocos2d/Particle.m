@@ -127,7 +127,7 @@
 
 -(void) initParticle: (Particle*) particle
 {
-	cpVect v;
+	CGPoint v;
 
 	// position
 	particle->pos.x = (int) (source.x + posVar.x * CCRANDOM_MINUS1_1());
@@ -195,9 +195,9 @@
 
 		if( p->life > 0 ) {
 
-			cpVect tmp, radial, tangential;
+			CGPoint tmp, radial, tangential;
 
-			radial = cpvzero;
+			radial = CGPointZero;
 			// radial acceleration
 			if(p->pos.x || p->pos.y)
 				radial = cpvnormalize(p->pos);

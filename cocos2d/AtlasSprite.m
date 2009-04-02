@@ -73,11 +73,11 @@
 -(void)setTextureRect:(CGRect) rect
 {
 	mRect = rect;
-	transformAnchor = cpv( mRect.size.width / 2, mRect.size.height /2 );
+	transformAnchor = CGPointMake( mRect.size.width / 2, mRect.size.height /2 );
 
 	[self updateTextureCoords];
 	
-	// Don't update Atlas. issue #283
+	// Don't update Atlas if index == -1. issue #283
 	if( mAtlasIndex != -1)
 		[self updateAtlas];
 	else

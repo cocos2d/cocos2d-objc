@@ -20,8 +20,8 @@
 
 typedef struct sParticle
 {
-	cpVect	pos;
-	cpVect	dir;
+	CGPoint	pos;
+	CGPoint	dir;
 	float	radialAccel;
 	float	tangentialAccel;
 	ccColorF	color;
@@ -45,13 +45,13 @@ typedef struct sParticle
 	float elapsed;
 	
 	/// Gravity of the particles
-	cpVect gravity;
+	CGPoint gravity;
 
 	// position is from "superclass" CocosNode
 	// Emitter source position
-	cpVect source;
+	CGPoint source;
 	// Position variance
-	cpVect posVar;
+	CGPoint posVar;
 	
 	// The angle (direction) of the particles measured in degrees
 	float angle;
@@ -129,13 +129,13 @@ typedef struct sParticle
 /** Quantity of particles that are being simulated at the moment */
 @property (readonly) int	particleCount;
 /** Gravity value */
-@property (readwrite,assign) cpVect gravity;
+@property (readwrite,assign) CGPoint gravity;
 /** How many seconds the emitter wil run. -1 means 'forever' */
 @property (readwrite,assign) float duration;
 /** Source location of particles respective to emitter location */
-@property (readwrite,assign) cpVect source;
+@property (readwrite,assign) CGPoint source;
 /** Position variance of the emitter */
-@property (readwrite,assign) cpVect posVar;
+@property (readwrite,assign) CGPoint posVar;
 /** life, and life variation of each particle */
 @property (readwrite,assign) float life;
 /** life variance of each particle */

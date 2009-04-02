@@ -77,7 +77,7 @@ Class restartAction()
 		
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label z:1];
-	[label setPosition: cpv(s.width/2, s.height-50)];
+	[label setPosition: CGPointMake(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -85,10 +85,10 @@ Class restartAction()
 	
 	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 	
-	menu.position = cpvzero;
-	item1.position = cpv( s.width/2 - 100,30);
-	item2.position = cpv( s.width/2, 30);
-	item3.position = cpv( s.width/2 + 100,30);
+	menu.position = CGPointZero;
+	item1.position = CGPointMake( s.width/2 - 100,30);
+	item2.position = CGPointMake( s.width/2, 30);
+	item3.position = CGPointMake( s.width/2 + 100,30);
 	[self addChild: menu z:1];	
 
 	return self;
@@ -202,7 +202,7 @@ Class restartAction()
 	[self addChild:label];
 	[label retain];
 
-	label.position = cpv(10,100);
+	label.position = CGPointMake(10,100);
 
 	[self schedule:@selector(step:)];
 	return self;
@@ -250,11 +250,11 @@ Class restartAction()
 		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
 		CGSize size = tilemap.contentSize;
-		tilemap.transformAnchor = cpv(0, size.height/2);
+		tilemap.transformAnchor = CGPointMake(0, size.height/2);
 		
 		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
 		id scaleBack = [s reverse];
-		id go = [MoveBy actionWithDuration:8 position:cpv(-1650,0)];
+		id go = [MoveBy actionWithDuration:8 position:CGPointMake(-1650,0)];
 		id goBack = [go reverse];
 		
 		id seq = [Sequence actions: s,
@@ -298,8 +298,8 @@ Class restartAction()
 		
 		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
-		tilemap.transformAnchor = cpv(0, 0);
-		tilemap.position = cpv(-20,-200);
+		tilemap.transformAnchor = CGPointMake(0, 0);
+		tilemap.position = CGPointMake(-20,-200);
 	}	
 	return self;
 }
@@ -374,7 +374,7 @@ Class restartAction()
 	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
 	[mgr addChild:sprite];
 
-	sprite.position = cpv( p.x, p.y);
+	sprite.position = CGPointMake( p.x, p.y);
 
 	id action;
 	float r = CCRANDOM_0_1();
@@ -441,9 +441,9 @@ Class restartAction()
 		[mgr addChild:sprite3];
 		
 		CGSize s = [[Director sharedDirector] winSize];
-		sprite.position = cpv( s.width /2, s.height/2);
-		sprite2.position = cpv( s.width /2 - 100, s.height/2);
-		sprite3.position = cpv( s.width /2 + 100, s.height/2);
+		sprite.position = CGPointMake( s.width /2, s.height/2);
+		sprite2.position = CGPointMake( s.width /2 - 100, s.height/2);
+		sprite3.position = CGPointMake( s.width /2 + 100, s.height/2);
 		
 		id action = [Animate actionWithAnimation: animation];
 		id action2 = [[action copy] autorelease];
@@ -490,14 +490,14 @@ Class restartAction()
 		AtlasSprite *sprite8 = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
 		
 		CGSize s = [[Director sharedDirector] winSize];
-		sprite1.position = cpv( (s.width/5)*1, (s.height/3)*1);
-		sprite2.position = cpv( (s.width/5)*2, (s.height/3)*1);
-		sprite3.position = cpv( (s.width/5)*3, (s.height/3)*1);
-		sprite4.position = cpv( (s.width/5)*4, (s.height/3)*1);
-		sprite5.position = cpv( (s.width/5)*1, (s.height/3)*2);
-		sprite6.position = cpv( (s.width/5)*2, (s.height/3)*2);
-		sprite7.position = cpv( (s.width/5)*3, (s.height/3)*2);
-		sprite8.position = cpv( (s.width/5)*4, (s.height/3)*2);
+		sprite1.position = CGPointMake( (s.width/5)*1, (s.height/3)*1);
+		sprite2.position = CGPointMake( (s.width/5)*2, (s.height/3)*1);
+		sprite3.position = CGPointMake( (s.width/5)*3, (s.height/3)*1);
+		sprite4.position = CGPointMake( (s.width/5)*4, (s.height/3)*1);
+		sprite5.position = CGPointMake( (s.width/5)*1, (s.height/3)*2);
+		sprite6.position = CGPointMake( (s.width/5)*2, (s.height/3)*2);
+		sprite7.position = CGPointMake( (s.width/5)*3, (s.height/3)*2);
+		sprite8.position = CGPointMake( (s.width/5)*4, (s.height/3)*2);
 
 		id action = [FadeIn actionWithDuration:2];
 		id action_back = [action reverse];
