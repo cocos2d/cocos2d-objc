@@ -43,19 +43,19 @@
 @interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames, CocosNodeOpacity, CocosNodeRGB>
 {
 	// weak reference
-	TextureAtlas *mAtlas;
-	int mAtlasIndex;
+	TextureAtlas *_textureAtlas;
+	int _atlasIndex;
 
 	// texture pixels
-	CGRect mRect;
+	CGRect _rect;
 
 	// texture coords
 	// stored as floats in the range [0..1]
-	ccQuad2 mTexCoords;
+	ccQuad2 _texCoords;
 
-	// screen pixels
+	// vertex coordinates
 	// stored as pixel locations
-	ccQuad3 mVertices;
+	ccQuad3 _vertexCoords;
 	
 	// whether or not this Sprite needs to be updated in the Atlas
 	BOOL	dirtyPosition;
@@ -86,6 +86,7 @@
 /** updates the Quad in the TextureAtlas with it's new position, scale and rotation */
 -(void)updateAtlas;
 
+-(void)insertInAtlasAtIndex:(NSUInteger)index;
 -(void)updatePosition;
 -(void)updateColor;
 

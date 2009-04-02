@@ -26,15 +26,14 @@
  * Limitations:
  *  - The only object that is accepted as child is AtlasSprite
  *  - All it's children are Aliased or Antialiased. They can't be some Aliased and some Antialiased
- *  - All it's children will have the same z-order: 0
  * 
  * @since v0.7.1
  */
 @interface AtlasSpriteManager : CocosNode
 {
 @private
-	unsigned int mTotalSprites;
-	TextureAtlas *mAtlas;
+	unsigned int _totalSprites;
+	TextureAtlas *_textureAtlas;
 }
 
 /** returns the TextureAtlas that is used */
@@ -54,7 +53,7 @@
 /** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
--(int)indexForNewChild;
+-(NSUInteger)indexForNewChildAtZ:(int)z;
 
 /** creates an sprite with a rect in the AtlasSpriteManage */
 -(AtlasSprite*) createSpriteWithRect:(CGRect)rect;

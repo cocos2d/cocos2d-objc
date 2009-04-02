@@ -26,8 +26,8 @@
 @implementation AtlasSprite
 
 @synthesize dirtyColor, dirtyPosition;
-@synthesize atlasIndex = mAtlasIndex;
-@synthesize textureRect = mRect;
+@synthesize atlasIndex = _atlasIndex;
+@synthesize textureRect = _rect;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -37,9 +37,9 @@
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
-		mAtlas = [manager atlas];	// weak reference. Don't release
+		_textureAtlas = [manager atlas];	// weak reference. Don't release
 		
-		mAtlasIndex = -1;
+		_atlasIndex = -1;
 
 		dirtyPosition = YES;
 		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
@@ -56,7 +56,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i>", [self class], self, mRect.origin.x, mRect.origin.y, mRect.size.width, mRect.size.height, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i>", [self class], self, _rect.origin.x, _rect.origin.y, _rect.size.width, _rect.size.height, tag];
 }
 
 - (void) dealloc
@@ -72,13 +72,13 @@
 
 -(void)setTextureRect:(CGRect) rect
 {
-	mRect = rect;
-	transformAnchor = CGPointMake( mRect.size.width / 2, mRect.size.height /2 );
+	_rect = rect;
+	transformAnchor = CGPointMake( _rect.size.width / 2, _rect.size.height /2 );
 
 	[self updateTextureCoords];
 	
 	// Don't update Atlas if index == -1. issue #283
-	if( mAtlasIndex != -1)
+	if( _atlasIndex != -1)
 		[self updateAtlas];
 	else
 		dirtyPosition = YES;
@@ -86,13 +86,13 @@
 
 -(void)updateTextureCoords
 {
-	float atlasWidth = mAtlas.texture.pixelsWide;
-	float atlasHeight = mAtlas.texture.pixelsHigh;
+	float atlasWidth = _textureAtlas.texture.pixelsWide;
+	float atlasHeight = _textureAtlas.texture.pixelsHigh;
 
-	float left = mRect.origin.x / atlasWidth;
-	float right = (mRect.origin.x + mRect.size.width) / atlasWidth;
-	float top = mRect.origin.y / atlasHeight;
-	float bottom = (mRect.origin.y + mRect.size.height) / atlasHeight;
+	float left = _rect.origin.x / atlasWidth;
+	float right = (_rect.origin.x + _rect.size.width) / atlasWidth;
+	float top = _rect.origin.y / atlasHeight;
+	float bottom = (_rect.origin.y + _rect.size.height) / atlasHeight;
 
 	ccQuad2 newCoords = {
 		left, bottom,
@@ -101,13 +101,13 @@
 		right, top,
 	};
 
-	mTexCoords = newCoords;
+	_texCoords = newCoords;
 }
 
 -(void) updateColor
 {
 	ccColorB colorQuad = { _r, _g, _b, _opacity};
-	[mAtlas updateColorWithColorQuad:&colorQuad atIndex:mAtlasIndex];
+	[_textureAtlas updateColorWithColorQuad:&colorQuad atIndex:_atlasIndex];
 	dirtyColor = NO;
 }
 
@@ -125,7 +125,7 @@
 			0,0,0,			
 		};
 		
-		mVertices = newVertices;
+		_vertexCoords = newVertices;
 	}
 	
 	// rotation ? -> update: rotation, scale, position
@@ -133,8 +133,8 @@
 		float x1 = -transformAnchor.x * scaleX;
 		float y1 = -transformAnchor.y * scaleY;
 
-		float x2 = x1 + mRect.size.width * scaleX;
-		float y2 = y1 + mRect.size.height * scaleY;
+		float x2 = x1 + _rect.size.width * scaleX;
+		float y2 = y1 + _rect.size.height * scaleY;
 		float x = position.x;
 		float y = position.y;
 		
@@ -155,7 +155,7 @@
 					bx, by, 0,
 					dx, dy, 0,
 					cx, cy, 0};
-		mVertices = newVertices;		
+		_vertexCoords = newVertices;		
 	}
 	
 	// scale ? -> update: scale, position
@@ -166,8 +166,8 @@
 		
 		float x1 = (x- transformAnchor.x * scaleX);
 		float y1 = (y- transformAnchor.y * scaleY);
-		float x2 = (x1 + mRect.size.width * scaleX);
-		float y2 = (y1 + mRect.size.height * scaleY);
+		float x2 = (x1 + _rect.size.width * scaleX);
+		float y2 = (y1 + _rect.size.height * scaleY);
 		ccQuad3 newVertices = {
 			x1,y1,0,
 			x2,y1,0,
@@ -175,7 +175,7 @@
 			x2,y2,0,
 		};
 
-		mVertices = newVertices;	
+		_vertexCoords = newVertices;	
 	}
 	
 	// update position
@@ -185,8 +185,8 @@
 		
 		float x1 = (x-transformAnchor.x);
 		float y1 = (y-transformAnchor.y);
-		float x2 = (x1 + mRect.size.width);
-		float y2 = (y1 + mRect.size.height);
+		float x2 = (x1 + _rect.size.width);
+		float y2 = (y1 + _rect.size.height);
 		ccQuad3 newVertices = {
 			x1,y1,0,
 			x2,y1,0,
@@ -194,17 +194,23 @@
 			x2,y2,0,
 		};
 		
-		mVertices = newVertices;
+		_vertexCoords = newVertices;
 	}
 
-	[mAtlas updateQuadWithTexture:&mTexCoords vertexQuad:&mVertices atIndex:mAtlasIndex];
+	[_textureAtlas updateQuadWithTexture:&_texCoords vertexQuad:&_vertexCoords atIndex:_atlasIndex];
 	dirtyPosition = NO;
 	return;
 }
 
 -(void)updateAtlas
 {
-	[mAtlas updateQuadWithTexture:&mTexCoords vertexQuad:&mVertices atIndex:mAtlasIndex];
+	[_textureAtlas updateQuadWithTexture:&_texCoords vertexQuad:&_vertexCoords atIndex:_atlasIndex];
+}
+
+-(void)insertInAtlasAtIndex:(NSUInteger)index
+{
+	_atlasIndex = index;
+	[_textureAtlas insertQuadWithTexture:&_texCoords vertexQuad:&_vertexCoords atIndex:_atlasIndex];
 }
 
 //
@@ -308,7 +314,7 @@
 //
 -(CGSize)contentSize
 {
-	return mRect.size;
+	return _rect.size;
 }
 
 //
@@ -334,12 +340,12 @@
 {
 	AtlasSpriteFrame *spr = (AtlasSpriteFrame*)frame;
 	CGRect r = [spr rect];
-	return CGRectEqualToRect(r, mRect);
+	return CGRectEqualToRect(r, _rect);
 }
 
 -(id) displayFrame
 {
-	return [AtlasSpriteFrame frameWithRect:mRect];
+	return [AtlasSpriteFrame frameWithRect:_rect];
 }
 // XXX: duplicated code. Sprite.m and AtlasSprite.m share this same piece of code
 -(void) addAnimation: (id<CocosAnimation>) anim

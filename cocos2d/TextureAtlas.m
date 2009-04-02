@@ -129,7 +129,7 @@
 	}
 }
 
-#pragma mark TextureAtlas - Updates & Remove
+#pragma mark TextureAtlas - Update, Insert, Move & Remove
 
 -(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(NSUInteger) n
 {
@@ -154,6 +154,64 @@
 		colors[n*4+i] = *color;
 }
 
+-(void) insertQuadWithTexture:(ccQuad2*)texCoords vertexQuad:(ccQuad3*)vertexCoords atIndex:(NSUInteger)index
+{
+	NSAssert( index >= 0 && index < _capacity, @"updateQuadWithTexture: Invalid index");
+	
+	_totalQuads =  MAX( index+1, _totalQuads);
+	
+	NSUInteger remaining = (_totalQuads-1) - index;
+	
+	// last object doesn't need to be moved
+	if( remaining ) {
+		// tex coordinates
+		memmove( &texCoordinates[index+1],&texCoordinates[index], sizeof(texCoordinates[0]) * remaining );
+		// vertices
+		memmove( &vertices[index+1], &vertices[index], sizeof(vertices[0]) * remaining );
+		// colors
+		if(_withColorArray)
+			memmove(&colors[(index+1)*4], &colors[index*4], sizeof(colors[0]) * remaining * 4);
+	}
+	
+	texCoordinates[index] = *texCoords;
+	vertices[index] = *vertexCoords;
+}
+
+
+-(void) insertQuadFromIndex:(NSUInteger)oldIndex atIndex:(NSUInteger)newIndex
+{
+	NSAssert( newIndex >= 0 && newIndex < _totalQuads, @"insertQuadFromIndex:atIndex: Invalid index");
+	NSAssert( oldIndex >= 0 && oldIndex < _totalQuads, @"insertQuadFromIndex:atIndex: Invalid index");
+
+	if( oldIndex == newIndex )
+		return;
+
+	NSUInteger howMany = abs( oldIndex - newIndex);
+
+	// tex coordinates
+	ccQuad2 texCoordsBackup = texCoordinates[oldIndex];
+	memmove( &texCoordinates[oldIndex],&texCoordinates[newIndex], sizeof(texCoordinates[0]) * howMany );
+	texCoordinates[newIndex] = texCoordsBackup;
+
+	// vertices coordinates
+	ccQuad3 vertexQuadBackup = vertices[oldIndex];
+	memmove( &vertices[oldIndex], &vertices[newIndex], sizeof(vertices[0]) * howMany );
+	vertices[newIndex] = vertexQuadBackup;
+
+	// colors
+	if( _withColorArray ) {
+		ccColorB colorsBackup[4];
+
+		for(int i=0;i<4;i++)
+			colorsBackup[i] = colors[oldIndex*4+i];
+		
+		memmove(&colors[oldIndex*4], &colors[(newIndex)*4], sizeof(colors[0]) * howMany * 4);
+
+		for(int i=0;i<4;i++)
+			colors[newIndex*4+i] = colorsBackup[i];
+	}	
+}
+
 -(void) removeQuadAtIndex:(NSUInteger) index
 {
 	NSAssert( index >= 0 && index < _totalQuads, @"removeQuadAtIndex: Invalid index");
@@ -173,6 +231,7 @@
 	
 	_totalQuads--;
 }
+
 
 #pragma mark TextureAtlas - Resize
 
