@@ -172,7 +172,7 @@
 	CCLOG(@"add:z:tag: is deprecated. Use addChild:z:tag:");
 	return [self addChild:child z:z tag:aTag];
 }
-/* Add logic MUST only be on this selector
+/* "add" logic MUST only be on this selector
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this selector
  */
@@ -242,7 +242,7 @@
 	CCLOG(@"removeAndStop: is deprecated. Use removeChild:cleanup:");
 	return [self removeChild:child cleanup:YES];
 }
-/* Remove logic MUST only be on this selector
+/* "remove" logic MUST only be on this selector
  * If a class want's to extend the 'removeChild' behaviour it only needs
  * to override this selector
  */
@@ -279,7 +279,6 @@
 }
 
 -(void) removeAll
-
 {
 	CCLOG(@"removeAll is deprecated. Use removeAllChildrenWithCleanup:");
 	return [self removeAllChildrenWithCleanup:NO];
