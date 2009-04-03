@@ -101,6 +101,14 @@
  */
 -(void) removeQuadAtIndex:(NSUInteger) index;
 
+/** removes all Quads.
+ The TextureAtlas capacity remains untouched. No memory is freed.
+ The total number of quads to be drawn will be 0
+ @since v0.7.2
+ */
+-(void) removeAllQuads;
+ 
+
 /** resize the capacity of the Texture Atlas.
  * The new capacity can be lower or higher
  */

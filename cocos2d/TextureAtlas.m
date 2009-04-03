@@ -238,6 +238,10 @@
 	_totalQuads--;
 }
 
+-(void) removeAllQuads
+{
+	_totalQuads = 0;
+}
 
 #pragma mark TextureAtlas - Resize
 
