@@ -15,7 +15,6 @@
 
 #import "Menu.h"
 #import "Director.h"
-#import "CocosNodeExtras.h"
 
 @interface Menu (Private)
 // returns touched menu item, if any

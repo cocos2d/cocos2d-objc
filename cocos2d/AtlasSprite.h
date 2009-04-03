@@ -31,7 +31,6 @@
  *
  *	- Limitations
  *		- Their parent can only be an AtlasSpriteManager
- *		- They all use z-order 0
  *		- They can't have children
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
  *		- GridBase actions are supported (eg: Lens, Ripple, Twirl)
@@ -44,7 +43,7 @@
 {
 	// weak reference
 	TextureAtlas *_textureAtlas;
-	int _atlasIndex;
+	NSUInteger _atlasIndex;
 
 	// texture pixels
 	CGRect _rect;
@@ -74,7 +73,7 @@
 /** whether or not the Sprite's color needs to be updated in the Atlas */
 @property (readonly) BOOL dirtyColor;
 /** returns the altas index of the AtlasSprite */
-@property (readonly) int atlasIndex;
+@property (readonly) NSUInteger atlasIndex;
 /** returns the rect of the AtlasSprite */
 @property (readonly) CGRect textureRect;
 

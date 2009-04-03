@@ -2,6 +2,8 @@ version 0.7.2 - xxx
  . All: removed chipmunk macros. using CG macros (issue #290)
  . Actions: Added TintTo and TintBy (issue #204)
  . AtlasSprite: don't overwrite index 0 (issue #283)
+ . AtlasSprite: Supports Z-order (issue #275)
+ . Demos: AtlasSprite with z-order (issue #275)
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
  . Demos: organized tests folder (issue #280)
  . Director: Attach uses 'bounds' not 'frame' (issue #233)
@@ -11,6 +13,7 @@ version 0.7.2 - xxx
  . Particles: texture is a property (issue #282)
  . SoundSupport: supports vorbis codec (issue #XXX)      <------------- XXX CREATE ISSUE XXX
  . TextureAtlas: fixed colorarray memory leak (issue #272)
+ . TextureAtlas: support for insert,remove,reorder (issue #275)
  . TextureNode: texture is "retain" not "assign" (issue #230 and issue #274)
  . TileMapAtlas: supports fullpath (issue #220)
  
