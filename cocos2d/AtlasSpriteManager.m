@@ -209,7 +209,7 @@ const int defaultCapacity = 29;
 	[super reorderChild:child z:z];
 
 	
-	// search the new position
+	// What's the new atlas index ?
 	NSUInteger newAtlasIndex = 0;
 	for( AtlasSprite *sprite in children) {
 		if( [sprite isEqual:child] )
@@ -217,21 +217,17 @@ const int defaultCapacity = 29;
 		newAtlasIndex++;
 	}
 	
-			
 	if( newAtlasIndex != child.atlasIndex ) {
 
 		[_textureAtlas insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
 		
 		// update atlas index
-		NSUInteger count = [children count];
+		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
 		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
-		for( ; index < count ; index++ ) {
+		for( ; index < count+1 ; index++ ) {
 			AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
 			[sprite setIndex: index];
 		}
-//		NSUInteger index = 0;
-//		for( AtlasSprite *sprite in children )
-//			[sprite setIndex:index++];
 	}
 }
 
@@ -244,8 +240,8 @@ const int defaultCapacity = 29;
 {
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
-	// BUG XXX: atlas should be purged as well
 	_totalSprites = 0;
+	[_textureAtlas removeAllQuads];
 }
 
 #pragma mark AtlasSpriteManager - draw
