@@ -18,6 +18,10 @@
 #pragma mark -
 #pragma mark AltasSprite
 
+enum {
+	kIndexNotInitialized = 0xffffffff,
+};
+
 @interface AtlasSprite (Private)
 -(void)updateTextureCoords;
 -(void) initAnimationDictionary;
@@ -39,7 +43,7 @@
 	if( (self = [super init])) {
 		_textureAtlas = [manager atlas];	// weak reference. Don't release
 		
-		_atlasIndex = -1;
+		_atlasIndex = kIndexNotInitialized;
 
 		dirtyPosition = YES;
 		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
@@ -78,7 +82,7 @@
 	[self updateTextureCoords];
 	
 	// Don't update Atlas if index == -1. issue #283
-	if( _atlasIndex != -1)
+	if( _atlasIndex != kIndexNotInitialized)
 		[self updateAtlas];
 	else
 		dirtyPosition = YES;

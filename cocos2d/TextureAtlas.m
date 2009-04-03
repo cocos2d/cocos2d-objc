@@ -158,7 +158,7 @@
 {
 	NSAssert( index >= 0 && index < _capacity, @"updateQuadWithTexture: Invalid index");
 	
-	_totalQuads =  MAX( index+1, _totalQuads);
+	_totalQuads++;
 	
 	NSUInteger remaining = (_totalQuads-1) - index;
 	
@@ -187,15 +187,21 @@
 		return;
 
 	NSUInteger howMany = abs( oldIndex - newIndex);
+	int dst = oldIndex;
+	int src = oldIndex + 1;
+	if( oldIndex > newIndex) {
+		dst = newIndex+1;
+		src = newIndex;
+	}
 
 	// tex coordinates
 	ccQuad2 texCoordsBackup = texCoordinates[oldIndex];
-	memmove( &texCoordinates[oldIndex],&texCoordinates[newIndex], sizeof(texCoordinates[0]) * howMany );
+	memmove( &texCoordinates[dst],&texCoordinates[src], sizeof(texCoordinates[0]) * howMany );
 	texCoordinates[newIndex] = texCoordsBackup;
 
 	// vertices coordinates
 	ccQuad3 vertexQuadBackup = vertices[oldIndex];
-	memmove( &vertices[oldIndex], &vertices[newIndex], sizeof(vertices[0]) * howMany );
+	memmove( &vertices[dst], &vertices[src], sizeof(vertices[0]) * howMany );
 	vertices[newIndex] = vertexQuadBackup;
 
 	// colors
@@ -205,7 +211,7 @@
 		for(int i=0;i<4;i++)
 			colorsBackup[i] = colors[oldIndex*4+i];
 		
-		memmove(&colors[oldIndex*4], &colors[(newIndex)*4], sizeof(colors[0]) * howMany * 4);
+		memmove(&colors[dst*4], &colors[(src)*4], sizeof(colors[0]) * howMany * 4);
 
 		for(int i=0;i<4;i++)
 			colors[newIndex*4+i] = colorsBackup[i];

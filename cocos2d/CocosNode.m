@@ -3,6 +3,7 @@
  * http://code.google.com/p/cocos2d-iphone
  *
  * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2009 Valentin Milea
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -18,6 +19,7 @@
 #import "Grid.h"
 #import "Scheduler.h"
 #import "ccMacros.h"
+#import "Director.h"
 
 
 @interface CocosNode (Private)
@@ -437,7 +439,7 @@
 	float parallaxOffsetX = 0;
 	float parallaxOffsetY = 0;
 	
-	// XXX: Parallax code should be moved to a ParallaxNode node
+	// XXX: In v0.8 parallax code will be moved to a ParallaxNode node
 	if( (parallaxRatioX != 1.0f || parallaxRatioY != 1.0) && parent ) {
 		parallaxOffsetX = -parent.position.x + parent.position.x * parallaxRatioX;
 		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;		
@@ -768,5 +770,75 @@
 {
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
+}
+
+
+#pragma mark CocosNode Transform
+
+- (CGAffineTransform)nodeToWorldTransform
+{
+	CGAffineTransform t = CGAffineTransformIdentity;
+	
+	if (parent != nil) {
+		t = [parent nodeToWorldTransform];
+	}
+	
+	if (!relativeTransformAnchor) {
+		t = CGAffineTransformTranslate(t, transformAnchor.x, transformAnchor.y);
+	}
+	
+	t = CGAffineTransformTranslate(t, position.x, position.y);
+	t = CGAffineTransformRotate(t, -CC_DEGREES_TO_RADIANS(rotation));
+	t = CGAffineTransformScale(t, scaleX, scaleY);
+	
+	t = CGAffineTransformTranslate(t, -transformAnchor.x, -transformAnchor.y);
+	
+	return t;
+}
+
+- (CGAffineTransform)worldToNodeTransform
+{
+	return CGAffineTransformInvert([self nodeToWorldTransform]);
+}
+
+- (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
+{
+	return CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
+}
+
+- (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
+{
+	return CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+}
+
+- (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
+{
+	CGPoint nodePoint = [self convertToNodeSpace:worldPoint];
+	nodePoint.x -= transformAnchor.x;
+	nodePoint.y -= transformAnchor.y;
+	return nodePoint;
+}
+
+- (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint
+{
+	nodePoint.x += transformAnchor.x;
+	nodePoint.y += transformAnchor.y;
+	return [self convertToWorldSpace:nodePoint];
+}
+
+// convenience methods which take a UITouch instead of CGPoint
+
+- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
+{
+	CGPoint point = [touch locationInView: [touch view]];
+	point = [[Director sharedDirector] convertCoordinate: point];
+	return [self convertToNodeSpace:point];
+}
+
+- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
+{
+	CGPoint point = [touch locationInView: [touch view]];
+	point = [[Director sharedDirector] convertCoordinate: point];
+	return [self convertToNodeSpaceAR:point];
 }
 @end

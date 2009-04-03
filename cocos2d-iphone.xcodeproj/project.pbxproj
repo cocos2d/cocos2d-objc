@@ -384,8 +384,6 @@
 		506C80090E041C9300B48100 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506C800A0E041C9300B48100 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		506C80130E041CDB00B48100 /* SceneTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C80120E041CDB00B48100 /* SceneTest.m */; };
-		5072E63D0F69E6E9001B4BB2 /* CocosNodeExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 5072E63B0F69E6E9001B4BB2 /* CocosNodeExtras.h */; };
-		5072E63E0F69E6E9001B4BB2 /* CocosNodeExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 5072E63C0F69E6E9001B4BB2 /* CocosNodeExtras.m */; };
 		5078B51B0E3E43540004233A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		5078B51C0E3E43540004233A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		5078B51E0E3E43540004233A /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1212,8 +1210,6 @@
 		506C800E0E041C9300B48100 /* SceneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C80110E041CDB00B48100 /* SceneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneTest.h; path = tests/SceneTest.h; sourceTree = "<group>"; };
 		506C80120E041CDB00B48100 /* SceneTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneTest.m; path = tests/SceneTest.m; sourceTree = "<group>"; };
-		5072E63B0F69E6E9001B4BB2 /* CocosNodeExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodeExtras.h; sourceTree = "<group>"; };
-		5072E63C0F69E6E9001B4BB2 /* CocosNodeExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodeExtras.m; sourceTree = "<group>"; };
 		5078B5320E3E437F0004233A /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalTest.h; path = tests/IntervalTest.h; sourceTree = "<group>"; };
 		5078B5330E3E437F0004233A /* IntervalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalTest.m; path = tests/IntervalTest.m; sourceTree = "<group>"; };
 		5084D25C0EE5906100BD237C /* powered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powered.png; sourceTree = "<group>"; };
@@ -2236,8 +2232,6 @@
 			children = (
 				5018F2540DFDEAFF00C013A5 /* CocosNode.h */,
 				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
-				5072E63B0F69E6E9001B4BB2 /* CocosNodeExtras.h */,
-				5072E63C0F69E6E9001B4BB2 /* CocosNodeExtras.m */,
 				509A79990F6188500032F449 /* AtlasSpriteManager.h */,
 				509A799A0F6188500032F449 /* AtlasSpriteManager.m */,
 				509A79950F6188420032F449 /* AtlasSprite.h */,
@@ -2656,7 +2650,6 @@
 				500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */,
 				509A79970F6188420032F449 /* AtlasSprite.h in Headers */,
 				509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */,
-				5072E63D0F69E6E9001B4BB2 /* CocosNodeExtras.h in Headers */,
 				50C508C60F7C194400799124 /* FileUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3963,7 +3956,6 @@
 				500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */,
 				509A79980F6188420032F449 /* AtlasSprite.m in Sources */,
 				509A799C0F6188500032F449 /* AtlasSpriteManager.m in Sources */,
-				5072E63E0F69E6E9001B4BB2 /* CocosNodeExtras.m in Sources */,
 				50C508C70F7C194400799124 /* FileUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

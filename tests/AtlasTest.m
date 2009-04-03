@@ -18,6 +18,7 @@ static NSString *transitions[] = {
 			@"Atlas5",
 			@"Atlas6",
 			@"Atlas7",
+			@"Atlas8",
 };
 
 enum {
@@ -559,6 +560,70 @@ Class restartAction()
 }
 @end
 
+#pragma mark Example Atlas 8
+
+@implementation Atlas8
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		dir = 1;
+		
+		// small capacity. Testing resizing
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];		
+		
+		CGSize s = [[Director sharedDirector] winSize];
+
+		for(int i=0;i<5;i++) {
+			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+			sprite.position = CGPointMake( 50 + i*40, s.height/2);
+			[mgr addChild:sprite z:i];
+		}
+		
+		for(int i=5;i<10;i++) {
+			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+			sprite.position = CGPointMake( 50 + i*40, s.height/2);
+			[mgr addChild:sprite z:14-i];
+		}
+		
+		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
+		[mgr addChild:sprite z:-1 tag:kTagSprite1];
+		sprite.position = CGPointMake(s.width/2, s.height/2 - 20);
+		sprite.scaleX = 6;
+		[sprite setRGB:255:0:0];
+		
+		[self schedule:@selector(reorderSprite:) interval:1];		
+	}	
+	return self;
+}
+
+-(void) reorderSprite:(ccTime) dt
+{
+	id mgr = [self getChildByTag:kTagSpriteManager];
+	id sprite = [mgr getChildByTag:kTagSprite1];
+	
+	int z = [sprite zOrder];
+	
+	if( z < -1 )
+		dir = 1;
+	if( z > 10 )
+		dir = -1;
+	
+	z += dir * 3;
+
+	[mgr reorderChild:sprite z:z];
+	
+}
+
+-(NSString *) title
+{
+	return @"AtlasSprite: Z order";
+}
+@end
+
+
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
@@ -603,7 +668,8 @@ Class restartAction()
 }
 
 // purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
 	[[TextureMgr sharedTextureMgr] removeAllTextures];
 }
 

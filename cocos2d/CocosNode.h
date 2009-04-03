@@ -3,6 +3,7 @@
  * http://code.google.com/p/cocos2d-iphone
  *
  * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2009 Valentin Milea
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -12,9 +13,7 @@
  *
  */
 
-
 #import <OpenGLES/ES1/gl.h>
-#import <UIKit/UIKit.h>
 
 #import "Action.h"
 #import "cctypes.h"
@@ -350,6 +349,41 @@ enum {
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
+
+// transformation methods
+
+/// actual affine transforms used
+/// XXX: needs documentation
+/// @since v0.7.1
+- (CGAffineTransform)nodeToWorldTransform;
+/// XXX: needs documentation
+/// @since v0.7.1
+- (CGAffineTransform)worldToNodeTransform;
+/** converts a world coordinate to local coordinate
+ @since v0.7.1
+ */
+- (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
+/** converts local coordinate to world space
+ @since v0.7.1
+ */
+- (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
+/** converts a world coordinate to local coordinate
+ treating the returned/received node point as anchor relative
+ @since v0.7.1
+ */
+- (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
+/** converts local coordinate to world space
+ treating the returned/received node point as anchor relative
+ @since v0.7.1
+ */
+- (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
+// convenience methods which take a UITouch instead of CGPoint
+/// XXX: needs documentation
+/// @since v0.7.1
+- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
+/// XXX: needs documentation
+/// @since v0.7.1
+- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 @end
 
 //

@@ -158,13 +158,25 @@ const int defaultCapacity = 29;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
-	[child insertInAtlasAtIndex: [self indexForNewChildAtZ:z] ];
+	NSUInteger index = [self indexForNewChildAtZ:z];
+	[child insertInAtlasAtIndex: index];
 
 	if( _textureAtlas.withColorArray )
 		[child updateColor];
 
 	_totalSprites++;
-	return [super addChild:child z:z tag:aTag];
+	[super addChild:child z:z tag:aTag];
+
+	// XXX: it is not necessary to iterate over all the array.
+	NSUInteger count = [children count];
+	index++;
+	for(; index < count; index++) {
+		AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
+		NSAssert([sprite atlasIndex] == index - 1, @"AtlasSpriteManager: index failed");
+		[sprite setIndex:index];		
+	}
+	
+	return self;
 }
 
 // override removeChild:
@@ -174,14 +186,13 @@ const int defaultCapacity = 29;
 	if (sprite == nil)
 		return;
 	
-	int index= sprite.atlasIndex;
+	NSUInteger index= sprite.atlasIndex;
 	[super removeChild:sprite cleanup:doCleanup];
 
-	// update all sprites beyond this one
-	int count = [children count];
-	
 	[_textureAtlas removeQuadAtIndex:index];
 
+	// update all sprites beyond this one
+	NSUInteger count = [children count];
 	for(; index < count; index++)
 	{
 		AtlasSprite *other = (AtlasSprite *)[children objectAtIndex:index];
@@ -197,17 +208,31 @@ const int defaultCapacity = 29;
 	// reorder child in the children array
 	[super reorderChild:child z:z];
 
-	// and now reorder it in the TextureAtlas
+	
+	// search the new position
 	NSUInteger newAtlasIndex = 0;
-
 	for( AtlasSprite *sprite in children) {
-		if ( sprite.zOrder > z ) {
+		if( [sprite isEqual:child] )
 			break;
-		}
 		newAtlasIndex++;
 	}
+	
+			
+	if( newAtlasIndex != child.atlasIndex ) {
 
-	[_textureAtlas insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
+		[_textureAtlas insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
+		
+		// update atlas index
+		NSUInteger count = [children count];
+		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
+		for( ; index < count ; index++ ) {
+			AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
+			[sprite setIndex: index];
+		}
+//		NSUInteger index = 0;
+//		for( AtlasSprite *sprite in children )
+//			[sprite setIndex:index++];
+	}
 }
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
