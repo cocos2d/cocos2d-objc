@@ -65,15 +65,15 @@
 	_withColorArray = NO;
 
 	texCoordinates = malloc( sizeof(texCoordinates[0]) * _capacity );
-	vertices = malloc( sizeof(vertices[0]) * _capacity );
+	vertexCoordinates = malloc( sizeof(vertexCoordinates[0]) * _capacity );
 	indices = malloc( sizeof(indices[0]) * _capacity * 6 );
 	
-	if( ! ( texCoordinates && vertices && indices) ) {
+	if( ! ( texCoordinates && vertexCoordinates && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");
 		if( texCoordinates )
 			free(texCoordinates);
-		if( vertices )
-			free(vertices);
+		if( vertexCoordinates )
+			free(vertexCoordinates);
 		if( indices )
 			free(indices);
 		return nil;
@@ -93,7 +93,7 @@
 {
 	CCLOG(@"deallocing %@",self);
 
-	free(vertices);
+	free(vertexCoordinates);
 	free(texCoordinates);
 	free(indices);
 	if(_withColorArray)
@@ -139,7 +139,7 @@
 	_totalQuads =  MAX( n+1, _totalQuads);
 
 	texCoordinates[n] = *quadT;
-	vertices[n] = *quadV;
+	vertexCoordinates[n] = *quadV;
 }
 
 -(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n
@@ -166,15 +166,15 @@
 	if( remaining ) {
 		// tex coordinates
 		memmove( &texCoordinates[index+1],&texCoordinates[index], sizeof(texCoordinates[0]) * remaining );
-		// vertices
-		memmove( &vertices[index+1], &vertices[index], sizeof(vertices[0]) * remaining );
+		// vertexCoordinates
+		memmove( &vertexCoordinates[index+1], &vertexCoordinates[index], sizeof(vertexCoordinates[0]) * remaining );
 		// colors
 		if(_withColorArray)
 			memmove(&colors[(index+1)*4], &colors[index*4], sizeof(colors[0]) * remaining * 4);
 	}
 	
 	texCoordinates[index] = *texCoords;
-	vertices[index] = *vertexCoords;
+	vertexCoordinates[index] = *vertexCoords;
 }
 
 
@@ -199,10 +199,10 @@
 	memmove( &texCoordinates[dst],&texCoordinates[src], sizeof(texCoordinates[0]) * howMany );
 	texCoordinates[newIndex] = texCoordsBackup;
 
-	// vertices coordinates
-	ccQuad3 vertexQuadBackup = vertices[oldIndex];
-	memmove( &vertices[dst], &vertices[src], sizeof(vertices[0]) * howMany );
-	vertices[newIndex] = vertexQuadBackup;
+	// vertexCoordinates coordinates
+	ccQuad3 vertexQuadBackup = vertexCoordinates[oldIndex];
+	memmove( &vertexCoordinates[dst], &vertexCoordinates[src], sizeof(vertexCoordinates[0]) * howMany );
+	vertexCoordinates[newIndex] = vertexQuadBackup;
 
 	// colors
 	if( _withColorArray ) {
@@ -228,8 +228,8 @@
 	if( remaining ) {
 		// tex coordinates
 		memmove( &texCoordinates[index],&texCoordinates[index+1], sizeof(texCoordinates[0]) * remaining );
-		// vertices
-		memmove( &vertices[index], &vertices[index+1], sizeof(vertices[0]) * remaining );
+		// vertexCoordinates
+		memmove( &vertexCoordinates[index], &vertexCoordinates[index+1], sizeof(vertexCoordinates[0]) * remaining );
 		// colors
 		if(_withColorArray)
 			memmove(&colors[index*4], &colors[(index+1)*4], sizeof(colors[0]) * remaining * 4);
@@ -245,34 +245,48 @@
 
 #pragma mark TextureAtlas - Resize
 
--(void) resizeCapacity: (NSUInteger) n
+-(BOOL) resizeCapacity: (NSUInteger) n
 {
 	if( n == _capacity )
-		return;
+		return YES;
+	
+	void * tmpColors = nil;
 	
 	_capacity = n;
 
-	texCoordinates = realloc( texCoordinates, sizeof(texCoordinates[0]) * _capacity );
-	vertices = realloc( vertices, sizeof(vertices[0]) * _capacity );
-	indices = realloc( indices, sizeof(indices[0]) * _capacity * 6 );
+	void * tmpTexCoords = realloc( texCoordinates, sizeof(texCoordinates[0]) * _capacity );
+	void * tmpVertexCoords = realloc( vertexCoordinates, sizeof(vertexCoordinates[0]) * _capacity );
+	void * tmpIndices = realloc( indices, sizeof(indices[0]) * _capacity * 6 );
 	
 	if( _withColorArray )
-		colors = realloc( colors, sizeof(colors[0]) * _capacity * 4 );
+		tmpColors = realloc( colors, sizeof(colors[0]) * _capacity * 4 );
+	else
+		tmpColors = (void*) 1;
 	
-	if( ! ( texCoordinates && vertices && indices) ) {
+	if( ! ( tmpTexCoords && tmpVertexCoords && tmpIndices && tmpColors) ) {
 		NSLog(@"TextureAtlas: not enough memory");
-		if( texCoordinates )
-			free(texCoordinates);
-		if( vertices )
-			free(vertices);
-		if( indices )
-			free(indices);
-		if( colors )
-			free( colors );
-		[NSException raise:@"TextureAtlas:NoMemory" format:@"Texture Atlas. Not enough memory to resize the capacity"];
+		if( tmpTexCoords )
+			free(tmpTexCoords);
+		if( tmpVertexCoords )
+			free(tmpVertexCoords);
+		if( tmpIndices )
+			free(tmpIndices);
+		if( _withColorArray && tmpColors )
+			free( tmpColors );
+
+		_capacity = 0;
+		return NO;
 	}
 	
-	[self initIndices];
+	texCoordinates = tmpTexCoords;
+	vertexCoordinates = tmpVertexCoords;
+	indices = tmpIndices;
+	if( _withColorArray )
+		colors = tmpColors;
+
+	[self initIndices];	
+
+	return YES;
 }
 
 #pragma mark TextureAtlas - Drawing
@@ -285,7 +299,7 @@
 -(void) drawNumberOfQuads: (NSUInteger) n
 {		
 	glBindTexture(GL_TEXTURE_2D, [texture name]);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glVertexPointer(3, GL_FLOAT, 0, vertexCoordinates);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
 	if( _withColorArray )
 		glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
