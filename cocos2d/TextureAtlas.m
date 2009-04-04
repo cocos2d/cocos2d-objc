@@ -267,13 +267,31 @@
 		NSLog(@"TextureAtlas: not enough memory");
 		if( tmpTexCoords )
 			free(tmpTexCoords);
+		else
+			free(texCoordinates);
+		
 		if( tmpVertexCoords )
 			free(tmpVertexCoords);
+		else
+			free(vertexCoordinates);
+		
 		if( tmpIndices )
 			free(tmpIndices);
-		if( _withColorArray && tmpColors )
-			free( tmpColors );
+		else
+			free(indices);
 
+		if( _withColorArray) {
+			if( tmpColors )
+				free( tmpColors );
+			else
+				free( colors);
+		}
+		
+		texCoordinates = nil;
+		vertexCoordinates = nil;
+		indices = nil;
+		colors = nil;
+		
 		_capacity = 0;
 		return NO;
 	}
