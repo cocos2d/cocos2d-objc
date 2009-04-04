@@ -18,10 +18,11 @@
 /** A class that implements a Texture Atlas.
  Supported features:
    * The atlas file can be a PVRTC, PNG or any other fomrat supported by Texture2D
+   * Quads can be udpated in runtime
    * Quads can be added in runtime
    * Quads can be removed in runtime
    * Quads can be re-ordered in runtime
-   * The TextureAtlas capacity can be increased in runtime
+   * The TextureAtlas capacity can be increased or decreased in runtime
    * Color array created on demand
  The quads are rendered using an OpenGL ES vertex array list
  */
@@ -29,7 +30,7 @@
 	NSUInteger			_totalQuads;
 	NSUInteger			_capacity;
 	ccQuad2		*texCoordinates;
-	ccQuad3		*vertices;
+	ccQuad3		*vertexCoordinates;
 	ccColorB	*colors;			// RGBA for each vertex
 	GLushort	*indices;
 	Texture2D	*texture;
@@ -110,9 +111,11 @@
  
 
 /** resize the capacity of the Texture Atlas.
- * The new capacity can be lower or higher
+ * The new capacity can be lower or higher than the current one
+ * It returns YES if the resize was successful.
+ * If it fails to resize the capacity it will return NO with a new capacity of 0.
  */
--(void) resizeCapacity: (NSUInteger) n;
+-(BOOL) resizeCapacity: (NSUInteger) n;
 
 
 /** draws n quads

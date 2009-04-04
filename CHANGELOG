@@ -16,6 +16,7 @@ version 0.7.2 - xxx
  . TextureAtlas: fixed colorarray memory leak (issue #272)
  . TextureAtlas: support for insert,remove,reorder (issue #275)
  . TextureAtlas: free indices correctly when out of memory (issue #293)
+ . TextureAtlas: resizeCapacity returns BOOL instead of raise exception (issue #294)
  . TextureNode: texture is "retain" not "assign" (issue #230 and issue #274)
  . TileMapAtlas: supports fullpath (issue #220)
  
