@@ -75,7 +75,7 @@
 		if( vertices )
 			free(vertices);
 		if( indices )
-			free(vertices);
+			free(indices);
 		return nil;
 	}
 
@@ -266,7 +266,7 @@
 		if( vertices )
 			free(vertices);
 		if( indices )
-			free(vertices);
+			free(indices);
 		if( colors )
 			free( colors );
 		[NSException raise:@"TextureAtlas:NoMemory" format:@"Texture Atlas. Not enough memory to resize the capacity"];
