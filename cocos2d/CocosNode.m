@@ -555,11 +555,15 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-#ifdef DEBUG
-	if ( [actions containsObject:action] || [actionsToAdd containsObject:action] ) {
-		CCLOG(@"WARNING: action already scheduled.");
+	NSAssert( ![actionsToAdd containsObject:action], @"Action already sheduled to run");
+	
+	if ( [actions containsObject:action] ) {
+		NSAssert( [actionsToRemove containsObject:action], @"Action already running");
+		[actionsToRemove removeObject:action];
+		
+		CCLOG(@"runAction: Action saved from removal");
+		return action;
 	}
-#endif
 	
 	action.target = self;
 	[action start];
@@ -584,35 +588,23 @@
 
 -(void) stopAction: (Action*) action
 {
-	if( [actionsToRemove containsObject:action] )
-		CCLOG(@"stopAction: action already scheduled for removal!");
-
-	else if( [actions containsObject:action] )
-		[actionsToRemove addObject:action];
-	
-	else if( [actionsToAdd containsObject:action] )
+	if( [actionsToAdd containsObject:action] )
 		[actionsToAdd removeObject:action];
+	
+	else if( [actions containsObject:action] ) {
+		if( ![actionsToRemove containsObject:action] )
+			[actionsToRemove addObject:action];
+		else
+			CCLOG(@"stopAction: Action already scheduled for removal!");
+	}
 	else
-		CCLOG(@"stopAction: action not found!");
+		CCLOG(@"stopAction: Action not found!");
 }
 
 -(void) stopActionByTag:(int) aTag
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	
-	for( Action *a in actionsToRemove ) {
-		if( a.tag == aTag ) {
-			CCLOG(@"stopActionByTag: action already scheduled for removal!");
-			return; 
-		}
-	}
-	// is running ?
-	for( Action *a in actions ) {
-		if( a.tag == aTag ) {
-			[actionsToRemove addObject:a];
-			return; 
-		}
-	}
 	// is going to be added ?
 	for( Action *a in actionsToAdd ) {
 		if( a.tag == aTag ) {
@@ -620,7 +612,15 @@
 			return;
 		}
 	}
-	CCLOG(@"stopActionByTag: action not found!");
+	// is running ?
+	for( Action *a in actions ) {
+		if( a.tag == aTag && ![actionsToRemove containsObject:a] ) {
+			[actionsToRemove addObject:a];
+			return; 
+		}
+	}
+	
+	CCLOG(@"stopActionByTag: Action not running or already scheduled for removal!");
 }
 
 -(Action*) getActionByTag:(int) aTag
@@ -629,7 +629,7 @@
 	
 	for( Action *a in actionsToRemove ) {
 		if( a.tag == aTag ) {
-			CCLOG(@"getActionByTag: action unavailable, scheduled for removal!");
+			CCLOG(@"getActionByTag: Action unavailable, scheduled for removal!");
 			return nil; 
 		}
 	}
@@ -645,7 +645,7 @@
 			return a;
 	}
 
-	CCLOG(@"getActionByTag: action not found");
+	CCLOG(@"getActionByTag: Action not found");
 	return nil;
 }
 
@@ -688,7 +688,7 @@
 	//    slightly better performance when there are many actions. Need to keep original
 	//    value because actions might get nullified and you don't want [nil release].
 	
-	[actions retain];
+	id actionsBackup = [actions retain];
 	
 	// call all actions
 	for( Action *action in actions ) {
@@ -705,7 +705,7 @@
 		}
 	}
 	
-	[actions release];
+	[actionsBackup release];
 }
 
 #pragma mark CocosNode Timers 
