@@ -62,7 +62,8 @@
 		invocation = [NSInvocation invocationWithMethodSignature:sig];
 		[invocation setTarget:t];
 		[invocation setSelector:s];
-		[invocation retainArguments];
+		// TODO: ask riq why this was here
+		// [invocation retainArguments];
 		
 		[invocation retain];
 	}
