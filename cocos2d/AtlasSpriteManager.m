@@ -185,6 +185,9 @@ const int defaultCapacity = 29;
 	// explicit nil handling
 	if (sprite == nil)
 		return;
+	// ignore non-children 
+	if( ![children containsObject:sprite] )
+		return;
 	
 	NSUInteger index= sprite.atlasIndex;
 	[super removeChild:sprite cleanup:doCleanup];
