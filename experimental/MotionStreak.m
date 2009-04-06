@@ -23,7 +23,6 @@
 
 #import "MotionStreak.h"
 #import "Scheduler.h"
-#import "CocosNodeExtras.h"
 
 @implementation MotionStreak
 

@@ -32,6 +32,7 @@ enum {
 @synthesize dirtyColor, dirtyPosition;
 @synthesize atlasIndex = _atlasIndex;
 @synthesize textureRect = _rect;
+@synthesize autoCenterFrames = _autoCenterFrames;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -53,6 +54,11 @@ enum {
 		
 		animations = nil;		// lazy alloc
 		[self setTextureRect:rect];
+		
+		// default transform anchor: center
+		transformAnchor = CGPointMake( rect.size.width / 2, rect.size.height /2 );
+		
+		_autoCenterFrames = NO;
 	}
 
 	return self;
@@ -77,7 +83,6 @@ enum {
 -(void)setTextureRect:(CGRect) rect
 {
 	_rect = rect;
-	transformAnchor = CGPointMake( _rect.size.width / 2, _rect.size.height /2 );
 
 	[self updateTextureCoords];
 	
@@ -327,7 +332,14 @@ enum {
 -(void) setDisplayFrame:(id)newFrame
 {
 	AtlasSpriteFrame *frame = (AtlasSpriteFrame*)newFrame;
-	[self setTextureRect: [frame rect]];
+	CGRect rect = [frame rect];
+
+	if( _autoCenterFrames ) {
+		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
+		dirtyPosition = YES;
+	}
+
+	[self setTextureRect: rect];	
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
@@ -337,7 +349,16 @@ enum {
 	
 	AtlasAnimation *a = [animations objectForKey: animationName];
 	AtlasSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
-	[self setTextureRect: [frame rect]];
+	
+	CGRect rect = [frame rect];
+	
+	if( _autoCenterFrames ) {
+		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
+		dirtyPosition = YES;
+	}
+	
+	[self setTextureRect: rect];
+	
 }
 
 -(BOOL) isFrameDisplayed:(id)frame 

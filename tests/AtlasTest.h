@@ -53,3 +53,7 @@
 	int dir;
 }
 @end
+
+@interface Atlas9 : AtlasDemo
+{}
+@end

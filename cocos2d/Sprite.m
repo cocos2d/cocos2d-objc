@@ -25,6 +25,8 @@
 
 @implementation Sprite
 
+@synthesize autoCenterFrames = _autoCenterFrames;
+
 #pragma mark Sprite - image file
 + (id) spriteWithFile:(NSString*) filename
 {
@@ -37,6 +39,13 @@
 	if( self ) {
 		// texture is retained
 		self.texture = [[TextureMgr sharedTextureMgr] addImage: filename];
+		
+		CGSize s = self.texture.contentSize;
+		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		_autoCenterFrames = NO;
+		
+		// lazy alloc
+		animations = nil;
 	}
 	
 	return self;
@@ -55,6 +64,10 @@
 		// texture is retained
 		self.texture = [[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w];
 		
+		CGSize s = self.texture.contentSize;
+		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		_autoCenterFrames = NO;
+
 		// lazy alloc
 		animations = nil;
 	}
@@ -76,6 +89,10 @@
 		// texture is retained
 		self.texture = [[TextureMgr sharedTextureMgr] addCGImage: image];
 		
+		CGSize s = self.texture.contentSize;
+		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		_autoCenterFrames = NO;
+
 		// lazy alloc
 		animations = nil;
 	}
@@ -96,6 +113,10 @@
 		// texture is retained
 		self.texture = tex;
 		
+		CGSize s = self.texture.contentSize;
+		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		_autoCenterFrames = NO;
+		
 		// lazy alloc
 		animations = nil;
 	}
@@ -107,8 +128,6 @@
 -(void) setTexture: (Texture2D *) aTexture
 {
 	super.texture = aTexture;
-	CGSize s = aTexture.contentSize;
-	self.transformAnchor = CGPointMake(s.width/2, s.height/2);
 }
 
 #pragma mark Sprite
@@ -130,6 +149,11 @@
 -(void) setDisplayFrame:(id)frame
 {
 	self.texture = frame;
+	
+	if( _autoCenterFrames ) {
+		CGSize s = self.texture.contentSize;
+		self.transformAnchor = CGPointMake(s.width/2, s.height/2);
+	}
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
@@ -140,6 +164,11 @@
 	Animation *a = [animations objectForKey: animationName];
 	Texture2D *frame = [[a frames] objectAtIndex:frameIndex];
 	self.texture = frame;
+	
+	if( _autoCenterFrames ) {
+		CGSize s = self.texture.contentSize;
+		self.transformAnchor = CGPointMake(s.width/2, s.height/2);
+	}	
 }
 
 -(BOOL) isFrameDisplayed:(id)frame

@@ -1,0 +1,39 @@
+Steps to convert a game based on cocos2d v0.7.1 to v0.7.2
+
+//
+// NEEDED CHANGES
+//
+
+Sprite & AtlasSprite:
+---------------------
+  * If you want to auto-center the frames when using animation (or using setDisplayFrame:)
+    then you should do this:
+    [sprite setAutoCenterFrames: YES];
+
+    'sprite' can be an instance of Sprite or AtlasSprite
+
+
+New files:
+---------
+  * Add these files to your project
+    - Support/FileUtils.m
+    - Support/FileUtils.h
+
+
+//
+// OPTIONAL CHANGES
+//
+
+
+Deleted files:
+--------------
+  * Delete these files to your project
+    - CocosNodesExtra.m
+    - CocosNodesExtra.h
+
+
+Linking parameters
+------------------
+  * You can safely remove the '-ObjC' parameter from:
+    In XCode -> Project -> Edit Active Target -> Build (All Configurations) -> 
+             -> Linking -> Other Linker Flags:
