@@ -125,12 +125,24 @@ Class restartAction()
 	
 	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	
+	Sprite *point1 = [Sprite spriteWithFile:@"r1.png"];
+	Sprite *point2 = [Sprite spriteWithFile:@"r1.png"];
+
+	point1.scale = 0.25f;
+	point2.scale = 0.25f;
+
 	sp1.position = cpv(100, s.height /2 );
+	point1.position = sp1.position;
+	
 	sp2.position = cpv(380, s.height /2 );
+	point2.position = sp2.position;
+	
+	sp2.transformAnchor = cpvzero;
 	
 	[self addChild: sp1];
 	[self addChild: sp2];
+	[self addChild: point1 z:1];
+	[self addChild: point2 z:1];
 	
 
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
@@ -141,9 +153,7 @@ Class restartAction()
 									];
 	id action2 = [RepeatForever actionWithAction:
 				  [Sequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
-									];
-	
-	sp2.transformAnchor = cpvzero;
+				  ];
 	
 	[sp1 runAction: action1];
 	[sp2 runAction:action2];

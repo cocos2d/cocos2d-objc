@@ -19,6 +19,7 @@ static NSString *transitions[] = {
 			@"Atlas6",
 			@"Atlas7",
 			@"Atlas8",
+			@"Atlas9",
 };
 
 enum {
@@ -620,6 +621,60 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"AtlasSprite: Z order";
+}
+@end
+
+#pragma mark Example Atlas 9
+
+@implementation Atlas9
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		// small capacity. Testing resizing
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];		
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		
+		
+		id rotate = [RotateBy actionWithDuration:10 angle:360];
+		id action = [RepeatForever actionWithAction:rotate];
+		for(int i=0;i<3;i++) {
+			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
+			sprite.position = CGPointMake( 90 + i*150, s.height/2);
+
+			
+			Sprite *point = [Sprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:1];
+
+			switch(i) {
+				case 0:
+					sprite.transformAnchor = CGPointZero;
+					break;
+				case 1:
+					break;
+				case 2:
+					sprite.transformAnchor = CGPointMake(85,121);
+					break;
+			}
+
+			point.position = sprite.position;
+			
+			id copy = [[action copy] autorelease];
+			[sprite runAction:copy];
+			[mgr addChild:sprite z:i];
+		}		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"AtlasSprite: anchor point";
 }
 @end
 

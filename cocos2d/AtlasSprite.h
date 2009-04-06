@@ -66,6 +66,9 @@
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations;
+	
+	// cocosNodeProtcol
+	BOOL	_autoCenterFrames;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -76,6 +79,8 @@
 @property (readonly) NSUInteger atlasIndex;
 /** returns the rect of the AtlasSprite */
 @property (readonly) CGRect textureRect;
+/** whether or not the new frames will be auto centered */
+@property (readwrite) BOOL autoCenterFrames;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;

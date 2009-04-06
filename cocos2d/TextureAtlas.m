@@ -245,14 +245,16 @@
 
 #pragma mark TextureAtlas - Resize
 
--(BOOL) resizeCapacity: (NSUInteger) n
+-(BOOL) resizeCapacity: (NSUInteger) newCapacity
 {
-	if( n == _capacity )
+	if( newCapacity == _capacity )
 		return YES;
 	
 	void * tmpColors = nil;
-	
-	_capacity = n;
+
+	// update capacity and totolQuads
+	_totalQuads = MIN(_totalQuads,newCapacity);
+	_capacity = newCapacity;
 
 	void * tmpTexCoords = realloc( texCoordinates, sizeof(texCoordinates[0]) * _capacity );
 	void * tmpVertexCoords = realloc( vertexCoordinates, sizeof(vertexCoordinates[0]) * _capacity );
@@ -292,7 +294,8 @@
 		indices = nil;
 		colors = nil;
 		
-		_capacity = 0;
+		_capacity = _totalQuads = 0;
+
 		return NO;
 	}
 	

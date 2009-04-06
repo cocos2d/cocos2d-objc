@@ -449,5 +449,7 @@ enum {
 -(id<CocosAnimation>)animationByName: (NSString*) animationName;
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (id<CocosAnimation>) animation;
+/** whether or not the method 'setDisplayFrame' will auto center the frames or not */
+-(void) setAutoCenterFrames:(BOOL) autoCenterFrames;
 @end
 
