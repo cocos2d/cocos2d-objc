@@ -45,10 +45,7 @@
 -(void) dealloc
 {
 	CCLOG(@"deallocing %@", self);
-	if( target ) {
-		[target release];
-		target = nil;
-	}
+	[target release];
 	[super dealloc];
 }
 
