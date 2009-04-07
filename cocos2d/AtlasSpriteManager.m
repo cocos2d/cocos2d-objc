@@ -167,7 +167,6 @@ const int defaultCapacity = 29;
 	_totalSprites++;
 	[super addChild:child z:z tag:aTag];
 
-	// XXX: it is not necessary to iterate over all the array.
 	NSUInteger count = [children count];
 	index++;
 	for(; index < count; index++) {
