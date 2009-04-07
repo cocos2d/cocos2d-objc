@@ -110,9 +110,8 @@ enum {
 	int tag;
 	
 	// actions
-	NSMutableArray *actions;
-	NSMutableArray *actionsToRemove;
-	NSMutableArray *actionsToAdd;
+	struct ccArray *actions;
+	NSUInteger actionIndex;
 	
 	// scheduled selectors
 	NSMutableDictionary *scheduledSelectors;    
@@ -309,7 +308,7 @@ enum {
 -(Action*) do: (Action*) action __attribute__ ((deprecated));
 /** Executes an action, and returns the action that is executed.
  The target will be retained.
- @warning in v0.8 the target won't be reatained anymore
+ @warning in v0.8 the target won't be retained anymore
  @since v0.7.1
  @return An Action pointer
  */
