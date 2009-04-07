@@ -449,7 +449,10 @@ enum {
 -(id<CocosAnimation>)animationByName: (NSString*) animationName;
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (id<CocosAnimation>) animation;
-/** whether or not the method 'setDisplayFrame' will auto center the frames or not */
+/** whether or not the method 'setDisplayFrame' will auto center the frames or not
+ @deprecated Added only to fix issue #281. v0.8 will use relative transformAnchor point.
+ @since v0.7.2
+ */
 -(void) setAutoCenterFrames:(BOOL) autoCenterFrames;
 @end
 

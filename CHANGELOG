@@ -3,6 +3,7 @@ version 0.7.2 - xxx
  . Actions: Added TintTo and TintBy (issue #204)
  . AtlasSprite: don't overwrite index 0 (issue #283)
  . AtlasSprite: Supports Z-order (issue #275)
+ . AtlasSprite & Sprite: don't auto center sprite when setting frame (issue #281)
  . CocosNode: CocosNodeExtras merged into CocosNode (issue #292)
  . Demos: AtlasSprite with z-order (issue #275)
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)

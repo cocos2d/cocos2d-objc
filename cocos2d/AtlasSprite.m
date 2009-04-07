@@ -417,7 +417,7 @@ enum {
 	return [self initWithName:t delay:d firstFrame:nil vaList:nil];
 }
 
-/** initializes an AtlasAnimation with an AtlasSpriteManager, a name, and the frames from AtlasSpriteFrames */
+/* initializes an AtlasAnimation with an AtlasSpriteManager, a name, and the frames from AtlasSpriteFrames */
 -(id) initWithName:(NSString*)t delay:(float)d firstFrame:(AtlasSpriteFrame*)frame vaList:(va_list)args
 {
 	if( (self=[super init]) ) {
