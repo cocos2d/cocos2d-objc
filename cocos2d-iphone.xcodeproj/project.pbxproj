@@ -731,6 +731,7 @@
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
+		6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F8321EE0F8BD08E00CBAD06 /* ccArray.h */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
 		8E3FC8950F7B8C0600B3E5DE /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */; };
 		8E60F0DB0F766499005FCEAC /* waterfall.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8E60F0DA0F766499005FCEAC /* waterfall.caf */; };
@@ -1394,6 +1395,7 @@
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		6F8321EE0F8BD08E00CBAD06 /* ccArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccArray.h; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trance-loop.ogg"; sourceTree = "<group>"; };
 		8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION; sourceTree = "<group>"; };
 		8E60F0DA0F766499005FCEAC /* waterfall.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waterfall.caf; sourceTree = "<group>"; };
@@ -2109,6 +2111,7 @@
 			children = (
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				501CCFB70E99659400B86F68 /* ImageSupport */,
+				6F8321EE0F8BD08E00CBAD06 /* ccArray.h */,
 				50C508C40F7C194400799124 /* FileUtils.h */,
 				50C508C50F7C194400799124 /* FileUtils.m */,
 			);
@@ -2651,6 +2654,7 @@
 				509A79970F6188420032F449 /* AtlasSprite.h in Headers */,
 				509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */,
 				50C508C60F7C194400799124 /* FileUtils.h in Headers */,
+				6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
