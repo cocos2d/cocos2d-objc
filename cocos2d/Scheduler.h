@@ -18,16 +18,22 @@
 
 #import "ccTypes.h"
 
+typedef void (*TICK_IMP)(id, SEL, ccTime);
+
 //
 // Timer
 //
 /** Light weight timer */
 @interface Timer : NSObject
 {
-	NSInvocation* invocation;
+	id target;
+	SEL selector;
+	TICK_IMP impMethod;
+	
 	ccTime interval;
-	ccTime elapsed; 
+	ccTime elapsed;
 }
+
 @property (readwrite,assign) ccTime interval;
 
 /** constructor for timer */
