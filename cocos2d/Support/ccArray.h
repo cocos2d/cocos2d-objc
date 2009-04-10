@@ -51,15 +51,17 @@ typedef struct ccArray {
 	id *arr;
 } ccArray;
 
-static inline ccArray* ccArrayNew(NSUInteger size) {
+/** Allocates and initializes a new array with specified capacity */
+static inline ccArray* ccArrayNew(NSUInteger capacity) {
 	ccArray *arr = (ccArray *) calloc(1, sizeof(ccArray));
 	arr->num = 0;
-	arr->arr = (id *) malloc( size * sizeof(id) );
-	arr->max = size;
+	arr->arr = (id *) malloc( capacity * sizeof(id) );
+	arr->max = capacity;
 	
 	return arr;
 }
 
+/** Frees array. Silently ignores nil values. */
 static inline void ccArrayFree(ccArray *arr)
 {
 	if( arr == nil ) return;
@@ -68,25 +70,21 @@ static inline void ccArrayFree(ccArray *arr)
 	free(arr);
 }
 
+/** Doubles array capacity */
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
 	arr->arr = (id *) realloc( arr->arr, arr->max * sizeof(id) );
 }	
 
-static inline void ccArrayDumbCopy(ccArray *dest, ccArray *src)
-{
-	memcpy(dest, src, src->num * sizeof(id));
-	dest->num = src->num;
-}
-
-// Make sure you have enough capacity before adding another value.
+/** Appends a value. Bahaviour undefined if array doesn't have enough capacity. */
 static inline void ccArrayAppendValue(ccArray *arr, id value)
 {
 	arr->arr[arr->num] = [value retain];
 	arr->num++;
 }
 
+/** Returns index of first occurence of value, NSNotFound if value not found. */
 static inline NSUInteger ccArrayGetIndexOfValue(ccArray *arr, id value)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
@@ -94,20 +92,26 @@ static inline NSUInteger ccArrayGetIndexOfValue(ccArray *arr, id value)
 	return NSNotFound;
 }
 
+/** Removes all values from arr */
 static inline void ccArrayRemoveAllValues(ccArray *arr)
 {
 	while (arr->num > 0)
 		[arr->arr[--arr->num] release]; 
 }
 
+/** Removes value at specified index and pushes back all subsequent values.
+ Behaviour undefined if index outside [0, num-1]. */
 static inline void ccArrayRemoveValueAtIndex(ccArray *arr, NSUInteger index)
 {
 	[arr->arr[index] release];
-	NSUInteger last = --arr->num;
-	while( index < last )
-		arr->arr[index] = arr->arr[++index];
+	
+	for (NSUInteger last = --arr->num; index < last; index++)
+		arr->arr[index] = arr->arr[index + 1];
 }
 
+/** Removes value at specified index and fills the gap with the last value,
+ thereby avoiding the need to push back subsequent values.
+ Behaviour undefined i index outside [0, num-1]. */
 static inline void ccArrayFastRemoveValueAtIndex(ccArray *arr, NSUInteger index)
 {
 	[arr->arr[index] release];
@@ -115,6 +119,8 @@ static inline void ccArrayFastRemoveValueAtIndex(ccArray *arr, NSUInteger index)
 	arr->arr[index] = arr->arr[last];
 }
 
+/** Searches for the first occurance of value and removes it. If value is not
+ found the function has no effect. */
 static inline void ccArrayRemoveValue(ccArray *arr, id value)
 {
 	NSUInteger index = ccArrayGetIndexOfValue(arr, value);
@@ -125,6 +131,41 @@ static inline void ccArrayRemoveValue(ccArray *arr, id value)
 static inline BOOL ccArrayContainsValue(ccArray *arr, id value)
 {
 	return ccArrayGetIndexOfValue(arr, value) != NSNotFound;
+}
+
+/** Removes from arr all values in minusArr. For each value in minusArr, the
+ first matching instance in arr will be removed. */
+static inline void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr)
+{
+	for( NSUInteger i = 0; i < minusArr->num; i++)
+		ccArrayRemoveValue(arr, minusArr->arr[i]);
+}
+
+/** Removes from arr all values in minusArr. For each value in minusArr, all
+ matching instances in arr will be removed. */
+static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
+{
+	NSUInteger back = 0;
+	
+	for( NSUInteger i = 0; i < arr->num; i++) {
+		if( ccArrayContainsValue(minusArr, arr->arr[i]) ) {
+			[arr->arr[i] release];
+			back++;
+		} else
+			arr->arr[i - back] = arr->arr[i];
+	}
+	
+	arr->num -= back;
+}
+
+/** Appends values from plusArr to arr. Capacity of arr is increased if needed. */
+static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
+{
+	while (arr->max < arr->num + plusArr->num)
+		ccArrayDoubleCapacity(arr);
+	
+	for( NSUInteger i = 0; i < plusArr->num; i++)
+		ccArrayAppendValue(arr, plusArr->arr[i]);
 }
 
 #endif // CC_ARRAY_H
