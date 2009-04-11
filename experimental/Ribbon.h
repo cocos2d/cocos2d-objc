@@ -33,9 +33,9 @@
 /** Ribbon - dynamically extended connected polygon mesh */
 @interface Ribbon : CocosNode 
 {
-  cpVect mLastPoint1;
-  cpVect mLastPoint2;
-  cpVect mLastLocation;
+  CGPoint mLastPoint1;
+  CGPoint mLastPoint2;
+  CGPoint mLastLocation;
   uint mColor;
   Texture2D* mTexture;
   float mTextureLength;
@@ -56,11 +56,11 @@
 /** init the ribbon */
 -(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
 /** add a point to the ribbon */
--(void)addPointAt:(cpVect)location width:(float)w;
+-(void)addPointAt:(CGPoint)location width:(float)w;
 /** polling function */
 -(void)update:(ccTime)delta;
 /** determine side of line */
--(float)sideOfLine:(cpVect)p l1:(cpVect)l1 l2:(cpVect)l2;
+-(float)sideOfLine:(CGPoint)p l1:(CGPoint)l1 l2:(CGPoint)l2;
 
 @end
 

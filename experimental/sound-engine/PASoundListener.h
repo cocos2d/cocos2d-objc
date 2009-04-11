@@ -19,13 +19,13 @@
 #import "cocos2d.h"
 
 @interface PASoundListener : NSObject {
-    cpVect position;
+    CGPoint position;
     float orientation;
 }
 
-@property (readwrite, assign) cpVect position;
+@property (readwrite, assign) CGPoint position;
 @property (readwrite, assign) float orientation;
 
-- (id)initWithPosition:(cpVect)pos;
+- (id)initWithPosition:(CGPoint)pos;
 
 @end

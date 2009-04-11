@@ -18,9 +18,9 @@
 @implementation PASoundListener
 
 - (id)init {
-    return [self initWithPosition:cpv(240,160)]; // middle of screen
+    return [self initWithPosition:CGPointMake(240,160)]; // middle of screen
 }
-- (id)initWithPosition:(cpVect)pos {
+- (id)initWithPosition:(CGPoint)pos {
     if ((self = [super init])) {
         self.position = pos;
         self.orientation = 0;
@@ -29,10 +29,10 @@
 }
 
 
-- (cpVect)position {
+- (CGPoint)position {
     return position;
 }
-- (void)setPosition:(cpVect)pos {
+- (void)setPosition:(CGPoint)pos {
     position = pos;
     float x,y;
     if ([[Director sharedDirector] landscape]) {

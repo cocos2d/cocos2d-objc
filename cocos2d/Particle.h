@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "chipmunk.h"
 #import "CocosNode.h"
 #import "ccTypes.h"
 

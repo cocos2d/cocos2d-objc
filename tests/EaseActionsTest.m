@@ -75,23 +75,23 @@ Class restartAction()
 
 	CGSize s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: cpv(60, 50)];
-	[kathia setPosition: cpv(60, 150)];
-	[tamara setPosition: cpv(60, 250)];
+	[grossini setPosition: CGPointMake(60, 50)];
+	[kathia setPosition: CGPointMake(60, 150)];
+	[tamara setPosition: CGPointMake(60, 250)];
 	
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label];
-	[label setPosition: cpv(s.width/2, s.height-50)];
+	[label setPosition: CGPointMake(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 	
 	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-	menu.position = cpvzero;
-	item1.position = cpv(480/2-100,30);
-	item2.position = cpv(480/2, 30);
-	item3.position = cpv(480/2+100,30);
+	menu.position = CGPointZero;
+	item1.position = CGPointMake(480/2-100,30);
+	item2.position = CGPointMake(480/2, 30);
+	item3.position = CGPointMake(480/2+100,30);
 	[self addChild: menu z:1];
 
 	return self;
@@ -130,8 +130,8 @@ Class restartAction()
 
 -(void) positionForTwo
 {	
-	grossini.position = cpv( 60, 120 );
-	tamara.position = cpv( 60, 220);
+	grossini.position = CGPointMake( 60, 120 );
+	tamara.position = CGPointMake( 60, 220);
 	kathia.visible = NO;
 }
 -(NSString*) title
@@ -148,7 +148,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [EaseIn actionWithAction:[[move copy] autorelease] rate:3.0f];
@@ -178,7 +178,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 //	id move_back = [move reverse];
 	
 	id move_ease_inout1 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
@@ -211,7 +211,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [EaseSineIn actionWithAction:[[move copy] autorelease]];
@@ -241,7 +241,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 	id move_back = [move reverse];
 	
 	id move_ease = [EaseSineInOut actionWithAction:[[move copy] autorelease]];
@@ -267,7 +267,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [EaseExponentialIn actionWithAction:[[move copy] autorelease]];
@@ -297,7 +297,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:cpv(350,0)];
+	id move = [MoveBy actionWithDuration:3 position:CGPointMake(350,0)];
 	id move_back = [move reverse];
 	
 	id move_ease = [EaseExponentialInOut actionWithAction:[[move copy] autorelease]];
@@ -324,7 +324,7 @@ Class restartAction()
 	
 
 	// rotate and jump
-	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:cpv(-400,0) height:100 jumps:4];
+	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:CGPointMake(-400,0) height:100 jumps:4];
 	IntervalAction *jump2 = [jump1 reverse];
 	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
 	IntervalAction *rot2 = [rot1 reverse];

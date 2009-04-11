@@ -152,12 +152,12 @@ enum {
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
 	Menu *menu = [Menu menuWithItems: item1, item2, nil];	
-	menu.position = cpv(0,0);
+	menu.position = CGPointMake(0,0);
 	
-	item1.position = cpv(100,100);
-	item2.position = cpv(100,200);
+	item1.position = CGPointMake(100,100);
+	item2.position = CGPointMake(100,200);
 	
-	id jump = [JumpBy actionWithDuration:3 position:cpv(400,0) height:50 jumps:4];
+	id jump = [JumpBy actionWithDuration:3 position:CGPointMake(400,0) height:50 jumps:4];
 	[item2 runAction: [RepeatForever actionWithAction:
 				 [Sequence actions: jump, [jump reverse], nil]
 								   ]

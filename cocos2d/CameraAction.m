@@ -60,8 +60,8 @@
 	angleX = x;
 	deltaAngleX = dx;
 
-	radDeltaZ = (cpFloat)CC_DEGREES_TO_RADIANS(dz);
-	radDeltaX = (cpFloat)CC_DEGREES_TO_RADIANS(dx);
+	radDeltaZ = (CGFloat)CC_DEGREES_TO_RADIANS(dz);
+	radDeltaX = (CGFloat)CC_DEGREES_TO_RADIANS(dx);
 	
 	return self;
 }
@@ -75,12 +75,12 @@
 	if( isnan(radius) )
 		radius = r;
 	if( isnan(angleZ) )
-		angleZ = (cpFloat)CC_RADIANS_TO_DEGREES(zenith);
+		angleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
 	if( isnan(angleX) )
-		angleX = (cpFloat)CC_RADIANS_TO_DEGREES(azimuth);
+		angleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
-	radZ = (cpFloat)CC_DEGREES_TO_RADIANS(angleZ);
-	radX = (cpFloat)CC_DEGREES_TO_RADIANS(angleX);
+	radZ = (CGFloat)CC_DEGREES_TO_RADIANS(angleZ);
+	radX = (CGFloat)CC_DEGREES_TO_RADIANS(angleX);
 }
 
 -(void) update: (ccTime) t
@@ -118,7 +118,7 @@
 
 	*zenith = acosf( z/r);
 	if( x < 0 )
-		*azimuth= (cpFloat)M_PI - asinf(y/s);
+		*azimuth= (CGFloat)M_PI - asinf(y/s);
 	else
 		*azimuth = asinf(y/s);
 					

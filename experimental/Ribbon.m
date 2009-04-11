@@ -28,9 +28,7 @@
 
 
 #import "Ribbon.h"
-#import "TextureMgr.h"
-#import "OpenGL_Internal.h"
-
+#import "cocos2d.h"
 
 //
 // Ribbon
@@ -52,7 +50,7 @@
     mTexture = [[[TextureMgr sharedTextureMgr] addImage:path] retain];
     mColor = color;
     mFadeTime = fade;
-    mLastLocation = cpvzero;
+    mLastLocation = CGPointZero;
     mLastWidth = w/2;
     mTexVPos = 0.0f;
     mSegments = [[[NSMutableArray alloc] init] retain];
@@ -74,7 +72,7 @@
 }
 
 // rotates a point around 0, 0
--(cpVect)rotatePoint:(cpVect)vec rotation:(float)a
+-(CGPoint)rotatePoint:(CGPoint)vec rotation:(float)a
 {
   float xtemp = (vec.x * cosf(a)) - (vec.y * sinf(a));
   vec.y = (vec.x * sinf(a)) + (vec.y * cosf(a));
@@ -88,15 +86,15 @@
   mDelta = delta;
 }
 
--(float)sideOfLine:(cpVect)p l1:(cpVect)l1 l2:(cpVect)l2
+-(float)sideOfLine:(CGPoint)p l1:(CGPoint)l1 l2:(CGPoint)l2
 {
-  cpVect vp = cpvperp(cpvsub(l1, l2));
-  cpVect vx = cpvsub(p, l1);
-  return cpvdot(vx, vp);
+  CGPoint vp = CGPointPerp(CGPointSub(l1, l2));
+  CGPoint vx = CGPointSub(p, l1);
+  return CGPointDot(vx, vp);
 }
 
 // adds a new segment to the ribbon
--(void)addPointAt:(cpVect)location width:(float)w
+-(void)addPointAt:(CGPoint)location width:(float)w
 {
   w=w*0.5f;
   // if this is the first point added, cache it and return
@@ -108,10 +106,10 @@
     return;
   }
   
-  cpVect sub = cpvsub(mLastLocation, location);
-  float r = cpvtoangle(sub) + 1.57079637f;
-  cpVect p1 = cpvadd([self rotatePoint:cpv(-w, 0) rotation:r], location);
-  cpVect p2 = cpvadd([self rotatePoint:cpv(w, 0) rotation:r], location);
+  CGPoint sub = CGPointSub(mLastLocation, location);
+  float r = CGPointToAngle(sub) + 1.57079637f;
+  CGPoint p1 = CGPointAdd([self rotatePoint:CGPointMake(-w, 0) rotation:r], location);
+  CGPoint p2 = CGPointAdd([self rotatePoint:CGPointMake(w, 0) rotation:r], location);
   float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
   float tend = mTexVPos + len/mTextureLength;
   RibbonSegment* seg;
@@ -168,8 +166,8 @@
   if (seg->end == 0)
   {
     // first edge has to get rotation from the first real polygon
-    cpVect lp1 = cpvadd([self rotatePoint:cpv(-mLastWidth, 0) rotation:r], mLastLocation);
-    cpVect lp2 = cpvadd([self rotatePoint:cpv(+mLastWidth, 0) rotation:r], mLastLocation);
+    CGPoint lp1 = CGPointAdd([self rotatePoint:CGPointMake(-mLastWidth, 0) rotation:r], mLastLocation);
+    CGPoint lp2 = CGPointAdd([self rotatePoint:CGPointMake(+mLastWidth, 0) rotation:r], mLastLocation);
     seg->creationTime[0] = mCurTime - mDelta;
     seg->verts[0] = lp1.x;
     seg->verts[1] = lp1.y;

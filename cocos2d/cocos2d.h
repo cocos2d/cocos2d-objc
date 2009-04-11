@@ -80,6 +80,7 @@
 #import "Support/Texture2D.h"
 #import "Support/EAGLView.h"
 #import "Support/FileUtils.h"
+#import "Support/CGPointExtension.h"
 
 
 // free functions

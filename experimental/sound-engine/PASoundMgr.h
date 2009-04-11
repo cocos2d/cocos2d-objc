@@ -28,8 +28,8 @@
 
 + (PASoundMgr *)sharedSoundManager;
 
-- (PASoundSource *)addSound:(NSString *)name withExtension:(NSString *)ext position:(cpVect)pos looped:(BOOL)yn;
-- (PASoundSource *)addSound:(NSString *)name withPosition:(cpVect)pos looped:(BOOL)yn;
+- (PASoundSource *)addSound:(NSString *)name withExtension:(NSString *)ext position:(CGPoint)pos looped:(BOOL)yn;
+- (PASoundSource *)addSound:(NSString *)name withPosition:(CGPoint)pos looped:(BOOL)yn;
 
 - (PASoundSource *)sound:(NSString *)name withExtension:(NSString *)ext;
 - (PASoundSource *)sound:(NSString *)name;

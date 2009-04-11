@@ -66,10 +66,10 @@ Class restartAction()
 		CGSize s = [[Director sharedDirector] winSize];
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
-		[label setPosition: cpv(s.width/2, s.height-50)];
+		[label setPosition: CGPointMake(s.width/2, s.height-50)];
 		
 		Label *tapScreen = [Label labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
-		[tapScreen setPosition: cpv(s.width/2, s.height-80)];
+		[tapScreen setPosition: CGPointMake(s.width/2, s.height-80)];
 		[self addChild:tapScreen];
 		
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -78,15 +78,15 @@ Class restartAction()
 		
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 			
-		menu.position = cpvzero;
-		item1.position = cpv( s.width/2 - 100,30);
-		item2.position = cpv( s.width/2, 30);
-		item3.position = cpv( s.width/2 + 100,30);
+		menu.position = CGPointZero;
+		item1.position = CGPointMake( s.width/2 - 100,30);
+		item2.position = CGPointMake( s.width/2, 30);
+		item3.position = CGPointMake( s.width/2 + 100,30);
 		[self addChild: menu z:-1];	
 		
 		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
-		labelAtlas.position = cpv(254,50);
+		labelAtlas.position = CGPointMake(254,50);
 			
 		[self schedule:@selector(step:)];
 	}
@@ -108,7 +108,7 @@ Class restartAction()
 	
 	ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
 	
-	cpVect source = cpvsub( convertedLocation, s.position );
+	CGPoint source = CGPointSub( convertedLocation, s.position );
 	s.source = source;
 	
 	return kEventHandled;

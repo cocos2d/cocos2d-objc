@@ -20,6 +20,7 @@
 #import "Scheduler.h"
 #import "ccMacros.h"
 #import "Director.h"
+#import "Support/CGPointExtension.h"
 
 
 @interface CocosNode (Private)
@@ -330,7 +331,7 @@
 	
 	while (cn.parent != nil) {
 		cn = cn.parent;
-		ret = cpvadd( ret,  cn.position );
+		ret = CGPointAdd( ret,  cn.position );
 	}
 	
 	return ret;

@@ -35,7 +35,7 @@
   NSString* mPath;
   float mWidth;
   float mTextureLength;
-  cpVect mLastLocation;
+  CGPoint mLastLocation;
 }
 
 /** creates the streak */

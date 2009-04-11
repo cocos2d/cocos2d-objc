@@ -201,12 +201,12 @@ Class restartTransition()
 		y = size.height;
 
 		Sprite *bg1 = [Sprite spriteWithFile:@"background1.jpg"];
-		bg1.transformAnchor = cpvzero;
+		bg1.transformAnchor = CGPointZero;
 		[self addChild:bg1 z:-1];
 
 		Label* label = [Label labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
 
-		[label setPosition: cpv(x/2,y/2)];	
+		[label setPosition: CGPointMake(x/2,y/2)];	
 		[self addChild: label];
 		
 		// menu
@@ -214,10 +214,10 @@ Class restartTransition()
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-		menu.position = cpvzero;
-		item1.position = cpv(480/2-100,30);
-		item2.position = cpv(480/2, 30);
-		item3.position = cpv(480/2+100,30);
+		menu.position = CGPointZero;
+		item1.position = CGPointMake(480/2-100,30);
+		item2.position = CGPointMake(480/2, 30);
+		item3.position = CGPointMake(480/2+100,30);
 		[self addChild: menu z:1];
 	}
 	
@@ -260,12 +260,12 @@ Class restartTransition()
 		y = size.height;
 		
 		Sprite *bg2 = [Sprite spriteWithFile:@"background2.jpg"];
-		bg2.transformAnchor = cpvzero;
+		bg2.transformAnchor = CGPointZero;
 		[self addChild:bg2 z:-1];
 		
 		Label* label = [Label labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];
 		
-		[label setPosition: cpv(x/2,y/2)];
+		[label setPosition: CGPointMake(x/2,y/2)];
 		[self addChild: label];
 		
 		// menu
@@ -273,10 +273,10 @@ Class restartTransition()
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-		menu.position = cpvzero;
-		item1.position = cpv(480/2-100,30);
-		item2.position = cpv(480/2, 30);
-		item3.position = cpv(480/2+100,30);
+		menu.position = CGPointZero;
+		item1.position = CGPointMake(480/2-100,30);
+		item2.position = CGPointMake(480/2, 30);
+		item3.position = CGPointMake(480/2+100,30);
 		[self addChild: menu z:1];
 
 	}

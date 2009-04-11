@@ -24,9 +24,9 @@ enum
 		[self addChild: layer z:-1];
 			
 		[self addChild: sprite z:0 tag:kTagSprite];
-		[sprite setPosition: cpv(20,150)];
+		[sprite setPosition: CGPointMake(20,150)];
 		
-		[sprite runAction: [JumpTo actionWithDuration:4 position:cpv(300,48) height:100 jumps:4] ];
+		[sprite runAction: [JumpTo actionWithDuration:4 position:CGPointMake(300,48) height:100 jumps:4] ];
 		
 		[layer runAction: [RepeatForever actionWithAction: 
 									[Sequence actions:
@@ -52,7 +52,7 @@ enum
 
 	CocosNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
-	[s runAction: [MoveTo actionWithDuration:1 position:cpv(convertedLocation.x, convertedLocation.y)]];
+	[s runAction: [MoveTo actionWithDuration:1 position:CGPointMake(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
 	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
