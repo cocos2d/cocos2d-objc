@@ -22,7 +22,7 @@
 #include "stdio.h"
 #include "math.h"
 
-#include "CGPointExtensions.h"
+#include "CGPointExtension.h"
 
 CGFloat
 CGPointLength(const CGPoint v)

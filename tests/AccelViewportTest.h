@@ -1,4 +1,7 @@
 #import "cocos2d.h"
+
+#import "chipmunk.h"	// needed for cpBB
+
 //#import "VirtualAccelerometer.h"
 
 @class Sprite;

@@ -183,8 +183,9 @@
 		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
-		503798C60F912C2000986724 /* CGPointExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtensions.h */; };
-		503798C70F912C2000986724 /* CGPointExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 503798C50F912C2000986724 /* CGPointExtensions.m */; };
+		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
+		503798C70F912C2000986724 /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 503798C50F912C2000986724 /* CGPointExtension.m */; };
+		50379A780F913F9E00986724 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		5037AF1E0F49B980004DCA1F /* logo-mipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */; };
 		5037AF1F0F49B980004DCA1F /* logo-nomipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */; };
 		5038B6B20E196CD8009A621E /* Particle.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038B6B00E196CD8009A621E /* Particle.h */; };
@@ -411,7 +412,6 @@
 		50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851C380F35FE7D00978029 /* UIColor-OpenGL.h */; };
 		50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50851C390F35FE7D00978029 /* UIColor-OpenGL.m */; };
 		5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5085BFAD0F7D67FF008DBA21 /* snow.png */; };
-		508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		509A79970F6188420032F449 /* AtlasSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* AtlasSprite.h */; };
 		509A79980F6188420032F449 /* AtlasSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* AtlasSprite.m */; };
 		509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* AtlasSpriteManager.h */; };
@@ -825,6 +825,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		50379A790F913FA300986724 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
+			remoteInfo = Chipmunk;
+		};
 		504828900F45AF2F00A30CEF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -901,13 +908,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
-		};
-		508D48F00E1C76840091E768 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
-			remoteInfo = Chipmunk;
 		};
 		509B3A1E0F31029300F2FB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1143,8 +1143,8 @@
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
-		503798C40F912C2000986724 /* CGPointExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtensions.h; sourceTree = "<group>"; };
-		503798C50F912C2000986724 /* CGPointExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtensions.m; sourceTree = "<group>"; };
+		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
+		503798C50F912C2000986724 /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
 		5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "logo-mipmap.pvr"; sourceTree = "<group>"; };
 		5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "logo-nomipmap.pvr"; sourceTree = "<group>"; };
 		5038B6B00E196CD8009A621E /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
@@ -1471,6 +1471,7 @@
 				317070550E2940C900DD3360 /* OpenGLES.framework in Frameworks */,
 				317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */,
 				317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */,
+				50379A780F913F9E00986724 /* libChipmunk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1483,7 +1484,6 @@
 				5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */,
 				5018F2E50DFDEBBA00C013A5 /* OpenGLES.framework in Frameworks */,
 				5018F2E60DFDEBBA00C013A5 /* QuartzCore.framework in Frameworks */,
-				508D48F20E1C76890091E768 /* libChipmunk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2068,8 +2068,8 @@
 			children = (
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				501CCFB70E99659400B86F68 /* ImageSupport */,
-				503798C40F912C2000986724 /* CGPointExtensions.h */,
-				503798C50F912C2000986724 /* CGPointExtensions.m */,
+				503798C40F912C2000986724 /* CGPointExtension.h */,
+				503798C50F912C2000986724 /* CGPointExtension.m */,
 				6F8321EE0F8BD08E00CBAD06 /* ccArray.h */,
 				50C508C40F7C194400799124 /* FileUtils.h */,
 				50C508C50F7C194400799124 /* FileUtils.m */,
@@ -2557,7 +2557,7 @@
 				509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */,
 				50C508C60F7C194400799124 /* FileUtils.h in Headers */,
 				6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */,
-				503798C60F912C2000986724 /* CGPointExtensions.h in Headers */,
+				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2659,6 +2659,7 @@
 			);
 			dependencies = (
 				317070420E2940C900DD3360 /* PBXTargetDependency */,
+				50379A7A0F913FA300986724 /* PBXTargetDependency */,
 			);
 			name = AccelViewportTest;
 			productName = playground;
@@ -2676,7 +2677,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				508D48F10E1C76840091E768 /* PBXTargetDependency */,
 			);
 			name = cocos2d;
 			productName = cocos2d;
@@ -3864,7 +3864,7 @@
 				509A79980F6188420032F449 /* AtlasSprite.m in Sources */,
 				509A799C0F6188500032F449 /* AtlasSpriteManager.m in Sources */,
 				50C508C70F7C194400799124 /* FileUtils.m in Sources */,
-				503798C70F912C2000986724 /* CGPointExtensions.m in Sources */,
+				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4172,6 +4172,11 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 502C661E0DFEFCDF00E4107D /* PBXContainerItemProxy */;
 		};
+		50379A7A0F913FA300986724 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
+			targetProxy = 50379A790F913FA300986724 /* PBXContainerItemProxy */;
+		};
 		504828910F45AF2F00A30CEF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -4226,11 +4231,6 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 5078B5190E3E43540004233A /* PBXContainerItemProxy */;
-		};
-		508D48F10E1C76840091E768 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
-			targetProxy = 508D48F00E1C76840091E768 /* PBXContainerItemProxy */;
 		};
 		509B3A1F0F31029300F2FB95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

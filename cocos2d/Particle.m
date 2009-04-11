@@ -30,7 +30,8 @@
 #import "ccMacros.h"
 
 // support
-#import "OpenGL_Internal.h"
+#import "Support/OpenGL_Internal.h"
+#import "Support/CGPointExtension.h"
 
 @implementation ParticleSystem
 @synthesize active, duration;
@@ -134,11 +135,11 @@
 	particle->pos.y = (int) (source.y + posVar.y * CCRANDOM_MINUS1_1());
 	
 	// direction
-	float a = (cpFloat)CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
+	float a = (CGFloat)CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * CCRANDOM_MINUS1_1();
-	particle->dir = cpvmult( v, s );
+	particle->dir = CGPointMult( v, s );
 	
 	// radial accel
 	particle->radialAccel = radialAccel + radialAccelVar * CCRANDOM_MINUS1_1();
@@ -200,22 +201,22 @@
 			radial = CGPointZero;
 			// radial acceleration
 			if(p->pos.x || p->pos.y)
-				radial = cpvnormalize(p->pos);
+				radial = CGPointNormalize(p->pos);
 			tangential = radial;
-			radial = cpvmult(radial, p->radialAccel);
+			radial = CGPointMult(radial, p->radialAccel);
 
 			// tangential acceleration
 			float newy = tangential.x;
 			tangential.x = -tangential.y;
 			tangential.y = newy;
-			tangential = cpvmult(tangential, p->tangentialAccel);
+			tangential = CGPointMult(tangential, p->tangentialAccel);
 
 			// (gravity + radial + tangential) * dt
-			tmp = cpvadd( cpvadd( radial, tangential), gravity);
-			tmp = cpvmult( tmp, dt);
-			p->dir = cpvadd( p->dir, tmp);
-			tmp = cpvmult(p->dir, dt);
-			p->pos = cpvadd( p->pos, tmp );
+			tmp = CGPointAdd( CGPointAdd( radial, tangential), gravity);
+			tmp = CGPointMult( tmp, dt);
+			p->dir = CGPointAdd( p->dir, tmp);
+			tmp = CGPointMult(p->dir, dt);
+			p->pos = CGPointAdd( p->pos, tmp );
 
 			p->color.r += (p->deltaColor.r * dt);
 			p->color.g += (p->deltaColor.g * dt);

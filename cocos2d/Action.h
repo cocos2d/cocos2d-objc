@@ -16,7 +16,6 @@
 #include <sys/time.h>
 
 #import "ccTypes.h"
-#import "chipmunk.h"
 
 enum {
 	kActionTagInvalid = -1,

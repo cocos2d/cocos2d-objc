@@ -16,6 +16,7 @@
 #import "IntervalAction.h"
 #import "Sprite.h"
 #import "CocosNode.h"
+#import "Support/CGPointExtension.h"
 
 //
 // IntervalAction
@@ -479,7 +480,7 @@
 {
 	[super start];
 	startPosition = [target position];
-	delta = cpvsub( endPosition, startPosition );
+	delta = CGPointSub( endPosition, startPosition );
 }
 
 -(void) update: (ccTime) t
@@ -559,7 +560,7 @@
 
 -(void) update: (ccTime) t
 {
-	ccTime y = height * fabsf( sinf(t * (cpFloat)M_PI * jumps ) );
+	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
 	y += delta.y * t;
 	ccTime x = delta.x * t;
 	target.position = CGPointMake( startPosition.x + x, startPosition.y + y );

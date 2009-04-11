@@ -97,7 +97,7 @@ Exit:
 }
 
 // initializers with position
-- (id)initWithPosition:(cpVect)pos file:(NSString *)f extension:(NSString *)e looped:(BOOL)yn {
+- (id)initWithPosition:(CGPoint)pos file:(NSString *)f extension:(NSString *)e looped:(BOOL)yn {
     if ((self = [super init])) {
         self.file = f;
         self.extension = e;
@@ -111,22 +111,22 @@ Exit:
     }
     return self;
 }
-- (id)initWithPosition:(cpVect)pos file:(NSString *)f looped:(BOOL)yn{
+- (id)initWithPosition:(CGPoint)pos file:(NSString *)f looped:(BOOL)yn{
     return [self initWithPosition:pos file:f extension:@"wav" looped:yn];
 }
-- (id)initWithPosition:(cpVect)pos file:(NSString *)f {
+- (id)initWithPosition:(CGPoint)pos file:(NSString *)f {
     return [self initWithPosition:pos file:f extension:@"wav" looped:NO];
 }
 
-// initializers without position (will have to be spcified at play time) -- defaulting to cpvzero
+// initializers without position (will have to be spcified at play time) -- defaulting to CGPointZero
 - (id)initWithFile:(NSString *)f extension:(NSString *)e looped:(BOOL)yn {
-    return [self initWithPosition:cpvzero file:f extension:e looped:yn];
+    return [self initWithPosition:CGPointZero file:f extension:e looped:yn];
 }
 - (id)initWithFile:(NSString *)f looped:(BOOL)yn {
-    return [self initWithPosition:cpvzero file:f extension:@"wav" looped:yn];
+    return [self initWithPosition:CGPointZero file:f extension:@"wav" looped:yn];
 }
 - (id)initWithFile:(NSString *)f {
-    return [self initWithPosition:cpvzero file:f extension:@"wav" looped:NO];
+    return [self initWithPosition:CGPointZero file:f extension:@"wav" looped:NO];
 }
 
 - (void)initBuffer {
@@ -248,8 +248,8 @@ Exit:
 }
 
 // play messages
-- (void)playAtPosition:(cpVect)p restart:(BOOL)r {
-    cpVect currentPos = [self position];
+- (void)playAtPosition:(CGPoint)p restart:(BOOL)r {
+    CGPoint currentPos = [self position];
     ALint state;
     if ((p.x != currentPos.x) || (p.y != currentPos.y)) {
         [self setPosition:p];
@@ -274,7 +274,7 @@ Exit:
         }        
     }    
 }
-- (void)playAtPosition:(cpVect)p {
+- (void)playAtPosition:(CGPoint)p {
     return [self playAtPosition:p restart:NO];
 }
 - (void)playWithRestart:(BOOL)r {
@@ -302,10 +302,10 @@ Exit:
 	}    
 }
 
-- (cpVect)position {
+- (CGPoint)position {
     return position;
 }
-- (void)setPosition:(cpVect)pos {
+- (void)setPosition:(CGPoint)pos {
     float x,y;
     position = pos;
     if ([[Director sharedDirector] landscape]) {

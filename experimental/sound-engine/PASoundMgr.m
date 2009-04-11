@@ -94,7 +94,7 @@ static PASoundMgr *sharedSoundManager = nil;
     listener = [[PASoundListener alloc] init];
 }
 
-- (PASoundSource *)addSound:(NSString *)name withExtension:(NSString *)ext position:(cpVect)pos looped:(BOOL)yn {
+- (PASoundSource *)addSound:(NSString *)name withExtension:(NSString *)ext position:(CGPoint)pos looped:(BOOL)yn {
     PASoundSource *sound = [[PASoundSource alloc] initWithPosition:pos file:name extension:ext looped:yn];
     if (sound) {
         [sounds setObject:sound forKey:[NSString stringWithFormat:@"%@.%@",name,ext]];
@@ -102,7 +102,7 @@ static PASoundMgr *sharedSoundManager = nil;
     }
     return sound;
 }
-- (PASoundSource *)addSound:(NSString *)name withPosition:(cpVect)pos looped:(BOOL)yn {
+- (PASoundSource *)addSound:(NSString *)name withPosition:(CGPoint)pos looped:(BOOL)yn {
     return [self addSound:name withExtension:@"wav" position:pos looped:yn];
 }
 

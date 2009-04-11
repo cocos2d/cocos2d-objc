@@ -132,17 +132,17 @@
 ////////////////////////////////////////////////////////////
 
 @interface IntervalAction (Amplitude)
--(void)setAmplitudeRate:(cpFloat)amp;
--(cpFloat)getAmplitudeRate;
+-(void)setAmplitudeRate:(CGFloat)amp;
+-(CGFloat)getAmplitudeRate;
 @end
 
 @implementation IntervalAction (Amplitude)
--(void)setAmplitudeRate:(cpFloat)amp
+-(void)setAmplitudeRate:(CGFloat)amp
 {
 	[NSException raise:@"IntervalAction (Amplitude)" format:@"Abstract class needs implementation"];
 }
 
--(cpFloat)getAmplitudeRate
+-(CGFloat)getAmplitudeRate
 {
 	[NSException raise:@"IntervalAction (Amplitude)" format:@"Abstract class needs implementation"];
 	return 0;
