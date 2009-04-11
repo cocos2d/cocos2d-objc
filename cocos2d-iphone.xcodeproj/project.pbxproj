@@ -1039,6 +1039,7 @@
 		5001659E0E72DB470085673F /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b2.png; sourceTree = "<group>"; };
 		5001659F0E72DB470085673F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
+		500576EA0F911700002EB855 /* cocos2d-xcclassmodel.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-xcclassmodel.xcclassmodel"; sourceTree = "<group>"; };
 		501755AE0F335CAE00624901 /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		501755AF0F335CAE00624901 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		501755B10F335CAE00624901 /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
@@ -1906,6 +1907,7 @@
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
+				500576EA0F911700002EB855 /* cocos2d-xcclassmodel.xcclassmodel */,
 				50B2C9C00E109A5900AE9530 /* LICENSE */,
 				50A783D30F3AFDB300104C45 /* experimental */,
 				501756090F335CE900624901 /* external */,
