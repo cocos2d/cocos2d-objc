@@ -21,7 +21,6 @@
 //
 // ParticleFireworks
 //
-#pragma mark Fireworks
 @implementation ParticleFireworks
 -(id) init
 {
@@ -85,7 +84,7 @@
 	size = 8.0f;
 	sizeVar = 2.0f;
 
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = NO;
@@ -97,7 +96,6 @@
 //
 // ParticleFire
 //
-#pragma mark Fire
 @implementation ParticleFire
 -(id) init
 {
@@ -126,7 +124,7 @@
 	
 	// emitter position
 	position.x = 160;
-	position.y = 100;
+	position.y = 60;
 	posVar.x = 40;
 	posVar.y = 20;
 	
@@ -163,7 +161,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = YES;
@@ -175,7 +173,6 @@
 //
 // ParticleSun
 //
-#pragma mark Sun
 @implementation ParticleSun
 -(id) init
 {
@@ -244,7 +241,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	
 	return self;
 }
@@ -253,7 +250,6 @@
 //
 // ParticleGalaxy
 //
-#pragma mark Galaxy
 @implementation ParticleGalaxy
 -(id) init
 {
@@ -323,7 +319,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = YES;
@@ -335,7 +331,6 @@
 //
 // ParticleFlower
 //
-#pragma mark Flower
 @implementation ParticleFlower
 -(id) init
 {
@@ -405,7 +400,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = YES;
@@ -417,7 +412,6 @@
 //
 // ParticleMeteor
 //
-#pragma mark Meteor
 @implementation ParticleMeteor
 -(id) init
 {
@@ -487,7 +481,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = YES;
@@ -499,7 +493,6 @@
 //
 // ParticleSpiral
 //
-#pragma mark Spiral
 @implementation ParticleSpiral
 -(id) init
 {
@@ -569,7 +562,7 @@
 	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = NO;
@@ -581,7 +574,6 @@
 //
 // ParticleExplosion
 //
-#pragma mark Explosion
 @implementation ParticleExplosion
 -(id) init
 {
@@ -651,10 +643,10 @@
 	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 
 	// additive
-	blendAdditive = YES;
+	blendAdditive = NO;
 	
 	return self;
 }
@@ -663,7 +655,6 @@
 //
 // ParticleSmoke
 //
-#pragma mark Smoke
 @implementation ParticleSmoke
 -(id) init
 {
@@ -692,7 +683,7 @@
 	
 	// emitter position
 	position.x = 160;
-	position.y = 100;
+	position.y = 0;
 	posVar.x = 20;
 	posVar.y = 0;
 	
@@ -729,7 +720,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = NO;
@@ -738,7 +729,6 @@
 }
 @end
 
-#pragma mark Snow
 @implementation ParticleSnow
 -(id) init
 {
@@ -775,12 +765,12 @@
 	
 	// emitter position
 	position.x = [[Director sharedDirector] winSize].width / 2;
-	position.y = [[Director sharedDirector] winSize].height - 100;
+	position.y = [[Director sharedDirector] winSize].height + 10;
 	posVar.x = [[Director sharedDirector] winSize].width / 2;
 	posVar.y = 0;
 	
 	// life of particles
-	life = 25;
+	life = 45;
 	lifeVar = 15;
 	
 	// size, in pixels
@@ -791,25 +781,25 @@
 	emissionRate = 10;
 	
 	// color of particles
-	startColor.r = 0.9f;
-	startColor.g = 0.9f;
-	startColor.b = 0.9f;
+	startColor.r = 1.0f;
+	startColor.g = 1.0f;
+	startColor.b = 1.0f;
 	startColor.a = 1.0f;
 	startColorVar.r = 0.0f;
 	startColorVar.g = 0.0f;
-	startColorVar.b = 0.1f;
+	startColorVar.b = 0.0f;
 	startColorVar.a = 0.0f;
-	endColor.r = 0.9f;
-	endColor.g = 0.9f;
-	endColor.b = 0.9f;
+	endColor.r = 1.0f;
+	endColor.g = 1.0f;
+	endColor.b = 1.0f;
 	endColor.a = 0.0f;
 	endColorVar.r = 0.0f;
 	endColorVar.g = 0.0f;
-	endColorVar.b = 0.1f;
-	endColorVar.a = 0.5f;
+	endColorVar.b = 0.0f;
+	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"snow.png"];
-
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	
 	// additive
 	blendAdditive = NO;
 	
@@ -817,7 +807,6 @@
 }
 @end
 
-#pragma mark Rain
 @implementation ParticleRain
 -(id) init
 {
@@ -854,7 +843,7 @@
 	
 	// emitter position
 	position.x = [[Director sharedDirector] winSize].width / 2;
-	position.y = [[Director sharedDirector] winSize].height - 100;
+	position.y = [[Director sharedDirector] winSize].height;
 	posVar.x = [[Director sharedDirector] winSize].width / 2;
 	posVar.y = 0;
 	
@@ -887,7 +876,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = NO;
