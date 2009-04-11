@@ -14,10 +14,33 @@ Sprite & AtlasSprite:
 
 
 New files:
----------
+----------
   * Add these files to your project
     - Support/FileUtils.m
     - Support/FileUtils.h
+    - Support/CGPointExtension.m
+    - Support/CGPointExtension.h
+
+
+Chipmunk:
+---------
+  cocos2d doesn't depend on chipmunk anymore.
+  So, if your game uses Chipmunk you need to import this file:
+
+#import "chipmunk.h"
+
+  But if your game doesn't use chipmunk, but depends on the chipmunk macros like:
+   cpv(), cpvadd(), cpvsub(), etc.  you can either do:
+
+a) 
+    #import "chipmunk.h"
+
+or:
+
+b) replace chipmunk macros with CG macros 
+   $ cp tools/convert_cpvect_2_cg.sh yourgame/directory/
+   $ cd yourgame/directory
+   $ . /convert_cpvect_2_cg.sh
 
 
 //
@@ -32,8 +55,8 @@ Deleted files:
     - CocosNodesExtra.h
 
 
-Linking parameters
-------------------
+Linking parameters:
+-------------------
   * You can safely remove the '-ObjC' parameter from:
     In XCode -> Project -> Edit Active Target -> Build (All Configurations) -> 
              -> Linking -> Other Linker Flags:
