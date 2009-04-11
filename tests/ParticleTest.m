@@ -161,6 +161,9 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFireworks node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+
 }
 -(NSString *) title
 {
@@ -174,6 +177,10 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFire node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	CGPoint p = emitter.position;
+	emitter.position = CGPointMake(p.x, 100);
 }
 -(NSString *) title
 {
@@ -187,6 +194,8 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSun node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 }
 -(NSString *) title
 {
@@ -200,6 +209,8 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleGalaxy node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 }
 -(NSString *) title
 {
@@ -213,6 +224,7 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFlower node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
 }
 -(NSString *) title
 {
@@ -226,6 +238,8 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleMeteor node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 }
 -(NSString *) title
 {
@@ -239,6 +253,8 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSpiral node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 }
 -(NSString *) title
 {
@@ -252,6 +268,8 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleExplosion node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
 }
 -(NSString *) title
 {
@@ -265,6 +283,9 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSmoke node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	CGPoint p = emitter.position;
+	emitter.position = CGPointMake( p.x, 100);
 }
 -(NSString *) title
 {
@@ -278,6 +299,34 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleSnow node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	CGPoint p = emitter.position;
+	emitter.position = CGPointMake( p.x, p.y-110);
+	emitter.life = 25;
+	
+	ccColorF startColor = emitter.startColor;
+	startColor.r = 0.9f;
+	startColor.g = 0.9f;
+	startColor.b = 0.9f;
+	emitter.startColor = startColor;
+	
+	ccColorF startColorVar = emitter.startColorVar;
+	startColorVar.b = 0.1f;
+	emitter.startColorVar = startColorVar;
+	
+	ccColorF endColor = emitter.endColor;
+	endColor.r = 0.9f;
+	endColor.g = 0.9f;
+	endColor.b = 0.9f;
+	emitter.endColor = endColor;
+	
+	ccColorF endColorVar = emitter.endColorVar;
+	endColorVar.b = 0.1f;
+	endColorVar.a = 0.5f;
+	emitter.endColorVar = endColorVar;
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"snow.png"];
+
 }
 -(NSString *) title
 {
@@ -291,6 +340,13 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleRain node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
+	
+	CGPoint p = emitter.position;
+	emitter.position = CGPointMake( p.x, p.y-100);
+	emitter.life = 25;	
+	
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+
 }
 -(NSString *) title
 {
