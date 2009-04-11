@@ -17,7 +17,17 @@ eachShape(void *ptr, void* unused)
 	Sprite *sprite = shape->data;
 	if( sprite ) {
 		cpBody *body = shape->body;
-		[sprite setPosition: CGPointMake( body->p.x, body->p.y)];
+		
+		// TIP: cocos2d and chipmunk uses the same struct to store it's position
+		// chipmunk uses: cpVect, and cocos2d uses CGPoint but in reality the are the same
+		// since v0.7.1 you can mix them if you want.
+		
+		// before v0.7.1
+//		[sprite setPosition: CGPointMake( body->p.x, body->p.y)];
+		
+		// since v0.7.1 (eaier)
+		[sprite setPosition: body->p];
+		
 		[sprite setRotation: (float) CC_RADIANS_TO_DEGREES( -body->a )];
 	}
 }
@@ -48,11 +58,15 @@ eachShape(void *ptr, void* unused)
 		CGPointMake( 24,-54),
 	};
 	
-	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, GPointZero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
+	
+	// TIP:
+	// since v0.7.1 you can assign CGPoint to chipmunk instead of cpVect.
+	// cpVect == CGPoint
 	body->p = CGPointMake(x, y);
 	cpSpaceAddBody(space, body);
 	
-	cpShape* shape = cpPolyShapeNew(body, num, verts, GPointZero);
+	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
 	shape->e = 0.5f; shape->u = 0.5f;
 	shape->data = sprite;
 	cpSpaceAddShape(space, shape);
