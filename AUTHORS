@@ -97,6 +97,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		removed unused scale ivar in CocosNode
 		Layer conforms to TouchDelegate protocol
 		Ability to remove nil objects
+		cpArray: supports add/remove
+		improved Scheduler timer performance
+		improved CocosNode runAction/stopAction
+		fixed possible memory leak when running actions
     * yarrington: patches for Director
 
 

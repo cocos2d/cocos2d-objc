@@ -5,6 +5,8 @@ version 0.7.2 - xxx
  . AtlasSprite: Supports Z-order (issue #275)
  . AtlasSprite & Sprite: don't auto center sprite when setting frame (issue #281)
  . CocosNode: CocosNodeExtras merged into CocosNode (issue #292)
+ . CocosNode: improved runAction/stopAction (issue #300)
+ . CocosNode: possible memory leak when running actions (issue #298)
  . Demos: AtlasSprite with z-order (issue #275)
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
  . Demos: organized tests folder (issue #280)
@@ -14,13 +16,16 @@ version 0.7.2 - xxx
  . Particles: Use by default fire.pvr (issue #276)
  . Particles: resetSystem actually resets the system (issue #252)
  . Particles: texture is a property (issue #282)
+ . Scheduler: improved timer performance (issue #309)
  . SoundSupport: supports vorbis codec (issue #XXX)      <------------- XXX CREATE ISSUE XXX
+ . Support Array: supports add/remove (issue #304)
  . TextureAtlas: fixed colorarray memory leak (issue #272)
  . TextureAtlas: support for insert,remove,reorder (issue #275)
  . TextureAtlas: free indices correctly when out of memory (issue #293)
  . TextureAtlas: resizeCapacity returns BOOL instead of raise exception (issue #294)
  . TextureNode: texture is "retain" not "assign" (issue #230 and issue #274)
  . TileMapAtlas: supports fullpath (issue #220)
+ . XCode project: added class model (issue #312)
  
 version 0.7.1 - 20-Mar-2009
  . Actions: added tags to actions (issue #222)
