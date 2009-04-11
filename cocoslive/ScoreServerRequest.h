@@ -80,7 +80,7 @@ typedef enum {
 @end
 
 /** CocosLiveRequest protocol */
-@protocol CocosLiveRequestDelegate
+@protocol CocosLiveRequestDelegate <NSObject>
 -(void) scoreRequestOk:(id) sender;
 -(void) scoreRequestFail:(id) sender;
 @end

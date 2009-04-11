@@ -51,8 +51,10 @@
 -(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds
 {
 	if( (self=[super init]) ) {
+#ifdef DEBUG
 		NSMethodSignature *sig = [t methodSignatureForSelector:s];
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
+#endif
 		
 		target = t;
 		selector = s;

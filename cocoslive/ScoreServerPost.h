@@ -93,7 +93,7 @@ typedef enum {
 @end
 
 /** CocosLivePost protocol */
-@protocol CocosLivePostDelegate
+@protocol CocosLivePostDelegate <NSObject>
 -(void) scorePostOk:(id) sender;
 -(void) scorePostFail:(id) sender;
 @end
