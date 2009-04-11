@@ -289,7 +289,6 @@
 		505CC1BA0F62BC8A000EDF26 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
 		505CC1BB0F62BCA6000EDF26 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		505CC1BC0F62BCA6000EDF26 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
-		505CC1C70F62BCDA000EDF26 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		505CC1C80F62BCDA000EDF26 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		505CC1CC0F62BCEF000EDF26 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505CC1CB0F62BCEF000EDF26 /* CoreGraphics.framework */; };
 		505CC1CE0F62BCEF000EDF26 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505CC1CD0F62BCEF000EDF26 /* OpenGLES.framework */; };
@@ -859,13 +858,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
-		};
-		505CC1C50F62BCD1000EDF26 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
-			remoteInfo = Chipmunk;
 		};
 		506143F30E589A2E003CCDB7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1550,7 +1542,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				505CC1C70F62BCDA000EDF26 /* libChipmunk.a in Frameworks */,
 				505CC1C80F62BCDA000EDF26 /* libcocos2d.a in Frameworks */,
 				505CC1CC0F62BCEF000EDF26 /* CoreGraphics.framework in Frameworks */,
 				505CC1CE0F62BCEF000EDF26 /* OpenGLES.framework in Frameworks */,
@@ -2785,7 +2776,6 @@
 			);
 			dependencies = (
 				505CC1C40F62BCCB000EDF26 /* PBXTargetDependency */,
-				505CC1C60F62BCD1000EDF26 /* PBXTargetDependency */,
 			);
 			name = PerformanceTest;
 			productName = PerformanceTest;
@@ -4196,11 +4186,6 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 505CC1C30F62BCCB000EDF26 /* PBXContainerItemProxy */;
-		};
-		505CC1C60F62BCD1000EDF26 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
-			targetProxy = 505CC1C50F62BCD1000EDF26 /* PBXContainerItemProxy */;
 		};
 		506143F20E589A2E003CCDB7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
