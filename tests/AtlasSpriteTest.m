@@ -259,8 +259,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		// small capacity. Testing resizing
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		// small capacity. Testing resizing.
+		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
@@ -352,8 +353,9 @@ Class restartAction()
 		
 		dir = 1;
 		
-		// small capacity. Testing resizing
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		// small capacity. Testing resizing.
+		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		CGSize s = [[Director sharedDirector] winSize];
@@ -413,8 +415,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		// small capacity. Testing resizing
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		// small capacity. Testing resizing.
+		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		CGSize s = [[Director sharedDirector] winSize];
@@ -467,7 +470,8 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		// small capacity. Testing resizing
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:2];
+		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 
 		CGSize s = [[Director sharedDirector] winSize];

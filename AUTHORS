@@ -101,6 +101,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		improved Scheduler timer performance
 		improved CocosNode runAction/stopAction
 		fixed possible memory leak when running actions
+		AtlasSpriteManager#removeChild fixes
+		CocosNode#runAction doesn't run an already running action
 	* yarrington: patches for Director
 
 
