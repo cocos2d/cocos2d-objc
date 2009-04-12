@@ -33,9 +33,11 @@
  * SOFTWARE.
  */
 
-/* Based on Chipmunk cpArray.
-   ccArray stores ids and retains/releases them appropriately.
-   And it's way faster than NSMutableArray.
+/** 
+ @file
+ Based on Chipmunk cpArray.
+ ccArray stores ids and retains/releases them appropriately.
+ And it's way faster than NSMutableArray.
  */
 
 #ifndef CC_ARRAY_H

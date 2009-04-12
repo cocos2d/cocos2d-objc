@@ -12,6 +12,7 @@ version 0.7.2 - xxx
  . Demos: organized tests folder (issue #280)
  . Demos: Atlas and Sprites uses TintBy and TintTo (issue #204)
  . Director: Attach uses 'bounds' not 'frame' (issue #233)
+ . Documentation: API doc documents free functions (issue #314)
  . Menu: an empty menu can be crated (issue #277)
  . Particles: Use by default fire.pvr (issue #276)
  . Particles: resetSystem actually resets the system (issue #252)
