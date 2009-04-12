@@ -31,6 +31,9 @@ const int defaultCapacity = 29;
 }
 @end
 
+@interface AtlasSpriteManager (private)
+-(void) resizeAtlas;
+@end
 
 #pragma mark AtlasSpriteManager
 @implementation AtlasSpriteManager
@@ -140,21 +143,6 @@ const int defaultCapacity = 29;
 {
 	NSUInteger index = 0;
 
-	// if we're going beyond the current TextureAtlas's capacity,
-	// all the previously initialized sprites will need to redo their texture coords
-	// this is likely computationally expensive
-	if(_totalSprites == _textureAtlas.capacity)
-	{
-		CCLOG(@"Resizing TextureAtlas capacity, from [%d] to [%d].", _textureAtlas.totalQuads, _textureAtlas.totalQuads * 3 / 2);
-
-		[_textureAtlas resizeCapacity:_textureAtlas.totalQuads * 3 / 2];
-		
-		for(AtlasSprite *sprite in children)
-		{
-			[sprite updateAtlas];
-		}
-	}
-	
 	for( AtlasSprite *sprite in children) {
 		if ( sprite.zOrder > z ) {
 			break;
@@ -170,13 +158,15 @@ const int defaultCapacity = 29;
 	return [AtlasSprite spriteWithRect:rect spriteManager:self];
 }
 
-
 // override addChild:
 -(id) addChild:(AtlasSprite*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
+	if(_totalSprites == _textureAtlas.capacity)
+		[self resizeAtlas];
+
 	NSUInteger index = [self indexForNewChildAtZ:z];
 	[child insertInAtlasAtIndex: index];
 
@@ -297,4 +287,24 @@ const int defaultCapacity = 29;
 	}
 }
 
+#pragma mark AtlasSpriteManager - private
+-(void) resizeAtlas
+{
+	// if we're going beyond the current TextureAtlas's capacity,
+	// all the previously initialized sprites will need to redo their texture coords
+	// this is likely computationally expensive
+	NSUInteger quantity = (_textureAtlas.totalQuads + 1) * 4 / 3;
+
+	CCLOG(@"Resizing TextureAtlas capacity, from [%d] to [%d].", _textureAtlas.totalQuads, quantity);
+
+
+	if( ! [_textureAtlas resizeCapacity:quantity] ) {
+		// serious problems
+		CCLOG(@"WARNING: Not enough memory to resize the atlas");
+		NSAssert(NO,@"XXX: AltasSpriteManager#resizeAtlas SHALL handle this assert");
+	}
+	
+	for(AtlasSprite *sprite in children)
+		[sprite updateAtlas];
+}
 @end
