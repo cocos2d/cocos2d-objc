@@ -110,11 +110,30 @@ const int defaultCapacity = 29;
 // Don't call visit on it's children
 -(void) visit
 {
-	// don't iterate over it's children
-	// the only valid children are AtlasSprites
-	// and are drawn in the atlas
+
+	// CAREFUL:
+	// This visit is almost identical to CocosNode#visit
+	// with the exception that it doesn't call visit on it's children
+	//
+	// The alternative is to have a void AtlasSprite#visit, but this
+	// although is less mantainable, is faster
+	//
+	if (!visible)
+		return;
+	
+	glPushMatrix();
+	
+	if ( grid && grid.active)
+		[grid beforeDraw];
+	
+	[self transform];
 	
 	[self draw];
+	
+	if ( grid && grid.active)
+		[grid afterDraw:self.camera];
+	
+	glPopMatrix();
 }
 
 -(NSUInteger)indexForNewChildAtZ:(int)z

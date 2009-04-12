@@ -4,6 +4,7 @@ version 0.7.2 - xxx
  . AtlasSprite: don't overwrite index 0 (issue #283)
  . AtlasSprite: Supports Z-order (issue #275)
  . AtlasSprite & Sprite: don't auto center sprite when setting frame (issue #281)
+ . AtlasSpriteManager: supports transformations (issue #308)
  . CocosNode: CocosNodeExtras merged into CocosNode (issue #292)
  . CocosNode: improved runAction/stopAction (issue #300)
  . CocosNode: possible memory leak when running actions (issue #298)
