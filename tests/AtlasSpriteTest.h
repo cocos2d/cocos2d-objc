@@ -14,17 +14,14 @@
 -(NSString*) title;
 @end
 
+
 @interface Atlas1 : AtlasDemo
-{
-	TextureAtlas *textureAtlas;
-}
+{}
+-(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
 @interface Atlas2 : AtlasDemo
-{
-	LabelAtlas *label;
-	ccTime		time;
-}
+{}
 @end
 
 @interface Atlas3 : AtlasDemo
@@ -32,5 +29,15 @@
 @end
 
 @interface Atlas4 : AtlasDemo
+{
+	int dir;
+}
+@end
+
+@interface Atlas5 : AtlasDemo
+{}
+@end
+
+@interface Atlas6 : AtlasDemo
 {}
 @end
