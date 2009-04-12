@@ -9,6 +9,8 @@
 
 enum {
 	kTagMenu = 1,
+	kTagMenu0 = 0,
+	kTagMenu1 = 1,
 };
 
 @implementation Layer1
@@ -78,24 +80,68 @@ enum {
 @end
 
 @implementation Layer2
+
+-(void) alignMenusH
+{
+	for(int i=0;i<2;i++) {
+		Menu *menu = (Menu*)[self getChildByTag:100+i];
+		menu.position = centeredMenu;
+		if(i==0) {
+			// TIP: if no padding, padding = 5
+			[menu alignItemsHorizontally];			
+			CGPoint p = menu.position;
+			menu.position = CGPointAdd(p, CGPointMake(0,30));
+			
+		} else {
+			// TIP: but padding is configurable
+			[menu alignItemsHorizontallyWithPadding:40];
+			CGPoint p = menu.position;
+			menu.position = CGPointSub(p, CGPointMake(0,30));
+		}		
+	}
+}
+
+-(void) alignMenusV
+{
+	for(int i=0;i<2;i++) {
+		Menu *menu = (Menu*)[self getChildByTag:100+i];
+		menu.position = centeredMenu;
+		if(i==0) {
+			// TIP: if no padding, padding = 5
+			[menu alignItemsVertically];			
+			CGPoint p = menu.position;
+			menu.position = CGPointAdd(p, CGPointMake(100,0));			
+		} else {
+			// TIP: but padding is configurable
+			[menu alignItemsVerticallyWithPadding:40];	
+			CGPoint p = menu.position;
+			menu.position = CGPointSub(p, CGPointMake(100,0));
+		}		
+	}
+}
+
 -(id) init
 {
-	[super init];
+	if( (self=[super init]) ) {
 	
-	isTouchEnabled = YES;
-	
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackH:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackV:)];
-	
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-	
-	menu.tag = kTagMenu;
-	[menu alignItemsHorizontally];
+		isTouchEnabled = YES;
+		
+		for( int i=0;i < 2;i++ ) {
+			MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
+			MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackH:)];
+			MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackV:)];
+			
+			Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+			
+			menu.tag = kTagMenu;
+			menu.opacity = 128;
+			
+			[self addChild:menu z:0 tag:100+i];
+			centeredMenu = menu.position;
+		}
 
-	menu.opacity = 128;
-
-	[self addChild: menu];
+		[self alignMenusH];
+	}
 
 	return self;
 }
@@ -107,9 +153,7 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-// One way to obtain the menu is:
-//	[self  getChildByTag:xxx]
-	id menu = [self getChildByTag:kTagMenu];
+	id menu = [sender parent];
 	[menu setOpacity: 128];
 
 	[(MultiplexLayer*)parent switchTo:0];
@@ -120,15 +164,14 @@ enum {
 	// Another way to obtain the menu
 	// in this particular case is:
 	// self.parent
-
 	id menu = [sender parent];
 	[menu setOpacity: 255];
-	[menu alignItemsHorizontally];
+
+	[self alignMenusH];
 }
 -(void) menuCallbackV: (id) sender
 {
-	id menu = [self getChildByTag:kTagMenu];
-	[menu alignItemsVertically];
+	[self alignMenusV];
 }
 
 -(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

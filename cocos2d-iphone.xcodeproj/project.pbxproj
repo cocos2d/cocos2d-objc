@@ -1150,7 +1150,6 @@
 		5018F2680DFDEAFF00C013A5 /* TextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureMgr.m; sourceTree = "<group>"; };
 		501A7CAC0EBC97BA005BC158 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		501C7C910F91EFFF0024A296 /* AtlasSpriteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtlasSpriteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		501C7C930F91F0000024A296 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		501C7CA60F91F1B20024A296 /* AtlasSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasSpriteTest.h; path = tests/AtlasSpriteTest.h; sourceTree = "<group>"; };
 		501C7CA70F91F1B20024A296 /* AtlasSpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtlasSpriteTest.m; path = tests/AtlasSpriteTest.m; sourceTree = "<group>"; };
 		501CCFA40E99657C00B86F68 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
@@ -1194,6 +1193,7 @@
 		504828C90F45B15700A30CEF /* attachDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = attachDemo.m; sourceTree = "<group>"; };
 		504828DE0F45B1B800A30CEF /* AttachDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AttachDemo-Info.plist"; sourceTree = "<group>"; };
 		504828ED0F45B71A00A30CEF /* attachDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = attachDemo.xib; sourceTree = "<group>"; };
+		5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoWithStatusBar.plist; path = Resources/InfoWithStatusBar.plist; sourceTree = "<group>"; };
 		505B62D60F2E6A0F001B4104 /* Texture2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Texture2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B62DE0F2E6A66001B4104 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
 		505B62DF0F2E6A66001B4104 /* Texture2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dTest.m; path = tests/Texture2dTest.m; sourceTree = "<group>"; };
@@ -1940,12 +1940,12 @@
 			children = (
 				500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
+				5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */,
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
-				501C7C930F91F0000024A296 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -4505,7 +4505,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -4531,7 +4531,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -5010,7 +5010,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -5036,7 +5036,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",

@@ -16,6 +16,10 @@
 #import "Menu.h"
 #import "Director.h"
 
+enum {
+	kDefaultPadding =  5,
+};
+
 @interface Menu (Private)
 // returns touched menu item, if any
 -(MenuItem *) itemForTouch: (UITouch *) touch idx: (int*) idx;
@@ -95,7 +99,6 @@
 	return [super addChild:child z:z tag:aTag];
 }
 
-
 #pragma mark Menu - Events
 
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -165,28 +168,37 @@
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically
 {
-	int height = -5;
+	return [self alignItemsVerticallyWithPadding:kDefaultPadding];
+}
+-(void) alignItemsVerticallyWithPadding:(float)padding
+{
+	float height = -padding;
 	for(MenuItem *item in children)
-	    height += [item contentSize].height + 5;
+	    height += [item contentSize].height + padding;
 
-	float y = height / 2;
+	float y = height / 2.0f;
 	for(MenuItem *item in children) {
-	    [item setPosition:CGPointMake(0, y - [item contentSize].height / 2)];
-	    y -= [item contentSize].height + 5;
+	    [item setPosition:CGPointMake(0, y - [item contentSize].height / 2.0f)];
+	    y -= [item contentSize].height + padding;
 	}
 }
 
 -(void) alignItemsHorizontally
 {
-	
-	int width = -5;
-	for(MenuItem* item in children)
-	    width += [item contentSize].width + 5;
+	return [self alignItemsHorizontallyWithPadding:kDefaultPadding];
+}
 
-	int x = -width / 2;
+-(void) alignItemsHorizontallyWithPadding:(float)padding
+{
+	
+	float width = -padding;
+	for(MenuItem* item in children)
+	    width += [item contentSize].width + padding;
+
+	float x = -width / 2.0f;
 	for(MenuItem* item in children) {
-		[item setPosition:CGPointMake(x + [item contentSize].width / 2, 0)];
-		x += [item contentSize].width + 5;
+		[item setPosition:CGPointMake(x + [item contentSize].width / 2.0f, 0)];
+		x += [item contentSize].width + padding;
 	}
 }
 
