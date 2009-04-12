@@ -26,6 +26,19 @@
  * Code based on Chipmunk's CGPoint.h file
  */
 
+/**
+ @file
+ CGPoint extentions based on Chipmunk's cpVect file.
+ These extensions work both with CGPoint and cpVect.
+ 
+ Examples:
+  - CGPointAdd( CGPointMake(1,1), CGPointMake(2,2) );  // CG way (prefered way)
+  - cpvadd( cpv(1,1), cpv(2,2) ); // chipmunk's way
+  - CGPointAdd( cpv(1,1), cpv(2,2) );  // mixing chipmunk and CG (avoid)
+  - cpvadd( CGPointMake(1,1), CGPointMake(2,2) );  // mixing chipmunk and CG (avoid)
+ */
+
+
 #import <CoreGraphics/CGGeometry.h>
 #import <math.h>
 
@@ -33,8 +46,7 @@
  @return CGPoint
  @since v0.7.2
  */
-static inline CGPoint
-CGPointAdd(const CGPoint v1, const CGPoint v2)
+static inline CGPoint CGPointAdd(const CGPoint v1, const CGPoint v2)
 {
 	return CGPointMake(v1.x + v2.x, v1.y + v2.y);
 }
