@@ -22,6 +22,7 @@
 
 @interface Layer2 : Layer
 {
+	CGPoint	centeredMenu;
 }
 -(void) menuCallbackBack: (id) sender;
 -(void) menuCallbackH: (id) sender;
