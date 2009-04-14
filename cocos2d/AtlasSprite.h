@@ -42,33 +42,33 @@
 @interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames, CocosNodeOpacity, CocosNodeRGB>
 {
 	// weak reference
-	TextureAtlas *_textureAtlas;
-	NSUInteger _atlasIndex;
+	TextureAtlas *textureAtlas_;
+	NSUInteger atlasIndex_;
 
 	// texture pixels
-	CGRect _rect;
+	CGRect rect_;
 
 	// texture coords
 	// stored as floats in the range [0..1]
-	ccQuad2 _texCoords;
+	ccQuad2 texCoords_;
 
 	// vertex coordinates
 	// stored as pixel locations
-	ccQuad3 _vertexCoords;
+	ccQuad3 vertexCoords_;
 	
 	// whether or not this Sprite needs to be updated in the Atlas
 	BOOL	dirtyPosition;
 	
 	// opacity and RGB protocol
-	GLubyte _opacity;
-	GLubyte _r, _g, _b;
+	GLubyte opacity_;
+	GLubyte r_, g_, b_;
 	BOOL	dirtyColor;
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations;
 	
 	// cocosNodeProtcol
-	BOOL	_autoCenterFrames;
+	BOOL	autoCenterFrames_;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */

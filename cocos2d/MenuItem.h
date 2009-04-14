@@ -159,12 +159,16 @@
 /** A MenuItemToggle */
 @interface MenuItemToggle : MenuItem
 {
-	NSUInteger selectedIndex;
-	NSMutableArray* subItems;
+	NSUInteger selectedIndex_;
+	NSMutableArray* subItems_;
 }
 
 /** returns the selected item */
 @property (readwrite) NSUInteger selectedIndex;
+/** NSMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+ @since v0.7.2
+ */
+@property (readwrite,retain) NSMutableArray *subItems;
 
 /** creates a menu item from a list of items with a target/selector */
 +(id) itemWithTarget:(id)t selector:(SEL)s items:(MenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;

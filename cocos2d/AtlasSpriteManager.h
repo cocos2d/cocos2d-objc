@@ -32,8 +32,8 @@
 @interface AtlasSpriteManager : CocosNode
 {
 @private
-	unsigned int _totalSprites;
-	TextureAtlas *_textureAtlas;
+	unsigned int totalSprites_;
+	TextureAtlas *textureAtlas_;
 }
 
 /** returns the TextureAtlas that is used */

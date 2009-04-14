@@ -129,13 +129,13 @@ and when to execute the Scenes
 
 /** change default pixel format.
  Call this class method before attaching it to a UIWindow/UIView
- Default pixel format: RGB565. Supported pixel formats: RGBA8 and RGB565
+ Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
  */
 -(void) setPixelFormat: (tPixelFormat) p;
 
 /** change depth buffer format.
  Call this class method before attaching it to a UIWindow/UIView
- Default depth buffer: 0 (none).  Supported: DepthBufferNone, DepthBuffer16, and DepthBuffer24
+ Default depth buffer: 0 (none).  Supported: kDepthBufferNone, kDepthBuffer16, and kDepthBuffer24
  */
 -(void) setDepthBufferFormat: (tDepthBufferFormat) db;
 

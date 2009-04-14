@@ -22,6 +22,7 @@ version 0.7.2 - xxx
  . Menu: an empty menu can be crated (issue #277)
  . Menu: supports padding (issue #249)
  . Menu: alignItemsVertically aligns items on the center of the screen (issue #315)
+ . Menu: MenuToggleItem supports add/remove items in runtime (issue #224)
  . Particles: Use by default fire.pvr (issue #276)
  . Particles: resetSystem actually resets the system (issue #252)
  . Particles: texture is a property (issue #282)

@@ -27,7 +27,7 @@ const int defaultCapacity = 29;
 @implementation AtlasSprite (Remove)
 -(void)setIndex:(int)index
 {
-	_atlasIndex = index;
+	atlasIndex_ = index;
 }
 @end
 
@@ -38,11 +38,11 @@ const int defaultCapacity = 29;
 #pragma mark AtlasSpriteManager
 @implementation AtlasSpriteManager
 
-@synthesize atlas = _textureAtlas;
+@synthesize atlas = textureAtlas_;
 
 -(void)dealloc
 {	
-	[_textureAtlas release];
+	[textureAtlas_ release];
 
 	[super dealloc];
 }
@@ -80,8 +80,8 @@ const int defaultCapacity = 29;
 -(id)initWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
-		_totalSprites = 0;
-		_textureAtlas = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
+		totalSprites_ = 0;
+		textureAtlas_ = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
 		
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
@@ -96,8 +96,8 @@ const int defaultCapacity = 29;
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
 	if( (self=[super init]) ) {
-		_totalSprites = 0;
-		_textureAtlas = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
+		totalSprites_ = 0;
+		textureAtlas_ = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
 		
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
@@ -164,16 +164,16 @@ const int defaultCapacity = 29;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
-	if(_totalSprites == _textureAtlas.capacity)
+	if(totalSprites_ == textureAtlas_.capacity)
 		[self resizeAtlas];
 
 	NSUInteger index = [self indexForNewChildAtZ:z];
 	[child insertInAtlasAtIndex: index];
 
-	if( _textureAtlas.withColorArray )
+	if( textureAtlas_.withColorArray )
 		[child updateColor];
 
-	_totalSprites++;
+	totalSprites_++;
 	[super addChild:child z:z tag:aTag];
 
 	NSUInteger count = [children count];
@@ -200,7 +200,7 @@ const int defaultCapacity = 29;
 	NSUInteger index= sprite.atlasIndex;
 	[super removeChild:sprite cleanup:doCleanup];
 
-	[_textureAtlas removeQuadAtIndex:index];
+	[textureAtlas_ removeQuadAtIndex:index];
 
 	// update all sprites beyond this one
 	NSUInteger count = [children count];
@@ -210,7 +210,7 @@ const int defaultCapacity = 29;
 		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
 		[other setIndex:index];
 	}	
-	_totalSprites--;
+	totalSprites_--;
 }
 
 // override reorderChild
@@ -230,7 +230,7 @@ const int defaultCapacity = 29;
 	
 	if( newAtlasIndex != child.atlasIndex ) {
 
-		[_textureAtlas insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
+		[textureAtlas_ insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
 		
 		// update atlas index
 		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
@@ -251,8 +251,8 @@ const int defaultCapacity = 29;
 {
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
-	_totalSprites = 0;
-	[_textureAtlas removeAllQuads];
+	totalSprites_ = 0;
+	[textureAtlas_ removeAllQuads];
 }
 
 #pragma mark AtlasSpriteManager - draw
@@ -266,21 +266,21 @@ const int defaultCapacity = 29;
 			[child updateColor];
 	}
 
-	if(_totalSprites > 0)
+	if(totalSprites_ > 0)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		
-		if( _textureAtlas.withColorArray )
+		if( textureAtlas_.withColorArray )
 			glEnableClientState(GL_COLOR_ARRAY);
 
 		glEnable(GL_TEXTURE_2D);
 
-		[_textureAtlas drawQuads];
+		[textureAtlas_ drawQuads];
 
 		glDisable(GL_TEXTURE_2D);
 
-		if( _textureAtlas.withColorArray )
+		if( textureAtlas_.withColorArray )
 			glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -293,12 +293,12 @@ const int defaultCapacity = 29;
 	// if we're going beyond the current TextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
 	// this is likely computationally expensive
-	NSUInteger quantity = (_textureAtlas.totalQuads + 1) * 4 / 3;
+	NSUInteger quantity = (textureAtlas_.totalQuads + 1) * 4 / 3;
 
-	CCLOG(@"Resizing TextureAtlas capacity, from [%d] to [%d].", _textureAtlas.totalQuads, quantity);
+	CCLOG(@"Resizing TextureAtlas capacity, from [%d] to [%d].", textureAtlas_.totalQuads, quantity);
 
 
-	if( ! [_textureAtlas resizeCapacity:quantity] ) {
+	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: AltasSpriteManager#resizeAtlas SHALL handle this assert");

@@ -511,6 +511,8 @@ enum {
 //
 @implementation MenuItemToggle
 
+@synthesize subItems = subItems_;
+
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (MenuItem*) item, ...
 {
 	va_list args;
@@ -524,38 +526,38 @@ enum {
 
 -(id) initWithTarget: (id)t selector: (SEL)sel items:(MenuItem*) item vaList: (va_list) args
 {
-	if( !(self=[super initWithTarget:t selector:sel]) )
-		return nil;
+	if( (self=[super initWithTarget:t selector:sel]) ) {
 	
-	subItems = [[NSMutableArray arrayWithCapacity:2] retain];
-	
-	int z = 0;
-	MenuItem *i = item;
-	while(i) {
-		z++;
-		[subItems addObject:i];
-		i = va_arg(args, MenuItem*);
-	}
+		self.subItems = [NSMutableArray arrayWithCapacity:2];
+		
+		int z = 0;
+		MenuItem *i = item;
+		while(i) {
+			z++;
+			[subItems_ addObject:i];
+			i = va_arg(args, MenuItem*);
+		}
 
-	selectedIndex = NSUIntegerMax;
-	[self setSelectedIndex:0];
+		selectedIndex_ = NSUIntegerMax;
+		[self setSelectedIndex:0];
+	}
 	
 	return self;
 }
 
 -(void) dealloc
 {
-	[subItems release];
+	[subItems_ release];
 	[super dealloc];
 }
 
 -(void)setSelectedIndex:(NSUInteger)index
 {
-	if( index != selectedIndex ) {
-		selectedIndex=index;
+	if( index != selectedIndex_ ) {
+		selectedIndex_=index;
 		[self removeChildByTag:kCurrentItem cleanup:NO];
 		
-		MenuItem *item = [subItems objectAtIndex:selectedIndex];
+		MenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
 		[self addChild:item z:0 tag:kCurrentItem];
 		
 		CGSize s = [item contentSize];
@@ -565,18 +567,18 @@ enum {
 
 -(NSUInteger) selectedIndex
 {
-	return selectedIndex;
+	return selectedIndex_;
 }
 
 
 -(void) selected
 {
-	[[subItems objectAtIndex:selectedIndex] selected];
+	[[subItems_ objectAtIndex:selectedIndex_] selected];
 }
 
 -(void) unselected
 {
-	[[subItems objectAtIndex:selectedIndex] unselected];
+	[[subItems_ objectAtIndex:selectedIndex_] unselected];
 }
 
 -(void) activate
@@ -584,7 +586,7 @@ enum {
 	// update index
 	
 	if( isEnabled ) {
-		NSUInteger newIndex = (selectedIndex + 1) % [subItems count];
+		NSUInteger newIndex = (selectedIndex_ + 1) % [subItems_ count];
 		[self setSelectedIndex:newIndex];
 
 		[invocation invoke];
@@ -594,13 +596,13 @@ enum {
 -(void) setIsEnabled: (BOOL)enabled
 {
 	[super setIsEnabled:enabled];
-	for(MenuItem* item in subItems)
+	for(MenuItem* item in subItems_)
 		[item setIsEnabled:enabled];
 }
 
 -(MenuItem*) selectedItem
 {
-	return [subItems objectAtIndex:selectedIndex];
+	return [subItems_ objectAtIndex:selectedIndex_];
 }
 
 -(CGRect) rect
@@ -623,7 +625,7 @@ enum {
 - (void) setOpacity: (GLubyte)newOpacity
 {
 	[super setOpacity:newOpacity];
-	for(MenuItem* item in subItems)
+	for(MenuItem* item in subItems_)
 		[item setOpacity:newOpacity];
 }
 @end
