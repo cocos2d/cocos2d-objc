@@ -42,7 +42,7 @@
 #import <CoreGraphics/CGGeometry.h>
 #import <math.h>
 
-/** Adds to CGPoint structures.
+/** Adds two CGPoint structures.
  @return CGPoint
  @since v0.7.2
  */
@@ -81,6 +81,16 @@ CGPointMult(const CGPoint v, const CGFloat s)
 	return CGPointMake(v.x*s, v.y*s);
 }
 
+/** Calculates midpoint between two points.
+ @return CGPoint
+ @since v0.7.2
+ */
+static inline CGPoint
+CGPointMidpoint(const CGPoint v1, const CGPoint v2)
+{
+	return CGPointMult(CGPointAdd(v1, v2), 0.5f);
+}
+
 /** Performs a dot product between two CGPoint structures.
  @return CGFloat
  @since v0.7.2
@@ -101,7 +111,7 @@ CGPointCross(const CGPoint v1, const CGPoint v2)
 	return v1.x*v2.y - v1.y*v2.x;
 }
 
-/** XXX
+/** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
  @return CGPoint
  @since v0.7.2
  */
@@ -111,7 +121,7 @@ CGPointPerp(const CGPoint v)
 	return CGPointMake(-v.y, v.x);
 }
 
-/** XXX
+/** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
  @return CGPoint
  @since v0.7.2
  */
@@ -121,7 +131,7 @@ CGPointRPerp(const CGPoint v)
 	return CGPointMake(v.y, -v.x);
 }
 
-/** XXX
+/** Calculates the projection of v1 over v2
  @return CGPoint
  @since v0.7.2
  */
@@ -151,27 +161,27 @@ CGPointUnrotate(const CGPoint v1, const CGPoint v2)
 	return CGPointMake(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
 }
 
-/** Calculates the distance between 2 CGPoints
+/** Calculates the square length of a CGPoint (not calling sqrt() )
  @return CGFloat
  @since v0.7.2
  */
 static inline CGFloat
-CGPointDistance(const CGPoint v1, const CGPoint v2)
+CGPointLengthSQ(const CGPoint v)
 {
-	return sqrtf(powf(v1.x - v2.x, 2) + powf(v1.y - v2.y, 2));
+	return CGPointDot(v, v);
 }
 
-/** Calculates the lenght of a CGPoint
+/** Calculates the length of a CGPoint
  @return CGFloat
  @since v0.7.2
  */
 CGFloat CGPointLength(const CGPoint v);
 
-/** Calculates the square lenght of a CGPoint (not calling sqrt() )
+/** Calculates the distance between 2 CGPoints
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CGPointLengthSQ(const CGPoint v);
+CGFloat CGPointDistance(const CGPoint v1, const CGPoint v2);
 
 /** Normalizes a CGPoint
  @return CGPoint
@@ -195,4 +205,4 @@ CGFloat CGPointToAngle(const CGPoint v);
  @return char
  @since v0.7.2
  */
-char *CGPointChar(const CGPoint v);
+const char *CGPointToCString(const CGPoint v);

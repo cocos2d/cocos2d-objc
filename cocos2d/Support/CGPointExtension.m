@@ -31,9 +31,9 @@ CGPointLength(const CGPoint v)
 }
 
 CGFloat
-CGPointLenghtSQ(const CGPoint v)
+CGPointDistance(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointDot(v, v);
+	return CGPointLength(CGPointSub(v1, v2));
 }
 
 CGPoint
@@ -54,8 +54,8 @@ CGPointToAngle(const CGPoint v)
 	return atan2f(v.y, v.x);
 }
 
-char*
-CGPointChar(const CGPoint v)
+const char*
+CGPointToCString(const CGPoint v)
 {
 	static char str[256];
 	sprintf(str, "(% .3f, % .3f)", v.x, v.y);
