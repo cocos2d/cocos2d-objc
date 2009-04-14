@@ -16,7 +16,7 @@ version 0.7.2 - xxx
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
  . Demos: organized tests folder (issue #280)
  . Demos: Atlas and Sprites uses TintBy and TintTo (issue #204)
- . Demos: Menu shows how to use padding (part of issue #249)
+ . Demos: Menu shows how to use padding / dynamic toggle items (part of issue #249, issue #224)
  . Director: Attach uses 'bounds' not 'frame' (issue #233)
  . Documentation: API doc documents free functions (issue #314)
  . Menu: an empty menu can be crated (issue #277)
@@ -27,7 +27,7 @@ version 0.7.2 - xxx
  . Particles: texture is a property (issue #282)
  . Particles: colors and vertices in 1 VBO (issue #246)
  . Scheduler: improved timer performance (issue #309)
- . SoundSupport: supports vorbis codec (issue #XXX)      <------------- XXX CREATE ISSUE XXX
+ . SoundSupport: supports vorbis codec (issue #321)
  . ccArray: a fast alternative to NSMutableArray (issue #304)
  . TextureAtlas: fixed colorarray memory leak (issue #272)
  . TextureAtlas: support for insert,remove,reorder (issue #275)
