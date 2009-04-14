@@ -60,42 +60,38 @@
 
 -(id) initWithTotalParticles:(int) numberOfParticles
 {
-	if( !(self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 
-	totalParticles = numberOfParticles;
-	
-	particles = malloc( sizeof(Particle) * totalParticles );
-	vertices = malloc( sizeof(ccPointSprite) * totalParticles );
-	colors = malloc (sizeof(ccColorF) * totalParticles);
-
-	if( ! ( particles &&vertices && colors ) ) {
-		NSLog(@"Particle system: not enough memory");
-		if( particles )
-			free(particles);
-		if( vertices )
-			free(vertices);
-		if( colors )
-			free(colors);
-		return nil;
-	}
-	
-	bzero( particles, sizeof(Particle) * totalParticles );
-	
-	// default, active
-	active = YES;
-	
-	// default: additive
-	blendAdditive = NO;
-	
-	// default: modulate
-	// XXX: not used
-//	colorModulate = YES;
+		totalParticles = numberOfParticles;
 		
-	glGenBuffers(1, &verticesID);
-	glGenBuffers(1, &colorsID);	
+		particles = malloc( sizeof(Particle) * totalParticles );
+		vertices = malloc( sizeof(ccPointSprite) * totalParticles );
 
-	[self schedule:@selector(step:)];
+		if( ! ( particles &&vertices ) ) {
+			NSLog(@"Particle system: not enough memory");
+			if( particles )
+				free(particles);
+			if( vertices )
+				free(vertices);
+			return nil;
+		}
+		
+		bzero( particles, sizeof(Particle) * totalParticles );
+		
+		// default, active
+		active = YES;
+		
+		// default: additive
+		blendAdditive = NO;
+		
+		// default: modulate
+		// XXX: not used
+	//	colorModulate = YES;
+			
+		glGenBuffers(1, &verticesID);
+
+		[self schedule:@selector(step:)];
+	}
 
 	return self;
 }
@@ -104,9 +100,7 @@
 {
 	free( particles );
 	free(vertices);
-	free(colors);
 	glDeleteBuffers(1, &verticesID);
-	glDeleteBuffers(1, &colorsID);
 
 	[texture release];
 	
@@ -229,9 +223,7 @@
 			vertices[particleIdx].x = p->pos.x;
 			vertices[particleIdx].y = p->pos.y;
 			vertices[particleIdx].size = p->size;
-
-			// colors
-			colors[particleIdx] = p->color;
+			vertices[particleIdx].colors = p->color;
 
 			// update particle counter
 			particleIdx++;
@@ -246,8 +238,6 @@
 
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, colorsID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccColorF)*totalParticles, colors,GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -287,8 +277,7 @@
 	glPointSizePointerOES(GL_FLOAT,sizeof(ccPointSprite),(GLvoid*) (sizeof(GL_FLOAT)*2));
 	
 	glEnableClientState(GL_COLOR_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, colorsID);
-	glColorPointer(4,GL_FLOAT,0,0);
+	glColorPointer(4, GL_FLOAT, sizeof(ccPointSprite),(GLvoid*) (sizeof(GL_FLOAT)*3));
 
 	// save blend state
 //	glGetIntegerv(GL_BLEND_DST, &blendDst);
