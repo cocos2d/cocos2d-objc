@@ -30,9 +30,9 @@ enum {
 @implementation AtlasSprite
 
 @synthesize dirtyColor, dirtyPosition;
-@synthesize atlasIndex = _atlasIndex;
-@synthesize textureRect = _rect;
-@synthesize autoCenterFrames = _autoCenterFrames;
+@synthesize atlasIndex = atlasIndex_;
+@synthesize textureRect = rect_;
+@synthesize autoCenterFrames = autoCenterFrames_;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -42,15 +42,15 @@ enum {
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
-		_textureAtlas = [manager atlas];	// weak reference. Don't release
+		textureAtlas_ = [manager atlas];	// weak reference. Don't release
 		
-		_atlasIndex = kIndexNotInitialized;
+		atlasIndex_ = kIndexNotInitialized;
 
 		dirtyPosition = YES;
 		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
 		
 		// RGB and opacity
-		_r = _g = _b = _opacity = 255;
+		r_ = g_ = b_ = opacity_ = 255;
 		
 		animations = nil;		// lazy alloc
 		[self setTextureRect:rect];
@@ -58,7 +58,7 @@ enum {
 		// default transform anchor: center
 		transformAnchor = CGPointMake( rect.size.width / 2, rect.size.height /2 );
 		
-		_autoCenterFrames = NO;
+		autoCenterFrames_ = NO;
 	}
 
 	return self;
@@ -66,7 +66,7 @@ enum {
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i>", [self class], self, _rect.origin.x, _rect.origin.y, _rect.size.width, _rect.size.height, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i>", [self class], self, rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height, tag];
 }
 
 - (void) dealloc
@@ -82,12 +82,12 @@ enum {
 
 -(void)setTextureRect:(CGRect) rect
 {
-	_rect = rect;
+	rect_ = rect;
 
 	[self updateTextureCoords];
 	
 	// Don't update Atlas if index == -1. issue #283
-	if( _atlasIndex != kIndexNotInitialized)
+	if( atlasIndex_ != kIndexNotInitialized)
 		[self updateAtlas];
 	else
 		dirtyPosition = YES;
@@ -95,13 +95,13 @@ enum {
 
 -(void)updateTextureCoords
 {
-	float atlasWidth = _textureAtlas.texture.pixelsWide;
-	float atlasHeight = _textureAtlas.texture.pixelsHigh;
+	float atlasWidth = textureAtlas_.texture.pixelsWide;
+	float atlasHeight = textureAtlas_.texture.pixelsHigh;
 
-	float left = _rect.origin.x / atlasWidth;
-	float right = (_rect.origin.x + _rect.size.width) / atlasWidth;
-	float top = _rect.origin.y / atlasHeight;
-	float bottom = (_rect.origin.y + _rect.size.height) / atlasHeight;
+	float left = rect_.origin.x / atlasWidth;
+	float right = (rect_.origin.x + rect_.size.width) / atlasWidth;
+	float top = rect_.origin.y / atlasHeight;
+	float bottom = (rect_.origin.y + rect_.size.height) / atlasHeight;
 
 	ccQuad2 newCoords = {
 		left, bottom,
@@ -110,13 +110,13 @@ enum {
 		right, top,
 	};
 
-	_texCoords = newCoords;
+	texCoords_ = newCoords;
 }
 
 -(void) updateColor
 {
-	ccColorB colorQuad = { _r, _g, _b, _opacity};
-	[_textureAtlas updateColorWithColorQuad:&colorQuad atIndex:_atlasIndex];
+	ccColorB colorQuad = { r_, g_, b_, opacity_};
+	[textureAtlas_ updateColorWithColorQuad:&colorQuad atIndex:atlasIndex_];
 	dirtyColor = NO;
 }
 
@@ -134,7 +134,7 @@ enum {
 			0,0,0,			
 		};
 		
-		_vertexCoords = newVertices;
+		vertexCoords_ = newVertices;
 	}
 	
 	// rotation ? -> update: rotation, scale, position
@@ -142,8 +142,8 @@ enum {
 		float x1 = -transformAnchor.x * scaleX;
 		float y1 = -transformAnchor.y * scaleY;
 
-		float x2 = x1 + _rect.size.width * scaleX;
-		float y2 = y1 + _rect.size.height * scaleY;
+		float x2 = x1 + rect_.size.width * scaleX;
+		float y2 = y1 + rect_.size.height * scaleY;
 		float x = position.x;
 		float y = position.y;
 		
@@ -164,7 +164,7 @@ enum {
 					bx, by, 0,
 					dx, dy, 0,
 					cx, cy, 0};
-		_vertexCoords = newVertices;		
+		vertexCoords_ = newVertices;		
 	}
 	
 	// scale ? -> update: scale, position
@@ -175,8 +175,8 @@ enum {
 		
 		float x1 = (x- transformAnchor.x * scaleX);
 		float y1 = (y- transformAnchor.y * scaleY);
-		float x2 = (x1 + _rect.size.width * scaleX);
-		float y2 = (y1 + _rect.size.height * scaleY);
+		float x2 = (x1 + rect_.size.width * scaleX);
+		float y2 = (y1 + rect_.size.height * scaleY);
 		ccQuad3 newVertices = {
 			x1,y1,0,
 			x2,y1,0,
@@ -184,7 +184,7 @@ enum {
 			x2,y2,0,
 		};
 
-		_vertexCoords = newVertices;	
+		vertexCoords_ = newVertices;	
 	}
 	
 	// update position
@@ -194,8 +194,8 @@ enum {
 		
 		float x1 = (x-transformAnchor.x);
 		float y1 = (y-transformAnchor.y);
-		float x2 = (x1 + _rect.size.width);
-		float y2 = (y1 + _rect.size.height);
+		float x2 = (x1 + rect_.size.width);
+		float y2 = (y1 + rect_.size.height);
 		ccQuad3 newVertices = {
 			x1,y1,0,
 			x2,y1,0,
@@ -203,23 +203,23 @@ enum {
 			x2,y2,0,
 		};
 		
-		_vertexCoords = newVertices;
+		vertexCoords_ = newVertices;
 	}
 
-	[_textureAtlas updateQuadWithTexture:&_texCoords vertexQuad:&_vertexCoords atIndex:_atlasIndex];
+	[textureAtlas_ updateQuadWithTexture:&texCoords_ vertexQuad:&vertexCoords_ atIndex:atlasIndex_];
 	dirtyPosition = NO;
 	return;
 }
 
 -(void)updateAtlas
 {
-	[_textureAtlas updateQuadWithTexture:&_texCoords vertexQuad:&_vertexCoords atIndex:_atlasIndex];
+	[textureAtlas_ updateQuadWithTexture:&texCoords_ vertexQuad:&vertexCoords_ atIndex:atlasIndex_];
 }
 
 -(void)insertInAtlasAtIndex:(NSUInteger)index
 {
-	_atlasIndex = index;
-	[_textureAtlas insertQuadWithTexture:&_texCoords vertexQuad:&_vertexCoords atIndex:_atlasIndex];
+	atlasIndex_ = index;
+	[textureAtlas_ insertQuadWithTexture:&texCoords_ vertexQuad:&vertexCoords_ atIndex:atlasIndex_];
 }
 
 //
@@ -287,12 +287,12 @@ enum {
 //
 -(void) setOpacity:(GLubyte) anOpacity
 {
-	_opacity = anOpacity;
+	opacity_ = anOpacity;
 	dirtyColor = YES;
 }
 -(GLubyte)opacity
 {
-	return _opacity;
+	return opacity_;
 }
 
 //
@@ -300,22 +300,22 @@ enum {
 //
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
 {
-	_r = r;
-	_g = g;
-	_b = b;
+	r_ = r;
+	g_ = g;
+	b_ = b;
 	dirtyColor = YES;
 }
 -(GLubyte) r
 {
-	return _r;
+	return r_;
 }
 -(GLubyte) g
 {
-	return _g;
+	return g_;
 }
 -(GLubyte) b
 {
-	return _b;
+	return b_;
 }
 
 //
@@ -323,7 +323,7 @@ enum {
 //
 -(CGSize)contentSize
 {
-	return _rect.size;
+	return rect_.size;
 }
 
 //
@@ -334,7 +334,7 @@ enum {
 	AtlasSpriteFrame *frame = (AtlasSpriteFrame*)newFrame;
 	CGRect rect = [frame rect];
 
-	if( _autoCenterFrames ) {
+	if( autoCenterFrames_ ) {
 		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
 		dirtyPosition = YES;
 	}
@@ -352,7 +352,7 @@ enum {
 	
 	CGRect rect = [frame rect];
 	
-	if( _autoCenterFrames ) {
+	if( autoCenterFrames_ ) {
 		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
 		dirtyPosition = YES;
 	}
@@ -365,12 +365,12 @@ enum {
 {
 	AtlasSpriteFrame *spr = (AtlasSpriteFrame*)frame;
 	CGRect r = [spr rect];
-	return CGRectEqualToRect(r, _rect);
+	return CGRectEqualToRect(r, rect_);
 }
 
 -(id) displayFrame
 {
-	return [AtlasSpriteFrame frameWithRect:_rect];
+	return [AtlasSpriteFrame frameWithRect:rect_];
 }
 // XXX: duplicated code. Sprite.m and AtlasSprite.m share this same piece of code
 -(void) addAnimation: (id<CocosAnimation>) anim

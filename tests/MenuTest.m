@@ -279,11 +279,16 @@ enum {
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:34];
     MenuItemToggle *item4 = [MenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-                             [MenuItemFont itemFromString: @"Off"],
+                             [MenuItemFont itemFromString: @"Off"], nil];
+	
+	NSArray *more_items = [NSArray arrayWithObjects:
                              [MenuItemFont itemFromString: @"33%"],
                              [MenuItemFont itemFromString: @"66%"],
                              [MenuItemFont itemFromString: @"100%"],
                              nil];
+	// TIP: you can manipulate the items like any other NSMutableArray
+	[item4.subItems addObjectsFromArray: more_items];
+	
     // you can change the one of the items by doing this
     item4.selectedIndex = 2;
     
