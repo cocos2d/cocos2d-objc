@@ -112,12 +112,12 @@ typedef struct sParticle
 	
 	// Array of (x,y,size) 
 	ccPointSprite *vertices;
-	// Array of colors
-	ccColorF	*colors;
+//	// Array of colors
+//	ccColorF	*colors;
 	// vertices buffer id
 	GLuint	verticesID;
-	// colors buffer id
-	GLuint	colorsID;
+//	// colors buffer id
+//	GLuint	colorsID;
 	
 	//  particle idx
 	int particleIdx;

@@ -26,6 +26,7 @@ version 0.7.2 - xxx
  . Particles: Use by default fire.pvr (issue #276)
  . Particles: resetSystem actually resets the system (issue #252)
  . Particles: texture is a property (issue #282)
+ . Particles: colors and vertices in 1 VBO (issue #246)
  . Scheduler: improved timer performance (issue #309)
  . SoundSupport: supports vorbis codec (issue #XXX)      <------------- XXX CREATE ISSUE XXX
  . ccArray: a fast alternative to NSMutableArray (issue #304)

@@ -47,6 +47,7 @@ typedef struct _ccPointSprite
 	float x;
 	float y;
 	float size;
+	ccColorF colors;
 } ccPointSprite;
 
 //!	A 2D Quad. 8 floats
