@@ -53,12 +53,12 @@ enum {
 		r_ = g_ = b_ = opacity_ = 255;
 		
 		animations = nil;		// lazy alloc
-		[self setTextureRect:rect];
 		
 		// default transform anchor: center
-		transformAnchor = CGPointMake( rect.size.width / 2, rect.size.height /2 );
-		
+		transformAnchor = CGPointMake( rect.size.width / 2, rect.size.height /2 );		
 		autoCenterFrames_ = NO;
+		
+		[self setTextureRect:rect];
 	}
 
 	return self;
@@ -91,6 +91,12 @@ enum {
 		[self updateAtlas];
 	else
 		dirtyPosition = YES;
+	
+	// add these lines	
+	if( autoCenterFrames_ ) {
+		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
+		dirtyPosition = YES;
+	}	
 }
 
 -(void)updateTextureCoords
@@ -334,11 +340,6 @@ enum {
 	AtlasSpriteFrame *frame = (AtlasSpriteFrame*)newFrame;
 	CGRect rect = [frame rect];
 
-	if( autoCenterFrames_ ) {
-		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
-		dirtyPosition = YES;
-	}
-
 	[self setTextureRect: rect];	
 }
 
@@ -351,12 +352,7 @@ enum {
 	AtlasSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	
 	CGRect rect = [frame rect];
-	
-	if( autoCenterFrames_ ) {
-		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
-		dirtyPosition = YES;
-	}
-	
+
 	[self setTextureRect: rect];
 	
 }
