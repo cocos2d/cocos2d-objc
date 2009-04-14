@@ -4,18 +4,6 @@ Steps to convert a game based on cocos2d v0.7.1 to v0.7.2
 // NEEDED CHANGES
 //
 
-Menu:
------
-Menu#alignItemsVertically was fixed, and now really aligns the items in the center of the screen.
-
-Your menu will have a new position in v0.7.2
-To reposition your menu to the same as in v0.7.1 do this:
-
-    // Only if your menu was vertically aligned
-    CGPoint pos = menu.position
-    menu.position = CGPointAdd( pos, CGPointMake(0,10));
-
-
 Sprite & AtlasSprite:
 ---------------------
   * If you want to auto-center the frames when using animation (or using setDisplayFrame:)
