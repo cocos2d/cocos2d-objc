@@ -73,6 +73,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuItem supports LabelAtlas
 		Added RGB protocol in CocosNode, Atlas, Texture
 		Particle reset system works as expected
+		CocosNode: fixed "already scheduled exception" bug
 	* mark at abitofthought: author of Fast Director
 	* Mitch: patches for Menu
 		 author of MenuItemToggle
