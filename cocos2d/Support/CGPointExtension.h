@@ -28,57 +28,70 @@
 
 /**
  @file
- CGPoint extentions based on Chipmunk's cpVect file.
+ CGPoint extensions based on Chipmunk's cpVect file.
  These extensions work both with CGPoint and cpVect.
  
  Examples:
-  - CGPointAdd( CGPointMake(1,1), CGPointMake(2,2) );  // CG way (prefered way)
-  - cpvadd( cpv(1,1), cpv(2,2) ); // chipmunk's way
-  - CGPointAdd( cpv(1,1), cpv(2,2) );  // mixing chipmunk and CG (avoid)
-  - cpvadd( CGPointMake(1,1), CGPointMake(2,2) );  // mixing chipmunk and CG (avoid)
+  - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos way
+  - ccpAdd( CGPointMake(1,1), CGPointMake(2,2) ); // also ok but more verbose
+  
+  - cpvadd( cpv(1,1), cpv(2,2) ); // way of the chipmunk
+  - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos (avoid)
+  - cpvadd( CGPointMake(1,1), CGPointMake(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
 
 #import <CoreGraphics/CGGeometry.h>
 #import <math.h>
 
-/** Adds two CGPoint structures.
- @return CGPoint
- @since v0.7.2
- */
-static inline CGPoint CGPointAdd(const CGPoint v1, const CGPoint v2)
-{
-	return CGPointMake(v1.x + v2.x, v1.y + v2.y);
-}
-
-/** Negates a CGPoint structures.
+/** Alias for CGPointMake.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-CGPointNeg(const CGPoint v)
+ccp(CGFloat x, CGFloat y)
 {
-	return CGPointMake(-v.x, -v.y);
+	return CGPointMake(x, y);
 }
 
-/** Subtracts two CGPoint structures.
+/** Returns opposite of point.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-CGPointSub(const CGPoint v1, const CGPoint v2)
+ccpNeg(const CGPoint v)
 {
-	return CGPointMake(v1.x - v2.x, v1.y - v2.y);
+	return ccp(-v.x, -v.y);
 }
 
-/** Multiplies a CGPoint structure with an scalar.
+/** Calculates sum of two points.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-CGPointMult(const CGPoint v, const CGFloat s)
+ccpSum(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointMake(v.x*s, v.y*s);
+	return ccp(v1.x + v2.x, v1.y + v2.y);
+}
+
+/** Calculates difference of two points.
+ @return CGPoint
+ @since v0.7.2
+ */
+static inline CGPoint
+ccpDiff(const CGPoint v1, const CGPoint v2)
+{
+	return ccp(v1.x - v2.x, v1.y - v2.y);
+}
+
+/** Returns point scaled by given factor.
+ @return CGPoint
+ @since v0.7.2
+ */
+static inline CGPoint
+ccpScaled(const CGPoint v, const CGFloat s)
+{
+	return ccp(v.x*s, v.y*s);
 }
 
 /** Calculates midpoint between two points.
@@ -86,27 +99,27 @@ CGPointMult(const CGPoint v, const CGFloat s)
  @since v0.7.2
  */
 static inline CGPoint
-CGPointMidpoint(const CGPoint v1, const CGPoint v2)
+ccpMidpoint(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointMult(CGPointAdd(v1, v2), 0.5f);
+	return ccpScaled(ccpSum(v1, v2), 0.5f);
 }
 
-/** Performs a dot product between two CGPoint structures.
+/** Calculates dot product of two points.
  @return CGFloat
  @since v0.7.2
  */
 static inline CGFloat
-CGPointDot(const CGPoint v1, const CGPoint v2)
+ccpDot(const CGPoint v1, const CGPoint v2)
 {
 	return v1.x*v2.x + v1.y*v2.y;
 }
 
-/** Performs a cross product between two CGPoint structures.
+/** Calculates cross product of two points.
  @return CGFloat
  @since v0.7.2
  */
 static inline CGFloat
-CGPointCross(const CGPoint v1, const CGPoint v2)
+ccpCross(const CGPoint v1, const CGPoint v2)
 {
 	return v1.x*v2.y - v1.y*v2.x;
 }
@@ -116,9 +129,9 @@ CGPointCross(const CGPoint v1, const CGPoint v2)
  @since v0.7.2
  */
 static inline CGPoint
-CGPointPerp(const CGPoint v)
+ccpPerp(const CGPoint v)
 {
-	return CGPointMake(-v.y, v.x);
+	return ccp(-v.y, v.x);
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
@@ -126,39 +139,39 @@ CGPointPerp(const CGPoint v)
  @since v0.7.2
  */
 static inline CGPoint
-CGPointRPerp(const CGPoint v)
+ccpRPerp(const CGPoint v)
 {
-	return CGPointMake(v.y, -v.x);
+	return ccp(v.y, -v.x);
 }
 
-/** Calculates the projection of v1 over v2
+/** Calculates the projection of v1 over v2.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-CGPointProject(const CGPoint v1, const CGPoint v2)
+ccpProject(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointMult(v2, CGPointDot(v1, v2)/CGPointDot(v2, v2));
+	return ccpScaled(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
 }
 
-/** Rotates two CGPoint structures.
+/** Rotates two points.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-CGPointRotate(const CGPoint v1, const CGPoint v2)
+ccpRotate(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointMake(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
+	return ccp(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
 }
 
-/** Unrotates tow CGPoint structures.
+/** Unrotates two points.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-CGPointUnrotate(const CGPoint v1, const CGPoint v2)
+ccpUnrotate(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointMake(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
+	return ccp(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
 }
 
 /** Calculates the square length of a CGPoint (not calling sqrt() )
@@ -166,43 +179,37 @@ CGPointUnrotate(const CGPoint v1, const CGPoint v2)
  @since v0.7.2
  */
 static inline CGFloat
-CGPointLengthSQ(const CGPoint v)
+ccpLengthSQ(const CGPoint v)
 {
-	return CGPointDot(v, v);
+	return ccpDot(v, v);
 }
 
-/** Calculates the length of a CGPoint
+/** Calculates distance between point an origin
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CGPointLength(const CGPoint v);
+CGFloat ccpLength(const CGPoint v);
 
-/** Calculates the distance between 2 CGPoints
+/** Calculates the distance between two points
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CGPointDistance(const CGPoint v1, const CGPoint v2);
+CGFloat ccpDistance(const CGPoint v1, const CGPoint v2);
 
-/** Normalizes a CGPoint
+/** Returns point scaled to a length of 1.
  @return CGPoint
  @since v0.7.2
  */
-CGPoint CGPointNormalize(const CGPoint v);
+CGPoint ccpNormalized(const CGPoint v);
 
-/** Converts radians to a normalized vector
+/** Converts radians to a normalized vector.
  @return CGPoint
  @since v0.7.2
  */
-CGPoint CGPointForAngle(const CGFloat a);
+CGPoint ccpForAngle(const CGFloat a);
 
-/** Converts a vector to radians
+/** Converts a vector to radians.
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CGPointToAngle(const CGPoint v);
-
-/** Gets a string representation of a vector
- @return char
- @since v0.7.2
- */
-const char *CGPointToCString(const CGPoint v);
+CGFloat ccpToAngle(const CGPoint v);

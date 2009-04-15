@@ -25,39 +25,31 @@
 #include "CGPointExtension.h"
 
 CGFloat
-CGPointLength(const CGPoint v)
+ccpLength(const CGPoint v)
 {
-	return sqrtf( CGPointDot(v, v) );
+	return sqrtf(ccpLengthSQ(v));
 }
 
 CGFloat
-CGPointDistance(const CGPoint v1, const CGPoint v2)
+ccpDistance(const CGPoint v1, const CGPoint v2)
 {
-	return CGPointLength(CGPointSub(v1, v2));
+	return ccpLength(ccpDiff(v1, v2));
 }
 
 CGPoint
-CGPointNormalize(const CGPoint v)
+ccpNormalized(const CGPoint v)
 {
-	return CGPointMult( v, 1.0f/CGPointLength(v) );
+	return ccpScaled(v, 1.0f/ccpLength(v));
 }
 
 CGPoint
-CGPointForAngle(const CGFloat a)
+ccpForAngle(const CGFloat a)
 {
-	return CGPointMake(cosf(a), sinf(a));
+	return ccp(cosf(a), sinf(a));
 }
 
 CGFloat
-CGPointToAngle(const CGPoint v)
+ccpToAngle(const CGPoint v)
 {
 	return atan2f(v.y, v.x);
-}
-
-const char*
-CGPointToCString(const CGPoint v)
-{
-	static char str[256];
-	sprintf(str, "(% .3f, % .3f)", v.x, v.y);
-	return str;
 }
