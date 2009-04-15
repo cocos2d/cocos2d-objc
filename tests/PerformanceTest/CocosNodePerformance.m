@@ -10,7 +10,7 @@
 - (void)performanceActions
 {
 	CGSize size = [[Director sharedDirector] winSize];
-	self.position = CGPointMake(random() % (int)size.width, random() % (int)size.height);
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 
 	float period = 0.5f + (random() % 1000) / 500.0f;
 	id rot = [RotateBy actionWithDuration:period angle: 360.0f * CCRANDOM_0_1()];
@@ -28,9 +28,9 @@
 {
 	CGSize size = [[Director sharedDirector] winSize];
 	if( CCRANDOM_0_1() < 0.2f )
-		self.position = CGPointMake(random() % (int)size.width, random() % (int)size.height);	
+		self.position = ccp(random() % (int)size.width, random() % (int)size.height);	
 	else
-		self.position = CGPointMake( -1000, -1000);
+		self.position = ccp( -1000, -1000);
 	
 	float period = 0.5f + (random() % 1000) / 500.0f;
 	id rot = [RotateBy actionWithDuration:period angle: 360.0f * CCRANDOM_0_1()];
@@ -47,7 +47,7 @@
 - (void)performanceRotationScale
 {
 	CGSize size = [[Director sharedDirector] winSize];
-	self.position = CGPointMake(random() % (int)size.width, random() % (int)size.height);
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 	self.rotation = CCRANDOM_0_1() * 360;
 	self.scale = CCRANDOM_0_1() * 2;
 }
@@ -55,7 +55,7 @@
 - (void)performancePosition
 {
 	CGSize size = [[Director sharedDirector] winSize];
-	self.position = CGPointMake(random() % (int)size.width, random() % (int)size.height);	
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);	
 }
 
 - (void)performanceout20
@@ -63,22 +63,22 @@
 	CGSize size = [[Director sharedDirector] winSize];
 	
 	if( CCRANDOM_0_1() < 0.2f )
-		self.position = CGPointMake(random() % (int)size.width, random() % (int)size.height);	
+		self.position = ccp(random() % (int)size.width, random() % (int)size.height);	
 	else
-		self.position = CGPointMake( -1000, -1000);
+		self.position = ccp( -1000, -1000);
 }
 
 - (void)performanceOut100
 {
 	
-	self.position = CGPointMake( -1000, -1000);
+	self.position = ccp( -1000, -1000);
 }
 
 
 - (void)performanceScale
 {
 	CGSize size = [[Director sharedDirector] winSize];
-	self.position = CGPointMake(random() % (int)size.width, random() % (int)size.height);	
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);	
 	self.scale = CCRANDOM_0_1() * 100 / 50;
 }
 @end

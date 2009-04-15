@@ -206,7 +206,7 @@ Class restartTransition()
 
 		Label* label = [Label labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
 
-		[label setPosition: CGPointMake(x/2,y/2)];	
+		[label setPosition: ccp(x/2,y/2)];	
 		[self addChild: label];
 		
 		// menu
@@ -215,9 +215,9 @@ Class restartTransition()
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = CGPointMake(480/2-100,30);
-		item2.position = CGPointMake(480/2, 30);
-		item3.position = CGPointMake(480/2+100,30);
+		item1.position = ccp(480/2-100,30);
+		item2.position = ccp(480/2, 30);
+		item3.position = ccp(480/2+100,30);
 		[self addChild: menu z:1];
 	}
 	
@@ -265,7 +265,7 @@ Class restartTransition()
 		
 		Label* label = [Label labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];
 		
-		[label setPosition: CGPointMake(x/2,y/2)];
+		[label setPosition: ccp(x/2,y/2)];
 		[self addChild: label];
 		
 		// menu
@@ -274,9 +274,9 @@ Class restartTransition()
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = CGPointMake(480/2-100,30);
-		item2.position = CGPointMake(480/2, 30);
-		item3.position = CGPointMake(480/2+100,30);
+		item1.position = ccp(480/2-100,30);
+		item2.position = ccp(480/2, 30);
+		item3.position = ccp(480/2+100,30);
 		[self addChild: menu z:1];
 
 	}

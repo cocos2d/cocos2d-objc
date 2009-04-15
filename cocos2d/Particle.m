@@ -133,7 +133,7 @@
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * CCRANDOM_MINUS1_1();
-	particle->dir = CGPointMult( v, s );
+	particle->dir = ccpMult( v, s );
 	
 	// radial accel
 	particle->radialAccel = radialAccel + radialAccelVar * CCRANDOM_MINUS1_1();
@@ -195,22 +195,22 @@
 			radial = CGPointZero;
 			// radial acceleration
 			if(p->pos.x || p->pos.y)
-				radial = CGPointNormalize(p->pos);
+				radial = ccpNormalize(p->pos);
 			tangential = radial;
-			radial = CGPointMult(radial, p->radialAccel);
+			radial = ccpMult(radial, p->radialAccel);
 
 			// tangential acceleration
 			float newy = tangential.x;
 			tangential.x = -tangential.y;
 			tangential.y = newy;
-			tangential = CGPointMult(tangential, p->tangentialAccel);
+			tangential = ccpMult(tangential, p->tangentialAccel);
 
 			// (gravity + radial + tangential) * dt
-			tmp = CGPointAdd( CGPointAdd( radial, tangential), gravity);
-			tmp = CGPointMult( tmp, dt);
-			p->dir = CGPointAdd( p->dir, tmp);
-			tmp = CGPointMult(p->dir, dt);
-			p->pos = CGPointAdd( p->pos, tmp );
+			tmp = ccpAdd( ccpAdd( radial, tangential), gravity);
+			tmp = ccpMult( tmp, dt);
+			p->dir = ccpAdd( p->dir, tmp);
+			tmp = ccpMult(p->dir, dt);
+			p->pos = ccpAdd( p->pos, tmp );
 
 			p->color.r += (p->deltaColor.r * dt);
 			p->color.g += (p->deltaColor.g * dt);

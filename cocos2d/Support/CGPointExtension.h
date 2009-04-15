@@ -31,28 +31,27 @@
  CGPoint extensions based on Chipmunk's cpVect file.
  These extensions work both with CGPoint and cpVect.
  
+ The "ccp" prefix means: "CoCos2d Point"
+ 
  Examples:
-  - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos way
-  - ccpAdd( CGPointMake(1,1), CGPointMake(2,2) ); // also ok but more verbose
+  - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos2d way
+  - ccpAdd( ccp(1,1), ccp(2,2) ); // also ok but more verbose
   
   - cpvadd( cpv(1,1), cpv(2,2) ); // way of the chipmunk
-  - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos (avoid)
-  - cpvadd( CGPointMake(1,1), CGPointMake(2,2) ); // mixing chipmunk and CG (avoid)
+  - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)
+  - cpvadd( ccp(1,1), ccp(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
 
 #import <CoreGraphics/CGGeometry.h>
 #import <math.h>
 
-/** Alias for CGPointMake.
+/** Helper macro that creates a CGPoint
  @return CGPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccp(CGFloat x, CGFloat y)
-{
-	return CGPointMake(x, y);
-}
+#define ccp(__X__,__Y__) CGPointMake(__X__,__Y__)
+
 
 /** Returns opposite of point.
  @return CGPoint
@@ -69,7 +68,7 @@ ccpNeg(const CGPoint v)
  @since v0.7.2
  */
 static inline CGPoint
-ccpSum(const CGPoint v1, const CGPoint v2)
+ccpAdd(const CGPoint v1, const CGPoint v2)
 {
 	return ccp(v1.x + v2.x, v1.y + v2.y);
 }
@@ -79,17 +78,17 @@ ccpSum(const CGPoint v1, const CGPoint v2)
  @since v0.7.2
  */
 static inline CGPoint
-ccpDiff(const CGPoint v1, const CGPoint v2)
+ccpSub(const CGPoint v1, const CGPoint v2)
 {
 	return ccp(v1.x - v2.x, v1.y - v2.y);
 }
 
-/** Returns point scaled by given factor.
+/** Returns point multiplied by given factor.
  @return CGPoint
  @since v0.7.2
  */
 static inline CGPoint
-ccpScaled(const CGPoint v, const CGFloat s)
+ccpMult(const CGPoint v, const CGFloat s)
 {
 	return ccp(v.x*s, v.y*s);
 }
@@ -101,7 +100,7 @@ ccpScaled(const CGPoint v, const CGFloat s)
 static inline CGPoint
 ccpMidpoint(const CGPoint v1, const CGPoint v2)
 {
-	return ccpScaled(ccpSum(v1, v2), 0.5f);
+	return ccpMult(ccpAdd(v1, v2), 0.5f);
 }
 
 /** Calculates dot product of two points.
@@ -151,7 +150,7 @@ ccpRPerp(const CGPoint v)
 static inline CGPoint
 ccpProject(const CGPoint v1, const CGPoint v2)
 {
-	return ccpScaled(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
+	return ccpMult(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
 }
 
 /** Rotates two points.
@@ -196,11 +195,11 @@ CGFloat ccpLength(const CGPoint v);
  */
 CGFloat ccpDistance(const CGPoint v1, const CGPoint v2);
 
-/** Returns point scaled to a length of 1.
+/** Returns point multiplied to a length of 1.
  @return CGPoint
  @since v0.7.2
  */
-CGPoint ccpNormalized(const CGPoint v);
+CGPoint ccpNormalize(const CGPoint v);
 
 /** Converts radians to a normalized vector.
  @return CGPoint

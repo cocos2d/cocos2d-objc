@@ -18,7 +18,7 @@
   
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label];
-	[label setPosition: CGPointMake(s.width/2, s.height-50)];
+	[label setPosition: ccp(s.width/2, s.height-50)];
   
 	return self;
 }
@@ -38,12 +38,12 @@
   // the root object just rotates around
 	root = [[Sprite spriteWithFile:@"r1.png"] retain];
 	[self addChild: root z:1];
-	[root setPosition: CGPointMake(s.width/2, s.height/2)];
+	[root setPosition: ccp(s.width/2, s.height/2)];
   
   // the target object is offset from root, and the streak is moved to follow it
   target = [Sprite spriteWithFile:@"r1.png"];
   [root addChild:target];
-  [target setPosition:CGPointMake(100,0)];
+  [target setPosition:ccp(100,0)];
   // create the streak object and add it to the scene
   streak = [MotionStreak streakWithFade:3 minSeg:3 image:@"streak.png" width:32 length:32 color:0xFFFFFF];
   [self addChild:streak];
@@ -53,7 +53,7 @@
 	id a1 = [RotateBy actionWithDuration:2 angle:360];
   
 	id action1 = [RepeatForever actionWithAction:a1];
-	id motion = [MoveBy actionWithDuration:2 position:CGPointMake(100,0)];
+	id motion = [MoveBy actionWithDuration:2 position:ccp(100,0)];
 	[root runAction:[RepeatForever actionWithAction:[Sequence actions:motion, [motion reverse], nil]]];
 	[root runAction:action1];
 }

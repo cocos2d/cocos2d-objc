@@ -88,9 +88,9 @@
 
 -(float)sideOfLine:(CGPoint)p l1:(CGPoint)l1 l2:(CGPoint)l2
 {
-  CGPoint vp = CGPointPerp(CGPointSub(l1, l2));
-  CGPoint vx = CGPointSub(p, l1);
-  return CGPointDot(vx, vp);
+  CGPoint vp = ccpPerp(ccpSub(l1, l2));
+  CGPoint vx = ccpSub(p, l1);
+  return ccpDot(vx, vp);
 }
 
 // adds a new segment to the ribbon
@@ -106,10 +106,10 @@
     return;
   }
   
-  CGPoint sub = CGPointSub(mLastLocation, location);
-  float r = CGPointToAngle(sub) + 1.57079637f;
-  CGPoint p1 = CGPointAdd([self rotatePoint:CGPointMake(-w, 0) rotation:r], location);
-  CGPoint p2 = CGPointAdd([self rotatePoint:CGPointMake(w, 0) rotation:r], location);
+  CGPoint sub = ccpSub(mLastLocation, location);
+  float r = ccpToAngle(sub) + 1.57079637f;
+  CGPoint p1 = ccpAdd([self rotatePoint:ccp(-w, 0) rotation:r], location);
+  CGPoint p2 = ccpAdd([self rotatePoint:ccp(w, 0) rotation:r], location);
   float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
   float tend = mTexVPos + len/mTextureLength;
   RibbonSegment* seg;
@@ -166,8 +166,8 @@
   if (seg->end == 0)
   {
     // first edge has to get rotation from the first real polygon
-    CGPoint lp1 = CGPointAdd([self rotatePoint:CGPointMake(-mLastWidth, 0) rotation:r], mLastLocation);
-    CGPoint lp2 = CGPointAdd([self rotatePoint:CGPointMake(+mLastWidth, 0) rotation:r], mLastLocation);
+    CGPoint lp1 = ccpAdd([self rotatePoint:ccp(-mLastWidth, 0) rotation:r], mLastLocation);
+    CGPoint lp2 = ccpAdd([self rotatePoint:ccp(+mLastWidth, 0) rotation:r], mLastLocation);
     seg->creationTime[0] = mCurTime - mDelta;
     seg->verts[0] = lp1.x;
     seg->verts[1] = lp1.y;

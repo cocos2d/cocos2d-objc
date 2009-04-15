@@ -235,8 +235,8 @@ typedef struct
 	{
 		for( j = 0; j < gridSize.y; j++ )
 		{
-			tileArray->position = CGPointMake(i,j);
-			tileArray->startPosition = CGPointMake(i,j);
+			tileArray->position = ccp(i,j);
+			tileArray->startPosition = ccp(i,j);
 			tileArray->delta = [self getDelta:ccg(i,j)];
 			tileArray++;
 		}
@@ -253,7 +253,7 @@ typedef struct
 	{
 		for( j = 0; j < gridSize.y; j++ )
 		{
-			tileArray->position = CGPointMult( CGPointMake(tileArray->delta.x, tileArray->delta.y), time);
+			tileArray->position = ccpMult( ccp(tileArray->delta.x, tileArray->delta.y), time);
 			[self placeTile:ccg(i,j) tile:*tileArray];
 			tileArray++;
 		}
@@ -268,7 +268,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	CGPoint	n = CGPointMult( CGPointMake(gridSize.x,gridSize.y), time);
+	CGPoint	n = ccpMult( ccp(gridSize.x,gridSize.y), time);
 	if ( (n.x+n.y) == 0.0f )
 		return 1.0f;
 	return powf( (pos.x+pos.y) / (n.x+n.y), 6 );
@@ -332,7 +332,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	CGPoint	n = CGPointMult(CGPointMake(gridSize.x, gridSize.y), (1.0f-time));
+	CGPoint	n = ccpMult(ccp(gridSize.x, gridSize.y), (1.0f-time));
 	
 	if ( (pos.x+pos.y) == 0 )
 		return 1.0f;
@@ -347,7 +347,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	CGPoint	n = CGPointMult(CGPointMake(gridSize.x, gridSize.y), time);
+	CGPoint	n = ccpMult(ccp(gridSize.x, gridSize.y), time);
 	if ( n.y == 0 )
 		return 1.0f;
 	return powf( pos.y / n.y, 6 );
@@ -373,7 +373,7 @@ typedef struct
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
-	CGPoint	n = CGPointMult(CGPointMake(gridSize.x,gridSize.y), (1.0f - time));
+	CGPoint	n = ccpMult(ccp(gridSize.x,gridSize.y), (1.0f - time));
 	if ( pos.y == 0 )
 		return 1.0f;
 	return powf( n.y / pos.y, 6 );

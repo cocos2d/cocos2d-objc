@@ -27,6 +27,7 @@
 #import "Support/glu.h"
 #import "Support/OpenGL_Internal.h"
 #import "Support/Texture2D.h"
+#import "Support/CGPointExtension.h"
 
 #import "Layer.h"
 
@@ -494,7 +495,7 @@ static Director *_sharedDirector = nil;
 {
 	int newY = _openGLView.frame.size.height - p.y;
 	
-	CGPoint ret = CGPointMake( p.x, newY );
+	CGPoint ret = ccp( p.x, newY );
 	if( ! landscape )
 	{
 		ret = ret;
@@ -835,7 +836,7 @@ static Director *_sharedDirector = nil;
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	
 	glColor4ub(224,224,244,200);
-	[texture drawAtPoint: CGPointMake(5,2)];
+	[texture drawAtPoint: ccp(5,2)];
 	[texture release];
 	
 	glDisable(GL_TEXTURE_2D);

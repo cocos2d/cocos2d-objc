@@ -66,7 +66,7 @@ Class restartAction()
 	
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
-		[label setPosition: CGPointMake(s.width/2, s.height-50)];
+		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -75,9 +75,9 @@ Class restartAction()
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 		
 		menu.position = CGPointZero;
-		item1.position = CGPointMake( s.width/2 - 100,30);
-		item2.position = CGPointMake( s.width/2, 30);
-		item3.position = CGPointMake( s.width/2 + 100,30);
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:-1];	
 	}
 
@@ -131,10 +131,10 @@ Class restartAction()
 	point1.scale = 0.25f;
 	point2.scale = 0.25f;
 
-	sp1.position = CGPointMake(100, s.height /2 );
+	sp1.position = ccp(100, s.height /2 );
 	point1.position = sp1.position;
 	
-	sp2.position = CGPointMake(380, s.height /2 );
+	sp2.position = ccp(380, s.height /2 );
 	point2.position = sp2.position;
 	
 	sp2.transformAnchor = CGPointZero;
@@ -176,8 +176,8 @@ Class restartAction()
 	Sprite *sp3 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	Sprite *sp4 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	
-	sp1.position = CGPointMake(100, s.height /2 );
-	sp2.position = CGPointMake(380, s.height /2 );
+	sp1.position = ccp(100, s.height /2 );
+	sp2.position = ccp(380, s.height /2 );
 	[self addChild: sp1];
 	[self addChild: sp2];
 	
@@ -220,9 +220,9 @@ Class restartAction()
 	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	Sprite *sp3 = [Sprite spriteWithFile:@"grossini.png"];
 	
-	sp1.position = CGPointMake(20,80);
-	sp2.position = CGPointMake(70,50);
-	sp3.position = CGPointMake(s.width/2, s.height/2);
+	sp1.position = ccp(20,80);
+	sp2.position = ccp(70,50);
+	sp3.position = ccp(s.width/2, s.height/2);
 	
 	// these tags belong to sp3 (kTagSprite1, kTagSprite2)
 	[sp3 addChild:sp1 z:-1 tag:kTagSprite1];
@@ -265,8 +265,8 @@ Class restartAction()
 	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	
-	sp1.position = CGPointMake(100,160);
-	sp2.position = CGPointMake(380,160);
+	sp1.position = ccp(100,160);
+	sp2.position = ccp(380,160);
 	
 	[self addChild:sp1 z:0 tag:2];
 	[self addChild:sp2 z:0 tag:3];
@@ -305,8 +305,8 @@ Class restartAction()
 		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 		Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 		
-		sp1.position = CGPointMake(100,160);
-		sp2.position = CGPointMake(380,160);
+		sp1.position = ccp(100,160);
+		sp2.position = ccp(380,160);
 
 		id rot = [RotateBy actionWithDuration:2 angle:360];
 		id rot_back = [rot reverse];
@@ -363,8 +363,8 @@ Class restartAction()
 		Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 		Sprite *sp21 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 		
-		sp1.position = CGPointMake(100,160);
-		sp2.position = CGPointMake(380,160);
+		sp1.position = ccp(100,160);
+		sp2.position = ccp(380,160);
 		
 		
 		id rot = [RotateBy actionWithDuration:2 angle:360];

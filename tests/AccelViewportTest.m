@@ -29,24 +29,24 @@ float randfloat() {
 	[clouds setScale: CLOUDS_SCALE];
 	
 	CGSize cs = clouds.texture.contentSize;
-	cloudsSize = CGPointMake(cs.width, cs.height);
+	cloudsSize = ccp(cs.width, cs.height);
 	[self addChild: clouds z:0];
 
 	CGSize s = [[Director sharedDirector] winSize];
-	screenSize = CGPointMake(s.width, s.height);
+	screenSize = ccp(s.width, s.height);
 	
-	halfCloudsSize = CGPointMult(cloudsSize, 0.5f*CLOUDS_SCALE);
-	CGPoint halfScreenSize = CGPointMult(screenSize, 0.5f);
+	halfCloudsSize = ccpMult(cloudsSize, 0.5f*CLOUDS_SCALE);
+	CGPoint halfScreenSize = ccpMult(screenSize, 0.5f);
 	cloudsCentered = halfScreenSize;
-	CGPoint tl = CGPointAdd(CGPointSub(cloudsCentered, halfCloudsSize), halfScreenSize);
-	CGPoint br = CGPointSub(CGPointAdd(cloudsCentered, halfCloudsSize), halfScreenSize);
+	CGPoint tl = ccpAdd(ccpSub(cloudsCentered, halfCloudsSize), halfScreenSize);
+	CGPoint br = ccpSub(ccpAdd(cloudsCentered, halfCloudsSize), halfScreenSize);
 	visibleArea = cpBBNew(tl.x, tl.y, br.x, br.y);
 	
 	[clouds setPosition: cloudsCentered];
 	cloudsPos = cloudsCentered;
 
 	for (int n=0; n<NUM_GROSSINIS; n++) {
-		CGPoint pos = CGPointMake((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
+		CGPoint pos = ccp((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
 		grossini[n] = [self addNewSpritePosition:pos scale:0.15];
 		[grossini[n] runAction:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
 	}
@@ -56,7 +56,7 @@ float randfloat() {
 	
 	label = [Label labelWithString:info fontName:@"Arial" fontSize:16];
 	[self addChild: label];
-	[label setPosition: CGPointMake(s.width/2, s.height-50)];
+	[label setPosition: ccp(s.width/2, s.height-50)];
 	return self;
 }
 
@@ -87,10 +87,10 @@ float randfloat() {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 
 	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
-	CGPoint location = CGPointMake(touchLocation.x, touchLocation.y);
-	location = CGPointSub(location, cloudsPos);
-	location = CGPointMult(location, 1.0f/CLOUDS_SCALE);
-	location = CGPointAdd(location, CGPointMult(cloudsSize, 0.5f));
+	CGPoint location = ccp(touchLocation.x, touchLocation.y);
+	location = ccpSub(location, cloudsPos);
+	location = ccpMult(location, 1.0f/CLOUDS_SCALE);
+	location = ccpAdd(location, ccpMult(cloudsSize, 0.5f));
 
 	NSString *info = [ NSString stringWithFormat: @"(%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f)", 
 					   touchLocation.x, touchLocation.y, cloudsSize.x, cloudsSize.y,
@@ -111,14 +111,14 @@ float randfloat() {
 	accels[1] = acceleration.y * kFilteringFactor + accels[1] * (1.0f - kFilteringFactor);
 	accels[2] = acceleration.z * kFilteringFactor + accels[2] * (1.0f - kFilteringFactor);
 	
-	CGPoint tmp = CGPointMake( (float) (cloudsSize.x*ACC_FACTOR*accels[1]), (float) (cloudsSize.y*ACC_FACTOR*-accels[0]));
-	CGPoint dest = CGPointAdd( cloudsCentered, tmp );
+	CGPoint tmp = ccp( (float) (cloudsSize.x*ACC_FACTOR*accels[1]), (float) (cloudsSize.y*ACC_FACTOR*-accels[0]));
+	CGPoint dest = ccpAdd( cloudsCentered, tmp );
 	
 	// comentar esta linea para no limitar el area scrolleable
 	dest = cpBBClampVect(visibleArea, dest);
 	
 	// velocidad inv. prop. a la distancia a recorrer
-	CGPoint newPos = CGPointAdd(cloudsPos, CGPointMult(CGPointSub(dest, cloudsPos), 0.1f) );
+	CGPoint newPos = ccpAdd(cloudsPos, ccpMult(ccpSub(dest, cloudsPos), 0.1f) );
 	[clouds setPosition:newPos];
 	cloudsPos = newPos;
 }

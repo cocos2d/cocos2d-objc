@@ -66,10 +66,10 @@ Class restartAction()
 		CGSize s = [[Director sharedDirector] winSize];
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
-		[label setPosition: CGPointMake(s.width/2, s.height-50)];
+		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		Label *tapScreen = [Label labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
-		[tapScreen setPosition: CGPointMake(s.width/2, s.height-80)];
+		[tapScreen setPosition: ccp(s.width/2, s.height-80)];
 		[self addChild:tapScreen];
 		
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -79,14 +79,14 @@ Class restartAction()
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 			
 		menu.position = CGPointZero;
-		item1.position = CGPointMake( s.width/2 - 100,30);
-		item2.position = CGPointMake( s.width/2, 30);
-		item3.position = CGPointMake( s.width/2 + 100,30);
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:-1];	
 		
 		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
-		labelAtlas.position = CGPointMake(254,50);
+		labelAtlas.position = ccp(254,50);
 			
 		[self schedule:@selector(step:)];
 	}
@@ -108,7 +108,7 @@ Class restartAction()
 	
 	ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
 	
-	CGPoint source = CGPointSub( convertedLocation, s.position );
+	CGPoint source = ccpSub( convertedLocation, s.position );
 	s.source = source;
 	
 	return kEventHandled;
@@ -180,7 +180,7 @@ Class restartAction()
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	CGPoint p = emitter.position;
-	emitter.position = CGPointMake(p.x, 100);
+	emitter.position = ccp(p.x, 100);
 }
 -(NSString *) title
 {
@@ -285,7 +285,7 @@ Class restartAction()
 	[self addChild: emitter z:0 tag:kTagEmitter];
 	
 	CGPoint p = emitter.position;
-	emitter.position = CGPointMake( p.x, 100);
+	emitter.position = ccp( p.x, 100);
 }
 -(NSString *) title
 {
@@ -301,7 +301,7 @@ Class restartAction()
 	[self addChild: emitter z:0 tag:kTagEmitter];
 	
 	CGPoint p = emitter.position;
-	emitter.position = CGPointMake( p.x, p.y-110);
+	emitter.position = ccp( p.x, p.y-110);
 	emitter.life = 25;
 	
 	ccColorF startColor = emitter.startColor;
@@ -342,7 +342,7 @@ Class restartAction()
 	[self addChild: emitter z:0 tag:kTagEmitter];
 	
 	CGPoint p = emitter.position;
-	emitter.position = CGPointMake( p.x, p.y-100);
+	emitter.position = ccp( p.x, p.y-100);
 	emitter.life = 25;	
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];

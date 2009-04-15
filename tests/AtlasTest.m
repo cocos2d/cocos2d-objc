@@ -74,7 +74,7 @@ Class restartAction()
 		
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label z:1];
-	[label setPosition: CGPointMake(s.width/2, s.height-50)];
+	[label setPosition: ccp(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -83,9 +83,9 @@ Class restartAction()
 	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 	
 	menu.position = CGPointZero;
-	item1.position = CGPointMake( s.width/2 - 100,30);
-	item2.position = CGPointMake( s.width/2, 30);
-	item3.position = CGPointMake( s.width/2 + 100,30);
+	item1.position = ccp( s.width/2 - 100,30);
+	item2.position = ccp( s.width/2, 30);
+	item3.position = ccp( s.width/2 + 100,30);
 	[self addChild: menu z:1];	
 
 	return self;
@@ -199,7 +199,7 @@ Class restartAction()
 	[self addChild:label];
 	[label retain];
 
-	label.position = CGPointMake(10,100);
+	label.position = ccp(10,100);
 
 	[self schedule:@selector(step:)];
 	return self;
@@ -247,11 +247,11 @@ Class restartAction()
 		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
 		CGSize size = tilemap.contentSize;
-		tilemap.transformAnchor = CGPointMake(0, size.height/2);
+		tilemap.transformAnchor = ccp(0, size.height/2);
 		
 		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
 		id scaleBack = [s reverse];
-		id go = [MoveBy actionWithDuration:8 position:CGPointMake(-1650,0)];
+		id go = [MoveBy actionWithDuration:8 position:ccp(-1650,0)];
 		id goBack = [go reverse];
 		
 		id seq = [Sequence actions: s,
@@ -295,8 +295,8 @@ Class restartAction()
 		
 		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
-		tilemap.transformAnchor = CGPointMake(0, 0);
-		tilemap.position = CGPointMake(-20,-200);
+		tilemap.transformAnchor = ccp(0, 0);
+		tilemap.position = ccp(-20,-200);
 	}	
 	return self;
 }

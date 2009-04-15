@@ -13,14 +13,8 @@
  */
 
 
-#import <QuartzCore/QuartzCore.h>
-#import <OpenGLES/EAGLDrawable.h>
-#import <UIKit/UIKit.h>
-#import <OpenGLES/EAGL.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
-
 #import "Label.h"
+#import "Support/CGPointExtension.h"
 
 @implementation Label
 
@@ -84,7 +78,7 @@
 	[self.texture release];
 
 	CGSize s = texture.contentSize;
-	transformAnchor = CGPointMake( s.width/2, s.height/2);
+	transformAnchor = ccp( s.width/2, s.height/2);
 }
 
 - (void) dealloc

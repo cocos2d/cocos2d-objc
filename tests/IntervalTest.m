@@ -15,7 +15,7 @@
 		
 	// sun
 	ParticleSystem* sun = [ParticleSun node];
-	sun.position = CGPointMake(480-32,320-32);
+	sun.position = ccp(480-32,320-32);
 
 	sun.totalParticles = 130;
 	sun.life = 0.6f;
@@ -30,9 +30,9 @@
 	[self schedule: @selector(step2:) interval:1.0f];
 	[self schedule: @selector(step3:) interval: 1.5f];
 	
-	label1.position = CGPointMake(80,160);
-	label2.position = CGPointMake(240,160);
-	label3.position = CGPointMake(400,160);
+	label1.position = ccp(80,160);
+	label2.position = ccp(240,160);
+	label3.position = ccp(400,160);
 	
 	[self addChild:label1];
 	[self addChild:label2];
@@ -40,9 +40,9 @@
 	
 	// Sprite
 	Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
-	sprite.position = CGPointMake(40,50);
+	sprite.position = ccp(40,50);
 	
-	id jump = [JumpBy actionWithDuration:3 position:CGPointMake(400,0) height:50 jumps:4];
+	id jump = [JumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
 	
 	[self addChild:sprite];
 	[sprite runAction: [RepeatForever actionWithAction:
@@ -53,7 +53,7 @@
 	// pause button
 	MenuItem *item1 = [MenuItemFont itemFromString: @"Pause" target:self selector:@selector(pause:)];
 	Menu *menu = [Menu menuWithItems: item1, nil];
-	menu.position = CGPointMake(480/2, 270);
+	menu.position = ccp(480/2, 270);
 
 	[self addChild: menu];
 		

@@ -17,6 +17,7 @@
 #import "LabelAtlas.h"
 #import "IntervalAction.h"
 #import "Sprite.h"
+#import "Support/CGPointExtension.h"
 
 static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
@@ -161,7 +162,7 @@ enum {
 	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
-	transformAnchor = CGPointMake( s.width/2, s.height/2 );
+	transformAnchor = ccp( s.width/2, s.height/2 );
 	
 	return self;
 }
@@ -170,7 +171,7 @@ enum {
 {
     [label setString:string];
 	CGSize s = label.contentSize;
-    transformAnchor = CGPointMake( s.width/2, s.height/2 );
+    transformAnchor = ccp( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
@@ -309,7 +310,7 @@ enum {
 	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
-	transformAnchor = CGPointMake( s.width/2, s.height/2 );
+	transformAnchor = ccp( s.width/2, s.height/2 );
 	
 	return self;
 }
@@ -318,7 +319,7 @@ enum {
 {
 	[label setString:string];
 	CGSize s = label.contentSize;
-	transformAnchor = CGPointMake( s.width/2, s.height/2 );
+	transformAnchor = ccp( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
@@ -439,7 +440,7 @@ enum {
 	[disabledImage setOpacity:opacity];
 	
 	CGSize s = [normalImage contentSize];
-	transformAnchor = CGPointMake( s.width/2, s.height/2 );
+	transformAnchor = ccp( s.width/2, s.height/2 );
 
 	return self;
 }
@@ -561,7 +562,7 @@ enum {
 		[self addChild:item z:0 tag:kCurrentItem];
 		
 		CGSize s = [item contentSize];
-		item.position = self.transformAnchor = CGPointMake( s.width/2, s.height/2 );
+		item.position = self.transformAnchor = ccp( s.width/2, s.height/2 );
 	}
 }
 

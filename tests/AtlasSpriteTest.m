@@ -77,7 +77,7 @@ Class restartAction()
 		
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label z:1];
-	[label setPosition: CGPointMake(s.width/2, s.height-50)];
+	[label setPosition: ccp(s.width/2, s.height-50)];
 	
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -86,9 +86,9 @@ Class restartAction()
 	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 	
 	menu.position = CGPointZero;
-	item1.position = CGPointMake( s.width/2 - 100,30);
-	item2.position = CGPointMake( s.width/2, 30);
-	item3.position = CGPointMake( s.width/2 + 100,30);
+	item1.position = ccp( s.width/2 - 100,30);
+	item2.position = ccp( s.width/2, 30);
+	item3.position = ccp( s.width/2 + 100,30);
 	[self addChild: menu z:1];	
 
 	return self;
@@ -139,7 +139,7 @@ Class restartAction()
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
-		[self addNewSpriteWithCoords:CGPointMake(480/2, 320/2)];
+		[self addNewSpriteWithCoords:ccp(480/2, 320/2)];
 		
 	}	
 	return self;
@@ -157,7 +157,7 @@ Class restartAction()
 	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
 	[mgr addChild:sprite];
 
-	sprite.position = CGPointMake( p.x, p.y);
+	sprite.position = ccp( p.x, p.y);
 
 	id action;
 	float r = CCRANDOM_0_1();
@@ -224,9 +224,9 @@ Class restartAction()
 		[mgr addChild:sprite3];
 		
 		CGSize s = [[Director sharedDirector] winSize];
-		sprite.position = CGPointMake( s.width /2, s.height/2);
-		sprite2.position = CGPointMake( s.width /2 - 100, s.height/2);
-		sprite3.position = CGPointMake( s.width /2 + 100, s.height/2);
+		sprite.position = ccp( s.width /2, s.height/2);
+		sprite2.position = ccp( s.width /2 - 100, s.height/2);
+		sprite3.position = ccp( s.width /2 + 100, s.height/2);
 		
 		id action = [Animate actionWithAnimation: animation];
 		id action2 = [[action copy] autorelease];
@@ -274,14 +274,14 @@ Class restartAction()
 		AtlasSprite *sprite8 = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
 		
 		CGSize s = [[Director sharedDirector] winSize];
-		sprite1.position = CGPointMake( (s.width/5)*1, (s.height/3)*1);
-		sprite2.position = CGPointMake( (s.width/5)*2, (s.height/3)*1);
-		sprite3.position = CGPointMake( (s.width/5)*3, (s.height/3)*1);
-		sprite4.position = CGPointMake( (s.width/5)*4, (s.height/3)*1);
-		sprite5.position = CGPointMake( (s.width/5)*1, (s.height/3)*2);
-		sprite6.position = CGPointMake( (s.width/5)*2, (s.height/3)*2);
-		sprite7.position = CGPointMake( (s.width/5)*3, (s.height/3)*2);
-		sprite8.position = CGPointMake( (s.width/5)*4, (s.height/3)*2);
+		sprite1.position = ccp( (s.width/5)*1, (s.height/3)*1);
+		sprite2.position = ccp( (s.width/5)*2, (s.height/3)*1);
+		sprite3.position = ccp( (s.width/5)*3, (s.height/3)*1);
+		sprite4.position = ccp( (s.width/5)*4, (s.height/3)*1);
+		sprite5.position = ccp( (s.width/5)*1, (s.height/3)*2);
+		sprite6.position = ccp( (s.width/5)*2, (s.height/3)*2);
+		sprite7.position = ccp( (s.width/5)*3, (s.height/3)*2);
+		sprite8.position = ccp( (s.width/5)*4, (s.height/3)*2);
 
 		id action = [FadeIn actionWithDuration:2];
 		id action_back = [action reverse];
@@ -362,19 +362,19 @@ Class restartAction()
 
 		for(int i=0;i<5;i++) {
 			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
-			sprite.position = CGPointMake( 50 + i*40, s.height/2);
+			sprite.position = ccp( 50 + i*40, s.height/2);
 			[mgr addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
 			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
-			sprite.position = CGPointMake( 50 + i*40, s.height/2);
+			sprite.position = ccp( 50 + i*40, s.height/2);
 			[mgr addChild:sprite z:14-i];
 		}
 		
 		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
 		[mgr addChild:sprite z:-1 tag:kTagSprite1];
-		sprite.position = CGPointMake(s.width/2, s.height/2 - 20);
+		sprite.position = ccp(s.width/2, s.height/2 - 20);
 		sprite.scaleX = 6;
 		[sprite setRGB:255:0:0];
 		
@@ -427,7 +427,7 @@ Class restartAction()
 		id action = [RepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
 			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
-			sprite.position = CGPointMake( 90 + i*150, s.height/2);
+			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			
 			Sprite *point = [Sprite spriteWithFile:@"r1.png"];
@@ -442,7 +442,7 @@ Class restartAction()
 				case 1:
 					break;
 				case 2:
-					sprite.transformAnchor = CGPointMake(85,121);
+					sprite.transformAnchor = ccp(85,121);
 					break;
 			}
 
@@ -477,7 +477,7 @@ Class restartAction()
 		CGSize s = [[Director sharedDirector] winSize];
 
 		mgr.relativeTransformAnchor = NO;
-		mgr.transformAnchor = CGPointMake( s.width / 2.0f, s.height / 2.0f );		
+		mgr.transformAnchor = ccp( s.width / 2.0f, s.height / 2.0f );		
 		
 		
 		// AtlasSprite actions
@@ -497,7 +497,7 @@ Class restartAction()
 
 		for(int i=0;i<3;i++) {
 			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
-			sprite.position = CGPointMake( 90 + i*150, s.height/2);
+			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			[sprite runAction: [[action copy] autorelease]];
 			[mgr addChild:sprite z:i];
