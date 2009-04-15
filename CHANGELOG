@@ -4,6 +4,7 @@ version 0.7.2 - xxx
  . AtlasSprite: don't overwrite index 0 (issue #283)
  . AtlasSprite: Supports Z-order (issue #275)
  . AtlasSprite & Sprite: don't auto center sprite when setting frame (issue #281)
+ . AtlasSprite: don't render in subpixels (issue #135)
  . AtlasSpriteManager: supports transformations (issue #308)
  . AtlasSpriteManager: fixes in removeChild (issue #296)
  . AtlasSpriteManager: works with capacity=1 (issue #305)
@@ -13,6 +14,7 @@ version 0.7.2 - xxx
  . CocosNode: dont execute an already running action (issue #299)
  . CocosNode: children referring to deallocated parent (issue #297)
  . CocosNode: fixed "already scheduled exception" (issue #251)
+ . CocosNode: don't render in subpixels (issue #135)
  . Demos: AtlasSprite with z-order (issue #275)
  . Demos: ParticleDemo uses touches to move the center of the emitter (issue #138)
  . Demos: organized tests folder (issue #280)
@@ -36,6 +38,7 @@ version 0.7.2 - xxx
  . TextureAtlas: resizeCapacity returns BOOL instead of raise exception (issue #294)
  . TextureNode: texture is "retain" not "assign" (issue #230 and issue #274)
  . TileMapAtlas: supports fullpath (issue #220)
+ . TileMapAtlas: don't render in subpixels (issue #135)
  . XCode project: added class model (issue #312)
  
 version 0.7.1 - 20-Mar-2009

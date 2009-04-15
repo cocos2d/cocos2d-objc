@@ -166,10 +166,10 @@ enum {
 		float dy = x1 * sr + y2 * cr + y;
 
 		ccQuad3 newVertices = 
-					{ax, ay, 0,
-					bx, by, 0,
-					dx, dy, 0,
-					cx, cy, 0};
+					{(int)ax, (int)ay, 0,
+					(int)bx, (int)by, 0,
+					(int)dx, (int)dy, 0,
+					(int)cx, (int)cy, 0};
 		vertexCoords_ = newVertices;		
 	}
 	
@@ -184,10 +184,10 @@ enum {
 		float x2 = (x1 + rect_.size.width * scaleX);
 		float y2 = (y1 + rect_.size.height * scaleY);
 		ccQuad3 newVertices = {
-			x1,y1,0,
-			x2,y1,0,
-			x1,y2,0,
-			x2,y2,0,
+			(int)x1,(int)y1,0,
+			(int)x2,(int)y1,0,
+			(int)x1,(int)y2,0,
+			(int)x2,(int)y2,0,
 		};
 
 		vertexCoords_ = newVertices;	
@@ -203,10 +203,10 @@ enum {
 		float x2 = (x1 + rect_.size.width);
 		float y2 = (y1 + rect_.size.height);
 		ccQuad3 newVertices = {
-			x1,y1,0,
-			x2,y1,0,
-			x1,y2,0,
-			x2,y2,0,
+			(int)x1,(int)y1,0,
+			(int)x2,(int)y1,0,
+			(int)x1,(int)y2,0,
+			(int)x2,(int)y2,0,
 		};
 		
 		vertexCoords_ = newVertices;
