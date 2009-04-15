@@ -15,6 +15,7 @@
 #import "TextureMgr.h"
 #import "Sprite.h"
 #import "ccMacros.h"
+#import "Support/CGPointExtension.h"
 
 #pragma mark Sprite
 
@@ -41,7 +42,7 @@
 		self.texture = [[TextureMgr sharedTextureMgr] addImage: filename];
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 		
 		// lazy alloc
@@ -65,7 +66,7 @@
 		self.texture = [[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w];
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 
 		// lazy alloc
@@ -90,7 +91,7 @@
 		self.texture = [[TextureMgr sharedTextureMgr] addCGImage: image];
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 
 		// lazy alloc
@@ -114,7 +115,7 @@
 		self.texture = tex;
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = CGPointMake(s.width/2, s.height/2);
+		transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 		
 		// lazy alloc
@@ -152,7 +153,7 @@
 	
 	if( _autoCenterFrames ) {
 		CGSize s = self.texture.contentSize;
-		self.transformAnchor = CGPointMake(s.width/2, s.height/2);
+		self.transformAnchor = ccp(s.width/2, s.height/2);
 	}
 }
 
@@ -167,7 +168,7 @@
 	
 	if( _autoCenterFrames ) {
 		CGSize s = self.texture.contentSize;
-		self.transformAnchor = CGPointMake(s.width/2, s.height/2);
+		self.transformAnchor = ccp(s.width/2, s.height/2);
 	}	
 }
 

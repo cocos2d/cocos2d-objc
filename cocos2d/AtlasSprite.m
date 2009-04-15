@@ -14,6 +14,7 @@
 
 #import "AtlasSpriteManager.h"
 #import "AtlasSprite.h"
+#import "Support/CGPointExtension.h"
 
 #pragma mark -
 #pragma mark AltasSprite
@@ -55,7 +56,7 @@ enum {
 		animations = nil;		// lazy alloc
 		
 		// default transform anchor: center
-		transformAnchor = CGPointMake( rect.size.width / 2, rect.size.height /2 );		
+		transformAnchor = ccp( rect.size.width / 2, rect.size.height /2 );		
 		autoCenterFrames_ = NO;
 		
 		[self setTextureRect:rect];
@@ -94,7 +95,7 @@ enum {
 	
 	// add these lines	
 	if( autoCenterFrames_ ) {
-		self.transformAnchor = CGPointMake(rect.size.width/2, rect.size.height/2);
+		self.transformAnchor = ccp(rect.size.width/2, rect.size.height/2);
 		dirtyPosition = YES;
 	}	
 }

@@ -63,7 +63,7 @@ Class restartAction()
 		CGSize s = [[Director sharedDirector] winSize];	
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
-		[label setPosition: CGPointMake(s.width/2, s.height-50)];
+		[label setPosition: ccp(s.width/2, s.height-50)];
 
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -71,9 +71,9 @@ Class restartAction()
 		
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = CGPointMake(480/2-100,30);
-		item2.position = CGPointMake(480/2, 30);
-		item3.position = CGPointMake(480/2+100,30);
+		item1.position = ccp(480/2-100,30);
+		item2.position = ccp(480/2, 30);
+		item3.position = ccp(480/2+100,30);
 		[self addChild: menu z:1];
 
 	}
@@ -125,9 +125,9 @@ Class restartAction()
 	Label *center = [Label labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
 	Label *right = [Label labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:@"Marker Felt" fontSize:32];
 
-	left.position = CGPointMake(240,200);
-	center.position = CGPointMake(240,150);
-	right.position = CGPointMake(240,100);
+	left.position = ccp(240,200);
+	center.position = ccp(240,150);
+	right.position = ccp(240,100);
 
 	[[[self addChild:left z:0]
 			addChild:right z:0]
@@ -149,9 +149,9 @@ Class restartAction()
 	Label *center2 = [Label labelWithString:@"Times New Roman 48" fontName:@"Times New Roman" fontSize:48];
 	Label *center3 = [Label labelWithString:@"Courier 64" fontName:@"Courier" fontSize:64];
 	
-	center1.position = CGPointMake(240,200);
-	center2.position = CGPointMake(240,150);
-	center3.position = CGPointMake(240,100);
+	center1.position = ccp(240,200);
+	center2.position = ccp(240,150);
+	center3.position = ccp(240,100);
 	
 	[[[self addChild:center1 z:0]
 			addChild:center2 z:0]
@@ -171,7 +171,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 
 	Sprite *img = [Sprite spriteWithFile:@"test_image.png"];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -189,7 +189,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.jpeg"];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -207,7 +207,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.bmp"];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -225,7 +225,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.tiff"];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -243,7 +243,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.gif"];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -268,13 +268,13 @@ Class restartAction()
 	[Texture2D setTexParameters:&params];
 	
 	Sprite *imgMipMap = [Sprite spriteWithFile:@"logo-mipmap.pvr"];
-	imgMipMap.position = CGPointMake( s.width/2.0f-100, s.height/2.0f);
+	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
 	[self addChild:imgMipMap];
 	
 	[Texture2D restoreTexParameters];
 
 	Sprite *img = [Sprite spriteWithFile:@"logo-nomipmap.pvr"];
-	img.position = CGPointMake( s.width/2.0f+100, s.height/2.0f);
+	img.position = ccp( s.width/2.0f+100, s.height/2.0f);
 	[self addChild:img];
 	
 	id scale1 = [EaseOut actionWithAction: [ScaleBy actionWithDuration:4 scale:0.01f] rate:3];
@@ -302,7 +302,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	Sprite *img = [Sprite spriteWithFile:@"test_image.pvr"];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -322,7 +322,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	Sprite *img = [Sprite spriteWithPVRTCFile:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
-	img.position = CGPointMake( s.width/2.0f, s.height/2.0f);
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
 }
@@ -347,7 +347,7 @@ Class restartAction()
 	[Texture2D setAntiAliasTexParameters];
 	
 	Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	sprite.position = CGPointMake( s.width/3.0f, s.height/2.0f);
+	sprite.position = ccp( s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite];
 	
 	[Texture2D restoreTexParameters];
@@ -360,7 +360,7 @@ Class restartAction()
 	[Texture2D setAliasTexParameters];
 	
 	Sprite *sprite2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	sprite2.position = CGPointMake( 2*s.width/3.0f, s.height/2.0f);
+	sprite2.position = ccp( 2*s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite2];
 	
 	[Texture2D restoreTexParameters];

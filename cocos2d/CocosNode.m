@@ -331,7 +331,7 @@
 	
 	while (cn.parent != nil) {
 		cn = cn.parent;
-		ret = CGPointAdd( ret,  cn.position );
+		ret = ccpAdd( ret,  cn.position );
 	}
 	
 	return ret;

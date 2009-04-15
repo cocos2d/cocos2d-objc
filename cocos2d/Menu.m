@@ -15,6 +15,7 @@
 
 #import "Menu.h"
 #import "Director.h"
+#import "Support/CGPointExtension.h"
 
 enum {
 	kDefaultPadding =  5,
@@ -64,7 +65,7 @@ enum {
 		s.height -= r.size.width;
 	else
 	    s.height -= r.size.height;
-	position = CGPointMake(s.width/2, s.height/2);
+	position = ccp(s.width/2, s.height/2);
 
 	isTouchEnabled = YES;
 	selectedItem = -1;
@@ -178,7 +179,7 @@ enum {
 
 	float y = height / 2.0f;
 	for(MenuItem *item in children) {
-	    [item setPosition:CGPointMake(0, y - [item contentSize].height / 2.0f)];
+	    [item setPosition:ccp(0, y - [item contentSize].height / 2.0f)];
 	    y -= [item contentSize].height + padding;
 	}
 }
@@ -197,7 +198,7 @@ enum {
 
 	float x = -width / 2.0f;
 	for(MenuItem* item in children) {
-		[item setPosition:CGPointMake(x + [item contentSize].width / 2.0f, 0)];
+		[item setPosition:ccp(x + [item contentSize].width / 2.0f, 0)];
 		x += [item contentSize].width + padding;
 	}
 }
@@ -263,7 +264,7 @@ enum {
         }
 
         rowHeight = fmaxf(rowHeight, [item contentSize].height);
-        [item setPosition:CGPointMake(x - winSize.width / 2,
+        [item setPosition:ccp(x - winSize.width / 2,
                               y - [item contentSize].height / 2)];
             
         x += w + 10;
@@ -349,7 +350,7 @@ enum {
         }
         
         columnWidth = fmaxf(columnWidth, [item contentSize].width);
-        [item setPosition:CGPointMake(x + [(NSNumber *) [columnWidths objectAtIndex:column] unsignedIntegerValue] / 2,
+        [item setPosition:ccp(x + [(NSNumber *) [columnWidths objectAtIndex:column] unsignedIntegerValue] / 2,
                               y - winSize.height / 2)];
         
         y -= [item contentSize].height + 10;

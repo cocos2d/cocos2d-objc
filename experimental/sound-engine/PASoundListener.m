@@ -18,7 +18,7 @@
 @implementation PASoundListener
 
 - (id)init {
-    return [self initWithPosition:CGPointMake(240,160)]; // middle of screen
+    return [self initWithPosition:ccp(240,160)]; // middle of screen
 }
 - (id)initWithPosition:(CGPoint)pos {
     if ((self = [super init])) {

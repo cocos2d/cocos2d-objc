@@ -480,12 +480,12 @@
 {
 	[super start];
 	startPosition = [target position];
-	delta = CGPointSub( endPosition, startPosition );
+	delta = ccpSub( endPosition, startPosition );
 }
 
 -(void) update: (ccTime) t
 {	
-	target.position = CGPointMake( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
+	target.position = ccp( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
 }
 @end
 
@@ -522,7 +522,7 @@
 
 -(IntervalAction*) reverse
 {
-	return [MoveBy actionWithDuration: duration position: CGPointMake( -delta.x, -delta.y)];
+	return [MoveBy actionWithDuration: duration position: ccp( -delta.x, -delta.y)];
 }
 @end
 
@@ -563,12 +563,12 @@
 	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
 	y += delta.y * t;
 	ccTime x = delta.x * t;
-	target.position = CGPointMake( startPosition.x + x, startPosition.y + y );
+	target.position = ccp( startPosition.x + x, startPosition.y + y );
 }
 
 -(IntervalAction*) reverse
 {
-	return [JumpBy actionWithDuration: duration position: CGPointMake(-delta.x,-delta.y) height: height jumps:jumps];
+	return [JumpBy actionWithDuration: duration position: ccp(-delta.x,-delta.y) height: height jumps:jumps];
 }
 @end
 
@@ -579,7 +579,7 @@
 -(void) start
 {
 	[super start];
-	delta = CGPointMake( delta.x - startPosition.x, delta.y - startPosition.y );
+	delta = ccp( delta.x - startPosition.x, delta.y - startPosition.y );
 }
 @end
 

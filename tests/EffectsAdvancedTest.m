@@ -37,7 +37,7 @@ enum {
 	// in this case:
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
-	id lens = [Lens3D actionWithPosition:CGPointMake(240,160) radius:240 grid:ccg(15,10) duration:0.0f];
+	id lens = [Lens3D actionWithPosition:ccp(240,160) radius:240 grid:ccg(15,10) duration:0.0f];
 	id waves = [Waves3D actionWithWaves:18 amplitude:15 grid:ccg(15,10) duration:10];
 
 	id reuse = [ReuseGrid actionWithTimes:1];
@@ -175,11 +175,11 @@ Class restartAction()
 		Sprite *bg = [Sprite spriteWithFile:@"background.png"];
 		[self addChild: bg z:0 tag:kTagBackground];
 		bg.transformAnchor = CGPointZero;
-//		bg.position = CGPointMake(x/2,y/2);
+//		bg.position = ccp(x/2,y/2);
 		
 		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 		[bg addChild:grossini z:1 tag:kTagSprite1];
-		grossini.position = CGPointMake(x/3.0f,200);
+		grossini.position = ccp(x/3.0f,200);
 		id sc = [ScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
 	
@@ -187,7 +187,7 @@ Class restartAction()
 
 		Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 		[bg addChild:tamara z:1 tag:kTagSprite2];
-		tamara.position = CGPointMake(2*x/3.0f,200);
+		tamara.position = ccp(2*x/3.0f,200);
 		id sc2 = [ScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];
 		[tamara runAction: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
@@ -195,7 +195,7 @@ Class restartAction()
 		
 		Label* label = [Label labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
 		
-		[label setPosition: CGPointMake(x/2,y-80)];
+		[label setPosition: ccp(x/2,y-80)];
 		[self addChild: label];
 		label.tag = kTagLabel;
 		
@@ -205,9 +205,9 @@ Class restartAction()
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = CGPointMake(480/2-100,30);
-		item2.position = CGPointMake(480/2, 30);
-		item3.position = CGPointMake(480/2+100,30);
+		item1.position = ccp(480/2-100,30);
+		item2.position = ccp(480/2, 30);
+		item3.position = ccp(480/2+100,30);
 		[self addChild: menu z:1];
 
 	}

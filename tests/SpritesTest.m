@@ -84,12 +84,12 @@ Class restartAction()
 
 	CGSize s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: CGPointMake(60, s.height/3)];
-	[tamara setPosition: CGPointMake(60, 2*s.height/3)];
+	[grossini setPosition: ccp(60, s.height/3)];
+	[tamara setPosition: ccp(60, 2*s.height/3)];
 	
 	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label];
-	[label setPosition: CGPointMake(s.width/2, s.height-50)];
+	[label setPosition: ccp(s.width/2, s.height-50)];
 
 	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -97,9 +97,9 @@ Class restartAction()
 	
 	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 	menu.position = CGPointZero;
-	item1.position = CGPointMake(480/2-100,30);
-	item2.position = CGPointMake(480/2, 30);
-	item3.position = CGPointMake(480/2+100,30);
+	item1.position = ccp(480/2-100,30);
+	item2.position = ccp(480/2, 30);
+	item3.position = ccp(480/2+100,30);
 	[self addChild: menu z:1];
 
 	return self;
@@ -139,8 +139,8 @@ Class restartAction()
 {
 	CGSize s = [[Director sharedDirector] winSize];
 	
-	[grossini setPosition: CGPointMake(s.width/3, s.height/2)];
-	[tamara setPosition: CGPointMake(2*s.width/3, s.height/2)];
+	[grossini setPosition: ccp(s.width/3, s.height/2)];
+	[tamara setPosition: ccp(2*s.width/3, s.height/2)];
 }
 -(NSString*) title
 {
@@ -157,11 +157,11 @@ Class restartAction()
 	
 	tamara.scaleX = 2.5f;
 	tamara.scaleY = -1.0f;
-	tamara.position = CGPointMake(100,100);
+	tamara.position = ccp(100,100);
 	
 	grossini.rotation = 120;
 	grossini.opacity = 128;
-	grossini.position = CGPointMake(240,160);	
+	grossini.position = ccp(240,160);	
 }
 
 -(NSString *) title
@@ -179,8 +179,8 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 
 	
-	id actionTo = [MoveTo actionWithDuration: 2 position:CGPointMake(s.width-40, s.height-40)];
-	id actionBy = [MoveBy actionWithDuration:2  position: CGPointMake(80,80)];
+	id actionTo = [MoveTo actionWithDuration: 2 position:ccp(s.width-40, s.height-40)];
+	id actionBy = [MoveBy actionWithDuration:2  position: ccp(80,80)];
 	
 	[tamara runAction: actionTo];
 	[grossini runAction:actionBy];
@@ -221,7 +221,7 @@ Class restartAction()
 	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5f];
 	id actionBy = [ScaleBy actionWithDuration:2  scale: 2];
 	
-//	grossini.transformAnchor = CGPointMake( [grossini transformAnchor].x, 0 );
+//	grossini.transformAnchor = ccp( [grossini transformAnchor].x, 0 );
 	
 	[tamara runAction: actionTo];
 	[grossini runAction:actionBy];
@@ -238,8 +238,8 @@ Class restartAction()
 {
 	[super onEnter];
 		
-	id actionTo = [JumpTo actionWithDuration:2 position:CGPointMake(300,300) height:50 jumps:4];
-	id actionBy = [JumpBy actionWithDuration:2 position:CGPointMake(300,0) height:50 jumps:4];
+	id actionTo = [JumpTo actionWithDuration:2 position:ccp(300,300) height:50 jumps:4];
+	id actionBy = [JumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
 	
 	[tamara runAction: actionTo];
 	[grossini runAction:actionBy];
@@ -340,7 +340,7 @@ Class restartAction()
 	[tamara setVisible:NO];
 
 	id action = [Sequence actions:
-				 [MoveBy actionWithDuration: 2 position:CGPointMake(240,0)],
+				 [MoveBy actionWithDuration: 2 position:ccp(240,0)],
 				 [RotateBy actionWithDuration: 2 angle: 540],
 				 nil];
 	
@@ -360,7 +360,7 @@ Class restartAction()
 	[tamara setVisible:NO];
 	
 	id action = [Spawn actions:
-				 [JumpBy actionWithDuration:2 position:CGPointMake(300,0) height:50 jumps:4],
+				 [JumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4],
 				 [RotateBy actionWithDuration: 2 angle: 720],
 				 nil];
 	
@@ -379,7 +379,7 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-	id jump = [JumpBy actionWithDuration:2 position:CGPointMake(300,0) height:50 jumps:4];
+	id jump = [JumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
 	id action = [Sequence actions: jump, [jump reverse], nil];
 	
 	[grossini runAction:action];
@@ -397,7 +397,7 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-	id move = [MoveBy actionWithDuration:1 position:CGPointMake(150,0)];
+	id move = [MoveBy actionWithDuration:1 position:ccp(150,0)];
 	id action = [Sequence actions: move, [DelayTime actionWithDuration:2], move, nil];
 	
 	[grossini runAction:action];
@@ -415,8 +415,8 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 
-	id move1 = [MoveBy actionWithDuration:1 position:CGPointMake(250,0)];
-	id move2 = [MoveBy actionWithDuration:1 position:CGPointMake(0,50)];
+	id move1 = [MoveBy actionWithDuration:1 position:ccp(250,0)];
+	id move2 = [MoveBy actionWithDuration:1 position:ccp(0,50)];
 	id seq = [Sequence actions: move1, move2, [move1 reverse], nil];
 	id action = [Sequence actions: seq, [seq reverse], nil];
 	
@@ -433,9 +433,9 @@ Class restartAction()
 {
 	[super onEnter];
 		
-	id a1 = [MoveBy actionWithDuration:1 position:CGPointMake(150,0)];
+	id a1 = [MoveBy actionWithDuration:1 position:ccp(150,0)];
 	id action1 = [Repeat actionWithAction:
-						[Sequence actions: [Place actionWithPosition:CGPointMake(60,60)], a1, nil]
+						[Sequence actions: [Place actionWithPosition:ccp(60,60)], a1, nil]
 									times:3];
 	id action2 = [RepeatForever actionWithAction:
 						[Sequence actions: [[a1 copy] autorelease], [a1 reverse], nil]
@@ -458,7 +458,7 @@ Class restartAction()
 	[tamara setVisible:NO];
 	
 	id action = [Sequence actions:
-				 [MoveBy actionWithDuration:2 position:CGPointMake(200,0)],
+				 [MoveBy actionWithDuration:2 position:ccp(200,0)],
 				 [CallFunc actionWithTarget:self selector:@selector(callback)],
 				nil];
 	[grossini runAction:action];

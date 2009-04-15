@@ -232,7 +232,7 @@
 		position = pos;
 		radius = r;
 		lensEffect = 0.7f;
-		lastPosition = CGPointMake(-1,-1);
+		lastPosition = ccp(-1,-1);
 	}
 	
 	return self;
@@ -249,8 +249,8 @@
 			for( j = 0; j < gridSize.y+1; j++ )
 			{
 				ccVertex3D	v = [self originalVertex:ccg(i,j)];
-				CGPoint vect = CGPointSub(position, CGPointMake(v.x,v.y));
-				CGFloat r = CGPointLength(vect);
+				CGPoint vect = ccpSub(position, ccp(v.x,v.y));
+				CGFloat r = ccpLength(vect);
 				
 				if ( r < radius )
 				{
@@ -260,11 +260,11 @@
 					float l = logf(pre_log) * lensEffect;
 					float new_r = expf( l ) * radius;
 					
-					if ( CGPointLength(vect) > 0 )
+					if ( ccpLength(vect) > 0 )
 					{
-						vect = CGPointNormalize(vect);
-						CGPoint new_vect = CGPointMult(vect, new_r);
-						v.z += CGPointLength(new_vect) * lensEffect;
+						vect = ccpNormalize(vect);
+						CGPoint new_vect = ccpMult(vect, new_r);
+						v.z += ccpLength(new_vect) * lensEffect;
 					}
 				}
 				
@@ -314,8 +314,8 @@
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
 			ccVertex3D	v = [self originalVertex:ccg(i,j)];
-			CGPoint vect = CGPointSub(position, CGPointMake(v.x,v.y));
-			CGFloat r = CGPointLength(vect);
+			CGPoint vect = ccpSub(position, ccp(v.x,v.y));
+			CGFloat r = ccpLength(vect);
 			
 			if ( r < radius )
 			{
@@ -500,8 +500,8 @@
 		{
 			ccVertex3D	v = [self originalVertex:ccg(i,j)];
 			
-			CGPoint	avg = CGPointMake(i-(gridSize.x/2.0f), j-(gridSize.y/2.0f));
-			CGFloat r = CGPointLength( avg );
+			CGPoint	avg = ccp(i-(gridSize.x/2.0f), j-(gridSize.y/2.0f));
+			CGFloat r = ccpLength( avg );
 			
 			CGFloat amp = 0.1f * amplitude * amplitudeRate;
 			CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * twirls * 2 ) * amp;

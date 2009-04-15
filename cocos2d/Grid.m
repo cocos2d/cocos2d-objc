@@ -19,6 +19,7 @@
 #import "Grabber.h"
 
 #import "Support/glu.h"
+#import "Support/CGPointExtension.h"
 
 @implementation GridBase
 
@@ -264,7 +265,7 @@
 			ccVertex3D l2[4] = { e, f, g, h };
 			
 			int tex1[4] = { a*2, b*2, c*2, d*2 };
-			CGPoint tex2[4] = { CGPointMake(x1,y1), CGPointMake(x2,y1), CGPointMake(x2,y2), CGPointMake(x1,y2) };
+			CGPoint tex2[4] = { ccp(x1,y1), ccp(x2,y1), ccp(x2,y2), ccp(x1,y2) };
 			
 			for( i = 0; i < 4; i++ )
 			{

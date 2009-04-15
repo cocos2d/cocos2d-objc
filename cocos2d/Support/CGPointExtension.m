@@ -33,13 +33,13 @@ ccpLength(const CGPoint v)
 CGFloat
 ccpDistance(const CGPoint v1, const CGPoint v2)
 {
-	return ccpLength(ccpDiff(v1, v2));
+	return ccpLength(ccpSub(v1, v2));
 }
 
 CGPoint
-ccpNormalized(const CGPoint v)
+ccpNormalize(const CGPoint v)
 {
-	return ccpScaled(v, 1.0f/ccpLength(v));
+	return ccpMult(v, 1.0f/ccpLength(v));
 }
 
 CGPoint

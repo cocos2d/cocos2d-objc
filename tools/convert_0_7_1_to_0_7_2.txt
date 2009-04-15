@@ -50,7 +50,7 @@ b) replace chipmunk macros with CG macros
 
 Deleted files:
 --------------
-  * Delete these files to your project
+  * Delete these files from your project
     - CocosNodesExtra.m
     - CocosNodesExtra.h
 

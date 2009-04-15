@@ -44,8 +44,8 @@ enum {
 		[self addChild:label];
 		[self addChild:grossini z:0 tag:kTagSprite];
 		
-		grossini.position = CGPointMake( s.width/2, s.height/2);
-		label.position = CGPointMake( s.width/2, s.height-40);
+		grossini.position = ccp( s.width/2, s.height/2);
+		label.position = ccp( s.width/2, s.height-40);
 		
 		id sc = [ScaleBy actionWithDuration:2 scale:1.5f];
 		id sc_back = [sc reverse];
@@ -69,7 +69,7 @@ enum {
 	
 	CocosNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
-	[s runAction: [MoveTo actionWithDuration:1 position:CGPointMake(convertedLocation.x, convertedLocation.y)]];
+	[s runAction: [MoveTo actionWithDuration:1 position:ccp(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
 	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );

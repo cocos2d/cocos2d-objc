@@ -260,12 +260,12 @@ Class restartAction()
 		
 		Menu *menu = [Menu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
-		menu.position = CGPointMake(s.width/2, s.height-65);
+		menu.position = ccp(s.width/2, s.height-65);
 		[self addChild:menu z:1];
 		
 		Label *infoLabel = [Label labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setRGB:0 :200 :20];
-		infoLabel.position = CGPointMake(s.width/2, s.height-90);
+		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 				
 		
@@ -275,7 +275,7 @@ Class restartAction()
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		menu = [Menu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
-		menu.position = CGPointMake(s.width/2, 30);
+		menu.position = ccp(s.width/2, 30);
 		[self addChild: menu z:1];	
 		
 		// Sub Tests
@@ -315,13 +315,13 @@ Class restartAction()
 		}
 		
 		[menu alignItemsHorizontally];
-		menu.position = CGPointMake(s.width/2, 80);
+		menu.position = ccp(s.width/2, 80);
 		[self addChild:menu z:2];
 		
 
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
-		[label setPosition: CGPointMake(s.width/2, s.height-32)];
+		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setRGB:255 :255 :40];
 
 		

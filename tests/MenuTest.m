@@ -90,13 +90,13 @@ enum {
 			// TIP: if no padding, padding = 5
 			[menu alignItemsHorizontally];			
 			CGPoint p = menu.position;
-			menu.position = CGPointAdd(p, CGPointMake(0,30));
+			menu.position = ccpAdd(p, ccp(0,30));
 			
 		} else {
 			// TIP: but padding is configurable
 			[menu alignItemsHorizontallyWithPadding:40];
 			CGPoint p = menu.position;
-			menu.position = CGPointSub(p, CGPointMake(0,30));
+			menu.position = ccpSub(p, ccp(0,30));
 		}		
 	}
 }
@@ -110,12 +110,12 @@ enum {
 			// TIP: if no padding, padding = 5
 			[menu alignItemsVertically];			
 			CGPoint p = menu.position;
-			menu.position = CGPointAdd(p, CGPointMake(100,0));			
+			menu.position = ccpAdd(p, ccp(100,0));			
 		} else {
 			// TIP: but padding is configurable
 			[menu alignItemsVerticallyWithPadding:40];	
 			CGPoint p = menu.position;
-			menu.position = CGPointSub(p, CGPointMake(100,0));
+			menu.position = ccpSub(p, ccp(100,0));
 		}		
 	}
 }
@@ -195,12 +195,12 @@ enum {
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
 	Menu *menu = [Menu menuWithItems: item1, item2, nil];	
-	menu.position = CGPointMake(0,0);
+	menu.position = ccp(0,0);
 	
-	item1.position = CGPointMake(100,100);
-	item2.position = CGPointMake(100,200);
+	item1.position = ccp(100,100);
+	item2.position = ccp(100,200);
 	
-	id jump = [JumpBy actionWithDuration:3 position:CGPointMake(400,0) height:50 jumps:4];
+	id jump = [JumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
 	[item2 runAction: [RepeatForever actionWithAction:
 				 [Sequence actions: jump, [jump reverse], nil]
 								   ]

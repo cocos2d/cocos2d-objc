@@ -23,7 +23,7 @@ eachShape(void *ptr, void* unused)
 		// since v0.7.1 you can mix them if you want.
 		
 		// before v0.7.1
-//		[sprite setPosition: CGPointMake( body->p.x, body->p.y)];
+//		[sprite setPosition: ccp( body->p.x, body->p.y)];
 		
 		// since v0.7.1 (eaier)
 		[sprite setPosition: body->p];
@@ -48,14 +48,14 @@ eachShape(void *ptr, void* unused)
 	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
 	[mgr addChild: sprite];
 	
-	sprite.position = CGPointMake(x,y);
+	sprite.position = ccp(x,y);
 	
 	int num = 4;
 	CGPoint verts[] = {
-		CGPointMake(-24,-54),
-		CGPointMake(-24, 54),
-		CGPointMake( 24, 54),
-		CGPointMake( 24,-54),
+		ccp(-24,-54),
+		ccp(-24, 54),
+		ccp( 24, 54),
+		ccp( 24,-54),
 	};
 	
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
@@ -63,7 +63,7 @@ eachShape(void *ptr, void* unused)
 	// TIP:
 	// since v0.7.1 you can assign CGPoint to chipmunk instead of cpVect.
 	// cpVect == CGPoint
-	body->p = CGPointMake(x, y);
+	body->p = ccp(x, y);
 	cpSpaceAddBody(space, body);
 	
 	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
@@ -87,28 +87,28 @@ eachShape(void *ptr, void* unused)
 	cpSpaceResizeStaticHash(space, 400.0f, 40);
 	cpSpaceResizeActiveHash(space, 100, 600);
 
-	space->gravity = CGPointMake(0, 0);
+	space->gravity = ccp(0, 0);
 	space->elasticIterations = space->iterations;
 
 	cpShape *shape;
 	
 	// bottom
-	shape = cpSegmentShapeNew(staticBody, CGPointMake(0,0), CGPointMake(wins.width,0), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, ccp(0,0), ccp(wins.width,0), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// top
-	shape = cpSegmentShapeNew(staticBody, CGPointMake(0,wins.height), CGPointMake(wins.width,wins.height), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, ccp(0,wins.height), ccp(wins.width,wins.height), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// left
-	shape = cpSegmentShapeNew(staticBody, CGPointMake(0,0), CGPointMake(0,wins.height), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, ccp(0,0), ccp(0,wins.height), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 
 	// right
-	shape = cpSegmentShapeNew(staticBody, CGPointMake(wins.width,0), CGPointMake(wins.width,wins.height), 0.0f);
+	shape = cpSegmentShapeNew(staticBody, ccp(wins.width,0), ccp(wins.width,wins.height), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	cpSpaceAddStaticShape(space, shape);
 	
@@ -166,9 +166,9 @@ eachShape(void *ptr, void* unused)
 	prevX = accelX;
 	prevY = accelY;
 
-	CGPoint v = CGPointMake( accelX, accelY);
+	CGPoint v = ccp( accelX, accelY);
 
-	space->gravity = CGPointMult(v, 200);
+	space->gravity = ccpMult(v, 200);
 }
 @end
 
@@ -209,7 +209,7 @@ eachShape(void *ptr, void* unused)
 	// add the label
 	CGSize s = [[Director sharedDirector] winSize];
 	Label* label = [Label labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
-	label.position = CGPointMake( s.width / 2, s.height - 30);
+	label.position = ccp( s.width / 2, s.height - 30);
 	[scene addChild:label z:-1];
 
 	[window makeKeyAndVisible];
