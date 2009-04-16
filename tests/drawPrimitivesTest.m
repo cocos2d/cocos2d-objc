@@ -120,7 +120,8 @@ Class restartAction()
 #pragma mark Drawing Primitives Test 1
 
 @implementation Test1
-//TIP:
+//
+// TIP:
 // Every CocosNode has a "draw" method.
 // In the "draw" method you put all the code that actually draws your node.
 // And Test1 is a subclass of TestDemo, which is a subclass of Layer, which is a subclass of CocosNode.
@@ -128,10 +129,16 @@ Class restartAction()
 // As you can see the drawing primitives aren't CocosNode objects. They are just helper
 // functions that let's you draw basic things like: points, line, polygons and circles.
 //
+//
+// TIP:
+// Don't draw your stuff outide the "draw" method. Otherwise it wont get transformed.
+//
+//
 // TIP:
 // If you want to rotate/translate/scale a circle or any other "primtive", you can do it by rotating
 // the node. eg:
 //    self.rotation = 90;
+//
 -(void) draw
 {
 	CGSize s = [[Director sharedDirector] winSize];
