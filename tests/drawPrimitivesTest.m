@@ -122,6 +122,16 @@ Class restartAction()
 @end
 
 @implementation Test1
+//TIP:
+// Every CocosNode has a "draw" method.
+// In the "draw" method you put all the code that actually draws your node.
+//
+// As you can see the drawing primitives aren't CocosNode. They are just helper
+// functions that let's you draw basic things like: points, line, polygons and circles.
+//
+// TIP:
+// If you want to rotate a circle or any other "primtive", you can do it by rotating
+// the node.
 -(void) draw
 {
 	CGSize s = [[Director sharedDirector] winSize];
@@ -143,6 +153,11 @@ Class restartAction()
 	glColor4ub(0,0,255,128);
 	drawPoint( ccp(s.width / 2, s.height / 2) );
 	
+	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
+	glPointSize(4);
+	glColor4ub(0,255,255,255);
+	drawPoints( points, 4);
+	
 	// draw a green circle with 10 segments
 	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(16);
@@ -159,13 +174,13 @@ Class restartAction()
 	glColor4ub(255, 255, 0, 255);
 	glLineWidth(10);
 	CGPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
-	drawPoly( vertices, 5, YES);
+	drawPoly( vertices, 5, NO);
 	
-	// closed yellow poly
+	// closed purble poly
 	glColor4ub(255, 0, 255, 255);
 	glLineWidth(2);
 	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
-	drawPoly( vertices2, 3, NO);
+	drawPoly( vertices2, 3, YES);
 	
 	
 	// restore original values

@@ -29,6 +29,17 @@ void drawPoint( CGPoint point )
 	glDisableClientState(GL_VERTEX_ARRAY);	
 }
 
+void drawPoints( CGPoint *points, unsigned int numberOfPoints )
+{
+	glVertexPointer(2, GL_FLOAT, 0, points);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	
+	glDrawArrays(GL_POINTS, 0, numberOfPoints);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);	
+}
+
+
 void drawLine( CGPoint origin, CGPoint destination )
 {
 	CGPoint vertices[2];
@@ -45,15 +56,15 @@ void drawLine( CGPoint origin, CGPoint destination )
 }
 
 
-void drawPoly( CGPoint *poli, int points, BOOL open )
+void drawPoly( CGPoint *poli, int points, BOOL closePolygon )
 {
 	glVertexPointer(2, GL_FLOAT, 0, poli);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
-	if( open )
-		glDrawArrays(GL_LINE_STRIP, 0, points);
-	else
+	if( closePolygon )
 		glDrawArrays(GL_LINE_LOOP, 0, points);
+	else
+		glDrawArrays(GL_LINE_STRIP, 0, points);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
