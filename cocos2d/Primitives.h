@@ -37,6 +37,11 @@ void drawPointDeprecated( float x, float y ) __attribute__((deprecated));
 /** draws a point given x and y coordinate */
 void drawPoint( CGPoint point );
 
+/** draws an array of points.
+ @since v0.7.2
+ */
+void drawPoints( CGPoint *points, unsigned int numberOfPoints );
+
 /** draws a line given x1,y1 and x2,y2 coordinates
 @deprecated Use drawLine() instead. Will be removed in v0.8
 */
@@ -52,7 +57,7 @@ void drawPolyDeprecated( float *poli, int points ) __attribute__((deprecated));
 
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
  */
-void drawPoly( CGPoint *vertices, int numOfVertices, BOOL openPolygon );
+void drawPoly( CGPoint *vertices, int numOfVertices, BOOL closePolygon );
 
 /** draws a circle given the center, radius and number of segments.
  @deprecated Use drawCircle() instead. Will be removed in v0.8
