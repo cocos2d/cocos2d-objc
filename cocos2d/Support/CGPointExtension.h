@@ -23,7 +23,7 @@
  */
 
 /*
- * Code based on Chipmunk's CGPoint.h file
+ * Code based on Chipmunk's cpVect.h file
  */
 
 /**

@@ -47,7 +47,7 @@ enum {
 	id orbit_back = [orbit reverse];
 
 	[target runAction: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
-	[target runAction: [Sequence actions: lens, delay, reuse, waves, nil]];
+	[target runAction: [Sequence actions: lens, delay, reuse, waves, nil]];	
 }
 -(NSString*) title
 {
@@ -107,8 +107,7 @@ enum {
 	
 	id bg = [self getChildByTag:kTagBackground];
 	id target1 = [bg getChildByTag:kTagSprite1];
-	id target2 = [bg getChildByTag:kTagSprite2];
-	
+	id target2 = [bg getChildByTag:kTagSprite2];	
 	
 	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:ccg(15,10) duration:5];
 	id shaky = [Shaky3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
@@ -116,6 +115,9 @@ enum {
 	[target1 runAction: [RepeatForever actionWithAction: waves]];
 	[target2 runAction: [RepeatForever actionWithAction: shaky]];
 	
+	// moving background. Testing issue #244
+	id move = [MoveBy actionWithDuration:3 position:ccp(200,0)];
+	[bg runAction:[RepeatForever actionWithAction:[Sequence actions:move, [move reverse], nil]]];	
 }
 -(NSString*) title
 {
