@@ -35,11 +35,11 @@
  
  Examples:
   - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos2d way
-  - ccpAdd( ccp(1,1), ccp(2,2) ); // also ok but more verbose
+  - ccpAdd( CGPointMake(1,1), CGPointMake(2,2) ); // also ok but more verbose
   
   - cpvadd( cpv(1,1), cpv(2,2) ); // way of the chipmunk
   - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)
-  - cpvadd( ccp(1,1), ccp(2,2) ); // mixing chipmunk and CG (avoid)
+  - cpvadd( CGPointMake(1,1), CGPointMake(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
 
