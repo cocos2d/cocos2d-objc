@@ -27,15 +27,15 @@
  The quads are rendered using an OpenGL ES vertex array list
  */
 @interface TextureAtlas : NSObject {
-	NSUInteger			_totalQuads;
-	NSUInteger			_capacity;
+	NSUInteger			totalQuads_;
+	NSUInteger			capacity_;
 	ccQuad2		*texCoordinates;
 	ccQuad3		*vertexCoordinates;
 	ccColorB	*colors;			// RGBA for each vertex
 	GLushort	*indices;
 	Texture2D	*texture;
 	
-	BOOL		_withColorArray;
+	BOOL		withColorArray_;
 }
 
 /** quantity of quads that are going to be drawn */
