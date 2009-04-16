@@ -10,13 +10,6 @@
 // local import
 #import "drawPrimitivesTest.h"
 
-enum {
-	kTagSprite1 = 1,
-	kTagSprite2 = 2,
-	kTagSprite3 = 3,
-};
-
-
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Test1",
@@ -51,6 +44,8 @@ Class restartAction()
 	return c;
 }
 
+#pragma mark -
+#pragma mark Base Class
 
 @implementation TestDemo
 -(id) init
@@ -121,24 +116,32 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Drawing Primitives Test 1
+
 @implementation Test1
 //TIP:
 // Every CocosNode has a "draw" method.
 // In the "draw" method you put all the code that actually draws your node.
+// And Test1 is a subclass of TestDemo, which is a subclass of Layer, which is a subclass of CocosNode.
 //
-// As you can see the drawing primitives aren't CocosNode. They are just helper
+// As you can see the drawing primitives aren't CocosNode objects. They are just helper
 // functions that let's you draw basic things like: points, line, polygons and circles.
 //
 // TIP:
-// If you want to rotate a circle or any other "primtive", you can do it by rotating
-// the node.
+// If you want to rotate/translate/scale a circle or any other "primtive", you can do it by rotating
+// the node. eg:
+//    self.rotation = 90;
 -(void) draw
 {
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	
-	// simple line
-	glLineWidth(1);
+	// draw a simple line
+	// The default state is:
+	// Line Width: 1
+	// color: 255,255,255,255 (white, non-transparent)
+	// Aliased
 	drawLine( ccp(0, 0), ccp(s.width, s.height) );
 	
 	// line: color, width, anti-aliased
@@ -147,25 +150,30 @@ Class restartAction()
 	glColor4ub(255,0,0,255);
 	drawLine( ccp(0, s.height), ccp(s.width, 0) );
 
+	// TIP:
+	// Since nobody disabled GL_LINE_SMOOTH,
+	// it will be valid until somone disabled it.
+	// The followin examples will be drawn using anti-aliasing.
+	//
+	// Remember: OpenGL is a state-machine.
 	
-	// big point in the center
+	// draw big point in the center
 	glPointSize(64);
 	glColor4ub(0,0,255,128);
 	drawPoint( ccp(s.width / 2, s.height / 2) );
 	
+	// draw 4 small points
 	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
 	glPointSize(4);
 	glColor4ub(0,255,255,255);
 	drawPoints( points, 4);
 	
 	// draw a green circle with 10 segments
-	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(16);
 	glColor4ub(0, 255, 0, 255);
 	drawCircle( ccp(s.width/2,  s.height/2), 100, 0, 10, NO);
 
 	// draw a green circle with 50 segments with line to center
-	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(2);
 	glColor4ub(0, 255, 255, 255);
 	drawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);	
@@ -195,6 +203,7 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark AppController
 
 // CLASS IMPLEMENTATIONS
