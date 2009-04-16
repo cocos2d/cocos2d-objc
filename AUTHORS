@@ -54,6 +54,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of StreakDemo, MotionStreak and Ribbon
 		patch for ScaleTo/By action to support X and Y.
 	* Joe Vennix: patches for CocosNode
+	* jkrippy: patch for menu align. takes scale into account
 	* kasatani: AtlasSprite index 0 is not overwritten
 	* kermidt.zed: patches for absolutePosition in CocosNode
 		patches for Labels in Texture2D
