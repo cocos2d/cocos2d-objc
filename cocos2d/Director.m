@@ -111,11 +111,10 @@ static Director *_sharedDirector = nil;
 	// scenes
 	runningScene_ = nil;
 	nextScene = nil;
-	scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
 	eventHandlers = [[NSMutableArray arrayWithCapacity:8] retain];
-	
+	scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	// landscape
 	landscape = NO;
@@ -576,6 +575,10 @@ static Director *_sharedDirector = nil;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
+
+	// director could be ended and run again.
+	if( ! scenesStack_ )
+		scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	[self pushScene:scene];
 	[self startAnimation];
@@ -621,7 +624,7 @@ static Director *_sharedDirector = nil;
 	[runningScene_ onExit];
 	[runningScene_ release];
 	runningScene_ = nil;
-	[self stopAnimation];
+	nextScene = nil;
 
 	// don't release the event handlers
 	// They are needed in case the director is run again

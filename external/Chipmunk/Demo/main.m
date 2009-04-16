@@ -149,7 +149,7 @@ void drawPolyShape(cpShape *shape)
 		cpVect v = cpvadd(body->p, cpvrotate(verts[i], body->rot));
 		vertices[i] = v;
 	}
-	drawPoly( vertices, poly->numVerts, NO );
+	drawPoly( vertices, poly->numVerts, YES );
 	
 	free(vertices);
 }
