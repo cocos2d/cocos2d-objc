@@ -45,7 +45,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MultiplexLayer
 	* Graham Perks: Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
-	* guilo0: Added TintTo
+	* guilo0: Added TintTo action
 	* Hans Larsen: Possibility to create empty menus
 	* Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
