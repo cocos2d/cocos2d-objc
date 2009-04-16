@@ -55,11 +55,11 @@
 @implementation Director
 
 @synthesize animationInterval;
-@synthesize runningScene;
+@synthesize runningScene = runningScene_;
 @synthesize displayFPS, eventsEnabled;
-@synthesize openGLView=_openGLView;
-@synthesize pixelFormat=_pixelFormat;
-@synthesize nextDeltaTimeZero=_nextDeltaTimeZero;
+@synthesize openGLView=openGLView_;
+@synthesize pixelFormat=pixelFormat_;
+@synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 
 //
 // singleton stuff
@@ -105,13 +105,13 @@ static Director *_sharedDirector = nil;
 	//Create a full-screen window
 
 	// default values
-	_pixelFormat = kRGB565;
-	_depthBufferFormat = 0;
+	pixelFormat_ = kRGB565;
+	depthBufferFormat_ = 0;
 
 	// scenes
-	runningScene = nil;
+	runningScene_ = nil;
 	nextScene = nil;
-	scenes = [[NSMutableArray arrayWithCapacity:10] retain];
+	scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
 	eventHandlers = [[NSMutableArray arrayWithCapacity:8] retain];
@@ -141,16 +141,16 @@ static Director *_sharedDirector = nil;
 	[FPSLabel release];
 #endif
 	[eventHandlers release];
-	[runningScene release];
-	[scenes release];
+	[runningScene_ release];
+	[scenesStack_ release];
 	
 	[super dealloc];
 }
 
 -(void) initGLDefaultValues
 {
-	// This method SHOULD be called only after _openGLview was initialized
-	NSAssert( _openGLView, @"_openGLView must be initialized");
+	// This method SHOULD be called only after openGLView_ was initialized
+	NSAssert( openGLView_, @"openGLView_ must be initialized");
 
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
@@ -190,14 +190,14 @@ static Director *_sharedDirector = nil;
 	[self applyLandscape];
 	
 	/* draw the scene */
-	[runningScene visit];
+	[runningScene_ visit];
 	if( displayFPS )
 		[self showFPS];
 	
 		glPopMatrix();
 	
 	/* swap buffers */
-	[_openGLView swapBuffers];	
+	[openGLView_ swapBuffers];	
 }
 
 -(void) calculateDeltaTime
@@ -213,9 +213,9 @@ static Director *_sharedDirector = nil;
 	}
 	
 	// new delta time
-	if( _nextDeltaTimeZero ) {
+	if( nextDeltaTimeZero_ ) {
 		dt = 0;
-		_nextDeltaTimeZero = NO;
+		nextDeltaTimeZero_ = NO;
 	} else {
 		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0f;
 		dt = MAX(0,dt);
@@ -236,7 +236,7 @@ static Director *_sharedDirector = nil;
 		@throw myException;		
 	}
 	
-	_pixelFormat = format;
+	pixelFormat_ = format;
 }
 
 -(void) setDepthBufferFormat: (tDepthBufferFormat) format
@@ -249,7 +249,7 @@ static Director *_sharedDirector = nil;
 		@throw myException;		
 	}
 
-   _depthBufferFormat = format;
+   depthBufferFormat_ = format;
 }
 
 #pragma mark Director Scene OpenGL Helper
@@ -264,7 +264,7 @@ static Director *_sharedDirector = nil;
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, _openGLView.frame.size.width, 0, _openGLView.frame.size.height, -1, 1);
+	glOrthof(0, openGLView_.frame.size.width, 0, openGLView_.frame.size.height, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -272,15 +272,15 @@ static Director *_sharedDirector = nil;
 // set a 3d projection matrix
 -(void)set3Dprojection
 {
-	glViewport(0, 0, _openGLView.frame.size.width, _openGLView.frame.size.height);
+	glViewport(0, 0, openGLView_.frame.size.width, openGLView_.frame.size.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, (GLfloat)_openGLView.frame.size.width/_openGLView.frame.size.height, 0.5f, 1500.0f);
+	gluPerspective(60, (GLfloat)openGLView_.frame.size.width/openGLView_.frame.size.height, 0.5f, 1500.0f);
 	
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
-	gluLookAt( _openGLView.frame.size.width/2, _openGLView.frame.size.height/2, [Camera getZEye],
-			  _openGLView.frame.size.width/2, _openGLView.frame.size.height/2, 0,
+	gluLookAt( openGLView_.frame.size.width/2, openGLView_.frame.size.height/2, [Camera getZEye],
+			  openGLView_.frame.size.width/2, openGLView_.frame.size.height/2, 0,
 			  0.0f, 1.0f, 0.0f);
 }
 
@@ -317,7 +317,7 @@ static Director *_sharedDirector = nil;
 // is the view currently attached
 -(BOOL)isOpenGLAttached
 {
-	return ([_openGLView superview]!=nil);
+	return ([openGLView_ superview]!=nil);
 }
 
 // detach or attach to a view or a window
@@ -337,7 +337,7 @@ static Director *_sharedDirector = nil;
 	}
 	
 	// remove from the superview
-	[_openGLView removeFromSuperview];
+	[openGLView_ removeFromSuperview];
 	
 	// check if the view is not attached anymore
 	if(![self isOpenGLAttached])
@@ -401,25 +401,25 @@ static Director *_sharedDirector = nil;
 	}
 	
 	// check if the view is not initialized
-	if(!_openGLView)
+	if(!openGLView_)
 	{
 		// define the pixel format
 		NSString	*pFormat = kEAGLColorFormatRGB565;
 	    GLuint		depthFormat = 0;
 		
-		if(_pixelFormat==kRGBA8)
+		if(pixelFormat_==kRGBA8)
 			pFormat = kEAGLColorFormatRGBA8;
 		
-		if(_depthBufferFormat == kDepthBuffer16)
+		if(depthBufferFormat_ == kDepthBuffer16)
 			depthFormat = GL_DEPTH_COMPONENT16_OES;
-		else if(_depthBufferFormat == kDepthBuffer24)
+		else if(depthBufferFormat_ == kDepthBuffer24)
 			depthFormat = GL_DEPTH_COMPONENT24_OES;
 		
 		// alloc and init the opengl view
-		_openGLView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
+		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
 		
 		// check if the view was alloced and initialized
-		if(!_openGLView)
+		if(!openGLView_)
 		{
 			// the view was not created
 			NSException* myException = [NSException
@@ -432,41 +432,41 @@ static Director *_sharedDirector = nil;
 		}
 		
 		// set autoresizing enabled when attaching the glview to another view
-		[_openGLView setAutoresizesEAGLSurface:YES];
+		[openGLView_ setAutoresizesEAGLSurface:YES];
 		
 		// set the touch delegate of the glview to self
-		[_openGLView setTouchDelegate:self];
+		[openGLView_ setTouchDelegate:self];
 	}
 	else
 	{
 		// set the (new) frame of the glview
-		[_openGLView setFrame:rect];
+		[openGLView_ setFrame:rect];
 	}
 	
 	// check if the superview has touchs enabled and enable it in our view
 	if([view isUserInteractionEnabled])
 	{
-		[_openGLView setUserInteractionEnabled:YES];
+		[openGLView_ setUserInteractionEnabled:YES];
 		[self setEventsEnabled:YES];
 	}
 	else
 	{
-		[_openGLView setUserInteractionEnabled:NO];
+		[openGLView_ setUserInteractionEnabled:NO];
 		[self setEventsEnabled:NO];
 	}
 	
 	// check if multi touches are enabled and set them
 	if([view isMultipleTouchEnabled])
 	{
-		[_openGLView setMultipleTouchEnabled:YES];
+		[openGLView_ setMultipleTouchEnabled:YES];
 	}
 	else
 	{
-		[_openGLView setMultipleTouchEnabled:NO];
+		[openGLView_ setMultipleTouchEnabled:NO];
 	}
 	
 	// add the glview to his (new) superview
-	[view addSubview:_openGLView];
+	[view addSubview:openGLView_];
 	
 	// set the background color of the glview
 	//	[backgroundColor setOpenGLClearColor];
@@ -493,7 +493,7 @@ static Director *_sharedDirector = nil;
 // convert a coordinate from uikit to opengl
 -(CGPoint)convertCoordinate:(CGPoint)p
 {
-	int newY = _openGLView.frame.size.height - p.y;
+	int newY = openGLView_.frame.size.height - p.y;
 	
 	CGPoint ret = ccp( p.x, newY );
 	if( ! landscape )
@@ -507,7 +507,7 @@ static Director *_sharedDirector = nil;
 		ret.y = p.x;
 #else
 		ret.x = p.y;
-		ret.y = _openGLView.frame.size.width -p.x;
+		ret.y = openGLView_.frame.size.width -p.x;
 #endif // LANDSCAPE_LEFT
 	}
 	
@@ -517,11 +517,11 @@ static Director *_sharedDirector = nil;
 // get the current size of the glview
 -(CGSize)winSize
 {
-	CGSize s = _openGLView.frame.size;
+	CGSize s = openGLView_.frame.size;
 	if( landscape ) {
 		// swap x,y in landscape mode
-		s.width = _openGLView.frame.size.height;
-		s.height = _openGLView.frame.size.width;
+		s.width = openGLView_.frame.size.height;
+		s.height = openGLView_.frame.size.width;
 	}
 	return s;
 }
@@ -529,7 +529,7 @@ static Director *_sharedDirector = nil;
 // return  the current frame size
 -(CGSize)displaySize
 {
-	return _openGLView.frame.size;
+	return openGLView_.frame.size;
 }
 
 - (BOOL) landscape
@@ -575,10 +575,9 @@ static Director *_sharedDirector = nil;
 - (void)runWithScene:(Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert( runningScene == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
-		
-//	[self pushScene: scene];
-	[self replaceScene: scene];
+	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
+	
+	[self pushScene:scene];
 	[self startAnimation];
 }
 
@@ -586,39 +585,42 @@ static Director *_sharedDirector = nil;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
-	nextScene = [scene retain];
+	NSUInteger index = [scenesStack_ count];
+
+	[scenesStack_ replaceObjectAtIndex:index-1 withObject:scene];
+	nextScene = scene;	// nextScene is a weak ref
 }
 
 - (void) pushScene: (Scene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert( runningScene != nil, @"A running Scene is needed");
 
-	[scenes addObject: runningScene];
-	nextScene = [scene retain];		// retained twice
+	[scenesStack_ addObject: scene];
+	nextScene = scene;	// nextScene is a weak ref
 }
 
 -(void) popScene
 {	
-	NSAssert( runningScene != nil, @"A running Scene is needed");
+	NSAssert( runningScene_ != nil, @"A running Scene is needed");
 
-	int c = [scenes count];
+	[scenesStack_ removeLastObject];
+	NSUInteger c = [scenesStack_ count];
+	
 	if( c == 0 ) {
 		[self end];
 	} else {
-		nextScene = [[scenes objectAtIndex:c-1] retain];
-		[scenes removeLastObject];
+		nextScene = [scenesStack_ objectAtIndex:c-1];
 	}
 }
 
 -(void) end
 {
-	[scenes release];
-	scenes = nil;
+	[scenesStack_ release];
+	scenesStack_ = nil;
 
-	[runningScene onExit];
-	[runningScene release];
-	runningScene = nil;
+	[runningScene_ onExit];
+	[runningScene_ release];
+	runningScene_ = nil;
 	[self stopAnimation];
 
 	// don't release the event handlers
@@ -639,13 +641,13 @@ static Director *_sharedDirector = nil;
 
 -(void) setNextScene
 {
-	[runningScene onExit];
-	[runningScene release];
+	[runningScene_ onExit];
+	[runningScene_ release];
 	
-	[nextScene onEnter];
-	runningScene = nextScene;
-	
+	runningScene_ = [nextScene retain];
 	nextScene = nil;
+
+	[runningScene_ onEnter];
 }
 
 -(void) pause

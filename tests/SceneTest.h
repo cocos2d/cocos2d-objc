@@ -11,7 +11,8 @@
 @interface Layer1 : Layer
 {
 }
--(void) onOptions: (id) sender;
+-(void) onPushScene: (id) sender;
+-(void) onPushSceneTran: (id) sender;
 -(void) onVoid: (id) sender;
 -(void) onQuit: (id) sender;
 @end
@@ -20,7 +21,8 @@
 {
 }
 -(void) onGoBack: (id) sender;
--(void) onFullscreen: (id) sender;
+-(void) onReplaceScene: (id) sender;
+-(void) onReplaceSceneTran: (id) sender;
 @end
 
 @interface Layer3: ColorLayer
