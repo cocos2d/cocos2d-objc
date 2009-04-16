@@ -22,15 +22,15 @@
 
 @interface TextureAtlas (Private)
 -(void) initIndices;
--(void) initColorArray;
+-(BOOL) initColorArray;
 @end
 
 
 @implementation TextureAtlas
 
-@synthesize totalQuads = _totalQuads, capacity = _capacity;
+@synthesize totalQuads = totalQuads_, capacity = capacity_;
 @synthesize texture;
-@synthesize withColorArray = _withColorArray;
+@synthesize withColorArray = withColorArray_;
 
 #pragma mark TextureAtlas - alloc & init
 
@@ -57,16 +57,16 @@
 	if( ! (self=[super init]) )
 		return nil;
 	
-	_capacity = n;
+	capacity_ = n;
 	
 	// retained in property
 	self.texture = tex;
 
-	_withColorArray = NO;
+	withColorArray_ = NO;
 
-	texCoordinates = malloc( sizeof(texCoordinates[0]) * _capacity );
-	vertexCoordinates = malloc( sizeof(vertexCoordinates[0]) * _capacity );
-	indices = malloc( sizeof(indices[0]) * _capacity * 6 );
+	texCoordinates = malloc( sizeof(texCoordinates[0]) * capacity_ );
+	vertexCoordinates = malloc( sizeof(vertexCoordinates[0]) * capacity_ );
+	indices = malloc( sizeof(indices[0]) * capacity_ * 6 );
 	
 	if( ! ( texCoordinates && vertexCoordinates && indices) ) {
 		NSLog(@"TextureAtlas: not enough memory");
@@ -86,7 +86,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, _totalQuads];
+	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, totalQuads_];
 }
 
 -(void) dealloc
@@ -96,7 +96,7 @@
 	free(vertexCoordinates);
 	free(texCoordinates);
 	free(indices);
-	if(_withColorArray)
+	if(withColorArray_)
 		free(colors);
 	
 	[texture release];
@@ -104,19 +104,30 @@
 	[super dealloc];
 }
 
--(void) initColorArray
+-(BOOL) initColorArray
 {
-	if( ! _withColorArray ) {
-		colors = malloc( sizeof(colors[0]) * _capacity * 4 );
-		// default color: 255,255,255,255
-		memset(colors, 0xFF,  _capacity * 4 * sizeof(colors[0]));
-		_withColorArray = YES;
+	if( !withColorArray_ ) {
+		colors = malloc( sizeof(colors[0]) * capacity_ * 4 );
+		if(!colors) {
+			CCLOG(@"TextureAtlas#initColorArray: not enough memory");
+			// XXX: These kind of events should raise an exception instead of returning BOOL. 
+			// XXX: For the moment lets continue handling like these.
+			// XXX: But an exception hierarchy should be created
+			// XXX: And the library should work with try() catch().
+			return NO;
+		} else {
+			// default color: 255,255,255,255
+			memset(colors, 0xFF,  capacity_ * 4 * sizeof(colors[0]));
+			withColorArray_ = YES;
+		}
 	}
+	
+	return YES;
 }
 
 -(void) initIndices
 {
-	for( NSUInteger i=0;i< _capacity;i++) {
+	for( NSUInteger i=0;i< capacity_;i++) {
 		indices[i*6+0] = i*4+0;
 		indices[i*6+1] = i*4+1;
 		indices[i*6+2] = i*4+2;
@@ -134,9 +145,9 @@
 -(void) updateQuadWithTexture: (ccQuad2*) quadT vertexQuad:(ccQuad3*) quadV atIndex:(NSUInteger) n
 {
 	
-	NSAssert( n >= 0 && n < _capacity, @"updateQuadWithTexture: Invalid index");
+	NSAssert( n >= 0 && n < capacity_, @"updateQuadWithTexture: Invalid index");
 
-	_totalQuads =  MAX( n+1, _totalQuads);
+	totalQuads_ =  MAX( n+1, totalQuads_);
 
 	texCoordinates[n] = *quadT;
 	vertexCoordinates[n] = *quadV;
@@ -144,23 +155,28 @@
 
 -(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n
 {
-	NSAssert( n >= 0 && n < _capacity, @"updateColorWithQuadColor: Invalid index");
+	NSAssert( n >= 0 && n < capacity_, @"updateColorWithQuadColor: Invalid index");
 
-	_totalQuads =  MAX( n+1, _totalQuads);
+	totalQuads_ =  MAX( n+1, totalQuads_);
 	
-	if( ! _withColorArray )
+	if( ! withColorArray_ )
 		[self initColorArray];
-	for( int i=0;i<4;i++)
-		colors[n*4+i] = *color;
+	
+	// initColorArray might fail
+
+	if( withColorArray_ ) {
+		for( int i=0;i<4;i++)
+			colors[n*4+i] = *color;
+	}
 }
 
 -(void) insertQuadWithTexture:(ccQuad2*)texCoords vertexQuad:(ccQuad3*)vertexCoords atIndex:(NSUInteger)index
 {
-	NSAssert( index >= 0 && index < _capacity, @"updateQuadWithTexture: Invalid index");
+	NSAssert( index >= 0 && index < capacity_, @"updateQuadWithTexture: Invalid index");
 	
-	_totalQuads++;
+	totalQuads_++;
 	
-	NSUInteger remaining = (_totalQuads-1) - index;
+	NSUInteger remaining = (totalQuads_-1) - index;
 	
 	// last object doesn't need to be moved
 	if( remaining ) {
@@ -169,7 +185,7 @@
 		// vertexCoordinates
 		memmove( &vertexCoordinates[index+1], &vertexCoordinates[index], sizeof(vertexCoordinates[0]) * remaining );
 		// colors
-		if(_withColorArray)
+		if(withColorArray_)
 			memmove(&colors[(index+1)*4], &colors[index*4], sizeof(colors[0]) * remaining * 4);
 	}
 	
@@ -180,8 +196,8 @@
 
 -(void) insertQuadFromIndex:(NSUInteger)oldIndex atIndex:(NSUInteger)newIndex
 {
-	NSAssert( newIndex >= 0 && newIndex < _totalQuads, @"insertQuadFromIndex:atIndex: Invalid index");
-	NSAssert( oldIndex >= 0 && oldIndex < _totalQuads, @"insertQuadFromIndex:atIndex: Invalid index");
+	NSAssert( newIndex >= 0 && newIndex < totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
+	NSAssert( oldIndex >= 0 && oldIndex < totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
 
 	if( oldIndex == newIndex )
 		return;
@@ -205,7 +221,7 @@
 	vertexCoordinates[newIndex] = vertexQuadBackup;
 
 	// colors
-	if( _withColorArray ) {
+	if( withColorArray_ ) {
 		ccColorB colorsBackup[4];
 
 		for(int i=0;i<4;i++)
@@ -220,9 +236,9 @@
 
 -(void) removeQuadAtIndex:(NSUInteger) index
 {
-	NSAssert( index >= 0 && index < _totalQuads, @"removeQuadAtIndex: Invalid index");
+	NSAssert( index >= 0 && index < totalQuads_, @"removeQuadAtIndex: Invalid index");
 	
-	NSUInteger remaining = (_totalQuads-1) - index;
+	NSUInteger remaining = (totalQuads_-1) - index;
 	
 	// last object doesn't need to be moved
 	if( remaining ) {
@@ -231,37 +247,37 @@
 		// vertexCoordinates
 		memmove( &vertexCoordinates[index], &vertexCoordinates[index+1], sizeof(vertexCoordinates[0]) * remaining );
 		// colors
-		if(_withColorArray)
+		if(withColorArray_)
 			memmove(&colors[index*4], &colors[(index+1)*4], sizeof(colors[0]) * remaining * 4);
 	}
 	
-	_totalQuads--;
+	totalQuads_--;
 }
 
 -(void) removeAllQuads
 {
-	_totalQuads = 0;
+	totalQuads_ = 0;
 }
 
 #pragma mark TextureAtlas - Resize
 
 -(BOOL) resizeCapacity: (NSUInteger) newCapacity
 {
-	if( newCapacity == _capacity )
+	if( newCapacity == capacity_ )
 		return YES;
 	
 	void * tmpColors = nil;
 
 	// update capacity and totolQuads
-	_totalQuads = MIN(_totalQuads,newCapacity);
-	_capacity = newCapacity;
+	totalQuads_ = MIN(totalQuads_,newCapacity);
+	capacity_ = newCapacity;
 
-	void * tmpTexCoords = realloc( texCoordinates, sizeof(texCoordinates[0]) * _capacity );
-	void * tmpVertexCoords = realloc( vertexCoordinates, sizeof(vertexCoordinates[0]) * _capacity );
-	void * tmpIndices = realloc( indices, sizeof(indices[0]) * _capacity * 6 );
+	void * tmpTexCoords = realloc( texCoordinates, sizeof(texCoordinates[0]) * capacity_ );
+	void * tmpVertexCoords = realloc( vertexCoordinates, sizeof(vertexCoordinates[0]) * capacity_ );
+	void * tmpIndices = realloc( indices, sizeof(indices[0]) * capacity_ * 6 );
 	
-	if( _withColorArray )
-		tmpColors = realloc( colors, sizeof(colors[0]) * _capacity * 4 );
+	if( withColorArray_ )
+		tmpColors = realloc( colors, sizeof(colors[0]) * capacity_ * 4 );
 	else
 		tmpColors = (void*) 1;
 	
@@ -282,7 +298,7 @@
 		else
 			free(indices);
 
-		if( _withColorArray) {
+		if( withColorArray_) {
 			if( tmpColors )
 				free( tmpColors );
 			else
@@ -294,7 +310,7 @@
 		indices = nil;
 		colors = nil;
 		
-		_capacity = _totalQuads = 0;
+		capacity_ = totalQuads_ = 0;
 
 		return NO;
 	}
@@ -302,7 +318,7 @@
 	texCoordinates = tmpTexCoords;
 	vertexCoordinates = tmpVertexCoords;
 	indices = tmpIndices;
-	if( _withColorArray )
+	if( withColorArray_ )
 		colors = tmpColors;
 
 	[self initIndices];	
@@ -314,7 +330,7 @@
 
 -(void) drawQuads
 {
-	return [self drawNumberOfQuads: _totalQuads];
+	return [self drawNumberOfQuads: totalQuads_];
 }
 
 -(void) drawNumberOfQuads: (NSUInteger) n
@@ -322,7 +338,7 @@
 	glBindTexture(GL_TEXTURE_2D, [texture name]);
 	glVertexPointer(3, GL_FLOAT, 0, vertexCoordinates);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
-	if( _withColorArray )
+	if( withColorArray_ )
 		glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	
 }
