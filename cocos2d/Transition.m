@@ -83,6 +83,9 @@ enum {
 	// enable events while transitions
 	[[Director sharedDirector] setEventsEnabled: YES];
 	
+	// issue #267
+	[outScene setVisible:YES];
+
 	[self removeChild:inScene cleanup:NO];
 	[self removeChild:outScene cleanup:NO];
 	
