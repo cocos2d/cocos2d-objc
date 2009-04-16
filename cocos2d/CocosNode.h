@@ -297,8 +297,15 @@ enum {
 
 // transformations
 
-/** performs opengl view-matrix transformation based on position, scale, rotation and other attributes. */
+/** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
+
+/** performs OpenGL view-matrix transformation of it's ancestors.
+ Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
+ it's necessary to transform the ancestors again.
+ @since v0.7.2
+ */
+-(void) transformAncestors;
 
 
 // actions

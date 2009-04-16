@@ -396,6 +396,8 @@
 -(void) draw
 {
 	// override me
+	// Only use this function to draw your staff.
+	// DON'T draw your stuff outside this method
 }
 
 -(void) visit
@@ -405,8 +407,10 @@
 	
 	glPushMatrix();
 	
-	if ( grid && grid.active)
+	if ( grid && grid.active) {
 		[grid beforeDraw];
+		[self transformAncestors];
+	}
 	
 	[self transform];
 	
@@ -431,6 +435,14 @@
 }
 
 #pragma mark CocosNode - Transformations
+
+-(void) transformAncestors
+{
+	if( self.parent ) {
+		[self.parent transformAncestors];
+		[self.parent transform];
+	}
+}
 
 -(void) transform
 {
