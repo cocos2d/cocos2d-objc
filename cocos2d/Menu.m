@@ -175,12 +175,12 @@ enum {
 {
 	float height = -padding;
 	for(MenuItem *item in children)
-	    height += [item contentSize].height + padding;
+	    height += [item contentSize].height * item.scaleY + padding;
 
 	float y = height / 2.0f;
 	for(MenuItem *item in children) {
-	    [item setPosition:ccp(0, y - [item contentSize].height / 2.0f)];
-	    y -= [item contentSize].height + padding;
+	    [item setPosition:ccp(0, y - [item contentSize].height * item.scaleY / 2.0f)];
+	    y -= [item contentSize].height * item.scaleY + padding;
 	}
 }
 
@@ -194,12 +194,12 @@ enum {
 	
 	float width = -padding;
 	for(MenuItem* item in children)
-	    width += [item contentSize].width + padding;
+	    width += [item contentSize].width * item.scaleX + padding;
 
 	float x = -width / 2.0f;
 	for(MenuItem* item in children) {
-		[item setPosition:ccp(x + [item contentSize].width / 2.0f, 0)];
-		x += [item contentSize].width + padding;
+		[item setPosition:ccp(x + [item contentSize].width * item.scaleX / 2.0f, 0)];
+		x += [item contentSize].width * item.scaleX + padding;
 	}
 }
 

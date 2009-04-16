@@ -128,18 +128,22 @@ enum {
 		
 		for( int i=0;i < 2;i++ ) {
 			MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
-			MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackH:)];
-			MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackV:)];
+			MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackOpacity:)];
+			MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackAlign:)];
+			
+			item1.scaleX = 1.5f;
+			item2.scaleY = 0.5f;
+			item3.scaleX = 0.5f;
 			
 			Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
 			
 			menu.tag = kTagMenu;
-			menu.opacity = 128;
 			
 			[self addChild:menu z:0 tag:100+i];
 			centeredMenu = menu.position;
 		}
 
+		alignedH = YES;
 		[self alignMenusH];
 	}
 
@@ -153,25 +157,26 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	id menu = [sender parent];
-	[menu setOpacity: 128];
-
 	[(MultiplexLayer*)parent switchTo:0];
 }
 
--(void) menuCallbackH: (id) sender
+-(void) menuCallbackOpacity: (id) sender
 {
-	// Another way to obtain the menu
-	// in this particular case is:
-	// self.parent
 	id menu = [sender parent];
-	[menu setOpacity: 255];
-
-	[self alignMenusH];
+	GLubyte opacity = [menu opacity];
+	if( opacity == 128 )
+		[menu setOpacity: 255];
+	else
+		[menu setOpacity: 128];	
 }
--(void) menuCallbackV: (id) sender
+-(void) menuCallbackAlign: (id) sender
 {
-	[self alignMenusV];
+	alignedH = ! alignedH;
+	
+	if( alignedH )
+		[self alignMenusH];
+	else
+		[self alignMenusV];
 }
 
 -(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
