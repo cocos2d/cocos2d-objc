@@ -22,6 +22,7 @@ version 0.7.2 - xxx
  . Demos: Menu shows how to use padding / dynamic toggle items (part of issue #249, issue #224)
  . Demos: added drawing primitives excample (part of issue #322)
  . Director: Attach uses 'bounds' not 'frame' (issue #233)
+ . Director: runWithScene / end doesn't crash/leak anymore (issue #325)
  . Director / Transitions: pushScene with Transitions works (issue #267)
  . Documentation: API doc documents free functions (issue #314)
  . Menu: an empty menu can be crated (issue #277)

@@ -575,10 +575,6 @@ static Director *_sharedDirector = nil;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
-
-	// director could be ended and run again.
-	if( ! scenesStack_ )
-		scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	[self pushScene:scene];
 	[self startAnimation];
@@ -618,8 +614,9 @@ static Director *_sharedDirector = nil;
 
 -(void) end
 {
-	[scenesStack_ release];
-	scenesStack_ = nil;
+	// remove all objects, but don't release it.
+	// runWithScene might be executed after 'end'.
+	[scenesStack_ removeAllObjects];
 
 	[runningScene_ onExit];
 	[runningScene_ release];
@@ -628,8 +625,7 @@ static Director *_sharedDirector = nil;
 
 	// don't release the event handlers
 	// They are needed in case the director is run again
-//	[eventHandlers release];
-//	eventHandlers = nil;
+	[eventHandlers removeAllObjects];
 
 	[self stopAnimation];
 	[self detach];
