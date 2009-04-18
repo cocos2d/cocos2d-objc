@@ -1,3 +1,6 @@
+version 0.8 - xxx
+ . All: removed deprecated classes/methods (issue #326)
+
 version 0.7.2 - xxx
  . All: removed chipmunk macros. using CG macros (issue #290)
  . Actions: Added TintTo and TintBy (issue #204)

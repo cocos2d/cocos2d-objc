@@ -78,7 +78,7 @@
 @end
 
 /** Calls a 'callback' with the node as the first argument
- /* N means Node
+ N means Node
  */
 @interface CallFuncN : CallFunc
 {
