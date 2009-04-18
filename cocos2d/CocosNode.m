@@ -170,11 +170,6 @@
 	return camera;
 }
 
--(id) add: (CocosNode*) child z:(int)z tag:(int) aTag
-{
-	CCLOG(@"add:z:tag: is deprecated. Use addChild:z:tag:");
-	return [self addChild:child z:z tag:aTag];
-}
 /* "add" logic MUST only be on this selector
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this selector
@@ -198,11 +193,6 @@
 	return self;
 }
 
--(id) add: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)c
-{
-	CCLOG(@"add:z:tag:parallaxRatio: is deprecated. Use addChild:z:parallaxRatio:");
-	return [self addChild:child z:z parallaxRatio:c];
-}
 -(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)c
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
@@ -211,40 +201,18 @@
 	return [self addChild: child z:z tag:child.tag];
 }
 
-// add a node to the array
--(id) add: (CocosNode*) child z:(int)z
-{
-	CCLOG(@"add:z: is deprecated. Use addChild:z:");
-	return [self addChild:child z:z];
-}
 -(id) addChild: (CocosNode*) child z:(int)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	return [self addChild:child z:z tag:child.tag];
 }
 
--(id) add: (CocosNode*) child
-{
-	CCLOG(@"add: is deprecated. Use addChild:");
-	return [self addChild:child];
-}
 -(id) addChild: (CocosNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	return [self addChild:child z:child.zOrder tag:child.tag];
 }
 
-
--(void) remove: (CocosNode*)child
-{
-	CCLOG(@"remove: is deprecated. Use removeChild:cleanup:");
-	return [self removeChild:child cleanup:NO];
-}
--(void) removeAndStop: (CocosNode*)child
-{
-	CCLOG(@"removeAndStop: is deprecated. Use removeChild:cleanup:");
-	return [self removeChild:child cleanup:YES];
-}
 /* "remove" logic MUST only be on this selector
  * If a class want's to extend the 'removeChild' behaviour it only needs
  * to override this selector
@@ -259,16 +227,6 @@
 		[self detachChild:child cleanup:cleanup];
 }
 
--(void) removeByTag:(int) aTag
-{
-	CCLOG(@"removeByTag: is deprecated. Use removeChildByTag:cleanup:");
-	return [self removeChildByTag:aTag cleanup:NO];
-}
--(void) removeAndStopByTag:(int) aTag
-{
-	CCLOG(@"removeAndStopByTag: is deprecated. Use removeChildByTag:cleanup:");
-	return [self removeChildByTag:aTag cleanup:YES];
-}
 -(void) removeChildByTag:(int)aTag cleanup:(BOOL)cleanup
 {
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
@@ -281,16 +239,6 @@
 		[self removeChild:child cleanup:cleanup];
 }
 
--(void) removeAll
-{
-	CCLOG(@"removeAll is deprecated. Use removeAllChildrenWithCleanup:");
-	return [self removeAllChildrenWithCleanup:NO];
-}
--(void) removeAndStopAll
-{
-	CCLOG(@"removeAndStopAll is deprecated. Use removeAllChildrenCleanup:");
-	return [self removeAllChildrenWithCleanup:YES];
-}
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
 	// not using detachChild improves speed here
@@ -306,11 +254,6 @@
 	[children removeAllObjects];
 }
 
--(CocosNode*) getByTag:(int) aTag
-{
-	CCLOG(@"getByTag: is deprecated. Use getChildByTag:");
-	return [self getChildByTag:aTag];
-}
 -(CocosNode*) getChildByTag:(int) aTag
 {
 	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
@@ -557,11 +500,6 @@
 	actionsToAdd = [[NSMutableArray arrayWithCapacity:4] retain];
 }
 
--(Action*) do: (Action*) action
-{
-	CCLOG(@"do: is deprecated. Use runAction: instead");
-	return [self runAction:action];
-}
 -(Action*) runAction:(Action*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
