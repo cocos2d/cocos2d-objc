@@ -24,7 +24,7 @@
 #import <OpenGLES/ES1/gl.h>
 
 // cocos2d
-#import "Particle.h"
+#import "ParticleSystem.h"
 #import "Primitives.h"
 #import "TextureMgr.h"
 #import "ccMacros.h"
@@ -321,3 +321,5 @@
 	return (particleCount == totalParticles);
 }
 @end
+
+

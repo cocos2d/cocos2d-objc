@@ -1,5 +1,6 @@
 version 0.8 - xxx
  . All: removed deprecated classes/methods (issue #326)
+ . Particles: Added BigParticles (issue #245)
 
 version 0.7.2 - xxx
  . All: removed chipmunk macros. using CG macros (issue #290)

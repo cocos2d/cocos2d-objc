@@ -12,7 +12,8 @@
  *
  */
 
-#import "Particle.h"
+#import "ParticleSystem.h"
+#import "BigParticleSystem.h"
 
 //! Fire particle system
 @interface ParticleFire: ParticleSystem
@@ -40,6 +41,12 @@
 
 //! Flower particle system
 @interface ParticleFlower : ParticleSystem
+{
+}
+@end
+
+//! Flower particle system
+@interface BigParticleFlower : BigParticleSystem
 {
 }
 @end

@@ -25,6 +25,7 @@ static NSString *transitions[] = {
 		@"DemoExplosion",
 		@"DemoSnow",
 		@"DemoRain",
+		@"DemoBigParticle",
 };
 
 Class nextAction()
@@ -155,6 +156,54 @@ Class restartAction()
 
 @end
 
+@implementation BigParticleDemo
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		isTouchEnabled = YES;
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label];
+		[label setPosition: CGPointMake(s.width/2, s.height-50)];
+		
+		Label *tapScreen = [Label labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
+		[tapScreen setPosition: CGPointMake(s.width/2, s.height-80)];
+		[self addChild:tapScreen];
+		
+		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		
+		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		
+		menu.position = CGPointZero;
+		item1.position = CGPointMake( s.width/2 - 100,30);
+		item2.position = CGPointMake( s.width/2, 30);
+		item3.position = CGPointMake( s.width/2 + 100,30);
+		[self addChild: menu z:-1];	
+		
+		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
+		labelAtlas.position = CGPointMake(254,50);
+		
+		[self schedule:@selector(step:)];
+	}
+	
+	return self;
+}
+
+-(void) restartCallback: (id) sender
+{
+	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagEmitter];
+	[emitter resetSystem];
+}
+
+@end
+
+
 @implementation DemoFirework
 -(void) onEnter
 {
@@ -223,6 +272,20 @@ Class restartAction()
 {
 	[super onEnter];
 	ParticleSystem *emitter = [ParticleFlower node];
+	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+}
+-(NSString *) title
+{
+	return @"ParticleFlower";
+}
+@end
+
+@implementation DemoBigParticle
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [BigParticleFlower node];
 	[self addChild: emitter z:0 tag:kTagEmitter];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
 }
