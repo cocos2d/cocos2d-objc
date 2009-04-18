@@ -352,6 +352,7 @@ enum {
 	AtlasAnimation *a = [animations objectForKey: animationName];
 	AtlasSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	
+	NSAssert( frame, @"AtlasSprite#setDisplayFrame. Invalid frame");
 	CGRect rect = [frame rect];
 
 	[self setTextureRect: rect];

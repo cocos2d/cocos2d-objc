@@ -225,16 +225,10 @@ enum {
 	int height = -5;
     NSUInteger row = 0, rowHeight = 0, columnsOccupied = 0, rowColumns;
 	for(MenuItem *item in children) {
-        if(row >= [rows count])
-            @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"Too many menu items for the amount of rows/columns."
-                                         userInfo:nil];
+		NSAssert( row < [rows count], @"Too many menu items for the amount of rows/columns.");
         
         rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
-        if(rowColumns == 0)
-            @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:[NSString stringWithFormat:@"Can't have zero columns on a row (row %d).", row]
-                                         userInfo:nil];
+		NSAssert( rowColumns, @"Can't have zero columns on a row");
         
         rowHeight = fmaxf(rowHeight, [item contentSize].height);
         ++columnsOccupied;
@@ -247,10 +241,7 @@ enum {
             ++row;
         }
     }
-    if(columnsOccupied != 0)
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"Too many rows/columns for available menu items."
-                                     userInfo:nil];
+	NSAssert( !columnsOccupied, @"Too many rows/columns for available menu items." );
 
     CGSize winSize = [[Director sharedDirector] winSize];
     
@@ -308,16 +299,10 @@ enum {
 	int width = -10, columnHeight = -5;
     NSUInteger column = 0, columnWidth = 0, rowsOccupied = 0, columnRows;
 	for(MenuItem *item in children) {
-        if(column >= [columns count])
-            @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"Too many menu items for the amount of rows/columns."
-                                         userInfo:nil];
+		NSAssert( column < [columns count], @"Too many menu items for the amount of rows/columns.");
         
         columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
-        if(columnRows == 0)
-            @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:[NSString stringWithFormat:@"Can't have zero rows on a column (column %d).", column]
-                                         userInfo:nil];
+		NSAssert( columnRows, @"Can't have zero rows on a column");
         
         columnWidth = fmaxf(columnWidth, [item contentSize].width);
         columnHeight += [item contentSize].height + 5;
@@ -334,10 +319,7 @@ enum {
             ++column;
         }
     }
-    if(rowsOccupied != 0)
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"Too many rows/columns for available menu items."
-                                     userInfo:nil];
+	NSAssert( !rowsOccupied, @"Too many rows/columns for available menu items.");
     
     CGSize winSize = [[Director sharedDirector] winSize];
     
