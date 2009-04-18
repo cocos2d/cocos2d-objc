@@ -187,3 +187,4 @@ typedef struct sParticle
 //! whether or not the system is full
 -(BOOL) isFull;
 @end
+

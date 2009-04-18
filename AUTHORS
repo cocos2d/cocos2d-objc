@@ -58,6 +58,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* kasatani: AtlasSprite index 0 is not overwritten
 	* kermidt.zed: patches for absolutePosition in CocosNode
 		patches for Labels in Texture2D
+	*Leonardo Kasperavičius: author of BigParticleSystem class
 	* lukeman: patches for MenuItem
 	* Maarten Billemont (lhunath): author of ParticleRain
 		added suport for particles' source

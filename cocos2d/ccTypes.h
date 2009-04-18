@@ -90,6 +90,20 @@ ccg(const int x, const int y)
 	return v;
 }
 
+//! to keep texture coordinates
+typedef struct _ccTexCoord {
+	float u;
+	float v;
+} ccTexCoord;
+
+//! Big Particle attributes
+typedef struct _ccTexColorQuad
+{
+	ccTexCoord	texCoords[4];
+	CGPoint		vertices[4];
+	ccColorF	colors[4];
+} ccTexColorQuad;
+
 //! delta time type
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
