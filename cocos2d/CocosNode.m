@@ -21,6 +21,7 @@
 #import "ccMacros.h"
 #import "Director.h"
 #import "Support/CGPointExtension.h"
+#import "Support/ccArray.h"
 
 
 @interface CocosNode (Private)
@@ -88,8 +89,6 @@
 
 	// actions (lazy allocs)
 	actions = nil;
-	actionsToRemove = nil;
-	actionsToAdd = nil;
 	
 	// scheduled selectors (lazy allocs)
 	scheduledSelectors = nil;
@@ -104,14 +103,7 @@
 - (void)cleanup
 {
 	// actions
-	[actions release];
-	actions = nil;
-	
-	[actionsToRemove release];
-	actionsToRemove = nil;
-	
-	[actionsToAdd release];
-	actionsToAdd = nil;
+	[self stopAllActions];
 	
 	// timers
 	[scheduledSelectors release];
@@ -147,9 +139,8 @@
 	[scheduledSelectors release];
 	
 	// actions
-	[actions release];
-	[actionsToRemove release];
-	[actionsToAdd release];
+	[self stopAllActions];
+	ccArrayFree(actions);
 	
 	[super dealloc];
 }
@@ -482,46 +473,26 @@
 
 -(void) actionAlloc
 {
-	// Reason for having actionsToAdd & actionsToRemove:
-	// While iterating through the actions array it's possible that one of the
-	// actions will call do or stopAction on current node. If these methods were
-	// to alter the array directly (remember you're still inside the loop), you'd
-	// get undefined behaviour. So instead these 2 arrays are used as buffers.
-	//
-	// Another solution would be to make a copy of actions on each step_ and
-	// iterate over the copy, but that leads to other complications (you need to
-	// manage a fast buffer in which to save the copy, and you need to accomodate
-	// the possibility of actions accidentally releasing themselves, which leads
-	// to retain/release hell and, ultimately, a slow loop).
-	
-	// actions
-	actions = [[NSMutableArray arrayWithCapacity:4] retain];
-	actionsToRemove = [[NSMutableArray arrayWithCapacity:4] retain];
-	actionsToAdd = [[NSMutableArray arrayWithCapacity:4] retain];
+	if( actions == nil )
+		actions = ccArrayNew(4);
+	else if( actions->num == actions->max )
+		ccArrayDoubleCapacity(actions);
 }
 
 -(Action*) runAction:(Action*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	NSAssert( ![actionsToAdd containsObject:action], @"Action already sheduled to run");
+	// lazy alloc
+	[self actionAlloc];
 	
-	if ( [actions containsObject:action] ) {
-		NSAssert( [actionsToRemove containsObject:action], @"Action already running");
-		[actionsToRemove removeObject:action];
-		
-		CCLOG(@"runAction: Action saved from removal");
-		return action;
-	}
+	NSAssert( !ccArrayContainsObject(actions, action), @"Action already running");
+	
+	ccArrayAppendObject(actions, action);
 	
 	action.target = self;
 	[action start];
 	
-	// lazy alloc
-	if( !actionsToAdd )
-		[self actionAlloc];
-	
-	[actionsToAdd addObject: action];
 	[self schedule: @selector(step_:)];
 	
 	return action;
@@ -529,24 +500,28 @@
 
 -(void) stopAllActions
 {
-	[actionsToAdd removeAllObjects];
-
-	[actionsToRemove removeAllObjects];
-	[actionsToRemove addObjectsFromArray:actions];
+	if( actions == nil )
+		return;
+	ccArrayRemoveAllObjects(actions);
 }
 
 -(void) stopAction: (Action*) action
 {
-	if( [actionsToAdd containsObject:action] )
-		[actionsToAdd removeObject:action];
+	// explicit nil handling
+	if (action == nil)
+		return;
 	
-	else if( [actions containsObject:action] ) {
-		if( ![actionsToRemove containsObject:action] )
-			[actionsToRemove addObject:action];
-		else
-			CCLOG(@"stopAction: Action already scheduled for removal!");
-	}
-	else
+	if( actions != nil ) {
+		NSUInteger i = ccArrayGetIndexOfObject(actions, action);
+	
+		if (i != NSNotFound) {
+			ccArrayRemoveObjectAtIndex(actions, i);
+	
+			// update actionIndex in case we are in step_, looping over the actions
+			if (actionIndex >= (int) i)
+				actionIndex--;
+		}
+	} else
 		CCLOG(@"stopAction: Action not found!");
 }
 
@@ -554,44 +529,37 @@
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	
-	// is going to be added ?
-	for( Action *a in actionsToAdd ) {
-		if( a.tag == aTag ) {
-			[actionsToAdd removeObject:a];
-			return;
-		}
-	}
-	// is running ?
-	for( Action *a in actions ) {
-		if( a.tag == aTag && ![actionsToRemove containsObject:a] ) {
-			[actionsToRemove addObject:a];
-			return; 
+	if( actions != nil ) {
+		NSUInteger limit = actions->num;
+		for( NSUInteger i = 0; i < limit; i++) {
+			Action *a = (Action *) actions->arr[i];
+			
+			if( a.tag == aTag ) {
+				ccArrayRemoveObjectAtIndex(actions, i);
+				
+				// update actionIndex in case we are in step_, looping over the actions
+				if (actionIndex >= (int) i)
+					actionIndex--;
+				return; 
+			}
 		}
 	}
 	
-	CCLOG(@"stopActionByTag: Action not running or already scheduled for removal!");
+	CCLOG(@"stopActionByTag: Action not found!");
 }
 
 -(Action*) getActionByTag:(int) aTag
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	
-	for( Action *a in actionsToRemove ) {
-		if( a.tag == aTag ) {
-			CCLOG(@"getActionByTag: Action unavailable, scheduled for removal!");
-			return nil; 
+	if( actions != nil ) {
+		NSUInteger limit = actions->num;
+		for( NSUInteger i = 0; i < limit; i++) {
+			Action *a = (Action *) actions->arr[i];
+		
+			if( a.tag == aTag )
+				return a; 
 		}
-	}
-	// is running ?
-	for( Action *a in actions ) {
-		if( a.tag == aTag )
-			return a;
-	}
-
-	// is going to be added ?
-	for( Action *a in actionsToAdd ) {
-		if( a.tag == aTag )
-			return a;
 	}
 
 	CCLOG(@"getActionByTag: Action not found");
@@ -600,61 +568,38 @@
 
 -(int) numberOfRunningActions
 {
-	return [actionsToAdd count]+[actions count];
+	return actions ? actions->num : 0;
 }
 
 -(void) step_: (ccTime) dt
 {
-	// remove 'removed' actions
-	for( Action* action in actionsToRemove )
-		[actions removeObject: action];
-	[actionsToRemove removeAllObjects];
-	
-	// add actions that needs to be added
-	for( Action* action in actionsToAdd )
-		[actions addObject: action];
-	[actionsToAdd removeAllObjects];
-	
-	// Unschedule if it is no longer necessary. Note that if step_ is still
-	// scheduled onExit (this happens if the node has actions when it's
-	// removed/removedAndStopped from its parent), it will get descheduled there.
-	if ( [actions count] == 0 ) {
-		[self unschedule: @selector(step_:)];
-		return;
-	}
- 	
-	// Assume the instructions inside [action step: dt] end up calling cleanup on
-	// the current node. This could happen, for example, if the action is a CallFunc
-	// which tells the current node's parent to removeAndStop our node.
-	//
-	// Cleanup releases and nullifies the actions array. As a result all the actions
-	// inside the array get released, including the currently executing one. If
-	// the action had a retain count of 1, it has now deallocated itself!
-	// 
-	// To prevent such accidental deallocs, we could:
-	// a. Retain each action inside the loop before calling step, release it after step.
-	// b. Retain actions array before loop, release it after loop. Only 1 retain,
-	//    slightly better performance when there are many actions. Need to keep original
-	//    value because actions might get nullified and you don't want [nil release].
-	
-	id actionsBackup = [actions retain];
+	// Running the actions may indirectly release the CocosNode, so we're
+	// retaining self to prevent deallocation.
+	[self retain];
 	
 	// call all actions
-	for( Action *action in actions ) {
-		[action step: dt];
+	
+	// The 'actions' ccArray may change while inside this loop.
+	for( actionIndex = 0; actionIndex < (int) actions->num; actionIndex++) {
+		Action *a = (Action *) actions->arr[actionIndex];
+
+		[a retain];
+		[a step: dt];
 		
-		// Note: There's no danger of our node being deallocated inside the loop (because
-		// the current action has retained it) so it's safe to access the actions ivar.
-		if (actions == nil)
-			break;
-		
-		if( [action isDone] ) {
-			[action stop];
-			[actionsToRemove addObject: action];
+		if( [a isDone] ) {
+			[a stop];
+			[self stopAction:a];
 		}
+		[a release];
 	}
 	
-	[actionsBackup release];
+	if( actions->num == 0 )
+		[self unschedule: @selector(step_:)];
+	
+	// And releasing self when done.
+	[self release];
+	// If the node had a retain count of 1 before getting released, it's now
+	// deallocated. However, since we don't access any ivar, we're fine.
 }
 
 #pragma mark CocosNode Timers 

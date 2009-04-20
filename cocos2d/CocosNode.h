@@ -110,9 +110,8 @@ enum {
 	int tag;
 	
 	// actions
-	NSMutableArray *actions;
-	NSMutableArray *actionsToRemove;
-	NSMutableArray *actionsToAdd;
+	struct ccArray *actions;
+	int actionIndex;
 	
 	// scheduled selectors
 	NSMutableDictionary *scheduledSelectors;    
