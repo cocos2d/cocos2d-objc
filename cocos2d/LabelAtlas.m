@@ -70,17 +70,17 @@
 		texCoord.tr_x = row + texStepX;				// D - x
 		texCoord.tr_y = col + texStepY;				// D - y
 		
-		vertex.bl_x = i * itemWidth;				// A - x
+		vertex.bl_x = (int)(i * itemWidth);			// A - x
 		vertex.bl_y = 0;							// A - y
 		vertex.bl_z = 0;							// A - z
-		vertex.br_x = i * itemWidth + itemWidth;	// B - x
+		vertex.br_x = (int)(i * itemWidth + itemWidth);	// B - x
 		vertex.br_y = 0;							// B - y
 		vertex.br_z = 0;							// B - z
-		vertex.tl_x = i * itemWidth;				// C - x
-		vertex.tl_y = itemHeight;					// C - y
+		vertex.tl_x = (int)(i * itemWidth);			// C - x
+		vertex.tl_y = (int)itemHeight;				// C - y
 		vertex.tl_z = 0;							// C - z
-		vertex.tr_x = i * itemWidth + itemWidth;	// D - x
-		vertex.tr_y = itemHeight;					// D - y
+		vertex.tr_x = (int)(i * itemWidth + itemWidth);	// D - x
+		vertex.tr_y = (int)itemHeight;				// D - y
 		vertex.tr_z = 0;							// D - z
 		
 		[textureAtlas updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
