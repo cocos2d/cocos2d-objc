@@ -52,30 +52,6 @@
 	return self;
 }
 
-#pragma mark Sprite - PVRTC RAW
-
-+ (id) spriteWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
-{
-	return [[[self alloc] initWithPVRTCFile:fileimage bpp:bpp hasAlpha:alpha width:w] autorelease];
-}
-
-- (id) initWithPVRTCFile: (NSString*) fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
-{
-	if((self=[super init])) {
-		// texture is retained
-		self.texture = [[TextureMgr sharedTextureMgr] addPVRTCImage:fileimage bpp:bpp hasAlpha:alpha width:w];
-		
-		CGSize s = self.texture.contentSize;
-		transformAnchor = ccp(s.width/2, s.height/2);
-		_autoCenterFrames = NO;
-
-		// lazy alloc
-		animations = nil;
-	}
-	
-	return self;
-}
-
 #pragma mark Sprite - CGImageRef
 
 + (id) spriteWithCGImage: (CGImageRef) image
@@ -256,10 +232,6 @@
 	return self;
 }
 
--(void) addFrame: (NSString*) filename
-{
-	return [self addFrameWithFilename:filename];
-}
 -(void) addFrameWithFilename: (NSString*) filename
 {
 	Texture2D *tex = [[TextureMgr sharedTextureMgr] addImage: filename];

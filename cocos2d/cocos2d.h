@@ -27,8 +27,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 07 02
-#define COCOS2D_VERSION 0x00000702
+// 00   00 08 00
+#define COCOS2D_VERSION 0x00000800
 
 //
 // all cocos2d include files
@@ -67,6 +67,7 @@
 #import "GridAction.h"
 #import "AtlasSprite.h"
 #import "AtlasSpriteManager.h"
+#import "BitmapFontAtlas.h"
 
 //
 // cocos2d macros

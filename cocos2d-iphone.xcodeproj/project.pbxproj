@@ -380,6 +380,12 @@
 		506144030E589A2E003CCDB7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506144040E589A2E003CCDB7 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */; };
+		506414ED0F9C7021007A7B24 /* BitmapFontAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */; };
+		506414EE0F9C7021007A7B24 /* BitmapFontAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */; };
+		5064164B0F9C9B24007A7B24 /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */; };
+		5064164C0F9C9B24007A7B24 /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */; };
+		506417F00F9CBA72007A7B24 /* bitmapFontTest2.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */; };
+		506417F10F9CBA72007A7B24 /* bitmapFontTest2.png in Resources */ = {isa = PBXBuildFile; fileRef = 506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */; };
 		506602110E38A70D000B500E /* Scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* Scheduler.h */; };
 		506602120E38A70D000B500E /* Scheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* Scheduler.m */; };
 		506881F80E95761200F943E5 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -1252,6 +1258,12 @@
 		5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocosnodeTest.m; path = tests/cocosnodeTest.m; sourceTree = "<group>"; };
 		50637A150E95397A000C9182 /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
 		50637A160E95397A000C9182 /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
+		506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapFontAtlas.h; sourceTree = "<group>"; };
+		506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapFontAtlas.m; sourceTree = "<group>"; };
+		506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest.fnt; sourceTree = "<group>"; };
+		5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest.png; sourceTree = "<group>"; };
+		506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest2.fnt; sourceTree = "<group>"; };
+		506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest2.png; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
 		506602100E38A70D000B500E /* Scheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scheduler.m; sourceTree = "<group>"; };
 		506881E60E9575E100F943E5 /* AtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasTest.h; path = tests/AtlasTest.h; sourceTree = "<group>"; };
@@ -2133,7 +2145,7 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				506414C50F9C67C0007A7B24 /* Atlas Nodes */,
+				506414C50F9C67C0007A7B24 /* Labels and Tiles Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				506414C30F9C6769007A7B24 /* Scene Nodes */,
@@ -2253,17 +2265,21 @@
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
 		};
-		506414C50F9C67C0007A7B24 /* Atlas Nodes */ = {
+		506414C50F9C67C0007A7B24 /* Labels and Tiles Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				5018F25C0DFDEAFF00C013A5 /* Label.h */,
+				5018F25D0DFDEAFF00C013A5 /* Label.m */,
+				506887D70E96C90000F943E5 /* AtlasNode.h */,
+				506887D80E96C90000F943E5 /* AtlasNode.m */,
+				506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */,
+				506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */,
 				506884700E96734A00F943E5 /* LabelAtlas.h */,
 				506884710E96734A00F943E5 /* LabelAtlas.m */,
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
-				506887D70E96C90000F943E5 /* AtlasNode.h */,
-				506887D80E96C90000F943E5 /* AtlasNode.m */,
 			);
-			name = "Atlas Nodes";
+			name = "Labels and Tiles Nodes";
 			sourceTree = "<group>";
 		};
 		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
@@ -2344,8 +2360,6 @@
 				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				509E574A0E36234300BD7F09 /* TextureNode.h */,
 				509E574B0E36234300BD7F09 /* TextureNode.m */,
-				5018F25C0DFDEAFF00C013A5 /* Label.h */,
-				5018F25D0DFDEAFF00C013A5 /* Label.m */,
 				5018F25E0DFDEAFF00C013A5 /* Layer.h */,
 				5018F25F0DFDEAFF00C013A5 /* Layer.m */,
 			);
@@ -2420,6 +2434,10 @@
 			isa = PBXGroup;
 			children = (
 				50E675CD0F65857D003DAA90 /* sprites_test */,
+				506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */,
+				506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */,
+				506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */,
+				5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */,
 				5085BFAD0F7D67FF008DBA21 /* snow.png */,
 				502AACF20F79715D001E3F87 /* fire.pvr */,
 				8EDF3FD90F6BE3F400F54643 /* listener-marker.png */,
@@ -2691,6 +2709,7 @@
 				6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
 				50D413260F9A3FE00040C3C8 /* BigParticleSystem.h in Headers */,
+				506414ED0F9C7021007A7B24 /* BitmapFontAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3695,6 +3714,10 @@
 				501CD1760E99873000B86F68 /* fps_images.png in Resources */,
 				509A7A980F61A2400032F449 /* grossini_dance_atlas.png in Resources */,
 				502AACF50F79715E001E3F87 /* fire.pvr in Resources */,
+				5064164B0F9C9B24007A7B24 /* bitmapFontTest.fnt in Resources */,
+				5064164C0F9C9B24007A7B24 /* bitmapFontTest.png in Resources */,
+				506417F00F9CBA72007A7B24 /* bitmapFontTest2.fnt in Resources */,
+				506417F10F9CBA72007A7B24 /* bitmapFontTest2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4083,6 +4106,7 @@
 				50C508C70F7C194400799124 /* FileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				50D413270F9A3FE00040C3C8 /* BigParticleSystem.m in Sources */,
+				506414EE0F9C7021007A7B24 /* BitmapFontAtlas.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
