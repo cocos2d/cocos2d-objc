@@ -63,7 +63,7 @@ static inline ccArray* ccArrayNew(NSUInteger capacity) {
 	return arr;
 }
 
-/** Frees array. Silently ignores nil values. */
+/** Frees array. Silently ignores nil arr. */
 static inline void ccArrayFree(ccArray *arr)
 {
 	if( arr == nil ) return;
@@ -79,31 +79,31 @@ static inline void ccArrayDoubleCapacity(ccArray *arr)
 	arr->arr = (id *) realloc( arr->arr, arr->max * sizeof(id) );
 }	
 
-/** Appends a value. Bahaviour undefined if array doesn't have enough capacity. */
-static inline void ccArrayAppendValue(ccArray *arr, id value)
+/** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
+static inline void ccArrayAppendObject(ccArray *arr, id object)
 {
-	arr->arr[arr->num] = [value retain];
+	arr->arr[arr->num] = [object retain];
 	arr->num++;
 }
 
-/** Returns index of first occurence of value, NSNotFound if value not found. */
-static inline NSUInteger ccArrayGetIndexOfValue(ccArray *arr, id value)
+/** Returns index of first occurence of object, NSNotFound if object not found. */
+static inline NSUInteger ccArrayGetIndexOfObject(ccArray *arr, id object)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
-		if( arr->arr[i] == value ) return i;
+		if( arr->arr[i] == object ) return i;
 	return NSNotFound;
 }
 
-/** Removes all values from arr */
-static inline void ccArrayRemoveAllValues(ccArray *arr)
+/** Removes all objects from arr */
+static inline void ccArrayRemoveAllObjects(ccArray *arr)
 {
 	while (arr->num > 0)
 		[arr->arr[--arr->num] release]; 
 }
 
-/** Removes value at specified index and pushes back all subsequent values.
+/** Removes object at specified index and pushes back all subsequent objects.
  Behaviour undefined if index outside [0, num-1]. */
-static inline void ccArrayRemoveValueAtIndex(ccArray *arr, NSUInteger index)
+static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 {
 	[arr->arr[index] release];
 	
@@ -111,46 +111,47 @@ static inline void ccArrayRemoveValueAtIndex(ccArray *arr, NSUInteger index)
 		arr->arr[index] = arr->arr[index + 1];
 }
 
-/** Removes value at specified index and fills the gap with the last value,
- thereby avoiding the need to push back subsequent values.
- Behaviour undefined i index outside [0, num-1]. */
-static inline void ccArrayFastRemoveValueAtIndex(ccArray *arr, NSUInteger index)
+/** Removes object at specified index and fills the gap with the last object,
+ thereby avoiding the need to push back subsequent objects.
+ Behaviour undefined if index outside [0, num-1]. */
+static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 {
 	[arr->arr[index] release];
 	NSUInteger last = --arr->num;
 	arr->arr[index] = arr->arr[last];
 }
 
-/** Searches for the first occurance of value and removes it. If value is not
+/** Searches for the first occurance of object and removes it. If object is not
  found the function has no effect. */
-static inline void ccArrayRemoveValue(ccArray *arr, id value)
+static inline void ccArrayRemoveObject(ccArray *arr, id object)
 {
-	NSUInteger index = ccArrayGetIndexOfValue(arr, value);
+	NSUInteger index = ccArrayGetIndexOfObject(arr, object);
 	if (index != NSNotFound)
-		ccArrayRemoveValueAtIndex(arr, index);
+		ccArrayRemoveObjectAtIndex(arr, index);
 }
 
-static inline BOOL ccArrayContainsValue(ccArray *arr, id value)
+/** Returns a Boolean value that indicates whether object is present in array. */
+static inline BOOL ccArrayContainsObject(ccArray *arr, id object)
 {
-	return ccArrayGetIndexOfValue(arr, value) != NSNotFound;
+	return ccArrayGetIndexOfObject(arr, object) != NSNotFound;
 }
 
-/** Removes from arr all values in minusArr. For each value in minusArr, the
+/** Removes from arr all objects in minusArr. For each object in minusArr, the
  first matching instance in arr will be removed. */
 static inline void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr)
 {
 	for( NSUInteger i = 0; i < minusArr->num; i++)
-		ccArrayRemoveValue(arr, minusArr->arr[i]);
+		ccArrayRemoveObject(arr, minusArr->arr[i]);
 }
 
-/** Removes from arr all values in minusArr. For each value in minusArr, all
+/** Removes from arr all objects in minusArr. For each object in minusArr, all
  matching instances in arr will be removed. */
 static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 {
 	NSUInteger back = 0;
 	
 	for( NSUInteger i = 0; i < arr->num; i++) {
-		if( ccArrayContainsValue(minusArr, arr->arr[i]) ) {
+		if( ccArrayContainsObject(minusArr, arr->arr[i]) ) {
 			[arr->arr[i] release];
 			back++;
 		} else
@@ -160,14 +161,21 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	arr->num -= back;
 }
 
-/** Appends values from plusArr to arr. Capacity of arr is increased if needed. */
+/** Appends objects from plusArr to arr. Capacity of arr is increased if needed. */
 static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 {
 	while (arr->max < arr->num + plusArr->num)
 		ccArrayDoubleCapacity(arr);
 	
 	for( NSUInteger i = 0; i < plusArr->num; i++)
-		ccArrayAppendValue(arr, plusArr->arr[i]);
+		ccArrayAppendObject(arr, plusArr->arr[i]);
+}
+
+/** Sends to each object in arr the message identified by given selector. */
+static inline void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL sel)
+{
+	for( NSUInteger i = 0; i < arr->num; i++)
+		[arr->arr[i] performSelector:sel];
 }
 
 #endif // CC_ARRAY_H
