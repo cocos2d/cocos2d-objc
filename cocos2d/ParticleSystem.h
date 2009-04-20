@@ -17,6 +17,8 @@
 #import "CocosNode.h"
 #import "ccTypes.h"
 
+/** Structure that contains the values of each particle
+ */
 typedef struct sParticle
 {
 	CGPoint	pos;
@@ -31,7 +33,27 @@ typedef struct sParticle
 
 @class Texture2D;
 
-//! Particle System base class
+/** Particle System base class
+ Attributes of a Particle System:
+  * duration
+  * gravity
+  * emmision rate
+  * total max particles
+  * angle +- variance
+  * speed +-  variance
+  * tangential acceleration +- variance
+  * radial acceleration +- variance
+  * size +- variance
+  * start color +- variance
+  * end color +- variance
+  * life +- variance
+  * blend additive or not
+  * one texture
+ 
+ Limitations:
+  * size can't be bigger than 64
+  * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
+ */
 @interface ParticleSystem : CocosNode
 {
 	int id;
@@ -112,12 +134,8 @@ typedef struct sParticle
 	
 	// Array of (x,y,size) 
 	ccPointSprite *vertices;
-//	// Array of colors
-//	ccColorF	*colors;
 	// vertices buffer id
 	GLuint	verticesID;
-//	// colors buffer id
-//	GLuint	colorsID;
 	
 	//  particle idx
 	int particleIdx;

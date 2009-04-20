@@ -1,5 +1,6 @@
 version 0.8 - xxx
  . All: removed deprecated classes/methods (issue #326)
+ . LabelAtlas: don't render in subpixel (issue #135)
  . Particles: Added BigParticles (issue #245)
 
 version 0.7.2 - xxx

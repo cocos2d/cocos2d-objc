@@ -14,6 +14,15 @@
 
 #import "ParticleSystem.h"
 
+/** Big Particle System class
+ Attributes of a Particle System:
+ * All the attributes of Particle System
+ 
+ Features and Limitations:
+ * Size can be any float number.
+ * The system can be scaled
+ * It is a little bit slower than Particle System since it renders each particle using 4 quads instead of 1
+ */
 @interface BigParticleSystem : ParticleSystem
 {
 	ccVertex3D *faces;		// the vertex coordinates
@@ -24,6 +33,5 @@
 	GLuint	texCoordsID;	// the texcoord's id
 	GLuint	colorsID;		// colors buffer id
 }
-
 @end
 
