@@ -204,9 +204,9 @@
 	return [self addChild:child z:child.zOrder tag:child.tag];
 }
 
-/* "remove" logic MUST only be on this selector
- * If a class want's to extend the 'removeChild' behaviour it only needs
- * to override this selector
+/* "remove" logic MUST only be on this method
+ * If a class want's to extend the 'removeChild' behavior it only needs
+ * to override this method
  */
 -(void) removeChild: (CocosNode*)child cleanup:(BOOL)cleanup
 {

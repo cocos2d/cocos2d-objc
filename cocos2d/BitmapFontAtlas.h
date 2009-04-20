@@ -56,6 +56,9 @@ enum {
 	// string to render
 	NSString		*string_;
 	
+	// values for kerning
+	NSMutableDictionary	*kerningDictionary;
+
 	// Alignmnet
 	UITextAlignment	alignment_;
 	

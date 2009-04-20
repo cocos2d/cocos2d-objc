@@ -27,9 +27,13 @@
 @interface BitmapFontAtlas (Private)
 -(NSString*) atlasNameFromFntFile:(NSString*)fntFile;
 
+-(int) kerningAmmountForFirst:(unichar)first second:(unichar)second;
+
 -(void) parseConfigFile:(NSString*)controlFile;
 -(void) parseCharacterDefinition:(NSString*)line charDef:(ccBitmapFontDef*)characterDefinition;
 -(void) parseCommonArguments:(NSString*)line;
+-(void) parseKerningCapacity:(NSString*)line;
+-(void) parseKerningEntry:(NSString*)line;
 @end
 
 @implementation BitmapFontAtlas
@@ -51,10 +55,11 @@
 
 		alignment_ = alignment;
 
-		[self parseConfigFile:fntFile];
-		
-		[self setString:theString];
+		// will be allocated later
+		kerningDictionary = nil;
 
+		[self parseConfigFile:fntFile];		
+		[self setString:theString];
 	}
 
 	return self;
@@ -63,6 +68,7 @@
 -(void) dealloc
 {
 	[string_ release];
+	[kerningDictionary release];
 	[super dealloc];
 }
 
@@ -138,8 +144,11 @@
 			
 			// Add the CharDef returned to the charArray
 			bitmapFontArray[ characterDefinition.charID ] = characterDefinition;
-			
-		}		
+		}	else if([line hasPrefix:@"kernings count"]) {
+			[self parseKerningCapacity:line];
+		} else if([line hasPrefix:@"kerning first"]) {
+			[self parseKerningEntry:line];
+		}
 	}
 	// Finished with lines so release it
 	[lines release];	
@@ -197,15 +206,77 @@
 	characterDefinition->xAdvance = [propertyValue intValue];
 }
 
+-(void) parseKerningCapacity:(NSString*) line
+{
+	NSAssert(!kerningDictionary, @"dictionary already initialized");
+
+	// Break the values for this line up using =
+	NSArray *values = [line componentsSeparatedByString:@"="];
+	NSEnumerator *nse = [values objectEnumerator];	
+	NSString *propertyValue;
+	
+	// We need to move past the first entry in the array before we start assigning values
+	[nse nextObject];
+	
+	// count
+	propertyValue = [nse nextObject];
+	int capacity = [propertyValue intValue];
+	
+	if( capacity != -1 )
+		kerningDictionary = [[NSMutableDictionary dictionaryWithCapacity: [propertyValue intValue]] retain];
+}
+
+-(void) parseKerningEntry:(NSString*) line
+{
+	NSArray *values = [line componentsSeparatedByString:@"="];
+	NSEnumerator *nse = [values objectEnumerator];	
+	NSString *propertyValue;
+	
+	// We need to move past the first entry in the array before we start assigning values
+	[nse nextObject];
+	
+	// first
+	propertyValue = [nse nextObject];
+	int first = [propertyValue intValue];
+
+	// second
+	propertyValue = [nse nextObject];
+	int second = [propertyValue intValue];
+	
+	// second
+	propertyValue = [nse nextObject];
+	int ammount = [propertyValue intValue];
+	
+	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
+	NSNumber *value = [NSNumber numberWithInt:ammount];
+	
+	[kerningDictionary setObject:value forKey:key];
+}
+
 #pragma mark BitmapFontAtlas - Atlas generation
+
+-(int) kerningAmmountForFirst:(unichar)first second:(unichar)second
+{
+	int ret = 0;
+	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
+	NSNumber *value = [kerningDictionary objectForKey:key];
+	if(value)
+		ret = [value intValue];
+		
+	return ret;
+}
 
 -(void) createFontChars
 {
 	int nextFontPositionX = 0;
+	unichar prev = -1;
+	int kerningAmmount = 0;
 
 	NSUInteger l = [string_ length];
 	for(NSUInteger i=0; i<l; i++) {
 		unichar c = [string_ characterAtIndex:i];
+		
+		kerningAmmount = [self kerningAmmountForFirst:prev second:c];
 		
 		ccBitmapFontDef fontDef = bitmapFontArray[c];
 		
@@ -240,7 +311,11 @@
 			fontChar.position = ccp( nextFontPositionX + fontDef.xOffset, (commonHeight - fontDef.yOffset) - rect.size.height );			
 		}
 		
-		nextFontPositionX += bitmapFontArray[c].xAdvance;
+		// update kerning
+		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmmount,0));
+		nextFontPositionX += bitmapFontArray[c].xAdvance + kerningAmmount;
+		prev = c;
+		
 	}
 	
 	if( alignment_ == UITextAlignmentCenter ) {
