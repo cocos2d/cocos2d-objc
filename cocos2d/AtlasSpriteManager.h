@@ -37,7 +37,7 @@
 }
 
 /** returns the TextureAtlas that is used */
-@property (readonly) TextureAtlas * atlas;
+@property (readwrite,retain) TextureAtlas * atlas;
 
 /** creates an AtlasSpriteManager with a texture2d */
 +(id)spriteManagerWithTexture:(Texture2D *)tex;

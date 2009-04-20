@@ -15,12 +15,17 @@ static NSString *transitions[] = {
 			@"Atlas2",
 			@"Atlas3",
 			@"Atlas4",
+			@"Atlas5",
+			@"Atlas6",
 };
 
 enum {
 	kTagTileMap = 1,
 	kTagSpriteManager = 1,
 	kTagAnimation1 = 1,
+	kTagBitmapAtlas1 = 1,
+	kTagBitmapAtlas2 = 2,
+	kTagBitmapAtlas3 = 3,
 };
 
 enum {
@@ -225,9 +230,139 @@ Class restartAction()
 }
 @end
 
-#pragma mark Example Atlas 3
 
+#pragma mark Example Atlas3
+
+/*
+* Use this editor to generate bitmap font atlas:
+*  http://slick.cokeandcode.com/demos/hiero.jnlp
+*/
 @implementation Atlas3
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		BitmapFontAtlas *label1 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest2.fnt" alignment:UITextAlignmentLeft];
+		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		
+		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest2.fnt" alignment:UITextAlignmentCenter];
+		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
+		
+		BitmapFontAtlas *label3 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest2.fnt" alignment:UITextAlignmentRight];
+		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
+		
+		
+		CGSize s = [[Director sharedDirector] winSize];	
+		label1.position = ccp( 0, 40);
+		label2.position = ccp( s.width/2, s.height/2);
+		label3.position = ccp( s.width, s.height/2+40);
+		
+		[self schedule:@selector(step:)];
+	}
+	
+	return self;
+}
+
+-(void) step:(ccTime) dt
+{
+	time += dt;
+	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
+	
+	BitmapFontAtlas *label1 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas1];
+	[label1 setString:string];
+	
+	BitmapFontAtlas *label2 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
+	[label2 setString:string];
+	
+	BitmapFontAtlas *label3 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas3];
+	[label3 setString:string];
+}
+
+-(NSString*) title
+{
+	return @"BitmapFontAtlas test #1";
+}
+@end
+
+#pragma mark Example Atlas4
+
+/*
+ * Use this editor to generate bitmap font atlas:
+ *  http://slick.cokeandcode.com/demos/hiero.jnlp
+ */
+
+@implementation Atlas4
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		// Upper Label
+		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt" alignment:UITextAlignmentCenter];
+		[self addChild:label];
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		
+		label.position = ccp(s.width/2, s.height/2);
+		
+		
+		AtlasSprite *BChar = (AtlasSprite*) [label getChildByTag:0];
+		AtlasSprite *FChar = (AtlasSprite*) [label getChildByTag:7];
+		AtlasSprite *AChar = (AtlasSprite*) [label getChildByTag:12];
+		
+		
+		id rotate = [RotateBy actionWithDuration:2 angle:360];
+		id rot_4ever = [RepeatForever actionWithAction:rotate];
+		
+		id scale = [ScaleBy actionWithDuration:2 scale:1.5f];
+		id scale_back = [scale reverse];
+		id scale_seq = [Sequence actions:scale, scale_back,nil];
+		id scale_4ever = [RepeatForever actionWithAction:scale_seq];
+		
+		id jump = [JumpBy actionWithDuration:0.5f position:CGPointZero height:60 jumps:1];
+		id jump_4ever = [RepeatForever actionWithAction:jump];
+		
+		id fade_out = [FadeOut actionWithDuration:1];
+		id fade_in = [FadeIn actionWithDuration:1];
+		id seq = [Sequence actions:fade_out, fade_in, nil];
+		id fade_4ever = [RepeatForever actionWithAction:seq];
+		
+		[BChar runAction:rot_4ever];
+		[BChar runAction:scale_4ever];
+		[FChar runAction:jump_4ever];
+		[AChar runAction:fade_4ever];
+		
+		
+		// Bottom Label
+		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt" alignment:UITextAlignmentCenter];
+		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
+		label2.position = ccp(s.width/2.0f, 80);
+		
+		AtlasSprite *lastChar = (AtlasSprite*) [label2 getChildByTag:3];
+		[lastChar runAction: [[rot_4ever copy] autorelease]];
+		
+		[self schedule:@selector(step:) interval:0.1f];
+	}
+	
+	return self;
+}
+-(NSString*) title
+{
+	return @"BitmapFontAtlas test #2";
+}
+-(void) step:(ccTime) dt
+{
+	time += dt;
+	NSString *string = [NSString stringWithFormat:@"%04.1f", time];
+	
+	BitmapFontAtlas *label1 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
+	[label1 setString:string];	
+}
+
+@end
+
+#pragma mark Example Atlas 5
+
+@implementation Atlas5
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -273,9 +408,9 @@ Class restartAction()
 
 @end
 
-#pragma mark Example Atlas 4
+#pragma mark Example Atlas 6
 
-@implementation Atlas4
+@implementation Atlas6
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -340,6 +475,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Application Delegate
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController

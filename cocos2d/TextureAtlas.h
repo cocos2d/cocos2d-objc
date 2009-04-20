@@ -29,13 +29,13 @@
 @interface TextureAtlas : NSObject {
 	NSUInteger			totalQuads_;
 	NSUInteger			capacity_;
-	ccQuad2		*texCoordinates;
-	ccQuad3		*vertexCoordinates;
-	ccColorB	*colors;			// RGBA for each vertex
-	GLushort	*indices;
-	Texture2D	*texture;
+	ccQuad2				*texCoordinates;
+	ccQuad3				*vertexCoordinates;
+	ccColorB			*colors;	// RGBA for each vertex
+	GLushort			*indices;
+	Texture2D			*texture;
 	
-	BOOL		withColorArray_;
+	BOOL				withColorArray_;
 }
 
 /** quantity of quads that are going to be drawn */
