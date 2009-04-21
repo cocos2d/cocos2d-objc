@@ -20,49 +20,50 @@ float randfloat() {
 @implementation AccelViewportDemo
 -(id) init
 {
-	[super init];
+	if( (self=[super init])) {
 
-	isTouchEnabled = YES;
-	isAccelerometerEnabled = YES;
-//	clouds = [[Sprite spriteWithFile:@"clouds.jpg"] retain];
-	clouds = [[Sprite spriteWithPVRTCFile:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024] retain];
-	[clouds setScale: CLOUDS_SCALE];
-	
-	CGSize cs = clouds.texture.contentSize;
-	cloudsSize = ccp(cs.width, cs.height);
-	[self addChild: clouds z:0];
-
-	CGSize s = [[Director sharedDirector] winSize];
-	screenSize = ccp(s.width, s.height);
-	
-	halfCloudsSize = ccpMult(cloudsSize, 0.5f*CLOUDS_SCALE);
-	CGPoint halfScreenSize = ccpMult(screenSize, 0.5f);
-	cloudsCentered = halfScreenSize;
-	CGPoint tl = ccpAdd(ccpSub(cloudsCentered, halfCloudsSize), halfScreenSize);
-	CGPoint br = ccpSub(ccpAdd(cloudsCentered, halfCloudsSize), halfScreenSize);
-	visibleArea = cpBBNew(tl.x, tl.y, br.x, br.y);
-	
-	[clouds setPosition: cloudsCentered];
-	cloudsPos = cloudsCentered;
-
-	for (int n=0; n<NUM_GROSSINIS; n++) {
-		CGPoint pos = ccp((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
-		grossini[n] = [self addNewSpritePosition:pos scale:0.15];
-		[grossini[n] runAction:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
-	}
+		isTouchEnabled = YES;
+		isAccelerometerEnabled = YES;
+		Texture2D *tex = [[TextureMgr sharedTextureMgr] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
+		clouds = [Sprite spriteWithTexture:tex];
+		[clouds setScale: CLOUDS_SCALE];
 		
-//	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
-	NSString *info = @"Grossini's iPhone";
-	
-	label = [Label labelWithString:info fontName:@"Arial" fontSize:16];
-	[self addChild: label];
-	[label setPosition: ccp(s.width/2, s.height-50)];
+		CGSize cs = clouds.texture.contentSize;
+		cloudsSize = ccp(cs.width, cs.height);
+		[self addChild: clouds z:0];
+
+		CGSize s = [[Director sharedDirector] winSize];
+		screenSize = ccp(s.width, s.height);
+		
+		halfCloudsSize = ccpMult(cloudsSize, 0.5f*CLOUDS_SCALE);
+		CGPoint halfScreenSize = ccpMult(screenSize, 0.5f);
+		cloudsCentered = halfScreenSize;
+		CGPoint tl = ccpAdd(ccpSub(cloudsCentered, halfCloudsSize), halfScreenSize);
+		CGPoint br = ccpSub(ccpAdd(cloudsCentered, halfCloudsSize), halfScreenSize);
+		visibleArea = cpBBNew(tl.x, tl.y, br.x, br.y);
+		
+		[clouds setPosition: cloudsCentered];
+		cloudsPos = cloudsCentered;
+
+		for (int n=0; n<NUM_GROSSINIS; n++) {
+			CGPoint pos = ccp((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
+			grossini[n] = [self addNewSpritePosition:pos scale:0.15];
+			[grossini[n] runAction:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
+		}
+			
+	//	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
+		NSString *info = @"Grossini's iPhone";
+		
+		label = [Label labelWithString:info fontName:@"Arial" fontSize:16];
+		[self addChild: label];
+		[label setPosition: ccp(s.width/2, s.height-50)];
+	}
 	return self;
 }
 
 -(Sprite *) addNewSpritePosition:(CGPoint)pos scale:(double)scle
 {
-	Sprite *g = [[Sprite spriteWithFile:@"grossini.png"] retain];
+	Sprite *g = [Sprite spriteWithFile:@"grossini.png"];
 	[clouds addChild: g];
 	[g setScale: (float) scle];
 	[g setPosition: pos ];

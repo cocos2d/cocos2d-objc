@@ -98,8 +98,9 @@
 			// We need to move past the first entry in the array before we start assigning values
 			[nse nextObject];
 			
-			// page ID (ignore)
+			// page ID. Sanity check
 			propertyValue = [nse nextObject];
+			NSAssert( [propertyValue intValue] == 0, @"XXX: BitmapFontAtlas only supports 1 page");
 			
 			// file 
 			propertyValue = [nse nextObject];
@@ -156,7 +157,10 @@
 
 -(void) parseCommonArguments:(NSString*)line
 {
-	// Break the values for this line up using =
+	//
+	// line to parse:
+	// common lineHeight=104 base=26 scaleW=1024 scaleH=512 pages=1 packed=0
+	//
 	NSArray *values = [line componentsSeparatedByString:@"="];
 	NSEnumerator *nse = [values objectEnumerator];	
 	NSString *propertyValue;
@@ -167,8 +171,23 @@
 	// Character ID
 	propertyValue = [nse nextObject];
 	commonHeight = [propertyValue intValue];
+
+	// base (ignore)
+	propertyValue = [nse nextObject];
 	
-	// ignore the rest parameters
+	// scaleW. sanity check
+	propertyValue = [nse nextObject];
+	NSAssert( [propertyValue intValue] <= 1024, @"BitmapFontAtlas: page can't be larger than 1024x1024");
+
+	// scaleH. sanity check
+	propertyValue = [nse nextObject];
+	NSAssert( [propertyValue intValue] <= 1024, @"BitmapFontAtlas: page can't be larger than 1024x1024");
+	
+	// pages
+	propertyValue = [nse nextObject];
+	NSAssert( [propertyValue intValue] == 1, @"BitfontAtlas: only supports 1 page");
+	
+	// packed (ignore) What does this mean ??
 }
 - (void)parseCharacterDefinition:(NSString*)line charDef:(ccBitmapFontDef*)characterDefinition
 {	

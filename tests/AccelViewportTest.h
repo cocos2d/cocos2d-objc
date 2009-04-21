@@ -19,7 +19,7 @@
 @interface AccelViewportDemo : Layer
 {
 	Sprite * grossini[NUM_GROSSINIS];
-	Sprite * clouds;
+	Sprite *clouds;
 	CGPoint cloudsCentered;
 	CGPoint cloudsPos;
 	CGPoint cloudsSize;
