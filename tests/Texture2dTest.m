@@ -321,7 +321,8 @@ Class restartAction()
 	[super onEnter];
 	CGSize s = [[Director sharedDirector] winSize];
 	
-	Sprite *img = [Sprite spriteWithPVRTCFile:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
+	Texture2D *tex = [[TextureMgr sharedTextureMgr] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
+	Sprite *img = [Sprite spriteWithTexture:tex];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
