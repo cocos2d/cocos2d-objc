@@ -36,8 +36,13 @@
 /** 
  @file
  Based on Chipmunk cpArray.
- ccArray stores ids and retains/releases them appropriately.
- And it's way faster than NSMutableArray.
+ ccArray is a faster alternative to NSMutableArray, it does pretty much the
+ same thing (stores NSObjects and retains/releases them appropriately). It's
+ faster because:
+ - it uses a plain C interface so it doesn't incur Objective-c messaging overhead 
+ - it assumes you know what you're doing, so it doesn't spend time on safety checks
+   (index out of bounds, required capacity etc.)
+ - comparisons are done using pointer equality instead of isEqual
  */
 
 #ifndef CC_ARRAY_H
@@ -63,10 +68,19 @@ static inline ccArray* ccArrayNew(NSUInteger capacity) {
 	return arr;
 }
 
-/** Frees array. Silently ignores nil arr. */
+/** Removes all objects from arr */
+static inline void ccArrayRemoveAllObjects(ccArray *arr)
+{
+	while (arr->num > 0)
+		[arr->arr[--arr->num] release]; 
+}
+
+/** Frees array after removing all remaining objects. Silently ignores nil arr. */
 static inline void ccArrayFree(ccArray *arr)
 {
 	if( arr == nil ) return;
+	
+	ccArrayRemoveAllObjects(arr);
 	
 	free(arr->arr);
 	free(arr);
@@ -92,13 +106,6 @@ static inline NSUInteger ccArrayGetIndexOfObject(ccArray *arr, id object)
 	for( NSUInteger i = 0; i < arr->num; i++)
 		if( arr->arr[i] == object ) return i;
 	return NSNotFound;
-}
-
-/** Removes all objects from arr */
-static inline void ccArrayRemoveAllObjects(ccArray *arr)
-{
-	while (arr->num > 0)
-		[arr->arr[--arr->num] release]; 
 }
 
 /** Removes object at specified index and pushes back all subsequent objects.
