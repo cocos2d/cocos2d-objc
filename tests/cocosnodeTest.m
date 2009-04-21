@@ -25,6 +25,7 @@ static NSString *transitions[] = {
 			@"Test4",
 			@"Test5",
 			@"Test6",
+			@"Test7",
 };
 
 Class nextAction()
@@ -416,6 +417,62 @@ Class restartAction()
 	return @"remove/cleanup with children";
 }
 @end
+
+
+@implementation Test7
+-(id) init
+{
+	if( ( self=[super init]) ) {
+
+		CGSize s = [[Director sharedDirector] winSize];
+
+		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		[self addChild:sp1 z:0 tag:kTagSprite1];
+		
+		sp1.position = ccp(s.width/2, s.height/2);		
+
+		[self schedule:@selector(shouldNotCrash:) interval:1.0f];
+	}
+	
+	return self;
+}
+
+- (void) shouldNotCrash:(ccTime) delta
+{	
+	[self unschedule:_cmd];
+
+	CGSize s = [[Director sharedDirector] winSize];
+
+	// if the node has timers, it crashes
+	CocosNode *explosion = [ParticleSun node];
+	
+	// if it doesn't, it works Ok.
+//	CocosNode *explosion = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+
+	explosion.position = ccp(s.width/2, s.height/2);
+	
+	[self runAction:[Sequence actions:
+						[RotateBy actionWithDuration:2 angle:360],
+						[CallFuncN actionWithTarget:self selector:@selector(removeMe:)],
+						nil]];
+	
+	[self addChild:explosion];
+}
+
+// remove
+- (void) removeMe: (id)node
+{	
+    [parent removeChild:node cleanup:YES];
+	[self nextCallback:self];
+}
+
+
+-(NSString *) title
+{
+	return @"stress test #1";
+}
+@end
+
 
 
 #pragma mark AppController

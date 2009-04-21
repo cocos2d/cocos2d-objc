@@ -79,7 +79,7 @@
 			break;
 	}
 
-	// The only supported flag as of v0.2 is kQueryFlagByCountry and kQueryFlagByDevice
+	// The only supported flags as of v0.2 is kQueryFlagByCountry and kQueryFlagByDevice
 	tQueryFlags flags = kQueryFlagIgnore;
 	if( world == kCountry )
 		flags = kQueryFlagByCountry;
