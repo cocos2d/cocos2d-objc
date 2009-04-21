@@ -148,19 +148,21 @@ Class restartAction()
 	// The default state is:
 	// Line Width: 1
 	// color: 255,255,255,255 (white, non-transparent)
-	// Aliased
+	// Anti-Aliased
+	glEnable(GL_LINE_SMOOTH);
 	drawLine( ccp(0, 0), ccp(s.width, s.height) );
 	
-	// line: color, width, anti-aliased
+	// line: color, width, aliased
+	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
+	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
+	glDisable(GL_LINE_SMOOTH);
 	glLineWidth( 5.0f );
-	glEnable(GL_LINE_SMOOTH);
 	glColor4ub(255,0,0,255);
 	drawLine( ccp(0, s.height), ccp(s.width, 0) );
 
 	// TIP:
-	// Since nobody disabled GL_LINE_SMOOTH,
-	// it will be valid until somone disabled it.
-	// The followin examples will be drawn using anti-aliasing.
+	// If you are going to use always the same color or width, you don't
+	// need to call it before every draw
 	//
 	// Remember: OpenGL is a state-machine.
 	
@@ -200,7 +202,6 @@ Class restartAction()
 	
 	// restore original values
 	glLineWidth(1);
-	glDisable(GL_LINE_SMOOTH);
 	glColor4ub(255,255,255,255);
 	glPointSize(1);
 }
