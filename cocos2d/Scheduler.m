@@ -56,7 +56,7 @@
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
 #endif
 		
-		target = t;
+		target = [t retain];
 		selector = s;
 		impMethod = (TICK_IMP) [t methodForSelector:s];
 		
@@ -68,6 +68,8 @@
 -(void) dealloc
 {
 	CCLOG( @"deallocing %@", self);
+	
+	[target release];
 	[super dealloc];
 }
 
@@ -207,7 +209,6 @@ static Scheduler *sharedScheduler;
 	for( id k in methodsToAdd )
 		[scheduledMethods addObject:k];
 	[methodsToAdd removeAllObjects];
-	
 	
 	for( Timer *t in scheduledMethods )
 		[t fire: dt];
