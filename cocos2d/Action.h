@@ -29,7 +29,7 @@ enum {
 	int tag;
 }
 
-@property (readwrite,retain) CocosNode *target;
+@property (readwrite,assign) CocosNode *target;
 @property (readwrite,assign) int tag;
 
 +(id) action;
