@@ -49,6 +49,7 @@
 @synthesize size, sizeVar;
 @synthesize gravity;
 @synthesize texture;
+@synthesize blendAdditive;
 
 -(id) init {
 	NSException* myException = [NSException

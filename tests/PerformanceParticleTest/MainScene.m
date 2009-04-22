@@ -1,30 +1,26 @@
 //
-// cocos2d performance test
+// cocos2d performance particle test
 // Based on the test by Valentin Milea
 //
 
 #import "MainScene.h"
-#import "CocosNodePerformance.h"
 
 enum {
-	kMaxNodes = 5000,
+	kMaxParticles = 5000,
 	kNodesIncrease = 50,
 };
 
 enum {
 	kTagInfoLayer = 1,
 	kTagMainLayer = 2,
+	kTagParticleSystem = 3,
+	kTagLabelAtlas = 4,
 };
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 		@"PerformanceTest1",
 		@"PerformanceTest2",
-		@"PerformanceTest3",
-		@"PerformanceTest4",
-		@"PerformanceTest5",
-		@"PerformanceTest6",
-		@"PerformanceTest7",
 };
 
 Class nextAction()
@@ -56,202 +52,28 @@ Class restartAction()
 	return c;
 }
 
-#pragma mark SubTest
-@implementation SubTest
-
--(id) initWithSubTest:(int) subtest parent:(id)p
-{
-	if( (self=[super init]) ) {
-		
-		subtestNumber = subtest;
-		parent = p;
-		sheet = nil;
-/*
- * Tests:
- * 0: 1 PNG sprite of 52 x 139
- * 1: 1 PNG Atlas sprite using 1 sprite of 52 x 139
- * 2: 1 PVRTC (4bpp, linear) Atlas sprite using 1 sprite of 52 x 139
-
- * 3: 14 PNG sprites of 85 x 121 each
- * 4: 14 PNG Atlassprites of 85 x 121 each
- * 5: 14 PVRTC (4bpp, linear) Atlassprites of 85 x 121 each
- 
- * 6: 64 sprites of 32 x 32 each
- * 7: 64 PNG AtlasSprites of 32 x 32 each
- * 8: 64 PVRTC AtlasSprites of 32 x 32 each
- */
-		switch( subtestNumber) {
-			case 1:
-			case 4:
-			case 7:
-				break;
-			case 2:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
-				[p addChild:sheet z:0];
-				[sheet retain];
-				break;
-			case 3:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
-				[p addChild:sheet z:0];
-				[sheet retain];
-				break;
-				
-			case 5:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
-				[p addChild:sheet z:0];
-				[sheet retain];
-				break;				
-			case 6:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
-				[p addChild:sheet z:0];
-				[sheet retain];
-				break;
-
-			case 8:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
-				[p addChild:sheet z:0];
-				[sheet retain];
-				break;
-			case 9:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
-				[p addChild:sheet z:0];
-				[sheet retain];
-				break;
-				
-			default:
-				break;
-		}
-	}
-	return self;
-}
-
-- (void) dealloc
-{
-	[sheet release];
-	[super dealloc];
-}
-
--(id) createSpriteWithTag:(int)tag
-{
-	id sprite = nil;
-	switch (subtestNumber) {
-		case 1: {
-			sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-			[parent addChild:sprite z:0 tag:tag+100];
-			break;
-		}
-		case 2:
-		case 3: {
-			sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 52, 139) spriteManager:sheet];
-			[sheet addChild:sprite];
-			break;
-		}
-
-		case 4:
-		{
-			int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
-			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
-			[parent addChild:sprite z:0 tag:tag+100];
-			break;
-		}
-		case 5:
-		case 6:
-		{
-			int y,x;
-			int r = (CCRANDOM_0_1() * 1400 / 100);
-			
-			y = r / 5;
-			x = r % 5;
-
-			x *= 85;
-			y *= 121;
-			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:sheet];
-			[sheet addChild:sprite];
-			break;
-		}
-
-		case 7:
-		{
-			int y,x;
-			int r = (CCRANDOM_0_1() * 6400 / 100);
-			
-			y = r / 8;
-			x = r % 8;
-			
-			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"sprite-%d-%d.png", x, y]];
-			[parent addChild:sprite z:0 tag:tag+100];
-			break;
-		}
-			
-		case 8:
-		case 9:
-		{
-			int y,x;
-			int r = (CCRANDOM_0_1() * 6400 / 100);
-			
-			y = r / 8;
-			x = r % 8;
-			
-			x *= 32;
-			y *= 32;
-			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,32,32) spriteManager:sheet];
-			[sheet addChild:sprite];
-			break;
-		}
-			
-		default:
-			break;
-	}
-			
-	return sprite;
-}
-
--(void) removeByTag:(int) tag
-{
-	switch (subtestNumber) {
-		case 1:
-		case 4:
-		case 7:
-			[parent removeChildByTag:tag+100 cleanup:YES];
-			break;
-		case 2:
-		case 3:
-		case 5:
-		case 6:
-		case 8:
-		case 9:
-			[sheet removeChildAtIndex:tag cleanup:YES];
-			break;
-		default:
-			break;
-	}
-}
-@end
-
 
 #pragma mark MainScene
 
 @implementation MainScene
 
-+(id) testWithSubTest:(int) subtest nodes:(int)nodes
++(id) testWithSubTest:(int) subtest particles:(int)particles
 {
-	return [[[self alloc] initWithSubTest:subtest nodes:nodes] autorelease];
+	return [[[self alloc] initWithSubTest:subtest particles:particles] autorelease];
 }
 
-- (id)initWithSubTest:(int) asubtest nodes:(int)nodes
+- (id)initWithSubTest:(int) asubtest particles:(int)particles
 {
 	if ((self = [super init]) != nil) {
 		
 		srandom(0);
 		
 		subtestNumber = asubtest;
-		subTest = [[SubTest alloc] initWithSubTest:asubtest parent:self];
-
 		CGSize s = [[Director sharedDirector] winSize];
 
 		lastRenderedCount = 0;
-		quantityNodes = 0;
-		
+		quantityParticles = particles;
+
 		[MenuItemFont setFontSize:65];
 		MenuItemFont *decrease = [MenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
 		[decrease.label setRGB:0 :200 :20];
@@ -267,7 +89,11 @@ Class restartAction()
 		[infoLabel setRGB:0 :200 :20];
 		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
-				
+		
+		// particles on stage
+		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
+		labelAtlas.position = CGPointMake(254,50);
 		
 		// Next Prev Test
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -284,33 +110,20 @@ Class restartAction()
 		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF4 = [MenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF5 = [MenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF6 = [MenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF7 = [MenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF8 = [MenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF9 = [MenuItemFont itemFromString:@"9 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
 		itemF3.tag = 3;
 		itemF4.tag = 4;
-		itemF5.tag = 5;
-		itemF6.tag = 6;
-		itemF7.tag = 7;
-		itemF8.tag = 8;
-		itemF9.tag = 9;
 
-
-		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, nil];
+		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, nil];
 		
 		int i=0;
 		for( id child in menu.children ) {
-			if( i<3)
+			if( i<2)
 				[[child label] setRGB:200 :20 :20];
-			else if(i<6)
+			else if(i<4)
 				[[child label] setRGB:0 :200 :20];
-			else
-				[[child label] setRGB:0 :20 :200];
 			i++;
 		}
 		
@@ -324,9 +137,10 @@ Class restartAction()
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setRGB:255 :255 :40];
 
+		[self updateQuantityLabel];
+		[self createParticleSystem];
 		
-		while(quantityNodes < nodes )
-			[self onIncrease:self];
+		[self schedule:@selector(step:)];
 	}
 	
 	return self;
@@ -339,14 +153,67 @@ Class restartAction()
 
 -(void) dealloc
 {
-	[subTest release];
 	[super dealloc];
 }
+
+-(void) step:(ccTime) dt
+{
+	LabelAtlas *atlas = (LabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	
+	NSString *str = [NSString stringWithFormat:@"%4d", emitter.particleCount];
+	[atlas setString:str];
+}
+
+-(void) createParticleSystem
+{
+	
+	ParticleSystem *particleSystem;
+
+	/*
+	 * Tests:
+	 * 0: Particle System using .PNG image as texture
+	 * 1: Particle System using .PVR image as texture
+	 
+	 * 2: Big Particle System using a .PNG image as texture
+	 * 3: Big Particle System using a .PVR image as texture
+	 
+	 */
+	
+	
+	[self removeChildByTag:kTagParticleSystem cleanup:YES];
+	
+	switch( subtestNumber) {
+		case 1:
+			particleSystem = [[ParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			break;
+		case 2:
+			particleSystem = [[ParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
+			break;
+		case 3:
+			particleSystem = [[BigParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			break;
+		case 4:
+			particleSystem = [[BigParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
+			break;
+		default:
+			break;
+	}
+	[self addChild:particleSystem z:0 tag:kTagParticleSystem];
+	[particleSystem release];
+
+	[self doTest];
+}
+
 
 -(void) restartCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	id scene = [restartAction() testWithSubTest:subtestNumber nodes:quantityNodes];
+	id scene = [restartAction() testWithSubTest:subtestNumber particles:quantityParticles];
 	[s addChild:scene];
 
 	[[Director sharedDirector] replaceScene: s];
@@ -355,7 +222,7 @@ Class restartAction()
 -(void) nextCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	id scene = [nextAction() testWithSubTest:subtestNumber nodes:quantityNodes];
+	id scene = [nextAction() testWithSubTest:subtestNumber particles:quantityParticles];
 	[s addChild:scene];
 	[[Director sharedDirector] replaceScene: s];
 }
@@ -363,7 +230,7 @@ Class restartAction()
 -(void) backCallback: (id) sender
 {
 	Scene *s = [Scene node];
-	id scene = [backAction() testWithSubTest:subtestNumber nodes:quantityNodes];
+	id scene = [backAction() testWithSubTest:subtestNumber particles:quantityParticles];
 	[s addChild:scene];
 
 	[[Director sharedDirector] replaceScene: s];
@@ -375,50 +242,42 @@ Class restartAction()
 	[self restartCallback:sender];
 }
 
-- (void)updateNodes
-{
-	if( quantityNodes != lastRenderedCount ) {
-
-		Label *infoLabel = (Label *) [self getChildByTag:kTagInfoLayer];
-		[infoLabel setString: [NSString stringWithFormat:@"%u nodes", quantityNodes] ];
-		
-		lastRenderedCount = quantityNodes;
-	}
-}
-
--(void) doTest:(id) sprite
+-(void) doTest
 {
 	// override
 }
 
 -(void) onIncrease:(id) sender
 {
-	if( quantityNodes >= kMaxNodes)
-		return;
-	
-	for( int i=0;i< kNodesIncrease;i++) {
-		
-		Sprite *sprite = [subTest createSpriteWithTag: quantityNodes];
-		[self doTest:sprite];
-		
-		quantityNodes++;
-	}
-	
-	[self updateNodes];
+	quantityParticles += kNodesIncrease;
+	if( quantityParticles > kMaxParticles )
+		quantityParticles = kMaxParticles;
+
+	[self updateQuantityLabel];
+	[self createParticleSystem];
 }
 
 -(void) onDecrease:(id) sender
 {
-	if( quantityNodes <= 0 )
-		return;
+	quantityParticles -= kNodesIncrease;
+	if( quantityParticles < 0 )
+		quantityParticles = 0;
 	
-	for( int i=0;i < kNodesIncrease;i++) {
-		quantityNodes--;
-		[subTest removeByTag:quantityNodes];
-	}
-	
-	[self updateNodes];
+	[self updateQuantityLabel];
+	[self createParticleSystem];
 }
+
+- (void)updateQuantityLabel
+{
+	if( quantityParticles != lastRenderedCount ) {
+		
+		Label *infoLabel = (Label *) [self getChildByTag:kTagInfoLayer];
+		[infoLabel setString: [NSString stringWithFormat:@"%u particles", quantityParticles] ];
+		
+		lastRenderedCount = quantityParticles;
+	}
+}
+
 
 @end
 
@@ -428,12 +287,62 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"A (%d) position", subtestNumber];
+	return [NSString stringWithFormat:@"A (%d) size=8", subtestNumber];
 }
 
--(void) doTest:(id) sprite
+-(void) doTest
 {
-	[sprite performancePosition];
+	CGSize s = [[Director sharedDirector] winSize];
+	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+
+	// duration
+	particleSystem.duration = -1;
+	
+	// gravity
+	particleSystem.gravity = ccp(0,-90);
+	
+	// angle
+	particleSystem.angle = 90;
+	particleSystem.angleVar = 0;
+	
+	// radial
+	particleSystem.radialAccel = 0;
+	particleSystem.radialAccelVar = 0;
+	
+	// speed of particles
+	particleSystem.speed = 180;
+	particleSystem.speedVar = 50;
+	
+	// emitter position
+	particleSystem.position = ccp(s.width/2, 100);
+	particleSystem.posVar = ccp(s.width/2,0);
+	
+	// life of particles
+	particleSystem.life = 3.0f;
+	particleSystem.lifeVar = 1;
+	
+	// emits per frame
+	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColor = startColor;
+
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColorVar = startColorVar;
+
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	particleSystem.endColor = endColor;
+
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	particleSystem.endColorVar = endColorVar;
+	
+	// size, in pixels
+	particleSystem.size = 8.0f;
+	particleSystem.sizeVar = 0;
+	
+	// additive
+	particleSystem.blendAdditive = NO;
 }
 @end
 
@@ -441,78 +350,62 @@ Class restartAction()
 @implementation PerformanceTest2
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"B (%d) scale", subtestNumber];
+	return [NSString stringWithFormat:@"B (%d) size=64", subtestNumber];
 }
--(void) doTest:(id) sprite
+-(void) doTest
 {
-	[sprite performanceScale];
+	CGSize s = [[Director sharedDirector] winSize];
+	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	
+	// duration
+	particleSystem.duration = -1;
+	
+	// gravity
+	particleSystem.gravity = ccp(0,-90);
+	
+	// angle
+	particleSystem.angle = 90;
+	particleSystem.angleVar = 0;
+	
+	// radial
+	particleSystem.radialAccel = 0;
+	particleSystem.radialAccelVar = 0;
+	
+	// speed of particles
+	particleSystem.speed = 180;
+	particleSystem.speedVar = 50;
+	
+	// emitter position
+	particleSystem.position = ccp(s.width/2, 100);
+	particleSystem.posVar = ccp(s.width/2,0);
+	
+	// life of particles
+	particleSystem.life = 3.0f;
+	particleSystem.lifeVar = 1;
+	
+	// emits per frame
+	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColor = startColor;
+	
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColorVar = startColorVar;
+	
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	particleSystem.endColor = endColor;
+	
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	particleSystem.endColorVar = endColorVar;
+	
+	// size, in pixels
+	particleSystem.size = 64.0f;
+	particleSystem.sizeVar = 0;
+	
+	// additive
+	particleSystem.blendAdditive = NO;
+	
 }
 @end
-
-#pragma mark Test 3
-@implementation PerformanceTest3
--(NSString*) title
-{
-	return [NSString stringWithFormat:@"C (%d) scale + rot", subtestNumber];
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceRotationScale];
-}
-@end
-
-
-#pragma mark Test 4
-@implementation PerformanceTest4
--(NSString*) title
-{
-	return [NSString stringWithFormat:@"D (%d) 100%% out", subtestNumber];
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceOut100];
-}
-@end
-
-#pragma mark Test 5
-@implementation PerformanceTest5
--(NSString*) title
-{
-	return [NSString stringWithFormat:@"E (%d) 80%% out", subtestNumber];
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceout20];
-}
-@end
-
-#pragma mark Test 6
-@implementation PerformanceTest6
--(NSString*) title
-{
-	return [NSString stringWithFormat:@"F (%d) actions", subtestNumber];
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceActions];
-}
-@end
-
-#pragma mark Test 7
-@implementation PerformanceTest7
--(NSString*) title
-{
-	return [NSString stringWithFormat:@"G (%d) actions 80%% out", subtestNumber];
-}
-
--(void) doTest:(id) sprite
-{
-	[sprite performanceActions20];
-}
-@end
-
 

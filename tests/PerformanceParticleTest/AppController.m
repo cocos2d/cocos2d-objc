@@ -1,5 +1,5 @@
 //
-// cocos2d performance test
+// cocos2d performance particle test
 // Based on the test by Valentin Milea
 //
 
@@ -19,12 +19,12 @@
 
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
-	[[Director sharedDirector] setLandscape:YES];
+	[[Director sharedDirector] setLandscape:NO];
 	
 	[window makeKeyAndVisible];
 	
 	Scene *scene = [Scene node];
-	[scene addChild: [nextAction() testWithSubTest:1 nodes:50]];
+	[scene addChild: [nextAction() testWithSubTest:1 particles:50]];
 	
 	[[Director sharedDirector] runWithScene:scene];
 }

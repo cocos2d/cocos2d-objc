@@ -191,6 +191,8 @@ typedef struct sParticle
 @property (readwrite,assign) int totalParticles;
 /** texture used to render the particles */
 @property (readwrite, retain) Texture2D * texture;
+/** whether or not the particles are using "blend additive */
+@property (readwrite) BOOL blendAdditive;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;
