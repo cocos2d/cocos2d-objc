@@ -1,5 +1,5 @@
 //
-// cocos2d performance test
+// cocos2d performance particle test
 // Based on the test by Valentin Milea
 //
 
@@ -8,33 +8,23 @@
 Class nextAction();
 
 
-@interface SubTest : NSObject
-{
-	int					subtestNumber;
-	AtlasSpriteManager	*sheet;
-	id					parent;
-}
--(id) createSpriteWithTag:(int)tag;
--(void) removeByTag:(int)tag;
--(id) initWithSubTest:(int) subtest parent:(id)parent;
-@end
-
 @interface MainScene : Scene {
 	int			lastRenderedCount;
-	int			quantityNodes;
-	SubTest		*subTest;
+	int			quantityParticles;
 	int			subtestNumber;
 }
 
-+(id) testWithSubTest:(int)subtest nodes:(int)nodes;
--(id) initWithSubTest:(int)subtest nodes:(int)nodes;
--(void)updateNodes;
++(id) testWithSubTest:(int)subtest particles:(int)particles;
+-(id) initWithSubTest:(int)subtest particles:(int)particles;
+-(void) createParticleSystem;
 -(NSString*) title;
 
 -(void) onIncrease:(id) sender;
 -(void) onDecrease:(id) sender;
 
--(void) doTest:(id) sprite;
+-(void) updateQuantityLabel;
+
+-(void) doTest;
 @end
 
 
