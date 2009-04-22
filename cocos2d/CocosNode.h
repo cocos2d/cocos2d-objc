@@ -246,8 +246,8 @@ enum {
 // actions
 
 /** Executes an action, and returns the action that is executed.
- The target will be retained.
- @warning in v0.8 the target won't be retained anymore
+ The node becomes the action's target.
+ @warning Starting from v0.8 actions don't retain their target anymore.
  @since v0.7.1
  @return An Action pointer
  */

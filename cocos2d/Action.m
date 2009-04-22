@@ -45,7 +45,6 @@
 -(void) dealloc
 {
 	CCLOG(@"deallocing %@", self);
-	[target release];
 	[super dealloc];
 }
 
