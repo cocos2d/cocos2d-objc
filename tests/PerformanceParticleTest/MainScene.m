@@ -21,6 +21,9 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 		@"PerformanceTest1",
 		@"PerformanceTest2",
+		@"PerformanceTest3",
+		@"PerformanceTest4",
+
 };
 
 Class nextAction()
@@ -287,6 +290,71 @@ Class restartAction()
 
 -(NSString*) title
 {
+	return [NSString stringWithFormat:@"A (%d) size=4", subtestNumber];
+}
+
+-(void) doTest
+{
+	CGSize s = [[Director sharedDirector] winSize];
+	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	
+	// duration
+	particleSystem.duration = -1;
+	
+	// gravity
+	particleSystem.gravity = ccp(0,-90);
+	
+	// angle
+	particleSystem.angle = 90;
+	particleSystem.angleVar = 0;
+	
+	// radial
+	particleSystem.radialAccel = 0;
+	particleSystem.radialAccelVar = 0;
+	
+	// speed of particles
+	particleSystem.speed = 180;
+	particleSystem.speedVar = 50;
+	
+	// emitter position
+	particleSystem.position = ccp(s.width/2, 100);
+	particleSystem.posVar = ccp(s.width/2,0);
+	
+	// life of particles
+	particleSystem.life = 3.0f;
+	particleSystem.lifeVar = 1;
+	
+	// emits per frame
+	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColor = startColor;
+	
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColorVar = startColorVar;
+	
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	particleSystem.endColor = endColor;
+	
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	particleSystem.endColorVar = endColorVar;
+	
+	// size, in pixels
+	particleSystem.size = 4.0f;
+	particleSystem.sizeVar = 0;
+	
+	// additive
+	particleSystem.blendAdditive = NO;
+}
+@end
+
+#pragma mark Test 2
+
+@implementation PerformanceTest2
+
+-(NSString*) title
+{
 	return [NSString stringWithFormat:@"A (%d) size=8", subtestNumber];
 }
 
@@ -346,8 +414,71 @@ Class restartAction()
 }
 @end
 
-#pragma mark Test 2
-@implementation PerformanceTest2
+#pragma mark Test 3
+@implementation PerformanceTest3
+-(NSString*) title
+{
+	return [NSString stringWithFormat:@"B (%d) size=32", subtestNumber];
+}
+-(void) doTest
+{
+	CGSize s = [[Director sharedDirector] winSize];
+	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	
+	// duration
+	particleSystem.duration = -1;
+	
+	// gravity
+	particleSystem.gravity = ccp(0,-90);
+	
+	// angle
+	particleSystem.angle = 90;
+	particleSystem.angleVar = 0;
+	
+	// radial
+	particleSystem.radialAccel = 0;
+	particleSystem.radialAccelVar = 0;
+	
+	// speed of particles
+	particleSystem.speed = 180;
+	particleSystem.speedVar = 50;
+	
+	// emitter position
+	particleSystem.position = ccp(s.width/2, 100);
+	particleSystem.posVar = ccp(s.width/2,0);
+	
+	// life of particles
+	particleSystem.life = 3.0f;
+	particleSystem.lifeVar = 1;
+	
+	// emits per frame
+	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColor = startColor;
+	
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColorVar = startColorVar;
+	
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	particleSystem.endColor = endColor;
+	
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	particleSystem.endColorVar = endColorVar;
+	
+	// size, in pixels
+	particleSystem.size = 32.0f;
+	particleSystem.sizeVar = 0;
+	
+	// additive
+	particleSystem.blendAdditive = NO;
+	
+}
+@end
+
+#pragma mark Test 4
+@implementation PerformanceTest4
 -(NSString*) title
 {
 	return [NSString stringWithFormat:@"B (%d) size=64", subtestNumber];
