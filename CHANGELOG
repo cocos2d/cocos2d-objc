@@ -1,8 +1,10 @@
 version 0.8 - xxx
  . All: removed deprecated classes/methods (issue #326)
  . BitmapFontAtlas: new features (issue #317)
+ . CocosNode: actions don't retain the target (issue #150)
  . LabelAtlas: don't render in subpixel (issue #135)
  . Particles: Added BigParticles (issue #245)
+ . Touches: new feature (issue #211)
 
 version 0.7.2 - xxx
  . All: removed chipmunk macros. using CG macros (issue #290)
