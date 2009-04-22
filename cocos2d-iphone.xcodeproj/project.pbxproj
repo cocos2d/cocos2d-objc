@@ -789,6 +789,11 @@
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
+		6F167CBD0F9EF1D800843D49 /* TargetedTouchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F167CB80F9EF1D800843D49 /* TargetedTouchDelegate.h */; };
+		6F167CBE0F9EF1D800843D49 /* TouchDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F167CB90F9EF1D800843D49 /* TouchDispatcher.h */; };
+		6F167CBF0F9EF1D800843D49 /* TouchDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F167CBA0F9EF1D800843D49 /* TouchDispatcher.m */; };
+		6F167CC00F9EF1D800843D49 /* TouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F167CBB0F9EF1D800843D49 /* TouchHandler.h */; };
+		6F167CC10F9EF1D800843D49 /* TouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F167CBC0F9EF1D800843D49 /* TouchHandler.m */; };
 		6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F8321EE0F8BD08E00CBAD06 /* ccArray.h */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
 		8E3FC8950F7B8C0600B3E5DE /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */; };
@@ -1478,6 +1483,11 @@
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		6F167CB80F9EF1D800843D49 /* TargetedTouchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetedTouchDelegate.h; sourceTree = "<group>"; };
+		6F167CB90F9EF1D800843D49 /* TouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDispatcher.h; sourceTree = "<group>"; };
+		6F167CBA0F9EF1D800843D49 /* TouchDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDispatcher.m; sourceTree = "<group>"; };
+		6F167CBB0F9EF1D800843D49 /* TouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchHandler.h; sourceTree = "<group>"; };
+		6F167CBC0F9EF1D800843D49 /* TouchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchHandler.m; sourceTree = "<group>"; };
 		6F8321EE0F8BD08E00CBAD06 /* ccArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccArray.h; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trance-loop.ogg"; sourceTree = "<group>"; };
 		8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION; sourceTree = "<group>"; };
@@ -2144,6 +2154,7 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Labels and Tiles Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
@@ -2577,6 +2588,18 @@
 			path = sprites_test;
 			sourceTree = "<group>";
 		};
+		6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				6F167CB80F9EF1D800843D49 /* TargetedTouchDelegate.h */,
+				6F167CB90F9EF1D800843D49 /* TouchDispatcher.h */,
+				6F167CBA0F9EF1D800843D49 /* TouchDispatcher.m */,
+				6F167CBB0F9EF1D800843D49 /* TouchHandler.h */,
+				6F167CBC0F9EF1D800843D49 /* TouchHandler.m */,
+			);
+			name = "Touch Dispatcher";
+			sourceTree = "<group>";
+		};
 		8E6CBE5F0F7A5A3E00D47B3A /* Tremor */ = {
 			isa = PBXGroup;
 			children = (
@@ -2710,6 +2733,9 @@
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
 				50D413260F9A3FE00040C3C8 /* BigParticleSystem.h in Headers */,
 				506414ED0F9C7021007A7B24 /* BitmapFontAtlas.h in Headers */,
+				6F167CBD0F9EF1D800843D49 /* TargetedTouchDelegate.h in Headers */,
+				6F167CBE0F9EF1D800843D49 /* TouchDispatcher.h in Headers */,
+				6F167CC00F9EF1D800843D49 /* TouchHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4107,6 +4133,8 @@
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				50D413270F9A3FE00040C3C8 /* BigParticleSystem.m in Sources */,
 				506414EE0F9C7021007A7B24 /* BitmapFontAtlas.m in Sources */,
+				6F167CBF0F9EF1D800843D49 /* TouchDispatcher.m in Sources */,
+				6F167CC10F9EF1D800843D49 /* TouchHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
