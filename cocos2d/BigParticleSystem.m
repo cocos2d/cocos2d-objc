@@ -3,7 +3,6 @@
  * http://code.google.com/p/cocos2d-iphone
  *
  * Copyright (C) 2009 Leonardo Kasperavičius
- 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -31,49 +30,37 @@
 -(id) initWithTotalParticles:(int) numberOfParticles
 {
 	// base initialization
-	if( !(self=[super initWithTotalParticles:numberOfParticles]) )
-		return nil;
+	if( (self=[super initWithTotalParticles:numberOfParticles]) ) {
 	
-	// allocating data space
-	faces = malloc( sizeof(ccVertex3D) * totalParticles * 4 ); // two triangles for each face
-	texcoords = malloc( sizeof(ccTexCoord) * totalParticles * 4 );
-	colors = malloc( sizeof(ccColorF)*totalParticles*4);
-	indices = malloc( sizeof(indices[0]) * totalParticles * 6 );
-	
-	if( !faces || !texcoords || !colors || !indices ) {
-		NSLog(@"Particle system: not enough memory");
-		if( faces )
-			free(faces);
-		if(texcoords)
-			free(texcoords);
-		if(colors)
-			free(colors);
-		if(indices)
-			free(indices);
-		return nil;
-	}
-	
-	// putting the tex coordinates on array (only once)
-	[self initTexCoords];
-	[self initIndices];
+		// allocating data space
+		quads = malloc( sizeof(quads[0]) * totalParticles );
+		indices = malloc( sizeof(indices[0]) * totalParticles * 6 );
+		
+		if( !quads || !indices) {
+			NSLog(@"Particle system: not enough memory");
+			if( quads )
+				free( quads );
+			if(indices)
+				free(indices);
+			return nil;
+		}
+		
+		// initialize only once the texCoords and the indices
+		[self initTexCoords];
+		[self initIndices];
 
-	// creating the buffers on opengl
-	glGenBuffers(1, &facesID);
-	glGenBuffers(1, &texCoordsID);
-	glGenBuffers(1, &colorsID);
-	
+		// create the VBO buffer
+		glGenBuffers(1, &quadsID);
+	}
+		
 	return self;
 }
 
 -(void) dealloc
 {
-	free(faces);
-	free(texcoords);
-	free(colors);
+	free(quads);
 	free(indices);
-	glDeleteBuffers(1, &facesID);
-	glDeleteBuffers(1, &texCoordsID);
-	glDeleteBuffers(1, &colorsID);
+	glDeleteBuffers(1, &quadsID);
 	
 	[super dealloc];
 }
@@ -82,17 +69,17 @@
 {
 	for(int i=0; i<totalParticles; i++) {
 		// top-left vertex:
-		texcoords[i*4].u = 0;
-		texcoords[i*4].v = 0;
+		quads[i].point[0].texCoords.u = 0;
+		quads[i].point[0].texCoords.v = 0;
 		// bottom-left vertex:
-		texcoords[i*4+1].u = 1;
-		texcoords[i*4+1].v = 0;
+		quads[i].point[1].texCoords.u = 1;
+		quads[i].point[1].texCoords.v = 0;
 		// top-right vertex:
-		texcoords[i*4+2].u = 0;
-		texcoords[i*4+2].v = 1;
+		quads[i].point[2].texCoords.u = 0;
+		quads[i].point[2].texCoords.v = 1;
 		// top-right vertex:
-		texcoords[i*4+3].u = 1;
-		texcoords[i*4+3].v = 1;
+		quads[i].point[3].texCoords.u = 1;
+		quads[i].point[3].texCoords.v = 1;
 	}
 }	
 -(void) initIndices
@@ -160,36 +147,30 @@
 			
 			p->life -= dt;
 			
-			// place vertices and colors in array
-			vertices[particleIdx].x = p->pos.x;
-			vertices[particleIdx].y = p->pos.y;
-			vertices[particleIdx].size = p->size;
-			vertices[particleIdx].colors = p->color;
+			//
+			// update values in quad
+			//
 			
 			// colors
-			colors[particleIdx*4] = p->color;
-			colors[particleIdx*4+1] = p->color;
-			colors[particleIdx*4+2] = p->color;
-			colors[particleIdx*4+3] = p->color;
+			for(int i=0;i<4;i++)
+				quads[particleIdx].point[i].colors = p->color;
 			
-			// place the triangles in arrays
-			
+			// vertices
 			// top-left vertex:
-			faces[particleIdx*4].x = p->pos.x - (p->size/2);
-			faces[particleIdx*4].y = p->pos.y - (p->size/2);
-			faces[particleIdx*4].z = 0;
+			quads[particleIdx].point[0].vertices.x = p->pos.x - (p->size/2);
+			quads[particleIdx].point[0].vertices.y = p->pos.y - (p->size/2);
+
 			// bottom-left vertex:
-			faces[particleIdx*4+1].x = p->pos.x + (p->size/2);
-			faces[particleIdx*4+1].y = p->pos.y - (p->size/2);
-			faces[particleIdx*4+1].z = 0;
+			quads[particleIdx].point[1].vertices.x = p->pos.x + (p->size/2);
+			quads[particleIdx].point[1].vertices.y = p->pos.y - (p->size/2);
+
 			// top-right vertex:
-			faces[particleIdx*4+2].x = p->pos.x - (p->size/2);
-			faces[particleIdx*4+2].y = p->pos.y + (p->size/2);
-			faces[particleIdx*4+2].z = 0;
+			quads[particleIdx].point[2].vertices.x = p->pos.x - (p->size/2);
+			quads[particleIdx].point[2].vertices.y = p->pos.y + (p->size/2);
+
 			// top-right vertex:
-			faces[particleIdx*4+3].x = p->pos.x + (p->size/2);
-			faces[particleIdx*4+3].y = p->pos.y + (p->size/2);
-			faces[particleIdx*4+3].z = 0;
+			quads[particleIdx].point[3].vertices.x = p->pos.x + (p->size/2);
+			quads[particleIdx].point[3].vertices.y = p->pos.y + (p->size/2);
 			
 			// update particle counter
 			particleIdx++;
@@ -201,7 +182,6 @@
 			particleCount--;
 		}
 	}
-	
 }
 
 // overriding draw method
@@ -210,21 +190,21 @@
 	glEnable(GL_TEXTURE_2D);
 	
 	glBindTexture(GL_TEXTURE_2D, texture.name);
-	
+
+	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quads[0])*totalParticles, quads,GL_DYNAMIC_DRAW);	
+
+	int pointSize = sizeof( quads[0].point[0]);
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, facesID); // the faces
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccVertex3D)*totalParticles*4, faces,GL_DYNAMIC_DRAW);
-	glVertexPointer(3,GL_FLOAT,sizeof(ccVertex3D),0);
+	glVertexPointer(2,GL_FLOAT,pointSize, 0);
 	
+	int s = sizeof(quads[0].point[0].vertices);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, texCoordsID); // the texture coords
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccTexCoord)*totalParticles*4, texcoords, GL_DYNAMIC_DRAW);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(ccTexCoord), 0);
+	glTexCoordPointer(2, GL_FLOAT, pointSize, (GLvoid*) s );
 	
+	s += sizeof( quads[0].point[0].texCoords );
 	glEnableClientState(GL_COLOR_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, colorsID); // the colors
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccColorF)*totalParticles*4, colors,GL_DYNAMIC_DRAW);
-	glColorPointer(4,GL_FLOAT,0,0);
+	glColorPointer(4, GL_FLOAT, pointSize, (GLvoid*) s );
 	
 	
 	if( blendAdditive )
@@ -251,9 +231,8 @@
 	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, colorMode);
 #endif
 	
-	// unbind VBO buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);

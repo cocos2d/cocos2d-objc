@@ -97,11 +97,16 @@ typedef struct _ccTexCoord {
 } ccTexCoord;
 
 //! Big Particle attributes
+typedef struct _ccTexColorPoint
+{
+	CGPoint		vertices;
+	ccTexCoord	texCoords;
+	ccColorF	colors;
+} ccTexColorPoint;
+
 typedef struct _ccTexColorQuad
 {
-	ccTexCoord	texCoords[4];
-	CGPoint		vertices[4];
-	ccColorF	colors[4];
+	ccTexColorPoint	point[4];
 } ccTexColorQuad;
 
 //! delta time type
