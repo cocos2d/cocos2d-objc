@@ -25,14 +25,10 @@
  */
 @interface BigParticleSystem : ParticleSystem
 {
-	ccVertex3D *faces;		// the vertex coordinates
-	ccTexCoord *texcoords;	// the texcoords values
-	ccColorF	*colors;	// Array of colors
+	ccTexColorQuad	*quads;	// quads to be rendered
 	GLushort	*indices;	// indices
 	
-	GLuint	facesID;		// the face's id
-	GLuint	texCoordsID;	// the texcoord's id
-	GLuint	colorsID;		// colors buffer id
+	GLuint	quadsID;		// the face's id
 }
 
 // initialices the indices for the vertices
