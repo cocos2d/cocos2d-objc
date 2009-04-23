@@ -7,6 +7,10 @@
 
 Class nextAction();
 
+enum {
+	kMaxParticles = 9000,
+	kNodesIncrease = 100,
+};
 
 @interface MainScene : Scene {
 	int			lastRenderedCount;

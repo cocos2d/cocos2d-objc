@@ -6,11 +6,6 @@
 #import "MainScene.h"
 
 enum {
-	kMaxParticles = 5000,
-	kNodesIncrease = 50,
-};
-
-enum {
 	kTagInfoLayer = 1,
 	kTagMainLayer = 2,
 	kTagParticleSystem = 3,
@@ -188,11 +183,11 @@ Class restartAction()
 	
 	switch( subtestNumber) {
 		case 1:
-			particleSystem = [[ParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;
 		case 2:
-			particleSystem = [[ParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		case 3:

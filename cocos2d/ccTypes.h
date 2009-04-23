@@ -45,8 +45,7 @@ typedef struct _ccColorF {
 //! Point Sprite attributes
 typedef struct _ccPointSprite
 {
-	float x;
-	float y;
+	CGPoint	pos;
 	float size;
 	ccColorF colors;
 } ccPointSprite;

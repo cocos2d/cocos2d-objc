@@ -24,7 +24,7 @@
 	[window makeKeyAndVisible];
 	
 	Scene *scene = [Scene node];
-	[scene addChild: [nextAction() testWithSubTest:1 particles:50]];
+	[scene addChild: [nextAction() testWithSubTest:1 particles:kNodesIncrease]];
 	
 	[[Director sharedDirector] runWithScene:scene];
 }

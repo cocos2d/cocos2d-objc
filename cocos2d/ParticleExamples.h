@@ -12,35 +12,35 @@
  *
  */
 
-#import "ParticleSystem.h"
+#import "PointParticleSystem.h"
 #import "BigParticleSystem.h"
 
 //! Fire particle system
-@interface ParticleFire: ParticleSystem
+@interface ParticleFire: PointParticleSystem
 {
 }
 @end
 
 //! Fireworks particle system
-@interface ParticleFireworks : ParticleSystem
+@interface ParticleFireworks : PointParticleSystem
 {
 }
 @end
 
 //! Sun particle system
-@interface ParticleSun : ParticleSystem
+@interface ParticleSun : PointParticleSystem
 {
 }
 @end
 
 //! Galaxy particle system
-@interface ParticleGalaxy : ParticleSystem
+@interface ParticleGalaxy : PointParticleSystem
 {
 }
 @end
 
 //! Flower particle system
-@interface ParticleFlower : ParticleSystem
+@interface ParticleFlower : PointParticleSystem
 {
 }
 @end
@@ -52,37 +52,37 @@
 @end
 
 //! Meteor particle system
-@interface ParticleMeteor : ParticleSystem
+@interface ParticleMeteor : PointParticleSystem
 {
 }
 @end
 
 //! Spiral particle system
-@interface ParticleSpiral : ParticleSystem
+@interface ParticleSpiral : PointParticleSystem
 {
 }
 @end
 
 //! Explosion particle system
-@interface ParticleExplosion : ParticleSystem
+@interface ParticleExplosion : PointParticleSystem
 {
 }
 @end
 
 //! Smoke particle system
-@interface ParticleSmoke : ParticleSystem
+@interface ParticleSmoke : PointParticleSystem
 {
 }
 @end
 
 //! Snow particle system
-@interface ParticleSnow : ParticleSystem
+@interface ParticleSnow : PointParticleSystem
 {
 }
 @end
 
 //! Rain particle system
-@interface ParticleRain : ParticleSystem
+@interface ParticleRain : PointParticleSystem
 {
 }
 @end

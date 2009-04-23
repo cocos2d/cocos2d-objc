@@ -14,7 +14,7 @@
 
 #import "ParticleSystem.h"
 
-/** Big Particle System class
+/** BigParticleSystem is a subclass of ParticleSystem
  Attributes of a Particle System:
  * All the attributes of Particle System
  
