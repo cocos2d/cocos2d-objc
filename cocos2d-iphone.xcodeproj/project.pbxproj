@@ -47,6 +47,8 @@
 		500AA2220E77926900872752 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
 		500AA2230E77926900872752 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		500AA2240E77926900872752 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		5016F52F0FA0D16B000E9BB2 /* PointParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5016F52D0FA0D16B000E9BB2 /* PointParticleSystem.h */; };
+		5016F5300FA0D16B000E9BB2 /* PointParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5016F52E0FA0D16B000E9BB2 /* PointParticleSystem.m */; };
 		501755C00F335CAE00624901 /* CDataScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755AE0F335CAE00624901 /* CDataScanner.h */; };
 		501755C10F335CAE00624901 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755AF0F335CAE00624901 /* CDataScanner.m */; };
 		501755C20F335CAE00624901 /* CDataScanner_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755B10F335CAE00624901 /* CDataScanner_Extensions.h */; };
@@ -1139,6 +1141,8 @@
 		5001659F0E72DB470085673F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
 		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
+		5016F52D0FA0D16B000E9BB2 /* PointParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointParticleSystem.h; sourceTree = "<group>"; };
+		5016F52E0FA0D16B000E9BB2 /* PointParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointParticleSystem.m; sourceTree = "<group>"; };
 		501755AE0F335CAE00624901 /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		501755AF0F335CAE00624901 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		501755B10F335CAE00624901 /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
@@ -2390,6 +2394,8 @@
 			children = (
 				5038B6B00E196CD8009A621E /* ParticleSystem.h */,
 				5038B6B10E196CD8009A621E /* ParticleSystem.m */,
+				5016F52D0FA0D16B000E9BB2 /* PointParticleSystem.h */,
+				5016F52E0FA0D16B000E9BB2 /* PointParticleSystem.m */,
 				50D413240F9A3FE00040C3C8 /* BigParticleSystem.h */,
 				50D413250F9A3FE00040C3C8 /* BigParticleSystem.m */,
 				504055AE0E3230BD00213FEF /* ParticleExamples.h */,
@@ -2797,6 +2803,7 @@
 				6F167CBD0F9EF1D800843D49 /* TargetedTouchDelegate.h in Headers */,
 				6F167CBE0F9EF1D800843D49 /* TouchDispatcher.h in Headers */,
 				6F167CC00F9EF1D800843D49 /* TouchHandler.h in Headers */,
+				5016F52F0FA0D16B000E9BB2 /* PointParticleSystem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4235,6 +4242,7 @@
 				506414EE0F9C7021007A7B24 /* BitmapFontAtlas.m in Sources */,
 				6F167CBF0F9EF1D800843D49 /* TouchDispatcher.m in Sources */,
 				6F167CC10F9EF1D800843D49 /* TouchHandler.m in Sources */,
+				5016F5300FA0D16B000E9BB2 /* PointParticleSystem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

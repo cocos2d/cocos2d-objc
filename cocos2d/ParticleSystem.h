@@ -131,12 +131,7 @@ typedef struct sParticle
 	
 	// Texture of the particles
 	Texture2D *texture;
-	
-	// Array of (x,y,size) 
-	ccPointSprite *vertices;
-	// vertices buffer id
-	GLuint	verticesID;
-	
+
 	//  particle idx
 	int particleIdx;
 }
