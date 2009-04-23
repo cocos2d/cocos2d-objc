@@ -24,6 +24,7 @@
 #import "ivorbiscodec.h"
 #import "ivorbisfile.h"
 
+#define kBuffSize (4096)
 #define kSoundReferenceDistance 20.0f
 
 void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei *outSampleRate)
@@ -37,28 +38,40 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 	
 	// Open a file with ExtAudioFileOpen()
 	err = AudioFileOpenURL(inFileURL, kAudioFileReadPermission, 0, &afid);
-	if(err) { printf("MyGetOpenALAudioData: AudioFileOpenURL FAILED, Error = %ld\n", err); goto Exit; }
+	if(err) {
+		NSLog(@"MyGetOpenALAudioData: AudioFileOpenURL FAILED, Error = %ld", err);
+		goto Exit;
+	}
 	
 	// Get the audio data format
 	err = AudioFileGetProperty(afid, kAudioFilePropertyDataFormat, &thePropertySize, &theFileFormat);
-	if(err) { printf("MyGetOpenALAudioData: AudioFileGetProperty(kAudioFileProperty_DataFormat) FAILED, Error = %ld\n", err); goto Exit; }
+	if(err) {
+		NSLog(@"PASoundEngine#MyGetOpenALAudioData: AudioFileGetProperty(kAudioFileProperty_DataFormat) FAILED, Error = %ld", err);
+		goto Exit;
+	}
 	
 	if (theFileFormat.mChannelsPerFrame > 2)  { 
-		printf("MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n"); goto Exit;
+		NSLog(@"PASoundEngine#MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo");
+		goto Exit;
 	}
 	
 	if ((theFileFormat.mFormatID != kAudioFormatLinearPCM) || (!TestAudioFormatNativeEndian(theFileFormat))) { 
-		printf("MyGetOpenALAudioData - Unsupported Format, must be little-endian PCM\n"); goto Exit;
+		NSLog(@"PASoundEngine#MyGetOpenALAudioData - Unsupported Format, must be little-endian PCM");
+		goto Exit;
 	}
 	
 	if ((theFileFormat.mBitsPerChannel != 8) && (theFileFormat.mBitsPerChannel != 16)) { 
-		printf("MyGetOpenALAudioData - Unsupported Format, must be 8 or 16 bit PCM\n"); goto Exit;
+		NSLog(@"MyGetOpenALAudioData - Unsupported Format, must be 8 or 16 bit PCM\n");
+		goto Exit;
 	}
 	
 	
 	thePropertySize = sizeof(fileDataSize);
 	err = AudioFileGetProperty(afid, kAudioFilePropertyAudioDataByteCount, &thePropertySize, &fileDataSize);
-	if(err) { printf("MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld\n", err); goto Exit; }
+	if(err) {
+		NSLog(@"PASoundEngine#MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld", err);
+		goto Exit;
+	}
 	
 	// Read all the data into memory
 	UInt32		dataSize = (UInt32) fileDataSize;
@@ -78,7 +91,8 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 			// failure
 			free (theData);
 			theData = NULL; // make sure to return NULL
-			printf("MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld\n", err); goto Exit;
+			NSLog(@"PASoundEngine#MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld", err);
+			goto Exit;
 		}	
 	}
 	
@@ -146,8 +160,14 @@ Exit:
         // load buffer data based on the file format guessed from the extension
         if ([self.extension isEqualToString:@"wav"]) {
             // WAV
-            data = MyGetOpenALAudioData(fileURL, &size, &format, &freq);            
+            data = MyGetOpenALAudioData(fileURL, &size, &format, &freq);
+			
         } else if ([self.extension isEqualToString:@"ogg"]) {
+			// XXX
+			// XXX Big files will have a lot of performance problems
+			// XXX
+			// XXX is ov_open_callbacks more efficient ?
+			// XXX			
             // OGG
             NSString *fsPath = [(NSURL *)fileURL path];
             FILE *fh;
@@ -158,8 +178,8 @@ Exit:
                 int current_section;
                 
                 if(ov_open(fh, &vf, NULL, 0) < 0) {
-                    fprintf(stderr,"Input does not appear to be an Ogg bitstream.\n");
-                    exit(1);
+					NSLog(@"PASoundEngine: Input does not appear to be an Ogg bitstream");
+					[NSException raise:@"PASoundEngine:InvalidOggFormat" format:@"InvalidOggFormat"];
                 }
                 
                 // get meta info (sample rate & mono/stereo format)
@@ -168,28 +188,43 @@ Exit:
                 format = (vi->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
                 
                 // decode data
-                size = 0;
-                const int buffSize = 4096;
-                while(!eof){
-                    char tempBuff[buffSize];
-                    int ret = ov_read(&vf, tempBuff, buffSize, &current_section);
+                size = 0;				
+				char tmpBuff[kBuffSize];
+				char *newData;
+                while(!eof) {
+					
+                    int ret = ov_read(&vf, &tmpBuff[0], kBuffSize, &current_section);
                     if (ret == 0) {
                         eof = 1;
-                    } else if (ret > 0) {
-                        void *newData = (char *)malloc(size + ret);
-                        if (data) memcpy(newData, data, size);
-                        memcpy(newData + size, tempBuff, ret);
-                        if (data) free(data);
-                        data = newData;
-                        size += ret;
-                    }
+					} else if (ret < 0) {
+						/* error in the stream.  Not a problem, just reporting it in
+						 case we (the app) cares.  In this case, we don't. */
+						NSLog(@"PASoundEngine:Error reading buffer");
+						[NSException raise:@"PASoundEngine:Error reading file" format:@"Error reading file"];						
+                    } else {
+						size += ret;
+												
+						// 1st malloc
+						if( !data )
+							newData = malloc(ret);
+						else
+							newData = realloc( data, size);
+
+						if( ! newData ) {
+							NSLog(@"PASoundEngine: Not enough memory");
+							[NSException raise:@"PASoundEngine:NotEnoughMemory" format:@"NotEnoughMemory"];
+						}
+						data = newData;
+						int dst = (int)data + (size-ret);
+						memcpy( (char*)dst, &tmpBuff[0], ret);
+					}
                 }
 
                 // close ogg file
                 ov_clear(&vf);
             } else {
-                fprintf(stderr,"Could not open file.\n");
-                exit(1);
+				NSLog(@"PASoundEngine: Could not open file");
+				[NSException raise:@"PASoundEngine:InvalidOggFormat" format:@"InvalidOggFormat"];
             }
             fclose(fh);
         }
@@ -197,8 +232,9 @@ Exit:
         CFRelease(fileURL);
         
         if((error = alGetError()) != AL_NO_ERROR) {
-			printf("error loading sound: %x\n", error);
-			exit(1);
+			NSLog(@"PASoundEngine: Error loading sound: %x", error);
+			[NSException raise:@"PASoundEngine:ErrorLoadingSound" format:@"ErrorLoadingSound"];
+
 		}
         
 		alGenBuffers(1, &buffer);
@@ -206,11 +242,13 @@ Exit:
 		free(data);
         
 		if((error = alGetError()) != AL_NO_ERROR) {
-			printf("error attaching audio to buffer: %x\n", error);
+			NSLog(@"PASoundEngine: Error attaching audio to buffer: %x", error);
 		}		
 	}
-	else
-		printf("Could not find file!\n");    
+	else {
+		NSLog(@"Could not find file");
+		[NSException raise:@"PASoundEngine:CouldNotFindfile" format:@"CouldNotFindFile"];
+	}
 }
 
 - (void)initSource {
@@ -231,8 +269,9 @@ Exit:
 	alSourcei(source, AL_BUFFER, buffer);
 	
 	if((error = alGetError()) != AL_NO_ERROR) {
-		printf("Error attaching buffer to source: %x\n", error);
-		exit(1);
+		NSLog(@"PASoundEngine: Error attaching buffer to source: %x", error);
+		[NSException raise:@"PASoundEngine:AttachingToBuffer" format:@"AttachingToBuffer"];
+
 	}    
 }
 
@@ -267,7 +306,7 @@ Exit:
         [self setGain:gain];
         alSourcePlay(source);
         if((error = alGetError()) != AL_NO_ERROR) {
-            printf("error starting source: %x\n", error);
+            NSLog(@"PASoundEngine: Error starting source: %x", error);
         } else {
             // Mark our state as playing (the view looks at this)
             self.isPlaying = YES;
@@ -295,7 +334,7 @@ Exit:
     ALenum error;
 	alSourceStop(source);
 	if((error = alGetError()) != AL_NO_ERROR) {
-		printf("error stopping source: %x\n", error);
+		NSLog(@"PASoundEngine: Error stopping source: %x", error);
 	} else {
 		// Mark our state as not playing (the view looks at this)
 		self.isPlaying = NO;
