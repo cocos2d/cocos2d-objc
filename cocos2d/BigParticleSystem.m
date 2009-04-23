@@ -38,27 +38,25 @@
 	faces = malloc( sizeof(ccVertex3D) * totalParticles * 4 ); // two triangles for each face
 	texcoords = malloc( sizeof(ccTexCoord) * totalParticles * 4 );
 	colors = malloc( sizeof(ccColorF)*totalParticles*4);
+	indices = malloc( sizeof(indices[0]) * totalParticles * 6 );
 	
-	if( ! ( faces ) || ! ( texcoords ) || ! ( colors )) {
+	if( !faces || !texcoords || !colors || !indices ) {
 		NSLog(@"Particle system: not enough memory");
+		if( faces )
+			free(faces);
+		if(texcoords)
+			free(texcoords);
+		if(colors)
+			free(colors);
+		if(indices)
+			free(indices);
 		return nil;
 	}
 	
 	// putting the tex coordinates on array (only once)
-	for(int i=0; i<totalParticles; i++){
-		// top-left vertex:
-		texcoords[i*4].u = 0;
-		texcoords[i*4].v = 0;
-		// bottom-left vertex:
-		texcoords[i*4+1].u = 1;
-		texcoords[i*4+1].v = 0;
-		// top-right vertex:
-		texcoords[i*4+2].u = 0;
-		texcoords[i*4+2].v = 1;
-		// top-right vertex:
-		texcoords[i*4+3].u = 1;
-		texcoords[i*4+3].v = 1;
-	}
+	[self initTexCoords];
+	[self initIndices];
+
 	// creating the buffers on opengl
 	glGenBuffers(1, &facesID);
 	glGenBuffers(1, &texCoordsID);
@@ -72,11 +70,42 @@
 	free(faces);
 	free(texcoords);
 	free(colors);
+	free(indices);
 	glDeleteBuffers(1, &facesID);
 	glDeleteBuffers(1, &texCoordsID);
 	glDeleteBuffers(1, &colorsID);
 	
 	[super dealloc];
+}
+
+-(void) initTexCoords
+{
+	for(int i=0; i<totalParticles; i++) {
+		// top-left vertex:
+		texcoords[i*4].u = 0;
+		texcoords[i*4].v = 0;
+		// bottom-left vertex:
+		texcoords[i*4+1].u = 1;
+		texcoords[i*4+1].v = 0;
+		// top-right vertex:
+		texcoords[i*4+2].u = 0;
+		texcoords[i*4+2].v = 1;
+		// top-right vertex:
+		texcoords[i*4+3].u = 1;
+		texcoords[i*4+3].v = 1;
+	}
+}	
+-(void) initIndices
+{
+	for( int i=0;i< totalParticles;i++) {
+		indices[i*6+0] = i*4+0;
+		indices[i*6+1] = i*4+1;
+		indices[i*6+2] = i*4+2;
+		
+		indices[i*6+5] = i*4+1;
+		indices[i*6+4] = i*4+2;
+		indices[i*6+3] = i*4+3;
+	}
 }
 
 -(void) step: (ccTime) dt
@@ -177,9 +206,7 @@
 
 // overriding draw method
 -(void) draw
-{
-	int blendSrc, blendDst;
-	
+{	
 	glEnable(GL_TEXTURE_2D);
 	
 	glBindTexture(GL_TEXTURE_2D, texture.name);
@@ -200,9 +227,6 @@
 	glColorPointer(4,GL_FLOAT,0,0);
 	
 	
-	// save blend state
-	glGetIntegerv(GL_BLEND_DST, &blendDst);
-	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	else
@@ -217,12 +241,10 @@
 		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 #endif
 	
-	for(int i=0; i<particleCount; i++){
-		glDrawArrays(GL_TRIANGLE_STRIP, i*4, 4); // each face has two triangles in fact...
-	}
+	glDrawElements(GL_TRIANGLES, totalParticles*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// restore blend state
-	glBlendFunc( blendSrc, blendDst );
+	glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
 	
 #if 0
 	// restore color mode
