@@ -321,7 +321,7 @@ Class restartAction()
 	particleSystem.posVar = ccp(s.width/2,0);
 	
 	// life of particles
-	particleSystem.life = 3.0f;
+	particleSystem.life = 2.0f;
 	particleSystem.lifeVar = 1;
 	
 	// emits per frame
@@ -355,7 +355,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"A (%d) size=8", subtestNumber];
+	return [NSString stringWithFormat:@"B (%d) size=8", subtestNumber];
 }
 
 -(void) doTest
@@ -386,7 +386,7 @@ Class restartAction()
 	particleSystem.posVar = ccp(s.width/2,0);
 	
 	// life of particles
-	particleSystem.life = 3.0f;
+	particleSystem.life = 2.0f;
 	particleSystem.lifeVar = 1;
 	
 	// emits per frame
@@ -418,7 +418,7 @@ Class restartAction()
 @implementation PerformanceTest3
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"B (%d) size=32", subtestNumber];
+	return [NSString stringWithFormat:@"C (%d) size=32", subtestNumber];
 }
 -(void) doTest
 {
@@ -448,7 +448,7 @@ Class restartAction()
 	particleSystem.posVar = ccp(s.width/2,0);
 	
 	// life of particles
-	particleSystem.life = 3.0f;
+	particleSystem.life = 2.0f;
 	particleSystem.lifeVar = 1;
 	
 	// emits per frame
@@ -481,7 +481,7 @@ Class restartAction()
 @implementation PerformanceTest4
 -(NSString*) title
 {
-	return [NSString stringWithFormat:@"B (%d) size=64", subtestNumber];
+	return [NSString stringWithFormat:@"D (%d) size=64", subtestNumber];
 }
 -(void) doTest
 {
@@ -511,7 +511,7 @@ Class restartAction()
 	particleSystem.posVar = ccp(s.width/2,0);
 	
 	// life of particles
-	particleSystem.life = 3.0f;
+	particleSystem.life = 2.0f;
 	particleSystem.lifeVar = 1;
 	
 	// emits per frame

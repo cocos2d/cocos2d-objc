@@ -28,10 +28,16 @@
 	ccVertex3D *faces;		// the vertex coordinates
 	ccTexCoord *texcoords;	// the texcoords values
 	ccColorF	*colors;	// Array of colors
+	GLushort	*indices;	// indices
 	
 	GLuint	facesID;		// the face's id
 	GLuint	texCoordsID;	// the texcoord's id
 	GLuint	colorsID;		// colors buffer id
 }
+
+// initialices the indices for the vertices
+-(void) initIndices;
+// initilizes the text coords
+-(void) initTexCoords;
 @end
 
