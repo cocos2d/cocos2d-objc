@@ -7,7 +7,7 @@ version 0.8 - xxx
  . Particles: Added BigParticles (issue #245)
  . Touches: new feature (issue #211)
 
-version 0.7.2 - xxx
+version 0.7.2 - 23-Apr-2009
  . All: removed chipmunk macros. using CG macros (issue #290)
  . Actions: Added TintTo and TintBy (issue #204)
  . AtlasSprite: don't overwrite index 0 (issue #283)
