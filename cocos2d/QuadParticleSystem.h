@@ -14,21 +14,22 @@
 
 #import "ParticleSystem.h"
 
-/** BigParticleSystem is a subclass of ParticleSystem
- Attributes of a Particle System:
- * All the attributes of Particle System
+/** QuadParticleSystem is a subclass of ParticleSystem
+
+ It includes all the features of ParticleSystem.
  
- Features and Limitations:
- * Size can be any float number.
- * The system can be scaled
- * It is a little bit slower than Particle System since it renders each particle using 4 quads instead of 1
+ Special features and Limitations:
+  - Particle size can be any float number.
+  - The system can be scaled
+  - It is a bit slower that PointParticleSystem
+  - It consumes more RAM and more GPU memory than PointParticleSystem
  */
-@interface BigParticleSystem : ParticleSystem
+@interface QuadParticleSystem : ParticleSystem
 {
 	ccTexColorQuad	*quads;	// quads to be rendered
 	GLushort	*indices;	// indices
 	
-	GLuint	quadsID;		// the face's id
+	GLuint	quadsID;		// VBO id
 }
 
 // initialices the indices for the vertices

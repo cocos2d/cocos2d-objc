@@ -170,11 +170,11 @@ Class restartAction()
 
 	/*
 	 * Tests:
-	 * 0: Particle System using .PNG image as texture
-	 * 1: Particle System using .PVR image as texture
+	 * 0: Point Particle System using .PNG image as texture
+	 * 1: Point Particle System using .PVR image as texture
 	 
-	 * 2: Big Particle System using a .PNG image as texture
-	 * 3: Big Particle System using a .PVR image as texture
+	 * 2: Quad Particle System using a .PNG image as texture
+	 * 3: Quad Particle System using a .PVR image as texture
 	 
 	 */
 	
@@ -191,11 +191,11 @@ Class restartAction()
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		case 3:
-			particleSystem = [[BigParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;
 		case 4:
-			particleSystem = [[BigParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		default:
@@ -336,8 +336,8 @@ Class restartAction()
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
-	particleSystem.size = 4.0f;
-	particleSystem.sizeVar = 0;
+	particleSystem.endSize = particleSystem.startSize = 4.0f;
+	particleSystem.endSizeVar =particleSystem.startSizeVar = 0;
 	
 	// additive
 	particleSystem.blendAdditive = NO;
@@ -401,8 +401,8 @@ Class restartAction()
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
-	particleSystem.size = 8.0f;
-	particleSystem.sizeVar = 0;
+	particleSystem.endSize = particleSystem.startSize = 8.0f;
+	particleSystem.endSizeVar =particleSystem.startSizeVar = 0;
 	
 	// additive
 	particleSystem.blendAdditive = NO;
@@ -463,8 +463,8 @@ Class restartAction()
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
-	particleSystem.size = 32.0f;
-	particleSystem.sizeVar = 0;
+	particleSystem.endSize = particleSystem.startSize = 32.0f;
+	particleSystem.endSizeVar = particleSystem.startSizeVar = 0;
 	
 	// additive
 	particleSystem.blendAdditive = NO;
@@ -526,8 +526,8 @@ Class restartAction()
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
-	particleSystem.size = 64.0f;
-	particleSystem.sizeVar = 0;
+	particleSystem.endSize = particleSystem.startSize = 64.0f;
+	particleSystem.endSizeVar =particleSystem.startSizeVar = 0;
 	
 	// additive
 	particleSystem.blendAdditive = NO;

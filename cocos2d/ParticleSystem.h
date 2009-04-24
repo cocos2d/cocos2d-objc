@@ -17,6 +17,10 @@
 #import "CocosNode.h"
 #import "ccTypes.h"
 
+enum {
+	kParticleStartSizeEqualToEndSize = -1,
+};
+
 /** Structure that contains the values of each particle
  */
 typedef struct sParticle
@@ -28,6 +32,7 @@ typedef struct sParticle
 	ccColorF	color;
 	ccColorF	deltaColor;
 	float	size;
+	float	deltaSize;
 	float	life;
 } Particle;
 
@@ -43,7 +48,8 @@ typedef struct sParticle
   * speed +-  variance
   * tangential acceleration +- variance
   * radial acceleration +- variance
-  * size +- variance
+  * start size +- variance
+  * end size +- variance
   * start color +- variance
   * end color +- variance
   * life +- variance
@@ -94,10 +100,14 @@ typedef struct sParticle
 	// Radial acceleration variance
 	float radialAccelVar;
 	
-	// Size of the particles
-	float size;
-	// Size variance
-	float sizeVar;
+	// start ize of the particles
+	float startSize;
+	// start Size variance
+	float startSizeVar;
+	// End size of the particle
+	float endSize;
+	// end size of variance
+	float endSizeVar;
 	
 	// How many seconds will the particle live
 	float life;
@@ -168,10 +178,14 @@ typedef struct sParticle
 @property (readwrite,assign) float radialAccel;
 /** radial acceleration variance of each particle */
 @property (readwrite,assign) float radialAccelVar;
-/** size in pixels of each particle */
-@property (readwrite,assign) float size;
+/** start size in pixels of each particle */
+@property (readwrite,assign) float startSize;
 /** size variance in pixels of each particle */
-@property (readwrite,assign) float sizeVar;
+@property (readwrite,assign) float startSizeVar;
+/** end size in pixels of each particle */
+@property (readwrite,assign) float endSize;
+/** end size variance in pixels of each particle */
+@property (readwrite,assign) float endSizeVar;
 /** start color of each particle */
 @property (readwrite,assign) ccColorF startColor;
 /** start color variance of each particle */

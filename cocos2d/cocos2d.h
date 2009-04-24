@@ -48,7 +48,7 @@
 #import "MenuItem.h"
 #import "ParticleSystem.h"
 #import "PointParticleSystem.h"
-#import "BigParticleSystem.h"
+#import "QuadParticleSystem.h"
 #import "ParticleExamples.h"
 #import "Primitives.h"
 #import "Scene.h"

@@ -45,7 +45,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MultiplexLayer
 	* Graham Perks: Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
-	* guilo0: Added TintTo action
+	* Mark Cooke: Added TintTo action
 	* Hans Larsen: Possibility to create empty menus
 	* Ishaq Malik: patches for CocosNode
 	* Jacob Eiting: patches for Primitives
@@ -53,12 +53,13 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of EaseAction demos
 		author of StreakDemo, MotionStreak and Ribbon
 		patch for ScaleTo/By action to support X and Y.
+		added endSize to ParticleSystem
 	* Joe Vennix: patches for CocosNode
 	* jkrippy: patch for menu align. takes scale into account
 	* kasatani: AtlasSprite index 0 is not overwritten
 	* kermidt.zed: patches for absolutePosition in CocosNode
 		patches for Labels in Texture2D
-	*Leonardo Kasperavičius: author of BigParticleSystem class
+	* Leonardo Kasperavičius: original author of QuadParticleSystem class
 	* lukeman: patches for MenuItem
 	* Maarten Billemont (lhunath): author of ParticleRain
 		added suport for particles' source

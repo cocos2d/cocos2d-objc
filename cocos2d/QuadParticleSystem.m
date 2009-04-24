@@ -16,7 +16,7 @@
 #import <OpenGLES/ES1/gl.h>
 
 // cocos2d
-#import "BigParticleSystem.h"
+#import "QuadParticleSystem.h"
 #import "TextureMgr.h"
 #import "ccMacros.h"
 
@@ -24,7 +24,7 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
-@implementation BigParticleSystem
+@implementation QuadParticleSystem
 
 // overriding the init method
 -(id) initWithTotalParticles:(int) numberOfParticles
@@ -157,6 +157,8 @@
 			p->color.b += (p->deltaColor.b * dt);
 			p->color.a += (p->deltaColor.a * dt);
 			
+			p->size += (p->deltaSize * dt);
+
 			p->life -= dt;
 			
 			//
@@ -169,20 +171,21 @@
 			
 			// vertices
 			// top-left vertex:
-			quads[particleIdx].point[0].vertices.x = p->pos.x - (p->size/2);
-			quads[particleIdx].point[0].vertices.y = p->pos.y - (p->size/2);
+			float size_2 = p->size/2;
+			quads[particleIdx].point[0].vertices.x = p->pos.x - size_2;
+			quads[particleIdx].point[0].vertices.y = p->pos.y - size_2;
 			
 			// bottom-left vertex:
-			quads[particleIdx].point[1].vertices.x = p->pos.x + (p->size/2);
-			quads[particleIdx].point[1].vertices.y = p->pos.y - (p->size/2);
+			quads[particleIdx].point[1].vertices.x = p->pos.x + size_2;
+			quads[particleIdx].point[1].vertices.y = p->pos.y - size_2;
 			
 			// top-right vertex:
-			quads[particleIdx].point[2].vertices.x = p->pos.x - (p->size/2);
-			quads[particleIdx].point[2].vertices.y = p->pos.y + (p->size/2);
+			quads[particleIdx].point[2].vertices.x = p->pos.x - size_2;
+			quads[particleIdx].point[2].vertices.y = p->pos.y + size_2;
 			
 			// top-right vertex:
-			quads[particleIdx].point[3].vertices.x = p->pos.x + (p->size/2);
-			quads[particleIdx].point[3].vertices.y = p->pos.y + (p->size/2);
+			quads[particleIdx].point[3].vertices.x = p->pos.x + size_2;
+			quads[particleIdx].point[3].vertices.y = p->pos.y + size_2;
 			
 			// update particle counter
 			particleIdx++;
@@ -208,17 +211,17 @@
 
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 
-	int pointSize = sizeof( quads[0].point[0]);
+#define kPointSize sizeof(quads[0].point[0])
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2,GL_FLOAT,pointSize, 0);
+	glVertexPointer(2,GL_FLOAT, kPointSize, 0);
 	
 	int s = sizeof(quads[0].point[0].vertices);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, pointSize, (GLvoid*) s );
-	
+	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) s );
+
 	s += sizeof( quads[0].point[0].texCoords );
 	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, pointSize, (GLvoid*) s );
+	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) s );
 	
 	
 	if( blendAdditive )

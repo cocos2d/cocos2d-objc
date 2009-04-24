@@ -26,6 +26,7 @@ static NSString *transitions[] = {
 		@"DemoSnow",
 		@"DemoRain",
 		@"DemoBigParticle",
+		@"DemoModernArt",
 };
 
 Class nextAction()
@@ -291,7 +292,7 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"ParticleFlower";
+	return @"BigParticleFlower";
 }
 @end
 
@@ -417,7 +418,81 @@ Class restartAction()
 }
 @end
 
+@implementation DemoModernArt
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:1000];
+	[self addChild: particleSystem z:0 tag:kTagEmitter];
+	
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	// duration
+	particleSystem.duration = -1;
+	
+	// gravity
+	particleSystem.gravity = ccp(0,0);
+	
+	// angle
+	particleSystem.angle = 0;
+	particleSystem.angleVar = 360;
+	
+	// radial
+	particleSystem.radialAccel = 70;
+	particleSystem.radialAccelVar = 10;
+	
+	// tagential
+	particleSystem.tangentialAccel = 80;
+	particleSystem.tangentialAccelVar = 0;
+	
+	// speed of particles
+	particleSystem.speed = 50;
+	particleSystem.speedVar = 10;
+	
+	// emitter position
+	particleSystem.position = ccp( s.width/2, s.height/2);
+	particleSystem.posVar = CGPointZero;
+	
+	// life of particles
+	particleSystem.life = 2.0f;
+	particleSystem.lifeVar = 0.3f;
+	
+	// emits per frame
+	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColor = startColor;
+	
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	particleSystem.startColorVar = startColorVar;
+	
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	particleSystem.endColor = endColor;
+	
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	particleSystem.endColorVar = endColorVar;
+	
+	// size, in pixels
+	particleSystem.startSize = 1.0f;
+	particleSystem.startSizeVar = 1.0f;
+	particleSystem.endSize = 32.0f;
+	particleSystem.endSizeVar = 8.0f;
+	
+	// texture
+//	particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+	
+	// additive
+	particleSystem.blendAdditive = NO;	
+}
+-(NSString *) title
+{
+	return @"Modern Art";
+}
+@end
 
+#pragma mark -
+#pragma mark App Delegate
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController

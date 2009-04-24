@@ -46,7 +46,8 @@
 @synthesize endColor, endColorVar;
 @synthesize emissionRate;
 @synthesize totalParticles;
-@synthesize size, sizeVar;
+@synthesize startSize, startSizeVar;
+@synthesize endSize, endSizeVar;
 @synthesize gravity;
 @synthesize texture;
 @synthesize blendAdditive;
@@ -158,7 +159,14 @@
 	particle->deltaColor.a = (end.a - start.a) / particle->life;
 
 	// size
-	particle->size = size + sizeVar * CCRANDOM_MINUS1_1();	
+	float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
+	particle->size = startS;
+	if( endSize == kParticleStartSizeEqualToEndSize )
+		particle->deltaSize = 0;
+	else {
+		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
+		particle->deltaSize = (endS - startS) / particle->life;
+	}
 }
 
 -(void) stopSystem
