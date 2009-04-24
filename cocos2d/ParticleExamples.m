@@ -81,8 +81,9 @@
 	endColorVar.a = 0.2f;
 	
 	// size, in pixels
-	size = 8.0f;
-	sizeVar = 2.0f;
+	startSize = 8.0f;
+	startSizeVar = 2.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
 
 	self.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
 
@@ -137,9 +138,10 @@
 	speedVar = 20;
 		
 	// size, in pixels
-	size = 100.0f;
-	sizeVar = 10.0f;
-	
+	startSize = 54.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per frame
 	emissionRate = totalParticles/life;
 	
@@ -217,9 +219,10 @@
 	speedVar = 5;
 	
 	// size, in pixels
-	size = 30.0f;
-	sizeVar = 10.0f;
-	
+	startSize = 30.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per seconds
 	emissionRate = totalParticles/life;
 	
@@ -295,8 +298,9 @@
 	lifeVar = 1;
 	
 	// size, in pixels
-	size = 37.0f;
-	sizeVar = 10.0f;
+	startSize = 37.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
 	
 	// emits per second
 	emissionRate = totalParticles/life;
@@ -376,9 +380,10 @@
 	lifeVar = 1;
 	
 	// size, in pixels
-	size = 30.0f;
-	sizeVar = 10.0f;
-	
+	startSize = 30.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = totalParticles/life;
 	
@@ -457,9 +462,10 @@
 	lifeVar = 1;
 	
 	// size, in pixels
-	size = 60.0f;
-	sizeVar = 10.0f;
-	
+	startSize = 60.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = totalParticles/life;
 	
@@ -538,9 +544,10 @@
 	lifeVar = 0;
 	
 	// size, in pixels
-	size = 20.0f;
-	sizeVar = 0.0f;
-	
+	startSize = 20.0f;
+	startSizeVar = 0.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = totalParticles/life;
 	
@@ -619,9 +626,10 @@
 	lifeVar = 2;
 	
 	// size, in pixels
-	size = 15.0f;
-	sizeVar = 10.0f;
-	
+	startSize = 15.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = totalParticles/duration;
 	
@@ -696,9 +704,10 @@
 	speedVar = 10;
 	
 	// size, in pixels
-	size = 60.0f;
-	sizeVar = 10.0f;
-	
+	startSize = 60.0f;
+	startSizeVar = 10.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per frame
 	emissionRate = totalParticles/life;
 	
@@ -774,9 +783,10 @@
 	lifeVar = 15;
 	
 	// size, in pixels
-	size = 10.0f;
-	sizeVar = 5.0f;
-	
+	startSize = 10.0f;
+	startSizeVar = 5.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = 10;
 	
@@ -852,9 +862,10 @@
 	lifeVar = 0;
 	
 	// size, in pixels
-	size = 4.0f;
-	sizeVar = 2.0f;
-	
+	startSize = 4.0f;
+	startSizeVar = 2.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = 20;
 	
@@ -933,9 +944,10 @@
 	lifeVar = 1;
 	
 	// size, in pixels
-	size = 150.0f;
-	sizeVar = 50.0f;
-	
+	startSize = 150.0f;
+	startSizeVar = 50.0f;
+	endSize = kParticleStartSizeEqualToEndSize;
+
 	// emits per second
 	emissionRate = totalParticles/life;
 	

@@ -71,3 +71,7 @@
 @interface DemoRain : ParticleDemo
 {}
 @end
+
+@interface DemoModernArt : ParticleDemo
+{}
+@end

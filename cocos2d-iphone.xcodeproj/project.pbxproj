@@ -667,8 +667,8 @@
 		50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C93AA80E0BF6E000517B01 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* SpritesTest.m */; };
-		50D413260F9A3FE00040C3C8 /* BigParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D413240F9A3FE00040C3C8 /* BigParticleSystem.h */; };
-		50D413270F9A3FE00040C3C8 /* BigParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D413250F9A3FE00040C3C8 /* BigParticleSystem.m */; };
+		50D413260F9A3FE00040C3C8 /* QuadParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D413240F9A3FE00040C3C8 /* QuadParticleSystem.h */; };
+		50D413270F9A3FE00040C3C8 /* QuadParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D413250F9A3FE00040C3C8 /* QuadParticleSystem.m */; };
 		50D56FAA0F3FABEC007CD6B9 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50D56FAB0F3FABEC007CD6B9 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		50D56FAC0F3FABEC007CD6B9 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
@@ -1431,8 +1431,8 @@
 		50C93AAD0E0BF6E000517B01 /* SpritesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* SpritesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesTest.h; path = tests/SpritesTest.h; sourceTree = "<group>"; };
 		50C93AC40E0BF8FC00517B01 /* SpritesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesTest.m; path = tests/SpritesTest.m; sourceTree = "<group>"; };
-		50D413240F9A3FE00040C3C8 /* BigParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigParticleSystem.h; sourceTree = "<group>"; };
-		50D413250F9A3FE00040C3C8 /* BigParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigParticleSystem.m; sourceTree = "<group>"; };
+		50D413240F9A3FE00040C3C8 /* QuadParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadParticleSystem.h; sourceTree = "<group>"; };
+		50D413250F9A3FE00040C3C8 /* QuadParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuadParticleSystem.m; sourceTree = "<group>"; };
 		50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsAdvancedTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsAdvancedTest.h; path = tests/EffectsAdvancedTest.h; sourceTree = "<group>"; };
 		50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsAdvancedTest.m; path = tests/EffectsAdvancedTest.m; sourceTree = "<group>"; };
@@ -2396,8 +2396,8 @@
 				5038B6B10E196CD8009A621E /* ParticleSystem.m */,
 				5016F52D0FA0D16B000E9BB2 /* PointParticleSystem.h */,
 				5016F52E0FA0D16B000E9BB2 /* PointParticleSystem.m */,
-				50D413240F9A3FE00040C3C8 /* BigParticleSystem.h */,
-				50D413250F9A3FE00040C3C8 /* BigParticleSystem.m */,
+				50D413240F9A3FE00040C3C8 /* QuadParticleSystem.h */,
+				50D413250F9A3FE00040C3C8 /* QuadParticleSystem.m */,
 				504055AE0E3230BD00213FEF /* ParticleExamples.h */,
 				504055AF0E3230BD00213FEF /* ParticleExamples.m */,
 			);
@@ -2798,7 +2798,7 @@
 				50C508C60F7C194400799124 /* FileUtils.h in Headers */,
 				6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
-				50D413260F9A3FE00040C3C8 /* BigParticleSystem.h in Headers */,
+				50D413260F9A3FE00040C3C8 /* QuadParticleSystem.h in Headers */,
 				506414ED0F9C7021007A7B24 /* BitmapFontAtlas.h in Headers */,
 				6F167CBD0F9EF1D800843D49 /* TargetedTouchDelegate.h in Headers */,
 				6F167CBE0F9EF1D800843D49 /* TouchDispatcher.h in Headers */,
@@ -4238,7 +4238,7 @@
 				509A799C0F6188500032F449 /* AtlasSpriteManager.m in Sources */,
 				50C508C70F7C194400799124 /* FileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
-				50D413270F9A3FE00040C3C8 /* BigParticleSystem.m in Sources */,
+				50D413270F9A3FE00040C3C8 /* QuadParticleSystem.m in Sources */,
 				506414EE0F9C7021007A7B24 /* BitmapFontAtlas.m in Sources */,
 				6F167CBF0F9EF1D800843D49 /* TouchDispatcher.m in Sources */,
 				6F167CC10F9EF1D800843D49 /* TouchHandler.m in Sources */,

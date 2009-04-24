@@ -4,7 +4,8 @@ version 0.8 - xxx
  . CocosNode: actions don't retain the target (issue #150)
  . Demos: Added PerformanceParticleTest (issue #331)
  . LabelAtlas: don't render in subpixel (issue #135)
- . Particles: Added BigParticles (issue #245)
+ . Particles: Added QuadParticleSystem. renamed ParticleSystem to PointParticleSystem (issue #245)
+ . Particles: added support for endSize and endSizeVar (issue #241)
  . Touches: new feature (issue #211)
 
 version 0.7.2 - 23-Apr-2009

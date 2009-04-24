@@ -114,6 +114,8 @@
 			p->color.b += (p->deltaColor.b * dt);
 			p->color.a += (p->deltaColor.a * dt);
 			
+			p->size += (p->deltaSize * dt);
+			
 			p->life -= dt;
 			
 			//

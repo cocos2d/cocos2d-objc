@@ -13,7 +13,7 @@
  */
 
 #import "PointParticleSystem.h"
-#import "BigParticleSystem.h"
+#import "QuadParticleSystem.h"
 
 //! Fire particle system
 @interface ParticleFire: PointParticleSystem
@@ -46,7 +46,7 @@
 @end
 
 //! Flower particle system
-@interface BigParticleFlower : BigParticleSystem
+@interface BigParticleFlower : QuadParticleSystem
 {
 }
 @end
