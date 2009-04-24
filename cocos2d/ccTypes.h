@@ -95,7 +95,7 @@ typedef struct _ccTexCoord {
 	float v;
 } ccTexCoord;
 
-//! Big Particle attributes
+//! a Point with a vertex point, a tex coord point and a color
 typedef struct _ccTexColorPoint
 {
 	CGPoint		vertices;
@@ -103,6 +103,7 @@ typedef struct _ccTexColorPoint
 	ccColorF	colors;
 } ccTexColorPoint;
 
+//! 4 ccTexColorPoint.
 typedef struct _ccTexColorQuad
 {
 	ccTexColorPoint	point[4];
