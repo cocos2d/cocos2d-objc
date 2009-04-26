@@ -6,6 +6,7 @@ version 0.8 - xxx
  . LabelAtlas: don't render in subpixel (issue #135)
  . Particles: Added QuadParticleSystem. renamed ParticleSystem to PointParticleSystem (issue #245)
  . Particles: added support for endSize and endSizeVar (issue #241)
+ . Particles: added support for start/end/var spinning (issue #335)
  . Touches: new feature (issue #211)
 
 version 0.7.2 - 23-Apr-2009

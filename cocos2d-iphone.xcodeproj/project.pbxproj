@@ -239,6 +239,7 @@
 		50379A780F913F9E00986724 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		5037AF1E0F49B980004DCA1F /* logo-mipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */; };
 		5037AF1F0F49B980004DCA1F /* logo-nomipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */; };
+		503841940FA4E66B008411FB /* stars2.png in Resources */ = {isa = PBXBuildFile; fileRef = 503841930FA4E66B008411FB /* stars2.png */; };
 		5038B6B20E196CD8009A621E /* ParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038B6B00E196CD8009A621E /* ParticleSystem.h */; };
 		5038B6B30E196CD8009A621E /* ParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* ParticleSystem.m */; };
 		503A2B070F64B26D00E436AB /* grossini_dance_atlas.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */; };
@@ -1254,6 +1255,7 @@
 		503798C50F912C2000986724 /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
 		5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "logo-mipmap.pvr"; sourceTree = "<group>"; };
 		5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "logo-nomipmap.pvr"; sourceTree = "<group>"; };
+		503841930FA4E66B008411FB /* stars2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars2.png; sourceTree = "<group>"; };
 		5038B6B00E196CD8009A621E /* ParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystem.h; sourceTree = "<group>"; };
 		5038B6B10E196CD8009A621E /* ParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystem.m; sourceTree = "<group>"; };
 		503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grossini_dance_atlas.pvr; sourceTree = "<group>"; };
@@ -2535,6 +2537,7 @@
 				5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */,
 				50405A1F0E32A15500213FEF /* smoke.png */,
 				50405A130E3296AC00213FEF /* stars.png */,
+				503841930FA4E66B008411FB /* stars2.png */,
 				50F9EA8F0E1AE87E000E7616 /* fire.png */,
 				50B2D0E00E13296F00AE9530 /* grossini_dance_01.png */,
 				50B2D0E10E13296F00AE9530 /* grossini_dance_02.png */,
@@ -4117,6 +4120,7 @@
 				501CD1730E99873000B86F68 /* fps_images.png in Resources */,
 				502AACF30F79715E001E3F87 /* fire.pvr in Resources */,
 				5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */,
+				503841940FA4E66B008411FB /* stars2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

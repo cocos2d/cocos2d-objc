@@ -25,7 +25,8 @@ static NSString *transitions[] = {
 		@"DemoExplosion",
 		@"DemoSnow",
 		@"DemoRain",
-		@"DemoBigParticle",
+		@"DemoBigFlower",
+		@"DemoRotFlower",
 		@"DemoModernArt",
 };
 
@@ -282,19 +283,157 @@ Class restartAction()
 }
 @end
 
-@implementation DemoBigParticle
+@implementation DemoBigFlower
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [BigParticleFlower node];
+	ParticleSystem *emitter = [[QuadParticleSystem alloc] initWithTotalParticles:50];
 	[self addChild: emitter z:0 tag:kTagEmitter];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	
+	// duration
+	emitter.duration = -1;
+	
+	// gravity
+	emitter.gravity = CGPointZero;
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 360;
+	
+	// speed of particles
+	emitter.speed = 160;
+	emitter.speedVar = 20;
+	
+	// radial
+	emitter.radialAccel = -120;
+	emitter.radialAccelVar = 0;
+	
+	// tagential
+	emitter.tangentialAccel = 30;
+	emitter.tangentialAccelVar = 0;
+	
+	// emitter position
+	emitter.position = ccp(160,240);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 4;
+	emitter.lifeVar = 1;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 80.0f;
+	emitter.startSizeVar = 40.0f;
+	emitter.endSize = kParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+	
+	// additive
+	emitter.blendAdditive = YES;
+	
 }
 -(NSString *) title
 {
-	return @"BigParticleFlower";
+	return @"Big Particles";
 }
 @end
+
+@implementation DemoRotFlower
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [[QuadParticleSystem alloc] initWithTotalParticles:300];
+	[self addChild: emitter z:0 tag:kTagEmitter];
+	[emitter release];
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars2.png"];
+	
+	// duration
+	emitter.duration = -1;
+	
+	// gravity
+	emitter.gravity = CGPointZero;
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 360;
+	
+	// speed of particles
+	emitter.speed = 160;
+	emitter.speedVar = 20;
+	
+	// radial
+	emitter.radialAccel = -120;
+	emitter.radialAccelVar = 0;
+	
+	// tagential
+	emitter.tangentialAccel = 30;
+	emitter.tangentialAccelVar = 0;
+	
+	// emitter position
+	emitter.position = ccp(160,240);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 3;
+	emitter.lifeVar = 1;
+
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 2000;
+	
+	// color of particles
+	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+
+	// size, in pixels
+	emitter.startSize = 30.0f;
+	emitter.startSizeVar = 00.0f;
+	emitter.endSize = kParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+
+	// additive
+	emitter.blendAdditive = NO;
+	
+}
+-(NSString *) title
+{
+	return @"Spinning Particles";
+}
+@end
+
 
 @implementation DemoMeteor
 -(void) onEnter
@@ -378,17 +517,6 @@ Class restartAction()
 	startColorVar.b = 0.1f;
 	emitter.startColorVar = startColorVar;
 	
-	ccColorF endColor = emitter.endColor;
-	endColor.r = 0.9f;
-	endColor.g = 0.9f;
-	endColor.b = 0.9f;
-	emitter.endColor = endColor;
-	
-	ccColorF endColorVar = emitter.endColorVar;
-	endColorVar.b = 0.1f;
-	endColorVar.a = 0.5f;
-	emitter.endColorVar = endColorVar;
-	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"snow.png"];
 
 }
@@ -424,6 +552,7 @@ Class restartAction()
 	[super onEnter];
 	ParticleSystem *particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:1000];
 	[self addChild: particleSystem z:0 tag:kTagEmitter];
+	[particleSystem release];
 	
 	CGSize s = [[Director sharedDirector] winSize];
 	
@@ -487,7 +616,7 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"Modern Art";
+	return @"Varying size";
 }
 @end
 

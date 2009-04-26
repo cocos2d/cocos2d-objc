@@ -21,6 +21,7 @@
  Special features and Limitations:
   - Particle size can be any float number.
   - The system can be scaled
+  - The particles can be rotated
   - It is a bit slower that PointParticleSystem
   - It consumes more RAM and more GPU memory than PointParticleSystem
  */
@@ -32,9 +33,12 @@
 	GLuint	quadsID;		// VBO id
 }
 
+
 // initialices the indices for the vertices
 -(void) initIndices;
 // initilizes the text coords
 -(void) initTexCoords;
+
+
 @end
 

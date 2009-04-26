@@ -170,22 +170,60 @@
 				quads[particleIdx].point[j].colors = p->color;
 			
 			// vertices
-			// top-left vertex:
 			float size_2 = p->size/2;
-			quads[particleIdx].point[0].vertices.x = p->pos.x - size_2;
-			quads[particleIdx].point[0].vertices.y = p->pos.y - size_2;
-			
-			// bottom-left vertex:
-			quads[particleIdx].point[1].vertices.x = p->pos.x + size_2;
-			quads[particleIdx].point[1].vertices.y = p->pos.y - size_2;
-			
-			// top-right vertex:
-			quads[particleIdx].point[2].vertices.x = p->pos.x - size_2;
-			quads[particleIdx].point[2].vertices.y = p->pos.y + size_2;
-			
-			// top-right vertex:
-			quads[particleIdx].point[3].vertices.x = p->pos.x + size_2;
-			quads[particleIdx].point[3].vertices.y = p->pos.y + size_2;
+			p->angle += (p->deltaAngle * dt);
+			if( p->angle ) {
+				float x1 = -size_2;
+				float y1 = -size_2;
+				
+				float x2 = x1 + p->size;
+				float y2 = y1 + p->size;
+				float x = p->pos.x;
+				float y = p->pos.y;
+				
+				float r = (float)-CC_DEGREES_TO_RADIANS(p->angle);
+				float cr = cosf(r);
+				float sr = sinf(r);
+				float ax = x1 * cr - y1 * sr + x;
+				float ay = x1 * sr + y1 * cr + y;
+				float bx = x2 * cr - y1 * sr + x;
+				float by = x2 * sr + y1 * cr + y;
+				float cx = x2 * cr - y2 * sr + x;
+				float cy = x2 * sr + y2 * cr + y;
+				float dx = x1 * cr - y2 * sr + x;
+				float dy = x1 * sr + y2 * cr + y;
+				
+				quads[particleIdx].point[0].vertices.x = ax;
+				quads[particleIdx].point[0].vertices.y = ay;
+				
+				// bottom-left vertex:
+				quads[particleIdx].point[1].vertices.x = bx;
+				quads[particleIdx].point[1].vertices.y = by;
+				
+				// top-right vertex:
+				quads[particleIdx].point[2].vertices.x = dx;
+				quads[particleIdx].point[2].vertices.y = dy;
+				
+				// top-right vertex:
+				quads[particleIdx].point[3].vertices.x = cx;
+				quads[particleIdx].point[3].vertices.y = cy;
+			} else {
+				// top-left vertex:
+				quads[particleIdx].point[0].vertices.x = p->pos.x - size_2;
+				quads[particleIdx].point[0].vertices.y = p->pos.y - size_2;
+				
+				// bottom-left vertex:
+				quads[particleIdx].point[1].vertices.x = p->pos.x + size_2;
+				quads[particleIdx].point[1].vertices.y = p->pos.y - size_2;
+				
+				// top-right vertex:
+				quads[particleIdx].point[2].vertices.x = p->pos.x - size_2;
+				quads[particleIdx].point[2].vertices.y = p->pos.y + size_2;
+				
+				// top-right vertex:
+				quads[particleIdx].point[3].vertices.x = p->pos.x + size_2;
+				quads[particleIdx].point[3].vertices.y = p->pos.y + size_2;				
+			}
 			
 			// update particle counter
 			particleIdx++;

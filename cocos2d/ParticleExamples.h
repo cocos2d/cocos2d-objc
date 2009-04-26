@@ -45,12 +45,6 @@
 }
 @end
 
-//! Flower particle system
-@interface BigParticleFlower : QuadParticleSystem
-{
-}
-@end
-
 //! Meteor particle system
 @interface ParticleMeteor : PointParticleSystem
 {

@@ -44,7 +44,11 @@
 {}
 @end
 
-@interface DemoBigParticle : ParticleDemo
+@interface DemoBigFlower : ParticleDemo
+{}
+@end
+
+@interface DemoRotFlower : ParticleDemo
 {}
 @end
 
