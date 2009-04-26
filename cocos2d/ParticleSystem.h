@@ -33,6 +33,8 @@ typedef struct sParticle
 	ccColorF	deltaColor;
 	float	size;
 	float	deltaSize;
+	float	angle;
+	float	deltaAngle;
 	float	life;
 } Particle;
 
@@ -123,6 +125,15 @@ typedef struct sParticle
 	// End color variance
 	ccColorF endColorVar;
 	
+	// start angle of the particles
+	float startSpin;
+	// start angle variance
+	float startSpinVar;
+	// End angle of the particle
+	float endSpin;
+	// end angle ariance
+	float endSpinVar;	
+	
 	// Array of particles
 	Particle *particles;
 	// Maximum particles
@@ -194,6 +205,14 @@ typedef struct sParticle
 @property (readwrite,assign) ccColorF endColor;
 /** end color variance of each particle */
 @property (readwrite,assign) ccColorF endColorVar;
+//* initial angle of each particle
+@property (readwrite,assign) float startSpin;
+//* initial angle of each particle
+@property (readwrite,assign) float startSpinVar;
+//* initial angle of each particle
+@property (readwrite,assign) float endSpin;
+//* initial angle of each particle
+@property (readwrite,assign) float endSpinVar;
 /** emission rate of the particles */
 @property (readwrite,assign) float emissionRate;
 /** maximum particles of the system */

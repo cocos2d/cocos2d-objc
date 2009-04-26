@@ -42,8 +42,8 @@
 @synthesize speed, speedVar;
 @synthesize tangentialAccel, tangentialAccelVar;
 @synthesize radialAccel, radialAccelVar;
-@synthesize startColor, startColorVar;
-@synthesize endColor, endColorVar;
+@synthesize startColor, startColorVar, endColor, endColorVar;
+@synthesize startSpin, startSpinVar, endSpin, endSpinVar;
 @synthesize emissionRate;
 @synthesize totalParticles;
 @synthesize startSize, startSizeVar;
@@ -167,6 +167,12 @@
 		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
 		particle->deltaSize = (endS - startS) / particle->life;
 	}
+	
+	// angle
+	float startA = startSpin + startSpinVar * CCRANDOM_MINUS1_1();
+	float endA = endSpin + endSpinVar * CCRANDOM_MINUS1_1();
+	particle->angle = startA;
+	particle->deltaAngle = (endA - startA) / particle->life;
 }
 
 -(void) stopSystem
