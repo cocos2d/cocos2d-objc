@@ -200,6 +200,41 @@
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_POINT_SPRITE_OES);
 }
+
+#pragma mark Non supported properties
+
+//
+// SPIN IS NOT SUPPORTED
+//
+-(void) setStartSpin:(float)a
+{
+	NSAssert(a == 0, @"PointParticleSystem doesn't support spinning");
+	[super setStartSpin:a];
+}
+-(void) setStartSpinVar:(float)a
+{
+	NSAssert(a == 0, @"PointParticleSystem doesn't support spinning");
+	[super setStartSpin:a];
+}
+-(void) setEndSpin:(float)a
+{
+	NSAssert(a == 0, @"PointParticleSystem doesn't support spinning");
+	[super setStartSpin:a];
+}
+-(void) setEndSpinVar:(float)a
+{
+	NSAssert(a == 0, @"PointParticleSystem doesn't support spinning");
+	[super setStartSpin:a];
+}
+
+//
+// SIZE > 64 IS NOT SUPPORTED
+//
+-(void) setStartSize:(float)size
+{
+	NSAssert(size <= 64, @"PointParticleSystem doesn't support size > 64");
+	[super setStartSize:size];
+}
 @end
 
 
