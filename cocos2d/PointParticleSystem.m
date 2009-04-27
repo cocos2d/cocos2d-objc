@@ -81,6 +81,9 @@
 	
 	particleIdx = 0;
 	
+	// test performance with [self absolutePosition];
+	CGPoint	absolutePosition = position;
+	
 	while( particleIdx < particleCount )
 	{
 		Particle *p = &particles[particleIdx];
@@ -88,7 +91,7 @@
 		if( p->life > 0 ) {
 			
 			CGPoint tmp, radial, tangential;
-			
+						
 			radial = CGPointZero;
 			// radial acceleration
 			if(p->pos.x || p->pos.y)
@@ -119,11 +122,16 @@
 			p->life -= dt;
 			
 			//
-			// update values in quad
+			// update values in point
 			//
+			CGPoint	newPos = p->pos;
+			if( positionType_ == kPositionTypeWorld ) {
+				newPos = ccpSub(absolutePosition, p->startPos);
+				newPos = ccpSub( p->pos, newPos);
+			}
 			
 			// place vertices and colos in array
-			vertices[particleIdx].pos = p->pos;
+			vertices[particleIdx].pos = newPos;
 			vertices[particleIdx].size = p->size;
 			vertices[particleIdx].colors = p->color;
 

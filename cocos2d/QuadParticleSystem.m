@@ -124,6 +124,9 @@
 	
 	particleIdx = 0;
 	
+	// test performance with [self absolutePosition];
+	CGPoint	absolutePosition = position;
+	
 	while( particleIdx < particleCount )
 	{
 		Particle *p = &particles[particleIdx];
@@ -165,6 +168,12 @@
 			// update values in quad
 			//
 
+			CGPoint	newPos = p->pos;
+			if( positionType_ == kPositionTypeWorld ) {
+				newPos = ccpSub(absolutePosition, p->startPos);
+				newPos = ccpSub( p->pos, newPos);
+			}
+			
 			// colors
 			for(int j=0;j<4;j++)
 				quads[particleIdx].point[j].colors = p->color;
@@ -178,8 +187,8 @@
 				
 				float x2 = x1 + p->size;
 				float y2 = y1 + p->size;
-				float x = p->pos.x;
-				float y = p->pos.y;
+				float x = newPos.x;
+				float y = newPos.y;
 				
 				float r = (float)-CC_DEGREES_TO_RADIANS(p->angle);
 				float cr = cosf(r);
@@ -209,20 +218,20 @@
 				quads[particleIdx].point[3].vertices.y = cy;
 			} else {
 				// top-left vertex:
-				quads[particleIdx].point[0].vertices.x = p->pos.x - size_2;
-				quads[particleIdx].point[0].vertices.y = p->pos.y - size_2;
+				quads[particleIdx].point[0].vertices.x = newPos.x - size_2;
+				quads[particleIdx].point[0].vertices.y = newPos.y - size_2;
 				
 				// bottom-left vertex:
-				quads[particleIdx].point[1].vertices.x = p->pos.x + size_2;
-				quads[particleIdx].point[1].vertices.y = p->pos.y - size_2;
+				quads[particleIdx].point[1].vertices.x = newPos.x + size_2;
+				quads[particleIdx].point[1].vertices.y = newPos.y - size_2;
 				
 				// top-right vertex:
-				quads[particleIdx].point[2].vertices.x = p->pos.x - size_2;
-				quads[particleIdx].point[2].vertices.y = p->pos.y + size_2;
+				quads[particleIdx].point[2].vertices.x = newPos.x - size_2;
+				quads[particleIdx].point[2].vertices.y = newPos.y + size_2;
 				
 				// top-right vertex:
-				quads[particleIdx].point[3].vertices.x = p->pos.x + size_2;
-				quads[particleIdx].point[3].vertices.y = p->pos.y + size_2;				
+				quads[particleIdx].point[3].vertices.x = newPos.x + size_2;
+				quads[particleIdx].point[3].vertices.y = newPos.y + size_2;				
 			}
 			
 			// update particle counter

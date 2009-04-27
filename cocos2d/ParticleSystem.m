@@ -51,6 +51,7 @@
 @synthesize gravity;
 @synthesize texture;
 @synthesize blendAdditive;
+@synthesize positionType = positionType_;
 
 -(id) init {
 	NSException* myException = [NSException
@@ -82,6 +83,9 @@
 		
 		// default: additive
 		blendAdditive = NO;
+		
+		// default position type;
+		positionType_ = kPositionTypeWorld;
 		
 		// default: modulate
 		// XXX: not used
@@ -120,11 +124,12 @@
 	CGPoint v;
 
 	// position
+	// XXX: source should be deprecated.
 	particle->pos.x = (int) (source.x + posVar.x * CCRANDOM_MINUS1_1());
 	particle->pos.y = (int) (source.y + posVar.y * CCRANDOM_MINUS1_1());
 	
 	// direction
-	float a = (CGFloat)CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
+	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * CCRANDOM_MINUS1_1();
@@ -173,6 +178,9 @@
 	float endA = endSpin + endSpinVar * CCRANDOM_MINUS1_1();
 	particle->angle = startA;
 	particle->deltaAngle = (endA - startA) / particle->life;
+	
+	// position
+	particle->startPos = position;
 }
 
 -(void) stopSystem
