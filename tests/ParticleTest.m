@@ -111,8 +111,9 @@ Class restartAction()
 	
 	ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
 	
-	CGPoint source = ccpSub( convertedLocation, s.position );
-	s.source = source;
+//	CGPoint source = ccpSub( convertedLocation, s.position );
+//	s.source = source;
+	s.position = convertedLocation;
 	
 	return kEventHandled;
 }

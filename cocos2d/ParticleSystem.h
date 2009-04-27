@@ -19,13 +19,21 @@
 
 enum {
 	kParticleStartSizeEqualToEndSize = -1,
+	kParticleDurationInfinity = -1,
 };
+
+typedef enum {
+	kPositionTypeLocal,
+	kPositionTypeWorld,
+	kPositionTypeCenterOfGravity,
+} tPositionType;
 
 /** Structure that contains the values of each particle
  */
 typedef struct sParticle
 {
 	CGPoint	pos;
+	CGPoint startPos;
 	CGPoint	dir;
 	float	radialAccel;
 	float	tangentialAccel;
@@ -153,6 +161,9 @@ typedef struct sParticle
 	// Texture of the particles
 	Texture2D *texture;
 
+	// position type: world, local, center of gravity
+	tPositionType	positionType_;
+
 	//  particle idx
 	int particleIdx;
 }
@@ -221,6 +232,8 @@ typedef struct sParticle
 @property (readwrite, retain) Texture2D * texture;
 /** whether or not the particles are using "blend additive */
 @property (readwrite) BOOL blendAdditive;
+/** position type */
+@property (readwrite) tPositionType positionType;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;
