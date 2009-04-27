@@ -505,7 +505,16 @@ Class restartAction()
 	
 	CGPoint p = emitter.position;
 	emitter.position = ccp( p.x, p.y-110);
-	emitter.life = 25;
+	emitter.life = 3;
+	emitter.lifeVar = 1;
+	
+	// gravity
+	emitter.gravity = ccp(0,-10);
+		
+	// speed of particles
+	emitter.speed = 130;
+	emitter.speedVar = 30;
+	
 	
 	ccColorF startColor = emitter.startColor;
 	startColor.r = 0.9f;
@@ -516,6 +525,8 @@ Class restartAction()
 	ccColorF startColorVar = emitter.startColorVar;
 	startColorVar.b = 0.1f;
 	emitter.startColorVar = startColorVar;
+	
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"snow.png"];
 
@@ -535,7 +546,7 @@ Class restartAction()
 	
 	CGPoint p = emitter.position;
 	emitter.position = ccp( p.x, p.y-100);
-	emitter.life = 25;	
+	emitter.life = 4;
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 
