@@ -54,7 +54,7 @@
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
 	
 	// BUG XXX: doesn't work with RGB565.
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClearColor(0.0f,0.0f,0.0f,1.0f);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 }

@@ -6,7 +6,7 @@
 
 //
 // To view these scores online, go here:
-// http://www.cocoslive.net/game-scores?gamename=DemoGame%202
+// http://www.cocoslive.net/game-scores?gamename=DemoGame%203
 //
 
 //
@@ -63,7 +63,7 @@
 {
 	NSLog(@"Requesting scores...");
 
-	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame 2" delegate:self];
+	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame 3" delegate:self];
 	
 	NSString *cat = @"easy";
 	
@@ -98,10 +98,10 @@
 {
 	NSLog(@"Posting Score");
 
-	// Create que "post" object for the game "DemoGame 2"
+	// Create que "post" object for the game "DemoGame 3"
 	// The gameKey is the secret key that is generated when you create you game in cocos live.
 	// This secret key is used to prevent spoofing the high scores
-	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame 2" gameKey:@"1ad0ba5afd763c6bdaa2429cfc99b3be" delegate:self];
+	ScoreServerPost *server = [[ScoreServerPost alloc] initWithGameName:@"DemoGame 3" gameKey:@"f35a4350b63afcb4e87c88b01ecc64b6" delegate:self];
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
 
