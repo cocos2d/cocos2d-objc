@@ -86,7 +86,10 @@
 {}
 @end
 
-
 @interface SpriteOrbit : SpriteDemo
+{}
+@end
+
+@interface SpriteBezier : SpriteDemo
 {}
 @end

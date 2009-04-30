@@ -181,6 +181,35 @@ Example:
 }
 @end
 
+/** bezier configuration structure
+ */
+typedef struct _ccBezierConfig {
+	//! startPosition of the bezier
+	CGPoint startPosition;
+	//! end position of the bezier
+	CGPoint endPosition;
+	//! Bezier control point 1
+	CGPoint controlPoint_1;
+	//! Bezier control point 2
+	CGPoint controlPoint_2;
+} ccBezierConfig;
+
+/** A action that moves the target with a cubic Bezier curve.
+ Since BezierBy moves the target "relative" it will be easier if
+ the startPosition of the Bezier configuration is (0,0)
+ */
+@interface BezierBy : IntervalAction <NSCopying>
+{
+	ccBezierConfig config;
+	CGPoint startPosition;
+}
+
+/** creates the action with a duration and a bezier configuration */
++(id) actionWithDuration: (ccTime) t bezier:(ccBezierConfig) c;
+
+/** initializes the action with a duration and a bezier configuration */
+-(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c;
+@end
 
 /** Scales a CocosNode object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
