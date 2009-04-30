@@ -111,7 +111,10 @@
 
 	// cc_ files are predefined cocoslive fields.
 	// set score
-	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:20000] ] forKey:@"cc_score"];
+//	[dict setObject: [NSNumber numberWithInt: [self getRandomWithMax:20000] ] forKey:@"cc_score"];
+
+	[dict setObject: [NSNumber numberWithInt: 19000] forKey:@"cc_score"];
+
 	// set playername
 	[dict setObject:name forKey:@"cc_playername"];
 
