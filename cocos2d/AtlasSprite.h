@@ -67,6 +67,10 @@
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations;
 	
+	// image is flipped
+	BOOL	flipX_;
+	BOOL	flipY_;
+	
 	// cocosNodeProtcol
 	BOOL	autoCenterFrames_;
 }
@@ -81,6 +85,11 @@
 @property (readonly) CGRect textureRect;
 /** whether or not the new frames will be auto centered */
 @property (readwrite) BOOL autoCenterFrames;
+/** whether or not the sprite is flipped horizontally */
+@property (readwrite) BOOL flipX;
+/** whether or not the sprite is flipped vertically */
+@property (readwrite) BOOL flipY;
+
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;

@@ -18,6 +18,7 @@ static NSString *transitions[] = {
 			@"Atlas4",
 			@"Atlas5",
 			@"Atlas6",
+			@"Atlas7",
 };
 
 enum {
@@ -511,6 +512,46 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"AtlasSpriteManager transformation";
+}
+@end
+
+#pragma mark Example Atlas 7
+
+@implementation Atlas7
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];
+		
+		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		sprite1.position = ccp( 100, 120 );		
+		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
+		
+		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		sprite2.position = ccp( 300, 120 );		
+		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
+		
+		[self schedule:@selector(flipSprites:) interval:1];
+	}	
+	return self;
+}
+-(void) flipSprites:(ccTime)dt
+{
+	id mgr = [self getChildByTag:kTagSpriteManager];
+	id sprite1 = [mgr getChildByTag:kTagSprite1];
+	id sprite2 = [mgr getChildByTag:kTagSprite2];
+	
+	BOOL x = [sprite1 flipX];
+	BOOL y = [sprite2 flipY];
+	
+	[sprite1 setFlipX: !x];
+	[sprite2 setFlipY: !y];
+}
+-(NSString*) title
+{
+	return @"AtlasSprite Flip X & Y";
 }
 @end
 

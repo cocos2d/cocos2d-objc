@@ -50,6 +50,8 @@ enum {
 		dirtyPosition = YES;
 		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
 		
+		flipY_ = flipX_ = NO;
+		
 		// RGB and opacity
 		r_ = g_ = b_ = opacity_ = 255;
 		
@@ -110,6 +112,12 @@ enum {
 	float top = rect_.origin.y / atlasHeight;
 	float bottom = (rect_.origin.y + rect_.size.height) / atlasHeight;
 
+	
+	if( flipX_)
+		CC_SWAP(left,right);
+	if( flipY_)
+		CC_SWAP(top,bottom);
+	
 	ccQuad2 newCoords = {
 		left, bottom,
 		right, bottom,
@@ -278,6 +286,30 @@ enum {
 {
 	[super setVisible:v];
 	dirtyPosition = YES;
+}
+
+-(void)setFlipX:(BOOL)b
+{
+	if( flipX_ != b ) {
+		flipX_ = b;
+		[self setTextureRect:rect_];
+	}
+}
+-(BOOL) flipX
+{
+	return flipX_;
+}
+
+-(void) setFlipY:(BOOL)b
+{
+	if( flipY_ != b ) {
+		flipY_ = b;	
+		[self setTextureRect:rect_];
+	}	
+}
+-(BOOL) flipY
+{
+	return flipY_;
 }
 
 //

@@ -1,5 +1,6 @@
 version 0.8 - xxx
  . All: removed deprecated classes/methods (issue #326)
+ . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)
  . CocosLive: Demo shows world rankings (issue #342)
  . CocosNode: actions don't retain the target (issue #150)

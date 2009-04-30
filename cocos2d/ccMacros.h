@@ -26,6 +26,14 @@
 #define CCLOG(...) do {} while (0)
 #endif
 
+//simple macro that swaps 2 variables
+#define CC_SWAP( x, y )			\
+({ __typeof__(x) temp  = (x);		\
+		x = y; y = temp;		\
+})
+
+
+
 
 /// returns a random float between -1 and 1
 #define CCRANDOM_MINUS1_1() ((random() / (float)0x3fffffff )-1.0f)
