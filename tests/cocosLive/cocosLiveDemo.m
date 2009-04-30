@@ -146,8 +146,11 @@
 //	[server sendScore:dict];
 	
 	// Or you can "update" your score instead of adding a new one.
-	// To do that, cc_playername must exists.
 	// The score will be udpated only if it is better than the previous one
+	// 
+	// "update score" is the recommend way since it can be treated like a profile
+	// and it has some benefits like: "tell me if my score was beaten", etc.
+	// It also supports "world ranking". eg: "What's my ranking ?"
 	[server updateScore:dict];
 	
 	// Release. It won't be freed from memory until the connection fails or suceeds

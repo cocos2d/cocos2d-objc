@@ -126,11 +126,10 @@ enum {
 	
 	int i = indexPath.row;
 	AppController *appDelegate = [[UIApplication sharedApplication] delegate];
-	
-	idx.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
-	
+
 	NSDictionary	*s = [[appDelegate globalScores] objectAtIndex:i];
 
+	idx.text = [[s objectForKey:@"position"] stringValue];
 	name.text = [s objectForKey:@"cc_playername"];
 	// this is an NSNumber... convert it to string
 	score.text = [[s objectForKey:@"cc_score"] stringValue];
