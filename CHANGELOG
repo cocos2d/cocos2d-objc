@@ -1,4 +1,5 @@
 version 0.8 - xxx
+ . Actions: Added BezierBy action (issue #313)
  . All: removed deprecated classes/methods (issue #326)
  . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)

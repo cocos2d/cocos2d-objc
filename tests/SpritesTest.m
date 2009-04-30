@@ -19,6 +19,7 @@ static NSString *transitions[] = {
 						 @"SpriteRotate",
 						 @"SpriteScale",
 						 @"SpriteJump",
+						 @"SpriteBezier",
 						 @"SpriteBlink",
 						 @"SpriteFade",
 						 @"SpriteTint",
@@ -250,6 +251,54 @@ Class restartAction()
 }
 @end
 
+@implementation SpriteBezier
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Bezier curve, make it (0,0)
+	//
+	
+	// sprite 1
+	ccBezierConfig bezier;
+	bezier.startPosition = ccp(0,0);
+	bezier.controlPoint_1 = ccp(0, s.height/2);
+	bezier.controlPoint_2 = ccp(300, -s.height/2);
+	bezier.endPosition = ccp(300,100);
+	
+	id bezierForward = [BezierBy actionWithDuration:3 bezier:bezier];
+	id bezierBack = [bezierForward reverse];	
+	id seq = [Sequence actions: bezierForward, bezierBack, nil];
+	id rep = [RepeatForever actionWithAction:seq];
+	
+
+	// sprite 2
+	ccBezierConfig bezier2;
+	bezier2.startPosition = ccp(0,0);
+	bezier2.controlPoint_1 = ccp(100, s.height/2);
+	bezier2.controlPoint_2 = ccp(200, -s.height/2);
+	bezier2.endPosition = ccp(300,0);
+	
+	id bezierForward2 = [BezierBy actionWithDuration:3 bezier:bezier2];
+	id bezierBack2 = [bezierForward2 reverse];	
+	id seq2 = [Sequence actions: bezierForward2, bezierBack2, nil];
+	id rep2 = [RepeatForever actionWithAction:seq2];
+	
+	
+	[grossini runAction: rep];
+	[tamara runAction:rep2];
+}
+-(NSString *) title
+{
+	return @"BezierBy";
+}
+@end
+
+
 @implementation SpriteBlink
 -(void) onEnter
 {
@@ -317,9 +366,9 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-	id animation = [Animation animationWithName:@"dance" delay:0.2f];
+	Animation* animation = [Animation animationWithName:@"dance" delay:0.2f];
 	for( int i=1;i<15;i++)
-		[animation addFrame: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
 	id action = [Animate actionWithAnimation: animation];
 	
