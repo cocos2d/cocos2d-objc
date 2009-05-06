@@ -23,6 +23,7 @@
 @implementation AtlasNode
 
 @synthesize	opacity, r, g, b;
+@synthesize textureAtlas = textureAtlas_;
 
 #pragma mark AtlasNode - Creation & Init
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c
@@ -36,7 +37,8 @@
 	if( ! (self=[super init]) )
 		return nil;
 	
-	textureAtlas = [[TextureAtlas textureAtlasWithFile:tile capacity:c] retain];
+	// retained
+	self.textureAtlas = [TextureAtlas textureAtlasWithFile:tile capacity:c];
 	
 	itemWidth = w;
 	itemHeight = h;
@@ -52,7 +54,7 @@
 
 -(void) dealloc
 {
-	[textureAtlas release];
+	[textureAtlas_ release];
 	
 	[super dealloc];
 }
@@ -61,15 +63,15 @@
 
 -(void) calculateMaxItems
 {
-	CGSize s = [[textureAtlas texture] contentSize];
+	CGSize s = [[textureAtlas_ texture] contentSize];
 	itemsPerColumn = s.height / itemHeight;
 	itemsPerRow = s.width / itemWidth;
 }
 
 -(void) calculateTexCoordsSteps
 {
-	texStepX = itemWidth / (float) [[textureAtlas texture] pixelsWide];
-	texStepY = itemHeight / (float) [[textureAtlas texture] pixelsHigh]; 	
+	texStepX = itemWidth / (float) [[textureAtlas_ texture] pixelsWide];
+	texStepY = itemHeight / (float) [[textureAtlas_ texture] pixelsHigh]; 	
 }
 
 -(void) updateAtlasValues
@@ -88,7 +90,7 @@
 
 	glColor4ub( r, g, b, opacity);
 
-	[textureAtlas drawQuads];
+	[textureAtlas_ drawQuads];
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);

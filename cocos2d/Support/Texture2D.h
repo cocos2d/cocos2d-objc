@@ -71,6 +71,8 @@ typedef enum {
 	kTexture2DPixelFormat_RGBA8888,
 	kTexture2DPixelFormat_RGB565,
 	kTexture2DPixelFormat_A8,
+	kTexture2DPixelFormat_RGBA4444,
+	kTexture2DPixelFormat_RGB5A1,
 } Texture2DPixelFormat;
 
 //CLASS INTERFACES:
@@ -166,39 +168,20 @@ typedef struct _ccTexParams {
 
 @interface Texture2D (GLFilter)
 /** sets the min filter, mag filter, wrap s and wrap t texture parameters
- @warning this function is not thread safe
  */
-+(void) setTexParameters: (ccTexParams*) texParams;
+-(void) setTexParameters: (ccTexParams*) texParams;
 
-/** returns the min filter, mag filter, wrap s and wrap t texture parameters
- @warning this function is not thread safe
+/** sets antialias texture parameters:
+ TEXTURE_MIN_FILTER = LINEAR
+ TEXTURE_MAG_FILTER = LINEAR
  */
-+(ccTexParams) texParameters;
+- (void) setAntiAliasTexParameters;
 
-/** apply the setted min/mag filter to the current texture
- @warning this function is not thread safe
+/** sets alias texture parameters:
+ TEXTURE_MIN_FILTER = NEAREST
+ TEXTURE_MAG_FILTER = NEAREST
  */
-+ (void) applyTexParameters;
-
-/** saves in an internal variable the current tex parameters
- @warning this function is not thread safe and it is not re-entrat
- */
-+ (void) saveTexParameters;
-
-/** restores from the internal variable the tex parameters
- @warning this function is not thread safe and it is not re-entrat
- */
-+ (void) restoreTexParameters;
-
-/** sets antialias texture parameters
- @warning this function is not thread safe and it is not re-entrat
- */
-+ (void) setAntiAliasTexParameters;
-
-/** sets alias texture parameters
- @warning this function is not thread safe and it is not re-entrat
- */
-+ (void) setAliasTexParameters;
+- (void) setAliasTexParameters;
 
 @end
 

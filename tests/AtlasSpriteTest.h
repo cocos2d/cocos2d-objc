@@ -45,3 +45,8 @@
 @interface Atlas7 : AtlasDemo
 {}
 @end
+
+@interface Atlas8 : AtlasDemo
+{}
+@end
+

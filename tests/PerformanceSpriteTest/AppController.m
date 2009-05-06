@@ -14,12 +14,14 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[window setUserInteractionEnabled:YES];
 	
-	[Director useFastDirector];
+//	[Director useFastDirector];
 //	[[Director sharedDirector] setPixelFormat:kRGBA8];
 
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
 	[[Director sharedDirector] setLandscape:YES];
+	[[Director sharedDirector] setAnimationInterval:1.0f/240.0f];
+
 	
 	[window makeKeyAndVisible];
 	

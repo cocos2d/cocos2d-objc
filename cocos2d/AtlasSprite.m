@@ -43,7 +43,7 @@ enum {
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
 	if( (self = [super init])) {
-		textureAtlas_ = [manager atlas];	// weak reference. Don't release
+		textureAtlas_ = [manager textureAtlas];	// weak reference. Don't release
 		
 		atlasIndex_ = kIndexNotInitialized;
 

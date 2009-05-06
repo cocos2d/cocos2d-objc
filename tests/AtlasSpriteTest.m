@@ -19,6 +19,7 @@ static NSString *transitions[] = {
 			@"Atlas5",
 			@"Atlas6",
 			@"Atlas7",
+			@"Atlas8",
 };
 
 enum {
@@ -201,12 +202,8 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		[Texture2D saveTexParameters];
-		[Texture2D setAliasTexParameters];
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self addChild:mgr z:0 tag:kTagSpriteManager];
-		
-		[Texture2D restoreTexParameters];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
 		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
@@ -525,12 +522,14 @@ Class restartAction()
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
+		CGSize s = [[Director sharedDirector] winSize];
+		
 		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
-		sprite1.position = ccp( 100, 120 );		
+		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
 		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
 		
 		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
-		sprite2.position = ccp( 300, 120 );		
+		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
 		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
 		
 		[self schedule:@selector(flipSprites:) interval:1];
@@ -552,6 +551,60 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"AtlasSprite Flip X & Y";
+}
+@end
+
+#pragma mark Example Atlas 8
+
+@implementation Atlas8
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];
+		
+		CGSize s = [[Director sharedDirector] winSize];
+	
+		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
+		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
+		
+		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
+		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
+		
+		id scale = [ScaleBy actionWithDuration:2 scale:5];
+		id scale_back = [scale reverse];
+		id seq = [Sequence actions: scale, scale_back, nil];
+		id repeat = [RepeatForever actionWithAction:seq];
+		
+		id repeat2 = [[repeat copy] autorelease];
+		
+		[sprite1 runAction:repeat];
+		[sprite2 runAction:repeat2];
+		
+	}	
+	return self;
+}
+-(void) onEnter
+{
+	[super onEnter];
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	[mgr.textureAtlas.texture setAliasTexParameters];
+}
+
+-(void) onExit
+{
+	// restore the tex parameter to AntiAliased.
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	[mgr.textureAtlas.texture setAntiAliasTexParameters];
+	[super onExit];
+}
+
+-(NSString*) title
+{
+	return @"Aliased AtlasSprite";
 }
 @end
 

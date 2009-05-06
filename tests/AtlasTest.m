@@ -367,13 +367,10 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 	
-		// Create an Aliased Atlas
-		[Texture2D saveTexParameters];
-		[Texture2D setAliasTexParameters];
 		
 		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
-				
-		[Texture2D restoreTexParameters];
+		// Convert it to "alias" (GL_LINEAR filtering)
+		[tilemap.textureAtlas.texture setAliasTexParameters];
 		
 		// If you are not going to use the Map, you can free it now
 		// NEW since v0.7
@@ -415,13 +412,11 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		// Create an Aliased Atlas
-		[Texture2D saveTexParameters];
-		[Texture2D setAliasTexParameters];
 		
 		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
-		
-		[Texture2D restoreTexParameters];
+
+		// Create an Aliased Atlas
+		[tilemap.textureAtlas.texture setAliasTexParameters];
 		
 		// If you are not going to use the Map, you can free it now
 		// [tilemap releaseMap];
@@ -491,7 +486,7 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
