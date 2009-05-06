@@ -16,6 +16,7 @@ static NSString *transitions[] = {
 			@"Atlas2",
 			@"Atlas3",
 			@"Atlas4",
+			@"AtlasZVertex",
 			@"Atlas5",
 			@"Atlas6",
 			@"Atlas7",
@@ -405,6 +406,92 @@ Class restartAction()
 }
 @end
 
+#pragma mark Example AtlasZVertex
+
+@implementation AtlasZVertex
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		dir = 1;
+		time = 0;
+
+		CGSize s = [[Director sharedDirector] winSize];
+		
+		// small capacity. Testing resizing.
+		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];		
+		
+		
+		for(int i=0;i<5;i++) {
+			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.vertexZ = 50+i;
+			[mgr addChild:sprite z:0];
+			
+		}
+		
+		for(int i=5;i<10;i++) {
+			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.vertexZ = 60-i;
+			[mgr addChild:sprite z:0];
+		}
+		
+//		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
+//		[mgr addChild:sprite z:0 tag:kTagSprite1];
+//		sprite.position = ccp(s.width/2, s.height/2 - 20);
+//		sprite.scaleX = 6;
+//		[sprite setRGB:255:0:0];
+//		
+//		[self schedule:@selector(reorderSprite:) interval:0];		
+	}	
+	return self;
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	// 
+	// XXX XXX XXX
+	// What depthFunc should we use to support real GL vertex ?
+	// XXX XXX XXX
+
+//	glDepthRangef(100, -100);
+//	glDepthFunc(GL_LESS);
+//	glDepthRangef(-100,100);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//	[[Director sharedDirector] set2Dprojection];
+}
+
+-(void) onExit
+{
+	glDepthFunc(GL_LEQUAL);
+	[super onExit];
+}
+
+-(void) reorderSprite:(ccTime) dt
+{
+	
+	time += dt;
+	id mgr = [self getChildByTag:kTagSpriteManager];
+	id sprite = [mgr getChildByTag:kTagSprite1];
+
+	float sinz = sinf((CGFloat)M_PI*time*2) * 100;
+
+	[sprite setVertexZ:sinz];	
+}
+
+-(NSString *) title
+{
+	return @"AtlasSprite: openGL Z vertex";
+}
+@end
+
+
 #pragma mark Example Atlas 5
 
 @implementation Atlas5
@@ -630,6 +717,14 @@ Class restartAction()
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
+
+	// Use this pixel format to have transparent buffers
+	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	
+	// Create a depth buffer of 24 bits
+	// These means that openGL z-order will be taken into account
+	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
+	
 
 	// create an openGL view inside a window
 	[[Director sharedDirector] attachInView:window];	

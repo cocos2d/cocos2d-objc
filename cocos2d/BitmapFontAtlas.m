@@ -38,8 +38,6 @@
 
 @implementation BitmapFontAtlas
 
-@synthesize textureAtlas = textureAtlas_;
-
 #pragma mark BitmapFontAtlas - Creation & Init
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile alignment:(UITextAlignment)alignment
 {

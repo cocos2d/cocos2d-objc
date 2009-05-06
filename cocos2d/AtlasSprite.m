@@ -51,7 +51,7 @@ enum {
 		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
 		
 		flipY_ = flipX_ = NO;
-		
+
 		// RGB and opacity
 		r_ = g_ = b_ = opacity_ = 255;
 		
@@ -175,10 +175,10 @@ enum {
 		float dy = x1 * sr + y2 * cr + y;
 
 		ccQuad3 newVertices = 
-					{(int)ax, (int)ay, 0,
-					(int)bx, (int)by, 0,
-					(int)dx, (int)dy, 0,
-					(int)cx, (int)cy, 0};
+					{(int)ax, (int)ay, vertexZ_,
+					(int)bx, (int)by, vertexZ_,
+					(int)dx, (int)dy, vertexZ_,
+					(int)cx, (int)cy, vertexZ_};
 		vertexCoords_ = newVertices;		
 	}
 	
@@ -193,10 +193,10 @@ enum {
 		float x2 = (x1 + rect_.size.width * scaleX);
 		float y2 = (y1 + rect_.size.height * scaleY);
 		ccQuad3 newVertices = {
-			(int)x1,(int)y1,0,
-			(int)x2,(int)y1,0,
-			(int)x1,(int)y2,0,
-			(int)x2,(int)y2,0,
+			(int)x1,(int)y1,vertexZ_,
+			(int)x2,(int)y1,vertexZ_,
+			(int)x1,(int)y2,vertexZ_,
+			(int)x2,(int)y2,vertexZ_,
 		};
 
 		vertexCoords_ = newVertices;	
@@ -212,10 +212,10 @@ enum {
 		float x2 = (x1 + rect_.size.width);
 		float y2 = (y1 + rect_.size.height);
 		ccQuad3 newVertices = {
-			(int)x1,(int)y1,0,
-			(int)x2,(int)y1,0,
-			(int)x1,(int)y2,0,
-			(int)x2,(int)y2,0,
+			(int)x1,(int)y1,vertexZ_,
+			(int)x2,(int)y1,vertexZ_,
+			(int)x1,(int)y2,vertexZ_,
+			(int)x2,(int)y2,vertexZ_,
 		};
 		
 		vertexCoords_ = newVertices;
@@ -268,6 +268,12 @@ enum {
 -(void)setScale:(float) s
 {
 	[super setScale:s];
+	dirtyPosition = YES;
+}
+
+-(void) setVertexZ:(float)z
+{
+	[super setVertexZ:z];
 	dirtyPosition = YES;
 }
 

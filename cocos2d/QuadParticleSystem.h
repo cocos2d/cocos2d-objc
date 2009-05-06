@@ -24,6 +24,7 @@
   - The particles can be rotated
   - It is a bit slower that PointParticleSystem
   - It consumes more RAM and more GPU memory than PointParticleSystem
+ @since v0.8
  */
 @interface QuadParticleSystem : ParticleSystem
 {

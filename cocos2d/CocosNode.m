@@ -50,6 +50,7 @@
 @synthesize grid;
 @synthesize zOrder;
 @synthesize tag;
+@synthesize vertexZ = vertexZ_;
 
 +(id) node
 {
@@ -70,6 +71,7 @@
 	scaleY = 1.0f;
 	parallaxRatioX = 1.0f;
 	parallaxRatioY = 1.0f;
+	vertexZ_ = 0;
 
 	grid = nil;
 	
@@ -396,12 +398,12 @@
 	
 	// transalte
 	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
-		glTranslatef( (int)(-transformAnchor.x + parallaxOffsetX), (int)(-transformAnchor.y + parallaxOffsetY), 0);
+		glTranslatef( (int)(-transformAnchor.x + parallaxOffsetX), (int)(-transformAnchor.y + parallaxOffsetY), vertexZ_);
 	
 	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
-		glTranslatef( (int)(position.x + transformAnchor.x + parallaxOffsetX), (int)(position.y + transformAnchor.y + parallaxOffsetY), 0);
+		glTranslatef( (int)(position.x + transformAnchor.x + parallaxOffsetX), (int)(position.y + transformAnchor.y + parallaxOffsetY), vertexZ_);
 	else if ( position.x !=0 || position.y !=0 || parallaxOffsetX != 0 || parallaxOffsetY != 0)
-		glTranslatef( (int)(position.x + parallaxOffsetX), (int)(position.y + parallaxOffsetY), 0 );
+		glTranslatef( (int)(position.x + parallaxOffsetX), (int)(position.y + parallaxOffsetY), vertexZ_ );
 	
 	// rotate
 	if (rotation != 0.0f )
@@ -413,7 +415,7 @@
 	
 	// restore and re-position point
 	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
-		glTranslatef((int)(-transformAnchor.x + parallaxOffsetX), (int)(-transformAnchor.y + parallaxOffsetY), 0);
+		glTranslatef((int)(-transformAnchor.x + parallaxOffsetX), (int)(-transformAnchor.y + parallaxOffsetY), vertexZ_);
 }
 
 -(float) scale
