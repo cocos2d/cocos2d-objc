@@ -38,7 +38,7 @@ const int defaultCapacity = 29;
 #pragma mark AtlasSpriteManager
 @implementation AtlasSpriteManager
 
-@synthesize atlas = textureAtlas_;
+@synthesize textureAtlas = textureAtlas_;
 
 -(void)dealloc
 {	

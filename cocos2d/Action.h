@@ -18,6 +18,7 @@
 #import "ccTypes.h"
 
 enum {
+	//! Default tag
 	kActionTagInvalid = -1,
 };
 
@@ -29,7 +30,9 @@ enum {
 	int tag;
 }
 
+/** The "target". The action will modify the target properties */
 @property (readwrite,assign) CocosNode *target;
+/** The action tag. An identifier of the action */
 @property (readwrite,assign) int tag;
 
 +(id) action;

@@ -1,63 +1,60 @@
-Steps to convert a game based on cocos2d v0.7 to v0.8
+Steps to convert a game based on cocos2d v0.7.2 to v0.8
 
 
-CocosNode children
+
+v0.7.2 Deprecatred
 ==================
 
+All the deprecated functions from v0.7.2 were removed.
 
-Add
----
+So, all the "optionals" changes that were made in v0.7.2 are required in v0.8.0
 
-[self add:node];        // OLD
-[self addChild:node];   // NEW
-
-[self add:node z:0];          // OLD
-[self addChild:node z:0];     // NEW
-
-[self add:node z:0 tag:t];          // OLD
-[self addChild:node z:0 tag:t];     // NEW
-
-[self add:node z:0 tag:t parallaxRatio];        // OLD
-[self addChild:node z:0 tag:t parallaxRatio];   // NEW
-
-Add Warning
------------
-
-Are you getting a warning saying that 'addChild:' selector is already defined in NSXML ?
-If you want to get rid of the warning you can simply add 'z:0'. eg:
-[self addChild:child z:0];
+For more information read the following files:
+  convert_0_7_0_to_0_7_1.txt
+  convert_0_7_1_to_0_7_2.txt
 
 
-Get
----
+Texture2D Alias/AntiAlias
+=========================
 
-[self getByTag:tag];        // OLD
-[self getChildByTag:tag];   // NEW
+The Alias/AntiAlias API is no longer a class method, but an instance method.
 
-Remove
-------
+[OLD]:
 
-[self remove:node];                    // OLD
-[self removeChild:node cleanup:NO];    // NEW
+	// Aliased images
+	[Texture2D saveTexParameters];
+	[Texture2D setAliasTexParameters];
 
-[self removeAndStop:node];                  // OLD
-[self removeChild:node cleanup:YES];        // NEW
-
-[self removeByTag:tag];                    // OLD
-[self removeChildByTag:tag cleanup:NO];    // NEW
-
-[self removeAndStopByTag:tag];              // OLD
-[self removeChildByTag:tag cleanup:YES];    // NEW
-
-[self removeAll];                           // OLD
-[self removeAllChildrenWithCleanup: NO];    // NEW
-
-[self removeAndStopAll];                    // OLD
-[self removeAllChildrenWithCleanup: YES];    // NEW
+	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	
+	[Texture2D restoreTexParameters];
 
 
-CocosNode actions
-=================
+[NEW]
 
-[self do: action];          // OLD
-[self runAction: action];   // NEW
+	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+
+	// Aliased images
+    [tilemap.textureAtlas.texture setAliasTexParameters];
+
+
+New Files
+=========
+    BitmapFontAtlas.h
+    BitmapFontAtlas.m
+    ParticleExamples.h
+    ParticleExamples.m
+    ParticleSystem.h
+    ParticleSystem.m
+    PointParticleSystem.h
+    PointParticleSystem.m
+    QuadParticleSystem.h
+    QuadParticleSystem.m
+
+
+Removed Files
+=============
+    Particle.h
+    Particle.m
+    ParticleSystems.h
+    ParticleSystems.m

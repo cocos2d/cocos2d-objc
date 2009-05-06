@@ -83,14 +83,14 @@
 		vertex.tr_y = (int)itemHeight;				// D - y
 		vertex.tr_z = 0;							// D - z
 		
-		[textureAtlas updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
+		[textureAtlas_ updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
 	}
 }
 
 - (void) setString:(NSString*) newString
 {
-	if( newString.length > textureAtlas.totalQuads )
-		[textureAtlas resizeCapacity: newString.length];
+	if( newString.length > textureAtlas_.totalQuads )
+		[textureAtlas_ resizeCapacity: newString.length];
 
 	[string release];
 	string = [newString retain];
@@ -108,7 +108,7 @@
 	
 	glColor4ub( r, g, b, opacity);
 	
-	[textureAtlas drawNumberOfQuads: string.length];
+	[textureAtlas_ drawNumberOfQuads: string.length];
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);

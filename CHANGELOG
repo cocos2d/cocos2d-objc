@@ -1,16 +1,21 @@
 version 0.8 - xxx
  . Actions: Added BezierBy action (issue #313)
+ . Actions: Sequence works when 1st action (issue #348)
  . All: removed deprecated classes/methods (issue #326)
  . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)
  . CocosLive: Demo shows world rankings (issue #342)
  . CocosNode: actions don't retain the target (issue #150)
  . Demos: Added PerformanceParticleTest (issue #331)
+ . Director: Fast Director runs in it's own thread (issue #145)
+ . Director: Fast Director works with attach/detach (issue #145)
+ . Director: Fast Director works with auto-lock (issue #239)
  . LabelAtlas: don't render in subpixel (issue #135)
  . Particles: Added QuadParticleSystem. renamed ParticleSystem to PointParticleSystem (issue #245)
  . Particles: added support for endSize and endSizeVar (issue #241)
  . Particles: added support for start/end/var spinning (issue #335)
  . Particles: support for World/Local coordinates (issue #241)
+ . Texture2D: new alias/antialias API (issue #226)
  . Touches: new feature (issue #211)
 
 version 0.7.2 - 23-Apr-2009

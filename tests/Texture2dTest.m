@@ -132,6 +132,11 @@ Class restartAction()
 	[[[self addChild:left z:0]
 			addChild:right z:0]
 			addChild:center z:0];
+	
+//	id s = [Sprite spriteWithFile:@"grossini_indexed.png"];
+//	id s2 = [Sprite spriteWithFile:@"grossini_indexed.gif"];
+//	[self addChild:s];
+//	[self addChild:s2];
 }
 
 -(NSString *) title
@@ -261,18 +266,14 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[Director sharedDirector] winSize];
-	
-	[Texture2D saveTexParameters];
-	ccTexParams params = [Texture2D texParameters];
-	params.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-	[Texture2D setTexParameters:&params];
-	
+
 	Sprite *imgMipMap = [Sprite spriteWithFile:@"logo-mipmap.pvr"];
 	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
 	[self addChild:imgMipMap];
-	
-	[Texture2D restoreTexParameters];
 
+	// support mipmap filtering
+	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
+	[imgMipMap.texture setTexParameters:&texParams];
 	Sprite *img = [Sprite spriteWithFile:@"logo-nomipmap.pvr"];
 	img.position = ccp( s.width/2.0f+100, s.height/2.0f);
 	[self addChild:img];
@@ -344,28 +345,26 @@ Class restartAction()
 	// Sprite 1: GL_LINEAR
 	//
 	// Default filter is GL_LINEAR
-	[Texture2D saveTexParameters];
-	[Texture2D setAntiAliasTexParameters];
 	
 	Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	sprite.position = ccp( s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite];
 	
-	[Texture2D restoreTexParameters];
+	// this is the default filterting
+	[sprite.texture setAntiAliasTexParameters];
 	
 	//
 	// Sprite 1: GL_NEAREST
 	//	
-	// Use Nearest in this one
-	[Texture2D saveTexParameters];
-	[Texture2D setAliasTexParameters];
 	
 	Sprite *sprite2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 	sprite2.position = ccp( 2*s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite2];
 	
-	[Texture2D restoreTexParameters];
-	
+	// Use Nearest in this one
+	[sprite2.texture setAliasTexParameters];
+
+		
 	// scale them to show
 	id sc = [ScaleBy actionWithDuration:3 scale:8.0f];
 	id sc_back = [sc reverse];

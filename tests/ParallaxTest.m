@@ -122,9 +122,6 @@ Class restartAction()
 	// position the image somewhere (optional)
 	cocosImage.position = ccp(200,1000);
 	
-	// Aliased images
-	[Texture2D saveTexParameters];
-	[Texture2D setAliasTexParameters];
 
 	// Middle layer: a Tile map atlas
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
@@ -134,8 +131,10 @@ Class restartAction()
 	tilemap.transformAnchor = ccp(0, 0);
 	// position the tilemap (optional)
 	tilemap.position = ccp(0,-200);
+
+	// Aliased images
+	[tilemap.textureAtlas.texture setAliasTexParameters];
 	
-	[Texture2D restoreTexParameters];
 
 	// background layer: another image
 	Sprite *background = [Sprite spriteWithFile:@"background.png"];
@@ -195,15 +194,13 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
-	// Aliased images
-	[Texture2D saveTexParameters];
-	[Texture2D setAliasTexParameters];	
 	
 	// this node will be used as the parent (reference) for the parallax scroller
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 	[tilemap releaseMap];
-	
-	[Texture2D restoreTexParameters];
+
+	// Aliased images
+	[tilemap.textureAtlas.texture setAliasTexParameters];
 	
 	tilemap.transformAnchor = ccp(0, 0);
 	tilemap.position = ccp(0,-200);

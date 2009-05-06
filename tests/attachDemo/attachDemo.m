@@ -192,12 +192,9 @@ enum {
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
-	//
-	// XXX BUG: Important: DONT use Fast Director
-	// XXX BUG: If you are going to attach / detach / end / run the application
-	// XXX BUG: Your application might crash
-	//
+	// The new threaded director works with attach/detach
 	[[Director sharedDirector] setDisplayFPS:YES];
+	[[Director sharedDirector] setAnimationInterval:1/240.0f];
 
 
 	[window makeKeyAndVisible];	

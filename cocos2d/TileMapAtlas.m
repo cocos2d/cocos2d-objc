@@ -184,7 +184,7 @@
 	vertex.tr_y = (int)(y * itemHeight + itemHeight);	// D - y
 	vertex.tr_z = 0.0f;									// D - z
 	
-	[textureAtlas updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:idx];
+	[textureAtlas_ updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:idx];
 }
 
 -(void) updateAtlasValues

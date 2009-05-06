@@ -38,6 +38,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 			TurnOffTiles, WavesTiles3D, JumpTiles3D, SplitRows, SplitCols
 		Added Composite actions: AccelAmplitude, AccelDeccelAmplitude, DeccelAmplitude
 	* Favo Yang: patch for unschedule timer in CocosNode
+	* Fraggle: Fix to make Sequence actions works with 1st action
 	* Florin Dumitrescu: added "update score" in cocosLive
 		author of the sound engine: PASoundListener, PASoundMgr, PASoundSource
 	* Fradj Johann: patches for CocosNode
@@ -79,7 +80,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added RGB protocol in CocosNode, Atlas, Texture
 		Particle reset system works as expected
 		CocosNode: fixed "already scheduled exception" bug
-	* mark at abitofthought: author of Fast Director
+		Author of the multithreaded Fast Director
+	* mark at abitofthought: author of the single threaded Fast Director
 	* Mitch: patches for Menu
 		 author of MenuItemToggle
 	* Math Sephton: patches for Demos

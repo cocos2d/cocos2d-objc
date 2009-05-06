@@ -28,7 +28,7 @@
 @interface AtlasNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize> {
 	
 	/// texture atlas
-	TextureAtlas	*textureAtlas;
+	TextureAtlas	*textureAtlas_;
 	/// chars per row
 	int				itemsPerRow;
 	/// chars per column
@@ -55,6 +55,8 @@
 /// Conforms to CocosNodeOpacity and CocosNodeRGB protocol
 @property (readwrite,assign) GLubyte opacity, r, g, b;
 
+/// texture atlas used
+@property (readwrite,retain) TextureAtlas *textureAtlas;
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;
