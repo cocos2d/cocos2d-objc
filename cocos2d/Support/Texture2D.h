@@ -168,18 +168,21 @@ typedef struct _ccTexParams {
 
 @interface Texture2D (GLFilter)
 /** sets the min filter, mag filter, wrap s and wrap t texture parameters
+ @since v0.8
  */
 -(void) setTexParameters: (ccTexParams*) texParams;
 
 /** sets antialias texture parameters:
  TEXTURE_MIN_FILTER = LINEAR
  TEXTURE_MAG_FILTER = LINEAR
+ @since v0.8
  */
 - (void) setAntiAliasTexParameters;
 
 /** sets alias texture parameters:
  TEXTURE_MIN_FILTER = NEAREST
  TEXTURE_MAG_FILTER = NEAREST
+ @since v0.8
  */
 - (void) setAliasTexParameters;
 

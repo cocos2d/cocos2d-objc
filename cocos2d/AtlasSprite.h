@@ -70,7 +70,7 @@
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
-	
+
 	// cocosNodeProtcol
 	BOOL	autoCenterFrames_;
 }

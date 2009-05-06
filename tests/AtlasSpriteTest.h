@@ -34,6 +34,13 @@
 }
 @end
 
+@interface AtlasZVertex : AtlasDemo
+{
+	int dir;
+	float	time;
+}
+@end
+
 @interface Atlas5 : AtlasDemo
 {}
 @end

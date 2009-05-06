@@ -167,10 +167,7 @@ static Director *_sharedDirector = nil;
 // main loop
 //
 - (void) mainLoop
-{
-	// dispatch missing events
-//    while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, YES) == kCFRunLoopRunHandledSource) {};
-    
+{    
 	/* clear window */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -263,7 +260,7 @@ static Director *_sharedDirector = nil;
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, openGLView_.frame.size.width, 0, openGLView_.frame.size.height, -1, 1);
+	glOrthof(0, openGLView_.frame.size.width, 0, openGLView_.frame.size.height, -100, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -306,7 +303,7 @@ static Director *_sharedDirector = nil;
 		glClearDepthf(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	} else
 		glDisable( GL_DEPTH_TEST );
 }
