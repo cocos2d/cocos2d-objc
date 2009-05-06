@@ -60,20 +60,18 @@ typedef struct ccArray {
 
 /** Allocates and initializes a new array with specified capacity */
 static inline ccArray* ccArrayNew(NSUInteger capacity) {
-	ccArray *arr = (ccArray *) calloc(1, sizeof(ccArray));
+	if (capacity == 0)
+		capacity = 1; 
+	
+	ccArray *arr = malloc( sizeof(ccArray) );
 	arr->num = 0;
-	arr->arr = (id *) malloc( capacity * sizeof(id) );
+	arr->arr = malloc( capacity * sizeof(id) );
 	arr->max = capacity;
 	
 	return arr;
 }
 
-/** Removes all objects from arr */
-static inline void ccArrayRemoveAllObjects(ccArray *arr)
-{
-	while (arr->num > 0)
-		[arr->arr[--arr->num] release]; 
-}
+static inline void ccArrayRemoveAllObjects(ccArray *arr);
 
 /** Frees array after removing all remaining objects. Silently ignores nil arr. */
 static inline void ccArrayFree(ccArray *arr)
@@ -90,14 +88,14 @@ static inline void ccArrayFree(ccArray *arr)
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
-	arr->arr = (id *) realloc( arr->arr, arr->max * sizeof(id) );
-}	
+	arr->arr = realloc( arr->arr, arr->max * sizeof(id) );
+}
 
-/** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
-static inline void ccArrayAppendObject(ccArray *arr, id object)
+/** Increases array capacity such that max >= num + extra. */
+static inline void ccArrayEnsureExtraCapacity(ccArray *arr, NSUInteger extra)
 {
-	arr->arr[arr->num] = [object retain];
-	arr->num++;
+	while (arr->max < arr->num + extra)
+		ccArrayDoubleCapacity(arr);
 }
 
 /** Returns index of first occurence of object, NSNotFound if object not found. */
@@ -108,13 +106,55 @@ static inline NSUInteger ccArrayGetIndexOfObject(ccArray *arr, id object)
 	return NSNotFound;
 }
 
+/** Returns a Boolean value that indicates whether object is present in array. */
+static inline BOOL ccArrayContainsObject(ccArray *arr, id object)
+{
+	return ccArrayGetIndexOfObject(arr, object) != NSNotFound;
+}
+
+/** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
+static inline void ccArrayAppendObject(ccArray *arr, id object)
+{
+	arr->arr[arr->num] = [object retain];
+	arr->num++;
+}
+
+/** Appends an object. Capacity of arr is increased if needed. */
+static inline void ccArrayAppendObjectWithResize(ccArray *arr, id object)
+{
+	ccArrayEnsureExtraCapacity(arr, 1);
+	ccArrayAppendObject(arr, object);
+}
+
+/** Appends objects from plusArr to arr. Behaviour undefined if arr doesn't have
+ enough capacity. */
+static inline void ccArrayAppendArray(ccArray *arr, ccArray *plusArr)
+{
+	for( NSUInteger i = 0; i < plusArr->num; i++)
+		ccArrayAppendObject(arr, plusArr->arr[i]);
+}
+
+/** Appends objects from plusArr to arr. Capacity of arr is increased if needed. */
+static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
+{
+	ccArrayEnsureExtraCapacity(arr, plusArr->num);
+	ccArrayAppendArray(arr, plusArr);
+}
+
+/** Removes all objects from arr */
+static inline void ccArrayRemoveAllObjects(ccArray *arr)
+{
+	while( arr->num > 0 )
+		[arr->arr[--arr->num] release]; 
+}
+
 /** Removes object at specified index and pushes back all subsequent objects.
  Behaviour undefined if index outside [0, num-1]. */
 static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 {
 	[arr->arr[index] release];
 	
-	for (NSUInteger last = --arr->num; index < last; index++)
+	for( NSUInteger last = --arr->num; index < last; index++)
 		arr->arr[index] = arr->arr[index + 1];
 }
 
@@ -135,12 +175,6 @@ static inline void ccArrayRemoveObject(ccArray *arr, id object)
 	NSUInteger index = ccArrayGetIndexOfObject(arr, object);
 	if (index != NSNotFound)
 		ccArrayRemoveObjectAtIndex(arr, index);
-}
-
-/** Returns a Boolean value that indicates whether object is present in array. */
-static inline BOOL ccArrayContainsObject(ccArray *arr, id object)
-{
-	return ccArrayGetIndexOfObject(arr, object) != NSNotFound;
 }
 
 /** Removes from arr all objects in minusArr. For each object in minusArr, the
@@ -166,16 +200,6 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	}
 	
 	arr->num -= back;
-}
-
-/** Appends objects from plusArr to arr. Capacity of arr is increased if needed. */
-static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
-{
-	while (arr->max < arr->num + plusArr->num)
-		ccArrayDoubleCapacity(arr);
-	
-	for( NSUInteger i = 0; i < plusArr->num; i++)
-		ccArrayAppendObject(arr, plusArr->arr[i]);
 }
 
 /** Sends to each object in arr the message identified by given selector. */
