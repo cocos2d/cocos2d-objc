@@ -28,14 +28,13 @@
 	if ((self = [super init]) == nil)
 		return nil;
 	
-	delegate = [aDelegate retain];
+	delegate = aDelegate;
 	claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
 	
 	return self;
 }
 
 - (void)dealloc {
-	[delegate release];
 	[claimedTouches release];
 	[super dealloc];
 }
