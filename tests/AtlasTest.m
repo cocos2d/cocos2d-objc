@@ -370,7 +370,7 @@ Class restartAction()
 		
 		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 		// Convert it to "alias" (GL_LINEAR filtering)
-		[tilemap.textureAtlas.texture setAliasTexParameters];
+		[tilemap.texture setAliasTexParameters];
 		
 		// If you are not going to use the Map, you can free it now
 		// NEW since v0.7
@@ -416,7 +416,7 @@ Class restartAction()
 		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 
 		// Create an Aliased Atlas
-		[tilemap.textureAtlas.texture setAliasTexParameters];
+		[tilemap.texture setAliasTexParameters];
 		
 		// If you are not going to use the Map, you can free it now
 		// [tilemap releaseMap];

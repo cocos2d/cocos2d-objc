@@ -678,14 +678,14 @@ Class restartAction()
 {
 	[super onEnter];
 	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
-	[mgr.textureAtlas.texture setAliasTexParameters];
+	[mgr.texture setAliasTexParameters];
 }
 
 -(void) onExit
 {
 	// restore the tex parameter to AntiAliased.
 	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
-	[mgr.textureAtlas.texture setAntiAliasTexParameters];
+	[mgr.texture setAntiAliasTexParameters];
 	[super onExit];
 }
 

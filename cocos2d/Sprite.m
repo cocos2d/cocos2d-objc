@@ -150,11 +150,11 @@
 
 -(BOOL) isFrameDisplayed:(id)frame
 {
-	return texture == frame;
+	return texture_ == frame;
 }
 -(id) displayFrame
 {
-	return texture;
+	return texture_;
 }
 -(void) addAnimation: (id<CocosAnimation>) anim
 {

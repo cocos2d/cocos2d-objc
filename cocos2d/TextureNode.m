@@ -24,7 +24,8 @@
 
 @implementation TextureNode
 
-@synthesize texture, opacity, r, g, b;
+@synthesize opacity, r, g, b;
+@synthesize texture = texture_;
 
 - (id) init
 {
@@ -39,7 +40,7 @@
 
 -(void) dealloc
 {
-	[texture release];
+	[texture_ release];
 	[super dealloc];
 }
 
@@ -59,7 +60,7 @@
 
 	glColor4ub( r, g, b, opacity);
 	
-	[texture drawAtPoint: CGPointZero];
+	[texture_ drawAtPoint: CGPointZero];
 
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
@@ -72,7 +73,7 @@
 
 -(CGSize) contentSize
 {
-	return [texture contentSize];
+	return [texture_ contentSize];
 }
 	
 @end
