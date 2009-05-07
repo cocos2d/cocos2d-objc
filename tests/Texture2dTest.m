@@ -8,6 +8,9 @@
 #import "cocos2d.h"
 #import "Texture2dTest.h"
 
+enum {
+	kTagLabel = 1,
+};
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -22,6 +25,7 @@ static NSString *transitions[] = {
 						@"TextureJPEG",
 						@"TextureTIFF",
 						@"TextureGIF",
+						@"Texture1632bit",
 };
 
 #pragma mark Callbacks
@@ -58,11 +62,11 @@ Class restartAction()
 @implementation TextureDemo
 -(id) init
 {
-	if( (self = [super initWithColor:0x202020FF]) ) {
+	if( (self = [super init]) ) {
 
 		CGSize s = [[Director sharedDirector] winSize];	
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label];
+		[self addChild:label z:0 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -380,6 +384,84 @@ Class restartAction()
 }
 @end
 
+#pragma mark Texture1632bit
+@implementation Texture1632bit
+-(void) onEnter
+{
+	//
+	// This example displays 1 png images 4 times.
+	// Each time the image is generated using:
+	// 1- 32-bit RGBA8
+	// 2- 16-bit RGBA4
+	// 3- 16-bit RGB5A1
+	// 4- 16-bit RGB565
+	[super onEnter];
+	
+	Label *label = (Label*) [self getChildByTag:kTagLabel];
+	[label setRGB:16 :16 :255];
+	
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	Sprite *background = [Sprite spriteWithFile:@"background3.jpg"];
+	background.position = ccp(240,160);
+	[self addChild:background z:-1];
+	
+	// RGBA 8888 image (32-bit)
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	Sprite *sprite1 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	sprite1.position = ccp(64, s.height/2);
+	[self addChild:sprite1 z:0];
+	
+	// remove texture from texture manager	
+	[[TextureMgr sharedTextureMgr] removeTexture:sprite1.texture];
+
+	// RGBA 4444 image (16-bit)
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+	Sprite *sprite2 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	sprite2.position = ccp(64+128, s.height/2);
+	[self addChild:sprite2 z:0];
+
+	// remove texture from texture manager	
+	[[TextureMgr sharedTextureMgr] removeTexture:sprite2.texture];
+
+	// RGB5A1 image (16-bit)
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB5A1];
+	Sprite *sprite3 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	sprite3.position = ccp(64+128*2, s.height/2);
+	[self addChild:sprite3 z:0];
+
+	// remove texture from texture manager	
+	[[TextureMgr sharedTextureMgr] removeTexture:sprite3.texture];
+
+	// RGB565 image (16-bit)
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB565];
+	Sprite *sprite4 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	sprite4.position = ccp(64+128*3, s.height/2);
+	[self addChild:sprite4 z:0];
+
+	// remove texture from texture manager	
+	[[TextureMgr sharedTextureMgr] removeTexture:sprite4.texture];
+
+	
+	id fadeout = [FadeOut actionWithDuration:2];
+	id fadein = [FadeIn actionWithDuration:2];
+	id seq = [Sequence actions: [DelayTime actionWithDuration:2], fadeout, fadein, nil];
+	id seq_4ever = [RepeatForever actionWithAction:seq];
+	
+	[sprite1 runAction:seq_4ever];
+	[sprite2 runAction: [[seq_4ever copy] autorelease]];
+	[sprite3 runAction: [[seq_4ever copy] autorelease]];
+	[sprite4 runAction: [[seq_4ever copy] autorelease]];
+
+	// restore default
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+}
+
+-(NSString *) title
+{
+	return @"Texture Pixel Formats";
+}
+@end
 
 
 #pragma mark -
@@ -400,7 +482,10 @@ Class restartAction()
 	
 	// must be called before any othe call to the director
 //	[Director useFastDirector];
-	
+
+	//
+//	[[Director sharedDirector] setPixelFormat:kRGBA8];
+
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
