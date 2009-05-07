@@ -17,6 +17,7 @@
 
 #import "Action.h"
 #import "cctypes.h"
+#import "Support/Texture2D.h"
 
 enum {
 	kCocosNodeTagInvalid = -1,
@@ -381,6 +382,14 @@ enum {
 -(float) delay;
 /** name of the animation */
 -(NSString*) name;
+@end
+
+/** CocosNodes that uses a Texture2D to render the images.
+ @since v0.8
+ */
+@protocol CocosNodeTexture <NSObject>
+-(Texture2D*) texture;
+-(void) setTexture:(Texture2D*)texture;
 @end
 
 

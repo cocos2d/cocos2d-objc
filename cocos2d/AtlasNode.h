@@ -25,7 +25,7 @@
  - color (setRGB:::)
  - contentSize
  */
-@interface AtlasNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize> {
+@interface AtlasNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize, CocosNodeTexture> {
 	
 	/// texture atlas
 	TextureAtlas	*textureAtlas_;

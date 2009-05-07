@@ -116,4 +116,16 @@
 	return CGSizeMake(0,0);
 }
 
+#pragma mark AtlasNode - CocosNodeTexture protocol
+-(void) setTexture:(Texture2D*)texture
+{
+	textureAtlas_.texture = texture;
+}
+
+-(Texture2D*) texture
+{
+	return textureAtlas_.texture;
+}
+
+
 @end

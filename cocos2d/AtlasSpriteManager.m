@@ -307,4 +307,15 @@ const int defaultCapacity = 29;
 	for(AtlasSprite *sprite in children)
 		[sprite updateAtlas];
 }
+
+#pragma mark AtlasSpriteManager - CocosNodeTexture protocol
+-(void) setTexture:(Texture2D*)texture
+{
+	textureAtlas_.texture = texture;
+}
+
+-(Texture2D*) texture
+{
+	return textureAtlas_.texture;
+}
 @end

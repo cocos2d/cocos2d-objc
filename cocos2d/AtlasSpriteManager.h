@@ -29,7 +29,7 @@
  * 
  * @since v0.7.1
  */
-@interface AtlasSpriteManager : CocosNode
+@interface AtlasSpriteManager : CocosNode <CocosNodeTexture>
 {
 @private
 	unsigned int totalSprites_;

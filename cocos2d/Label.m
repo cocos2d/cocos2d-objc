@@ -77,7 +77,7 @@
 	// end of warning. 1 retain only
 	[self.texture release];
 
-	CGSize s = texture.contentSize;
+	CGSize s = texture_.contentSize;
 	transformAnchor = ccp( s.width/2, s.height/2);
 }
 
