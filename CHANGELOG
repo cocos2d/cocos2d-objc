@@ -17,6 +17,7 @@ version 0.8 - xxx
  . Particles: added support for start/end/var spinning (issue #335)
  . Particles: support for World/Local coordinates (issue #241)
  . Texture2D: new alias/antialias API (issue #226)
+ . Texture2D: supports 16-bit textures RGB4 and RGB5A1 (issue #356)
  . Touches: new feature (issue #211)
 
 version 0.7.2 - 23-Apr-2009

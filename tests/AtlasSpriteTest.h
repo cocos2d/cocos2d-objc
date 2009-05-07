@@ -7,7 +7,7 @@
 }
 @end
 
-@interface AtlasDemo: Layer
+@interface AtlasDemo: ColorLayer
 {
     TextureAtlas *atlas;
 }

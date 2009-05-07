@@ -7,7 +7,7 @@
 }
 @end
 
-@interface TextureDemo : ColorLayer
+@interface TextureDemo : Layer
 {}
 
 -(NSString*) title;
@@ -60,3 +60,8 @@
 @interface TextureAlias : TextureDemo
 {}
 @end
+
+@interface Texture1632bit : TextureDemo
+{}
+@end
+

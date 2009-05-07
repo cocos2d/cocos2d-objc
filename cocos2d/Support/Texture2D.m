@@ -77,6 +77,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
+
+// If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
+// Default is: RGBA8
+static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_RGBA8888;
+
 @implementation Texture2D
 
 @synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
@@ -179,23 +184,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	size_t bpp = CGImageGetBitsPerComponent(image);
 	if(CGImageGetColorSpace(image)) {
-		if(hasAlpha) {
-			if( bpp == 8 )
-				// 32-bit texture with alpha
-				pixelFormat = kTexture2DPixelFormat_RGBA8888;
-			else if( bpp == 4 )
-				// 16-bit texture with alpha
-				pixelFormat = kTexture2DPixelFormat_RGBA4444;
-			else if( bpp == 5 ) // 5 doesn't exist
-				// 16-bit texture with alpha
-				pixelFormat = kTexture2DPixelFormat_RGB5A1;
-		} else {
-			// 16-bit texture without alpha
+		if(hasAlpha || bpp >= 8)
+			pixelFormat = defaultAlphaPixelFormat;
+		else
 			pixelFormat = kTexture2DPixelFormat_RGB565;
-		}
 	} else  //NOTE: No colorspace means a mask image
 		pixelFormat = kTexture2DPixelFormat_A8;
-	
 	
 	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
 	transform = CGAffineTransformIdentity;
@@ -227,17 +221,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	switch(pixelFormat) {          
 		case kTexture2DPixelFormat_RGBA8888:
-			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(height * width * 4);
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-			CGColorSpaceRelease(colorSpace);
-			break;
 		case kTexture2DPixelFormat_RGBA4444:
-			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(height * width * 4);
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-			CGColorSpaceRelease(colorSpace);
-			break;
 		case kTexture2DPixelFormat_RGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(height * width * 4);
@@ -514,3 +498,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 @end
 
+//
+// Texture options for images that contains alpha
+//
+@implementation Texture2D (PixelFormat)
++(void) setDefaultAlphaPixelFormat:(Texture2DPixelFormat)format
+{
+	defaultAlphaPixelFormat = format;
+}
+
++(Texture2DPixelFormat) defaultAlphaPixelFormat
+{
+	return defaultAlphaPixelFormat;
+}
+@end

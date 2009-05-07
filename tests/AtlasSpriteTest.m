@@ -73,27 +73,27 @@ Class restartAction()
 @implementation AtlasDemo
 -(id) init
 {
-	[super init];
+	if( (self = [super initWithColor:0x202020FF]) ) {
 
 
-	CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[Director sharedDirector] winSize];
+			
+		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label z:1];
+		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self addChild: label z:1];
-	[label setPosition: ccp(s.width/2, s.height-50)];
-	
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-	
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-	
-	menu.position = CGPointZero;
-	item1.position = ccp( s.width/2 - 100,30);
-	item2.position = ccp( s.width/2, 30);
-	item3.position = ccp( s.width/2 + 100,30);
-	[self addChild: menu z:1];	
-
+		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		
+		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		
+		menu.position = CGPointZero;
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+		[self addChild: menu z:1];	
+	}
 	return self;
 }
 
@@ -163,11 +163,11 @@ Class restartAction()
 	sprite.position = ccp( p.x, p.y);
 
 	id action;
-	float r = CCRANDOM_0_1();
+	float rand = CCRANDOM_0_1();
 	
-	if( r < 0.33 )
+	if( rand < 0.33 )
 		action = [ScaleBy actionWithDuration:3 scale:2];
-	else if(r < 0.66)
+	else if(rand < 0.66)
 		action = [RotateBy actionWithDuration:3 angle:360];
 	else
 		action = [Blink actionWithDuration:1 blinks:3];
