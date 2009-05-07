@@ -89,6 +89,12 @@ Class restartAction()
 	[super dealloc];
 }
 
+-(void) onEnter
+{
+	[super onEnter];
+	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+}
+
 
 -(void) restartCallback: (id) sender
 {
@@ -124,7 +130,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	Label *left = [Label labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:@"Marker Felt" fontSize:32];
 	Label *center = [Label labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
 	Label *right = [Label labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:@"Marker Felt" fontSize:32];
@@ -176,7 +182,8 @@ Class restartAction()
 @implementation TexturePNG
 -(void) onEnter
 {
-	[super onEnter];
+	[super onEnter];	
+
 	CGSize s = [[Director sharedDirector] winSize];
 
 	Sprite *img = [Sprite spriteWithFile:@"test_image.png"];
@@ -402,7 +409,7 @@ Class restartAction()
 	
 	CGSize s = [[Director sharedDirector] winSize];
 	
-	Sprite *background = [Sprite spriteWithFile:@"background3.jpg"];
+	Sprite *background = [Sprite spriteWithFile:@"background1.jpg"];
 	background.position = ccp(240,160);
 	[self addChild:background z:-1];
 	

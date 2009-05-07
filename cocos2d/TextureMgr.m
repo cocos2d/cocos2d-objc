@@ -13,6 +13,7 @@
  */
 
 #import "TextureMgr.h"
+#import "ccMacros.h"
 #import "Support/FileUtils.h"
 #import "Support/Texture2D.h"
 
@@ -148,6 +149,18 @@ static TextureMgr *sharedTextureMgr;
 -(void) removeAllTextures
 {
 	[textures removeAllObjects];
+}
+
+-(void) removeUnusedTextures
+{
+	NSArray *keys = [textures allKeys];
+	for( id key in keys ) {
+		id value = [textures objectForKey:key];		
+		if( [value retainCount] == 1 ) {
+			CCLOG(@"removing texture: %@", key);
+			[textures removeObjectForKey:key];
+		}
+	}
 }
 
 -(void) removeTexture: (Texture2D*) tex

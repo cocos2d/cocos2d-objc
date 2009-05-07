@@ -68,6 +68,13 @@
  */
 -(void) removeAllTextures;
 
+/** Removes unused textures
+ * Textures that have a retain count of 1 will be deleted
+ * It is convinient to call this method after when starting a new Scene
+ * @since v0.8
+ */
+-(void) removeUnusedTextures;
+
 /** Deletes a texture from the Texture Manager
  */
 -(void) removeTexture: (Texture2D*) tex;
