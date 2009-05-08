@@ -57,6 +57,24 @@ enum {
 
 @end
 
+/** Base class actions that do have a finite time duration.
+ Possible actions:
+   - An action with a duration of 0 seconds
+   - An action with a duration of 35.5 seconds
+ Infitite time actions are valid
+ */
+@interface FiniteTimeAction : Action <NSCopying>
+{
+	//! duration in seconds
+	ccTime duration;
+}
+//! duration in seconds of the action
+@property (readwrite) ccTime duration;
+
+/** returns a reversed action */
+- (FiniteTimeAction*) reverse;
+@end
+
 
 @class IntervalAction;
 /** Repeats an action for ever.

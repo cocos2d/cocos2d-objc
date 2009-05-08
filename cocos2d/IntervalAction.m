@@ -25,7 +25,7 @@
 #pragma mark IntervalAction
 @implementation IntervalAction
 
-@synthesize elapsed, duration;
+@synthesize elapsed;
 
 -(id) init
 {
@@ -99,21 +99,21 @@
 #pragma mark -
 #pragma mark Sequence
 @implementation Sequence
-+(id) actionOne: (IntervalAction*) one two: (IntervalAction*) two
++(id) actionOne: (FiniteTimeAction*) one two: (FiniteTimeAction*) two
 {	
 	return [[[self alloc] initOne:one two:two ] autorelease];
 }
 
-+(id) actions: (IntervalAction*) action1, ...
++(id) actions: (FiniteTimeAction*) action1, ...
 {
 	va_list params;
 	va_start(params,action1);
 	
-	IntervalAction *now;
-	IntervalAction *prev = action1;
+	FiniteTimeAction *now;
+	FiniteTimeAction *prev = action1;
 	
 	while( action1 ) {
-		now = va_arg(params,IntervalAction*);
+		now = va_arg(params,FiniteTimeAction*);
 		if ( now )
 			prev = [Sequence actionOne: prev two: now];
 		else
@@ -123,13 +123,13 @@
 	return prev;
 }
 
--(id) initOne: (IntervalAction*) one_ two: (IntervalAction*) two_
+-(id) initOne: (FiniteTimeAction*) one_ two: (FiniteTimeAction*) two_
 {
 	NSAssert( one_!=nil, @"Sequence: argument one must be non-nil");
 	NSAssert( two_!=nil, @"Sequence: argument two must be non-nil");
 
-	IntervalAction *one = one_;
-	IntervalAction *two = two_;
+	FiniteTimeAction *one = one_;
+	FiniteTimeAction *two = two_;
 		
 	ccTime d = [one duration] + [two duration];
 	[super initWithDuration: d];
@@ -209,12 +209,12 @@
 #pragma mark -
 #pragma mark Repeat
 @implementation Repeat
-+(id) actionWithAction: (IntervalAction*) action times: (unsigned int) t
++(id) actionWithAction: (FiniteTimeAction*) action times: (unsigned int) t
 {
 	return [[[self alloc] initWithAction: action times: t] autorelease];
 }
 
--(id) initWithAction: (IntervalAction*) action times: (unsigned int) t
+-(id) initWithAction: (FiniteTimeAction*) action times: (unsigned int) t
 {
 	int d = [action duration] * t;
 
@@ -296,16 +296,16 @@
 #pragma mark Spawn
 
 @implementation Spawn
-+(id) actions: (IntervalAction*) action1, ...
++(id) actions: (FiniteTimeAction*) action1, ...
 {
 	va_list params;
 	va_start(params,action1);
 	
-	IntervalAction *now;
-	IntervalAction *prev = action1;
+	FiniteTimeAction *now;
+	FiniteTimeAction *prev = action1;
 	
 	while( action1 ) {
-		now = va_arg(params,IntervalAction*);
+		now = va_arg(params,FiniteTimeAction*);
 		if ( now )
 			prev = [Spawn actionOne: prev two: now];
 		else
@@ -315,12 +315,12 @@
 	return prev;
 }
 
-+(id) actionOne: (IntervalAction*) one two: (IntervalAction*) two
++(id) actionOne: (FiniteTimeAction*) one two: (FiniteTimeAction*) two
 {	
 	return [[[self alloc] initOne:one two:two ] autorelease];
 }
 
--(id) initOne: (IntervalAction*) one_ two: (IntervalAction*) two_
+-(id) initOne: (FiniteTimeAction*) one_ two: (FiniteTimeAction*) two_
 {
 	NSAssert( one_!=nil, @"Spawn: argument one must be non-nil");
 	NSAssert( two_!=nil, @"Spawn: argument two must be non-nil");
@@ -963,117 +963,6 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @end
 
 //
-// Accelerate
-//
-#pragma mark -
-#pragma mark Accelerate
-@implementation Accelerate
-@synthesize rate;
-+ (id) actionWithAction: (IntervalAction*) action rate: (float) r
-{
-	return [[[self alloc] initWithAction:action rate:r ] autorelease];
-}
-
-- (id) initWithAction: (IntervalAction*) action rate: (float) r
-{	
-	NSAssert( action!=nil, @"Accelerate: argument action must be non-nil");
-
-	if( ! (self=[super initWithDuration: [action duration]]) )
-		return nil;
-
-	other = [action retain];
-	
-	rate = r;
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [[other copy] autorelease] rate: rate];
-	return copy;
-}
-
-- (void) dealloc
-{
-	[other release];
-	[super dealloc];
-}
-
-- (void) start
-{
-	[super start];
-	other.target = target;
-	[other start];
-}
-
-- (void) update: (ccTime) t
-{
-	[other update: powf(t,rate) ];
-}
-
-- (IntervalAction*) reverse
-{
-	return [Accelerate actionWithAction: [other reverse] rate: 1/rate];
-}
-@end
-
-//
-// AccelDeccel
-//
-#pragma mark -
-#pragma mark AccelDeccel
-@implementation AccelDeccel
-+(id) actionWithAction: (IntervalAction*) action
-{
-	return [[[self alloc] initWithAction: action ] autorelease ];
-}
-
--(id) initWithAction: (IntervalAction*) action
-{
-	NSAssert( action!=nil, @"AccelDeccel: argument action must be non-nil");
-
-	if( !(self=[super initWithDuration: action.duration ]) )
-		return nil;
-
-	other = [action retain];
-	
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	Action *copy = [[[self class] allocWithZone: zone] initWithAction: [[other copy] autorelease] ];
-	return copy;
-}
-
--(void) dealloc
-{
-	[other release];
-	[super dealloc];
-}
-
--(void) start
-{
-	[super start];
-	other.target = target;
-	[other start];
-}
-
--(void) update: (ccTime) t
-{
-	ccTime ft = (t-0.5f) * 12;
-	ccTime nt = 1.0f/( 1.0f + expf(-ft) );
-	[other update: nt];	
-}
-
--(IntervalAction*) reverse
-{
-	return [AccelDeccel actionWithAction: [other reverse]];
-}
-@end
-
-
-//
 // DelayTime
 //
 #pragma mark -
@@ -1096,12 +985,14 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark -
 #pragma mark ReverseTime
 @implementation ReverseTime
-+(id) actionWithAction: (IntervalAction*) action
++(id) actionWithAction: (FiniteTimeAction*) action
 {
-	return [[[super alloc] initWithAction:action] autorelease];
+	// casting to prevent warnings
+	ReverseTime *a = [super alloc];
+	return [[a initWithAction:action] autorelease];
 }
 
--(id) initWithAction: (IntervalAction*) action
+-(id) initWithAction: (FiniteTimeAction*) action
 {
 	if( !(self=[super initWithDuration: [action duration]]) )
 		return nil;
