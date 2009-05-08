@@ -73,7 +73,7 @@ Class restartAction()
 @implementation AtlasDemo
 -(id) init
 {
-	if( (self = [super initWithColor:0x202020FF]) ) {
+	if( (self = [super initWithColor:0x202020ff]) ) {
 
 
 		CGSize s = [[Director sharedDirector] winSize];
@@ -414,6 +414,15 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		//
+		// This test tests z-order
+		// If you are going to use it is better to use a 2D projection
+		//
+		// WARNING:
+		// The developer is resposible for ordering it's sprites according to it's Z if the sprite has
+		// transparent parts.
+		//
+		
 		dir = 1;
 		time = 0;
 
@@ -424,65 +433,24 @@ Class restartAction()
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		
 		for(int i=0;i<5;i++) {
 			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 50 + i*40, s.height/2);
-			sprite.vertexZ = 50+i;
+			sprite.vertexZ = 10 + i*40;
 			[mgr addChild:sprite z:0];
 			
 		}
 		
-		for(int i=5;i<10;i++) {
+		for(int i=5;i<11;i++) {
 			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 50 + i*40, s.height/2);
-			sprite.vertexZ = 60-i;
+			sprite.vertexZ = 10 + (10-i)*40;
 			[mgr addChild:sprite z:0];
 		}
-		
-//		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
-//		[mgr addChild:sprite z:0 tag:kTagSprite1];
-//		sprite.position = ccp(s.width/2, s.height/2 - 20);
-//		sprite.scaleX = 6;
-//		[sprite setRGB:255:0:0];
-//		
-//		[self schedule:@selector(reorderSprite:) interval:0];		
+
+		[self runAction:[OrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
 	}	
 	return self;
-}
-
--(void) onEnter
-{
-	[super onEnter];
-	
-	// 
-	// XXX XXX XXX
-	// What depthFunc should we use to support real GL vertex ?
-	// XXX XXX XXX
-
-//	glDepthRangef(100, -100);
-//	glDepthFunc(GL_LESS);
-//	glDepthRangef(-100,100);
-//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//	[[Director sharedDirector] set2Dprojection];
-}
-
--(void) onExit
-{
-	glDepthFunc(GL_LEQUAL);
-	[super onExit];
-}
-
--(void) reorderSprite:(ccTime) dt
-{
-	
-	time += dt;
-	id mgr = [self getChildByTag:kTagSpriteManager];
-	id sprite = [mgr getChildByTag:kTagSprite1];
-
-	float sinz = sinf((CGFloat)M_PI*time*2) * 100;
-
-	[sprite setVertexZ:sinz];	
 }
 
 -(NSString *) title
@@ -710,6 +678,8 @@ Class restartAction()
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
 	
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+
 	// must be called before any othe call to the director
 //	[Director useFastDirector];
 	

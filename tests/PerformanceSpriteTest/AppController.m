@@ -14,8 +14,10 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[window setUserInteractionEnabled:YES];
 	
-//	[Director useFastDirector];
+	[Director useFastDirector];
 //	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
