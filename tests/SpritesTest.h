@@ -74,6 +74,10 @@
 {}
 @end
 
+@interface SpriteReverseSequence2 : SpriteDemo
+{}
+@end
+
 @interface SpriteCallFunc : SpriteDemo
 {}
 @end

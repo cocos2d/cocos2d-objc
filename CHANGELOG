@@ -1,6 +1,6 @@
 version 0.8 - xxx
  . Actions: Added BezierBy action (issue #313)
- . Actions: Sequence works when 1st action (issue #348)
+ . Actions: Sequence works when 1st action, InstantActions are reversible (issue #348)
  . All: removed deprecated classes/methods (issue #326)
  . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)

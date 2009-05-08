@@ -20,13 +20,8 @@
 /** Instant actions are immediate actions. They don't have a duration like
  the Interval Actions.
 */ 
-@interface InstantAction : Action <NSCopying>
-{
-	ccTime duration;
-}
-@property (readonly,assign) ccTime duration;
-
--(BOOL) isDone;
+@interface InstantAction : FiniteTimeAction <NSCopying>
+{}
 @end
 
 /** Show the node

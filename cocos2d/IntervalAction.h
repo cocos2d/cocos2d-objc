@@ -23,7 +23,7 @@ duration plus the start time.
 
 These IntervalAction actions have some interesting properties, like:
  - They can run normally (default)
- - They can run reversed with the Reverse action.
+ - They can run reversed with the reverse method
  - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
 
 For example, you can simulate a Ping Pong effect running the action normally and
@@ -33,16 +33,13 @@ Example:
  
 	Action * pingPongAction = [Sequence actions: action, [action reverse], nil];
 */
-@interface IntervalAction: Action <NSCopying>
+@interface IntervalAction: FiniteTimeAction <NSCopying>
 {
 	struct timeval lastUpdate;
 	ccTime elapsed;
-	//! duration in seconds
-	ccTime duration;
 }
 
 @property (readonly) ccTime elapsed;
-@property (readwrite,assign) ccTime duration;
 
 /** creates the action */
 +(id) actionWithDuration: (ccTime) d;
@@ -54,7 +51,6 @@ Example:
 -(BOOL) isDone;
 /** returns a reversed action */
 - (IntervalAction*) reverse;
-
 @end
 
 /** Runs actions sequentially, one after another
@@ -66,11 +62,11 @@ Example:
 	int last;
 }
 /** helper contructor to create an array of sequenceable actions */
-+(id) actions: (IntervalAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
++(id) actions: (FiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** creates the action */
-+(id) actionOne:(IntervalAction*)actionOne two:(IntervalAction*)actionTwo;
++(id) actionOne:(FiniteTimeAction*)actionOne two:(FiniteTimeAction*)actionTwo;
 /** initializes the action */
--(id) initOne:(IntervalAction*)actionOne two:(IntervalAction*)actionTwo;
+-(id) initOne:(FiniteTimeAction*)actionOne two:(FiniteTimeAction*)actionTwo;
 @end
 
 
@@ -81,27 +77,27 @@ Example:
 {
 	unsigned int times;
 	unsigned int total;
-	IntervalAction *other;
+	FiniteTimeAction *other;
 }
 /** creates the Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
-+(id) actionWithAction:(IntervalAction*)action times: (unsigned int)times;
++(id) actionWithAction:(FiniteTimeAction*)action times: (unsigned int)times;
 /** initializes the action. Times is an unsigned integer between 1 and pow(2,30) */
--(id) initWithAction:(IntervalAction*)action times: (unsigned int)times;
+-(id) initWithAction:(FiniteTimeAction*)action times: (unsigned int)times;
 @end
 
 /** Spawn a new action immediately
  */
 @interface Spawn : IntervalAction <NSCopying>
 {
-	IntervalAction *one;
-	IntervalAction *two;
+	FiniteTimeAction *one;
+	FiniteTimeAction *two;
 }
 /** helper constructor to create an array of spawned actions */
-+(id) actions: (IntervalAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
++(id) actions: (FiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** creates the Spawn action */
-+(id) actionOne: (IntervalAction*) one two:(IntervalAction*) two;
++(id) actionOne: (FiniteTimeAction*) one two:(FiniteTimeAction*) two;
 /** initializes the Spawn action with the 2 actions to spawn */
--(id) initOne: (IntervalAction*) one two:(IntervalAction*) two;
+-(id) initOne: (FiniteTimeAction*) one two:(FiniteTimeAction*) two;
 @end
 
 /**  Rotates a CocosNode object to a certain angle by modifying it's
@@ -313,39 +309,6 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
 @end
 
-
-/** Changes the acceleration of an action
- @deprecated Use EaseIn or EaseOut instead. This Action will be removed in v0.8
- */
-__attribute__((deprecated))
-@interface Accelerate: IntervalAction <NSCopying>
-{
-	IntervalAction *other;
-	float rate;
-}
-/** rate for the acceleration. Can be changed in runtime */
-@property (readwrite) float rate;
-
-/** creates the action */
-+(id) actionWithAction: (IntervalAction*) action rate: (float) rate;
-/** initializes the action */
--(id) initWithAction: (IntervalAction*) action rate: (float) rate;
-@end
-
-/** Makes an action change the travel speed but retain near normal speed at the beginning and ending.
- @deprecated Use EaseInOut instead. This Action will be removed in v0.8
-*/
-__attribute__((deprecated))
-@interface AccelDeccel: IntervalAction <NSCopying>
-{
-	IntervalAction *other;
-}
-/** creates an action */
-+(id) actionWithAction: (IntervalAction*) action;
-/** initializes the action */
--(id) initWithAction: (IntervalAction*) action;
-@end
-
 /** Delays the action a certain amount of seconds
 */
 @interface DelayTime : IntervalAction <NSCopying>
@@ -362,12 +325,12 @@ __attribute__((deprecated))
 */
 @interface ReverseTime : IntervalAction <NSCopying>
 {
-	IntervalAction * other;
+	FiniteTimeAction * other;
 }
 /** creates the action */
-+(id) actionWithAction: (IntervalAction*) action;
++(id) actionWithAction: (FiniteTimeAction*) action;
 /** initializes the action */
--(id) initWithAction: (IntervalAction*) action;
+-(id) initWithAction: (FiniteTimeAction*) action;
 @end
 
 

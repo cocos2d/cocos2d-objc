@@ -20,7 +20,6 @@
 // InstantAction
 //
 @implementation InstantAction
-@synthesize duration;
 
 -(id) init
 {
@@ -47,6 +46,10 @@
 {
 	// ignore
 }
+-(InstantAction*) reverse
+{
+	return [[self copy] autorelease];
+}
 @end
 
 //
@@ -58,6 +61,10 @@
 	[super start];
 	target.visible = YES;
 }
+-(InstantAction*) reverse
+{
+	return [Hide action];
+}
 @end
 
 //
@@ -68,6 +75,10 @@
 {
 	[super start];
 	target.visible = NO;
+}
+-(InstantAction*) reverse
+{
+	return [Show action];
 }
 @end
 

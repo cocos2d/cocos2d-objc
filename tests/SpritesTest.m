@@ -29,8 +29,9 @@ static NSString *transitions[] = {
 						 @"SpriteReverse",
 						 @"SpriteDelayTime",
 						 @"SpriteRepeat",
-						 @"SpriteReverseSequence",
 						 @"SpriteCallFunc",
+						 @"SpriteReverseSequence",
+						 @"SpriteReverseSequence2",
 						 @"SpriteOrbit" };
 
 Class nextAction()
@@ -476,6 +477,41 @@ Class restartAction()
 	return @"Reverse a sequence";
 }
 @end
+
+@implementation SpriteReverseSequence2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	// Test:
+	//   Sequence should work both with IntervalAction and InstantActions
+	
+	id move1 = [MoveBy actionWithDuration:1 position:ccp(250,0)];
+	id move2 = [MoveBy actionWithDuration:1 position:ccp(0,50)];
+	id tog1 = [ToggleVisibility action];
+	id tog2 = [ToggleVisibility action];
+	id seq = [Sequence actions: move1, tog1, move2, tog2, [move1 reverse], nil];
+	id action = [Repeat actionWithAction:[Sequence actions: seq, [seq reverse], nil]
+								   times:3];
+				 
+
+	// Test:
+	//   Also test that the reverse of Hide is Show, and vice-versa
+	[grossini runAction:action];
+
+	id move_tamara = [MoveBy actionWithDuration:1 position:ccp(100,0)];
+	id move_tamara2 = [MoveBy actionWithDuration:1 position:ccp(50,0)];
+	id hide = [Hide action];
+	id seq_tamara = [Sequence actions: move_tamara, hide, move_tamara2, nil];
+	id seq_back = [seq_tamara reverse];
+	[tamara runAction: [Sequence actions: seq_tamara, seq_back, nil]];
+}
+-(NSString *) title
+{
+	return @"Reverse sequence 2";
+}
+@end
+
 
 @implementation SpriteRepeat
 -(void) onEnter
