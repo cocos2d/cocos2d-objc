@@ -17,8 +17,6 @@
 	[Director useFastDirector];
 //	[[Director sharedDirector] setPixelFormat:kRGBA8];
 	
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
 	[[Director sharedDirector] setLandscape:YES];

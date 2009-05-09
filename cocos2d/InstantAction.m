@@ -46,7 +46,7 @@
 {
 	// ignore
 }
--(InstantAction*) reverse
+-(FiniteTimeAction*) reverse
 {
 	return [[self copy] autorelease];
 }
@@ -61,7 +61,7 @@
 	[super start];
 	target.visible = YES;
 }
--(InstantAction*) reverse
+-(FiniteTimeAction*) reverse
 {
 	return [Hide action];
 }
@@ -76,7 +76,7 @@
 	[super start];
 	target.visible = NO;
 }
--(InstantAction*) reverse
+-(FiniteTimeAction*) reverse
 {
 	return [Show action];
 }

@@ -108,19 +108,23 @@ Class restartAction()
 		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF4 = [MenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF5 = [MenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF6 = [MenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
 		itemF3.tag = 3;
 		itemF4.tag = 4;
+		itemF5.tag = 5;
+		itemF6.tag = 6;
 
-		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, nil];
+		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, nil];
 		
 		int i=0;
-		for( id child in menu.children ) {
-			if( i<2)
+		for( id child in [menu children] ) {
+			if( i<3)
 				[[child label] setRGB:200 :20 :20];
-			else if(i<4)
+			else if(i<6)
 				[[child label] setRGB:0 :200 :20];
 			i++;
 		}
@@ -170,31 +174,49 @@ Class restartAction()
 
 	/*
 	 * Tests:
-	 * 0: Point Particle System using .PNG image as texture
-	 * 1: Point Particle System using .PVR image as texture
+	 * 1: Point Particle System using 32-bit textures (PNG)
+	 * 2: Point Particle System using 16-bit textures (PNG)
+	 * 3: Point Particle System using 4-bit textures (PVRTC)
 	 
-	 * 2: Quad Particle System using a .PNG image as texture
-	 * 3: Quad Particle System using a .PVR image as texture
-	 
+	 * 4: Quad Particle System using 32-bit textures (PNG)
+	 * 5: Quad Particle System using 16-bit textures (PNG)
+	 * 6: Quad Particle System using 4-bit textures (PVRTC)
 	 */
 	
-	
+
 	[self removeChildByTag:kTagParticleSystem cleanup:YES];
 	
+	// remove the "fire.png" from the TextureMgr cache. 
+	Texture2D *texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+	[[TextureMgr sharedTextureMgr] removeTexture:texture];
+	
+
 	switch( subtestNumber) {
 		case 1:
+			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;
 		case 2:
+			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			break;			
+		case 3:
 			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
-		case 3:
+		case 4:
+			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;
-		case 4:
+		case 5:
+			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			break;			
+		case 6:
 			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
