@@ -20,15 +20,15 @@ Main features
     * Basic menus and buttons
     * Integrated Chipmunk 2d physics engine
     * Particle system
-    * Text rendering support
+    * Fast text rendering: Fixed and Variable width fonts
     * Texture Atlas support
     * Tile Map support
-    * Parallax scrolling support
+    * Parallax scrolling
     * High Score server
-    * Touch/Accelerometer support
+    * Touch/Accelerometer
     * Portrait and Landscape mode
     * Integrated Pause/Resume
-    * Supports PowerVR Texture Compression (PVRTC) format
+    * Fast textures: PVRTC 2-bit & 4-bit textures, RGBA 16-bit (and 32-bit) textures
     * Language: objective-c
     * Open Source: Compatible with open and closed source projects
     * OpenGL ES 1.1 based 

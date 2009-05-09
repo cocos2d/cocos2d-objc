@@ -68,51 +68,85 @@ Class restartAction()
 		sheet = nil;
 /*
  * Tests:
- * 0: 1 PNG sprite of 52 x 139
- * 1: 1 PNG Atlas sprite using 1 sprite of 52 x 139
- * 2: 1 PVRTC (4bpp, linear) Atlas sprite using 1 sprite of 52 x 139
+ * 1: 1 (32-bit) PNG sprite of 52 x 139
+ * 2: 1 (32-bit) PNG Atlas sprite using 1 sprite of 52 x 139
+ * 3: 1 (16-bit) PNG Atlas sprite using 1 sprite of 52 x 139
+ * 4: 1 (4-bit) PVRTC Atlas sprite using 1 sprite of 52 x 139
 
- * 3: 14 PNG sprites of 85 x 121 each
- * 4: 14 PNG Atlassprites of 85 x 121 each
- * 5: 14 PVRTC (4bpp, linear) Atlassprites of 85 x 121 each
+ * 5: 14 (32-bit) PNG sprites of 85 x 121 each
+ * 6: 14 (32-bit) PNG Atlassprites of 85 x 121 each
+ * 7: 14 (16-bit) PNG Atlassprites of 85 x 121 each
+ * 8: 14 (4-bit) PVRTC Atlassprites of 85 x 121 each
  
- * 6: 64 sprites of 32 x 32 each
- * 7: 64 PNG AtlasSprites of 32 x 32 each
- * 8: 64 PVRTC AtlasSprites of 32 x 32 each
+ * 9: 64 (32-bit) sprites of 32 x 32 each
+ *10: 64 (32-bit) PNG AtlasSprites of 32 x 32 each
+ *11: 64 (16-bit) PNG AtlasSprites of 32 x 32 each
+ *12: 64 (4-bit) PVRTC AtlasSprites of 32 x 32 each
  */
+		
+		// purge textures
+		TextureMgr *mgr = [TextureMgr sharedTextureMgr];
+		[mgr removeTexture: [mgr addImage:@"grossinis_sister1.png"]];
+		[mgr removeTexture: [mgr addImage:@"grossini_dance_atlas.png"]];
+		[mgr removeTexture: [mgr addImage:@"spritesheet1.png"]];
+		
 		switch( subtestNumber) {
 			case 1:
-			case 4:
-			case 7:
+			case 5:
+			case 9:
 				break;
+				///
 			case 2:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 			case 3:
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
+				[p addChild:sheet z:0];
+				[sheet retain];
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				break;				
+			case 4:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 				
-			case 5:
+				///
+			case 6:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				[sheet retain];
 				break;				
-			case 6:
+			case 7:
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+				[p addChild:sheet z:0];
+				[sheet retain];
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				break;								
+			case 8:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
 
-			case 8:
+				///
+			case 10:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				[sheet retain];
 				break;
-			case 9:
+			case 11:
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
+				[p addChild:sheet z:0];
+				[sheet retain];
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				break;				
+			case 12:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				[sheet retain];
@@ -122,6 +156,7 @@ Class restartAction()
 				break;
 		}
 	}
+	
 	return self;
 }
 
@@ -141,21 +176,23 @@ Class restartAction()
 			break;
 		}
 		case 2:
-		case 3: {
+		case 3: 
+		case 4: {
 			sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 52, 139) spriteManager:sheet];
 			[sheet addChild:sprite];
 			break;
 		}
 
-		case 4:
+		case 5:
 		{
 			int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
 			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
 			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
-		case 5:
 		case 6:
+		case 7:
+		case 8:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 1400 / 100);
@@ -170,7 +207,7 @@ Class restartAction()
 			break;
 		}
 
-		case 7:
+		case 9:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 6400 / 100);
@@ -183,8 +220,9 @@ Class restartAction()
 			break;
 		}
 			
-		case 8:
-		case 9:
+		case 10:
+		case 11:
+		case 12:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 6400 / 100);
@@ -279,7 +317,7 @@ Class restartAction()
 		[self addChild: menu z:1];	
 		
 		// Sub Tests
-		[MenuItemFont setFontSize:40];
+		[MenuItemFont setFontSize:32];
 		MenuItemFont  *itemF1 = [MenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
@@ -289,6 +327,9 @@ Class restartAction()
 		MenuItemFont  *itemF7 = [MenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF8 = [MenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
 		MenuItemFont  *itemF9 = [MenuItemFont itemFromString:@"9 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF10 = [MenuItemFont itemFromString:@"10 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF11 = [MenuItemFont itemFromString:@"11 " target:self selector:@selector(testNCallback:)];
+		MenuItemFont  *itemF12 = [MenuItemFont itemFromString:@"12 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
@@ -299,15 +340,18 @@ Class restartAction()
 		itemF7.tag = 7;
 		itemF8.tag = 8;
 		itemF9.tag = 9;
+		itemF10.tag = 10;
+		itemF11.tag = 11;
+		itemF12.tag = 12;
 
 
-		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, nil];
+		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, itemF10, itemF11, itemF12, nil];
 		
 		int i=0;
-		for( id child in menu.children ) {
-			if( i<3)
+		for( id child in [menu children] ) {
+			if( i<4)
 				[[child label] setRGB:200 :20 :20];
-			else if(i<6)
+			else if(i<8)
 				[[child label] setRGB:0 :200 :20];
 			else
 				[[child label] setRGB:0 :20 :200];

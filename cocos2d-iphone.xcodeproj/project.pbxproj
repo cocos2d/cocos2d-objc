@@ -2249,6 +2249,19 @@
 			name = "Menu Nodes";
 			sourceTree = "<group>";
 		};
+		507E5CCC0FB487610000B1F5 /* streak-motion */ = {
+			isa = PBXGroup;
+			children = (
+				500045090F3F261F00A5FBF4 /* StreakTest.h */,
+				5000450A0F3F261F00A5FBF4 /* StreakTest.m */,
+				50A783D40F3AFDB300104C45 /* MotionStreak.h */,
+				50A783D50F3AFDB300104C45 /* MotionStreak.m */,
+				50A783D70F3AFDB300104C45 /* Ribbon.h */,
+				50A783D80F3AFDB300104C45 /* Ribbon.m */,
+			);
+			name = "streak-motion";
+			sourceTree = "<group>";
+		};
 		509B3A100F31027600F2FB95 /* cocoslive */ = {
 			isa = PBXGroup;
 			children = (
@@ -2328,12 +2341,7 @@
 			isa = PBXGroup;
 			children = (
 				8EDF3E910F6BD8E600F54643 /* sound-engine */,
-				500045090F3F261F00A5FBF4 /* StreakTest.h */,
-				5000450A0F3F261F00A5FBF4 /* StreakTest.m */,
-				50A783D40F3AFDB300104C45 /* MotionStreak.h */,
-				50A783D50F3AFDB300104C45 /* MotionStreak.m */,
-				50A783D70F3AFDB300104C45 /* Ribbon.h */,
-				50A783D80F3AFDB300104C45 /* Ribbon.m */,
+				507E5CCC0FB487610000B1F5 /* streak-motion */,
 			);
 			path = experimental;
 			sourceTree = "<group>";
