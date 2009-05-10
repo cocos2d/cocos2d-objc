@@ -80,7 +80,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added RGB protocol in CocosNode, Atlas, Texture
 		Particle reset system works as expected
 		CocosNode: fixed "already scheduled exception" bug
-		Author of the multithreaded Fast Director
 	* mark at abitofthought: author of the single threaded Fast Director
 	* Mitch: patches for Menu
 		 author of MenuItemToggle
@@ -96,6 +95,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Steve Israelson: patches for Scheduler
 		pactches for Actions
 		patches for Transitions
+	* slypete: patch for FastDirector to run in the main thread
 	* Steve Oldmeadow: patches for Texture2D
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
