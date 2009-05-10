@@ -192,7 +192,8 @@ enum {
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
-	// The new threaded director works with attach/detach
+	[Director useFastDirector];
+
 	[[Director sharedDirector] setDisplayFPS:YES];
 	[[Director sharedDirector] setAnimationInterval:1/240.0f];
 
