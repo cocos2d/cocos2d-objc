@@ -260,7 +260,7 @@ static Director *_sharedDirector = nil;
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, openGLView_.frame.size.width, 0, openGLView_.frame.size.height, -100, 100);
+	glOrthof(0, openGLView_.frame.size.width, 0, openGLView_.frame.size.height, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -303,7 +303,7 @@ static Director *_sharedDirector = nil;
 		glClearDepthf(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
-//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	} else
 		glDisable( GL_DEPTH_TEST );
 }

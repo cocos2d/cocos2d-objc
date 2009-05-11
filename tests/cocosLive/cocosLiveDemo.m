@@ -164,6 +164,14 @@
 -(void) scorePostOk: (id) sender
 {
 	NSLog(@"score post OK");
+	if( [sender ranking] != kServerPostInvalidRanking && [sender scoreDidUpdate]) {
+		NSString *message = [NSString stringWithFormat:@"World ranking: %d", [sender ranking]];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post Ok." message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+		alert.tag = 2;
+		[alert show];
+		[alert release];		
+		
+	}
 }
 
 -(void) scorePostFail: (id) sender
