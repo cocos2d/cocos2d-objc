@@ -202,7 +202,7 @@ enum {
 	
 	state = kStateEnd;
 
-	[self runCocos2d];
+//	[self runCocos2d];
 }
 
 #pragma mark -

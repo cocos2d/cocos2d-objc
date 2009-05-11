@@ -45,6 +45,11 @@ typedef enum {
 	kPostStatusPostFailed = 2,
 } tPostStatus;
 
+enum {
+	//! Invalid Ranking. Valid rankins are from 1 to ...
+	kServerPostInvalidRanking = 0,
+};
+
 /**
  * Handles the Score Post to the cocos live server
  */
@@ -58,6 +63,12 @@ typedef enum {
 
 	/// delegate instance of fetch score
 	id			delegate;
+	
+	/// ranking
+	NSUInteger	ranking_;
+	
+	/// score was updated
+	BOOL		scoreDidUpdate_;
 
 	/// data received
 	NSMutableData *receivedData;
@@ -66,13 +77,24 @@ typedef enum {
 	NSMutableArray *bodyValues;
 	
 	/// status of the request
-	tPostStatus		postStatus;
+	tPostStatus		postStatus_;
 	
 	/// mdt context
 	CC_MD5_CTX		md5Ctx;
 }
 
+/** status from the score post */ 
 @property (readonly) tPostStatus postStatus;
+ 
+/** ranking of your score
+ @since v0.7.3
+ */
+@property (readonly) NSUInteger ranking;
+
+/** whether or not the score was updated
+ @since v0.7.3
+ */
+@property (readonly) BOOL scoreDidUpdate;
 
 /** creates a cocos server with a game name and a game key */
 +(id) serverWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id)delegate;
@@ -94,6 +116,8 @@ typedef enum {
 
 /** CocosLivePost protocol */
 @protocol CocosLivePostDelegate <NSObject>
+/** callback method that will be called if the post is successful */
 -(void) scorePostOk:(id) sender;
+/** callback method that will be called if the post fails */
 -(void) scorePostFail:(id) sender;
 @end

@@ -37,7 +37,9 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 @implementation ScoreServerPost
 
-@synthesize postStatus;
+@synthesize postStatus = postStatus_;
+@synthesize ranking = ranking_;
+@synthesize scoreDidUpdate = scoreDidUpdate_;
 
 +(id) serverWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id) delegate
 {
@@ -53,6 +55,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		bodyValues = [[NSMutableArray arrayWithCapacity:5] retain];
 		delegate = [aDelegate retain];
 		receivedData = [[NSMutableData data] retain];
+		
+		ranking_ = kServerPostInvalidRanking;
 	}
 	
 	return self;
@@ -90,7 +94,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     [receivedData setLength:0];
 	
 	// reset status
-	postStatus = kPostStatusOK;
+	postStatus_ = kPostStatusOK;
 		
 	// create the request
 	NSMutableURLRequest *post = [self scoreServerRequestWithURLString:(isUpdate ? SCORE_SERVER_UPDATE_URL : SCORE_SERVER_SEND_URL)];
@@ -240,7 +244,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	CCLOG(@"Connection failed");
 
 	// wifi problems ?
-	postStatus = kPostStatusConnectionFailed;
+	postStatus_ = kPostStatusConnectionFailed;
 
     // release the connection, and the data object
     [connection release];
@@ -257,16 +261,40 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	if( [dataString isEqual: @"OK"] ) {
 		
 		// Ok
-		postStatus = kPostStatusOK;
+		postStatus_ = kPostStatusOK;
 
 		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
 			[delegate scorePostOk:self];
+
+	} else if( [dataString hasPrefix:@"OK:"] ) {
+		// parse ranking and other possible answers
+		NSArray *values = [dataString componentsSeparatedByString:@":"];
+		NSArray *answer = [ [values objectAtIndex:1] componentsSeparatedByString:@","];
+		NSEnumerator *nse = [answer objectEnumerator];
+		
+		// Create a holder for each line we are going to work with
+		NSString *line;
+		
+		// Loop through all the lines in the lines array processing each one
+		while( (line = [nse nextObject]) ) {
+			NSArray *keyvalue = [line componentsSeparatedByString:@"="];
+//			NSLog(@"%@",keyvalue);
+			if( [[keyvalue objectAtIndex:0] isEqual:@"ranking"] ) {
+				ranking_ = [[keyvalue objectAtIndex:1] intValue];
+			} else if( [[keyvalue objectAtIndex:0] isEqual:@"score_updated"] ) {
+				scoreDidUpdate_ = [[keyvalue objectAtIndex:1] boolValue];
+			}
+			
+		}
+		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
+			[delegate scorePostOk:self];
+		
 	} else {
 		
 		CCLOG(@"Post Score failed. Reason: %@", dataString);
 
 		// Error parsing answer
-		postStatus = kPostStatusPostFailed;
+		postStatus_ = kPostStatusPostFailed;
 
 		if( [delegate respondsToSelector:@selector(scorePostFail:) ] )
 			[delegate scorePostFail:self];
