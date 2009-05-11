@@ -38,6 +38,26 @@ The Alias/AntiAlias API is no longer a class method, but an instance method.
     [tilemap.textureAtlas.texture setAliasTexParameters];
 
 
+Parallax Scroller
+=================
+
+(issue #358)
+
+[OLD]
+
+id node = [CocosNode node];
+id child1 = [Sprite ...];
+[node addChild z:0 parallaxRatio:ccp(ratioX, ratioY)];
+
+
+[NEW]
+
+id parallax = [ParallaxNode node];          // <-- ParallaxNode is the only one that suports parallax ratio 
+id child1 = [Sprite ...];
+[node addChild z:0 parallaxRatio:ccp(ratioX, ratioY) positionOffset:ccp(offsetX,offsetY)];
+
+
+
 New Files
 =========
     BitmapFontAtlas.h
@@ -50,6 +70,8 @@ New Files
     PointParticleSystem.m
     QuadParticleSystem.h
     QuadParticleSystem.m
+    ParallaxNode.h
+    ParallaxNode.m
 
 
 Removed Files
