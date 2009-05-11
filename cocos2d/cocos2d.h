@@ -70,6 +70,7 @@
 #import "AtlasSprite.h"
 #import "AtlasSpriteManager.h"
 #import "BitmapFontAtlas.h"
+#import "ParallaxNode.h"
 
 //
 // cocos2d macros
