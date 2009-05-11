@@ -50,7 +50,6 @@ enum {
  - anchor point
  - visible
  - z-order
- - parallax ratio
  
  Limitations:
  - A CocosNode is a "void" object. It doesn't have a texture
@@ -74,12 +73,6 @@ enum {
 	
 	// openGL real Z vertex
 	float vertexZ_;
-	
-	// parallax X factor
-	float parallaxRatioX;
-	
-	// parallax Y factor
-	float parallaxRatioY;
 	
 	// is visible
 	BOOL visible;
@@ -136,12 +129,6 @@ enum {
 @property(readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor */
 @property(readwrite,assign) float scale, scaleX, scaleY;
-/** The parallax ratio of the node. 1.0 is the default ratio */
-@property(readwrite,assign) float parallaxRatio;
-/** The X parallax ratio of the node. 1.0 is the default ratio */
-@property(readwrite,assign) float parallaxRatioY;
-/** The Y parallax ratio of the node. 1.0 is the default ratio */
-@property(readwrite,assign) float parallaxRatioX;
 /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner */
 @property(readwrite,assign) CGPoint position;
 /** A Camera object that lets you move the node using camera coordinates.
@@ -199,12 +186,6 @@ enum {
  @since v0.7.1
  */
 -(id) addChild: (CocosNode*)node z:(int)z tag:(int)tag;
-
-/** Adds a child to the container with a z-order and a parallax ratio
- It returns self, so you can chain several addChilds.
- @since v0.7.1
- */
--(id) addChild: (CocosNode*)node z:(int)z parallaxRatio:(CGPoint)c;
 
 // composition: REMOVE
 

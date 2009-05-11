@@ -190,7 +190,7 @@ static Director *_sharedDirector = nil;
 	if( displayFPS )
 		[self showFPS];
 	
-		glPopMatrix();
+	glPopMatrix();
 	
 	/* swap buffers */
 	[openGLView_ swapBuffers];	

@@ -13,7 +13,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Parallax1",
-			@"Parallax2",
 };
 
 Class nextAction()
@@ -119,8 +118,6 @@ Class restartAction()
 	cocosImage.scale = 2.5f;
 	// change the transform anchor point to 0,0 (optional)
 	cocosImage.transformAnchor = ccp(0,0);
-	// position the image somewhere (optional)
-	cocosImage.position = ccp(200,1000);
 	
 
 	// Middle layer: a Tile map atlas
@@ -129,8 +126,6 @@ Class restartAction()
 	
 	// change the transform anchor to 0,0 (optional)
 	tilemap.transformAnchor = ccp(0, 0);
-	// position the tilemap (optional)
-	tilemap.position = ccp(0,-200);
 
 	// Aliased images
 	[tilemap.texture setAliasTexParameters];
@@ -145,18 +140,18 @@ Class restartAction()
 
 	
 	// create a void node, a parent node
-	CocosNode *voidNode = [CocosNode node];
+	ParallaxNode *voidNode = [ParallaxNode node];
 	
 	// NOW add the 3 layers to the 'void' node
 
 	// background image is moved at a ratio of 0.4x, 0.5y
-	[voidNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f)];
+	[voidNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f) positionOffset:CGPointZero];
 	
 	// tiles are moved at a ratio of 2.2x, 1.0y
-	[voidNode addChild:tilemap z:1 parallaxRatio:ccp(2.2f,1.0f)];
+	[voidNode addChild:tilemap z:1 parallaxRatio:ccp(2.2f,1.0f) positionOffset:ccp(0,-200)];
 	
 	// top image is moved at a ratio of 3.0x, 2.5y
-	[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f)];
+	[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
 	
 	
 	// now create some actions that will move the 'void' node
@@ -183,53 +178,6 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Parallax: parent and 3 children";
-}
-@end
-
-#pragma mark Example Parallax 2
-
-@implementation Parallax2
--(id) init
-{
-	if( ![super init] )
-		return nil;
-	
-	
-	// this node will be used as the parent (reference) for the parallax scroller
-	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
-	[tilemap releaseMap];
-
-	// Aliased images
-	[tilemap.texture setAliasTexParameters];
-	
-	tilemap.transformAnchor = ccp(0, 0);
-	tilemap.position = ccp(0,-200);
-	
-	Sprite *background = [Sprite spriteWithFile:@"background.png"];
-	background.scale = 1.5f;
-	background.transformAnchor = ccp(0,0);
-	
-	// the parent contains data. The parent moves at (1,1)
-	// while the child moves at the ratio of (0.4, 0.5)
-	[tilemap addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f)];
-	
-	id goUp = [MoveBy actionWithDuration:2 position:ccp(-1000,-500)];
-	id goDown = [goUp reverse];
-	id seq = [Sequence actions:
-			  goUp,
-			  goDown,
-			  nil];	
-	[tilemap runAction: [RepeatForever actionWithAction:seq ] ];
-	
-	[self addChild:tilemap];
-	
-	return self;
-	
-}
-
--(NSString *) title
-{
-	return @"Parallax: parent & child";
 }
 @end
 

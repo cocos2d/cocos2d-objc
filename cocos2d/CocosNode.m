@@ -43,7 +43,7 @@
 
 @implementation CocosNode
 
-@synthesize rotation, scaleX, scaleY, position, parallaxRatioX, parallaxRatioY;
+@synthesize rotation, scaleX, scaleY, position;
 @synthesize visible;
 @synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent, children;
@@ -69,8 +69,6 @@
 	rotation = 0.0f;		// 0 degrees	
 	scaleX = 1.0f;			// scale factor
 	scaleY = 1.0f;
-	parallaxRatioX = 1.0f;
-	parallaxRatioY = 1.0f;
 	vertexZ_ = 0;
 
 	grid = nil;
@@ -184,14 +182,6 @@
 	if( isRunning )
 		[child onEnter];
 	return self;
-}
-
--(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)c
-{
-	NSAssert( child != nil, @"Argument must be non-nil");
-	child.parallaxRatioX = c.x;
-	child.parallaxRatioY = c.y;
-	return [self addChild: child z:z tag:child.tag];
 }
 
 -(id) addChild: (CocosNode*) child z:(int)z
@@ -385,25 +375,16 @@
 	if ( !(grid && grid.active) )
 		[camera locate];
 	
-	float parallaxOffsetX = 0;
-	float parallaxOffsetY = 0;
-	
-	// XXX: In v0.8 parallax code will be moved to a ParallaxNode node
-	if( (parallaxRatioX != 1.0f || parallaxRatioY != 1.0) && parent ) {
-		parallaxOffsetX = -parent.position.x + parent.position.x * parallaxRatioX;
-		parallaxOffsetY = -parent.position.y + parent.position.y * parallaxRatioY;		
-	}
-	
 	// transformations
 	
 	// transalte
 	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
-		glTranslatef( (int)(-transformAnchor.x + parallaxOffsetX), (int)(-transformAnchor.y + parallaxOffsetY), vertexZ_);
+		glTranslatef( (int)(-transformAnchor.x), (int)(-transformAnchor.y), vertexZ_);
 	
 	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
-		glTranslatef( (int)(position.x + transformAnchor.x + parallaxOffsetX), (int)(position.y + transformAnchor.y + parallaxOffsetY), vertexZ_);
-	else if ( position.x !=0 || position.y !=0 || parallaxOffsetX != 0 || parallaxOffsetY != 0)
-		glTranslatef( (int)(position.x + parallaxOffsetX), (int)(position.y + parallaxOffsetY), vertexZ_ );
+		glTranslatef( (int)(position.x + transformAnchor.x), (int)(position.y + transformAnchor.y), vertexZ_);
+	else if ( position.x !=0 || position.y !=0)
+		glTranslatef( (int)(position.x), (int)(position.y), vertexZ_ );
 	
 	// rotate
 	if (rotation != 0.0f )
@@ -415,7 +396,7 @@
 	
 	// restore and re-position point
 	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
-		glTranslatef((int)(-transformAnchor.x + parallaxOffsetX), (int)(-transformAnchor.y + parallaxOffsetY), vertexZ_);
+		glTranslatef((int)(-transformAnchor.x), (int)(-transformAnchor.y), vertexZ_);
 }
 
 -(float) scale
@@ -432,22 +413,6 @@
 {
 	scaleX = scaleY = s;
 }
-
--(float) parallaxRatio
-{
-	if( parallaxRatioX == parallaxRatioY)
-		return parallaxRatioX;
-	else
-		[NSException raise:@"CocosNode parallaxRatio:" format:@"parallaxRatioX is different from parallaxRatioY"];
-	
-	return 0;
-}
-
--(void) setParallaxRatio:(float) p
-{
-	parallaxRatioX = parallaxRatioY = p;
-}
-
 
 #pragma mark CocosNode SceneManagement
 
