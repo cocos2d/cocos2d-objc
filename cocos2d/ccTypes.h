@@ -72,12 +72,12 @@ typedef struct _ccTex2F {
 } ccTex2F;
 
  
-//! Point Sprite attributes
+//! Point Sprite component
 typedef struct _ccPointSprite
 {
-	ccVertex2F	pos;
-	ccColor4F	colors;
-	float		size;
+	ccVertex2F	pos;		// 8 bytes
+	ccColor4F	colors;		// 16 bytes
+	float		size;		// 4 bytes
 } ccPointSprite;
 
 //!	A 2D Quad. 4 * 2 floats
@@ -127,24 +127,28 @@ typedef struct _ccV2F_C4F_T2F
 typedef struct _ccV3F_C4B_T2F
 {
 	//! vertices (3F)
-	ccVertex3F		vertices;
+	ccVertex3F		vertices;			// 12 bytes
+//	char __padding__[4];
+
 	//! colors (4B)
-	ccColor4B		colors;
+	ccColor4B		colors;				// 4 bytes
+//	char __padding2__[4];
+
 	// tex coords (2F)
-	ccTex2F			texCoords;
+	ccTex2F			texCoords;			// 8 byts
 } ccV3F_C4B_T2F;
 
 //! 4 ccVertex3FTex2FColor4B
 typedef struct _ccV3F_C4B_T2F_Quad
 {
-	//! bottom left
-	ccV3F_C4B_T2F	bl;
-	//! bottom right
-	ccV3F_C4B_T2F	br;
 	//! top left
 	ccV3F_C4B_T2F	tl;
+	//! bottom left
+	ccV3F_C4B_T2F	bl;
 	//! top right
 	ccV3F_C4B_T2F	tr;
+	//! bottom right
+	ccV3F_C4B_T2F	br;
 } ccV3F_C4B_T2F_Quad;
 
 //! 4 ccVertex2FTex2FColor4F Quad

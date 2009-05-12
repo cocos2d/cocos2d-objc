@@ -24,6 +24,8 @@
 -(void) initIndices;
 @end
 
+//According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
+//#define USE_TRIANGLE_STRIP 1
 
 @implementation TextureAtlas
 
@@ -97,15 +99,26 @@
 -(void) initIndices
 {
 	for( NSUInteger i=0;i< capacity_;i++) {
+#ifdef USE_TRIANGLE_STRIP
+		indices[i*6+0] = i*4+0;
+		indices[i*6+1] = i*4+0;
+		indices[i*6+2] = i*4+2;		
+		indices[i*6+3] = i*4+1;
+		indices[i*6+4] = i*4+3;
+		indices[i*6+5] = i*4+3;
+#else
 		indices[i*6+0] = i*4+0;
 		indices[i*6+1] = i*4+1;
 		indices[i*6+2] = i*4+2;
-
-		// inverted index. issue #179
-		indices[i*6+5] = i*4+1;
-		indices[i*6+4] = i*4+2;
-		indices[i*6+3] = i*4+3;
 		
+		// inverted index. issue #179
+		indices[i*6+3] = i*4+3;
+		indices[i*6+4] = i*4+2;
+		indices[i*6+5] = i*4+1;		
+//		indices[i*6+3] = i*4+2;
+//		indices[i*6+4] = i*4+3;
+//		indices[i*6+5] = i*4+1;	
+#endif	
 	}
 }
 
@@ -234,19 +247,26 @@
 #define kPointSize sizeof(quads[0].bl)
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
+	int offset = (int)quads;
+
 	// vertex
-	char *offset = (char*)quads;
-	glVertexPointer(3, GL_FLOAT, kPointSize, offset);
+	int diff = offsetof( ccV3F_C4B_T2F, vertices);
+	glVertexPointer(3, GL_FLOAT, kPointSize, (void*) (offset + diff) );
 
 	// color
-	offset += sizeof(quads[0].bl.vertices);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, offset);
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (void*)(offset + diff));
 	
 	// tex coords
-	offset += sizeof(quads[0].bl.colors);
-	glTexCoordPointer(2, GL_FLOAT, kPointSize, offset);
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glTexCoordPointer(2, GL_FLOAT, kPointSize, (void*)(offset + diff));
 
+#ifdef USE_TRIANGLE_STRIP
+	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices);	
+#else
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	
+#endif
+
 }
 
 @end

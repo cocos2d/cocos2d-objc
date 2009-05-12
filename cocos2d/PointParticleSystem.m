@@ -167,10 +167,10 @@
 	glVertexPointer(2,GL_FLOAT,sizeof(vertices[0]),0);
 
 	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, sizeof(vertices[0]),(GLvoid*) (sizeof(vertices[0].pos)) );
+	glColorPointer(4, GL_FLOAT, sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,colors) );
 
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) (sizeof(vertices[0].pos) + sizeof(vertices[0].colors)) );
+	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,size) );
 	
 
 	if( blendAdditive )
