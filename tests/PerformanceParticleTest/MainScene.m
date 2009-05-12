@@ -345,16 +345,16 @@ Class restartAction()
 	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
 	
 	// color of particles
-	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColor = startColor;
 	
-	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColorVar = startColorVar;
 	
-	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
 	particleSystem.endColor = endColor;
 	
-	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
@@ -410,16 +410,16 @@ Class restartAction()
 	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
 	
 	// color of particles
-	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColor = startColor;
 
-	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColorVar = startColorVar;
 
-	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
 	particleSystem.endColor = endColor;
 
-	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
@@ -472,16 +472,16 @@ Class restartAction()
 	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
 	
 	// color of particles
-	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColor = startColor;
 	
-	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColorVar = startColorVar;
 	
-	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
 	particleSystem.endColor = endColor;
 	
-	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels
@@ -535,16 +535,16 @@ Class restartAction()
 	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
 	
 	// color of particles
-	ccColorF startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColor = startColor;
 	
-	ccColorF startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
 	particleSystem.startColorVar = startColorVar;
 	
-	ccColorF endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
 	particleSystem.endColor = endColor;
 	
-	ccColorF endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
 	particleSystem.endColorVar = endColorVar;
 	
 	// size, in pixels

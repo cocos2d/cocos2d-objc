@@ -165,16 +165,14 @@
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2,GL_FLOAT,sizeof(vertices[0]),0);
-	
-	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) (sizeof(vertices[0].pos)) );
-	
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, sizeof(vertices[0]),(GLvoid*) (sizeof(vertices[0].pos) + sizeof(vertices[0].size)) );
 
-	// save blend state
-//	glGetIntegerv(GL_BLEND_DST, &blendDst);
-//	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glColorPointer(4, GL_FLOAT, sizeof(vertices[0]),(GLvoid*) (sizeof(vertices[0].pos)) );
+
+	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
+	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) (sizeof(vertices[0].pos) + sizeof(vertices[0].colors)) );
+	
+
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	else
@@ -202,9 +200,9 @@
 	// unbind VBO buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_POINT_SPRITE_OES);
 }

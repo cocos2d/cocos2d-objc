@@ -51,8 +51,7 @@
 {
 	int n = [string length];
 	
-	ccQuad2 texCoord;
-	ccQuad3 vertex;
+	ccV3F_C4B_T2F_Quad quad;
 
 	const char *s = [string UTF8String];
 
@@ -61,29 +60,29 @@
 		float row = (a % itemsPerRow) * texStepX;
 		float col = (a / itemsPerRow) * texStepY;
 		
-		texCoord.bl.x = row;						// A - x
-		texCoord.bl.y = col;						// A - y
-		texCoord.br.x = row + texStepX;				// B - x
-		texCoord.br.y = col;						// B - y
-		texCoord.tl.x = row;						// C - x
-		texCoord.tl.y = col + texStepY;				// C - y
-		texCoord.tr.x = row + texStepX;				// D - x
-		texCoord.tr.y = col + texStepY;				// D - y
+		quad.tl.texCoords.u = row;
+		quad.tl.texCoords.v = col;
+		quad.tr.texCoords.u = row + texStepX;
+		quad.tr.texCoords.v = col;
+		quad.bl.texCoords.u = row;
+		quad.bl.texCoords.v = col + texStepY;
+		quad.br.texCoords.u = row + texStepX;
+		quad.br.texCoords.v = col + texStepY;
 		
-		vertex.bl.x = (int)(i * itemWidth);			// A - x
-		vertex.bl.y = 0;							// A - y
-		vertex.bl.z = 0;							// A - z
-		vertex.br.x = (int)(i * itemWidth + itemWidth);	// B - x
-		vertex.br.y = 0;							// B - y
-		vertex.br.z = 0;							// B - z
-		vertex.tl.x = (int)(i * itemWidth);			// C - x
-		vertex.tl.y = (int)itemHeight;				// C - y
-		vertex.tl.z = 0;							// C - z
-		vertex.tr.x = (int)(i * itemWidth + itemWidth);	// D - x
-		vertex.tr.y = (int)itemHeight;				// D - y
-		vertex.tr.z = 0;							// D - z
+		quad.bl.vertices.x = (int) (i * itemWidth);
+		quad.bl.vertices.y = 0;
+		quad.bl.vertices.z = 0.0f;
+		quad.br.vertices.x = (int)(i * itemWidth + itemWidth);
+		quad.br.vertices.y = 0;
+		quad.br.vertices.z = 0.0f;
+		quad.tl.vertices.x = (int)(i * itemWidth);
+		quad.tl.vertices.y = (int)(itemHeight);
+		quad.tl.vertices.z = 0.0f;
+		quad.tr.vertices.x = (int)(i * itemWidth + itemWidth);
+		quad.tr.vertices.y = (int)(itemHeight);
+		quad.tr.vertices.z = 0.0f;
 		
-		[textureAtlas_ updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
+		[textureAtlas_ updateQuad:&quad atIndex:i];
 	}
 }
 

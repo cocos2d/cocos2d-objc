@@ -74,17 +74,17 @@
 {
 	for(int i=0; i<totalParticles; i++) {
 		// top-left vertex:
-		quads[i].point[0].texCoords.u = 0;
-		quads[i].point[0].texCoords.v = 0;
+		quads[i].bl.texCoords.u = 0;
+		quads[i].bl.texCoords.v = 0;
 		// bottom-left vertex:
-		quads[i].point[1].texCoords.u = 1;
-		quads[i].point[1].texCoords.v = 0;
+		quads[i].br.texCoords.u = 1;
+		quads[i].br.texCoords.v = 0;
 		// top-right vertex:
-		quads[i].point[2].texCoords.u = 0;
-		quads[i].point[2].texCoords.v = 1;
+		quads[i].tl.texCoords.u = 0;
+		quads[i].tl.texCoords.v = 1;
 		// top-right vertex:
-		quads[i].point[3].texCoords.u = 1;
-		quads[i].point[3].texCoords.v = 1;
+		quads[i].tr.texCoords.u = 1;
+		quads[i].tr.texCoords.v = 1;
 	}
 }	
 -(void) initIndices
@@ -175,8 +175,10 @@
 			}
 			
 			// colors
-			for(int j=0;j<4;j++)
-				quads[particleIdx].point[j].colors = p->color;
+			quads[particleIdx].bl.colors = p->color;
+			quads[particleIdx].br.colors = p->color;
+			quads[particleIdx].tl.colors = p->color;
+			quads[particleIdx].tr.colors = p->color;
 			
 			// vertices
 			float size_2 = p->size/2;
@@ -202,36 +204,36 @@
 				float dx = x1 * cr - y2 * sr + x;
 				float dy = x1 * sr + y2 * cr + y;
 				
-				quads[particleIdx].point[0].vertices.x = ax;
-				quads[particleIdx].point[0].vertices.y = ay;
+				quads[particleIdx].bl.vertices.x = ax;
+				quads[particleIdx].bl.vertices.y = ay;
 				
 				// bottom-left vertex:
-				quads[particleIdx].point[1].vertices.x = bx;
-				quads[particleIdx].point[1].vertices.y = by;
+				quads[particleIdx].br.vertices.x = bx;
+				quads[particleIdx].br.vertices.y = by;
 				
 				// top-right vertex:
-				quads[particleIdx].point[2].vertices.x = dx;
-				quads[particleIdx].point[2].vertices.y = dy;
+				quads[particleIdx].tl.vertices.x = dx;
+				quads[particleIdx].tl.vertices.y = dy;
 				
 				// top-right vertex:
-				quads[particleIdx].point[3].vertices.x = cx;
-				quads[particleIdx].point[3].vertices.y = cy;
+				quads[particleIdx].tr.vertices.x = cx;
+				quads[particleIdx].tr.vertices.y = cy;
 			} else {
 				// top-left vertex:
-				quads[particleIdx].point[0].vertices.x = newPos.x - size_2;
-				quads[particleIdx].point[0].vertices.y = newPos.y - size_2;
+				quads[particleIdx].bl.vertices.x = newPos.x - size_2;
+				quads[particleIdx].bl.vertices.y = newPos.y - size_2;
 				
 				// bottom-left vertex:
-				quads[particleIdx].point[1].vertices.x = newPos.x + size_2;
-				quads[particleIdx].point[1].vertices.y = newPos.y - size_2;
+				quads[particleIdx].br.vertices.x = newPos.x + size_2;
+				quads[particleIdx].br.vertices.y = newPos.y - size_2;
 				
 				// top-right vertex:
-				quads[particleIdx].point[2].vertices.x = newPos.x - size_2;
-				quads[particleIdx].point[2].vertices.y = newPos.y + size_2;
+				quads[particleIdx].tl.vertices.x = newPos.x - size_2;
+				quads[particleIdx].tl.vertices.y = newPos.y + size_2;
 				
 				// top-right vertex:
-				quads[particleIdx].point[3].vertices.x = newPos.x + size_2;
-				quads[particleIdx].point[3].vertices.y = newPos.y + size_2;				
+				quads[particleIdx].tr.vertices.x = newPos.x + size_2;
+				quads[particleIdx].tr.vertices.y = newPos.y + size_2;				
 			}
 			
 			// update particle counter
@@ -258,17 +260,17 @@
 
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 
-#define kPointSize sizeof(quads[0].point[0])
+#define kPointSize sizeof(quads[0].bl)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2,GL_FLOAT, kPointSize, 0);
-	
-	int s = sizeof(quads[0].point[0].vertices);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) s );
 
-	s += sizeof( quads[0].point[0].texCoords );
+	int s = sizeof( quads[0].bl.vertices );
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) s );
+	
+	s += sizeof(quads[0].bl.colors);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) s );
 	
 	
 	if( blendAdditive )
@@ -297,9 +299,9 @@
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_TEXTURE_2D);
 }
 
