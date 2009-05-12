@@ -264,16 +264,16 @@ const int defaultCapacity = 29;
 	if(totalSprites_ > 0)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnable(GL_TEXTURE_2D);
 
-		[textureAtlas_ drawQuads];
+		[textureAtlas_ drawNumberOfQuads:totalSprites_];
 
 		glDisable(GL_TEXTURE_2D);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 }
 
@@ -292,10 +292,7 @@ const int defaultCapacity = 29;
 		// serious problems
 		CCLOG(@"WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: AltasSpriteManager#resizeAtlas SHALL handle this assert");
-	}
-	
-//	for(AtlasSprite *sprite in children)
-//		[sprite updateAtlas];
+	}	
 }
 
 #pragma mark AtlasSpriteManager - CocosNodeTexture protocol

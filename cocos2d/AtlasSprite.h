@@ -90,9 +90,6 @@
 /** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */
 -(id)initWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
 
-/** updates the Quad in the TextureAtlas with it's new position, scale and rotation */
--(void)updateAtlas;
-
 -(void)insertInAtlasAtIndex:(NSUInteger)index;
 -(void)updatePosition;
 
