@@ -264,13 +264,11 @@
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2,GL_FLOAT, kPointSize, 0);
 
-	int s = sizeof( quads[0].bl.vertices );
 	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) s );
+	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
 	
-	s += sizeof(quads[0].bl.colors);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) s );
+	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
 	
 	
 	if( blendAdditive )
