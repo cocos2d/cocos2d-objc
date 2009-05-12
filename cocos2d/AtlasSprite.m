@@ -63,7 +63,7 @@ enum {
 		animations = nil;		// lazy alloc
 		
 		// default transform anchor: center
-		transformAnchor = ccp( rect.size.width / 2, rect.size.height /2 );		
+		self.transformAnchor = ccp( rect.size.width / 2, rect.size.height /2 );		
 		autoCenterFrames_ = NO;
 		
 		[self setTextureRect:rect];
@@ -155,16 +155,16 @@ enum {
 	}
 	
 	// rotation ? -> update: rotation, scale, position
-	else if( rotation ) {
-		float x1 = -transformAnchor.x * scaleX;
-		float y1 = -transformAnchor.y * scaleY;
+	else if( rotation_ ) {
+		float x1 = -transformAnchor_.x * scaleX_;
+		float y1 = -transformAnchor_.y * scaleY_;
 
-		float x2 = x1 + rect_.size.width * scaleX;
-		float y2 = y1 + rect_.size.height * scaleY;
-		float x = position.x;
-		float y = position.y;
+		float x2 = x1 + rect_.size.width * scaleX_;
+		float y2 = y1 + rect_.size.height * scaleY_;
+		float x = position_.x;
+		float y = position_.y;
 		
-		float r = (float)-CC_DEGREES_TO_RADIANS(rotation);
+		float r = -CC_DEGREES_TO_RADIANS(rotation_);
 		float cr = cosf(r);
 		float sr = sinf(r);
 		float ax = x1 * cr - y1 * sr + x;
@@ -190,15 +190,15 @@ enum {
 	}
 	
 	// scale ? -> update: scale, position
-	else if(scaleX != 1 || scaleY != 1)
+	else if(scaleX_ != 1 || scaleY_ != 1)
 	{
-		float x = position.x;
-		float y = position.y;
+		float x = position_.x;
+		float y = position_.y;
 		
-		float x1 = (x- transformAnchor.x * scaleX);
-		float y1 = (y- transformAnchor.y * scaleY);
-		float x2 = (x1 + rect_.size.width * scaleX);
-		float y2 = (y1 + rect_.size.height * scaleY);
+		float x1 = (x- transformAnchor_.x * scaleX_);
+		float y1 = (y- transformAnchor_.y * scaleY_);
+		float x2 = (x1 + rect_.size.width * scaleX_);
+		float y2 = (y1 + rect_.size.height * scaleY_);
 		ccQuad3 newVertices = {
 			{(int)x1,(int)y1,vertexZ_},
 			{(int)x2,(int)y1,vertexZ_},
@@ -213,11 +213,11 @@ enum {
 	
 	// update position
 	else {
-		float x = position.x;
-		float y = position.y;
+		float x = position_.x;
+		float y = position_.y;
 		
-		float x1 = (x-transformAnchor.x);
-		float y1 = (y-transformAnchor.y);
+		float x1 = (x-transformAnchor_.x);
+		float y1 = (y-transformAnchor_.y);
 		float x2 = (x1 + rect_.size.width);
 		float y2 = (y1 + rect_.size.height);
 		ccQuad3 newVertices = {

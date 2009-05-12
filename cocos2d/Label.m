@@ -78,7 +78,7 @@
 	[self.texture release];
 
 	CGSize s = texture_.contentSize;
-	transformAnchor = ccp( s.width/2, s.height/2);
+	self.transformAnchor = ccp( s.width/2, s.height/2);
 }
 
 - (void) dealloc

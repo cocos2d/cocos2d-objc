@@ -229,7 +229,7 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		position = pos;
+		self.position = pos;
 		radius = r;
 		lensEffect = 0.7f;
 		lastPosition = ccp(-1,-1);
@@ -295,7 +295,7 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		position = pos;
+		self.position = pos;
 		radius = r;
 		waves = wav;
 		amplitude = amp;
@@ -480,7 +480,7 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		position = pos;
+		self.position = pos;
 		twirls = t;
 		amplitude = amp;
 		amplitudeRate = 1.0f;

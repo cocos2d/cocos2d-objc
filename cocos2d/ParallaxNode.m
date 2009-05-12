@@ -70,7 +70,7 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	[parallaxDictionary setObject:[CGPointObject pointWithCGPoint:c offset:offset] forKey:[self addressForObject:child]];
 	
-	CGPoint pos = position;
+	CGPoint pos = self.position;
 	float x = pos.x * c.x + offset.x;
 	float y = pos.y * c.y + offset.y;
 	child.position = ccp(x,y);

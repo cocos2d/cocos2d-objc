@@ -60,16 +60,24 @@ enum {
 @interface CocosNode : NSObject {
 	
 	// rotation angle
-	float rotation;	
+	float rotation_;	
 	
-	// scale X factor
-	float scaleX;
-	
-	// scale Y factor
-	float scaleY;
+	// scaling factors
+	float scaleX_, scaleY_;
 	
 	// position of the node
-	CGPoint position;
+	CGPoint position_;
+	
+	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// Sprites, Labels and any other "small" object uses it.
+	// Scenes, Layers and other "whole screen" object don't use it.
+	BOOL relativeTransformAnchor_;
+	
+	// transformation anchor point
+	CGPoint transformAnchor_;
+	
+	CGAffineTransform transform_, inverse_;
+	BOOL isTransformDirty_, isInverseDirty_;
 	
 	// openGL real Z vertex
 	float vertexZ_;
@@ -85,14 +93,6 @@ enum {
 	
 	// z-order value
 	int zOrder;
-	
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL relativeTransformAnchor;
-	
-	// transformation anchor point
-	CGPoint transformAnchor;
 	
 	// array of children
 	NSMutableArray *children;
@@ -285,6 +285,12 @@ enum {
 // transformation methods
 
 /// actual affine transforms used
+/// XXX: needs documentation
+/// @since v0.7.1
+- (CGAffineTransform)nodeToParentTransform;
+/// XXX: needs documentation
+/// @since v0.7.1
+- (CGAffineTransform)parentToNodeTransform;
 /// XXX: needs documentation
 /// @since v0.7.1
 - (CGAffineTransform)nodeToWorldTransform;

@@ -125,7 +125,7 @@
 	particleIdx = 0;
 	
 	// test performance with [self absolutePosition];
-	CGPoint	absolutePosition = position;
+	CGPoint	absolutePosition = position_;
 	
 	while( particleIdx < particleCount )
 	{

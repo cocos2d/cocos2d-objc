@@ -162,16 +162,16 @@ enum {
 	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
-	transformAnchor = ccp( s.width/2, s.height/2 );
+	self.transformAnchor = ccp( s.width/2, s.height/2 );
 	
 	return self;
 }
 
 -(void) setString:(NSString *)string
 {
-    [label setString:string];
+	[label setString:string];
 	CGSize s = label.contentSize;
-    transformAnchor = ccp( s.width/2, s.height/2 );
+	self.transformAnchor = ccp( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
@@ -184,7 +184,7 @@ enum {
 {
 	CGSize s = label.contentSize;
 	
-	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
+	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
 	return r;
 }
 
@@ -310,7 +310,7 @@ enum {
 	[label setOpacity:opacity];
 	
 	CGSize s = label.contentSize;
-	transformAnchor = ccp( s.width/2, s.height/2 );
+	self.transformAnchor = ccp( s.width/2, s.height/2 );
 	
 	return self;
 }
@@ -319,7 +319,7 @@ enum {
 {
 	[label setString:string];
 	CGSize s = label.contentSize;
-	transformAnchor = ccp( s.width/2, s.height/2 );
+	self.transformAnchor = ccp( s.width/2, s.height/2 );
 }
 
 -(void) dealloc
@@ -332,7 +332,7 @@ enum {
 {
 	CGSize s = label.contentSize;
 	
-	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
+	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
 	return r;
 }
 
@@ -440,7 +440,7 @@ enum {
 	[disabledImage setOpacity:opacity];
 	
 	CGSize s = [normalImage contentSize];
-	transformAnchor = ccp( s.width/2, s.height/2 );
+	self.transformAnchor = ccp( s.width/2, s.height/2 );
 
 	return self;
 }
@@ -468,7 +468,7 @@ enum {
 {
 	CGSize s = [normalImage contentSize];
 	
-	CGRect r = CGRectMake( position.x - s.width/2, position.y-s.height/2, s.width, s.height);
+	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
 	return r;
 }
 
@@ -611,8 +611,8 @@ enum {
 	MenuItem* selectedItem = [self selectedItem];
 
 	CGRect r = [selectedItem rect];
-	r.origin.x = position.x - r.size.width / 2;
-	r.origin.y = position.y - r.size.height / 2;
+	r.origin.x = self.position.x - r.size.width / 2;
+	r.origin.y = self.position.y - r.size.height / 2;
 	
 	return r;
 }

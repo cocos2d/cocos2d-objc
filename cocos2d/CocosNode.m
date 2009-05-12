@@ -22,7 +22,7 @@
 #import "Director.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccArray.h"
-
+#import "Support/TransformUtils.h"
 
 @interface CocosNode (Private)
 -(void) step_: (ccTime) dt;
@@ -43,14 +43,73 @@
 
 @implementation CocosNode
 
-@synthesize rotation, scaleX, scaleY, position;
 @synthesize visible;
-@synthesize transformAnchor, relativeTransformAnchor;
 @synthesize parent, children;
 @synthesize grid;
 @synthesize zOrder;
 @synthesize tag;
 @synthesize vertexZ = vertexZ_;
+
+#pragma mark CocosNode - Transform related properties
+
+@synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
+@synthesize transformAnchor=transformAnchor_, relativeTransformAnchor=relativeTransformAnchor_;
+
+// getters synthesized, setters explicit
+-(void) setRotation: (float)newRotation
+{
+	rotation_ = newRotation;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setScaleX: (float)newScaleX
+{
+	scaleX_ = newScaleX;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setScaleY: (float)newScaleY
+{
+	scaleY_ = newScaleY;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setPosition: (CGPoint)newPosition
+{
+	position_ = newPosition;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setTransformAnchor: (CGPoint)newTransformAnchor
+{
+	transformAnchor_ = newTransformAnchor;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setRelativeTransformAnchor: (BOOL)newValue
+{
+	relativeTransformAnchor_ = newValue;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(float) scale
+{
+	if( scaleX_ == scaleY_)
+		return scaleX_;
+	else
+		[NSException raise:@"CocosNode scale:" format:@"scaleX is different from scaleY"];
+	
+	return 0;
+}
+
+-(void) setScale:(float) s
+{
+	scaleX_ = scaleY_ = s;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+
+#pragma mark CocosNode - Init & cleanup
 
 +(id) node
 {
@@ -64,19 +123,23 @@
 	
 	isRunning = NO;
 	
-	position = CGPointZero;
+
+	rotation_ = 0.0f;
+	scaleX_ = scaleY_ = 1.0f;
+	position_ = CGPointZero;
+	transformAnchor_ = CGPointZero;
+	// "whole screen" objects. like Scenes and Layers, should set relativeTransformAnchor to NO
+	relativeTransformAnchor_ = YES; 
 	
-	rotation = 0.0f;		// 0 degrees	
-	scaleX = 1.0f;			// scale factor
-	scaleY = 1.0f;
+	isTransformDirty_ = isInverseDirty_ = YES;
+	
+	
 	vertexZ_ = 0;
 
 	grid = nil;
 	
 	visible = YES;
 
-	transformAnchor = CGPointZero;
-	
 	tag = kCocosNodeTagInvalid;
 	
 	zOrder = 0;
@@ -93,10 +156,6 @@
 	// scheduled selectors (lazy allocs)
 	scheduledSelectors = nil;
 	
-	// default.
-	// "whole screen" objects should set it to NO, like Scenes and Layers
-	relativeTransformAnchor = YES;
-
 	return self;
 }
 
@@ -249,20 +308,6 @@
 	return nil;
 }
 
--(CGPoint) absolutePosition
-{
-	CGPoint ret = position;
-	
-	CocosNode *cn = self;
-	
-	while (cn.parent != nil) {
-		cn = cn.parent;
-		ret = ccpAdd( ret,  cn.position );
-	}
-	
-	return ret;
-}
-
 -(void) detachChild:(CocosNode *) child cleanup:(BOOL) doCleanup
 {
 	[child setParent: nil];
@@ -377,41 +422,42 @@
 	
 	// transformations
 	
-	// transalte
-	if ( relativeTransformAnchor && (transformAnchor.x != 0 || transformAnchor.y != 0 ) )
-		glTranslatef( (int)(-transformAnchor.x), (int)(-transformAnchor.y), vertexZ_);
+	// BEGIN original implementation
+	// 
+	// translate
+	if ( relativeTransformAnchor_ && (transformAnchor_.x != 0 || transformAnchor_.y != 0 ) )
+		glTranslatef( (int)(-transformAnchor_.x), (int)(-transformAnchor_.y), vertexZ_);
 	
-	if (transformAnchor.x != 0 || transformAnchor.y != 0 )
-		glTranslatef( (int)(position.x + transformAnchor.x), (int)(position.y + transformAnchor.y), vertexZ_);
-	else if ( position.x !=0 || position.y !=0)
-		glTranslatef( (int)(position.x), (int)(position.y), vertexZ_ );
+	if (transformAnchor_.x != 0 || transformAnchor_.y != 0 )
+		glTranslatef( (int)(position_.x + transformAnchor_.x), (int)(position_.y + transformAnchor_.y), vertexZ_);
+	else if ( position_.x !=0 || position_.y !=0)
+		glTranslatef( (int)(position_.x), (int)(position_.y), vertexZ_ );
 	
 	// rotate
-	if (rotation != 0.0f )
-		glRotatef( -rotation, 0.0f, 0.0f, 1.0f );
+	if (rotation_ != 0.0f )
+		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
 	
 	// scale
-	if (scaleX != 1.0f || scaleY != 1.0f)
-		glScalef( scaleX, scaleY, 1.0f );
+	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
+		glScalef( scaleX_, scaleY_, 1.0f );
 	
 	// restore and re-position point
-	if (transformAnchor.x != 0.0f || transformAnchor.y != 0.0f)
-		glTranslatef((int)(-transformAnchor.x), (int)(-transformAnchor.y), vertexZ_);
-}
-
--(float) scale
-{
-	if( scaleX == scaleY)
-		return scaleX;
-	else
-		[NSException raise:@"CocosNode scale:" format:@"scaleX is different from scaleY"];
+	if (transformAnchor_.x != 0.0f || transformAnchor_.y != 0.0f)
+		glTranslatef((int)(-transformAnchor_.x), (int)(-transformAnchor_.y), vertexZ_);
+	//
+	// END original implementation
 	
-	return 0;
-}
-
--(void) setScale:(float) s
-{
-	scaleX = scaleY = s;
+	/*
+	// BEGIN alternative -- using cached transform
+	//
+	static GLfloat m[16];
+	CGAffineTransform t = [self nodeToParentTransform];
+	CGAffineToGL(&t, m);
+	glMultMatrixf(m);
+	glTranslatef(0, 0, vertexZ_);
+	//
+	// END alternative
+	*/
 }
 
 #pragma mark CocosNode SceneManagement
@@ -636,23 +682,44 @@
 
 #pragma mark CocosNode Transform
 
+- (CGAffineTransform)nodeToParentTransform
+{
+	if ( isTransformDirty_ ) {
+		
+		transform_ = CGAffineTransformIdentity;
+		
+		if ( !relativeTransformAnchor_ ) {
+			transform_ = CGAffineTransformTranslate(transform_, (int)transformAnchor_.x, (int)transformAnchor_.y);
+		}
+		
+		transform_ = CGAffineTransformTranslate(transform_, (int)position_.x, (int)position_.y);
+		transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
+		transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+		
+		transform_ = CGAffineTransformTranslate(transform_, -(int)transformAnchor_.x, -(int)transformAnchor_.y);
+		
+		isTransformDirty_ = NO;
+	}
+	
+	return transform_;
+}
+
+- (CGAffineTransform)parentToNodeTransform
+{
+	if ( isInverseDirty_ ) {
+		inverse_ = CGAffineTransformInvert([self nodeToParentTransform]);
+		isInverseDirty_ = NO;
+	}
+	
+	return inverse_;
+}
+
 - (CGAffineTransform)nodeToWorldTransform
 {
-	CGAffineTransform t = CGAffineTransformIdentity;
+	CGAffineTransform t = [self nodeToParentTransform];
 	
-	if (parent != nil) {
-		t = [parent nodeToWorldTransform];
-	}
-	
-	if (!relativeTransformAnchor) {
-		t = CGAffineTransformTranslate(t, transformAnchor.x, transformAnchor.y);
-	}
-	
-	t = CGAffineTransformTranslate(t, position.x, position.y);
-	t = CGAffineTransformRotate(t, -CC_DEGREES_TO_RADIANS(rotation));
-	t = CGAffineTransformScale(t, scaleX, scaleY);
-	
-	t = CGAffineTransformTranslate(t, -transformAnchor.x, -transformAnchor.y);
+	for (CocosNode *p = parent; p != nil; p = p.parent)
+		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
 	
 	return t;
 }
@@ -675,15 +742,12 @@
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
 {
 	CGPoint nodePoint = [self convertToNodeSpace:worldPoint];
-	nodePoint.x -= transformAnchor.x;
-	nodePoint.y -= transformAnchor.y;
-	return nodePoint;
+	return ccpSub(nodePoint, transformAnchor_);
 }
 
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint
 {
-	nodePoint.x += transformAnchor.x;
-	nodePoint.y += transformAnchor.y;
+	nodePoint = ccpAdd(nodePoint, transformAnchor_);
 	return [self convertToWorldSpace:nodePoint];
 }
 
@@ -702,4 +766,5 @@
 	point = [[Director sharedDirector] convertCoordinate: point];
 	return [self convertToNodeSpaceAR:point];
 }
+
 @end
