@@ -119,10 +119,10 @@ enum {
 		CC_SWAP(top,bottom);
 	
 	ccQuad2 newCoords = {
-		left, bottom,
-		right, bottom,
-		left, top,
-		right, top,
+		{left, bottom},
+		{right, bottom},
+		{left, top},
+		{right, top},
 	};
 
 	texCoords_ = newCoords;
@@ -130,7 +130,7 @@ enum {
 
 -(void) updateColor
 {
-	ccColorB colorQuad = { r_, g_, b_, opacity_};
+	ccColor4B colorQuad = { r_, g_, b_, opacity_};
 	[textureAtlas_ updateColorWithColorQuad:&colorQuad atIndex:atlasIndex_];
 	dirtyColor = NO;
 }
@@ -143,10 +143,10 @@ enum {
 	// then everything is 0
 	if( ! visible ) {		
 		ccQuad3 newVertices = {
-			0,0,0,
-			0,0,0,
-			0,0,0,
-			0,0,0,			
+			{0,0,0},
+			{0,0,0},
+			{0,0,0},
+			{0,0,0},
 		};
 		
 		vertexCoords_ = newVertices;
@@ -174,11 +174,12 @@ enum {
 		float dx = x1 * cr - y2 * sr + x;
 		float dy = x1 * sr + y2 * cr + y;
 
-		ccQuad3 newVertices = 
-					{(int)ax, (int)ay, vertexZ_,
-					(int)bx, (int)by, vertexZ_,
-					(int)dx, (int)dy, vertexZ_,
-					(int)cx, (int)cy, vertexZ_};
+		ccQuad3 newVertices = {
+						{(int)ax, (int)ay, vertexZ_},
+						{(int)bx, (int)by, vertexZ_},
+						{(int)dx, (int)dy, vertexZ_},
+						{(int)cx, (int)cy, vertexZ_}
+					};
 		vertexCoords_ = newVertices;		
 	}
 	
@@ -193,10 +194,10 @@ enum {
 		float x2 = (x1 + rect_.size.width * scaleX);
 		float y2 = (y1 + rect_.size.height * scaleY);
 		ccQuad3 newVertices = {
-			(int)x1,(int)y1,vertexZ_,
-			(int)x2,(int)y1,vertexZ_,
-			(int)x1,(int)y2,vertexZ_,
-			(int)x2,(int)y2,vertexZ_,
+			{(int)x1,(int)y1,vertexZ_},
+			{(int)x2,(int)y1,vertexZ_},
+			{(int)x1,(int)y2,vertexZ_},
+			{(int)x2,(int)y2,vertexZ_},
 		};
 
 		vertexCoords_ = newVertices;	
@@ -212,10 +213,10 @@ enum {
 		float x2 = (x1 + rect_.size.width);
 		float y2 = (y1 + rect_.size.height);
 		ccQuad3 newVertices = {
-			(int)x1,(int)y1,vertexZ_,
-			(int)x2,(int)y1,vertexZ_,
-			(int)x1,(int)y2,vertexZ_,
-			(int)x2,(int)y2,vertexZ_,
+			{(int)x1,(int)y1,vertexZ_},
+			{(int)x2,(int)y1,vertexZ_},
+			{(int)x1,(int)y2,vertexZ_},
+			{(int)x2,(int)y2,vertexZ_},
 		};
 		
 		vertexCoords_ = newVertices;

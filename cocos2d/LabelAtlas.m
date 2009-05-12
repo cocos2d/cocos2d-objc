@@ -61,27 +61,27 @@
 		float row = (a % itemsPerRow) * texStepX;
 		float col = (a / itemsPerRow) * texStepY;
 		
-		texCoord.bl_x = row;						// A - x
-		texCoord.bl_y = col;						// A - y
-		texCoord.br_x = row + texStepX;				// B - x
-		texCoord.br_y = col;						// B - y
-		texCoord.tl_x = row;						// C - x
-		texCoord.tl_y = col + texStepY;				// C - y
-		texCoord.tr_x = row + texStepX;				// D - x
-		texCoord.tr_y = col + texStepY;				// D - y
+		texCoord.bl.x = row;						// A - x
+		texCoord.bl.y = col;						// A - y
+		texCoord.br.x = row + texStepX;				// B - x
+		texCoord.br.y = col;						// B - y
+		texCoord.tl.x = row;						// C - x
+		texCoord.tl.y = col + texStepY;				// C - y
+		texCoord.tr.x = row + texStepX;				// D - x
+		texCoord.tr.y = col + texStepY;				// D - y
 		
-		vertex.bl_x = (int)(i * itemWidth);			// A - x
-		vertex.bl_y = 0;							// A - y
-		vertex.bl_z = 0;							// A - z
-		vertex.br_x = (int)(i * itemWidth + itemWidth);	// B - x
-		vertex.br_y = 0;							// B - y
-		vertex.br_z = 0;							// B - z
-		vertex.tl_x = (int)(i * itemWidth);			// C - x
-		vertex.tl_y = (int)itemHeight;				// C - y
-		vertex.tl_z = 0;							// C - z
-		vertex.tr_x = (int)(i * itemWidth + itemWidth);	// D - x
-		vertex.tr_y = (int)itemHeight;				// D - y
-		vertex.tr_z = 0;							// D - z
+		vertex.bl.x = (int)(i * itemWidth);			// A - x
+		vertex.bl.y = 0;							// A - y
+		vertex.bl.z = 0;							// A - z
+		vertex.br.x = (int)(i * itemWidth + itemWidth);	// B - x
+		vertex.br.y = 0;							// B - y
+		vertex.br.z = 0;							// B - z
+		vertex.tl.x = (int)(i * itemWidth);			// C - x
+		vertex.tl.y = (int)itemHeight;				// C - y
+		vertex.tl.z = 0;							// C - z
+		vertex.tr.x = (int)(i * itemWidth + itemWidth);	// D - x
+		vertex.tr.y = (int)itemHeight;				// D - y
+		vertex.tr.z = 0;							// D - z
 		
 		[textureAtlas_ updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:i];
 	}

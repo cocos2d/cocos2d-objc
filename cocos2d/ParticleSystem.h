@@ -37,8 +37,8 @@ typedef struct sParticle
 	CGPoint	dir;
 	float	radialAccel;
 	float	tangentialAccel;
-	ccColorF	color;
-	ccColorF	deltaColor;
+	ccColor4F	color;
+	ccColor4F	deltaColor;
 	float	size;
 	float	deltaSize;
 	float	angle;
@@ -125,13 +125,13 @@ typedef struct sParticle
 	float lifeVar;
 	
 	// Start color of the particles
-	ccColorF startColor;
+	ccColor4F startColor;
 	// Start color variance
-	ccColorF startColorVar;
+	ccColor4F startColorVar;
 	// End color of the particles
-	ccColorF endColor;
+	ccColor4F endColor;
 	// End color variance
-	ccColorF endColorVar;
+	ccColor4F endColorVar;
 	
 	// start angle of the particles
 	float startSpin;
@@ -209,13 +209,13 @@ typedef struct sParticle
 /** end size variance in pixels of each particle */
 @property (readwrite,assign) float endSizeVar;
 /** start color of each particle */
-@property (readwrite,assign) ccColorF startColor;
+@property (readwrite,assign) ccColor4F startColor;
 /** start color variance of each particle */
-@property (readwrite,assign) ccColorF startColorVar;
+@property (readwrite,assign) ccColor4F startColorVar;
 /** end color and end color variation of each particle */
-@property (readwrite,assign) ccColorF endColor;
+@property (readwrite,assign) ccColor4F endColor;
 /** end color variance of each particle */
-@property (readwrite,assign) ccColorF endColorVar;
+@property (readwrite,assign) ccColor4F endColorVar;
 //* initial angle of each particle
 @property (readwrite,assign) float startSpin;
 //* initial angle of each particle

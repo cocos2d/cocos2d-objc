@@ -145,13 +145,13 @@
 	particle->life = life + lifeVar * CCRANDOM_MINUS1_1();
 	
 	// Color
-	ccColorF start;
+	ccColor4F start;
 	start.r = startColor.r + startColorVar.r * CCRANDOM_MINUS1_1();
 	start.g = startColor.g + startColorVar.g * CCRANDOM_MINUS1_1();
 	start.b = startColor.b + startColorVar.b * CCRANDOM_MINUS1_1();
 	start.a = startColor.a + startColorVar.a * CCRANDOM_MINUS1_1();
 
-	ccColorF end;
+	ccColor4F end;
 	end.r = endColor.r + endColorVar.r * CCRANDOM_MINUS1_1();
 	end.g = endColor.g + endColorVar.g * CCRANDOM_MINUS1_1();
 	end.b = endColor.b + endColorVar.b * CCRANDOM_MINUS1_1();

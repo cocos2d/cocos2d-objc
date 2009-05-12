@@ -17,62 +17,85 @@
  cocos2d (cc) types
 */
 
-//! RGB color composed of bytes. 3 chars
-typedef struct _ccRGBB
+/** RGB color composed of bytes 3 bytes
+@since v0.8
+ */
+typedef struct _ccColor3B
 {
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-} ccRGBB;
+} ccColor3B;
 
-//! RGBA color composed of bytes. 4 chars
-typedef struct _ccColorB
+/** RGBA color composed of 4 bytes
+@since v0.8
+*/
+typedef struct _ccColor4B
 {
 	unsigned char r;
 	unsigned char g;
 	unsigned char b;
 	unsigned char a;
-} ccColorB;
+} ccColor4B;
 
-//! RGBA color composed of floats. 4 floats
-typedef struct _ccColorF {
+/** RGBA color composed of 4 floats
+@since v0.8
+*/
+typedef struct _ccColor4F {
 	float r;
 	float g;
 	float b;
 	float a;
-} ccColorF;
+} ccColor4F;
 
+/** A vertex composed of 2 floats: x, y
+ @since v0.8
+ */
+#define ccVertex2F CGPoint
+
+/** A vertex composed of 2 floats: x, y
+ @since v0.8
+ */
+typedef struct _ccVertex3F
+{
+		float x;
+		float y;
+		float z;
+} ccVertex3F;
+		
+/** A texcoord composed of 2 floats: u, y
+ @since v0.8
+ */
+typedef struct _ccTex2F {
+	 float u;
+	 float v;
+} ccTex2F;
+
+ 
 //! Point Sprite attributes
 typedef struct _ccPointSprite
 {
-	CGPoint	pos;
-	float size;
-	ccColorF colors;
+	ccVertex2F	pos;
+	float		size;
+	ccColor4F	colors;
 } ccPointSprite;
 
-//!	A 2D Quad. 8 floats
+//!	A 2D Quad. 4 * 2 floats
 typedef struct _ccQuad2 {
-	float	tl_x, tl_y;
-	float	tr_x, tr_y;
-	float	bl_x, bl_y;
-	float	br_x, br_y;
+	ccVertex2F		tl;
+	ccVertex2F		tr;
+	ccVertex2F		bl;
+	ccVertex2F		br;
 } ccQuad2;
 
-//!	A 3D Quad. 12 floats
-typedef struct _ccQuad3 {
-	float	bl_x, bl_y, bl_z;
-	float	br_x, br_y, br_z;
-	float	tl_x, tl_y, tl_z;
-	float	tr_x, tr_y, tr_z;
-} ccQuad3;
 
-//! A 3D vertex
-typedef struct _ccVertex3D
-{
-	float x;
-	float y;
-	float z;
-} ccVertex3D;
+//!	A 3D Quad. 4 * 3 floats
+typedef struct _ccQuad3 {
+	ccVertex3F		bl;
+	ccVertex3F		br;
+	ccVertex3F		tl;
+	ccVertex3F		tr;
+} ccQuad3;
 
 //! A 2D grid size
 typedef struct _ccGridSize
@@ -89,18 +112,12 @@ ccg(const int x, const int y)
 	return v;
 }
 
-//! to keep texture coordinates
-typedef struct _ccTexCoord {
-	float u;
-	float v;
-} ccTexCoord;
-
 //! a Point with a vertex point, a tex coord point and a color
 typedef struct _ccTexColorPoint
 {
-	CGPoint		vertices;
-	ccTexCoord	texCoords;
-	ccColorF	colors;
+	ccVertex2F		vertices;
+	ccTex2F			texCoords;
+	ccColor4F		colors;
 } ccTexColorPoint;
 
 //! 4 ccTexColorPoint.

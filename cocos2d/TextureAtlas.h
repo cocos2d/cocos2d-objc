@@ -31,7 +31,7 @@
 	NSUInteger			capacity_;
 	ccQuad2				*texCoordinates;
 	ccQuad3				*vertexCoordinates;
-	ccColorB			*colors;	// RGBA for each vertex
+	ccColor4B			*colors;	// RGBA for each vertex
 	GLushort			*indices;
 	Texture2D			*texture;
 	
@@ -77,7 +77,7 @@
 /** updates the color (RGBA) for a certain quad
  * The 4 vertices of the Quad will be updated with this new quad color
  */
--(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n;
+-(void) updateColorWithColorQuad:(ccColor4B*)color atIndex:(NSUInteger)n;
 
 /** updates a certain texture coordinate & vertex with new Quads.
  * index must be between 0 and the atlas capacity - 1
