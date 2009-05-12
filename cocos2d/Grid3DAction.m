@@ -45,7 +45,7 @@
 	{
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
-			ccVertex3D	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccg(i,j)];
 			v.z += (sinf((CGFloat)M_PI*time*waves*2 + (v.y+v.x) * .01f) * amplitude * amplitudeRate);
 			[self setVertex:ccg(i,j) vertex:v];
 		}
@@ -84,7 +84,7 @@
 	angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 	CGFloat mx = cosf( angle );
 	
-	ccVertex3D	v0, v1, v, diff;
+	ccVertex3F	v0, v1, v, diff;
 	
 	v0 = [self originalVertex:ccg(1,1)];
 	v1 = [self originalVertex:ccg(0,0)];
@@ -154,7 +154,7 @@
 	angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 	CGFloat my = cosf( angle );
 	
-	ccVertex3D	v0, v1, v, diff;
+	ccVertex3F	v0, v1, v, diff;
 	
 	v0 = [self originalVertex:ccg(1,1)];
 	v1 = [self originalVertex:ccg(0,0)];
@@ -248,7 +248,7 @@
 		{
 			for( j = 0; j < gridSize.y+1; j++ )
 			{
-				ccVertex3D	v = [self originalVertex:ccg(i,j)];
+				ccVertex3F	v = [self originalVertex:ccg(i,j)];
 				CGPoint vect = ccpSub(position, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
 				
@@ -313,7 +313,7 @@
 	{
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
-			ccVertex3D	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccg(i,j)];
 			CGPoint vect = ccpSub(position, ccp(v.x,v.y));
 			CGFloat r = ccpLength(vect);
 			
@@ -359,7 +359,7 @@
 	{
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
-			ccVertex3D	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccg(i,j)];
 			v.x += ( rand() % (randrange*2) ) - randrange;
 			v.y += ( rand() % (randrange*2) ) - randrange;
 			if( shakeZ )
@@ -404,7 +404,7 @@
 	{
 		for( j = 1; j < gridSize.y; j++ )
 		{
-			ccVertex3D	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccg(i,j)];
 			v.x = (v.x + (sinf(time*(CGFloat)M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
 			v.y = (v.y + (sinf(time*(CGFloat)M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
 			[self setVertex:ccg(i,j) vertex:v];
@@ -448,7 +448,7 @@
 	{
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
-			ccVertex3D	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccg(i,j)];
 			
 			if ( vertical )
 				v.x = (v.x + (sinf(time*(CGFloat)M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
@@ -498,7 +498,7 @@
 	{
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
-			ccVertex3D	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccg(i,j)];
 			
 			CGPoint	avg = ccp(i-(gridSize.x/2.0f), j-(gridSize.y/2.0f));
 			CGFloat r = ccpLength( avg );

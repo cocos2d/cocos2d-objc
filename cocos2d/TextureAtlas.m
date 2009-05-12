@@ -153,7 +153,7 @@
 	vertexCoordinates[n] = *quadV;
 }
 
--(void) updateColorWithColorQuad:(ccColorB*)color atIndex:(NSUInteger)n
+-(void) updateColorWithColorQuad:(ccColor4B*)color atIndex:(NSUInteger)n
 {
 	NSAssert( n >= 0 && n < capacity_, @"updateColorWithQuadColor: Invalid index");
 
@@ -222,7 +222,7 @@
 
 	// colors
 	if( withColorArray_ ) {
-		ccColorB colorsBackup[4];
+		ccColor4B colorsBackup[4];
 
 		for(int i=0;i<4;i++)
 			colorsBackup[i] = colors[oldIndex*4+i];

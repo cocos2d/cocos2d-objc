@@ -81,19 +81,19 @@
 	return [Grid3D gridWithSize:gridSize];
 }
 
--(ccVertex3D)vertex:(ccGridSize)pos
+-(ccVertex3F)vertex:(ccGridSize)pos
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g vertex:pos];
 }
 
--(ccVertex3D)originalVertex:(ccGridSize)pos
+-(ccVertex3F)originalVertex:(ccGridSize)pos
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g originalVertex:pos];
 }
 
--(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
 {
 	Grid3D *g = (Grid3D *)target.grid;
 	return [g setVertex:pos vertex:vertex];

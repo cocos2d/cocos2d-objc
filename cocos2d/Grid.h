@@ -67,11 +67,11 @@
 -(id)initWithSize:(ccGridSize)gridSize;
 
 /** returns the vertex at a given position */
--(ccVertex3D)vertex:(ccGridSize)pos;
+-(ccVertex3F)vertex:(ccGridSize)pos;
 /** returns the original (non-transformed) vertex at a given position */
--(ccVertex3D)originalVertex:(ccGridSize)pos;
+-(ccVertex3F)originalVertex:(ccGridSize)pos;
 /** sets a new vertex at a given position */
--(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex;
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex;
 
 -(void)calculateVertexPoints;
 

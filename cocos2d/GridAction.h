@@ -48,11 +48,11 @@
 }
 
 /** returns the vertex than belongs to certain position in the grid */
--(ccVertex3D)vertex:(ccGridSize)pos;
+-(ccVertex3F)vertex:(ccGridSize)pos;
 /** returns the non-transformed vertex than belongs to certain position in the grid */
--(ccVertex3D)originalVertex:(ccGridSize)pos;
+-(ccVertex3F)originalVertex:(ccGridSize)pos;
 /** sets a new vertex to a certain position of the grid */
--(void)setVertex:(ccGridSize)pos vertex:(ccVertex3D)vertex;
+-(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex;
 
 @end
 

@@ -18,6 +18,7 @@ version 0.8 - xxx
  . Texture2D: new alias/antialias API (issue #226)
  . Texture2D: supports 16-bit textures RGB4 and RGB5A1 (issue #356)
  . TextureMgr: added method that removes unused textures (issue #117)
+ . Types: types follows OpenGL "standards" (issue #360)
  . Touches: new feature (issue #211)
 
 version 0.7.2 - 23-Apr-2009
