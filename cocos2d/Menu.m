@@ -65,7 +65,7 @@ enum {
 		s.height -= r.size.width;
 	else
 	    s.height -= r.size.height;
-	position = ccp(s.width/2, s.height/2);
+	self.position = ccp(s.width/2, s.height/2);
 
 	isTouchEnabled = YES;
 	selectedItem = -1;

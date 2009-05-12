@@ -180,7 +180,7 @@
 	particle->deltaAngle = (endA - startA) / particle->life;
 	
 	// position
-	particle->startPos = position;
+	particle->startPos = self.position;
 }
 
 -(void) stopSystem

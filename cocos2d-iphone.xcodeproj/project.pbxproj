@@ -739,6 +739,8 @@
 		6F167CBF0F9EF1D800843D49 /* TouchDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F167CBA0F9EF1D800843D49 /* TouchDispatcher.m */; };
 		6F167CC00F9EF1D800843D49 /* TouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F167CBB0F9EF1D800843D49 /* TouchHandler.h */; };
 		6F167CC10F9EF1D800843D49 /* TouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F167CBC0F9EF1D800843D49 /* TouchHandler.m */; };
+		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
+		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F8321EE0F8BD08E00CBAD06 /* ccArray.h */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
 		8E3FC8950F7B8C0600B3E5DE /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */; };
@@ -1437,6 +1439,8 @@
 		6F167CBA0F9EF1D800843D49 /* TouchDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDispatcher.m; sourceTree = "<group>"; };
 		6F167CBB0F9EF1D800843D49 /* TouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchHandler.h; sourceTree = "<group>"; };
 		6F167CBC0F9EF1D800843D49 /* TouchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchHandler.m; sourceTree = "<group>"; };
+		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
+		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		6F8321EE0F8BD08E00CBAD06 /* ccArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccArray.h; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trance-loop.ogg"; sourceTree = "<group>"; };
 		8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION; sourceTree = "<group>"; };
@@ -2165,6 +2169,8 @@
 		501CCFB60E99658900B86F68 /* OpenGLSupport */ = {
 			isa = PBXGroup;
 			children = (
+				6F305B5D0FB9D2790052E700 /* TransformUtils.h */,
+				6F305B5E0FB9D2790052E700 /* TransformUtils.m */,
 				50851C380F35FE7D00978029 /* UIColor-OpenGL.h */,
 				50851C390F35FE7D00978029 /* UIColor-OpenGL.m */,
 				501CCFA40E99657C00B86F68 /* EAGLView.h */,
@@ -2714,6 +2720,7 @@
 				6F167CC00F9EF1D800843D49 /* TouchHandler.h in Headers */,
 				5016F52F0FA0D16B000E9BB2 /* PointParticleSystem.h in Headers */,
 				502C6C6C0FB87970002BF3C2 /* ParallaxNode.h in Headers */,
+				6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4073,6 +4080,7 @@
 				6F167CC10F9EF1D800843D49 /* TouchHandler.m in Sources */,
 				5016F5300FA0D16B000E9BB2 /* PointParticleSystem.m in Sources */,
 				502C6C6D0FB87970002BF3C2 /* ParallaxNode.m in Sources */,
+				6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

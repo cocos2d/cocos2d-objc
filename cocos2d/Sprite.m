@@ -42,7 +42,7 @@
 		self.texture = [[TextureMgr sharedTextureMgr] addImage: filename];
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = ccp(s.width/2, s.height/2);
+		self.transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 		
 		// lazy alloc
@@ -67,7 +67,7 @@
 		self.texture = [[TextureMgr sharedTextureMgr] addCGImage: image];
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = ccp(s.width/2, s.height/2);
+		self.transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 
 		// lazy alloc
@@ -91,7 +91,7 @@
 		self.texture = tex;
 		
 		CGSize s = self.texture.contentSize;
-		transformAnchor = ccp(s.width/2, s.height/2);
+		self.transformAnchor = ccp(s.width/2, s.height/2);
 		_autoCenterFrames = NO;
 		
 		// lazy alloc

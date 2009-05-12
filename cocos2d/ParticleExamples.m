@@ -17,6 +17,7 @@
 #import "ParticleExamples.h"
 #import "TextureMgr.h"
 #import "Director.h"
+#import "Support/CGPointExtension.h"
 
 //
 // ParticleFireworks
@@ -52,8 +53,7 @@
 	speedVar = 50;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 160;
+	self.position = ccp(160, 160);
 	
 	// life of particles
 	life = 3.5f;
@@ -124,10 +124,8 @@
 	radialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 60;
-	posVar.x = 40;
-	posVar.y = 20;
+	self.position = ccp(160, 60);
+	posVar = ccp(40, 20);
 	
 	// life of particles
 	life = 3;
@@ -205,10 +203,8 @@
 	radialAccelVar = 0;	
 	
 	// emitter position
-	position.x = 160;
-	position.y = 240;
-	posVar.x = 0;
-	posVar.y = 0;
+	self.position = ccp(160, 240);
+	posVar = CGPointZero;
 	
 	// life of particles
 	life = 1;
@@ -288,10 +284,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 240;
-	posVar.x = 0;
-	posVar.y = 0;
+	self.position = ccp(160, 240);
+	posVar = CGPointZero;
 	
 	// life of particles
 	life = 4;
@@ -370,10 +364,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 240;
-	posVar.x = 0;
-	posVar.y = 0;
+	self.position = ccp(160, 240);
+	posVar = CGPointZero;
 	
 	// life of particles
 	life = 4;
@@ -452,10 +444,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 240;
-	posVar.x = 0;
-	posVar.y = 0;
+	self.position = ccp(160, 240);
+	posVar = CGPointZero;
 	
 	// life of particles
 	life = 2;
@@ -534,10 +524,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 240;
-	posVar.x = 0;
-	posVar.y = 0;
+	self.position = ccp(160, 240);
+	posVar = CGPointZero;
 	
 	// life of particles
 	life = 12;
@@ -616,10 +604,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 240;
-	posVar.x = 0;
-	posVar.y = 0;
+	self.position = ccp(160, 240);
+	posVar = CGPointZero;
 	
 	// life of particles
 	life = 5.0f;
@@ -690,10 +676,8 @@
 	radialAccelVar = 0;
 	
 	// emitter position
-	position.x = 160;
-	position.y = 0;
-	posVar.x = 20;
-	posVar.y = 0;
+	self.position = ccp(160, 0);
+	posVar = ccp(20, 0);
 	
 	// life of particles
 	life = 4;
@@ -773,10 +757,11 @@
 	tangentialAccelVar = 1;
 	
 	// emitter position
-	position.x = [[Director sharedDirector] winSize].width / 2;
-	position.y = [[Director sharedDirector] winSize].height + 10;
-	posVar.x = [[Director sharedDirector] winSize].width / 2;
-	posVar.y = 0;
+	self.position = (CGPoint) {
+		[[Director sharedDirector] winSize].width / 2,
+		[[Director sharedDirector] winSize].height + 10
+	};
+	posVar = ccp( [[Director sharedDirector] winSize].width / 2, 0 );
 	
 	// life of particles
 	life = 45;
@@ -852,10 +837,11 @@
 	tangentialAccelVar = 1;
 	
 	// emitter position
-	position.x = [[Director sharedDirector] winSize].width / 2;
-	position.y = [[Director sharedDirector] winSize].height;
-	posVar.x = [[Director sharedDirector] winSize].width / 2;
-	posVar.y = 0;
+	self.position = (CGPoint) {
+		[[Director sharedDirector] winSize].width / 2,
+		[[Director sharedDirector] winSize].height
+	};
+	posVar = ccp( [[Director sharedDirector] winSize].width / 2, 0 );
 	
 	// life of particles
 	life = 4.5f;

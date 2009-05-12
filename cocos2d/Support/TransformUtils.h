@@ -12,21 +12,8 @@
  *
  */
 
+#import <UIKit/UIKit.h>
+#import <OpenGLES/ES1/gl.h>
 
-#import "Scene.h"
-#import "Director.h"
-#import "Support/CGPointExtension.h"
-
-@implementation Scene
--(id) init
-{
-	if( ! (self=[super init]) )
-		return nil;
-	
-	CGSize s = [[Director sharedDirector] winSize];
-	self.relativeTransformAnchor = NO;
-	self.transformAnchor = ccp(s.width / 2, s.height / 2);
-	
-	return self;
-}
-@end
+void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
+void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
