@@ -30,7 +30,8 @@ enum {
 
 @implementation AtlasSprite
 
-@synthesize dirtyColor, dirtyPosition;
+@synthesize dirty;
+@synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
 @synthesize autoCenterFrames = autoCenterFrames_;
@@ -47,13 +48,17 @@ enum {
 		
 		atlasIndex_ = kIndexNotInitialized;
 
-		dirtyPosition = YES;
-		dirtyColor = NO;			// optimization. If the color is not changed gl_color_array is not send to the GPU
+		dirty = YES;
 		
 		flipY_ = flipX_ = NO;
 
 		// RGB and opacity
 		r_ = g_ = b_ = opacity_ = 255;
+		ccColor4B tmpColor = {255,255,255,255};
+		quad_.bl.colors = tmpColor;
+		quad_.br.colors = tmpColor;
+		quad_.tl.colors = tmpColor;
+		quad_.tr.colors = tmpColor;
 		
 		animations = nil;		// lazy alloc
 		
@@ -93,12 +98,12 @@ enum {
 	if( atlasIndex_ != kIndexNotInitialized)
 		[self updateAtlas];
 	else
-		dirtyPosition = YES;
+		dirty = YES;
 	
 	// add these lines	
 	if( autoCenterFrames_ ) {
 		self.transformAnchor = ccp(rect.size.width/2, rect.size.height/2);
-		dirtyPosition = YES;
+		dirty = YES;
 	}	
 }
 
@@ -118,21 +123,15 @@ enum {
 	if( flipY_)
 		CC_SWAP(top,bottom);
 	
-	ccQuad2 newCoords = {
-		{left, bottom},
-		{right, bottom},
-		{left, top},
-		{right, top},
-	};
+	quad_.bl.texCoords.u = left;
+	quad_.bl.texCoords.v = bottom;
+	quad_.br.texCoords.u = right;
+	quad_.br.texCoords.v = bottom;
+	quad_.tl.texCoords.u = left;
+	quad_.tl.texCoords.v = top;
+	quad_.tr.texCoords.u = right;
+	quad_.tr.texCoords.v = top;
 
-	texCoords_ = newCoords;
-}
-
--(void) updateColor
-{
-	ccColor4B colorQuad = { r_, g_, b_, opacity_};
-	[textureAtlas_ updateColorWithColorQuad:&colorQuad atIndex:atlasIndex_];
-	dirtyColor = NO;
 }
 
 -(void)updatePosition
@@ -148,8 +147,11 @@ enum {
 			{0,0,0},
 			{0,0,0},
 		};
-		
-		vertexCoords_ = newVertices;
+		quad_.bl.vertices = newVertices.bl;
+		quad_.br.vertices = newVertices.br;
+		quad_.tl.vertices = newVertices.tl;
+		quad_.tr.vertices = newVertices.tr;
+
 	}
 	
 	// rotation ? -> update: rotation, scale, position
@@ -180,7 +182,11 @@ enum {
 						{(int)dx, (int)dy, vertexZ_},
 						{(int)cx, (int)cy, vertexZ_}
 					};
-		vertexCoords_ = newVertices;		
+		quad_.bl.vertices = newVertices.bl;
+		quad_.br.vertices = newVertices.br;
+		quad_.tl.vertices = newVertices.tl;
+		quad_.tr.vertices = newVertices.tr;
+		
 	}
 	
 	// scale ? -> update: scale, position
@@ -199,8 +205,10 @@ enum {
 			{(int)x1,(int)y2,vertexZ_},
 			{(int)x2,(int)y2,vertexZ_},
 		};
-
-		vertexCoords_ = newVertices;	
+		quad_.bl.vertices = newVertices.bl;
+		quad_.br.vertices = newVertices.br;
+		quad_.tl.vertices = newVertices.tl;
+		quad_.tr.vertices = newVertices.tr;
 	}
 	
 	// update position
@@ -218,24 +226,26 @@ enum {
 			{(int)x1,(int)y2,vertexZ_},
 			{(int)x2,(int)y2,vertexZ_},
 		};
-		
-		vertexCoords_ = newVertices;
+		quad_.bl.vertices = newVertices.bl;
+		quad_.br.vertices = newVertices.br;
+		quad_.tl.vertices = newVertices.tl;
+		quad_.tr.vertices = newVertices.tr;
 	}
-
-	[textureAtlas_ updateQuadWithTexture:&texCoords_ vertexQuad:&vertexCoords_ atIndex:atlasIndex_];
-	dirtyPosition = NO;
+	
+	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+	dirty = NO;
 	return;
 }
 
 -(void)updateAtlas
 {
-	[textureAtlas_ updateQuadWithTexture:&texCoords_ vertexQuad:&vertexCoords_ atIndex:atlasIndex_];
+	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 }
 
 -(void)insertInAtlasAtIndex:(NSUInteger)index
 {
 	atlasIndex_ = index;
-	[textureAtlas_ insertQuadWithTexture:&texCoords_ vertexQuad:&vertexCoords_ atIndex:atlasIndex_];
+	[textureAtlas_ insertQuad:&quad_ atIndex:atlasIndex_];
 }
 
 //
@@ -245,43 +255,43 @@ enum {
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void) setVertexZ:(float)z
 {
 	[super setVertexZ:z];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setTransformAnchor:(CGPoint)anchor
 {
 	[super setTransformAnchor:anchor];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setRelativeTransformAnchor:(BOOL)relative
@@ -292,7 +302,7 @@ enum {
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	dirtyPosition = YES;
+	dirty = YES;
 }
 
 -(void)setFlipX:(BOOL)b
@@ -334,7 +344,13 @@ enum {
 -(void) setOpacity:(GLubyte) anOpacity
 {
 	opacity_ = anOpacity;
-	dirtyColor = YES;
+	ccColor4B color = {r_, g_, b_, opacity_ };
+	quad_.bl.colors = color;
+	quad_.br.colors = color;
+	quad_.tl.colors = color;
+	quad_.tr.colors = color;
+
+	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 }
 -(GLubyte)opacity
 {
@@ -349,7 +365,13 @@ enum {
 	r_ = r;
 	g_ = g;
 	b_ = b;
-	dirtyColor = YES;
+	ccColor4B color = {r_, g_, b_, opacity_ };
+	quad_.bl.colors = color;
+	quad_.br.colors = color;
+	quad_.tl.colors = color;
+	quad_.tr.colors = color;
+	
+	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 }
 -(GLubyte) r
 {

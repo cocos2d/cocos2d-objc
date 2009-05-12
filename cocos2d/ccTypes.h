@@ -76,8 +76,8 @@ typedef struct _ccTex2F {
 typedef struct _ccPointSprite
 {
 	ccVertex2F	pos;
-	float		size;
 	ccColor4F	colors;
+	float		size;
 } ccPointSprite;
 
 //!	A 2D Quad. 4 * 2 floats
@@ -112,22 +112,56 @@ ccg(const int x, const int y)
 	return v;
 }
 
-//! a Point with a vertex point, a tex coord point and a color
-typedef struct _ccTexColorPoint
+//! a Point with a vertex point, a tex coord point and a color 4F
+typedef struct _ccV2F_C4F_T2F
 {
+	//! vertices (2F)
 	ccVertex2F		vertices;
-	ccTex2F			texCoords;
+	//! colors (4F)
 	ccColor4F		colors;
-} ccTexColorPoint;
+	//! tex coords (2F)
+	ccTex2F			texCoords;
+} ccV2F_C4F_T2F;
 
-//! 4 ccTexColorPoint.
-typedef struct _ccTexColorQuad
+//! a Point with a vertex point, a tex coord point and a color 4B
+typedef struct _ccV3F_C4B_T2F
 {
-	ccTexColorPoint	point[4];
-} ccTexColorQuad;
+	//! vertices (3F)
+	ccVertex3F		vertices;
+	//! colors (4B)
+	ccColor4B		colors;
+	// tex coords (2F)
+	ccTex2F			texCoords;
+} ccV3F_C4B_T2F;
+
+//! 4 ccVertex3FTex2FColor4B
+typedef struct _ccV3F_C4B_T2F_Quad
+{
+	//! bottom left
+	ccV3F_C4B_T2F	bl;
+	//! bottom right
+	ccV3F_C4B_T2F	br;
+	//! top left
+	ccV3F_C4B_T2F	tl;
+	//! top right
+	ccV3F_C4B_T2F	tr;
+} ccV3F_C4B_T2F_Quad;
+
+//! 4 ccVertex2FTex2FColor4F Quad
+typedef struct _ccV2F_C4F_T2F_Quad
+{
+	//! bottom left
+	ccV2F_C4F_T2F	bl;
+	//! bottom right
+	ccV2F_C4F_T2F	br;
+	//! top left
+	ccV2F_C4F_T2F	tl;
+	//! top right
+	ccV2F_C4F_T2F	tr;
+} ccV2F_C4F_T2F_Quad;
+
 
 //! delta time type
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
 //typedef double ccTime;
-

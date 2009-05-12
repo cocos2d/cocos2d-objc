@@ -48,21 +48,15 @@
 	// texture pixels
 	CGRect rect_;
 
-	// texture coords
-	// stored as floats in the range [0..1]
-	ccQuad2 texCoords_;
-
-	// vertex coordinates
-	// stored as pixel locations
-	ccQuad3 vertexCoords_;
+	// texture, vertex and color info
+	ccV3F_C4B_T2F_Quad quad_;
 	
 	// whether or not this Sprite needs to be updated in the Atlas
-	BOOL	dirtyPosition;
+	BOOL	dirty;
 	
 	// opacity and RGB protocol
 	GLubyte opacity_;
 	GLubyte r_, g_, b_;
-	BOOL	dirtyColor;
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations;
@@ -76,9 +70,9 @@
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
-@property (readonly) BOOL dirtyPosition;
-/** whether or not the Sprite's color needs to be updated in the Atlas */
-@property (readonly) BOOL dirtyColor;
+@property (readonly) BOOL dirty;
+/** the quad (tex coords, vertex coords and color) information */
+@property (readonly) ccV3F_C4B_T2F_Quad quad;
 /** returns the altas index of the AtlasSprite */
 @property (readonly) NSUInteger atlasIndex;
 /** returns the rect of the AtlasSprite */
@@ -101,7 +95,6 @@
 
 -(void)insertInAtlasAtIndex:(NSUInteger)index;
 -(void)updatePosition;
--(void)updateColor;
 
 /** updates the texture rect of the AtlasSprite */
 -(void) setTextureRect:(CGRect) rect;

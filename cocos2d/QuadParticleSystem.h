@@ -28,10 +28,9 @@
  */
 @interface QuadParticleSystem : ParticleSystem
 {
-	ccTexColorQuad	*quads;	// quads to be rendered
-	GLushort	*indices;	// indices
-	
-	GLuint	quadsID;		// VBO id
+	ccV2F_C4F_T2F_Quad	*quads;		// quads to be rendered
+	GLushort			*indices;	// indices
+	GLuint				quadsID;	// VBO id
 }
 
 

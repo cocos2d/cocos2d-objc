@@ -145,46 +145,36 @@
 
 -(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(int)idx
 {
-	ccQuad2 texCoord;
-	ccQuad3 vertex;
+	ccV3F_C4B_T2F_Quad quad;
+
 	int x = pos.x;
 	int y = pos.y;
 	float row = (value.r % itemsPerRow) * texStepX;
 	float col = (value.r / itemsPerRow) * texStepY;
+
+	quad.tl.texCoords.u = row;
+	quad.tl.texCoords.v = col;
+	quad.tr.texCoords.u = row + texStepX;
+	quad.tr.texCoords.v = col;
+	quad.bl.texCoords.u = row;
+	quad.bl.texCoords.v = col + texStepY;
+	quad.br.texCoords.u = row + texStepX;
+	quad.br.texCoords.v = col + texStepY;
+
+	quad.bl.vertices.x = (int) (x * itemWidth);
+	quad.bl.vertices.y = (int) (y * itemHeight);
+	quad.bl.vertices.z = 0.0f;
+	quad.br.vertices.x = (int)(x * itemWidth + itemWidth);
+	quad.br.vertices.y = (int)(y * itemHeight);
+	quad.br.vertices.z = 0.0f;
+	quad.tl.vertices.x = (int)(x * itemWidth);
+	quad.tl.vertices.y = (int)(y * itemHeight + itemHeight);
+	quad.tl.vertices.z = 0.0f;
+	quad.tr.vertices.x = (int)(x * itemWidth + itemWidth);
+	quad.tr.vertices.y = (int)(y * itemHeight + itemHeight);
+	quad.tr.vertices.z = 0.0f;
 	
-	texCoord.bl.x = row;							// A - x
-	texCoord.bl.y = col;							// A - y
-	texCoord.br.x = row + texStepX;					// B - x
-	texCoord.br.y = col;							// B - y
-	texCoord.tl.x = row;							// C - x
-	texCoord.tl.y = col + texStepY;					// C - y
-	texCoord.tr.x = row + texStepX;					// D - x
-	texCoord.tr.y = col + texStepY;					// D - y
-	
-	//					CCLOG(@"Tex coords: (%f,%f), (%f,%f), (%f,%f), (%f,%f)",
-	//						  texCoord.bl_x,
-	//						  texCoord.bl_y,
-	//						  texCoord.br_x,
-	//						  texCoord.br_y,
-	//						  texCoord.tl_x,
-	//						  texCoord.tl_y,
-	//						  texCoord.tr_x,
-	//						  texCoord.tr_y );
-	
-	vertex.bl.x = (int) (x * itemWidth);				// A - x
-	vertex.bl.y = (int) (y * itemHeight);				// A - y
-	vertex.bl.z = 0.0f;									// A - z
-	vertex.br.x = (int)(x * itemWidth + itemWidth);		// B - x
-	vertex.br.y = (int)(y * itemHeight);				// B - y
-	vertex.br.z = 0.0f;									// B - z
-	vertex.tl.x = (int)(x * itemWidth);					// C - x
-	vertex.tl.y = (int)(y * itemHeight + itemHeight);	// C - y
-	vertex.tl.z = 0.0f;									// C - z
-	vertex.tr.x = (int)(x * itemWidth + itemWidth);		// D - x
-	vertex.tr.y = (int)(y * itemHeight + itemHeight);	// D - y
-	vertex.tr.z = 0.0f;									// D - z
-	
-	[textureAtlas_ updateQuadWithTexture:&texCoord vertexQuad:&vertex atIndex:idx];
+	[textureAtlas_ updateQuad:&quad atIndex:idx];
 }
 
 -(void) updateAtlasValues

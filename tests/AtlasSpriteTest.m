@@ -73,7 +73,7 @@ Class restartAction()
 @implementation AtlasDemo
 -(id) init
 {
-	if( (self = [super initWithColor:0x202020ff]) ) {
+	if( (self = [super init]) ) {
 
 
 		CGSize s = [[Director sharedDirector] winSize];

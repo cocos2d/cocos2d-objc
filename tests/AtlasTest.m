@@ -139,24 +139,41 @@ Class restartAction()
 		return nil;
 	
 	textureAtlas = [[TextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
+	
+	CGSize s = [[Director sharedDirector] winSize];
 
-	ccQuad2 texCoords[] = {
-		{0.0f,0.2f,	0.5f,0.2f,	0.0f,0.0f,	0.5f,0.0f},
-		{0.2f,0.6f,	0.6f,0.6f,	0.2f,0.2f,	0.6f,0.2f},
-		{0.0f,1.0f,	1.0f,1.0f,	0.0f,0.0f,	1.0f,0.0f},
+	//
+	// Notice: u,v tex coordinates are inverted
+	//
+	ccV3F_C4B_T2F_Quad quads[] = {
+		{
+			{{0,0,0},{0,0,255,255},{0.0f,1.0f},},				// bottom left
+			{{s.width,0,0},{0,0,255,0},{1.0f,1.0f},},			// bottom right
+			{{0,s.height,0},{0,0,255,0},{0.0f,0.0f},},			// top left
+			{{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},	// top right
+		},		
+		{
+			{{40,40,0},{255,255,255,255},{0.0f,0.2f},},			// bottom left
+			{{120,80,0},{255,0,0,255},{0.5f,0.2f},},			// bottom right
+			{{40,160,0},{255,255,255,255},{0.0f,0.0f},},		// top left
+			{{160,160,0},{0,255,0,255},{0.5f,0.0f},},			// top right
+		},
+
+		{
+			{{s.width/2,40,0},{255,0,0,255},{0.0f,1.0f},},		// bottom left
+			{{s.width,40,0},{0,255,0,255},{1.0f,1.0f},},		// bottom right
+			{{s.width/2-50,200,0},{0,0,255,255},{0.0f,0.0f},},		// top left
+			{{s.width,100,0},{255,255,0,255},{1.0f,0.0f},},		// top right
+		},
+		
 	};
 	
-	ccQuad3	vertices[] = {
-		{40,40,0,		120,80,0,		40,160,0,		160,160,0},
-		{240,80,0,		480,80,0,		180,120,0,		420,120,0},
-		{240,140,0,		360,200,0,		240,250,0,		360,310,0},
-	};
 	
 	for( int i=0;i<3;i++) {
-		[textureAtlas updateQuadWithTexture: &texCoords[i] vertexQuad: &vertices[i] atIndex:i];
+		[textureAtlas updateQuad:&quads[i] atIndex:i];
 	}
-	
-	[textureAtlas removeQuadAtIndex:2];
+		
+//	[textureAtlas removeQuadAtIndex:0];
 
 	return self;
 }
@@ -172,6 +189,7 @@ Class restartAction()
 {
 	glEnableClientState( GL_VERTEX_ARRAY);
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	glEnableClientState( GL_COLOR_ARRAY);
 	
 	glEnable( GL_TEXTURE_2D);
 
@@ -181,6 +199,7 @@ Class restartAction()
 		
 	glDisable( GL_TEXTURE_2D);
 	
+	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
@@ -445,7 +464,7 @@ Class restartAction()
 	// over all your tiles in every frame. It's very expensive
 	//	for(int x=0; x < tilemap.tgaInfo->width; x++) {
 	//		for(int y=0; y < tilemap.tgaInfo->height; y++) {
-	//			ccRGBB c =[tilemap tileAt:ccg(x,y)];
+	//			ccColor3B c =[tilemap tileAt:ccg(x,y)];
 	//			if( c.r != 0 ) {
 	//				NSLog(@"%d,%d = %d", x,y,c.r);
 	//			}
@@ -453,7 +472,7 @@ Class restartAction()
 	//	}
 	
 	// NEW since v0.7
-	ccRGBB c =[tilemap tileAt:ccg(13,21)];		
+	ccColor3B c =[tilemap tileAt:ccg(13,21)];		
 	c.r++;
 	c.r %= 50;
 	if( c.r==0)
