@@ -428,6 +428,20 @@
 		50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851C380F35FE7D00978029 /* UIColor-OpenGL.h */; };
 		50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50851C390F35FE7D00978029 /* UIColor-OpenGL.m */; };
 		5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5085BFAD0F7D67FF008DBA21 /* snow.png */; };
+		508A332C0FBADD5F00D574A2 /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
+		508A332D0FBADD5F00D574A2 /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */; };
+		508A332E0FBADD5F00D574A2 /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33200FBADD5F00D574A2 /* grossini_dance_03.png */; };
+		508A332F0FBADD5F00D574A2 /* grossini_dance_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33210FBADD5F00D574A2 /* grossini_dance_04.png */; };
+		508A33300FBADD5F00D574A2 /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33220FBADD5F00D574A2 /* grossini_dance_05.png */; };
+		508A33310FBADD5F00D574A2 /* grossini_dance_06.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33230FBADD5F00D574A2 /* grossini_dance_06.png */; };
+		508A33320FBADD5F00D574A2 /* grossini_dance_07.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33240FBADD5F00D574A2 /* grossini_dance_07.png */; };
+		508A33330FBADD5F00D574A2 /* grossini_dance_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33250FBADD5F00D574A2 /* grossini_dance_08.png */; };
+		508A33340FBADD5F00D574A2 /* grossini_dance_09.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33260FBADD5F00D574A2 /* grossini_dance_09.png */; };
+		508A33350FBADD5F00D574A2 /* grossini_dance_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33270FBADD5F00D574A2 /* grossini_dance_10.png */; };
+		508A33360FBADD5F00D574A2 /* grossini_dance_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33280FBADD5F00D574A2 /* grossini_dance_11.png */; };
+		508A33370FBADD5F00D574A2 /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33290FBADD5F00D574A2 /* grossini_dance_12.png */; };
+		508A33380FBADD5F00D574A2 /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
+		508A33390FBADD5F00D574A2 /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */; };
 		509A79970F6188420032F449 /* AtlasSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* AtlasSprite.h */; };
 		509A79980F6188420032F449 /* AtlasSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* AtlasSprite.m */; };
 		509A799B0F6188500032F449 /* AtlasSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* AtlasSpriteManager.h */; };
@@ -1264,6 +1278,20 @@
 		50851C380F35FE7D00978029 /* UIColor-OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-OpenGL.h"; sourceTree = "<group>"; };
 		50851C390F35FE7D00978029 /* UIColor-OpenGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-OpenGL.m"; sourceTree = "<group>"; };
 		5085BFAD0F7D67FF008DBA21 /* snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snow.png; sourceTree = "<group>"; };
+		508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_01.png; sourceTree = "<group>"; };
+		508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_02.png; sourceTree = "<group>"; };
+		508A33200FBADD5F00D574A2 /* grossini_dance_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_03.png; sourceTree = "<group>"; };
+		508A33210FBADD5F00D574A2 /* grossini_dance_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_04.png; sourceTree = "<group>"; };
+		508A33220FBADD5F00D574A2 /* grossini_dance_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_05.png; sourceTree = "<group>"; };
+		508A33230FBADD5F00D574A2 /* grossini_dance_06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_06.png; sourceTree = "<group>"; };
+		508A33240FBADD5F00D574A2 /* grossini_dance_07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_07.png; sourceTree = "<group>"; };
+		508A33250FBADD5F00D574A2 /* grossini_dance_08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_08.png; sourceTree = "<group>"; };
+		508A33260FBADD5F00D574A2 /* grossini_dance_09.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_09.png; sourceTree = "<group>"; };
+		508A33270FBADD5F00D574A2 /* grossini_dance_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_10.png; sourceTree = "<group>"; };
+		508A33280FBADD5F00D574A2 /* grossini_dance_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_11.png; sourceTree = "<group>"; };
+		508A33290FBADD5F00D574A2 /* grossini_dance_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_12.png; sourceTree = "<group>"; };
+		508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_13.png; sourceTree = "<group>"; };
+		508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
 		509A79950F6188420032F449 /* AtlasSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* AtlasSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasSprite.m; sourceTree = "<group>"; };
 		509A79990F6188500032F449 /* AtlasSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasSpriteManager.h; sourceTree = "<group>"; };
@@ -2272,6 +2300,78 @@
 			name = "streak-motion";
 			sourceTree = "<group>";
 		};
+		508A333A0FBADD6A00D574A2 /* grossini images */ = {
+			isa = PBXGroup;
+			children = (
+				50B2CB280E10EE4A00AE9530 /* grossini.png */,
+				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
+				50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */,
+				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
+				503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */,
+				508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */,
+				508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */,
+				508A33200FBADD5F00D574A2 /* grossini_dance_03.png */,
+				508A33210FBADD5F00D574A2 /* grossini_dance_04.png */,
+				508A33220FBADD5F00D574A2 /* grossini_dance_05.png */,
+				508A33230FBADD5F00D574A2 /* grossini_dance_06.png */,
+				508A33240FBADD5F00D574A2 /* grossini_dance_07.png */,
+				508A33250FBADD5F00D574A2 /* grossini_dance_08.png */,
+				508A33260FBADD5F00D574A2 /* grossini_dance_09.png */,
+				508A33270FBADD5F00D574A2 /* grossini_dance_10.png */,
+				508A33280FBADD5F00D574A2 /* grossini_dance_11.png */,
+				508A33290FBADD5F00D574A2 /* grossini_dance_12.png */,
+				508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */,
+				508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */,
+			);
+			name = "grossini images";
+			sourceTree = "<group>";
+		};
+		508A333B0FBADD9200D574A2 /* font related images */ = {
+			isa = PBXGroup;
+			children = (
+				506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */,
+				506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */,
+				506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */,
+				506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */,
+				5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */,
+			);
+			name = "font related images";
+			sourceTree = "<group>";
+		};
+		508A333C0FBADDA700D574A2 /* particles images */ = {
+			isa = PBXGroup;
+			children = (
+				50405A1F0E32A15500213FEF /* smoke.png */,
+				50405A130E3296AC00213FEF /* stars.png */,
+				503841930FA4E66B008411FB /* stars2.png */,
+				50F9EA8F0E1AE87E000E7616 /* fire.png */,
+				5085BFAD0F7D67FF008DBA21 /* snow.png */,
+				502AACF20F79715D001E3F87 /* fire.pvr */,
+			);
+			name = "particles images";
+			sourceTree = "<group>";
+		};
+		508A333D0FBADE2D00D574A2 /* menu related images */ = {
+			isa = PBXGroup;
+			children = (
+				5084D4780EE5C7D100BD237C /* btn-about-normal.png */,
+				5084D4790EE5C7D100BD237C /* btn-about-selected.png */,
+				5084D47A0EE5C7D100BD237C /* btn-highscores-normal.png */,
+				5084D47B0EE5C7D100BD237C /* btn-highscores-selected.png */,
+				5084D47C0EE5C7D100BD237C /* btn-play-normal.png */,
+				5084D47D0EE5C7D100BD237C /* btn-play-selected.png */,
+				5001659D0E72DB470085673F /* b1.png */,
+				5001659E0E72DB470085673F /* b2.png */,
+				5001659F0E72DB470085673F /* f1.png */,
+				500165A00E72DB470085673F /* f2.png */,
+				500165990E72DB0E0085673F /* r1.png */,
+				5001659A0E72DB0E0085673F /* r2.png */,
+				5036DFBF0E612F2D003B6155 /* SendScoreButton.png */,
+				5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */,
+			);
+			name = "menu related images";
+			sourceTree = "<group>";
+		};
 		509B3A100F31027600F2FB95 /* cocoslive */ = {
 			isa = PBXGroup;
 			children = (
@@ -2412,21 +2512,18 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				508A333B0FBADD9200D574A2 /* font related images */,
+				508A333A0FBADD6A00D574A2 /* grossini images */,
+				508A333D0FBADE2D00D574A2 /* menu related images */,
+				508A333C0FBADDA700D574A2 /* particles images */,
 				50E675CD0F65857D003DAA90 /* sprites_test */,
+				501CD16A0E99873000B86F68 /* fps_images.png */,
 				506E1AD50FB34E8E00AAA494 /* test-rgba1.png */,
-				506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */,
-				506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */,
-				506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */,
-				5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */,
-				5085BFAD0F7D67FF008DBA21 /* snow.png */,
-				502AACF20F79715D001E3F87 /* fire.pvr */,
 				8EDF3FD90F6BE3F400F54643 /* listener-marker.png */,
 				8EDF3FDA0F6BE3F400F54643 /* source-marker.png */,
 				50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */,
 				50E676960F6587FD003DAA90 /* spritesheet1.pvr */,
 				50E675060F65628C003DAA90 /* spritesheet1.png */,
-				503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */,
-				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
 				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
 				5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */,
 				50B53B640F3F28DC00E81F83 /* test_image.gif */,
@@ -2439,35 +2536,12 @@
 				50A783DC0F3AFDD700104C45 /* streak.png */,
 				50A252290F38B8DC007CAEB0 /* background1.jpg */,
 				50A2522A0F38B8DC007CAEB0 /* background2.jpg */,
-				5084D4780EE5C7D100BD237C /* btn-about-normal.png */,
-				5084D4790EE5C7D100BD237C /* btn-about-selected.png */,
-				5084D47A0EE5C7D100BD237C /* btn-highscores-normal.png */,
-				5084D47B0EE5C7D100BD237C /* btn-highscores-selected.png */,
-				5084D47C0EE5C7D100BD237C /* btn-play-normal.png */,
-				5084D47D0EE5C7D100BD237C /* btn-play-selected.png */,
 				5084D25C0EE5906100BD237C /* powered.png */,
 				50C1959C0EE4B90800829067 /* background.png */,
 				50C723DB0EC062680046C5DB /* clouds.pvrtc */,
-				501CD16A0E99873000B86F68 /* fps_images.png */,
 				506888A20E96D7A200F943E5 /* levelmap.tga */,
 				506886510E96C2D800F943E5 /* tiles.png */,
-				506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */,
 				506882680E957C4A00F943E5 /* atlastest.png */,
-				5001659D0E72DB470085673F /* b1.png */,
-				5001659E0E72DB470085673F /* b2.png */,
-				5001659F0E72DB470085673F /* f1.png */,
-				500165A00E72DB470085673F /* f2.png */,
-				500165990E72DB0E0085673F /* r1.png */,
-				5001659A0E72DB0E0085673F /* r2.png */,
-				5036DFBF0E612F2D003B6155 /* SendScoreButton.png */,
-				5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */,
-				50405A1F0E32A15500213FEF /* smoke.png */,
-				50405A130E3296AC00213FEF /* stars.png */,
-				503841930FA4E66B008411FB /* stars2.png */,
-				50F9EA8F0E1AE87E000E7616 /* fire.png */,
-				50B2CB280E10EE4A00AE9530 /* grossini.png */,
-				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
-				50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */,
 			);
 			name = Images;
 			path = Resources/Images;
@@ -3907,6 +3981,20 @@
 				500165A40E72DB470085673F /* f2.png in Resources */,
 				501CD1700E99873000B86F68 /* fps_images.png in Resources */,
 				502AAD030F79715E001E3F87 /* fire.pvr in Resources */,
+				508A332C0FBADD5F00D574A2 /* grossini_dance_01.png in Resources */,
+				508A332D0FBADD5F00D574A2 /* grossini_dance_02.png in Resources */,
+				508A332E0FBADD5F00D574A2 /* grossini_dance_03.png in Resources */,
+				508A332F0FBADD5F00D574A2 /* grossini_dance_04.png in Resources */,
+				508A33300FBADD5F00D574A2 /* grossini_dance_05.png in Resources */,
+				508A33310FBADD5F00D574A2 /* grossini_dance_06.png in Resources */,
+				508A33320FBADD5F00D574A2 /* grossini_dance_07.png in Resources */,
+				508A33330FBADD5F00D574A2 /* grossini_dance_08.png in Resources */,
+				508A33340FBADD5F00D574A2 /* grossini_dance_09.png in Resources */,
+				508A33350FBADD5F00D574A2 /* grossini_dance_10.png in Resources */,
+				508A33360FBADD5F00D574A2 /* grossini_dance_11.png in Resources */,
+				508A33370FBADD5F00D574A2 /* grossini_dance_12.png in Resources */,
+				508A33380FBADD5F00D574A2 /* grossini_dance_13.png in Resources */,
+				508A33390FBADD5F00D574A2 /* grossini_dance_14.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
