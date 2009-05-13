@@ -17,6 +17,7 @@
  
 // cocos2d imports
 #import "Director.h"
+#import "TouchDispatcher.h"
 #import "Camera.h"
 #import "Scheduler.h"
 #import "LabelAtlas.h"
@@ -679,6 +680,8 @@ static Director *_sharedDirector = nil;
 
 - (void)startAnimation
 {
+	[self addEventHandler:[TouchDispatcher sharedDispatcher]];
+	
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
 
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
@@ -689,8 +692,6 @@ static Director *_sharedDirector = nil;
 		@throw myException;
 	}
 	
-	
-
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
 
 //
@@ -704,6 +705,8 @@ static Director *_sharedDirector = nil;
 
 - (void)stopAnimation
 {
+	[self removeEventHandler:[TouchDispatcher sharedDispatcher]];
+	
 	[animationTimer invalidate];
 	animationTimer = nil;
 }
@@ -869,6 +872,8 @@ static Director *_sharedDirector = nil;
 
 - (void) startAnimation
 {
+	[self addEventHandler:[TouchDispatcher sharedDispatcher]];
+	
 	// XXX:
 	// XXX: release autorelease objects created
 	// XXX: between "use fast director" and "runWithScene"
@@ -919,6 +924,8 @@ static Director *_sharedDirector = nil;
 }
 - (void) stopAnimation
 {
+	[self removeEventHandler:[TouchDispatcher sharedDispatcher]];
+	
 	isRunning = NO;
 }
 

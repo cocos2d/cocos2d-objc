@@ -179,14 +179,6 @@ enum {
 		[self alignMenusV];
 }
 
--(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	// you will only receive this message if Menu doesn't handle the touchesBegan event
-	// new in v0.6
-	NSLog(@"touches received");
-	return kEventHandled;
-}
-
 @end
 
 @implementation Layer3

@@ -31,11 +31,6 @@
 /** When NO, dispatcher is muted. Default YES. */
 @property (readwrite, assign) BOOL dispatchEvents;
 
-/** Convenience method. Adds self to the Director's event handlers */
--(void) link;
-/** Convenience method. Removes self from the Director's event handlers */
--(void) unlink;
-
 /** Adds a delegate to the list of multi-touch event handlers, with priority 0
  and touch swallowing on. */
 -(void) addEventHandler:(id<TargetedTouchDelegate>) delegate;
