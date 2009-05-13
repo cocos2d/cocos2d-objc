@@ -23,10 +23,10 @@
  delegate(s) that claimed them when they began. In other words, updates
  will "target" their specific handler, without bothering the other handlers.
  */
-- (BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event;
+- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event;
 @optional
 // touch updates:
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event;
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event;
-- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event;
+- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event;
+- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event;
+- (void)ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event;
 @end

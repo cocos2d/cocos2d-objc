@@ -64,16 +64,6 @@ static TouchDispatcher *sharedDispatcher = nil;
 	[super dealloc];
 }
 
--(void) link
-{
-	[[Director sharedDirector] addEventHandler:self];
-}
-
--(void) unlink
-{
-	[[Director sharedDirector] removeEventHandler:self];
-}
-
 //
 // handlers management
 //
@@ -156,7 +146,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 		
 		for( UITouch *touch in touches) {
 			for( TouchHandler *handler in handlers ) {
-				BOOL touchWasClaimed = [handler.delegate touchBegan:touch withEvent:event];
+				BOOL touchWasClaimed = [handler.delegate ccTouchBegan:touch withEvent:event];
 				
 				if( touchWasClaimed ) {
 					[handler.claimedTouches addObject:touch];
@@ -197,21 +187,21 @@ static TouchDispatcher *sharedDispatcher = nil;
 -(BOOL) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if (dispatchEvents)
-		[self updateKnownTouches:touches withEvent:event selector:@selector(touchMoved:withEvent:) unclaim:NO];
+		[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchMoved:withEvent:) unclaim:NO];
 	
 	return kEventHandled;
 }
 
 -(BOOL) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	[self updateKnownTouches:touches withEvent:event selector:@selector(touchEnded:withEvent:) unclaim:YES];
+	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES];
 	
 	return kEventHandled;
 }
 
 -(BOOL) ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	[self updateKnownTouches:touches withEvent:event selector:@selector(touchCancelled:withEvent:) unclaim:YES];
+	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchCancelled:withEvent:) unclaim:YES];
 	
 	return kEventHandled;
 }
