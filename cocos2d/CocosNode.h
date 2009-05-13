@@ -109,6 +109,8 @@ enum {
 	// actions
 	struct ccArray *actions;
 	int actionIndex;
+	Action *currentAction;
+	BOOL currentActionSalvaged;
 	
 	// scheduled selectors
 	NSMutableDictionary *scheduledSelectors;    
