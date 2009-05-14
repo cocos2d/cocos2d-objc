@@ -90,7 +90,6 @@ typedef enum {
  */
 @interface Texture2D : NSObject
 {
-@private
 	GLuint						_name;
 	CGSize						_size;
 	NSUInteger					_width,
