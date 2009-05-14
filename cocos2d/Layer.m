@@ -171,7 +171,13 @@
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
 	glEnableClientState(GL_COLOR_ARRAY);
 	
+	if( opacity != 255 )
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	if( opacity != 255 )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
