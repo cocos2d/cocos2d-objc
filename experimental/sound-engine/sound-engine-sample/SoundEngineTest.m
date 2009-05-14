@@ -29,12 +29,16 @@
     if ((self = [super init])) {
         isTouchEnabled = YES;
         
+		CGSize size = [[Director sharedDirector] winSize];
+		
         // init sound manager/OpenAL support
         [PASoundMgr sharedSoundManager];
         // preload interface-like sounds
-        [[PASoundMgr sharedSoundManager] addSound:@"clank" withPosition:ccp(160,240) looped:NO];
-        [[PASoundMgr sharedSoundManager] addSound:@"chicken" withPosition:ccp(160,240) looped:NO];
+        [[PASoundMgr sharedSoundManager] addSound:@"clank" withPosition:ccp(size.width/2, size.height/2) looped:NO];
+        [[PASoundMgr sharedSoundManager] addSound:@"chicken" withPosition:ccp(size.width/2, size.height/2) looped:NO];
         bgTrack = [[PASoundMgr sharedSoundManager] addSound:@"trance-loop" withExtension:@"ogg" position:CGPointZero looped:YES];
+		
+		[bgTrack retain];
         
         // lower music track volume and play it
         [bgTrack setGain:0.3f];
@@ -42,7 +46,7 @@
 
         Label *info = [Label labelWithString:@"Tap and move your finger to update\nthe listener's position." dimensions:CGSizeMake(320, 40) alignment:UITextAlignmentCenter fontName:@"TrebuchetMS-Bold" fontSize:14];
         [self addChild:info z:1];
-        info.position = ccp(160, 450);
+        info.position = ccp(size.width/2, size.height-40);
         
         // set bottom menu (its actions play some sample interface-like sound, right from the manager)
         MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(selectedBackForwardMenuItem:)];
@@ -50,16 +54,16 @@
         MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(selectedBackForwardMenuItem:)];
         Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
         menu.position = CGPointZero;
-        item1.position = ccp(320/2-100,30);
-        item2.position = ccp(320/2, 30);
-        item3.position = ccp(320/2+100,30);
+        item1.position = ccp(size.width/2-100,30);
+        item2.position = ccp(size.width/2, 30);
+        item3.position = ccp(size.width/2+100,30);
         [self addChild: menu z:1];
         
         // set listener's position and sprite
-        [[[PASoundMgr sharedSoundManager] listener] setPosition:ccp(160,240)];
+        [[[PASoundMgr sharedSoundManager] listener] setPosition:ccp(size.width/2, size.height/2)];
         listenerSprite = [Sprite spriteWithFile:@"listener-marker.png"];
         [self addChild:listenerSprite z:1];
-        listenerSprite.position = ccp(160,240);
+        listenerSprite.position = ccp(size.width/2, size.height/2);
         
         // set first sound source (static waterfall)
         source1 = [[PASoundSource alloc] initWithFile:@"waterfall" looped:YES];
@@ -73,11 +77,11 @@
         source2 = [[PASoundSource alloc] initWithFile:@"chicken" looped:YES];
         source2Sprite = [Sprite spriteWithFile:@"source-marker.png"];
         [self addChild:source2Sprite z:0];
-        source2Sprite.position = ccp(270,400);
+        source2Sprite.position = ccp(10,size.height-100);
         [source2 setGain:.5f];
         [source2 playAtPosition:source2.position];
         
-        id move = [MoveBy actionWithDuration:2 position:ccp(-220,0)];
+        id move = [MoveBy actionWithDuration:2 position:ccp(size.width-10,0)];
         id sequence = [Sequence actions:move,[move reverse],nil];
         [source2Sprite runAction:[RepeatForever actionWithAction:sequence]];
         
@@ -87,12 +91,37 @@
     return self;
 }
 
+-(void) newOrientation
+{
+	ccDeviceOrientation orientation = [[Director sharedDirector] deviceOrientation];
+	switch (orientation) {
+		case CCDeviceOrientationLandscapeLeft:
+			orientation = CCDeviceOrientationPortrait;
+			break;
+		case CCDeviceOrientationPortrait:
+			orientation = CCDeviceOrientationLandscapeRight;
+			break;						
+		case CCDeviceOrientationLandscapeRight:
+			orientation = CCDeviceOrientationPortraitUpsideDown;
+			break;
+		case CCDeviceOrientationPortraitUpsideDown:
+			orientation = CCDeviceOrientationLandscapeLeft;
+			break;
+	}
+	[[Director sharedDirector] setDeviceOrientation:orientation];
+}
+
 - (void)selectedBackForwardMenuItem:(id)sender {
     // play the common interface "clank" sound
-    [[PASoundMgr sharedSoundManager] play:@"clank"];
+	[self newOrientation];
+	Scene *scene = [Scene node];
+	[scene addChild: [SoundEngineTest node]];
+	[[Director sharedDirector] replaceScene: scene];
 }
+
 - (void)selectedCenterMenuItem:(id)sender {
-    [[PASoundMgr sharedSoundManager] play:@"chicken"];    
+    [[PASoundMgr sharedSoundManager] play:@"chicken"]; 
+    [[PASoundMgr sharedSoundManager] play:@"clank"];
 }
 
 - (void)loop:(ccTime)t {
@@ -120,6 +149,7 @@
     [source1 stop];
     [source2 stop];
     
+	[bgTrack release];
     [source1 release];
     [source2 release];
     
@@ -141,7 +171,7 @@
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
 	
-	[[Director sharedDirector] setLandscape: NO];
+	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationPortrait];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
     
 	// create an openGL view inside a window

@@ -26,8 +26,6 @@ enum {
 	kEventIgnored = NO,
 };
 
-// Landscape is right or left ?
-#define LANDSCAPE_LEFT 1
 
 // Fast FPS display. FPS are updated 10 times per second without consuming resources
 // uncomment this line to use the old method that updated
@@ -45,6 +43,18 @@ typedef enum {
    kDepthBuffer16,
    kDepthBuffer24,
 } tDepthBufferFormat;
+
+/** Possible device orientations */
+typedef enum {
+	/// Device oriented vertically, home button on the bottom
+	CCDeviceOrientationPortrait = UIDeviceOrientationPortrait,	
+	/// Device oriented vertically, home button on the top
+    CCDeviceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown,
+	/// Device oriented horizontally, home button on the right
+    CCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
+	/// Device oriented horizontally, home button on the left
+    CCDeviceOrientationLandscapeRight = UIDeviceOrientationLandscapeRight,
+} ccDeviceOrientation;
 
 @class LabelAtlas;
 
@@ -65,6 +75,9 @@ and when to execute the Scenes
 
 	/* landscape mode ? */
 	BOOL landscape;
+	
+	/* orientation */
+	ccDeviceOrientation	deviceOrientation_;
 	
 	/* display FPS ? */
 	BOOL displayFPS;
@@ -116,6 +129,8 @@ and when to execute the Scenes
 @property (readonly) tPixelFormat pixelFormat;
 /** whether or not the next delta time will be zero */
 @property (readwrite,assign) BOOL nextDeltaTimeZero;
+/** The device orientattion */
+@property (readwrite) ccDeviceOrientation deviceOrientation;
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
@@ -160,10 +175,15 @@ and when to execute the Scenes
 /** returns the display size of the OpenGL view */
 -(CGSize) displaySize;
 
-/** returns whether or not the screen is in landscape mode */
-- (BOOL) landscape;
-/** sets lanscape mode */
-- (void) setLandscape: (BOOL) on;
+/** returns whether or not the screen is in landscape mode
+ @deprecated Use deviceOrientation instead
+ */
+- (BOOL) landscape __attribute__((deprecated));
+/** sets lanscape mode
+ @deprecated Use setDeviceOrientation instead
+ */
+- (void) setLandscape: (BOOL) on __attribute__((deprecated));
+
 /** converts a UIKit coordinate to an OpenGL coordinate
  Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
  */
@@ -248,7 +268,6 @@ and when to execute the Scenes
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.
  * In some circumstances it is faster than the normal Director.
- @warning BUG: Don't use the FastDirector if you are going the detach and then re-attach the opengl view again.
  */
 @interface FastDirector : Director
 {

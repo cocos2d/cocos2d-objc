@@ -160,7 +160,7 @@
 	[[Director sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
 	// Setup the OpenGL Propertys
 	[[Director sharedDirector] set3Dprojection];

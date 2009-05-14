@@ -27,7 +27,7 @@ enum {
 	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
 	MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
 	MenuItem *item5 = [MenuItemFont itemFromString: @"Configuration" target: self selector:@selector(menuCallbackConfig:)];
-	
+
 	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	[[item6 label] setRGB:255:0:32];
@@ -271,7 +271,7 @@ enum {
     
 	[MenuItemFont setFontName: @"American Typewriter"];
 	[MenuItemFont setFontSize:18];
-	MenuItemFont *title4 = [MenuItemFont itemFromString: @"Volume"];
+	MenuItemFont *title4 = [MenuItemFont itemFromString: @"Orientation"];
     [title4 setIsEnabled:NO];
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:34];
@@ -345,7 +345,7 @@ enum {
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
 
 	// show FPS
 	[[Director sharedDirector] setDisplayFPS:YES];

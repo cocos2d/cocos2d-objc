@@ -14,6 +14,9 @@ For more information read the following files:
   convert_0_7_1_to_0_7_2.txt
 
 
+COMPULSORY CHANGES
+******************
+
 Texture2D Alias/AntiAlias
 =========================
 
@@ -80,3 +83,21 @@ Removed Files
     Particle.m
     ParticleSystems.h
     ParticleSystems.m
+
+
+
+OPTIONAL CHANGES
+****************
+
+Director
+========
+
+[OLD]
+    BOOL b = [[Director sharedDirector] landscape];
+    [[Director sharedDirector] setLandscape: YES];
+    [[Director sharedDirector] setLandscape: NO];
+
+[NEW]
+    ccDeviceOrientation = [[Director sharedDirector] deviceOrientation];
+    [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationLandscapeLeft];
+    [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationPortrait];

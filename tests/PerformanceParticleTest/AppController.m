@@ -19,7 +19,7 @@
 
 	[[Director sharedDirector] attachInWindow:window];
 	[Director sharedDirector].displayFPS = YES;
-	[[Director sharedDirector] setLandscape:NO];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
 	
 	[window makeKeyAndVisible];
 	

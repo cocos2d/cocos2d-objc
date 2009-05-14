@@ -123,7 +123,7 @@
 	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	[[Director sharedDirector] setDisplayFPS:YES];
 
 	// frames per second

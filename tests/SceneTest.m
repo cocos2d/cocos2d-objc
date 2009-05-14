@@ -128,7 +128,8 @@
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+//	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
 
 	// attach the OpenGL view to a window
 	[[Director sharedDirector] attachInView:window];

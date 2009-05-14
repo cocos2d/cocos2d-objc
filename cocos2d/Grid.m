@@ -79,19 +79,26 @@
 // This routine can be merged with Director
 -(void)applyLandscape
 {
-	BOOL	landscape = [Director sharedDirector].landscape;
-	
-	if( landscape ) {
-		glTranslatef(160,240,0);
-		
-#ifdef LANDSCAPE_LEFT
-		glRotatef(-90,0,0,1);
-		glTranslatef(-240,-160,0);
-#else		
-		// rotate left
-		glRotatef(90,0,0,1);
-		glTranslatef(-240,-160,0);
-#endif // LANDSCAPE_LEFT
+	ccDeviceOrientation orientation  = [[Director sharedDirector] deviceOrientation];
+
+	switch (orientation) {
+		case CCDeviceOrientationLandscapeLeft:
+			glTranslatef(160,240,0);
+			glRotatef(-90,0,0,1);
+			glTranslatef(-240,-160,0);
+			break;
+		case CCDeviceOrientationLandscapeRight:
+			glTranslatef(160,240,0);
+			glRotatef(90,0,0,1);
+			glTranslatef(-240,-160,0);
+			break;
+		case CCDeviceOrientationPortraitUpsideDown:
+			glTranslatef(160,240,0);
+			glRotatef(180,0,0,1);
+			glTranslatef(-160,-240,0);
+			break;
+		default:
+			break;
 	}
 }
 
