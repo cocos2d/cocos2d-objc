@@ -256,7 +256,7 @@ void drawCollisions(void *ptr, void *data)
 	ticks = 0;
 	init_funcs[demo_index]();
 	
-	return kEventHandled;
+	return kEventIgnored;
 }
 @end
 

@@ -141,7 +141,7 @@
 	CGPoint point = [touch locationInView: [touch view]];
     point = [[Director sharedDirector] convertCoordinate: point];
     listenerSprite.position = ccp(point.x, point.y);
-    return kEventHandled;
+    return kEventIgnored;
 }    
 
 - (void)dealloc {
