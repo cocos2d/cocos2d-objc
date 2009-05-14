@@ -30,7 +30,10 @@ enum {
 
 	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
-	[[item6 label] setRGB:255:0:32];
+	id color_action = [TintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
+	id color_back = [color_action reverse];
+	id seq = [Sequence actions:color_action, color_back, nil];
+	[item6 runAction:[RepeatForever actionWithAction:seq]];
 
 	Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
 	[menu alignItemsVertically];

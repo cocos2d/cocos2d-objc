@@ -29,7 +29,7 @@ enum {
 
 @implementation Menu
 
-@synthesize opacity;
+@synthesize opacity=opacity_, r=r_, g=g_, b=b_;
 
 - (id) init
 {
@@ -345,9 +345,18 @@ enum {
 /** Override synthesized setOpacity to recurse items */
 - (void) setOpacity:(GLubyte)newOpacity
 {
-	opacity = newOpacity;
-	for(id<CocosNodeOpacity> item in children)
-		[item setOpacity:opacity];
+	opacity_ = newOpacity;
+	for(id<CocosNodeRGBA> item in children)
+		[item setOpacity:opacity_];
+}
+
+- (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
+{
+	r_=r;
+	g_=g;
+	b_=b;
+	for(id<CocosNodeRGBA> item in children)
+		[item setRGB:r:g:b];
 }
 
 #pragma mark Menu - Private

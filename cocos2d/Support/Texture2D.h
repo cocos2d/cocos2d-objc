@@ -80,6 +80,9 @@ typedef enum {
 	kTexture2DPixelFormat_RGB5A1,
 } Texture2DPixelFormat;
 
+/// Default pixel format: RGBA4444
+#define kTexture2DPixelFormat_Default kTexture2DPixelFormat_RGBA4444
+
 //CLASS INTERFACES:
 
 /** Texture2D class
@@ -97,6 +100,7 @@ typedef enum {
 	Texture2DPixelFormat		_format;
 	GLfloat						_maxS,
 								_maxT;
+	BOOL						_premultipliedColors;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -117,6 +121,8 @@ typedef enum {
 @property(readonly) GLfloat maxS;
 /** texture max T */
 @property(readonly) GLfloat maxT;
+/** whether or not the textures has premultiplied colors */
+@property(readonly) BOOL premultipliedColors;
 @end
 
 /**
@@ -196,8 +202,8 @@ typedef struct _ccTexParams {
 /** sets the default pixel format for UIImages that contains alpha channel.
  If the UIImage has already alpha pre-multiplied (no alpha channle), then it will create an RGB565 texture.
  But if the UIImage contains alpha channel, then the options are:
-    - generate 32-bit textures: RGBA8 (defaultt: kTexture2DPixelFormat_RGBA8888)
-    - generate 16-bit textures: RGBA4 (kTexture2DPixelFormat_RGBA4444)
+    - generate 32-bit textures: RGBA8 (kTexture2DPixelFormat_RGBA8888)
+    - generate 16-bit textures: RGBA4 (default: kTexture2DPixelFormat_RGBA4444)
     - generate 16-bit textures: RGB5A1 (kTexture2DPixelFormat_RGB5A1)
  
  To use this function you MUST disable the "compres .PNG files" in XCode, otherwise all your .PNG images
@@ -206,7 +212,9 @@ typedef struct _ccTexParams {
  */
 +(void) setDefaultAlphaPixelFormat:(Texture2DPixelFormat)format;
 
-/** returns the alpha pixel format */
+/** returns the alpha pixel format
+ @since v0.8
+ */
 +(Texture2DPixelFormat) defaultAlphaPixelFormat;
 @end
 

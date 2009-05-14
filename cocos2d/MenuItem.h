@@ -24,15 +24,11 @@
 
 /** Menu Item base class
  */
-@interface MenuItem : CocosNode <CocosNodeSize, CocosNodeOpacity>
+@interface MenuItem : CocosNode <CocosNodeSize>
 {
 	NSInvocation *invocation;
 	BOOL isEnabled;
-	GLubyte opacity;
 }
-
-/** Opacity property. Conforms to CocosNodeOpacity protocol */
-@property (readwrite,assign) GLubyte opacity;
 
 /** Creates a menu item with a target/selector */
 +(id) itemWithTarget:(id) r selector:(SEL) s;
@@ -56,20 +52,30 @@
 -(void) setIsEnabled: (BOOL)enabled;
 /** Returns whether or not the MenuItem is enabled */
 -(BOOL) isEnabled;
+@end
 
-/** Returns the size in pixels of the texture.
- * Conforms to the CocosNodeSize protocol
+/** An abstract class "label" MenuItems */
+@interface MenuItemLabel : MenuItem  <CocosNodeRGBA>
+{
+	id label;
+}
+
+/** LabelAtlas that is rendered */
+@property (readwrite, retain) id label;
+
+/** Change this menuitem's label's string **/
+-(void) setString:(NSString *)string;
+
+/** Enable or disabled the MenuItemFont
+ @warning setIsEnabled changes the RGB color of the font
  */
--(CGSize) contentSize;
+-(void) setIsEnabled: (BOOL)enabled;
 @end
 
 /** A MenuItemAtlasFont */
-@interface MenuItemAtlasFont : MenuItem
+@interface MenuItemAtlasFont : MenuItemLabel
 {
-	LabelAtlas *label;
 }
-
-@property (readwrite, retain) LabelAtlas* label;
 
 /** creates a menu item from a string and atlas with a target/selector */
 +(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap;
@@ -80,24 +86,13 @@
 /** initializes a menu item from a string and atlas with a target/selector */
 -(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb;
 
-/** Change this menuitem's label's string **/
--(void) setString:(NSString *)string;
-
-/** Enable or disabled the MenuItemFont
- @warning setIsEnabled changes the RGB color of the font
- */
--(void) setIsEnabled: (BOOL)enabled;
 
 @end
 
 /** A MenuItemFont */
-@interface MenuItemFont : MenuItem
+@interface MenuItemFont : MenuItemLabel
 {
-	Label *label;
 }
-
-@property (readwrite, retain) Label* label;
-
 /** set font size */
 +(void) setFontSize: (int) s;
 
@@ -118,20 +113,10 @@
 
 /** initializes a menu item from a string with a target/selector */
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
-
-/** Change this menuitem's label's string **/
--(void) setString:(NSString *)string;
-
-/** Enable or disabled the MenuItemFont
- @warning setIsEnabled changes the RGB color of the font
- */
--(void) setIsEnabled: (BOOL)enabled;
-
 @end
 
-
 /** A MenuItemImage */
-@interface MenuItemImage : MenuItem
+@interface MenuItemImage : MenuItem <CocosNodeRGBA>
 {
 	BOOL selected;
 	Sprite *normalImage, *selectedImage, *disabledImage;
@@ -157,11 +142,15 @@
 
 
 /** A MenuItemToggle */
-@interface MenuItemToggle : MenuItem
+@interface MenuItemToggle : MenuItem <CocosNodeRGBA>
 {
 	NSUInteger selectedIndex_;
 	NSMutableArray* subItems_;
+	GLubyte opacity_, r_, g_, b_;
 }
+
+/** conforms with CocosNodeRGBA protocol */
+@property (readonly) GLubyte opacity,r,g,b;
 
 /** returns the selected item */
 @property (readwrite) NSUInteger selectedIndex;

@@ -2164,10 +2164,10 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				506414C50F9C67C0007A7B24 /* Labels and Tiles Nodes */,
+				506414C50F9C67C0007A7B24 /* Label, Tile, Parallax */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
-				506414C30F9C6769007A7B24 /* Scene Nodes */,
+				506414C30F9C6769007A7B24 /* Scene and Layers Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
@@ -2249,15 +2249,17 @@
 			path = tests/attachDemo;
 			sourceTree = "<group>";
 		};
-		506414C30F9C6769007A7B24 /* Scene Nodes */ = {
+		506414C30F9C6769007A7B24 /* Scene and Layers Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				5018F25E0DFDEAFF00C013A5 /* Layer.h */,
+				5018F25F0DFDEAFF00C013A5 /* Layer.m */,
 				5018F2600DFDEAFF00C013A5 /* Scene.h */,
 				5018F2610DFDEAFF00C013A5 /* Scene.m */,
 				502B3E980E09A59500886982 /* Transition.h */,
 				502B3E990E09A59500886982 /* Transition.m */,
 			);
-			name = "Scene Nodes";
+			name = "Scene and Layers Nodes";
 			sourceTree = "<group>";
 		};
 		506414C40F9C6792007A7B24 /* Sprite Nodes */ = {
@@ -2273,21 +2275,23 @@
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
 		};
-		506414C50F9C67C0007A7B24 /* Labels and Tiles Nodes */ = {
+		506414C50F9C67C0007A7B24 /* Label, Tile, Parallax */ = {
 			isa = PBXGroup;
 			children = (
-				5018F25C0DFDEAFF00C013A5 /* Label.h */,
-				5018F25D0DFDEAFF00C013A5 /* Label.m */,
 				506887D70E96C90000F943E5 /* AtlasNode.h */,
 				506887D80E96C90000F943E5 /* AtlasNode.m */,
 				506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */,
 				506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */,
+				5018F25C0DFDEAFF00C013A5 /* Label.h */,
+				5018F25D0DFDEAFF00C013A5 /* Label.m */,
 				506884700E96734A00F943E5 /* LabelAtlas.h */,
 				506884710E96734A00F943E5 /* LabelAtlas.m */,
+				502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */,
+				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
 			);
-			name = "Labels and Tiles Nodes";
+			name = "Label, Tile, Parallax";
 			sourceTree = "<group>";
 		};
 		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
@@ -2455,10 +2459,6 @@
 				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				509E574A0E36234300BD7F09 /* TextureNode.h */,
 				509E574B0E36234300BD7F09 /* TextureNode.m */,
-				5018F25E0DFDEAFF00C013A5 /* Layer.h */,
-				5018F25F0DFDEAFF00C013A5 /* Layer.m */,
-				502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */,
-				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
 			);
 			name = "Base Nodes";
 			sourceTree = "<group>";
@@ -4831,7 +4831,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COMPRESS_PNG_FILES = NO;
+				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -4859,6 +4859,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -5018,7 +5019,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COMPRESS_PNG_FILES = NO;
+				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -5045,7 +5046,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COMPRESS_PNG_FILES = NO;
+				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;

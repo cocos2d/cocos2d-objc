@@ -173,10 +173,11 @@
 	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,size) );
 	
 
+	BOOL premultipliedColors = [texture premultipliedColors];
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	else
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	else if( ! premultipliedColors )
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
 	// save color mode
 #if 0
@@ -190,7 +191,8 @@
 	glDrawArrays(GL_POINTS, 0, particleIdx);
 	
 	// restore blend state
-	glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
+	if( blendAdditive || ! premultipliedColors )
+		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
 
 #if 0
 	// restore color mode

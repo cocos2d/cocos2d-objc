@@ -79,12 +79,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
-// Default is: RGBA8
-static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_RGBA8888;
+// Default is: RGBA4444 (16-bit textures)
+static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Default;
 
 @implementation Texture2D
 
 @synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
+@synthesize premultipliedColors=_premultipliedColors;
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	GLint					saveName;
@@ -127,6 +128,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_RGBA
 		_format = pixelFormat;
 		_maxS = size.width / (float)width;
 		_maxT = size.height / (float)height;
+
+		_premultipliedColors = NO;
 	}					
 	return self;
 }
@@ -182,6 +185,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_RGBA
 
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
+	
+	_premultipliedColors = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 	size_t bpp = CGImageGetBitsPerComponent(image);
 	if(CGImageGetColorSpace(image)) {
 		if(hasAlpha || bpp >= 8)

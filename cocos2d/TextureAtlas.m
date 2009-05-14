@@ -260,13 +260,12 @@
 	// tex coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (void*)(offset + diff));
-
+	
 #ifdef USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices);	
 #else
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	
 #endif
-
 }
 
 @end

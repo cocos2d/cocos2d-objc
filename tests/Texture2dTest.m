@@ -461,7 +461,7 @@ Class restartAction()
 	[sprite4 runAction: [[seq_4ever copy] autorelease]];
 
 	// restore default
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
 }
 
 -(NSString *) title
