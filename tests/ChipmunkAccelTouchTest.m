@@ -151,7 +151,7 @@ eachShape(void *ptr, void* unused)
 		
 		[self addNewSpriteX: location.x y:location.y];
 	}
-	return kEventHandled;
+	return kEventIgnored;
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
