@@ -29,11 +29,11 @@ typedef enum  {
  *  - You can add MenuItem objects in runtime using addChild:
  *  - But the only accecpted children are MenuItem objects
  */
-@interface Menu : CocosNode <TargetedTouchDelegate, CocosNodeOpacity>
+@interface Menu : CocosNode <TargetedTouchDelegate, CocosNodeRGBA>
 {
 	MenuState state;
 	MenuItem *selectedItem;
-	GLubyte opacity;
+	GLubyte opacity_, r_, g_, b_;
 }
 
 /** creates a menu with it's items */
@@ -66,6 +66,7 @@ typedef enum  {
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
 
 
-@property (readwrite,assign) GLubyte opacity;
+/** conforms to CocosNodeRGBA protocol */
+@property (readonly) GLubyte opacity, r, g, b;
 
 @end

@@ -31,21 +31,21 @@
  *  - RGB (setRGB:::)
  *  - texture (can be Aliased or AntiAliased)
  */
-@interface TextureNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize, CocosNodeTexture> {
+@interface TextureNode : CocosNode <CocosNodeRGBA, CocosNodeSize, CocosNodeTexture> {
 
 	/// texture
 	Texture2D *texture_;
 	
 	/// texture opacity
-	GLubyte opacity;
+	GLubyte opacity_;
 	
 	/// texture color
-	GLubyte	r,g,b;
+	GLubyte	r_,g_,b_;
 }
 
 /** The texture that is rendered */
 @property (readwrite,retain) Texture2D *texture;
 
-/** conforms to CocosNodeOpacity and CocosNodeRGB protocol */
-@property (readwrite,assign) GLubyte r, g, b, opacity;
+/** conforms to CocosNodeRGBA protocol */
+@property (readonly) GLubyte r, g, b, opacity;
 @end

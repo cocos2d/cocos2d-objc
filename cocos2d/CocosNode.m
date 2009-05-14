@@ -669,7 +669,6 @@
 		[self timerAlloc];
 	
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
-		CCLOG(@"CocosNode.schedule: Selector already scheduled: %@",NSStringFromSelector(selector) );
 		return;
 	}
 	

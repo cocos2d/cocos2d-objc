@@ -39,7 +39,7 @@
  *
  * @since v0.7.1
  */
-@interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames, CocosNodeOpacity, CocosNodeRGB>
+@interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames, CocosNodeRGBA>
 {
 	// weak reference
 	TextureAtlas *textureAtlas_;
@@ -109,8 +109,9 @@
 
 @property (readwrite,assign) NSString *name;
 
-/* cocos animation */
+/** delay between frames in seconds */
 @property (readwrite,assign) float delay;
+/** array of frames */
 @property (readonly) NSMutableArray *frames;
 
 /** creates an AtlasAnimation with an AtlasSpriteManager, a name, delay between frames */

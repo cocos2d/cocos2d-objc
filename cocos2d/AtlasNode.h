@@ -25,7 +25,7 @@
  - color (setRGB:::)
  - contentSize
  */
-@interface AtlasNode : CocosNode <CocosNodeOpacity, CocosNodeRGB, CocosNodeSize, CocosNodeTexture> {
+@interface AtlasNode : CocosNode <CocosNodeRGBA, CocosNodeSize, CocosNodeTexture> {
 	
 	/// texture atlas
 	TextureAtlas	*textureAtlas_;
@@ -45,18 +45,18 @@
 	int				itemHeight;
 	
 	/// texture opacity
-	GLubyte opacity;
+	GLubyte opacity_;
 	
 	/// texture color
-	GLubyte	r,g,b;
+	GLubyte	r_,g_,b_;
 	
 }
 
-/// Conforms to CocosNodeOpacity and CocosNodeRGB protocol
-@property (readwrite,assign) GLubyte opacity, r, g, b;
-
-/// texture atlas used
+/** conforms to CocosNodeTexture protocol */
 @property (readwrite,retain) TextureAtlas *textureAtlas;
+
+/** conforms to CocosNodeRGBA protocol */
+@property (readonly) GLubyte r, g, b, opacity;
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;

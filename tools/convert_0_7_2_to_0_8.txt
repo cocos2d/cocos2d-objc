@@ -17,6 +17,21 @@ For more information read the following files:
 COMPULSORY CHANGES
 ******************
 
+Textures
+========
+
+a)
+    Default blend function is: (GL_ONE, GL_ONE_MINUS_SRC)
+    cocos2d takes care if your images is premultiplied or not.
+    If you were handling them manually, you should remove that code.
+
+b) 
+    Default Alpha texture is RGBA_4444 (16-bit textures). To use 32-bit RGBA textures, like in v0.7.2 add
+    at the very beginning of your game:
+        [Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+
+
+
 Texture2D Alias/AntiAlias
 =========================
 
@@ -75,6 +90,11 @@ New Files
     QuadParticleSystem.m
     ParallaxNode.h
     ParallaxNode.m
+    TouchDispatcher.h
+    TouchDispatcher.m
+    TouchHandler.h
+    TouchHandler.m
+    TargetedTouchDelegate.h
 
 
 Removed Files
@@ -83,6 +103,8 @@ Removed Files
     Particle.m
     ParticleSystems.h
     ParticleSystems.m
+    CocosNodeExtras.h
+    CocosNodeExtras.m
 
 
 

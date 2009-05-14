@@ -313,7 +313,13 @@ enum {
 -(void) setOpacity:(GLubyte) anOpacity
 {
 	opacity_ = anOpacity;
-	ccColor4B color = {r_, g_, b_, opacity_ };
+	
+	// special opacity for premultiplied textures
+	if( [[textureAtlas_ texture] premultipliedColors] )
+		r_ = g_ = b_ = opacity_;
+
+	ccColor4B color = (ccColor4B) {r_, g_, b_, opacity_ };
+
 	quad_.bl.colors = color;
 	quad_.br.colors = color;
 	quad_.tl.colors = color;

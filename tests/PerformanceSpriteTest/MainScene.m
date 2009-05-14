@@ -97,64 +97,60 @@ Class restartAction()
 				break;
 				///
 			case 2:
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
 				break;
 			case 3:
 				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 				break;				
 			case 4:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
 				break;
 				
 				///
 			case 6:
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
 				break;				
 			case 7:
 				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 				break;								
 			case 8:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
 				break;
 
 				///
 			case 10:
+				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
 				break;
 			case 11:
 				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 				break;				
 			case 12:
 				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
 				[p addChild:sheet z:0];
-				[sheet retain];
 				break;
 				
 			default:
 				break;
 		}
+		
+		[sheet retain];
+
+		[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+
 	}
 	
 	return self;
@@ -168,6 +164,9 @@ Class restartAction()
 
 -(id) createSpriteWithTag:(int)tag
 {
+	// create 
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+
 	id sprite = nil;
 	switch (subtestNumber) {
 		case 1: {
@@ -240,7 +239,9 @@ Class restartAction()
 		default:
 			break;
 	}
-			
+		
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+
 	return sprite;
 }
 

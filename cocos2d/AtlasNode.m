@@ -13,6 +13,7 @@
  */
 
 #import "AtlasNode.h"
+#import "ccMacros.h"
 
 
 @interface AtlasNode (Private)
@@ -22,7 +23,7 @@
 
 @implementation AtlasNode
 
-@synthesize	opacity, r, g, b;
+@synthesize opacity=opacity_, r=r_, g=g_, b=b_;
 @synthesize textureAtlas = textureAtlas_;
 
 #pragma mark AtlasNode - Creation & Init
@@ -43,8 +44,8 @@
 	itemWidth = w;
 	itemHeight = h;
 
-	opacity = 255;
-	r = g = b = 255;
+	opacity_ = 255;
+	r_ = g_ = b_ = 255;
 		
 	[self calculateMaxItems];
 	[self calculateTexCoordsSteps];
@@ -87,10 +88,17 @@
 	
 	glEnable( GL_TEXTURE_2D);
 
+	glColor4ub( r_, g_, b_, opacity_);
 
-	glColor4ub( r, g, b, opacity);
-
+	BOOL preMulti = [[textureAtlas_ texture] premultipliedColors];
+	if( ! preMulti )
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	[textureAtlas_ drawQuads];
+		
+	if( !preMulti )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
@@ -101,13 +109,24 @@
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
-#pragma mark AtlasNode - protocol related
+#pragma mark AtlasNode - RGB protocol
 
+// RGB protocol
 -(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
 {
-	r=rr;
-	g=gg;
-	b=bb;
+	r_=rr;
+	g_=gg;
+	b_=bb;
+}
+#pragma mark AtlasNode - opacity protocol
+
+// opacity protocol
+-(void) setOpacity:(GLubyte)opacity
+{
+	// special opacity for premultiplied textures
+	opacity_ = opacity;
+	if( [[textureAtlas_ texture] premultipliedColors] )
+		r_ = g_ = b_ = opacity_;	
 }
 
 -(CGSize) contentSize

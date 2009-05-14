@@ -810,7 +810,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation FadeIn
 -(void) update: (ccTime) t
 {
-	[(id<CocosNodeOpacity>) target setOpacity: 255 *t];
+	[(id<CocosNodeRGBA>) target setOpacity: 255 *t];
 }
 -(IntervalAction*) reverse
 {
@@ -826,7 +826,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation FadeOut
 -(void) update: (ccTime) t
 {
-	[(id<CocosNodeOpacity>) target setOpacity: 255 *(1-t)];
+	[(id<CocosNodeRGBA>) target setOpacity: 255 *(1-t)];
 }
 -(IntervalAction*) reverse
 {
@@ -861,12 +861,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) start
 {
 	[super start];
-	fromOpacity = [(id<CocosNodeOpacity>)target opacity];
+	fromOpacity = [(id<CocosNodeRGBA>)target opacity];
 }
 
 -(void) update: (ccTime) t
 {
-	[(id<CocosNodeOpacity>)target setOpacity: fromOpacity + ( toOpacity - fromOpacity ) * t];
+	[(id<CocosNodeRGBA>)target setOpacity: fromOpacity + ( toOpacity - fromOpacity ) * t];
 }
 @end
 
@@ -901,7 +901,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[super start];
 	
-	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
 	
 	fromR = [tn r];
 	fromG = [tn g];
@@ -910,7 +910,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
 	[tn setRGB:fromR + (toR - fromR) * t :fromG + (toG - fromG) * t :fromB + (toB - fromB) * t];
 }
 @end
@@ -945,7 +945,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[super start];
 	
-	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
 	fromR = [tn r];
 	fromG = [tn g];
 	fromB = [tn b];
@@ -953,7 +953,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	id<CocosNodeRGB> tn = (id<CocosNodeRGB>) target;
+	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
 	[tn setRGB:fromR + deltaR * t :fromG + deltaG * t :fromB + deltaB * t];
 }
 - (IntervalAction*) reverse

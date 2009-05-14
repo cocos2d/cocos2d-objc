@@ -267,9 +267,16 @@ const int defaultCapacity = 29;
 		glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnable(GL_TEXTURE_2D);
-
+		
+		BOOL preMulti = [[textureAtlas_ texture] premultipliedColors];
+		if( !preMulti )
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		[textureAtlas_ drawNumberOfQuads:totalSprites_];
-
+		
+		if( !preMulti )
+			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);

@@ -165,12 +165,16 @@ Class restartAction()
 	id action;
 	float rand = CCRANDOM_0_1();
 	
-	if( rand < 0.33 )
+	if( rand < 0.20 )
 		action = [ScaleBy actionWithDuration:3 scale:2];
-	else if(rand < 0.66)
+	else if(rand < 0.40)
 		action = [RotateBy actionWithDuration:3 angle:360];
-	else
+	else if( rand < 0.60)
 		action = [Blink actionWithDuration:1 blinks:3];
+	else if( rand < 0.8 )
+		action = [TintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+	else 
+		action = [FadeOut actionWithDuration:2];
 	id action_back = [action reverse];
 	id seq = [Sequence actions:action, action_back, nil];
 	

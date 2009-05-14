@@ -330,15 +330,6 @@ enum {
 // protocols
 //
 
-/// CocosNode opacity protocol
-@protocol CocosNodeOpacity <NSObject>
-/// returns the opacity
--(GLubyte) opacity;
-/// sets the opacity
--(void) setOpacity: (GLubyte) opacity;
-@end
-
-
 /// Size CocosNode protocol
 @protocol CocosNodeSize <NSObject>
 /// returns the size in pixels of the un-tranformted texture.
@@ -347,8 +338,8 @@ enum {
 
 
 /// Size CocosNode protocol
-@protocol CocosNodeRGB <NSObject>
-/** set the color of the node.
+@protocol CocosNodeRGBA <NSObject>
+/** set the color of the node
  * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
  @since v0.7.1
  */
@@ -359,6 +350,21 @@ enum {
 -(GLubyte) g;
 /// The blue component of the node's color.
 -(GLubyte) b;
+/// returns the opacity
+-(GLubyte) opacity;
+/** sets the opacity.
+ @warning If the the texture has premultiplied colors then R = G = B = Opacity
+ */
+-(void) setOpacity: (GLubyte) opacity;
+@end
+
+
+/** CocosNodes that uses a Texture2D to render the images.
+ @since v0.8
+ */
+@protocol CocosNodeTexture <NSObject>
+-(Texture2D*) texture;
+-(void) setTexture:(Texture2D*)texture;
 @end
 
 
@@ -372,15 +378,6 @@ enum {
 /** name of the animation */
 -(NSString*) name;
 @end
-
-/** CocosNodes that uses a Texture2D to render the images.
- @since v0.8
- */
-@protocol CocosNodeTexture <NSObject>
--(Texture2D*) texture;
--(void) setTexture:(Texture2D*)texture;
-@end
-
 
 /// Nodes supports frames protocol
 /// @since v0.7.1

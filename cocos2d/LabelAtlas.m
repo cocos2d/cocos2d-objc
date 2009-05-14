@@ -96,29 +96,6 @@
 	[self updateAtlasValues];
 }
 
-
-#pragma mark LabelAtlas - draw
-- (void) draw
-{
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	
-	glEnable( GL_TEXTURE_2D);
-	
-	glColor4ub( r, g, b, opacity);
-	
-	[textureAtlas_ drawNumberOfQuads: string.length];
-	
-	// is this chepear than saving/restoring color state ?
-	glColor4ub( 255, 255, 255, 255);
-	
-	glDisable( GL_TEXTURE_2D);
-	
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-}
-
-
 #pragma mark LabelAtlas - protocol related
 
 -(CGSize) contentSize

@@ -271,10 +271,11 @@
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
 	
 	
+	BOOL premultipliedColors = [texture premultipliedColors];
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	else
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	else if( ! premultipliedColors )
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	
 	// save color mode
 #if 0
@@ -288,7 +289,8 @@
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// restore blend state
-	glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
+	if( blendAdditive || ! premultipliedColors )
+		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
 	
 #if 0
 	// restore color mode
