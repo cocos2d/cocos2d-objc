@@ -1,12 +1,15 @@
 version 0.8 - xxx
  . Actions: Added BezierBy action (issue #313)
  . Actions: Sequence works when 1st action, InstantActions are reversible (issue #348)
+ . Actions: improved performance when running Actions (issue #301)
  . All: removed deprecated classes/methods (issue #326)
  . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)
  . CocosLive: Demo shows world rankings (issue #342)
  . CocosNode: actions don't retain the target (issue #150)
  . CocosNode: support real openGL Z vertex (issue #355)
+ . CocosNode: transformation matrix is cached (issue #263)
+ . CocosNode: faster transforming of local/world coordinates (issue #263)
  . Demos: Added PerformanceParticleTest (issue #331)
  . Director: "new" Fast Director. Attach/Detach, auto-lock, SDK 3.0 works (issue #145, #issue #239, issue #340)
  . LabelAtlas: don't render in subpixel (issue #135)
@@ -20,7 +23,9 @@ version 0.8 - xxx
  . TextureAtlas: uses interleaved vertex array (issue #359)
  . TextureMgr: added method that removes unused textures (issue #117)
  . Types: types follows OpenGL "standards" (issue #360)
- . Touches: new feature (issue #211)
+ . Touch Events: new touch dispatcher (issue #211)
+ . Touch Events: menu uses new touch dispatcher (issue #362)
+
 
 version 0.7.2 - 23-Apr-2009
  . All: removed chipmunk macros. using CG macros (issue #290)
