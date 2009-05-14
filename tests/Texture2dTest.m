@@ -494,7 +494,7 @@ Class restartAction()
 //	[[Director sharedDirector] setPixelFormat:kRGBA8];
 
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
 

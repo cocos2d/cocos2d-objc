@@ -609,7 +609,7 @@ Class restartAction()
 	[[Director sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	
 	// display FPS (useful when debugging)
 	[[Director sharedDirector] setDisplayFPS:YES];

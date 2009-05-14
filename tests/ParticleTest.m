@@ -651,7 +651,7 @@ Class restartAction()
 	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: NO];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
 	[[Director sharedDirector] setDisplayFPS: YES];
 
 	// AnimationInterval doesn't work with FastDirector, yet

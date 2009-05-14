@@ -37,7 +37,9 @@ enum {
 	// in this case:
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
-	id lens = [Lens3D actionWithPosition:ccp(240,160) radius:240 grid:ccg(15,10) duration:0.0f];
+	
+	CGSize size = [[Director sharedDirector] winSize];
+	id lens = [Lens3D actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:ccg(15,10) duration:0.0f];
 	id waves = [Waves3D actionWithWaves:18 amplitude:15 grid:ccg(15,10) duration:10];
 
 	id reuse = [ReuseGrid actionWithTimes:1];
@@ -275,7 +277,7 @@ Class restartAction()
 	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
 	[[Director sharedDirector] setDisplayFPS:YES];
 	
 	// create an openGL view inside a window
