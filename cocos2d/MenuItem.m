@@ -278,8 +278,6 @@ enum {
 
 @implementation MenuItemFont
 
-@synthesize label;
-
 +(void) setFontSize: (int) s
 {
 	_fontSize = s;
