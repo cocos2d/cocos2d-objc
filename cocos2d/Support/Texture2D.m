@@ -85,7 +85,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 @implementation Texture2D
 
 @synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
-@synthesize premultipliedColors=_premultipliedColors;
+@synthesize premultipliedAlpha=_premultipliedAlpha;
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	GLint					saveName;
@@ -129,7 +129,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		_maxS = size.width / (float)width;
 		_maxT = size.height / (float)height;
 
-		_premultipliedColors = NO;
+		_premultipliedAlpha = NO;
 	}					
 	return self;
 }
@@ -186,7 +186,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
-	_premultipliedColors = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+	_premultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 	size_t bpp = CGImageGetBitsPerComponent(image);
 	if(CGImageGetColorSpace(image)) {
 		if(hasAlpha || bpp >= 8)

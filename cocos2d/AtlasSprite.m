@@ -315,7 +315,7 @@ enum {
 	opacity_ = anOpacity;
 	
 	// special opacity for premultiplied textures
-	if( [[textureAtlas_ texture] premultipliedColors] )
+	if( [[textureAtlas_ texture] premultipliedAlpha] )
 		r_ = g_ = b_ = opacity_;
 
 	ccColor4B color = (ccColor4B) {r_, g_, b_, opacity_ };

@@ -100,7 +100,7 @@ typedef enum {
 	Texture2DPixelFormat		_format;
 	GLfloat						_maxS,
 								_maxT;
-	BOOL						_premultipliedColors;
+	BOOL						_premultipliedAlpha;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -121,8 +121,8 @@ typedef enum {
 @property(readonly) GLfloat maxS;
 /** texture max T */
 @property(readonly) GLfloat maxT;
-/** whether or not the textures has premultiplied colors */
-@property(readonly) BOOL premultipliedColors;
+/** whether or not the texture has their Alpha premultiplied */
+@property(readonly) BOOL premultipliedAlpha;
 @end
 
 /**
@@ -158,6 +158,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 
 /**
  Extensions to make it easy to create a Texture2D object from a PVRTC file
+ Note that the generated textures are don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
 @interface Texture2D (PVRTC)
 /** Initializes a texture from a PVRTC buffer */
@@ -200,11 +201,12 @@ typedef struct _ccTexParams {
 
 @interface Texture2D (PixelFormat)
 /** sets the default pixel format for UIImages that contains alpha channel.
- If the UIImage has already alpha pre-multiplied (no alpha channle), then it will create an RGB565 texture.
- But if the UIImage contains alpha channel, then the options are:
+ If the UIImage contains alpha channel, then the options are:
     - generate 32-bit textures: RGBA8 (kTexture2DPixelFormat_RGBA8888)
     - generate 16-bit textures: RGBA4 (default: kTexture2DPixelFormat_RGBA4444)
     - generate 16-bit textures: RGB5A1 (kTexture2DPixelFormat_RGB5A1)
+ You can also use the following option, but you will lose the alpha channel:
+    - generate 16-bit textures: RGB565 (kTexture2DPixelFormat_RGB565)
  
  To use this function you MUST disable the "compres .PNG files" in XCode, otherwise all your .PNG images
  will be pre-multiplied wihtout alpha channel.
