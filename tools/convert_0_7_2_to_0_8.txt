@@ -31,6 +31,21 @@ b)
         [Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 
 
+CocosNode
+=========
+
+[OLD]
+    // image size is(400,300)
+    [node setTransformAnchor: ccp(200,200)];        // absolute pixels
+
+[NEW]
+    // image size is(400,300)
+    [node setAnchorPoint:ccp( 0.5f, 2/3.0f)];       // relative (1,1) is top-right
+                                                    // (0,0) is bottom-left
+                                                    // (0.5f, 0.5f) is the middle
+
+    transformAnchor can be read, but cannot be written anymore
+
 
 Texture2D Alias/AntiAlias
 =========================

@@ -94,15 +94,12 @@
 	[string release];
 	string = [newString retain];
 	[self updateAtlasValues];
-}
 
-#pragma mark LabelAtlas - CocosNodeSize protocol
-
--(CGSize) contentSize
-{
 	CGSize s;
 	s.width = [string length] * itemWidth;
 	s.height = itemHeight;
-	return s;
+	[self setContentSize:s];
 }
+
+
 @end

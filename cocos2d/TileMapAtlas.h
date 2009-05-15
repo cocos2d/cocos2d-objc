@@ -34,15 +34,9 @@
 	/// x,y to altas dicctionary
 	NSMutableDictionary	*posToAtlasIndex;
 	
-	/// size of the map in pixels
-	CGSize			contentSize;
-	
 	/// numbers of tiles to render
 	int				itemsToRender;
 }
-
-/** content size of the TileMap */
-@property (readonly) CGSize contentSize;
 
 /** TileMap info */
 @property (readonly) tImageTGA *tgaInfo;

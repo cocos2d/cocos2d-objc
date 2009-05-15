@@ -25,7 +25,6 @@
 
 @implementation TileMapAtlas
 
-@synthesize contentSize;
 @synthesize tgaInfo;
 
 #pragma mark TileMapAtlas - Creation & Init
@@ -40,15 +39,14 @@
 	[self loadTGAfile: map];
 	[self calculateItemsToRender];
 
-	if( !(self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender]) )
-		return nil;
+	if( (self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender]) ) {
 
-	posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:itemsToRender] retain];
+		posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:itemsToRender] retain];
 
-	[self updateAtlasValues];
-	
-	contentSize.width = tgaInfo->width * itemWidth;
-	contentSize.height = tgaInfo->height * itemHeight;
+		[self updateAtlasValues];
+		
+		[self setContentSize: CGSizeMake(tgaInfo->width*itemWidth, tgaInfo->height*itemHeight)];
+	}
 
 	return self;
 }

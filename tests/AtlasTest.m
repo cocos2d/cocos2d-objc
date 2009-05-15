@@ -261,20 +261,27 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		BitmapFontAtlas *label1 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest2.fnt" alignment:UITextAlignmentLeft];
+		BitmapFontAtlas *label1 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		
+		// testing anchors
+		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
 		
-		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest2.fnt" alignment:UITextAlignmentCenter];
+		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		// testing anchors
+		label2.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		
-		BitmapFontAtlas *label3 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest2.fnt" alignment:UITextAlignmentRight];
+		BitmapFontAtlas *label3 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		// testing anchors
+		label3.anchorPoint = ccp(1,1);
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
 		
 		
 		CGSize s = [[Director sharedDirector] winSize];	
-		label1.position = ccp( 0, 90);
+		label1.position = ccp( 0,0);
 		label2.position = ccp( s.width/2, s.height/2);
-		label3.position = ccp( s.width, s.height-90);
+		label3.position = ccp( s.width, s.height);
 
 		[self schedule:@selector(step:)];
 	}
@@ -285,7 +292,7 @@ Class restartAction()
 -(void) step:(ccTime) dt
 {
 	time += dt;
-	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
+	NSString *string = [NSString stringWithFormat:@"%2.2f Test j", time];
 	
 	BitmapFontAtlas *label1 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas1];
 	[label1 setString:string];
@@ -316,12 +323,13 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		// Upper Label
-		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt" alignment:UITextAlignmentCenter];
+		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label];
 		
 		CGSize s = [[Director sharedDirector] winSize];
 		
 		label.position = ccp(s.width/2, s.height/2);
+		label.anchorPoint = ccp(0.5f, 0.5f);
 		
 		
 		AtlasSprite *BChar = (AtlasSprite*) [label getChildByTag:0];
@@ -352,7 +360,7 @@ Class restartAction()
 		
 		
 		// Bottom Label
-		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt" alignment:UITextAlignmentCenter];
+		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		label2.position = ccp(s.width/2.0f, 80);
 		
@@ -364,6 +372,14 @@ Class restartAction()
 	
 	return self;
 }
+-(void) draw
+{
+	CGSize s = [[Director sharedDirector] winSize];
+	drawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
+	drawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
+
+}
+
 -(NSString*) title
 {
 	return @"BitmapFontAtlas test #2";
@@ -397,8 +413,7 @@ Class restartAction()
 		
 		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
-		CGSize size = tilemap.contentSize;
-		tilemap.transformAnchor = ccp(0, size.height/2);
+		tilemap.anchorPoint = ccp(0, 0.5f);
 		
 		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
 		id scaleBack = [s reverse];
@@ -444,7 +459,7 @@ Class restartAction()
 		
 		[self addChild:tilemap z:0 tag:kTagTileMap];
 		
-		tilemap.transformAnchor = ccp(0, 0);
+		tilemap.anchorPoint = ccp(0, 0);
 		tilemap.position = ccp(-20,-200);
 	}	
 	return self;

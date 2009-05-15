@@ -26,7 +26,7 @@ enum {
 	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
 	MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
-	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt" alignment:UITextAlignmentCenter];
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
 	MenuItemLabel *item5 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
 	
 	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
@@ -78,6 +78,9 @@ enum {
 -(void) onQuit: (id) sender
 {
 	[[Director sharedDirector] end];
+	
+	// HA HA... no more terminate on sdk v3.0
+	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
@@ -192,7 +195,7 @@ enum {
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:28];
 
-	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"another option" fntFile:@"bitmapFontTest3.fnt" alignment:UITextAlignmentCenter];
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"another option" fntFile:@"bitmapFontTest3.fnt"];
 	MenuItemLabel *item1 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
@@ -297,7 +300,7 @@ enum {
     [MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:34];
 	
-	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"go back" fntFile:@"bitmapFontTest3.fnt" alignment:UITextAlignmentCenter];
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"go back" fntFile:@"bitmapFontTest3.fnt"];
 	MenuItemLabel *back = [MenuItemLabel itemWithLabel:label target:self selector:@selector(backCallback:)];
     
 	Menu *menu = [Menu menuWithItems:

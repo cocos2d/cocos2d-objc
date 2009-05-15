@@ -23,8 +23,10 @@
 #define kItemSize 32
 
 /** Menu Item base class
+ *
+ *  Subclass MenuItem (or any subclass) to create your custom MenuItem
  */
-@interface MenuItem : CocosNode <CocosNodeSize>
+@interface MenuItem : CocosNode
 {
 	NSInvocation *invocation;
 	BOOL isEnabled;
@@ -54,21 +56,26 @@
 -(BOOL) isEnabled;
 @end
 
-/** An abstract class "label" MenuItems */
+/** An abstract class for "label" MenuItems 
+ Any CocosNode that supports the CocosNodeLabel protocol can be added.
+ Supported nodes:
+   - BitmapFontAtlas
+   - LabelAtlas
+   - Label
+ */
 @interface MenuItemLabel : MenuItem  <CocosNodeRGBA>
 {
-	CocosNode<CocosNodeLabel, CocosNodeRGBA, CocosNodeSize> *label_;
+	CocosNode<CocosNodeLabel, CocosNodeRGBA> *label_;
 }
 
 /** Label that is rendered. It can be any CocosNode that implements the CocosNodeLabel */
-@property (readwrite, retain) id<CocosNodeLabel> label;
+@property (readwrite,retain) CocosNode<CocosNodeLabel, CocosNodeRGBA>* label;
 
 /** creates a MenuItemLabel with a Label, target and selector */
-+(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector;
++(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector;
 
 /** initializes a MenuItemLabel with a Label, target and selector */
--(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector;
-
+-(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector;
 
 /** sets a new string to the inner label */
 -(void) setString:(NSString*)label;
@@ -79,7 +86,9 @@
 -(void) setIsEnabled: (BOOL)enabled;
 @end
 
-/** A MenuItemAtlasFont */
+/** A MenuItemAtlasFont
+ Helper class that creates a MenuItemLabel class with a LabelAtlas
+ */
 @interface MenuItemAtlasFont : MenuItemLabel
 {
 }
@@ -96,7 +105,9 @@
 
 @end
 
-/** A MenuItemFont */
+/** A MenuItemFont
+ Helper class that creates a MenuItemLabel class with a Label
+ */
 @interface MenuItemFont : MenuItemLabel
 {
 }
@@ -122,7 +133,14 @@
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
 
-/** A MenuItemImage */
+/** A MenuItemImage
+ A class that creates a MenuItem with 3 images:
+ - unselected image
+ - selected image
+ - disabled image
+ 
+ For best results try that all images are of the same size
+ */
 @interface MenuItemImage : MenuItem <CocosNodeRGBA>
 {
 	BOOL selected;
@@ -148,7 +166,10 @@
 
 
 
-/** A MenuItemToggle */
+/** A MenuItemToggle
+ A simple container class that "toggles" it's inner items
+ The inner itmes can be any MenuItem
+ */
 @interface MenuItemToggle : MenuItem <CocosNodeRGBA>
 {
 	NSUInteger selectedIndex_;

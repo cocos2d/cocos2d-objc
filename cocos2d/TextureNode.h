@@ -20,18 +20,16 @@
 #import "CocosNode.h"
 
 
-/** TextureNode is a subclass of CocosNode that implements the CocosNodeOpacity,
- * CocosNodeRGB and CocosNodeSize protocol.
+/** TextureNode is a subclass of CocosNode that implements the CocosNodeRGBA
+ * and CocosNodeTexture protocol.
  *
  * As the name implies it, it knows how to render a textures.
  *
  * All features from CocosNode are valid, plus the following new features:
- *  - opacity
- *  - contentSize
- *  - RGB (setRGB:::)
+ *  - opacity and RGB
  *  - texture (can be Aliased or AntiAliased)
  */
-@interface TextureNode : CocosNode <CocosNodeRGBA, CocosNodeSize, CocosNodeTexture> {
+@interface TextureNode : CocosNode <CocosNodeRGBA, CocosNodeTexture> {
 
 	/// texture
 	Texture2D *texture_;

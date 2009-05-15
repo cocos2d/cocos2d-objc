@@ -48,8 +48,10 @@ enum {
  - Camera ( using spherical coordinates )
  - GridBase (to do mesh transformations)
  - anchor point
+ - size
  - visible
  - z-order
+ - openGL z position
  
  Limitations:
  - A CocosNode is a "void" object. It doesn't have a texture
@@ -75,6 +77,11 @@ enum {
 	
 	// transformation anchor point
 	CGPoint transformAnchor_;
+	
+	// anchor point
+	CGPoint anchorPoint_;
+	// untransformed size of the node
+	CGSize	contentSize_;
 	
 	CGAffineTransform transform_, inverse_;
 	BOOL isTransformDirty_, isInverseDirty_;
@@ -140,8 +147,21 @@ enum {
 @property(readwrite,retain) GridBase* grid;
 /** Whether of not the node is visible. Default is YES */
 @property(readwrite,assign) BOOL visible;
-/** The transformation anchor point. For Sprite and Label the transform anchor point is (width/2, height/2) */
-@property(readwrite,assign) CGPoint transformAnchor;
+/** The transformation anchor point in absolute pixels.
+ since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
+ */
+@property(readonly) CGPoint transformAnchor;
+/** Anchor point. (0,0) means bottom-left corner, (1,1) means top-right corner, (0.5, 0.5) means center
+ Sprites and other "textured" Nodes have a default anchorPoint of (0.5f, 0.5f)
+ @since v0.8
+ */
+@property(readwrite) CGPoint anchorPoint;
+/** The untransformed size of the node.
+ The contentSize remains the same no matter the node is scaled or rotated.
+ All nodes has a size. Layer and Scene has the same size of the screen.
+ @since v0.8
+ */
+@property (readwrite) CGSize contentSize;
 /** A weak reference to the parent */
 @property(readwrite,assign) CocosNode* parent;
 /** If YES the transformtions will be relative to (-transform.x, -transform.y).
@@ -330,14 +350,7 @@ enum {
 // protocols
 //
 
-/// Size CocosNode protocol
-@protocol CocosNodeSize <NSObject>
-/// returns the size in pixels of the un-tranformted texture.
--(CGSize) contentSize;
-@end
-
-
-/// Size CocosNode protocol
+/// CocosNode RGBA protocol
 @protocol CocosNodeRGBA <NSObject>
 /** set the color of the node
  * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
@@ -403,10 +416,5 @@ enum {
 -(id<CocosAnimation>)animationByName: (NSString*) animationName;
 /** adds an Animation to the Sprite */
 -(void) addAnimation: (id<CocosAnimation>) animation;
-/** whether or not the method 'setDisplayFrame' will auto center the frames or not
- @deprecated Added only to fix issue #281. v0.8 will use relative transformAnchor point.
- @since v0.7.2
- */
--(void) setAutoCenterFrames:(BOOL) autoCenterFrames;
 @end
 

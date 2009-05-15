@@ -19,19 +19,18 @@
 #import "TextureMgr.h"
 #import "TextureNode.h"
 #import "ccMacros.h"
+#import "Support/CGPointExtension.h"
 
 @implementation TextureNode
 
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
-@synthesize texture = texture_;
 
 - (id) init
 {
-	if( ! (self=[super init]) )
-		return nil;
-	
-	opacity_ = 255;
-	r_ = g_ = b_ = 255;
+	if( (self=[super init]) ) {
+		opacity_ = r_ = g_ = b_ = 255;
+		anchorPoint_ = ccp(0.5f, 0.5f);
+	}
 	
 	return self;
 }
@@ -42,7 +41,19 @@
 	[super dealloc];
 }
 
-#pragma mark TextureNode - RGB protocol
+-(void) setTexture:(Texture2D*) texture
+{
+	[texture_ release];
+	texture_ = [texture retain];
+	[self setContentSize: texture.contentSize];
+}
+
+-(Texture2D*) texture
+{
+	return texture_;
+}
+
+#pragma mark TextureNode - RGBA protocol
 -(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
 {
 	r_=rr;
@@ -50,7 +61,6 @@
 	b_=bb;
 }
 
-#pragma mark TextureNode - opacity protocol
 -(void) setOpacity:(GLubyte)opacity
 {
 	// special opacity for premultiplied textures
@@ -84,11 +94,5 @@
 
 	glDisableClientState(GL_VERTEX_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-}
-
--(CGSize) contentSize
-{
-	return [texture_ contentSize];
-}
-	
+}	
 @end

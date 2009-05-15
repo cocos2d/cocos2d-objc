@@ -92,6 +92,29 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
+-(void) setAnchorPoint:(CGPoint)point
+{
+	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
+		anchorPoint_ = point;
+		self.transformAnchor = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+	}
+}
+-(CGPoint) anchorPoint
+{
+	return anchorPoint_;
+}
+-(void) setContentSize:(CGSize)size
+{
+	if( ! CGSizeEqualToSize(size, contentSize_) ) {
+		contentSize_ = size;
+		self.transformAnchor = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+	}
+}
+-(CGSize) contentSize
+{
+	return contentSize_;
+}
+
 -(float) scale
 {
 	if( scaleX_ == scaleY_)
@@ -128,6 +151,9 @@
 	scaleX_ = scaleY_ = 1.0f;
 	position_ = CGPointZero;
 	transformAnchor_ = CGPointZero;
+	anchorPoint_ = CGPointZero;
+	contentSize_ = CGSizeZero;
+
 	// "whole screen" objects. like Scenes and Layers, should set relativeTransformAnchor to NO
 	relativeTransformAnchor_ = YES; 
 	

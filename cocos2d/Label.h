@@ -22,6 +22,8 @@
 /** Label is a subclass of TextureNode that knows how to render text labels
  *
  * All features from TextureNode are valid in Label
+ *
+ * Label are slow. Consider using LabelAtlas or BitmapFontAtlas instead.
  */
 @interface Label : TextureNode <CocosNodeLabel>
 {

@@ -42,25 +42,25 @@
 @synthesize contentSize = contentSize_;
 
 #pragma mark BitmapFontAtlas - Creation & Init
-+(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile alignment:(UITextAlignment)alignment
++(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
 {
-	return [[[self alloc] initWithString:string fntFile:fntFile alignment:alignment] autorelease];
+	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
 }
 
 
--(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile alignment:(UITextAlignment)alignment
+-(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
 	NSString *textureAtlasName = [self atlasNameFromFntFile:fntFile];
 	
 	if ((self=[super initWithFile:textureAtlasName capacity:[theString length]])) {
-
-		alignment_ = alignment;
 
 		// will be allocated later
 		kerningDictionary = nil;
 		
 		r_ = g_ = b_ = opacity_ = 255;
 		contentSize_ = CGSizeZero;
+		
+		anchorPoint_ = ccp(0.5f, 0.5f);
 
 		[self parseConfigFile:fntFile];		
 		[self setString:theString];
@@ -295,7 +295,7 @@
 	unichar prev = -1;
 	int kerningAmmount = 0;
 	
-	contentSize_ = CGSizeZero;
+	CGSize tmpSize = CGSizeZero;
 
 	NSUInteger l = [string_ length];
 	for(NSUInteger i=0; i<l; i++) {
@@ -319,25 +319,20 @@
 
 		fontChar.visible = YES;
 
-		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.xAdvance/2.0f, (commonHeight/2.0f - fontDef.yOffset) - rect.size.height/2.0f );
-		[fontChar setAutoCenterFrames:YES];
+		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.xAdvance/2.0f, (commonHeight - fontDef.yOffset) - rect.size.height/2.0f );
+		
+//		NSLog(@"position.y: %f", fontChar.position.y);
 		
 		// update kerning
 		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmmount,0));
 		nextFontPositionX += bitmapFontArray[c].xAdvance + kerningAmmount;
 		prev = c;
 		
-		contentSize_.width += bitmapFontArray[c].xAdvance + kerningAmmount;
-		contentSize_.height = MAX( rect.size.height, contentSize_.height);		
+		tmpSize.width += bitmapFontArray[c].xAdvance + kerningAmmount;
+		tmpSize.height = MAX( rect.size.height, contentSize_.height);		
 	}
 	
-	CGSize s = contentSize_;
-	if( alignment_ == UITextAlignmentCenter )
-		self.transformAnchor = ccp(s.width/2, s.height/2);
-	else if( alignment_ == UITextAlignmentRight)
-		self.transformAnchor = ccp(s.width, s.height/2);
-	else
-		self.transformAnchor = ccp(0,s.height/2);	
+	[self setContentSize:tmpSize];
 }
 
 #pragma mark BitmapFontAtlas - CocosNodeLabel protocol
@@ -375,18 +370,11 @@
 		[child setOpacity:opacity_];
 }
 
-#pragma mark BitmapFontAtlas - CocosNodeSize protocol
-//-(CGSize) contentSize
-//{
-//	CGSize ret = CGSizeZero;
-//	for( id child in children ) {
-//		CGSize tmp = [child contentSize];
-//		ret.width += tmp.width;
-//		if( tmp.height > ret.height )
-//			ret.height = tmp.height;
-//	}
-//	
-//	return ret;
-//}
-
+-(void) setAnchorPoint:(CGPoint)point
+{
+	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
+		[super setAnchorPoint:point];
+		[self createFontChars];
+	}
+}
 @end

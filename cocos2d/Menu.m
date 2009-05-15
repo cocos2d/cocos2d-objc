@@ -60,7 +60,8 @@ enum {
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	self.relativeTransformAnchor = NO;
-	self.transformAnchor = ccp(s.width / 2, s.height / 2);
+	anchorPoint_ = ccp(0.5f, 0.5f);
+	[self setContentSize:s];
 	
 	// XXX: in v0.7, winSize should return the visible size
 	// XXX: so the bar calculation should be done there

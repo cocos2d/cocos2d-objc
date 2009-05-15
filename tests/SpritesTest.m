@@ -222,9 +222,7 @@ Class restartAction()
 	
 	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5f];
 	id actionBy = [ScaleBy actionWithDuration:2  scale: 2];
-	
-//	grossini.transformAnchor = ccp( [grossini transformAnchor].x, 0 );
-	
+
 	[tamara runAction: actionTo];
 	[grossini runAction:actionBy];
 }

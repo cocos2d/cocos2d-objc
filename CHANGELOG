@@ -10,6 +10,7 @@ version 0.8 - xxx
  . CocosNode: support real openGL Z vertex (issue #355)
  . CocosNode: transformation matrix is cached (issue #263)
  . CocosNode: faster transforming of local/world coordinates (issue #263)
+ . CocosNode: anchorPoint is relative (0,0) to (1,1) (issue #303)
  . Demos: Added PerformanceParticleTest (issue #331)
  . Director: "new" Fast Director. Attach/Detach, auto-lock, SDK 3.0 works (issue #145, #issue #239, issue #340)
  . Director: supports PortraitUpsideDown and Right orientation (issue #351)
