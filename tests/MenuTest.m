@@ -26,8 +26,9 @@ enum {
 	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 	MenuItem *item3 = [MenuItemFont itemFromString: @"Disabled Item" target: self selector:@selector(menuCallbackDisabled:)];
 	MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
-	MenuItem *item5 = [MenuItemFont itemFromString: @"Configuration" target: self selector:@selector(menuCallbackConfig:)];
-
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt" alignment:UITextAlignmentLeft];
+	MenuItemLabel *item5 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
+	
 	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 	
 	id color_action = [TintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
@@ -191,7 +192,8 @@ enum {
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:28];
 
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Another option" target:self selector:@selector(menuCallback2:)];
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"another option" fntFile:@"bitmapFontTest3.fnt" alignment:UITextAlignmentLeft];
+	MenuItemLabel *item1 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
 	Menu *menu = [Menu menuWithItems: item1, item2, nil];	
@@ -294,8 +296,9 @@ enum {
     
     [MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:34];
-	MenuItemFont *back = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(backCallback:)];
-
+	
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"go back" fntFile:@"bitmapFontTest3.fnt" alignment:UITextAlignmentLeft];
+	MenuItemLabel *back = [MenuItemLabel itemWithLabel:label target:self selector:@selector(backCallback:)];
     
 	Menu *menu = [Menu menuWithItems:
                   title1, title2,

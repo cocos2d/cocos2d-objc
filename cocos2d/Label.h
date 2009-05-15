@@ -23,7 +23,7 @@
  *
  * All features from TextureNode are valid in Label
  */
-@interface Label : TextureNode
+@interface Label : TextureNode <CocosNodeLabel>
 {
 	CGSize _dimensions;
 	UITextAlignment _alignment;

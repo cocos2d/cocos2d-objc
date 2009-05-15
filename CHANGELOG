@@ -14,6 +14,8 @@ version 0.8 - xxx
  . Director: "new" Fast Director. Attach/Detach, auto-lock, SDK 3.0 works (issue #145, #issue #239, issue #340)
  . Director: supports PortraitUpsideDown and Right orientation (issue #351)
  . LabelAtlas: don't render in subpixel (issue #135)
+ . Menu: All MenuItems supports CocosNodeRGBA protocol (issue #347)
+ . Menu: Support for BitmapFontAtlas (or any other Label) (issue #365)
  . ParallaxNode: parallax code refactored (issue #358)
  . Particles: Added QuadParticleSystem. renamed ParticleSystem to PointParticleSystem (issue #245)
  . Particles: added support for endSize and endSizeVar (issue #241)

@@ -173,7 +173,7 @@
 	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,size) );
 	
 
-	BOOL premultipliedColors = [texture premultipliedAlpha];
+	BOOL premultipliedColors = [texture hasPremultipliedAlpha];
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	else if( ! premultipliedColors )

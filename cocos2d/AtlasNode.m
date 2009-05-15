@@ -90,7 +90,7 @@
 
 	glColor4ub( r_, g_, b_, opacity_);
 
-	BOOL preMulti = [[textureAtlas_ texture] premultipliedAlpha];
+	BOOL preMulti = [[textureAtlas_ texture] hasPremultipliedAlpha];
 	if( ! preMulti )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
@@ -109,23 +109,20 @@
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
-#pragma mark AtlasNode - RGB protocol
+#pragma mark AtlasNode - RGBA protocol
 
-// RGB protocol
 -(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
 {
 	r_=rr;
 	g_=gg;
 	b_=bb;
 }
-#pragma mark AtlasNode - opacity protocol
 
-// opacity protocol
 -(void) setOpacity:(GLubyte)opacity
 {
 	// special opacity for premultiplied textures
 	opacity_ = opacity;
-	if( [[textureAtlas_ texture] premultipliedAlpha] )
+	if( [[textureAtlas_ texture] hasPremultipliedAlpha] )
 		r_ = g_ = b_ = opacity_;	
 }
 

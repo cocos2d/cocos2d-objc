@@ -100,7 +100,7 @@ typedef enum {
 	Texture2DPixelFormat		_format;
 	GLfloat						_maxS,
 								_maxT;
-	BOOL						_premultipliedAlpha;
+	BOOL						_hasPremultipliedAlpha;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -122,7 +122,7 @@ typedef enum {
 /** texture max T */
 @property(readonly) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
-@property(readonly) BOOL premultipliedAlpha;
+@property(readonly) BOOL hasPremultipliedAlpha;
 @end
 
 /**

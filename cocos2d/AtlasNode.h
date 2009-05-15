@@ -27,27 +27,27 @@
  */
 @interface AtlasNode : CocosNode <CocosNodeRGBA, CocosNodeSize, CocosNodeTexture> {
 	
-	/// texture atlas
+	// texture atlas
 	TextureAtlas	*textureAtlas_;
-	/// chars per row
+	// chars per row
 	int				itemsPerRow;
-	/// chars per column
+	// chars per column
 	int				itemsPerColumn;
 	
-	/// texture coordinate x increment
+	// texture coordinate x increment
 	float			texStepX;
-	/// texture coordinate y increment
+	// texture coordinate y increment
 	float			texStepY;
 	
-	/// width of each char
+	// width of each char
 	int				itemWidth;
-	/// height of each char
+	// height of each char
 	int				itemHeight;
 	
-	/// texture opacity
+	// texture opacity
 	GLubyte opacity_;
 	
-	/// texture color
+	// texture color
 	GLubyte	r_,g_,b_;
 	
 }
