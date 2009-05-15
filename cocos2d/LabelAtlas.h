@@ -17,20 +17,21 @@
 
 /** LabelAtlas is a subclass of AtlasNode.
  
- It can be as a replacement of Label since it is MUCH faster that it.
+ It can be as a replacement of Label since it is MUCH faster.
  
  LabelAtlas versus Label:
  - LabelAtlas is MUCH faster than Label
- - LabelAtlas can't be created with an NSString
  - LabelAtlas "characters" have a fixed height and width
- - LabelAtlas "characters" can anything you want since they are taken from an image file
+ - LabelAtlas "characters" can be anything you want since they are taken from an image file
+ 
+ A more flexible class is BitmapFontAtlas. It supports variable width characters and it also has a nice editor.
  */
 @interface LabelAtlas : AtlasNode  <CocosNodeLabel> {
 		
-	/// string to render
+	// string to render
 	NSString		*string;
 	
-	/// the first char in the charmap
+	// the first char in the charmap
 	char			mapStartChar;
 }
 

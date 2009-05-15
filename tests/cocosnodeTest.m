@@ -123,25 +123,34 @@ Class restartAction()
 	[super onEnter];
 	
 	CGSize s = [[Director sharedDirector] winSize];
-	
+
+	Sprite *sp0 = [Sprite spriteWithFile:@"grossini.png"];
 	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
 	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	Sprite *point0 = [Sprite spriteWithFile:@"r1.png"];
 	Sprite *point1 = [Sprite spriteWithFile:@"r1.png"];
 	Sprite *point2 = [Sprite spriteWithFile:@"r1.png"];
 
+	point0.scale = 0.25f;
 	point1.scale = 0.25f;
 	point2.scale = 0.25f;
 
-	sp1.position = ccp(100, s.height /2 );
+	sp0.position = ccp(s.width/2, s.height/2 );
+	point0.position = sp0.position;
+	sp0.anchorPoint = ccp(0.5f, 0.5f);
+	
+	sp1.position = ccp(s.width/2-100, s.height/2 );
 	point1.position = sp1.position;
+	sp1.anchorPoint = ccp(0,0);
 	
-	sp2.position = ccp(380, s.height /2 );
-	point2.position = sp2.position;
-	
-	sp2.transformAnchor = CGPointZero;
-	
+	sp2.position = ccp(s.width/2+100, s.height/2 );
+	point2.position = sp2.position;	
+	sp2.anchorPoint = ccp(1,1);
+
+	[self addChild: sp0];
 	[self addChild: sp1];
 	[self addChild: sp2];
+	[self addChild: point0 z:1];
 	[self addChild: point1 z:1];
 	[self addChild: point2 z:1];
 	
@@ -152,16 +161,16 @@ Class restartAction()
 	id action1 = [RepeatForever actionWithAction:
 				  [Sequence actions: a1, a2, [a2 reverse], nil]
 									];
-	id action2 = [RepeatForever actionWithAction:
-				  [Sequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
-				  ];
-	
+	id action2 = [[action1 copy] autorelease];
+	id action0 = [[action1 copy] autorelease];
+
+	[sp0 runAction: action0];
 	[sp1 runAction: action1];
-	[sp2 runAction:action2];
+	[sp2 runAction: action2];
 }
 -(NSString *) title
 {
-	return @"transformAnchor";
+	return @"anchorPoint";
 }
 @end
 
@@ -198,14 +207,14 @@ Class restartAction()
 				  [Sequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
 									];
 	
-	sp2.transformAnchor = CGPointZero;
+	sp2.anchorPoint = ccp(0,0);
 	
 	[sp1 runAction:action1];
 	[sp2 runAction:action2];	
 }
 -(NSString *) title
 {
-	return @"transformAnchor and children";
+	return @"anchorPoint and children";
 }
 @end
 

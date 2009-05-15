@@ -201,7 +201,7 @@ Class restartTransition()
 		y = size.height;
 
 		Sprite *bg1 = [Sprite spriteWithFile:@"background1.jpg"];
-		bg1.transformAnchor = CGPointZero;
+		bg1.anchorPoint = CGPointZero;
 		[self addChild:bg1 z:-1];
 
 		Label* label = [Label labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
@@ -260,7 +260,7 @@ Class restartTransition()
 		y = size.height;
 		
 		Sprite *bg2 = [Sprite spriteWithFile:@"background2.jpg"];
-		bg2.transformAnchor = CGPointZero;
+		bg2.anchorPoint = CGPointZero;
 		[self addChild:bg2 z:-1];
 		
 		Label* label = [Label labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];

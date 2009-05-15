@@ -44,6 +44,9 @@
 -(void) onQuit: (id) sender
 {
 	[[Director sharedDirector] popScene];
+
+	// HA HA... no more terminate on sdk v3.0
+	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }

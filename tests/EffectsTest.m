@@ -345,7 +345,7 @@ Class restartAction()
 	
 	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
 	[node addChild: bg z:0];
-	bg.transformAnchor = CGPointZero;
+	bg.anchorPoint = CGPointZero;
 //	bg.position = ccp(-100,-100);
 	
 	Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];

@@ -20,12 +20,12 @@
 @implementation Scene
 -(id) init
 {
-	if( ! (self=[super init]) )
-		return nil;
-	
-	CGSize s = [[Director sharedDirector] winSize];
-	self.relativeTransformAnchor = NO;
-	self.transformAnchor = ccp(s.width / 2, s.height / 2);
+	if( (self=[super init]) ) {
+		CGSize s = [[Director sharedDirector] winSize];
+		self.relativeTransformAnchor = NO;
+		anchorPoint_ = ccp(0.5f, 0.5f);
+		[self setContentSize:s];	
+	}
 	
 	return self;
 }

@@ -34,7 +34,6 @@ enum {
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
-@synthesize autoCenterFrames = autoCenterFrames_;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -51,6 +50,9 @@ enum {
 		dirty = YES;
 		
 		flipY_ = flipX_ = NO;
+		
+		// default transform anchor: center
+		anchorPoint_ = ccp(0.5f, 0.5f);
 
 		// RGB and opacity
 		r_ = g_ = b_ = opacity_ = 255;
@@ -61,10 +63,6 @@ enum {
 		quad_.tr.colors = tmpColor;
 		
 		animations = nil;		// lazy alloc
-		
-		// default transform anchor: center
-		self.transformAnchor = ccp( rect.size.width / 2, rect.size.height /2 );		
-		autoCenterFrames_ = NO;
 		
 		[self setTextureRect:rect];
 	}
@@ -95,16 +93,15 @@ enum {
 	[self updateTextureCoords];
 	
 	// Don't update Atlas if index == -1. issue #283
-	if( atlasIndex_ != kIndexNotInitialized)
-		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+	if( atlasIndex_ == kIndexNotInitialized)
+		dirty = YES;
 	else
+		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+
+	if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
+		[self setContentSize:rect.size];
 		dirty = YES;
-	
-	// add these lines	
-	if( autoCenterFrames_ ) {
-		self.transformAnchor = ccp(rect.size.width/2, rect.size.height/2);
-		dirty = YES;
-	}	
+	}
 }
 
 -(void)updateTextureCoords
@@ -257,9 +254,9 @@ enum {
 	dirty = YES;
 }
 
--(void)setTransformAnchor:(CGPoint)anchor
+-(void)setAnchorPoint:(CGPoint)anchor
 {
-	[super setTransformAnchor:anchor];
+	[super setAnchorPoint:anchor];
 	dirty = YES;
 }
 

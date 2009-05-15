@@ -494,12 +494,13 @@ Class restartAction()
 
 			switch(i) {
 				case 0:
-					sprite.transformAnchor = CGPointZero;
+					sprite.anchorPoint = CGPointZero;
 					break;
 				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
 					break;
 				case 2:
-					sprite.transformAnchor = ccp(85,121);
+					sprite.anchorPoint = ccp(1,1);
 					break;
 			}
 

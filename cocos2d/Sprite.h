@@ -36,14 +36,8 @@
  */
 @interface Sprite : TextureNode <CocosNodeFrames>
 {
-	NSMutableDictionary *animations;
-	
-	// CocosNodeFrames protocol
-	BOOL	_autoCenterFrames;
+	NSMutableDictionary *animations;	
 }
-
-/** whether or not the new frames will be auto centered */
-@property (readwrite,assign) BOOL autoCenterFrames;
 
 /** creates an sprite with an image file */
 + (id) spriteWithFile:(NSString *)imageFile;

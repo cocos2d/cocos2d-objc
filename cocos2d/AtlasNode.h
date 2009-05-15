@@ -15,17 +15,16 @@
 #import "TextureAtlas.h"
 #import "CocosNode.h"
 
-/** AtlasNode is a subclass of CocosNode that implements CocosNodeOpacity, CocosNodeRGB and
- CocosNodeSize protocols.
+/** AtlasNode is a subclass of CocosNode that implements the CocosNodeRGBA and
+ CocosNodeTexture protocol
  
  It knows how to render a TextureAtlas object.
+ If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode)
  
  All features from CocosNode are valid, plus the following features:
- - opacity
- - color (setRGB:::)
- - contentSize
+ - opacity and RGB colors
  */
-@interface AtlasNode : CocosNode <CocosNodeRGBA, CocosNodeSize, CocosNodeTexture> {
+@interface AtlasNode : CocosNode <CocosNodeRGBA, CocosNodeTexture> {
 	
 	// texture atlas
 	TextureAtlas	*textureAtlas_;

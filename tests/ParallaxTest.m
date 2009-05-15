@@ -117,7 +117,7 @@ Class restartAction()
 	// scale the image (optional)
 	cocosImage.scale = 2.5f;
 	// change the transform anchor point to 0,0 (optional)
-	cocosImage.transformAnchor = ccp(0,0);
+	cocosImage.anchorPoint = ccp(0,0);
 	
 
 	// Middle layer: a Tile map atlas
@@ -125,7 +125,7 @@ Class restartAction()
 	[tilemap releaseMap];
 	
 	// change the transform anchor to 0,0 (optional)
-	tilemap.transformAnchor = ccp(0, 0);
+	tilemap.anchorPoint = ccp(0, 0);
 
 	// Aliased images
 	[tilemap.texture setAliasTexParameters];
@@ -136,7 +136,7 @@ Class restartAction()
 	// scale the image (optional)
 	background.scale = 1.5f;
 	// change the transform anchor point (optional)
-	background.transformAnchor = ccp(0,0);
+	background.anchorPoint = ccp(0,0);
 
 	
 	// create a void node, a parent node

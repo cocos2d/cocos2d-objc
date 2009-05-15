@@ -40,28 +40,28 @@
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 {
-	if( ! (self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 
-	_dimensions = dimensions;
-	_alignment = alignment;
-	_fontName = [name retain];
-	_fontSize = size;
-	
-	[self setString:string];
+		_dimensions = dimensions;
+		_alignment = alignment;
+		_fontName = [name retain];
+		_fontSize = size;
+		
+		[self setString:string];
+	}
 	return self;
 }
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 {
-	if( ! (self=[super init]) )
-		return nil;
-	
-	_dimensions = CGSizeZero;
-	_fontName = [name retain];
-	_fontSize = size;
-	
-	[self setString:string];
+	if( (self=[super init]) ) {
+		
+		_dimensions = CGSizeZero;
+		_fontName = [name retain];
+		_fontSize = size;
+		
+		[self setString:string];
+	}
 	return self;
 }
 
@@ -76,9 +76,6 @@
 	
 	// end of warning. 1 retain only
 	[self.texture release];
-
-	CGSize s = texture_.contentSize;
-	self.transformAnchor = ccp( s.width/2, s.height/2);
 }
 
 - (void) dealloc

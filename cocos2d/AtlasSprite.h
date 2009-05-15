@@ -28,6 +28,7 @@
  * AtlasSprite has all the features from CocosNode with the following additions and limitations:
  *	- New features
  *		- It is MUCH faster than Sprite
+ *      - supports flipX, flipY
  *
  *	- Limitations
  *		- Their parent can only be an AtlasSpriteManager
@@ -35,11 +36,11 @@
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
  *		- GridBase actions are supported (eg: Lens, Ripple, Twirl)
  *		- They can't Aliased or AntiAliased (but AtlasSpriteManager can)
- *		- They can't be "parallaxed" (but AtlasSpriteManager can)
+ *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
  *
  * @since v0.7.1
  */
-@interface AtlasSprite : CocosNode <CocosNodeSize, CocosNodeFrames, CocosNodeRGBA>
+@interface AtlasSprite : CocosNode <CocosNodeFrames, CocosNodeRGBA>
 {
 	// weak reference
 	TextureAtlas *textureAtlas_;
@@ -64,9 +65,6 @@
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
-
-	// cocosNodeProtcol
-	BOOL	autoCenterFrames_;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -77,8 +75,6 @@
 @property (readonly) NSUInteger atlasIndex;
 /** returns the rect of the AtlasSprite */
 @property (readonly) CGRect textureRect;
-/** whether or not the new frames will be auto centered */
-@property (readwrite) BOOL autoCenterFrames;
 /** whether or not the sprite is flipped horizontally */
 @property (readwrite) BOOL flipX;
 /** whether or not the sprite is flipped vertically */

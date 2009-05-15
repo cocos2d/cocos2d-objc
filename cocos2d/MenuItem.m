@@ -54,23 +54,24 @@ enum {
 
 -(id) initWithTarget:(id) rec selector:(SEL) cb
 {
-	if(!(self=[super init]) )
-		return nil;
+	if((self=[super init]) ) {
 	
-	NSMethodSignature * sig = nil;
-	
-	if( rec && cb ) {
-		sig = [[rec class] instanceMethodSignatureForSelector:cb];
+		anchorPoint_ = ccp(0.5f, 0.5f);
+		NSMethodSignature * sig = nil;
 		
-		invocation = nil;
-		invocation = [NSInvocation invocationWithMethodSignature:sig];
-		[invocation setTarget:rec];
-		[invocation setSelector:cb];
-		[invocation setArgument:&self atIndex:2];
-		[invocation retain];
+		if( rec && cb ) {
+			sig = [[rec class] instanceMethodSignatureForSelector:cb];
+			
+			invocation = nil;
+			invocation = [NSInvocation invocationWithMethodSignature:sig];
+			[invocation setTarget:rec];
+			[invocation setSelector:cb];
+			[invocation setArgument:&self atIndex:2];
+			[invocation retain];
+		}
+		
+		isEnabled = YES;
 	}
-    
-	isEnabled = YES;
 	
 	return self;
 }
@@ -109,15 +110,8 @@ enum {
 
 -(CGRect) rect
 {
-	NSAssert(1,@"MenuItem.rect must be overriden");
-
-	return CGRectNull;
-}
--(CGSize) contentSize
-{
-	NSAssert(1,@"MenuItem.contentSize must be overriden");
-
-	return CGSizeMake(0,0);
+	return CGRectMake( self.position.x - contentSize_.width/2, self.position.y-contentSize_.height/2,
+					  contentSize_.width, contentSize_.height);
 }
 @end
 
@@ -127,21 +121,28 @@ enum {
 
 @implementation MenuItemLabel
 
-@synthesize label = label_;
-+(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector
++(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector
 {
 	return [[[self class] alloc] initWithLabel:label target:target selector:selector];
 }
 
--(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector
+-(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
-		self.label = label;
-		
-		CGSize s = [label_ contentSize];
-		self.transformAnchor = ccp( s.width/2, s.height/2 );
+		self.label = label;		
 	}
 	return self;
+}
+
+-(CocosNode<CocosNodeLabel, CocosNodeRGBA>*) label
+{
+	return label_;
+}
+-(void) setLabel:(CocosNode<CocosNodeLabel, CocosNodeRGBA>*) label
+{
+	[label_ release];
+	label_ = [label retain];
+	[self setContentSize:[label_ contentSize]];
 }
 
 - (void) dealloc
@@ -153,16 +154,7 @@ enum {
 -(void) setString:(NSString *)string
 {
 	[label_ setString:string];
-	CGSize s = [label_ contentSize];
-	self.transformAnchor = ccp( s.width/2, s.height/2 );
-}
-
--(CGRect) rect
-{
-	CGSize s = [label_ contentSize];
-	
-	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
-	return r;
+	[self setContentSize: [label_ contentSize]];
 }
 
 -(void) activate {
@@ -205,11 +197,6 @@ enum {
 		[label_ setRGB:255 :255 :255];
     
 	[super setIsEnabled:enabled];
-}
-
--(CGSize) contentSize
-{
-	return [label_ contentSize];
 }
 
 -(void) draw
@@ -365,27 +352,25 @@ enum {
 
 -(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id) t selector:(SEL) sel
 {
-	if( !(self=[super initWithTarget:t selector:sel]) )
-		return nil;
+	if( (self=[super initWithTarget:t selector:sel]) ) {
 
-	self.normalImage = [Sprite spriteWithFile:normalI];
-	self.selectedImage = [Sprite spriteWithFile:selectedI];
-    
-	if(disabledI == nil)
-		self.disabledImage = nil;
-	else
-		self.disabledImage = [Sprite spriteWithFile:disabledI];
-  
-//	[normalImage setOpacity:opacity_];
-//	[normalImage setRGB:r_:g_:b_];
-//	[selectedImage setOpacity:opacity_];
-//	[selectedImage setRGB:r_:g_:b_];
-//	[disabledImage setOpacity:opacity_];
-//	[disabledImage setRGB:r_:g_:b_];
-	
-	CGSize s = [normalImage_ contentSize];
-	self.transformAnchor = ccp( s.width/2, s.height/2 );
-
+		self.normalImage = [Sprite spriteWithFile:normalI];
+		self.selectedImage = [Sprite spriteWithFile:selectedI];
+		
+		if(disabledI == nil)
+			self.disabledImage = nil;
+		else
+			self.disabledImage = [Sprite spriteWithFile:disabledI];
+	  
+	//	[normalImage setOpacity:opacity_];
+	//	[normalImage setRGB:r_:g_:b_];
+	//	[selectedImage setOpacity:opacity_];
+	//	[selectedImage setRGB:r_:g_:b_];
+	//	[disabledImage setOpacity:opacity_];
+	//	[disabledImage setRGB:r_:g_:b_];
+		
+		[self setContentSize: [normalImage_ contentSize]];
+	}
 	return self;
 }
 
@@ -406,19 +391,6 @@ enum {
 -(void) unselected
 {
 	selected = NO;
-}
-
--(CGRect) rect
-{
-	CGSize s = [normalImage_ contentSize];
-	
-	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
-	return r;
-}
-
--(CGSize) contentSize
-{
-	return [normalImage_ contentSize];
 }
 
 -(void) draw
@@ -529,7 +501,8 @@ enum {
 		[self addChild:item z:0 tag:kCurrentItem];
 		
 		CGSize s = [item contentSize];
-		item.position = self.transformAnchor = ccp( s.width/2, s.height/2 );
+		[self setContentSize: s];
+		item.position = ccp( s.width/2, s.height/2 );
 	}
 }
 
@@ -571,23 +544,6 @@ enum {
 -(MenuItem*) selectedItem
 {
 	return [subItems_ objectAtIndex:selectedIndex_];
-}
-
--(CGRect) rect
-{
-	MenuItem* selectedItem = [self selectedItem];
-
-	CGRect r = [selectedItem rect];
-	r.origin.x = self.position.x - r.size.width / 2;
-	r.origin.y = self.position.y - r.size.height / 2;
-	
-	return r;
-}
-
--(CGSize) contentSize
-{
-	MenuItem* selectedItem = [self selectedItem];
-	return [selectedItem contentSize];
 }
 
 - (void) setOpacity: (GLubyte)opacity
