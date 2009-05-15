@@ -55,7 +55,7 @@
 {
 	// special opacity for premultiplied textures
 	opacity_ = opacity;
-	if( [texture_ premultipliedAlpha] )
+	if( [texture_ hasPremultipliedAlpha] )
 		r_ = g_ = b_ = opacity_;	
 }
 
@@ -68,7 +68,7 @@
 
 	glColor4ub( r_, g_, b_, opacity_);
 	
-	BOOL preMulti = [texture_ premultipliedAlpha];
+	BOOL preMulti = [texture_ hasPremultipliedAlpha];
 	if( !preMulti )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		

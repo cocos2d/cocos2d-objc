@@ -249,6 +249,8 @@
 		504055B10E3230BD00213FEF /* ParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 504055AF0E3230BD00213FEF /* ParticleExamples.m */; };
 		50405A140E3296AC00213FEF /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
 		50405A200E32A15500213FEF /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A1F0E32A15500213FEF /* smoke.png */; };
+		50421E370FBD6D4000B992F7 /* bitmapFontTest3.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 50421E350FBD6D4000B992F7 /* bitmapFontTest3.fnt */; };
+		50421E380FBD6D4000B992F7 /* bitmapFontTest3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50421E360FBD6D4000B992F7 /* bitmapFontTest3.png */; };
 		504828920F45AF3600A30CEF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		504828940F45AF5F00A30CEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828930F45AF5F00A30CEF /* Foundation.framework */; };
 		504828980F45AF6700A30CEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828970F45AF6700A30CEF /* UIKit.framework */; };
@@ -1215,6 +1217,8 @@
 		504055AF0E3230BD00213FEF /* ParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleExamples.m; sourceTree = "<group>"; };
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		50405A1F0E32A15500213FEF /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
+		50421E350FBD6D4000B992F7 /* bitmapFontTest3.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest3.fnt; sourceTree = "<group>"; };
+		50421E360FBD6D4000B992F7 /* bitmapFontTest3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest3.png; sourceTree = "<group>"; };
 		504828800F45AED700A30CEF /* AttachTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AttachTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504828930F45AF5F00A30CEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		504828970F45AF6700A30CEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -2348,6 +2352,8 @@
 			isa = PBXGroup;
 			children = (
 				506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */,
+				50421E350FBD6D4000B992F7 /* bitmapFontTest3.fnt */,
+				50421E360FBD6D4000B992F7 /* bitmapFontTest3.png */,
 				506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */,
 				506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */,
 				506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */,
@@ -3846,6 +3852,8 @@
 				5084D4820EE5C7D100BD237C /* btn-play-normal.png in Resources */,
 				5084D4830EE5C7D100BD237C /* btn-play-selected.png in Resources */,
 				502AACFE0F79715E001E3F87 /* fire.pvr in Resources */,
+				50421E370FBD6D4000B992F7 /* bitmapFontTest3.fnt in Resources */,
+				50421E380FBD6D4000B992F7 /* bitmapFontTest3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

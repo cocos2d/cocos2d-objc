@@ -25,7 +25,7 @@
  - LabelAtlas "characters" have a fixed height and width
  - LabelAtlas "characters" can anything you want since they are taken from an image file
  */
-@interface LabelAtlas : AtlasNode {
+@interface LabelAtlas : AtlasNode  <CocosNodeLabel> {
 		
 	/// string to render
 	NSString		*string;
@@ -39,8 +39,4 @@
 
 /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 -(id) initWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c;
-
-/** changes the string to render. */
-- (void) setString:(NSString*)string;
-
 @end

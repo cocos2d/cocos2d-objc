@@ -38,6 +38,8 @@
 
 @implementation BitmapFontAtlas
 
+@synthesize opacity=opacity_,r=r_,g=g_,b=b_;
+
 #pragma mark BitmapFontAtlas - Creation & Init
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile alignment:(UITextAlignment)alignment
 {
@@ -323,7 +325,7 @@
 			fontChar.position = ccp( nextFontPositionX + fontDef.xOffset, (commonHeight - fontDef.yOffset) - rect.size.height );
 
 		} else if( alignment_ == UITextAlignmentRight ) {
-			// left aligned
+			// right aligned
 			fontChar.transformAnchor = CGPointZero;
 			fontChar.position = ccp( nextFontPositionX + fontDef.xOffset, (commonHeight - fontDef.yOffset) - rect.size.height );			
 		}
@@ -342,8 +344,14 @@
 		for(CocosNode *node in children)
 			node.position = ccpSub( node.position, ccp( nextFontPositionX,0) );
 	}
+	
+//	if( alignment_ == UITextAlignmentCenter ) {
+//		CGSize s = [self contentSize];
+//		self.transformAnchor = ccp(s.width/2, s.height/2);
+//	}
 }
 
+#pragma mark BitmapFontAtlas - CocosNodeLabel protocol
 - (void) setString:(NSString*) newString
 {	
 	[string_ release];
@@ -353,6 +361,43 @@
 		child.visible = NO;
 
 	[self createFontChars];
+}
+
+#pragma mark BitmapFontAtlas - CocosNodeRGBA protocol
+
+-(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
+{
+	r_=rr;
+	g_=gg;
+	b_=bb;
+	for( id child in children )
+		[child setRGB:r_:g_:b_];
+}
+
+-(void) setOpacity:(GLubyte)opacity
+{
+	opacity_ = opacity;
+
+	// special opacity for premultiplied textures
+	if( [[self.textureAtlas texture] hasPremultipliedAlpha] )
+		r_ = g_ = b_ = opacity_;
+
+	for( id child in children )
+		[child setOpacity:opacity_];
+}
+
+#pragma mark BitmapFontAtlas - CocosNodeSize protocol
+-(CGSize) contentSize
+{
+	CGSize ret = CGSizeZero;
+	for( id child in children ) {
+		CGSize tmp = [child contentSize];
+		ret.width += tmp.width;
+		if( tmp.height > ret.height )
+			ret.height = tmp.height;
+	}
+	
+	return ret;
 }
 
 @end

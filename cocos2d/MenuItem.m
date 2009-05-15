@@ -127,23 +127,39 @@ enum {
 
 @implementation MenuItemLabel
 
-@synthesize label;
+@synthesize label = label_;
++(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector
+{
+	return [[[self class] alloc] initWithLabel:label target:target selector:selector];
+}
+
+-(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector
+{
+	if( (self=[super initWithTarget:target selector:selector]) ) {
+		self.label = label;
+		
+		CGSize s = [label_ contentSize];
+		self.transformAnchor = ccp( s.width/2, s.height/2 );
+	}
+	return self;
+}
+
 - (void) dealloc
 {
-	[label release];
+	[label_ release];
 	[super dealloc];
 }
 
 -(void) setString:(NSString *)string
 {
-	[label setString:string];
-	CGSize s = [label contentSize];
+	[label_ setString:string];
+	CGSize s = [label_ contentSize];
 	self.transformAnchor = ccp( s.width/2, s.height/2 );
 }
 
 -(CGRect) rect
 {
-	CGSize s = [label contentSize];
+	CGSize s = [label_ contentSize];
 	
 	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
 	return r;
@@ -184,46 +200,46 @@ enum {
 -(void) setIsEnabled: (BOOL)enabled
 {
 	if(enabled == NO)
-		[label setRGB:126 :126 :126];
+		[label_ setRGB:126 :126 :126];
 	else
-		[label setRGB:255 :255 :255];
+		[label_ setRGB:255 :255 :255];
     
 	[super setIsEnabled:enabled];
 }
 
 -(CGSize) contentSize
 {
-	return [label contentSize];
+	return [label_ contentSize];
 }
 
 -(void) draw
 {
-	[label draw];
+	[label_ draw];
 }
 
 - (void) setOpacity: (GLubyte)opacity
 {
-    [label setOpacity:opacity];
+    [label_ setOpacity:opacity];
 }
 -(GLubyte) opacity
 {
-	return [label opacity];
+	return [label_ opacity];
 }
 - (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
 {
-	[label setRGB:r:g:b];
+	[label_ setRGB:r:g:b];
 }
 -(GLubyte)r
 {
-	return [label r];
+	return [label_ r];
 }
 -(GLubyte)g
 {
-	return [label g];
+	return [label_ g];
 }
 -(GLubyte)b
 {
-	return [label b];
+	return [label_ b];
 }
 @end
 
@@ -244,24 +260,14 @@ enum {
 
 -(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb
 {
-	if(!(self=[super initWithTarget:rec selector:cb]) )
-		return nil;
+	NSAssert( [value length] != 0, @"value lenght must be greater than 0");
 	
-	if( [value length] == 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"MenuItemInvalid"
-									reason:@"Can't create a MenuItem without value"
-									userInfo:nil];
-		@throw myException;
+	LabelAtlas *label = [[LabelAtlas alloc] initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
+	[label autorelease];
+
+	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
+		// do something ?
 	}
-	
-	
-	label = [[LabelAtlas alloc] initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
-//	[label setOpacity:opacity_];
-//	[label setRGB:r_:g_:b_];
-	
-	CGSize s = [label contentSize];
-	self.transformAnchor = ccp( s.width/2, s.height/2 );
 	
 	return self;
 }
@@ -314,26 +320,13 @@ enum {
 
 -(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
 {
-	if(!(self=[super initWithTarget:rec selector:cb]) )
-		return nil;
+	NSAssert( [value length] != 0, @"Value lenght must be greater than 0");
 	
-	if( [value length] == 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"MenuItemInvalid"
-									reason:@"Can't create a MenuItem without value"
-									userInfo:nil];
-		@throw myException;
-	}
-	
-	
-	label = [Label labelWithString:value fontName:_fontName fontSize:_fontSize];
-//	[label setOpacity:opacity_];
-//	[label setRGB:r_:g_:b_];
+	Label *label = [Label labelWithString:value fontName:_fontName fontSize:_fontSize];
 
-	[label retain];
-	
-	CGSize s = [label contentSize];
-	self.transformAnchor = ccp( s.width/2, s.height/2 );
+	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
+		// do something ?
+	}
 	
 	return self;
 }

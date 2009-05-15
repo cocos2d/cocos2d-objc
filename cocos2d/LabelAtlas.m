@@ -96,7 +96,7 @@
 	[self updateAtlasValues];
 }
 
-#pragma mark LabelAtlas - protocol related
+#pragma mark LabelAtlas - CocosNodeSize protocol
 
 -(CGSize) contentSize
 {

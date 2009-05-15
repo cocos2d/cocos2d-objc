@@ -31,10 +31,10 @@
 }
 
 /** Creates a menu item with a target/selector */
-+(id) itemWithTarget:(id) r selector:(SEL) s;
++(id) itemWithTarget:(id)target selector:(SEL)selector;
 
 /** Initializes a menu item with a target/selector */
--(id) initWithTarget:(id) r selector:(SEL) s;
+-(id) initWithTarget:(id)target selector:(SEL)selector;
 
 /** Returns the outside box */
 -(CGRect) rect;
@@ -49,7 +49,7 @@
 -(void) unselected;
 
 /** Enable or disabled the MenuItem */
--(void) setIsEnabled: (BOOL)enabled;
+-(void) setIsEnabled:(BOOL)enabled;
 /** Returns whether or not the MenuItem is enabled */
 -(BOOL) isEnabled;
 @end
@@ -57,14 +57,21 @@
 /** An abstract class "label" MenuItems */
 @interface MenuItemLabel : MenuItem  <CocosNodeRGBA>
 {
-	id label;
+	CocosNode<CocosNodeLabel, CocosNodeRGBA, CocosNodeSize> *label_;
 }
 
-/** LabelAtlas that is rendered */
-@property (readwrite, retain) id label;
+/** Label that is rendered. It can be any CocosNode that implements the CocosNodeLabel */
+@property (readwrite, retain) id<CocosNodeLabel> label;
 
-/** Change this menuitem's label's string **/
--(void) setString:(NSString *)string;
+/** creates a MenuItemLabel with a Label, target and selector */
++(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector;
+
+/** initializes a MenuItemLabel with a Label, target and selector */
+-(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA,CocosNodeSize>*)label target:(id)target selector:(SEL)selector;
+
+
+/** sets a new string to the inner label */
+-(void) setString:(NSString*)label;
 
 /** Enable or disabled the MenuItemFont
  @warning setIsEnabled changes the RGB color of the font

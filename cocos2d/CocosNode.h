@@ -363,9 +363,18 @@ enum {
  @since v0.8
  */
 @protocol CocosNodeTexture <NSObject>
+/** returns the used texture */
 -(Texture2D*) texture;
+/** sets a new texture. it will be retained */
 -(void) setTexture:(Texture2D*)texture;
 @end
+
+/** Common interface for Labels */
+@protocol CocosNodeLabel <NSObject>
+/** sets a new label using an NSString */
+-(void) setString:(NSString*)label;
+@end
+
 
 
 /// Objects that supports the Animation protocol

@@ -51,7 +51,7 @@ enum {
 	kBitmapFontAtlasMaxChars = 256,
 };
 
-@interface BitmapFontAtlas : AtlasSpriteManager
+@interface BitmapFontAtlas : AtlasSpriteManager <CocosNodeLabel, CocosNodeRGBA, CocosNodeSize>
 {
 	// string to render
 	NSString		*string_;
@@ -67,7 +67,13 @@ enum {
 
 	// The characters building up the font
 	ccBitmapFontDef	bitmapFontArray[kBitmapFontAtlasMaxChars];
+	
+	// texture color
+	GLubyte	r_,g_,b_, opacity_;
 }
+
+/** conforms to CocosNodeRGBA protocol */
+@property (readonly) GLubyte r, g, b, opacity;
 
 /** creates a bitmap font altas with an initial string and the FNT file */
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile alignment:(UITextAlignment)alignment;
@@ -77,8 +83,4 @@ enum {
 
 /** updates the font chars based on the string to render */
 -(void) createFontChars;
-
-/** changes the string to render */
--(void) setString:(NSString*)string;
-
 @end
