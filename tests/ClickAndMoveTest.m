@@ -66,7 +66,7 @@ enum
 	
 	[s runAction: [RotateTo actionWithDuration:1 angle: at]];
 	
-	return kEventIgnored;
+	return kEventHandled;
 }
 @end
 

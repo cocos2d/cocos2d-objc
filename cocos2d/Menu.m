@@ -140,6 +140,15 @@ enum {
 	state = kMenuStateWaiting;
 }
 
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
+	
+	[selectedItem unselected];
+	
+	state = kMenuStateWaiting;
+}
+
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");

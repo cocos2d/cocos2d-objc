@@ -190,7 +190,7 @@ Class restartAction()
 		
 		[self addNewSpriteWithCoords: location];
 	}
-	return kEventIgnored;
+	return kEventHandled;
 }
 
 -(NSString *) title

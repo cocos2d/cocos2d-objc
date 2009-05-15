@@ -707,7 +707,7 @@ static Director *_sharedDirector = nil;
 
 - (void)startAnimation
 {
-	[self addEventHandler:[TouchDispatcher sharedDispatcher]];
+	[eventHandlers insertObject:[TouchDispatcher sharedDispatcher] atIndex:0];
 	
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
 
@@ -732,7 +732,7 @@ static Director *_sharedDirector = nil;
 
 - (void)stopAnimation
 {
-	[self removeEventHandler:[TouchDispatcher sharedDispatcher]];
+	[eventHandlers removeObject:[TouchDispatcher sharedDispatcher]];
 	
 	[animationTimer invalidate];
 	animationTimer = nil;
@@ -753,7 +753,7 @@ static Director *_sharedDirector = nil;
 -(void) addEventHandler:(id<TouchEventsDelegate>) delegate
 {
 	NSAssert( delegate != nil, @"Director.addEventHandler: delegate must be non nil");	
-	[eventHandlers insertObject:delegate atIndex:0];
+	[eventHandlers insertObject:delegate atIndex:1];
 }
 
 -(void) removeEventHandler:(id<TouchEventsDelegate>) delegate
@@ -899,7 +899,7 @@ static Director *_sharedDirector = nil;
 
 - (void) startAnimation
 {
-	[self addEventHandler:[TouchDispatcher sharedDispatcher]];
+	[eventHandlers insertObject:[TouchDispatcher sharedDispatcher] atIndex:0];
 	
 	// XXX:
 	// XXX: release autorelease objects created
@@ -951,7 +951,7 @@ static Director *_sharedDirector = nil;
 }
 - (void) stopAnimation
 {
-	[self removeEventHandler:[TouchDispatcher sharedDispatcher]];
+	[eventHandlers removeObject:[TouchDispatcher sharedDispatcher]];
 	
 	isRunning = NO;
 }
