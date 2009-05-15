@@ -535,7 +535,8 @@ Class restartAction()
 		CGSize s = [[Director sharedDirector] winSize];
 
 		mgr.relativeTransformAnchor = NO;
-		mgr.transformAnchor = ccp( s.width / 2.0f, s.height / 2.0f );		
+		mgr.anchorPoint = ccp(0.5f, 0.5f);
+		mgr.contentSize = CGSizeMake(s.width, s.height);
 		
 		
 		// AtlasSprite actions
