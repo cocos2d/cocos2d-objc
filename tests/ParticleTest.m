@@ -115,7 +115,7 @@ Class restartAction()
 //	s.source = source;
 	s.position = convertedLocation;
 	
-	return kEventIgnored;
+	return kEventHandled;
 }
 
 -(void) step:(ccTime) dt

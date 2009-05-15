@@ -159,7 +159,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 		[handlers release];
 	}
 
-	return kEventHandled;
+	return kEventIgnored;
 }
 
 -(void) updateKnownTouches:(NSSet *)touches withEvent:(UIEvent *)event selector:(SEL)selector unclaim:(BOOL)doUnclaim
@@ -189,21 +189,21 @@ static TouchDispatcher *sharedDispatcher = nil;
 	if (dispatchEvents)
 		[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchMoved:withEvent:) unclaim:NO];
 	
-	return kEventHandled;
+	return kEventIgnored;
 }
 
 -(BOOL) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES];
 	
-	return kEventHandled;
+	return kEventIgnored;
 }
 
 -(BOOL) ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchCancelled:withEvent:) unclaim:YES];
 	
-	return kEventHandled;
+	return kEventIgnored;
 }
 
 @end

@@ -108,7 +108,7 @@
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[[Director sharedDirector] popScene];
-	return kEventIgnored;
+	return kEventHandled;
 }
 @end
 

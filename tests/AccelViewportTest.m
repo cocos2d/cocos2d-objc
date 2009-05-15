@@ -101,7 +101,7 @@ float randfloat() {
 	
 	[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
 	
-	return kEventIgnored;
+	return kEventHandled;
 }
 
 // Implement this method to get the lastest data from the accelerometer 
