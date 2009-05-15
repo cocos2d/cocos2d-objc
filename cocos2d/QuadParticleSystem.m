@@ -271,7 +271,7 @@
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
 	
 	
-	BOOL premultipliedColors = [texture premultipliedColors];
+	BOOL premultipliedColors = [texture premultipliedAlpha];
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	else if( ! premultipliedColors )
