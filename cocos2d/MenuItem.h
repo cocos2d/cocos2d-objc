@@ -126,15 +126,15 @@
 @interface MenuItemImage : MenuItem <CocosNodeRGBA>
 {
 	BOOL selected;
-	Sprite *normalImage, *selectedImage, *disabledImage;
+	Sprite *normalImage_, *selectedImage_, *disabledImage_;
 }
 
 /// Sprite (image) that is displayed when the MenuItem is not selected
-@property (readonly) Sprite *normalImage;
+@property (readwrite,retain) Sprite *normalImage;
 /// Sprite (image) that is displayed when the MenuItem is selected
-@property (readonly) Sprite *selectedImage;
+@property (readwrite,retain) Sprite *selectedImage;
 /// Sprite (image) that is displayed when the MenuItem is disabled
-@property (readonly) Sprite *disabledImage;
+@property (readwrite,retain) Sprite *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2;

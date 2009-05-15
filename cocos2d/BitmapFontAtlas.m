@@ -39,6 +39,7 @@
 @implementation BitmapFontAtlas
 
 @synthesize opacity=opacity_,r=r_,g=g_,b=b_;
+@synthesize contentSize = contentSize_;
 
 #pragma mark BitmapFontAtlas - Creation & Init
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile alignment:(UITextAlignment)alignment
@@ -57,6 +58,9 @@
 
 		// will be allocated later
 		kerningDictionary = nil;
+		
+		r_ = g_ = b_ = opacity_ = 255;
+		contentSize_ = CGSizeZero;
 
 		[self parseConfigFile:fntFile];		
 		[self setString:theString];
@@ -290,6 +294,8 @@
 	int nextFontPositionX = 0;
 	unichar prev = -1;
 	int kerningAmmount = 0;
+	
+	contentSize_ = CGSizeZero;
 
 	NSUInteger l = [string_ length];
 	for(NSUInteger i=0; i<l; i++) {
@@ -312,43 +318,26 @@
 			[fontChar setTextureRect:rect];
 
 		fontChar.visible = YES;
-		
-		if( alignment_ == UITextAlignmentCenter ) {
 
-			// center aligned ?
-			fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.xAdvance/2.0f, (commonHeight/2.0f - fontDef.yOffset) - rect.size.height/2.0f );
-			[fontChar setAutoCenterFrames:YES];
-
-		} else if (alignment_ == UITextAlignmentLeft ) {
-			// left aligned
-			fontChar.transformAnchor = CGPointZero;
-			fontChar.position = ccp( nextFontPositionX + fontDef.xOffset, (commonHeight - fontDef.yOffset) - rect.size.height );
-
-		} else if( alignment_ == UITextAlignmentRight ) {
-			// right aligned
-			fontChar.transformAnchor = CGPointZero;
-			fontChar.position = ccp( nextFontPositionX + fontDef.xOffset, (commonHeight - fontDef.yOffset) - rect.size.height );			
-		}
+		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.xAdvance/2.0f, (commonHeight/2.0f - fontDef.yOffset) - rect.size.height/2.0f );
+		[fontChar setAutoCenterFrames:YES];
 		
 		// update kerning
 		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmmount,0));
 		nextFontPositionX += bitmapFontArray[c].xAdvance + kerningAmmount;
 		prev = c;
 		
+		contentSize_.width += bitmapFontArray[c].xAdvance + kerningAmmount;
+		contentSize_.height = MAX( rect.size.height, contentSize_.height);		
 	}
 	
-	if( alignment_ == UITextAlignmentCenter ) {
-		for(CocosNode *node in children)
-			node.position = ccpSub( node.position, ccp( nextFontPositionX/2.0f,0) );
-	} else if( alignment_ == UITextAlignmentRight) {
-		for(CocosNode *node in children)
-			node.position = ccpSub( node.position, ccp( nextFontPositionX,0) );
-	}
-	
-//	if( alignment_ == UITextAlignmentCenter ) {
-//		CGSize s = [self contentSize];
-//		self.transformAnchor = ccp(s.width/2, s.height/2);
-//	}
+	CGSize s = contentSize_;
+	if( alignment_ == UITextAlignmentCenter )
+		self.transformAnchor = ccp(s.width/2, s.height/2);
+	else if( alignment_ == UITextAlignmentRight)
+		self.transformAnchor = ccp(s.width, s.height/2);
+	else
+		self.transformAnchor = ccp(0,s.height/2);	
 }
 
 #pragma mark BitmapFontAtlas - CocosNodeLabel protocol
@@ -387,17 +376,17 @@
 }
 
 #pragma mark BitmapFontAtlas - CocosNodeSize protocol
--(CGSize) contentSize
-{
-	CGSize ret = CGSizeZero;
-	for( id child in children ) {
-		CGSize tmp = [child contentSize];
-		ret.width += tmp.width;
-		if( tmp.height > ret.height )
-			ret.height = tmp.height;
-	}
-	
-	return ret;
-}
+//-(CGSize) contentSize
+//{
+//	CGSize ret = CGSizeZero;
+//	for( id child in children ) {
+//		CGSize tmp = [child contentSize];
+//		ret.width += tmp.width;
+//		if( tmp.height > ret.height )
+//			ret.height = tmp.height;
+//	}
+//	
+//	return ret;
+//}
 
 @end

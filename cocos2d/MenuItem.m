@@ -341,7 +341,7 @@ enum {
 
 @implementation MenuItemImage
 
-@synthesize selectedImage, normalImage, disabledImage;
+@synthesize selectedImage=selectedImage_, normalImage=normalImage_, disabledImage=disabledImage_;
 
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2
 {
@@ -368,13 +368,13 @@ enum {
 	if( !(self=[super initWithTarget:t selector:sel]) )
 		return nil;
 
-	normalImage = [[Sprite spriteWithFile:normalI] retain];
-	selectedImage = [[Sprite spriteWithFile:selectedI] retain];
+	self.normalImage = [Sprite spriteWithFile:normalI];
+	self.selectedImage = [Sprite spriteWithFile:selectedI];
     
 	if(disabledI == nil)
-		disabledImage = nil;
+		self.disabledImage = nil;
 	else
-		disabledImage = [[Sprite spriteWithFile:disabledI] retain];
+		self.disabledImage = [Sprite spriteWithFile:disabledI];
   
 //	[normalImage setOpacity:opacity_];
 //	[normalImage setRGB:r_:g_:b_];
@@ -383,7 +383,7 @@ enum {
 //	[disabledImage setOpacity:opacity_];
 //	[disabledImage setRGB:r_:g_:b_];
 	
-	CGSize s = [normalImage contentSize];
+	CGSize s = [normalImage_ contentSize];
 	self.transformAnchor = ccp( s.width/2, s.height/2 );
 
 	return self;
@@ -391,9 +391,9 @@ enum {
 
 -(void) dealloc
 {
-	[normalImage release];
-	[selectedImage release];
-	[disabledImage release];
+	[normalImage_ release];
+	[selectedImage_ release];
+	[disabledImage_ release];
 
 	[super dealloc];
 }
@@ -410,7 +410,7 @@ enum {
 
 -(CGRect) rect
 {
-	CGSize s = [normalImage contentSize];
+	CGSize s = [normalImage_ contentSize];
 	
 	CGRect r = CGRectMake( self.position.x - s.width/2, self.position.y-s.height/2, s.width, s.height);
 	return r;
@@ -418,55 +418,55 @@ enum {
 
 -(CGSize) contentSize
 {
-	return [normalImage contentSize];
+	return [normalImage_ contentSize];
 }
 
 -(void) draw
 {
 	if(isEnabled) {
 		if( selected )
-			[selectedImage draw];
+			[selectedImage_ draw];
 		else
-			[normalImage draw];
+			[normalImage_ draw];
 
 	} else {
-		if(disabledImage != nil)
-			[disabledImage draw];
+		if(disabledImage_ != nil)
+			[disabledImage_ draw];
 		
 		// disabled image was not provided
 		else
-			[normalImage draw];
+			[normalImage_ draw];
 	}
 }
 
 - (void) setOpacity: (GLubyte)opacity
 {
-	[normalImage setOpacity:opacity];
-	[selectedImage setOpacity:opacity];
-	[disabledImage setOpacity:opacity];
+	[normalImage_ setOpacity:opacity];
+	[selectedImage_ setOpacity:opacity];
+	[disabledImage_ setOpacity:opacity];
 }
 
 - (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
 {
-	[normalImage setRGB:r:g:b];
-	[selectedImage setRGB:r:g:b];
-	[disabledImage setRGB:r:g:b];
+	[normalImage_ setRGB:r:g:b];
+	[selectedImage_ setRGB:r:g:b];
+	[disabledImage_ setRGB:r:g:b];
 }
 -(GLubyte) opacity
 {
-	return [normalImage opacity];
+	return [normalImage_ opacity];
 }
 -(GLubyte)r
 {
-	return [normalImage r];
+	return [normalImage_ r];
 }
 -(GLubyte)g
 {
-	return [normalImage g];
+	return [normalImage_ g];
 }
 -(GLubyte)b
 {
-	return [normalImage b];
+	return [normalImage_ b];
 }
 
 @end
