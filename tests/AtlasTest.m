@@ -272,10 +272,10 @@ Class restartAction()
 		
 		
 		CGSize s = [[Director sharedDirector] winSize];	
-		label1.position = ccp( 0, 40);
+		label1.position = ccp( 0, 90);
 		label2.position = ccp( s.width/2, s.height/2);
-		label3.position = ccp( s.width, s.height/2+40);
-		
+		label3.position = ccp( s.width, s.height-90);
+
 		[self schedule:@selector(step:)];
 	}
 	
