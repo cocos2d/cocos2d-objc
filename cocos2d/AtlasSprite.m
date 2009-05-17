@@ -34,6 +34,7 @@ enum {
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
+@synthesize opacity=opacity_, r=r_, g=g_, b=b_;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -305,8 +306,15 @@ enum {
 }
 
 //
-// Opacity protocol
+// RGBA protocol
 //
+-(void) updateColor
+{
+	if( atlasIndex_ != kIndexNotInitialized)
+		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+	else
+		dirty = YES;
+}
 -(void) setOpacity:(GLubyte) anOpacity
 {
 	opacity_ = anOpacity;
@@ -322,16 +330,9 @@ enum {
 	quad_.tl.colors = color;
 	quad_.tr.colors = color;
 
-	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-}
--(GLubyte)opacity
-{
-	return opacity_;
+	[self updateColor];
 }
 
-//
-// RGB protocol
-//
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
 {
 	r_ = r;
@@ -343,19 +344,7 @@ enum {
 	quad_.tl.colors = color;
 	quad_.tr.colors = color;
 	
-	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-}
--(GLubyte) r
-{
-	return r_;
-}
--(GLubyte) g
-{
-	return g_;
-}
--(GLubyte) b
-{
-	return b_;
+	[self updateColor];
 }
 
 //
