@@ -98,7 +98,6 @@
 		
 	if( !preMulti )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);

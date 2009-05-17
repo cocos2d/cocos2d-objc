@@ -22,7 +22,6 @@
 
 @interface Atlas2 : AtlasDemo
 {
-	LabelAtlas *label;
 	ccTime		time;
 }
 @end

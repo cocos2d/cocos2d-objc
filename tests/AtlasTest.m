@@ -218,12 +218,13 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
-	label = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
-	
-	[self addChild:label];
-	[label retain];
+	LabelAtlas *label1 = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+	[self addChild:label1 z:0 tag:kTagSprite1];
+	label1.position = ccp(10,100);
 
-	label.position = ccp(10,100);
+	LabelAtlas *label2 = [LabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+	[self addChild:label2 z:0 tag:kTagSprite2];
+	label2.position = ccp(10,200);
 
 	[self schedule:@selector(step:)];
 	return self;
@@ -234,12 +235,15 @@ Class restartAction()
 {
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
-	[label setString:string];
+	LabelAtlas *label1 = (LabelAtlas*) [self getChildByTag:kTagSprite1];
+	[label1 setString:string];
+
+	LabelAtlas *label2 = (LabelAtlas*) [self getChildByTag:kTagSprite2];
+	[label2 setString: [NSString stringWithFormat:@"%d", (int)time]];
 }
 
 -(void) dealloc
 {
-	[label release];
 	[super dealloc];
 }
 
