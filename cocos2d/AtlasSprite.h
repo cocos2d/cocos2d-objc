@@ -79,7 +79,8 @@
 @property (readwrite) BOOL flipX;
 /** whether or not the sprite is flipped vertically */
 @property (readwrite) BOOL flipY;
-
+/** opacity and RGB colors. conforms to CocosNodeRGBA protocol */
+@property (readonly) GLubyte opacity, r, g, b;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
