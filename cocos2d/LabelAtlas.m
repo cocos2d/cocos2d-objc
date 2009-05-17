@@ -13,6 +13,7 @@
  */
 
 #import "LabelAtlas.h"
+#import "ccMacros.h"
 
 
 @implementation LabelAtlas
@@ -86,6 +87,8 @@
 	}
 }
 
+#pragma mark LabelAtlas - CocosNodeLabel
+
 - (void) setString:(NSString*) newString
 {
 	if( newString.length > textureAtlas_.totalQuads )
@@ -101,5 +104,31 @@
 	[self setContentSize:s];
 }
 
-
+#pragma mark LabelAtlas - draw
+- (void) draw
+{
+	glEnableClientState( GL_VERTEX_ARRAY);
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	
+	glEnable( GL_TEXTURE_2D);
+	
+	glColor4ub( r_, g_, b_, opacity_);
+	
+	BOOL preMulti = [[textureAtlas_ texture] hasPremultipliedAlpha];
+	if( ! preMulti )
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	[textureAtlas_ drawNumberOfQuads: string.length];
+	
+	if( !preMulti )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	
+	// is this chepear than saving/restoring color state ?
+	glColor4ub( 255, 255, 255, 255);
+	
+	glDisable( GL_TEXTURE_2D);
+	
+	glDisableClientState(GL_VERTEX_ARRAY );
+	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+}
 @end
