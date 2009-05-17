@@ -216,8 +216,12 @@
     glEnable( GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, [mTexture name]);
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
+	BOOL preMulti = [mTexture hasPremultipliedAlpha];
+	if( ! preMulti )
+	  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	  
     GLubyte r = mColor >> 24 & 0xFF;
     GLubyte g = mColor >> 16 & 0xFF;
     GLubyte b = mColor >> 8 & 0xFF;
@@ -227,6 +231,10 @@
     {
       [seg draw:mCurTime fadeTime:mFadeTime r:r g:g b:b a:a];
     }    
+
+	if( !preMulti )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	  
     glDisable( GL_TEXTURE_2D);
     glDisableClientState( GL_VERTEX_ARRAY );
     glDisableClientState( GL_TEXTURE_COORD_ARRAY );
