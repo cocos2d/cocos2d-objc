@@ -26,7 +26,7 @@
 -(void) dealloc
 {
 	[root release];
-  [target release];
+	[target release];
 	[super dealloc];
 }
 
