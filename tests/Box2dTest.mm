@@ -1,16 +1,10 @@
 //
-// Accelerometer + physics + touches example
+// Demo of calling Box2D testbed test case from a cocos2d Layer
 // a cocos2d example
 // http://code.google.com/p/cocos2d-iphone
 //
 
 #import "Box2dTest.h"
-
-//
-// Demo of calling Box2D testbed test case from a cocos2d Layer
-//
-
-#import "Box2DTestLayer.h"
 #import "SphereStack.h"
 #import "VerticalStack.h"
 
@@ -19,7 +13,7 @@ Settings settings;
 @implementation Box2DTestLayer
 -(id) init
 {
-	if((self=[super init]) {
+	if((self=[super init])) {
 		//currentTest = SphereStack::Create();	
 		currentTest = VerticalStack::Create();	
 		isTouchEnabled = YES;
@@ -37,14 +31,16 @@ Settings settings;
 
 -(void) draw
 {
-    //Scale can be used to zoom in and out of scene
+    glPushMatrix();
+	//Scale can be used to zoom in and out of scene
 	glScalef(10.0f, 10.0f, 1.0f);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	//Make sure you call step from a draw method as step triggers
 	//debug drawing which assumes OpenGL context is set up correctly.
 	//NB: normally you would not want to call step from draw but all
 	//testbed tests use debug drawing for rendering
-	currentTest->Step(&settings);	
+	currentTest->Step(&settings);
+	glPopMatrix();
 }	
 
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -73,6 +69,7 @@ Settings settings;
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
 	// create an openGL view inside a window
 	[[Director sharedDirector] attachInView:window];

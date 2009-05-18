@@ -347,7 +347,7 @@
 		5042270D0FC0B88900B992F7 /* b2PulleyJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 504226BC0FC0B88900B992F7 /* b2PulleyJoint.h */; };
 		5042270E0FC0B88900B992F7 /* b2RevoluteJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504226BD0FC0B88900B992F7 /* b2RevoluteJoint.cpp */; };
 		5042270F0FC0B88900B992F7 /* b2RevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 504226BE0FC0B88900B992F7 /* b2RevoluteJoint.h */; };
-		504227140FC0B96E00B992F7 /* Box2dTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 504227130FC0B96E00B992F7 /* Box2dTest.m */; };
+		504227140FC0B96E00B992F7 /* Box2dTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 504227130FC0B96E00B992F7 /* Box2dTest.mm */; };
 		504828920F45AF3600A30CEF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		504828940F45AF5F00A30CEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828930F45AF5F00A30CEF /* Foundation.framework */; };
 		504828980F45AF6700A30CEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828970F45AF6700A30CEF /* UIKit.framework */; };
@@ -990,7 +990,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5042256F0FC0B39C00B992F7 /* box2d */;
+			remoteGlobalIDString = 5042256F0FC0B39C00B992F7;
 			remoteInfo = box2d;
 		};
 		504828900F45AF2F00A30CEF /* PBXContainerItemProxy */ = {
@@ -1425,7 +1425,7 @@
 		504226BD0FC0B88900B992F7 /* b2RevoluteJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2RevoluteJoint.cpp; sourceTree = "<group>"; };
 		504226BE0FC0B88900B992F7 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		504227120FC0B96E00B992F7 /* Box2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2dTest.h; path = tests/Box2dTest.h; sourceTree = "<group>"; };
-		504227130FC0B96E00B992F7 /* Box2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Box2dTest.m; path = tests/Box2dTest.m; sourceTree = "<group>"; };
+		504227130FC0B96E00B992F7 /* Box2dTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Box2dTest.mm; path = tests/Box2dTest.mm; sourceTree = "<group>"; };
 		504828800F45AED700A30CEF /* AttachTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AttachTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504828930F45AF5F00A30CEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		504828970F45AF6700A30CEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -2905,7 +2905,7 @@
 				501C7CA60F91F1B20024A296 /* AtlasSpriteTest.h */,
 				501C7CA70F91F1B20024A296 /* AtlasSpriteTest.m */,
 				504227120FC0B96E00B992F7 /* Box2dTest.h */,
-				504227130FC0B96E00B992F7 /* Box2dTest.m */,
+				504227130FC0B96E00B992F7 /* Box2dTest.mm */,
 				506C77E50E01524200B48100 /* ClickAndMoveTest.h */,
 				506C77E60E01524200B48100 /* ClickAndMoveTest.m */,
 				50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */,
@@ -4807,7 +4807,7 @@
 				504226310FC0B64700B992F7 /* main.m in Sources */,
 				504226510FC0B6E000B992F7 /* GLES-Render.mm in Sources */,
 				504226520FC0B6E000B992F7 /* iPhoneTest.mm in Sources */,
-				504227140FC0B96E00B992F7 /* Box2dTest.m in Sources */,
+				504227140FC0B96E00B992F7 /* Box2dTest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
