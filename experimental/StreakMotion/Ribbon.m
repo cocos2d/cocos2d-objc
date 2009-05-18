@@ -53,8 +53,8 @@
     mLastLocation = CGPointZero;
     mLastWidth = w/2;
     mTexVPos = 0.0f;
-    mSegments = [[[NSMutableArray alloc] init] retain];
-    dSegments = [[[NSMutableArray alloc] init] retain];
+	mSegments = [[NSMutableArray alloc] init];
+	dSegments = [[NSMutableArray alloc] init];
     RibbonSegment* seg = [[[RibbonSegment alloc] init] autorelease];
     [mSegments addObject:seg];
     mCurTime = 0;
