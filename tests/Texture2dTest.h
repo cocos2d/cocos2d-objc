@@ -61,7 +61,11 @@
 {}
 @end
 
-@interface Texture1632bit : TextureDemo
+@interface TexturePixelFormat : TextureDemo
+{}
+@end
+
+@interface TextureBlend : TextureDemo
 {}
 @end
 

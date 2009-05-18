@@ -25,7 +25,8 @@ static NSString *transitions[] = {
 						@"TextureJPEG",
 						@"TextureTIFF",
 						@"TextureGIF",
-						@"Texture1632bit",
+						@"TexturePixelFormat",
+						@"TextureBlend",
 };
 
 #pragma mark Callbacks
@@ -391,8 +392,8 @@ Class restartAction()
 }
 @end
 
-#pragma mark Texture1632bit
-@implementation Texture1632bit
+#pragma mark TexturePixelFormat
+@implementation TexturePixelFormat
 -(void) onEnter
 {
 	//
@@ -467,6 +468,39 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Texture Pixel Formats";
+}
+@end
+#pragma mark TextureBlend
+@implementation TextureBlend
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		for( int i=0;i < 15;i++ ) {
+			
+			// lower sprites have alpha pre-multiplied
+			// they use GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+			Sprite *cloud = [Sprite spriteWithFile:@"test_blend.png"];
+			[self addChild:cloud z:i+1 tag:100+i];
+			cloud.position = ccp(50+25*i, 100);
+			if( ! cloud.texture.hasPremultipliedAlpha )
+				NSLog(@"Texture Blend failed. Test it on the device, not simulator");
+
+			// upper sprites don't have alpha pre-multiplied
+			// they use GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+			cloud = [Sprite spriteWithFile:@"test_blend.bmp"];
+			[self addChild:cloud z:i+1 tag:200+i];
+			cloud.position = ccp(50+25*i, 200);
+			if( cloud.texture.hasPremultipliedAlpha )
+				NSLog(@"Texture Blend failed. Test it on the device, not simulator");
+		}
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Texture Blending";
 }
 @end
 
