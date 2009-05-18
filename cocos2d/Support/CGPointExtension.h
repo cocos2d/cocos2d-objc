@@ -46,6 +46,10 @@
 #import <CoreGraphics/CGGeometry.h>
 #import <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif	
+
 /** Helper macro that creates a CGPoint
  @return CGPoint
  @since v0.7.2
@@ -212,3 +216,7 @@ CGPoint ccpForAngle(const CGFloat a);
  @since v0.7.2
  */
 CGFloat ccpToAngle(const CGPoint v);
+
+#ifdef __cplusplus
+}
+#endif
