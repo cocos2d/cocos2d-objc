@@ -3,6 +3,8 @@
 // a cocos2d example
 // http://code.google.com/p/cocos2d-iphone
 //
+// Box2d Demo by Steve Oldmeadow
+//
 
 #import "Box2dTest.h"
 #import "SphereStack.h"
