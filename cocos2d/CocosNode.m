@@ -26,10 +26,6 @@
 
 @interface CocosNode (Private)
 -(void) step_: (ccTime) dt;
-// activate all scheduled timers
--(void) activateTimers;
-// deactivate all scheduled timers
--(void) deactivateTimers;
 // lazy allocs
 -(void) actionAlloc;
 -(void) childrenAlloc;
@@ -496,6 +492,12 @@
 	[self activateTimers];
 
 	isRunning = YES;
+}
+
+-(void) onTransitionDidFinish
+{
+	for( id child in children )
+		[child onTransitionDidFinish];
 }
 
 -(void) onExit

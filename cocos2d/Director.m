@@ -23,6 +23,8 @@
 #import "LabelAtlas.h"
 #import "ccMacros.h"
 #import "ccExceptions.h"
+#import "Transition.h"
+#import "Scene.h"
 
 // support imports
 #import "Support/glu.h"
@@ -203,11 +205,9 @@ static Director *_sharedDirector = nil;
 	struct timeval now;
 	
 	if( gettimeofday( &now, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
+		CCLOG(@"error in gettimeofday");
+		dt = 0;
+		return;
 	}
 	
 	// new delta time
@@ -654,24 +654,26 @@ static Director *_sharedDirector = nil;
 
 	[self stopAnimation];
 	[self detach];
-	
-
-	// dont call terminate
-	// an application might want to kill the director
-	// without quiting the application
-//	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-//		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 
 -(void) setNextScene
 {
-	[runningScene_ onExit];
+	BOOL runningIsTransition = [runningScene_ isKindOfClass:[TransitionScene class]];
+	BOOL newIsTransition = [nextScene isKindOfClass:[TransitionScene class]];
+
+	// If it is not a transition, call onExit
+	if( ! newIsTransition )
+		[runningScene_ onExit];
+
 	[runningScene_ release];
 	
 	runningScene_ = [nextScene retain];
 	nextScene = nil;
 
-	[runningScene_ onEnter];
+	if( ! runningIsTransition ) {
+		[runningScene_ onEnter];
+		[runningScene_ onTransitionDidFinish];
+	}
 }
 
 -(void) pause

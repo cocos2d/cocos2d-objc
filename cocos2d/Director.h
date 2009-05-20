@@ -13,11 +13,12 @@
  */
 
 
+//
+#import "ccTypes.h"
+
 // OpenGL related
 #import "Support/EAGLView.h"
 
-// cocos2d related
-#import "Scene.h"
 
 @protocol TouchEventsDelegate;
 
@@ -57,6 +58,7 @@ typedef enum {
 } ccDeviceOrientation;
 
 @class LabelAtlas;
+@class Scene;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes

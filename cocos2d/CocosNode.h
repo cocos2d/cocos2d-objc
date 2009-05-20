@@ -183,9 +183,16 @@ enum {
 
 // scene managment
 
-/** callback that is called every time the node enters the 'stage' */
+/** callback that is called every time the CocosNode enters the 'stage'
+ If the CocosNode enters the 'stage' with a transition, this callback is called when the transition starts.
+ */
 -(void) onEnter;
-/** callback that is called every time the node leaves the 'stage'. */
+/** callback that is called when the CocosNode enters in the 'stage'.
+ If the CocosNode enters the 'stage' with a transition, this callback is called when the transition finishes.
+ @since v0.8
+ */
+-(void) onTransitionDidFinish;
+/** callback that is called every time the CocosNode leaves the 'stage'. */
 -(void) onExit;
 
 
@@ -303,6 +310,15 @@ enum {
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
+/** activate all scheduled timers.
+ Called internally by onEnter
+ */
+-(void) activateTimers;
+/** deactivate all scheduled timers.
+ Called internally by onExit
+ */
+-(void) deactivateTimers;
+
 
 // transformation methods
 
