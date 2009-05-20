@@ -17,6 +17,8 @@
  cocos2d (cc) types
 */
 
+#import <CoreGraphics/CGGeometry.h>	// CGPoint
+
 /** RGB color composed of bytes 3 bytes
 @since v0.8
  */

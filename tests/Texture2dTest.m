@@ -88,14 +88,8 @@ Class restartAction()
 -(void) dealloc
 {
 	[super dealloc];
-}
-
--(void) onEnter
-{
-	[super onEnter];
 	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
 }
-
 
 -(void) restartCallback: (id) sender
 {
@@ -522,7 +516,7 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[Director useFastDirector];
 
 	//
 //	[[Director sharedDirector] setPixelFormat:kRGBA8];

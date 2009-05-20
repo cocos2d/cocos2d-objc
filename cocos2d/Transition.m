@@ -43,27 +43,27 @@ enum {
 {
 	NSAssert( s != nil, @"Argument scene must be non-nil");
 	
-	if( ! (self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 	
-	duration = t;
-	
-	// Don't retain them, it will be reatined when added
-	inScene = s;
-	outScene = [[Director sharedDirector] runningScene];
-	
-	if( inScene == outScene ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"TransitionWithInvalidScene"
-									reason:@"Incoming scene must be different from the outgoing scene"
-									userInfo:nil];
-		@throw myException;		
-	}
-	
-	// disable events while transitions
-	[[Director sharedDirector] setEventsEnabled: NO];
+		duration = t;
+		
+		// Don't retain them, it will be reatined when added
+		inScene = s;
+		outScene = [[Director sharedDirector] runningScene];
+		
+		if( inScene == outScene ) {
+			NSException* myException = [NSException
+										exceptionWithName:@"TransitionWithInvalidScene"
+										reason:@"Incoming scene must be different from the outgoing scene"
+										userInfo:nil];
+			@throw myException;		
+		}
+		
+		// disable events while transitions
+		[[Director sharedDirector] setEventsEnabled: NO];
 
-	[self addScenes];
+		[self addScenes];
+	}
 	return self;
 }
 
@@ -74,7 +74,7 @@ enum {
 	[self addChild: outScene z:0];
 }
 
--(void) step: (ccTime) dt {
+-(void) setNewScene: (ccTime) dt {
 
 	[self unschedule:_cmd];
 	
@@ -86,11 +86,6 @@ enum {
 	// issue #267
 	[outScene setVisible:YES];
 
-	[self removeChild:inScene cleanup:NO];
-	[self removeChild:outScene cleanup:NO];
-	
-	inScene = nil;
-	outScene = nil;
 }
 
 -(void) finish
@@ -111,7 +106,7 @@ enum {
 //	[inScene stopAllActions];
 //	[outScene stopAllActions];
 
-	[self schedule:@selector(step:) interval:0];
+	[self schedule:@selector(setNewScene:) interval:0];
 }
 
 -(void) hideOutShowIn
@@ -120,6 +115,40 @@ enum {
 	[outScene setVisible:NO];
 }
 
+// custom onEnter
+-(void) onEnter
+{
+	// don't call [super onEnter]
+	// outScene should not receive the onEnter callback
+	// inScene should receive it now
+
+//	[super onEnter];
+	[inScene onEnter];
+	[self activateTimers];
+	isRunning = YES;
+}
+
+// custom onExit
+-(void) onExit
+{
+	// don't call [super onExit]
+	// inScene should not receive the onExit callback
+	// outScene should receive ti now
+//	[super onExit];
+	[outScene onExit];	
+	[inScene onTransitionDidFinish];
+
+//	[self removeChild:inScene cleanup:NO];
+//	[self removeChild:outScene cleanup:NO];
+
+	[self deactivateTimers];	
+	isRunning = NO;		
+}
+
+-(void) onTransitionDidFinish
+{
+	// Don't propagate the event. consume it
+}
 
 -(void) dealloc
 {

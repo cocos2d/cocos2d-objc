@@ -244,6 +244,24 @@ Class restartTransition()
 	[s2 addChild: [TextLayer2 node]];
 	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
 }	
+-(void) onEnter
+{
+	[super onEnter];
+	NSLog(@"Scene 1 onEnter");
+}
+
+-(void) onTransitionDidFinish
+{
+	[super onTransitionDidFinish];
+	NSLog(@"Scene 1: transition did finish");
+}
+
+-(void) onExit
+{
+	[super onExit];
+	NSLog(@"Scene 1 onExit");
+}
+
 @end
 
 @implementation TextLayer2
@@ -303,7 +321,27 @@ Class restartTransition()
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer node]];
 	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
-}	
+}
+
+/// callbacks 
+-(void) onEnter
+{
+	[super onEnter];
+	NSLog(@"Scene 2 onEnter");
+}
+
+-(void) onTransitionDidFinish
+{
+	[super onTransitionDidFinish];
+	NSLog(@"Scene 2: transition did finish");
+}
+
+-(void) onExit
+{
+	[super onExit];
+	NSLog(@"Scene 2 onExit");
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS
