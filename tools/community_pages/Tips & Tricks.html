@@ -1,0 +1,62 @@
+<p></p>
+<p><span style="font-weight: bold;">Layer isTouchEnabled must be set before adding the layer</span></p>
+<p>Otherwise, it wont receive the touch events.</p>
+<p><br>
+</p>
+<p><span style="font-weight: bold;">Problem with texture alpha ?</span></p>
+<p>Set the pixel format of your director like this:</p>
+<p></p>
+<p style="margin: 0px; font-family: Monaco; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10px; line-height: normal; font-size-adjust: none; font-stretch: normal; color: rgb(38, 71, 75);"><span style="color: rgb(0, 0, 0);">[[</span><span style="color: rgb(63, 110, 116);">Director</span><span style="color: rgb(0, 0, 0);"> </span>sharedDirector<span style="color: rgb(0, 0, 0);">] </span>setPixelFormat<span style="color: rgb(0, 0, 0);">:</span>kRGBA8<span style="color: rgb(0, 0, 0);">];</span></p>
+<p style="margin: 0px; font-family: Monaco; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10px; line-height: normal; font-size-adjust: none; font-stretch: normal; color: rgb(38, 71, 75);"><br>
+</p>
+<p style="margin: 0px; font-family: Monaco; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10px; line-height: normal; font-size-adjust: none; font-stretch: normal; color: rgb(38, 71, 75);"><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 13px; font-weight: bold;">Sprite turn black when adding a 3D effects ?</span><br>
+</p>
+<p>Add depthBuffer to your director like this:</p>
+<p><span style="font-weight: bold;"><span style="color: rgb(38, 71, 75); font-family: Monaco; font-size: 10px; font-weight: normal;"><span style="color: rgb(0, 0, 0);">[[</span><span style="color: rgb(63, 110, 116);">Director</span><span style="color: rgb(0, 0, 0);">&nbsp;</span>sharedDirector<span style="color: rgb(0, 0, 0);">]&nbsp;</span>setDepthBufferFormat<span style="color: rgb(0, 0, 0);">:</span>kDepthBuffer16<span style="color: rgb(0, 0, 0);">];</span></span><br>
+</span></p>
+<p><span style="font-weight: bold;"><br>
+</span></p>
+<p>
+<b>Continuous (never ending) Repeat actions for v0.6.x <br>
+</b>
+id _action = [RepeatForEver actionWithAction: [MoveBy actionWithDuration:1.0 position:cpv(10,0)] <b>]</b>&nbsp;</p>
+<p> <br>
+<b>Continuous (never ending) Repeat actions for v0.5.x (an earlier)<br>
+</b></p>
+<p> How-to: Set the "times" argument to 0 </p>
+<p>Example: id _action = [Repeat actionWithAction: [MoveBy actionWithDuration:1.0 position:cpv(10,0)] <b>times: 0</b>];</p>
+<p>&nbsp;</p>
+<b><br>
+</b><b>Quick hack to add Hex tiles (0.6.3 / 0.7)</b><br>
+Edit updateAtlasValueAt (0.7) or updateAltasValues (0.6.3) in TileMapAtlas.m to include the following<br>
+<br>
+&nbsp;&nbsp;&nbsp; float offsetX = x *( itemWidth *0.5f + ((int)(itemWidth / 4.0f)));<br>
+&nbsp;&nbsp;&nbsp; float offsetY =&nbsp; y * itemHeight;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; if (x % 2)<br>
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; offsetY = y * itemHeight + 0.5f * itemHeight;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; vertex.bl_x = offsetX;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // A - x<br>
+&nbsp;&nbsp;&nbsp; vertex.bl_y = offsetY;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // A - y<br>
+&nbsp;&nbsp;&nbsp; vertex.bl_z = 0.0f;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // A - z<br>
+&nbsp;&nbsp;&nbsp; vertex.br_x = itemWidth + offsetX;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // B - x<br>
+&nbsp;&nbsp;&nbsp; vertex.br_y = offsetY;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // B - y<br>
+&nbsp;&nbsp;&nbsp; vertex.br_z = 0.0f;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // B - z<br>
+&nbsp;&nbsp;&nbsp; vertex.tl_x = offsetX;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // C - x<br>
+&nbsp;&nbsp;&nbsp; vertex.tl_y = itemHeight + offsetY;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // C - y<br>
+&nbsp;&nbsp;&nbsp; vertex.tl_z = 0.0f;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // C - z<br>
+&nbsp;&nbsp;&nbsp; vertex.tr_x = itemWidth + offsetX;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // D - x<br>
+&nbsp;&nbsp;&nbsp; vertex.tr_y = itemHeight + offsetY;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // D - y<br>
+&nbsp;&nbsp;&nbsp; vertex.tr_z = 0.0f;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // D - z<br>
+<br>
+<b><span>How to draw primitives in landscape mode and keeping the correct coordinates ?</span></b><br>
+<font style="font-family: arial,sans-serif;" face="Courier, Monospaced">You should be drawing in a draw method. &nbsp;Have a look at mainLoop in
+Director. &nbsp;Scheduled methods get called, then landscape is applied
+then drawing is done. &nbsp;If you do drawing in a scheduled method then
+you are doing it before the landscape transformation is applied.</font>
+  - Steve Oldmeadow<br>
+<br>
+<a href="http://groups.google.com/group/cocos2d-iphone-discuss/browse_thread/thread/6685badf484b29dd">http://groups.google.com/group/cocos2d-iphone-discuss/browse_thread/thread/6685badf484b29dd<br>
+</a><wbr>
