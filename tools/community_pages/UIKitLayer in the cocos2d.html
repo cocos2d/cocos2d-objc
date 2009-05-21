@@ -1,0 +1,451 @@
+<span style="font-size: small;">Firstly, I would like to say really very appreciate the whole cocos2d&nbsp;develop team. Your high performance package help me to finish an&nbsp;impossible mission.</span>
+<div><span style="font-size: small;">&nbsp;</span>
+<div><span style="font-size: 11px;">
+<p><span style="font-size: small;">Our cocos2d package is pretty much easier to manage and coding, very&nbsp;little bugs. especially when we want to use some animation, it is&nbsp;really very perfect.&nbsp;</span></p>
+<p><span style="font-size: small;">I want to use cocos2d lib as my root develop&nbsp;platform instead of UIView family. But I met a problem here is the UIKit can not be managed by CocosNode family, only can be managed&nbsp;manually.&nbsp;</span></p>
+<p><span style="font-size: 12px;"><br>
+</span></p>
+<p><span style="font-size: small;">But there still some simple view &amp; compenent can be used the&nbsp;game development. &nbsp;especially UITextView, UIProgressbar and soso.&nbsp;</span></p>
+<p><span style="font-size: 12px;">I am thinking how to merge these 2 family into 1? let UIView family&nbsp;easily managed by Director?&nbsp;</span><br>
+</p>
+<p><span style="font-size: 12px;"><br>
+</span></p>
+<p><span style="font-weight: bold;"><span style="font-size: large;">Here is my point&nbsp;need to verify by later testing.&nbsp;</span></span><br>
+</p>
+<p><span style="font-size: 12px;"><span style="color: rgb(7, 55, 99);">1. Director is created based on a View (_openGLView).&nbsp;&nbsp;please check the function in the Director.m&nbsp;</span></span><br>
+</p>
+<p><span style="font-size: small;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">&nbsp; -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:&nbsp;(CGRect)rect&nbsp;</span></span><br>
+</span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">2. CocosNode just used for child node management and it is draw&nbsp;function need to realized in its sub classes.&nbsp;<br>
+</span></span></p>
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);"><br>
+</span></span></p>
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">3. I have check most subclass of CocosNode, most of them just realize&nbsp;the draw function. and some transform.My conclusion is whatever we add sub node in the Scene, all of them&nbsp;are drawn on the _openGLView. so we could add subview on the&nbsp;_openGLView to realize UIView shown on in the Director control. What&nbsp;action need us to do is :&nbsp;</span></span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-size: small;">&nbsp;&nbsp; &nbsp; 1) get _openGLView pointer from Director &nbsp;<br>
+&nbsp;&nbsp; &nbsp; 2) Create a subclass named UIViewNode from CocosNode, add UIView&nbsp;pointer as member variable,&nbsp;<br>
+&nbsp;&nbsp; &nbsp; 3) Overwrite -(id)init function, in this function we can create this&nbsp;view (pView) with rect(0,0,1,1), with no color, add this subView to&nbsp;_openGLView in director.&nbsp;</span></p>
+<p><span style="font-size: small;">&nbsp;&nbsp; &nbsp; 4) Overwrite -(void) dealloc release this view and its subviews &amp; sub&nbsp;hild, it is key to avoid memory leak;&nbsp;<br>
+&nbsp;&nbsp; &nbsp; 5) Deprecate &nbsp;addChild function, only support add addSubview &amp;&nbsp;addViewNode (_openGLView is always in the bottom of the view, if we&nbsp;add other type of Node, it can not be shown on top of this Node), put&nbsp;subview &amp; subviewnode's view pointer to current view' subview.&nbsp;<br>
+&nbsp;&nbsp; &nbsp; 6) Overwrite setVisible(call subview show/hide function &amp; subViewNode&nbsp;setVisible function)&nbsp;<br>
+&nbsp;&nbsp; &nbsp; 7) Overwrite below &nbsp;function, (Damn .....)&nbsp;&nbsp;&nbsp;removeChild &nbsp;removeChildByTag removeAllChildrenWithCleanup&nbsp;getChildByTag reorderChild transform&nbsp;<br>
+</span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-weight: bold;"><span style="font-size: small;">After that, I think it is ok to show UIView on the Cocos2D games.&nbsp;Below bug can not be solved, need to take care while coding.&nbsp;</span></span></p>
+<p><span style="font-size: 12px; font-weight: bold;"><br>
+</span></p>
+<p><span style="font-size: small;">1. UIKitLayer must be on the top of node, try not code like this;&nbsp;otherwise you will find the UIViewNode always display on the top.&nbsp;<br>
+&nbsp; &nbsp;<span style="font-family: 'courier new',monospace;">&nbsp;&nbsp;[scene addChild : [SubLayer1 node] z:0];&nbsp;<br>
+&nbsp;&nbsp; [scene addChild : [SubUIViewNode node] z:0];&nbsp;<br>
+&nbsp;&nbsp; [scene addChild : [SubLabel node] z:0];&nbsp;<br>
+</span></span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-size: small;">2. Suggest to use&nbsp;UIKitLayer's&nbsp;addSubView function and put the subview&nbsp;on the&nbsp;UIKitLayer. and take&nbsp;care to set the view's region, only can control manually ( I am&nbsp;consider to add extra function to control)&nbsp;</span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-size: small;">3. UIImageView can not be easily transformed, take care, it hurts me a&nbsp;lot in my previous project.&nbsp;<br>
+</span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-size: small;">4.&nbsp;UIKitLayer&nbsp;just provide a simple family control to let our customer&nbsp;view display on the game, pls try to&nbsp;avoid using&nbsp;UIKitLayer-&gt;pView to realized some function, pls add&nbsp;subviews to realize.&nbsp;</span><br>
+</p>
+<p><br>
+</p>
+<p><span style="font-weight: bold;"><span style="font-size: large;"><span style="color: rgb(7, 55, 99);">Below is the final source Code for UIKitLayer&nbsp;class.&nbsp;</span></span></span><br>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;"><span style="font-weight: bold;">@interface UIKitLayer : CocosNode </span>{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; UIView * pView;&nbsp;<br>
+</span></span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) addChild : (UIView *) subView;&nbsp;<br>
+-(void) setFrame : (CGRect) frame;&nbsp;<br>
+-(void) setBackgroundColor : (UIColor *)color;&nbsp;<br>
+@end&nbsp;</span></span>
+<p></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-size: small;"><br>
+</span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-size: small;"><span style="font-weight: bold;">@implementation UIKitLayer&nbsp;</span><br>
+-(id) init&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; self = [super init];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; pView = [[UIView alloc]initWithFrame : CGRectMake(0,0,1,1)];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [pView setBackgroundColor: [UIColor clearColor]];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [pView setCenter: cpv(0,0)];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [super setPosition: cpv(0,0)];&nbsp;<br>
+</span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">&nbsp; &nbsp; &nbsp; &nbsp; [[[Director sharedDirector] openGLView] &nbsp;addSubview:pView];&nbsp;<br>
+</span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">&nbsp; &nbsp; &nbsp; &nbsp; NSLog(@"pView inserted");&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; return self;&nbsp;<br>
+</span></span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) dealloc&nbsp;<br>
+{&nbsp;<br>
+</span></span>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">&nbsp; &nbsp; &nbsp; &nbsp; if(pView)&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; {&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NSLog(@"pView deallocing");&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [pView removeFromSuperview];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [pView release];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; }&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [super dealloc];&nbsp;<br>
+</span></span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) addChild : (UIView *) subView&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; NSAssert(pView,@"subView must be valid");&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [pView addSubview: subView];&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(id) addChild: (CocosNode*)node z:(int)z&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; NSAssert(false,@"This function is not allowed!");&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; return nil;&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(id) addChild: (CocosNode*)node z:(int)z tag:(int)tag&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; NSAssert(false,@"This function is not allowed!");&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; return nil;&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(id) addChild: (CocosNode*)node z:(int)z parallaxRatio:(cpVect)c&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; NSAssert(false,@"This function is not allowed!");&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; return nil;&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) insertChild:(CocosNode*) child z:(int)z&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; NSAssert(false,@"This function is not allowed!");&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) reorderChild:(CocosNode*) child z:(int)z&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; NSAssert(false,@"This function is not allowed!");&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) setVisible : (bool) agv&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; super.visible = agv;&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; pView.hidden = !agv;&nbsp;<br>
+</span></span>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) setPosition : (CGPoint) point&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [super setPosition: point];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [pView setCenter: point];&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) setFrame : (CGRect) frame&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [pView setFrame: frame];&nbsp;<br>
+</span></span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">-(void) setBackgroundColor : (UIColor *)color&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [pView setBackgroundColor: color];&nbsp;<br>
+</span></span>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;"><span style="font-size: small;">}&nbsp;<br>
+<br>
+</span></span></div>
+<span style="font-family: 'courier new',monospace;"><span style="font-size: small;">@end</span></span>
+<p></p>
+<p><br>
+</p>
+<p><br>
+</p>
+<span style="font-weight: bold;"><span style="font-size: large;">There are below key point need to take care&nbsp;</span></span></span></div>
+<div><span style="font-size: 11px;">
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">1. &nbsp;If we want to use landscape mode, &nbsp;need manually revise our View&nbsp;Coordinate System by View Controller. &nbsp;In this situation, no need to&nbsp;call [Director setLandscape] ; I have created viewController.view based on revised Coordinate. &nbsp;you can get reference from Iphone&nbsp;Sample </span></span><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">[Which Way is Up]</span></span><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">.&nbsp;<br>
+</span></span></p>
+<p><span style="color: rgb(7, 55, 99); font-size: 12px;"><br>
+</span></p>
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">Below is the revised&nbsp;<span style="font-family: 'courier new'; font-size: 11px; font-weight: bold;"><span style="color: rgb(0, 0, 255);">applicationDidFinishLaunching</span></span>.&nbsp;</span></span><br>
+</p>
+<p><br>
+</p>
+<p><span style="font-family: 'courier new',monospace;"><span style="color: rgb(39, 78, 19);"><span style="font-weight: bold;">//auto load viewController &amp; window in MainWindow.XIB&nbsp;</span></span><br>
+<span style="font-weight: bold;">@interface CocosDetectiveViewController </span>: UIViewController {&nbsp;<br>
+</span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@end&nbsp;<br>
+<span style="font-weight: bold;">@interface CocosDetectiveAppDelegate</span> : NSObject&nbsp;&lt;UIApplicationDelegate&gt; {&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; CocosDetectiveViewController * viewController;&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; UIWindow *window;&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@property (nonatomic, retain) UIWindow *window;&nbsp;<br>
+@property (nonatomic, retain) CocosDetectiveViewController&nbsp;<br>
+*viewController;&nbsp;<br>
+@implementation CocosDetectiveAppDelegate&nbsp;<br>
+@synthesize window;&nbsp;<br>
+@synthesize viewController;&nbsp;<br>
+</span>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">- (void)applicationDidFinishLaunching:(UIApplication *)app{</span>&nbsp;<br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp; &nbsp; &nbsp; &nbsp; [app setStatusBarHidden:YES animated:NO];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; // Override point for customization after app launch&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [window addSubview: viewController.view ];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; // show FPS&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector] setDisplayFPS:YES];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; // frames per second&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector] setAnimationInterval:1.0/60];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="font-weight: bold;"><span style="color: rgb(39, 78, 19);">// attach cocos2d to a window, if we need play game under landscape mode,don't call attachInWindow&nbsp;</span></span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="color: rgb(39, 78, 19); font-weight: bold;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// and no need to call [Director setLandscape] function anymore<br>
+</span>&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector] attachInView: viewController.view&nbsp;withFrame: CGRectMake(0,0,480,320)];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector] runWithScene: [MenuScene node]];&nbsp;<br>
+</span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">-(void) dealloc{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [viewController release];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [window release];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [super dealloc];&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">// getting a call, pause the game&nbsp;<br>
+-(void) applicationWillResignActive:(UIApplication *)application&nbsp;<br>
+{&nbsp;<br>
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;[[Director sharedDirector] pause];&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">// call got rejected&nbsp;<br>
+-(void) applicationDidBecomeActive:(UIApplication *)application&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector] resume];&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">// purge memroy&nbsp;<br>
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)&nbsp;<br>
+application {&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[TextureMgr sharedTextureMgr] removeAllTextures];&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">// next delta time will be zero&nbsp;<br>
+-(void) applicationSignificantTimeChange:(UIApplication *)application&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector] setNextDeltaTimeZero:YES];&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@end&nbsp;</span></span></div>
+<div><span style="font-size: 11px;"><span style="font-family: 'courier new',monospace;"><br>
+</span>
+<p><span style="font-family: 'courier new',monospace;">@implementation CocosDetectiveViewController&nbsp;<br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)&nbsp;<br>
+interfaceOrientation {&nbsp;</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp;&nbsp; &nbsp;<span style="font-weight: bold;"><span style="color: rgb(39, 78, 19);">//turn iphone to landscape mode&nbsp;</span></span><br>
+&nbsp;&nbsp; &nbsp;return interfaceOrientation ==&nbsp;UIInterfaceOrientationLandscapeRight;&nbsp;</span></p>
+<p><span style="font-family: 'courier new',monospace;"><br>
+</span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<p><span style="font-family: 'courier new',monospace;">@end&nbsp;</span></p>
+<p><span style="font-family: 'courier new';"><br>
+</span></p>
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">2. How to do implementation of &nbsp;UIKitLayer's subclass.<span style="color: rgb(0, 0, 0); font-size: 11px;">&nbsp;</span></span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;"><span style="color: rgb(39, 78, 19);">// subView need &nbsp;be manually released while dealloc to avoid&nbsp;memory leak.&nbsp;</span></span><br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">@interface AboutScene : Scene</span>{&nbsp;<br>
+</span></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@end&nbsp;<br>
+</span>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">@interface AboutLayer : UIKitLayer{</span>&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; UITextView *contentView;&nbsp;<br>
+</span></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@end&nbsp;</span></span></div>
+<div><span style="font-size: 11px;"><span style="font-family: 'courier new',monospace;"><br>
+</span>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">@implementation AboutScene&nbsp;</span><br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">- (id) init&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; self = [super init];&nbsp;<br>
+&nbsp;&nbsp; &nbsp;//create images&nbsp;<br>
+&nbsp;&nbsp; &nbsp;Sprite * bg = [Sprite spriteWithFile:@"liuqianru.png"];&nbsp;<br>
+&nbsp; &nbsp; [bg setPosition:cpv(100, 160)];&nbsp;<br>
+&nbsp; &nbsp; [self addChild:bg z:0];&nbsp;<br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp; &nbsp; &nbsp; &nbsp; //create button&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [MenuItemFont setFontSize:24];&nbsp;<br>
+&nbsp; &nbsp; [MenuItemFont setFontName:@"Helvetica"];&nbsp;<br>
+&nbsp;&nbsp; &nbsp;MenuItem *back &nbsp;= [MenuItemFont itemFromString:@"Back"&nbsp;target:self&nbsp;selector:@selector(tapBack:)];&nbsp;<br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp;&nbsp; &nbsp;Menu *menu = [Menu menuWithItems:back, nil];&nbsp;<br>
+&nbsp; &nbsp; [menu alignItemsVertically];&nbsp;<br>
+&nbsp; &nbsp; [self addChild:menu];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [back setPosition: cpv(100,20)];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [menu setPosition: cpv(0,0)];&nbsp;<br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp; &nbsp; &nbsp; &nbsp; //create title&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; Label * title = [Label labelWithString : @"About" fontName :&nbsp;@"Helvetica" fontSize : 20];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [title setRGB: 0xFF : 0xFF :0x00];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [self addChild : title];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [title setPosition: cpv(240,300)];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; //create content&nbsp;<br>
+&nbsp; &nbsp; [self addChild : [AboutLayer node]];&nbsp;<br>
+</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp; &nbsp; &nbsp; &nbsp; return self;&nbsp;<br>
+</span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">-(void) tapBack : (id) sender&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [[Director sharedDirector]replaceScene:[MenuScene node]];&nbsp;<br>
+</span>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@end&nbsp;<br>
+</span>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">@implementation AboutLayer&nbsp;</span><br>
+-(id) init&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; self = [super init];&nbsp;</span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp;&nbsp; &nbsp; &nbsp; <span style="color: rgb(39, 78, 19);"><span style="font-weight: bold;">&nbsp;//very important, need set same size or larger than subviews.</span></span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="font-weight: bold;"><span style="color: rgb(255, 0, 0);">[self setFrame: CGRectMake(0, 0, 280, 260)];</span>&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; </span><span style="font-weight: bold;">[self setPosition: cpv(320,170)];&nbsp;<span style="font-weight: normal;"></span></span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;"><span style="font-weight: normal;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">UITextView *view = &nbsp;[[UITextView alloc] initWithFrame:CGRectMake(0,0, <span style="color: rgb(255, 0, 0);">280, 260</span>)];&nbsp;</span></span></span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;"><span style="font-weight: normal;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;view.font = [UIFont systemFontOfSize:12.0];&nbsp;</span></span></span></p>
+<p><span style="font-family: 'courier new',monospace;">&nbsp; &nbsp; &nbsp; &nbsp; view.textColor = [UIColor whiteColor];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; view.backgroundColor = [UIColor clearColor];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; view.textAlignment = UITextAlignmentLeft;&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; view.editable = FALSE;&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; view.text = NSLocalizedStringFromTable(@"AboutContent",@"resource",nil);&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [self addChild: view];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; contentView = view;&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; return self;&nbsp;<br>
+</span></p>
+<p></p>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">-(void) dealloc&nbsp;<br>
+{&nbsp;</span></span></div>
+<div><span style="font-size: 11px;"><span style="font-family: 'courier new',monospace;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;"><span style="color: rgb(39, 78, 19);">//need manual release subviews</span></span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; [contentView removeFromSuperview];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [contentView release];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [super dealloc];&nbsp;<br>
+</span>
+<div style="display: block;"><span style="font-family: 'courier new',monospace;">}&nbsp;<br>
+<br>
+</span></div>
+<span style="font-family: 'courier new',monospace;">@end&nbsp;</span><br>
+<p></p>
+<p><br>
+</p>
+<p><span style="font-size: small;"><span style="color: rgb(7, 55, 99);">3. Pls notice, UIKitLayer setFrame function is used to define the echo&nbsp;rect, all subview's rect must be contained in the UIKeyLayer rect, we can&nbsp;use&nbsp;</span></span></p>
+<p><span style="color: rgb(0, 0, 255);"><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;">[self setBackgroundColor:[UIColor greenColor]]</span></span></span><span style="font-size: small;"> <span style="color: rgb(12, 52, 61);">to double check,&nbsp;otherwise UIKit tap/touch action can not be caught by UIKitLayer.</span>&nbsp;</span></p>
+<p><span style="font-family: 'courier new',monospace;">@implementation AboutLayer&nbsp;<br>
+-(id) init&nbsp;<br>
+{&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; self = [super init];&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="font-weight: bold;"><span style="color: rgb(39, 78, 19);">//This action is very important, and also spent me very&nbsp;long time&nbsp;</span></span></span></p>
+<p><span style="font-family: 'courier new',monospace;"><span style="font-weight: bold;"><span style="color: rgb(39, 78, 19);">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;//to find the root cause why system can not receive scroll&nbsp;action.</span></span>&nbsp;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; [self setFrame: CGRectMake(0, 0, 280, 260)];&nbsp;<br>
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;UITextView *view = &nbsp;[[UITextView alloc] initWithFrame:CGRectMake(0,&nbsp;0, 280, 260)];&nbsp;</span><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><span style="font-weight: bold;"><span style="font-size: large;">There are still something remain I can not solve. &nbsp;</span></span><br>
+</p>
+<p><span style="font-size: 12px;">1. The default origin coordinate &nbsp;of &nbsp;UIKitLayer is <span style="font-weight: bold;">left up </span>in the&nbsp;landscape mode, which is slip with [Director class which is <span style="font-weight: bold;">left&nbsp;down</span>.&nbsp;</span><br>
+</p>
+<p><span style="font-size: small;">&nbsp;&nbsp; &nbsp; Don't know how to solve this problem, anyway now just need to&nbsp;<span style="font-weight: bold;">convert&nbsp;coordinate manually</span>.</span></p>
+<p><span style="font-size: small;">&nbsp;<br>
+</span></p>
+<p><span style="font-size: small;">2. Any animation action can be simply realized for this &nbsp;Layer, only can do it manually, using View Transform, Really hate to use&nbsp;<br>
+View Controller and lazy to implement (^_^) .<br>
+</span></p>
+<p><span style="font-size: small;"><br>
+</span></p>
+<p><span style="font-size: small;">3. A demo sample project attached in our group, hope it &nbsp;can be helpfull (need manually import cocos2D path).<span style="font-size: 11px;">&nbsp;<a href="http://cocos2d-iphone-discuss.googlegroups.com/web/DemoUIKitLayer.zip?gda=2H0U70QAAACGRBJdS423NOi2_n1UzN_UXDbUpaVgclGG37_MRj4IsKf-3isT3zqEgzdUc-EcdptV6u9SiETdg0Q2ffAyHU-dzc4BZkLnSFWX59nr5BxGqA&amp;gsc=bP-DJxYAAAD58jOj-1A6CoSXoaHPtZx2lKW9gda2xEqp8GeRYGM_Dg">[DemoUIKitLyaer]</a></span></span></p>
+<p><br>
+</p>
+<p><span style="font-size: small;"><span><span style="font-size: small;">4. Some member functions need to implement in UIKitLayer, will update later if necessary, and also need you help to give me some advice.</span></span></span></p>
+<p><br>
+</p>
+<p></p>
+<p><br>
+</p>
+<p>&nbsp;<br>
+</p>
+</span></div>
+</div>
+<wbr>

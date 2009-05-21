@@ -1,0 +1,89 @@
+<b><br>
+cocos2d and Flash</b> (draft)<br>
+Description: Define how the same task done in Flash would be done using cocos2d
+<div><br>
+</div>
+<div><br>
+</div>
+<div>[ADDED BY: Robert Payne]:</div>
+<div><br>
+</div>
+<div>Some of these may have solutions that are easier but I have yet to find any:</div>
+<div><br>
+</div>
+<div>TIPS:</div>
+<div><br>
+</div>
+<div>
+<ol><li>PVRTC will rarely work for any Textures coming from Flash if you have Vector line work.</li>
+<li>"tint" in Flash is not like glColor4b or the colorizing features in cocos2d. To be able to colorize to any color the Texture has to be white.</li>
+<li>There is no magic MovieClip or easy way to mimic it. Nested looping animations are a bit time consuming to setup.</li>
+<li>There is an event dispatcher sort of see NSNotificationCenter in the API Documentation</li>
+<li>Learn to use TextureAtlas directly and manage your own draw calls. It allows for a lot more flexibility than trying to run animations through the Sprite or AtlasSprite especially when you get into nesting animations.</li>
+<li>If you have not already go look up "autorelease" "retain" or "release" and read the rest of the Garbage collection system it'll save you years of time debugging memory issues.<br>
+</li>
+</ol>
+<br>
+[ADDED BY: Boon]:</div>
+<b>Objective-C and Actionscript 3 (draft)</b><br>
+<br>
+[ObjC] id is a pointer to any type of object<br>
+[AS3] Object<br>
+<br>
+[ObjC] BOOL (values: YES | NO)<br>
+[AS3] Boolean (true | false)<br>
+&nbsp;<br>
+[ObjC] nil<br>
+[AS3] (undefined | null)<span style="color: rgb(255, 0, 0);"></span><br>
+<br>
+[ObjC] The name of the class (specified in .h or .m) doesn't have to match with the filename<br>
+[AS3] The name of the class HAS to match with the filename<br>
+<br>
+View-based methods<br>
+[ObjC] addSubview<br>
+[AS3] addChild<br>
+<br>
+[ObjC] bringSubviewToFront, bringSubviewToBack<br>
+[AS3] setChildIndex<br>
+<br>
+[ObjC] removeFromSuperview<br>
+[AS3] parent.removeChild<br>
+<br>
+[ObjC] exchangeSubviewAtIndex<br>
+[AS3] swapChildrenAt<br>
+<br>
+convertPoint:fromView -&gt; localToGlobal, globalToLocal<br>
+convertPoint:toView -&gt; localToGlobal, globalToLocal<br>
+convertPoint:toView:nil -&gt; localToGlobal<br>
+<br>
+[ObjC] setNeedsDisplay/setNeedsDisplayInRect<br>
+[AS3] stage.invalidate<br>
+<br>
+[ObjC] setAnimationEnabled<br>
+[AS3] play/stop<br>
+<br>
+[ObjC] UIView::hitTest<br>
+[AS3] displayObject.hitTest<br>
+<br>
+[ObjC] UIView::pointInside<br>
+[AS3] objectsUnderPoint<br>
+<br>
+[ObjC] userInteractionEnabled<br>
+[AS3] mouseEnabled<br>
+<br>
+Dynamic method calling<br>
+[ObjC]<br>
+if( [obj respondsToSelector:@selector(method)] ) or @selector(NSSelectorFromString(“method”))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [obj performSelector:@selector(method)];<br>
+<br>
+[AS3]<br>
+if (obj.hasOwnProperty(“method”))<br>
+{<br>
+&nbsp;&nbsp; obj.method();<br>
+}<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<wbr>
