@@ -128,10 +128,9 @@
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
 	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
 
 	// attach the OpenGL view to a window
@@ -143,6 +142,11 @@
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
 	
+	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	Scene *scene = [Scene node];
 

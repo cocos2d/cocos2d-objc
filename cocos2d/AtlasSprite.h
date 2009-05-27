@@ -20,8 +20,7 @@
 
 #pragma mark AltasSprite
 
-/** AtlasSprite is a CocosNode object that implements the CocosNodeSize, CocosNodeFrames, CocosNodeOpacity and
- * CocosNodeRGB protocols.
+/** AtlasSprite is a CocosNode object that implements the CocosNodeFrames and CocosNodeRGBA protocols.
  * 
  * AtlasSprite can be used as a replacement of Sprite.
  *
@@ -34,8 +33,8 @@
  *		- Their parent can only be an AtlasSpriteManager
  *		- They can't have children
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
- *		- GridBase actions are supported (eg: Lens, Ripple, Twirl)
- *		- They can't Aliased or AntiAliased (but AtlasSpriteManager can)
+ *		- GridBase actions are not supported (eg: Lens, Ripple, Twirl)
+ *		- The Alias/Antialias property belongs to AtlasSpriteManager, so you can't individually set the aliased property.
  *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
  *
  * @since v0.7.1

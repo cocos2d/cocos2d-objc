@@ -251,7 +251,12 @@ Class restartAction()
 
 	// create an openGL view inside a window
 	[[Director sharedDirector] attachInView:window];	
-	[window makeKeyAndVisible];		
+	[window makeKeyAndVisible];	
+	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	Scene *scene = [Scene node];
 	[scene addChild: [nextAction() node]];

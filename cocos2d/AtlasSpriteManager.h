@@ -24,8 +24,8 @@
  * that belongs to this Manager. Use 1 AtlasSpriteManager per TextureAtlas
 *
  * Limitations:
- *  - The only object that is accepted as children are AtlasSprite
- *  - It's children are all Aliased or all Antialiased. They can't be some Aliased and some Antialiased
+ *  - The only object that is accepted as child is AtlasSprite
+ *  - It's children are all Aliased or all Antialiased.
  * 
  * @since v0.7.1
  */

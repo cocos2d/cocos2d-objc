@@ -200,7 +200,11 @@ eachShape(void *ptr, void* unused)
 	// And you can later, once the openGLView was created
 	// you can change it's properties
 	[[[Director sharedDirector] openGLView] setMultipleTouchEnabled:YES];
-	
+
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	// add layer
 	Scene *scene = [Scene node];

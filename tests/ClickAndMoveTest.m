@@ -102,6 +102,11 @@ enum
 	// Make the window visible
 	[window makeKeyAndVisible];
 	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	
 	Scene *scene = [Scene node];
 	MainLayer * mainLayer =[MainLayer node];	
 	[scene addChild: mainLayer z:2];
