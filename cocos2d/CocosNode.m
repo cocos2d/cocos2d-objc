@@ -137,46 +137,45 @@
 
 -(id) init
 {
-	if (!(self=[super init]) )
-		return nil;
-	
-	isRunning = NO;
-	
+	if ((self=[super init]) ) {
 
-	rotation_ = 0.0f;
-	scaleX_ = scaleY_ = 1.0f;
-	position_ = CGPointZero;
-	transformAnchor_ = CGPointZero;
-	anchorPoint_ = CGPointZero;
-	contentSize_ = CGSizeZero;
-
-	// "whole screen" objects. like Scenes and Layers, should set relativeTransformAnchor to NO
-	relativeTransformAnchor_ = YES; 
+		isRunning = NO;
 	
-	isTransformDirty_ = isInverseDirty_ = YES;
-	
-	
-	vertexZ_ = 0;
+		rotation_ = 0.0f;
+		scaleX_ = scaleY_ = 1.0f;
+		position_ = CGPointZero;
+		transformAnchor_ = CGPointZero;
+		anchorPoint_ = CGPointZero;
+		contentSize_ = CGSizeZero;
 
-	grid = nil;
-	
-	visible = YES;
+		// "whole screen" objects. like Scenes and Layers, should set relativeTransformAnchor to NO
+		relativeTransformAnchor_ = YES; 
+		
+		isTransformDirty_ = isInverseDirty_ = YES;
+		
+		
+		vertexZ_ = 0;
 
-	tag = kCocosNodeTagInvalid;
-	
-	zOrder = 0;
+		grid = nil;
+		
+		visible = YES;
 
-	// lazy alloc
-	camera = nil;
+		tag = kCocosNodeTagInvalid;
+		
+		zOrder = 0;
 
-	// children (lazy allocs)
-	children = nil;
+		// lazy alloc
+		camera = nil;
 
-	// actions (lazy allocs)
-	actions = nil;
-	
-	// scheduled selectors (lazy allocs)
-	scheduledSelectors = nil;
+		// children (lazy allocs)
+		children = nil;
+
+		// actions (lazy allocs)
+		actions = nil;
+		
+		// scheduled selectors (lazy allocs)
+		scheduledSelectors = nil;
+	}
 	
 	return self;
 }
@@ -494,10 +493,10 @@
 	isRunning = YES;
 }
 
--(void) onTransitionDidFinish
+-(void) onEnterTransitionDidFinish
 {
 	for( id child in children )
-		[child onTransitionDidFinish];
+		[child onEnterTransitionDidFinish];
 }
 
 -(void) onExit
@@ -696,6 +695,7 @@
 	if( !scheduledSelectors )
 		[self timerAlloc];
 	
+	// already scheduled ?
 	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
 		return;
 	}

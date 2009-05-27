@@ -672,7 +672,7 @@ static Director *_sharedDirector = nil;
 
 	if( ! runningIsTransition ) {
 		[runningScene_ onEnter];
-		[runningScene_ onTransitionDidFinish];
+		[runningScene_ onEnterTransitionDidFinish];
 	}
 }
 

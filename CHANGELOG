@@ -24,7 +24,7 @@ version 0.8 - xxx
  . Texture2D: blending mode varies according to texture (issue #125)
  . TextureAtlas: uses interleaved vertex array (issue #359)
  . TextureMgr: added method that removes unused textures (issue #117)
- . Transition: onTransitionDidFinsih added. OnExit and onEnter only once (issue #172)
+ . Transition: onEnterTransitionDidFinsih added. OnExit and onEnter only once (issue #172)
  . Types: types follows OpenGL "standards" (issue #360)
  . Touch Events: new touch dispatcher (issue #211)
  . Touch Events: menu uses new touch dispatcher (issue #362)
