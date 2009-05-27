@@ -32,9 +32,10 @@ typedef enum {
 /** Base class for Transition scenes
  */
 @interface TransitionScene : Scene {
-	Scene * inScene;
-	Scene * outScene;
-	ccTime duration;	
+	Scene	*inScene;
+	Scene	*outScene;
+	ccTime	duration;
+	BOOL	inSceneOnTop;
 }
 /** creates a base transition with duration and incoming scene */
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;

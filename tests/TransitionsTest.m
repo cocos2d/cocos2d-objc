@@ -192,7 +192,7 @@ Class restartTransition()
 @implementation TextLayer
 -(id) init
 {
-	if( [super init] ) {
+	if( (self=[super init]) ) {
 
 		float x,y;
 		
@@ -219,16 +219,23 @@ Class restartTransition()
 		item2.position = ccp(480/2, 30);
 		item3.position = ccp(480/2+100,30);
 		[self addChild: menu z:1];
+		
+		[self schedule:@selector(step:) interval:1.0f];
 	}
 	
 	return self;
 }
 
+-(void) step:(ccTime)dt
+{
+	NSLog(@"Scene1#step called");
+}
 -(void) nextCallback:(id) sender
 {
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer2 node]];
 	[[Director sharedDirector] replaceScene: [nextTransition() transitionWithDuration:1.2f scene:s2]];
+
 }	
 
 -(void) backCallback:(id) sender
@@ -250,9 +257,9 @@ Class restartTransition()
 	NSLog(@"Scene 1 onEnter");
 }
 
--(void) onTransitionDidFinish
+-(void) onEnterTransitionDidFinish
 {
-	[super onTransitionDidFinish];
+	[super onEnterTransitionDidFinish];
 	NSLog(@"Scene 1: transition did finish");
 }
 
@@ -262,12 +269,17 @@ Class restartTransition()
 	NSLog(@"Scene 1 onExit");
 }
 
+-(void) cleanup
+{
+	NSLog(@"cleanup 1");
+	[super cleanup];
+}
 @end
 
 @implementation TextLayer2
 -(id) init
 {
-	if( [super init] ) {
+	if( (self=[super init]) ) {
 			
 		isTouchEnabled = YES;
 		
@@ -296,7 +308,8 @@ Class restartTransition()
 		item2.position = ccp(480/2, 30);
 		item3.position = ccp(480/2+100,30);
 		[self addChild: menu z:1];
-
+		
+		[self schedule:@selector(step:) interval:1.0f];
 	}
 	
 	return self;
@@ -322,6 +335,11 @@ Class restartTransition()
 	[s2 addChild: [TextLayer node]];
 	[[Director sharedDirector] replaceScene: [restartTransition() transitionWithDuration:1.2f scene:s2]];
 }
+-(void) step:(ccTime)dt
+{
+	NSLog(@"Scene2#step called");
+}
+
 
 /// callbacks 
 -(void) onEnter
@@ -330,9 +348,9 @@ Class restartTransition()
 	NSLog(@"Scene 2 onEnter");
 }
 
--(void) onTransitionDidFinish
+-(void) onEnterTransitionDidFinish
 {
-	[super onTransitionDidFinish];
+	[super onEnterTransitionDidFinish];
 	NSLog(@"Scene 2: transition did finish");
 }
 
@@ -342,6 +360,11 @@ Class restartTransition()
 	NSLog(@"Scene 2 onExit");
 }
 
+-(void) cleanup
+{
+	NSLog(@"cleanup 2");
+	[super cleanup];
+}
 @end
 
 // CLASS IMPLEMENTATIONS

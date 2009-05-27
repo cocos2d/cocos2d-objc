@@ -191,7 +191,7 @@ enum {
  If the CocosNode enters the 'stage' with a transition, this callback is called when the transition finishes.
  @since v0.8
  */
--(void) onTransitionDidFinish;
+-(void) onEnterTransitionDidFinish;
 /** callback that is called every time the CocosNode leaves the 'stage'. */
 -(void) onExit;
 
@@ -319,6 +319,7 @@ enum {
  */
 -(void) deactivateTimers;
 
+-(void) cleanup;
 
 // transformation methods
 

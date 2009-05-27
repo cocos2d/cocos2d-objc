@@ -30,7 +30,7 @@ enum {
 };
 
 @interface TransitionScene (Private)
--(void) addScenes;
+-(void) sceneOrder;
 @end
 
 @implementation TransitionScene
@@ -47,9 +47,10 @@ enum {
 	
 		duration = t;
 		
-		// Don't retain them, it will be reatined when added
-		inScene = s;
+		// retain
+		inScene = [s retain];
 		outScene = [[Director sharedDirector] runningScene];
+		[outScene retain];
 		
 		if( inScene == outScene ) {
 			NSException* myException = [NSException
@@ -62,30 +63,24 @@ enum {
 		// disable events while transitions
 		[[Director sharedDirector] setEventsEnabled: NO];
 
-		[self addScenes];
+		[self sceneOrder];
 	}
 	return self;
 }
-
--(void) addScenes
+-(void) sceneOrder
 {
-	// add both scenes
-	[self addChild: inScene z:1];
-	[self addChild: outScene z:0];
+	inSceneOnTop = YES;
 }
 
--(void) setNewScene: (ccTime) dt {
-
-	[self unschedule:_cmd];
-	
-	[[Director sharedDirector] replaceScene: inScene];
-
-	// enable events while transitions
-	[[Director sharedDirector] setEventsEnabled: YES];
-	
-	// issue #267
-	[outScene setVisible:YES];
-
+-(void) draw
+{
+	if( inSceneOnTop ) {
+		[outScene visit];
+		[inScene visit];
+	} else {
+		[inScene visit];
+		[outScene visit];
+	}
 }
 
 -(void) finish
@@ -103,10 +98,20 @@ enum {
 	[outScene setRotation:0.0f];
 	[outScene.camera restore];
 	
-//	[inScene stopAllActions];
-//	[outScene stopAllActions];
-
 	[self schedule:@selector(setNewScene:) interval:0];
+}
+
+-(void) setNewScene: (ccTime) dt
+{	
+	[self unschedule:_cmd];
+	
+	[[Director sharedDirector] replaceScene: inScene];
+	
+	// enable events while transitions
+	[[Director sharedDirector] setEventsEnabled: YES];
+	
+	// issue #267
+	[outScene setVisible:YES];	
 }
 
 -(void) hideOutShowIn
@@ -118,40 +123,31 @@ enum {
 // custom onEnter
 -(void) onEnter
 {
-	// don't call [super onEnter]
-	// outScene should not receive the onEnter callback
-	// inScene should receive it now
-
-//	[super onEnter];
+	[super onEnter];
 	[inScene onEnter];
-	[self activateTimers];
-	isRunning = YES;
+	// outScene should not receive the onEnter callback
 }
 
 // custom onExit
 -(void) onExit
 {
-	// don't call [super onExit]
-	// inScene should not receive the onExit callback
-	// outScene should receive ti now
-//	[super onExit];
+	[super onExit];
 	[outScene onExit];	
-	[inScene onTransitionDidFinish];
 
-//	[self removeChild:inScene cleanup:NO];
-//	[self removeChild:outScene cleanup:NO];
-
-	[self deactivateTimers];	
-	isRunning = NO;		
+	// inScene should not receive the onExit callback
+	// only the onEnterTransitionDidFinish
+	[inScene onEnterTransitionDidFinish];
 }
 
--(void) onTransitionDidFinish
+-(void) onEnterTransitionDidFinish
 {
-	// Don't propagate the event. consume it
+	[super onEnterTransitionDidFinish];
 }
 
 -(void) dealloc
 {
+	[inScene release];
+	[outScene release];
 	[super dealloc];
 }
 @end
@@ -167,9 +163,8 @@ enum {
 
 -(id) initWithDuration:(ccTime) t scene:(Scene*)s orientation:(tOrientation)o
 {
-	if( !(self=[super initWithDuration:t scene:s]) )
-		return nil;
-	orientation = o;
+	if( (self=[super initWithDuration:t scene:s]) )
+		orientation = o;
 	return self;
 }
 @end
@@ -749,11 +744,9 @@ enum {
 @implementation TurnOffTilesTransition
 
 // override addScenes, and change the order
--(void) addScenes
+-(void) sceneOrder
 {
-	// add both scenes
-	[self addChild: inScene z:0];
-	[self addChild: outScene z:1];
+	inSceneOnTop = NO;
 }
 
 -(void) onEnter
@@ -825,12 +818,9 @@ enum {
 // FadeTR Transition
 //
 @implementation FadeTRTransition
-// override addScenes, and change the order
--(void) addScenes
+-(void) sceneOrder
 {
-	// add both scenes
-	[self addChild: inScene z:0];
-	[self addChild: outScene z:1];
+	inSceneOnTop = NO;
 }
 
 -(void) onEnter
