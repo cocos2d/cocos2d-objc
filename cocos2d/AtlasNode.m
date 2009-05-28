@@ -19,12 +19,14 @@
 @interface AtlasNode (Private)
 -(void) calculateMaxItems;
 -(void) calculateTexCoordsSteps;
+-(void) updateBlendFunc;
 @end
 
 @implementation AtlasNode
 
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
 @synthesize textureAtlas = textureAtlas_;
+@synthesize blendFunc = blendFunc_;
 
 #pragma mark AtlasNode - Creation & Init
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c
@@ -35,20 +37,25 @@
 
 -(id) initWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c
 {
-	if( ! (self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 	
-	// retained
-	self.textureAtlas = [TextureAtlas textureAtlasWithFile:tile capacity:c];
-	
-	itemWidth = w;
-	itemHeight = h;
+		itemWidth = w;
+		itemHeight = h;
 
-	opacity_ = 255;
-	r_ = g_ = b_ = 255;
+		opacity_ = 255;
+		r_ = g_ = b_ = 255;
 		
-	[self calculateMaxItems];
-	[self calculateTexCoordsSteps];
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
+		
+		// retained
+		self.textureAtlas = [TextureAtlas textureAtlasWithFile:tile capacity:c];
+		
+		[self updateBlendFunc];
+			
+		[self calculateMaxItems];
+		[self calculateTexCoordsSteps];
+	}
 	
 	return self;
 }
@@ -90,13 +97,15 @@
 
 	glColor4ub( r_, g_, b_, opacity_);
 
-	BOOL preMulti = [[textureAtlas_ texture] hasPremultipliedAlpha];
-	if( ! preMulti )
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+	BOOL newBlend = NO;
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+		newBlend = YES;
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	}
+		
 	[textureAtlas_ drawQuads];
 		
-	if( !preMulti )
+	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	// is this chepear than saving/restoring color state ?
@@ -132,9 +141,19 @@
 }
 
 #pragma mark AtlasNode - CocosNodeTexture protocol
+
+-(void) updateBlendFunc
+{
+	if( ! [textureAtlas_.texture hasPremultipliedAlpha] ) {
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	}
+}
+
 -(void) setTexture:(Texture2D*)texture
 {
 	textureAtlas_.texture = texture;
+	[self updateBlendFunc];
 }
 
 -(Texture2D*) texture

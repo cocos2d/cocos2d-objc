@@ -105,6 +105,8 @@
 }
 
 #pragma mark LabelAtlas - draw
+
+// XXX: overriding draw from AtlasNode
 - (void) draw
 {
 	glEnableClientState( GL_VERTEX_ARRAY);
@@ -114,13 +116,15 @@
 	
 	glColor4ub( r_, g_, b_, opacity_);
 	
-	BOOL preMulti = [[textureAtlas_ texture] hasPremultipliedAlpha];
-	if( ! preMulti )
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	BOOL newBlend = NO;
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+		newBlend = YES;
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	}
 	
 	[textureAtlas_ drawNumberOfQuads: string.length];
 	
-	if( !preMulti )
+	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	// is this chepear than saving/restoring color state ?

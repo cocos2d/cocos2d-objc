@@ -156,7 +156,7 @@
 //	int colorMode;
 	
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture.name);
+	glBindTexture(GL_TEXTURE_2D, texture_.name);
 	
 	glEnable(GL_POINT_SPRITE_OES);
 	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );
@@ -173,11 +173,13 @@
 	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,size) );
 	
 
-	BOOL premultipliedColors = [texture hasPremultipliedAlpha];
+	BOOL newBlend = NO;
 	if( blendAdditive )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	else if( ! premultipliedColors )
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	else if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+		newBlend = YES;
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	}
 
 	// save color mode
 #if 0
@@ -191,7 +193,7 @@
 	glDrawArrays(GL_POINTS, 0, particleIdx);
 	
 	// restore blend state
-	if( blendAdditive || ! premultipliedColors )
+	if( blendAdditive || newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
 
 #if 0

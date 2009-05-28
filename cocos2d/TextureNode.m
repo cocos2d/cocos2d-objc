@@ -24,12 +24,15 @@
 @implementation TextureNode
 
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
+@synthesize blendFunc = blendFunc_;
 
 - (id) init
 {
 	if( (self=[super init]) ) {
 		opacity_ = r_ = g_ = b_ = 255;
 		anchorPoint_ = ccp(0.5f, 0.5f);
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
 	}
 	
 	return self;
@@ -46,6 +49,10 @@
 	[texture_ release];
 	texture_ = [texture retain];
 	[self setContentSize: texture.contentSize];
+	if( ! [texture hasPremultipliedAlpha] ) {
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	}
 }
 
 -(Texture2D*) texture
@@ -77,14 +84,16 @@
 	glEnable( GL_TEXTURE_2D);
 
 	glColor4ub( r_, g_, b_, opacity_);
-	
-	BOOL preMulti = [texture_ hasPremultipliedAlpha];
-	if( !preMulti )
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	BOOL newBlend = NO;
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+		newBlend = YES;
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	}
 
 	[texture_ drawAtPoint: CGPointZero];
 	
-	if( !preMulti )
+	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 
 	// is this chepear than saving/restoring color state ?

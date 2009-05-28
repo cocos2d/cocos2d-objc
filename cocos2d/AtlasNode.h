@@ -25,9 +25,10 @@
  - opacity and RGB colors
  */
 @interface AtlasNode : CocosNode <CocosNodeRGBA, CocosNodeTexture> {
-	
+
 	// texture atlas
 	TextureAtlas	*textureAtlas_;
+
 	// chars per row
 	int				itemsPerRow;
 	// chars per column
@@ -42,20 +43,26 @@
 	int				itemWidth;
 	// height of each char
 	int				itemHeight;
-	
+
+	// blend function
+	ccBlendFunc		blendFunc_;
+
 	// texture opacity
 	GLubyte opacity_;
-	
+
 	// texture color
-	GLubyte	r_,g_,b_;
-	
+	GLubyte	r_,g_,b_;	
 }
 
 /** conforms to CocosNodeTexture protocol */
 @property (readwrite,retain) TextureAtlas *textureAtlas;
 
+/** conforms to CocosNodeTexture protocol */
+@property (readwrite) ccBlendFunc blendFunc;
+
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
+
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;

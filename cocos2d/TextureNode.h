@@ -31,18 +31,25 @@
  */
 @interface TextureNode : CocosNode <CocosNodeRGBA, CocosNodeTexture> {
 
-	/// texture
+	// texture
 	Texture2D *texture_;
+
+	// blend func
+	ccBlendFunc	blendFunc_;
 	
-	/// texture opacity
+	// texture opacity
 	GLubyte opacity_;
 	
-	/// texture color
+	// texture color
 	GLubyte	r_,g_,b_;
+	
 }
 
-/** The texture that is rendered */
+/** conforms to CocosNodeTexture protocol */
 @property (readwrite,retain) Texture2D *texture;
+
+/** conforms to CocosNodeTexture protocol */
+@property (readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
