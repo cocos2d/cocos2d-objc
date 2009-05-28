@@ -70,7 +70,7 @@ typedef struct sParticle
   * size can't be bigger than 64
   * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
  */
-@interface ParticleSystem : CocosNode
+@interface ParticleSystem : CocosNode <CocosNodeTexture>
 {
 	int id;
 	
@@ -159,7 +159,9 @@ typedef struct sParticle
 	float emitCounter;
 	
 	// Texture of the particles
-	Texture2D *texture;
+	Texture2D *texture_;
+	// blend function
+	ccBlendFunc	blendFunc_;
 
 	// position type: world, local, center of gravity
 	tPositionType	positionType_;
@@ -228,8 +230,10 @@ typedef struct sParticle
 @property (readwrite,assign) float emissionRate;
 /** maximum particles of the system */
 @property (readwrite,assign) int totalParticles;
-/** texture used to render the particles */
+/** conforms to CocosNodeTexture protocol */
 @property (readwrite, retain) Texture2D * texture;
+/** conforms to CocosNodeTexture protocol */
+@property (readwrite) ccBlendFunc blendFunc;
 /** whether or not the particles are using "blend additive */
 @property (readwrite) BOOL blendAdditive;
 /** position type */

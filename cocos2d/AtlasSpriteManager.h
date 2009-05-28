@@ -31,13 +31,16 @@
  */
 @interface AtlasSpriteManager : CocosNode <CocosNodeTexture>
 {
-@private
 	unsigned int totalSprites_;
 	TextureAtlas *textureAtlas_;
+	ccBlendFunc	blendFunc_;
 }
 
 /** returns the TextureAtlas that is used */
 @property (readwrite,retain) TextureAtlas * textureAtlas;
+
+/** conforms to CocosNodeTexture protocol */
+@property (readwrite) ccBlendFunc blendFunc;
 
 /** creates an AtlasSpriteManager with a texture2d */
 +(id)spriteManagerWithTexture:(Texture2D *)tex;

@@ -397,6 +397,10 @@ enum {
 -(Texture2D*) texture;
 /** sets a new texture. it will be retained */
 -(void) setTexture:(Texture2D*)texture;
+/** set the source blending function for the texture */
+-(void) setBlendFunc:(ccBlendFunc)blendFunc;
+/** returns the blending function used for the texture */
+-(ccBlendFunc) blendFunc;
 @end
 
 /** Common interface for Labels */

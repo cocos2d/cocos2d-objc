@@ -68,4 +68,3 @@
 @interface TextureBlend : TextureDemo
 {}
 @end
-

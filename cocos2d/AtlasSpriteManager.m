@@ -33,12 +33,14 @@ const int defaultCapacity = 29;
 
 @interface AtlasSpriteManager (private)
 -(void) resizeAtlas;
+-(void) updateBlendFunc;
 @end
 
 #pragma mark AtlasSpriteManager
 @implementation AtlasSpriteManager
 
 @synthesize textureAtlas = textureAtlas_;
+@synthesize blendFunc = blendFunc_;
 
 -(void)dealloc
 {	
@@ -80,8 +82,13 @@ const int defaultCapacity = 29;
 -(id)initWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
+		
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
 		totalSprites_ = 0;
 		textureAtlas_ = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
+		
+		[self updateBlendFunc];
 		
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
@@ -96,8 +103,13 @@ const int defaultCapacity = 29;
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
 	if( (self=[super init]) ) {
+		
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
 		totalSprites_ = 0;
 		textureAtlas_ = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
+		
+		[self updateBlendFunc];
 		
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
@@ -303,9 +315,19 @@ const int defaultCapacity = 29;
 }
 
 #pragma mark AtlasSpriteManager - CocosNodeTexture protocol
+
+-(void) updateBlendFunc
+{
+	if( ! [textureAtlas_.texture hasPremultipliedAlpha] ) {
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	}
+}
+
 -(void) setTexture:(Texture2D*)texture
 {
 	textureAtlas_.texture = texture;
+	[self updateBlendFunc];
 }
 
 -(Texture2D*) texture

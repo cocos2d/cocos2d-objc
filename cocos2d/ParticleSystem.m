@@ -49,7 +49,7 @@
 @synthesize startSize, startSizeVar;
 @synthesize endSize, endSizeVar;
 @synthesize gravity;
-@synthesize texture;
+@synthesize blendFunc = blendFunc_;
 @synthesize blendAdditive;
 @synthesize positionType = positionType_;
 
@@ -84,6 +84,9 @@
 		// default: additive
 		blendAdditive = NO;
 		
+		// blend function
+		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+		
 		// default position type;
 		positionType_ = kPositionTypeWorld;
 		
@@ -101,7 +104,7 @@
 {
 	free( particles );
 
-	[texture release];
+	[texture_ release];
 	
 	[super dealloc];
 }
@@ -203,6 +206,23 @@
 -(BOOL) isFull
 {
 	return (particleCount == totalParticles);
+}
+
+#pragma mark ParticleSystem - CocosNodeTexture protocol
+
+-(void) setTexture:(Texture2D*) texture
+{
+	[texture_ release];
+	texture_ = [texture retain];
+	if( ! [texture hasPremultipliedAlpha] ) {
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	}
+}
+
+-(Texture2D*) texture
+{
+	return texture_;
 }
 @end
 

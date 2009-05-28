@@ -2708,8 +2708,6 @@
 		506414C50F9C67C0007A7B24 /* Label, Tile, Parallax */ = {
 			isa = PBXGroup;
 			children = (
-				506887D70E96C90000F943E5 /* AtlasNode.h */,
-				506887D80E96C90000F943E5 /* AtlasNode.m */,
 				506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */,
 				506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */,
 				5018F25C0DFDEAFF00C013A5 /* Label.h */,
@@ -2878,6 +2876,8 @@
 				5018F2550DFDEAFF00C013A5 /* CocosNode.m */,
 				509E574A0E36234300BD7F09 /* TextureNode.h */,
 				509E574B0E36234300BD7F09 /* TextureNode.m */,
+				506887D70E96C90000F943E5 /* AtlasNode.h */,
+				506887D80E96C90000F943E5 /* AtlasNode.m */,
 			);
 			name = "Base Nodes";
 			sourceTree = "<group>";

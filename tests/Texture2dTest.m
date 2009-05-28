@@ -472,21 +472,28 @@ Class restartAction()
 		
 		for( int i=0;i < 15;i++ ) {
 			
-			// lower sprites have alpha pre-multiplied
-			// they use GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+			// BOTTOM sprites have alpha pre-multiplied
+			// they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
 			Sprite *cloud = [Sprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:100+i];
-			cloud.position = ccp(50+25*i, 100);
+			cloud.position = ccp(50+25*i, 80);
 			if( ! cloud.texture.hasPremultipliedAlpha )
 				NSLog(@"Texture Blend failed. Test it on the device, not simulator");
 
-			// upper sprites don't have alpha pre-multiplied
-			// they use GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+			// CENTER sprites don't have alpha pre-multiplied
+			// they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
 			cloud = [Sprite spriteWithFile:@"test_blend.bmp"];
 			[self addChild:cloud z:i+1 tag:200+i];
-			cloud.position = ccp(50+25*i, 200);
+			cloud.position = ccp(50+25*i, 160);
 			if( cloud.texture.hasPremultipliedAlpha )
 				NSLog(@"Texture Blend failed. Test it on the device, not simulator");
+			
+			// UPPER sprites are using custom blending function
+			// You can set any blend function to your sprites
+			cloud = [Sprite spriteWithFile:@"test_blend.bmp"];
+			[self addChild:cloud z:i+1 tag:200+i];
+			cloud.position = ccp(50+25*i, 320-80);
+			cloud.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
 		}
 	}
 	return self;
