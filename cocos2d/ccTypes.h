@@ -18,6 +18,7 @@
 */
 
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
+#import <OpenGLES/ES1/gl.h>			// GLenum
 
 /** RGB color composed of bytes 3 bytes
 @since v0.8
@@ -170,9 +171,9 @@ typedef struct _ccV2F_C4F_T2F_Quad
 typedef struct _ccBlendFunc
 {
 	//! source blend function
-	int src;
+	GLenum src;
 	//! destination blend function
-	int dst;
+	GLenum dst;
 } ccBlendFunc;
 
 //! delta time type

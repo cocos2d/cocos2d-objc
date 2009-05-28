@@ -19,6 +19,7 @@ version 0.8 - xxx
  . Particles: added support for endSize and endSizeVar (issue #241)
  . Particles: added support for start/end/var spinning (issue #335)
  . Particles: support for World/Local coordinates (issue #241)
+ . Primitives: added bezier path support (issue #380)
  . Texture2D: new alias/antialias API (issue #226)
  . Texture2D: supports 16-bit textures RGB4 and RGB5A1 (default is RGBA4444) (issue #356)
  . Texture2D: blending mode varies according to texture (issue #125)

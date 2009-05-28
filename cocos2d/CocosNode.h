@@ -390,6 +390,12 @@ enum {
 
 
 /** CocosNodes that uses a Texture2D to render the images.
+ The texture can have a blending function.
+ If the texture has alpha premultiplied the default blending function is:
+    src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
+ else
+	src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
+ But you can change the blending funtion at any time.
  @since v0.8
  */
 @protocol CocosNodeTexture <NSObject>
