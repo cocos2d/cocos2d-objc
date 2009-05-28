@@ -46,3 +46,13 @@ void drawPoly( CGPoint *vertices, int numOfVertices, BOOL closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
 void drawCircle( CGPoint center, float radius, float angle, int segments, BOOL drawLineToCenter);
+
+/** draws a quad bezier path
+ @since v0.8
+ */
+void drawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments);
+
+/** draws a cubic bezier path
+ @since v0.8
+ */
+void drawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);

@@ -104,3 +104,47 @@ void drawCircle( CGPoint center, float r, float a, int segs, BOOL drawLineToCent
 	
 	free( vertices );
 }
+
+void drawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments)
+{
+	CGPoint vertices[segments + 1];
+	
+	float t = 0.0f;
+	for(int i = 0; i < segments; i++)
+	{
+		float x = powf(1 - t, 2) * origin.x + 2.0f * (1 - t) * t * control.x + t * t * destination.x;
+		float y = powf(1 - t, 2) * origin.y + 2.0f * (1 - t) * t * control.y + t * t * destination.y;
+		vertices[i] = CGPointMake(x, y);
+		t += 1.0f / segments;
+	}
+	vertices[segments] = destination;
+	
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	
+	glDrawArrays(GL_LINE_STRIP, 0, segments);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void drawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments)
+{
+	CGPoint vertices[segments + 1];
+	
+	float t = 0;
+	for(int i = 0; i < segments; i++)
+	{
+		float x = powf(1 - t, 3) * origin.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * destination.x;
+		float y = powf(1 - t, 3) * origin.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * destination.y;
+		vertices[i] = CGPointMake(x, y);
+		t += 1.0f / segments;
+	}
+	vertices[segments] = destination;
+	
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	
+	glDrawArrays(GL_LINE_STRIP, 0, segments);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);  
+}

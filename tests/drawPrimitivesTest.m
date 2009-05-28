@@ -214,6 +214,12 @@ Class restartAction()
 	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
 	drawPoly( vertices2, 3, YES);
 	
+	// draw quad bezier path
+	drawQuadBezier(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50);
+
+	// draw cubic bezier path
+	drawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
+
 	
 	// restore original values
 	glLineWidth(1);

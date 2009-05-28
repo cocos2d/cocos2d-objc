@@ -61,6 +61,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* kasatani: AtlasSprite index 0 is not overwritten
 	* kermidt.zed: patches for absolutePosition in CocosNode
 		patches for Labels in Texture2D
+	* Keith Peters: author of Bezier drawing primitives
 	* Leonardo Kasperavičius: original author of QuadParticleSystem class
 		Author of the original Bezier action
 	* lukeman: patches for MenuItem
