@@ -64,6 +64,7 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 	ExtAudioFileRef					extRef = NULL;
 	void*							theData = NULL;
 	AudioStreamBasicDescription		theOutputFormat;
+	UInt32							dataSize = 0;
 	
 	// Open a file with ExtAudioFileOpen()
 	err = ExtAudioFileOpenURL(inFileURL, &extRef);
@@ -96,7 +97,7 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 	if(err) { printf("MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld\n", err); goto Exit; }
 	
 	// Read all the data into memory
-	UInt32		dataSize = theFileLengthInFrames * theOutputFormat.mBytesPerFrame;;
+	dataSize = (UInt32) theFileLengthInFrames * theOutputFormat.mBytesPerFrame;;
 	theData = malloc(dataSize);
 	if (theData)
 	{

@@ -40,9 +40,14 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 @synthesize soundEngine, backgroundMusic, willPlayBackgroundMusic;
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
-	if (self = [super init]) {
+	if ((self = [super init]))  {
 		//Initialise the audio session 
-		OSStatus result = AudioSessionInitialize(NULL, NULL,managerInterruptionCallback, self); 
+		OSStatus result = AudioSessionInitialize(NULL, NULL,managerInterruptionCallback, self);
+		if( result ) {
+			CCLOG(@"CocosDenshion: Error initializing AudioSession");
+			return nil;
+		}
+	
 		_mode = mode;
 		
 		switch (_mode) {
@@ -181,14 +186,19 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 	ALenum  error = AL_NO_ERROR;
     // Deactivate the current audio session 
     OSStatus result = AudioSessionSetActive(NO); 
+	if( result ) {
+		CCLOG(@"CocosDenshion: Error Setting AudioSession");
+		return;
+	}
+	
     // set the current context to NULL will 'shutdown' openAL 
     alcMakeContextCurrent(NULL); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if( (error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error making context current %x\n", error);
 	} 
     // now suspend your context to 'pause' your sound world 
     alcSuspendContext([soundEngine openALContext]); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error suspending context %x\n", error);
 	} 
 } 
@@ -206,12 +216,12 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 	
     // Restore open al context 
     alcMakeContextCurrent([soundEngine openALContext]); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error making context current%x\n", error);
 	} 
     // 'unpause' my context 
     alcProcessContext([soundEngine openALContext]); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error processing context%x\n", error);
 	} 
 

@@ -77,7 +77,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 			
 			// Create some OpenAL Source Objects
 			alGenSources(CD_MAX_SOURCES, _sources);
-			if(lastErrorCode = alGetError() != AL_NO_ERROR) {
+			if((lastErrorCode = alGetError()) != AL_NO_ERROR) {
 				CCLOG(@"Denshion: Error generating sources! %x\n", lastErrorCode);
 				return FALSE;//No sources
 			} 
@@ -102,12 +102,12 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	
 	// Delete the Sources
     alDeleteSources(CD_MAX_SOURCES, _sources);
-	if(lastErrorCode = alGetError() != AL_NO_ERROR) {
+	if((lastErrorCode = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error deleting sources! %x\n", lastErrorCode);
 	} 
 	// Delete the Buffers
     alDeleteBuffers(CD_MAX_BUFFERS, _buffers);
-	if(lastErrorCode = alGetError() != AL_NO_ERROR) {
+	if((lastErrorCode = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error deleting buffers! %x\n", lastErrorCode);
 	} 
 	
@@ -140,7 +140,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
  */
 - (id)init:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal audioSessionCategory:(UInt32) audioSessionCategory 
 {	
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		
 		_mute = FALSE;
 		_audioSessionCategory = audioSessionCategory;
@@ -461,15 +461,20 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
     CCLOG(@"Denshion: Audio session interrupted"); 
 	ALenum  error = AL_NO_ERROR;
     // Deactivate the current audio session 
-    OSStatus result = AudioSessionSetActive(NO); 
+    OSStatus result = AudioSessionSetActive(NO);
+	if( result ) {
+		CCLOG(@"CocosDenshion: Error Setting AudioSession");
+		return;
+	}
+	
     // set the current context to NULL will 'shutdown' openAL 
     alcMakeContextCurrent(NULL); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error making context current %x\n", error);
 	} 
     // now suspend your context to 'pause' your sound world 
     alcSuspendContext(context); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error suspending context %x\n", error);
 	} 
 } 
@@ -487,12 +492,12 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	
     // Restore open al context 
     alcMakeContextCurrent(context); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error making context current%x\n", error);
 	} 
     // 'unpause' my context 
     alcProcessContext(context); 
-	if(error = alGetError() != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error processing context%x\n", error);
 	} 
 } 
@@ -521,15 +526,15 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 //alGetSource does not appear to work for pitch, pan and gain values
 //These implementations have been provided just so that these could be treated as properties
 - (float) pitch {
-	return 0.0;
+	return 0.0f;
 }
 
 - (float) pan {
-	return 0.0;
+	return 0.0f;
 }
 
 - (float) gain {
-	return 0.0;
+	return 0.0f;
 }	
 
 @end

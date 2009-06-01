@@ -45,9 +45,9 @@
 #define CGROUP_TOTAL 4
 ///////////////////////////////////////////////////////
 
-#define SLIDER_POS_MAX 300.0
-#define SLIDER_POS_MIN 20.0
-#define SLIDER_POS_X 79.0
+#define SLIDER_POS_MAX 300.0f
+#define SLIDER_POS_MIN 20.0f
+#define SLIDER_POS_X 79.0f
 
 #define PFC_X 317
 #define PFC_Y 165
@@ -78,7 +78,7 @@ CDSourceWrapper *toneSource;
 	
 	slider = [Sprite spriteWithFile:@"slider.png"];
 	[slider setPosition:CGPointMake(SLIDER_POS_X, ((SLIDER_POS_MAX - SLIDER_POS_MIN)/2) + SLIDER_POS_MIN)]; 
-	[slider setRotation:180.0];
+	[slider setRotation:180.0f];
 	[slider retain];
 	[self addChild:slider];
 	
@@ -156,42 +156,42 @@ CDSourceWrapper *toneSource;
 		if ((touchedPads & (1 << 0)) != 0) {
 			//Pad 1 touched - play a one shot kick sound in the drum voices channel group with normal pitch and pan and the
 			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_BALL channelGroupId:CGROUP_DRUM_VOICES pitch:1.0f pan:0.0 gain:sliderValue loop:NO];
+			[soundEngine playSound:SND_ID_BALL channelGroupId:CGROUP_DRUM_VOICES pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
 			flashIndex[0] = 0;
 		}	
 		
 		if ((touchedPads & (1 << 1)) != 0) {
 			//Pad 2 touched - play a one shot snare sound in the drum voices channel group with normal pitch and pan and the
 			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_GUN channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:0.0 gain:sliderValue loop:NO];
+			[soundEngine playSound:SND_ID_GUN channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
 			flashIndex[1] = 0;
 		}
 		
 		if ((touchedPads & (1 << 2)) != 0) {
 			//Pad 3 touched - play a one shot hat sound in the drum voices channel group with normal pitch and pan and the
 			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_STAB channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0) - 1.0) gain:1.0 loop:NO];
+			[soundEngine playSound:SND_ID_STAB channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
 			flashIndex[2] = 0;
 		}
 		
 		if ((touchedPads & (1 << 3)) != 0) {
 			//Pad 4 touched - play a one shot fx sound in the fx voices channel group with normal gain and pan and the
 			//pitch controlled by the slider.  Slider mid point = normal pitch (1.0)
-			[soundEngine playSound:SND_ID_EXPLODE channelGroupId:CGROUP_FX_VOICES pitch:sliderValue + 0.5 pan:0.0 gain:1.0 loop:NO];
+			[soundEngine playSound:SND_ID_EXPLODE channelGroupId:CGROUP_FX_VOICES pitch:sliderValue + 0.5f pan:0.0f gain:1.0f loop:NO];
 			flashIndex[3] = 0;
 		}
 		
 		if ((touchedPads & (1 << 4)) != 0) {
 			//Pad 5 touched  - play a one shot fx sound in the fx voices channel group with normal gain and pan and the
 			//pitch controlled by the slider.  Slider mid point = normal pitch (1.0)
-			[soundEngine playSound:SND_ID_COWBELL channelGroupId:CGROUP_DRUM_VOICES pitch:sliderValue + 0.5 pan:0.0 gain:1.0 loop:NO];
+			[soundEngine playSound:SND_ID_COWBELL channelGroupId:CGROUP_DRUM_VOICES pitch:sliderValue + 0.5f pan:0.0f gain:1.0f loop:NO];
 			flashIndex[4] = 0;
 		}
 
 		if ((touchedPads & (1 << 5)) != 0) {
 			//Pad 6 touched  - play a one shot fx sound in the fx voices channel group with normal pitch and gain and the
 			//pan controlled by the slider.  Slider top = hard right, bottom = hard left, centre = middle
-			[soundEngine playSound:SND_ID_KARATE channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0) - 1.0) gain:1.0 loop:NO];
+			[soundEngine playSound:SND_ID_KARATE channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
 			flashIndex[5] = 0;
 		}
 		
@@ -199,7 +199,7 @@ CDSourceWrapper *toneSource;
 			if (!toneLoopPlaying) {
 				//Pad 7 touched- play a looped sound with normal pitch, pan and gain in the loop channel group.
 				//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
-				toneSource.sourceId = [am.soundEngine playSound:SND_ID_TONELOOP channelGroupId:CGROUP_TONELOOP pitch:1.0f pan:0.0 gain:1.0 loop:YES];
+				toneSource.sourceId = [am.soundEngine playSound:SND_ID_TONELOOP channelGroupId:CGROUP_TONELOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
 				toneLoopPlaying = YES;
 			} else {
 				[soundEngine stopSound:toneSource.sourceId];
@@ -212,7 +212,7 @@ CDSourceWrapper *toneSource;
 		if ((touchedPads & (1 << 7)) != 0) {
 			//Pad 8 touched - play a looped sound with normal pitch, pan and gain in the loop channel group.
 			//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
-			[soundEngine playSound:SND_ID_DRUMLOOP channelGroupId:CGROUP_DRUMLOOP pitch:1.0f pan:0.0 gain:1.0 loop:YES];
+			[soundEngine playSound:SND_ID_DRUMLOOP channelGroupId:CGROUP_DRUMLOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
 			flashIndex[7] = 0;
 		}
 
@@ -247,7 +247,7 @@ CDSourceWrapper *toneSource;
 	
 	if (toneLoopPlaying) {
 		//Adjust pitch of tone loop to match slider - this technique can be used to adjust gain and pan too
-		toneSource.pitch = sliderValue + 0.5;
+		toneSource.pitch = sliderValue + 0.5f;
 	}	
 	
 	//Update flashes
@@ -351,7 +351,7 @@ CDSourceWrapper *toneSource;
 	window.multipleTouchEnabled = TRUE;
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setLandscape: YES];
+	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
 	
 	// show FPS
 	[[Director sharedDirector] setDisplayFPS:NO];
