@@ -109,7 +109,7 @@ static CDAudioManager *am;
 		#endif
 	}
 
-	return [soundEngine playSound:[soundId intValue] channelGroupId:0 pitch:1.0 pan:0 gain:1.0 loop:false];
+	return [soundEngine playSound:[soundId intValue] channelGroupId:0 pitch:1.0f pan:0 gain:1.0f loop:false];
 }
 
 -(void) preloadEffect:(NSString*) filename
@@ -164,6 +164,8 @@ static CDAudioManager *am;
 #ifdef ASSERT_DEBUG
 	@throw [[[NSException alloc] initWithName:@"AudioEngine::getNextAvailableBuffer" reason:@"Full buffers" userInfo:nil] autorelease];
 #endif
+	// shall not happen
+	return [NSNumber numberWithInt:-1];
 }
 
 -(void) freeBuffer:(NSNumber*) buffer

@@ -98,6 +98,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Transitions
 	* slypete: patch for FastDirector to run in the main thread
 	* Steve Oldmeadow: patches for Texture2D
+		Author of CocosDenshion Sound Engine
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
 		Actions can have tags
