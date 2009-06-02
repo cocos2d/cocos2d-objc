@@ -76,7 +76,7 @@ static CDAudioManager *am;
 
 -(void) playBackgroundMusic:(NSString*) filename
 {
-	[am playBackgroundMusic:filename];
+	[am playBackgroundMusic:filename loop:TRUE];
 }
 
 -(void) stopBackgroundMusic
@@ -164,8 +164,7 @@ static CDAudioManager *am;
 #ifdef ASSERT_DEBUG
 	@throw [[[NSException alloc] initWithName:@"AudioEngine::getNextAvailableBuffer" reason:@"Full buffers" userInfo:nil] autorelease];
 #endif
-	// shall not happen
-	return [NSNumber numberWithInt:-1];
+	return nil;//Added to get rid of compiler warning
 }
 
 -(void) freeBuffer:(NSNumber*) buffer

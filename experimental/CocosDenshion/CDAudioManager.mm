@@ -35,20 +35,22 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
     } 
 } 
 
+#if TARGET_IPHONE_SIMULATOR	
+//Workaround for issue in simulator.
+//See: audioPlayerDidFinishPlaying
+float realBackgroundMusicVolume = -1.0f;
+#endif
 
 @implementation CDAudioManager
 @synthesize soundEngine, backgroundMusic, willPlayBackgroundMusic;
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
-	if ((self = [super init]))  {
+	if ((self = [super init])) {
 		//Initialise the audio session 
-		OSStatus result = AudioSessionInitialize(NULL, NULL,managerInterruptionCallback, self);
-		if( result ) {
-			CCLOG(@"CocosDenshion: Error initializing AudioSession");
-			return nil;
-		}
+		AudioSessionInitialize(NULL, NULL,managerInterruptionCallback, self); 
 	
 		_mode = mode;
+		backgroundMusicCompletionSelector = nil;
 		
 		switch (_mode) {
 				
@@ -108,7 +110,7 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 	}	
 }	
 
--(void) playBackgroundMusic:(NSString*) filename
+-(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop
 {
 	
 	if (!willPlayBackgroundMusic) {
@@ -126,7 +128,7 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 		backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
 		
 		if (backgroundMusic != nil) {
-			[backgroundMusic setNumberOfLoops:-1];
+			backgroundMusic.numberOfLoops = (loop ? -1:0);
 			[backgroundMusic play];
 			backgroundMusic.delegate = self;
 		}	
@@ -135,6 +137,15 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 		CCLOG(@"Denshion: request to play current background music file");
 		[self pauseBackgroundMusic];
 		[self rewindBackgroundMusic];
+#if TARGET_IPHONE_SIMULATOR
+		//Workaround for issue in simulator.
+		//See: audioPlayerDidFinishPlaying
+		//Need to restore volume and loop count to correct values
+		if (realBackgroundMusicVolume >= 0.0f) {
+			backgroundMusic.volume = realBackgroundMusicVolume;
+		}
+		backgroundMusic.numberOfLoops = (loop ? -1:0);
+#endif		
 		[backgroundMusic play];
 	}	
 }
@@ -179,21 +190,40 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 	[player play];
 }	
 
+-(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector {
+	backgroundMusicCompletionListener = listener;
+	backgroundMusicCompletionSelector = selector;
+}	
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+	CCLOG(@"Denshion: audio player finished");
+	if (backgroundMusicCompletionSelector != nil) {
+		[backgroundMusicCompletionListener performSelector:backgroundMusicCompletionSelector];
+	}	
+#if TARGET_IPHONE_SIMULATOR	
+	CCLOG(@"Denshion: workaround for OpenAL clobbered audio issue");
+	//This is a workaround for an issue in the 2.2 and 2.2.1 simulator.  Problem is 
+	//that OpenAL audio playback is clobbered when an AVAudioPlayer stops.  Workaround
+	//is to keep the player playing on an endless loop with 0 volume and then when
+	//it is played again reset the volume and set loop count appropriately.
+	player.numberOfLoops = -1;
+	realBackgroundMusicVolume = player.volume;
+	player.volume = 0;
+	[player play];
+#endif	
+}	
+
+
 //Code to handle audio session interruption.  Thanks to Andy Fitter and Ben Britten.
 -(void)audioSessionInterrupted 
 { 
     CCLOG(@"Denshion: Audio session interrupted"); 
 	ALenum  error = AL_NO_ERROR;
     // Deactivate the current audio session 
-    OSStatus result = AudioSessionSetActive(NO); 
-	if( result ) {
-		CCLOG(@"CocosDenshion: Error Setting AudioSession");
-		return;
-	}
-	
+    AudioSessionSetActive(NO); 
     // set the current context to NULL will 'shutdown' openAL 
     alcMakeContextCurrent(NULL); 
-	if( (error = alGetError()) != AL_NO_ERROR) {
+	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error making context current %x\n", error);
 	} 
     // now suspend your context to 'pause' your sound world 

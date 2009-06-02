@@ -22,13 +22,20 @@
  */
 
 /* Changelog
+1.3 (2009.06.02) * Added non interruptible option for channel group
+                 * Added loop parameter for playing background music
+                 * Added isPlaying property to CDSourceWrapper
+                 * Modified CDSourceWrapper to return last set values of pitch, pan and gain
+                 * Added option of specifying callback selector for background music completion to CDAudioManager
+                 * Workaround for issue in 2.2 & 2.2.1 simulator whereby OpenAL playback would be killed after 
+                   an AVAudioPlayer (backgroundMusic) stops.
 1.2 (2009.05.27) * Changes for integration with cocos2d svn repository.
 				 * Renamed myOpenALSupport.h to CDOpenALSupport.h to distinguish it from the
 				   version included with the Aeterius sound engine.
 				 * Added unloadBuffer method.
-				 * Updated myOpenALSupport.h to latest version with support for IMA4
+				 * Updated myOpenALSupport.h to latest version with support for IMA4 compressed files
 1.1 (2009.05.26) * Added code for handling audio session interruption. Thanks to Andy Fitter and
-                 Ben Britten for the code.
+                   Ben Britten for the code.
 1.0 (2009.05.01) * Initial release
 */
 
@@ -41,9 +48,10 @@
 #define CD_MAX_BUFFERS 32 //Total number of sounds that can be loaded
 #define CD_MAX_SOURCES 32 //Total number of playback channels that can be created
 
-#define CD_NO_SOURCE 0xFEEDFACE //Return value indicating playback failed i.e. no source
-#define CD_MUTE      0xFEEDBABE //Return value indicating sound engine is muted or non functioning
-#define CD_IGNORE_AUDIO_SESSION 0xFEEDBABE
+#define CD_NO_SOURCE 0xFEEDFAC //Return value indicating playback failed i.e. no source
+#define CD_IGNORE_AUDIO_SESSION 0xBEEFBEE //Used internally to indicate audio session will not be handled
+#define CD_CHANNEL_GROUP_NON_INTERRUPTIBLE 0xFEDEEFF //User internally to indicate channel group is not interruptible
+#define CD_MUTE      0xFEEDBAB //Return value indicating sound engine is muted or non functioning
 
 enum bufferState {
 	CD_BS_EMPTY = 0,
@@ -89,6 +97,7 @@ typedef struct _channelGroup {
 
 - (void) stopSound:(ALuint) sourceId;
 - (void) stopChannelGroup:(int) channelGroupId;
+- (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible;
 - (BOOL) loadBuffer:(int) soundId fileName:(NSString*) fileName fileType:(NSString*) fileType;
 - (BOOL) unloadBuffer:(int) soundId;
 - (ALCcontext *) openALContext;
@@ -96,17 +105,22 @@ typedef struct _channelGroup {
 - (void) audioSessionResumed;
 
 - (BOOL) _initOpenAL;
-- (ALuint) _startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping;
+- (ALuint) _startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping checkState:(BOOL) checkState
+;
 
 @end
 
 ////////////////////////////////////////////////////////////////////////////
 @interface CDSourceWrapper : NSObject {
 	ALuint sourceId;
+	float lastPitch;
+	float lastPan;
+	float lastGain;
 }
 @property (readwrite) ALuint sourceId;
 @property (readwrite) float pitch;
 @property (readwrite) float gain;
 @property (readwrite) float pan;
+@property (readonly)  BOOL isPlaying;
 
 @end
