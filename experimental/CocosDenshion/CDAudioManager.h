@@ -38,6 +38,8 @@ typedef enum {
 	BOOL				_audioWasPlayingAtStartup;
 	tAudioManagerMode	_mode;
 	
+	SEL backgroundMusicCompletionSelector;
+	id backgroundMusicCompletionListener;
 	BOOL willPlayBackgroundMusic;
 }
 
@@ -46,12 +48,13 @@ typedef enum {
 @property (readonly) BOOL willPlayBackgroundMusic;
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
--(void) playBackgroundMusic:(NSString*) filename;
+-(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop;
 -(void) stopBackgroundMusic;
 -(void) pauseBackgroundMusic;
 -(void) rewindBackgroundMusic;
 -(void) resumeBackgroundMusic;
 -(BOOL) isBackgroundMusicPlaying;
+-(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 -(void) audioSessionInterrupted;
 -(void) audioSessionResumed;
 

@@ -18,5 +18,6 @@
 	
 }
 -(void) setUpSoundEngine;
+-(void) backgroundMusicFinished;
 @end
 

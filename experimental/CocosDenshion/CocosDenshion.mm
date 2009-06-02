@@ -384,30 +384,60 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		return CD_MUTE;
 	}	
 	
+	
 	//Work out which channel we can use
 	int channel = _channelGroups[channelGroupId].currentIndex;
-	if (_channelGroups[channelGroupId].startIndex != _channelGroups[channelGroupId].endIndex) {
-		_channelGroups[channelGroupId].currentIndex++;
-		if(_channelGroups[channelGroupId].currentIndex > _channelGroups[channelGroupId].endIndex) {
-			_channelGroups[channelGroupId].currentIndex = _channelGroups[channelGroupId].startIndex; 
+	if (channel != CD_CHANNEL_GROUP_NON_INTERRUPTIBLE) {
+		if (_channelGroups[channelGroupId].startIndex != _channelGroups[channelGroupId].endIndex) {
+			_channelGroups[channelGroupId].currentIndex++;
+			if(_channelGroups[channelGroupId].currentIndex > _channelGroups[channelGroupId].endIndex) {
+				_channelGroups[channelGroupId].currentIndex = _channelGroups[channelGroupId].startIndex; 
+			}	
+		}	
+		return [self _startSound:soundId channelId:channel pitchVal:pitch panVal:pan gainVal:gain looping:loop checkState:TRUE];
+	} else {
+		//Channel group is non interruptible therefore we must search for the first non playing channel/source if there are any
+		int checkingIndex = _channelGroups[channelGroupId].startIndex;
+		ALint state = 0;
+		while ((checkingIndex <= _channelGroups[channelGroupId].endIndex) && (channel == CD_CHANNEL_GROUP_NON_INTERRUPTIBLE)) {
+			//Check if source is playing
+			alGetSourcei(_sources[checkingIndex], AL_SOURCE_STATE, &state);
+			if (state != AL_PLAYING) {
+				channel = checkingIndex;
+			}	
+			checkingIndex++;
+		}
+		
+		if (channel != CD_CHANNEL_GROUP_NON_INTERRUPTIBLE) {
+			//Found a free channel
+			return [self _startSound:soundId channelId:channel pitchVal:pitch panVal:pan gainVal:gain looping:loop checkState:FALSE];
+		} else {
+			//Didn't find a free channel
+			return CD_NO_SOURCE;
 		}	
 	}	
-	return [self _startSound:soundId channelId:channel pitchVal:pitch panVal:pan gainVal:gain looping:loop];
 }	
 
 /**
  * Internal method - use playSound instead.
  */
-- (ALuint)_startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping
+- (ALuint)_startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping checkState:(BOOL) checkState
 {
 	
 	ALint state;
 	ALuint source = _sources[channelId];
 	ALuint buffer = _buffers[soundId];
 	
-	alGetSourcei(source, AL_SOURCE_STATE, &state);
-	if (state == AL_PLAYING) {
-		alSourceStop(source);
+	alGetError();//Clear the error code
+	
+	//If we are in interruptible mode then we check the state to see if the source 
+	//is already playing and if so stop it.  Otherwise in non interruptible mode
+	//we already know that the source is not playing.
+	if (checkState) {
+		alGetSourcei(source, AL_SOURCE_STATE, &state);
+		if (state == AL_PLAYING) {
+			alSourceStop(source);
+		}	
 	}	
 	
 	alSourcei(source, AL_BUFFER, buffer);//Attach to sound
@@ -451,6 +481,20 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	alSourceStop(sourceId);
 }
 
+/**
+ * Set a channel group as non interruptible.  Default is that channel groups are interruptible.
+ * Non interruptible means that if a request to play a sound is made for a channel group and there are
+ * no free channels available then the play request will be ignored and CD_NO_SOURCE will be returned.
+ */
+- (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible {
+	if (isNonInterruptible) {
+		_channelGroups[channelGroupId].currentIndex = CD_CHANNEL_GROUP_NON_INTERRUPTIBLE;
+	} else {
+		_channelGroups[channelGroupId].currentIndex = _channelGroups[channelGroupId].startIndex;
+	}	
+}
+ 
+
 -(ALCcontext *) openALContext {
 	return context;
 }	
@@ -461,12 +505,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
     CCLOG(@"Denshion: Audio session interrupted"); 
 	ALenum  error = AL_NO_ERROR;
     // Deactivate the current audio session 
-    OSStatus result = AudioSessionSetActive(NO);
-	if( result ) {
-		CCLOG(@"CocosDenshion: Error Setting AudioSession");
-		return;
-	}
-	
+    AudioSessionSetActive(NO); 
     // set the current context to NULL will 'shutdown' openAL 
     alcMakeContextCurrent(NULL); 
 	if((error = alGetError()) != AL_NO_ERROR) {
@@ -508,33 +547,58 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 
 @implementation CDSourceWrapper
 
-@synthesize sourceId;
+-(void) setSourceId:(ALuint) newSourceId {
+	if ((newSourceId != CD_NO_SOURCE) && (newSourceId != CD_MUTE)) {
+		sourceId = newSourceId;
+	} else {
+		CCLOG(@"Denshion: Attempt to assign CD_MUTE or CD_NO_SOURCE to a source wrapper");
+	}	
+}	
+
+- (ALuint) sourceId {
+	return sourceId;
+}	
 
 - (void) setPitch:(float) newPitchValue {
+	lastPitch = newPitchValue;
 	alSourcef(sourceId, AL_PITCH, newPitchValue);	
 }	
 
 - (void) setGain:(float) newGainValue {
+	lastGain = newGainValue;
 	alSourcef(sourceId, AL_GAIN, newGainValue);	
 }
 
 - (void) setPan:(float) newPanValue {
+	lastPan = newPanValue;
 	float sourcePosAL[] = {newPanValue, 0.0f, 0.0f};//Set position - just using left and right panning
 	alSourcefv(sourceId, AL_POSITION, sourcePosAL);
 }
 
+- (BOOL) isPlaying {
+	ALint state;
+	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+	return (state == AL_PLAYING);
+}	
+
 //alGetSource does not appear to work for pitch, pan and gain values
-//These implementations have been provided just so that these could be treated as properties
+//So we just remember the last value set
 - (float) pitch {
-	return 0.0f;
+	/*
+	//This does not work on simulator or device 
+	ALfloat pitchVal;
+	alGetSourcef(sourceId, AL_PITCH, &pitchVal);
+	return pitchVal;
+	*/ 
+	return lastPitch;
 }
 
 - (float) pan {
-	return 0.0f;
+	return lastPan;
 }
 
 - (float) gain {
-	return 0.0f;
+	return lastGain;
 }	
 
 @end

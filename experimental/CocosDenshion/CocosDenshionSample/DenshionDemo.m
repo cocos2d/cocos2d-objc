@@ -41,8 +41,9 @@
 #define CGROUP_TONELOOP 1
 #define CGROUP_DRUM_VOICES 2
 #define CGROUP_FX_VOICES 3
+#define CGROUP_NON_INTERRUPTIBLE 4
 
-#define CGROUP_TOTAL 4
+#define CGROUP_TOTAL 5
 ///////////////////////////////////////////////////////
 
 #define SLIDER_POS_MAX 300.0f
@@ -123,10 +124,15 @@ CDSourceWrapper *toneSource;
 	channelGroups[CGROUP_TONELOOP] = 1;//This means only 1 loop will play at a time
 	channelGroups[CGROUP_DRUM_VOICES] = 8;//8 voices to be shared by the drums
 	channelGroups[CGROUP_FX_VOICES] = 16;//16 voices to be shared by the fx
-
+	channelGroups[CGROUP_NON_INTERRUPTIBLE] = 2;//2 voices that can't be interrupted
 	am = [[CDAudioManager alloc] init:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
-
+	//Set up a method to get notified when background music finishes playing
+	[am setBackgroundMusicCompletionListener:self selector:@selector(backgroundMusicFinished)];
 	soundEngine = am.soundEngine;
+	//Create a non interruptible channel group. Non interruptible channel groups only allow new
+	//sounds to play if there are free channels. In other words currently playing sounds will
+	//not be interrupted.
+	[soundEngine setChannelGroupNonInterruptible:CGROUP_NON_INTERRUPTIBLE isNonInterruptible:TRUE];
 	
 	//Load the buffers with audio data. There is no correspondence between voices/channels and
 	//buffers.  For example you can play the same sound in multiple channel groups with different
@@ -163,7 +169,7 @@ CDSourceWrapper *toneSource;
 		if ((touchedPads & (1 << 1)) != 0) {
 			//Pad 2 touched - play a one shot snare sound in the drum voices channel group with normal pitch and pan and the
 			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_GUN channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
+			[soundEngine playSound:SND_ID_GUN channelGroupId:CGROUP_NON_INTERRUPTIBLE pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
 			flashIndex[1] = 0;
 		}
 		
@@ -196,7 +202,7 @@ CDSourceWrapper *toneSource;
 		}
 		
 		if ((touchedPads & (1 << 6)) != 0) {
-			if (!toneLoopPlaying) {
+			if (!toneSource.isPlaying) {
 				//Pad 7 touched- play a looped sound with normal pitch, pan and gain in the loop channel group.
 				//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
 				toneSource.sourceId = [am.soundEngine playSound:SND_ID_TONELOOP channelGroupId:CGROUP_TONELOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
@@ -222,7 +228,7 @@ CDSourceWrapper *toneSource;
 			[soundEngine stopChannelGroup:CGROUP_DRUMLOOP];
 			
 			if (![am isBackgroundMusicPlaying]) {
-				[am playBackgroundMusic:@"mula_tito_on_timbales.mp3"];
+				[am playBackgroundMusic:@"mula_tito_on_timbales.mp3" loop:FALSE];
 			} else {
 				[am pauseBackgroundMusic];
 			}	
@@ -268,6 +274,10 @@ CDSourceWrapper *toneSource;
 	}	
 	
 }
+
+- (void) backgroundMusicFinished {
+	CCLOG(@"Denshion: backgroundMusicFinished selector called");
+}	
 
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
