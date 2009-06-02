@@ -1,56 +1,134 @@
 //
-// Demo of calling Box2D testbed test case from a cocos2d Layer
+// Demo of calling integrating Box2D physics engine with cocos2d AtlasSprites
 // a cocos2d example
 // http://code.google.com/p/cocos2d-iphone
 //
-// Box2d Demo by Steve Oldmeadow
+// by Steve Oldmeadow
 //
 
 #import "Box2dTest.h"
-#import "SphereStack.h"
-#import "VerticalStack.h"
-
-Settings settings;
 
 @implementation Box2DTestLayer
+
+//Pixel to metres ratio. Box2D uses metres as the unit for measurement.
+//This ratio defines how many pixels correspond to 1 Box2D "metre"
+//Box2D is optimized for objects of 1x1 metre therefore it makes sense
+//to define the ratio so that your most common object type is 1x1 metre.
+#define PTM_RATIO 32
+
+enum {
+	kTagTileMap = 1,
+	kTagSpriteManager = 1,
+	kTagAnimation1 = 1,
+};
+
 -(id) init
 {
-	if((self=[super init])) {
-		//currentTest = SphereStack::Create();	
-		currentTest = VerticalStack::Create();	
-		isTouchEnabled = YES;
-	}
+	[super init];
+	CGSize screenSize = [Director sharedDirector].winSize;
+	CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
+	
+	//Set up world bounds - this should be larger than screen as any body that reaches
+	//the boundary will be frozen
+	b2AABB worldAABB;
+	float borderSize = 96 / PTM_RATIO;//We want a 96 pixel border between the screen and the world bounds
+	worldAABB.lowerBound.Set(-borderSize, -borderSize);//Bottom left
+	worldAABB.upperBound.Set(screenSize.width/PTM_RATIO + borderSize, screenSize.height/PTM_RATIO + borderSize);//Top right
+	
+	b2Vec2 gravity(0.0f, -30.0f);//Set up gravity
+	bool doSleep = true;
+	
+	world = new b2World(worldAABB, gravity, doSleep);
+	
+	//Set up ground, we will make it as wide as the screen
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(screenSize.width/PTM_RATIO/2, -1.0f);//This is a mid point, hence the /2
+	b2Body* groundBody = world->CreateBody(&groundBodyDef);
+	b2PolygonDef groundShapeDef;
+	groundShapeDef.SetAsBox(screenSize.width/PTM_RATIO/2, 1.0f);//This is a mid point, hence the /2
+	groundBody->CreateShape(&groundShapeDef);
+	
+	[self schedule: @selector(tick:)];
+	
+	//Set up sprite
+	
+	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
+	[self addChild:mgr z:0 tag:kTagSpriteManager];
+	
+	isTouchEnabled = YES;
 	return self;
 }
 
 -(void) dealloc
 {
-	if (currentTest != NULL) {
-		delete currentTest;
-	}	
+	delete world;
+	body = NULL;
+	world = NULL;
 	[super dealloc];
 }	
 
--(void) draw
+-(void) addNewSpriteWithCoords:(CGPoint)p
 {
-    glPushMatrix();
-	//Scale can be used to zoom in and out of scene
-	glScalef(10.0f, 10.0f, 1.0f);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	//Make sure you call step from a draw method as step triggers
-	//debug drawing which assumes OpenGL context is set up correctly.
-	//NB: normally you would not want to call step from draw but all
-	//testbed tests use debug drawing for rendering
-	currentTest->Step(&settings);
-	glPopMatrix();
-}	
-
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	//Fire a bullet when the screen is touched (mapped to ',' key on keyboard)
-	currentTest->Keyboard(',');
-	return kEventHandled; 
+	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	
+	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+	//just randomly picking one of the images
+	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
+	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(32 * idx,32 * idy,32,32) spriteManager:mgr];
+	[mgr addChild:sprite];
+	
+	sprite.position = ccp( p.x, p.y);
+	
+	//Set up a 1m squared box in the physics world
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	bodyDef.userData = sprite;
+	body = world->CreateBody(&bodyDef);
+	b2PolygonDef shapeDef;
+	shapeDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	shapeDef.density = 1.0f;
+	shapeDef.friction = 0.3f;
+	body->CreateShape(&shapeDef);
+	body->SetMassFromShapes();
 }
+
+
+
+-(void) tick: (ccTime) dt
+{
+	//It is recommended that a fixed time step is used with Box2D for stability
+	//of the simulation, however, we are using a variable time step here.
+	//You need to make an informed choice, the following URL is useful
+	//http://gafferongames.com/game-physics/fix-your-timestep/
+	
+	world->Step(dt, 10, 8);//Step the physics world
+	//Iterate over the bodies in the physics world
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	{
+		if (b->GetUserData() != NULL) {
+			//Synchronize the AtlasSprites position and rotation with the corresponding body
+			AtlasSprite* myActor = (AtlasSprite*)b->GetUserData();
+			myActor.position = CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
+			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
+		}	
+	}
+}
+
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	//Add a new body/atlas sprite at the touched location
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[Director sharedDirector] convertCoordinate: location];
+		
+		[self addNewSpriteWithCoords: location];
+	}
+	return kEventHandled;
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS
@@ -89,8 +167,7 @@ Settings settings;
 	Scene *scene = [Scene node];
 	id box2dLayer = [[Box2DTestLayer alloc] init];
 	[scene addChild:box2dLayer z:0];
-	
-	[box2dLayer setPosition:ccp(240,160)];
+	glClearColor(1.0f,1.0f,1.0f,1.0f);
 
 	[window makeKeyAndVisible];
 
