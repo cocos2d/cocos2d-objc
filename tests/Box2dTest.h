@@ -4,7 +4,7 @@
 
 #import "cocos2d.h"
 #import "Box2D.h"
-#import "iPhoneTest.h"
+
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
@@ -14,7 +14,10 @@
 @end
 
 @interface Box2DTestLayer : Layer {
+	b2World* world;
+	b2Body* body;
 	
-	Test* currentTest;	
+	AtlasSprite* boxSprite;
+	
 }
 @end
