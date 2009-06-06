@@ -216,7 +216,7 @@
 
 -(id) initWithAction: (FiniteTimeAction*) action times: (unsigned int) t
 {
-	int d = [action duration] * t;
+	ccTime d = [action duration] * t;
 
 	if( !(self=[super initWithDuration: d ]) )
 		return nil;
