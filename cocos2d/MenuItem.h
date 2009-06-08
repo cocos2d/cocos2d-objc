@@ -133,26 +133,49 @@
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
 
-/** A MenuItemImage
- A class that creates a MenuItem with 3 images:
+/** MenuItemSprite accepts both Sprite or AtlasSprite objects as items.
+ The images has 3 different states:
+ - unselected image
+ - selected image
+ - disabled image
+ 
+ @since v0.8.0
+ */
+@interface MenuItemSprite : MenuItem <CocosNodeRGBA>
+{
+	BOOL selected;
+	CocosNode<CocosNodeRGBA> *normalImage_, *selectedImage_, *disabledImage_;
+}
+
+/** the image used when the item is not selected */
+@property (readwrite,retain) CocosNode<CocosNodeRGBA> *normalImage;
+/** the image used when the item is selected */
+@property (readwrite,retain) CocosNode<CocosNodeRGBA> *selectedImage;
+/** the image used when the item is disabled */
+@property (readwrite,retain) CocosNode<CocosNodeRGBA> *disabledImage;
+
+/** creates a menu item with a normal and selected image*/
++(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite;
+/** creates a menu item with a normal and selected image with target/selector */
++(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite target:(id)target selector:(SEL)selector;
+/** creates a menu item with a normal,selected  and disabled image with target/selector */
++(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
+/** initializes a menu item with a normal, selected  and disabled image with target/selector */
+-(id) initFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
+
+@end
+
+/** MenuItemImage accepts images as items.
+ The images has 3 different states:
  - unselected image
  - selected image
  - disabled image
  
  For best results try that all images are of the same size
  */
-@interface MenuItemImage : MenuItem <CocosNodeRGBA>
+@interface MenuItemImage : MenuItemSprite
 {
-	BOOL selected;
-	Sprite *normalImage_, *selectedImage_, *disabledImage_;
 }
-
-/// Sprite (image) that is displayed when the MenuItem is not selected
-@property (readwrite,retain) Sprite *normalImage;
-/// Sprite (image) that is displayed when the MenuItem is selected
-@property (readwrite,retain) Sprite *selectedImage;
-/// Sprite (image) that is displayed when the MenuItem is disabled
-@property (readwrite,retain) Sprite *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2;

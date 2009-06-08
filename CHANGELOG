@@ -6,7 +6,6 @@ version 0.8 - xxx
  . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)
  . CocosDenshion: new sound engine in experimental (issue #XXX)
- . CocosNode: fixed compile error when keyboard registry is enabled (issue #387)
  . CocosNode: actions don't retain the target (issue #150)
  . CocosNode: support real openGL Z vertex (issue #355)
  . CocosNode: transformation matrix is cached (issue #263)
@@ -17,6 +16,7 @@ version 0.8 - xxx
  . LabelAtlas: don't render in subpixel (issue #135)
  . Menu: All MenuItems supports CocosNodeRGBA protocol (issue #347)
  . Menu: Support for BitmapFontAtlas (or any other Label) (issue #365)
+ . Menu: Support for Sprite and AtlasSprite (or any other CocosNodeRGBA node) (issue #383)
  . ParallaxNode: parallax code refactored (issue #358)
  . Particles: Added QuadParticleSystem. renamed ParticleSystem to PointParticleSystem (issue #245)
  . Particles: added support for endSize and endSizeVar (issue #241)
@@ -32,6 +32,7 @@ version 0.8 - xxx
  . Types: types follows OpenGL "standards" (issue #360)
  . Touch Events: new touch dispatcher (issue #211)
  . Touch Events: menu uses new touch dispatcher (issue #362)
+ . XCode: fixed compile error when keyboard registry is enabled (issue #387)
 
  version 0.7.3 - 18-May-2009
  . Actions: Sequence works when 1st action is an InstantAction. InstantActions are reversible (issue #348)
