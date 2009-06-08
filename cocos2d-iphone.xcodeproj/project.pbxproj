@@ -2885,10 +2885,10 @@
 		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				506C78EA0E0178FD00B48100 /* MenuItem.h */,
-				506C78EB0E0178FD00B48100 /* MenuItem.m */,
 				506C78A50E016A7300B48100 /* Menu.h */,
 				506C78A60E016A7300B48100 /* Menu.m */,
+				506C78EA0E0178FD00B48100 /* MenuItem.h */,
+				506C78EB0E0178FD00B48100 /* MenuItem.m */,
 			);
 			name = "Menu Nodes";
 			sourceTree = "<group>";

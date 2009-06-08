@@ -82,6 +82,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Particle reset system works as expected
 		CocosNode: fixed "already scheduled exception" bug
 	* mark at abitofthought: author of the single threaded Fast Director
+	* Michal Szymerski: Added support for AtlasSprite as MenuItems
 	* Mitch: patches for Menu
 		 author of MenuItemToggle
 	* Math Sephton: patches for Demos

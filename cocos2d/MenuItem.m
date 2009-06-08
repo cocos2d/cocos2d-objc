@@ -18,6 +18,7 @@
 #import "IntervalAction.h"
 #import "Sprite.h"
 #import "Support/CGPointExtension.h"
+#import "AtlasSprite.h"
 
 static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
@@ -324,54 +325,36 @@ enum {
 }
 @end
 
-#pragma mark MenuItemImage
+#pragma mark -
+#pragma mark MenuItemSprite
+@implementation MenuItemSprite
 
-@implementation MenuItemImage
+@synthesize normalImage=normalImage_, selectedImage=selectedImage_, disabledImage=disabledImage_;
 
-@synthesize selectedImage=selectedImage_, normalImage=normalImage_, disabledImage=disabledImage_;
 
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2
++(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite
 {
-	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:nil selector:nil];
+	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:nil selector:nil];
 }
-
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) t selector:(SEL) s
++(id) itemFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite target:(id)target selector:(SEL)selector
 {
-	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:t selector:s];
+	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:target selector:selector];
 }
-
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3
++(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
 {
-	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:nil selector:nil] autorelease];
+	return [[[self alloc] itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector] autorelease];
 }
-
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3 target:(id) t selector:(SEL) s
+-(id) initFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
 {
-	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:t selector:s] autorelease];
-}
-
--(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id) t selector:(SEL) sel
-{
-	if( (self=[super initWithTarget:t selector:sel]) ) {
-
-		self.normalImage = [Sprite spriteWithFile:normalI];
-		self.selectedImage = [Sprite spriteWithFile:selectedI];
+	if( (self=[super initWithTarget:target selector:selector]) ) {
 		
-		if(disabledI == nil)
-			self.disabledImage = nil;
-		else
-			self.disabledImage = [Sprite spriteWithFile:disabledI];
-	  
-	//	[normalImage setOpacity:opacity_];
-	//	[normalImage setRGB:r_:g_:b_];
-	//	[selectedImage setOpacity:opacity_];
-	//	[selectedImage setRGB:r_:g_:b_];
-	//	[disabledImage setOpacity:opacity_];
-	//	[disabledImage setRGB:r_:g_:b_];
+		self.normalImage = normalSprite;
+		self.selectedImage = selectedSprite;
+		self.disabledImage = disabledSprite;
 		
 		[self setContentSize: [normalImage_ contentSize]];
 	}
-	return self;
+	return self;	
 }
 
 -(void) dealloc
@@ -379,7 +362,7 @@ enum {
 	[normalImage_ release];
 	[selectedImage_ release];
 	[disabledImage_ release];
-
+	
 	[super dealloc];
 }
 
@@ -395,22 +378,35 @@ enum {
 
 -(void) draw
 {
-	if(isEnabled) {
-		if( selected )
-			[selectedImage_ draw];
-		else
-			[normalImage_ draw];
-
-	} else {
-		if(disabledImage_ != nil)
-			[disabledImage_ draw];
-		
-		// disabled image was not provided
-		else
-			[normalImage_ draw];
+	if( ! [normalImage_ isKindOfClass:[AtlasSprite class]] ) {
+		if(isEnabled) {
+			if( selected )
+				[selectedImage_ draw];
+			else
+				[normalImage_ draw];
+			
+		} else {
+			if(disabledImage_ != nil)
+				[disabledImage_ draw];
+			
+			// disabled image was not provided
+			else
+				[normalImage_ draw];
+		}
 	}
 }
 
+- (void)setPosition:(CGPoint)pos
+{
+	[super setPosition:pos];
+	[normalImage_ setPosition:pos];
+	if (selectedImage_)
+		[selectedImage_ setPosition:pos];
+	if (disabledImage_)
+		[disabledImage_ setPosition:pos];	
+}
+
+#pragma mark MenuItemImage - CocosNodeRGBA protocol
 - (void) setOpacity: (GLubyte)opacity
 {
 	[normalImage_ setOpacity:opacity];
@@ -440,9 +436,48 @@ enum {
 {
 	return [normalImage_ b];
 }
-
 @end
 
+
+#pragma mark -
+#pragma mark MenuItemImage
+
+@implementation MenuItemImage
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2
+{
+	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:nil selector:nil];
+}
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) t selector:(SEL) s
+{
+	return [self itemFromNormalImage:value selectedImage:value2 disabledImage: nil target:t selector:s];
+}
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3
+{
+	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:nil selector:nil] autorelease];
+}
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3 target:(id) t selector:(SEL) s
+{
+	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:t selector:s] autorelease];
+}
+
+-(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id)t selector:(SEL)sel
+{
+	Sprite *normalImage = [Sprite spriteWithFile:normalI];
+	Sprite *selectedImage = [Sprite spriteWithFile:selectedI]; 
+	Sprite *disabledImage = nil;
+
+	if(disabledI)
+		disabledImage = [Sprite spriteWithFile:disabledI];
+
+	return [self initFromNormalSprite:normalImage selectedSprite:selectedImage disabledSprite:disabledImage target:t selector:sel];
+}
+@end
+
+#pragma mark -
 #pragma mark MenuItemToggle
 
 //
@@ -545,6 +580,8 @@ enum {
 {
 	return [subItems_ objectAtIndex:selectedIndex_];
 }
+
+#pragma mark MenuItemToggle - CocosNodeRGBA protocol
 
 - (void) setOpacity: (GLubyte)opacity
 {
