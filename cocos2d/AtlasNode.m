@@ -134,12 +134,6 @@
 		r_ = g_ = b_ = opacity_;	
 }
 
--(CGSize) contentSize
-{
-	[NSException raise:@"ContentSizeAbstract" format:@"ContentSize was not overriden"];
-	return CGSizeMake(0,0);
-}
-
 #pragma mark AtlasNode - CocosNodeTexture protocol
 
 -(void) updateBlendFunc

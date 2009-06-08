@@ -29,7 +29,7 @@
 @interface LabelAtlas : AtlasNode  <CocosNodeLabel> {
 		
 	// string to render
-	NSString		*string;
+	NSString		*string_;
 	
 	// the first char in the charmap
 	char			mapStartChar;

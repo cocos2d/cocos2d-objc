@@ -19,7 +19,7 @@
 @implementation LabelAtlas
 
 #pragma mark LabelAtlas - Creation & Init
-+(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
++(id) labelAtlasWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
 {
 	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
 }
@@ -28,20 +28,18 @@
 -(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
 {
 
-	if (! (self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) )
-		return nil;
+	if ((self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
 
-	string = [theString retain];
-	mapStartChar = c;	
-	
-	[self updateAtlasValues];
+		mapStartChar = c;		
+		[self setString: theString];
+	}
 
 	return self;
 }
 
 -(void) dealloc
 {
-	[string release];
+	[string_ release];
 
 	[super dealloc];
 }
@@ -50,11 +48,11 @@
 
 -(void) updateAtlasValues
 {
-	int n = [string length];
+	int n = [string_ length];
 	
 	ccV3F_C4B_T2F_Quad quad;
 
-	const char *s = [string UTF8String];
+	const char *s = [string_ UTF8String];
 
 	for( int i=0; i<n; i++) {
 		char a = s[i] - mapStartChar;
@@ -94,12 +92,12 @@
 	if( newString.length > textureAtlas_.totalQuads )
 		[textureAtlas_ resizeCapacity: newString.length];
 
-	[string release];
-	string = [newString retain];
+	[string_ release];
+	string_ = [newString retain];
 	[self updateAtlasValues];
 
 	CGSize s;
-	s.width = [string length] * itemWidth;
+	s.width = [string_ length] * itemWidth;
 	s.height = itemHeight;
 	[self setContentSize:s];
 }
@@ -122,7 +120,7 @@
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
 	
-	[textureAtlas_ drawNumberOfQuads: string.length];
+	[textureAtlas_ drawNumberOfQuads: string_.length];
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
