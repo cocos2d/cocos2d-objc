@@ -6,6 +6,7 @@ version 0.8 - xxx
  . AtlasSprite: supports flipX and flipY properties (issue #343)
  . BitmapFontAtlas: new features (issue #317)
  . CocosDenshion: new sound engine in experimental (issue #XXX)
+ . CocosNode: fixed compile error when keyboard registry is enabled (issue #387)
  . CocosNode: actions don't retain the target (issue #150)
  . CocosNode: support real openGL Z vertex (issue #355)
  . CocosNode: transformation matrix is cached (issue #263)
