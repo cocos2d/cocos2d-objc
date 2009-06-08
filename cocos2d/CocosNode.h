@@ -16,7 +16,7 @@
 #import <OpenGLES/ES1/gl.h>
 
 #import "Action.h"
-#import "cctypes.h"
+#import "ccTypes.h"
 #import "Support/Texture2D.h"
 
 enum {
