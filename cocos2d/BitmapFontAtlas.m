@@ -39,6 +39,8 @@
 @implementation BitmapFontAtlas
 
 @synthesize opacity=opacity_,r=r_,g=g_,b=b_;
+@synthesize opacityModifyRGB=opacityModifyRGB_;
+
 
 #pragma mark BitmapFontAtlas - Creation & Init
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
@@ -58,6 +60,8 @@
 		
 		r_ = g_ = b_ = opacity_ = 255;
 		contentSize_ = CGSizeZero;
+		
+		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
 		
 		anchorPoint_ = ccp(0.5f, 0.5f);
 
@@ -362,7 +366,7 @@
 	opacity_ = opacity;
 
 	// special opacity for premultiplied textures
-	if( [[self.textureAtlas texture] hasPremultipliedAlpha] )
+	if( opacityModifyRGB_ )
 		r_ = g_ = b_ = opacity_;
 
 	for( id child in children )

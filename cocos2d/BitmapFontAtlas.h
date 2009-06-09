@@ -75,12 +75,15 @@ enum {
 	// The characters building up the font
 	ccBitmapFontDef	bitmapFontArray[kBitmapFontAtlasMaxChars];
 	
-	// texture color
+	// texture RGBA
 	GLubyte	r_,g_,b_, opacity_;	
+	BOOL opacityModifyRGB_;
 }
 
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
+/** conforms to CocosNodeRGBA protocol */
+@property (readwrite) BOOL opacityModifyRGB;
 
 /** creates a bitmap font altas with an initial string and the FNT file */
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile;

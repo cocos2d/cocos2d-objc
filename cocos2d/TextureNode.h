@@ -37,11 +37,9 @@
 	// blend func
 	ccBlendFunc	blendFunc_;
 	
-	// texture opacity
-	GLubyte opacity_;
-	
-	// texture color
-	GLubyte	r_,g_,b_;
+	// texture RGBA
+	GLubyte	r_,g_,b_,opacity_;
+	BOOL opacityModifyRGB_;
 	
 }
 
@@ -53,4 +51,6 @@
 
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
+/** conforms to CocosNodeRGBA protocol */
+@property (readwrite) BOOL opacityModifyRGB;
 @end
