@@ -60,8 +60,6 @@
 
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
-/** conforms to CocosNodeRGBA protocol */
-@property (readwrite) BOOL opacityModifyRGB;
 
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/

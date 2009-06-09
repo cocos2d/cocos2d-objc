@@ -20,13 +20,12 @@
 -(void) calculateMaxItems;
 -(void) calculateTexCoordsSteps;
 -(void) updateBlendFunc;
--(void) updateopacityModifyRGB;
+-(void) updateOpacityModifyRGB;
 @end
 
 @implementation AtlasNode
 
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
-@synthesize opacityModifyRGB=opacityModifyRGB_;
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
 
@@ -55,7 +54,7 @@
 		self.textureAtlas = [TextureAtlas textureAtlasWithFile:tile capacity:c];
 		
 		[self updateBlendFunc];
-		[self updateopacityModifyRGB];
+		[self updateOpacityModifyRGB];
 			
 		[self calculateMaxItems];
 		[self calculateTexCoordsSteps];
@@ -137,9 +136,17 @@
 	if( opacityModifyRGB_ )
 		r_ = g_ = b_ = opacity_;	
 }
--(void) updateopacityModifyRGB
+-(void) updateOpacityModifyRGB
 {
 	opacityModifyRGB_ = [textureAtlas_.texture hasPremultipliedAlpha];
+}
+-(void) setOpacityModifyRGB:(BOOL)modify
+{
+	opacityModifyRGB_ = modify;
+}
+-(BOOL) doesOpacityModifyRGB
+{
+	return opacityModifyRGB_;
 }
 
 #pragma mark AtlasNode - CocosNodeTexture protocol
@@ -156,7 +163,7 @@
 {
 	textureAtlas_.texture = texture;
 	[self updateBlendFunc];
-	[self updateopacityModifyRGB];
+	[self updateOpacityModifyRGB];
 }
 
 -(Texture2D*) texture

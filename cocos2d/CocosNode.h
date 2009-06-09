@@ -397,7 +397,7 @@ enum {
 /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
  @since v0.8
  */
- -(BOOL) opacityModifyRGB;
+ -(BOOL) doesOpacityModifyRGB;
 
 @end
 

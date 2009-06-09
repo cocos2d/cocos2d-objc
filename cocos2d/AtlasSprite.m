@@ -35,7 +35,6 @@ enum {
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
-@synthesize opacityModifyRGB=opacityModifyRGB_;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -311,6 +310,7 @@ enum {
 //
 // RGBA protocol
 //
+#pragma mark AtlasSprite - RGBA protocol
 -(void) updateColor
 {
 	if( atlasIndex_ != kIndexNotInitialized)
@@ -349,18 +349,19 @@ enum {
 	
 	[self updateColor];
 }
-
-//
-// CocosNodeSize protocol
-//
--(CGSize)contentSize
+-(void) setOpacityModifyRGB:(BOOL)modify
 {
-	return rect_.size;
+	opacityModifyRGB_ = modify;
+}
+-(BOOL) doesOpacityModifyRGB
+{
+	return opacityModifyRGB_;
 }
 
 //
 // CocosNodeFrames protocol
 //
+#pragma mark AtlasSprite - CocosNodeFrames protocol
 -(void) setDisplayFrame:(id)newFrame
 {
 	AtlasSpriteFrame *frame = (AtlasSpriteFrame*)newFrame;
