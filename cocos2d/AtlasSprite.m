@@ -35,6 +35,7 @@ enum {
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
+@synthesize opacityModifyRGB=opacityModifyRGB_;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -45,6 +46,8 @@ enum {
 {
 	if( (self = [super init])) {
 		textureAtlas_ = [manager textureAtlas];	// weak reference. Don't release
+		
+		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
 		
 		atlasIndex_ = kIndexNotInitialized;
 
@@ -320,7 +323,7 @@ enum {
 	opacity_ = anOpacity;
 	
 	// special opacity for premultiplied textures
-	if( [[textureAtlas_ texture] hasPremultipliedAlpha] )
+	if( opacityModifyRGB_ )
 		r_ = g_ = b_ = opacity_;
 
 	ccColor4B color = (ccColor4B) {r_, g_, b_, opacity_ };

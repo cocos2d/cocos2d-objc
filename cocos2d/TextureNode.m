@@ -25,6 +25,7 @@
 
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
 @synthesize blendFunc = blendFunc_;
+@synthesize opacityModifyRGB=opacityModifyRGB_;
 
 - (id) init
 {
@@ -53,6 +54,7 @@
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
+	opacityModifyRGB_ = [texture hasPremultipliedAlpha];
 }
 
 -(Texture2D*) texture
@@ -72,7 +74,7 @@
 {
 	// special opacity for premultiplied textures
 	opacity_ = opacity;
-	if( [texture_ hasPremultipliedAlpha] )
+	if( opacityModifyRGB_ )
 		r_ = g_ = b_ = opacity_;	
 }
 

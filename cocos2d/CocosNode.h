@@ -383,9 +383,22 @@ enum {
 /// returns the opacity
 -(GLubyte) opacity;
 /** sets the opacity.
- @warning If the the texture has premultiplied colors then R = G = B = Opacity
+ @warning If the the texture has premultiplied alpha then 
  */
 -(void) setOpacity: (GLubyte) opacity;
+@optional
+/** sets the premultipliedAlphaOpacity property.
+ If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
+ If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
+ Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
+ @since v0.8
+ */
+-(void) setOpacityModifyRGB:(BOOL)boolean;
+/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
+ @since v0.8
+ */
+ -(BOOL) opacityModifyRGB;
+
 @end
 
 

@@ -56,8 +56,8 @@
 	BOOL	dirty;
 	
 	// opacity and RGB protocol
-	GLubyte opacity_;
-	GLubyte r_, g_, b_;
+	GLubyte r_, g_, b_, opacity_;
+	BOOL opacityModifyRGB_;
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations;
@@ -81,6 +81,8 @@
 @property (readwrite) BOOL flipY;
 /** opacity and RGB colors. conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte opacity, r, g, b;
+/** conforms to CocosNodeRGBA protocol */
+@property (readwrite) BOOL opacityModifyRGB;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
