@@ -51,6 +51,4 @@
 
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
-/** conforms to CocosNodeRGBA protocol */
-@property (readwrite) BOOL opacityModifyRGB;
 @end

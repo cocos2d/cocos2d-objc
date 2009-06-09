@@ -81,8 +81,6 @@
 @property (readwrite) BOOL flipY;
 /** opacity and RGB colors. conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte opacity, r, g, b;
-/** conforms to CocosNodeRGBA protocol */
-@property (readwrite) BOOL opacityModifyRGB;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;

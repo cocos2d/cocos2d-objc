@@ -25,7 +25,6 @@
 
 @synthesize opacity=opacity_, r=r_, g=g_, b=b_;
 @synthesize blendFunc = blendFunc_;
-@synthesize opacityModifyRGB=opacityModifyRGB_;
 
 - (id) init
 {
@@ -77,7 +76,16 @@
 	if( opacityModifyRGB_ )
 		r_ = g_ = b_ = opacity_;	
 }
+-(void) setOpacityModifyRGB:(BOOL)modify
+{
+	opacityModifyRGB_ = modify;
+}
+-(BOOL) doesOpacityModifyRGB
+{
+	return opacityModifyRGB_;
+}
 
+#pragma mark TextureNode - draw
 - (void) draw
 {
 	glEnableClientState( GL_VERTEX_ARRAY);

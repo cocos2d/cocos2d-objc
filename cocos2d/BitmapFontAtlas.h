@@ -82,8 +82,6 @@ enum {
 
 /** conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte r, g, b, opacity;
-/** conforms to CocosNodeRGBA protocol */
-@property (readwrite) BOOL opacityModifyRGB;
 
 /** creates a bitmap font altas with an initial string and the FNT file */
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile;

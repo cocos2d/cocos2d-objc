@@ -39,8 +39,6 @@
 @implementation BitmapFontAtlas
 
 @synthesize opacity=opacity_,r=r_,g=g_,b=b_;
-@synthesize opacityModifyRGB=opacityModifyRGB_;
-
 
 #pragma mark BitmapFontAtlas - Creation & Init
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
@@ -372,7 +370,16 @@
 	for( id child in children )
 		[child setOpacity:opacity_];
 }
+-(void) setOpacityModifyRGB:(BOOL)modify
+{
+	opacityModifyRGB_ = modify;
+}
+-(BOOL) doesOpacityModifyRGB
+{
+	return opacityModifyRGB_;
+}
 
+#pragma mark BitmapFontAtlas - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point
 {
 	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
