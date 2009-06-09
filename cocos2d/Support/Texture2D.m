@@ -74,6 +74,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CONSTANTS:
 
 #define kMaxTextureSize	 1024
+//#define kMaxTextureSize		2048
 
 //CLASS IMPLEMENTATIONS:
 
@@ -213,13 +214,16 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 			i *= 2;
 		height = i;
 	}
-	while((width > kMaxTextureSize) || (height > kMaxTextureSize)) {
-		width /= 2;
-		height /= 2;
-		transform = CGAffineTransformScale(transform, 0.5f, 0.5f);
-		imageSize.width *= 0.5f;
-		imageSize.height *= 0.5f;
-	}
+	
+	NSAssert2( (width <= kMaxTextureSize) && (height <= kMaxTextureSize), @"Image is bigger than the supported %d x %d", kMaxTextureSize, kMaxTextureSize);
+
+//	while((width > kMaxTextureSize) || (height > kMaxTextureSize)) {
+//		width /= 2;
+//		height /= 2;
+//		transform = CGAffineTransformScale(transform, 0.5f, 0.5f);
+//		imageSize.width *= 0.5f;
+//		imageSize.height *= 0.5f;
+//	}
 	
 	// Create the bitmap graphics context
 	
