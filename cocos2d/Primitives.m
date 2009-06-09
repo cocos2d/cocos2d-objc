@@ -122,7 +122,7 @@ void drawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int se
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
-	glDrawArrays(GL_LINE_STRIP, 0, segments);
+	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -144,7 +144,7 @@ void drawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
-	glDrawArrays(GL_LINE_STRIP, 0, segments);
+	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);  
 }
