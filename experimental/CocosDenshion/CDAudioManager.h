@@ -30,6 +30,15 @@ typedef enum {
 	kAudioManagerFxPlusMusicIfNoOtherAudio	//If another app is playing audio at start up then allow it to continue and don't play music
 } tAudioManagerMode;
 
+typedef enum {
+	kAMStateUninitialised, //Audio manager has not been initialised - do not use
+	kAMStateInitialising,  //Audio manager is in the process of initialising - do not use
+	kAMStateInitialised	   //Audio manager is initialised - safe to use
+} tAudioManagerState;
+
+@interface CDAsynchInitialiser : NSOperation {}	
+@end
+
 @interface CDAudioManager : NSObject <AVAudioPlayerDelegate> {
 	CDSoundEngine		*soundEngine;
 	AVAudioPlayer		*backgroundMusic;
@@ -37,7 +46,6 @@ typedef enum {
 	UInt32				_audioSessionCategory;
 	BOOL				_audioWasPlayingAtStartup;
 	tAudioManagerMode	_mode;
-	
 	SEL backgroundMusicCompletionSelector;
 	id backgroundMusicCompletionListener;
 	BOOL willPlayBackgroundMusic;
@@ -46,6 +54,12 @@ typedef enum {
 @property (readonly) CDSoundEngine *soundEngine;
 @property (readonly) AVAudioPlayer *backgroundMusic;
 @property (readonly) BOOL willPlayBackgroundMusic;
+
+
++ (CDAudioManager *) sharedManager;
++ (tAudioManagerState) sharedManagerState;
++ (void) configure: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
++ (void) initAsynchronously: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
 -(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop;
@@ -59,3 +73,5 @@ typedef enum {
 -(void) audioSessionResumed;
 
 @end
+
+
