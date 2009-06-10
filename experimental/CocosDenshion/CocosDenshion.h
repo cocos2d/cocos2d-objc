@@ -22,6 +22,9 @@
  */
 
 /* Changelog
+1.4 (2009.06.10) * Implemented asynchronous initialisation of audio manager
+                 * Implemented asynchronous loading of sound buffers
+                 * Fixed problem with mute button being ignored if game played background music (Thanks to Sebastien Flory for reporting)
 1.3 (2009.06.02) * Added non interruptible option for channel group
                  * Added loop parameter for playing background music
                  * Added isPlaying property to CDSourceWrapper
@@ -66,6 +69,8 @@ typedef struct _channelGroup {
 } channelGroup;
 
 
+////////////////////////////////////////////////////////////////////////////
+
 @interface CDSoundEngine : NSObject {
 	
 	ALuint			*_sources;
@@ -82,13 +87,15 @@ typedef struct _channelGroup {
 	
 	ALenum			lastErrorCode;
 	BOOL			functioning;
+	float			asynchLoadProgress;
 	
 }
 
-@property (readwrite) ALfloat masterGain;
-@property (readwrite) BOOL mute;
+@property (readwrite, nonatomic) ALfloat masterGain;
+@property (readwrite, nonatomic) BOOL mute;
 @property (readonly)  ALenum lastErrorCode;//Last OpenAL error code that was generated
 @property (readonly)  BOOL functioning;//Is the sound engine functioning
+@property (readwrite) float asynchLoadProgress;
 
 - (id)init:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
 - (id)init:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal audioSessionCategory:(UInt32) audioSessionCategory;
@@ -99,6 +106,7 @@ typedef struct _channelGroup {
 - (void) stopChannelGroup:(int) channelGroupId;
 - (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible;
 - (BOOL) loadBuffer:(int) soundId fileName:(NSString*) fileName fileType:(NSString*) fileType;
+- (void) loadBuffersAsynchronously:(NSArray *) loadRequests;
 - (BOOL) unloadBuffer:(int) soundId;
 - (ALCcontext *) openALContext;
 - (void) audioSessionInterrupted;
@@ -117,10 +125,37 @@ typedef struct _channelGroup {
 	float lastPan;
 	float lastGain;
 }
-@property (readwrite) ALuint sourceId;
-@property (readwrite) float pitch;
-@property (readwrite) float gain;
-@property (readwrite) float pan;
+@property (readwrite, nonatomic) ALuint sourceId;
+@property (readwrite, nonatomic) float pitch;
+@property (readwrite, nonatomic) float gain;
+@property (readwrite, nonatomic) float pan;
 @property (readonly)  BOOL isPlaying;
 
 @end
+
+////////////////////////////////////////////////////////////////////////////
+@interface CDAsynchBufferLoader : NSOperation {
+	NSArray *_loadRequests;
+	CDSoundEngine *_soundEngine;
+}	
+
+-(id) init:(NSArray *)loadRequests soundEngine:(CDSoundEngine *) theSoundEngine;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////
+
+@interface CDBufferLoadRequest: NSObject
+{
+	NSString *fileName;
+	int		 soundId;
+	//id       loader;
+}
+
+@property (readonly) NSString *fileName;
+@property (readonly) int soundId;
+
+- (id)init:(int) theSoundId fileName:(NSString *) theFileName;
+
+@end
+

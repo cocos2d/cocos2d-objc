@@ -41,8 +41,90 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 float realBackgroundMusicVolume = -1.0f;
 #endif
 
+
+//NSOperation object used to asynchronously initialise 
+@implementation CDAsynchInitialiser
+
+-(void) main {
+	CCLOG(@"CDAsychInitialiser is initialising audio manager");
+	[super main];
+	[CDAudioManager sharedManager];
+}	
+
+@end
+
 @implementation CDAudioManager
 @synthesize soundEngine, backgroundMusic, willPlayBackgroundMusic;
+static CDAudioManager *sharedManager;
+static tAudioManagerState _sharedManagerState = kAMStateUninitialised;
+static tAudioManagerMode configuredMode;
+static int *configuredChannelGroupDefinitions;
+static int configuredChannelGroupTotal;
+static BOOL configured = FALSE;
+
+// Init
++ (CDAudioManager *) sharedManager
+{
+	@synchronized(self)     {
+		if (!sharedManager) {
+			if (!configured) {
+				//Set defaults here
+				configuredMode = kAudioManagerFxPlusMusicIfNoOtherAudio;
+				//Just create one channel group with all the sources
+				configuredChannelGroupDefinitions = new int[1];
+				configuredChannelGroupDefinitions[0] = CD_MAX_SOURCES;
+				configuredChannelGroupTotal = 1;
+			}
+			[[CDAudioManager alloc] init:configuredMode channelGroupDefinitions:configuredChannelGroupDefinitions channelGroupTotal:configuredChannelGroupTotal];
+			_sharedManagerState = kAMStateInitialised;//This is only really relevant when using asynchronous initialisation
+		}	
+		return sharedManager;
+	}
+	return nil;
+}
+
++ (tAudioManagerState) sharedManagerState {
+	return _sharedManagerState;
+}	
+
+/**
+ * Call this to set up audio manager asynchronously.  Initialisation is finished when sharedManagerState == kAMStateInitialised
+ */
++ (void) initAsynchronously: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
+	@synchronized(self) {
+		if (_sharedManagerState == kAMStateUninitialised) {
+			_sharedManagerState = kAMStateInitialising;
+			[CDAudioManager configure:mode channelGroupDefinitions:channelGroupDefinitions channelGroupTotal:channelGroupTotal];
+			CDAsynchInitialiser *initOp = [[[CDAsynchInitialiser alloc] init] autorelease];
+			NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease];
+			[opQ addOperation:initOp];
+		}	
+	}
+}	
+
++ (id) alloc
+{
+	@synchronized(self)     {
+		NSAssert(sharedManager == nil, @"Attempted to allocate a second instance of a singleton.");
+		sharedManager = [super alloc];
+		return sharedManager;
+	}
+	return nil;
+}
+
+/*
+ * Call this method before accessing the shared manager in order to configure the shared audio manager
+ */
++ (void) configure: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
+	configuredMode = mode;
+	configuredChannelGroupDefinitions = new int[channelGroupTotal];
+	for (int i=0; i < channelGroupTotal; i++) {
+		configuredChannelGroupDefinitions[i] = channelGroupDefinitions[i];
+	}	
+	configuredChannelGroupTotal = channelGroupTotal;
+	configured = TRUE;
+}	
+
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
 	if ((self = [super init])) {
@@ -64,7 +146,7 @@ float realBackgroundMusicVolume = -1.0f;
 			case kAudioManagerFxPlusMusic:
 				//Use audio exclusively - if other audio is playing it will be stopped
 				CCLOG(@"Denshion: Audio will be exclusive");
-				_audioSessionCategory = kAudioSessionCategory_MediaPlayback;
+				_audioSessionCategory = kAudioSessionCategory_SoloAmbientSound;
 				willPlayBackgroundMusic = TRUE;
 				break;
 				
@@ -81,7 +163,7 @@ float realBackgroundMusicVolume = -1.0f;
 					_audioWasPlayingAtStartup = TRUE;
 				} else {
 					CCLOG(@"Denshion: Other audio is not playing audio will be exclusive");
-					_audioSessionCategory = kAudioSessionCategory_MediaPlayback;
+					_audioSessionCategory = kAudioSessionCategory_SoloAmbientSound;
 					willPlayBackgroundMusic = TRUE;
 					_audioWasPlayingAtStartup = FALSE;
 				}	
@@ -258,3 +340,4 @@ float realBackgroundMusicVolume = -1.0f;
 } 
 
 @end
+

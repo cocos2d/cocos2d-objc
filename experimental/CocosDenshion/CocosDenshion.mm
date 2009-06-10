@@ -38,7 +38,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 
 @implementation CDSoundEngine
 
-@synthesize lastErrorCode, functioning;
+@synthesize lastErrorCode, functioning, asynchLoadProgress;
 
 /**
  * Internal method called during init
@@ -143,6 +143,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	if ((self = [super init])) {
 		
 		_mute = FALSE;
+		asynchLoadProgress = 0.0f;
 		_audioSessionCategory = audioSessionCategory;
 		_handleAudioSession = (_audioSessionCategory != CD_IGNORE_AUDIO_SESSION);
 		if (_handleAudioSession) {
@@ -244,6 +245,23 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	return TRUE;
 	
 }	
+
+/**
+ * Load buffers asynchronously 
+ * Check asynchLoadProgress for progress. asynchLoadProgress represents fraction of completion. When it equals 1.0 loading
+ * is complete. NB: asynchLoadProgress is simply based on the number of load requests, it does not take into account
+ * file sizes.
+ * @param An array of CDBufferLoadRequest objects
+ */
+- (void) loadBuffersAsynchronously:(NSArray *) loadRequests {
+	@synchronized(self) {
+		asynchLoadProgress = 0.0f;
+		CDAsynchBufferLoader *loaderOp = [[[CDAsynchBufferLoader alloc] init:loadRequests soundEngine:self] autorelease];
+		NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease]; //This is going to leak?
+		[opQ addOperation:loaderOp];
+	}
+}	
+
 
 /**
  * Load sound data for later play back.
@@ -602,4 +620,73 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 }	
 
 @end
+
+////////////////////////////////////////////////////////////////////////////
+
+@implementation CDAsynchBufferLoader
+
+-(id) init:(NSArray *)loadRequests soundEngine:(CDSoundEngine *) theSoundEngine {
+	if ([super init] ) {
+		_loadRequests = loadRequests;
+		[_loadRequests retain];
+		_soundEngine = theSoundEngine;
+		[_soundEngine retain];
+		return self;
+	} else {
+		return nil;
+	}	
+}	
+
+-(void) main {
+	CCLOG(@"Denshion: CDAsynchBufferLoader loading buffers");
+	[super main];
+	_soundEngine.asynchLoadProgress = 0.0f;
+
+	if ([_loadRequests count] > 0) {
+		float increment = 1.0f / [_loadRequests count];
+		//Iterate over load request and load
+		for (CDBufferLoadRequest *loadRequest in _loadRequests) {
+			[_soundEngine loadBuffer:loadRequest.soundId fileName:loadRequest.fileName fileType:nil];
+			_soundEngine.asynchLoadProgress += increment;
+			
+		}	
+	}	
+	
+	//Completed
+	_soundEngine.asynchLoadProgress = 1.0f;
+	
+}	
+
+-(void) dealloc {
+	[_loadRequests release];
+	[_soundEngine release];
+	[super dealloc];
+}	
+
+@end
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+@implementation CDBufferLoadRequest
+
+@synthesize fileName, soundId;
+
+-(id) init:(int) theSoundId fileName:(NSString *) theFileName {
+	if ([super init]) {
+		soundId = theSoundId;
+		fileName = theFileName;
+		[fileName retain];
+		return self;
+	} else {
+		return nil;
+	}	
+}	
+
+-(void) dealloc {
+	[fileName release];
+	[super dealloc];
+}	
+
+@end
+
 

@@ -70,8 +70,6 @@ CDSourceWrapper *toneSource;
 {
 	[super init];
 	
-	[self setUpSoundEngine];
-	
 	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	Sprite* bg = [Sprite spriteWithFile:@"bg.png"];
 	[bg setPosition:CGPointMake(480/2, 320/2)]; 
@@ -104,6 +102,21 @@ CDSourceWrapper *toneSource;
 		flashIndex[i] = FLASH_FADE_TOTAL;//Use total as a sentinel value
 	}	
 	
+	am = nil;
+	soundEngine = nil;
+		
+	if ([CDAudioManager sharedManagerState] != kAMStateInitialised) {
+		//The audio manager is not initialised yet so kick off the sound loading as an NSOperation that will wait for
+		//the audio manager
+		NSInvocationOperation* bufferLoadOp = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(loadSoundBuffers:) object:nil] autorelease];
+		NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease]; 
+		[opQ addOperation:bufferLoadOp];
+		_appState = kAppStateAudioManagerInitialising;
+	} else {
+		[self loadSoundBuffers:nil];
+		_appState = kAppStateSoundBuffersLoading;
+	}	
+	
 	isTouchEnabled = YES;
 	toneLoopPlaying = NO;
 	toneSource = [[CDSourceWrapper alloc] init];
@@ -112,164 +125,185 @@ CDSourceWrapper *toneSource;
 	return self;
 }
 
--(void) setUpSoundEngine {
-
-	//Channel groups define how voices are shared, the maximum number of voices is defined by 
-	//CD_MAX_SOURCES in the CocosDenshion.h file
-	//When a request is made to play a sound within a channel group the next available voice
-	//is used.  If no voices are free then the least recently used voice is stopped and reused.
-	int channelGroupCount = CGROUP_TOTAL;
-	int channelGroups[CGROUP_TOTAL];
-	channelGroups[CGROUP_DRUMLOOP] = 1;//This means only 1 loop will play at a time
-	channelGroups[CGROUP_TONELOOP] = 1;//This means only 1 loop will play at a time
-	channelGroups[CGROUP_DRUM_VOICES] = 8;//8 voices to be shared by the drums
-	channelGroups[CGROUP_FX_VOICES] = 16;//16 voices to be shared by the fx
-	channelGroups[CGROUP_NON_INTERRUPTIBLE] = 2;//2 voices that can't be interrupted
-	am = [[CDAudioManager alloc] init:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
-	//Set up a method to get notified when background music finishes playing
-	[am setBackgroundMusicCompletionListener:self selector:@selector(backgroundMusicFinished)];
-	soundEngine = am.soundEngine;
-	//Create a non interruptible channel group. Non interruptible channel groups only allow new
-	//sounds to play if there are free channels. In other words currently playing sounds will
-	//not be interrupted.
-	[soundEngine setChannelGroupNonInterruptible:CGROUP_NON_INTERRUPTIBLE isNonInterruptible:TRUE];
+-(void) loadSoundBuffers:(NSObject*) data {
 	
+	//Wait for the audio manager if it is not initialised yet
+	while ([CDAudioManager sharedManagerState] != kAMStateInitialised) {
+		[NSThread sleepForTimeInterval:0.1];
+	}	
+	
+
 	//Load the buffers with audio data. There is no correspondence between voices/channels and
 	//buffers.  For example you can play the same sound in multiple channel groups with different
 	//pitch, pan and gain settings.
 	//Buffers can be loaded with different sounds simply by calling loadBuffer again, however,
 	//any sources attached to the buffer will be stopped if they are currently playing
 	//Use: afconvert -f caff -d ima4 yourfile.wav to create an ima4 compressed version of a wave file
-	[soundEngine loadBuffer:SND_ID_DRUMLOOP fileName:@"808_120bpm" fileType:@"caf"];
-	[soundEngine loadBuffer:SND_ID_TONELOOP fileName:@"sine440" fileType:@"caf"];
-	[soundEngine loadBuffer:SND_ID_BALL fileName:@"ballbounce" fileType:@"wav"];
-	[soundEngine loadBuffer:SND_ID_GUN fileName:@"machinegun" fileType:@"caf"];
-	[soundEngine loadBuffer:SND_ID_STAB fileName:@"rustylow" fileType:@"wav"];
-	[soundEngine loadBuffer:SND_ID_COWBELL fileName:@"cowbell" fileType:@"wav"];
-	[soundEngine loadBuffer:SND_ID_EXPLODE fileName:@"explodelow" fileType:@"wav"];
-	[soundEngine loadBuffer:SND_ID_KARATE fileName:@"karate" fileType:@"wav"];
-
+	CDSoundEngine *sse = [CDAudioManager sharedManager].soundEngine;
+	
+	//Code for loading buffers synchronously
+	/*
+	[sse loadBuffer:SND_ID_DRUMLOOP fileName:@"808_120bpm" fileType:@"caf"];
+	[sse loadBuffer:SND_ID_TONELOOP fileName:@"sine440" fileType:@"caf"];
+	[sse loadBuffer:SND_ID_BALL fileName:@"ballbounce" fileType:@"wav"];
+	[sse loadBuffer:SND_ID_GUN fileName:@"machinegun" fileType:@"caf"];
+	[sse loadBuffer:SND_ID_STAB fileName:@"rustylow" fileType:@"wav"];
+	[sse loadBuffer:SND_ID_COWBELL fileName:@"cowbell" fileType:@"wav"];
+	[sse loadBuffer:SND_ID_EXPLODE fileName:@"explodelow" fileType:@"wav"];
+	[sse loadBuffer:SND_ID_KARATE fileName:@"karate" fileType:@"wav"];
+	*/
+	
+	//Load sound buffers asynchrounously
+	NSMutableArray *loadRequests = [[[NSMutableArray alloc] init] autorelease];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_DRUMLOOP fileName:@"808_120bpm.caf"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_TONELOOP fileName:@"sine440.caf"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_BALL fileName:@"ballbounce.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_GUN fileName:@"machinegun.caf"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_STAB fileName:@"rustylow.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_COWBELL fileName:@"cowbell.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_EXPLODE fileName:@"explodelow.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_KARATE fileName:@"karate.wav"] autorelease]];
+	[sse loadBuffersAsynchronously:loadRequests];
+	_appState = kAppStateSoundBuffersLoading;
+	
 	//Sound engine is now set up. You can check the functioning property to see if everything worked.
 	//In addition the loadBuffer method returns a boolean indicating whether it worked.
 	//If your buffers loaded and the functioning = TRUE then you are set to play sounds.
+	
 }
 
 -(void) tick: (ccTime) dt
 {
-	float sliderValue = (((slider.position.y) - SLIDER_POS_MIN) / (SLIDER_POS_MAX - SLIDER_POS_MIN));// 0 to 1
-	if (touchedPads > 0) {
+	
+	if (_appState == kAppStateReady) {
+		am = [CDAudioManager sharedManager];
+		soundEngine = am.soundEngine;
+
+		float sliderValue = (((slider.position.y) - SLIDER_POS_MIN) / (SLIDER_POS_MAX - SLIDER_POS_MIN));// 0 to 1
+		if (touchedPads > 0) {
+			
+			if ((touchedPads & (1 << 0)) != 0) {
+				//Pad 1 touched - play a one shot kick sound in the drum voices channel group with normal pitch and pan and the
+				//gain controlled by the slider
+				[soundEngine playSound:SND_ID_BALL channelGroupId:CGROUP_DRUM_VOICES pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
+				flashIndex[0] = 0;
+			}	
+			
+			if ((touchedPads & (1 << 1)) != 0) {
+				//Pad 2 touched - play a one shot snare sound in the drum voices channel group with normal pitch and pan and the
+				//gain controlled by the slider
+				[soundEngine playSound:SND_ID_GUN channelGroupId:CGROUP_NON_INTERRUPTIBLE pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
+				flashIndex[1] = 0;
+			}
+			
+			if ((touchedPads & (1 << 2)) != 0) {
+				//Pad 3 touched - play a one shot hat sound in the drum voices channel group with normal pitch and pan and the
+				//gain controlled by the slider
+				[soundEngine playSound:SND_ID_STAB channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
+				flashIndex[2] = 0;
+			}
+			
+			if ((touchedPads & (1 << 3)) != 0) {
+				//Pad 4 touched - play a one shot fx sound in the fx voices channel group with normal gain and pan and the
+				//pitch controlled by the slider.  Slider mid point = normal pitch (1.0)
+				[soundEngine playSound:SND_ID_EXPLODE channelGroupId:CGROUP_FX_VOICES pitch:sliderValue + 0.5f pan:0.0f gain:1.0f loop:NO];
+				flashIndex[3] = 0;
+			}
+			
+			if ((touchedPads & (1 << 4)) != 0) {
+				//Pad 5 touched  - play a one shot fx sound in the fx voices channel group with normal gain and pan and the
+				//pitch controlled by the slider.  Slider mid point = normal pitch (1.0)
+				[soundEngine playSound:SND_ID_COWBELL channelGroupId:CGROUP_DRUM_VOICES pitch:sliderValue + 0.5f pan:0.0f gain:1.0f loop:NO];
+				flashIndex[4] = 0;
+			}
+
+			if ((touchedPads & (1 << 5)) != 0) {
+				//Pad 6 touched  - play a one shot fx sound in the fx voices channel group with normal pitch and gain and the
+				//pan controlled by the slider.  Slider top = hard right, bottom = hard left, centre = middle
+				[soundEngine playSound:SND_ID_KARATE channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
+				flashIndex[5] = 0;
+			}
+			
+			if ((touchedPads & (1 << 6)) != 0) {
+				if (!toneSource.isPlaying) {
+					//Pad 7 touched- play a looped sound with normal pitch, pan and gain in the loop channel group.
+					//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
+					toneSource.sourceId = [am.soundEngine playSound:SND_ID_TONELOOP channelGroupId:CGROUP_TONELOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
+					toneLoopPlaying = YES;
+				} else {
+					[soundEngine stopSound:toneSource.sourceId];
+					toneLoopPlaying = NO;
+				}	
+				
+				flashIndex[6] = 0;
+			}
+			
+			if ((touchedPads & (1 << 7)) != 0) {
+				//Pad 8 touched - play a looped sound with normal pitch, pan and gain in the loop channel group.
+				//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
+				[soundEngine playSound:SND_ID_DRUMLOOP channelGroupId:CGROUP_DRUMLOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
+				flashIndex[7] = 0;
+			}
+
+			if ((touchedPads & (1 << 8)) != 0) {
+				//Pad 9 touched - stop all sounds in the loops channel group
+				flashIndex[8] = 0;
+				[soundEngine stopChannelGroup:CGROUP_DRUMLOOP];
+				
+				if (![am isBackgroundMusicPlaying]) {
+					[am playBackgroundMusic:@"mula_tito_on_timbales.mp3" loop:FALSE];
+				} else {
+					[am pauseBackgroundMusic];
+				}	
+				
+				//Play background music
+				
+				//Testing loading a buffer with a new sound
+				//[soundEngine loadBuffer:SND_ID_TONELOOP fileName:@"bassloop" fileType:@"wav"];	
+				
+				//Testing deleting a buffer
+				//[soundEngine unloadBuffer:SND_ID_KARATE];
+				
+				//Testing master gain setting
+				//[soundEngine setMasterGain:sliderValue];
+				
+				//Testing mute feature
+				//soundEngine.mute = !soundEngine.mute;
+
+			}
+		}	
+		touchedPads = 0;
 		
-		if ((touchedPads & (1 << 0)) != 0) {
-			//Pad 1 touched - play a one shot kick sound in the drum voices channel group with normal pitch and pan and the
-			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_BALL channelGroupId:CGROUP_DRUM_VOICES pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
-			flashIndex[0] = 0;
+		if (toneLoopPlaying) {
+			//Adjust pitch of tone loop to match slider - this technique can be used to adjust gain and pan too
+			toneSource.pitch = sliderValue + 0.5f;
 		}	
 		
-		if ((touchedPads & (1 << 1)) != 0) {
-			//Pad 2 touched - play a one shot snare sound in the drum voices channel group with normal pitch and pan and the
-			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_GUN channelGroupId:CGROUP_NON_INTERRUPTIBLE pitch:1.0f pan:0.0f gain:sliderValue loop:NO];
-			flashIndex[1] = 0;
-		}
-		
-		if ((touchedPads & (1 << 2)) != 0) {
-			//Pad 3 touched - play a one shot hat sound in the drum voices channel group with normal pitch and pan and the
-			//gain controlled by the slider
-			[soundEngine playSound:SND_ID_STAB channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
-			flashIndex[2] = 0;
-		}
-		
-		if ((touchedPads & (1 << 3)) != 0) {
-			//Pad 4 touched - play a one shot fx sound in the fx voices channel group with normal gain and pan and the
-			//pitch controlled by the slider.  Slider mid point = normal pitch (1.0)
-			[soundEngine playSound:SND_ID_EXPLODE channelGroupId:CGROUP_FX_VOICES pitch:sliderValue + 0.5f pan:0.0f gain:1.0f loop:NO];
-			flashIndex[3] = 0;
-		}
-		
-		if ((touchedPads & (1 << 4)) != 0) {
-			//Pad 5 touched  - play a one shot fx sound in the fx voices channel group with normal gain and pan and the
-			//pitch controlled by the slider.  Slider mid point = normal pitch (1.0)
-			[soundEngine playSound:SND_ID_COWBELL channelGroupId:CGROUP_DRUM_VOICES pitch:sliderValue + 0.5f pan:0.0f gain:1.0f loop:NO];
-			flashIndex[4] = 0;
-		}
-
-		if ((touchedPads & (1 << 5)) != 0) {
-			//Pad 6 touched  - play a one shot fx sound in the fx voices channel group with normal pitch and gain and the
-			//pan controlled by the slider.  Slider top = hard right, bottom = hard left, centre = middle
-			[soundEngine playSound:SND_ID_KARATE channelGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
-			flashIndex[5] = 0;
-		}
-		
-		if ((touchedPads & (1 << 6)) != 0) {
-			if (!toneSource.isPlaying) {
-				//Pad 7 touched- play a looped sound with normal pitch, pan and gain in the loop channel group.
-				//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
-				toneSource.sourceId = [am.soundEngine playSound:SND_ID_TONELOOP channelGroupId:CGROUP_TONELOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
-				toneLoopPlaying = YES;
-			} else {
-				[soundEngine stopSound:toneSource.sourceId];
-				toneLoopPlaying = NO;
+		//Update flashes
+		for (int i=0; i < FLASH_FADE_TOTAL; i++) {
+			 
+			if (flashIndex[i] < FLASH_FADE_TOTAL) {
+				Sprite *flash = [padFlashes objectAtIndex:i];
+				if (flashIndex[i] == 0) {
+					//Turn on visibility
+					flash.visible = YES;
+				} else if (flashIndex[i] == FLASH_FADE_TOTAL - 1) {
+					//Turn off visibility
+					flash.visible = NO;
+				}	
+				flash.opacity = flashFade[flashIndex[i]];
+				flashIndex[i]++;
 			}	
-			
-			flashIndex[6] = 0;
-		}
-		
-		if ((touchedPads & (1 << 7)) != 0) {
-			//Pad 8 touched - play a looped sound with normal pitch, pan and gain in the loop channel group.
-			//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
-			[soundEngine playSound:SND_ID_DRUMLOOP channelGroupId:CGROUP_DRUMLOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
-			flashIndex[7] = 0;
-		}
-
-		if ((touchedPads & (1 << 8)) != 0) {
-			//Pad 9 touched - stop all sounds in the loops channel group
-			flashIndex[8] = 0;
-			[soundEngine stopChannelGroup:CGROUP_DRUMLOOP];
-			
-			if (![am isBackgroundMusicPlaying]) {
-				[am playBackgroundMusic:@"mula_tito_on_timbales.mp3" loop:FALSE];
-			} else {
-				[am pauseBackgroundMusic];
-			}	
-			
-			//Play background music
-			
-			//Testing loading a buffer with a new sound
-			//[soundEngine loadBuffer:SND_ID_TONELOOP fileName:@"bassloop" fileType:@"wav"];	
-			
-			//Testing deleting a buffer
-			//[soundEngine unloadBuffer:SND_ID_KARATE];
-			
-			//Testing master gain setting
-			//[soundEngine setMasterGain:sliderValue];
-			
-			//Testing mute feature
-			//soundEngine.mute = !soundEngine.mute;
-
-		}
-	}	
-	touchedPads = 0;
-	
-	if (toneLoopPlaying) {
-		//Adjust pitch of tone loop to match slider - this technique can be used to adjust gain and pan too
-		toneSource.pitch = sliderValue + 0.5f;
-	}	
-	
-	//Update flashes
-	for (int i=0; i < FLASH_FADE_TOTAL; i++) {
-		 
-		if (flashIndex[i] < FLASH_FADE_TOTAL) {
-			Sprite *flash = [padFlashes objectAtIndex:i];
-			if (flashIndex[i] == 0) {
-				//Turn on visibility
-				flash.visible = YES;
-			} else if (flashIndex[i] == FLASH_FADE_TOTAL - 1) {
-				//Turn off visibility
-				flash.visible = NO;
-			}	
-			flash.opacity = flashFade[flashIndex[i]];
-			flashIndex[i]++;
+		}	
+	} else if (_appState == kAppStateSoundBuffersLoading) {
+		//Check if sound buffers have completed loading, asynchLoadProgress represents fraction of completion and 1.0 is complete.
+		if ([CDAudioManager sharedManager].soundEngine.asynchLoadProgress >= 1.0f) {
+			//Sounds have finished loading
+			_appState = kAppStateReady;
+			[[CDAudioManager sharedManager] setBackgroundMusicCompletionListener:self selector:@selector(backgroundMusicFinished)]; 
+			[[CDAudioManager sharedManager].soundEngine setChannelGroupNonInterruptible:CGROUP_NON_INTERRUPTIBLE isNonInterruptible:TRUE];
+		} else {
+			//CCLOG(@"Denshion: sound buffers loading %0.2f",[CDAudioManager sharedManager].soundEngine.asynchLoadProgress);
 		}	
 	}	
 	
@@ -354,6 +388,25 @@ CDSourceWrapper *toneSource;
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+-(void) setUpAudioManager:(NSObject*) data {
+	
+	//Channel groups define how voices are shared, the maximum number of voices is defined by 
+	//CD_MAX_SOURCES in the CocosDenshion.h file
+	//When a request is made to play a sound within a channel group the next available voice
+	//is used.  If no voices are free then the least recently used voice is stopped and reused.
+	int channelGroupCount = CGROUP_TOTAL;
+	int channelGroups[CGROUP_TOTAL];
+	channelGroups[CGROUP_DRUMLOOP] = 1;//This means only 1 loop will play at a time
+	channelGroups[CGROUP_TONELOOP] = 1;//This means only 1 loop will play at a time
+	channelGroups[CGROUP_DRUM_VOICES] = 8;//8 voices to be shared by the drums
+	channelGroups[CGROUP_FX_VOICES] = 16;//16 voices to be shared by the fx
+	channelGroups[CGROUP_NON_INTERRUPTIBLE] = 2;//2 voices that can't be interrupted
+	
+	//Initialise audio manager asynchronously as it can take a few seconds
+	[CDAudioManager initAsynchronously:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
+}
+
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
@@ -372,6 +425,9 @@ CDSourceWrapper *toneSource;
 	
 	// attach cocos2d to a window
 	[[Director sharedDirector] attachInView:window];
+	
+	//Set up audio engine
+	[self setUpAudioManager:nil];
 	
 	Scene *scene = [Scene node];
 	
