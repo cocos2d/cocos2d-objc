@@ -13,37 +13,66 @@ enum {
 	kTagMenu1 = 1,
 };
 
+#pragma mark -
+#pragma mark MainMenu
 @implementation Layer1
 -(id) init
 {
-	[super init];
+	if( (self=[super init])) {
 	
-	[MenuItemFont setFontSize:30];
-	[MenuItemFont setFontName: @"Courier New"];
-	
-	
-	MenuItem *item1 = [MenuItemFont itemFromString: @"Start" target:self selector:@selector(menuCallback:)];
-	MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
-	LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-	MenuItemLabel *item3 = [MenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
-	MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
-	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
-	MenuItemLabel *item5 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
-	
-	MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
-	
-	id color_action = [TintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
-	id color_back = [color_action reverse];
-	id seq = [Sequence actions:color_action, color_back, nil];
-	[item6 runAction:[RepeatForever actionWithAction:seq]];
+		[MenuItemFont setFontSize:30];
+		[MenuItemFont setFontName: @"Courier New"];
 
-	Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
-	[menu alignItemsVertically];
+		// Font Item
+		// AtlasSprite Item
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"menuitemsprite.png"];
+		[self addChild:mgr];
+		
+		AtlasSprite *spriteNormal = [AtlasSprite spriteWithRect:CGRectMake(0,23*2,115,23) spriteManager:mgr];
+		AtlasSprite *spriteSelected = [AtlasSprite spriteWithRect:CGRectMake(0,23*1,115,23) spriteManager:mgr];
+		AtlasSprite *spriteDisabled = [AtlasSprite spriteWithRect:CGRectMake(0,23*0,115,23) spriteManager:mgr];
+		[mgr addChild:spriteNormal];
+		[mgr addChild:spriteSelected];
+		[mgr addChild:spriteDisabled];
+		MenuItemSprite *item1 = [MenuItemAtlasSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback:)];
+		
+		// Image Item
+		MenuItem *item2 = [MenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 
-	disabledItem = [item3 retain];
-	disabledItem.isEnabled = NO;
+		// Label Item (LabelAtlas)
+		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		MenuItemLabel *item3 = [MenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
+		
 
-	[self addChild: menu];
+		// Font Item
+		MenuItem *item4 = [MenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+		
+		// Label Item (BitmapFontAtlas)
+		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
+		MenuItemLabel *item5 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
+		
+		// Font Item
+		MenuItemFont *item6 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
+		
+		id color_action = [TintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
+		id color_back = [color_action reverse];
+		id seq = [Sequence actions:color_action, color_back, nil];
+		[item6 runAction:[RepeatForever actionWithAction:seq]];
+
+		Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
+		[menu alignItemsVertically];
+		
+		
+		// IMPORTANT
+		// If you are going to use AtlasSprite as items, you should
+		// re-position the AtlasSpriteManager AFTER modifying the menu position
+		mgr.position = menu.position;
+
+		disabledItem = [item3 retain];
+		disabledItem.isEnabled = NO;
+
+		[self addChild: menu];
+	}
 
 	return self;
 }
@@ -84,8 +113,13 @@ enum {
 	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
+	else
+		NSLog(@"YOU CAN'T TERMINATE YOUR APPLICATION PROGRAMATICALLY in SDK 3.0+");
 }
 @end
+
+#pragma mark -
+#pragma mark StartMenu
 
 @implementation Layer2
 
@@ -189,6 +223,9 @@ enum {
 
 @end
 
+#pragma mark -
+#pragma mark SendScores
+
 @implementation Layer3
 -(id) init
 {
@@ -196,15 +233,31 @@ enum {
 	[MenuItemFont setFontName: @"Marker Felt"];
 	[MenuItemFont setFontSize:28];
 
-	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"another option" fntFile:@"bitmapFontTest3.fnt"];
+	BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
 	MenuItemLabel *item1 = [MenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
 	MenuItemFont *item2 = [MenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
-	Menu *menu = [Menu menuWithItems: item1, item2, nil];	
+	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"menuitemsprite.png"];
+	[self addChild:mgr];
+
+	AtlasSprite *spriteNormal = [AtlasSprite spriteWithRect:CGRectMake(0,23*2,115,23) spriteManager:mgr];
+	AtlasSprite *spriteSelected = [AtlasSprite spriteWithRect:CGRectMake(0,23*1,115,23) spriteManager:mgr];
+	AtlasSprite *spriteDisabled = [AtlasSprite spriteWithRect:CGRectMake(0,23*0,115,23) spriteManager:mgr];
+	[mgr addChild:spriteNormal];
+	[mgr addChild:spriteSelected];
+	[mgr addChild:spriteDisabled];
+	
+	
+	MenuItemSprite *item3 = [MenuItemAtlasSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
+	disabledItem = item3;
+	disabledItem.isEnabled = NO;
+	
+	Menu *menu = [Menu menuWithItems: item1, item2, item3, nil];	
 	menu.position = ccp(0,0);
 	
 	item1.position = ccp(100,100);
 	item2.position = ccp(100,200);
+	item3.position = ccp(350,100);
 	
 	id jump = [JumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
 	[item2 runAction: [RepeatForever actionWithAction:
@@ -213,9 +266,11 @@ enum {
 	 ];
 	id spin1 = [RotateBy actionWithDuration:3 angle:360];
 	id spin2 = [[spin1 copy] autorelease];
+	id spin3 = [[spin1 copy] autorelease];
 	
 	[item1 runAction: [RepeatForever actionWithAction:spin1]];
 	[item2 runAction: [RepeatForever actionWithAction:spin2]];
+	[item3 runAction: [RepeatForever actionWithAction:spin3]];
 	
 	[self addChild: menu];
 	
@@ -235,6 +290,13 @@ enum {
 
 -(void) menuCallback2: (id) sender
 {
+	NSLog(@"Label clicked. Toogling AtlasSprite");
+	disabledItem.isEnabled = ~disabledItem.isEnabled;
+	[disabledItem stopAllActions];
+}
+-(void) menuCallback3:(id) sender
+{
+	NSLog(@"MenuItemSprite clicked");
 }
 
 @end
@@ -352,7 +414,7 @@ enum {
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// must be called before any othe call to the director
-	[Director useFastDirector];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];

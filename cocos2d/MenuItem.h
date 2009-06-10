@@ -133,7 +133,7 @@
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
 
-/** MenuItemSprite accepts both Sprite or AtlasSprite objects as items.
+/** MenuItemSprite accepts CocosNode<CocosNodeRGBA> objects as items.
  The images has 3 different states:
  - unselected image
  - selected image
@@ -155,14 +155,33 @@
 @property (readwrite,retain) CocosNode<CocosNodeRGBA> *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
-+(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite;
++(id) itemFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite;
 /** creates a menu item with a normal and selected image with target/selector */
-+(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite target:(id)target selector:(SEL)selector;
++(id) itemFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite target:(id)target selector:(SEL)selector;
 /** creates a menu item with a normal,selected  and disabled image with target/selector */
-+(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
++(id) itemFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
 /** initializes a menu item with a normal, selected  and disabled image with target/selector */
 -(id) initFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
 
+@end
+
+/** MenuItemAtlasCocosNode<CocosNodeRGBA> accepts AtlasCocosNode<CocosNodeRGBA> objects as items.
+ The images has 3 different states:
+ - unselected image
+ - selected image
+ - disabled image
+ 
+ Limitations:
+  - AtlasSprite objects can only have as a parent an AltasSpriteManager
+  - So they need to be added twice:
+    - To the Menu
+	- And to the AtlasSpriteManager
+  - To respect the menu aligments, the AtlasSpriteManager should have the same coordinates as the Menu
+ @since v0.8.0
+ */
+@interface MenuItemAtlasSprite : MenuItemSprite
+{
+}
 @end
 
 /** MenuItemImage accepts images as items.

@@ -938,6 +938,7 @@ static Director *_sharedDirector = nil;
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
+//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004, FALSE) == kCFRunLoopRunHandledSource);
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 
 		if (paused) {
@@ -945,7 +946,8 @@ static Director *_sharedDirector = nil;
 		}
 		
 		[self mainLoop];
-		
+
+//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004, FALSE) == kCFRunLoopRunHandledSource);
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 
 		[loopPool release];
