@@ -32,6 +32,7 @@
 
 @interface Layer3 : Layer
 {
+	MenuItem	*disabledItem;
 }
 -(void) menuCallback: (id) sender;
 -(void) menuCallback2: (id) sender;

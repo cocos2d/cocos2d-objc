@@ -17,8 +17,8 @@
 #import "LabelAtlas.h"
 #import "IntervalAction.h"
 #import "Sprite.h"
-#import "Support/CGPointExtension.h"
 #import "AtlasSprite.h"
+#import "Support/CGPointExtension.h"
 
 static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
@@ -331,8 +331,7 @@ enum {
 
 @synthesize normalImage=normalImage_, selectedImage=selectedImage_, disabledImage=disabledImage_;
 
-
-+(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite
++(id) itemFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite
 {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:nil selector:nil];
 }
@@ -340,9 +339,9 @@ enum {
 {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:target selector:selector];
 }
-+(id) itemFromNormalSprite: (CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
++(id) itemFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
 {
-	return [[[self alloc] itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector] autorelease];
+	return [[[self alloc] initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector] autorelease];
 }
 -(id) initFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
 {
@@ -378,32 +377,20 @@ enum {
 
 -(void) draw
 {
-	if( ! [normalImage_ isKindOfClass:[AtlasSprite class]] ) {
-		if(isEnabled) {
-			if( selected )
-				[selectedImage_ draw];
-			else
-				[normalImage_ draw];
-			
-		} else {
-			if(disabledImage_ != nil)
-				[disabledImage_ draw];
-			
-			// disabled image was not provided
-			else
-				[normalImage_ draw];
-		}
+	if(isEnabled) {
+		if( selected )
+			[selectedImage_ draw];
+		else
+			[normalImage_ draw];
+		
+	} else {
+		if(disabledImage_ != nil)
+			[disabledImage_ draw];
+		
+		// disabled image was not provided
+		else
+			[normalImage_ draw];
 	}
-}
-
-- (void)setPosition:(CGPoint)pos
-{
-	[super setPosition:pos];
-	[normalImage_ setPosition:pos];
-	if (selectedImage_)
-		[selectedImage_ setPosition:pos];
-	if (disabledImage_)
-		[disabledImage_ setPosition:pos];	
 }
 
 #pragma mark MenuItemImage - CocosNodeRGBA protocol
@@ -438,6 +425,90 @@ enum {
 }
 @end
 
+#pragma mark -
+#pragma mark MenuItemAtlasSprite
+@implementation MenuItemAtlasSprite
+
+-(id) initFromNormalSprite:(CocosNode<CocosNodeRGBA>*)normalSprite selectedSprite:(CocosNode<CocosNodeRGBA>*)selectedSprite disabledSprite:(CocosNode<CocosNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
+{
+	if( (self=[super initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector]) ) {
+		
+		[normalImage_ setVisible:YES];
+		[selectedImage_ setVisible:NO];
+		[disabledImage_ setVisible:NO];
+	}
+	return self;	
+}
+
+- (void)setPosition:(CGPoint)pos
+{
+	[super setPosition:pos];
+	[normalImage_ setPosition:pos];
+	[selectedImage_ setPosition:pos];
+	[disabledImage_ setPosition:pos];	
+}
+
+- (void)setRotation:(float)angle
+{
+	[super setRotation:angle];
+	[normalImage_ setRotation:angle];
+	[selectedImage_ setRotation:angle];
+	[disabledImage_ setRotation:angle];
+}
+
+- (void)setScale:(float)scale
+{
+	[super setScale:scale];
+	[normalImage_ setScale:scale];
+	[selectedImage_ setScale:scale];
+	[disabledImage_ setScale:scale];
+}
+
+- (void)selected
+{
+	if( isEnabled ) {
+		[super selected];
+		[normalImage_ setVisible:NO];
+		[selectedImage_ setVisible:YES];
+		[disabledImage_ setVisible:NO];
+	}
+}
+
+- (void)unselected
+{
+	if( isEnabled ) {
+		[super unselected];
+		[normalImage_ setVisible:YES];
+		[selectedImage_ setVisible:NO];
+		[disabledImage_ setVisible:NO];
+	}
+}
+
+- (void)setIsEnabled:(BOOL)enabled
+{
+	[super setIsEnabled:enabled];
+	if(enabled) {
+		[normalImage_ setVisible:YES];
+		[selectedImage_ setVisible:NO];
+		[disabledImage_ setVisible:NO];
+
+	} else {
+		[normalImage_ setVisible:NO];
+		[selectedImage_ setVisible:NO];
+		if( disabledImage_ )
+			[disabledImage_ setVisible:YES];
+		else
+			[normalImage_ setVisible:YES];
+	}
+}
+
+-(void) draw
+{
+	// override parent draw
+	// since AtlasSpriteManager is the one that draws all the AtlasSprite objects
+}
+@end
+
 
 #pragma mark -
 #pragma mark MenuItemImage
@@ -466,9 +537,9 @@ enum {
 
 -(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id)t selector:(SEL)sel
 {
-	Sprite *normalImage = [Sprite spriteWithFile:normalI];
-	Sprite *selectedImage = [Sprite spriteWithFile:selectedI]; 
-	Sprite *disabledImage = nil;
+	CocosNode<CocosNodeRGBA> *normalImage = [Sprite spriteWithFile:normalI];
+	CocosNode<CocosNodeRGBA> *selectedImage = [Sprite spriteWithFile:selectedI]; 
+	CocosNode<CocosNodeRGBA> *disabledImage = nil;
 
 	if(disabledI)
 		disabledImage = [Sprite spriteWithFile:disabledI];

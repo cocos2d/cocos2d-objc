@@ -243,6 +243,7 @@
 		503841940FA4E66B008411FB /* stars2.png in Resources */ = {isa = PBXBuildFile; fileRef = 503841930FA4E66B008411FB /* stars2.png */; };
 		5038B6B20E196CD8009A621E /* ParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038B6B00E196CD8009A621E /* ParticleSystem.h */; };
 		5038B6B30E196CD8009A621E /* ParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* ParticleSystem.m */; };
+		503909FB0FDFDC0B009F63EE /* menuitemsprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 503909FA0FDFDC0B009F63EE /* menuitemsprite.png */; };
 		503A2B070F64B26D00E436AB /* grossini_dance_atlas.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */; };
 		503F25C50FD3CA2A009BAFB6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		503F25CE0FD3CA2A009BAFB6 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
@@ -1360,6 +1361,7 @@
 		503841930FA4E66B008411FB /* stars2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars2.png; sourceTree = "<group>"; };
 		5038B6B00E196CD8009A621E /* ParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystem.h; sourceTree = "<group>"; };
 		5038B6B10E196CD8009A621E /* ParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystem.m; sourceTree = "<group>"; };
+		503909FA0FDFDC0B009F63EE /* menuitemsprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuitemsprite.png; sourceTree = "<group>"; };
 		503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grossini_dance_atlas.pvr; sourceTree = "<group>"; };
 		503F25EB0FD3CA2A009BAFB6 /* CocosDenshionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		503F25F30FD3CA94009BAFB6 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -2949,6 +2951,7 @@
 		508A333D0FBADE2D00D574A2 /* menu related images */ = {
 			isa = PBXGroup;
 			children = (
+				503909FA0FDFDC0B009F63EE /* menuitemsprite.png */,
 				5084D4780EE5C7D100BD237C /* btn-about-normal.png */,
 				5084D4790EE5C7D100BD237C /* btn-about-selected.png */,
 				5084D47A0EE5C7D100BD237C /* btn-highscores-normal.png */,
@@ -4575,6 +4578,7 @@
 				502AACFE0F79715E001E3F87 /* fire.pvr in Resources */,
 				50421E370FBD6D4000B992F7 /* bitmapFontTest3.fnt in Resources */,
 				50421E380FBD6D4000B992F7 /* bitmapFontTest3.png in Resources */,
+				503909FB0FDFDC0B009F63EE /* menuitemsprite.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
