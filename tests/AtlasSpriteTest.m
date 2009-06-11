@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 			@"Atlas6",
 			@"Atlas7",
 			@"Atlas8",
+			@"AtlasNewTexture",
 };
 
 enum {
@@ -667,6 +668,91 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"Aliased AtlasSprite";
+}
+@end
+
+#pragma mark Example AtlasSpriteManager NewTexture
+
+@implementation AtlasNewTexture
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		isTouchEnabled = YES;
+		
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];
+		
+		texture1 = [[mgr texture] retain];
+		texture2 = [[[TextureMgr sharedTextureMgr] addImage:@"grossini_dance_atlas-mono.png"] retain];
+				
+		for(int i=0;i<30;i++)
+			[self addNewSprite];
+		
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[texture1 release];
+	[texture2 release];
+	[super dealloc];
+}
+
+-(void) addNewSprite
+{
+	CGSize s = [[Director sharedDirector] winSize];
+
+	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+	
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	
+	int idx = CCRANDOM_0_1() * 1400 / 100;
+	int x = (idx%5) * 85;
+	int y = (idx/5) * 121;
+	
+	
+	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
+	[mgr addChild:sprite];
+	
+	sprite.position = ccp( p.x, p.y);
+	
+	id action;
+	float rand = CCRANDOM_0_1();
+	
+	if( rand < 0.20 )
+		action = [ScaleBy actionWithDuration:3 scale:2];
+	else if(rand < 0.40)
+		action = [RotateBy actionWithDuration:3 angle:360];
+	else if( rand < 0.60)
+		action = [Blink actionWithDuration:1 blinks:3];
+	else if( rand < 0.8 )
+		action = [TintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+	else 
+		action = [FadeOut actionWithDuration:2];
+	id action_back = [action reverse];
+	id seq = [Sequence actions:action, action_back, nil];
+	
+	[sprite runAction: [RepeatForever actionWithAction:seq]];
+}
+
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	
+	if( [mgr texture] == texture1 )
+		[mgr setTexture:texture2];
+	else
+		[mgr setTexture:texture1];
+
+	return kEventHandled;
+}
+
+-(NSString *) title
+{
+	return @"AtlasSpriteMgr texture (tap)";
 }
 @end
 
