@@ -80,8 +80,8 @@ typedef enum {
 	kTexture2DPixelFormat_RGB5A1,
 } Texture2DPixelFormat;
 
-/// Default pixel format: RGBA4444
-#define kTexture2DPixelFormat_Default kTexture2DPixelFormat_RGBA4444
+/// Default pixel format: RGBA8888
+#define kTexture2DPixelFormat_Default kTexture2DPixelFormat_RGBA8888
 
 //CLASS INTERFACES:
 
