@@ -770,8 +770,6 @@ Class restartAction()
 	// cocos2d will inherit these values
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
-	
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 
 	// must be called before any othe call to the director
 //	[Director useFastDirector];
