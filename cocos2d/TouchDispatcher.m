@@ -84,7 +84,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 
 #pragma mark remove event handlers
 
--(void) removeEventHandler:(id) delegate
+-(void) removeTouchHandler:(id) delegate
 {
 	if( delegate == nil )
 		return;
@@ -97,14 +97,14 @@ static TouchDispatcher *sharedDispatcher = nil;
 		[touchHandlers removeObject:handler];
 }
 
--(void) removeAllEventHandlers
+-(void) removeAllTouchHandlers
 {
 	[touchHandlers removeAllObjects];
 }
 
 #pragma mark priority event handlers
 
--(void) setPriority:(int) priority forEventHandler:(id) delegate
+-(void) setPriority:(int) priority forTouchHandler:(id) delegate
 {
 	NSAssert( delegate != nil, @"TouchDispatcher.setPriority:forEventHandler: -- Delegate must be non nil");	
 	
