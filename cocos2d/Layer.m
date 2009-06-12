@@ -41,16 +41,24 @@
 		isTouchEnabled = NO;
 		isAccelerometerEnabled = NO;
 		
-		touchEventType = [self typeOfEventsToHandle];
+		touchHandlerType = kTouchHandlerNone;
 	}
 	
 	return self;
 }
 
 // callback
--(ccTouchEventType) typeOfEventsToHandle
+-(ccTouchHandlerType) typeOfTouchHandler
 {
-	return kTouchEventNone;
+	return kTouchHandlerNone;
+}
+-(int) priorityOfTouchHandler
+{
+	return 0;
+}
+-(BOOL) targetedTouchHandlerSwallowTouches
+{
+	return YES;
 }
 
 -(void) onEnter
@@ -59,14 +67,16 @@
 	// compatibility with v0.7
 	// will be removed in v0.8.1 or v0.9
 	if (isTouchEnabled)
-		touchEventType = kTouchEventStandard;
+		touchHandlerType = kTouchHandlerStandard;
+	else
+		touchHandlerType = [self typeOfTouchHandler];
 
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
-	if( touchEventType == kTouchEventStandard )
-		[[TouchDispatcher sharedDispatcher] addStandardEventHandler:self];
-	else if( touchEventType == kTouchEventTargeted )
-		[[TouchDispatcher sharedDispatcher] addTargetedEventHandler:self];
+	if( touchHandlerType == kTouchHandlerStandard )
+		[[TouchDispatcher sharedDispatcher] addStandardEventHandler:self priority:[self priorityOfTouchHandler]];
+	else if( touchHandlerType == kTouchHandlerTargeted )
+		[[TouchDispatcher sharedDispatcher] addTargetedEventHandler:self priority:[self priorityOfTouchHandler] swallowTouches:[self targetedTouchHandlerSwallowTouches]];
 
 	// the iterate over all the children
 	[super onEnter];
@@ -77,7 +87,7 @@
 
 -(void) onExit
 {
-	if( touchEventType != kTouchEventNone )
+	if( touchHandlerType != kTouchHandlerNone )
 		[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
 
 	if( isAccelerometerEnabled )

@@ -20,9 +20,8 @@
 
 /** TouchDispatcher.
  Singleton that handles all the touch events.
- The dispatcher can dispatch 2 types of touch events:
-   - standard touch events: each event is propagated until one consumer "consumes" it
-   - targeted touch events: the ownership is taken when the touch event begins.
+ The dispatcher dispatches events to the registered TouchHandlers.
+ @since v0.8
  */
 @interface TouchDispatcher : NSObject <EAGLTouchDelegate>
 {
@@ -30,14 +29,15 @@
 	BOOL dispatchEvents;
 }
 
+/** singleton of the TouchDispatcher */
 + (TouchDispatcher*)sharedDispatcher;
 
-/** When NO, dispatcher is muted. Default YES. */
+/** Whether or not the events are going to be dispatched. Default: YES */
 @property (readwrite, assign) BOOL dispatchEvents;
 
-/** Adds a delegate to the list of multi-touch event handlers, with priority 0 */
+/** Adds an "standard" delegate to the list of multi-touch event handlers, with priority 0 */
 -(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate;
-/** Adds a standard delegate to the list of multi-touch event handlers with a priority.
+/** Adds an standard delegate to the list of multi-touch event handlers with a given priority.
  The lower the number, the higher the priority.
  */
 -(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate priority:(int) priority;

@@ -60,7 +60,7 @@
 
 @synthesize animationInterval;
 @synthesize runningScene = runningScene_;
-@synthesize displayFPS, eventsEnabled;
+@synthesize displayFPS;
 @synthesize openGLView=openGLView_;
 @synthesize pixelFormat=pixelFormat_;
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
@@ -129,10 +129,7 @@ static Director *_sharedDirector = nil;
 	
 	// paused ?
 	paused = NO;
-	
-	// touch events enabled ?
-	eventsEnabled = YES;
-	
+
 	return self;
 }
 
@@ -444,12 +441,12 @@ static Director *_sharedDirector = nil;
 	if([view isUserInteractionEnabled])
 	{
 		[openGLView_ setUserInteractionEnabled:YES];
-		[self setEventsEnabled:YES];
+		[[TouchDispatcher sharedDispatcher] setDispatchEvents: YES];
 	}
 	else
 	{
 		[openGLView_ setUserInteractionEnabled:NO];
-		[self setEventsEnabled:NO];
+		[[TouchDispatcher sharedDispatcher] setDispatchEvents: NO];
 	}
 	
 	// check if multi touches are enabled and set them

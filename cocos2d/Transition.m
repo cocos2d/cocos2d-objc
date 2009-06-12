@@ -23,6 +23,7 @@
 #import "Camera.h"
 #import "TiledGridAction.h"
 #import "EaseAction.h"
+#import "TouchDispatcher.h"
 #import "Support/CGPointExtension.h"
 
 enum {
@@ -61,7 +62,7 @@ enum {
 		}
 		
 		// disable events while transitions
-		[[Director sharedDirector] setEventsEnabled: NO];
+		[[TouchDispatcher sharedDispatcher] setDispatchEvents: NO];
 
 		[self sceneOrder];
 	}
@@ -108,7 +109,7 @@ enum {
 	[[Director sharedDirector] replaceScene: inScene];
 	
 	// enable events while transitions
-	[[Director sharedDirector] setEventsEnabled: YES];
+	[[TouchDispatcher sharedDispatcher] setDispatchEvents: YES];
 	
 	// issue #267
 	[outScene setVisible:YES];	

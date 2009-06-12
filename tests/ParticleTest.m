@@ -64,8 +64,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		isTouchEnabled = YES;
-
 		CGSize s = [[Director sharedDirector] winSize];
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
@@ -95,6 +93,18 @@ Class restartAction()
 	}
 
 	return self;
+}
+
+// callback
+-(ccTouchHandlerType) typeOfTouchHandler
+{
+	return kTouchHandlerStandard;
+//	return kTouchHandlerTargeted;
+//  return kTouchHandlerNone;
+}
+-(int) priorityOfTouchHandler
+{
+	return 0;
 }
 
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

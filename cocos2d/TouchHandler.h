@@ -19,7 +19,6 @@
 /**
  TouchHandler
  Object than contains the delegate and priority of the event handler.
- Used internally by TouchDispatcher
 */
 @interface TouchHandler : NSObject {
 	id delegate;
@@ -29,7 +28,9 @@
 @property(nonatomic, readonly) id delegate;
 @property(nonatomic, readwrite) int priority; // default 0
 
+/** allocates a TouchHandler with a delegate */
 + (id)handlerWithDelegate:(id) aDelegate;
+/** initializes a TouchHandler with a delegate */
 - (id)initWithDelegate:(id) aDelegate;
 
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
@@ -39,6 +40,7 @@
 @end
 
 /** StandardTouchHandler
+ It forwardes each event to the delegate until one delegate returns kEventHandled.
  */
 @interface StandardTouchHandler : TouchHandler
 {
@@ -54,7 +56,9 @@
 	BOOL swallowsTouches;
 	NSMutableSet *claimedTouches;
 }
+/** whether or not the touches are swallowed */
 @property(nonatomic, readwrite) BOOL swallowsTouches; // default NO
+/** MutableSet that contains the claimed touches */
 @property(nonatomic, readonly) NSMutableSet *claimedTouches;
 @end
 

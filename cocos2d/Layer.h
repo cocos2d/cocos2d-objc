@@ -29,7 +29,7 @@
 */
 @interface Layer : CocosNode <UIAccelerometerDelegate, StandardTouchDelegate, TargetedTouchDelegate>
 {
-	ccTouchEventType	touchEventType;
+	ccTouchHandlerType	touchHandlerType;
 
 	BOOL isTouchEnabled;	
 	BOOL isAccelerometerEnabled;
@@ -41,7 +41,16 @@
  - kTouchEventTargeted: targeted events will be forwarded
  @since v0.8
  */
--(ccTouchEventType) typeOfEventsToHandle;
+-(ccTouchHandlerType) typeOfTouchHandler;
+/** priority of the touch handler.
+ The lower the number, the higher the priority
+ @since v0.8
+ */
+-(int) priorityOfTouchHandler;
+/** whether or not the "targeted" handler will swallow the touches
+ @since v0.8
+ */
+-(BOOL) targetedTouchHandlerSwallowTouches;
 
 //! whether or not it will receive Touch events
 @property(nonatomic,assign) BOOL isTouchEnabled __attribute__ ((deprecated));
