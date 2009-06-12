@@ -14,24 +14,54 @@
 
 #import "TouchHandler.h"
 
+#pragma mark -
+#pragma mark TouchHandler
 @implementation TouchHandler
 
 @synthesize delegate, priority;
 
-+ (id)handlerWithDelegate:(id<StandardTouchDelegate>) aDelegate
++ (id)handlerWithDelegate:(id) aDelegate
 {
 	return [[[self alloc] initWithDelegate:aDelegate] autorelease];
 }
 
-- (id)initWithDelegate:(id<StandardTouchDelegate>) aDelegate
+- (id)initWithDelegate:(id) aDelegate
 {
-	if ((self = [super init]))
+	if ((self = [super init])) {
 		delegate = aDelegate;
+	}
 	
 	return self;
 }
 
 - (void)dealloc {
+	[super dealloc];
+}
+
+@end
+
+#pragma mark -
+#pragma mark StandardTouchHandler
+@implementation StandardTouchHandler
+@end
+
+#pragma mark -
+#pragma mark TargetedTouchHandler
+@implementation TargetedTouchHandler
+
+@synthesize swallowsTouches, claimedTouches;
+
+- (id)initWithDelegate:(id) aDelegate
+{
+	if ((self = [super init])) {	
+		claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
+	}
+	
+	return self;
+}
+
+- (void)dealloc {
+	[claimedTouches release];
 	[super dealloc];
 }
 

@@ -18,17 +18,39 @@
 
 /**
  TouchHandler
- XXX: add description
+ Object than contains the delegate and priority of the event handler.
+ Used internally by TouchDispatcher
 */
 @interface TouchHandler : NSObject {
-	id<StandardTouchDelegate> delegate;
+	id delegate;
 	int priority;
 }
 
-@property(nonatomic, readonly) id<StandardTouchDelegate> delegate;
+@property(nonatomic, readonly) id delegate;
 @property(nonatomic, readwrite) int priority; // default 0
 
-+ (id)handlerWithDelegate:(id<StandardTouchDelegate>) aDelegate;
-- (id)initWithDelegate:(id<StandardTouchDelegate>) aDelegate;
++ (id)handlerWithDelegate:(id) aDelegate;
+- (id)initWithDelegate:(id) aDelegate;
 
 @end
+
+/** StandardTouchHandler
+ */
+@interface StandardTouchHandler : TouchHandler
+{
+}
+@end
+
+/**
+ TargetedTouchHandler
+ Object than contains the claimed touches and if it swallos touches.
+ Used internally by TouchDispatcher
+ */
+@interface TargetedTouchHandler : TouchHandler {
+	BOOL swallowsTouches;
+	NSMutableSet *claimedTouches;
+}
+@property(nonatomic, readwrite) BOOL swallowsTouches; // default NO
+@property(nonatomic, readonly) NSMutableSet *claimedTouches;
+@end
+
