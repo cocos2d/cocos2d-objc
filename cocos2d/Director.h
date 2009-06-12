@@ -99,10 +99,7 @@ and when to execute the Scenes
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */
-	BOOL nextDeltaTimeZero_;
-	
-	/* are touch events enabled. Default is YES */
-	BOOL eventsEnabled;
+	BOOL nextDeltaTimeZero_;	
 }
 
 /** The current running Scene. Director can only run one Scene at the time */
@@ -111,8 +108,6 @@ and when to execute the Scenes
 @property (readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (readwrite, assign) BOOL displayFPS;
-/** Whether or not to propagate the touch events to the running Scene. Default YES */
-@property (readwrite, assign) BOOL eventsEnabled;
 /** The OpenGL view */
 @property (readonly) EAGLView *openGLView;
 /** Pixel format used to create the context */

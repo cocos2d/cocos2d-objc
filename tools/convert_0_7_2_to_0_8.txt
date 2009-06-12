@@ -17,6 +17,18 @@ For more information read the following files:
 COMPULSORY CHANGES
 ******************
 
+Director
+========
+
+Director doesn't handle the touches anymore.
+
+[OLD]
+    [[Director sharedDirector] setEventsEnabled: state];
+
+[NEW]
+    [[TouchDispatcher sharedDispatcher] setDispatchEvents: state];
+
+
 Textures
 ========
 
@@ -24,11 +36,13 @@ a)
     Default blend function is: (GL_ONE, GL_ONE_MINUS_SRC)
     cocos2d takes care if your images is premultiplied or not.
     If you were handling them manually, you should remove that code.
+    Also, you can change the blend function manually:
+        sprite.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
 
-b) 
-    Default Alpha texture is RGBA_4444 (16-bit textures). To use 32-bit RGBA textures, like in v0.7.2 add
-    at the very beginning of your game:
-        [Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+
+b) Opacity:
+    xxx
+    
 
 
 CocosNode
@@ -138,3 +152,19 @@ Director
     ccDeviceOrientation = [[Director sharedDirector] deviceOrientation];
     [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationLandscapeLeft];
     [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationPortrait];
+
+
+Layer / Menu
+============
+[OLD]
+    // in your init code
+    isEventsEnabled = YES;
+
+[NEW]
+// add this method (callback) in your Layer subclass
+-(ccTouchHandlerType) typeOfTouchHandler
+{
+//	return kTouchEventStandard;
+	return kTouchHandlerTargeted;
+}
+

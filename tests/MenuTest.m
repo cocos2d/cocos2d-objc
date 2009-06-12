@@ -165,9 +165,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
-	
-		isTouchEnabled = YES;
-		
+			
 		for( int i=0;i < 2;i++ ) {
 			MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
 			MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackOpacity:)];

@@ -134,11 +134,13 @@
 {
 	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchMoved:withEvent:) unclaim:NO];
 	return kEventIgnored;
+
 }
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES];
 	return kEventIgnored;
+
 }
 - (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {

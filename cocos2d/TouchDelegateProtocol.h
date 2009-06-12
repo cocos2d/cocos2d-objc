@@ -18,6 +18,7 @@
  Updates of claimed touches (move/ended/cancelled) are sent only to the
  delegate(s) that claimed them when they began. In other words, updates
  will "target" their specific handler, without bothering the other handlers. 
+ @since v0.8
  */
 @protocol TargetedTouchDelegate <NSObject>
 
@@ -25,6 +26,7 @@
  Updates of claimed touches (move/ended/cancelled) are sent only to the
  delegate(s) that claimed them when they began. In other words, updates
  will "target" their specific handler, without bothering the other handlers.
+ @since v0.8
  */
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event;
 @optional
@@ -40,6 +42,7 @@
  unless a previous delegate consumes the event.
  To consume the event (prevent propagation) the delegate should return kEventHandled.
  To ignore the event (the event will be forwarded to the next delegate in the chain) the delegate should return kEventIgnored.
+ @since v0.8
 */
 @protocol StandardTouchDelegate <NSObject>
 @optional
@@ -49,19 +52,24 @@
 - (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 @end
 
-/** types of events to handle */
+/** types of events to handle
+ @since v0.8
+ */
 typedef enum
 {
 	/// No Touch events will be forwarded (default)
-	kTouchEventNone,
+	kTouchHandlerNone,
 	/// Standard events will be forwarded (like in v0.7)
-	kTouchEventStandard,
+	kTouchHandlerStandard,
 	/// Targeted events will be forwarded
-	kTouchEventTargeted,
-} ccTouchEventType;
+	kTouchHandlerTargeted,
+} ccTouchHandlerType;
+
 
 enum {
+	/// return kEventHandled if the event should NOT be forwarded to the next handler in the chain
 	kEventHandled = YES,
+	/// return kEventIgnored if the event should be forwarded to the next handler in the chain
 	kEventIgnored = NO,
 };
 
