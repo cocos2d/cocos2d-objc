@@ -16,11 +16,6 @@
 #import "TouchHandler.h"
 #import "Director.h"
 
-@interface TouchDispatcher (private)
--(BOOL) targetedTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event withHandler:(TargetedTouchHandler*)handler;
--(void) updateKnownTouches:(NSSet *)touches withEvent:(UIEvent *)event selector:(SEL)selector unclaim:(BOOL)doUnclaim handler:(TargetedTouchHandler*)handler;
-@end
-
 @implementation TouchDispatcher
 
 @synthesize dispatchEvents;
@@ -161,23 +156,14 @@ static TouchDispatcher *sharedDispatcher = nil;
 }
 
 //
-// multi touch proxies
+// dispatch events
 //
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	BOOL ret = kEventIgnored;
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if([eventHandler isKindOfClass:[StandardTouchHandler class]]) {
-				// standard
-				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
-					ret = [[eventHandler delegate] ccTouchesBegan:touches withEvent:event];
-			} else
-				// targeted
-				ret = [self targetedTouchesBegan:touches withEvent:event withHandler:(TargetedTouchHandler*)eventHandler];
-
-			if( ret == kEventHandled )
+			if( [eventHandler ccTouchesBegan:touches withEvent:event] == kEventHandled )
 				break;
 		}
 		[copyArray release];
@@ -189,14 +175,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if([eventHandler isKindOfClass:[StandardTouchHandler class]]) {
-				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesMoved:withEvent:)] ) {
-					if( [[eventHandler delegate] ccTouchesMoved:touches withEvent:event] == kEventHandled )
-						break;
-				}
-			} else {
-				[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchMoved:withEvent:) unclaim:NO handler:(TargetedTouchHandler*)eventHandler];
-			}
+			if( [eventHandler ccTouchesMoved:touches withEvent:event] == kEventHandled )
+				break;
 		}
 		[copyArray release];
 	}	
@@ -207,17 +187,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if([eventHandler isKindOfClass:[StandardTouchHandler class]]) {
-				// standard touch
-				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesEnded:withEvent:)] ) {
-					if( [[eventHandler delegate] ccTouchesEnded:touches withEvent:event] == kEventHandled )
-						break;
-				}
-			} else {
-				// targeted
-				[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES handler:(TargetedTouchHandler*)eventHandler];
-
-			}
+			if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
+				break;
 		}
 		[copyArray release];
 	}	
@@ -228,59 +199,10 @@ static TouchDispatcher *sharedDispatcher = nil;
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if([eventHandler isKindOfClass:[StandardTouchHandler class]]) {
-				// standard
-				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] ) {
-					if( [[eventHandler delegate] ccTouchesCancelled:touches withEvent:event] == kEventHandled )
-						break;
-				}
-			} else {
-				// targeted
-				[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchCancelled:withEvent:) unclaim:YES handler:(TargetedTouchHandler*)eventHandler];
-
-			}
+			if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
+				break;
 		}
 		[copyArray release];
 	}
-}
-#pragma mark -
-#pragma mark Targeted Touch Logic
-
-//
-// Targeted Touch Logic
-//
--(BOOL) targetedTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event withHandler:(TargetedTouchHandler*)handler
-{
-	for( UITouch *touch in touches) {
-		BOOL touchWasClaimed = [[handler delegate] ccTouchBegan:touch withEvent:event];
-		
-		if( touchWasClaimed ) {
-			[handler.claimedTouches addObject:touch];
-			
-			if( handler.swallowsTouches )
-				break;
-		}
-	}
-	return kEventIgnored;
-}
-
--(void) updateKnownTouches:(NSSet *)touches withEvent:(UIEvent *)event selector:(SEL)selector unclaim:(BOOL)doUnclaim handler:(TargetedTouchHandler*)handler
-{
-	NSArray *handlers = [touchHandlers copy];
-	
-	for( UITouch *touch in touches) {
-		if( [handler.claimedTouches containsObject:touch] ) {
-			
-			if( [handler.delegate respondsToSelector:selector] )
-				[handler.delegate performSelector:selector withObject:touch withObject:event];
-			
-			if( doUnclaim )
-				[handler.claimedTouches removeObject:touch];
-			
-			if( handler.swallowsTouches )
-				break;
-		}
-	}
-	[handlers release];
 }
 @end
