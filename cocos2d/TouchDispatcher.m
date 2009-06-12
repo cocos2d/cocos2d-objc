@@ -50,10 +50,11 @@ static TouchDispatcher *sharedDispatcher = nil;
 
 -(id) init
 {
-	self = [super init];
+	if((self = [super init])) {
 	
-	dispatchEvents = YES;
-	touchHandlers = [[NSMutableArray alloc] initWithCapacity:8];
+		dispatchEvents = YES;
+		touchHandlers = [[NSMutableArray alloc] initWithCapacity:8];
+	}
 	
 	return self;
 }
@@ -80,23 +81,22 @@ static TouchDispatcher *sharedDispatcher = nil;
 	[touchHandlers insertObject:handler atIndex:i];
 }
 
--(void) addEventHandler:(id<TargetedTouchDelegate>) delegate
+-(void) addEventHandler:(id<DirectTouchDelegate>) delegate
 {
-	[self addEventHandler:delegate priority:0 swallowTouches:YES];
+	[self addEventHandler:delegate priority:0];
 }
 
--(void) addEventHandler:(id<TargetedTouchDelegate>) delegate priority:(int) priority swallowTouches:(BOOL) swallowTouches
+-(void) addEventHandler:(id<DirectTouchDelegate>) delegate priority:(int) priority
 {
 	NSAssert( delegate != nil, @"TouchDispatcher.addEventHandler:priority:swallowTouches: -- Delegate must be non nil");	
 	
 	TouchHandler *handler = [TouchHandler handlerWithDelegate:delegate];
-	handler.swallowsTouches = swallowTouches;
 	
 	handler.priority = priority;
 	[self insertHandler:handler];
 }
 
--(void) removeEventHandler:(id<TargetedTouchDelegate>) delegate
+-(void) removeEventHandler:(id<DirectTouchDelegate>) delegate
 {
 	if( delegate == nil )
 		return;
@@ -109,7 +109,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 		[touchHandlers removeObject:handler];
 }
 
--(void) setPriority:(int) priority forEventHandler:(id<TargetedTouchDelegate>) delegate
+-(void) setPriority:(int) priority forEventHandler:(id<DirectTouchDelegate>) delegate
 {
 	NSAssert( delegate != nil, @"TouchDispatcher.setPriority:forEventHandler: -- Delegate must be non nil");	
 	
@@ -138,72 +138,59 @@ static TouchDispatcher *sharedDispatcher = nil;
 //
 // multi touch proxies
 //
--(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( dispatchEvents ) {
-
-		NSArray *handlers = [touchHandlers copy];
-		
-		for( UITouch *touch in touches) {
-			for( TouchHandler *handler in handlers ) {
-				BOOL touchWasClaimed = [handler.delegate ccTouchBegan:touch withEvent:event];
-				
-				if( touchWasClaimed ) {
-					[handler.claimedTouches addObject:touch];
-					
-					if( handler.swallowsTouches )
-						break;
-				}
-			}
-		}
-		[handlers release];
-	}
-
-	return kEventIgnored;
-}
-
--(void) updateKnownTouches:(NSSet *)touches withEvent:(UIEvent *)event selector:(SEL)selector unclaim:(BOOL)doUnclaim
-{
-	NSArray *handlers = [touchHandlers copy];
-	
-	for( UITouch *touch in touches) {
-		for( TouchHandler *handler in handlers ) {
-			if( [handler.claimedTouches containsObject:touch] ) {
-				
-				if( dispatchEvents && [handler.delegate respondsToSelector:selector] )
-					[handler.delegate performSelector:selector withObject:touch withObject:event];
-				
-				if( doUnclaim )
-					[handler.claimedTouches removeObject:touch];
-				
-				if( handler.swallowsTouches )
+	if( dispatchEvents )  {
+		NSArray *copyArray = [touchHandlers copy];
+		for( id eventHandler in copyArray ) {
+			if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesBegan:withEvent:)] ) {
+				if( [[eventHandler delegate] ccTouchesBegan:touches withEvent:event] == kEventHandled )
 					break;
 			}
 		}
+		[copyArray release];
+	}	
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( dispatchEvents )  {
+		NSArray *copyArray = [touchHandlers copy];
+		for( id eventHandler in copyArray ) {
+			if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesMoved:withEvent:)] ) {
+				if( [[eventHandler delegate] ccTouchesMoved:touches withEvent:event] == kEventHandled )
+					break;
+			}
+		}
+		[copyArray release];
+	}	
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( dispatchEvents )  {
+		NSArray *copyArray = [touchHandlers copy];
+		for( id eventHandler in copyArray ) {
+			if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesEnded:withEvent:)] ) {
+				if( [[eventHandler delegate] ccTouchesEnded:touches withEvent:event] == kEventHandled )
+					break;
+			}
+		}
+		[copyArray release];
+	}	
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if( dispatchEvents )  {
+		NSArray *copyArray = [touchHandlers copy];
+		for( id eventHandler in copyArray ) {
+			if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] ) {
+				if( [[eventHandler delegate] ccTouchesCancelled:touches withEvent:event] == kEventHandled )
+					break;
+			}
+		}
+		[copyArray release];
 	}
-	[handlers release];
 }
-
--(BOOL) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if (dispatchEvents)
-		[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchMoved:withEvent:) unclaim:NO];
-	
-	return kEventIgnored;
-}
-
--(BOOL) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES];
-	
-	return kEventIgnored;
-}
-
--(BOOL) ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchCancelled:withEvent:) unclaim:YES];
-	
-	return kEventIgnored;
-}
-
 @end

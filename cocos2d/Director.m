@@ -17,7 +17,7 @@
  
 // cocos2d imports
 #import "Director.h"
-#import "TouchDispatcher.h"
+#import "TouchDelegateProtocol.h"
 #import "Camera.h"
 #import "Scheduler.h"
 #import "LabelAtlas.h"
@@ -25,6 +25,7 @@
 #import "ccExceptions.h"
 #import "Transition.h"
 #import "Scene.h"
+#import "TouchDispatcher.h"
 
 // support imports
 #import "Support/glu.h"
@@ -117,7 +118,6 @@ static Director *_sharedDirector = nil;
 	nextScene = nil;
 	
 	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
-	eventHandlers = [[NSMutableArray arrayWithCapacity:8] retain];
 	scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
 	
 	// landscape
@@ -143,7 +143,6 @@ static Director *_sharedDirector = nil;
 #ifdef FAST_FPS_DISPLAY
 	[FPSLabel release];
 #endif
-	[eventHandlers release];
 	[runningScene_ release];
 	[scenesStack_ release];
 	
@@ -433,7 +432,7 @@ static Director *_sharedDirector = nil;
 		[openGLView_ setAutoresizesEAGLSurface:YES];
 		
 		// set the touch delegate of the glview to self
-		[openGLView_ setTouchDelegate:self];
+		[openGLView_ setTouchDelegate: [TouchDispatcher sharedDispatcher]];
 	}
 	else
 	{
@@ -570,7 +569,9 @@ static Director *_sharedDirector = nil;
 }
 
 -(void) applyLandscape
-{
+{	
+	// XXX it's using hardcoded values.
+	// What if the the screen size changes in the future?
 	switch ( deviceOrientation_ ) {
 		case CCDeviceOrientationPortrait:
 			// nothing
@@ -650,7 +651,7 @@ static Director *_sharedDirector = nil;
 
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	[eventHandlers removeAllObjects];
+	[[TouchDispatcher sharedDispatcher] removeAllEventHandlers];
 
 	[self stopAnimation];
 	[self detach];
@@ -709,8 +710,6 @@ static Director *_sharedDirector = nil;
 
 - (void)startAnimation
 {
-	[eventHandlers insertObject:[TouchDispatcher sharedDispatcher] atIndex:0];
-	
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
 
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
@@ -734,8 +733,6 @@ static Director *_sharedDirector = nil;
 
 - (void)stopAnimation
 {
-	[eventHandlers removeObject:[TouchDispatcher sharedDispatcher]];
-	
 	[animationTimer invalidate];
 	animationTimer = nil;
 }
@@ -752,78 +749,17 @@ static Director *_sharedDirector = nil;
 
 #pragma mark Director Events
 
--(void) addEventHandler:(id<TouchEventsDelegate>) delegate
+-(void) addEventHandler:(id<DirectTouchDelegate>) delegate
 {
 	NSAssert( delegate != nil, @"Director.addEventHandler: delegate must be non nil");	
-	[eventHandlers insertObject:delegate atIndex:1];
+	[[TouchDispatcher sharedDispatcher] addEventHandler:delegate];
 }
 
--(void) removeEventHandler:(id<TouchEventsDelegate>) delegate
+-(void) removeEventHandler:(id<DirectTouchDelegate>) delegate
 {
 	NSAssert( delegate != nil, @"Director.removeEventHandler: delegate must be non nil");
-	[eventHandlers removeObject:delegate];
+	[[TouchDispatcher sharedDispatcher] removeEventHandler:delegate];
 }
-
-//
-// multi touch proxies
-//
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if( eventsEnabled ) {
-		NSArray *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler respondsToSelector:@selector(ccTouchesBegan:withEvent:)] ) {
-				if( [eventHandler ccTouchesBegan:touches withEvent:event] == kEventHandled )
-					break;
-			}
-		}
-		
-		[copyArray release];
-	}	
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if( eventsEnabled ) {
-		NSArray *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler respondsToSelector:@selector(ccTouchesMoved:withEvent:)] ) {
-				if( [eventHandler ccTouchesMoved:touches withEvent:event] == kEventHandled )
-					break;
-			}
-		}
-		[copyArray release];
-	}
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if( eventsEnabled ) {
-		NSArray *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler respondsToSelector:@selector(ccTouchesEnded:withEvent:)] ) {
-				if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
-					break;
-			}
-		}
-		[copyArray release];
-	}
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if( eventsEnabled )  {
-		NSArray *copyArray = [eventHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] ) {
-				if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
-					break;
-			}
-		}
-		[copyArray release];
-	}
-}
-
 
 #ifdef FAST_FPS_DISPLAY
 
@@ -901,8 +837,6 @@ static Director *_sharedDirector = nil;
 
 - (void) startAnimation
 {
-	[eventHandlers insertObject:[TouchDispatcher sharedDispatcher] atIndex:0];
-	
 	// XXX:
 	// XXX: release autorelease objects created
 	// XXX: between "use fast director" and "runWithScene"
@@ -938,7 +872,7 @@ static Director *_sharedDirector = nil;
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
-//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004, FALSE) == kCFRunLoopRunHandledSource);
+//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 
 		if (paused) {
@@ -947,7 +881,7 @@ static Director *_sharedDirector = nil;
 		
 		[self mainLoop];
 
-//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004, FALSE) == kCFRunLoopRunHandledSource);
+//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 
 		[loopPool release];
@@ -955,8 +889,6 @@ static Director *_sharedDirector = nil;
 }
 - (void) stopAnimation
 {
-	[eventHandlers removeObject:[TouchDispatcher sharedDispatcher]];
-	
 	isRunning = NO;
 }
 

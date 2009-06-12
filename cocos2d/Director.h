@@ -19,8 +19,7 @@
 // OpenGL related
 #import "Support/EAGLView.h"
 
-
-@protocol TouchEventsDelegate;
+@protocol DirectTouchDelegate;
 
 enum {
 	kEventHandled = YES,
@@ -63,7 +62,7 @@ typedef enum {
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes
 */
-@interface Director : NSObject <EAGLTouchDelegate>
+@interface Director : NSObject
 {
 	EAGLView	*openGLView_;
 
@@ -99,9 +98,6 @@ and when to execute the Scenes
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
 	Scene *nextScene;
-	
-	/* event handler */
-	NSMutableArray	*eventHandlers;
 
 	/* scheduled scenes */
 	NSMutableArray *scenesStack_;
@@ -248,9 +244,9 @@ and when to execute the Scenes
 // Events
 
 /** adds a delegate to the list of multi-touch handlers */
--(void) addEventHandler: (id<TouchEventsDelegate>) delegate;
+-(void) addEventHandler: (id<DirectTouchDelegate>) delegate;
 /** removes a delegate from the list of multi-touch handlers */
--(void) removeEventHandler: (id<TouchEventsDelegate>) delegate;
+-(void) removeEventHandler: (id<DirectTouchDelegate>) delegate;
 
 // OpenGL Helper
 

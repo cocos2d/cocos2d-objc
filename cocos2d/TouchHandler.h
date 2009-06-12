@@ -13,26 +13,22 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "TargetedTouchDelegate.h"
+#import "TouchDelegateProtocol.h"
+#import "Support/EAGLView.h"
 
 /**
  TouchHandler
  XXX: add description
 */
 @interface TouchHandler : NSObject {
-@private
-	id<TargetedTouchDelegate> delegate;
+	id<DirectTouchDelegate> delegate;
 	int priority;
-	BOOL swallowsTouches;
-	NSMutableSet *claimedTouches;
 }
 
-@property(nonatomic, readonly) id<TargetedTouchDelegate> delegate;
+@property(nonatomic, readonly) id<DirectTouchDelegate> delegate;
 @property(nonatomic, readwrite) int priority; // default 0
-@property(nonatomic, readwrite) BOOL swallowsTouches; // default NO
-@property(nonatomic, readonly) NSMutableSet *claimedTouches;
 
-+ (id)handlerWithDelegate:(id<TargetedTouchDelegate>) aDelegate;
-- (id)initWithDelegate:(id<TargetedTouchDelegate>) aDelegate;
++ (id)handlerWithDelegate:(id<DirectTouchDelegate>) aDelegate;
+- (id)initWithDelegate:(id<DirectTouchDelegate>) aDelegate;
 
 @end
