@@ -93,7 +93,7 @@
 -(void) onExit
 {
 	if( touchHandlerType != kTouchHandlerNone )
-		[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
+		[[TouchDispatcher sharedDispatcher] removeTouchHandler:self];
 
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];

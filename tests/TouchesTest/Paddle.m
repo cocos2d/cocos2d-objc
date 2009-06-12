@@ -34,7 +34,7 @@
 
 - (void)onExit
 {
-	[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
+	[[TouchDispatcher sharedDispatcher] removeTouchHandler:self];
 	[super onExit];
 }	
 

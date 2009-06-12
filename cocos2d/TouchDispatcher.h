@@ -40,10 +40,10 @@
 -(void) addTouchHandler:(TouchHandler*)touchHandler;
 /** Changes the priority of a previously added touch handler. The lower the number,
  the higher the priority */
--(void) setPriority:(int) priority forEventHandler:(id) delegate;
+-(void) setPriority:(int) priority forTouchHandler:(id) delegate;
 /** Removes a delegate from the list of multi-touch touch handlers. */
--(void) removeEventHandler:(id) delegate;
+-(void) removeTouchHandler:(id) delegate;
 /** Removes all multi-touch event handlers. */
--(void) removeAllEventHandlers;
+-(void) removeAllTouchHandlers;
 
 @end
