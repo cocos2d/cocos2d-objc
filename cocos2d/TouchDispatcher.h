@@ -14,12 +14,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Layer.h"
-#import "TargetedTouchDelegate.h"
+#import "TouchDelegateProtocol.h"
+#import "Support/EAGLView.h"
 
 /** TouchDispatcher
  * XXX: add description
  */
-@interface TouchDispatcher : NSObject <TouchEventsDelegate>
+@interface TouchDispatcher : NSObject <EAGLTouchDelegate>
 {
 @private
 	NSMutableArray *touchHandlers;
@@ -33,18 +34,17 @@
 
 /** Adds a delegate to the list of multi-touch event handlers, with priority 0
  and touch swallowing on. */
--(void) addEventHandler:(id<TargetedTouchDelegate>) delegate;
+-(void) addEventHandler:(id<DirectTouchDelegate>) delegate;
 /** Adds a delegate to the list of multi-touch event handlers.
  If a handler swallows touches, it will be the exclusive owner of the touch(es)
  it claims. Not swallowing allows other handlers to claim and receive updates on
  the same touch. */
--(void) addEventHandler:(id<TargetedTouchDelegate>) delegate
-							 priority:(int) priority swallowTouches:(BOOL) swallowTouches;
+-(void) addEventHandler:(id<DirectTouchDelegate>) delegate priority:(int) priority;
 /** Changes the priority of a previously added event handler. The lower the number,
  the higher the priority */
--(void) setPriority:(int) priority forEventHandler:(id<TargetedTouchDelegate>) delegate;
+-(void) setPriority:(int) priority forEventHandler:(id<DirectTouchDelegate>) delegate;
 /** Removes a delegate from the list of multi-touch event handlers. */
--(void) removeEventHandler:(id<TargetedTouchDelegate>) delegate;
+-(void) removeEventHandler:(id<DirectTouchDelegate>) delegate;
 /** Removes all multi-touch event handlers. */
 -(void) removeAllEventHandlers;
 

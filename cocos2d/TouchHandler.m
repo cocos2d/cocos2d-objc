@@ -16,26 +16,22 @@
 
 @implementation TouchHandler
 
-@synthesize delegate, priority, swallowsTouches, claimedTouches;
+@synthesize delegate, priority;
 
-+ (id)handlerWithDelegate:(id<TargetedTouchDelegate>) aDelegate
++ (id)handlerWithDelegate:(id<DirectTouchDelegate>) aDelegate
 {
 	return [[[self alloc] initWithDelegate:aDelegate] autorelease];
 }
 
-- (id)initWithDelegate:(id<TargetedTouchDelegate>) aDelegate
+- (id)initWithDelegate:(id<DirectTouchDelegate>) aDelegate
 {
-	if ((self = [super init]) == nil)
-		return nil;
-	
-	delegate = aDelegate;
-	claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
+	if ((self = [super init]))
+		delegate = aDelegate;
 	
 	return self;
 }
 
 - (void)dealloc {
-	[claimedTouches release];
 	[super dealloc];
 }
 

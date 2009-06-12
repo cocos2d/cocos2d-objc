@@ -16,7 +16,6 @@
 
 #import "MenuItem.h"
 #import "Layer.h"
-#import "TargetedTouchDelegate.h"
 
 typedef enum  {
 	kMenuStateWaiting,
@@ -29,7 +28,7 @@ typedef enum  {
  *  - You can add MenuItem objects in runtime using addChild:
  *  - But the only accecpted children are MenuItem objects
  */
-@interface Menu : CocosNode <TargetedTouchDelegate, CocosNodeRGBA>
+@interface Menu : Layer <CocosNodeRGBA>
 {
 	MenuState state;
 	MenuItem *selectedItem;

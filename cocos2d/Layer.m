@@ -18,6 +18,7 @@
 
 #import "Layer.h"
 #import "Director.h"
+#import "TouchDispatcher.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
@@ -30,16 +31,16 @@
 
 -(id) init
 {
-	if( ! (self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 	
-	CGSize s = [[Director sharedDirector] winSize];
-	anchorPoint_ = ccp(0.5f, 0.5f);
-	[self setContentSize:s];
-	self.relativeTransformAnchor = NO;
+		CGSize s = [[Director sharedDirector] winSize];
+		anchorPoint_ = ccp(0.5f, 0.5f);
+		[self setContentSize:s];
+		self.relativeTransformAnchor = NO;
 
-	isTouchEnabled = NO;
-	isAccelerometerEnabled = NO;
+		isTouchEnabled = NO;
+		isAccelerometerEnabled = NO;
+	}
 	
 	return self;
 }
@@ -50,7 +51,7 @@
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
 	if( isTouchEnabled )
-		[[Director sharedDirector] addEventHandler:self];
+		[[TouchDispatcher sharedDispatcher] addEventHandler:self];
 
 	// the iterate over all the children
 	[super onEnter];
@@ -62,7 +63,7 @@
 -(void) onExit
 {
 	if( isTouchEnabled )
-		[[Director sharedDirector] removeEventHandler:self];
+		[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
 
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];

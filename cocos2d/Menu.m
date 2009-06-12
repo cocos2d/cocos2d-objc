@@ -53,41 +53,43 @@ enum {
 
 -(id) initWithItems: (MenuItem*) item vaList: (va_list) args
 {
-	if( !(self=[super init]) )
-		return nil;
-	
-	// menu in the center of the screen
-	CGSize s = [[Director sharedDirector] winSize];
-	
-	self.relativeTransformAnchor = NO;
-	anchorPoint_ = ccp(0.5f, 0.5f);
-	[self setContentSize:s];
-	
-	// XXX: in v0.7, winSize should return the visible size
-	// XXX: so the bar calculation should be done there
-	CGRect r = [[UIApplication sharedApplication] statusBarFrame];
-	ccDeviceOrientation orientation = [[Director sharedDirector] deviceOrientation];
-	if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
-		s.height -= r.size.width;
-	else
-	    s.height -= r.size.height;
-	self.position = ccp(s.width/2, s.height/2);
+	if( (self=[super init]) ) {
 
-	int z=0;
-	
-	if (item) {
-		[self addChild: item z:z];
-		MenuItem *i = va_arg(args, MenuItem*);
-		while(i) {
-			z++;
-			[self addChild: i z:z];
-			i = va_arg(args, MenuItem*);
+		isTouchEnabled = YES;
+
+		// menu in the center of the screen
+		CGSize s = [[Director sharedDirector] winSize];
+		
+		self.relativeTransformAnchor = NO;
+		anchorPoint_ = ccp(0.5f, 0.5f);
+		[self setContentSize:s];
+		
+		// XXX: in v0.7, winSize should return the visible size
+		// XXX: so the bar calculation should be done there
+		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
+		ccDeviceOrientation orientation = [[Director sharedDirector] deviceOrientation];
+		if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
+			s.height -= r.size.width;
+		else
+			s.height -= r.size.height;
+		self.position = ccp(s.width/2, s.height/2);
+
+		int z=0;
+		
+		if (item) {
+			[self addChild: item z:z];
+			MenuItem *i = va_arg(args, MenuItem*);
+			while(i) {
+				z++;
+				[self addChild: i z:z];
+				i = va_arg(args, MenuItem*);
+			}
 		}
+	//	[self alignItemsVertically];
+		
+		selectedItem = nil;
+		state = kMenuStateWaiting;
 	}
-//	[self alignItemsVertically];
-	
-	selectedItem = nil;
-	state = kMenuStateWaiting;
 	
 	return self;
 }
@@ -107,61 +109,122 @@ enum {
 }
 	
 #pragma mark Menu - Events
-	
--(void) onEnter
-{
-	[[TouchDispatcher sharedDispatcher] addEventHandler:self priority:0 swallowTouches:NO];
-	[super onEnter];
-}
-	
--(void) onExit
-{
-	[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
-	[super onExit];
-}
 
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( state != kMenuStateWaiting ) return NO;
+	UITouch *touch = [touches anyObject];	
+	MenuItem *item = [self itemForTouch:touch];
 	
-	selectedItem = [self itemForTouch:touch];
-	[selectedItem selected];
-	
-	state = kMenuStateTrackingTouch;
-	return YES;
-}
-
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
-	
-	[selectedItem unselected];
-	[selectedItem activate];
-	
-	state = kMenuStateWaiting;
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
-	
-	[selectedItem unselected];
-	
-	state = kMenuStateWaiting;
-}
-
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
-	
-	MenuItem *currentItem = [self itemForTouch:touch];
-	
-	if (currentItem != selectedItem) {
-		[selectedItem unselected];
-		selectedItem = currentItem;
-		[selectedItem selected];
+	if( item ) {
+		[item selected];
+		selectedItem = item;
+		return kEventHandled;
 	}
+	
+	return kEventIgnored;
 }
+
+- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];	
+	MenuItem *item = [self itemForTouch:touch];
+	
+	if( item ) {
+		[item unselected];
+		[item activate];
+		return kEventHandled;
+		
+	} else if( selectedItem ) {
+		[selectedItem unselected];
+		selectedItem = nil;
+		
+		// don't return kEventHandled here, since we are not handling it!
+	}
+	return kEventIgnored;
+}
+
+- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];	
+	MenuItem *item = [self itemForTouch:touch];
+	
+	// "mouse" draged inside a button
+	if( item ) {
+		if( item != selectedItem ) {
+			if( selectedItem  )
+				[selectedItem unselected];
+			[item selected];
+			selectedItem = item;
+			return kEventHandled;
+		}
+		
+		// "mouse" draged outside the selected button
+	} else {
+		if( selectedItem ) {
+			[selectedItem unselected];
+			selectedItem = nil;
+			
+			// don't return kEventHandled here, since we are not handling it!
+		}
+	}
+	
+	return kEventIgnored;
+}
+
+//-(void) onEnter
+//{
+//	[[TouchDispatcher sharedDispatcher] addEventHandler:self priority:0 swallowTouches:NO];
+//	[super onEnter];
+//}
+//	
+//-(void) onExit
+//{
+//	[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
+//	[super onExit];
+//}
+
+//-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//	if( state != kMenuStateWaiting ) return NO;
+//	
+//	selectedItem = [self itemForTouch:touch];
+//	[selectedItem selected];
+//	
+//	state = kMenuStateTrackingTouch;
+//	return YES;
+//}
+//
+//-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
+//	
+//	[selectedItem unselected];
+//	[selectedItem activate];
+//	
+//	state = kMenuStateWaiting;
+//}
+//
+//-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
+//	
+//	[selectedItem unselected];
+//	
+//	state = kMenuStateWaiting;
+//}
+//
+//-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
+//	
+//	MenuItem *currentItem = [self itemForTouch:touch];
+//	
+//	if (currentItem != selectedItem) {
+//		[selectedItem unselected];
+//		selectedItem = currentItem;
+//		[selectedItem selected];
+//	}
+//}
 
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically
@@ -387,5 +450,4 @@ enum {
 	}
 	return nil;
 }
-
 @end
