@@ -17,10 +17,10 @@
 #import "MenuItem.h"
 #import "Layer.h"
 
-//typedef enum  {
-//	kMenuStateWaiting,
-//	kMenuStateTrackingTouch
-//} MenuState;
+typedef enum  {
+	kMenuStateWaiting,
+	kMenuStateTrackingTouch
+} MenuState;
 
 /** A Menu
  * 
@@ -30,7 +30,7 @@
  */
 @interface Menu : Layer <CocosNodeRGBA>
 {
-//	MenuState state;
+	MenuState state;
 	MenuItem *selectedItem;
 	GLubyte opacity_, r_, g_, b_;
 }

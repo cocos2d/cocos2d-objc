@@ -53,7 +53,7 @@
 
 - (id)initWithDelegate:(id) aDelegate
 {
-	if ((self = [super init])) {	
+	if ((self = [super initWithDelegate:aDelegate])) {	
 		claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
 	}
 	
