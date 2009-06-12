@@ -27,17 +27,26 @@
  - It can receive iPhone Touches
  - It can receive Accelerometer input
 */
-@interface Layer : CocosNode <UIAccelerometerDelegate, DirectTouchDelegate>
+@interface Layer : CocosNode <UIAccelerometerDelegate, StandardTouchDelegate>
 {
-	//! whether or not it will receive Touch events
-	BOOL isTouchEnabled;
-	
-	//! whether or not it will receive Accelerometer events
+	ccTouchEventType	touchEventType;
+
+	BOOL isTouchEnabled;	
 	BOOL isAccelerometerEnabled;
 }
 
-@property(nonatomic,assign) BOOL isTouchEnabled;
-@property(nonatomic,assign) BOOL isAccelerometerEnabled;
+/** callback that is called to detect what kind of touch will be propagated
+ - kTouchEventNone: None events are forwarded (default)
+ - kTouchEventStandard: "Standard" events will be forwarded, like in v0.7
+ - kTouchEventTargeted: targeted events will be forwarded
+ @since v0.8
+ */
+-(ccTouchEventType) typeOfEventsToHandle;
+
+//! whether or not it will receive Touch events
+@property(nonatomic,assign) BOOL isTouchEnabled __attribute__ ((deprecated));
+//! whether or not it will receive Accelerometer events
+@property(nonatomic,assign) BOOL isAccelerometerEnabled __attribute__ ((deprecated));
 
 @end
 

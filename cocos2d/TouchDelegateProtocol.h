@@ -35,18 +35,31 @@
 @end
 
 /**
- DirectTouchDelegate.
- Every event that is received will be propagated to the delegate,
+ StandardTouchDelegate.
+ Each event that is received will be propagated to the delegate,
  unless a previous delegate consumes the event.
- To consume the event (prevent propagation) you should return kEventHandled.
- To ignore the event (the event will be forwarded to the next delegate in the chain) return kEventIgnored.
+ To consume the event (prevent propagation) the delegate should return kEventHandled.
+ To ignore the event (the event will be forwarded to the next delegate in the chain) the delegate should return kEventIgnored.
 */
-@protocol DirectTouchDelegate <NSObject>
+@protocol StandardTouchDelegate <NSObject>
 @optional
 - (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 @end
+
+/** types of events to handle */
+typedef enum
+{
+	/// No Touch events will be forwarded (default)
+	kTouchEventNone,
+	/// Standard events will be forwarded (like in v0.7)
+	kTouchEventStandard,
+	/// Targeted events will be forwarded
+	kTouchEventTargeted,
+} ccTouchEventType;
+
+
 
 
