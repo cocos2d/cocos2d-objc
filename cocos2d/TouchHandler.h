@@ -28,15 +28,15 @@
 @property(nonatomic, readonly) id delegate;
 @property(nonatomic, readwrite) int priority; // default 0
 
-/** allocates a TouchHandler with a delegate */
-+ (id)handlerWithDelegate:(id) aDelegate;
-/** initializes a TouchHandler with a delegate */
-- (id)initWithDelegate:(id) aDelegate;
+/** allocates a TouchHandler with a delegate and a priority */
++ (id)handlerWithDelegate:(id)aDelegate priority:(int)priority;
+/** initializes a TouchHandler with a delegate and a priority */
+- (id)initWithDelegate:(id)aDelegate priority:(int)priority;
 
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesBegan:(NSMutableSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesMoved:(NSMutableSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesEnded:(NSMutableSet *)touches withEvent:(UIEvent *)event;
+- (BOOL)ccTouchesCancelled:(NSMutableSet *)touches withEvent:(UIEvent *)event;
 @end
 
 /** StandardTouchHandler
@@ -60,5 +60,11 @@
 @property(nonatomic, readwrite) BOOL swallowsTouches; // default NO
 /** MutableSet that contains the claimed touches */
 @property(nonatomic, readonly) NSMutableSet *claimedTouches;
+
+/** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
++ (id)handlerWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
+/** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
+- (id)initWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
+
 @end
 

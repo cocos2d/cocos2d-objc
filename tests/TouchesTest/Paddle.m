@@ -28,7 +28,7 @@
 
 - (void)onEnter
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedEventHandler:self priority:0 swallowTouches:YES];
+	[[TouchDispatcher sharedDispatcher] addTouchHandler:[TargetedTouchHandler handlerWithDelegate:self priority:0 swallowsTouches:YES]];
 	[super onEnter];
 }
 

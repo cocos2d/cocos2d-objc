@@ -86,6 +86,7 @@ enum {
 	//	[self alignItemsVertically];
 		
 		selectedItem = nil;
+		state = kMenuStateWaiting;
 	}
 	
 	return self;
@@ -107,73 +108,121 @@ enum {
 	
 #pragma mark Menu - Events
 
-// The code to handle the menus is much more simpler and easy to understand
-// if is uses kTouchHandlerTargeted.
-// But integration between Targeted and Standard handler is not 100% compatible
+//- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//	UITouch *touch = [touches anyObject];	
+//	MenuItem *item = [self itemForTouch:touch];
+//	
+//	if( item ) {
+//		[item selected];
+//		selectedItem = item;
+//		return kEventHandled;
+//	}
+//	
+//	return kEventIgnored;
+//}
+//
+//- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//	UITouch *touch = [touches anyObject];	
+//	MenuItem *item = [self itemForTouch:touch];
+//	
+//	if( item ) {
+//		[item unselected];
+//		[item activate];
+//		return kEventHandled;
+//		
+//	} else if( selectedItem ) {
+//		[selectedItem unselected];
+//		selectedItem = nil;
+//		
+//		// don't return kEventHandled here, since we are not handling it!
+//	}
+//	return kEventIgnored;
+//}
+//
+//- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//	UITouch *touch = [touches anyObject];	
+//	MenuItem *item = [self itemForTouch:touch];
+//	
+//	// "mouse" draged inside a button
+//	if( item ) {
+//		if( item != selectedItem ) {
+//			if( selectedItem  )
+//				[selectedItem unselected];
+//			[item selected];
+//			selectedItem = item;
+//			return kEventHandled;
+//		}
+//		
+//		// "mouse" draged outside the selected button
+//	} else {
+//		if( selectedItem ) {
+//			[selectedItem unselected];
+//			selectedItem = nil;
+//			
+//			// don't return kEventHandled here, since we are not handling it!
+//		}
+//	}
+//	
+//	return kEventIgnored;
+//}
+
 -(ccTouchHandlerType) typeOfTouchHandler
 {
-	return kTouchHandlerStandard;
+	return kTouchHandlerTargeted;
 }
 
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(BOOL) targetedTouchHandlerSwallowTouches
 {
-	UITouch *touch = [touches anyObject];	
-	MenuItem *item = [self itemForTouch:touch];
+	return YES;
+}
+
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	if( state != kMenuStateWaiting ) return NO;
 	
-	if( item ) {
-		[item selected];
-		selectedItem = item;
-		return kEventHandled;
+	selectedItem = [self itemForTouch:touch];
+	[selectedItem selected];
+	
+	if( selectedItem ) {
+		state = kMenuStateTrackingTouch;
+		return YES;
 	}
-	
-	return kEventIgnored;
+	return NO;
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];	
-	MenuItem *item = [self itemForTouch:touch];
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
 	
-	if( item ) {
-		[item unselected];
-		[item activate];
-		return kEventHandled;
-		
-	} else if( selectedItem ) {
+	[selectedItem unselected];
+	[selectedItem activate];
+	
+	state = kMenuStateWaiting;
+}
+
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
+	
+	[selectedItem unselected];
+	
+	state = kMenuStateWaiting;
+}
+
+-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
+	
+	MenuItem *currentItem = [self itemForTouch:touch];
+	
+	if (currentItem != selectedItem) {
 		[selectedItem unselected];
-		selectedItem = nil;
-		
-		// don't return kEventHandled here, since we are not handling it!
+		selectedItem = currentItem;
+		[selectedItem selected];
 	}
-	return kEventIgnored;
-}
-
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	UITouch *touch = [touches anyObject];	
-	MenuItem *item = [self itemForTouch:touch];
-	
-	// "mouse" draged inside a button
-	if( item ) {
-		if( item != selectedItem ) {
-			if( selectedItem  )
-				[selectedItem unselected];
-			[item selected];
-			selectedItem = item;
-			return kEventHandled;
-		}
-		
-		// "mouse" draged outside the selected button
-	} else {
-		if( selectedItem ) {
-			[selectedItem unselected];
-			selectedItem = nil;
-			
-			// don't return kEventHandled here, since we are not handling it!
-		}
-	}
-	
-	return kEventIgnored;
 }
 
 #pragma mark Menu - Alignment
