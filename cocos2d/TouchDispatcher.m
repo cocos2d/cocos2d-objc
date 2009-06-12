@@ -69,8 +69,9 @@ static TouchDispatcher *sharedDispatcher = nil;
 // handlers management
 //
 
-// private helper
--(void) insertHandler:(TouchHandler *)handler
+#pragma mark add event handlers
+
+-(void) addTouchHandler:(TouchHandler*)handler
 {
 	NSUInteger i = 0;
 	for( TouchHandler *h in touchHandlers ) {
@@ -79,38 +80,6 @@ static TouchDispatcher *sharedDispatcher = nil;
 		i++;
 	}
 	[touchHandlers insertObject:handler atIndex:i];
-}
-
-#pragma mark add event handlers
--(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate
-{
-	[self addStandardEventHandler:delegate priority:0];
-}
-
--(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate priority:(int) priority
-{
-	NSAssert( delegate != nil, @"TouchDispatcher.addEventHandler:priority:swallowTouches: -- Delegate must be non nil");	
-	
-	TouchHandler *handler = [StandardTouchHandler handlerWithDelegate:delegate];
-	
-	handler.priority = priority;
-	[self insertHandler:handler];
-}
-
--(void) addTargetedEventHandler:(id<TargetedTouchDelegate>) delegate
-{
-	[self addTargetedEventHandler:delegate priority:0 swallowTouches:YES];
-}
-
--(void) addTargetedEventHandler:(id<TargetedTouchDelegate>) delegate priority:(int) priority swallowTouches:(BOOL) swallowTouches
-{
-	NSAssert( delegate != nil, @"TouchDispatcher.addEventHandler:priority:swallowTouches: -- Delegate must be non nil");	
-	
-	TargetedTouchHandler *handler = [TargetedTouchHandler handlerWithDelegate:delegate];
-	handler.swallowsTouches = swallowTouches;
-	
-	handler.priority = priority;
-	[self insertHandler:handler];
 }
 
 #pragma mark remove event handlers
@@ -150,7 +119,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 		[touchHandlers removeObjectAtIndex:i];
 		
 		handler.priority = priority;
-		[self insertHandler:handler];
+		[self addTouchHandler:handler];
 		[handler release];
 	}
 }
@@ -162,10 +131,12 @@ static TouchDispatcher *sharedDispatcher = nil;
 {
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
+		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
 		for( id eventHandler in copyArray ) {
-			if( [eventHandler ccTouchesBegan:touches withEvent:event] == kEventHandled )
+			if( [eventHandler ccTouchesBegan:copyTouches withEvent:event] == kEventHandled )
 				break;
 		}
+		[copyTouches release];
 		[copyArray release];
 	}	
 }
@@ -173,11 +144,13 @@ static TouchDispatcher *sharedDispatcher = nil;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )  {
+		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
 		NSArray *copyArray = [touchHandlers copy];
 		for( id eventHandler in copyArray ) {
-			if( [eventHandler ccTouchesMoved:touches withEvent:event] == kEventHandled )
+			if( [eventHandler ccTouchesMoved:copyTouches withEvent:event] == kEventHandled )
 				break;
 		}
+		[copyTouches release];
 		[copyArray release];
 	}	
 }
@@ -186,10 +159,12 @@ static TouchDispatcher *sharedDispatcher = nil;
 {
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
+		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
 		for( id eventHandler in copyArray ) {
 			if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
 				break;
 		}
+		[copyTouches release];
 		[copyArray release];
 	}	
 }
@@ -198,10 +173,12 @@ static TouchDispatcher *sharedDispatcher = nil;
 {
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
+		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
 		for( id eventHandler in copyArray ) {
 			if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
 				break;
 		}
+		[copyTouches release];
 		[copyArray release];
 	}
 }

@@ -30,6 +30,7 @@ typedef enum  {
  */
 @interface Menu : Layer <CocosNodeRGBA>
 {
+	MenuState state;
 	MenuItem *selectedItem;
 	GLubyte opacity_, r_, g_, b_;
 }

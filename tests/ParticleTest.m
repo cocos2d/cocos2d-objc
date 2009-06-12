@@ -116,16 +116,20 @@ Class restartAction()
 {
 	UITouch *touch = [touches anyObject];
 	
-	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+	if( touch ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+		
+		ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
+		
+	//	CGPoint source = ccpSub( convertedLocation, s.position );
+	//	s.source = source;
+		s.position = convertedLocation;
 	
-	ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
+		return kEventHandled;
+	}
 	
-//	CGPoint source = ccpSub( convertedLocation, s.position );
-//	s.source = source;
-	s.position = convertedLocation;
-	
-	return kEventHandled;
+	return kEventIgnored;
 }
 
 -(void) step:(ccTime) dt
@@ -655,7 +659,7 @@ Class restartAction()
 	
 	// cocos2d will inherit these values
 	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
 	[Director useFastDirector];
