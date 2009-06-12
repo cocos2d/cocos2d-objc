@@ -37,11 +37,21 @@
 
 /** Adds a delegate to the list of multi-touch event handlers, with priority 0 */
 -(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate;
-/** Adds a delegate to the list of multi-touch event handlers.
+/** Adds a standard delegate to the list of multi-touch event handlers with a priority.
+ The lower the number, the higher the priority.
+ */
+-(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate priority:(int) priority;
+
+/** Adds a targeted delegate to the list of multi-touch event handlers, with priority 0
+ and touch swallowing on. */
+-(void) addTargetedEventHandler:(id<TargetedTouchDelegate>) delegate;
+/** Adds a targeted delegate to the list of multi-touch event handlers with a priority.
+ The lower the number, the higher the priority.
  If a handler swallows touches, it will be the exclusive owner of the touch(es)
  it claims. Not swallowing allows other handlers to claim and receive updates on
  the same touch. */
--(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate priority:(int) priority;
+-(void) addTargetedEventHandler:(id<TargetedTouchDelegate>) delegate
+			   priority:(int) priority swallowTouches:(BOOL) swallowTouches;
 /** Changes the priority of a previously added event handler. The lower the number,
  the higher the priority */
 -(void) setPriority:(int) priority forEventHandler:(id<StandardTouchDelegate>) delegate;
