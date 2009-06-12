@@ -87,6 +87,7 @@
 }
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
+	NSAssert(NO, @"Layer#ccTouchBegan override me");
 	return YES;
 }
 @end

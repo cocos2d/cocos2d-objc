@@ -19,14 +19,6 @@
 // OpenGL related
 #import "Support/EAGLView.h"
 
-@protocol DirectTouchDelegate;
-
-enum {
-	kEventHandled = YES,
-	kEventIgnored = NO,
-};
-
-
 // Fast FPS display. FPS are updated 10 times per second without consuming resources
 // uncomment this line to use the old method that updated
 #define FAST_FPS_DISPLAY 1

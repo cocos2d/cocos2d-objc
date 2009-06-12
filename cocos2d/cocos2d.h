@@ -39,6 +39,8 @@
 #import "CocosNode.h"
 #import "Director.h"
 #import "TouchDispatcher.h"
+#import "TouchDelegateProtocol.h"
+#import "TouchHandler.h"
 #import "InstantAction.h"
 #import "IntervalAction.h"
 #import "EaseAction.h"

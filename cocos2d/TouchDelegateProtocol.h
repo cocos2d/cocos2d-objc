@@ -60,6 +60,9 @@ typedef enum
 	kTouchEventTargeted,
 } ccTouchEventType;
 
-
+enum {
+	kEventHandled = YES,
+	kEventIgnored = NO,
+};
 
 
