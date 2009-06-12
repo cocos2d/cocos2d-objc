@@ -53,7 +53,8 @@ enum {
 
 -(ccTouchEventType) typeOfEventsToHandle
 {
-	return kTouchEventStandard;
+//	return kTouchEventStandard;
+	return kTouchEventTargeted;
 }
 
 -(id) initWithItems: (MenuItem*) item vaList: (va_list) args
@@ -113,66 +114,66 @@ enum {
 	
 #pragma mark Menu - Events
 
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	UITouch *touch = [touches anyObject];	
-	MenuItem *item = [self itemForTouch:touch];
-	
-	if( item ) {
-		[item selected];
-		selectedItem = item;
-		return kEventHandled;
-	}
-	
-	return kEventIgnored;
-}
-
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	UITouch *touch = [touches anyObject];	
-	MenuItem *item = [self itemForTouch:touch];
-	
-	if( item ) {
-		[item unselected];
-		[item activate];
-		return kEventHandled;
-		
-	} else if( selectedItem ) {
-		[selectedItem unselected];
-		selectedItem = nil;
-		
-		// don't return kEventHandled here, since we are not handling it!
-	}
-	return kEventIgnored;
-}
-
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	UITouch *touch = [touches anyObject];	
-	MenuItem *item = [self itemForTouch:touch];
-	
-	// "mouse" draged inside a button
-	if( item ) {
-		if( item != selectedItem ) {
-			if( selectedItem  )
-				[selectedItem unselected];
-			[item selected];
-			selectedItem = item;
-			return kEventHandled;
-		}
-		
-		// "mouse" draged outside the selected button
-	} else {
-		if( selectedItem ) {
-			[selectedItem unselected];
-			selectedItem = nil;
-			
-			// don't return kEventHandled here, since we are not handling it!
-		}
-	}
-	
-	return kEventIgnored;
-}
+//- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//	UITouch *touch = [touches anyObject];	
+//	MenuItem *item = [self itemForTouch:touch];
+//	
+//	if( item ) {
+//		[item selected];
+//		selectedItem = item;
+//		return kEventHandled;
+//	}
+//	
+//	return kEventIgnored;
+//}
+//
+//- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//	UITouch *touch = [touches anyObject];	
+//	MenuItem *item = [self itemForTouch:touch];
+//	
+//	if( item ) {
+//		[item unselected];
+//		[item activate];
+//		return kEventHandled;
+//		
+//	} else if( selectedItem ) {
+//		[selectedItem unselected];
+//		selectedItem = nil;
+//		
+//		// don't return kEventHandled here, since we are not handling it!
+//	}
+//	return kEventIgnored;
+//}
+//
+//- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//	UITouch *touch = [touches anyObject];	
+//	MenuItem *item = [self itemForTouch:touch];
+//	
+//	// "mouse" draged inside a button
+//	if( item ) {
+//		if( item != selectedItem ) {
+//			if( selectedItem  )
+//				[selectedItem unselected];
+//			[item selected];
+//			selectedItem = item;
+//			return kEventHandled;
+//		}
+//		
+//		// "mouse" draged outside the selected button
+//	} else {
+//		if( selectedItem ) {
+//			[selectedItem unselected];
+//			selectedItem = nil;
+//			
+//			// don't return kEventHandled here, since we are not handling it!
+//		}
+//	}
+//	
+//	return kEventIgnored;
+//}
 
 //-(void) onEnter
 //{
@@ -186,48 +187,48 @@ enum {
 //	[super onExit];
 //}
 
-//-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-//{
-//	if( state != kMenuStateWaiting ) return NO;
-//	
-//	selectedItem = [self itemForTouch:touch];
-//	[selectedItem selected];
-//	
-//	state = kMenuStateTrackingTouch;
-//	return YES;
-//}
-//
-//-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-//{
-//	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
-//	
-//	[selectedItem unselected];
-//	[selectedItem activate];
-//	
-//	state = kMenuStateWaiting;
-//}
-//
-//-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-//{
-//	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
-//	
-//	[selectedItem unselected];
-//	
-//	state = kMenuStateWaiting;
-//}
-//
-//-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-//{
-//	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
-//	
-//	MenuItem *currentItem = [self itemForTouch:touch];
-//	
-//	if (currentItem != selectedItem) {
-//		[selectedItem unselected];
-//		selectedItem = currentItem;
-//		[selectedItem selected];
-//	}
-//}
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	if( state != kMenuStateWaiting ) return NO;
+	
+	selectedItem = [self itemForTouch:touch];
+	[selectedItem selected];
+	
+	state = kMenuStateTrackingTouch;
+	return YES;
+}
+
+-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
+	
+	[selectedItem unselected];
+	[selectedItem activate];
+	
+	state = kMenuStateWaiting;
+}
+
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
+	
+	[selectedItem unselected];
+	
+	state = kMenuStateWaiting;
+}
+
+-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
+	
+	MenuItem *currentItem = [self itemForTouch:touch];
+	
+	if (currentItem != selectedItem) {
+		[selectedItem unselected];
+		selectedItem = currentItem;
+		[selectedItem selected];
+	}
+}
 
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically

@@ -54,9 +54,9 @@
 			   priority:(int) priority swallowTouches:(BOOL) swallowTouches;
 /** Changes the priority of a previously added event handler. The lower the number,
  the higher the priority */
--(void) setPriority:(int) priority forEventHandler:(id<StandardTouchDelegate>) delegate;
+-(void) setPriority:(int) priority forEventHandler:(id) delegate;
 /** Removes a delegate from the list of multi-touch event handlers. */
--(void) removeEventHandler:(id<StandardTouchDelegate>) delegate;
+-(void) removeEventHandler:(id) delegate;
 /** Removes all multi-touch event handlers. */
 -(void) removeAllEventHandlers;
 

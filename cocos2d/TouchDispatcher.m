@@ -120,7 +120,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 
 #pragma mark remove event handlers
 
--(void) removeEventHandler:(id<StandardTouchDelegate>) delegate
+-(void) removeEventHandler:(id) delegate
 {
 	if( delegate == nil )
 		return;
@@ -140,7 +140,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 
 #pragma mark priority event handlers
 
--(void) setPriority:(int) priority forEventHandler:(id<StandardTouchDelegate>) delegate
+-(void) setPriority:(int) priority forEventHandler:(id) delegate
 {
 	NSAssert( delegate != nil, @"TouchDispatcher.setPriority:forEventHandler: -- Delegate must be non nil");	
 	
@@ -171,9 +171,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 		for( id eventHandler in copyArray ) {
 			if([eventHandler isKindOfClass:[StandardTouchHandler class]]) {
 				// standard
-				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesBegan:withEvent:)] ) {
+				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
 					ret = [[eventHandler delegate] ccTouchesBegan:touches withEvent:event];
-				}
 			} else
 				// targeted
 				ret = [self targetedTouchesBegan:touches withEvent:event withHandler:(TargetedTouchHandler*)eventHandler];
@@ -205,14 +204,15 @@ static TouchDispatcher *sharedDispatcher = nil;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	BOOL ret = kEventIgnored;
 	if( dispatchEvents )  {
 		NSArray *copyArray = [touchHandlers copy];
 		for( id eventHandler in copyArray ) {
 			if([eventHandler isKindOfClass:[StandardTouchHandler class]]) {
 				// standard touch
-				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
-					ret = [[eventHandler delegate] ccTouchesEnded:touches withEvent:event];
+				if( [[eventHandler delegate] respondsToSelector:@selector(ccTouchesEnded:withEvent:)] ) {
+					if( [[eventHandler delegate] ccTouchesEnded:touches withEvent:event] == kEventHandled )
+						break;
+				}
 			} else {
 				// targeted
 				[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES handler:(TargetedTouchHandler*)eventHandler];
@@ -271,7 +271,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 	for( UITouch *touch in touches) {
 		if( [handler.claimedTouches containsObject:touch] ) {
 			
-			if( dispatchEvents && [handler.delegate respondsToSelector:selector] )
+			if( [handler.delegate respondsToSelector:selector] )
 				[handler.delegate performSelector:selector withObject:touch withObject:event];
 			
 			if( doUnclaim )

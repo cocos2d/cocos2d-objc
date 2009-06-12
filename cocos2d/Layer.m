@@ -66,7 +66,7 @@
 	if( touchEventType == kTouchEventStandard )
 		[[TouchDispatcher sharedDispatcher] addStandardEventHandler:self];
 	else if( touchEventType == kTouchEventTargeted )
-		[[TouchDispatcher sharedDispatcher] addStandardEventHandler:self];
+		[[TouchDispatcher sharedDispatcher] addTargetedEventHandler:self];
 
 	// the iterate over all the children
 	[super onEnter];
@@ -84,6 +84,10 @@
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 	
 	[super onExit];
+}
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	return YES;
 }
 @end
 

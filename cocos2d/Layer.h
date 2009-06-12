@@ -27,7 +27,7 @@
  - It can receive iPhone Touches
  - It can receive Accelerometer input
 */
-@interface Layer : CocosNode <UIAccelerometerDelegate, StandardTouchDelegate>
+@interface Layer : CocosNode <UIAccelerometerDelegate, StandardTouchDelegate, TargetedTouchDelegate>
 {
 	ccTouchEventType	touchEventType;
 
