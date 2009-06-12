@@ -747,20 +747,6 @@ static Director *_sharedDirector = nil;
 	}
 }
 
-#pragma mark Director Events
-
--(void) addEventHandler:(id<DirectTouchDelegate>) delegate
-{
-	NSAssert( delegate != nil, @"Director.addEventHandler: delegate must be non nil");	
-	[[TouchDispatcher sharedDispatcher] addEventHandler:delegate];
-}
-
--(void) removeEventHandler:(id<DirectTouchDelegate>) delegate
-{
-	NSAssert( delegate != nil, @"Director.removeEventHandler: delegate must be non nil");
-	[[TouchDispatcher sharedDispatcher] removeEventHandler:delegate];
-}
-
 #ifdef FAST_FPS_DISPLAY
 
 // display the FPS using a LabelAtlas

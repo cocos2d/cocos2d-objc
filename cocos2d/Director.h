@@ -241,13 +241,6 @@ and when to execute the Scenes
 -(void) startAnimation;
 
 
-// Events
-
-/** adds a delegate to the list of multi-touch handlers */
--(void) addEventHandler: (id<DirectTouchDelegate>) delegate;
-/** removes a delegate from the list of multi-touch handlers */
--(void) removeEventHandler: (id<DirectTouchDelegate>) delegate;
-
 // OpenGL Helper
 
 /** enables/disables OpenGL alpha blending */

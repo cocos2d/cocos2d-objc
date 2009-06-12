@@ -18,12 +18,12 @@
 
 @synthesize delegate, priority;
 
-+ (id)handlerWithDelegate:(id<DirectTouchDelegate>) aDelegate
++ (id)handlerWithDelegate:(id<StandardTouchDelegate>) aDelegate
 {
 	return [[[self alloc] initWithDelegate:aDelegate] autorelease];
 }
 
-- (id)initWithDelegate:(id<DirectTouchDelegate>) aDelegate
+- (id)initWithDelegate:(id<StandardTouchDelegate>) aDelegate
 {
 	if ((self = [super init]))
 		delegate = aDelegate;

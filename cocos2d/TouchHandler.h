@@ -21,14 +21,14 @@
  XXX: add description
 */
 @interface TouchHandler : NSObject {
-	id<DirectTouchDelegate> delegate;
+	id<StandardTouchDelegate> delegate;
 	int priority;
 }
 
-@property(nonatomic, readonly) id<DirectTouchDelegate> delegate;
+@property(nonatomic, readonly) id<StandardTouchDelegate> delegate;
 @property(nonatomic, readwrite) int priority; // default 0
 
-+ (id)handlerWithDelegate:(id<DirectTouchDelegate>) aDelegate;
-- (id)initWithDelegate:(id<DirectTouchDelegate>) aDelegate;
++ (id)handlerWithDelegate:(id<StandardTouchDelegate>) aDelegate;
+- (id)initWithDelegate:(id<StandardTouchDelegate>) aDelegate;
 
 @end

@@ -81,12 +81,12 @@ static TouchDispatcher *sharedDispatcher = nil;
 	[touchHandlers insertObject:handler atIndex:i];
 }
 
--(void) addEventHandler:(id<DirectTouchDelegate>) delegate
+-(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate
 {
-	[self addEventHandler:delegate priority:0];
+	[self addStandardEventHandler:delegate priority:0];
 }
 
--(void) addEventHandler:(id<DirectTouchDelegate>) delegate priority:(int) priority
+-(void) addStandardEventHandler:(id<StandardTouchDelegate>) delegate priority:(int) priority
 {
 	NSAssert( delegate != nil, @"TouchDispatcher.addEventHandler:priority:swallowTouches: -- Delegate must be non nil");	
 	
@@ -96,7 +96,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 	[self insertHandler:handler];
 }
 
--(void) removeEventHandler:(id<DirectTouchDelegate>) delegate
+-(void) removeEventHandler:(id<StandardTouchDelegate>) delegate
 {
 	if( delegate == nil )
 		return;
@@ -109,7 +109,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 		[touchHandlers removeObject:handler];
 }
 
--(void) setPriority:(int) priority forEventHandler:(id<DirectTouchDelegate>) delegate
+-(void) setPriority:(int) priority forEventHandler:(id<StandardTouchDelegate>) delegate
 {
 	NSAssert( delegate != nil, @"TouchDispatcher.setPriority:forEventHandler: -- Delegate must be non nil");	
 	

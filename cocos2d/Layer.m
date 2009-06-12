@@ -40,18 +40,33 @@
 
 		isTouchEnabled = NO;
 		isAccelerometerEnabled = NO;
+		
+		touchEventType = [self typeOfEventsToHandle];
 	}
 	
 	return self;
 }
 
+// callback
+-(ccTouchEventType) typeOfEventsToHandle
+{
+	return kTouchEventNone;
+}
+
 -(void) onEnter
 {
+	
+	// compatibility with v0.7
+	// will be removed in v0.8.1 or v0.9
+	if (isTouchEnabled)
+		touchEventType = kTouchEventStandard;
 
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
-	if( isTouchEnabled )
-		[[TouchDispatcher sharedDispatcher] addEventHandler:self];
+	if( touchEventType == kTouchEventStandard )
+		[[TouchDispatcher sharedDispatcher] addStandardEventHandler:self];
+	else if( touchEventType == kTouchEventTargeted )
+		[[TouchDispatcher sharedDispatcher] addStandardEventHandler:self];
 
 	// the iterate over all the children
 	[super onEnter];
@@ -62,7 +77,7 @@
 
 -(void) onExit
 {
-	if( isTouchEnabled )
+	if( touchEventType != kTouchEventNone )
 		[[TouchDispatcher sharedDispatcher] removeEventHandler:self];
 
 	if( isAccelerometerEnabled )

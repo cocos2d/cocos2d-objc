@@ -51,11 +51,14 @@ enum {
 	return s;
 }
 
+-(ccTouchEventType) typeOfEventsToHandle
+{
+	return kTouchEventStandard;
+}
+
 -(id) initWithItems: (MenuItem*) item vaList: (va_list) args
 {
 	if( (self=[super init]) ) {
-
-		isTouchEnabled = YES;
 
 		// menu in the center of the screen
 		CGSize s = [[Director sharedDirector] winSize];
@@ -88,7 +91,7 @@ enum {
 	//	[self alignItemsVertically];
 		
 		selectedItem = nil;
-		state = kMenuStateWaiting;
+//		state = kMenuStateWaiting;
 	}
 	
 	return self;
