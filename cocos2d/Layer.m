@@ -56,7 +56,7 @@
 {
 	return 0;
 }
--(BOOL) targetedTouchHandlerSwallowTouches
+-(BOOL) targetedTouchHandlerSwallowsTouches
 {
 	return YES;
 }
@@ -76,11 +76,11 @@
 	TouchHandler *touchHandler = nil;
 	if( touchHandlerType == kTouchHandlerStandard ) {
 		touchHandler = [StandardTouchHandler handlerWithDelegate:self priority:[self priorityOfTouchHandler]];
-		[[TouchDispatcher sharedDispatcher] addTouchHandler:touchHandler];
+		[[TouchDispatcher sharedDispatcher] addHandler:touchHandler];
 	}
 	else if( touchHandlerType == kTouchHandlerTargeted ) {
-		touchHandler = [TargetedTouchHandler handlerWithDelegate:self priority:[self priorityOfTouchHandler] swallowsTouches:[self targetedTouchHandlerSwallowTouches]];
-		[[TouchDispatcher sharedDispatcher] addTouchHandler:touchHandler];
+		touchHandler = [TargetedTouchHandler handlerWithDelegate:self priority:[self priorityOfTouchHandler] swallowsTouches:[self targetedTouchHandlerSwallowsTouches]];
+		[[TouchDispatcher sharedDispatcher] addHandler:touchHandler];
 	}
 
 	// the iterate over all the children
@@ -93,7 +93,7 @@
 -(void) onExit
 {
 	if( touchHandlerType != kTouchHandlerNone )
-		[[TouchDispatcher sharedDispatcher] removeTouchHandler:self];
+		[[TouchDispatcher sharedDispatcher] removeHandlerForDelegate:self];
 
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];

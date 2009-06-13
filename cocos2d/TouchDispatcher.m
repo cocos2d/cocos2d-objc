@@ -69,22 +69,30 @@ static TouchDispatcher *sharedDispatcher = nil;
 // handlers management
 //
 
-#pragma mark add event handlers
+#pragma mark Adding handlers
 
--(void) addTouchHandler:(TouchHandler*)handler
+-(void) addHandler:(TouchHandler*) handler
 {
 	NSUInteger i = 0;
 	for( TouchHandler *h in touchHandlers ) {
-		if( h.priority >= handler.priority )
-			break;
-		i++;
+		if( h.priority < handler.priority )
+			i++;
+		
+		if( h.delegate == handler.delegate )
+			[NSException raise:NSInvalidArgumentException format:@"Delegate already added to touch dispatcher."];
 	}
 	[touchHandlers insertObject:handler atIndex:i];
 }
 
-#pragma mark remove event handlers
+#pragma mark Removing handlers
 
--(void) removeTouchHandler:(id) delegate
+-(void) removeHandler:(TouchHandler *) handler
+{
+	if( handler != nil )
+		[touchHandlers removeObject:handler];
+}
+
+-(void) removeHandlerForDelegate:(id) delegate
 {
 	if( delegate == nil )
 		return;
@@ -93,36 +101,48 @@ static TouchDispatcher *sharedDispatcher = nil;
 	for( handler in touchHandlers )
 		if( handler.delegate ==  delegate ) break;
 	
-	if( handler != nil )
-		[touchHandlers removeObject:handler];
+	[self removeHandler:handler];
 }
 
--(void) removeAllTouchHandlers
+-(void) removeAllHandlers
 {
 	[touchHandlers removeAllObjects];
 }
 
-#pragma mark priority event handlers
+#pragma mark Changing priority of added handlers
 
--(void) setPriority:(int) priority forTouchHandler:(id) delegate
+-(void) setPriority:(int) priority forHandler:(TouchHandler *) handler
 {
-	NSAssert( delegate != nil, @"TouchDispatcher.setPriority:forEventHandler: -- Delegate must be non nil");	
-	
-	NSUInteger i = [touchHandlers indexOfObject:delegate];
-	if( i == NSNotFound )
-		[NSException raise:NSInvalidArgumentException format:@"Delegate not found"];
-	
-	TouchHandler *handler = [touchHandlers objectAtIndex:i];
+	if( handler == nil )
+		[NSException raise:NSInvalidArgumentException format:@"Got nil handler"];
+	if( ![touchHandlers containsObject:handler] )
+		[NSException raise:NSInvalidArgumentException format:@"Handler not found"];
 	
 	if( handler.priority != priority ) {
-		[handler retain];
-		[touchHandlers removeObjectAtIndex:i];
-		
 		handler.priority = priority;
-		[self addTouchHandler:handler];
+		
+		[handler retain];
+		[self removeHandler:handler];
+		[self addHandler:handler];
 		[handler release];
 	}
 }
+
+-(void) setPriority:(int) priority forDelegate:(id) delegate
+{
+	if( delegate == nil )
+		[NSException raise:NSInvalidArgumentException format:@"Got nil delegate"];
+	
+	TouchHandler *handler = nil;
+	for( handler in touchHandlers )
+		if( handler.delegate ==  delegate ) break;
+	
+	if( handler == nil )
+		[NSException raise:NSInvalidArgumentException format:@"No handler for given delegate"];
+	
+	[self setPriority:priority forHandler:handler];
+}
+
 
 //
 // dispatch events
@@ -130,56 +150,60 @@ static TouchDispatcher *sharedDispatcher = nil;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )  {
-		NSArray *copyArray = [touchHandlers copy];
-		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler ccTouchesBegan:copyTouches withEvent:event] == kEventHandled )
+		NSArray *handlers = [touchHandlers copy];
+		NSMutableSet *mutableTouches = [touches mutableCopy];
+		
+		for( TouchHandler *handler in handlers ) {
+			if( [handler ccTouchesBegan:mutableTouches withEvent:event] == kEventHandled )
 				break;
 		}
-		[copyTouches release];
-		[copyArray release];
-	}	
+		[handlers release];
+		[mutableTouches release];
+	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )  {
-		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
-		NSArray *copyArray = [touchHandlers copy];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler ccTouchesMoved:copyTouches withEvent:event] == kEventHandled )
+		NSArray *handlers = [touchHandlers copy];
+		NSMutableSet *mutableTouches = [touches mutableCopy];
+		
+		for( TouchHandler *handler in handlers ) {
+			if( [handler ccTouchesMoved:mutableTouches withEvent:event] == kEventHandled )
 				break;
 		}
-		[copyTouches release];
-		[copyArray release];
-	}	
+		[handlers release];
+		[mutableTouches release];
+	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )  {
-		NSArray *copyArray = [touchHandlers copy];
-		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler ccTouchesEnded:touches withEvent:event] == kEventHandled )
+		NSArray *handlers = [touchHandlers copy];
+		NSMutableSet *mutableTouches = [touches mutableCopy];
+		
+		for( TouchHandler *handler in handlers ) {
+			if( [handler ccTouchesEnded:mutableTouches withEvent:event] == kEventHandled )
 				break;
 		}
-		[copyTouches release];
-		[copyArray release];
-	}	
+		[handlers release];
+		[mutableTouches release];
+	}
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )  {
-		NSArray *copyArray = [touchHandlers copy];
-		NSMutableSet *copyTouches = [[NSMutableSet setWithSet:touches] retain];
-		for( id eventHandler in copyArray ) {
-			if( [eventHandler ccTouchesCancelled:touches withEvent:event] == kEventHandled )
+		NSArray *handlers = [touchHandlers copy];
+		NSMutableSet *mutableTouches = [touches mutableCopy];
+		
+		for( TouchHandler *handler in handlers ) {
+			if( [handler ccTouchesCancelled:mutableTouches withEvent:event] == kEventHandled )
 				break;
 		}
-		[copyTouches release];
-		[copyArray release];
+		[handlers release];
+		[mutableTouches release];
 	}
 }
 @end

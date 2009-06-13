@@ -648,7 +648,7 @@ static Director *_sharedDirector = nil;
 
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	[[TouchDispatcher sharedDispatcher] removeAllTouchHandlers];
+	[[TouchDispatcher sharedDispatcher] removeAllHandlers];
 
 	[self stopAnimation];
 	[self detach];
