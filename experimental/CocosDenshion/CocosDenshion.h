@@ -22,6 +22,9 @@
  */
 
 /* Changelog
+1.5 (2009.06.13) * Added preLoadBackgroundMusic method to CDAudioManager to allow background music to be preloaded
+                 * Fixed bug with sound engine locking up when trying to load non existent file asynchronously 
+                   (Thanks to Edison's Labs for reporting)
 1.4 (2009.06.10) * Implemented asynchronous initialisation of audio manager
                  * Implemented asynchronous loading of sound buffers
                  * Fixed problem with mute button being ignored if game played background music (Thanks to Sebastien Flory for reporting)

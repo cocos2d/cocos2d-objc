@@ -192,6 +192,31 @@ static BOOL configured = FALSE;
 	}	
 }	
 
+//Load background music ready for playing
+-(void) preloadBackgroundMusic:(NSString*) filename
+{
+	if (!willPlayBackgroundMusic) {
+		CCLOG(@"Denshion: preload background music aborted because audio is not exclusive");
+		return;
+	}	
+	
+	if (![filename isEqualToString:lastBackgroundMusicFilename]) {
+		CCLOG(@"Denshion: preloading new or different background music file");
+		if(backgroundMusic != nil)
+		{
+			[self stopBackgroundMusic];
+		}
+		NSString * path = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
+		backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+		
+		if (backgroundMusic != nil) {
+			[backgroundMusic prepareToPlay];
+			backgroundMusic.delegate = self;
+		}	
+		lastBackgroundMusicFilename = [filename copy];
+	}	
+}	
+
 -(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop
 {
 	
@@ -226,8 +251,8 @@ static BOOL configured = FALSE;
 		if (realBackgroundMusicVolume >= 0.0f) {
 			backgroundMusic.volume = realBackgroundMusicVolume;
 		}
-		backgroundMusic.numberOfLoops = (loop ? -1:0);
 #endif		
+		backgroundMusic.numberOfLoops = (loop ? -1:0);//Reset loop count because track may have been preloaded
 		[backgroundMusic play];
 	}	
 }
