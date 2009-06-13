@@ -36,14 +36,18 @@
 /** Whether or not the events are going to be dispatched. Default: YES */
 @property (readwrite, assign) BOOL dispatchEvents;
 
-/** Adds touch handler to the list of multi-touch event handlers */
--(void) addTouchHandler:(TouchHandler*)touchHandler;
+/** Adds a touch handler to the dispatcher's list */
+-(void) addHandler:(TouchHandler*) touchHandler;
+/** Removes a touch handler. */
+-(void) removeHandler:(TouchHandler *) touchHandler;
+/** Convenience method that works on the delegate's corresponding handler */
+-(void) removeHandlerForDelegate:(id) delegate;
+/** Removes all touch handlers. */
+-(void) removeAllHandlers;
 /** Changes the priority of a previously added touch handler. The lower the number,
  the higher the priority */
--(void) setPriority:(int) priority forTouchHandler:(id) delegate;
-/** Removes a delegate from the list of multi-touch touch handlers. */
--(void) removeTouchHandler:(id) delegate;
-/** Removes all multi-touch event handlers. */
--(void) removeAllTouchHandlers;
+-(void) setPriority:(int) priority forHandler:(TouchHandler *) touchHandler;
+/** Convenience method that works on the delegate's corresponding handler */
+-(void) setPriority:(int) priority forDelegate:(id) delegate;
 
 @end

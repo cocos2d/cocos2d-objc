@@ -28,13 +28,13 @@
 
 - (void)onEnter
 {
-	[[TouchDispatcher sharedDispatcher] addTouchHandler:[TargetedTouchHandler handlerWithDelegate:self priority:0 swallowsTouches:YES]];
+	[[TouchDispatcher sharedDispatcher] addHandler:[TargetedTouchHandler handlerWithDelegate:self priority:0 swallowsTouches:YES]];
 	[super onEnter];
 }
 
 - (void)onExit
 {
-	[[TouchDispatcher sharedDispatcher] removeTouchHandler:self];
+	[[TouchDispatcher sharedDispatcher] removeHandlerForDelegate:self];
 	[super onExit];
 }	
 

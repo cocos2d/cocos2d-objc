@@ -47,10 +47,11 @@
  @since v0.8
  */
 -(int) priorityOfTouchHandler;
-/** whether or not the "targeted" handler will swallow the touches
+/** whether or not the "targeted" handler will swallow the touches.
+ Ignored unless typeOfTouchHandler is kTouchEventTargeted.
  @since v0.8
  */
--(BOOL) targetedTouchHandlerSwallowTouches;
+-(BOOL) targetedTouchHandlerSwallowsTouches;
 
 //! whether or not it will receive Touch events
 @property(nonatomic,assign) BOOL isTouchEnabled __attribute__ ((deprecated));

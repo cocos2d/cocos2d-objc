@@ -173,8 +173,11 @@ enum {
 {
 	return kTouchHandlerTargeted;
 }
-
--(BOOL) targetedTouchHandlerSwallowTouches
+-(int) priorityOfTouchHandler
+{
+	return INT_MIN + 1;
+}
+-(BOOL) targetedTouchHandlerSwallowsTouches
 {
 	return YES;
 }
