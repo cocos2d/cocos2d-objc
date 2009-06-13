@@ -57,6 +57,7 @@
 
 void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate)
 {
+	
 	OSStatus						err = noErr;	
 	SInt64							theFileLengthInFrames = 0;
 	AudioStreamBasicDescription		theFileFormat;

@@ -63,6 +63,7 @@ typedef enum {
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
 -(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop;
+-(void) preloadBackgroundMusic:(NSString*) filename;
 -(void) stopBackgroundMusic;
 -(void) pauseBackgroundMusic;
 -(void) rewindBackgroundMusic;

@@ -289,10 +289,11 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		return FALSE;
 	}	
 
-	NSBundle*				bundle = [NSBundle mainBundle];
-	
-	// get some audio data from a wave file
-	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:fileName ofType:fileType]] retain];
+	CFURLRef fileURL = nil;
+	NSString * path = [[NSBundle mainBundle] pathForResource:fileName ofType:fileType];
+	if (path) {
+		fileURL = (CFURLRef)[[NSURL fileURLWithPath:path] retain];
+	}
 	
 	if (fileURL)
 	{
