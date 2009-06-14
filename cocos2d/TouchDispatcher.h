@@ -12,10 +12,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
-#import "Layer.h"
 #import "TouchDelegateProtocol.h"
-#import "TouchHandler.h"
 #import "Support/EAGLView.h"
 
 
@@ -36,18 +33,18 @@
 /** Whether or not the events are going to be dispatched. Default: YES */
 @property (readwrite, assign) BOOL dispatchEvents;
 
-/** Adds a touch handler to the dispatcher's list */
--(void) addHandler:(TouchHandler*) touchHandler;
-/** Removes a touch handler. */
--(void) removeHandler:(TouchHandler *) touchHandler;
-/** Convenience method that works on the delegate's corresponding handler */
--(void) removeHandlerForDelegate:(id) delegate;
-/** Removes all touch handlers. */
--(void) removeAllHandlers;
-/** Changes the priority of a previously added touch handler. The lower the number,
+/** Adds a standard touch delegate to the dispatcher's list.
+ See StandardTouchDelegate description. */
+-(void) addDelegate:(id<StandardTouchDelegate>) delegate priority:(int)priority;
+/** Adds a targeted touch delegate to the dispatcher's list.
+ See TargetedTouchDelegate description. */
+-(void) addTargetedDelegate:(id<TargetedTouchDelegate>) delegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
+/** Removes a touch delegate. */
+-(void) removeDelegate:(id) delegate;
+/** Removes all touch delegates. */
+-(void) removeAllDelegates;
+/** Changes the priority of a previously added delegate. The lower the number,
  the higher the priority */
--(void) setPriority:(int) priority forHandler:(TouchHandler *) touchHandler;
-/** Convenience method that works on the delegate's corresponding handler */
 -(void) setPriority:(int) priority forDelegate:(id) delegate;
 
 @end

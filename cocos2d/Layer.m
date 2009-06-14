@@ -73,15 +73,10 @@
 
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
-	TouchHandler *touchHandler = nil;
-	if( touchHandlerType == kTouchHandlerStandard ) {
-		touchHandler = [StandardTouchHandler handlerWithDelegate:self priority:[self priorityOfTouchHandler]];
-		[[TouchDispatcher sharedDispatcher] addHandler:touchHandler];
-	}
-	else if( touchHandlerType == kTouchHandlerTargeted ) {
-		touchHandler = [TargetedTouchHandler handlerWithDelegate:self priority:[self priorityOfTouchHandler] swallowsTouches:[self targetedTouchHandlerSwallowsTouches]];
-		[[TouchDispatcher sharedDispatcher] addHandler:touchHandler];
-	}
+	if( touchHandlerType == kTouchHandlerStandard )
+		[[TouchDispatcher sharedDispatcher] addDelegate:self priority:[self priorityOfTouchHandler]];
+	else if( touchHandlerType == kTouchHandlerTargeted )
+		[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:[self priorityOfTouchHandler] swallowsTouches:[self targetedTouchHandlerSwallowsTouches]];
 
 	// the iterate over all the children
 	[super onEnter];
@@ -93,7 +88,7 @@
 -(void) onExit
 {
 	if( touchHandlerType != kTouchHandlerNone )
-		[[TouchDispatcher sharedDispatcher] removeHandlerForDelegate:self];
+		[[TouchDispatcher sharedDispatcher] removeDelegate:self];
 
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
