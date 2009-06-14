@@ -14,7 +14,6 @@
 
 #import "TouchDispatcher.h"
 #import "TouchHandler.h"
-#import "Director.h"
 
 @implementation TouchDispatcher
 
@@ -84,63 +83,60 @@ static TouchDispatcher *sharedDispatcher = nil;
 	[touchHandlers insertObject:handler atIndex:i];
 }
 
-#pragma mark Removing handlers
-
--(void) removeHandler:(TouchHandler *) handler
+-(void) addDelegate:(id<StandardTouchDelegate>) delegate priority:(int)priority
 {
-	if( handler != nil )
-		[touchHandlers removeObject:handler];
+	TouchHandler *handler = [StandardTouchHandler handlerWithDelegate:delegate priority:priority];
+	[self addHandler:handler];
 }
 
--(void) removeHandlerForDelegate:(id) delegate
+-(void) addTargetedDelegate:(id<TargetedTouchDelegate>) delegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches
+{
+	TouchHandler *handler = [TargetedTouchHandler handlerWithDelegate:delegate priority:priority swallowsTouches:swallowsTouches];
+	[self addHandler:handler];
+}
+
+#pragma mark Removing handlers
+
+-(void) removeDelegate:(id) delegate
 {
 	if( delegate == nil )
 		return;
 	
-	TouchHandler *handler = nil;
-	for( handler in touchHandlers )
-		if( handler.delegate ==  delegate ) break;
-	
-	[self removeHandler:handler];
+	for( TouchHandler *handler in touchHandlers ) {
+		if( handler.delegate ==  delegate ) {
+			[touchHandlers removeObject:handler];
+			break;
+		}
+	}
 }
 
--(void) removeAllHandlers
+-(void) removeAllDelegates
 {
 	[touchHandlers removeAllObjects];
 }
 
 #pragma mark Changing priority of added handlers
 
--(void) setPriority:(int) priority forHandler:(TouchHandler *) handler
+-(void) setPriority:(int) priority forDelegate:(id) delegate
 {
+	if( delegate == nil )
+		[NSException raise:NSInvalidArgumentException format:@"Got nil touch delegate"];
+	
+	TouchHandler *handler = nil;
+	for( handler in touchHandlers )
+		if( handler.delegate == delegate ) break;
+	
 	if( handler == nil )
-		[NSException raise:NSInvalidArgumentException format:@"Got nil handler"];
-	if( ![touchHandlers containsObject:handler] )
-		[NSException raise:NSInvalidArgumentException format:@"Handler not found"];
+		[NSException raise:NSInvalidArgumentException format:@"Touch delegate not found"];
 	
 	if( handler.priority != priority ) {
 		handler.priority = priority;
 		
 		[handler retain];
-		[self removeHandler:handler];
+		[touchHandlers removeObject:handler];
 		[self addHandler:handler];
 		[handler release];
 	}
-}
-
--(void) setPriority:(int) priority forDelegate:(id) delegate
-{
-	if( delegate == nil )
-		[NSException raise:NSInvalidArgumentException format:@"Got nil delegate"];
-	
-	TouchHandler *handler = nil;
-	for( handler in touchHandlers )
-		if( handler.delegate ==  delegate ) break;
-	
-	if( handler == nil )
-		[NSException raise:NSInvalidArgumentException format:@"No handler for given delegate"];
-	
-	[self setPriority:priority forHandler:handler];
 }
 
 

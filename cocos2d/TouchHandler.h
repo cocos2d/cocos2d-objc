@@ -12,9 +12,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
 #import "TouchDelegateProtocol.h"
-#import "Support/EAGLView.h"
 
 /**
  TouchHandler

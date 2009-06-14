@@ -28,6 +28,8 @@
 
 - (id)initWithDelegate:(id) aDelegate priority:(int)aPriority
 {
+	NSAssert(aDelegate != nil, @"Touch delegate may not be nil");
+	
 	if ((self = [super init])) {
 		delegate = aDelegate;
 		priority = aPriority;
