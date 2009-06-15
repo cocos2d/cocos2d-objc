@@ -35,7 +35,7 @@
 
 /** Adds a standard touch delegate to the dispatcher's list.
  See StandardTouchDelegate description. */
--(void) addDelegate:(id<StandardTouchDelegate>) delegate priority:(int)priority;
+-(void) addStandardDelegate:(id<StandardTouchDelegate>) delegate priority:(int)priority;
 /** Adds a targeted touch delegate to the dispatcher's list.
  See TargetedTouchDelegate description. */
 -(void) addTargetedDelegate:(id<TargetedTouchDelegate>) delegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
