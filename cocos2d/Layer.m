@@ -40,45 +40,24 @@
 
 		isTouchEnabled = NO;
 		isAccelerometerEnabled = NO;
-		
-		touchHandlerType = kTouchHandlerNone;
 	}
 	
 	return self;
 }
 
-// callback
--(ccTouchHandlerType) typeOfTouchHandler
+-(void) registerWithTouchDispatcher
 {
-	return kTouchHandlerNone;
-}
--(int) priorityOfTouchHandler
-{
-	return 0;
-}
--(BOOL) targetedTouchHandlerSwallowsTouches
-{
-	return YES;
+	[[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
 }
 
 -(void) onEnter
 {
-	
-	// compatibility with v0.7
-	// will be removed in v0.8.1 or v0.9
-	if (isTouchEnabled)
-		touchHandlerType = kTouchHandlerStandard;
-	else
-		touchHandlerType = [self typeOfTouchHandler];
-
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
-	if( touchHandlerType == kTouchHandlerStandard )
-		[[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:[self priorityOfTouchHandler]];
-	else if( touchHandlerType == kTouchHandlerTargeted )
-		[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:[self priorityOfTouchHandler] swallowsTouches:[self targetedTouchHandlerSwallowsTouches]];
-
-	// the iterate over all the children
+	if (isTouchEnabled)
+		[self registerWithTouchDispatcher];
+	
+	// then iterate over all the children
 	[super onEnter];
 
 	if( isAccelerometerEnabled )
@@ -87,9 +66,8 @@
 
 -(void) onExit
 {
-	if( touchHandlerType != kTouchHandlerNone )
-		[[TouchDispatcher sharedDispatcher] removeDelegate:self];
-
+	[[TouchDispatcher sharedDispatcher] removeDelegate:self];
+	
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 	

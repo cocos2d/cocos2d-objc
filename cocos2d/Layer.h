@@ -29,34 +29,20 @@
 */
 @interface Layer : CocosNode <UIAccelerometerDelegate, StandardTouchDelegate, TargetedTouchDelegate>
 {
-	ccTouchHandlerType	touchHandlerType;
-
-	BOOL isTouchEnabled;	
+	BOOL isTouchEnabled;
 	BOOL isAccelerometerEnabled;
 }
 
-/** callback that is called to detect what kind of touch will be propagated
- - kTouchEventNone: None events are forwarded (default)
- - kTouchEventStandard: "Standard" events will be forwarded, like in v0.7
- - kTouchEventTargeted: targeted events will be forwarded
- @since v0.8
+/** If isTouchEnabled, this method is called onEnter. Override it to change the
+ way Layer receives touch events.
+ ( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
  */
--(ccTouchHandlerType) typeOfTouchHandler;
-/** priority of the touch handler.
- The lower the number, the higher the priority
- @since v0.8
- */
--(int) priorityOfTouchHandler;
-/** whether or not the "targeted" handler will swallow the touches.
- Ignored unless typeOfTouchHandler is kTouchEventTargeted.
- @since v0.8
- */
--(BOOL) targetedTouchHandlerSwallowsTouches;
+-(void) registerWithTouchDispatcher;
 
-//! whether or not it will receive Touch events
-@property(nonatomic,assign) BOOL isTouchEnabled __attribute__ ((deprecated));
-//! whether or not it will receive Accelerometer events
-@property(nonatomic,assign) BOOL isAccelerometerEnabled __attribute__ ((deprecated));
+// whether or not it will receive Touch events
+@property(nonatomic,assign) BOOL isTouchEnabled;
+// whether or not it will receive Accelerometer events
+@property(nonatomic,assign) BOOL isAccelerometerEnabled;
 
 @end
 

@@ -57,25 +57,9 @@
 - (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 @end
 
-/** types of events to handle
- @since v0.8
- */
-typedef enum
-{
-	/// No Touch events will be forwarded (default)
-	kTouchHandlerNone,
-	/// Standard events will be forwarded (like in v0.7)
-	kTouchHandlerStandard,
-	/// Targeted events will be forwarded
-	kTouchHandlerTargeted,
-} ccTouchHandlerType;
-
-
 enum {
 	/// return kEventHandled if the event should NOT be forwarded to the next handler in the chain
 	kEventHandled = YES,
 	/// return kEventIgnored if the event should be forwarded to the next handler in the chain
 	kEventIgnored = NO,
 };
-
-

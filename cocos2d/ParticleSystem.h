@@ -25,7 +25,6 @@ enum {
 typedef enum {
 	kPositionTypeLocal,
 	kPositionTypeWorld,
-	kPositionTypeCenterOfGravity,
 } tPositionType;
 
 /** Structure that contains the values of each particle
