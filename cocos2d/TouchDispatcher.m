@@ -83,7 +83,7 @@ static TouchDispatcher *sharedDispatcher = nil;
 	[touchHandlers insertObject:handler atIndex:i];
 }
 
--(void) addDelegate:(id<StandardTouchDelegate>) delegate priority:(int)priority
+-(void) addStandardDelegate:(id<StandardTouchDelegate>) delegate priority:(int)priority
 {
 	TouchHandler *handler = [StandardTouchHandler handlerWithDelegate:delegate priority:priority];
 	[self addHandler:handler];
