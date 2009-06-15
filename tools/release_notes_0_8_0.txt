@@ -1,117 +1,132 @@
-
-cocos2d for iPhone v0.8 (beta) Release Notes
-============================================
-
-WARNING:
- - This is a beta version. It means:
-   - Features might be in an incomplete state
-   - It has less testing than final versions (more bugs?)
-   - The API in this versions is not final
+===== cocos2d for iPhone v0.8 (beta) Release Notes =====
 
 
-New features
-============
-  - Touch Dispatcher:
-     A singleton that dispatches touches like in v0.7.x or one touch at the time
-     Example:
-         cocos2d/Menu.m or
-         tests/TouchTest/
-     cocos2d uses it internally for the menu handling.
-
-  - Particles:
-      Support for big particles: particles bigger than 64 pixels
-      Support for spinning particles and varying size particles
-      Support for Local and World coordinates
-      Example:
-        tests/ParticleTest.m
-
-  - Box2d physics:
-      Box2d, a c++ physics engine was integrated within cocos2d
-      http://www.box2d.org/
-      Example:
-        tests/Box2dTest.mm
-
-  - CocosDenshin sound engine:
-      A new sound engine was integrated into cocos2d.
-      One of the main features is simplicity and the capacity to play 32 sounds simultaneously.
-      Example:
-        experimental/CocosDenshion
-
-  - Bitmap fonts:
-      A new way to create Labels from TTF fonts
-      Example:
-        tests/AtlasTest.m
+**WARNING**:
+This is a beta version. It means:
+  * Features might be in an incomplete state
+  * It has less testing than final versions (more bugs?)
+  * The API in this versions is not final
 
 
-Compatibility issues with v0.7.2 / v0.7.3
-=========================================
+==== New features ====
 
-Deprecated API
-==============
+=== Touch Dispatcher ===
+A singleton that dispatches touches like in v0.7.x (Standard) or one touch at the time (Targeted).
+The benefits of using Targeted touches is that you only receive the events (begin, move, end, cancel) of the touch that you claim.
+Using Targeted touches simplifies the touch handling code both in multi-touch and single-touch games.
+Unless you need a complex touch handling code, the use of Targeted touches is recommended.
+
+Example:
+   * cocos2d/Menu.m or
+   * tests/TouchTest/
+cocos2d uses it internally for the menu handling.
+
+=== Box2d physics ===
+[[http://www.box2d.org/Box2d|Box2d]], a c++ physics engine, was integrated within cocos2d.
+Example:
+   * tests/Box2dTest.mm
+This feature is experimental.
+
+=== CocosDenshion sound engine ===
+A new sound engine was integrated into cocos2d.
+One of the main features is simplicity and the capacity to play 32 sounds simultaneously.
+Example:
+   * experimental/CocosDenshion
+This feature is experimental.
+
+=== Bitmap fonts ===
+A new way to create Labels from TTF fonts was added.
+You can create nice Labels with gradients, shadows, and other effects.
+Also you can manipulate each letter individually, like if they were AtlasSprites.
+To create the fonts, you can use this [[http://slick.cokeandcode.com/demos/hiero.jnlp|font editor]].
+Example:
+   * tests/AtlasTest.m
+
+
+==== Improved features ====
+
+=== Particles ===
+The particle engine was refactored, and now there is one __system__ with 2 subclasses: ''PointParticleSystem'' and ''QuadParticleSystem''.
+Benefits of ''QuadParticleSystem'':
+   * Support for big particles: particles bigger than 64 pixels
+   * Support for spinning particles and varying size particles
+
+New feature added to the main __system__:
+  * Support for Local and World coordinates
+Example:
+  * tests/ParticleTest.m
+
+=== Alias/Antialias ===
+The API to manipulate the alias / antialias property of a texture was refactored.
+Now it is possible to change that property by calling instance methods, instead of calling class methods, making the API simpler.
+For further information see:
+   * tests/Texture2dText.m
+Also read __Compatibility issues__ in this same document
+
+=== AnchorPoint ===
+A new property, called anchorPoint was added to CocosNode.
+It lets you modify the anchor point of a given node by using __relative__ coordinates. The default value is 0.5,0.5 (center of the node).
+The transformAnchor property was removed.
+Examples:
+   * tests/cocosNodeTest.m 
+Also read __Compatibility issues__ in this same document
+
+==== Compatibility issues with v0.7.2 / v0.7.3 ====
+
+
+=== Deprecated API ===
 
 All the deprecated functions from v0.7.2 / v0.7.3 were removed.
 
 So, all the changes that were "optional" in v0.7.2 / v0.7.3 are required in v0.8.0
 
 For more information read the following files:
-  convert_0_7_0_to_0_7_1.txt
-  convert_0_7_1_to_0_7_2.txt
+  * convert_0_7_0_to_0_7_1.txt
+  * convert_0_7_1_to_0_7_2.txt
 
 
-COMPULSORY CHANGES
-==================
+==== Compulsory Changes ====
 
-Director
---------
+
+=== Director ===
 
 Director doesn't handle the touches anymore.
 
-[OLD]
+Old:
+<code objc>
     [[Director sharedDirector] setEventsEnabled: state];
+</code>
 
-[NEW]
+New:
+<code objc>
     [[TouchDispatcher sharedDispatcher] setDispatchEvents: state];
+</code>
 
 
-Textures
---------
-
-a)
-    Default blend function is: (GL_ONE, GL_ONE_MINUS_SRC)
-    cocos2d takes care if your images is premultiplied or not.
-    If you were handling them manually, you should remove that code.
-    Also, you can change the blend function manually:
-        sprite.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
+=== Textures ===
 
 
-b) Opacity:
-    xxx
-    
+== Blend function ==
+The default blend function is: (GL_ONE, GL_ONE_MINUS_SRC).
+cocos2d takes care if your images is premultiplied or not.
+If you were handling them manually, you should remove that code.
+Also, you can change the blend function manually:
+<code objc>
+sprite.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
+</code>
+Example:
+  * tests/Texture2dTest.m
 
 
-CocosNode
----------
+== Opacity ==
+doesOpacityModifyRGB added
+FIXME      
 
-[OLD]
-    // image size is(400,300)
-    [node setTransformAnchor: ccp(200,200)];        // absolute pixels
-
-[NEW]
-    // image size is(400,300)
-    [node setAnchorPoint:ccp( 0.5f, 2/3.0f)];       // relative (1,1) is top-right
-                                                    // (0,0) is bottom-left
-                                                    // (0.5f, 0.5f) is the middle
-
-    transformAnchor can be read, but cannot be written anymore
-
-
-Texture2D Alias/AntiAlias
--------------------------
-
+== Alias/AntiAlias ==
 The Alias/AntiAlias API is no longer a class method, but an instance method.
 
-[OLD]:
-
+Old:
+<code objc>
 	// Aliased images
 	[Texture2D saveTexParameters];
 	[Texture2D setAliasTexParameters];
@@ -119,80 +134,102 @@ The Alias/AntiAlias API is no longer a class method, but an instance method.
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 	
 	[Texture2D restoreTexParameters];
+</code>
 
-
-[NEW]
-
+New:
+<code objc>
 	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 
 	// Aliased images
-    [tilemap.textureAtlas.texture setAliasTexParameters];
+        [tilemap.textureAtlas.texture setAliasTexParameters];
+</code>
 
 
-Parallax Scroller
------------------
+
+=== AnchorPoint ===
+
+Old:
+<code objc>
+    // image size is(400,300)
+    [node setTransformAnchor: ccp(200,200)];        // absolute pixels
+</code>
+
+New:
+<code objc>
+    // image size is(400,300)
+    [node setAnchorPoint:ccp( 0.5f, 2/3.0f)];       // relative (1,1) is top-right
+                                                    // (0,0) is bottom-left
+                                                    // (0.5f, 0.5f) is the middle
+</code>
+transformAnchor can be read, but cannot be written anymore
+
+
+=== Parallax Scroller ===
 
 (issue #358)
 
-[OLD]
-
-id node = [CocosNode node];
-id child1 = [Sprite ...];
-[node addChild z:0 parallaxRatio:ccp(ratioX, ratioY)];
-
-
-[NEW]
-
-id parallax = [ParallaxNode node];          // <-- ParallaxNode is the only one that suports parallax ratio 
-id child1 = [Sprite ...];
-[node addChild z:0 parallaxRatio:ccp(ratioX, ratioY) positionOffset:ccp(offsetX,offsetY)];
+Old:
+<code objc>
+    id node = [CocosNode node];
+    id child1 = [Sprite ...];
+    [node addChild z:0 parallaxRatio:ccp(ratioX, ratioY)];
+</code>
 
 
-
-New Files
----------
-    BitmapFontAtlas.h
-    BitmapFontAtlas.m
-    ParticleExamples.h
-    ParticleExamples.m
-    ParticleSystem.h
-    ParticleSystem.m
-    PointParticleSystem.h
-    PointParticleSystem.m
-    QuadParticleSystem.h
-    QuadParticleSystem.m
-    ParallaxNode.h
-    ParallaxNode.m
-    TouchDispatcher.h
-    TouchDispatcher.m
-    TouchHandler.h
-    TouchHandler.m
-    TouchDelegateProtocol.h
-
-
-Removed Files
--------------
-    Particle.h
-    Particle.m
-    ParticleSystems.h
-    ParticleSystems.m
-    CocosNodeExtras.h
-    CocosNodeExtras.m
+New:
+<code objc>
+    id parallax = [ParallaxNode node];          // <-- ParallaxNode is the only one that suports parallax ratio 
+    id child1 = [Sprite ...];
+    [node addChild z:0 parallaxRatio:ccp(ratioX, ratioY) positionOffset:ccp(offsetX,offsetY)];
+</code>
 
 
 
-OPTIONAL CHANGES
-================
+=== New Files ===
+The following files were added to cocos2d:
+   * BitmapFontAtlas.h
+   * BitmapFontAtlas.m
+   * ParticleExamples.h
+   * ParticleExamples.m
+   * ParticleSystem.h
+   * ParticleSystem.m
+   * PointParticleSystem.h
+   * PointParticleSystem.m
+   * QuadParticleSystem.h
+   * QuadParticleSystem.m
+   * ParallaxNode.h
+   * ParallaxNode.m
+   * TouchDispatcher.h
+   * TouchDispatcher.m
+   * TouchHandler.h
+   * TouchHandler.m
+   * TouchDelegateProtocol.h
 
-Director
---------
 
-[OLD]
+=== Removed Files ===
+The following files were removed from cocos2d:
+   * Particle.h
+   * Particle.m
+   * ParticleSystems.h
+   * ParticleSystems.m
+   * CocosNodeExtras.h
+   * CocosNodeExtras.m
+
+
+==== Optional Changes ====
+
+=== Director ===
+
+Old:
+<code objc>
     BOOL b = [[Director sharedDirector] landscape];
     [[Director sharedDirector] setLandscape: YES];
     [[Director sharedDirector] setLandscape: NO];
+</code>
 
-[NEW]
+New:
+<code objc>
     ccDeviceOrientation = [[Director sharedDirector] deviceOrientation];
     [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationLandscapeLeft];
     [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationPortrait];
+</code>
