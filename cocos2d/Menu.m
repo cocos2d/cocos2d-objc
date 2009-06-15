@@ -55,6 +55,8 @@ enum {
 {
 	if( (self=[super init]) ) {
 
+		isTouchEnabled = YES;
+		
 		// menu in the center of the screen
 		CGSize s = [[Director sharedDirector] winSize];
 		
@@ -169,17 +171,9 @@ enum {
 //	return kEventIgnored;
 //}
 
--(ccTouchHandlerType) typeOfTouchHandler
+-(void) registerWithTouchDispatcher
 {
-	return kTouchHandlerTargeted;
-}
--(int) priorityOfTouchHandler
-{
-	return INT_MIN + 1;
-}
--(BOOL) targetedTouchHandlerSwallowsTouches
-{
-	return YES;
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event

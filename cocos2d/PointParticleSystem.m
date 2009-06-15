@@ -82,6 +82,7 @@
 	particleIdx = 0;
 	
 	// test performance with [self absolutePosition];
+	//	CGPoint	absolutePosition = [self convertToWorldSpace:CGPointZero];
 	CGPoint	absolutePosition = position_;
 	
 	while( particleIdx < particleCount )
