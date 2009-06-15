@@ -1,13 +1,57 @@
-Steps to convert a game based on cocos2d v0.7.2 to v0.8
+
+cocos2d for iPhone v0.8 (beta) Release Notes
+============================================
+
+WARNING:
+ - This is a beta version. It means:
+   - Features might be in an incomplete state
+   - It has less testing than final versions (more bugs?)
+   - The API in this versions is not final
 
 
+New features
+============
+  - Touch Dispatcher:
+     A singleton that dispatches touches like in v0.7.x or one touch at the time
+     Example:
+         cocos2d/Menu.m or
+         tests/TouchTest/
+     cocos2d uses it internally for the menu handling.
 
-v0.7.2 Deprecatred
-==================
+  - Particles:
+      Support for big particles: particles bigger than 64 pixels
+      Support for spinning particles and varying size particles
+      Support for Local and World coordinates
+      Example:
+        tests/ParticleTest.m
 
-All the deprecated functions from v0.7.2 were removed.
+  - Box2d physics:
+      Box2d, a c++ physics engine was integrated within cocos2d
+      http://www.box2d.org/
+      Example:
+        tests/Box2dTest.mm
 
-So, all the "optionals" changes that were made in v0.7.2 are required in v0.8.0
+  - CocosDenshin sound engine:
+      A new sound engine was integrated into cocos2d.
+      One of the main features is simplicity and the capacity to play 32 sounds simultaneously.
+      Example:
+        experimental/CocosDenshion
+
+  - Bitmap fonts:
+      A new way to create Labels from TTF fonts
+      Example:
+        tests/AtlasTest.m
+
+
+Compatibility issues with v0.7.2 / v0.7.3
+=========================================
+
+Deprecated API
+==============
+
+All the deprecated functions from v0.7.2 / v0.7.3 were removed.
+
+So, all the changes that were "optional" in v0.7.2 / v0.7.3 are required in v0.8.0
 
 For more information read the following files:
   convert_0_7_0_to_0_7_1.txt
@@ -15,10 +59,10 @@ For more information read the following files:
 
 
 COMPULSORY CHANGES
-******************
+==================
 
 Director
-========
+--------
 
 Director doesn't handle the touches anymore.
 
@@ -30,7 +74,7 @@ Director doesn't handle the touches anymore.
 
 
 Textures
-========
+--------
 
 a)
     Default blend function is: (GL_ONE, GL_ONE_MINUS_SRC)
@@ -46,7 +90,7 @@ b) Opacity:
 
 
 CocosNode
-=========
+---------
 
 [OLD]
     // image size is(400,300)
@@ -62,7 +106,7 @@ CocosNode
 
 
 Texture2D Alias/AntiAlias
-=========================
+-------------------------
 
 The Alias/AntiAlias API is no longer a class method, but an instance method.
 
@@ -86,7 +130,7 @@ The Alias/AntiAlias API is no longer a class method, but an instance method.
 
 
 Parallax Scroller
-=================
+-----------------
 
 (issue #358)
 
@@ -106,7 +150,7 @@ id child1 = [Sprite ...];
 
 
 New Files
-=========
+---------
     BitmapFontAtlas.h
     BitmapFontAtlas.m
     ParticleExamples.h
@@ -123,11 +167,11 @@ New Files
     TouchDispatcher.m
     TouchHandler.h
     TouchHandler.m
-    TargetedTouchDelegate.h
+    TouchDelegateProtocol.h
 
 
 Removed Files
-=============
+-------------
     Particle.h
     Particle.m
     ParticleSystems.h
@@ -138,10 +182,10 @@ Removed Files
 
 
 OPTIONAL CHANGES
-****************
+================
 
 Director
-========
+--------
 
 [OLD]
     BOOL b = [[Director sharedDirector] landscape];
@@ -152,19 +196,3 @@ Director
     ccDeviceOrientation = [[Director sharedDirector] deviceOrientation];
     [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationLandscapeLeft];
     [[Director sharedDirector] setDviceOrientation: CCDeviceOrientationPortrait];
-
-
-Layer / Menu
-============
-[OLD]
-    // in your init code
-    isEventsEnabled = YES;
-
-[NEW]
-// add this method (callback) in your Layer subclass
--(ccTouchHandlerType) typeOfTouchHandler
-{
-//	return kTouchEventStandard;
-	return kTouchHandlerTargeted;
-}
-
