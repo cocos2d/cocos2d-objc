@@ -1,5 +1,5 @@
 /* cocos2d for iPhone
- * http://code.google.com/p/cocos2d-iphone
+ * http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2007 Scott Lembcke
  * 
