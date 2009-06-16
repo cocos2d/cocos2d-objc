@@ -1,6 +1,6 @@
 /* cocos2d for iPhone
  *
- * http://code.google.com/p/cocos2d-iphone
+ * http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2008,2009 Ricardo Quesada
  *

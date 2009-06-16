@@ -1,7 +1,7 @@
 //
 // Scene demo
 // a cocos2d example
-// http://code.google.com/p/cocos2d-iphone
+// http://www.cocos2d-iphone.org
 //
 
 #import "SceneTest.h"
