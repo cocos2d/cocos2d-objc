@@ -10,7 +10,7 @@ version 0.8-beta - 17-Jun-2009
  . CocosNode: actions don't retain the target (issue #150)
  . CocosNode: support real openGL Z vertex (issue #355)
  . CocosNode: faster transforming of local/world coordinates (issue #263)
- . CocosNode: anchorPoint is relative (0,0) to (1,1) (issue #303)
+ . CocosNode: anchorPoint uses normalized coords (0,0) to (1,1) (issue #303)
  . Director: supports PortraitUpsideDown and Right orientation (issue #351)
  . LabelAtlas: don't render in subpixel (issue #135)
  . Menu: All MenuItems supports CocosNodeRGBA protocol (issue #347)
