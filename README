@@ -36,6 +36,7 @@ Main features
 Experimental features:
     * Motion Streak / Ribbon support
     * Sound Engine support
+    * Integrated Box2d physics engine
 
 This library does not work with the toolchain, but it
 should be easy to port it to it.
