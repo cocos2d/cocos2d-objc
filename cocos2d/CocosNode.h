@@ -151,7 +151,8 @@ enum {
  since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
 @property(readonly) CGPoint transformAnchor;
-/** Anchor point. (0,0) means bottom-left corner, (1,1) means top-right corner, (0.5, 0.5) means center
+/** The normalized coordinates of the anchor point.
+ Anchor point. (0,0) means bottom-left corner, (1,1) means top-right corner, (0.5, 0.5) means the center.
  Sprites and other "textured" Nodes have a default anchorPoint of (0.5f, 0.5f)
  @since v0.8
  */
