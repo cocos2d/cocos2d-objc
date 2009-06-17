@@ -93,7 +93,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Nerezus: Fixed compile error when keyboard registry is enabled
 	* rac5372: compiler warning in MenuItem
 	* ratman: patch for TileMapAtlas: it works with 255 tiles
-		  patch for TextureMgr: supports directory within image names
+		patch for TextureMgr: supports directory within image names
 	* Serge Kolgan: patches for CocosNode
 	* Steve Israelson: patches for Scheduler
 		pactches for Actions
@@ -120,7 +120,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of the TouchDispatcher/TouchHandler: handle each touch independently
 		CocosNode actions: patches that makes the actions run MUCH faster
 		Author of the transformations caches. world2local, local2world runs faster.
-        fixes for Repeat action. It doesn't skip integer values
+		fixes for Repeat action. It doesn't skip integer values
 	* yarrington: patches for Director
 
 
