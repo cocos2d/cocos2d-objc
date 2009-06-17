@@ -1,4 +1,4 @@
-version 0.8 - xxx
+version 0.8-beta - 17-Jun-2009
  . Actions: Added BezierBy action (issue #313)
  . Actions: improved performance when running Actions (issue #301)
  . Actions: fixed Repeat skipping when duration not an integer (issue #394)
