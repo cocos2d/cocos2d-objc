@@ -10,9 +10,13 @@
 #import "CocosDenshion.h"
 #import "CDAudioManager.h"
 
-@interface SimpleAudioEngine : NSObject {	
+@interface SimpleAudioEngine : NSObject {
+	
+	BOOL	muted_;
 	
 }
+
+@property (readwrite) BOOL muted;
 
 + (SimpleAudioEngine*) sharedEngine;
 
