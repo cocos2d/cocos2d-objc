@@ -24,6 +24,13 @@
 #import "Support/ccArray.h"
 #import "Support/TransformUtils.h"
 
+
+#if 1
+#define RENDER_IN_SUBPIXEL
+#else
+#define RENDER_IN_SUBPIXEL (int)
+#endif
+
 @interface CocosNode (Private)
 -(void) step_: (ccTime) dt;
 // lazy allocs
@@ -447,12 +454,12 @@
 	// 
 	// translate
 	if ( relativeTransformAnchor_ && (transformAnchor_.x != 0 || transformAnchor_.y != 0 ) )
-		glTranslatef( (int)(-transformAnchor_.x), (int)(-transformAnchor_.y), vertexZ_);
+		glTranslatef( RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), vertexZ_);
 	
 	if (transformAnchor_.x != 0 || transformAnchor_.y != 0 )
-		glTranslatef( (int)(position_.x + transformAnchor_.x), (int)(position_.y + transformAnchor_.y), vertexZ_);
+		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + transformAnchor_.x), RENDER_IN_SUBPIXEL(position_.y + transformAnchor_.y), vertexZ_);
 	else if ( position_.x !=0 || position_.y !=0)
-		glTranslatef( (int)(position_.x), (int)(position_.y), vertexZ_ );
+		glTranslatef( RENDER_IN_SUBPIXEL(position_.x), RENDER_IN_SUBPIXEL(position_.y), vertexZ_ );
 	
 	// rotate
 	if (rotation_ != 0.0f )
@@ -464,7 +471,7 @@
 	
 	// restore and re-position point
 	if (transformAnchor_.x != 0.0f || transformAnchor_.y != 0.0f)
-		glTranslatef((int)(-transformAnchor_.x), (int)(-transformAnchor_.y), vertexZ_);
+		glTranslatef(RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), vertexZ_);
 	//
 	// END original implementation
 	
