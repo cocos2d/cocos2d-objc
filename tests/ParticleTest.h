@@ -79,3 +79,8 @@
 @interface DemoModernArt : ParticleDemo
 {}
 @end
+
+@interface DemoRing : ParticleDemo
+{}
+@end
+

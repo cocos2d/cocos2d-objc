@@ -28,6 +28,7 @@ static NSString *transitions[] = {
 		@"DemoBigFlower",
 		@"DemoRotFlower",
 		@"DemoModernArt",
+		@"DemoRing",
 };
 
 Class nextAction()
@@ -635,6 +636,28 @@ Class restartAction()
 	return @"Varying size";
 }
 @end
+
+@implementation DemoRing
+-(void) onEnter
+{
+	[super onEnter];
+	ParticleSystem *emitter = [[ParticleFlower alloc] initWithTotalParticles:500];
+	[self addChild: emitter z:0 tag:kTagEmitter];
+	[emitter release];
+
+	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.lifeVar = 0;
+	emitter.life = 10;
+	emitter.speed = 100;
+	emitter.speedVar = 0;
+	emitter.emissionRate = 10000;
+}
+-(NSString *) title
+{
+	return @"Ring Demo";
+}
+@end
+
 
 #pragma mark -
 #pragma mark App Delegate
