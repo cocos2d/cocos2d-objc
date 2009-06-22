@@ -20,8 +20,12 @@
  
  */
 @interface ParallaxNode : CocosNode {
-	NSMutableDictionary	*parallaxDictionary;
+	NSMutableDictionary	*parallaxDictionary_;
+	CGPoint				lastPosition;
 }
+
+/** dictionary that holds the offset / ratio of the children */
+@property (readwrite, retain) NSMutableDictionary * parallaxDictionary;
 
 /** Adds a child to the container with a z-order, a parallax ratio and a position offset
  It returns self, so you can chain several addChilds.
