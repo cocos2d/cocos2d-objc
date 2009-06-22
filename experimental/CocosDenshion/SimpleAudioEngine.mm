@@ -59,6 +59,8 @@ static CDAudioManager *am;
 	am = [[CDAudioManager alloc] init:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:1];
 	soundEngine = am.soundEngine;
 	loadedEffects = [[NSMutableDictionary alloc] initWithCapacity:CD_MAX_BUFFERS];
+	
+	muted_ = NO;
 	return self;
 }
 
@@ -146,6 +148,26 @@ static CDAudioManager *am;
 	[soundEngine unloadBuffer:[soundId intValue]];
 }
 
+/*
+ * muted
+ */
+-(BOOL) muted
+{
+	return muted_;
+}
+
+-(void) setMuted:(BOOL)muted
+{
+	if( muted_ != muted ) {
+		muted_ = muted;
+		[soundEngine setMute:muted];
+		if( muted ) {
+			[am pauseBackgroundMusic];
+		} else {
+			[am resumeBackgroundMusic];
+		}
+	}
+}
 
 @end 
 
