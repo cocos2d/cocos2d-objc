@@ -280,13 +280,15 @@ const int defaultCapacity = 29;
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnable(GL_TEXTURE_2D);
 		
-		BOOL preMulti = [[textureAtlas_ texture] hasPremultipliedAlpha];
-		if( !preMulti )
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		BOOL newBlend = NO;
+		if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+			newBlend = YES;
+			glBlendFunc( blendFunc_.src, blendFunc_.dst );
+		}
 		
 		[textureAtlas_ drawNumberOfQuads:totalSprites_];
-		
-		if( !preMulti )
+
+		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		
 		glDisable(GL_TEXTURE_2D);
