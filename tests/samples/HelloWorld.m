@@ -39,7 +39,7 @@
 	return self;
 }
 
-// on "dealloc" no need to release all your retained objects
+// on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
 	// in case you have something to dealloc, do it in this method
