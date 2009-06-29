@@ -13,6 +13,7 @@
 // Import the interfaces
 #import "HelloEvents.h"
 
+// A simple 'define' used as a tag
 enum {
 	kTagSprite = 1,
 };
@@ -112,7 +113,7 @@ enum {
 	return kEventIgnored;
 }
 
-// This callback will be called because 'isAccelerometer' is YES.
+// This callback will be called because 'isAccelerometerEnabled' is YES.
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
 {	
 	CocosNode *s = [self getChildByTag:kTagSprite];
@@ -147,6 +148,9 @@ enum {
 	// create an initilize the main UIWindow
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+	// Enable Multiple Touches ? No
+	[window setMultipleTouchEnabled:NO];
+
 	// Attach cocos2d to the window
 	[[Director sharedDirector] attachInWindow:window];
 	
@@ -161,7 +165,7 @@ enum {
 
 	// Create and initialize our HelloEvents Layer
 	Layer *layer = [HelloEvents node];
-	// add our HelloWorld Layer as a child of the main scene
+	// add our HelloEvents Layer as a child of the main scene
 	[scene addChild:layer];
 
 	// Run!
