@@ -68,3 +68,10 @@
 @interface TextureBlend : TextureDemo
 {}
 @end
+
+@interface TextureAsync : TextureDemo
+{
+	int imageOffset;
+}
+@end
+
