@@ -99,7 +99,8 @@ static TextureMgr *sharedTextureMgr;
 	// load / create the texture
 	Texture2D *tex = [self addImage:async.data];
 
-	[async.target performSelector:async.selector withObject:tex];
+	// The callback will be executed on the main thread
+	[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
 	
 	[autoreleasepool release];
 }
