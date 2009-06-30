@@ -2,6 +2,7 @@ version 0.8 - dd-MMM-yyyy
  . Actions: CallFuncND doesn't leak if reused (issue #336)
  . AtlasSpriteManager: fixed blend function (part of issue #125)
  . ParallaxNode: uses world coordinates (issue #373)
+ . TextureMgr: supports loading images asynchronously (issue #420)
 
 version 0.8-beta - 17-Jun-2009
  . Actions: Added BezierBy action (issue #313)

@@ -14,6 +14,7 @@
 
 #import "TextureMgr.h"
 #import "ccMacros.h"
+#import "Director.h"
 #import "Support/FileUtils.h"
 #import "Support/Texture2D.h"
 
@@ -68,8 +69,10 @@ static TextureMgr *sharedTextureMgr;
 
 -(id) init
 {
-	if( (self=[super init]) )
+	if( (self=[super init]) ) {
 		textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
+		dictLock = [[NSLock alloc] init];
+	}
 
 	return self;
 }
@@ -84,8 +87,21 @@ static TextureMgr *sharedTextureMgr;
 
 -(void) addImageWithAsyncObject:(AsyncObject*)async
 {
+	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
+	
+	// textures will be created on the main OpenGL context
+	EAGLContext *k_context = [[[EAGLContext alloc]
+							   initWithAPI:kEAGLRenderingAPIOpenGLES1
+							   sharegroup:[[[[Director sharedDirector] openGLView] context] sharegroup]] autorelease];
+	
+	[EAGLContext setCurrentContext:k_context];
+
+	// load / create the texture
 	Texture2D *tex = [self addImage:async.data];
+
 	[async.target performSelector:async.selector withObject:tex];
+	
+	[autoreleasepool release];
 }
 
 -(void) addImageAsync: (NSString*) filename target:(id)target selector:(SEL)selector
@@ -100,16 +116,15 @@ static TextureMgr *sharedTextureMgr;
 		[target performSelector:selector withObject:tex];
 		return;
 	}
-	
-	[NSThread 
+
 	// schedule the load
 	
 	AsyncObject *asyncObject = [[AsyncObject alloc] init];
 	asyncObject.selector = selector;
 	asyncObject.target = target;
 	asyncObject.data = filename;
-	[self performSelectorOnMainThread:@selector(addImageWithAsyncObject:) withObject:asyncObject waitUntilDone:NO];
 	
+	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
 	[asyncObject release];
 }
 
@@ -117,24 +132,35 @@ static TextureMgr *sharedTextureMgr;
 {
 	NSAssert(path != nil, @"TextureMgr: fileimage MUST not be nill");
 
-	Texture2D * tex;
+	Texture2D * tex = nil;
+
+	// MUTEX:
+	// Needed since addImageAsync calls this method from a different thread
+	[dictLock lock];
 	
-	if( (tex=[textures objectForKey: path] ) ) {
-		return tex;
-	}
+	tex=[textures objectForKey: path];
+	
+	if( ! tex ) {
 		
-	// Split up directory and filename
-	NSString *fullpath = [FileUtils fullPathFromRelativePath: path ];
+		// Split up directory and filename
+		NSString *fullpath = [FileUtils fullPathFromRelativePath: path ];
 
-	// all images are handled by UIImage except PVR extension that is handled by our own handler
-	if ( [[path lowercaseString] hasSuffix:@".pvr"] )
-		return [self addPVRTCImage:fullpath];
-	
-	tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: fullpath ] ];
+		// all images are handled by UIImage except PVR extension that is handled by our own handler
+		if ( [[path lowercaseString] hasSuffix:@".pvr"] )
+			tex = [self addPVRTCImage:fullpath];
+		else {
+		
+			tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: fullpath ] ];
 
-	[textures setObject: tex forKey:path];
+			[textures setObject: tex forKey:path];
+			
+			[tex release];
+		}
+	}
 	
-	return [tex autorelease];
+	[dictLock unlock];
+	
+	return tex;
 }
 
 -(Texture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w

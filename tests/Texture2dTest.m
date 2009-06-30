@@ -535,7 +535,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[TextureMgr sharedTextureMgr] removeAllTextures];
 	[super dealloc];
 }
 
@@ -544,25 +544,36 @@ Class restartAction()
 {
 	[self unschedule:_cmd];
 
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
-
 	for( int i=0;i < 8;i++) {
 		for( int j=0;j < 8; j++) {
 			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
 			[[TextureMgr sharedTextureMgr] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
 		}
 	}	
-
+	
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
 
-	
 }
-		
+
+
 -(void) imageLoaded: (Texture2D*) tex
-{	
+{
+	// IMPORTANT 1: The order on the callback is not guaranteed. Don't depend on the callback
+	
+	// IMPORTANT 2: This callback is executed in another thread
+	// So we can't do any cocos2d stuff here
+	// We need to execute everything on the main thread
+	[self performSelectorOnMainThread:@selector(imageLoadedOnMainThread:) withObject:tex waitUntilDone:NO];
+}
+
+-(void) imageLoadedOnMainThread:(Texture2D*) tex
+{
+	// This test just creates a sprite based on the Texture
+	
 	Sprite *sprite = [Sprite spriteWithTexture:tex];
 	sprite.anchorPoint = ccp(0,0);
 	[self addChild:sprite];
