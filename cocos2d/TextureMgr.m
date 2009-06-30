@@ -17,11 +17,28 @@
 #import "Support/FileUtils.h"
 #import "Support/Texture2D.h"
 
+@interface AsyncObject : NSObject
+{
+	SEL			selector_;
+	id			target_;
+	id			data_;
+}
+@property	(readwrite,assign)	SEL			selector;
+@property	(readwrite,retain)	id			target;
+@property	(readwrite,retain)	id			data;
+@end
+
+@implementation AsyncObject
+@synthesize selector = selector_;
+@synthesize target = target_;
+@synthesize data = data_;
+@end
+
+
 
 @implementation TextureMgr
-//
-// singleton stuff
-//
+
+#pragma mark TextureMgr - Alloc, Init & Dealloc
 static TextureMgr *sharedTextureMgr;
 
 + (TextureMgr *)sharedTextureMgr
@@ -63,7 +80,38 @@ static TextureMgr *sharedTextureMgr;
 	[super dealloc];
 }
 
-// public interfaces
+#pragma mark TextureMgr - Add Images
+
+-(void) addImageWithAsyncObject:(AsyncObject*)async
+{
+	Texture2D *tex = [self addImage:async.data];
+	[async.target performSelector:async.selector withObject:tex];
+}
+
+-(void) addImageAsync: (NSString*) filename target:(id)target selector:(SEL)selector
+{
+	NSAssert(filename != nil, @"TextureMgr: fileimage MUST not be nill");
+
+	// optimization
+	
+	Texture2D * tex;
+	
+	if( (tex=[textures objectForKey: filename] ) ) {
+		[target performSelector:selector withObject:tex];
+		return;
+	}
+	
+	[NSThread 
+	// schedule the load
+	
+	AsyncObject *asyncObject = [[AsyncObject alloc] init];
+	asyncObject.selector = selector;
+	asyncObject.target = target;
+	asyncObject.data = filename;
+	[self performSelectorOnMainThread:@selector(addImageWithAsyncObject:) withObject:asyncObject waitUntilDone:NO];
+	
+	[asyncObject release];
+}
 
 -(Texture2D*) addImage: (NSString*) path
 {
@@ -145,6 +193,8 @@ static TextureMgr *sharedTextureMgr;
 	
 	return [tex autorelease];
 }
+
+#pragma mark TextureMgr - Cache
 
 -(void) removeAllTextures
 {

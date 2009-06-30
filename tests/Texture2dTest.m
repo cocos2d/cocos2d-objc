@@ -27,6 +27,7 @@ static NSString *transitions[] = {
 						@"TextureGIF",
 						@"TexturePixelFormat",
 						@"TextureBlend",
+						@"TextureAsync",
 };
 
 #pragma mark Callbacks
@@ -464,6 +465,8 @@ Class restartAction()
 	return @"Texture Pixel Formats";
 }
 @end
+
+
 #pragma mark TextureBlend
 @implementation TextureBlend
 -(id) init
@@ -504,6 +507,81 @@ Class restartAction()
 	return @"Texture Blending";
 }
 @end
+
+#pragma mark TextureAsync
+@implementation TextureAsync
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		imageOffset = 0;
+	
+		CGSize size =[[Director sharedDirector] winSize];
+
+		Label *label = [Label labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
+		label.position = ccp( size.width/2, size.height/2);
+		[self addChild:label z:10];
+		
+		id scale = [ScaleBy actionWithDuration:0.3f scale:2];
+		id scale_back = [scale reverse];
+		id seq = [Sequence actions: scale, scale_back, nil];
+		[label runAction: [RepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(loadImages:) interval:1.0f];
+		
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[super dealloc];
+}
+
+
+-(void) loadImages:(ccTime) dt
+{
+	[self unschedule:_cmd];
+
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
+
+	for( int i=0;i < 8;i++) {
+		for( int j=0;j < 8; j++) {
+			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
+			[[TextureMgr sharedTextureMgr] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
+		}
+	}	
+
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
+
+	
+}
+		
+-(void) imageLoaded: (Texture2D*) tex
+{	
+	Sprite *sprite = [Sprite spriteWithTexture:tex];
+	sprite.anchorPoint = ccp(0,0);
+	[self addChild:sprite];
+	
+	CGSize size =[[Director sharedDirector] winSize];
+	
+	int i = imageOffset * 32;
+	sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
+	
+	imageOffset++;
+}
+
+-(NSString *) title
+{
+	return @"Texture Async Load";
+}
+@end
+
+
 
 
 #pragma mark -

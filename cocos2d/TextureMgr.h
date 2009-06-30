@@ -32,9 +32,11 @@
  * If the file image was not previously loaded, it will create a new Texture2D
  *  object and it will return it.
  * Otherwise it will return a reference of a previosly loaded image.
- * Supported images extensions: .png, .bmp, .tiff, .jpeg, .pvr
+ * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
  */
 -(Texture2D*) addImage: (NSString*) fileimage;
+
+-(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
 
 /** Returns a Texture2D object given an PVRTC RAW filename
  * If the file image was not previously loaded, it will create a new Texture2D
@@ -51,7 +53,6 @@
  *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
  */
 -(Texture2D*) addPVRTCImage: (NSString*) filename;
-
 
 /** Returns a Texture2D object given an CGImageRef image
  * If the image was not previously loaded, it will create a new Texture2D
