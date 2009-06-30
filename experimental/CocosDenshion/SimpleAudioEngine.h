@@ -10,24 +10,39 @@
 #import "CocosDenshion.h"
 #import "CDAudioManager.h"
 
+/**
+ * A wrapper to the CDAudioManager object.
+ * This class, as it's name suggests it, simplifies the interface
+ * @since v0.8
+ */
 @interface SimpleAudioEngine : NSObject {
 	
 	BOOL	muted_;
 	
 }
 
+/** whether or not the engine is muted */
 @property (readwrite) BOOL muted;
 
+/** returns the shared instance of the SimpleAudioEngine object */
 + (SimpleAudioEngine*) sharedEngine;
 
+/** plays background music */
 -(void) playBackgroundMusic:(NSString*) filename;
+/** stops playing background music */
 -(void) stopBackgroundMusic;
+/** pauses the background music */
 -(void) pauseBackgroundMusic;
+/** rewind the background music */
 -(void) rewindBackgroundMusic;
+/** returns whether or not the background music is playing */
 -(BOOL) isBackgroundMusicPlaying;
 
+/** plays an audio effect */
 -(ALuint) playEffect:(NSString*) filename;
+/** preloads an audio effect */
 -(void) preloadEffect:(NSString*) filename;
+/** unloads an audio effect from memory */
 -(void) unloadEffect:(NSString*) filename;
 
 @end
