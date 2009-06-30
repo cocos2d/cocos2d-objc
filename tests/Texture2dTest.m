@@ -550,33 +550,24 @@ Class restartAction()
 			[[TextureMgr sharedTextureMgr] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
 		}
 	}	
-	
+
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
 	[[TextureMgr sharedTextureMgr] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
-
+	[[TextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
 }
 
 
 -(void) imageLoaded: (Texture2D*) tex
 {
-	// IMPORTANT 1: The order on the callback is not guaranteed. Don't depend on the callback
-	
-	// IMPORTANT 2: This callback is executed in another thread
-	// So we can't do any cocos2d stuff here
-	// We need to execute everything on the main thread
-	[self performSelectorOnMainThread:@selector(imageLoadedOnMainThread:) withObject:tex waitUntilDone:NO];
-}
+	// IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
--(void) imageLoadedOnMainThread:(Texture2D*) tex
-{
 	// This test just creates a sprite based on the Texture
 	
 	Sprite *sprite = [Sprite spriteWithTexture:tex];
 	sprite.anchorPoint = ccp(0,0);
-	[self addChild:sprite];
+	[self addChild:sprite z:-1];
 	
 	CGSize size =[[Director sharedDirector] winSize];
 	
