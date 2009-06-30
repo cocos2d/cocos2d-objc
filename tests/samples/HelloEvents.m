@@ -95,15 +95,15 @@ enum {
 		
 		// IMPORTANT:
 		// The touches are always in "portrait" coordinates. You need to convert them to your current orientation
-		CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+		CGPoint convertedPoint = [[Director sharedDirector] convertCoordinate:location];
 		
-		CocosNode *s = [self getChildByTag:kTagSprite];
+		CocosNode *sprite = [self getChildByTag:kTagSprite];
 		
-		// we remove the all running actions
-		[s stopAllActions];
+		// we stop the all running actions
+		[sprite stopAllActions];
 		
 		// and we run a new action
-		[s runAction: [MoveTo actionWithDuration:1 position:ccp(convertedLocation.x, convertedLocation.y)]];
+		[sprite runAction: [MoveTo actionWithDuration:1 position:convertedPoint]];
 		
 		// no other handlers will receive this event
 		return kEventHandled;
@@ -116,7 +116,7 @@ enum {
 // This callback will be called because 'isAccelerometerEnabled' is YES.
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
 {	
-	CocosNode *s = [self getChildByTag:kTagSprite];
+	CocosNode *sprite = [self getChildByTag:kTagSprite];
 
 	// Convert the coordinates to 'landscape' coords
 	// since they are always in 'portrait' coordinates
@@ -124,11 +124,11 @@ enum {
 	
 	// update the rotation based on the z-rotation
 	// the sprite will always be 'standing up'
-	s.rotation = (float) CC_RADIANS_TO_DEGREES( atan2f( converted.x, converted.y) + M_PI );
+	sprite.rotation = (float) CC_RADIANS_TO_DEGREES( atan2f( converted.x, converted.y) + M_PI );
 	
 	// update the scale based on the length of the acceleration
 	// the higher the acceleration, the higher the scale factor
-	s.scale = 0.5f + sqrtf( (converted.x * converted.x) + (converted.y * converted.y) );
+	sprite.scale = 0.5f + sqrtf( (converted.x * converted.x) + (converted.y * converted.y) );
 }
 @end
 
