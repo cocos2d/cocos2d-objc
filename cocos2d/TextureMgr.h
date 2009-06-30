@@ -23,6 +23,7 @@
 @interface TextureMgr : NSObject
 {
 	NSMutableDictionary *textures;
+	NSLock				*dictLock;
 }
 
 /** Retruns ths shared instance of the Texture Manager */
@@ -36,6 +37,15 @@
  */
 -(Texture2D*) addImage: (NSString*) fileimage;
 
+/** Returns a Texture2D object given an file image
+ * If the file image was not previously loaded, it will create a new Texture2D
+ *  object and it will return it.
+ * Otherwise it will load a texture in a new thread, and when the image is loaded,
+ * the callback will be called with the Texture2D as a parameter.
+ * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
+ * warning: You SHOULD not create any cocos2d object on your callback method since it will be called from a new thread
+ * @since v0.8
+ */
 -(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
 
 /** Returns a Texture2D object given an PVRTC RAW filename
