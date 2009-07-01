@@ -45,6 +45,7 @@
 1.0 (2009.05.01) * Initial release
 */
 
+#import <UIKit/UIKit.h>
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
