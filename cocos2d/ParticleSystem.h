@@ -162,8 +162,11 @@ typedef struct sParticle
 	// blend function
 	ccBlendFunc	blendFunc_;
 
-	// position type: world, local, center of gravity
+	// position type: world or local coordinates
 	tPositionType	positionType_;
+
+	// Whether or not the node will be auto-removed when there are not particles
+	BOOL	autoRemoveOnFinish_;
 
 	//  particle idx
 	int particleIdx;
@@ -237,6 +240,11 @@ typedef struct sParticle
 @property (readwrite) BOOL blendAdditive;
 /** position type */
 @property (readwrite) tPositionType positionType;
+/** whether or not the node will be auto-removed when it has no particles left.
+ By default it is NO.
+ @since v0.8
+ */
+@property (readwrite) BOOL autoRemoveOnFinish;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;

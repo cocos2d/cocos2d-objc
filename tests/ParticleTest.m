@@ -479,6 +479,8 @@ Class restartAction()
 	[self addChild: emitter z:0 tag:kTagEmitter];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	
+	emitter.autoRemoveOnFinish = YES;
 }
 -(NSString *) title
 {

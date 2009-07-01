@@ -144,6 +144,11 @@
 			if( particleIdx != particleCount-1 )
 				particles[particleIdx] = particles[particleCount-1];
 			particleCount--;
+			
+			if( particleCount == 0 && autoRemoveOnFinish_ ) {
+				[self unschedule:@selector(step:)];
+				[[self parent] removeChild:self cleanup:YES];
+			}
 		}
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
