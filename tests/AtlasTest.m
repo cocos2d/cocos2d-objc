@@ -542,7 +542,7 @@ Class restartAction()
 	
 	Scene *scene = [Scene node];
 	[scene addChild: [nextAction() node]];
-			 
+
 	[[Director sharedDirector] runWithScene: scene];
 }
 

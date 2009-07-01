@@ -60,7 +60,7 @@
 		contentSize_ = CGSizeZero;
 		
 		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-		
+
 		anchorPoint_ = ccp(0.5f, 0.5f);
 
 		[self parseConfigFile:fntFile];		
@@ -86,7 +86,7 @@
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath];
 	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
 	NSEnumerator *nse = [lines objectEnumerator];
-	NSString *line;		
+	NSString *line;
 	NSString *propertyValue = nil; // ret value
 	
 	// Loop through all the lines in the lines array processing each one
