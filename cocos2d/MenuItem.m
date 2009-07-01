@@ -124,7 +124,7 @@ enum {
 
 +(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector
 {
-	return [[[self class] alloc] initWithLabel:label target:target selector:selector];
+	return [[[self alloc] initWithLabel:label target:target selector:selector] autorelease];
 }
 
 -(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector
