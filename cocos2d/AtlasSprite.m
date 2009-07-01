@@ -19,6 +19,12 @@
 #pragma mark -
 #pragma mark AltasSprite
 
+#if 1
+#define RENDER_IN_SUBPIXEL
+#else
+#define RENDER_IN_SUBPIXEL (int)
+#endif
+
 enum {
 	kIndexNotInitialized = 0xffffffff,
 };
@@ -166,10 +172,10 @@ enum {
 		float cy = x2 * sr + y2 * cr + y;
 		float dx = x1 * cr - y2 * sr + x;
 		float dy = x1 * sr + y2 * cr + y;
-		quad_.bl.vertices = (ccVertex3F) { (int)ax, (int)ay, vertexZ_ };
-		quad_.br.vertices = (ccVertex3F) { (int)bx, (int)by, vertexZ_ };
-		quad_.tl.vertices = (ccVertex3F) { (int)dx, (int)dy, vertexZ_ };
-		quad_.tr.vertices = (ccVertex3F) { (int)cx, (int)cy, vertexZ_ };
+		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
+		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
+		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
+		quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
 		
 	}
 	
@@ -184,10 +190,11 @@ enum {
 		float x2 = (x1 + rect_.size.width * scaleX_);
 		float y2 = (y1 + rect_.size.height * scaleY_);
 
-		quad_.bl.vertices = (ccVertex3F) { (int)x1, (int)y1, vertexZ_ };
-		quad_.br.vertices = (ccVertex3F) { (int)x2, (int)y1, vertexZ_ };
-		quad_.tl.vertices = (ccVertex3F) { (int)x1, (int)y2, vertexZ_ };
-		quad_.tr.vertices = (ccVertex3F) { (int)x2, (int)y2, vertexZ_ };
+		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
+		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
+		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
+		quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
+		
 	}
 	
 	// update position
@@ -200,10 +207,11 @@ enum {
 		float x2 = (x1 + rect_.size.width);
 		float y2 = (y1 + rect_.size.height);
 
-		quad_.bl.vertices = (ccVertex3F) { (int)x1, (int)y1, vertexZ_ };
-		quad_.br.vertices = (ccVertex3F) { (int)x2, (int)y1, vertexZ_ };
-		quad_.tl.vertices = (ccVertex3F) { (int)x1, (int)y2, vertexZ_ };
-		quad_.tr.vertices = (ccVertex3F) { (int)x2, (int)y2, vertexZ_ };
+		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
+		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
+		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
+		quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
+		
 	}
 	
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
