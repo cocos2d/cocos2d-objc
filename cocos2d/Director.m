@@ -107,28 +107,29 @@ static Director *_sharedDirector = nil;
 
 - (id) init
 {   
-	//Create a full-screen window
+	if( (self=[super init]) ) {
 
-	// default values
-	pixelFormat_ = kRGB565;
-	depthBufferFormat_ = 0;
+		// default values
+		pixelFormat_ = kRGB565;
+		depthBufferFormat_ = 0;
 
-	// scenes
-	runningScene_ = nil;
-	nextScene = nil;
-	
-	oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
-	scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
-	
-	// landscape
-	deviceOrientation_ = CCDeviceOrientationPortrait;
+		// scenes
+		runningScene_ = nil;
+		nextScene = nil;
+		
+		oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
+		scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
+		
+		// landscape
+		deviceOrientation_ = CCDeviceOrientationPortrait;
 
-	// FPS
-	displayFPS = NO;
-	frames = 0;
-	
-	// paused ?
-	paused = NO;
+		// FPS
+		displayFPS = NO;
+		frames = 0;
+		
+		// paused ?
+		paused = NO;
+	}
 
 	return self;
 }

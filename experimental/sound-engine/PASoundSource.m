@@ -145,10 +145,10 @@ Exit:
 
 - (void)initBuffer {
 	ALenum  error = AL_NO_ERROR;
-	ALenum  format;
+	ALenum  format = AL_FORMAT_STEREO16;
 	ALvoid* data = NULL;
-	ALsizei size;
-	ALsizei freq;
+	ALsizei size = 0;
+	ALsizei freq = 0;
 	
 	NSBundle*				bundle = [NSBundle mainBundle];
 	
@@ -238,7 +238,7 @@ Exit:
 		}
         
 		alGenBuffers(1, &buffer);
-        alBufferData(buffer, format, data, size, freq);
+		alBufferData(buffer, format, data, size, freq);
 		free(data);
         
 		if((error = alGetError()) != AL_NO_ERROR) {

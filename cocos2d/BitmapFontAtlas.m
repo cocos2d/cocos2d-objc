@@ -87,7 +87,7 @@
 	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
 	NSEnumerator *nse = [lines objectEnumerator];
 	NSString *line;		
-	NSString *propertyValue; // ret value
+	NSString *propertyValue = nil; // ret value
 	
 	// Loop through all the lines in the lines array processing each one
 	while( (line = [nse nextObject]) ) {
@@ -168,7 +168,7 @@
 	//
 	NSArray *values = [line componentsSeparatedByString:@"="];
 	NSEnumerator *nse = [values objectEnumerator];	
-	NSString *propertyValue;
+	NSString *propertyValue = nil;
 	
 	// We need to move past the first entry in the array before we start assigning values
 	[nse nextObject];
@@ -178,7 +178,7 @@
 	commonHeight = [propertyValue intValue];
 
 	// base (ignore)
-	propertyValue = [nse nextObject];
+	[nse nextObject];
 	
 	// scaleW. sanity check
 	propertyValue = [nse nextObject];

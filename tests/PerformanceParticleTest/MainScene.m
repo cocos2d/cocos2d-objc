@@ -221,6 +221,8 @@ Class restartAction()
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		default:
+			particleSystem = ni;
+			CCLOG(@"Shall not happen!");
 			break;
 	}
 	[self addChild:particleSystem z:0 tag:kTagParticleSystem];
