@@ -44,6 +44,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Fradj Johann: patches for CocosNode
 		patches for Layer
 		patches for MultiplexLayer
+	* Gamebit: added support for auto-remove-on-finish in particles
 	* Graham Perks: Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
 	* Mark Cooke: Added TintTo action

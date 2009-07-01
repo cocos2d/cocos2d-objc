@@ -52,6 +52,7 @@
 @synthesize blendFunc = blendFunc_;
 @synthesize blendAdditive;
 @synthesize positionType = positionType_;
+@synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 
 -(id) init {
 	NSException* myException = [NSException
@@ -93,6 +94,8 @@
 		// default: modulate
 		// XXX: not used
 	//	colorModulate = YES;
+		
+		autoRemoveOnFinish_ = NO;
 
 		[self schedule:@selector(step:)];
 	}

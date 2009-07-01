@@ -4,6 +4,7 @@ version 0.8 - dd-MMM-yyyy
  . AtlasSprite: render in subpixel by default (issue #414)
  . Director: added isPaused property (issue #375)
  . ParallaxNode: uses world coordinates (issue #373)
+ . Particles: support for auto-remove-on-finish (issue #385)
  . TextureMgr: supports loading images asynchronously (issue #420)
 
 version 0.8-beta - 17-Jun-2009
