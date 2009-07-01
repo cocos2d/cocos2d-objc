@@ -156,7 +156,7 @@ static NSString *transitions[] = {
 Class nextTransition()
 {	
 	// HACK: else NSClassFromString will fail
-	[FadeTransition node];
+//	[FadeTransition node];
 	
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
