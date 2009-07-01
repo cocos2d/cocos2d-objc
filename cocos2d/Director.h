@@ -82,7 +82,7 @@ and when to execute the Scenes
 #endif
 	
 	/* is the running scene paused */
-	BOOL paused;
+	BOOL isPaused_;
 	
 	/* The running scene */
 	Scene *runningScene_;
@@ -116,6 +116,8 @@ and when to execute the Scenes
 @property (readwrite,assign) BOOL nextDeltaTimeZero;
 /** The device orientattion */
 @property (readwrite) ccDeviceOrientation deviceOrientation;
+/** Whether or not the Director is paused */
+@property (readonly) BOOL isPaused;
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;

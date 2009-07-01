@@ -65,6 +65,7 @@
 @synthesize pixelFormat=pixelFormat_;
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 @synthesize deviceOrientation=deviceOrientation_;
+@synthesize isPaused=isPaused_;
 
 //
 // singleton stuff
@@ -128,7 +129,7 @@ static Director *_sharedDirector = nil;
 		frames = 0;
 		
 		// paused ?
-		paused = NO;
+		isPaused_ = NO;
 	}
 
 	return self;
@@ -174,7 +175,7 @@ static Director *_sharedDirector = nil;
 	
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
-	if( ! paused )
+	if( ! isPaused_ )
 		[[Scheduler sharedScheduler] tick: dt];
 	
 	
@@ -677,19 +678,19 @@ static Director *_sharedDirector = nil;
 
 -(void) pause
 {
-	if( paused )
+	if( isPaused_ )
 		return;
 
 	oldAnimationInterval = animationInterval;
 	
 	// when paused, don't consume CPU
 	[self setAnimationInterval:1/4.0];
-	paused = YES;
+	isPaused_ = YES;
 }
 
 -(void) resume
 {
-	if( ! paused )
+	if( ! isPaused_ )
 		return;
 	
 	[self setAnimationInterval: oldAnimationInterval];
@@ -702,7 +703,7 @@ static Director *_sharedDirector = nil;
 		@throw myException;
 	}
 	
-	paused = NO;
+	isPaused_ = NO;
 	dt = 0;
 }
 
@@ -859,7 +860,7 @@ static Director *_sharedDirector = nil;
 //		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 
-		if (paused) {
+		if (isPaused_) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		}
 		
