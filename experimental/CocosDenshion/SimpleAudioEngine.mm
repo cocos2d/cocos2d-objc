@@ -21,11 +21,11 @@
 
 @implementation SimpleAudioEngine
 
-static SimpleAudioEngine *sharedEngine;
-static CDSoundEngine* soundEngine;
-static NSMutableDictionary* loadedEffects;
+static SimpleAudioEngine *sharedEngine = nil;
+static CDSoundEngine* soundEngine = nil;
+static NSMutableDictionary* loadedEffects = nil;
 static bool usedBuffers[CD_MAX_BUFFERS];
-static CDAudioManager *am;
+static CDAudioManager *am = nil;
 
 // Init
 + (SimpleAudioEngine *) sharedEngine
@@ -50,31 +50,36 @@ static CDAudioManager *am;
 
 -(id) init
 {
-	if(![super init]) return nil;
+	if((self=[super init])) {
 	
-	int channelGroups[1];
-	channelGroups[0] = CD_MAX_SOURCES - 1;
-	//Setting up the audio manager with this mode means that if the user is playing music when the app starts then 
-	//background music will not be played.
-	am = [[CDAudioManager alloc] init:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:1];
-	soundEngine = am.soundEngine;
-	loadedEffects = [[NSMutableDictionary alloc] initWithCapacity:CD_MAX_BUFFERS];
-	
-	muted_ = NO;
+		int channelGroups[1];
+		channelGroups[0] = CD_MAX_SOURCES - 1;
+		//Setting up the audio manager with this mode means that if the user is playing music when the app starts then 
+		//background music will not be played.
+		am = [[CDAudioManager alloc] init:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:1];
+		soundEngine = am.soundEngine;
+		loadedEffects = [[NSMutableDictionary alloc] initWithCapacity:CD_MAX_BUFFERS];
+		
+		muted_ = NO;
+	}
 	return self;
 }
 
 // Memory
 - (void) dealloc
 {
+	[am release];
+	am = nil;
+	
+	soundEngine = nil;
+	
 	[loadedEffects autorelease];
-	sharedEngine = nil;
+	loadedEffects = nil;
 	
 	[super dealloc];
 }
 
-#pragma mark -
-#pragma mark AudioEngine
+#pragma mark SimpleAudioEngine - background music
 
 -(void) playBackgroundMusic:(NSString*) filename
 {
@@ -97,6 +102,8 @@ static CDAudioManager *am;
 -(BOOL) isBackgroundMusicPlaying {
 	return [am isBackgroundMusicPlaying];
 }	
+
+#pragma mark SimpleAudioEngine - sound effects
 
 -(ALuint) playEffect:(NSString*) filename
 {
@@ -148,9 +155,7 @@ static CDAudioManager *am;
 	[soundEngine unloadBuffer:[soundId intValue]];
 }
 
-/*
- * muted
- */
+#pragma mark SimpleAudioEngine - Muted
 -(BOOL) muted
 {
 	return muted_;
@@ -170,6 +175,8 @@ static CDAudioManager *am;
 }
 
 @end 
+
+#pragma mark SimpleAudioEngine - Buffers
 
 @implementation SimpleAudioEngine (Buffers)
 

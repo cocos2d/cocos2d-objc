@@ -12,7 +12,7 @@
 
 /**
  * A wrapper to the CDAudioManager object.
- * This class, as it's name suggests it, simplifies the interface
+ * This class, as it's name suggests it, simplifies the interface to CDAudioManager
  * @since v0.8
  */
 @interface SimpleAudioEngine : NSObject {
