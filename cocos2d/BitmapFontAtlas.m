@@ -83,7 +83,8 @@
 -(NSString*) atlasNameFromFntFile:(NSString*)fntFile
 {
 	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath];
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+
 	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
 	NSEnumerator *nse = [lines objectEnumerator];
 	NSString *line;
@@ -124,7 +125,8 @@
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath];
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+
 	
 	// Move all lines in the string, which are denoted by \n, into an array
 	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];

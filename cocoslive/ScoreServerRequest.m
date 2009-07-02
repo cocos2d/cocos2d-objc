@@ -115,7 +115,8 @@
 -(NSArray*) parseScores
 {	
 	NSArray *array = nil;
-	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];	
+//	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];	
+	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
 
 	NSData *jsonData = [jsonString dataUsingEncoding:NSUTF32BigEndianStringEncoding];
 	NSError *error = nil;
