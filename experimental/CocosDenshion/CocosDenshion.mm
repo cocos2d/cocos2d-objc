@@ -594,6 +594,12 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	alSourcefv(sourceId, AL_POSITION, sourcePosAL);
 }
 
+- (void) setLooping:(BOOL) newLoopingValue {
+	lastLooping = newLoopingValue;
+	alSourcei(sourceId, AL_LOOPING, newLoopingValue);
+}
+
+
 - (BOOL) isPlaying {
 	ALint state;
 	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
@@ -618,6 +624,10 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 
 - (float) gain {
 	return lastGain;
+}	
+
+- (BOOL) looping {
+	return lastLooping;
 }	
 
 @end

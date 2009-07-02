@@ -21,7 +21,52 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
+/* IMPORTANT!
+There are 3 different ways of using CocosDenshion. Depending on which you choose you 
+will need to include different files and frameworks.
+
+SimpleAudioEngine
+=================
+This is recommended for basic audio requirements. If you just want to play some sound fx
+and some background music and have no interest in learning the lower level workings then
+this is the interface to use.
+
+Requires: OS 2.2 or greater 
+Required Files: SimpleAudioEngine.*, CocosDenshion.*
+Required Frameworks: OpenAL, AudioToolbox, AVFoundation
+ 
+CDAudioManager
+==============
+CDAudioManager is basically a thin wrapper around an AVAudioPlayer object used for playing
+background music and a CDSoundEngine object used for playing sound effects. It manages the
+audio session for you deals with audio session interruption. It is fairly low level and it
+is expected you have some understanding of the underlying technologies. For example, for 
+many use cases regarding background music it is expected you will work directly with the
+backgroundMusic AVAudioPlayer which is exposed as a property.
+ 
+Requires: OS 2.2 or greater 
+Required Files: CDAudioManager.*, CocosDenshion.*
+Required Frameworks: OpenAL, AudioToolbox, AVFoundation
+
+CDSoundEngine
+=============
+CDSoundEngine is a sound engine built upon OpenAL and derived from Apple's oalTouch 
+example. It can playback up to 32 sounds simultaneously with control over pitch, pan
+and gain.  It can be set up to handle audio session interruption automatically.  You 
+may decide to use CDSoundEngine directly instead of CDAudioManager or SimpleAudioEngine
+because you require OS 2.0 compatibility.
+ 
+Requires: OS 2.0 or greater 
+Required Files: CocosDenshion.*
+Required Frameworks: OpenAL, AudioToolbox
+ 
+*/ 
+
 /* Changelog
+1.6 (2009.07.02) * Added looping property to CDSourceWrapper so that looping flag can be toggled during playback
+                   (Thanks to Pable Ruiz)
+                 * 				
+ 
 1.5 (2009.06.13) * Added preLoadBackgroundMusic method to CDAudioManager to allow background music to be preloaded
                  * Fixed bug with sound engine locking up when trying to load non existent file asynchronously 
                    (Thanks to Edison's Labs for reporting)
@@ -53,7 +98,7 @@
 
 //You may want to edit these. Devices won't support any more than 32 sources though.
 #define CD_MAX_BUFFERS 32 //Total number of sounds that can be loaded
-#define CD_MAX_SOURCES 32 //Total number of playback channels that can be created
+#define CD_MAX_SOURCES 32 //Total number of playback channels that can be created (32 is the limit)
 
 #define CD_NO_SOURCE 0xFEEDFAC //Return value indicating playback failed i.e. no source
 #define CD_IGNORE_AUDIO_SESSION 0xBEEFBEE //Used internally to indicate audio session will not be handled
@@ -128,11 +173,13 @@ typedef struct _channelGroup {
 	float lastPitch;
 	float lastPan;
 	float lastGain;
+	BOOL lastLooping;
 }
 @property (readwrite, nonatomic) ALuint sourceId;
 @property (readwrite, nonatomic) float pitch;
 @property (readwrite, nonatomic) float gain;
 @property (readwrite, nonatomic) float pan;
+@property (readwrite, nonatomic) BOOL looping;
 @property (readonly)  BOOL isPlaying;
 
 @end
