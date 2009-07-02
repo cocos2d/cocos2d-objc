@@ -540,6 +540,7 @@
 		506886570E96C6E700F943E5 /* TileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506886550E96C6CC00F943E5 /* TileMapAtlas.m */; };
 		506887F70E96D4F000F943E5 /* AtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 506887D80E96C90000F943E5 /* AtlasNode.m */; };
 		506888A30E96D7A200F943E5 /* levelmap.tga in Resources */ = {isa = PBXBuildFile; fileRef = 506888A20E96D7A200F943E5 /* levelmap.tga */; };
+		5069723B0FFD3E2B00D49022 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -5270,6 +5271,7 @@
 				506046A40E75CEFB0044A29B /* f1.png in Resources */,
 				506046A50E75CEFB0044A29B /* f2.png in Resources */,
 				506046A60E75CEFB0044A29B /* r1.png in Resources */,
+				5069723B0FFD3E2B00D49022 /* background.png in Resources */,
 				506046A70E75CEFB0044A29B /* r2.png in Resources */,
 				50DB1BB50E1C1E5900A89DFF /* Default.png in Resources */,
 				50DB1BB60E1C1E5900A89DFF /* Icon.png in Resources */,

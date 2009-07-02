@@ -22,9 +22,10 @@ enum {
 	kParticleDurationInfinity = -1,
 };
 
+/** possible types of particle positions */
 typedef enum {
-	kPositionTypeLocal,
-	kPositionTypeWorld,
+	kPositionTypeFree,
+	kPositionTypeGrouped
 } tPositionType;
 
 /** Structure that contains the values of each particle
@@ -84,8 +85,8 @@ typedef struct sParticle
 	CGPoint gravity;
 
 	// position is from "superclass" CocosNode
-	// Emitter source position
-	CGPoint source;
+	// Emitter centerOfGravity position
+	CGPoint centerOfGravity;
 	// Position variance
 	CGPoint posVar;
 	
@@ -162,7 +163,7 @@ typedef struct sParticle
 	// blend function
 	ccBlendFunc	blendFunc_;
 
-	// position type: world or local coordinates
+	// movment type: free or grouped
 	tPositionType	positionType_;
 
 	// Whether or not the node will be auto-removed when there are not particles
@@ -180,8 +181,8 @@ typedef struct sParticle
 @property (readwrite,assign) CGPoint gravity;
 /** How many seconds the emitter wil run. -1 means 'forever' */
 @property (readwrite,assign) float duration;
-/** Source location of particles respective to emitter location */
-@property (readwrite,assign) CGPoint source;
+/** centerOfGravity of the emitter */
+@property (readwrite,assign) CGPoint centerOfGravity;
 /** Position variance of the emitter */
 @property (readwrite,assign) CGPoint posVar;
 /** life, and life variation of each particle */
@@ -238,7 +239,9 @@ typedef struct sParticle
 @property (readwrite) ccBlendFunc blendFunc;
 /** whether or not the particles are using "blend additive */
 @property (readwrite) BOOL blendAdditive;
-/** position type */
+/** particles movement type: Free or Grouped
+ @since v0.8
+ */
 @property (readwrite) tPositionType positionType;
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
