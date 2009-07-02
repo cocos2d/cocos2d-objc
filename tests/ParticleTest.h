@@ -14,14 +14,11 @@
 
 @interface ParticleDemo : Layer
 {
+	ParticleSystem	*emitter;
+	Sprite			*background;
 }
 
 -(NSString*) title;
-@end
-
-@interface BigParticleDemo : ParticleDemo
-{
-}
 @end
 
 @interface DemoFirework : ParticleDemo

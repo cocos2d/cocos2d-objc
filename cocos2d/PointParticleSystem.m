@@ -126,7 +126,7 @@
 			// update values in point
 			//
 			CGPoint	newPos = p->pos;
-			if( positionType_ == kPositionTypeWorld ) {
+			if( positionType_ == kPositionTypeFree ) {
 				newPos = ccpSub(absolutePosition, p->startPos);
 				newPos = ccpSub( p->pos, newPos);
 			}

@@ -9,7 +9,6 @@
 
 enum {
 	kTagLabelAtlas = 1,
-	kTagEmitter	= 2,
 };
 
 static int sceneIdx=-1;
@@ -80,53 +79,69 @@ Class restartAction()
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		MenuItemToggle *item4 = [MenuItemToggle itemWithTarget:self selector:@selector(toggleCallback:) items:
+								 [MenuItemFont itemFromString: @"Free Movement"],
+								 [MenuItemFont itemFromString: @"Grouped Movement"],
+								 nil];
+		
+		Menu *menu = [Menu menuWithItems:item1, item2, item3, item4, nil];
 			
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
+		item4.position = ccp( 0, 100);
+		item4.anchorPoint = ccp(0,0);
+
 		[self addChild: menu z:-1];	
 		
 		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
 		labelAtlas.position = ccp(254,50);
-			
+		
+		// moving background
+		background = [Sprite spriteWithFile:@"background.png"];
+		[self addChild:background z:-10];
+		background.anchorPoint = ccp(0.5f,0);
+
+		id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
+		id move_back = [move reverse];
+		id seq = [Sequence actions: move, move_back, nil];
+		[background runAction:[RepeatForever actionWithAction:seq]];
+		
+		
 		[self schedule:@selector(step:)];
 	}
 
 	return self;
 }
 
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) registerWithTouchDispatcher
 {
-	return [self ccTouchesEnded:touches withEvent:event];
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:NO];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
 {
-	UITouch *touch = [touches anyObject];
+	return YES;
+}
+- (void)ccTouchMoved:(UITouch*)touch withEvent:(UIEvent *)event
+{
+	return [self ccTouchEnded:touch withEvent:event];
+}
+
+- (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
+{
+	CGPoint location = [touch locationInView: [touch view]];
+	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
 	
-	if( touch ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
-		
-		ParticleSystem *s = (ParticleSystem*) [self getChildByTag:kTagEmitter];
-		
-	//	CGPoint source = ccpSub( convertedLocation, s.position );
-	//	s.source = source;
-		s.position = convertedLocation;
-	
-		return kEventHandled;
-	}
-	
-	return kEventIgnored;
+	CGPoint	pos = [background convertToWorldSpace:CGPointZero];
+	emitter.position = ccpSub(convertedLocation, pos);	
 }
 
 -(void) step:(ccTime) dt
 {
 	LabelAtlas *atlas = (LabelAtlas*) [self getChildByTag:kTagLabelAtlas];
-	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagEmitter];
 
 	NSString *str = [NSString stringWithFormat:@"%4d", emitter.particleCount];
 	[atlas setString:str];
@@ -137,13 +152,20 @@ Class restartAction()
 	return @"No title";
 }
 
+-(void) toggleCallback: (id) sender
+{
+	if( emitter.positionType == kPositionTypeGrouped )
+		emitter.positionType = kPositionTypeFree;
+	else
+		emitter.positionType = kPositionTypeGrouped;
+}
+
 -(void) restartCallback: (id) sender
 {
 //	Scene *s = [Scene node];
 //	[s addChild: [restartAction() node]];
 //	[[Director sharedDirector] replaceScene: s];
 	
-	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagEmitter];
 	[emitter resetSystem];
 //	[emitter stopSystem];
 }
@@ -162,65 +184,26 @@ Class restartAction()
 	[[Director sharedDirector] replaceScene: s];
 }
 
-@end
-
-@implementation BigParticleDemo
-
--(id) init
+-(void) setEmitterPosition
 {
-	if( (self=[super init]) ) {
-		
-		isTouchEnabled = YES;
-		
-		CGSize s = [[Director sharedDirector] winSize];
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label];
-		[label setPosition: CGPointMake(s.width/2, s.height-50)];
-		
-		Label *tapScreen = [Label labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
-		[tapScreen setPosition: CGPointMake(s.width/2, s.height-80)];
-		[self addChild:tapScreen];
-		
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-		
-		menu.position = CGPointZero;
-		item1.position = CGPointMake( s.width/2 - 100,30);
-		item2.position = CGPointMake( s.width/2, 30);
-		item3.position = CGPointMake( s.width/2 + 100,30);
-		[self addChild: menu z:-1];	
-		
-		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
-		labelAtlas.position = CGPointMake(254,50);
-		
-		[self schedule:@selector(step:)];
-	}
-	
-	return self;
-}
-
--(void) restartCallback: (id) sender
-{
-	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagEmitter];
-	[emitter resetSystem];
+	CGSize s = [[Director sharedDirector] winSize];
+	emitter.position = ccp(300, s.height/2);
 }
 
 @end
 
+#pragma mark -
 
 @implementation DemoFirework
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleFireworks node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleFireworks node];
+	[background addChild: emitter z:0];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
-
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -228,16 +211,20 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoFire
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleFire node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleFire node];
+	[background addChild: emitter z:0];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	CGPoint p = emitter.position;
 	emitter.position = ccp(p.x, 100);
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -245,14 +232,18 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoSun
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleSun node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleSun node];
+	[background addChild: emitter z:0];
 
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -260,14 +251,18 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoGalaxy
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleGalaxy node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleGalaxy node];
+	[background addChild: emitter z:0];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -275,13 +270,18 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoFlower
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleFlower node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+
+	emitter = [ParticleFlower node];
+	[background addChild: emitter z:0];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -289,12 +289,14 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoBigFlower
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [[QuadParticleSystem alloc] initWithTotalParticles:50];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [[QuadParticleSystem alloc] initWithTotalParticles:50];
+	[background addChild: emitter z:0];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	
 	// duration
@@ -357,6 +359,7 @@ Class restartAction()
 	// additive
 	emitter.blendAdditive = YES;
 	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -364,12 +367,14 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoRotFlower
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [[QuadParticleSystem alloc] initWithTotalParticles:300];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [[QuadParticleSystem alloc] initWithTotalParticles:300];
+	[background addChild: emitter z:0];
 	[emitter release];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars2.png"];
 	
@@ -433,6 +438,8 @@ Class restartAction()
 	// additive
 	emitter.blendAdditive = NO;
 	
+	[self setEmitterPosition];
+	
 }
 -(NSString *) title
 {
@@ -440,15 +447,18 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 
 @implementation DemoMeteor
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleMeteor node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleMeteor node];
+	[background addChild: emitter z:0];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -456,14 +466,18 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoSpiral
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleSpiral node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleSpiral node];
+	[background addChild: emitter z:0];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -471,16 +485,20 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoExplosion
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleExplosion node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleExplosion node];
+	[background addChild: emitter z:0];
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	
 	emitter.autoRemoveOnFinish = YES;
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -488,15 +506,19 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoSmoke
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleSmoke node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleSmoke node];
+	[background addChild: emitter z:0];
 	
 	CGPoint p = emitter.position;
 	emitter.position = ccp( p.x, 100);
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -504,12 +526,14 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoSnow
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleSnow node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleSnow node];
+	[background addChild: emitter z:0];
 	
 	CGPoint p = emitter.position;
 	emitter.position = ccp( p.x, p.y-110);
@@ -537,6 +561,8 @@ Class restartAction()
 	emitter.emissionRate = emitter.totalParticles/emitter.life;
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"snow.png"];
+	
+	[self setEmitterPosition];
 
 }
 -(NSString *) title
@@ -545,18 +571,22 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoRain
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [ParticleRain node];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [ParticleRain node];
+	[background addChild: emitter z:0];
 	
 	CGPoint p = emitter.position;
 	emitter.position = ccp( p.x, p.y-100);
 	emitter.life = 4;
 	
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	
+	[self setEmitterPosition];
 
 }
 -(NSString *) title
@@ -565,73 +595,77 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoModernArt
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:1000];
-	[self addChild: particleSystem z:0 tag:kTagEmitter];
-	[particleSystem release];
+	emitter = [[PointParticleSystem alloc] initWithTotalParticles:1000];
+	[background addChild: emitter z:0];
+	[emitter release];
 	
 	CGSize s = [[Director sharedDirector] winSize];
 	
 	// duration
-	particleSystem.duration = -1;
+	emitter.duration = -1;
 	
 	// gravity
-	particleSystem.gravity = ccp(0,0);
+	emitter.gravity = ccp(0,0);
 	
 	// angle
-	particleSystem.angle = 0;
-	particleSystem.angleVar = 360;
+	emitter.angle = 0;
+	emitter.angleVar = 360;
 	
 	// radial
-	particleSystem.radialAccel = 70;
-	particleSystem.radialAccelVar = 10;
+	emitter.radialAccel = 70;
+	emitter.radialAccelVar = 10;
 	
 	// tagential
-	particleSystem.tangentialAccel = 80;
-	particleSystem.tangentialAccelVar = 0;
+	emitter.tangentialAccel = 80;
+	emitter.tangentialAccelVar = 0;
 	
 	// speed of particles
-	particleSystem.speed = 50;
-	particleSystem.speedVar = 10;
+	emitter.speed = 50;
+	emitter.speedVar = 10;
 	
 	// emitter position
-	particleSystem.position = ccp( s.width/2, s.height/2);
-	particleSystem.posVar = CGPointZero;
+	emitter.position = ccp( s.width/2, s.height/2);
+	emitter.posVar = CGPointZero;
 	
 	// life of particles
-	particleSystem.life = 2.0f;
-	particleSystem.lifeVar = 0.3f;
+	emitter.life = 2.0f;
+	emitter.lifeVar = 0.3f;
 	
 	// emits per frame
-	particleSystem.emissionRate = particleSystem.totalParticles/particleSystem.life;
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
 	
 	// color of particles
 	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-	particleSystem.startColor = startColor;
+	emitter.startColor = startColor;
 	
 	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-	particleSystem.startColorVar = startColorVar;
+	emitter.startColorVar = startColorVar;
 	
 	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-	particleSystem.endColor = endColor;
+	emitter.endColor = endColor;
 	
 	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
-	particleSystem.endColorVar = endColorVar;
+	emitter.endColorVar = endColorVar;
 	
 	// size, in pixels
-	particleSystem.startSize = 1.0f;
-	particleSystem.startSizeVar = 1.0f;
-	particleSystem.endSize = 32.0f;
-	particleSystem.endSizeVar = 8.0f;
+	emitter.startSize = 1.0f;
+	emitter.startSizeVar = 1.0f;
+	emitter.endSize = 32.0f;
+	emitter.endSizeVar = 8.0f;
 	
 	// texture
-//	particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+//	emitter.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
 	
 	// additive
-	particleSystem.blendAdditive = NO;	
+	emitter.blendAdditive = NO;
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
@@ -639,12 +673,14 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation DemoRing
 -(void) onEnter
 {
 	[super onEnter];
-	ParticleSystem *emitter = [[ParticleFlower alloc] initWithTotalParticles:500];
-	[self addChild: emitter z:0 tag:kTagEmitter];
+	emitter = [[ParticleFlower alloc] initWithTotalParticles:500];
+	[background addChild: emitter z:0];
 	[emitter release];
 
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
@@ -653,13 +689,14 @@ Class restartAction()
 	emitter.speed = 100;
 	emitter.speedVar = 0;
 	emitter.emissionRate = 10000;
+	
+	[self setEmitterPosition];
 }
 -(NSString *) title
 {
 	return @"Ring Demo";
 }
 @end
-
 
 #pragma mark -
 #pragma mark App Delegate
