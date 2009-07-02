@@ -57,6 +57,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for ScaleTo/By action to support X and Y.
 		added endSize to ParticleSystem
 		added WorldSpace coordinates to ParticleSystem
+	* Jason Cecil: Fixed memory leak in Director#FPSLabel
 	* Joe Vennix: patches for CocosNode
 	* jkrippy: patch for menu align. takes scale into account
 	* kasatani: AtlasSprite index 0 is not overwritten
