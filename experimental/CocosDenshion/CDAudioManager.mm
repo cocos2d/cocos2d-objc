@@ -170,8 +170,18 @@ static BOOL configured = FALSE;
 				
 				break;
 		}
+		
 		//Set audio session category
+		if (willPlayBackgroundMusic) {
+			//Work around to ensure background music is not decoded in software
+			//on OS 3.0. Thanks to Bryan Acceleroto (SO 2009.07.02)
+			UInt32 fakeCategory = kAudioSessionCategory_MediaPlayback;
+			AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(fakeCategory), &fakeCategory);
+			AudioSessionSetActive(TRUE);
+			AudioSessionSetActive(FALSE);
+		}	
 		AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory);
+		AudioSessionSetActive(TRUE);
 		soundEngine = [[CDSoundEngine alloc] init:channelGroupDefinitions channelGroupTotal:channelGroupTotal];
 	}	
 	return self;		
