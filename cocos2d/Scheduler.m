@@ -90,6 +90,8 @@
 
 static Scheduler *sharedScheduler;
 
+@synthesize timeScale = timeScale_;
+
 + (Scheduler *)sharedScheduler
 {
 	@synchronized([Scheduler class])
@@ -117,12 +119,13 @@ static Scheduler *sharedScheduler;
 
 - (id) init
 {
-	if( ! (self=[super init]) )
-		return nil;
-	
-	scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];
-	methodsToRemove = [[NSMutableArray arrayWithCapacity:20] retain];
-	methodsToAdd = [[NSMutableArray arrayWithCapacity:20] retain];
+	if( (self=[super init]) ) {
+		scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];
+		methodsToRemove = [[NSMutableArray arrayWithCapacity:20] retain];
+		methodsToAdd = [[NSMutableArray arrayWithCapacity:20] retain];
+		
+		timeScale_ = 1.0f;
+	}
 
 	return self;
 }
@@ -201,6 +204,9 @@ static Scheduler *sharedScheduler;
 
 -(void) tick: (ccTime) dt
 {
+	if( timeScale_ != 1.0f )
+		dt *= timeScale_;
+
 	for( id k in methodsToRemove )
 		[scheduledMethods removeObject:k];
 

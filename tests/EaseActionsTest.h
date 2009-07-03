@@ -48,6 +48,12 @@
 {}
 @end
 
-@interface Speed1 : SpriteDemo
+@interface SpeedTest : SpriteDemo
 {}
+@end
+
+@interface SchedulerTest : SpriteDemo
+{
+	UISlider	*sliderCtl;
+}
 @end
