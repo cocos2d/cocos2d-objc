@@ -46,6 +46,7 @@
 		500AA2220E77926900872752 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
 		500AA2230E77926900872752 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		500AA2240E77926900872752 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		500AB8400FFE55A60054D452 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
 		5012DA190FE109C100D6DDD1 /* grossini_dance_atlas-mono.png in Resources */ = {isa = PBXBuildFile; fileRef = 5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */; };
 		5012DAC50FE179BF00D6DDD1 /* TouchDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5012DAC40FE179BF00D6DDD1 /* TouchDelegateProtocol.h */; };
 		5012DD1C0FE2994300D6DDD1 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -4832,6 +4833,7 @@
 				505B637D0F2F4210001B4104 /* r2.png in Resources */,
 				505B637E0F2F4210001B4104 /* Default.png in Resources */,
 				505B637F0F2F4210001B4104 /* Icon.png in Resources */,
+				500AB8400FFE55A60054D452 /* fire.png in Resources */,
 				505B63800F2F4210001B4104 /* grossini.png in Resources */,
 				505B63810F2F4210001B4104 /* grossinis_sister1.png in Resources */,
 				505B63820F2F4210001B4104 /* grossinis_sister2.png in Resources */,

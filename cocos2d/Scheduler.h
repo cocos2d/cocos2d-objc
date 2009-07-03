@@ -34,6 +34,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	ccTime elapsed;
 }
 
+/** interval in seconds */
 @property (readwrite,assign) ccTime interval;
 
 /** constructor for timer */
@@ -56,31 +57,45 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 //
 // Scheduler
 //
-/**Class manages all the schedulers
+/** Scheduler is a singleton.
+ It is responsible of triggering the scheduled callbacks.
+ You should not use NSTimer. Instead use this class.
 */
 @interface Scheduler : NSObject
 {
-	NSMutableArray *scheduledMethods;
-	NSMutableArray *methodsToRemove;
-	NSMutableArray *methodsToAdd;
+	NSMutableArray	*scheduledMethods;
+	NSMutableArray	*methodsToRemove;
+	NSMutableArray	*methodsToAdd;
+	
+	ccTime			timeScale_;
 }
+
+/** Modifies the time of all scheduled callbacks.
+ You can use this property to create a 'slow motion' or 'fast fordward' effect.
+ Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
+ To create a 'fast fordward' effect, use values higher than 1.0.
+ @since v0.8
+ */
+@property (readwrite) ccTime	timeScale;
 
 /** returns a shared instance of the Scheduler */
 +(Scheduler *)sharedScheduler;
 
-/** the scheduler is ticked */
+/** 'tick' the scheduler.
+ You should not call this method NEVER.
+ */
 -(void) tick: (ccTime) dt;
 
-/** schedule a target/selector */
+/** schedules a target/selector */
 -(Timer*) scheduleTarget:(id) r selector:(SEL) s;
 
-/** schedule a target/selector with interval */
+/** schedules a target/selector with interval */
 -(Timer*) scheduleTarget:(id) r selector:(SEL) s interval: (ccTime) i;
 
 
-/** schedule a Timer */
+/** schedules a Timer */
 -(void) scheduleTimer: (Timer*) t;
 
-/** unschedule a timer */
+/** unschedules a timer */
 -(void) unscheduleTimer: (Timer*) t;
 @end

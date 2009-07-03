@@ -6,6 +6,7 @@ version 0.8 - dd-MMM-yyyy
  . Director: fixed memory leak in FPSLabel (issue #370)
  . ParallaxNode: uses world coordinates (issue #373)
  . Particles: support for auto-remove-on-finish (issue #385)
+ . Scheduler: it's possible to scale the time (part of issue #236)
  . Tests: ParticleTest tests 'free' and 'grouped' emitter (part of issue #241)
  . TextureMgr: supports loading images asynchronously (issue #420)
 

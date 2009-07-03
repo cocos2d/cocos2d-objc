@@ -16,12 +16,14 @@ static NSString *transitions[] = {
 				@"SpriteEaseExponentialInOut",
 				@"SpriteEaseSine",
 				@"SpriteEaseSineInOut",
-				@"Speed1",
+				@"SpeedTest",
+				@"SchedulerTest",
 };
 
 enum {
 	kTagAction1 = 1,
 	kTagAction2 = 2,
+	kTagSlider = 1,
 };
 
 Class nextAction()
@@ -317,7 +319,7 @@ Class restartAction()
 }
 @end
 
-@implementation Speed1
+@implementation SpeedTest
 -(void) onEnter
 {
 	[super onEnter];
@@ -364,6 +366,76 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Speed action";
+}
+@end
+
+@implementation SchedulerTest
+- (UISlider *)sliderCtl
+{
+    if (sliderCtl == nil) 
+    {
+        CGRect frame = CGRectMake(174.0f, 12.0f, 120.0f, 7.0f);
+        sliderCtl = [[UISlider alloc] initWithFrame:frame];
+        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+        
+        // in case the parent view draws with a custom color or gradient, use a transparent color
+        sliderCtl.backgroundColor = [UIColor clearColor];
+        
+        sliderCtl.minimumValue = 0.0f;
+        sliderCtl.maximumValue = 2.0f;
+        sliderCtl.continuous = YES;
+        sliderCtl.value = 1.0f;
+		
+		sliderCtl.tag = kTagSlider;	// tag this view for later so we can remove it from recycled table cells
+    }
+    return [sliderCtl autorelease];
+}
+
+-(void) sliderAction:(id) sender
+{
+	[[Scheduler sharedScheduler] setTimeScale: sliderCtl.value];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	
+	// rotate and jump
+	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+	IntervalAction *jump2 = [jump1 reverse];
+	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
+	IntervalAction *rot2 = [rot1 reverse];
+	
+	id seq3_1 = [Sequence actions:jump2, jump1, nil];
+	id seq3_2 = [Sequence actions: rot1, rot2, nil];
+	id spawn = [Spawn actions:seq3_1, seq3_2, nil];
+	id action = [RepeatForever actionWithAction:spawn];
+	
+	id action2 = [[action copy] autorelease];
+	id action3 = [[action copy] autorelease];
+	
+	
+	[grossini runAction: [Speed actionWithAction:action speed:0.5f]];
+	[tamara runAction: [Speed actionWithAction:action2 speed:1.5f]];
+	[kathia runAction: [Speed actionWithAction:action3 speed:1.0f]];
+	
+	ParticleSystem *emitter = [ParticleFireworks node];
+	[self addChild:emitter];
+	
+	sliderCtl = [self sliderCtl];
+	[[[[Director sharedDirector] openGLView] window] addSubview: sliderCtl];
+}
+
+-(void) onExit
+{
+	[sliderCtl removeFromSuperview];
+	[super onExit];
+}
+
+-(NSString *) title
+{
+	return @"Scheduler scaleTime Test";
 }
 @end
 
