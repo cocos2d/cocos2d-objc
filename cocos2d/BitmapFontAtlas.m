@@ -332,7 +332,11 @@
 		prev = c;
 		
 		tmpSize.width += bitmapFontArray[c].xAdvance + kerningAmmount;
-		tmpSize.height = MAX( rect.size.height, contentSize_.height);		
+		tmpSize.height = MAX( rect.size.height, contentSize_.height);
+		
+		// Apply label properties
+		fontChar.opacity = self.opacity;
+		[fontChar setRGB:r_ :g_ :b_];
 	}
 	
 	[self setContentSize:tmpSize];
