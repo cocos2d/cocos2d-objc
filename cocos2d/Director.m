@@ -640,19 +640,24 @@ static Director *_sharedDirector = nil;
 
 -(void) end
 {
+	[runningScene_ onExit];
+	[runningScene_ cleanup];
+	[runningScene_ release];
+
+	runningScene_ = nil;
+	nextScene = nil;
+	
+	// XXX: Some unscheduled timers might remain.
+	[[Scheduler sharedScheduler] unscheduleAllTimers];
+
 	// remove all objects, but don't release it.
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
 
-	[runningScene_ onExit];
-	[runningScene_ release];
-	runningScene_ = nil;
-	nextScene = nil;
-
 	// don't release the event handlers
 	// They are needed in case the director is run again
 	[[TouchDispatcher sharedDispatcher] removeAllDelegates];
-
+	
 	[self stopAnimation];
 	[self detach];
 }

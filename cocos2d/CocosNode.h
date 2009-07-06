@@ -248,6 +248,11 @@ enum {
  */
 -(void) reorderChild:(CocosNode*)child z:(int)zOrder;
 
+/** Stops all running actions and schedulers
+ @since v0.8
+ */
+-(void) cleanup;
+
 // draw
 
 /** override this method to draw your own node. */

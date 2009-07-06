@@ -56,6 +56,7 @@
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
 #endif
 		
+		// XXX: target should not be retained. But cocosnodeTest#stress test shall not crash
 		target = [t retain];
 		selector = s;
 		impMethod = (TICK_IMP) [t methodForSelector:s];
@@ -68,7 +69,6 @@
 -(void) dealloc
 {
 	CCLOG( @"deallocing %@", self);
-	
 	[target release];
 	[super dealloc];
 }
@@ -140,26 +140,6 @@ static Scheduler *sharedScheduler;
 	[super dealloc];
 }
 
--(Timer*) scheduleTarget: (id) target selector:(SEL)sel
-{
-	Timer *t = [Timer timerWithTarget:target selector:sel];
-	
-	[methodsToAdd addObject: t];
-	
-	return t;
-}
-
--(Timer*) scheduleTarget: (id) target selector:(SEL)sel interval:(ccTime) i
-{
-	Timer *t = [Timer timerWithTarget:target selector:sel];
-	
-	[t setInterval:i];
-	
-	[methodsToAdd addObject: t];
-	
-	return t;
-}
-
 -(void) scheduleTimer: (Timer*) t
 {
 	// it is possible that sometimes (in transitions in particular) an scene unschedule a timer
@@ -200,6 +180,13 @@ static Scheduler *sharedScheduler;
 	}
 	
 	[methodsToRemove addObject:t];
+}
+
+-(void) unscheduleAllTimers
+{
+	[methodsToAdd removeAllObjects];
+	[methodsToRemove removeAllObjects];
+	[scheduledMethods removeAllObjects];
 }
 
 -(void) tick: (ccTime) dt

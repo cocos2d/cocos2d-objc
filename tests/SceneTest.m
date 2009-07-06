@@ -9,22 +9,31 @@
 @implementation Layer1
 -(id) init
 {
-	[super init];
+	if((self=[super init])) {
 	
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
-	MenuItemFont *item3 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
-	
-	Menu *menu = [Menu menuWithItems: item1, item2, item3, nil];
-	[menu alignItemsVertically];
-	
-	[self addChild: menu];
+		MenuItemFont *item1 = [MenuItemFont itemFromString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
+		MenuItemFont *item2 = [MenuItemFont itemFromString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
+		MenuItemFont *item3 = [MenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
+		
+		Menu *menu = [Menu menuWithItems: item1, item2, item3, nil];
+		[menu alignItemsVertically];
+		
+		[self addChild: menu];
+		
+		[self schedule:@selector(testDealloc:)];
+	}
 
 	return self;
 }
 
+-(void) testDealloc:(ccTime) dt
+{
+//	[self unschedule:_cmd];
+}
+
 -(void) dealloc
 {
+	NSLog(@"Layer1 - dealloc");
 	[super dealloc];
 }
 
@@ -32,6 +41,7 @@
 {
 	Scene * scene = [[Scene node] addChild: [Layer2 node] z:0];
 	[[Director sharedDirector] pushScene: scene];
+//	[[Director sharedDirector] replaceScene:scene];
 }
 
 -(void) onPushSceneTran: (id) sender
@@ -59,24 +69,31 @@
 @implementation Layer2
 -(id) init
 {
-	[super init];
+	if((self=[super init])) {
 	
-	MenuItemFont *item1 = [MenuItemFont itemFromString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
-	MenuItemFont *item2 = [MenuItemFont itemFromString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
-	MenuItemFont *item3 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
-	
-	Menu *menu = [Menu menuWithItems: item1, item2, item3, nil];
-	[menu alignItemsVertically];
-	
-	[self addChild: menu];
-	
-	
+		MenuItemFont *item1 = [MenuItemFont itemFromString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
+		MenuItemFont *item2 = [MenuItemFont itemFromString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
+		MenuItemFont *item3 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
+		
+		Menu *menu = [Menu menuWithItems: item1, item2, item3, nil];
+		[menu alignItemsVertically];
+		
+		[self addChild: menu];
+		
+		[self schedule:@selector(testDealloc:)];
+	}
+
 	return self;
 }
 
 -(void) dealloc
 {
+	NSLog(@"Layer2 - dealloc");
 	[super dealloc];
+}
+
+-(void) testDealloc:(ccTime) dt
+{
 }
 
 -(void) onGoBack:(id) sender
@@ -104,10 +121,21 @@
 		[self addChild:label];
 		CGSize s = [[Director sharedDirector] winSize];
 		[label setPosition:ccp(s.width/2, s.height/2)];
+		
+		[self schedule:@selector(testDealloc:)];
 	}
 	return self;
 }
 
+- (void) dealloc
+{
+	NSLog(@"Layer3 - dealloc");
+	[super dealloc];
+}
+
+-(void) testDealloc:(ccTime)dt
+{
+}
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[[Director sharedDirector] popScene];
@@ -128,7 +156,7 @@
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	[Director useFastDirector];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
