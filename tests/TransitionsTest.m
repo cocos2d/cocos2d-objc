@@ -55,7 +55,7 @@
 @end
 @implementation FadeWhiteTransition
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
-	return [self transitionWithDuration:t scene:s withColorRGB:0xffffff];
+	return [self transitionWithDuration:t scene:s withColor:ccWHITE];
 }
 @end
 

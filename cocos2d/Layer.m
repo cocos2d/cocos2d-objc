@@ -102,23 +102,23 @@
 	@throw myException;	
 }
 
-+ (id) layerWithColor: (GLuint) aColor width:(GLfloat)w  height:(GLfloat) h
++ (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
-	return [[[self alloc] initWithColor: aColor width:w height:h] autorelease];
+	return [[[self alloc] initWithColor:color width:w height:h] autorelease];
 }
 
-+ (id) layerWithColor: (GLuint) aColor
++ (id) layerWithColor:(ccColor4B)color
 {
-	return [[[self alloc] initWithColor: aColor] autorelease];
+	return [[[self alloc] initWithColor:color] autorelease];
 }
 
-- (id) initWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
+- (id) initWithColor:(ccColor4B)color width:(GLint)w  height:(GLint) h
 {
 	if( (self=[super init]) ) {
-		color_.r = (aColor >> 24) & 0xff;
-		color_.g = (aColor >> 16) & 0xff;
-		color_.b = (aColor >> 8) & 0xff;
-		opacity_ = (aColor) & 0xff;
+		color_.r = color.r;
+		color_.g = color.g;
+		color_.b = color.b;
+		opacity_ = color.a;
 		
 		[self updateColor];
 		
@@ -127,11 +127,11 @@
 	return self;
 }
 
-- (id) initWithColor: (GLuint) aColor
+- (id) initWithColor:(ccColor4B)color
 {
 	CGSize s = [[Director sharedDirector] winSize];
 	
-	return [self initWithColor: aColor width:s.width height:s.height];
+	return [self initWithColor:color width:s.width height:s.height];
 }
 
 -(void) changeWidth: (GLfloat) w

@@ -200,14 +200,14 @@ typedef enum {
  */
 @interface FadeTransition : TransitionScene
 {
-	unsigned int RGBA;
+	ccColor4B	color;
 }
 /** creates the transition with a duration and with an RGB color
- * Example: [FadeTransition transitionWithDuration:2 scene:s withColorRGB:0xff0000]; // red color
+ * Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color
  */
-+(id) transitionWithDuration:(ccTime)duration scene:(Scene*)scene withColorRGB:(unsigned int)rgb;
++(id) transitionWithDuration:(ccTime)duration scene:(Scene*)scene withColor:(ccColor3B)color;
 /** initializes the transition with a duration and with an RGB color */
--(id) initWithDuration:(ccTime)duration scene:(Scene*)scene withColorRGB:(unsigned int)rgb;
+-(id) initWithDuration:(ccTime)duration scene:(Scene*)scene withColor:(ccColor3B)color;
 @end
 
 /** TurnOffTiles Transition.
