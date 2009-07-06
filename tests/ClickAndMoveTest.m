@@ -20,7 +20,7 @@ enum
 		
 		Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
 		
-		id layer = [ColorLayer layerWithColor: 0xffff00ff];
+		id layer = [ColorLayer layerWithColor: ccc4(255,255,0,255)];
 		[self addChild: layer z:-1];
 			
 		[self addChild: sprite z:0 tag:kTagSprite];

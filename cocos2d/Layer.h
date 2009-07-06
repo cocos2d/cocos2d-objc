@@ -65,14 +65,14 @@
 }
 
 /** creates the Layer with color, width and height */
-+ (id) layerWithColor: (GLuint) aColor width:(GLfloat)w height:(GLfloat)h;
++ (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** creates the layer with color. Width and height are the window size. */
-+ (id) layerWithColor: (GLuint) aColor;
++ (id) layerWithColor: (ccColor4B)color;
 
 /** initializes a Layer with color, width and height */
-- (id) initWithColor: (GLuint) aColor width:(GLint)w height:(GLint)h;
+- (id) initWithColor:(ccColor4B)color width:(GLint)w height:(GLint)h;
 /** initializes a Layer with color. Width and height are the window size. */
-- (id) initWithColor: (GLuint) aColor;
+- (id) initWithColor:(ccColor4B)color;
 
 /** initializes the witdh and height of the layer */
 - (void) initWidth: (GLfloat)w height:(GLfloat)h;

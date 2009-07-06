@@ -692,30 +692,32 @@ enum {
 // Fade Transition
 //
 @implementation FadeTransition
-+(id) transitionWithDuration:(ccTime)d scene:(Scene*)s withColorRGB:(unsigned int)rgb
++(id) transitionWithDuration:(ccTime)d scene:(Scene*)s withColor:(ccColor3B)color
 {
-	return [[[self alloc] initWithDuration:d scene:s withColorRGB:rgb] autorelease];
+	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
 }
 
--(id) initWithDuration:(ccTime)d scene:(Scene*)s withColorRGB:(unsigned int)rgb
+-(id) initWithDuration:(ccTime)d scene:(Scene*)s withColor:(ccColor3B)aColor
 {
-	self = [super initWithDuration:d scene:s];
-	if( self ) 
-		RGBA = rgb << 8;
+	if( (self=[super initWithDuration:d scene:s]) ) {
+		color.r = aColor.r;
+		color.g = aColor.g;
+		color.b = aColor.b;
+	}
 	
 	return self;
 }
 
 -(id) initWithDuration:(ccTime)d scene:(Scene*)s
 {
-	return [self initWithDuration:d scene:s withColorRGB:0x00000000];
+	return [self initWithDuration:d scene:s withColor:ccBLACK];
 }
 
 -(void) onEnter
 {
 	[super onEnter];
 	
-	ColorLayer *l = [ColorLayer layerWithColor:RGBA];
+	ColorLayer *l = [ColorLayer layerWithColor:color];
 	[inScene setVisible: NO];
 	
 	[self addChild: l z:2 tag:kSceneFade];

@@ -30,11 +30,11 @@ typedef struct _ccColor3B
 	GLubyte b;
 } ccColor3B;
 
-//! helper macro that creates an RGB color
+//! helper macro that creates an ccColor3B type
 static inline ccColor3B
-ccc3(const GLubyte R, const GLubyte G, const GLubyte B)
+ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 {
-	ccColor3B c = {R, G, B};
+	ccColor3B c = {r, g, b};
 	return c;
 }
 //ccColor3B predefined colors
@@ -67,6 +67,14 @@ typedef struct _ccColor4B
 	unsigned char b;
 	unsigned char a;
 } ccColor4B;
+//! helper macro that creates an ccColor4B type
+static inline ccColor4B
+ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
+{
+	ccColor4B c = {r, g, b, o};
+	return c;
+}
+
 
 /** RGBA color composed of 4 floats
 @since v0.8
