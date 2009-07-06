@@ -37,17 +37,21 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** interval in seconds */
 @property (readwrite,assign) ccTime interval;
 
-/** constructor for timer */
+/** Allocates a timer with a target and a selector.
+*/
 +(id) timerWithTarget:(id) t selector:(SEL)s;
 
-/** constructor for timer with interval */
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i;
+/** Allocates a timer with a target, a selector and an interval in seconds.
+*/
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
 
-/** init for Timer */
--(id) initWithTarget:(id) t selector:(SEL)s;
+/** Initializes a timer with a target and a selector.
+*/
+ -(id) initWithTarget:(id) t selector:(SEL)s;
 
-/** init for Timer with interval */
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) i;
+/** Initializes a timer with a target, a selector and an interval in seconds.
+*/
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
 
 
 /** triggers the timer */
@@ -82,20 +86,21 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 +(Scheduler *)sharedScheduler;
 
 /** 'tick' the scheduler.
- You should not call this method NEVER.
+ You should NEVER call this method, unless you know what you are doing.
  */
--(void) tick: (ccTime) dt;
+-(void) tick:(ccTime)dt;
 
-/** schedules a target/selector */
--(Timer*) scheduleTarget:(id) r selector:(SEL) s;
-
-/** schedules a target/selector with interval */
--(Timer*) scheduleTarget:(id) r selector:(SEL) s interval: (ccTime) i;
-
-
-/** schedules a Timer */
+/** schedules a Timer.
+ It will be fired in every frame.
+ */
 -(void) scheduleTimer: (Timer*) t;
 
-/** unschedules a timer */
+/** unschedules an already scheduled Timer */
 -(void) unscheduleTimer: (Timer*) t;
+
+/** unschedule all timers.
+ You should NEVER call this method, unless you know what you are doing.
+ @since v0.8
+ */
+-(void) unscheduleAllTimers;
 @end
