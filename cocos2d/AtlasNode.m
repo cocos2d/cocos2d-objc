@@ -25,7 +25,7 @@
 
 @implementation AtlasNode
 
-@synthesize opacity=opacity_, r=r_, g=g_, b=b_;
+@synthesize opacity=opacity_, color=color_;
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
 
@@ -44,7 +44,7 @@
 		itemHeight = h;
 
 		opacity_ = 255;
-		r_ = g_ = b_ = 255;
+		color_ = ccWHITE;
 		opacityModifyRGB_ = NO;
 		
 		blendFunc_.src = CC_BLEND_SRC;
@@ -98,7 +98,7 @@
 	
 	glEnable( GL_TEXTURE_2D);
 
-	glColor4ub( r_, g_, b_, opacity_);
+	glColor4ub( color_.r, color_.g, color_.b, opacity_);
 
 	BOOL newBlend = NO;
 	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
@@ -122,11 +122,9 @@
 
 #pragma mark AtlasNode - RGBA protocol
 
--(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
 {
-	r_=rr;
-	g_=gg;
-	b_=bb;
+	[self setColor:ccc3(r,g,b)];
 }
 
 -(void) setOpacity:(GLubyte)opacity
@@ -134,7 +132,7 @@
 	// special opacity for premultiplied textures
 	opacity_ = opacity;
 	if( opacityModifyRGB_ )
-		r_ = g_ = b_ = opacity_;	
+		color_.r = color_.g = color_.b = opacity_;	
 }
 -(void) updateOpacityModifyRGB
 {

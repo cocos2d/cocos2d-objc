@@ -29,7 +29,7 @@ enum {
 
 @implementation Menu
 
-@synthesize opacity=opacity_, r=r_, g=g_, b=b_;
+@synthesize opacity=opacity_, color=color_;
 
 - (id) init
 {
@@ -421,11 +421,18 @@ enum {
 
 - (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
 {
-	r_=r;
-	g_=g;
-	b_=b;
+	color_.r=r;
+	color_.g=g;
+	color_.b=b;
 	for(id<CocosNodeRGBA> item in children)
-		[item setRGB:r:g:b];
+		[item setColor:color_];
+}
+
+-(void) setColor:(ccColor3B)color
+{
+	color_ = color;
+	for(id<CocosNodeRGBA> item in children)
+		[item setColor:color_];
 }
 
 #pragma mark Menu - Private

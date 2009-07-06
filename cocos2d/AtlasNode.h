@@ -48,7 +48,8 @@
 	ccBlendFunc		blendFunc_;
 
 	// texture RGBA. 
-	GLubyte	r_,g_,b_, opacity_;
+	GLubyte		opacity_;
+	ccColor3B	color_;
 	BOOL opacityModifyRGB_;
 }
 
@@ -59,7 +60,9 @@
 @property (readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte r, g, b, opacity;
+@property (readonly) GLubyte opacity;
+/** conforms to CocosNodeRGBA protocol */
+@property (readwrite) ccColor3B color;
 
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/

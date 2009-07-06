@@ -401,7 +401,7 @@ Class restartAction()
 	[super onEnter];
 	
 	Label *label = (Label*) [self getChildByTag:kTagLabel];
-	[label setRGB:16 :16 :255];
+	[label setColor:ccc3(16,16,255)];
 	
 	CGSize s = [[Director sharedDirector] winSize];
 	

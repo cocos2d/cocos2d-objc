@@ -1,8 +1,9 @@
 version 0.8 - dd-MMM-yyyy
  . Actions: CallFuncND doesn't leak if reused (issue #336)
  . AtlasSpriteManager: fixed blend function (part of issue #125)
- . AtlasSprite: render in subpixel by default (issue #414)
+ . AtlasSprite: render in subpixel by default (issue #414, issue #399)
  . BitmapFontAtlas: opacity and color are applied (issue #425)
+ . CocosNode: RGBA protocol setColor new API (issue #273)
  . Director: added isPaused property (issue #375)
  . Director: fixed memory leak in FPSLabel (issue #370)
  . ParallaxNode: uses world coordinates (issue #373)

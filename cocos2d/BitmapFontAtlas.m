@@ -38,7 +38,7 @@
 
 @implementation BitmapFontAtlas
 
-@synthesize opacity=opacity_,r=r_,g=g_,b=b_;
+@synthesize opacity=opacity_, color=color_;
 
 #pragma mark BitmapFontAtlas - Creation & Init
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
@@ -56,7 +56,9 @@
 		// will be allocated later
 		kerningDictionary = nil;
 		
-		r_ = g_ = b_ = opacity_ = 255;
+		opacity_ = 255;
+		color_ = ccWHITE;
+
 		contentSize_ = CGSizeZero;
 		
 		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
@@ -336,7 +338,7 @@
 		
 		// Apply label properties
 		fontChar.opacity = self.opacity;
-		[fontChar setRGB:r_ :g_ :b_];
+		[fontChar setColor:color_];
 	}
 	
 	[self setContentSize:tmpSize];
@@ -356,13 +358,16 @@
 
 #pragma mark BitmapFontAtlas - CocosNodeRGBA protocol
 
--(void) setRGB: (GLubyte) rr :(GLubyte) gg :(GLubyte)bb
+-(void) setColor:(ccColor3B)color
 {
-	r_=rr;
-	g_=gg;
-	b_=bb;
-	for( id child in children )
-		[child setRGB:r_:g_:b_];
+	color_ = color;
+	for( AtlasSprite* child in children )
+		[child setColor:color_];
+}
+
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
+{
+	[self setColor:ccc3(r,g,b)];
 }
 
 -(void) setOpacity:(GLubyte)opacity
@@ -371,7 +376,7 @@
 
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		r_ = g_ = b_ = opacity_;
+		color_.r = color_.g = color_.b = opacity_;
 
 	for( id child in children )
 		[child setOpacity:opacity_];

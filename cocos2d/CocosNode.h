@@ -375,17 +375,15 @@ enum {
 
 /// CocosNode RGBA protocol
 @protocol CocosNodeRGBA <NSObject>
-/** set the color of the node
- * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
- @since v0.7.1
+/** sets Color
+ @since v0.8
  */
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b;
-/// The red component of the node's color.
--(GLubyte) r;
-/// The green component of the node's color.
--(GLubyte) g;
-/// The blue component of the node's color.
--(GLubyte) b;
+-(void) setColor:(ccColor3B)color;
+/** returns the color
+ @since v0.8
+ */
+-(ccColor3B) color;
+
 /// returns the opacity
 -(GLubyte) opacity;
 /** sets the opacity.
@@ -404,7 +402,24 @@ enum {
  @since v0.8
  */
  -(BOOL) doesOpacityModifyRGB;
-
+/** set the color of the node
+ * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
+ @since v0.7.1
+ @deprecated Will be removed in v0.9. Use setColor instead.
+ */
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b __attribute__((deprecated));
+/** The red component of the node's color
+ @deprecated Will be removed in v0.9. Use color instead
+ */
+-(GLubyte) r __attribute__((deprecated));
+/** The green component of the node's color.
+ @deprecated Will be removed in v0.9. Use color instead
+ */
+-(GLubyte) g __attribute__((deprecated));
+/** The blue component of the node's color.
+ @deprecated Will be removed in v0.9. Use color instead
+ */
+-(GLubyte) b __attribute__((deprecated));
 @end
 
 

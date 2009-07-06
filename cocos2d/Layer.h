@@ -58,7 +58,8 @@
  */
 @interface ColorLayer : Layer <CocosNodeRGBA>
 {
-	GLubyte r,g,b,opacity;
+	GLubyte		opacity_;
+	ccColor3B	color_;	
 	GLfloat squareVertices[4 * 2];
 	GLubyte squareColors[4 * 4];
 }
@@ -76,21 +77,15 @@
 /** initializes the witdh and height of the layer */
 - (void) initWidth: (GLfloat)w height:(GLfloat)h;
 
-/** changes the color of the layer
- @deprecated Use CocosNodeRGB protocol instead
- */
-- (void) changeColor: (GLuint) aColor __attribute__ ((deprecated));
-
 /** change width */
 -(void) changeWidth: (GLfloat)w;
 /** change height */
 -(void) changeHeight: (GLfloat)h;
 
-/* deprecated */
-@property (readonly) GLuint color __attribute__ ((deprecated));
-
-/** conforms to CocosNodeRGB and CocosNodeOpacity protocol */
-@property (readonly) GLubyte r,g,b,opacity;
+/** Opacity: conforms to CocosNodeRGB and CocosNodeOpacity protocol */
+@property (readonly) GLubyte opacity;
+/** Opacity: conforms to CocosNodeRGB and CocosNodeOpacity protocol */
+@property (readonly) ccColor3B color;
 
 @end
 

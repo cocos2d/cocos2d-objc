@@ -112,7 +112,7 @@
 	
 	glEnable( GL_TEXTURE_2D);
 	
-	glColor4ub( r_, g_, b_, opacity_);
+	glColor4ub( color_.r, color_.g, color_.b, opacity_);
 	
 	BOOL newBlend = NO;
 	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {

@@ -286,8 +286,8 @@ typedef struct _ccBezierConfig {
 */
 @interface TintTo : IntervalAction <NSCopying>
 {
-	GLubyte toR, toG, toB;
-	GLubyte fromR, fromG, fromB;
+	ccColor3B to;
+	ccColor3B from;
 }
 /** creates an action with duration and opactiy */
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;

@@ -32,7 +32,8 @@ typedef enum  {
 {
 	MenuState state;
 	MenuItem *selectedItem;
-	GLubyte opacity_, r_, g_, b_;
+	GLubyte		opacity_;
+	ccColor3B	color_;
 }
 
 /** creates a menu with it's items */
@@ -66,6 +67,8 @@ typedef enum  {
 
 
 /** conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity, r, g, b;
+@property (readonly) GLubyte opacity;
+/** conforms to CocosNodeRGBA protocol */
+@property (readonly) ccColor3B color;
 
 @end

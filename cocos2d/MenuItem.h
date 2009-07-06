@@ -216,11 +216,15 @@
 {
 	NSUInteger selectedIndex_;
 	NSMutableArray* subItems_;
-	GLubyte opacity_, r_, g_, b_;
+	GLubyte		opacity_;
+	ccColor3B	color_;
 }
 
 /** conforms with CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity,r,g,b;
+@property (readonly) GLubyte opacity;
+/** conforms with CocosNodeRGBA protocol */
+@property (readonly) ccColor3B color;
+
 
 /** returns the selected item */
 @property (readwrite) NSUInteger selectedIndex;
