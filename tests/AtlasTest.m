@@ -221,10 +221,12 @@ Class restartAction()
 	LabelAtlas *label1 = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	[self addChild:label1 z:0 tag:kTagSprite1];
 	label1.position = ccp(10,100);
+	label1.opacity = 200;
 
 	LabelAtlas *label2 = [LabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	[self addChild:label2 z:0 tag:kTagSprite2];
 	label2.position = ccp(10,200);
+	label2.opacity = 32;
 
 	[self schedule:@selector(step:)];
 	return self;
@@ -270,6 +272,7 @@ Class restartAction()
 		// testing anchors
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		label1.opacity = 32;
 		
 		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
