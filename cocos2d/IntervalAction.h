@@ -289,9 +289,9 @@ typedef struct _ccBezierConfig {
 	ccColor3B to;
 	ccColor3B from;
 }
-/** creates an action with duration and opactiy */
+/** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
-/** initializes the action with duration and opacity */
+/** initializes the action with duration and color */
 -(id) initWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
 @end
 
@@ -303,9 +303,9 @@ typedef struct _ccBezierConfig {
 	GLshort deltaR, deltaG, deltaB;
 	GLshort fromR, fromG, fromB;
 }
-/** creates an action with duration and opactiy */
+/** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
-/** initializes the action with duration and opacity */
+/** initializes the action with duration and color */
 -(id) initWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
 @end
 
