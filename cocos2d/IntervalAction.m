@@ -884,16 +884,14 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithDuration: (ccTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
 	if( (self=[super initWithDuration: t] ) ) {
-		toR = r;
-		toG = g;
-		toB = b;
+		to = ccc3(r,g,b);
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	Action *copy = [(TintTo*)[[self class] allocWithZone: zone] initWithDuration: [self duration] red:toR green:toG blue:toB];
+	Action *copy = [(TintTo*)[[self class] allocWithZone: zone] initWithDuration: [self duration] red:to.r green:to.g blue:to.b];
 	return copy;
 }
 
@@ -902,16 +900,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[super start];
 	
 	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
-	
-	fromR = [tn r];
-	fromG = [tn g];
-	fromB = [tn b];
+	from = [tn color];
 }
 
 -(void) update: (ccTime) t
 {
 	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
-	[tn setRGB:fromR + (toR - fromR) * t :fromG + (toG - fromG) * t :fromB + (toB - fromB) * t];
+	[tn setColor:ccc3(from.r + (to.r - from.r) * t, from.g + (to.g - from.g) * t, from.b + (to.b - from.b) * t)];
 }
 @end
 
@@ -946,15 +941,16 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[super start];
 	
 	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
-	fromR = [tn r];
-	fromG = [tn g];
-	fromB = [tn b];
+	ccColor3B color = [tn color];
+	fromR = color.r;
+	fromG = color.g;
+	fromB = color.b;
 }
 
 -(void) update: (ccTime) t
 {
 	id<CocosNodeRGBA> tn = (id<CocosNodeRGBA>) target;
-	[tn setRGB:fromR + deltaR * t :fromG + deltaG * t :fromB + deltaB * t];
+	[tn setColor:ccc3( fromR + deltaR * t, fromG + deltaG * t, fromB + deltaB * t)];
 }
 - (IntervalAction*) reverse
 {

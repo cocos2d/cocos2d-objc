@@ -205,7 +205,7 @@ Class restartTransition()
 		[self addChild:bg1 z:-1];
 
 		Label* label = [Label labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
-		[label setRGB:16 :16 :255];
+		[label setColor:ccc3(16,16,255)];
 		[label setPosition: ccp(x/2,y/2)];	
 		[self addChild: label];
 		
@@ -288,7 +288,7 @@ Class restartTransition()
 		[self addChild:bg2 z:-1];
 		
 		Label* label = [Label labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];
-		[label setRGB:16 :16 :255];
+		[label setColor:ccc3(16,16,255)];
 		[label setPosition: ccp(x/2,y/2)];
 		[self addChild: label];
 		

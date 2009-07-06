@@ -381,7 +381,7 @@ Class restartAction()
 		[mgr addChild:sprite z:-1 tag:kTagSprite1];
 		sprite.position = ccp(s.width/2, s.height/2 - 20);
 		sprite.scaleX = 6;
-		[sprite setRGB:255:0:0];
+		[sprite setColor:ccRED];
 		
 		[self schedule:@selector(reorderSprite:) interval:1];		
 	}	

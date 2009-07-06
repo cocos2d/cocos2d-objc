@@ -40,7 +40,7 @@ enum {
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
-@synthesize opacity=opacity_, r=r_, g=g_, b=b_;
+@synthesize opacity=opacity_, color=color_;
 
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager
 {
@@ -64,7 +64,8 @@ enum {
 		anchorPoint_ = ccp(0.5f, 0.5f);
 
 		// RGB and opacity
-		r_ = g_ = b_ = opacity_ = 255;
+		opacity_ = 255;
+		color_ = ccWHITE;
 		ccColor4B tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
@@ -332,30 +333,34 @@ enum {
 	
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		r_ = g_ = b_ = opacity_;
+		color_.r = color_.g = color_.b = opacity_;
 
-	ccColor4B color = (ccColor4B) {r_, g_, b_, opacity_ };
+	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
 
-	quad_.bl.colors = color;
-	quad_.br.colors = color;
-	quad_.tl.colors = color;
-	quad_.tr.colors = color;
+	quad_.bl.colors = color4;
+	quad_.br.colors = color4;
+	quad_.tl.colors = color4;
+	quad_.tr.colors = color4;
 
 	[self updateColor];
 }
 
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
+-(void) setColor:(ccColor3B)color3
 {
-	r_ = r;
-	g_ = g;
-	b_ = b;
-	ccColor4B color = {r_, g_, b_, opacity_ };
-	quad_.bl.colors = color;
-	quad_.br.colors = color;
-	quad_.tl.colors = color;
-	quad_.tr.colors = color;
+	color_ = color3;
+	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
+	quad_.bl.colors = color4;
+	quad_.br.colors = color4;
+	quad_.tl.colors = color4;
+	quad_.tr.colors = color4;
 	
 	[self updateColor];
+	
+}
+
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
+{	
+	[self setColor:ccc3(r,g,b)];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {

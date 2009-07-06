@@ -90,7 +90,7 @@
 @implementation ColorLayer
 
 // Opacity and RGB color protocol
-@synthesize r,g,b,opacity;
+@synthesize opacity=opacity_, color=color_;
 
 
 - (id) init
@@ -115,10 +115,10 @@
 - (id) initWithColor: (GLuint) aColor width:(GLint)w  height:(GLint) h
 {
 	if( (self=[super init]) ) {
-		r = (aColor >> 24) & 0xff;
-		g = (aColor >> 16) & 0xff;
-		b = (aColor >> 8) & 0xff;
-		opacity = (aColor) & 0xff;
+		color_.r = (aColor >> 24) & 0xff;
+		color_.g = (aColor >> 16) & 0xff;
+		color_.b = (aColor >> 8) & 0xff;
+		opacity_ = (aColor) & 0xff;
 		
 		[self updateColor];
 		
@@ -151,13 +151,13 @@
 	for( NSUInteger i=0; i < sizeof(squareColors) / sizeof(squareColors[0]);i++ )
 	{
 		if( i % 4 == 0 )
-			squareColors[i] = r;
+			squareColors[i] = color_.r;
 		else if( i % 4 == 1)
-			squareColors[i] = g;
+			squareColors[i] = color_.g;
 		else if( i % 4 ==2  )
-			squareColors[i] = b;
+			squareColors[i] = color_.b;
 		else
-			squareColors[i] = opacity;
+			squareColors[i] = opacity_;
 	}
 }
 
@@ -180,12 +180,12 @@
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
 	glEnableClientState(GL_COLOR_ARRAY);
 	
-	if( opacity != 255 )
+	if( opacity_ != 255 )
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
-	if( opacity != 255 )
+	if( opacity_ != 255 )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -195,10 +195,10 @@
 -(void) changeColor: (GLuint) aColor
 {
 	CCLOG(@"ColorLayer:changeColor is deprecated. using setRGB::: instead");
-	r = (aColor >> 24) & 0xff;
-	g = (aColor >> 16) & 0xff;
-	b = (aColor >> 8) & 0xff;
-	opacity = (aColor) & 0xff;	
+	color_.r = (aColor >> 24) & 0xff;
+	color_.g = (aColor >> 16) & 0xff;
+	color_.b = (aColor >> 8) & 0xff;
+	opacity_ = (aColor) & 0xff;	
 	[self updateColor];
 }
 
@@ -206,27 +206,24 @@
 //{
 //	return [self changeColor:aColor];
 //}
--(GLuint) color
-{
-	GLuint ret;
-	ret = (r << 24) | (g << 16) | (b << 8) | opacity;
-	return ret;
-}
 
 #pragma mark Protocols
 // Color Protocol
--(void) setRGB: (GLubyte)rr :(GLubyte)gg :(GLubyte)bb
+
+-(void) setColor:(ccColor3B)color
 {
-	r = rr;
-	g = gg;
-	b = bb;
+	color_ = color;
 	[self updateColor];
+}
+-(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
+{
+	[self setColor:ccc3(r,g,b)];
 }
 
 // Opacity Protocol
 -(void) setOpacity: (GLubyte) o
 {
-	opacity = o;
+	opacity_ = o;
 	[self updateColor];
 }
 
