@@ -36,6 +36,13 @@ typedef enum {
 	kAMStateInitialised	   //Audio manager is initialised - safe to use
 } tAudioManagerState;
 
+typedef enum {
+	kAMRBDoNothing,			    //Audio manager will not do anything on resign or becoming active
+	kAMRBStopPlay,    			//Background music is stopped on resign and resumed on become active
+	kAMRBStop					//Background music is stopped on resign but not resumed - maybe because you want to do this from within your game
+} tAudioManagerResignBehavior;
+
+
 @interface CDAsynchInitialiser : NSOperation {}	
 @end
 
@@ -49,11 +56,22 @@ typedef enum {
 	SEL backgroundMusicCompletionSelector;
 	id backgroundMusicCompletionListener;
 	BOOL willPlayBackgroundMusic;
+	BOOL _mute;
+	BOOL _muteStoppedMusic;
+	
+	//For handling resign/become active
+	BOOL _isObservingAppEvents;
+	BOOL _systemPausedMusic;
+	tAudioManagerResignBehavior _resignBehavior;
+	NSTimeInterval _bookmark;
+	
+	
 }
 
 @property (readonly) CDSoundEngine *soundEngine;
 @property (readonly) AVAudioPlayer *backgroundMusic;
 @property (readonly) BOOL willPlayBackgroundMusic;
+@property (readwrite) BOOL mute; 
 
 
 + (CDAudioManager *) sharedManager;
@@ -65,6 +83,7 @@ typedef enum {
 -(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop;
 -(void) preloadBackgroundMusic:(NSString*) filename;
 -(void) stopBackgroundMusic;
+-(void) stopBackgroundMusic:(BOOL) release;
 -(void) pauseBackgroundMusic;
 -(void) rewindBackgroundMusic;
 -(void) resumeBackgroundMusic;
@@ -72,6 +91,7 @@ typedef enum {
 -(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 -(void) audioSessionInterrupted;
 -(void) audioSessionResumed;
+-(void) setResignBehavior:(tAudioManagerResignBehavior) resignBehavior autoHandle:(BOOL) autoHandle; 
 
 @end
 
