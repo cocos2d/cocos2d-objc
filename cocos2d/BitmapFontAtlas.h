@@ -33,6 +33,34 @@ typedef struct _bitmapFontDef {
 	int xAdvance;
 } ccBitmapFontDef;
 
+enum {
+	kBitmapFontAtlasMaxChars = 256,
+};
+
+/** BitmapFontConfiguration has parsed configuration of the the .fnt file
+ @since v0.8
+ */
+@interface BitmapFontConfiguration : NSObject
+{
+// XXX: Creating a public interface so that the bitmapFontArray[] is accesible
+@public
+	// The characters building up the font
+	ccBitmapFontDef	bitmapFontArray[kBitmapFontAtlasMaxChars];
+	
+	// FNTConfig: Common Height
+	NSUInteger		commonHeight;
+
+	// values for kerning
+	NSMutableDictionary	*kerningDictionary;
+}
+
+/** allocates a BitmapFontConfiguration with a FNT file */
++(id) configurationWithFNTFile:(NSString*)FNTfile;
+/** initializes a BitmapFontConfiguration with a FNT file */
+-(id) initWithFNTfile:(NSString*)FNTfile;
+@end
+
+
 /** BitmapFontAtlas is a subclass of AtlasSpriteManger.
   
  Features:
@@ -57,24 +85,13 @@ typedef struct _bitmapFontDef {
  @since v0.8
  */
 
-enum {
-	kBitmapFontAtlasMaxChars = 256,
-};
-
 @interface BitmapFontAtlas : AtlasSpriteManager <CocosNodeLabel, CocosNodeRGBA>
 {
 	// string to render
 	NSString		*string_;
 	
-	// values for kerning
-	NSMutableDictionary	*kerningDictionary;
+	BitmapFontConfiguration	*configuration;
 
-	// FNTConfig: Common Height
-	NSUInteger		commonHeight;
-
-	// The characters building up the font
-	ccBitmapFontDef	bitmapFontArray[kBitmapFontAtlasMaxChars];
-	
 	// texture RGBA
 	GLubyte		opacity_;
 	ccColor3B	color_;
@@ -96,3 +113,13 @@ enum {
 /** updates the font chars based on the string to render */
 -(void) createFontChars;
 @end
+
+/** Free function that parses a FNT file a place it on the cache
+*/
+BitmapFontConfiguration * FNTConfigLoadFile( NSString *file );
+/** Purges the FNT config cache
+ */
+void FNTConfigRemoveCache( void );
+
+
+

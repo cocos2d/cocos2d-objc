@@ -46,3 +46,7 @@
 {}
 @end
 
+@interface AtlasFastBitmap : AtlasDemo
+{}
+@end
+

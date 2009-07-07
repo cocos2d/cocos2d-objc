@@ -61,8 +61,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 //
 // Scheduler
 //
-/** Scheduler is a singleton.
- It is responsible of triggering the scheduled callbacks.
+/** Scheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
 */
 @interface Scheduler : NSObject
@@ -79,6 +78,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
  To create a 'fast fordward' effect, use values higher than 1.0.
  @since v0.8
+ @warning It will affect EVERY scheduled selector / action.
  */
 @property (readwrite) ccTime	timeScale;
 

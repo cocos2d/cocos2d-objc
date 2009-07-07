@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 			@"Atlas2",
 			@"Atlas3",
 			@"Atlas4",
+			@"AtlasFastBitmap",
 			@"Atlas5",
 			@"Atlas6",
 };
@@ -401,6 +402,41 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark Example AtlasFastBitmap
+
+/*
+ * Use this editor to generate bitmap font atlas:
+ *  http://slick.cokeandcode.com/demos/hiero.jnlp
+ */
+
+@implementation AtlasFastBitmap
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		// Upper Label
+		for( int i=0 ; i < 100;i ++ ) {
+			BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
+			[self addChild:label];
+			
+			CGSize s = [[Director sharedDirector] winSize];
+
+			CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+			label.position = p;
+			label.anchorPoint = ccp(0.5f, 0.5f);
+		}
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"BitmapFontAtlas FastCache";
+}
+@end
+
 
 #pragma mark Example Atlas 5
 
