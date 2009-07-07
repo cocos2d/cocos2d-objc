@@ -229,6 +229,7 @@ CDSourceWrapper *toneSource;
 					//Pad 7 touched- play a looped sound with normal pitch, pan and gain in the loop channel group.
 					//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
 					toneSource.sourceId = [am.soundEngine playSound:SND_ID_TONELOOP channelGroupId:CGROUP_TONELOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
+					//toneSource.looping = TRUE;
 					toneLoopPlaying = YES;
 				} else {
 					[soundEngine stopSound:toneSource.sourceId];
@@ -243,6 +244,7 @@ CDSourceWrapper *toneSource;
 				//Any other sound playing in this channel group will be stopped as the group has only 1 voice.
 				[soundEngine playSound:SND_ID_DRUMLOOP channelGroupId:CGROUP_DRUMLOOP pitch:1.0f pan:0.0f gain:1.0f loop:YES];
 				flashIndex[7] = 0;
+				
 			}
 
 			if ((touchedPads & (1 << 8)) != 0) {
@@ -250,13 +252,18 @@ CDSourceWrapper *toneSource;
 				flashIndex[8] = 0;
 				[soundEngine stopChannelGroup:CGROUP_DRUMLOOP];
 				
+				
 				if (![am isBackgroundMusicPlaying]) {
 					[am playBackgroundMusic:@"mula_tito_on_timbales.mp3" loop:FALSE];
 				} else {
 					[am pauseBackgroundMusic];
 				}	
 				
-				//Play background music
+				//Testing channel group mute
+				//[soundEngine setChannelGroupMute:CGROUP_DRUMLOOP mute:![soundEngine channelGroupMute:CGROUP_DRUMLOOP]];
+				
+				//Testing looping flag in CDSourceWrapper
+				//toneSource.looping = !toneSource.looping;
 				
 				//Testing loading a buffer with a new sound
 				//[soundEngine loadBuffer:SND_ID_TONELOOP fileName:@"bassloop" fileType:@"wav"];	
@@ -302,6 +309,7 @@ CDSourceWrapper *toneSource;
 			_appState = kAppStateReady;
 			[[CDAudioManager sharedManager] setBackgroundMusicCompletionListener:self selector:@selector(backgroundMusicFinished)]; 
 			[[CDAudioManager sharedManager].soundEngine setChannelGroupNonInterruptible:CGROUP_NON_INTERRUPTIBLE isNonInterruptible:TRUE];
+			[[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:TRUE];
 		} else {
 			//CCLOG(@"Denshion: sound buffers loading %0.2f",[CDAudioManager sharedManager].soundEngine.asynchLoadProgress);
 		}	
@@ -404,6 +412,7 @@ CDSourceWrapper *toneSource;
 	
 	//Initialise audio manager asynchronously as it can take a few seconds
 	[CDAudioManager initAsynchronously:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
+	//[CDAudioManager initAsynchronously:kAudioManagerFxPlusMusic channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
 }
 
 

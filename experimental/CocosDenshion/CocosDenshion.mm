@@ -162,6 +162,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 			_channelGroups[i].startIndex = channelCount;
 			_channelGroups[i].endIndex = _channelGroups[i].startIndex + channelGroupDefinitions[i] - 1;
 			_channelGroups[i].currentIndex = _channelGroups[i].startIndex;
+			_channelGroups[i].mute = false;
 			channelCount += channelGroupDefinitions[i];
 			CCLOG(@"Denshion: channel def %i %i %i %i",i,_channelGroups[i].startIndex, _channelGroups[i].endIndex, _channelGroups[i].currentIndex);
 		}
@@ -392,7 +393,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 #endif
 	
 	//If mute or initialisation has failed or buffer is not loaded then do nothing
-	if (_mute || !functioning || _bufferStates[soundId] != CD_BS_LOADED) {
+	if (_mute || !functioning || _bufferStates[soundId] != CD_BS_LOADED || _channelGroups[channelGroupId].mute) {
 #ifdef DEBUG
 		if (!functioning) {
 			CCLOG(@"Denshion: sound playback aborted because sound engine is not functioning");
@@ -512,7 +513,33 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		_channelGroups[channelGroupId].currentIndex = _channelGroups[channelGroupId].startIndex;
 	}	
 }
- 
+
+/**
+ * Set the mute property for a channel group. If mute is turned on any sounds in that channel group
+ * will be stopped and further sounds in that channel group will play. However, turning mute off
+ * will not restart any sounds that were playing when mute was turned on. Also the mute setting 
+ * for the sound engine must be taken into account. If the sound engine is mute no sounds will play
+ * no matter what the channel group mute setting is.
+ */
+- (void) setChannelGroupMute:(int) channelGroupId mute:(BOOL) mute {
+	if (mute) {
+		_channelGroups[channelGroupId].mute = true;
+		[self stopChannelGroup:channelGroupId];
+	} else {
+		_channelGroups[channelGroupId].mute = false;	
+	}	
+}
+
+/**
+ * Return the mute property for the channel group identified by channelGroupId
+ */
+- (BOOL) channelGroupMute:(int) channelGroupId {
+	if (_channelGroups[channelGroupId].mute) {
+		return YES;
+	} else {
+		return NO;	
+	}	
+}
 
 -(ALCcontext *) openALContext {
 	return context;

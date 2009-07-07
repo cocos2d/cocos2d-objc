@@ -64,9 +64,13 @@ Required Frameworks: OpenAL, AudioToolbox
 
 /* Changelog
 1.6 (2009.07.02) * Added looping property to CDSourceWrapper so that looping flag can be toggled during playback
-                   (Thanks to Pable Ruiz)
-                 * 				
- 
+                   (Thanks to Pablo Ruiz)
+                 * Added fix to ensure mp3 files are not decoded in software on 3.0 (Thanks to Bryan Accleroto) 
+                 * Added mute to CDAudioManager
+                 * Added handlers for resign active and become active to CDAudioManager (Thanks to Dominique Bongard)
+			     * Added stopBackgroundMusic method with flag to indicate whether resources should be released
+				   (Thanks to Dominique Bongard) 
+				 * Added functionality to mute channel groups
 1.5 (2009.06.13) * Added preLoadBackgroundMusic method to CDAudioManager to allow background music to be preloaded
                  * Fixed bug with sound engine locking up when trying to load non existent file asynchronously 
                    (Thanks to Edison's Labs for reporting)
@@ -115,6 +119,7 @@ typedef struct _channelGroup {
 	int startIndex;
 	int endIndex;
 	int currentIndex;
+	bool mute;
 } channelGroup;
 
 
@@ -154,6 +159,8 @@ typedef struct _channelGroup {
 - (void) stopSound:(ALuint) sourceId;
 - (void) stopChannelGroup:(int) channelGroupId;
 - (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible;
+- (void) setChannelGroupMute:(int) channelGroupId mute:(BOOL) mute;
+- (BOOL) channelGroupMute:(int) channelGroupId;
 - (BOOL) loadBuffer:(int) soundId fileName:(NSString*) fileName fileType:(NSString*) fileType;
 - (void) loadBuffersAsynchronously:(NSArray *) loadRequests;
 - (BOOL) unloadBuffer:(int) soundId;
