@@ -24,11 +24,37 @@
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
 
-@interface BitmapFontAtlas (Private)
--(NSString*) atlasNameFromFntFile:(NSString*)fntFile;
 
--(int) kerningAmmountForFirst:(unichar)first second:(unichar)second;
+#pragma mark -
+#pragma mark FNTConfig Cache - free functions
 
+NSMutableDictionary *configurations = nil;
+BitmapFontConfiguration* FNTConfigLoadFile( NSString *fntFile)
+{
+	BitmapFontConfiguration *ret = nil;
+	
+	if( configurations == nil )
+		configurations = [[NSMutableDictionary dictionaryWithCapacity:3] retain];
+	
+	ret = [configurations objectForKey:fntFile];
+	if( ret == nil ) {
+		ret = [BitmapFontConfiguration configurationWithFNTFile:fntFile];
+		[configurations setObject:ret forKey:fntFile];
+	}
+	
+	return ret;
+}
+
+void FNTConfigRemoveCache( void )
+{
+	[configurations removeAllObjects];
+}
+
+#pragma mark -
+#pragma mark BitmapFontConfiguration
+
+
+@interface BitmapFontConfiguration (Private)
 -(void) parseConfigFile:(NSString*)controlFile;
 -(void) parseCharacterDefinition:(NSString*)line charDef:(ccBitmapFontDef*)characterDefinition;
 -(void) parseCommonArguments:(NSString*)line;
@@ -36,99 +62,33 @@
 -(void) parseKerningEntry:(NSString*)line;
 @end
 
-@implementation BitmapFontAtlas
+@implementation BitmapFontConfiguration
 
-@synthesize opacity=opacity_, color=color_;
-
-#pragma mark BitmapFontAtlas - Creation & Init
-+(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
++(id) configurationWithFNTFile:(NSString*)FNTfile
 {
-	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
+	return [[[self alloc] initWithFNTfile:FNTfile] autorelease];
 }
 
-
--(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
+-(id) initWithFNTfile:(NSString*)fntFile
 {
-	NSString *textureAtlasName = [self atlasNameFromFntFile:fntFile];
-	
-	if ((self=[super initWithFile:textureAtlasName capacity:[theString length]])) {
-
-		// will be allocated later
-		kerningDictionary = nil;
-		
-		opacity_ = 255;
-		color_ = ccWHITE;
-
-		contentSize_ = CGSizeZero;
-		
-		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-
-		anchorPoint_ = ccp(0.5f, 0.5f);
-
-		[self parseConfigFile:fntFile];		
-		[self setString:theString];
+	if((self=[super init])) {
+		[self parseConfigFile:fntFile];
 	}
-
 	return self;
 }
 
--(void) dealloc
+- (void) dealloc
 {
-	[string_ release];
+	CCLOG( @"deallocing %@", self);
 	[kerningDictionary release];
 	[super dealloc];
 }
 
-//
-// obtain the texture atlas image
-//
--(NSString*) atlasNameFromFntFile:(NSString*)fntFile
-{
-	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
-
-	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
-	NSEnumerator *nse = [lines objectEnumerator];
-	NSString *line;
-	NSString *propertyValue = nil; // ret value
-	
-	// Loop through all the lines in the lines array processing each one
-	while( (line = [nse nextObject]) ) {
-		// Check to see if the start of the line is something we are interested in
-		if([line hasPrefix:@"page id="]) {
-			
-			// Break the values for this line up using =
-			NSArray *values = [line componentsSeparatedByString:@"="];
-			
-			// Get the enumerator for the array of components which has been created
-			NSEnumerator *nse = [values objectEnumerator];
-			
-			// We need to move past the first entry in the array before we start assigning values
-			[nse nextObject];
-			
-			// page ID. Sanity check
-			propertyValue = [nse nextObject];
-			NSAssert( [propertyValue intValue] == 0, @"XXX: BitmapFontAtlas only supports 1 page");
-			
-			// file 
-			propertyValue = [nse nextObject];
-			NSArray *array = [propertyValue componentsSeparatedByString:@"\""];
-			propertyValue = [array objectAtIndex:1];
-			break;
-		}		
-	}
-	// Finished with lines so release it
-	[lines release];	
-	
-	return propertyValue;
-}
-
-#pragma mark BitmapFontAtlas - FNT parser
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
-
+	
 	
 	// Move all lines in the string, which are denoted by \n, into an array
 	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
@@ -138,7 +98,7 @@
 	
 	// Create a holder for each line we are going to work with
 	NSString *line;
-
+	
 	// Loop through all the lines in the lines array processing each one
 	while( (line = [nse nextObject]) ) {
 		// Check to see if the start of the line is something we are interested in
@@ -180,14 +140,14 @@
 	// Character ID
 	propertyValue = [nse nextObject];
 	commonHeight = [propertyValue intValue];
-
+	
 	// base (ignore)
 	[nse nextObject];
 	
 	// scaleW. sanity check
 	propertyValue = [nse nextObject];
 	NSAssert( [propertyValue intValue] <= 1024, @"BitmapFontAtlas: page can't be larger than 1024x1024");
-
+	
 	// scaleH. sanity check
 	propertyValue = [nse nextObject];
 	NSAssert( [propertyValue intValue] <= 1024, @"BitmapFontAtlas: page can't be larger than 1024x1024");
@@ -237,7 +197,7 @@
 -(void) parseKerningCapacity:(NSString*) line
 {
 	NSAssert(!kerningDictionary, @"dictionary already initialized");
-
+	
 	// Break the values for this line up using =
 	NSArray *values = [line componentsSeparatedByString:@"="];
 	NSEnumerator *nse = [values objectEnumerator];	
@@ -266,7 +226,7 @@
 	// first
 	propertyValue = [nse nextObject];
 	int first = [propertyValue intValue];
-
+	
 	// second
 	propertyValue = [nse nextObject];
 	int second = [propertyValue intValue];
@@ -281,13 +241,113 @@
 	[kerningDictionary setObject:value forKey:key];
 }
 
+@end
+
+#pragma mark -
+#pragma mark BitmapFontAtlas
+
+@interface BitmapFontAtlas (Private)
+-(NSString*) atlasNameFromFntFile:(NSString*)fntFile;
+
+-(int) kerningAmmountForFirst:(unichar)first second:(unichar)second;
+
+@end
+
+@implementation BitmapFontAtlas
+
+@synthesize opacity=opacity_, color=color_;
+
+#pragma mark BitmapFontAtlas - Creation & Init
++(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
+{
+	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
+}
+
+
+-(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
+{
+	NSString *textureAtlasName = [self atlasNameFromFntFile:fntFile];
+	
+	if ((self=[super initWithFile:textureAtlasName capacity:[theString length]])) {
+
+		opacity_ = 255;
+		color_ = ccWHITE;
+
+		contentSize_ = CGSizeZero;
+		
+		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
+
+		anchorPoint_ = ccp(0.5f, 0.5f);
+
+		configuration = FNTConfigLoadFile(fntFile);
+		[configuration retain];
+		[self setString:theString];
+	}
+
+	return self;
+}
+
+-(void) dealloc
+{
+	[string_ release];
+	[configuration release];
+	[super dealloc];
+}
+
+//
+// obtain the texture atlas image
+//
+-(NSString*) atlasNameFromFntFile:(NSString*)fntFile
+{
+	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+
+	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
+	NSEnumerator *nse = [lines objectEnumerator];
+	NSString *line;
+	NSString *propertyValue = nil; // ret value
+	
+	// Loop through all the lines in the lines array processing each one
+	while( (line = [nse nextObject]) ) {
+		// Check to see if the start of the line is something we are interested in
+		if([line hasPrefix:@"page id="]) {
+			
+			// Break the values for this line up using =
+			NSArray *values = [line componentsSeparatedByString:@"="];
+			
+			// Get the enumerator for the array of components which has been created
+			NSEnumerator *nse = [values objectEnumerator];
+			
+			// We need to move past the first entry in the array before we start assigning values
+			[nse nextObject];
+			
+			// page ID. Sanity check
+			propertyValue = [nse nextObject];
+			NSAssert( [propertyValue intValue] == 0, @"XXX: BitmapFontAtlas only supports 1 page");
+			
+			// file 
+			propertyValue = [nse nextObject];
+			NSArray *array = [propertyValue componentsSeparatedByString:@"\""];
+			propertyValue = [array objectAtIndex:1];
+			break;
+		}		
+	}
+	// Finished with lines so release it
+	[lines release];	
+	
+	return propertyValue;
+}
+
+#pragma mark BitmapFontAtlas - FNT parser
+
+
 #pragma mark BitmapFontAtlas - Atlas generation
 
 -(int) kerningAmmountForFirst:(unichar)first second:(unichar)second
 {
 	int ret = 0;
 	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
-	NSNumber *value = [kerningDictionary objectForKey:key];
+	NSNumber *value = [configuration->kerningDictionary objectForKey:key];
 	if(value)
 		ret = [value intValue];
 		
@@ -308,7 +368,7 @@
 		
 		kerningAmmount = [self kerningAmmountForFirst:prev second:c];
 		
-		ccBitmapFontDef fontDef = bitmapFontArray[c];
+		ccBitmapFontDef fontDef = configuration->bitmapFontArray[c];
 		
 		CGRect rect = fontDef.rect;
 		
@@ -324,16 +384,16 @@
 
 		fontChar.visible = YES;
 
-		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.xAdvance/2.0f, (commonHeight - fontDef.yOffset) - rect.size.height/2.0f );
+		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.xAdvance/2.0f, (configuration->commonHeight - fontDef.yOffset) - rect.size.height/2.0f );
 		
 //		NSLog(@"position.y: %f", fontChar.position.y);
 		
 		// update kerning
 		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmmount,0));
-		nextFontPositionX += bitmapFontArray[c].xAdvance + kerningAmmount;
+		nextFontPositionX += configuration->bitmapFontArray[c].xAdvance + kerningAmmount;
 		prev = c;
 		
-		tmpSize.width += bitmapFontArray[c].xAdvance + kerningAmmount;
+		tmpSize.width += configuration->bitmapFontArray[c].xAdvance + kerningAmmount;
 		tmpSize.height = MAX( rect.size.height, contentSize_.height);
 		
 		// Apply label properties

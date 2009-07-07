@@ -28,6 +28,7 @@ Main features
     * Touch/Accelerometer
     * Portrait and Landscape mode
     * Integrated Pause/Resume
+	* Integrated Slow motion/Fast forward
     * Fast textures: PVRTC 2-bit & 4-bit textures, RGBA 16-bit (and 32-bit) textures
     * Language: objective-c
     * Open Source: Compatible with open and closed source projects
