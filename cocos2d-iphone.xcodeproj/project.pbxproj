@@ -780,7 +780,7 @@
 		50CB2FFA1004C93600B7A750 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF31004C93600B7A750 /* CocosDenshion.h */; };
 		50CB2FFB1004C93600B7A750 /* CocosDenshion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB2FF41004C93600B7A750 /* CocosDenshion.mm */; };
 		50CB2FFC1004C93600B7A750 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */; };
-		50CB2FFD1004C93600B7A750 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */; };
+		50CB2FFD1004C93600B7A750 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB2FF61004C93600B7A750 /* SimpleAudioEngine.m */; };
 		50CB302D1004C9D300B7A750 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50CB302E1004C9D300B7A750 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50CB302F1004C9D300B7A750 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -1869,7 +1869,7 @@
 		50CB2FF31004C93600B7A750 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
 		50CB2FF41004C93600B7A750 /* CocosDenshion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocosDenshion.mm; sourceTree = "<group>"; };
 		50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
-		50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
+		50CB2FF61004C93600B7A750 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB30641004CACF00B7A750 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50CB30661004CAD900B7A750 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -3439,7 +3439,7 @@
 				50CB2FF31004C93600B7A750 /* CocosDenshion.h */,
 				50CB2FF41004C93600B7A750 /* CocosDenshion.mm */,
 				50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */,
-				50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */,
+				50CB2FF61004C93600B7A750 /* SimpleAudioEngine.m */,
 			);
 			path = CocosDenshion;
 			sourceTree = "<group>";
@@ -5899,7 +5899,7 @@
 			files = (
 				50CB2FF81004C93600B7A750 /* CDAudioManager.mm in Sources */,
 				50CB2FFB1004C93600B7A750 /* CocosDenshion.mm in Sources */,
-				50CB2FFD1004C93600B7A750 /* SimpleAudioEngine.mm in Sources */,
+				50CB2FFD1004C93600B7A750 /* SimpleAudioEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
