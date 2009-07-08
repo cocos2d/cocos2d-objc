@@ -285,26 +285,6 @@
 		503F25E40FD3CA2A009BAFB6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		503F25E50FD3CA2A009BAFB6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		503F25E70FD3CA2A009BAFB6 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		503F26100FD3CA94009BAFB6 /* CDAudioManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503F25F40FD3CA94009BAFB6 /* CDAudioManager.mm */; };
-		503F26110FD3CA94009BAFB6 /* CocosDenshion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503F25F70FD3CA94009BAFB6 /* CocosDenshion.mm */; };
-		503F26120FD3CA94009BAFB6 /* DenshionDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F25FA0FD3CA94009BAFB6 /* DenshionDemo.m */; };
-		503F26130FD3CA94009BAFB6 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 503F25FC0FD3CA94009BAFB6 /* bg.png */; };
-		503F26140FD3CA94009BAFB6 /* flash.png in Resources */ = {isa = PBXBuildFile; fileRef = 503F25FD0FD3CA94009BAFB6 /* flash.png */; };
-		503F26150FD3CA94009BAFB6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 503F25FE0FD3CA94009BAFB6 /* Icon.png */; };
-		503F26160FD3CA94009BAFB6 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 503F25FF0FD3CA94009BAFB6 /* slider.png */; };
-		503F26170FD3CA94009BAFB6 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 503F26010FD3CA94009BAFB6 /* 808_120bpm.caf */; };
-		503F26180FD3CA94009BAFB6 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F26020FD3CA94009BAFB6 /* 808_120bpm.wav */; };
-		503F261A0FD3CA94009BAFB6 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F26040FD3CA94009BAFB6 /* ballbounce.wav */; };
-		503F261B0FD3CA94009BAFB6 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F26050FD3CA94009BAFB6 /* cowbell.wav */; };
-		503F261C0FD3CA94009BAFB6 /* explodelow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F26060FD3CA94009BAFB6 /* explodelow.wav */; };
-		503F261D0FD3CA94009BAFB6 /* karate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F26070FD3CA94009BAFB6 /* karate.wav */; };
-		503F261E0FD3CA94009BAFB6 /* machinegun.caf in Resources */ = {isa = PBXBuildFile; fileRef = 503F26080FD3CA94009BAFB6 /* machinegun.caf */; };
-		503F261F0FD3CA94009BAFB6 /* machinegun.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F26090FD3CA94009BAFB6 /* machinegun.wav */; };
-		503F26200FD3CA94009BAFB6 /* mula_tito_on_timbales.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 503F260A0FD3CA94009BAFB6 /* mula_tito_on_timbales.mp3 */; };
-		503F26210FD3CA94009BAFB6 /* rustylow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F260B0FD3CA94009BAFB6 /* rustylow.wav */; };
-		503F26220FD3CA94009BAFB6 /* sine440.caf in Resources */ = {isa = PBXBuildFile; fileRef = 503F260C0FD3CA94009BAFB6 /* sine440.caf */; };
-		503F26230FD3CA94009BAFB6 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = 503F260D0FD3CA94009BAFB6 /* sine440.wav */; };
-		503F26240FD3CA94009BAFB6 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503F260F0FD3CA94009BAFB6 /* SimpleAudioEngine.mm */; };
 		503F26B60FD3CFF4009BAFB6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		503F26D60FD3D1F9009BAFB6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503F26D50FD3D1F9009BAFB6 /* AVFoundation.framework */; };
 		503F27260FD3F6DC009BAFB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503F27250FD3F6DC009BAFB6 /* OpenAL.framework */; };
@@ -794,6 +774,42 @@
 		50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C93AA80E0BF6E000517B01 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* SpritesTest.m */; };
+		50CB2FF71004C93600B7A750 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF01004C93600B7A750 /* CDAudioManager.h */; };
+		50CB2FF81004C93600B7A750 /* CDAudioManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB2FF11004C93600B7A750 /* CDAudioManager.mm */; };
+		50CB2FF91004C93600B7A750 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */; };
+		50CB2FFA1004C93600B7A750 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF31004C93600B7A750 /* CocosDenshion.h */; };
+		50CB2FFB1004C93600B7A750 /* CocosDenshion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB2FF41004C93600B7A750 /* CocosDenshion.mm */; };
+		50CB2FFC1004C93600B7A750 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */; };
+		50CB2FFD1004C93600B7A750 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */; };
+		50CB302D1004C9D300B7A750 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50CB302E1004C9D300B7A750 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50CB302F1004C9D300B7A750 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50CB30301004C9D300B7A750 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50CB30311004C9D300B7A750 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50CB30321004C9D300B7A750 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		50CB304F1004CA6900B7A750 /* DenshionDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB303B1004CA6900B7A750 /* DenshionDemo.m */; };
+		50CB30501004CA6900B7A750 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB303D1004CA6900B7A750 /* bg.png */; };
+		50CB30511004CA6900B7A750 /* flash.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB303E1004CA6900B7A750 /* flash.png */; };
+		50CB30521004CA6900B7A750 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB303F1004CA6900B7A750 /* Icon.png */; };
+		50CB30531004CA6900B7A750 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30401004CA6900B7A750 /* slider.png */; };
+		50CB30541004CA6900B7A750 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30421004CA6900B7A750 /* 808_120bpm.caf */; };
+		50CB30551004CA6900B7A750 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30431004CA6900B7A750 /* 808_120bpm.wav */; };
+		50CB30561004CA6900B7A750 /* ATTRIBUTION.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30441004CA6900B7A750 /* ATTRIBUTION.txt */; };
+		50CB30571004CA6900B7A750 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30451004CA6900B7A750 /* ballbounce.wav */; };
+		50CB30581004CA6900B7A750 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30461004CA6900B7A750 /* cowbell.wav */; };
+		50CB30591004CA6900B7A750 /* explodelow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30471004CA6900B7A750 /* explodelow.wav */; };
+		50CB305A1004CA6900B7A750 /* karate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30481004CA6900B7A750 /* karate.wav */; };
+		50CB305B1004CA6900B7A750 /* machinegun.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30491004CA6900B7A750 /* machinegun.caf */; };
+		50CB305C1004CA6900B7A750 /* machinegun.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304A1004CA6900B7A750 /* machinegun.wav */; };
+		50CB305D1004CA6900B7A750 /* mula_tito_on_timbales.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304B1004CA6900B7A750 /* mula_tito_on_timbales.mp3 */; };
+		50CB305E1004CA6900B7A750 /* rustylow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304C1004CA6900B7A750 /* rustylow.wav */; };
+		50CB305F1004CA6900B7A750 /* sine440.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304D1004CA6900B7A750 /* sine440.caf */; };
+		50CB30601004CA6900B7A750 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304E1004CA6900B7A750 /* sine440.wav */; };
+		50CB30631004CA9900B7A750 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
+		50CB30651004CACF00B7A750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB30641004CACF00B7A750 /* AVFoundation.framework */; };
+		50CB30671004CAD900B7A750 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB30661004CAD900B7A750 /* AudioToolbox.framework */; };
+		50CB306B1004CAFB00B7A750 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB306A1004CAFB00B7A750 /* OpenAL.framework */; };
+		50CB30A01004CD2100B7A750 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1333,6 +1349,20 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		50CB30191004C9D300B7A750 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		50CB30611004CA9100B7A750 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50CB2FC91004C8B100B7A750 /* CocosDenshion */;
+			remoteInfo = CocosDenshion;
+		};
 		50D0E04A0FF9232E00098927 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1549,31 +1579,6 @@
 		503909FA0FDFDC0B009F63EE /* menuitemsprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuitemsprite.png; sourceTree = "<group>"; };
 		503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grossini_dance_atlas.pvr; sourceTree = "<group>"; };
 		503F25EB0FD3CA2A009BAFB6 /* CocosDenshionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		503F25F30FD3CA94009BAFB6 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
-		503F25F40FD3CA94009BAFB6 /* CDAudioManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CDAudioManager.mm; sourceTree = "<group>"; };
-		503F25F50FD3CA94009BAFB6 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
-		503F25F60FD3CA94009BAFB6 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
-		503F25F70FD3CA94009BAFB6 /* CocosDenshion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocosDenshion.mm; sourceTree = "<group>"; };
-		503F25F90FD3CA94009BAFB6 /* DenshionDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DenshionDemo.h; sourceTree = "<group>"; };
-		503F25FA0FD3CA94009BAFB6 /* DenshionDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DenshionDemo.m; sourceTree = "<group>"; };
-		503F25FC0FD3CA94009BAFB6 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
-		503F25FD0FD3CA94009BAFB6 /* flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flash.png; sourceTree = "<group>"; };
-		503F25FE0FD3CA94009BAFB6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		503F25FF0FD3CA94009BAFB6 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
-		503F26010FD3CA94009BAFB6 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = text; path = 808_120bpm.caf; sourceTree = "<group>"; };
-		503F26020FD3CA94009BAFB6 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 808_120bpm.wav; sourceTree = "<group>"; };
-		503F26040FD3CA94009BAFB6 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ballbounce.wav; sourceTree = "<group>"; };
-		503F26050FD3CA94009BAFB6 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cowbell.wav; sourceTree = "<group>"; };
-		503F26060FD3CA94009BAFB6 /* explodelow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explodelow.wav; sourceTree = "<group>"; };
-		503F26070FD3CA94009BAFB6 /* karate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = karate.wav; sourceTree = "<group>"; };
-		503F26080FD3CA94009BAFB6 /* machinegun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = machinegun.caf; sourceTree = "<group>"; };
-		503F26090FD3CA94009BAFB6 /* machinegun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = machinegun.wav; sourceTree = "<group>"; };
-		503F260A0FD3CA94009BAFB6 /* mula_tito_on_timbales.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mula_tito_on_timbales.mp3; sourceTree = "<group>"; };
-		503F260B0FD3CA94009BAFB6 /* rustylow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rustylow.wav; sourceTree = "<group>"; };
-		503F260C0FD3CA94009BAFB6 /* sine440.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sine440.caf; sourceTree = "<group>"; };
-		503F260D0FD3CA94009BAFB6 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sine440.wav; sourceTree = "<group>"; };
-		503F260E0FD3CA94009BAFB6 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
-		503F260F0FD3CA94009BAFB6 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		503F26B40FD3CFE8009BAFB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		503F26BD0FD3D045009BAFB6 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		503F26C00FD3D062009BAFB6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1856,7 +1861,38 @@
 		50C93AAD0E0BF6E000517B01 /* SpritesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* SpritesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesTest.h; path = tests/SpritesTest.h; sourceTree = "<group>"; };
 		50C93AC40E0BF8FC00517B01 /* SpritesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesTest.m; path = tests/SpritesTest.m; sourceTree = "<group>"; };
-		50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCocosDenshion.a; path = "build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
+		50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		50CB2FF01004C93600B7A750 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		50CB2FF11004C93600B7A750 /* CDAudioManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CDAudioManager.mm; sourceTree = "<group>"; };
+		50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		50CB2FF31004C93600B7A750 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		50CB2FF41004C93600B7A750 /* CocosDenshion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocosDenshion.mm; sourceTree = "<group>"; };
+		50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
+		50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
+		50CB30361004C9D300B7A750 /* CocosDenshionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50CB30381004C9D300B7A750 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
+		50CB303A1004CA6900B7A750 /* DenshionDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DenshionDemo.h; sourceTree = "<group>"; };
+		50CB303B1004CA6900B7A750 /* DenshionDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DenshionDemo.m; sourceTree = "<group>"; };
+		50CB303D1004CA6900B7A750 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		50CB303E1004CA6900B7A750 /* flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flash.png; sourceTree = "<group>"; };
+		50CB303F1004CA6900B7A750 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		50CB30401004CA6900B7A750 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
+		50CB30421004CA6900B7A750 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 808_120bpm.caf; sourceTree = "<group>"; };
+		50CB30431004CA6900B7A750 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 808_120bpm.wav; sourceTree = "<group>"; };
+		50CB30441004CA6900B7A750 /* ATTRIBUTION.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION.txt; sourceTree = "<group>"; };
+		50CB30451004CA6900B7A750 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ballbounce.wav; sourceTree = "<group>"; };
+		50CB30461004CA6900B7A750 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cowbell.wav; sourceTree = "<group>"; };
+		50CB30471004CA6900B7A750 /* explodelow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explodelow.wav; sourceTree = "<group>"; };
+		50CB30481004CA6900B7A750 /* karate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = karate.wav; sourceTree = "<group>"; };
+		50CB30491004CA6900B7A750 /* machinegun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = machinegun.caf; sourceTree = "<group>"; };
+		50CB304A1004CA6900B7A750 /* machinegun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = machinegun.wav; sourceTree = "<group>"; };
+		50CB304B1004CA6900B7A750 /* mula_tito_on_timbales.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mula_tito_on_timbales.mp3; sourceTree = "<group>"; };
+		50CB304C1004CA6900B7A750 /* rustylow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rustylow.wav; sourceTree = "<group>"; };
+		50CB304D1004CA6900B7A750 /* sine440.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sine440.caf; sourceTree = "<group>"; };
+		50CB304E1004CA6900B7A750 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sine440.wav; sourceTree = "<group>"; };
+		50CB30641004CACF00B7A750 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		50CB30661004CAD900B7A750 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		50CB306A1004CAFB00B7A750 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -2413,6 +2449,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50CB302C1004C9D300B7A750 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50CB302D1004C9D300B7A750 /* Foundation.framework in Frameworks */,
+				50CB302E1004C9D300B7A750 /* UIKit.framework in Frameworks */,
+				50CB302F1004C9D300B7A750 /* CoreGraphics.framework in Frameworks */,
+				50CB30301004C9D300B7A750 /* OpenGLES.framework in Frameworks */,
+				50CB30311004C9D300B7A750 /* QuartzCore.framework in Frameworks */,
+				50CB30321004C9D300B7A750 /* libcocos2d.a in Frameworks */,
+				50CB30631004CA9900B7A750 /* libCocosDenshion.a in Frameworks */,
+				50CB30651004CACF00B7A750 /* AVFoundation.framework in Frameworks */,
+				50CB30671004CAD900B7A750 /* AudioToolbox.framework in Frameworks */,
+				50CB306B1004CAFB00B7A750 /* OpenAL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50D0E0550FF9232E00098927 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2560,6 +2613,7 @@
 				50D0E05F0FF9232E00098927 /* HelloActionsSample.app */,
 				50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */,
 				50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */,
+				50CB30361004C9D300B7A750 /* CocosDenshionTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2576,6 +2630,7 @@
 				501756090F335CE900624901 /* external */,
 				50B130FC0DFE0923003BAB56 /* tests */,
 				509B3A100F31027600F2FB95 /* cocoslive */,
+				50CB2FEF1004C93600B7A750 /* CocosDenshion */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				501CCFA30E99657C00B86F68 /* Support */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -2608,6 +2663,9 @@
 				503F27250FD3F6DC009BAFB6 /* OpenAL.framework */,
 				503F27270FD3F6E9009BAFB6 /* AudioToolbox.framework */,
 				503F272B0FD3F714009BAFB6 /* QuartzCore.framework */,
+				50CB30641004CACF00B7A750 /* AVFoundation.framework */,
+				50CB30661004CAD900B7A750 /* AudioToolbox.framework */,
+				50CB306A1004CAFB00B7A750 /* OpenAL.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2623,6 +2681,7 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
+				50CB30381004C9D300B7A750 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2850,62 +2909,6 @@
 				501CCFAC0E99657C00B86F68 /* TGAlib.h */,
 			);
 			name = ImageSupport;
-			sourceTree = "<group>";
-		};
-		503F25F20FD3CA94009BAFB6 /* CocosDenshion */ = {
-			isa = PBXGroup;
-			children = (
-				503F25F30FD3CA94009BAFB6 /* CDAudioManager.h */,
-				503F25F40FD3CA94009BAFB6 /* CDAudioManager.mm */,
-				503F25F50FD3CA94009BAFB6 /* CDOpenALSupport.h */,
-				503F25F60FD3CA94009BAFB6 /* CocosDenshion.h */,
-				503F25F70FD3CA94009BAFB6 /* CocosDenshion.mm */,
-				503F25F80FD3CA94009BAFB6 /* CocosDenshionSample */,
-				503F260E0FD3CA94009BAFB6 /* SimpleAudioEngine.h */,
-				503F260F0FD3CA94009BAFB6 /* SimpleAudioEngine.mm */,
-			);
-			path = CocosDenshion;
-			sourceTree = "<group>";
-		};
-		503F25F80FD3CA94009BAFB6 /* CocosDenshionSample */ = {
-			isa = PBXGroup;
-			children = (
-				503F25F90FD3CA94009BAFB6 /* DenshionDemo.h */,
-				503F25FA0FD3CA94009BAFB6 /* DenshionDemo.m */,
-				503F25FB0FD3CA94009BAFB6 /* Images */,
-				503F26000FD3CA94009BAFB6 /* Sounds */,
-			);
-			path = CocosDenshionSample;
-			sourceTree = "<group>";
-		};
-		503F25FB0FD3CA94009BAFB6 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				503F25FC0FD3CA94009BAFB6 /* bg.png */,
-				503F25FD0FD3CA94009BAFB6 /* flash.png */,
-				503F25FE0FD3CA94009BAFB6 /* Icon.png */,
-				503F25FF0FD3CA94009BAFB6 /* slider.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
-		503F26000FD3CA94009BAFB6 /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				503F26010FD3CA94009BAFB6 /* 808_120bpm.caf */,
-				503F26020FD3CA94009BAFB6 /* 808_120bpm.wav */,
-				503F26040FD3CA94009BAFB6 /* ballbounce.wav */,
-				503F26050FD3CA94009BAFB6 /* cowbell.wav */,
-				503F26060FD3CA94009BAFB6 /* explodelow.wav */,
-				503F26070FD3CA94009BAFB6 /* karate.wav */,
-				503F26080FD3CA94009BAFB6 /* machinegun.caf */,
-				503F26090FD3CA94009BAFB6 /* machinegun.wav */,
-				503F260A0FD3CA94009BAFB6 /* mula_tito_on_timbales.mp3 */,
-				503F260B0FD3CA94009BAFB6 /* rustylow.wav */,
-				503F260C0FD3CA94009BAFB6 /* sine440.caf */,
-				503F260D0FD3CA94009BAFB6 /* sine440.wav */,
-			);
-			path = Sounds;
 			sourceTree = "<group>";
 		};
 		5042241F0FC0A9E100B992F7 /* StreakMotion */ = {
@@ -3325,7 +3328,6 @@
 		50A783D30F3AFDB300104C45 /* experimental */ = {
 			isa = PBXGroup;
 			children = (
-				503F25F20FD3CA94009BAFB6 /* CocosDenshion */,
 				5042241F0FC0A9E100B992F7 /* StreakMotion */,
 				8EDF3E910F6BD8E600F54643 /* sound-engine */,
 			);
@@ -3336,6 +3338,7 @@
 			isa = PBXGroup;
 			children = (
 				504828C70F45B15700A30CEF /* attachDemo */,
+				50CB30391004CA6900B7A750 /* CocosDenshionTest */,
 				50175B240F33B22300624901 /* cocosLiveDemo */,
 				50F992430F9F183500767ABC /* PerformanceSpriteTest */,
 				50F998EC0F9F277D00767ABC /* PerformanceParticleTest */,
@@ -3426,6 +3429,63 @@
 			);
 			name = Images;
 			path = Resources/Images;
+			sourceTree = "<group>";
+		};
+		50CB2FEF1004C93600B7A750 /* CocosDenshion */ = {
+			isa = PBXGroup;
+			children = (
+				50CB2FF01004C93600B7A750 /* CDAudioManager.h */,
+				50CB2FF11004C93600B7A750 /* CDAudioManager.mm */,
+				50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */,
+				50CB2FF31004C93600B7A750 /* CocosDenshion.h */,
+				50CB2FF41004C93600B7A750 /* CocosDenshion.mm */,
+				50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */,
+				50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */,
+			);
+			path = CocosDenshion;
+			sourceTree = "<group>";
+		};
+		50CB30391004CA6900B7A750 /* CocosDenshionTest */ = {
+			isa = PBXGroup;
+			children = (
+				50CB303A1004CA6900B7A750 /* DenshionDemo.h */,
+				50CB303B1004CA6900B7A750 /* DenshionDemo.m */,
+				50CB303C1004CA6900B7A750 /* Images */,
+				50CB30411004CA6900B7A750 /* Sounds */,
+			);
+			name = CocosDenshionTest;
+			path = tests/CocosDenshionTest;
+			sourceTree = "<group>";
+		};
+		50CB303C1004CA6900B7A750 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				50CB303D1004CA6900B7A750 /* bg.png */,
+				50CB303E1004CA6900B7A750 /* flash.png */,
+				50CB303F1004CA6900B7A750 /* Icon.png */,
+				50CB30401004CA6900B7A750 /* slider.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		50CB30411004CA6900B7A750 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				50CB30421004CA6900B7A750 /* 808_120bpm.caf */,
+				50CB30431004CA6900B7A750 /* 808_120bpm.wav */,
+				50CB30441004CA6900B7A750 /* ATTRIBUTION.txt */,
+				50CB30451004CA6900B7A750 /* ballbounce.wav */,
+				50CB30461004CA6900B7A750 /* cowbell.wav */,
+				50CB30471004CA6900B7A750 /* explodelow.wav */,
+				50CB30481004CA6900B7A750 /* karate.wav */,
+				50CB30491004CA6900B7A750 /* machinegun.caf */,
+				50CB304A1004CA6900B7A750 /* machinegun.wav */,
+				50CB304B1004CA6900B7A750 /* mula_tito_on_timbales.mp3 */,
+				50CB304C1004CA6900B7A750 /* rustylow.wav */,
+				50CB304D1004CA6900B7A750 /* sine440.caf */,
+				50CB304E1004CA6900B7A750 /* sine440.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		50DFC2CC0FF62852007E7827 /* Samples */ = {
@@ -3802,6 +3862,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50CB2FF71004C93600B7A750 /* CDAudioManager.h in Headers */,
+				50CB2FF91004C93600B7A750 /* CDOpenALSupport.h in Headers */,
+				50CB2FFA1004C93600B7A750 /* CocosDenshion.h in Headers */,
+				50CB2FFC1004C93600B7A750 /* SimpleAudioEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4408,6 +4472,25 @@
 			productReference = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		50CB30171004C9D300B7A750 /* CocosDenshionTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionTest" */;
+			buildPhases = (
+				50CB301A1004C9D300B7A750 /* Resources */,
+				50CB30291004C9D300B7A750 /* Sources */,
+				50CB302C1004C9D300B7A750 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50CB30181004C9D300B7A750 /* PBXTargetDependency */,
+				50CB30621004CA9100B7A750 /* PBXTargetDependency */,
+			);
+			name = CocosDenshionTest;
+			productName = playground;
+			productReference = 50CB30361004C9D300B7A750 /* CocosDenshionTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		50D0E0480FF9232E00098927 /* HelloActionsSample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50D0E05C0FF9232E00098927 /* Build configuration list for PBXNativeTarget "HelloActionsSample" */;
@@ -4580,6 +4663,7 @@
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
 				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
 				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
+				50CB30171004C9D300B7A750 /* CocosDenshionTest */,
 				509B3A270F3102FD00F2FB95 /* cocosLiveTest */,
 				506143F10E589A2E003CCDB7 /* cocosnodeTest */,
 				501945550F964C620059CE7C /* drawPrimitivesTest */,
@@ -4719,22 +4803,6 @@
 			files = (
 				503F25C50FD3CA2A009BAFB6 /* Default.png in Resources */,
 				503F25CE0FD3CA2A009BAFB6 /* fps_images.png in Resources */,
-				503F26130FD3CA94009BAFB6 /* bg.png in Resources */,
-				503F26140FD3CA94009BAFB6 /* flash.png in Resources */,
-				503F26150FD3CA94009BAFB6 /* Icon.png in Resources */,
-				503F26160FD3CA94009BAFB6 /* slider.png in Resources */,
-				503F26170FD3CA94009BAFB6 /* 808_120bpm.caf in Resources */,
-				503F26180FD3CA94009BAFB6 /* 808_120bpm.wav in Resources */,
-				503F261A0FD3CA94009BAFB6 /* ballbounce.wav in Resources */,
-				503F261B0FD3CA94009BAFB6 /* cowbell.wav in Resources */,
-				503F261C0FD3CA94009BAFB6 /* explodelow.wav in Resources */,
-				503F261D0FD3CA94009BAFB6 /* karate.wav in Resources */,
-				503F261E0FD3CA94009BAFB6 /* machinegun.caf in Resources */,
-				503F261F0FD3CA94009BAFB6 /* machinegun.wav in Resources */,
-				503F26200FD3CA94009BAFB6 /* mula_tito_on_timbales.mp3 in Resources */,
-				503F26210FD3CA94009BAFB6 /* rustylow.wav in Resources */,
-				503F26220FD3CA94009BAFB6 /* sine440.caf in Resources */,
-				503F26230FD3CA94009BAFB6 /* sine440.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5249,6 +5317,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50CB301A1004C9D300B7A750 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50CB30501004CA6900B7A750 /* bg.png in Resources */,
+				50CB30511004CA6900B7A750 /* flash.png in Resources */,
+				50CB30521004CA6900B7A750 /* Icon.png in Resources */,
+				50CB30531004CA6900B7A750 /* slider.png in Resources */,
+				50CB30541004CA6900B7A750 /* 808_120bpm.caf in Resources */,
+				50CB30551004CA6900B7A750 /* 808_120bpm.wav in Resources */,
+				50CB30561004CA6900B7A750 /* ATTRIBUTION.txt in Resources */,
+				50CB30571004CA6900B7A750 /* ballbounce.wav in Resources */,
+				50CB30581004CA6900B7A750 /* cowbell.wav in Resources */,
+				50CB30591004CA6900B7A750 /* explodelow.wav in Resources */,
+				50CB305A1004CA6900B7A750 /* karate.wav in Resources */,
+				50CB305B1004CA6900B7A750 /* machinegun.caf in Resources */,
+				50CB305C1004CA6900B7A750 /* machinegun.wav in Resources */,
+				50CB305D1004CA6900B7A750 /* mula_tito_on_timbales.mp3 in Resources */,
+				50CB305E1004CA6900B7A750 /* rustylow.wav in Resources */,
+				50CB305F1004CA6900B7A750 /* sine440.caf in Resources */,
+				50CB30601004CA6900B7A750 /* sine440.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50D0E04B0FF9232E00098927 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5517,10 +5609,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				503F26B60FD3CFF4009BAFB6 /* main.m in Sources */,
-				503F26100FD3CA94009BAFB6 /* CDAudioManager.mm in Sources */,
-				503F26110FD3CA94009BAFB6 /* CocosDenshion.mm in Sources */,
-				503F26120FD3CA94009BAFB6 /* DenshionDemo.m in Sources */,
-				503F26240FD3CA94009BAFB6 /* SimpleAudioEngine.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5809,6 +5897,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50CB2FF81004C93600B7A750 /* CDAudioManager.mm in Sources */,
+				50CB2FFB1004C93600B7A750 /* CocosDenshion.mm in Sources */,
+				50CB2FFD1004C93600B7A750 /* SimpleAudioEngine.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50CB30291004C9D300B7A750 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50CB30A01004CD2100B7A750 /* main.m in Sources */,
+				50CB304F1004CA6900B7A750 /* DenshionDemo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6051,6 +6151,16 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50C93A970E0BF6E000517B01 /* PBXContainerItemProxy */;
+		};
+		50CB30181004C9D300B7A750 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 50CB30191004C9D300B7A750 /* PBXContainerItemProxy */;
+		};
+		50CB30621004CA9100B7A750 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50CB2FC91004C8B100B7A750 /* CocosDenshion */;
+			targetProxy = 50CB30611004CA9100B7A750 /* PBXContainerItemProxy */;
 		};
 		50D0E0490FF9232E00098927 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7654,6 +7764,61 @@
 			};
 			name = Release;
 		};
+		50CB30341004C9D300B7A750 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = CocosDenshionTest;
+				SDKROOT = iphoneos2.2;
+			};
+			name = Debug;
+		};
+		50CB30351004C9D300B7A750 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = CocosDenshionTest;
+				SDKROOT = iphoneos2.2;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		50D0E05D0FF9232E00098927 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8418,6 +8583,15 @@
 			buildConfigurations = (
 				50CB2FE31004C8B200B7A750 /* Debug */,
 				50CB2FE41004C8B200B7A750 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50CB30341004C9D300B7A750 /* Debug */,
+				50CB30351004C9D300B7A750 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
