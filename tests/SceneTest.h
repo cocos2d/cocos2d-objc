@@ -19,6 +19,7 @@
 
 @interface Layer2 : Layer
 {
+	float	timeCounter;
 }
 -(void) onGoBack: (id) sender;
 -(void) onReplaceScene: (id) sender;

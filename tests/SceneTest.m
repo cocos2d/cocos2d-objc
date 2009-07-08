@@ -71,6 +71,8 @@
 {
 	if((self=[super init])) {
 	
+		timeCounter = 0;
+
 		MenuItemFont *item1 = [MenuItemFont itemFromString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
 		MenuItemFont *item2 = [MenuItemFont itemFromString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
 		MenuItemFont *item3 = [MenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
@@ -94,6 +96,9 @@
 
 -(void) testDealloc:(ccTime) dt
 {
+	timeCounter += dt;
+	if( timeCounter > 10 )
+		[self onReplaceScene:self];
 }
 
 -(void) onGoBack:(id) sender
@@ -115,7 +120,7 @@
 @implementation Layer3
 -(id) init
 {
-	if( (self=[super initWithColor: 0x0000ffff]) ) {
+	if( (self=[super initWithColor: ccc4(0,0,255,255)]) ) {
 		self.isTouchEnabled = YES;
 		id label = [Label labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label];
