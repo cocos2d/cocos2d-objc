@@ -2632,7 +2632,7 @@
 				509B3A100F31027600F2FB95 /* cocoslive */,
 				50CB2FEF1004C93600B7A750 /* CocosDenshion */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
-				501CCFA30E99657C00B86F68 /* Support */,
+				501CCFA30E99657C00B86F68 /* cocos2d Support */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -2866,7 +2866,7 @@
 			path = cocos2d;
 			sourceTree = "<group>";
 		};
-		501CCFA30E99657C00B86F68 /* Support */ = {
+		501CCFA30E99657C00B86F68 /* cocos2d Support */ = {
 			isa = PBXGroup;
 			children = (
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
@@ -2877,7 +2877,7 @@
 				50C508C40F7C194400799124 /* FileUtils.h */,
 				50C508C50F7C194400799124 /* FileUtils.m */,
 			);
-			name = Support;
+			name = "cocos2d Support";
 			path = cocos2d/Support;
 			sourceTree = "<group>";
 		};
