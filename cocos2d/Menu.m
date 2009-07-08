@@ -55,7 +55,7 @@ enum {
 {
 	if( (self=[super init]) ) {
 
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		
 		// menu in the center of the screen
 		CGSize s = [[Director sharedDirector] winSize];

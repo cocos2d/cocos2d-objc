@@ -16,7 +16,7 @@ enum
 {
 	if( ( self=[super init] ))
 	{
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		
 		Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
 		

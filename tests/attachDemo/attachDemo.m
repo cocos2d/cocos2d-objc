@@ -34,7 +34,7 @@ enum {
 {
 	if( (self=[super init] ) )
 	{
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		
 		CGSize s = [[Director sharedDirector] winSize];
 

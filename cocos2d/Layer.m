@@ -27,8 +27,7 @@
 
 @implementation Layer
 
-@synthesize isTouchEnabled, isAccelerometerEnabled;
-
+#pragma mark Layer - Init
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -45,11 +44,50 @@
 	return self;
 }
 
+#pragma mark Layer - Touch and Accelerometer related
+
 -(void) registerWithTouchDispatcher
 {
 	[[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
 }
 
+-(BOOL) isAccelerometerEnabled
+{
+	return isAccelerometerEnabled;
+}
+
+-(void) setIsAccelerometerEnabled:(BOOL)enabled
+{
+	if( enabled != isAccelerometerEnabled ) {
+		isAccelerometerEnabled = enabled;
+		if( isRunning ) {
+			if( enabled )
+				[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+			else
+				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+		}
+	}
+}
+
+-(BOOL) isTouchEnabled
+{
+	return isTouchEnabled;
+}
+
+-(void) setIsTouchEnabled:(BOOL)enabled
+{
+	if( isTouchEnabled != enabled ) {
+		isTouchEnabled = enabled;
+		if( isRunning ) {
+			if( enabled )
+				[self registerWithTouchDispatcher];
+			else
+				[[TouchDispatcher sharedDispatcher] removeDelegate:self];
+		}
+	}
+}
+
+#pragma mark Layer - Callbacks
 -(void) onEnter
 {
 	// register 'parent' nodes first
@@ -66,7 +104,8 @@
 
 -(void) onExit
 {
-	[[TouchDispatcher sharedDispatcher] removeDelegate:self];
+	if( isTouchEnabled )
+		[[TouchDispatcher sharedDispatcher] removeDelegate:self];
 	
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];

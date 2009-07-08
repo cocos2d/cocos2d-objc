@@ -7,6 +7,7 @@ version 0.8 - dd-MMM-yyyy
  . CocosNode: RGBA protocol setColor new API (issue #273)
  . Director: added isPaused property (issue #375)
  . Director: fixed memory leak in FPSLabel (issue #370)
+ . Layer: possibility to hook / unkook touches/Accelerometer in runtime (issue #164)
  . ParallaxNode: uses world coordinates (issue #373)
  . Particles: support for auto-remove-on-finish (issue #385)
  . Scheduler: it's possible to scale the time (issue #236)

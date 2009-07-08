@@ -22,8 +22,8 @@ float randfloat() {
 {
 	if( (self=[super init])) {
 
-		isTouchEnabled = YES;
-		isAccelerometerEnabled = YES;
+		self.isTouchEnabled = YES;
+		self.isAccelerometerEnabled = YES;
 		Texture2D *tex = [[TextureMgr sharedTextureMgr] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
 		clouds = [Sprite spriteWithTexture:tex];
 		[clouds setScale: CLOUDS_SCALE];

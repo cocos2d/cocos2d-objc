@@ -64,7 +64,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		
 		CGSize s = [[Director sharedDirector] winSize];
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
