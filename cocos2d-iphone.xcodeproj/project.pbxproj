@@ -787,29 +787,30 @@
 		50CB30301004C9D300B7A750 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50CB30311004C9D300B7A750 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50CB30321004C9D300B7A750 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50CB304F1004CA6900B7A750 /* DenshionDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB303B1004CA6900B7A750 /* DenshionDemo.m */; };
-		50CB30501004CA6900B7A750 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB303D1004CA6900B7A750 /* bg.png */; };
-		50CB30511004CA6900B7A750 /* flash.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB303E1004CA6900B7A750 /* flash.png */; };
-		50CB30521004CA6900B7A750 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB303F1004CA6900B7A750 /* Icon.png */; };
-		50CB30531004CA6900B7A750 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30401004CA6900B7A750 /* slider.png */; };
-		50CB30541004CA6900B7A750 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30421004CA6900B7A750 /* 808_120bpm.caf */; };
-		50CB30551004CA6900B7A750 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30431004CA6900B7A750 /* 808_120bpm.wav */; };
-		50CB30561004CA6900B7A750 /* ATTRIBUTION.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30441004CA6900B7A750 /* ATTRIBUTION.txt */; };
-		50CB30571004CA6900B7A750 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30451004CA6900B7A750 /* ballbounce.wav */; };
-		50CB30581004CA6900B7A750 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30461004CA6900B7A750 /* cowbell.wav */; };
-		50CB30591004CA6900B7A750 /* explodelow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30471004CA6900B7A750 /* explodelow.wav */; };
-		50CB305A1004CA6900B7A750 /* karate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30481004CA6900B7A750 /* karate.wav */; };
-		50CB305B1004CA6900B7A750 /* machinegun.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30491004CA6900B7A750 /* machinegun.caf */; };
-		50CB305C1004CA6900B7A750 /* machinegun.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304A1004CA6900B7A750 /* machinegun.wav */; };
-		50CB305D1004CA6900B7A750 /* mula_tito_on_timbales.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304B1004CA6900B7A750 /* mula_tito_on_timbales.mp3 */; };
-		50CB305E1004CA6900B7A750 /* rustylow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304C1004CA6900B7A750 /* rustylow.wav */; };
-		50CB305F1004CA6900B7A750 /* sine440.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304D1004CA6900B7A750 /* sine440.caf */; };
-		50CB30601004CA6900B7A750 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB304E1004CA6900B7A750 /* sine440.wav */; };
 		50CB30631004CA9900B7A750 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		50CB30651004CACF00B7A750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB30641004CACF00B7A750 /* AVFoundation.framework */; };
 		50CB30671004CAD900B7A750 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB30661004CAD900B7A750 /* AudioToolbox.framework */; };
 		50CB306B1004CAFB00B7A750 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB306A1004CAFB00B7A750 /* OpenAL.framework */; };
 		50CB30A01004CD2100B7A750 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		50CB30C61004CE9400B7A750 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30BA1004CE9400B7A750 /* 808_120bpm.wav */; };
+		50CB30C71004CE9400B7A750 /* ATTRIBUTION.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30BB1004CE9400B7A750 /* ATTRIBUTION.txt */; };
+		50CB30C81004CE9400B7A750 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30BC1004CE9400B7A750 /* ballbounce.wav */; };
+		50CB30C91004CE9400B7A750 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30BD1004CE9400B7A750 /* cowbell.wav */; };
+		50CB30CA1004CE9400B7A750 /* explodelow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30BE1004CE9400B7A750 /* explodelow.wav */; };
+		50CB30CB1004CE9400B7A750 /* karate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30BF1004CE9400B7A750 /* karate.wav */; };
+		50CB30CC1004CE9400B7A750 /* machinegun.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30C01004CE9400B7A750 /* machinegun.caf */; };
+		50CB30CD1004CE9400B7A750 /* machinegun.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30C11004CE9400B7A750 /* machinegun.wav */; };
+		50CB30CE1004CE9400B7A750 /* mula_tito_on_timbales.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30C21004CE9400B7A750 /* mula_tito_on_timbales.mp3 */; };
+		50CB30CF1004CE9400B7A750 /* rustylow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30C31004CE9400B7A750 /* rustylow.wav */; };
+		50CB30D01004CE9400B7A750 /* sine440.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30C41004CE9400B7A750 /* sine440.caf */; };
+		50CB30D11004CE9400B7A750 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30C51004CE9400B7A750 /* sine440.wav */; };
+		50CB30E01004CF6A00B7A750 /* DenshionDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB30DF1004CF6A00B7A750 /* DenshionDemo.m */; };
+		50CB30E51004CF7900B7A750 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E11004CF7900B7A750 /* bg.png */; };
+		50CB30E61004CF7900B7A750 /* flash.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E21004CF7900B7A750 /* flash.png */; };
+		50CB30E71004CF7900B7A750 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E31004CF7900B7A750 /* Icon.png */; };
+		50CB30E81004CF7900B7A750 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E41004CF7900B7A750 /* slider.png */; };
+		50CB30EA1004CF8B00B7A750 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */; };
+		50CB31081004D05300B7A750 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1360,7 +1361,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 50CB2FC91004C8B100B7A750 /* CocosDenshion */;
+			remoteGlobalIDString = 50CB2FC91004C8B100B7A750;
 			remoteInfo = CocosDenshion;
 		};
 		50D0E04A0FF9232E00098927 /* PBXContainerItemProxy */ = {
@@ -1869,30 +1870,29 @@
 		50CB2FF41004C93600B7A750 /* CocosDenshion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocosDenshion.mm; sourceTree = "<group>"; };
 		50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		50CB2FF61004C93600B7A750 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
-		50CB30361004C9D300B7A750 /* CocosDenshionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50CB30381004C9D300B7A750 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
-		50CB303A1004CA6900B7A750 /* DenshionDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DenshionDemo.h; sourceTree = "<group>"; };
-		50CB303B1004CA6900B7A750 /* DenshionDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DenshionDemo.m; sourceTree = "<group>"; };
-		50CB303D1004CA6900B7A750 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
-		50CB303E1004CA6900B7A750 /* flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flash.png; sourceTree = "<group>"; };
-		50CB303F1004CA6900B7A750 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		50CB30401004CA6900B7A750 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
-		50CB30421004CA6900B7A750 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 808_120bpm.caf; sourceTree = "<group>"; };
-		50CB30431004CA6900B7A750 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 808_120bpm.wav; sourceTree = "<group>"; };
-		50CB30441004CA6900B7A750 /* ATTRIBUTION.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION.txt; sourceTree = "<group>"; };
-		50CB30451004CA6900B7A750 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ballbounce.wav; sourceTree = "<group>"; };
-		50CB30461004CA6900B7A750 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cowbell.wav; sourceTree = "<group>"; };
-		50CB30471004CA6900B7A750 /* explodelow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explodelow.wav; sourceTree = "<group>"; };
-		50CB30481004CA6900B7A750 /* karate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = karate.wav; sourceTree = "<group>"; };
-		50CB30491004CA6900B7A750 /* machinegun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = machinegun.caf; sourceTree = "<group>"; };
-		50CB304A1004CA6900B7A750 /* machinegun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = machinegun.wav; sourceTree = "<group>"; };
-		50CB304B1004CA6900B7A750 /* mula_tito_on_timbales.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mula_tito_on_timbales.mp3; sourceTree = "<group>"; };
-		50CB304C1004CA6900B7A750 /* rustylow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rustylow.wav; sourceTree = "<group>"; };
-		50CB304D1004CA6900B7A750 /* sine440.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sine440.caf; sourceTree = "<group>"; };
-		50CB304E1004CA6900B7A750 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sine440.wav; sourceTree = "<group>"; };
+		50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB30641004CACF00B7A750 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50CB30661004CAD900B7A750 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50CB306A1004CAFB00B7A750 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		50CB30BA1004CE9400B7A750 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 808_120bpm.wav; sourceTree = "<group>"; };
+		50CB30BB1004CE9400B7A750 /* ATTRIBUTION.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION.txt; sourceTree = "<group>"; };
+		50CB30BC1004CE9400B7A750 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ballbounce.wav; sourceTree = "<group>"; };
+		50CB30BD1004CE9400B7A750 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cowbell.wav; sourceTree = "<group>"; };
+		50CB30BE1004CE9400B7A750 /* explodelow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explodelow.wav; sourceTree = "<group>"; };
+		50CB30BF1004CE9400B7A750 /* karate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = karate.wav; sourceTree = "<group>"; };
+		50CB30C01004CE9400B7A750 /* machinegun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = machinegun.caf; sourceTree = "<group>"; };
+		50CB30C11004CE9400B7A750 /* machinegun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = machinegun.wav; sourceTree = "<group>"; };
+		50CB30C21004CE9400B7A750 /* mula_tito_on_timbales.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mula_tito_on_timbales.mp3; sourceTree = "<group>"; };
+		50CB30C31004CE9400B7A750 /* rustylow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rustylow.wav; sourceTree = "<group>"; };
+		50CB30C41004CE9400B7A750 /* sine440.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sine440.caf; sourceTree = "<group>"; };
+		50CB30C51004CE9400B7A750 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sine440.wav; sourceTree = "<group>"; };
+		50CB30DE1004CF6A00B7A750 /* DenshionDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DenshionDemo.h; sourceTree = "<group>"; };
+		50CB30DF1004CF6A00B7A750 /* DenshionDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DenshionDemo.m; sourceTree = "<group>"; };
+		50CB30E11004CF7900B7A750 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		50CB30E21004CF7900B7A750 /* flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flash.png; sourceTree = "<group>"; };
+		50CB30E31004CF7900B7A750 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		50CB30E41004CF7900B7A750 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
+		50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 808_120bpm.caf; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -2613,7 +2613,7 @@
 				50D0E05F0FF9232E00098927 /* HelloActionsSample.app */,
 				50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */,
 				50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */,
-				50CB30361004C9D300B7A750 /* CocosDenshionTest.app */,
+				50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2681,7 +2681,6 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
-				50CB30381004C9D300B7A750 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -3338,7 +3337,7 @@
 			isa = PBXGroup;
 			children = (
 				504828C70F45B15700A30CEF /* attachDemo */,
-				50CB30391004CA6900B7A750 /* CocosDenshionTest */,
+				50CB30B71004CE9400B7A750 /* CocosDenshionDemo */,
 				50175B240F33B22300624901 /* cocosLiveDemo */,
 				50F992430F9F183500767ABC /* PerformanceSpriteTest */,
 				50F998EC0F9F277D00767ABC /* PerformanceParticleTest */,
@@ -3445,45 +3444,45 @@
 			path = CocosDenshion;
 			sourceTree = "<group>";
 		};
-		50CB30391004CA6900B7A750 /* CocosDenshionTest */ = {
+		50CB30B71004CE9400B7A750 /* CocosDenshionDemo */ = {
 			isa = PBXGroup;
 			children = (
-				50CB303A1004CA6900B7A750 /* DenshionDemo.h */,
-				50CB303B1004CA6900B7A750 /* DenshionDemo.m */,
-				50CB303C1004CA6900B7A750 /* Images */,
-				50CB30411004CA6900B7A750 /* Sounds */,
+				50CB30B81004CE9400B7A750 /* Images */,
+				50CB30B91004CE9400B7A750 /* Sounds */,
+				50CB30DE1004CF6A00B7A750 /* DenshionDemo.h */,
+				50CB30DF1004CF6A00B7A750 /* DenshionDemo.m */,
 			);
-			name = CocosDenshionTest;
-			path = tests/CocosDenshionTest;
+			name = CocosDenshionDemo;
+			path = tests/CocosDenshionDemo;
 			sourceTree = "<group>";
 		};
-		50CB303C1004CA6900B7A750 /* Images */ = {
+		50CB30B81004CE9400B7A750 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				50CB303D1004CA6900B7A750 /* bg.png */,
-				50CB303E1004CA6900B7A750 /* flash.png */,
-				50CB303F1004CA6900B7A750 /* Icon.png */,
-				50CB30401004CA6900B7A750 /* slider.png */,
+				50CB30E11004CF7900B7A750 /* bg.png */,
+				50CB30E21004CF7900B7A750 /* flash.png */,
+				50CB30E31004CF7900B7A750 /* Icon.png */,
+				50CB30E41004CF7900B7A750 /* slider.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
 		};
-		50CB30411004CA6900B7A750 /* Sounds */ = {
+		50CB30B91004CE9400B7A750 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				50CB30421004CA6900B7A750 /* 808_120bpm.caf */,
-				50CB30431004CA6900B7A750 /* 808_120bpm.wav */,
-				50CB30441004CA6900B7A750 /* ATTRIBUTION.txt */,
-				50CB30451004CA6900B7A750 /* ballbounce.wav */,
-				50CB30461004CA6900B7A750 /* cowbell.wav */,
-				50CB30471004CA6900B7A750 /* explodelow.wav */,
-				50CB30481004CA6900B7A750 /* karate.wav */,
-				50CB30491004CA6900B7A750 /* machinegun.caf */,
-				50CB304A1004CA6900B7A750 /* machinegun.wav */,
-				50CB304B1004CA6900B7A750 /* mula_tito_on_timbales.mp3 */,
-				50CB304C1004CA6900B7A750 /* rustylow.wav */,
-				50CB304D1004CA6900B7A750 /* sine440.caf */,
-				50CB304E1004CA6900B7A750 /* sine440.wav */,
+				50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */,
+				50CB30BA1004CE9400B7A750 /* 808_120bpm.wav */,
+				50CB30BB1004CE9400B7A750 /* ATTRIBUTION.txt */,
+				50CB30BC1004CE9400B7A750 /* ballbounce.wav */,
+				50CB30BD1004CE9400B7A750 /* cowbell.wav */,
+				50CB30BE1004CE9400B7A750 /* explodelow.wav */,
+				50CB30BF1004CE9400B7A750 /* karate.wav */,
+				50CB30C01004CE9400B7A750 /* machinegun.caf */,
+				50CB30C11004CE9400B7A750 /* machinegun.wav */,
+				50CB30C21004CE9400B7A750 /* mula_tito_on_timbales.mp3 */,
+				50CB30C31004CE9400B7A750 /* rustylow.wav */,
+				50CB30C41004CE9400B7A750 /* sine440.caf */,
+				50CB30C51004CE9400B7A750 /* sine440.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -4472,9 +4471,9 @@
 			productReference = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		50CB30171004C9D300B7A750 /* CocosDenshionTest */ = {
+		50CB30171004C9D300B7A750 /* CocosDenshionDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionTest" */;
+			buildConfigurationList = 50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionDemo" */;
 			buildPhases = (
 				50CB301A1004C9D300B7A750 /* Resources */,
 				50CB30291004C9D300B7A750 /* Sources */,
@@ -4486,9 +4485,9 @@
 				50CB30181004C9D300B7A750 /* PBXTargetDependency */,
 				50CB30621004CA9100B7A750 /* PBXTargetDependency */,
 			);
-			name = CocosDenshionTest;
+			name = CocosDenshionDemo;
 			productName = playground;
-			productReference = 50CB30361004C9D300B7A750 /* CocosDenshionTest.app */;
+			productReference = 50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50D0E0480FF9232E00098927 /* HelloActionsSample */ = {
@@ -4663,7 +4662,7 @@
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
 				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
 				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
-				50CB30171004C9D300B7A750 /* CocosDenshionTest */,
+				50CB30171004C9D300B7A750 /* CocosDenshionDemo */,
 				509B3A270F3102FD00F2FB95 /* cocosLiveTest */,
 				506143F10E589A2E003CCDB7 /* cocosnodeTest */,
 				501945550F964C620059CE7C /* drawPrimitivesTest */,
@@ -5321,23 +5320,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50CB30501004CA6900B7A750 /* bg.png in Resources */,
-				50CB30511004CA6900B7A750 /* flash.png in Resources */,
-				50CB30521004CA6900B7A750 /* Icon.png in Resources */,
-				50CB30531004CA6900B7A750 /* slider.png in Resources */,
-				50CB30541004CA6900B7A750 /* 808_120bpm.caf in Resources */,
-				50CB30551004CA6900B7A750 /* 808_120bpm.wav in Resources */,
-				50CB30561004CA6900B7A750 /* ATTRIBUTION.txt in Resources */,
-				50CB30571004CA6900B7A750 /* ballbounce.wav in Resources */,
-				50CB30581004CA6900B7A750 /* cowbell.wav in Resources */,
-				50CB30591004CA6900B7A750 /* explodelow.wav in Resources */,
-				50CB305A1004CA6900B7A750 /* karate.wav in Resources */,
-				50CB305B1004CA6900B7A750 /* machinegun.caf in Resources */,
-				50CB305C1004CA6900B7A750 /* machinegun.wav in Resources */,
-				50CB305D1004CA6900B7A750 /* mula_tito_on_timbales.mp3 in Resources */,
-				50CB305E1004CA6900B7A750 /* rustylow.wav in Resources */,
-				50CB305F1004CA6900B7A750 /* sine440.caf in Resources */,
-				50CB30601004CA6900B7A750 /* sine440.wav in Resources */,
+				50CB30C61004CE9400B7A750 /* 808_120bpm.wav in Resources */,
+				50CB30C71004CE9400B7A750 /* ATTRIBUTION.txt in Resources */,
+				50CB30C81004CE9400B7A750 /* ballbounce.wav in Resources */,
+				50CB30C91004CE9400B7A750 /* cowbell.wav in Resources */,
+				50CB30CA1004CE9400B7A750 /* explodelow.wav in Resources */,
+				50CB30CB1004CE9400B7A750 /* karate.wav in Resources */,
+				50CB30CC1004CE9400B7A750 /* machinegun.caf in Resources */,
+				50CB30CD1004CE9400B7A750 /* machinegun.wav in Resources */,
+				50CB30CE1004CE9400B7A750 /* mula_tito_on_timbales.mp3 in Resources */,
+				50CB30CF1004CE9400B7A750 /* rustylow.wav in Resources */,
+				50CB31081004D05300B7A750 /* fps_images.png in Resources */,
+				50CB30D01004CE9400B7A750 /* sine440.caf in Resources */,
+				50CB30D11004CE9400B7A750 /* sine440.wav in Resources */,
+				50CB30E51004CF7900B7A750 /* bg.png in Resources */,
+				50CB30E61004CF7900B7A750 /* flash.png in Resources */,
+				50CB30E71004CF7900B7A750 /* Icon.png in Resources */,
+				50CB30E81004CF7900B7A750 /* slider.png in Resources */,
+				50CB30EA1004CF8B00B7A750 /* 808_120bpm.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5908,7 +5908,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CB30A01004CD2100B7A750 /* main.m in Sources */,
-				50CB304F1004CA6900B7A750 /* DenshionDemo.m in Sources */,
+				50CB30E01004CF6A00B7A750 /* DenshionDemo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7775,7 +7775,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-lstdc++",
@@ -7786,7 +7786,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = CocosDenshionTest;
+				PRODUCT_NAME = CocosDenshionDemo;
 				SDKROOT = iphoneos2.2;
 			};
 			name = Debug;
@@ -7802,7 +7802,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-lstdc++",
@@ -7813,7 +7813,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = CocosDenshionTest;
+				PRODUCT_NAME = CocosDenshionDemo;
 				SDKROOT = iphoneos2.2;
 				ZERO_LINK = NO;
 			};
@@ -8587,7 +8587,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionTest" */ = {
+		50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50CB30341004C9D300B7A750 /* Debug */,
