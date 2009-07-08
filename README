@@ -55,6 +55,37 @@ Runtime Requirements
 Mac OS X 10.5.3, iPhone OS 2.0, Beta 8 release or later
 
 
+Files and Folders
+-----------------
+
+  * cocos2d/
+     core files and folders of cocos2d
+  * cocos2d Support/
+     cocos2d support files.
+  * cocoslive
+     high score client library
+  * CocosDenshion
+     sound engine library
+  * tests/
+     tests and demo examples     
+  * experimental/
+     stuff that is not yet stable enough to part of cocos2d or any other cocos2d project
+  * external/
+     3rd party libraries used by cocos2d or any other project.
+	   * Chipmunk/: physics library
+	   * Box2d/: physics library
+	   * TouchJSON/: JSON parser
+	   * Tremor/: OGG audio decoder
+
+
+How to run the tests
+--------------------
+
+Xcode -> View -> Customize toolbar
+Then, drag "Active Target" and "Active Executable" to your top project tool bar.
+Select the test you want to view in both drop downs and hit Build and Go.
+
+
 
 [1] http://www.cocos2d-iphone.org
 [2] http://www.cocos2d.org
