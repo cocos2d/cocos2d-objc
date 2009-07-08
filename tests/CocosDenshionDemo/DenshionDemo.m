@@ -117,7 +117,7 @@ CDSourceWrapper *toneSource;
 		_appState = kAppStateSoundBuffersLoading;
 	}	
 	
-	isTouchEnabled = YES;
+	self.isTouchEnabled = YES;
 	toneLoopPlaying = NO;
 	toneSource = [[CDSourceWrapper alloc] init];
 	[toneSource retain];

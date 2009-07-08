@@ -275,8 +275,6 @@ Class restartTransition()
 {
 	if( (self=[super init]) ) {
 			
-		isTouchEnabled = YES;
-		
 		float x,y;
 		
 		CGSize size = [[Director sharedDirector] winSize];

@@ -116,7 +116,7 @@
 -(id) init
 {
 	if( (self=[super initWithColor: 0x0000ffff]) ) {
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		id label = [Label labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label];
 		CGSize s = [[Director sharedDirector] winSize];

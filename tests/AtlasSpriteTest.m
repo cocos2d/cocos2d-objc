@@ -138,7 +138,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];

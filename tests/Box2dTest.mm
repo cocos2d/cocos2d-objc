@@ -55,8 +55,8 @@ enum {
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
-		isTouchEnabled = YES;
-		isAccelerometerEnabled = YES;
+		self.isTouchEnabled = YES;
+		self.isAccelerometerEnabled = YES;
 	}
 	return self;
 }
