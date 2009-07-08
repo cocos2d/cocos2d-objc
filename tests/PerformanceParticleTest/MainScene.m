@@ -74,9 +74,9 @@ Class restartAction()
 
 		[MenuItemFont setFontSize:65];
 		MenuItemFont *decrease = [MenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
-		[decrease.label setRGB:0 :200 :20];
+		[decrease.label setColor:ccc3(0,200,20)];
 		MenuItemFont *increase = [MenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
-		[increase.label setRGB:0 :200 :20];
+		[increase.label setColor:ccc3(0,200,20)];
 		
 		Menu *menu = [Menu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
@@ -84,7 +84,7 @@ Class restartAction()
 		[self addChild:menu z:1];
 		
 		Label *infoLabel = [Label labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
-		[infoLabel setRGB:0 :200 :20];
+		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 		
@@ -123,9 +123,9 @@ Class restartAction()
 		int i=0;
 		for( id child in [menu children] ) {
 			if( i<3)
-				[[child label] setRGB:200 :20 :20];
+				[[child label] setColor:ccc3(200,20,20)];
 			else if(i<6)
-				[[child label] setRGB:0 :200 :20];
+				[[child label] setColor:ccc3(0,200,20)];
 			i++;
 		}
 		
@@ -137,7 +137,7 @@ Class restartAction()
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
-		[label setRGB:255 :255 :40];
+		[label setColor:ccc3(255,255,40)];
 
 		[self updateQuantityLabel];
 		[self createParticleSystem];
@@ -221,7 +221,7 @@ Class restartAction()
 			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		default:
-			particleSystem = ni;
+			particleSystem = nil;
 			CCLOG(@"Shall not happen!");
 			break;
 	}
