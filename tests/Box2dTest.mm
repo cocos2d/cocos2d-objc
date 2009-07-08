@@ -24,38 +24,40 @@ enum {
 
 -(id) init
 {
-	[super init];
-	CGSize screenSize = [Director sharedDirector].winSize;
-	CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
-	
-	//Set up world bounds - this should be larger than screen as any body that reaches
-	//the boundary will be frozen
-	b2AABB worldAABB;
-	float borderSize = 96 / PTM_RATIO;//We want a 96 pixel border between the screen and the world bounds
-	worldAABB.lowerBound.Set(-borderSize, -borderSize);//Bottom left
-	worldAABB.upperBound.Set(screenSize.width/PTM_RATIO + borderSize, screenSize.height/PTM_RATIO + borderSize);//Top right
-	
-	b2Vec2 gravity(0.0f, -30.0f);//Set up gravity
-	bool doSleep = true;
-	
-	world = new b2World(worldAABB, gravity, doSleep);
-	
-	//Set up ground, we will make it as wide as the screen
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(screenSize.width/PTM_RATIO/2, -1.0f);//This is a mid point, hence the /2
-	b2Body* groundBody = world->CreateBody(&groundBodyDef);
-	b2PolygonDef groundShapeDef;
-	groundShapeDef.SetAsBox(screenSize.width/PTM_RATIO/2, 1.0f);//This is a mid point, hence the /2
-	groundBody->CreateShape(&groundShapeDef);
-	
-	[self schedule: @selector(tick:)];
-	
-	//Set up sprite
-	
-	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
-	[self addChild:mgr z:0 tag:kTagSpriteManager];
-	
-	isTouchEnabled = YES;
+	if( (self=[super init])) {
+		CGSize screenSize = [Director sharedDirector].winSize;
+		CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
+		
+		//Set up world bounds - this should be larger than screen as any body that reaches
+		//the boundary will be frozen
+		b2AABB worldAABB;
+		float borderSize = 96 / PTM_RATIO;//We want a 96 pixel border between the screen and the world bounds
+		worldAABB.lowerBound.Set(-borderSize, -borderSize);//Bottom left
+		worldAABB.upperBound.Set(screenSize.width/PTM_RATIO + borderSize, screenSize.height/PTM_RATIO + borderSize);//Top right
+		
+		b2Vec2 gravity(0.0f, -30.0f);//Set up gravity
+		bool doSleep = true;
+		
+		world = new b2World(worldAABB, gravity, doSleep);
+		
+		//Set up ground, we will make it as wide as the screen
+		b2BodyDef groundBodyDef;
+		groundBodyDef.position.Set(screenSize.width/PTM_RATIO/2, -1.0f);//This is a mid point, hence the /2
+		b2Body* groundBody = world->CreateBody(&groundBodyDef);
+		b2PolygonDef groundShapeDef;
+		groundShapeDef.SetAsBox(screenSize.width/PTM_RATIO/2, 1.0f);//This is a mid point, hence the /2
+		groundBody->CreateShape(&groundShapeDef);
+		
+		[self schedule: @selector(tick:)];
+		
+		//Set up sprite
+		
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
+		[self addChild:mgr z:0 tag:kTagSpriteManager];
+		
+		isTouchEnabled = YES;
+		isAccelerometerEnabled = YES;
+	}
 	return self;
 }
 
@@ -128,6 +130,27 @@ enum {
 	}
 	return kEventHandled;
 }
+
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
+{	
+	static float prevX=0, prevY=0;
+
+//#define kFilterFactor 0.05f
+#define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
+	
+	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
+	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
+	
+	prevX = accelX;
+	prevY = accelY;
+	
+	// accelerometer values are in "Portrait" mode. Change them to Landscape left
+	// multiply the gravity by 10
+	b2Vec2 gravity( -accelY * 10, accelX * 10);
+	
+	world->SetGravity( gravity );
+}
+
 
 @end
 
