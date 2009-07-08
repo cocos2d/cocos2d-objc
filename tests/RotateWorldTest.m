@@ -101,10 +101,10 @@
 	x = size.width;
 	y = size.height;
 	
-	CocosNode* blue =  [ColorLayer layerWithColor: 0x0000ffff];
-	CocosNode* red =   [ColorLayer layerWithColor: 0xff0000ff];
-	CocosNode* green = [ColorLayer layerWithColor: 0x00ff00ff];
-	CocosNode* white = [ColorLayer layerWithColor: 0xffffffff];
+	CocosNode* blue =  [ColorLayer layerWithColor:ccc4(0,0,255,255)];
+	CocosNode* red =   [ColorLayer layerWithColor:ccc4(255,0,0,255)];
+	CocosNode* green = [ColorLayer layerWithColor:ccc4(0,255,0,255)];
+	CocosNode* white = [ColorLayer layerWithColor:ccc4(255,255,255,255)];
 
 	[blue setScale: 0.5f];
 	[blue setPosition: ccp(-x/4,-y/4)];
