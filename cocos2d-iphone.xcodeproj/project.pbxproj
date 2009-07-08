@@ -1856,6 +1856,7 @@
 		50C93AAD0E0BF6E000517B01 /* SpritesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* SpritesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesTest.h; path = tests/SpritesTest.h; sourceTree = "<group>"; };
 		50C93AC40E0BF8FC00517B01 /* SpritesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesTest.m; path = tests/SpritesTest.m; sourceTree = "<group>"; };
+		50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCocosDenshion.a; path = "build/Release-iphoneos/libCocosDenshion.a"; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -2405,6 +2406,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50CB2FC81004C8B100B7A750 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50D0E0550FF9232E00098927 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2551,6 +2559,7 @@
 				50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */,
 				50D0E05F0FF9232E00098927 /* HelloActionsSample.app */,
 				50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */,
+				50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3789,6 +3798,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50CB2FC61004C8B100B7A750 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E6CBEEB0F7A758000D47B3A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -4375,6 +4391,23 @@
 			productReference = 50C93AAD0E0BF6E000517B01 /* SpritesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50CB2FC91004C8B100B7A750 /* CocosDenshion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50CB2FEA1004C8DA00B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshion" */;
+			buildPhases = (
+				50CB2FC61004C8B100B7A750 /* Headers */,
+				50CB2FC71004C8B100B7A750 /* Sources */,
+				50CB2FC81004C8B100B7A750 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocosDenshion;
+			productName = CocosDenshion;
+			productReference = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		50D0E0480FF9232E00098927 /* HelloActionsSample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50D0E05C0FF9232E00098927 /* Build configuration list for PBXNativeTarget "HelloActionsSample" */;
@@ -4535,6 +4568,7 @@
 				50B2C4D00E100AEA00AE9530 /* Chipmunk */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
+				50CB2FC91004C8B100B7A750 /* CocosDenshion */,
 				509B3A0C0F31024E00F2FB95 /* cocosLive */,
 				509B39DE0F31020900F2FB95 /* TouchJSON */,
 				8E6CBEEE0F7A758000D47B3A /* vorbis */,
@@ -5768,6 +5802,13 @@
 			files = (
 				50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */,
 				50B2CB1A0E10EE0800AE9530 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50CB2FC71004C8B100B7A750 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7588,6 +7629,31 @@
 			};
 			name = Release;
 		};
+		50CB2FE31004C8B200B7A750 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = CocosDenshion;
+			};
+			name = Debug;
+		};
+		50CB2FE41004C8B200B7A750 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = CocosDenshion;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		50D0E05D0FF9232E00098927 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8343,6 +8409,15 @@
 			buildConfigurations = (
 				50C93AAB0E0BF6E000517B01 /* Debug */,
 				50C93AAC0E0BF6E000517B01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50CB2FEA1004C8DA00B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50CB2FE31004C8B200B7A750 /* Debug */,
+				50CB2FE41004C8B200B7A750 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
