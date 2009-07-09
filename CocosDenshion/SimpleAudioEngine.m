@@ -81,9 +81,9 @@ static CDAudioManager *am = nil;
 
 #pragma mark SimpleAudioEngine - background music
 
--(void) playBackgroundMusic:(NSString*) filename
+-(void) playBackgroundMusic:(NSString*) filePath
 {
-	[am playBackgroundMusic:filename loop:TRUE];
+	[am playBackgroundMusic:filePath loop:TRUE];
 }
 
 -(void) stopBackgroundMusic
@@ -105,53 +105,53 @@ static CDAudioManager *am = nil;
 
 #pragma mark SimpleAudioEngine - sound effects
 
--(ALuint) playEffect:(NSString*) filename
+-(ALuint) playEffect:(NSString*) filePath
 {
-	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filename];
+	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filePath];
 
 	if(soundId == nil)
 	{
 		#ifdef ASSERT_DEBUG
-		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::playEffect" reason:filename userInfo:nil] autorelease];
+		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::playEffect" reason:filePath userInfo:nil] autorelease];
 		#else
-		[self preloadEffect:filename];
+		[self preloadEffect:filePath];
 		#endif
 	}
 
 	return [soundEngine playSound:[soundId intValue] channelGroupId:0 pitch:1.0f pan:0 gain:1.0f loop:false];
 }
 
--(void) preloadEffect:(NSString*) filename
+-(void) preloadEffect:(NSString*) filePath
 {
-	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filename];
+	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filePath];
 
 	if(soundId != nil)
 	{
 		#ifdef ASSERT_DEBUG
-		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::preloadEffect" reason:filename userInfo:nil] autorelease];
+		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::preloadEffect" reason:filePath userInfo:nil] autorelease];
 		#else
 		return;
 		#endif
 	}
 
 	NSNumber* position = [self getNextAvailableBuffer];
-	[loadedEffects setObject:position forKey:filename];
-	[soundEngine loadBuffer:[position intValue] fileName:filename fileType:nil];
+	[loadedEffects setObject:position forKey:filePath];
+	[soundEngine loadBuffer:[position intValue] filePath:filePath];
 }
 
--(void) unloadEffect:(NSString*) filename
+-(void) unloadEffect:(NSString*) filePath
 {
-	NSNumber* soundId = [loadedEffects objectForKey:filename];
+	NSNumber* soundId = [loadedEffects objectForKey:filePath];
 	if(soundId == nil)
 	{
 		#ifdef ASSERT_DEBUG
-		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::unloadEffect" reason:filename userInfo:nil] autorelease];
+		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::unloadEffect" reason:filePath userInfo:nil] autorelease];
 		#else
 		return;
 		#endif
 	}
 	[self freeBuffer:soundId];
-	[loadedEffects removeObjectForKey:filename];
+	[loadedEffects removeObjectForKey:filePath];
 	[soundEngine unloadBuffer:[soundId intValue]];
 }
 

@@ -63,6 +63,9 @@ Required Frameworks: OpenAL, AudioToolbox
 */ 
 
 /* Changelog
+2.0 (2009.07.09) * Change all file names to file paths to support loading sounds from locations other than root.
+                   (Thanks to Jason Cecil)
+                 * Take out C++ dependencies to make it easy to include CocosDenshion in static libraries. 
 1.6 (2009.07.02) * Added looping property to CDSourceWrapper so that looping flag can be toggled during playback
                    (Thanks to Pablo Ruiz)
                  * Added fix to ensure mp3 files are not decoded in software on 3.0 (Thanks to Bryan Accleroto) 
@@ -98,7 +101,7 @@ Required Frameworks: OpenAL, AudioToolbox
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
-
+#import "FileUtils.h"
 
 //You may want to edit these. Devices won't support any more than 32 sources though.
 #define CD_MAX_BUFFERS 32 //Total number of sounds that can be loaded
@@ -161,7 +164,7 @@ typedef struct _channelGroup {
 - (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible;
 - (void) setChannelGroupMute:(int) channelGroupId mute:(BOOL) mute;
 - (BOOL) channelGroupMute:(int) channelGroupId;
-- (BOOL) loadBuffer:(int) soundId fileName:(NSString*) fileName fileType:(NSString*) fileType;
+- (BOOL) loadBuffer:(int) soundId filePath:(NSString*) filePath;
 - (void) loadBuffersAsynchronously:(NSArray *) loadRequests;
 - (BOOL) unloadBuffer:(int) soundId;
 - (ALCcontext *) openALContext;
@@ -205,15 +208,14 @@ typedef struct _channelGroup {
 
 @interface CDBufferLoadRequest: NSObject
 {
-	NSString *fileName;
+	NSString *filePath;
 	int		 soundId;
 	//id       loader;
 }
 
-@property (readonly) NSString *fileName;
+@property (readonly) NSString *filePath;
 @property (readonly) int soundId;
 
-- (id)init:(int) theSoundId fileName:(NSString *) theFileName;
+- (id)init:(int) theSoundId filePath:(NSString *) theFilePath;
 
 @end
-

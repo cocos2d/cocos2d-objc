@@ -191,7 +191,7 @@ static BOOL configured = FALSE;
 
 -(void) dealloc {
 	[self stopBackgroundMusic];
-	[lastBackgroundMusicFilename release];
+	[lastBackgroundMusicFilePath release];
 	[soundEngine release];
 	if (_isObservingAppEvents) {
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -235,39 +235,39 @@ static BOOL configured = FALSE;
 }	
 
 //Load background music ready for playing
--(void) preloadBackgroundMusic:(NSString*) filename
+-(void) preloadBackgroundMusic:(NSString*) filePath
 {
 	if (!willPlayBackgroundMusic) {
 		CCLOG(@"Denshion: preload background music aborted because audio is not exclusive");
 		return;
 	}	
 	
-	if (![filename isEqualToString:lastBackgroundMusicFilename]) {
-		CCLOG(@"Denshion: loading new or different background music file %@",filename);
+	if (![filePath isEqualToString:lastBackgroundMusicFilePath]) {
+		CCLOG(@"Denshion: loading new or different background music file %@", filePath);
 		if(backgroundMusic != nil)
 		{
 			[self stopBackgroundMusic:TRUE];
 		}
-		NSString * path = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
+		NSString *path = [FileUtils fullPathFromRelativePath:filePath];
 		backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
-		
+
 		if (backgroundMusic != nil) {
 			[backgroundMusic prepareToPlay];
 			backgroundMusic.delegate = self;
 		}	
-		lastBackgroundMusicFilename = [filename copy];
+		lastBackgroundMusicFilePath = [filePath copy];
 	}	
 }	
 
--(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop
+-(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop
 {
 	if (!willPlayBackgroundMusic || _mute) {
 		CCLOG(@"Denshion: play bgm aborted because audio is not exclusive or sound is muted");
 		return;
 	}	
 	
-	if (![filename isEqualToString:lastBackgroundMusicFilename]) {
-		[self preloadBackgroundMusic:filename];		
+	if (![filePath isEqualToString:lastBackgroundMusicFilePath]) {
+		[self preloadBackgroundMusic:filePath];		
 		backgroundMusic.numberOfLoops = (loop ? -1:0);
 		[backgroundMusic play];
 	} else {
@@ -301,7 +301,7 @@ static BOOL configured = FALSE;
 		if (release) {
 			[backgroundMusic autorelease];
 			backgroundMusic = nil;
-			lastBackgroundMusicFilename = nil;
+			lastBackgroundMusicFilePath = nil;
 		}	
 	}	
 }
@@ -479,10 +479,7 @@ static BOOL configured = FALSE;
     alcProcessContext([soundEngine openALContext]); 
 	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error processing context%x\n", error);
-	} 
-
-} 
+	}
+}
 
 @end
-
-

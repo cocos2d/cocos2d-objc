@@ -49,7 +49,7 @@ typedef enum {
 @interface CDAudioManager : NSObject <AVAudioPlayerDelegate> {
 	CDSoundEngine		*soundEngine;
 	AVAudioPlayer		*backgroundMusic;
-	NSString			*lastBackgroundMusicFilename;
+	NSString			*lastBackgroundMusicFilePath;
 	UInt32				_audioSessionCategory;
 	BOOL				_audioWasPlayingAtStartup;
 	tAudioManagerMode	_mode;
@@ -80,8 +80,8 @@ typedef enum {
 + (void) initAsynchronously: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
--(void) playBackgroundMusic:(NSString*) filename loop:(BOOL) loop;
--(void) preloadBackgroundMusic:(NSString*) filename;
+-(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop;
+-(void) preloadBackgroundMusic:(NSString*) filePath;
 -(void) stopBackgroundMusic;
 -(void) stopBackgroundMusic:(BOOL) release;
 -(void) pauseBackgroundMusic;
@@ -91,8 +91,6 @@ typedef enum {
 -(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 -(void) audioSessionInterrupted;
 -(void) audioSessionResumed;
--(void) setResignBehavior:(tAudioManagerResignBehavior) resignBehavior autoHandle:(BOOL) autoHandle; 
+-(void) setResignBehavior:(tAudioManagerResignBehavior) resignBehavior autoHandle:(BOOL) autoHandle;
 
 @end
-
-
