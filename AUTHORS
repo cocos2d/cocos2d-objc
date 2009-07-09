@@ -21,9 +21,11 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Andy Fitter: patches for Texture2D
 	* Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
 	* Brian Hammond: patches for Demos
+        * Bryan/Acceleroto: patch for CocosDenshion
 	* Clinth Harris: patches for Doc generator script
 	* Codemattic: patches for CocosNode
 		patches fro MenuItemFont
+        * Dominique Bongard: patches for CocosDenshion
 	* effervens: patches for Director
 	* Ernesto Corvi: author of TGA RLE support
 		patches for TextureMgr
@@ -50,6 +52,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Mark Cooke: Added TintTo action
 	* Hans Larsen: Possibility to create empty menus
 	* Ishaq Malik: patches for CocosNode
+        * Joao Caxaria: author of SimpleAudioEngine
 	* Jacob Eiting: patches for Primitives
 	* Jason Booth (slipster216): author of the EaseAction actions
 		author of EaseAction demos
@@ -58,6 +61,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		added endSize to ParticleSystem
 		added WorldSpace coordinates to ParticleSystem
 	* Jason Cecil: Fixed memory leak in Director#FPSLabel
+                patches for CocosDenshion
 	* Joe Vennix: patches for CocosNode
 	* jkrippy: patch for menu align. takes scale into account
 	* kasatani: AtlasSprite index 0 is not overwritten
