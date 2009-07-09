@@ -60,7 +60,7 @@
 		target = [t retain];
 		selector = s;
 		impMethod = (TICK_IMP) [t methodForSelector:s];
-		
+		elapsed = -1;
 		interval = seconds;
 	}
 	return self;
@@ -75,7 +75,10 @@
 
 -(void) fire: (ccTime) dt
 {
-	elapsed += dt;
+	if( elapsed == - 1)
+		elapsed = 0;
+	else
+		elapsed += dt;
 	if( elapsed >= interval ) {
 		impMethod(target, selector, elapsed);
 		elapsed = 0;
