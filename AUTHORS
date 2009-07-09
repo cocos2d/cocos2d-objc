@@ -111,6 +111,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Steve Oldmeadow: patches for Texture2D
 		Author of CocosDenshion Sound Engine
 		Integrated Box2d physics engine
+		Created Box2d + cocos2d demo example
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
 		Actions can have tags
