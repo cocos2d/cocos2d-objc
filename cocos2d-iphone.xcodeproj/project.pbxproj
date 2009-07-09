@@ -279,17 +279,6 @@
 		5038B6B30E196CD8009A621E /* ParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* ParticleSystem.m */; };
 		503909FB0FDFDC0B009F63EE /* menuitemsprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 503909FA0FDFDC0B009F63EE /* menuitemsprite.png */; };
 		503A2B070F64B26D00E436AB /* grossini_dance_atlas.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */; };
-		503F25C50FD3CA2A009BAFB6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
-		503F25CE0FD3CA2A009BAFB6 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
-		503F25E20FD3CA2A009BAFB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		503F25E40FD3CA2A009BAFB6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		503F25E50FD3CA2A009BAFB6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
-		503F25E70FD3CA2A009BAFB6 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		503F26B60FD3CFF4009BAFB6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
-		503F26D60FD3D1F9009BAFB6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503F26D50FD3D1F9009BAFB6 /* AVFoundation.framework */; };
-		503F27260FD3F6DC009BAFB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503F27250FD3F6DC009BAFB6 /* OpenAL.framework */; };
-		503F27280FD3F6E9009BAFB6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503F27270FD3F6E9009BAFB6 /* AudioToolbox.framework */; };
-		503F272C0FD3F714009BAFB6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503F272B0FD3F714009BAFB6 /* QuartzCore.framework */; };
 		504055B00E3230BD00213FEF /* ParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = 504055AE0E3230BD00213FEF /* ParticleExamples.h */; };
 		504055B10E3230BD00213FEF /* ParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 504055AF0E3230BD00213FEF /* ParticleExamples.m */; };
 		50405A140E3296AC00213FEF /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
@@ -1182,13 +1171,6 @@
 			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
 			remoteInfo = Chipmunk;
 		};
-		503F25C10FD3CA2A009BAFB6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
 		504226140FC0B5D500B992F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1579,7 +1561,6 @@
 		5038B6B10E196CD8009A621E /* ParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystem.m; sourceTree = "<group>"; };
 		503909FA0FDFDC0B009F63EE /* menuitemsprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuitemsprite.png; sourceTree = "<group>"; };
 		503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grossini_dance_atlas.pvr; sourceTree = "<group>"; };
-		503F25EB0FD3CA2A009BAFB6 /* CocosDenshionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosDenshionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		503F26B40FD3CFE8009BAFB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		503F26BD0FD3D045009BAFB6 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		503F26C00FD3D062009BAFB6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -2147,21 +2128,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		503F25E10FD3CA2A009BAFB6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				503F25E20FD3CA2A009BAFB6 /* Foundation.framework in Frameworks */,
-				503F25E40FD3CA2A009BAFB6 /* CoreGraphics.framework in Frameworks */,
-				503F25E50FD3CA2A009BAFB6 /* OpenGLES.framework in Frameworks */,
-				503F25E70FD3CA2A009BAFB6 /* libcocos2d.a in Frameworks */,
-				503F26D60FD3D1F9009BAFB6 /* AVFoundation.framework in Frameworks */,
-				503F27260FD3F6DC009BAFB6 /* OpenAL.framework in Frameworks */,
-				503F27280FD3F6E9009BAFB6 /* AudioToolbox.framework in Frameworks */,
-				503F272C0FD3F714009BAFB6 /* QuartzCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5042256E0FC0B39C00B992F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2607,7 +2573,6 @@
 				50F992C40F9F188700767ABC /* PerformanceParticleTest.app */,
 				504225700FC0B39C00B992F7 /* libbox2d.a */,
 				5042262E0FC0B5D500B992F7 /* Box2dTest.app */,
-				503F25EB0FD3CA2A009BAFB6 /* CocosDenshionTest.app */,
 				5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */,
 				50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */,
 				50D0E05F0FF9232E00098927 /* HelloActionsSample.app */,
@@ -2632,7 +2597,6 @@
 				509B3A100F31027600F2FB95 /* cocoslive */,
 				50CB2FEF1004C93600B7A750 /* CocosDenshion */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
-				501CCFA30E99657C00B86F68 /* cocos2d Support */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -2845,6 +2809,7 @@
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
 				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
+				501CCFA30E99657C00B86F68 /* Support */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 				50637A150E95397A000C9182 /* TextureAtlas.h */,
@@ -2866,7 +2831,7 @@
 			path = cocos2d;
 			sourceTree = "<group>";
 		};
-		501CCFA30E99657C00B86F68 /* cocos2d Support */ = {
+		501CCFA30E99657C00B86F68 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
@@ -2877,8 +2842,7 @@
 				50C508C40F7C194400799124 /* FileUtils.h */,
 				50C508C50F7C194400799124 /* FileUtils.m */,
 			);
-			name = "cocos2d Support";
-			path = cocos2d/Support;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		501CCFB60E99658900B86F68 /* OpenGLSupport */ = {
@@ -4022,24 +3986,6 @@
 			productReference = 502C66180DFEFCCA00E4107D /* RotateWorldTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		503F25BF0FD3CA2A009BAFB6 /* SoundEngine CocosDenshionTest (experimental) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 503F25E80FD3CA2A009BAFB6 /* Build configuration list for PBXNativeTarget "SoundEngine CocosDenshionTest (experimental)" */;
-			buildPhases = (
-				503F25C20FD3CA2A009BAFB6 /* Resources */,
-				503F25DE0FD3CA2A009BAFB6 /* Sources */,
-				503F25E10FD3CA2A009BAFB6 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				503F25C00FD3CA2A009BAFB6 /* PBXTargetDependency */,
-			);
-			name = "SoundEngine CocosDenshionTest (experimental)";
-			productName = playground;
-			productReference = 503F25EB0FD3CA2A009BAFB6 /* CocosDenshionTest.app */;
-			productType = "com.apple.product-type.application";
-		};
 		5042256F0FC0B39C00B992F7 /* box2d */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504225730FC0B3C300B992F7 /* Build configuration list for PBXNativeTarget "box2d" */;
@@ -4471,9 +4417,9 @@
 			productReference = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		50CB30171004C9D300B7A750 /* CocosDenshionDemo */ = {
+		50CB30171004C9D300B7A750 /* CocosDenshionDemo (soundengine) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionDemo" */;
+			buildConfigurationList = 50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionDemo (soundengine)" */;
 			buildPhases = (
 				50CB301A1004C9D300B7A750 /* Resources */,
 				50CB30291004C9D300B7A750 /* Sources */,
@@ -4485,7 +4431,7 @@
 				50CB30181004C9D300B7A750 /* PBXTargetDependency */,
 				50CB30621004CA9100B7A750 /* PBXTargetDependency */,
 			);
-			name = CocosDenshionDemo;
+			name = "CocosDenshionDemo (soundengine)";
 			productName = playground;
 			productReference = 50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -4615,9 +4561,9 @@
 			productReference = 8E6CBEEF0F7A758000D47B3A /* libvorbis.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		8EDF3EA90F6BDA0000F54643 /* SoundEngineTest (experimental) */ = {
+		8EDF3EA90F6BDA0000F54643 /* PASoundEngineTest (experimental) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8EDF3ED50F6BDA0000F54643 /* Build configuration list for PBXNativeTarget "SoundEngineTest (experimental)" */;
+			buildConfigurationList = 8EDF3ED50F6BDA0000F54643 /* Build configuration list for PBXNativeTarget "PASoundEngineTest (experimental)" */;
 			buildPhases = (
 				8EDF3EC90F6BDA0000F54643 /* Sources */,
 				8EDF3ECE0F6BDA0000F54643 /* Frameworks */,
@@ -4629,7 +4575,7 @@
 				8EDF3EAA0F6BDA0000F54643 /* PBXTargetDependency */,
 				8E6CBF320F7A78F800D47B3A /* PBXTargetDependency */,
 			);
-			name = "SoundEngineTest (experimental)";
+			name = "PASoundEngineTest (experimental)";
 			productName = playground;
 			productReference = 8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */;
 			productType = "com.apple.product-type.application";
@@ -4662,7 +4608,7 @@
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
 				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
 				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
-				50CB30171004C9D300B7A750 /* CocosDenshionDemo */,
+				50CB30171004C9D300B7A750 /* CocosDenshionDemo (soundengine) */,
 				509B3A270F3102FD00F2FB95 /* cocosLiveTest */,
 				506143F10E589A2E003CCDB7 /* cocosnodeTest */,
 				501945550F964C620059CE7C /* drawPrimitivesTest */,
@@ -4673,12 +4619,11 @@
 				506C79F20E01C73A00B48100 /* MenuTest */,
 				50C1953E0EE4B57E00829067 /* ParallaxTest */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
+				8EDF3EA90F6BDA0000F54643 /* PASoundEngineTest (experimental) */,
 				50F992520F9F188700767ABC /* PerformanceParticleTest */,
 				505CC1580F62BB03000EDF26 /* PerformanceSpriteTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
-				8EDF3EA90F6BDA0000F54643 /* SoundEngineTest (experimental) */,
-				503F25BF0FD3CA2A009BAFB6 /* SoundEngine CocosDenshionTest (experimental) */,
 				50C93A930E0BF6E000517B01 /* SpritesTest */,
 				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
@@ -4793,15 +4738,6 @@
 				50B2CB830E10EE4A00AE9530 /* grossinis_sister2.png in Resources */,
 				501CD16B0E99873000B86F68 /* fps_images.png in Resources */,
 				502AAD010F79715E001E3F87 /* fire.pvr in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		503F25C20FD3CA2A009BAFB6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				503F25C50FD3CA2A009BAFB6 /* Default.png in Resources */,
-				503F25CE0FD3CA2A009BAFB6 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5604,14 +5540,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		503F25DE0FD3CA2A009BAFB6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				503F26B60FD3CFF4009BAFB6 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5042256D0FC0B39C00B992F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6031,11 +5959,6 @@
 			isa = PBXTargetDependency;
 			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
 			targetProxy = 50379A790F913FA300986724 /* PBXContainerItemProxy */;
-		};
-		503F25C00FD3CA2A009BAFB6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = 503F25C10FD3CA2A009BAFB6 /* PBXContainerItemProxy */;
 		};
 		504226130FC0B5D500B992F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6538,60 +6461,6 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = RotateWorldTest;
 				SDKROOT = iphoneos2.0;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		503F25E90FD3CA2A009BAFB6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = CocosDenshionTest;
-				SDKROOT = iphoneos2.2;
-			};
-			name = Debug;
-		};
-		503F25EA0FD3CA2A009BAFB6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = CocosDenshionTest;
-				SDKROOT = iphoneos2.2;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -8362,15 +8231,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		503F25E80FD3CA2A009BAFB6 /* Build configuration list for PBXNativeTarget "SoundEngine CocosDenshionTest (experimental)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				503F25E90FD3CA2A009BAFB6 /* Debug */,
-				503F25EA0FD3CA2A009BAFB6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		504225730FC0B3C300B992F7 /* Build configuration list for PBXNativeTarget "box2d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -8587,7 +8447,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionDemo" */ = {
+		50CB30331004C9D300B7A750 /* Build configuration list for PBXNativeTarget "CocosDenshionDemo (soundengine)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50CB30341004C9D300B7A750 /* Debug */,
@@ -8659,7 +8519,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8EDF3ED50F6BDA0000F54643 /* Build configuration list for PBXNativeTarget "SoundEngineTest (experimental)" */ = {
+		8EDF3ED50F6BDA0000F54643 /* Build configuration list for PBXNativeTarget "PASoundEngineTest (experimental)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8EDF3ED60F6BDA0000F54643 /* Debug */,

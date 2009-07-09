@@ -60,8 +60,6 @@ Files and Folders
 
   * cocos2d/
      core files and folders of cocos2d
-  * cocos2d Support/
-     cocos2d support files.
   * cocoslive
      high score client library
   * CocosDenshion
@@ -69,7 +67,7 @@ Files and Folders
   * tests/
      tests and demo examples     
   * experimental/
-     stuff that is not yet stable enough to part of cocos2d or any other cocos2d project
+     experimental stuff
   * external/
      3rd party libraries used by cocos2d or any other project.
 	   * Chipmunk/: physics library
