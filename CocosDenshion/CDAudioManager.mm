@@ -70,7 +70,8 @@ static BOOL configured = FALSE;
 				//Set defaults here
 				configuredMode = kAudioManagerFxPlusMusicIfNoOtherAudio;
 				//Just create one channel group with all the sources
-				configuredChannelGroupDefinitions = new int[1];
+				//configuredChannelGroupDefinitions = new int[1];
+				configuredChannelGroupDefinitions = (int *)malloc( sizeof(configuredChannelGroupDefinitions[0]) * 1);
 				configuredChannelGroupDefinitions[0] = CD_MAX_SOURCES;
 				configuredChannelGroupTotal = 1;
 			}
@@ -116,7 +117,13 @@ static BOOL configured = FALSE;
  */
 + (void) configure: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
 	configuredMode = mode;
-	configuredChannelGroupDefinitions = new int[channelGroupTotal];
+	//configuredChannelGroupDefinitions = new int[channelGroupTotal];
+	//NB: memory leak here if configure is called more than once, it is not intended to be used that way though (SO).
+	configuredChannelGroupDefinitions = (int *)malloc( sizeof(configuredChannelGroupDefinitions[0]) * channelGroupTotal);
+	if(!configuredChannelGroupDefinitions) {
+		CCLOG(@"Denshion: configuredChannelGroupDefinitions memory allocation failed");
+	}
+	
 	for (int i=0; i < channelGroupTotal; i++) {
 		configuredChannelGroupDefinitions[i] = channelGroupDefinitions[i];
 	}	
