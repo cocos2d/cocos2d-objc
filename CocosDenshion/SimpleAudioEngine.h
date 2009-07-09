@@ -27,8 +27,10 @@
 /** returns the shared instance of the SimpleAudioEngine object */
 + (SimpleAudioEngine*) sharedEngine;
 
-/** plays background music */
+/** plays background music in a loop*/
 -(void) playBackgroundMusic:(NSString*) filePath;
+/** plays background music, if loop is true the music will repeat otherwise it will be played once */
+-(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop;
 /** stops playing background music */
 -(void) stopBackgroundMusic;
 /** pauses the background music */
@@ -40,6 +42,7 @@
 
 /** plays an audio effect */
 -(ALuint) playEffect:(NSString*) filePath;
+-(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain;
 /** preloads an audio effect */
 -(void) preloadEffect:(NSString*) filePath;
 /** unloads an audio effect from memory */

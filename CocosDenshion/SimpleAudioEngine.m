@@ -86,6 +86,11 @@ static CDAudioManager *am = nil;
 	[am playBackgroundMusic:filePath loop:TRUE];
 }
 
+-(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop
+{
+	[am playBackgroundMusic:filePath loop:loop];
+}
+
 -(void) stopBackgroundMusic
 {
 	[am stopBackgroundMusic];
@@ -107,18 +112,24 @@ static CDAudioManager *am = nil;
 
 -(ALuint) playEffect:(NSString*) filePath
 {
-	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filePath];
+	return [self playEffect:filePath pitch:1.0f pan:0.0f gain:1.0f];
+}
 
+-(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain
+{
+	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filePath];
+	
 	if(soundId == nil)
 	{
-		#ifdef ASSERT_DEBUG
-		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::playEffect" reason:filePath userInfo:nil] autorelease];
-		#else
+#ifdef ASSERT_DEBUG
+		@throw [[[NSException alloc] initWithName:@"SimpleAudioEngine::playEffect" 
+										   reason:filePath userInfo:nil] autorelease];
+#else
 		[self preloadEffect:filePath];
-		#endif
+#endif
 	}
-
-	return [soundEngine playSound:[soundId intValue] channelGroupId:0 pitch:1.0f pan:0 gain:1.0f loop:false];
+	
+	return [soundEngine playSound:[soundId intValue] channelGroupId:0 pitch:pitch pan:pan gain:gain loop:false];
 }
 
 -(void) preloadEffect:(NSString*) filePath
