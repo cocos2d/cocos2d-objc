@@ -53,7 +53,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	_sources = new ALuint[CD_MAX_SOURCES];
 	
 	// Create a new OpenAL Device
-	// Pass NULL to specify the system’s default output device
+	// Pass NULL to specify the system's default output device
 	newDevice = alcOpenDevice(NULL);
 	if (newDevice != NULL)
 	{
@@ -268,7 +268,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
  * Load sound data for later play back.
  * @return TRUE if buffer loaded okay for play back otherwise false
  */
-- (BOOL) loadBuffer:(int) soundId fileName:(NSString*) fileName fileType:(NSString*) fileType
+- (BOOL) loadBuffer:(int) soundId filePath:(NSString*) filePath
 {
 	
 	ALenum  format;
@@ -276,7 +276,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	ALsizei size;
 	ALsizei freq;
 	
-	CCLOG(@"Denshion: Loading openAL buffer %i %@",soundId,fileName);
+	CCLOG(@"Denshion: Loading openAL buffer %i %@", soundId, filePath);
 	
 #ifdef DEBUG
 	//Sanity check parameters - only in DEBUG
@@ -288,14 +288,14 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		//OpenAL initialisation has previously failed
 		CCLOG(@"Denshion: Loading buffer failed because sound engine state != functioning");
 		return FALSE;
-	}	
+	}
 
 	CFURLRef fileURL = nil;
-	NSString * path = [[NSBundle mainBundle] pathForResource:fileName ofType:fileType];
+	NSString *path = [FileUtils fullPathFromRelativePath:filePath];
 	if (path) {
 		fileURL = (CFURLRef)[[NSURL fileURLWithPath:path] retain];
 	}
-	
+
 	if (fileURL)
 	{
 		if (_bufferStates[soundId] != CD_BS_EMPTY) {
@@ -684,7 +684,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		float increment = 1.0f / [_loadRequests count];
 		//Iterate over load request and load
 		for (CDBufferLoadRequest *loadRequest in _loadRequests) {
-			[_soundEngine loadBuffer:loadRequest.soundId fileName:loadRequest.fileName fileType:nil];
+			[_soundEngine loadBuffer:loadRequest.soundId filePath:loadRequest.filePath];
 			_soundEngine.asynchLoadProgress += increment;
 			
 		}	
@@ -707,24 +707,22 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 ///////////////////////////////////////////////////////////////////////////////////////
 @implementation CDBufferLoadRequest
 
-@synthesize fileName, soundId;
+@synthesize filePath, soundId;
 
--(id) init:(int) theSoundId fileName:(NSString *) theFileName {
+-(id) init:(int) theSoundId filePath:(NSString *) theFilePath {
 	if ([super init]) {
 		soundId = theSoundId;
-		fileName = theFileName;
-		[fileName retain];
+		filePath = theFilePath;
+		[filePath retain];
 		return self;
 	} else {
 		return nil;
-	}	
-}	
+	}
+}
 
 -(void) dealloc {
-	[fileName release];
+	[filePath release];
 	[super dealloc];
-}	
+}
 
 @end
-
-

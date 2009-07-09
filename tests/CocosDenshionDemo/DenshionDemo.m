@@ -143,26 +143,26 @@ CDSourceWrapper *toneSource;
 	
 	//Code for loading buffers synchronously
 	/*
-	[sse loadBuffer:SND_ID_DRUMLOOP fileName:@"808_120bpm" fileType:@"caf"];
-	[sse loadBuffer:SND_ID_TONELOOP fileName:@"sine440" fileType:@"caf"];
-	[sse loadBuffer:SND_ID_BALL fileName:@"ballbounce" fileType:@"wav"];
-	[sse loadBuffer:SND_ID_GUN fileName:@"machinegun" fileType:@"caf"];
-	[sse loadBuffer:SND_ID_STAB fileName:@"rustylow" fileType:@"wav"];
-	[sse loadBuffer:SND_ID_COWBELL fileName:@"cowbell" fileType:@"wav"];
-	[sse loadBuffer:SND_ID_EXPLODE fileName:@"explodelow" fileType:@"wav"];
-	[sse loadBuffer:SND_ID_KARATE fileName:@"karate" fileType:@"wav"];
+	[sse loadBuffer:SND_ID_DRUMLOOP filePath:@"808_120bpm.caf"];
+	[sse loadBuffer:SND_ID_TONELOOP filePath:@"sine440.caf"];
+	[sse loadBuffer:SND_ID_BALL filePath:@"ballbounce.wav"];
+	[sse loadBuffer:SND_ID_GUN filePath:@"machinegun.caf"];
+	[sse loadBuffer:SND_ID_STAB filePath:@"rustylow.wav"];
+	[sse loadBuffer:SND_ID_COWBELL filePath:@"cowbell.wav"];
+	[sse loadBuffer:SND_ID_EXPLODE filePath:@"explodelow.wav"];
+	[sse loadBuffer:SND_ID_KARATE filePath:@"karate.wav"];
 	*/
 	
 	//Load sound buffers asynchrounously
 	NSMutableArray *loadRequests = [[[NSMutableArray alloc] init] autorelease];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_DRUMLOOP fileName:@"808_120bpm.caf"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_TONELOOP fileName:@"sine440.caf"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_BALL fileName:@"ballbounce.wav"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_GUN fileName:@"machinegun.caf"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_STAB fileName:@"rustylow.wav"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_COWBELL fileName:@"cowbell.wav"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_EXPLODE fileName:@"explodelow.wav"] autorelease]];
-	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_KARATE fileName:@"karate.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_DRUMLOOP filePath:@"808_120bpm.caf"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_TONELOOP filePath:@"sine440.caf"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_BALL filePath:@"ballbounce.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_GUN filePath:@"machinegun.caf"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_STAB filePath:@"rustylow.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_COWBELL filePath:@"cowbell.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_EXPLODE filePath:@"explodelow.wav"] autorelease]];
+	[loadRequests addObject:[[[CDBufferLoadRequest alloc] init:SND_ID_KARATE filePath:@"karate.wav"] autorelease]];
 	[sse loadBuffersAsynchronously:loadRequests];
 	_appState = kAppStateSoundBuffersLoading;
 	
@@ -266,7 +266,7 @@ CDSourceWrapper *toneSource;
 				//toneSource.looping = !toneSource.looping;
 				
 				//Testing loading a buffer with a new sound
-				//[soundEngine loadBuffer:SND_ID_TONELOOP fileName:@"bassloop" fileType:@"wav"];	
+				//[soundEngine loadBuffer:SND_ID_TONELOOP filePath:@"bassloop.wav"];
 				
 				//Testing deleting a buffer
 				//[soundEngine unloadBuffer:SND_ID_KARATE];

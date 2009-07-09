@@ -28,7 +28,7 @@
 + (SimpleAudioEngine*) sharedEngine;
 
 /** plays background music */
--(void) playBackgroundMusic:(NSString*) filename;
+-(void) playBackgroundMusic:(NSString*) filePath;
 /** stops playing background music */
 -(void) stopBackgroundMusic;
 /** pauses the background music */
@@ -39,10 +39,10 @@
 -(BOOL) isBackgroundMusicPlaying;
 
 /** plays an audio effect */
--(ALuint) playEffect:(NSString*) filename;
+-(ALuint) playEffect:(NSString*) filePath;
 /** preloads an audio effect */
--(void) preloadEffect:(NSString*) filename;
+-(void) preloadEffect:(NSString*) filePath;
 /** unloads an audio effect from memory */
--(void) unloadEffect:(NSString*) filename;
+-(void) unloadEffect:(NSString*) filePath;
 
 @end
