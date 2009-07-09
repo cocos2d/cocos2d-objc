@@ -49,8 +49,19 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	context = NULL;
 	ALCdevice		*newDevice = NULL;
 	
-	_buffers = new ALuint[CD_MAX_BUFFERS];
-	_sources = new ALuint[CD_MAX_SOURCES];
+	//_buffers = new ALuint[CD_MAX_BUFFERS];
+	_buffers = (ALuint *)malloc( sizeof(_buffers[0]) * CD_MAX_BUFFERS );
+	if(!_buffers) {
+		CCLOG(@"Denshion: buffer memory allocation failed");
+		return FALSE;
+	}
+	
+	//_sources = new ALuint[CD_MAX_SOURCES];
+	_sources = (ALuint *)malloc( sizeof(_sources[0]) * CD_MAX_SOURCES );
+	if(!_sources) {
+		CCLOG(@"Denshion: source memory allocation failed");
+		return FALSE;
+	}
 	
 	// Create a new OpenAL Device
 	// Pass NULL to specify the system's default output device
@@ -96,9 +107,9 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	
 
 	CCLOG(@"Denshion: Deallocing sound engine.");
-	delete _bufferStates;
-	delete _channelGroups;
-	delete _sourceBufferAttachments;
+	free(_bufferStates);
+	free(_channelGroups);
+	free(_sourceBufferAttachments);
 	
 	// Delete the Sources
     alDeleteSources(CD_MAX_SOURCES, _sources);
@@ -120,8 +131,8 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
     //Close device
     alcCloseDevice(device);
 	
-	delete _buffers;
-	delete _sources;
+	free(_buffers);
+	free(_sources);
 	[super dealloc];
 }	
 
@@ -154,7 +165,12 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		}	
 		
 		//Set up channel groups
-		_channelGroups = new channelGroup[channelGroupTotal];
+		//_channelGroups = new channelGroup[channelGroupTotal];
+		_channelGroups = (channelGroup *)malloc( sizeof(_channelGroups[0]) * channelGroupTotal);
+		if(!_channelGroups) {
+			CCLOG(@"Denshion: channel groups memory allocation failed");
+		}
+		
 		_channelGroupTotal = channelGroupTotal;
 		int channelCount = 0;
 		for (int i=0; i < channelGroupTotal; i++) {
@@ -171,12 +187,21 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		_channelTotal = channelCount;
 		
 		//Set up buffer states
-		_bufferStates = new int[CD_MAX_BUFFERS];
+		//_bufferStates = new int[CD_MAX_BUFFERS];
+		_bufferStates = (int *)malloc( sizeof(_bufferStates[0]) * CD_MAX_BUFFERS);
+		if(!_bufferStates) {
+			CCLOG(@"Denshion: buffer states memory allocation failed");
+		}
+		
 		for (int i=0; i < CD_MAX_BUFFERS; i++) {
 			_bufferStates[i] = CD_BS_EMPTY;
 		}	
 		
-		_sourceBufferAttachments = new ALuint[CD_MAX_SOURCES];
+		//_sourceBufferAttachments = new ALuint[CD_MAX_SOURCES];
+		_sourceBufferAttachments = (ALuint *)malloc( sizeof(_sourceBufferAttachments[0]) * CD_MAX_SOURCES);
+		if(!_sourceBufferAttachments) {
+			CCLOG(@"Denshion: source buffer attachments memory allocation failed");
+		}
 		
 		// Initialize our OpenAL environment
 		if ([self _initOpenAL]) {
