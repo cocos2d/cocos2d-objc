@@ -4,6 +4,7 @@ version 0.8 - dd-MMM-yyyy
  . AtlasSprite: render in subpixel by default (issue #414, issue #399)
  . BitmapFontAtlas: opacity and color are applied (issue #425)
  . BitmapFontAtlas: cache the configuration. FASTER loading times (issue #382)
+ . CocosDenshion: improvements (issues #415, #431, #432, #433)
  . CocosNode: RGBA protocol setColor new API (issue #273)
  . Director: added isPaused property (issue #375)
  . Director: fixed memory leak in FPSLabel (issue #370)
