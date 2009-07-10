@@ -33,6 +33,14 @@
 @synthesize selector = selector_;
 @synthesize target = target_;
 @synthesize data = data_;
+- (void) dealloc
+{
+	CCLOG(@"deallocing @%", self);
+	[target_ release];
+	[data_ release];
+	[super dealloc];
+}
+
 @end
 
 
