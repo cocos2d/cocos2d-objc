@@ -36,6 +36,11 @@
 /** If isTouchEnabled, this method is called onEnter. Override it to change the
  way Layer receives touch events.
  ( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
+ Example:
+     -(void) registerWithTouchDispatcher
+     {
+        [[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+     }
  */
 -(void) registerWithTouchDispatcher;
 
