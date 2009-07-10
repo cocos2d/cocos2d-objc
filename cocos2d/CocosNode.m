@@ -248,6 +248,18 @@
 	return camera;
 }
 
+-(CocosNode*) getChildByTag:(int) aTag
+{
+	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
+	
+	for( CocosNode *node in children ) {
+		if( node.tag == aTag )
+			return node;
+	}
+	// not found
+	return nil;
+}
+
 /* "add" logic MUST only be on this selector
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this selector
@@ -313,33 +325,29 @@
 {
 	// not using detachChild improves speed here
 	for( CocosNode * c in children) {
+		[c setParent: nil];
+
+		// IMPORTANT:
+		//  - 1st do onExit
+		//  -2nd cleanup
+		if( isRunning )
+			[c onExit];
+
 		if( cleanup) {
 			[c cleanup];
 		}
-		[c setParent: nil];
-		if( isRunning )
-			[c onExit];
 	}
 	
 	[children removeAllObjects];
 }
 
--(CocosNode*) getChildByTag:(int) aTag
-{
-	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
-	
-	for( CocosNode *node in children ) {
-		if( node.tag == aTag )
-			return node;
-	}
-	// not found
-	return nil;
-}
-
 -(void) detachChild:(CocosNode *) child cleanup:(BOOL) doCleanup
 {
 	[child setParent: nil];
-	
+
+	// IMPORTANT:
+	//  - 1st do onExit
+	//  -2nd cleanup	
 	// stop timers
 	if( isRunning )
 		[child onExit];
