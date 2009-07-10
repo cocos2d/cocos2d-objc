@@ -6,6 +6,7 @@ version 0.8 - dd-MMM-yyyy
  . BitmapFontAtlas: cache the configuration. FASTER loading times (issue #382)
  . CocosDenshion: improvements (issues #415, #431, #432, #433)
  . CocosNode: RGBA protocol setColor new API (issue #273)
+ . CocosNode: removeAllChildren unschedules the timers correctly (issue #435)
  . Director: added isPaused property (issue #375)
  . Director: fixed memory leak in FPSLabel (issue #370)
  . Layer: possibility to hook / unkook touches/Accelerometer in runtime (issue #164)
