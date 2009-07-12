@@ -1,21 +1,18 @@
 //
-// Mem Bug
-// a cocos2d example
-// http://www.cocos2d-iphone.org
+// Bug-422 test case by lhunath
+// http://code.google.com/p/cocos2d-iphone/issues/detail?id=422
 //
 
-
-#import "MemBug.h"
+#import "Bug-422.h"
 
 #pragma mark -
 #pragma mark MemBug
 @implementation Layer1
 -(id) init
 {
-	if(!(self=[super init]))
-        return nil;
-
-    [self reset];
+	if((self=[super init])) {
+		[self reset];
+	}
     
 	return self;
 }
@@ -27,6 +24,9 @@
 	localtag++;
 
     //[self check:self];
+
+	// if the remove goes after the creation, then the bug can't be reproduced
+	[self removeChildByTag:localtag-1 cleanup:NO];
 
     MenuItem *item1 = [MenuItemFont itemFromString: @"One"
                                             target: self selector:@selector(menuCallback:)];
@@ -42,12 +42,10 @@
                                             target: self selector:@selector(menuCallback:)];
     
     Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
-	[menu alignItemsVertically];
-//    [menu alignItemsInColumns:[NSNumber numberWithInt:3], [NSNumber numberWithInt:3], nil];
-    
-    [self addChild: menu z:0 tag:localtag];
-	
-	[self removeChildByTag:localtag-1 cleanup:YES];
+    [menu alignItemsInColumns:[NSNumber numberWithInt:3], [NSNumber numberWithInt:3], nil];
+
+
+    [self addChild: menu z:0 tag:localtag];	
 
     //[self check:self];
 }
