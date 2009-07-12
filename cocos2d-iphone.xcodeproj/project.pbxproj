@@ -798,7 +798,7 @@
 		50CB30E81004CF7900B7A750 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E41004CF7900B7A750 /* slider.png */; };
 		50CB30EA1004CF8B00B7A750 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */; };
 		50CB31081004D05300B7A750 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
-		50CB35E01007BA8000B7A750 /* Bug-422.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB35DF1007BA8000B7A750 /* Bug-422.m */; };
+		50CB36161007D76600B7A750 /* Bug-422.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB36151007D76600B7A750 /* Bug-422.m */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1906,8 +1906,8 @@
 		50CB30E41004CF7900B7A750 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 808_120bpm.caf; sourceTree = "<group>"; };
 		50CB34DD100765EF00B7A750 /* Bug-422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bug-422.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		50CB35DE1007BA8000B7A750 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
-		50CB35DF1007BA8000B7A750 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
+		50CB36141007D76600B7A750 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
+		50CB36151007D76600B7A750 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -3350,7 +3350,7 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				50CB35DD1007BA7F00B7A750 /* bugs */,
+				50CB36131007D76600B7A750 /* bugs */,
 				504828C70F45B15700A30CEF /* attachDemo */,
 				50CB30B71004CE9400B7A750 /* CocosDenshionDemo */,
 				50175B240F33B22300624901 /* cocosLiveDemo */,
@@ -3502,11 +3502,11 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
-		50CB35DD1007BA7F00B7A750 /* bugs */ = {
+		50CB36131007D76600B7A750 /* bugs */ = {
 			isa = PBXGroup;
 			children = (
-				50CB35DE1007BA8000B7A750 /* Bug-422.h */,
-				50CB35DF1007BA8000B7A750 /* Bug-422.m */,
+				50CB36141007D76600B7A750 /* Bug-422.h */,
+				50CB36151007D76600B7A750 /* Bug-422.m */,
 			);
 			path = bugs;
 			sourceTree = "<group>";
@@ -6036,7 +6036,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5F0ED90FFE96D400C7C82E /* main.m in Sources */,
-				50CB35E01007BA8000B7A750 /* Bug-422.m in Sources */,
+				50CB36161007D76600B7A750 /* Bug-422.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
