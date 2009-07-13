@@ -59,7 +59,7 @@
 -(void) start
 {
 	[super start];
-	target.visible = YES;
+	[target setVisible: YES];
 }
 -(FiniteTimeAction*) reverse
 {
@@ -74,7 +74,7 @@
 -(void) start
 {
 	[super start];
-	target.visible = NO;
+	[target setVisible: NO];
 }
 -(FiniteTimeAction*) reverse
 {
@@ -89,7 +89,8 @@
 -(void) start
 {
 	[super start];
-	target.visible = ! target.visible;
+	BOOL v = [target visible];
+	[target setVisible: !v];
 }
 @end
 
@@ -118,7 +119,7 @@
 -(void) start
 {
 	[super start];
-	target.position = position;
+	[target setPosition: position];
 }
 @end
 

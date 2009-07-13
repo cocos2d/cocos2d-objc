@@ -323,10 +323,12 @@ Class restartAction()
 		id forever = [RepeatForever actionWithAction:
 						[Sequence actions:rot, rot_back, nil]];
 		id forever2 = [[forever copy] autorelease];
+		[forever setTag:101];
+		[forever2 setTag:102];
 													  
 		[self addChild:sp1 z:0 tag:kTagSprite1];
 		[self addChild:sp2 z:0 tag:kTagSprite2];
-		
+				
 		[sp1 runAction:forever];
 		[sp2 runAction:forever2];
 		

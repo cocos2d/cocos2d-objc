@@ -20,6 +20,7 @@
 #import "Scheduler.h"
 #import "ccMacros.h"
 #import "Director.h"
+#import "ActionManager.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccArray.h"
 #import "Support/TransformUtils.h"
@@ -32,9 +33,7 @@
 #endif
 
 @interface CocosNode (Private)
--(void) step_: (ccTime) dt;
 // lazy allocs
--(void) actionAlloc;
 -(void) childrenAlloc;
 -(void) timerAlloc;
 // helper that reorder a child
@@ -176,9 +175,6 @@
 
 		// children (lazy allocs)
 		children = nil;
-
-		// actions (lazy allocs)
-		actions = nil;
 		
 		// scheduled selectors (lazy allocs)
 		scheduledSelectors = nil;
@@ -224,11 +220,7 @@
 	
 	// timers
 	[scheduledSelectors release];
-	
-	// actions
-	[self stopAllActions];
-	ccArrayFree(actions);
-	
+		
 	[super dealloc];
 }
 
@@ -526,168 +518,40 @@
 
 #pragma mark CocosNode Actions
 
--(void) actionAlloc
-{
-	if( actions == nil )
-		actions = ccArrayNew(4);
-	else if( actions->num == actions->max )
-		ccArrayDoubleCapacity(actions);
-}
-
 -(Action*) runAction:(Action*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	// lazy alloc
-	[self actionAlloc];
-	
-	NSAssert( !ccArrayContainsObject(actions, action), @"Action already running");
-	
-	ccArrayAppendObject(actions, action);
-	
-	action.target = self;
-	[action start];
-	
-	[self schedule: @selector(step_:)];
-	
+	[[ActionManager sharedManager] queueAction:action target:self paused:!isRunning];
 	return action;
 }
 
 -(void) stopAllActions
 {
-	if( actions == nil )
-		return;
-	
-	if( ccArrayContainsObject(actions, currentAction) && !currentActionSalvaged ) {
-		[currentAction retain];
-		currentActionSalvaged = YES;
-	}
-	
-	ccArrayRemoveAllObjects(actions);
+	[[ActionManager sharedManager] stopAllActionsFromTarget:self];
 }
 
 -(void) stopAction: (Action*) action
 {
-	// explicit nil handling
-	if (action == nil)
-		return;
-	
-	if( actions != nil ) {
-		NSUInteger i = ccArrayGetIndexOfObject(actions, action);
-	
-		if( i != NSNotFound ) {
-			if( action == currentAction && !currentActionSalvaged ) {
-				[currentAction retain];
-				currentActionSalvaged = YES;
-			}
-			ccArrayRemoveObjectAtIndex(actions, i);
-	
-			// update actionIndex in case we are in step_, looping over the actions
-			if( actionIndex >= (int) i )
-				actionIndex--;
-		}
-	} else
-		CCLOG(@"stopAction: Action not found!");
+	[[ActionManager sharedManager] stopAction:action];
 }
 
--(void) stopActionByTag:(int) aTag
+-(void) stopActionByTag:(int)aTag
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
-	
-	if( actions != nil ) {
-		NSUInteger limit = actions->num;
-		for( NSUInteger i = 0; i < limit; i++) {
-			Action *a = actions->arr[i];
-			
-			if( a.tag == aTag ) {
-				if( a == currentAction && !currentActionSalvaged ) {
-					[currentAction retain];
-					currentActionSalvaged = YES;
-				}
-				ccArrayRemoveObjectAtIndex(actions, i);
-				
-				// update actionIndex in case we are in step_, looping over the actions
-				if (actionIndex >= (int) i)
-					actionIndex--;
-				return; 
-			}
-		}
-	}
-	
-	CCLOG(@"stopActionByTag: Action not found!");
+	[[ActionManager sharedManager] stopActionByTag:aTag target:self];
 }
 
 -(Action*) getActionByTag:(int) aTag
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
-	
-	if( actions != nil ) {
-		NSUInteger limit = actions->num;
-		for( NSUInteger i = 0; i < limit; i++) {
-			Action *a = actions->arr[i];
-		
-			if( a.tag == aTag )
-				return a; 
-		}
-	}
 
-	CCLOG(@"getActionByTag: Action not found");
-	return nil;
+	return [[ActionManager sharedManager] getActionByTag:aTag target:self];
 }
 
 -(int) numberOfRunningActions
 {
-	return actions ? actions->num : 0;
-}
-
--(void) step_: (ccTime) dt
-{
-	// !Running the actions may indirectly release the CocosNode, so we're
-	// !retaining self to prevent deallocation.
-	// ![self retain];
-	
-	// (!) UPDATE: Retaining isn't currently necessary because the Timer which runs 
-	// step_ retains the node, keeping it alive. Even if an action indirectly calls
-	// Scheduler#unscheduleTimer (i.e. CallFunc calls [parent removeChild:self] which
-	// calls [self onExit] which calls [self deactivateTimers]), the Timer won't be
-	// deallocated until the next Scheduler#tick.
-	// Bottom line: Node doesn't run the risk of deallocating itself in step_ as
-	// long as the implementation of Scheduler stays the same. We can ommit the
-	// expensive retain/release.
-		
-	// call all actions
-	
-	// The 'actions' ccArray may change while inside this loop.
-	for( actionIndex = 0; actionIndex < (int) actions->num; actionIndex++) {
-		currentAction = actions->arr[actionIndex];
-		currentActionSalvaged = NO;
-		
-		[currentAction step: dt];
-		
-		if( currentActionSalvaged ) {
-			// The currentAction told the node to stop it. To prevent the action from
-			// accidentally deallocating itself before finishing its step, we retained
-			// it. Now that step is done, it's safe to release it.
-			[currentAction release];
-		}
-		else if( [currentAction isDone] ) {
-			[currentAction stop];
-			
-			Action *a = currentAction;
-			// Make currentAction nil to prevent stopAction from salvaging it.
-			currentAction = nil;
-			[self stopAction:a];
-		}
-	}
-	currentAction = nil;
-	
-	if( actions->num == 0 )
-		[self unschedule: @selector(step_:)];
-	
-	// !And releasing self when done.
-	// ![self release];
-	// !If the node had a retain count of 1 before getting released, it's now
-	// !deallocated. However, since we don't access any ivar, we're fine.
+	return [[ActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
 
 #pragma mark CocosNode Timers 
@@ -746,12 +610,16 @@
 {
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] scheduleTimer: [scheduledSelectors objectForKey:key]];
+	
+	[[ActionManager sharedManager] pauseActions:NO forTarget:self];
 }
 
 - (void) deactivateTimers
 {
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
+
+	[[ActionManager sharedManager] pauseActions:YES forTarget:self];
 }
 
 

@@ -50,7 +50,7 @@
 -(void) start
 {
 	[super start];
-	other.target = target;
+	[other setTarget: target];
 	[other start];
 }
 

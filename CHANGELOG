@@ -1,4 +1,5 @@
 version 0.8 - dd-MMM-yyyy
+ . ActionManager: actions logic were removed from CocosNode (issue #437)
  . Actions: CallFuncND doesn't leak if reused (issue #336)
  . AtlasSpriteManager: fixed blend function (part of issue #125)
  . AtlasSprite: render in subpixel by default (issue #414, issue #399)

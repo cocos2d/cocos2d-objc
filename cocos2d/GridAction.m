@@ -40,11 +40,13 @@
 
 	GridBase *newgrid = [self grid];
 	
-	if ( target.grid && target.grid.reuseGrid > 0 )
+	CocosNode *t = (CocosNode*) target;
+	
+	if ( t.grid && t.grid.reuseGrid > 0 )
 	{
-		if ( target.grid.active && target.grid.gridSize.x == gridSize.x && target.grid.gridSize.y == gridSize.y && [target.grid isKindOfClass:[newgrid class]] )
+		if ( t.grid.active && t.grid.gridSize.x == gridSize.x && t.grid.gridSize.y == gridSize.y && [t.grid isKindOfClass:[newgrid class]] )
 		{
-			[target.grid reuse];
+			[t.grid reuse];
 		}
 		else
 		{
@@ -53,10 +55,10 @@
 	}
 	else
 	{
-		if ( target.grid && target.grid.active )
-			target.grid.active = NO;
-		target.grid = newgrid;
-		target.grid.active = YES;
+		if ( t.grid && t.grid.active )
+			t.grid.active = NO;
+		t.grid = newgrid;
+		t.grid.active = YES;
 	}	
 }
 
@@ -83,19 +85,19 @@
 
 -(ccVertex3F)vertex:(ccGridSize)pos
 {
-	Grid3D *g = (Grid3D *)target.grid;
+	Grid3D *g = (Grid3D *)[target grid];
 	return [g vertex:pos];
 }
 
 -(ccVertex3F)originalVertex:(ccGridSize)pos
 {
-	Grid3D *g = (Grid3D *)target.grid;
+	Grid3D *g = (Grid3D *)[target grid];
 	return [g originalVertex:pos];
 }
 
 -(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
 {
-	Grid3D *g = (Grid3D *)target.grid;
+	Grid3D *g = (Grid3D *)[target grid];
 	return [g setVertex:pos vertex:vertex];
 }
 @end
@@ -111,19 +113,19 @@
 
 -(ccQuad3)tile:(ccGridSize)pos
 {
-	TiledGrid3D *g = (TiledGrid3D *)target.grid;
+	TiledGrid3D *g = (TiledGrid3D *)[target grid];
 	return [g tile:pos];
 }
 
 -(ccQuad3)originalTile:(ccGridSize)pos
 {
-	TiledGrid3D *g = (TiledGrid3D *)target.grid;
+	TiledGrid3D *g = (TiledGrid3D *)[target grid];
 	return [g originalTile:pos];
 }
 
 -(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
 {
-	TiledGrid3D *g = (TiledGrid3D *)target.grid;
+	TiledGrid3D *g = (TiledGrid3D *)[target grid];
 	[g setTile:pos coords:coords];
 }
 
@@ -309,8 +311,8 @@
 {
 	[super start];
 
-	if ( self.target.grid && self.target.grid.active )
-		self.target.grid.active = NO;
+	if ( [[self target] grid] && [[[self target] grid] active] )
+		[[[self target] grid] setActive: NO];
 }
 
 @end
@@ -338,8 +340,9 @@
 {
 	[super start];
 
-	if ( self.target.grid && self.target.grid.active )
-		self.target.grid.reuseGrid += t;
+	CocosNode *myTarget = (CocosNode*) [self target];
+	if ( myTarget.grid && myTarget.grid.active )
+		myTarget.grid.reuseGrid += t;
 }
 
 @end

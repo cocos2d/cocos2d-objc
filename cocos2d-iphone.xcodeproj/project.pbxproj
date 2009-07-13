@@ -799,6 +799,9 @@
 		50CB30EA1004CF8B00B7A750 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */; };
 		50CB31081004D05300B7A750 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		50CB36161007D76600B7A750 /* Bug-422.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB36151007D76600B7A750 /* Bug-422.m */; };
+		50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* ActionManager.h */; };
+		50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* ActionManager.m */; };
+		50CB3B11100AC45300B7A750 /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B10100AC45300B7A750 /* uthash.h */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1908,6 +1911,9 @@
 		50CB34DD100765EF00B7A750 /* Bug-422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bug-422.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB36141007D76600B7A750 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
 		50CB36151007D76600B7A750 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
+		50CB3B0C100AC43A00B7A750 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
+		50CB3B0D100AC43A00B7A750 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
+		50CB3B10100AC45300B7A750 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -2889,6 +2895,7 @@
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
 				6F8321EE0F8BD08E00CBAD06 /* ccArray.h */,
+				50CB3B10100AC45300B7A750 /* uthash.h */,
 				50C508C40F7C194400799124 /* FileUtils.h */,
 				50C508C50F7C194400799124 /* FileUtils.m */,
 			);
@@ -3290,6 +3297,8 @@
 		50A24E770F3780A2007CAEB0 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				50CB3B0C100AC43A00B7A750 /* ActionManager.h */,
+				50CB3B0D100AC43A00B7A750 /* ActionManager.m */,
 				509E66EE0E06E1360050992C /* CameraAction.h */,
 				509E66EF0E06E1360050992C /* CameraAction.m */,
 				5018F2520DFDEAFF00C013A5 /* Action.h */,
@@ -3772,6 +3781,8 @@
 				502C6C6C0FB87970002BF3C2 /* ParallaxNode.h in Headers */,
 				6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */,
 				5012DAC50FE179BF00D6DDD1 /* TouchDelegateProtocol.h in Headers */,
+				50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */,
+				50CB3B11100AC45300B7A750 /* uthash.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5607,6 +5618,7 @@
 				5016F5300FA0D16B000E9BB2 /* PointParticleSystem.m in Sources */,
 				502C6C6D0FB87970002BF3C2 /* ParallaxNode.m in Sources */,
 				6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */,
+				50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
