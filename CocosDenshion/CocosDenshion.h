@@ -21,22 +21,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-/* IMPORTANT!
+/** 
+@file
+@b IMPORTANT
 There are 3 different ways of using CocosDenshion. Depending on which you choose you 
 will need to include different files and frameworks.
 
-SimpleAudioEngine
-=================
+@par SimpleAudioEngine
 This is recommended for basic audio requirements. If you just want to play some sound fx
 and some background music and have no interest in learning the lower level workings then
 this is the interface to use.
 
-Requires: OS 2.2 or greater 
-Required Files: SimpleAudioEngine.*, CocosDenshion.*
-Required Frameworks: OpenAL, AudioToolbox, AVFoundation
+Requirements:
+ - Firmware: OS 2.2 or greater 
+ - Files: SimpleAudioEngine.*, CocosDenshion.*
+ - Frameworks: OpenAL, AudioToolbox, AVFoundation
  
-CDAudioManager
-==============
+@par CDAudioManager
 CDAudioManager is basically a thin wrapper around an AVAudioPlayer object used for playing
 background music and a CDSoundEngine object used for playing sound effects. It manages the
 audio session for you deals with audio session interruption. It is fairly low level and it
@@ -44,21 +45,22 @@ is expected you have some understanding of the underlying technologies. For exam
 many use cases regarding background music it is expected you will work directly with the
 backgroundMusic AVAudioPlayer which is exposed as a property.
  
-Requires: OS 2.2 or greater 
-Required Files: CDAudioManager.*, CocosDenshion.*
-Required Frameworks: OpenAL, AudioToolbox, AVFoundation
+Requirements:
+  - Firmware: OS 2.2 or greater 
+  - Files: CDAudioManager.*, CocosDenshion.*
+  - Frameworks: OpenAL, AudioToolbox, AVFoundation
 
-CDSoundEngine
-=============
+@par CDSoundEngine
 CDSoundEngine is a sound engine built upon OpenAL and derived from Apple's oalTouch 
 example. It can playback up to 32 sounds simultaneously with control over pitch, pan
 and gain.  It can be set up to handle audio session interruption automatically.  You 
 may decide to use CDSoundEngine directly instead of CDAudioManager or SimpleAudioEngine
 because you require OS 2.0 compatibility.
  
-Requires: OS 2.0 or greater 
-Required Files: CocosDenshion.*
-Required Frameworks: OpenAL, AudioToolbox
+Requirements:
+  - Firmware: OS 2.0 or greater 
+  - Files: CocosDenshion.*
+  - Frameworks: OpenAL, AudioToolbox
  
 */ 
 
@@ -128,6 +130,20 @@ typedef struct _channelGroup {
 
 ////////////////////////////////////////////////////////////////////////////
 
+/** CDSoundEngine is built upon OpenAL and works with SDK 2.0.
+ CDSoundEngine is a sound engine built upon OpenAL and derived from Apple's oalTouch 
+ example. It can playback up to 32 sounds simultaneously with control over pitch, pan
+ and gain.  It can be set up to handle audio session interruption automatically.  You 
+ may decide to use CDSoundEngine directly instead of CDAudioManager or SimpleAudioEngine
+ because you require OS 2.0 compatibility.
+ 
+ Requirements:
+ - Firmware: OS 2.0 or greater 
+ - Files: CocosDenshion.*
+ - Frameworks: OpenAL, AudioToolbox
+ 
+ @since v0.8
+ */
 @interface CDSoundEngine : NSObject {
 	
 	ALuint			*_sources;
@@ -154,12 +170,17 @@ typedef struct _channelGroup {
 @property (readonly)  BOOL functioning;//Is the sound engine functioning
 @property (readwrite) float asynchLoadProgress;
 
+/** Initializes the engine with a group definition and a total number of groups */
 - (id)init:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
+/** Initializes the engine with a group definition, a total number of groups and an audio session category */
 - (id)init:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal audioSessionCategory:(UInt32) audioSessionCategory;
 
+/** Plays a sound in a channel group with a pitch, pan and gain. The sound could played looped or not */
 - (ALuint) playSound:(int) soundId channelGroupId:(int)channelGroupId pitch:(float) pitch pan:(float) pan gain:(float) gain loop:(BOOL) loop;
 
+/** Stops playing a sound */
 - (void) stopSound:(ALuint) sourceId;
+/** Stops playing a channel group */
 - (void) stopChannelGroup:(int) channelGroupId;
 - (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible;
 - (void) setChannelGroupMute:(int) channelGroupId mute:(BOOL) mute;

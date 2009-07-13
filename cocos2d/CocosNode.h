@@ -323,18 +323,22 @@ enum {
 
 // transformation methods
 
-/// actual affine transforms used
-/// XXX: needs documentation
-/// @since v0.7.1
+/** actual affine transforms used
+ @todo nodeToParentTransform needs documentation
+ @since v0.7.1
+ */
 - (CGAffineTransform)nodeToParentTransform;
-/// XXX: needs documentation
-/// @since v0.7.1
+/** @todo parentToNodeTransform needs documentation
+ @since v0.7.1
+ */
 - (CGAffineTransform)parentToNodeTransform;
-/// XXX: needs documentation
-/// @since v0.7.1
+/** @todo nodeToWorldTransform needs documentation
+ @since v0.7.1
+ */
 - (CGAffineTransform)nodeToWorldTransform;
-/// XXX: needs documentation
-/// @since v0.7.1
+/** @todo worldToNodeTransform needs documentation
+ @since v0.7.1
+ */
 - (CGAffineTransform)worldToNodeTransform;
 /** converts a world coordinate to local coordinate
  @since v0.7.1
@@ -354,12 +358,14 @@ enum {
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
-// convenience methods which take a UITouch instead of CGPoint
-/// XXX: needs documentation
-/// @since v0.7.1
+/** convenience methods which take a UITouch instead of CGPoint
+ @todo convertTouchToNodeSpace needs documentation
+ @since v0.7.1
+ */
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
-/// XXX: needs documentation
-/// @since v0.7.1
+/** @todo convertTouchToNodeSpaceAR needs documentation
+ @since v0.7.1
+ */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 @end
 

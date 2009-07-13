@@ -24,16 +24,18 @@
 #import "CocosDenshion.h"
 #import <AVFoundation/AVFoundation.h>
 
+/** Different modes of the engine */
 typedef enum {
-	kAudioManagerFxOnly,					//Other apps will be able to play audio
-	kAudioManagerFxPlusMusic,				//Only this app will play audio
-	kAudioManagerFxPlusMusicIfNoOtherAudio	//If another app is playing audio at start up then allow it to continue and don't play music
+	kAudioManagerFxOnly,					//!Other apps will be able to play audio
+	kAudioManagerFxPlusMusic,				//!Only this app will play audio
+	kAudioManagerFxPlusMusicIfNoOtherAudio	//!If another app is playing audio at start up then allow it to continue and don't play music
 } tAudioManagerMode;
 
+/** Possible states of the engine */
 typedef enum {
-	kAMStateUninitialised, //Audio manager has not been initialised - do not use
-	kAMStateInitialising,  //Audio manager is in the process of initialising - do not use
-	kAMStateInitialised	   //Audio manager is initialised - safe to use
+	kAMStateUninitialised, //!Audio manager has not been initialised - do not use
+	kAMStateInitialising,  //!Audio manager is in the process of initialising - do not use
+	kAMStateInitialised	   //!Audio manager is initialised - safe to use
 } tAudioManagerState;
 
 typedef enum {
@@ -46,6 +48,20 @@ typedef enum {
 @interface CDAsynchInitialiser : NSOperation {}	
 @end
 
+/** CDAudioManager is a wrapper around AVAudioPlayer.
+ CDAudioManager is basically a thin wrapper around an AVAudioPlayer object used for playing
+ background music and a CDSoundEngine object used for playing sound effects. It manages the
+ audio session for you deals with audio session interruption. It is fairly low level and it
+ is expected you have some understanding of the underlying technologies. For example, for 
+ many use cases regarding background music it is expected you will work directly with the
+ backgroundMusic AVAudioPlayer which is exposed as a property.
+ 
+ Requirements:
+ - Firmware: OS 2.2 or greater 
+ - Files: CDAudioManager.*, CocosDenshion.*
+ - Frameworks: OpenAL, AudioToolbox, AVFoundation
+ @since v0.8
+ */
 @interface CDAudioManager : NSObject <AVAudioPlayerDelegate> {
 	CDSoundEngine		*soundEngine;
 	AVAudioPlayer		*backgroundMusic;
@@ -73,21 +89,34 @@ typedef enum {
 @property (readonly) BOOL willPlayBackgroundMusic;
 @property (readwrite) BOOL mute; 
 
-
+/** Returns the shared singleton */
 + (CDAudioManager *) sharedManager;
 + (tAudioManagerState) sharedManagerState;
+/** Configures the shared singletong with a mode, a channel definition and a total number of channels */
 + (void) configure: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
+/** Initializes the engine asynchronously with a mode, channel definition and a total number of channels */
 + (void) initAsynchronously: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
-
+/** Initializes the engine synchronously with a mode, channel definition and a total number of channels */
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
+/** Plays music in background. The music can be looped or not
+ It is recommended to use .mp3 files as background since they are decoded by the device (hardware).
+ */
 -(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop;
+/** Preloads a background music */
 -(void) preloadBackgroundMusic:(NSString*) filePath;
+/** Stops playing the background music */
 -(void) stopBackgroundMusic;
+/** Stops the background music. The music can also be released from the cache */
 -(void) stopBackgroundMusic:(BOOL) release;
+/** Pauses the background music */
 -(void) pauseBackgroundMusic;
+/** Rewinds the background music */
 -(void) rewindBackgroundMusic;
+/** Resumes playing the background music */
 -(void) resumeBackgroundMusic;
+/** Returns whether or not the background music is playing */
 -(BOOL) isBackgroundMusicPlaying;
+
 -(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 -(void) audioSessionInterrupted;
 -(void) audioSessionResumed;

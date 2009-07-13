@@ -3457,11 +3457,11 @@
 		50CB2FEF1004C93600B7A750 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
-				AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */,
+				50CB2FF31004C93600B7A750 /* CocosDenshion.h */,
 				AAC2C3931005ED8E005B9B2C /* CocosDenshion.m */,
 				50CB2FF01004C93600B7A750 /* CDAudioManager.h */,
+				AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */,
 				50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */,
-				50CB2FF31004C93600B7A750 /* CocosDenshion.h */,
 				50CB2FF51004C93600B7A750 /* SimpleAudioEngine.h */,
 				50CB2FF61004C93600B7A750 /* SimpleAudioEngine.m */,
 			);
