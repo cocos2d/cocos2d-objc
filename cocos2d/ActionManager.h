@@ -30,6 +30,12 @@ typedef struct _hashElement
 
 
 /** ActionManager is a singleton that manages all the actions.
+ Normally you won't need to use this singleton directly. 99% of the cases you will use the CocosNode interface,
+ which uses this singleton.
+ But there are some cases where you might need to use this singleton.
+ Examples:
+   * When you want to run an action where the target is different from a CocosNode. 
+   * When you want to pause / resume the actions
  @since v0.8
  */
 @interface ActionManager : NSObject {
@@ -45,15 +51,21 @@ typedef struct _hashElement
 // actions
 
 /** Adds an action with a target. The action can be added paused or unpaused.
+ The action will be run "against" the target.
+ If the action is added paused, then it will be queued, but it won't be "ticked" until it is resumed.
+ If the action is added unpaused, then it will be queued, and it will be "ticked" in every frame.
  */
 -(void) addAction: (Action*) action target:(id)target paused:(BOOL)paused;
-/** Removes all actions from a certain target */
+/** Removes all actions from a certain target.
+ All the actions that belongs to the target will be removed.
+ */
 -(void) removeAllActionsFromTarget:(id)target;
-/** Removes an action given the action reference */
+/** Removes an action given an action reference.
+ */
 -(void) removeAction: (Action*) action;
-/** Removes an action from the running action list given its tag and the target */
+/** Removes an action given its tag and the target */
 -(void) removeActionByTag:(int)tag target:(id)target;
-/** Gets an action from the running action list given its tag an a target
+/** Gets an action given its tag an a target
  @return the Action the with the given tag
  */
 -(Action*) getActionByTag:(int) tag target:(id)target;
@@ -63,9 +75,13 @@ typedef struct _hashElement
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(int) numberOfRunningActionsInTarget:(id)target;
-/** Pauses all actions for a certain target */
+/** Pauses all actions for a certain target.
+ When the actions are paused, they won't be "ticked".
+ */
 -(void) pauseAllActionsForTarget:(id)target;
-/** Resumes all actions for a certain target */
+/** Resumes all actions for a certain target.
+ Once the actions are resumed, they will be "ticked" in every frame.
+ */
 -(void) resumeAllActionsForTarget:(id)target;
 
 @end
