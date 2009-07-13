@@ -14,7 +14,6 @@
 
 
 #import "Action.h"
-#import "CocosNode.h"
 #import "ccMacros.h"
 
 #import "IntervalAction.h"

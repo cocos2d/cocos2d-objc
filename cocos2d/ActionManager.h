@@ -57,6 +57,10 @@ typedef struct _hashElement
  If the action is added unpaused, then it will be queued, and it will be "ticked" in every frame.
  */
 -(void) addAction: (Action*) action target:(id)target paused:(BOOL)paused;
+/** Removes all actions from all the targers.
+ */
+-(void) removeAllActions;
+
 /** Removes all actions from a certain target.
  All the actions that belongs to the target will be removed.
  */

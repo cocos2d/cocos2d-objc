@@ -72,8 +72,12 @@ static ActionManager *_sharedManager = nil;
 - (void) dealloc
 {
 	CCLOG( @"deallocing %@", self);
-
+	
+	[self removeAllActions];
 	HASH_CLEAR(hh, targets);
+
+	_sharedManager = nil;
+
 	[super dealloc];
 }
 
@@ -164,6 +168,15 @@ static ActionManager *_sharedManager = nil;
 
 #pragma mark ActionManager - remove
 
+-(void) removeAllActions
+{
+	tHashElement *next = targets;
+	while( next != nil ) {
+		tHashElement *deleteme = next;
+		next = next->hh.next;
+		[self removeAllActionsFromTarget:deleteme->target];
+	}
+}
 -(void) removeAllActionsFromTarget:(id)target
 {
 	// explicit nil handling
@@ -276,7 +289,7 @@ static ActionManager *_sharedManager = nil;
 -(void) tick: (ccTime) dt
 {
 	currentTarget = targets;
-	while( currentTarget != NULL ) {
+	while( currentTarget != nil ) {
 		currentTargetSalvaged = NO;
 		
 		if( ! currentTarget->paused ) {
@@ -301,8 +314,9 @@ static ActionManager *_sharedManager = nil;
 					currentTarget->currentAction = nil;
 					[self removeAction:a];
 				}
+				
+				currentTarget->currentAction = nil;
 			}
-
 		}
 		// save before delete
 		tHashElement *deleteMe = currentTarget;
@@ -313,6 +327,5 @@ static ActionManager *_sharedManager = nil;
 		if( currentTargetSalvaged )
 			[self deleteHashElement:deleteMe];
 	}
-	currentTarget = NULL;
 }
 @end

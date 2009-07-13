@@ -63,9 +63,9 @@ static inline ccArray* ccArrayNew(NSUInteger capacity) {
 	if (capacity == 0)
 		capacity = 1; 
 	
-	ccArray *arr = malloc( sizeof(ccArray) );
+	ccArray *arr = (ccArray*)malloc( sizeof(ccArray) );
 	arr->num = 0;
-	arr->arr = malloc( capacity * sizeof(id) );
+	arr->arr =  (id*) malloc( capacity * sizeof(id) );
 	arr->max = capacity;
 	
 	return arr;
@@ -88,7 +88,7 @@ static inline void ccArrayFree(ccArray *arr)
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
-	arr->arr = realloc( arr->arr, arr->max * sizeof(id) );
+	arr->arr = (id*) realloc( arr->arr, arr->max * sizeof(id) );
 }
 
 /** Increases array capacity such that max >= num + extra. */

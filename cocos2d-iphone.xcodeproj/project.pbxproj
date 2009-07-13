@@ -1908,7 +1908,7 @@
 		50CB30E31004CF7900B7A750 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		50CB30E41004CF7900B7A750 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 808_120bpm.caf; sourceTree = "<group>"; };
-		50CB34DD100765EF00B7A750 /* Bug-422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bug-422.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50CB34DD100765EF00B7A750 /* Bug422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug422.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB36141007D76600B7A750 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
 		50CB36151007D76600B7A750 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
 		50CB3B0C100AC43A00B7A750 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
@@ -2634,7 +2634,7 @@
 				50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */,
 				50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */,
 				50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */,
-				50CB34DD100765EF00B7A750 /* Bug-422.app */,
+				50CB34DD100765EF00B7A750 /* Bug422.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4651,9 +4651,9 @@
 			productReference = 8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA5F0EC10FFE96D400C7C82E /* Bug-422 */ = {
+		DA5F0EC10FFE96D400C7C82E /* Bug422 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug-422" */;
+			buildConfigurationList = DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */;
 			buildPhases = (
 				DA5F0EC40FFE96D400C7C82E /* Resources */,
 				DA5F0ED70FFE96D400C7C82E /* Sources */,
@@ -4664,9 +4664,9 @@
 			dependencies = (
 				DA5F0EC20FFE96D400C7C82E /* PBXTargetDependency */,
 			);
-			name = "Bug-422";
+			name = Bug422;
 			productName = playground;
-			productReference = 50CB34DD100765EF00B7A750 /* Bug-422.app */;
+			productReference = 50CB34DD100765EF00B7A750 /* Bug422.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -4721,7 +4721,7 @@
 				50DFC2870FF627B6007E7827 /* HelloWorldSample */,
 				50D0E0480FF9232E00098927 /* HelloActionsSample */,
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
-				DA5F0EC10FFE96D400C7C82E /* Bug-422 */,
+				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
 			);
 		};
 /* End PBXProject section */
@@ -8317,7 +8317,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "Bug-422";
+				PRODUCT_NAME = Bug422;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -8343,7 +8343,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "Bug-422";
+				PRODUCT_NAME = Bug422;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -8721,7 +8721,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug-422" */ = {
+		DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA5F0EE20FFE96D400C7C82E /* Debug */,

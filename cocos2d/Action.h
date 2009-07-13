@@ -22,7 +22,6 @@ enum {
 	kActionTagInvalid = -1,
 };
 
-@class CocosNode;
 /** Base class for actions
  */
 @interface Action : NSObject <NSCopying> {
