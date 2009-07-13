@@ -494,7 +494,7 @@
 -(void) start
 {
 	[super start];
-	startPosition = [target position];
+	startPosition = [(CocosNode*)target position];
 	delta = ccpSub( endPosition, startPosition );
 }
 
@@ -576,7 +576,7 @@
 -(void) start
 {
 	[super start];
-	startPosition = [target position];
+	startPosition = [(CocosNode*)target position];
 }
 
 -(void) update: (ccTime) t
@@ -649,7 +649,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) start
 {
 	[super start];
-	startPosition = [target position];
+	startPosition = [(CocosNode*)target position];
 }
 
 -(void) update: (ccTime) t
