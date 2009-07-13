@@ -1,4 +1,4 @@
-version 0.8 - dd-MMM-yyyy
+version 0.8-rc - 13-Jul-2009
  . ActionManager: actions logic were removed from CocosNode (issue #437)
  . Actions/Scheduler: the 1st time a Timer or Action is fired, is with dt=0 (issue #429)
  . Actions: CallFuncND doesn't leak if reused (issue #336)
