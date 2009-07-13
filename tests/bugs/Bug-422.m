@@ -19,39 +19,37 @@
 
 
 -(void) reset {
-
+	
 	static int localtag = 0;
 	localtag++;
-
+	
     //[self check:self];
-
-	// if the remove goes after the creation, then the bug can't be reproduced
+	
+	// FIX:
+	// use removeFromParentWithCleanup
+	//	CocosNode *node = [self getChildByTag:localtag-1];
+	//	[node removeFromParentWithCleanup:YES];
+	
+	// TO TRIGGER THE BUG:
+	// remove the itself from parent from an action
 	[self removeChildByTag:localtag-1 cleanup:NO];
-
+	
     MenuItem *item1 = [MenuItemFont itemFromString: @"One"
                                             target: self selector:@selector(menuCallback:)];
     MenuItem *item2 = [MenuItemFont itemFromString: @"Two"
                                             target: self selector:@selector(menuCallback:)];
-    MenuItem *item3 = [MenuItemFont itemFromString: @"Three"
-                                            target: self selector:@selector(menuCallback:)];
-    MenuItem *item4 = [MenuItemFont itemFromString: @"Four"
-                                            target: self selector:@selector(menuCallback:)];
-    MenuItem *item5 = [MenuItemFont itemFromString: @"Five"
-                                            target: self selector:@selector(menuCallback:)];
-    MenuItem *item6 = [MenuItemFont itemFromString: @"Six"
-                                            target: self selector:@selector(menuCallback:)];
     
-    Menu *menu = [Menu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
-    [menu alignItemsInColumns:[NSNumber numberWithInt:3], [NSNumber numberWithInt:3], nil];
-
-
+    Menu *menu = [Menu menuWithItems: item1, item2, nil];
+	[menu alignItemsVertically];
+	
+	
     [self addChild: menu z:0 tag:localtag];	
-
+	
     //[self check:self];
 }
 
 -(void) check:(CocosNode *)t {
-
+	
 	NSArray *array = [t children];
     for (CocosNode *node in array) {
         NSLog(@"0x%x, rc: %d", node, [node retainCount]);
@@ -76,20 +74,20 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
-
+	
 	// show FPS
 	[[Director sharedDirector] setDisplayFPS:YES];
-
+	
 	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 	
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];	
-
+	
 	// attach cocos2d to a window
 	[[Director sharedDirector] attachInView:window];
 	
@@ -97,11 +95,11 @@
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
-
+	
 	Scene *scene = [Scene node];
-
+	
 	[scene addChild:[Layer1 node] z:0];
-
+	
 	[window makeKeyAndVisible];
 	[[Director sharedDirector] runWithScene: scene];
 }

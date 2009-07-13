@@ -511,6 +511,7 @@
 		506887F70E96D4F000F943E5 /* AtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 506887D80E96C90000F943E5 /* AtlasNode.m */; };
 		506888A30E96D7A200F943E5 /* levelmap.tga in Resources */ = {isa = PBXBuildFile; fileRef = 506888A20E96D7A200F943E5 /* levelmap.tga */; };
 		5069723B0FFD3E2B00D49022 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
+		5069C794100B84BC00489758 /* Bug-422.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069C793100B84BC00489758 /* Bug-422.m */; };
 		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -798,7 +799,6 @@
 		50CB30E81004CF7900B7A750 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E41004CF7900B7A750 /* slider.png */; };
 		50CB30EA1004CF8B00B7A750 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */; };
 		50CB31081004D05300B7A750 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
-		50CB36161007D76600B7A750 /* Bug-422.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB36151007D76600B7A750 /* Bug-422.m */; };
 		50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* ActionManager.h */; };
 		50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* ActionManager.m */; };
 		50CB3B11100AC45300B7A750 /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B10100AC45300B7A750 /* uthash.h */; };
@@ -1762,6 +1762,8 @@
 		506887D70E96C90000F943E5 /* AtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasNode.h; sourceTree = "<group>"; };
 		506887D80E96C90000F943E5 /* AtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtlasNode.m; sourceTree = "<group>"; };
 		506888A20E96D7A200F943E5 /* levelmap.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelmap.tga; sourceTree = "<group>"; };
+		5069C792100B84BC00489758 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
+		5069C793100B84BC00489758 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMoveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMoveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C77E50E01524200B48100 /* ClickAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClickAndMoveTest.h; path = tests/ClickAndMoveTest.h; sourceTree = "<group>"; };
 		506C77E60E01524200B48100 /* ClickAndMoveTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMoveTest.m; path = tests/ClickAndMoveTest.m; sourceTree = "<group>"; };
@@ -1909,8 +1911,6 @@
 		50CB30E41004CF7900B7A750 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		50CB30E91004CF8B00B7A750 /* 808_120bpm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 808_120bpm.caf; sourceTree = "<group>"; };
 		50CB34DD100765EF00B7A750 /* Bug422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug422.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50CB36141007D76600B7A750 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
-		50CB36151007D76600B7A750 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
 		50CB3B0C100AC43A00B7A750 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
 		50CB3B0D100AC43A00B7A750 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
 		50CB3B10100AC45300B7A750 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
@@ -3194,6 +3194,16 @@
 			name = "Menu Nodes";
 			sourceTree = "<group>";
 		};
+		5069C791100B84BC00489758 /* bugs */ = {
+			isa = PBXGroup;
+			children = (
+				5069C792100B84BC00489758 /* Bug-422.h */,
+				5069C793100B84BC00489758 /* Bug-422.m */,
+			);
+			name = bugs;
+			path = tests/bugs;
+			sourceTree = "<group>";
+		};
 		508A333A0FBADD6A00D574A2 /* grossini images */ = {
 			isa = PBXGroup;
 			children = (
@@ -3359,7 +3369,7 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				50CB36131007D76600B7A750 /* bugs */,
+				5069C791100B84BC00489758 /* bugs */,
 				504828C70F45B15700A30CEF /* attachDemo */,
 				50CB30B71004CE9400B7A750 /* CocosDenshionDemo */,
 				50175B240F33B22300624901 /* cocosLiveDemo */,
@@ -3509,15 +3519,6 @@
 				50CB30C51004CE9400B7A750 /* sine440.wav */,
 			);
 			path = Sounds;
-			sourceTree = "<group>";
-		};
-		50CB36131007D76600B7A750 /* bugs */ = {
-			isa = PBXGroup;
-			children = (
-				50CB36141007D76600B7A750 /* Bug-422.h */,
-				50CB36151007D76600B7A750 /* Bug-422.m */,
-			);
-			path = bugs;
 			sourceTree = "<group>";
 		};
 		50DFC2CC0FF62852007E7827 /* Samples */ = {
@@ -6048,7 +6049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5F0ED90FFE96D400C7C82E /* main.m in Sources */,
-				50CB36161007D76600B7A750 /* Bug-422.m in Sources */,
+				5069C794100B84BC00489758 /* Bug-422.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
