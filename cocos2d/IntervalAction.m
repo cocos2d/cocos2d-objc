@@ -44,11 +44,11 @@
 
 -(id) initWithDuration: (ccTime) d
 {
-	if( !(self=[super init]) )
-		return nil;
-	
-	duration = d;
-	elapsed = 0.0f;
+	if( (self=[super init]) ) {
+		duration = d;
+		elapsed = 0;
+		firstTick = YES;
+	}
 	return self;
 }
 
@@ -66,21 +66,18 @@
 
 -(void) step: (ccTime) dt
 {
-	elapsed += dt;
+	if( firstTick ) {
+		firstTick = NO;
+		elapsed = 0;
+	} else
+		elapsed += dt;
 	[self update: MIN(1, elapsed/duration)];
 }
 
 -(void) start
 {
-	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
-	}
-	
 	elapsed = 0.0f;
+	firstTick = YES;
 }
 
 - (IntervalAction*) reverse

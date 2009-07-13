@@ -63,7 +63,10 @@ typedef struct _hashElement
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(int) numberOfRunningActionsInTarget:(id)target;
-/** pauses / unpauses all actions for a certain target */
--(void) pauseAllActions:(BOOL)pause target:(id)target;
+/** Pauses all actions for a certain target */
+-(void) pauseAllActionsForTarget:(id)target;
+/** Resumes all actions for a certain target */
+-(void) resumeAllActionsForTarget:(id)target;
+
 @end
 

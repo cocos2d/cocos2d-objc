@@ -16,7 +16,7 @@ version 0.8 - dd-MMM-yyyy
  . Scheduler: it's possible to scale the time (issue #236)
  . Scheduler: removed unused API (issue #427)
  . Scheduler: Added a way to remove all scheduled Timers (issue #421)
- . Scheduler: the 1st time a Timer is fired, is with dt=0 (issue #429)
+ . Actions/Scheduler: the 1st time a Timer or Action is fired, is with dt=0 (issue #429)
  . Tests: ParticleTest tests 'free' and 'grouped' emitter (part of issue #241)
  . TextureMgr: supports loading images asynchronously (issue #420)
 
