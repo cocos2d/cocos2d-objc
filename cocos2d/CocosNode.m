@@ -611,7 +611,7 @@
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] scheduleTimer: [scheduledSelectors objectForKey:key]];
 	
-	[[ActionManager sharedManager] pauseAllActions:NO target:self];
+	[[ActionManager sharedManager] resumeAllActionsForTarget:self];
 }
 
 - (void) deactivateTimers
@@ -619,7 +619,7 @@
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
 
-	[[ActionManager sharedManager] pauseAllActions:YES target:self];
+	[[ActionManager sharedManager] pauseAllActionsForTarget:self];
 }
 
 

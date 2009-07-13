@@ -62,7 +62,7 @@ static ActionManager *_sharedManager = nil;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[Scheduler sharedScheduler] scheduleTimer: [Timer timerWithTarget:self selector:@selector(step_:)]];
+		[[Scheduler sharedScheduler] scheduleTimer: [Timer timerWithTarget:self selector:@selector(tick:)]];
 		targets = nil;
 	}
 	
@@ -101,7 +101,7 @@ static ActionManager *_sharedManager = nil;
 {
 	ccArrayRemoveObjectAtIndex(element->actions, index);
 			
-	// update actionIndex in case we are in step_, looping over the actions
+	// update actionIndex in case we are in tick:, looping over the actions
 	if( element->actionIndex >= index )
 		element->actionIndex--;
 	
@@ -113,17 +113,27 @@ static ActionManager *_sharedManager = nil;
 	}
 }
 
-#pragma mark ActionManager - Enable / Disable
+#pragma mark ActionManager - Pause / Resume
 
--(void) pauseAllActions:(BOOL)pause target:(id)target
+-(void) pauseAllActionsForTarget:(id)target
 {
 	tHashElement *element = nil;
 	HASH_FIND_INT(targets, &target, element);
 	if( element )
-		element->paused = pause;
+		element->paused = YES;
 //	else
-//		CCLOG(@"pauseActions: Target not found");
+//		CCLOG(@"pauseAllActions: Target not found");
 }
+-(void) resumeAllActionsForTarget:(id)target
+{
+	tHashElement *element = nil;
+	HASH_FIND_INT(targets, &target, element);
+	if( element )
+		element->paused = NO;
+//	else
+//		CCLOG(@"resumeAllActions: Target not found");
+}
+
 #pragma mark ActionManager - run
 
 -(void) addAction:(Action*)action target:(id)target paused:(BOOL)paused
@@ -263,7 +273,7 @@ static ActionManager *_sharedManager = nil;
 
 #pragma mark ActionManager - main loop
 
--(void) step_: (ccTime) dt
+-(void) tick: (ccTime) dt
 {
 	currentTarget = targets;
 	while( currentTarget != NULL ) {

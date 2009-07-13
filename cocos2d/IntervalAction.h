@@ -35,8 +35,8 @@ Example:
 */
 @interface IntervalAction: FiniteTimeAction <NSCopying>
 {
-	struct timeval lastUpdate;
 	ccTime elapsed;
+	BOOL	firstTick;
 }
 
 @property (readonly) ccTime elapsed;
