@@ -141,7 +141,7 @@ enum {
 	id move = [JumpBy actionWithDuration:5 position:ccp(300,0) height:100 jumps:4];
 	id move_back = [move reverse];
 	id seq = [Sequence actions: move, move_back, nil];
-	[[ActionManager sharedManager] queueAction:seq target:lens paused:NO];
+	[[ActionManager sharedManager] addAction:seq target:lens paused:NO];
 
 	[self runAction: lens];
 }

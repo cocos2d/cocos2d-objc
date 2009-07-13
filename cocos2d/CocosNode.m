@@ -522,24 +522,24 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	[[ActionManager sharedManager] queueAction:action target:self paused:!isRunning];
+	[[ActionManager sharedManager] addAction:action target:self paused:!isRunning];
 	return action;
 }
 
 -(void) stopAllActions
 {
-	[[ActionManager sharedManager] stopAllActionsFromTarget:self];
+	[[ActionManager sharedManager] removeAllActionsFromTarget:self];
 }
 
 -(void) stopAction: (Action*) action
 {
-	[[ActionManager sharedManager] stopAction:action];
+	[[ActionManager sharedManager] removeAction:action];
 }
 
 -(void) stopActionByTag:(int)aTag
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
-	[[ActionManager sharedManager] stopActionByTag:aTag target:self];
+	[[ActionManager sharedManager] removeActionByTag:aTag target:self];
 }
 
 -(Action*) getActionByTag:(int) aTag
@@ -611,7 +611,7 @@
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] scheduleTimer: [scheduledSelectors objectForKey:key]];
 	
-	[[ActionManager sharedManager] pauseActions:NO forTarget:self];
+	[[ActionManager sharedManager] pauseAllActions:NO target:self];
 }
 
 - (void) deactivateTimers
@@ -619,7 +619,7 @@
 	for( id key in scheduledSelectors )
 		[[Scheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
 
-	[[ActionManager sharedManager] pauseActions:YES forTarget:self];
+	[[ActionManager sharedManager] pauseAllActions:YES target:self];
 }
 
 
