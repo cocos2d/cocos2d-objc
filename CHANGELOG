@@ -1,5 +1,6 @@
 version 0.8 - dd-MMM-yyyy
  . ActionManager: actions logic were removed from CocosNode (issue #437)
+ . Actions/Scheduler: the 1st time a Timer or Action is fired, is with dt=0 (issue #429)
  . Actions: CallFuncND doesn't leak if reused (issue #336)
  . AtlasSpriteManager: fixed blend function (part of issue #125)
  . AtlasSprite: render in subpixel by default (issue #414, issue #399)
@@ -16,7 +17,6 @@ version 0.8 - dd-MMM-yyyy
  . Scheduler: it's possible to scale the time (issue #236)
  . Scheduler: removed unused API (issue #427)
  . Scheduler: Added a way to remove all scheduled Timers (issue #421)
- . Actions/Scheduler: the 1st time a Timer or Action is fired, is with dt=0 (issue #429)
  . Tests: ParticleTest tests 'free' and 'grouped' emitter (part of issue #241)
  . TextureMgr: supports loading images asynchronously (issue #420)
 
