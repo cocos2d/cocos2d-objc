@@ -136,9 +136,9 @@ enum {
 {
 	[super onEnter];
 		
-	id lens = [Lens3D actionWithPosition:ccp(20,120) radius:140 grid:ccg(32,24) duration:10];
+	id lens = [Lens3D actionWithPosition:ccp(100,180) radius:150 grid:ccg(32,24) duration:10];
 //	id move = [MoveBy actionWithDuration:5 position:ccp(400,0)];
-	id move = [JumpBy actionWithDuration:5 position:ccp(300,0) height:100 jumps:4];
+	id move = [JumpBy actionWithDuration:5 position:ccp(380,0) height:100 jumps:4];
 	id move_back = [move reverse];
 	id seq = [Sequence actions: move, move_back, nil];
 	[[ActionManager sharedManager] addAction:seq target:lens paused:NO];
@@ -147,7 +147,7 @@ enum {
 }
 -(NSString*) title
 {
-	return @"Animating Lens3D";
+	return @"Jumpy Lens3D";
 }
 @end
 
