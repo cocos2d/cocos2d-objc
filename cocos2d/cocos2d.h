@@ -72,6 +72,7 @@
 #import "AtlasSpriteManager.h"
 #import "BitmapFontAtlas.h"
 #import "ParallaxNode.h"
+#import "ActionManager.h"
 
 //
 // cocos2d macros

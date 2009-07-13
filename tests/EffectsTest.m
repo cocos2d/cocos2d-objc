@@ -331,58 +331,58 @@ Class restartAction()
 @implementation TextLayer
 -(id) init
 {
-	if( ! [super initWithColor: 0x202020ff] )
-		return nil;
+	if( (self=[super initWithColor: ccc4(32,32,32,255)] )) {
 	
-	float x,y;
-	
-	CGSize size = [[Director sharedDirector] winSize];
-	x = size.width;
-	y = size.height;
-	
-	CocosNode *node = [CocosNode node];
-	[self addChild: node z:0 tag:kTagBackground];
-	
-	Sprite *bg = [Sprite spriteWithFile:@"background.png"];
-	[node addChild: bg z:0];
-	bg.anchorPoint = CGPointZero;
-//	bg.position = ccp(-100,-100);
-	
-	Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	[node addChild:grossini z:1];
-	grossini.position = ccp(x/3,y/2);
-	id sc = [ScaleBy actionWithDuration:2 scale:5];
-	id sc_back = [sc reverse];
-	[grossini runAction: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
+		float x,y;
+		
+		CGSize size = [[Director sharedDirector] winSize];
+		x = size.width;
+		y = size.height;
+		
+		CocosNode *node = [CocosNode node];
+		[self addChild: node z:0 tag:kTagBackground];
+		
+		Sprite *bg = [Sprite spriteWithFile:@"background.png"];
+		[node addChild: bg z:0];
+		bg.anchorPoint = CGPointZero;
+	//	bg.position = ccp(-100,-100);
+		
+		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+		[node addChild:grossini z:1];
+		grossini.position = ccp(x/3,y/2);
+		id sc = [ScaleBy actionWithDuration:2 scale:5];
+		id sc_back = [sc reverse];
+		[grossini runAction: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
 
-	Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	[node addChild:tamara z:1];
-	tamara.position = ccp(2*x/3,y/2);
-	id sc2 = [ScaleBy actionWithDuration:2 scale:5];
-	id sc2_back = [sc2 reverse];
-	[tamara runAction: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
-	
-	
-	Label* label = [Label labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
-	
-	[label setPosition: ccp(x/2,y-80)];
-	[self addChild: label];
-	label.tag = kTagLabel;
-	
-	// menu
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
-	menu.position = CGPointZero;
-	item1.position = ccp(size.width/2-100,30);
-	item2.position = ccp(size.width/2, 30);
-	item3.position = ccp(size.width/2+100,30);
-	[self addChild: menu z:1];
-	
-	[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
-	
-	[self schedule:@selector(checkAnim:)];
+		Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		[node addChild:tamara z:1];
+		tamara.position = ccp(2*x/3,y/2);
+		id sc2 = [ScaleBy actionWithDuration:2 scale:5];
+		id sc2_back = [sc2 reverse];
+		[tamara runAction: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
+		
+		
+		Label* label = [Label labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
+		
+		[label setPosition: ccp(x/2,y-80)];
+		[self addChild: label];
+		label.tag = kTagLabel;
+		
+		// menu
+		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		menu.position = CGPointZero;
+		item1.position = ccp(size.width/2-100,30);
+		item2.position = ccp(size.width/2, 30);
+		item3.position = ccp(size.width/2+100,30);
+		[self addChild: menu z:1];
+		
+		[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
+		
+		[self schedule:@selector(checkAnim:)];
+	}
 	
 	return self;
 }

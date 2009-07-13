@@ -155,7 +155,7 @@
 {
 	[super start];
 	for( Action * action in actions )
-		action.target = target;
+		[action setTarget: target];
 	
 	split = [[actions objectAtIndex:0] duration] / duration;
 	last = -1;
@@ -244,7 +244,7 @@
 {
 	total = 0;
 	[super start];
-	other.target = target;
+	[other setTarget: target];
 	[other start];
 }
 
@@ -359,8 +359,8 @@
 -(void) start
 {
 	[super start];
-	one.target = target;
-	two.target = target;
+	[one setTarget: target];
+	[two setTarget: target];
 	[one start];
 	[two start];
 }
@@ -407,7 +407,7 @@
 -(void) start
 {
 	[super start];
-	startAngle = target.rotation;
+	startAngle = [target rotation];
 	angle -= startAngle;
 	if (angle > 180)
 		angle = -360 + angle;
@@ -416,7 +416,7 @@
 }
 -(void) update: (ccTime) t
 {
-	target.rotation = startAngle + angle * t;
+	[target setRotation: startAngle + angle * t];
 }
 @end
 
@@ -457,7 +457,7 @@
 -(void) update: (ccTime) t
 {	
 	// XXX: shall I add % 360
-	target.rotation = (startAngle + angle * t );
+	[target setRotation: (startAngle + angle * t )];
 }
 
 -(IntervalAction*) reverse
@@ -503,7 +503,7 @@
 
 -(void) update: (ccTime) t
 {	
-	target.position = ccp( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) );
+	[target setPosition: ccp( (startPosition.x + delta.x * t ), (startPosition.y + delta.y * t ) )];
 }
 @end
 
@@ -579,7 +579,7 @@
 -(void) start
 {
 	[super start];
-	startPosition = target.position;
+	startPosition = [target position];
 }
 
 -(void) update: (ccTime) t
@@ -587,7 +587,7 @@
 	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
 	y += delta.y * t;
 	ccTime x = delta.x * t;
-	target.position = ccp( startPosition.x + x, startPosition.y + y );
+	[target setPosition: ccp( startPosition.x + x, startPosition.y + y )];
 }
 
 -(IntervalAction*) reverse
@@ -652,7 +652,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) start
 {
 	[super start];
-	startPosition = target.position;
+	startPosition = [target position];
 }
 
 -(void) update: (ccTime) t
@@ -669,7 +669,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	
 	float x = bezierat(xa, xb, xc, xd, t);
 	float y = bezierat(ya, yb, yc, yd, t);
-	target.position = ccpAdd( startPosition, ccp(x,y));
+	[target setPosition:  ccpAdd( startPosition, ccp(x,y))];
 }
 
 - (IntervalAction*) reverse
@@ -792,7 +792,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	ccTime slice = 1.0f / times;
 	ccTime m = fmodf(t, slice);
-	target.visible = (m > slice/2) ? YES : NO;
+	[target setVisible: (m > slice/2) ? YES : NO];
 }
 
 -(IntervalAction*) reverse
@@ -1011,7 +1011,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) start
 {
 	[super start];
-	other.target = target;
+	[other setTarget: target];
 	[other start];
 }
 

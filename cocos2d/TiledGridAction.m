@@ -197,17 +197,18 @@ typedef struct
 {
 	ccQuad3	coords = [self originalTile:pos];
 	
-	coords.bl.x += (int)(t.position.x * target.grid.step.x);
-	coords.bl.y += (int)(t.position.y * target.grid.step.y);
+	CGPoint step = [[target grid] step];
+	coords.bl.x += (int)(t.position.x * step.x);
+	coords.bl.y += (int)(t.position.y * step.y);
 
-	coords.br.x += (int)(t.position.x * target.grid.step.x);
-	coords.br.y += (int)(t.position.y * target.grid.step.y);
+	coords.br.x += (int)(t.position.x * step.x);
+	coords.br.y += (int)(t.position.y * step.y);
 
-	coords.tl.x += (int)(t.position.x * target.grid.step.x);
-	coords.tl.y += (int)(t.position.y * target.grid.step.y);
+	coords.tl.x += (int)(t.position.x * step.x);
+	coords.tl.y += (int)(t.position.y * step.y);
 
-	coords.tr.x += (int)(t.position.x * target.grid.step.x);
-	coords.tr.y += (int)(t.position.y * target.grid.step.y);
+	coords.tr.x += (int)(t.position.x * step.x);
+	coords.tr.y += (int)(t.position.y * step.y);
 
 	[self setTile:pos coords:coords];
 }
@@ -289,18 +290,19 @@ typedef struct
 -(void)transformTile:(ccGridSize)pos distance:(float)distance
 {
 	ccQuad3	coords = [self originalTile:pos];
+	CGPoint	step = [[target grid] step];
 	
-	coords.bl.x += (target.grid.step.x / 2) * (1.0f - distance);
-	coords.bl.y += (target.grid.step.y / 2) * (1.0f - distance);
+	coords.bl.x += (step.x / 2) * (1.0f - distance);
+	coords.bl.y += (step.y / 2) * (1.0f - distance);
 
-	coords.br.x -= (target.grid.step.x / 2) * (1.0f - distance);
-	coords.br.y += (target.grid.step.y / 2) * (1.0f - distance);
+	coords.br.x -= (step.x / 2) * (1.0f - distance);
+	coords.br.y += (step.y / 2) * (1.0f - distance);
 
-	coords.tl.x += (target.grid.step.x / 2) * (1.0f - distance);
-	coords.tl.y -= (target.grid.step.y / 2) * (1.0f - distance);
+	coords.tl.x += (step.x / 2) * (1.0f - distance);
+	coords.tl.y -= (step.y / 2) * (1.0f - distance);
 
-	coords.tr.x -= (target.grid.step.x / 2) * (1.0f - distance);
-	coords.tr.y -= (target.grid.step.y / 2) * (1.0f - distance);
+	coords.tr.x -= (step.x / 2) * (1.0f - distance);
+	coords.tr.y -= (step.y / 2) * (1.0f - distance);
 
 	[self setTile:pos coords:coords];
 }
@@ -356,11 +358,12 @@ typedef struct
 -(void)transformTile:(ccGridSize)pos distance:(float)distance
 {
 	ccQuad3	coords = [self originalTile:pos];
+	CGPoint step = [[target grid] step];
 	
-	coords.bl.y += (target.grid.step.y / 2) * (1.0f - distance);
-	coords.br.y += (target.grid.step.y / 2) * (1.0f - distance);
-	coords.tl.y -= (target.grid.step.y / 2) * (1.0f - distance);
-	coords.tr.y -= (target.grid.step.y / 2) * (1.0f - distance);
+	coords.bl.y += (step.y / 2) * (1.0f - distance);
+	coords.br.y += (step.y / 2) * (1.0f - distance);
+	coords.tl.y -= (step.y / 2) * (1.0f - distance);
+	coords.tr.y -= (step.y / 2) * (1.0f - distance);
 	
 	[self setTile:pos coords:coords];
 }
