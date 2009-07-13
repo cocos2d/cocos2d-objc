@@ -11,9 +11,16 @@
 #import "CDAudioManager.h"
 
 /**
- * A wrapper to the CDAudioManager object.
- * This class, as it's name suggests it, simplifies the interface to CDAudioManager
- * @since v0.8
+ A wrapper to the CDAudioManager object.
+ This is recommended for basic audio requirements. If you just want to play some sound fx
+ and some background music and have no interest in learning the lower level workings then
+ this is the interface to use.
+ 
+ Requirements:
+ - Firmware: OS 2.2 or greater 
+ - Files: SimpleAudioEngine.*, CocosDenshion.*
+ - Frameworks: OpenAL, AudioToolbox, AVFoundation
+ @since v0.8
  */
 @interface SimpleAudioEngine : NSObject {
 	
@@ -40,8 +47,9 @@
 /** returns whether or not the background music is playing */
 -(BOOL) isBackgroundMusicPlaying;
 
-/** plays an audio effect */
+/** plays an audio effect with a file path*/
 -(ALuint) playEffect:(NSString*) filePath;
+/** plays an audio effect with a file path, pitch, pan and gain */
 -(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain;
 /** preloads an audio effect */
 -(void) preloadEffect:(NSString*) filePath;
