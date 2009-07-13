@@ -34,8 +34,9 @@ typedef struct _hashElement
  which uses this singleton.
  But there are some cases where you might need to use this singleton.
  Examples:
-   * When you want to run an action where the target is different from a CocosNode. 
-   * When you want to pause / resume the actions
+	- When you want to run an action where the target is different from a CocosNode. 
+	- When you want to pause / resume the actions
+ 
  @since v0.8
  */
 @interface ActionManager : NSObject {
