@@ -27,7 +27,7 @@
  * AtlasSprite has all the features from CocosNode with the following additions and limitations:
  *	- New features
  *		- It is MUCH faster than Sprite
- *      - supports flipX, flipY
+ *		- supports flipX, flipY
  *
  *	- Limitations
  *		- Their parent can only be an AtlasSpriteManager
@@ -35,7 +35,7 @@
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
  *		- GridBase actions are not supported (eg: Lens, Ripple, Twirl)
  *		- The Alias/Antialias property belongs to AtlasSpriteManager, so you can't individually set the aliased property.
- *      - The Blending function property belongs to AtlasSpriteManager, so you can't individually set the blending function property.
+ *		- The Blending function property belongs to AtlasSpriteManager, so you can't individually set the blending function property.
  *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
  *
  * @since v0.7.1
