@@ -44,15 +44,15 @@ typedef struct _hashElement
 
 // actions
 
-/** Queues an action for a target. The action can be queued paused or unpaused.
+/** Adds an action with a target. The action can be added paused or unpaused.
  */
--(void) queueAction: (Action*) action target:(id)target paused:(BOOL)paused;
+-(void) addAction: (Action*) action target:(id)target paused:(BOOL)paused;
 /** Removes all actions from a certain target */
--(void) stopAllActionsFromTarget:(id)target;
-/** Removes an action from the running action list */
--(void) stopAction: (Action*) action;
-/** Removes an action from the running action list given its tag an a target */
--(void) stopActionByTag:(int) tag target:(id)target;
+-(void) removeAllActionsFromTarget:(id)target;
+/** Removes an action given the action reference */
+-(void) removeAction: (Action*) action;
+/** Removes an action from the running action list given its tag and the target */
+-(void) removeActionByTag:(int)tag target:(id)target;
 /** Gets an action from the running action list given its tag an a target
  @return the Action the with the given tag
  */
@@ -64,6 +64,6 @@ typedef struct _hashElement
  */
 -(int) numberOfRunningActionsInTarget:(id)target;
 /** pauses / unpauses all actions for a certain target */
--(void) pauseActions:(BOOL)pause forTarget:(id)target;
+-(void) pauseAllActions:(BOOL)pause target:(id)target;
 @end
 

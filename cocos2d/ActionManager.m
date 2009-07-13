@@ -25,7 +25,7 @@
 static ActionManager *_sharedManager = nil;
 
 @interface ActionManager (Private)
--(void) stopActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element;
+-(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element;
 -(void) deleteHashElement:(tHashElement*)element;
 -(void) actionAllocWithHashElement:(tHashElement*)element;
 @end
@@ -97,7 +97,7 @@ static ActionManager *_sharedManager = nil;
 		ccArrayDoubleCapacity(element->actions);	
 }
 
--(void) stopActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
+-(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
 {
 	ccArrayRemoveObjectAtIndex(element->actions, index);
 			
@@ -115,7 +115,7 @@ static ActionManager *_sharedManager = nil;
 
 #pragma mark ActionManager - Enable / Disable
 
--(void) pauseActions:(BOOL)pause forTarget:(id)target
+-(void) pauseAllActions:(BOOL)pause target:(id)target
 {
 	tHashElement *element = nil;
 	HASH_FIND_INT(targets, &target, element);
@@ -126,7 +126,7 @@ static ActionManager *_sharedManager = nil;
 }
 #pragma mark ActionManager - run
 
--(void) queueAction:(Action*)action target:(id)target paused:(BOOL)paused
+-(void) addAction:(Action*)action target:(id)target paused:(BOOL)paused
 {
 	NSAssert( action != nil, @"Argument action must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
@@ -152,9 +152,9 @@ static ActionManager *_sharedManager = nil;
 	[action start];
 }
 
-#pragma mark ActionManager - stop
+#pragma mark ActionManager - remove
 
--(void) stopAllActionsFromTarget:(id)target
+-(void) removeAllActionsFromTarget:(id)target
 {
 	// explicit nil handling
 	if( target == nil )
@@ -173,11 +173,11 @@ static ActionManager *_sharedManager = nil;
 		else
 			[self deleteHashElement:element];
 	} else {
-//		CCLOG(@"stopAllActionsFromTarget: Target not found");
+//		CCLOG(@"removeAllActionsFromTarget: Target not found");
 	}
 }
 
--(void) stopAction: (Action*) action
+-(void) removeAction: (Action*) action
 {
 	// explicit nil handling
 	if (action == nil)
@@ -195,14 +195,14 @@ static ActionManager *_sharedManager = nil;
 				element->currentActionSalvaged = YES;
 			}
 			
-			[self stopActionAtIndex:i hashElement:element];
+			[self removeActionAtIndex:i hashElement:element];
 		}
 	} else {
-//		CCLOG(@"stopAction: Target not found");
+//		CCLOG(@"removeAction: Target not found");
 	}
 }
 
--(void) stopActionByTag:(int) aTag target:(id)target
+-(void) removeActionByTag:(int) aTag target:(id)target
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
@@ -216,11 +216,11 @@ static ActionManager *_sharedManager = nil;
 			Action *a = element->actions->arr[i];
 			
 			if( a.tag == aTag && [a target]==target)
-				return [self stopActionAtIndex:i hashElement:element];
+				return [self removeActionAtIndex:i hashElement:element];
 		}
-//		CCLOG(@"stopActionByTag: Action not found!");
+//		CCLOG(@"removeActionByTag: Action not found!");
 	} else {
-//		CCLOG(@"stopActionByTag: Target not found!");
+//		CCLOG(@"removeActionByTag: Target not found!");
 	}
 }
 
@@ -279,7 +279,7 @@ static ActionManager *_sharedManager = nil;
 				[currentTarget->currentAction step: dt];
 
 				if( currentTarget->currentActionSalvaged ) {
-					// The currentAction told the node to stop it. To prevent the action from
+					// The currentAction told the node to remove it. To prevent the action from
 					// accidentally deallocating itself before finishing its step, we retained
 					// it. Now that step is done, it's safe to release it.
 					[currentTarget->currentAction release];
@@ -287,9 +287,9 @@ static ActionManager *_sharedManager = nil;
 					[currentTarget->currentAction stop];
 					
 					Action *a = currentTarget->currentAction;
-					// Make currentAction nil to prevent stopAction from salvaging it.
+					// Make currentAction nil to prevent removeAction from salvaging it.
 					currentTarget->currentAction = nil;
-					[self stopAction:a];
+					[self removeAction:a];
 				}
 			}
 
