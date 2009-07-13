@@ -87,7 +87,11 @@ static TextureMgr *sharedTextureMgr;
 
 -(void) dealloc
 {
+	CCLOG( @"deallocing %@", self);
+
 	[textures release];
+	[dictLock release];
+	sharedTextureMgr = nil;
 	[super dealloc];
 }
 

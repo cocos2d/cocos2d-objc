@@ -139,6 +139,7 @@ static Scheduler *sharedScheduler;
 	[scheduledMethods release];
 	[methodsToRemove release];
 	[methodsToAdd release];
+	sharedScheduler = nil;
 	
 	[super dealloc];
 }

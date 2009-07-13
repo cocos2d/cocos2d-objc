@@ -20,6 +20,8 @@
 #import "TouchDelegateProtocol.h"
 #import "Camera.h"
 #import "Scheduler.h"
+#import "ActionManager.h"
+#import "TextureMgr.h"
 #import "LabelAtlas.h"
 #import "ccMacros.h"
 #import "ccExceptions.h"
@@ -429,16 +431,17 @@ static Director *_sharedDirector = nil;
 		}
 		
 		// set autoresizing enabled when attaching the glview to another view
-		[openGLView_ setAutoresizesEAGLSurface:YES];
-		
-		// set the touch delegate of the glview to self
-		[openGLView_ setTouchDelegate: [TouchDispatcher sharedDispatcher]];
+		[openGLView_ setAutoresizesEAGLSurface:YES];		
 	}
 	else
 	{
 		// set the (new) frame of the glview
 		[openGLView_ setFrame:rect];
 	}
+	
+	// set the touch delegate of the glview to self
+	[openGLView_ setTouchDelegate: [TouchDispatcher sharedDispatcher]];
+
 	
 	// check if the superview has touchs enabled and enable it in our view
 	if([view isUserInteractionEnabled])
@@ -647,9 +650,6 @@ static Director *_sharedDirector = nil;
 	runningScene_ = nil;
 	nextScene = nil;
 	
-	// XXX: Some unscheduled timers might remain.
-	[[Scheduler sharedScheduler] unscheduleAllTimers];
-
 	// remove all objects, but don't release it.
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
@@ -660,6 +660,11 @@ static Director *_sharedDirector = nil;
 	
 	[self stopAnimation];
 	[self detach];
+	
+	// Purge all managers
+	[[Scheduler sharedScheduler] release];
+	[[ActionManager sharedManager] release];
+	[[TextureMgr sharedTextureMgr] release];
 }
 
 -(void) setNextScene
