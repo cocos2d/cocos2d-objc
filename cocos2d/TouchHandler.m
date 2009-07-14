@@ -31,7 +31,7 @@
 	NSAssert(aDelegate != nil, @"Touch delegate may not be nil");
 	
 	if ((self = [super init])) {
-		delegate = aDelegate;
+		self.delegate = aDelegate;
 		priority = aPriority;
 	}
 	
@@ -40,6 +40,7 @@
 
 - (void)dealloc {
 	CCLOG(@"deallocing %@", self);
+	[delegate release];
 	[super dealloc];
 }
 
