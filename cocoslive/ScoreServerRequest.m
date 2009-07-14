@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008 Ricardo Quesada
+ * Copyright (C) 2008,2009 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -115,8 +115,8 @@
 -(NSArray*) parseScores
 {	
 	NSArray *array = nil;
-//	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];	
-	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
+	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
+//	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
 
 	NSData *jsonData = [jsonString dataUsingEncoding:NSUTF32BigEndianStringEncoding];
 	NSError *error = nil;
@@ -126,6 +126,7 @@
 		array = [dictionary objectForKey:@"scores"];
 	} else {
 		CCLOG(@"Error parsing scores: %@", error);
+		CCLOG(@"Data: %@", jsonString);
 	}
 	return array;
 }
