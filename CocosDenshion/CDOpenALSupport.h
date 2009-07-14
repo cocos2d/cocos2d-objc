@@ -1,11 +1,5 @@
 /*
  
- File: MyOpenALSupport.h
- 
- Abstract: OpenAL-related functions
- 
- Version: 1.4
- 
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by
  Apple Inc. ("Apple") in consideration of your agreement to the
  following terms, and your use, installation, modification or
@@ -48,13 +42,90 @@
  
  */
 
+/*
+ This file contains code from version 1.1 and 1.4 of MyOpenALSupport.h taken from Apple's oalTouch version.
+ The 1.4 version code is used for loading IMA4 files, however, this code causes very noticeable clicking
+ when used to load wave files that are looped so the 1.1 version code is used specifically for loading
+ wav files.
+ */
+
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
 #import "ccMacros.h"
 
-void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate)
+
+//Taken from oalTouch MyOpenALSupport 1.1
+void* loadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate)
+{
+	OSStatus						err = noErr;	
+	UInt64							fileDataSize = 0;
+	AudioStreamBasicDescription		theFileFormat;
+	UInt32							thePropertySize = sizeof(theFileFormat);
+	AudioFileID						afid = 0;
+	void*							theData = NULL;
+	
+	// Open a file with ExtAudioFileOpen()
+	err = AudioFileOpenURL(inFileURL, kAudioFileReadPermission, 0, &afid);
+	if(err) { CCLOG(@"MyGetOpenALAudioData: AudioFileOpenURL FAILED, Error = %ld\n", err); goto Exit; }
+	
+	// Get the audio data format
+	err = AudioFileGetProperty(afid, kAudioFilePropertyDataFormat, &thePropertySize, &theFileFormat);
+	if(err) { CCLOG(@"MyGetOpenALAudioData: AudioFileGetProperty(kAudioFileProperty_DataFormat) FAILED, Error = %ld\n", err); goto Exit; }
+	
+	if (theFileFormat.mChannelsPerFrame > 2)  { 
+		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n"); goto Exit;
+	}
+	
+	if ((theFileFormat.mFormatID != kAudioFormatLinearPCM) || (!TestAudioFormatNativeEndian(theFileFormat))) { 
+		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, must be little-endian PCM\n"); goto Exit;
+	}
+	
+	if ((theFileFormat.mBitsPerChannel != 8) && (theFileFormat.mBitsPerChannel != 16)) { 
+		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, must be 8 or 16 bit PCM\n"); goto Exit;
+	}
+	
+	
+	thePropertySize = sizeof(fileDataSize);
+	err = AudioFileGetProperty(afid, kAudioFilePropertyAudioDataByteCount, &thePropertySize, &fileDataSize);
+	if(err) { CCLOG(@"MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld\n", err); goto Exit; }
+	
+	// Read all the data into memory
+	UInt32		dataSize = (UInt32)fileDataSize;
+	theData = malloc(dataSize);
+	if (theData)
+	{
+		AudioFileReadBytes(afid, false, 0, &dataSize, theData);
+		if(err == noErr)
+		{
+			// success
+			*outDataSize = (ALsizei)dataSize;
+			//This fix was added by me, however, 8 bit sounds have a clipping sound at the end so aren't really usable (SO)
+			if (theFileFormat.mBitsPerChannel == 16) { 
+				*outDataFormat = (theFileFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+			} else {
+				*outDataFormat = (theFileFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO8 : AL_FORMAT_MONO8;	
+			}	
+			*outSampleRate = (ALsizei)theFileFormat.mSampleRate;
+		}
+		else 
+		{ 
+			// failure
+			free (theData);
+			theData = NULL; // make sure to return NULL
+			CCLOG(@"MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld\n", err); goto Exit;
+		}	
+	}
+	
+Exit:
+	// Dispose the ExtAudioFileRef, it is no longer needed
+	if (afid) AudioFileClose(afid);
+	return theData;
+}
+
+//Taken from oalTouch MyOpenALSupport 1.4
+void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate)
 {
 	OSStatus						status = noErr;
 	BOOL							abort = NO;
@@ -164,3 +235,15 @@ Exit:
 	if (extRef) ExtAudioFileDispose(extRef);
 	return theData;
 }
+
+void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate) {
+
+	CFStringRef extension = CFURLCopyPathExtension(inFileURL);
+	CFComparisonResult isWavFile =	CFStringCompare (extension,(CFStringRef)@"wav", kCFCompareCaseInsensitive);
+	if (isWavFile == kCFCompareEqualTo) {
+		return loadWaveAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);	
+	} else {
+		return loadCafAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);		
+	}
+}	
+
