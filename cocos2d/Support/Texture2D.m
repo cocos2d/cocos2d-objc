@@ -215,6 +215,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		height = i;
 	}
 	
+	// iPhone 3GS supports 2048 textures, so the maxtexturesize should be a variable, not a hardcoded value
 	NSAssert2( (width <= kMaxTextureSize) && (height <= kMaxTextureSize), @"Image is bigger than the supported %d x %d", kMaxTextureSize, kMaxTextureSize);
 
 //	while((width > kMaxTextureSize) || (height > kMaxTextureSize)) {
@@ -341,14 +342,14 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	if((width != 1) && (width & (width - 1))) {
 		i = 1;
 		while(i < width)
-		i *= 2;
+			i *= 2;
 		width = i;
 	}
 	height = dimensions.height;
 	if((height != 1) && (height & (height - 1))) {
 		i = 1;
 		while(i < height)
-		i *= 2;
+			i *= 2;
 		height = i;
 	}
 	
@@ -362,7 +363,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGContextTranslateCTM(context, 0.0f, height);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 	UIGraphicsPushContext(context);
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+	[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
 	UIGraphicsPopContext();
 	
 	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
