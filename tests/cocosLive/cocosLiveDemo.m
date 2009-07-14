@@ -65,11 +65,11 @@
 
 	ScoreServerRequest *request = [[ScoreServerRequest alloc] initWithGameName:@"DemoGame 3" delegate:self];
 	
-	NSString *cat = @"easy";
+	NSString *cat = @"easy2";
 	
 	switch( category ) {
 		case kCategoryEasy:
-			cat = @"easy";
+			cat = @"easy2";
 			break;
 		case kCategoryMedium:
 			cat = @"medium";
@@ -125,10 +125,10 @@
 
 	// cc_ are fields that cannot be modified. cocos fields
 	// set category... it can be "easy", "medium", whatever you want.
-	NSString *cat = @"easy";
+	NSString *cat = @"easy2";
 	switch(cate) {
 		case 0:
-			cat = @"easy";
+			cat = @"easy2";
 			break;
 		case 1:
 			cat = @"medium";
