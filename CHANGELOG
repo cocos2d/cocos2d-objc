@@ -1,5 +1,6 @@
-version 0.8
+version 0.8 - XX-Jul-2009
  . CocosLive: using the deprecated CString API (issue #441)
+ . TouchDispatcher: retains/releases the delegates (issue #422)
  
 version 0.8-rc - 13-Jul-2009
  . ActionManager: actions logic were removed from CocosNode (issue #437)
