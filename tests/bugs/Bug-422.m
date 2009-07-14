@@ -23,24 +23,29 @@
 	static int localtag = 0;
 	localtag++;
 	
-    //[self check:self];
-	
-	// FIX:
-	// use removeFromParentWithCleanup
-	//	CocosNode *node = [self getChildByTag:localtag-1];
-	//	[node removeFromParentWithCleanup:YES];
-	
 	// TO TRIGGER THE BUG:
 	// remove the itself from parent from an action
-	[self removeChildByTag:localtag-1 cleanup:NO];
+	// The menu will be removed, but the instance will be alive
+	// and then a new node will be allocated occupying the memory.
+	// => CRASH BOOM BANG
+	CocosNode *node = [self getChildByTag:localtag-1];
+	NSLog(@"Menu: %@", node);
+	[self removeChild:node cleanup:NO];
+//	[self removeChildByTag:localtag-1 cleanup:NO];
 	
     MenuItem *item1 = [MenuItemFont itemFromString: @"One"
                                             target: self selector:@selector(menuCallback:)];
+	NSLog(@"MenuItemFont: %@", item1);
     MenuItem *item2 = [MenuItemFont itemFromString: @"Two"
                                             target: self selector:@selector(menuCallback:)];
     
     Menu *menu = [Menu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
+	
+	float x = CCRANDOM_0_1() * 50;
+	float y = CCRANDOM_0_1() * 50;
+
+	menu.position = ccpAdd( menu.position, ccp(x,y));
 	
 	
     [self addChild: menu z:0 tag:localtag];	
