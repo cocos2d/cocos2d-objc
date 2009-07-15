@@ -1,6 +1,7 @@
 version 0.8 - XX-Jul-2009
  . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
  . CocosLive: using the deprecated CString API (issue #441)
+ . ColorLayer: uses floats instead of ints for its size (issue #339)
  . TouchDispatcher: retains/releases the delegates (issue #422)
  . Transitions: Fixed artifacts in Slide transitions (issue #442)
  

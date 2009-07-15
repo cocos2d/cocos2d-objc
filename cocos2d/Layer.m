@@ -151,7 +151,7 @@
 	return [[[self alloc] initWithColor:color] autorelease];
 }
 
-- (id) initWithColor:(ccColor4B)color width:(GLint)w  height:(GLint) h
+- (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
 		color_.r = color.r;
