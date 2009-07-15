@@ -114,7 +114,7 @@ typedef enum {
 {}
 /** initializes the scenes */
 -(void) initScenes;
-/** returns the action that will be performed */
+/** returns the action that will be performed by the incomming and outgoing scene */
 -(IntervalAction*) action;
 @end
 
