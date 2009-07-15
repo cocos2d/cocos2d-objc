@@ -623,13 +623,13 @@ enum {
 -(void) activate
 {
 	// update index
-	
 	if( isEnabled ) {
 		NSUInteger newIndex = (selectedIndex_ + 1) % [subItems_ count];
 		[self setSelectedIndex:newIndex];
 
-		[invocation invoke];
 	}
+
+	[super activate];
 }
 
 -(void) setIsEnabled: (BOOL)enabled
