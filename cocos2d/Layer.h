@@ -75,7 +75,7 @@
 + (id) layerWithColor: (ccColor4B)color;
 
 /** initializes a Layer with color, width and height */
-- (id) initWithColor:(ccColor4B)color width:(GLint)w height:(GLint)h;
+- (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** initializes a Layer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
 
