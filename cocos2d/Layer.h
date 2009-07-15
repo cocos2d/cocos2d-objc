@@ -54,12 +54,11 @@
 //
 // ColorLayer
 //
-/** ColorLayer is a subclass of Layer that implements the CocosNodeSize, CocosNodeOpacity and CocosNodeRGB protocol.
+/** ColorLayer is a subclass of Layer that implements the CocosNodeRGBA protocol.
  
  All features from Layer are valid, plus the following new features:
  - opacity
  - RGB colors
- - contentSize
  */
 @interface ColorLayer : Layer <CocosNodeRGBA>
 {
@@ -87,9 +86,9 @@
 /** change height */
 -(void) changeHeight: (GLfloat)h;
 
-/** Opacity: conforms to CocosNodeRGB and CocosNodeOpacity protocol */
+/** Opacity: conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte opacity;
-/** Opacity: conforms to CocosNodeRGB and CocosNodeOpacity protocol */
+/** Opacity: conforms to CocosNodeRGBA protocol */
 @property (readonly) ccColor3B color;
 
 @end
