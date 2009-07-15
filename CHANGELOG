@@ -1,6 +1,8 @@
 version 0.8 - XX-Jul-2009
+ . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
  . CocosLive: using the deprecated CString API (issue #441)
  . TouchDispatcher: retains/releases the delegates (issue #422)
+ . Transitions: Fixed artifacts in Slide transitions (issue #442)
  
 version 0.8-rc - 13-Jul-2009
  . ActionManager: actions logic were removed from CocosNode (issue #437)

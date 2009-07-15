@@ -2857,10 +2857,10 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				506414C50F9C67C0007A7B24 /* Label, Tile, Parallax */,
+				506414C50F9C67C0007A7B24 /* Label, Tile, Parallax Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
-				506414C30F9C6769007A7B24 /* Scene and Layers Nodes */,
+				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
@@ -3140,7 +3140,7 @@
 			path = tests/attachDemo;
 			sourceTree = "<group>";
 		};
-		506414C30F9C6769007A7B24 /* Scene and Layers Nodes */ = {
+		506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				5018F25E0DFDEAFF00C013A5 /* Layer.h */,
@@ -3150,7 +3150,7 @@
 				502B3E980E09A59500886982 /* Transition.h */,
 				502B3E990E09A59500886982 /* Transition.m */,
 			);
-			name = "Scene and Layers Nodes";
+			name = "Layers, Scenes, Transitions Nodes";
 			sourceTree = "<group>";
 		};
 		506414C40F9C6792007A7B24 /* Sprite Nodes */ = {
@@ -3166,7 +3166,7 @@
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
 		};
-		506414C50F9C67C0007A7B24 /* Label, Tile, Parallax */ = {
+		506414C50F9C67C0007A7B24 /* Label, Tile, Parallax Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */,
@@ -3180,7 +3180,7 @@
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
 			);
-			name = "Label, Tile, Parallax";
+			name = "Label, Tile, Parallax Nodes";
 			sourceTree = "<group>";
 		};
 		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
