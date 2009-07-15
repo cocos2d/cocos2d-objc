@@ -166,8 +166,6 @@ enum {
 @property(readwrite,assign) BOOL relativeTransformAnchor;
 /** A tag used to identify the node easily */
 @property(readwrite,assign) int tag;
-/** An array with the children */
-@property (readonly) NSArray *children;
 
 // initializators
 //! creates a node
@@ -236,6 +234,9 @@ enum {
  @since v0.7.1
  */
 -(CocosNode*) getChildByTag:(int) tag;
+
+/** Returns the array that contains all the children */
+- (NSArray *)children;
 
 /** Reorders a child according to a new z value.
  * The child MUST be already added.

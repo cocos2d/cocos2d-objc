@@ -46,7 +46,7 @@
 @implementation CocosNode
 
 @synthesize visible;
-@synthesize parent, children;
+@synthesize parent;
 @synthesize grid;
 @synthesize zOrder;
 @synthesize tag;
@@ -250,6 +250,11 @@
 	}
 	// not found
 	return nil;
+}
+
+- (NSArray *)children
+{
+	return (NSArray *) children;
 }
 
 /* "add" logic MUST only be on this selector
