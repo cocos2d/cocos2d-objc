@@ -66,7 +66,12 @@
 @interface MenuItemLabel : MenuItem  <CocosNodeRGBA>
 {
 	CocosNode<CocosNodeLabel, CocosNodeRGBA> *label_;
+	ccColor3B	colorBackup;
+	ccColor3B	disabledColor_;
 }
+
+/** the color that will be used to disable the item */
+@property (readwrite) ccColor3B disabledColor;
 
 /** Label that is rendered. It can be any CocosNode that implements the CocosNodeLabel */
 @property (readwrite,retain) CocosNode<CocosNodeLabel, CocosNodeRGBA>* label;
@@ -224,7 +229,6 @@
 @property (readonly) GLubyte opacity;
 /** conforms with CocosNodeRGBA protocol */
 @property (readonly) ccColor3B color;
-
 
 /** returns the selected item */
 @property (readwrite) NSUInteger selectedIndex;

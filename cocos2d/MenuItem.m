@@ -123,6 +123,8 @@ enum {
 
 @implementation MenuItemLabel
 
+@synthesize disabledColor = disabledColor_;
+
 +(id) itemWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector
 {
 	return [[[self alloc] initWithLabel:label target:target selector:selector] autorelease];
@@ -131,7 +133,9 @@ enum {
 -(id) initWithLabel:(CocosNode<CocosNodeLabel,CocosNodeRGBA>*)label target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
-		self.label = label;		
+		self.label = label;
+		colorBackup = ccWHITE;
+		disabledColor_ = ccc3( 126,126,126);
 	}
 	return self;
 }
@@ -193,10 +197,14 @@ enum {
 
 -(void) setIsEnabled: (BOOL)enabled
 {
-	if(enabled == NO)
-		[label_ setColor:ccc3(126,126,126)];
-	else
-		[label_ setColor:ccWHITE];
+	if( isEnabled != enabled ) {
+		if(enabled == NO) {
+			colorBackup = [label_ color];
+			[label_ setColor: disabledColor_];
+		}
+		else
+			[label_ setColor:colorBackup];
+	}
     
 	[super setIsEnabled:enabled];
 }
