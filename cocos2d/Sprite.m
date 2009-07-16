@@ -57,8 +57,10 @@
 {
 	self = [super init];
 	if( self ) {
-		// texture is retained
-		self.texture = [[TextureMgr sharedTextureMgr] addCGImage: image];
+		// XXX: possible bug. See issue #349. New API should be added
+		NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
+		self.texture = [[TextureMgr sharedTextureMgr] addCGImage:image forKey:key];
+
 
 		// lazy alloc
 		animations = nil;
