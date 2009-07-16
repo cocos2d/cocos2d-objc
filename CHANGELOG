@@ -3,6 +3,7 @@ version 0.8 - XX-Jul-2009
  . CocosLive: using the deprecated CString API (issue #441)
  . CocosNode: children is an explicit "property" (issue #411)
  . ColorLayer: uses floats instead of ints for its size (issue #339)
+ . ColorLayer: updates contentSize when when size is used (issue #443)
  . Particle: VBO update only the needed particles (issue #367)
  . TouchDispatcher: retains/releases the delegates (issue #422)
  . Transitions: Fixed artifacts in Slide transitions (issue #442)

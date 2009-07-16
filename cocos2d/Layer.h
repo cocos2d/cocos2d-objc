@@ -78,13 +78,14 @@
 /** initializes a Layer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
 
-/** initializes the witdh and height of the layer */
-- (void) initWidth: (GLfloat)w height:(GLfloat)h;
-
 /** change width */
 -(void) changeWidth: (GLfloat)w;
 /** change height */
 -(void) changeHeight: (GLfloat)h;
+/** change width and height
+ @since v0.8
+ */
+-(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
 /** Opacity: conforms to CocosNodeRGBA protocol */
 @property (readonly) GLubyte opacity;

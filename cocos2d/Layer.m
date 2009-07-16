@@ -159,9 +159,11 @@
 		color_.b = color.b;
 		opacity_ = color.a;
 		
+		for (NSUInteger i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
+			squareVertices[i] = 0.0f;
+				
 		[self updateColor];
-		
-		[self initWidth:w height:h];
+		[self setContentSize:CGSizeMake(w,h)];
 	}
 	return self;
 }
@@ -169,20 +171,35 @@
 - (id) initWithColor:(ccColor4B)color
 {
 	CGSize s = [[Director sharedDirector] winSize];
-	
 	return [self initWithColor:color width:s.width height:s.height];
+}
+
+// override contentSize
+-(void) setContentSize: (CGSize) size
+{
+	squareVertices[2] = size.width;
+	squareVertices[5] = size.height;
+	squareVertices[6] = size.width;
+	squareVertices[7] = size.height;
+	
+	[super setContentSize:size];
+}
+
+- (void) changeWidth: (GLfloat) w height:(GLfloat) h
+{
+	[self setContentSize:CGSizeMake(w,h)];
 }
 
 -(void) changeWidth: (GLfloat) w
 {
-	squareVertices[2] = w;
-	squareVertices[6] = w;
+	CGSize s = self.contentSize;
+	[self setContentSize:CGSizeMake(w,s.height)];
 }
 
 -(void) changeHeight: (GLfloat) h
 {
-	squareVertices[5] = h;
-	squareVertices[7] = h;
+	CGSize s = self.contentSize;
+	[self setContentSize:CGSizeMake(s.width,h)];
 }
 
 - (void) updateColor
@@ -198,18 +215,6 @@
 		else
 			squareColors[i] = opacity_;
 	}
-}
-
-- (void) initWidth: (GLfloat) w height:(GLfloat) h
-{
-	for (NSUInteger i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
-		squareVertices[i] = 0.0f;
-	
-	squareVertices[2] = w;
-	squareVertices[5] = h;
-	squareVertices[6] = w;
-	squareVertices[7] = h;
-	
 }
 
 - (void)draw
@@ -230,21 +235,6 @@
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 }
-/** XXX Deprecated **/
--(void) changeColor: (GLuint) aColor
-{
-	CCLOG(@"ColorLayer:changeColor is deprecated. using setRGB::: instead");
-	color_.r = (aColor >> 24) & 0xff;
-	color_.g = (aColor >> 16) & 0xff;
-	color_.b = (aColor >> 8) & 0xff;
-	opacity_ = (aColor) & 0xff;	
-	[self updateColor];
-}
-
-//-(void) setColor:(GLuint)aColor
-//{
-//	return [self changeColor:aColor];
-//}
 
 #pragma mark Protocols
 // Color Protocol
@@ -259,20 +249,10 @@
 	[self setColor:ccc3(r,g,b)];
 }
 
-// Opacity Protocol
 -(void) setOpacity: (GLubyte) o
 {
 	opacity_ = o;
 	[self updateColor];
-}
-
-// Size protocol
--(CGSize) contentSize
-{
-	CGSize ret;
-	ret.width = squareVertices[2];
-	ret.height = squareVertices[5];
-	return ret;
 }
 @end
 
