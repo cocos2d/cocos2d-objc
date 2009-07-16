@@ -404,6 +404,8 @@
 		504799F0100F6D5900D1C71A /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
 		504799F1100F6D5900D1C71A /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		504799F2100F6D5900D1C71A /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		50479B00100F80B000D1C71A /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
+		50479B01100F80B000D1C71A /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		504828920F45AF3600A30CEF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		504828940F45AF5F00A30CEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828930F45AF5F00A30CEF /* Foundation.framework */; };
 		504828980F45AF6700A30CEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828970F45AF6700A30CEF /* UIKit.framework */; };
@@ -1743,6 +1745,7 @@
 		504799B1100F6A4200D1C71A /* LayerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504799C1100F6AB100D1C71A /* LayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayerTest.h; path = tests/LayerTest.h; sourceTree = "<group>"; };
 		504799C2100F6AB100D1C71A /* LayerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LayerTest.m; path = tests/LayerTest.m; sourceTree = "<group>"; };
+		50479AFF100F80B000D1C71A /* background3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background3.png; sourceTree = "<group>"; };
 		504828800F45AED700A30CEF /* AttachTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AttachTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504828930F45AF5F00A30CEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		504828970F45AF6700A30CEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -3500,6 +3503,7 @@
 				50A783DC0F3AFDD700104C45 /* streak.png */,
 				50A252290F38B8DC007CAEB0 /* background1.jpg */,
 				50A2522A0F38B8DC007CAEB0 /* background2.jpg */,
+				50479AFF100F80B000D1C71A /* background3.png */,
 				5084D25C0EE5906100BD237C /* powered.png */,
 				50C1959C0EE4B90800829067 /* background.png */,
 				50C723DB0EC062680046C5DB /* clouds.pvrtc */,
@@ -5307,6 +5311,7 @@
 				50A24E350F377FA1007CAEB0 /* f2.png in Resources */,
 				50A24E360F377FA1007CAEB0 /* fps_images.png in Resources */,
 				502AACFB0F79715E001E3F87 /* fire.pvr in Resources */,
+				50479B00100F80B000D1C71A /* background3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5500,6 +5505,7 @@
 				50D56FC30F3FABEC007CD6B9 /* f2.png in Resources */,
 				50D56FC40F3FABEC007CD6B9 /* fps_images.png in Resources */,
 				502AACFC0F79715E001E3F87 /* fire.pvr in Resources */,
+				50479B01100F80B000D1C71A /* background3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
