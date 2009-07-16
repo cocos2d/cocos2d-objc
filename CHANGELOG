@@ -8,6 +8,7 @@ version 0.8 - XX-Jul-2009
  . ColorLayer: updates contentSize when when size is used (issue #443)
  . Menu: MenuItems works with anchorPoint correctly (issue #412)
  . Particle: VBO update only the needed particles (issue #367)
+ . TextureMgr: new (and recommended) way to add CGImages (issue #349)
  . TouchDispatcher: retains/releases the delegates (issue #422)
  . Transitions: Fixed artifacts in Slide transitions (issue #442)
  
