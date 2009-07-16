@@ -342,7 +342,7 @@ Class restartAction()
 		CocosNode *node = [CocosNode node];
 		[self addChild: node z:0 tag:kTagBackground];
 		
-		Sprite *bg = [Sprite spriteWithFile:@"background.png"];
+		Sprite *bg = [Sprite spriteWithFile:@"background3.png"];
 		[node addChild: bg z:0];
 		bg.anchorPoint = CGPointZero;
 	//	bg.position = ccp(-100,-100);

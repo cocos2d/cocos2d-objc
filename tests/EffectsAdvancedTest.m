@@ -202,7 +202,7 @@ Class restartAction()
 		x = size.width;
 		y = size.height;
 		
-		Sprite *bg = [Sprite spriteWithFile:@"background.png"];
+		Sprite *bg = [Sprite spriteWithFile:@"background3.png"];
 		[self addChild: bg z:0 tag:kTagBackground];
 		bg.anchorPoint = CGPointZero;
 //		bg.position = ccp(x/2,y/2);
