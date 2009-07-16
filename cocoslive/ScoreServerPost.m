@@ -92,6 +92,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 -(BOOL) submitScore: (NSDictionary*)dict forUpdate:(BOOL)isUpdate
 {	
     [receivedData setLength:0];
+	[bodyValues removeAllObjects];
 	
 	// reset status
 	postStatus_ = kPostStatusOK;
