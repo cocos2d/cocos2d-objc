@@ -1,4 +1,5 @@
 version 0.8 - XX-Jul-2009
+ . Actions: Repeat repeats OK (issue #424)
  . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
  . CocosLive: using the deprecated CString API (issue #441)
  . CocosNode: children is an explicit "property" (issue #411)
