@@ -63,16 +63,17 @@
 -(Texture2D*) addPVRTCImage: (NSString*) filename;
 
 /** Returns a Texture2D object given an CGImageRef image
- * If the image was not previously loaded (it uses the CGImageRef as key), it will create a new Texture2D
- *  object and it will return it.
- * Otherwise it will return a reference of a previosly loaded image.
- * @warning: if you delete your CGImageRef and create a new one, it's possible that both will reuse the same memory address (key). So it's safer to use the "addCGImage:forKey" method instead
+ * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
+ * Otherwise it will return a reference of a previously loaded image.
+ * The CGImageRef (a memory pointer) will be used as the "key" for the cache.
+ * @deprecated Use addCGImage:forKey: instead
  */
--(Texture2D*) addCGImage: (CGImageRef) image;
+-(Texture2D*) addCGImage: (CGImageRef) image __attribute__((deprecated));
 /** Returns a Texture2D object given an CGImageRef image
- * If the image was not previously loaded (it uses the "key" parameter as key), it will create a new Texture2D
- *  object and it will return it.
- * Otherwise it will return a reference of a previosly loaded image
+ * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
+ * Otherwise it will return a reference of a previously loaded image
+ * The "key" parameter will be used as the "key" for the cache.
+ * @since v0.8
  */
 -(Texture2D*) addCGImage: (CGImageRef) image forKey: (NSString *)key;
 
