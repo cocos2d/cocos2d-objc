@@ -215,13 +215,20 @@ static TextureMgr *sharedTextureMgr;
 	return [tex autorelease];
 }
 
-
 -(Texture2D*) addCGImage: (CGImageRef) image
 {
 	NSAssert(image != nil, @"TextureMgr: image MUST not be nill");
 	
-	Texture2D * tex;
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
+	
+	return [self addCGImage: image forKey: key];
+}
+
+-(Texture2D*) addCGImage: (CGImageRef) image forKey: (NSString *)key
+{
+	NSAssert(image != nil, @"TextureMgr: image MUST not be nill");
+	
+	Texture2D * tex;
 	
 	if( (tex=[textures objectForKey: key] ) ) {
 		return tex;

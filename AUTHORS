@@ -105,6 +105,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* ratman: patch for TileMapAtlas: it works with 255 tiles
 		patch for TextureMgr: supports directory within image names
 	* Serge Kolgan: patches for CocosNode
+	* sflory: new way to added CGImageRef to TextureMgr
 	* Steve Israelson: patches for Scheduler
 		pactches for Actions
 		patches for Transitions
