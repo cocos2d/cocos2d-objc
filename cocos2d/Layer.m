@@ -273,21 +273,21 @@
 
 -(id) initWithLayers: (Layer*) layer vaList:(va_list) params
 {
-	if( ! (self=[super init]) )
-		return nil;
+	if( (self=[super init]) ) {
 	
-	layers = [[NSMutableArray array] retain];
-	
-	[layers addObject: layer];
-	
-	Layer *l = va_arg(params,Layer*);
-	while( l ) {
-		[layers addObject: l];
-		l = va_arg(params,Layer*);
+		layers = [[NSMutableArray array] retain];
+		
+		[layers addObject: layer];
+		
+		Layer *l = va_arg(params,Layer*);
+		while( l ) {
+			[layers addObject: l];
+			l = va_arg(params,Layer*);
+		}
+		
+		enabledLayer = 0;
+		[self addChild: [layers objectAtIndex: enabledLayer]];	
 	}
-	
-	enabledLayer = 0;
-	[self addChild: [layers objectAtIndex: enabledLayer]];		
 	
 	return self;
 }

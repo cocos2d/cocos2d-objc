@@ -17,3 +17,8 @@
 {
 }
 @end
+
+@interface LayerTest2 : LayerTest
+{
+}
+@end
