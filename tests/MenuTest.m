@@ -42,6 +42,8 @@ enum {
 		// Label Item (LabelAtlas)
 		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		MenuItemLabel *item3 = [MenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
+		item3.disabledColor = ccc3(32,32,64);
+		item3.color = ccc3(200,200,255);
 		
 
 		// Font Item

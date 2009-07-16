@@ -91,6 +91,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CocosNode: fixed "already scheduled exception" bug
 	* Manu Valladolid: added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
+		MenuItemLabel: color is saved when item is disabled
 	* mark at abitofthought: author of the single threaded Fast Director
 	* Michal Szymerski: Added support for AtlasSprite as MenuItems
 	* Mitch: patches for Menu
