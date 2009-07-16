@@ -16,7 +16,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"LayerTest1",
+	@"LayerTest1",
+	@"LayerTest2",
 };
 
 Class nextAction()
@@ -118,10 +119,10 @@ Class restartAction()
 		self.isTouchEnabled = YES;
 		
 		CGSize s = [[Director sharedDirector] winSize];
-		ColorLayer* layer = [ColorLayer layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80) width: 200 
+		ColorLayer* layer = [ColorLayer layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
+												 width: 200 
 												height: 200];
 		layer.relativeTransformAnchor =  YES;
-		layer.contentSize = CGSizeMake(100,100);
 		layer.position = ccp(s.width/2, s.height/2);
 		[self addChild: layer z:1 tag:kTagLayer];
 	}
@@ -178,6 +179,50 @@ Class restartAction()
 	return @"ColorLayer resize (tap & move)";
 }
 @end
+
+#pragma mark Example LayerTest2
+
+@implementation LayerTest2
+-(id) init
+{
+	if( (self=[super init] )) {
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		ColorLayer* layer1 = [ColorLayer layerWithColor: ccc4(255, 255, 0, 80)
+												 width: 100 
+												height: 300];
+		layer1.position = ccp(s.width/3, s.height/2);
+		layer1.relativeTransformAnchor = YES;
+		[self addChild: layer1 z:1];
+		
+		ColorLayer* layer2 = [ColorLayer layerWithColor: ccc4(0, 0, 255, 255)
+												 width: 100 
+												height: 300];
+		layer2.position = ccp((s.width/3)*2, s.height/2);
+		layer2.relativeTransformAnchor = YES;
+		[self addChild: layer2 z:1];
+		
+		id actionTint = [TintBy actionWithDuration:2 red:-255 green:-127 blue:0];
+		id actionTintBack = [actionTint reverse];
+		id seq1 = [Sequence actions: actionTint, actionTintBack, nil];
+		[layer1 runAction:seq1];
+
+
+		id actionFade = [FadeOut actionWithDuration:2.0f];
+		id actionFadeBack = [actionFade reverse];
+		id seq2 = [Sequence actions:actionFade, actionFadeBack, nil];		
+		[layer2 runAction:seq2];
+
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"ColorLayer: fade and tint";
+}
+@end
+
 
 
 // CLASS IMPLEMENTATIONS
