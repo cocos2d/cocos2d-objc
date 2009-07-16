@@ -2,6 +2,7 @@ version 0.8 - XX-Jul-2009
  . Actions: Repeat repeats OK (issue #424)
  . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
  . CocosLive: using the deprecated CString API (issue #441)
+ . CocosLive: send-score object can be reused (issue #417)
  . CocosNode: children is an explicit "property" (issue #411)
  . ColorLayer: uses floats instead of ints for its size (issue #339)
  . ColorLayer: updates contentSize when when size is used (issue #443)
