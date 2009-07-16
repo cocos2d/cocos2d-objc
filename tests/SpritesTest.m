@@ -182,10 +182,12 @@ Class restartAction()
 
 	
 	id actionTo = [MoveTo actionWithDuration: 2 position:ccp(s.width-40, s.height-40)];
+	
 	id actionBy = [MoveBy actionWithDuration:2  position: ccp(80,80)];
+	id actionByBack = [actionBy reverse];
 	
 	[tamara runAction: actionTo];
-	[grossini runAction:actionBy];
+	[grossini runAction: [Sequence actions:actionBy, actionByBack, nil]];
 }
 -(NSString *) title
 {
@@ -202,9 +204,11 @@ Class restartAction()
 		
 	id actionTo = [RotateTo actionWithDuration: 2 angle:45];
 	id actionBy = [RotateBy actionWithDuration:2  angle: 360];
+	id actionByBack = [actionBy reverse];
+
 	
 	[tamara runAction: actionTo];
-	[grossini runAction:actionBy];
+	[grossini runAction: [Sequence actions:actionBy, actionByBack, nil]];
 }
 -(NSString *) title
 {
@@ -222,9 +226,10 @@ Class restartAction()
 	
 	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5f];
 	id actionBy = [ScaleBy actionWithDuration:2  scale: 2];
+	id actionByBack = [actionBy reverse];
 
 	[tamara runAction: actionTo];
-	[grossini runAction:actionBy];
+	[grossini runAction: [Sequence actions:actionBy, actionByBack, nil]];
 }
 -(NSString *) title
 {
@@ -240,9 +245,10 @@ Class restartAction()
 		
 	id actionTo = [JumpTo actionWithDuration:2 position:ccp(300,300) height:50 jumps:4];
 	id actionBy = [JumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
+	id actionByBack = [actionBy reverse];
 	
 	[tamara runAction: actionTo];
-	[grossini runAction:actionBy];
+	[grossini runAction: [Sequence actions:actionBy, actionByBack, nil]];
 }
 -(NSString *) title
 {
@@ -326,10 +332,13 @@ Class restartAction()
 	
 	tamara.opacity = 0;
 	id action1 = [FadeIn actionWithDuration:1.0f];
-	id action2 = [FadeOut actionWithDuration:1.0f];
+	id action1Back = [action1 reverse];
 	
-	[tamara runAction: action1];
-	[grossini runAction:action2];
+	id action2 = [FadeOut actionWithDuration:1.0f];
+	id action2Back = [action2 reverse];
+	
+	[tamara runAction: [Sequence actions: action1, action1Back, nil]];
+	[grossini runAction: [Sequence actions: action2, action2Back, nil]];
 }
 -(NSString *) title
 {
@@ -345,10 +354,11 @@ Class restartAction()
 	[self centerSprites];
 	
 	id action1 = [TintTo actionWithDuration:2 red:255 green:0 blue:255];
-	id action2 = [TintBy actionWithDuration:2 red:0 green:-127 blue:-127];
+	id action2 = [TintBy actionWithDuration:2 red:-127 green:-255 blue:-127];
+	id action2Back = [action2 reverse];
 	
 	[tamara runAction: action1];
-	[grossini runAction:action2];
+	[grossini runAction: [Sequence actions: action2, action2Back, nil]];
 }
 -(NSString *) title
 {

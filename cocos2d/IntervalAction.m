@@ -215,13 +215,12 @@
 {
 	ccTime d = [action duration] * t;
 
-	if( !(self=[super initWithDuration: d ]) )
-		return nil;
+	if( (self=[super initWithDuration: d ]) ) {
+		times = t;
+		other = [action retain];
 
-	times = t;
-	other = [action retain];
-
-	total = 0;
+		total = 0;
+	}
 	return self;
 }
 
@@ -269,8 +268,10 @@
 	} else {
 		// fix last repeat position
 		// else it could be 0.
-		if( dt== 1.0f)
+		if( dt== 1.0f) {
 			r=1.0f;
+			total++; // this is the added line
+		}
 		[other update: MIN(r,1)];
 	}
 }

@@ -20,6 +20,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TileMapAtlas supports fullpath
 	* Andy Fitter: patches for Texture2D
 	* Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
+	* Aymeric Bard: Repeat action works OK
 	* Brian Hammond: patches for Demos
 	* Bryan/Acceleroto: patch for CocosDenshion
 	* Clinth Harris: patches for Doc generator script
