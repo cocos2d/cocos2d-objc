@@ -99,8 +99,6 @@
 		50479E0C1010E0DD00D1C71A /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479D9F1010E0DD00D1C71A /* TGAlib.m */; };
 		50479E0D1010E0DD00D1C71A /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA01010E0DD00D1C71A /* TransformUtils.h */; };
 		50479E0E1010E0DD00D1C71A /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479DA11010E0DD00D1C71A /* TransformUtils.m */; };
-		50479E0F1010E0DD00D1C71A /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA21010E0DD00D1C71A /* UIColor-OpenGL.h */; };
-		50479E101010E0DD00D1C71A /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479DA31010E0DD00D1C71A /* UIColor-OpenGL.m */; };
 		50479E111010E0DD00D1C71A /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA41010E0DD00D1C71A /* uthash.h */; };
 		50479E121010E0DD00D1C71A /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA51010E0DD00D1C71A /* TextureAtlas.h */; };
 		50479E131010E0DD00D1C71A /* TextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479DA61010E0DD00D1C71A /* TextureAtlas.m */; };
@@ -200,28 +198,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 50479D451010E0BF00D1C71A /* cocos2d */;
+			remoteGlobalIDString = 50479D451010E0BF00D1C71A;
 			remoteInfo = cocos2d;
 		};
 		50479ED81010E1EA00D1C71A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 50479E291010E0ED00D1C71A /* CocosDenshion */;
+			remoteGlobalIDString = 50479E291010E0ED00D1C71A;
 			remoteInfo = CocosDenshion;
 		};
 		50479EDA1010E1ED00D1C71A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 50479E421010E13000D1C71A /* cocoslive */;
+			remoteGlobalIDString = 50479E421010E13000D1C71A;
 			remoteInfo = cocoslive;
 		};
 		50479EDC1010E1F200D1C71A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 50479E7C1010E18400D1C71A /* Chipmunk */;
+			remoteGlobalIDString = 50479E7C1010E18400D1C71A;
 			remoteInfo = Chipmunk;
 		};
 /* End PBXContainerItemProxy section */
@@ -324,8 +322,6 @@
 		50479D9F1010E0DD00D1C71A /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		50479DA01010E0DD00D1C71A /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		50479DA11010E0DD00D1C71A /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
-		50479DA21010E0DD00D1C71A /* UIColor-OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-OpenGL.h"; sourceTree = "<group>"; };
-		50479DA31010E0DD00D1C71A /* UIColor-OpenGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-OpenGL.m"; sourceTree = "<group>"; };
 		50479DA41010E0DD00D1C71A /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		50479DA51010E0DD00D1C71A /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
 		50479DA61010E0DD00D1C71A /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
@@ -665,8 +661,6 @@
 				50479D9F1010E0DD00D1C71A /* TGAlib.m */,
 				50479DA01010E0DD00D1C71A /* TransformUtils.h */,
 				50479DA11010E0DD00D1C71A /* TransformUtils.m */,
-				50479DA21010E0DD00D1C71A /* UIColor-OpenGL.h */,
-				50479DA31010E0DD00D1C71A /* UIColor-OpenGL.m */,
 				50479DA41010E0DD00D1C71A /* uthash.h */,
 			);
 			path = Support;
@@ -872,7 +866,6 @@
 				50479E091010E0DD00D1C71A /* Texture2D.h in Headers */,
 				50479E0B1010E0DD00D1C71A /* TGAlib.h in Headers */,
 				50479E0D1010E0DD00D1C71A /* TransformUtils.h in Headers */,
-				50479E0F1010E0DD00D1C71A /* UIColor-OpenGL.h in Headers */,
 				50479E111010E0DD00D1C71A /* uthash.h in Headers */,
 				50479E121010E0DD00D1C71A /* TextureAtlas.h in Headers */,
 				50479E141010E0DD00D1C71A /* TextureMgr.h in Headers */,
@@ -1116,7 +1109,6 @@
 				50479E0A1010E0DD00D1C71A /* Texture2D.m in Sources */,
 				50479E0C1010E0DD00D1C71A /* TGAlib.m in Sources */,
 				50479E0E1010E0DD00D1C71A /* TransformUtils.m in Sources */,
-				50479E101010E0DD00D1C71A /* UIColor-OpenGL.m in Sources */,
 				50479E131010E0DD00D1C71A /* TextureAtlas.m in Sources */,
 				50479E151010E0DD00D1C71A /* TextureMgr.m in Sources */,
 				50479E171010E0DD00D1C71A /* TextureNode.m in Sources */,

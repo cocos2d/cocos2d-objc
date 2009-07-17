@@ -270,13 +270,23 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
+								<string>50479ED31010E1C300D1C71A</string>
+								<string>50479D491010E0DD00D1C71A</string>
+								<string>50479D8F1010E0DD00D1C71A</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
-							<array/>
+							<array>
+								<array>
+									<integer>74</integer>
+									<integer>6</integer>
+									<integer>1</integer>
+									<integer>0</integer>
+								</array>
+							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {186, 669}}</string>
+							<string>{{0, 1104}, {186, 669}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -323,7 +333,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>50479F561010E43600D1C71A</string>
+										<string>5047A09F101129DA00D1C71A</string>
 										<key>history</key>
 										<array>
 											<string>50479EF81010E27E00D1C71A</string>
@@ -334,7 +344,7 @@
 											<string>50479F4F1010E43600D1C71A</string>
 											<string>50479F501010E43600D1C71A</string>
 											<string>50479F511010E43600D1C71A</string>
-											<string>50479EF51010E27E00D1C71A</string>
+											<string>50479F561010E43600D1C71A</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -342,30 +352,11 @@
 											<string>50479EFA1010E27E00D1C71A</string>
 											<string>50479EFB1010E27E00D1C71A</string>
 											<string>50479EFC1010E27E00D1C71A</string>
-											<string>50479EFD1010E27E00D1C71A</string>
-											<string>50479EFE1010E27E00D1C71A</string>
-											<string>50479EFF1010E27E00D1C71A</string>
 											<string>50479F001010E27E00D1C71A</string>
 											<string>50479F011010E27E00D1C71A</string>
-											<string>50479F021010E27E00D1C71A</string>
-											<string>50479F031010E27E00D1C71A</string>
-											<string>50479F041010E27E00D1C71A</string>
-											<string>50479F051010E27E00D1C71A</string>
-											<string>50479F061010E27E00D1C71A</string>
-											<string>50479F071010E27E00D1C71A</string>
 											<string>50479F371010E3B700D1C71A</string>
 											<string>50479F381010E3B700D1C71A</string>
-											<string>50479F391010E3B700D1C71A</string>
-											<string>50479F3A1010E3B700D1C71A</string>
 											<string>50479F3B1010E3B700D1C71A</string>
-											<string>50479F3C1010E3B700D1C71A</string>
-											<string>50479F3D1010E3B700D1C71A</string>
-											<string>50479F4A1010E41B00D1C71A</string>
-											<string>50479F4B1010E41B00D1C71A</string>
-											<string>50479F521010E43600D1C71A</string>
-											<string>50479F531010E43600D1C71A</string>
-											<string>50479F541010E43600D1C71A</string>
-											<string>50479F551010E43600D1C71A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -423,9 +414,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>50479F091010E27E00D1C71A</string>
+				<string>5047A0A0101129DA00D1C71A</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>50479F0A1010E27E00D1C71A</string>
+				<string>5047A0A1101129DA00D1C71A</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -559,10 +550,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>50479F3F1010E3B700D1C71A</string>
-		<string>50479F401010E3B700D1C71A</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>50479EF11010E27900D1C71A</string>
 		<string>/Users/riq/progs/cocos2d-iphone/trunk/tests/samples/MyFirstGame/MyFirstGame.xcodeproj</string>
 	</array>
@@ -583,14 +570,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MyFirstGameAppDelegate.m</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -646,7 +631,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>50479EF11010E27900D1C71A</string>
-				<string>50479EF21010E27900D1C71A</string>
+				<string>5047A0A2101129DA00D1C71A</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

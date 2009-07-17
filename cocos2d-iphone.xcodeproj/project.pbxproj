@@ -584,8 +584,6 @@
 		5084D4820EE5C7D100BD237C /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
 		5084D4830EE5C7D100BD237C /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
 		50851BF60F35FB0F00978029 /* ccExceptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851BF40F35FB0F00978029 /* ccExceptions.h */; };
-		50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50851C380F35FE7D00978029 /* UIColor-OpenGL.h */; };
-		50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 50851C390F35FE7D00978029 /* UIColor-OpenGL.m */; };
 		5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5085BFAD0F7D67FF008DBA21 /* snow.png */; };
 		508A332C0FBADD5F00D574A2 /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
 		508A332D0FBADD5F00D574A2 /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */; };
@@ -1822,8 +1820,6 @@
 		5084D47C0EE5C7D100BD237C /* btn-play-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-play-normal.png"; sourceTree = "<group>"; };
 		5084D47D0EE5C7D100BD237C /* btn-play-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-play-selected.png"; sourceTree = "<group>"; };
 		50851BF40F35FB0F00978029 /* ccExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccExceptions.h; sourceTree = "<group>"; };
-		50851C380F35FE7D00978029 /* UIColor-OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-OpenGL.h"; sourceTree = "<group>"; };
-		50851C390F35FE7D00978029 /* UIColor-OpenGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-OpenGL.m"; sourceTree = "<group>"; };
 		5085BFAD0F7D67FF008DBA21 /* snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snow.png; sourceTree = "<group>"; };
 		508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_01.png; sourceTree = "<group>"; };
 		508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_02.png; sourceTree = "<group>"; };
@@ -2955,8 +2951,6 @@
 			children = (
 				6F305B5D0FB9D2790052E700 /* TransformUtils.h */,
 				6F305B5E0FB9D2790052E700 /* TransformUtils.m */,
-				50851C380F35FE7D00978029 /* UIColor-OpenGL.h */,
-				50851C390F35FE7D00978029 /* UIColor-OpenGL.m */,
 				501CCFA40E99657C00B86F68 /* EAGLView.h */,
 				501CCFA50E99657C00B86F68 /* EAGLView.m */,
 				501CCFA60E99657C00B86F68 /* glu.c */,
@@ -3813,7 +3807,6 @@
 				50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
 				50851BF60F35FB0F00978029 /* ccExceptions.h in Headers */,
-				50851C3A0F35FE7D00978029 /* UIColor-OpenGL.h in Headers */,
 				50A24E110F377E8E007CAEB0 /* Grabber.h in Headers */,
 				50A24E130F377E8E007CAEB0 /* Grid.h in Headers */,
 				50A24E150F377E8E007CAEB0 /* Grid3DAction.h in Headers */,
@@ -5693,7 +5686,6 @@
 				501CCFB30E99657C00B86F68 /* Texture2D.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
 				50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */,
-				50851C3B0F35FE7D00978029 /* UIColor-OpenGL.m in Sources */,
 				50A24E120F377E8E007CAEB0 /* Grabber.m in Sources */,
 				50A24E140F377E8E007CAEB0 /* Grid.m in Sources */,
 				50A24E160F377E8E007CAEB0 /* Grid3DAction.m in Sources */,
