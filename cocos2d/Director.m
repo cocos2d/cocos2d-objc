@@ -141,7 +141,7 @@ static Director *_sharedDirector = nil;
 {
 	CCLOG( @"deallocing %@", self);
 
-#ifdef FAST_FPS_DISPLAY
+#if DIRECTOR_DISPLAY_FAST_FPS
 	[FPSLabel release];
 #endif
 	[runningScene_ release];
@@ -162,7 +162,7 @@ static Director *_sharedDirector = nil;
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
-#ifdef FAST_FPS_DISPLAY
+#if DIRECTOR_DISPLAY_FAST_FPS
     if (!FPSLabel)
         FPSLabel = [[LabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
 #endif	
@@ -757,7 +757,7 @@ static Director *_sharedDirector = nil;
 	}
 }
 
-#ifdef FAST_FPS_DISPLAY
+#if DIRECTOR_DISPLAY_FAST_FPS
 
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
@@ -796,11 +796,13 @@ static Director *_sharedDirector = nil;
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState( GL_VERTEX_ARRAY);
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glColor4ub(224,224,244,200);
 	[texture drawAtPoint: ccp(5,2)];
 	[texture release];
 	
+	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -816,7 +818,11 @@ static Director *_sharedDirector = nil;
 
 - (id) init
 {
+#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+	CCLOG(@"Using Fast Director with Fast Events");
+#else
 	CCLOG(@"Using Fast Director");
+#endif
 
 	if(( self = [super init] )) {
 		isRunning = NO;
@@ -859,7 +865,7 @@ static Director *_sharedDirector = nil;
 	[invocation setTarget:[Director sharedDirector]];
 	[invocation setSelector:selector];
 	[invocation performSelectorOnMainThread:@selector(invokeWithTarget:)
-								 withObject:[Director sharedDirector] waitUntilDone:NO];	
+								 withObject:[Director sharedDirector] waitUntilDone:NO];
 }
 
 -(void) preMainLoop
@@ -868,8 +874,11 @@ static Director *_sharedDirector = nil;
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
-//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
+#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
+#else
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
+#endif
 
 		if (isPaused_) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
@@ -877,8 +886,11 @@ static Director *_sharedDirector = nil;
 		
 		[self mainLoop];
 
-//		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
+#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
+#else
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
+#endif
 
 		[loopPool release];
 	}	
