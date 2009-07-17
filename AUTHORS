@@ -22,6 +22,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		added sanity in scheduler
 		TileMapAtlas supports fullpath
 	* Andy Fitter: patches for Texture2D
+	* Andreas Löw (thesk): FileUtils doesn't convert full paths
 	* Anton Zemlyanov: patches for MenuItemToggle that supports selectedIndex
 	* Aymeric Bard: Repeat action works OK
 	* Brian Hammond: patches for Demos
@@ -51,7 +52,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Fradj Johann: patches for CocosNode
 		patches for Layer
 		patches for MultiplexLayer
-	* Gamebit: added support for auto-remove-on-finish in particles
+	* Rolandas Razma (gamebit): added support for auto-remove-on-finish in particles
 	* Graham Perks: Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
 	* Mark Cooke: Added TintTo action
