@@ -240,6 +240,10 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 
 	CFStringRef extension = CFURLCopyPathExtension(inFileURL);
 	CFComparisonResult isWavFile =	CFStringCompare (extension,(CFStringRef)@"wav", kCFCompareCaseInsensitive);
+	if (extension != NULL) {
+		CFRelease(extension);
+	}	
+	
 	if (isWavFile == kCFCompareEqualTo) {
 		return loadWaveAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);	
 	} else {
