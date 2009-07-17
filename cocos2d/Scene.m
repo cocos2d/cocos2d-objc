@@ -22,7 +22,7 @@
 {
 	if( (self=[super init]) ) {
 		CGSize s = [[Director sharedDirector] winSize];
-		self.relativeTransformAnchor = NO;
+		self.relativeAnchorPoint = NO;
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];	
 	}

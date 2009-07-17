@@ -4,6 +4,7 @@ version 0.8 - XX-Jul-2009
  . CocosLive: using the deprecated CString API (issue #441)
  . CocosLive: send-score object can be reused (issue #417)
  . CocosNode: children is an explicit "property" (issue #411)
+ . CocosNode: relativeTransformAnchor -> relativeAnchorPoint (part of issue #303)
  . ColorLayer: uses floats instead of ints for its size (issue #339)
  . ColorLayer: updates contentSize when when size is used (issue #443)
  . Menu: MenuItems works with anchorPoint correctly (issue #412)

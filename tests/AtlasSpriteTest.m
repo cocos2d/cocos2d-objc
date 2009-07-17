@@ -536,7 +536,7 @@ Class restartAction()
 
 		CGSize s = [[Director sharedDirector] winSize];
 
-		mgr.relativeTransformAnchor = NO;
+		mgr.relativeAnchorPoint = NO;
 		mgr.anchorPoint = ccp(0.5f, 0.5f);
 		mgr.contentSize = CGSizeMake(s.width, s.height);
 		

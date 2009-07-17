@@ -55,7 +55,7 @@
 #pragma mark CocosNode - Transform related properties
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
-@synthesize transformAnchor=transformAnchor_, relativeTransformAnchor=relativeTransformAnchor_;
+@synthesize transformAnchor=transformAnchor_, relativeAnchorPoint=relativeAnchorPoint_;
 
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
@@ -88,9 +88,9 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) setRelativeTransformAnchor: (BOOL)newValue
+-(void) setrelativeAnchorPoint: (BOOL)newValue
 {
-	relativeTransformAnchor_ = newValue;
+	relativeAnchorPoint_ = newValue;
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
@@ -154,8 +154,8 @@
 		anchorPoint_ = CGPointZero;
 		contentSize_ = CGSizeZero;
 
-		// "whole screen" objects. like Scenes and Layers, should set relativeTransformAnchor to NO
-		relativeTransformAnchor_ = YES; 
+		// "whole screen" objects. like Scenes and Layers, should set relativeAnchorPoint to NO
+		relativeAnchorPoint_ = YES; 
 		
 		isTransformDirty_ = isInverseDirty_ = YES;
 		
@@ -458,7 +458,7 @@
 	// BEGIN original implementation
 	// 
 	// translate
-	if ( relativeTransformAnchor_ && (transformAnchor_.x != 0 || transformAnchor_.y != 0 ) )
+	if ( relativeAnchorPoint_ && (transformAnchor_.x != 0 || transformAnchor_.y != 0 ) )
 		glTranslatef( RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), vertexZ_);
 	
 	if (transformAnchor_.x != 0 || transformAnchor_.y != 0 )
@@ -636,7 +636,7 @@
 		
 		transform_ = CGAffineTransformIdentity;
 		
-		if ( !relativeTransformAnchor_ ) {
+		if ( !relativeAnchorPoint_ ) {
 			transform_ = CGAffineTransformTranslate(transform_, (int)transformAnchor_.x, (int)transformAnchor_.y);
 		}
 		
