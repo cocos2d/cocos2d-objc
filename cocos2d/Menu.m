@@ -60,7 +60,7 @@ enum {
 		// menu in the center of the screen
 		CGSize s = [[Director sharedDirector] winSize];
 		
-		self.relativeTransformAnchor = NO;
+		self.relativeAnchorPoint = NO;
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
 		

@@ -122,7 +122,7 @@ Class restartAction()
 		ColorLayer* layer = [ColorLayer layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
 												 width: 200 
 												height: 200];
-		layer.relativeTransformAnchor =  YES;
+		layer.relativeAnchorPoint =  YES;
 		layer.position = ccp(s.width/2, s.height/2);
 		[self addChild: layer z:1 tag:kTagLayer];
 	}
@@ -192,14 +192,14 @@ Class restartAction()
 												 width: 100 
 												height: 300];
 		layer1.position = ccp(s.width/3, s.height/2);
-		layer1.relativeTransformAnchor = YES;
+		layer1.relativeAnchorPoint = YES;
 		[self addChild: layer1 z:1];
 		
 		ColorLayer* layer2 = [ColorLayer layerWithColor: ccc4(0, 0, 255, 255)
 												 width: 100 
 												height: 300];
 		layer2.position = ccp((s.width/3)*2, s.height/2);
-		layer2.relativeTransformAnchor = YES;
+		layer2.relativeAnchorPoint = YES;
 		[self addChild: layer2 z:1];
 		
 		id actionTint = [TintBy actionWithDuration:2 red:-255 green:-127 blue:0];

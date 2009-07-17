@@ -73,7 +73,7 @@ enum {
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL relativeTransformAnchor_;
+	BOOL relativeAnchorPoint_;
 	
 	// transformation anchor point
 	CGPoint transformAnchor_;
@@ -159,11 +159,11 @@ enum {
 @property (readwrite) CGSize contentSize;
 /** A weak reference to the parent */
 @property(readwrite,assign) CocosNode* parent;
-/** If YES the transformtions will be relative to (-transform.x, -transform.y).
- * Sprites, Labels and any other sizeble object use it.
- * Scenes, Layers and other "whole screen" object don't use it.
+/** If YES the transformtions will be relative to it's anchor point.
+ * Sprites, Labels and any other sizeble object use it have it enabled by default.
+ * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
  */
-@property(readwrite,assign) BOOL relativeTransformAnchor;
+@property(readwrite,assign) BOOL relativeAnchorPoint;
 /** A tag used to identify the node easily */
 @property(readwrite,assign) int tag;
 
