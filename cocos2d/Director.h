@@ -24,9 +24,12 @@
 // You need to add the "fps_images.png" file to your project
 #define DIRECTOR_DISPLAY_FAST_FPS 1
 
-// If you want a Fast Director that dispatches the events more frequently, leave the following line uncommented
-// This value has no effect if you use the "normal" director
-#define DIRECTOR_FASTDIRECTOR_FAST_EVENTS 1
+// If you want a Fast Director that dispatches the events more frequently, 
+// define the following line.
+// Limitations:
+//  - The events are dispatched faster (?)
+//  - But it doesn't refresh the screen as fast as the "slow events"
+#define DIRECTOR_FASTDIRECTOR_FAST_EVENTS 0
 
 /** Possible Pixel Formats for the EAGLView */
 typedef enum {
