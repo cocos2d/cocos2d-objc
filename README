@@ -24,9 +24,10 @@ Main features
     * Texture Atlas support
     * Tile Map support
     * Parallax scrolling
-    * High Score server
+    * High Score server (cocosLive library)
     * Touch/Accelerometer
     * Portrait and Landscape mode
+	* Sound Engine support (CocosDenshion library)
     * Integrated Pause/Resume
 	* Integrated Slow motion/Fast forward
     * Fast textures: PVRTC 2-bit & 4-bit textures, RGBA 16-bit (and 32-bit) textures
@@ -36,7 +37,6 @@ Main features
 
 Experimental features:
     * Motion Streak / Ribbon support
-    * Sound Engine support
     * Integrated Box2d physics engine
 
 This library does not work with the toolchain, but it
@@ -65,7 +65,7 @@ Files and Folders
   * CocosDenshion
      sound engine library
   * tests/
-     tests and demo examples     
+     tests, demo and template examples     
   * experimental/
      experimental stuff
   * external/
@@ -83,6 +83,12 @@ Xcode -> View -> Customize toolbar
 Then, drag "Active Target" and "Active Executable" to your top project tool bar.
 Select the test you want to view in both drop downs and hit Build and Go.
 
+
+To start a new project
+----------------------
+
+Open this almost empty project:
+tests/samples/MyFirstGame/MyFirstGame.xcodeproj
 
 
 [1] http://www.cocos2d-iphone.org
