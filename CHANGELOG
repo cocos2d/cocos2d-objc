@@ -9,6 +9,7 @@ version 0.8 - XX-Jul-2009
  . ColorLayer: uses floats instead of ints for its size (issue #339)
  . ColorLayer: updates contentSize when when size is used (issue #443)
  . Demos: added basic template to start new projects (issue #447)
+ . FileUtils: Absolute paths are not converted (issue #352)
  . Menu: MenuItems works with anchorPoint correctly (issue #412)
  . Menu: ItemLabel disabled color is configurable. color is saved (issue #366)
  . Particle: VBO update only the needed particles (issue #367)

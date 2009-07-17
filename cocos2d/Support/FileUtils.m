@@ -17,6 +17,12 @@
 @implementation FileUtils
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
+	// do not convert an absolute path (starting with '/')
+	if(([relPath length] > 0) && ([relPath characterAtIndex:0] == '/'))
+	{
+		return relPath;
+	}
+	
 	NSMutableArray *imagePathComponents = [NSMutableArray arrayWithArray:[relPath pathComponents]];
 	NSString *file = [imagePathComponents lastObject];
 	
@@ -28,7 +34,8 @@
 													inDirectory:imageDirectory];
 	if (fullpath == nil)
 		fullpath = relPath;
-
+	
 	return fullpath;	
 }
+
 @end
