@@ -169,19 +169,8 @@ Class restartAction()
 	[grossini runAction: [RepeatForever actionWithAction:seq1]];
 	[tamara runAction: [RepeatForever actionWithAction:seq2]];
 	[kathia runAction: [RepeatForever actionWithAction:seq3]];
-
-	// auto delete test
-//	ParticleFire *fire = [ParticleFire node];
-//	[self addChild:fire];
-//	fire.position = ccp(200,200);
-//	
-//	[self schedule:@selector(removeall:) interval:2.0f];
 }
 
-//-(void) removeall:(ccTime) dt
-//{
-//	[self removeAllChildrenWithCleanup:YES];
-//}
 -(NSString *) title
 {
 	return @"EaseIn - EaseOut";

@@ -25,7 +25,8 @@ static NSString *transitions[] = {
 			@"Test4",
 			@"Test5",
 			@"Test6",
-			@"Test7",
+			@"StressTest1",
+			@"StressTest2",
 };
 
 Class nextAction()
@@ -430,7 +431,7 @@ Class restartAction()
 @end
 
 
-@implementation Test7
+@implementation StressTest1
 -(id) init
 {
 	if( ( self=[super init]) ) {
@@ -480,7 +481,58 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"stress test #1";
+	return @"stress test #1: no crashes";
+}
+@end
+
+@implementation StressTest2
+-(id) init
+{
+	// 
+	// Purpose of this test:
+	// Objects should be released when a layer is removed
+	//
+	
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		
+		Layer *sublayer = [Layer node];
+		
+		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		sp1.position = ccp(80, s.height/2);
+		
+		id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+		id move_ease_inout3 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
+		id move_ease_inout_back3 = [move_ease_inout3 reverse];
+		id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+		[sp1 runAction: [RepeatForever actionWithAction:seq3]];
+		[sublayer addChild:sp1 z:1];
+		
+		ParticleFire *fire = [ParticleFire node];
+		fire.position = ccp(80, s.height/2-50);
+		id copy_seq3 = [[seq3 copy] autorelease];
+		[fire runAction:[RepeatForever actionWithAction:copy_seq3]];
+		[sublayer addChild:fire z:2];
+				
+		[self schedule:@selector(shouldNotLeak:) interval:6.0f];
+		
+		[self addChild:sublayer z:0 tag:kTagSprite1];
+	}
+	
+	return self;
+}
+
+- (void) shouldNotLeak:(ccTime)dt
+{	
+	[self unschedule:_cmd];
+	id sublayer = [self getChildByTag:kTagSprite1];
+	[sublayer removeAllChildrenWithCleanup:YES];
+}
+
+-(NSString *) title
+{
+	return @"stress test #2: no leaks";
 }
 @end
 
