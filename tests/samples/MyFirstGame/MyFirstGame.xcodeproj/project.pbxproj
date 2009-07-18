@@ -1211,6 +1211,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyFirstGame_Prefix.pch;
+				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = "MyFirstGame-Info.plist";
 				PRODUCT_NAME = MyFirstGame;
@@ -1224,6 +1225,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyFirstGame_Prefix.pch;
+				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = "MyFirstGame-Info.plist";
 				PRODUCT_NAME = MyFirstGame;
