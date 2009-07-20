@@ -168,9 +168,11 @@ enum {
 @property(readwrite,assign) int tag;
 
 // initializators
-//! creates a node
+/** allocates and initializes a node.
+ The node will be created as "autorelease".
+ */
 +(id) node;
-//! initializes the node
+/** initializes the node */
 -(id) init;
 
 
