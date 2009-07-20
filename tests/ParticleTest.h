@@ -12,11 +12,13 @@
 
 @class Emitter;
 
-@interface ParticleDemo : Layer
+@interface ParticleDemo : ColorLayer
 {
 	ParticleSystem	*emitter;
 	Sprite			*background;
 }
+
+@property (readwrite,retain) ParticleSystem *emitter;
 
 -(NSString*) title;
 @end

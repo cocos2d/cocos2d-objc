@@ -55,6 +55,13 @@ enum {
 		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
+		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
+		
+		Label *label = [Label labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
+		[self addChild:label z:0];
+		[label setColor:ccc3(0,0,255)];
+		label.position = ccp( screenSize.width/2, screenSize.height-50);
+		
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
 	}

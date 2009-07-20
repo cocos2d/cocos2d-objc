@@ -26,7 +26,7 @@
 		activeSDKPreference = iphonesimulator3.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* MyFirstGame */;
 		addToTargets = (
-			1D6058900D05DD3D006BFB54 /* MyFirstGame */,
+			50479D451010E0BF00D1C71A /* cocos2d */,
 		);
 		codeSenseManager = 50479D3B1010DF6500D1C71A /* Code sense */;
 		executables = (
@@ -77,8 +77,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 269573061;
-			PBXWorkspaceStateSaveDate = 269573061;
+			PBXPerProjectTemplateStateSaveDate = 269819629;
+			PBXWorkspaceStateSaveDate = 269819629;
 		};
 		perUserProjectItems = {
 			50479EF81010E27E00D1C71A /* PBXTextBookmark */ = 50479EF81010E27E00D1C71A /* PBXTextBookmark */;
@@ -98,8 +98,10 @@
 			50479F4F1010E43600D1C71A /* PBXTextBookmark */ = 50479F4F1010E43600D1C71A /* PBXTextBookmark */;
 			50479F501010E43600D1C71A /* PBXTextBookmark */ = 50479F501010E43600D1C71A /* PBXTextBookmark */;
 			50479F511010E43600D1C71A /* PBXTextBookmark */ = 50479F511010E43600D1C71A /* PBXTextBookmark */;
-			5047A09F101129DA00D1C71A /* PBXTextBookmark */ = 5047A09F101129DA00D1C71A /* PBXTextBookmark */;
-			50D4394B1011FD6C00895754 /* PBXTextBookmark */ = 50D4394B1011FD6C00895754 /* PBXTextBookmark */;
+			50EC554110151F4900489A93 /* PBXTextBookmark */ = 50EC554110151F4900489A93 /* PBXTextBookmark */;
+			50EC554510151F4B00489A93 /* PBXTextBookmark */ = 50EC554510151F4B00489A93 /* PBXTextBookmark */;
+			50EC554610151F4B00489A93 /* PBXTextBookmark */ = 50EC554610151F4B00489A93 /* PBXTextBookmark */;
+			50EC555210151F5500489A93 /* PBXTextBookmark */ = 50EC555210151F5500489A93 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 50479D3A1010DF6500D1C71A /* Source Control */;
 		userBuildSettings = {
@@ -186,6 +188,13 @@
 			sepNavIntBoundsRect = "{{0, 0}, {1011, 1134}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 775}";
+		};
+	};
+	50479D821010E0DD00D1C71A /* ParticleSystem.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1219, 3150}}";
+			sepNavSelRange = "{734, 0}";
+			sepNavVisRange = "{0, 778}";
 		};
 	};
 	50479E291010E0ED00D1C71A /* CocosDenshion */ = {
@@ -371,7 +380,15 @@
 		vrLen = 1383;
 		vrLoc = 0;
 	};
-	5047A09F101129DA00D1C71A /* PBXTextBookmark */ = {
+	50EC554110151F4900489A93 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: Primitives.h: No such file or directory";
+		fRef = 50479D821010E0DD00D1C71A /* ParticleSystem.m */;
+		rLen = 1;
+		rLoc = 27;
+		rType = 1;
+	};
+	50EC554510151F4B00489A93 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 50479D3D1010E04B00D1C71A /* HelloWorldLayer.h */;
 		name = "HelloWorldLayer.h: 4";
@@ -381,7 +398,7 @@
 		vrLen = 146;
 		vrLoc = 0;
 	};
-	50D4394B1011FD6C00895754 /* PBXTextBookmark */ = {
+	50EC554610151F4B00489A93 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 50479D3D1010E04B00D1C71A /* HelloWorldLayer.h */;
 		name = "HelloWorldLayer.h: 4";
@@ -389,6 +406,16 @@
 		rLoc = 86;
 		rType = 0;
 		vrLen = 146;
+		vrLoc = 0;
+	};
+	50EC555210151F5500489A93 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50479D821010E0DD00D1C71A /* ParticleSystem.m */;
+		name = "ParticleSystem.m: 28";
+		rLen = 0;
+		rLoc = 734;
+		rType = 0;
+		vrLen = 1338;
 		vrLoc = 0;
 	};
 }
