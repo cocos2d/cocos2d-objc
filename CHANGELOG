@@ -1,5 +1,6 @@
 version 0.8 - XX-Jul-2009
  . Actions: Repeat repeats OK (issue #424)
+ . ActionManager: 5% increase in performance (issue #451)
  . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
  . CocosDenshion: CFURLCopyPathExtension fixed leak (issue #444)
  . CocosLive: using the deprecated CString API (issue #441)
