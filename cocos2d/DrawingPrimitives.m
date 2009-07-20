@@ -17,7 +17,7 @@
 #import <stdlib.h>
 #import <string.h>
 
-#import "Primitives.h"
+#import "DrawingPrimitives.h"
 
 void drawPoint( CGPoint point )
 {

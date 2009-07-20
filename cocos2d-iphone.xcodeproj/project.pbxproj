@@ -736,8 +736,8 @@
 		50B2CB940E10EE4A00AE9530 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50B2CB950E10EE4A00AE9530 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50B2CB970E10EE4A00AE9530 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
-		50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2CCC20E119B8E00AE9530 /* Primitives.h */; };
-		50B2CCCF0E119B8E00AE9530 /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* Primitives.m */; };
+		50B2CCCE0E119B8E00AE9530 /* DrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2CCC20E119B8E00AE9530 /* DrawingPrimitives.h */; };
+		50B2CCCF0E119B8E00AE9530 /* DrawingPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* DrawingPrimitives.m */; };
 		50B2CE500E12A01C00AE9530 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		50B2CE510E12A02100AE9530 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50B2CE520E12A03B00AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -972,6 +972,7 @@
 		50E676970F6587FD003DAA90 /* spritesheet1.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 50E676960F6587FD003DAA90 /* spritesheet1.pvr */; };
 		50E676A70F658B68003DAA90 /* grossinis_sister1.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */; };
 		50EC53F21014DEEB00489A93 /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EC53F11014DEEB00489A93 /* ccHashSet.m */; };
+		50EC54CD101519E400489A93 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9924A0F9F183500767ABC /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F992450F9F183500767ABC /* AppController.m */; };
@@ -1892,8 +1893,8 @@
 		50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossinis_sister1.png; sourceTree = "<group>"; };
 		50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossinis_sister2.png; sourceTree = "<group>"; };
 		50B2CB2B0E10EE4A00AE9530 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		50B2CCC20E119B8E00AE9530 /* Primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Primitives.h; sourceTree = "<group>"; };
-		50B2CCC30E119B8E00AE9530 /* Primitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Primitives.m; sourceTree = "<group>"; };
+		50B2CCC20E119B8E00AE9530 /* DrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPrimitives.h; sourceTree = "<group>"; };
+		50B2CCC30E119B8E00AE9530 /* DrawingPrimitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPrimitives.m; sourceTree = "<group>"; };
 		50B2CE460E129FD900AE9530 /* ChipmunkTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ChipmunkDemo-Info.plist"; path = "Resources/ChipmunkDemo-Info.plist"; sourceTree = "<group>"; };
 		50B53B640F3F28DC00E81F83 /* test_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test_image.gif; sourceTree = "<group>"; };
@@ -2918,8 +2919,8 @@
 				50637A160E95397A000C9182 /* TextureAtlas.m */,
 				5066020F0E38A70D000B500E /* Scheduler.h */,
 				506602100E38A70D000B500E /* Scheduler.m */,
-				50B2CCC20E119B8E00AE9530 /* Primitives.h */,
-				50B2CCC30E119B8E00AE9530 /* Primitives.m */,
+				50B2CCC20E119B8E00AE9530 /* DrawingPrimitives.h */,
+				50B2CCC30E119B8E00AE9530 /* DrawingPrimitives.m */,
 				509E665C0E06CD940050992C /* Camera.h */,
 				509E665D0E06CD940050992C /* Camera.m */,
 				5018F2560DFDEAFF00C013A5 /* Director.h */,
@@ -3795,7 +3796,7 @@
 				509E665E0E06CD940050992C /* Camera.h in Headers */,
 				509E66F00E06E1360050992C /* CameraAction.h in Headers */,
 				502B3E9A0E09A59500886982 /* Transition.h in Headers */,
-				50B2CCCE0E119B8E00AE9530 /* Primitives.h in Headers */,
+				50B2CCCE0E119B8E00AE9530 /* DrawingPrimitives.h in Headers */,
 				5038B6B20E196CD8009A621E /* ParticleSystem.h in Headers */,
 				50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */,
 				504055B00E3230BD00213FEF /* ParticleExamples.h in Headers */,
@@ -5515,6 +5516,7 @@
 				506046A50E75CEFB0044A29B /* f2.png in Resources */,
 				506046A60E75CEFB0044A29B /* r1.png in Resources */,
 				5069723B0FFD3E2B00D49022 /* background.png in Resources */,
+				50EC54CD101519E400489A93 /* background3.png in Resources */,
 				506046A70E75CEFB0044A29B /* r2.png in Resources */,
 				50DB1BB50E1C1E5900A89DFF /* Default.png in Resources */,
 				50DB1BB60E1C1E5900A89DFF /* Icon.png in Resources */,
@@ -5678,7 +5680,7 @@
 				509E665F0E06CD940050992C /* Camera.m in Sources */,
 				509E66F10E06E1360050992C /* CameraAction.m in Sources */,
 				502B3E9B0E09A59500886982 /* Transition.m in Sources */,
-				50B2CCCF0E119B8E00AE9530 /* Primitives.m in Sources */,
+				50B2CCCF0E119B8E00AE9530 /* DrawingPrimitives.m in Sources */,
 				5038B6B30E196CD8009A621E /* ParticleSystem.m in Sources */,
 				504055B10E3230BD00213FEF /* ParticleExamples.m in Sources */,
 				509E574D0E36234300BD7F09 /* TextureNode.m in Sources */,

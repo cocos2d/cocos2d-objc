@@ -71,8 +71,6 @@
 		50479DF01010E0DD00D1C71A /* ParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479D821010E0DD00D1C71A /* ParticleSystem.m */; };
 		50479DF11010E0DD00D1C71A /* PointParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479D831010E0DD00D1C71A /* PointParticleSystem.h */; };
 		50479DF21010E0DD00D1C71A /* PointParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479D841010E0DD00D1C71A /* PointParticleSystem.m */; };
-		50479DF31010E0DD00D1C71A /* Primitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479D851010E0DD00D1C71A /* Primitives.h */; };
-		50479DF41010E0DD00D1C71A /* Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479D861010E0DD00D1C71A /* Primitives.m */; };
 		50479DF51010E0DD00D1C71A /* QuadParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479D871010E0DD00D1C71A /* QuadParticleSystem.h */; };
 		50479DF61010E0DD00D1C71A /* QuadParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479D881010E0DD00D1C71A /* QuadParticleSystem.m */; };
 		50479DF71010E0DD00D1C71A /* Scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479D891010E0DD00D1C71A /* Scene.h */; };
@@ -99,7 +97,6 @@
 		50479E0C1010E0DD00D1C71A /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479D9F1010E0DD00D1C71A /* TGAlib.m */; };
 		50479E0D1010E0DD00D1C71A /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA01010E0DD00D1C71A /* TransformUtils.h */; };
 		50479E0E1010E0DD00D1C71A /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479DA11010E0DD00D1C71A /* TransformUtils.m */; };
-		50479E111010E0DD00D1C71A /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA41010E0DD00D1C71A /* uthash.h */; };
 		50479E121010E0DD00D1C71A /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA51010E0DD00D1C71A /* TextureAtlas.h */; };
 		50479E131010E0DD00D1C71A /* TextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50479DA61010E0DD00D1C71A /* TextureAtlas.m */; };
 		50479E141010E0DD00D1C71A /* TextureMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 50479DA71010E0DD00D1C71A /* TextureMgr.h */; };
@@ -191,6 +188,10 @@
 		50479EEB1010E23F00D1C71A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50479EEA1010E23F00D1C71A /* OpenAL.framework */; };
 		50479F111010E30D00D1C71A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50479F101010E30D00D1C71A /* CoreGraphics.framework */; };
 		50479F451010E40500D1C71A /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479F441010E40500D1C71A /* fps_images.png */; };
+		50EC553810151F1400489A93 /* ccHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 50EC553610151F1400489A93 /* ccHashSet.h */; };
+		50EC553910151F1400489A93 /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EC553710151F1400489A93 /* ccHashSet.m */; };
+		50EC553C10151F2700489A93 /* DrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50EC553A10151F2700489A93 /* DrawingPrimitives.h */; };
+		50EC553D10151F2700489A93 /* DrawingPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EC553B10151F2700489A93 /* DrawingPrimitives.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,8 +295,6 @@
 		50479D821010E0DD00D1C71A /* ParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystem.m; sourceTree = "<group>"; };
 		50479D831010E0DD00D1C71A /* PointParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointParticleSystem.h; sourceTree = "<group>"; };
 		50479D841010E0DD00D1C71A /* PointParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointParticleSystem.m; sourceTree = "<group>"; };
-		50479D851010E0DD00D1C71A /* Primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Primitives.h; sourceTree = "<group>"; };
-		50479D861010E0DD00D1C71A /* Primitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Primitives.m; sourceTree = "<group>"; };
 		50479D871010E0DD00D1C71A /* QuadParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadParticleSystem.h; sourceTree = "<group>"; };
 		50479D881010E0DD00D1C71A /* QuadParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuadParticleSystem.m; sourceTree = "<group>"; };
 		50479D891010E0DD00D1C71A /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
@@ -322,7 +321,6 @@
 		50479D9F1010E0DD00D1C71A /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		50479DA01010E0DD00D1C71A /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		50479DA11010E0DD00D1C71A /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
-		50479DA41010E0DD00D1C71A /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		50479DA51010E0DD00D1C71A /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
 		50479DA61010E0DD00D1C71A /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
 		50479DA71010E0DD00D1C71A /* TextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureMgr.h; sourceTree = "<group>"; };
@@ -422,6 +420,10 @@
 		50479EEA1010E23F00D1C71A /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		50479F101010E30D00D1C71A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		50479F441010E40500D1C71A /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../../../Resources/Images/fps_images.png; sourceTree = SOURCE_ROOT; };
+		50EC553610151F1400489A93 /* ccHashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccHashSet.h; sourceTree = "<group>"; };
+		50EC553710151F1400489A93 /* ccHashSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccHashSet.m; sourceTree = "<group>"; };
+		50EC553A10151F2700489A93 /* DrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPrimitives.h; sourceTree = "<group>"; };
+		50EC553B10151F2700489A93 /* DrawingPrimitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPrimitives.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MyFirstGame-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MyFirstGame-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -548,6 +550,8 @@
 		50479D491010E0DD00D1C71A /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50EC553A10151F2700489A93 /* DrawingPrimitives.h */,
+				50EC553B10151F2700489A93 /* DrawingPrimitives.m */,
 				50479D4A1010E0DD00D1C71A /* Action.h */,
 				50479D4B1010E0DD00D1C71A /* Action.m */,
 				50479D4C1010E0DD00D1C71A /* ActionManager.h */,
@@ -605,8 +609,6 @@
 				50479D821010E0DD00D1C71A /* ParticleSystem.m */,
 				50479D831010E0DD00D1C71A /* PointParticleSystem.h */,
 				50479D841010E0DD00D1C71A /* PointParticleSystem.m */,
-				50479D851010E0DD00D1C71A /* Primitives.h */,
-				50479D861010E0DD00D1C71A /* Primitives.m */,
 				50479D871010E0DD00D1C71A /* QuadParticleSystem.h */,
 				50479D881010E0DD00D1C71A /* QuadParticleSystem.m */,
 				50479D891010E0DD00D1C71A /* Scene.h */,
@@ -643,6 +645,8 @@
 		50479D8F1010E0DD00D1C71A /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				50EC553610151F1400489A93 /* ccHashSet.h */,
+				50EC553710151F1400489A93 /* ccHashSet.m */,
 				50479D901010E0DD00D1C71A /* ccArray.h */,
 				50479D911010E0DD00D1C71A /* CGPointExtension.h */,
 				50479D921010E0DD00D1C71A /* CGPointExtension.m */,
@@ -661,7 +665,6 @@
 				50479D9F1010E0DD00D1C71A /* TGAlib.m */,
 				50479DA01010E0DD00D1C71A /* TransformUtils.h */,
 				50479DA11010E0DD00D1C71A /* TransformUtils.m */,
-				50479DA41010E0DD00D1C71A /* uthash.h */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -851,7 +854,6 @@
 				50479DED1010E0DD00D1C71A /* ParticleExamples.h in Headers */,
 				50479DEF1010E0DD00D1C71A /* ParticleSystem.h in Headers */,
 				50479DF11010E0DD00D1C71A /* PointParticleSystem.h in Headers */,
-				50479DF31010E0DD00D1C71A /* Primitives.h in Headers */,
 				50479DF51010E0DD00D1C71A /* QuadParticleSystem.h in Headers */,
 				50479DF71010E0DD00D1C71A /* Scene.h in Headers */,
 				50479DF91010E0DD00D1C71A /* Scheduler.h in Headers */,
@@ -866,7 +868,6 @@
 				50479E091010E0DD00D1C71A /* Texture2D.h in Headers */,
 				50479E0B1010E0DD00D1C71A /* TGAlib.h in Headers */,
 				50479E0D1010E0DD00D1C71A /* TransformUtils.h in Headers */,
-				50479E111010E0DD00D1C71A /* uthash.h in Headers */,
 				50479E121010E0DD00D1C71A /* TextureAtlas.h in Headers */,
 				50479E141010E0DD00D1C71A /* TextureMgr.h in Headers */,
 				50479E161010E0DD00D1C71A /* TextureNode.h in Headers */,
@@ -876,6 +877,8 @@
 				50479E1D1010E0DD00D1C71A /* TouchDispatcher.h in Headers */,
 				50479E1F1010E0DD00D1C71A /* TouchHandler.h in Headers */,
 				50479E211010E0DD00D1C71A /* Transition.h in Headers */,
+				50EC553810151F1400489A93 /* ccHashSet.h in Headers */,
+				50EC553C10151F2700489A93 /* DrawingPrimitives.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1096,7 +1099,6 @@
 				50479DEE1010E0DD00D1C71A /* ParticleExamples.m in Sources */,
 				50479DF01010E0DD00D1C71A /* ParticleSystem.m in Sources */,
 				50479DF21010E0DD00D1C71A /* PointParticleSystem.m in Sources */,
-				50479DF41010E0DD00D1C71A /* Primitives.m in Sources */,
 				50479DF61010E0DD00D1C71A /* QuadParticleSystem.m in Sources */,
 				50479DF81010E0DD00D1C71A /* Scene.m in Sources */,
 				50479DFA1010E0DD00D1C71A /* Scheduler.m in Sources */,
@@ -1117,6 +1119,8 @@
 				50479E1E1010E0DD00D1C71A /* TouchDispatcher.m in Sources */,
 				50479E201010E0DD00D1C71A /* TouchHandler.m in Sources */,
 				50479E221010E0DD00D1C71A /* Transition.m in Sources */,
+				50EC553910151F1400489A93 /* ccHashSet.m in Sources */,
+				50EC553D10151F2700489A93 /* DrawingPrimitives.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

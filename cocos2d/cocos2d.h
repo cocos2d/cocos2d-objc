@@ -51,7 +51,7 @@
 #import "PointParticleSystem.h"
 #import "QuadParticleSystem.h"
 #import "ParticleExamples.h"
-#import "Primitives.h"
+#import "DrawingPrimitives.h"
 #import "Scene.h"
 #import "Scheduler.h"
 #import "Sprite.h"

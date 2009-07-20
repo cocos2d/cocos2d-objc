@@ -25,7 +25,6 @@
 
 // cocos2d
 #import "ParticleSystem.h"
-#import "Primitives.h"
 #import "TextureMgr.h"
 #import "ccMacros.h"
 

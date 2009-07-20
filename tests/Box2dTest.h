@@ -15,9 +15,7 @@
 
 @interface Box2DTestLayer : Layer {
 	b2World* world;
-	b2Body* body;
-	
-	AtlasSprite* boxSprite;
-	
+	b2Body* body;	
 }
+-(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
