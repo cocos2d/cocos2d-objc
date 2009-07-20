@@ -178,7 +178,7 @@ Class restartAction()
 		case 3: 
 		case 4: {
 			sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 52, 139) spriteManager:sheet];
-			[sheet addChild:sprite];
+			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 
@@ -202,7 +202,7 @@ Class restartAction()
 			x *= 85;
 			y *= 121;
 			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:sheet];
-			[sheet addChild:sprite];
+			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 
@@ -232,7 +232,7 @@ Class restartAction()
 			x *= 32;
 			y *= 32;
 			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,32,32) spriteManager:sheet];
-			[sheet addChild:sprite];
+			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 			
@@ -249,17 +249,21 @@ Class restartAction()
 {
 	switch (subtestNumber) {
 		case 1:
-		case 4:
-		case 7:
+		case 5:
+		case 9:
 			[parent removeChildByTag:tag+100 cleanup:YES];
 			break;
 		case 2:
 		case 3:
-		case 5:
+		case 4:
 		case 6:
+		case 7:
 		case 8:
-		case 9:
+		case 10:
+		case 11:
+		case 12:
 			[sheet removeChildAtIndex:tag cleanup:YES];
+//			[sheet removeChildByTag:tag+100 cleanup:YES];
 			break;
 		default:
 			break;
