@@ -1,8 +1,9 @@
 version 0.8 - XX-Jul-2009
  . Actions: Repeat repeats OK (issue #424)
+ . Actions: Prevents division by 0 when duration==0 (issue #452)
  . ActionManager: 5% increase in performance (issue #451)
  . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
- . CocosDenshion: CFURLCopyPathExtension fixed leak (issue #444)
+ . CocosDenshion: Added properties in SimpleSondEngine (issue #454)
  . CocosLive: using the deprecated CString API (issue #441)
  . CocosLive: send-score object can be reused (issue #417)
  . CocosNode: children is an explicit "property" (issue #411)
