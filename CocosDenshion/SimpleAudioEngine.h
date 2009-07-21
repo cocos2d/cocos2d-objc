@@ -30,6 +30,10 @@
 
 /** whether or not the engine is muted */
 @property (readwrite) BOOL muted;
+/** Background music volume. Range is 0.0f to 1.0f */
+@property (readwrite) float backgroundMusicVolume;
+/** Effects volume. Range is 0.0f to 1.0f */
+@property (readwrite) float effectsVolume;
 
 /** returns the shared instance of the SimpleAudioEngine object */
 + (SimpleAudioEngine*) sharedEngine;
@@ -49,7 +53,11 @@
 
 /** plays an audio effect with a file path*/
 -(ALuint) playEffect:(NSString*) filePath;
+<<<<<<< .mine
+/** plays an audio effect with control over pitch, pan and gain */
+=======
 /** plays an audio effect with a file path, pitch, pan and gain */
+>>>>>>> .r1176
 -(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain;
 /** preloads an audio effect */
 -(void) preloadEffect:(NSString*) filePath;
