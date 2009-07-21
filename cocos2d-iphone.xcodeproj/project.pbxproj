@@ -6375,6 +6375,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -6401,6 +6402,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -6481,6 +6483,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -6499,6 +6502,7 @@
 				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -6709,6 +6713,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
 			};
@@ -6723,6 +6728,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
 				ZERO_LINK = NO;
@@ -7010,6 +7016,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -7035,6 +7042,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -7382,6 +7390,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = TouchJSON;
 			};
@@ -7394,6 +7403,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = TouchJSON;
 				ZERO_LINK = NO;
@@ -7408,6 +7418,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_VERSION = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -7424,6 +7435,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_VERSION = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -7598,6 +7610,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
@@ -7616,6 +7629,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
@@ -7747,6 +7761,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -7773,6 +7788,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -7855,6 +7871,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -7881,6 +7898,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -7904,6 +7922,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
 			};
@@ -7916,6 +7935,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
 				ZERO_LINK = NO;
@@ -8150,6 +8170,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -8176,6 +8197,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -8256,6 +8278,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -8282,6 +8305,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -8307,6 +8331,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = vorbis;
 			};
@@ -8320,6 +8345,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = vorbis;
 				ZERO_LINK = NO;

@@ -154,7 +154,7 @@
 	[window setMultipleTouchEnabled:YES];
 		
 	// must be called before any othe call to the director
-	[Director useFastDirector];
+//	[Director useFastDirector];
 	
 	// Attach cocos2d to the window
 	[[Director sharedDirector] attachInWindow:window];

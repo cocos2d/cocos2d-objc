@@ -186,7 +186,7 @@ eachShape(void *ptr, void* unused)
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	[Director useFastDirector];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
