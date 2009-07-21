@@ -185,6 +185,29 @@ static CDAudioManager *am = nil;
 	}
 }
 
+#pragma mark SimpleAudioEngine - BackgroundMusicVolume
+-(float) backgroundMusicVolume
+{
+	return am.backgroundMusic.volume;
+}	
+
+-(void) setBackgroundMusicVolume:(float) volume
+{
+	am.backgroundMusic.volume = volume;
+}	
+
+#pragma mark SimpleAudioEngine - EffectsVolume
+-(float) effectsVolume
+{
+	return am.soundEngine.masterGain;
+}	
+
+-(void) setEffectsVolume:(float) volume
+{
+	am.soundEngine.masterGain = volume;
+}	
+
+
 @end 
 
 #pragma mark SimpleAudioEngine - Buffers
