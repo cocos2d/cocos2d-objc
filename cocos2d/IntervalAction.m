@@ -46,6 +46,12 @@
 {
 	if( (self=[super init]) ) {
 		duration = d;
+		
+		// prevent division by 0
+		// This comparison could be in step:, but it might decrease the performance
+		// by 3% in heavy based action games.
+		if( duration == 0 )
+			duration = 0.00000001f;
 		elapsed = 0;
 		firstTick = YES;
 	}
@@ -72,11 +78,7 @@
 	} else
 		elapsed += dt;
 
-	// prevent division by 0
-	if( duration == 0 )	
-		[self update:1];
-	else
-		[self update: MIN(1, elapsed/duration)];
+	[self update: MIN(1, elapsed/duration)];
 }
 
 -(void) start

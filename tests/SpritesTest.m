@@ -160,11 +160,13 @@ Class restartAction()
 	
 	tamara.scaleX = 2.5f;
 	tamara.scaleY = -1.0f;
-	tamara.position = ccp(100,100);
+	tamara.position = ccp(100,70);
+	tamara.opacity = 128;
 	
 	grossini.rotation = 120;
 	grossini.opacity = 128;
-	grossini.position = ccp(240,160);	
+	grossini.position = ccp(240,160);
+	grossini.color = ccc3( 255,0,0);
 }
 
 -(NSString *) title
@@ -609,7 +611,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Callback action: CallFunc and friends";
+	return @"Callbacks: CallFunc and friends";
 }
 @end
 
@@ -656,7 +658,7 @@ Class restartAction()
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	[Director useFastDirector];
+//	[Director useFastDirector];
 	
 	// Attach cocos2d to the window
 	[[Director sharedDirector] attachInWindow:window];

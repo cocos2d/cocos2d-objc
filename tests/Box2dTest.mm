@@ -174,7 +174,7 @@ enum {
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	[Director useFastDirector];
+//	[Director useFastDirector];
 
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[Director sharedDirector] setAnimationInterval:1.0/60];

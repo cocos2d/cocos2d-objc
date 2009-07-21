@@ -275,7 +275,11 @@
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
-							<array/>
+							<array>
+								<array>
+									<integer>0</integer>
+								</array>
+							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
 							<string>{{0, 0}, {186, 669}}</string>
 						</dict>
@@ -324,7 +328,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>50EC555210151F5500489A93</string>
+										<string>50EC55F21016225A00489A93</string>
 										<key>history</key>
 										<array>
 											<string>50479EF81010E27E00D1C71A</string>
@@ -336,7 +340,7 @@
 											<string>50479F501010E43600D1C71A</string>
 											<string>50479F511010E43600D1C71A</string>
 											<string>50EC554510151F4B00489A93</string>
-											<string>50EC554110151F4900489A93</string>
+											<string>50EC555210151F5500489A93</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -349,7 +353,6 @@
 											<string>50479F371010E3B700D1C71A</string>
 											<string>50479F381010E3B700D1C71A</string>
 											<string>50479F3B1010E3B700D1C71A</string>
-											<string>50EC554610151F4B00489A93</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -407,9 +410,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>50EC554810151F4B00489A93</string>
+				<string>50EC55F31016225A00489A93</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>50EC554910151F4B00489A93</string>
+				<string>50EC55F41016225A00489A93</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -543,9 +546,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>50479EF11010E27900D1C71A</string>
 		<string>/Users/riq/progs/cocos2d-iphone/trunk/tests/samples/MyFirstGame/MyFirstGame.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
