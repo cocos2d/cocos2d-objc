@@ -71,7 +71,12 @@
 		elapsed = 0;
 	} else
 		elapsed += dt;
-	[self update: MIN(1, elapsed/duration)];
+
+	// prevent division by 0
+	if( duration == 0 )	
+		[self update:1];
+	else
+		[self update: MIN(1, elapsed/duration)];
 }
 
 -(void) start
@@ -389,10 +394,9 @@
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
-	if( !(self=[super initWithDuration: t]) )
-		return nil;
-	
-	angle = a;
+	if( (self=[super initWithDuration: t]) ) {	
+		angle = a;
+	}
 	return self;
 }
 
