@@ -88,7 +88,7 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) setrelativeAnchorPoint: (BOOL)newValue
+-(void) setRelativeAnchorPoint: (BOOL)newValue
 {
 	relativeAnchorPoint_ = newValue;
 	isTransformDirty_ = isInverseDirty_ = YES;

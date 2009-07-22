@@ -1,5 +1,6 @@
 version 0.8 - xxx-MMM-2009
  . Action: Speed#stop calls other's stop (issue #460)
+ . CocosNode: setRelativeAnchorPoint error (issue #461)
  . Director: convertCoordinate roundoff error (issue #453)
  
 version 0.8-rc2 - 21-Jul-2009
