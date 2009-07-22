@@ -1,4 +1,4 @@
-version 0.8 - XX-Jul-2009
+version 0.8-rc2 - 21-Jul-2009
  . Actions: Repeat repeats OK (issue #424)
  . Actions: Prevents division by 0 when duration==0 (issue #452)
  . ActionManager: 5% increase in performance (issue #451)
