@@ -206,6 +206,12 @@
 	[other start];
 }
 
+-(void) stop
+{
+	[other stop];
+	[super stop];
+}
+
 -(void) step:(ccTime) dt
 {
 	[other step: dt * speed];

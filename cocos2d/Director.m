@@ -493,8 +493,8 @@ static Director *_sharedDirector = nil;
 // convert a coordinate from uikit to opengl
 -(CGPoint)convertCoordinate:(CGPoint)p
 {
-	int newY = openGLView_.frame.size.height - p.y;
-	int newX = openGLView_.frame.size.width -p.x;
+	float newY = openGLView_.frame.size.height - p.y;
+	float newX = openGLView_.frame.size.width -p.x;
 	
 	CGPoint ret;
 	switch ( deviceOrientation_) {
