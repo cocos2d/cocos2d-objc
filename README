@@ -84,13 +84,11 @@ Then, drag "Active Target" and "Active Executable" to your top project tool bar.
 Select the test you want to view in both drop downs and hit Build and Go.
 
 
-How to code from scratch a new game
------------------------------------
+How to start a new game
+-----------------------
 
-The recommended way to start coding a new game, is by using this project:
+To start an "empty" cocos2d game, you can do it by using this "empty" XCode project:
 tests/samples/MyFirstGame/MyFirstGame.xcodeproj
-
-It's a good starting point.
 
 
 
