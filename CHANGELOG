@@ -1,4 +1,4 @@
-version 0.8 - xxx-MMM-2009
+version 0.8 - 27-Jul-2009
  . Action: Speed#stop calls other's stop (issue #460)
  . BitmapFontAtlas: opacity and color work as expected (issue #463)
  . CocosNode: setRelativeAnchorPoint error (issue #461)
