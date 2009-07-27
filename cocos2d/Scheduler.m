@@ -56,7 +56,7 @@
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
 #endif
 		
-		// XXX: target should not be retained. But cocosnodeTest#stress test shall not crash
+		// target is being retained. Be careful with ciruclar references
 		target = [t retain];
 		selector = s;
 		impMethod = (TICK_IMP) [t methodForSelector:s];

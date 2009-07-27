@@ -268,17 +268,31 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		ColorLayer *col = [ColorLayer layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:col z:-10];
+		
 		BitmapFontAtlas *label1 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		
 		// testing anchors
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
-		label1.opacity = 32;
+		id fade = [FadeOut actionWithDuration:1.0f];
+		id fade_in = [fade reverse];
+		id seq = [Sequence actions:fade, fade_in, nil];
+		id repeat = [RepeatForever actionWithAction:seq];
+		[label1 runAction:repeat];
 		
+
+		// VERY IMPORTANT
+		// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
+		// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
+		// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
 		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
 		label2.anchorPoint = ccp(0.5f, 0.5f);
+		label2.color = ccRED;
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
+		[label2 runAction: [[repeat copy] autorelease]];
 		
 		BitmapFontAtlas *label3 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors

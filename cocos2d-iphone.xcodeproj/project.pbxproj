@@ -502,7 +502,6 @@
 		5064164B0F9C9B24007A7B24 /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */; };
 		5064164C0F9C9B24007A7B24 /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */; };
 		506417F00F9CBA72007A7B24 /* bitmapFontTest2.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */; };
-		506417F10F9CBA72007A7B24 /* bitmapFontTest2.png in Resources */ = {isa = PBXBuildFile; fileRef = 506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */; };
 		506602110E38A70D000B500E /* Scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* Scheduler.h */; };
 		506602120E38A70D000B500E /* Scheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* Scheduler.m */; };
 		506881F80E95761200F943E5 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -629,6 +628,7 @@
 		509B3A310F31031300F2FB95 /* libcocos Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A0D0F31024E00F2FB95 /* libcocos Live.a */; };
 		509B3A630F31065C00F2FB95 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A620F31065C00F2FB95 /* UIKit.framework */; };
 		509B3A650F31067500F2FB95 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A640F31067500F2FB95 /* Foundation.framework */; };
+		509D05D3101DDED5007E1749 /* bitmapFontTest2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */; };
 		509E574C0E36234300BD7F09 /* TextureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E574A0E36234300BD7F09 /* TextureNode.h */; };
 		509E574D0E36234300BD7F09 /* TextureNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E574B0E36234300BD7F09 /* TextureNode.m */; };
 		509E665E0E06CD940050992C /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* Camera.h */; };
@@ -1780,7 +1780,6 @@
 		506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest.fnt; sourceTree = "<group>"; };
 		5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest.png; sourceTree = "<group>"; };
 		506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest2.fnt; sourceTree = "<group>"; };
-		506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest2.png; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
 		506602100E38A70D000B500E /* Scheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scheduler.m; sourceTree = "<group>"; };
 		506881E60E9575E100F943E5 /* AtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasTest.h; path = tests/AtlasTest.h; sourceTree = "<group>"; };
@@ -1853,6 +1852,7 @@
 		509B3A280F3102FD00F2FB95 /* cocosLiveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosLiveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A620F31065C00F2FB95 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		509B3A640F31067500F2FB95 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = bitmapFontTest2.bmp; sourceTree = "<group>"; };
 		509E574A0E36234300BD7F09 /* TextureNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureNode.h; sourceTree = "<group>"; };
 		509E574B0E36234300BD7F09 /* TextureNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureNode.m; sourceTree = "<group>"; };
 		509E665C0E06CD940050992C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
@@ -3284,7 +3284,7 @@
 				50421E350FBD6D4000B992F7 /* bitmapFontTest3.fnt */,
 				50421E360FBD6D4000B992F7 /* bitmapFontTest3.png */,
 				506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */,
-				506417EF0F9CBA72007A7B24 /* bitmapFontTest2.png */,
+				509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */,
 				506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */,
 				5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */,
 			);
@@ -5210,7 +5210,7 @@
 				5064164B0F9C9B24007A7B24 /* bitmapFontTest.fnt in Resources */,
 				5064164C0F9C9B24007A7B24 /* bitmapFontTest.png in Resources */,
 				506417F00F9CBA72007A7B24 /* bitmapFontTest2.fnt in Resources */,
-				506417F10F9CBA72007A7B24 /* bitmapFontTest2.png in Resources */,
+				509D05D3101DDED5007E1749 /* bitmapFontTest2.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7110,6 +7110,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -7137,6 +7138,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;

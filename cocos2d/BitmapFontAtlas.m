@@ -397,8 +397,10 @@ void FNTConfigRemoveCache( void )
 		tmpSize.height = MAX( rect.size.height, contentSize_.height);
 		
 		// Apply label properties
-		fontChar.opacity = self.opacity;
+		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
+		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
 		[fontChar setColor:color_];
+		[fontChar setOpacity: opacity_];
 	}
 	
 	[self setContentSize:tmpSize];
@@ -434,16 +436,14 @@ void FNTConfigRemoveCache( void )
 {
 	opacity_ = opacity;
 
-	// special opacity for premultiplied textures
-	if( opacityModifyRGB_ )
-		color_.r = color_.g = color_.b = opacity_;
-
 	for( id child in children )
 		[child setOpacity:opacity_];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;
+	for( id child in children)
+		[child setOpacityModifyRGB:modify];
 }
 -(BOOL) doesOpacityModifyRGB
 {
