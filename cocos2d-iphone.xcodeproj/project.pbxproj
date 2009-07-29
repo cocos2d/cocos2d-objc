@@ -40,6 +40,8 @@
 		500165AA0E72DB7D0085673F /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		500166030E72E1DB0085673F /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		500166040E72E1DB0085673F /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		500426C51020D2730032274D /* iso-test1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 500426C31020D2730032274D /* iso-test1.tmx */; };
+		500426C61020D2730032274D /* iso.png in Resources */ = {isa = PBXBuildFile; fileRef = 500426C41020D2730032274D /* iso.png */; };
 		500AA21F0E77926900872752 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500AA2200E77926900872752 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500AA2210E77926900872752 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -1544,6 +1546,8 @@
 		5001659E0E72DB470085673F /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b2.png; sourceTree = "<group>"; };
 		5001659F0E72DB470085673F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
+		500426C31020D2730032274D /* iso-test1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "iso-test1.tmx"; sourceTree = "<group>"; };
+		500426C41020D2730032274D /* iso.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iso.png; sourceTree = "<group>"; };
 		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
 		5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-mono.png"; sourceTree = "<group>"; };
 		5012DAC40FE179BF00D6DDD1 /* TouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDelegateProtocol.h; sourceTree = "<group>"; };
@@ -3069,6 +3073,8 @@
 		503F5D0C101FEDAE002A37E5 /* tilemap */ = {
 			isa = PBXGroup;
 			children = (
+				500426C31020D2730032274D /* iso-test1.tmx */,
+				500426C41020D2730032274D /* iso.png */,
 				50F29FD71020607E0046CA73 /* orthogonal-test2.tmx */,
 				50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */,
 				50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */,
@@ -5059,6 +5065,8 @@
 				50F29FDA1020607E0046CA73 /* orthogonal-test2.tmx in Resources */,
 				50F29FDB1020607E0046CA73 /* orthogonal-test4.tmx in Resources */,
 				50F29FDC1020607E0046CA73 /* orthogonal-test3.tmx in Resources */,
+				500426C51020D2730032274D /* iso-test1.tmx in Resources */,
+				500426C61020D2730032274D /* iso.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
