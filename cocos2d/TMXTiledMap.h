@@ -28,6 +28,10 @@
    - Each tile can be rotated / moved / scaled / tinted / "opacitied"
    - Tiles can be added/removed in runtime
    - The z-order of the tiles can be modified in runtime.
+   - Each tile has an anchorPoint of (0,0)
+   - The anchorPoint of the TMXTileMap is (0,0)
+   - The TMX layers will be added as a child
+   - The TMX layers will be aliased by default
  
  Limitations:
    - It only supports one tileset.
@@ -47,25 +51,4 @@
 /** initializes a TMX Tiled Map with a TMX file */
 -(id) initWithTMXFile:(NSString*)tmxFile;
 @end
-
-/**
- TMXLayer is TMX layer.
- Internally it is represended by an AtlasSpriteManager
- @since v0.8.1
- */
-@interface TMXLayer : AtlasSpriteManager <CocosNodeRGBA>
-{
-	// texture RGBA
-	GLubyte		opacity_;
-	ccColor3B	color_;
-	BOOL opacityModifyRGB_;
-}
-
-/** conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity;
-/** conforms to CocosNodeRGBA protocol */
-@property (readonly) ccColor3B color;
-@end
-
-
 
