@@ -44,6 +44,14 @@ enum
 }
 @end
 @implementation LayerData
+- (void) dealloc
+{
+	CCLOG(@"dealling %@",self);
+	if( tiles )
+		free(tiles);
+	[super dealloc];
+}
+
 @end
 
 #pragma mark -
@@ -67,6 +75,14 @@ enum
 -(CGRect) tileForGID:(unsigned int)gid;
 @end
 @implementation TilesetData
+- (void) dealloc
+{
+	CCLOG(@"deallocing %@", self);
+	[sourceImage release];
+	[name release];
+	[super dealloc];
+}
+
 -(CGRect) tileForGID:(unsigned int)gid
 {
 	CGRect rect;
@@ -79,8 +95,6 @@ enum
 	
 	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin + 1;
 	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin + 1;
-	
-	NSLog(@"requesting GUID: %d. x,y=(%f,%f) max: %d", gid, rect.origin.x, rect.origin.y, max_x);
 
 	return rect;
 }
@@ -165,6 +179,7 @@ enum {
 	CCLOG(@"deallocing %@", self);
 	[tilesets release];
 	[layers release];
+	[currentString release];
 	[super dealloc];
 }
 
@@ -203,7 +218,7 @@ enum {
 	} else if([elementName isEqualToString:@"layer"]) {
 
 		LayerData *layer = [LayerData new];
-		layer->name = [attributeDict valueForKey:@"name"];
+		layer->name = [[attributeDict valueForKey:@"name"] retain];
 		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
 		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
 		
@@ -212,7 +227,7 @@ enum {
 	} else if([elementName isEqualToString:@"image"]) {
 
 		TilesetData *tileset = [tilesets lastObject];
-		tileset->sourceImage = [attributeDict valueForKey:@"source"];
+		tileset->sourceImage = [[attributeDict valueForKey:@"source"] retain];
 
 	} else if([elementName isEqualToString:@"data"]) {
 
@@ -272,63 +287,16 @@ enum {
 // the level did not load, file not found, etc.
 //
 -(void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
-	NSLog(@"Error on XML Parse: %@", [parseError localizedDescription] );
+	CCLOG(@"Error on XML Parse: %@", [parseError localizedDescription] );
 }
 
-@end
-
-#pragma mark -
-#pragma mark TMXLayer
-
-@implementation TMXLayer
-@synthesize opacity=opacity_, color=color_;
-
--(id) init
-{
-	if( (self=[super init])) {
-		opacity_ = 255;
-		color_ = ccWHITE;
-		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];				
-	}			
-	return self;
-}
-#pragma mark CocosNodeRGBA protocol
--(void) setColor:(ccColor3B)color
-{
-	color_ = color;
-	for( AtlasSprite* child in children )
-		[child setColor:color_];
-}
-
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
-{
-	[self setColor:ccc3(r,g,b)];
-}
-
--(void) setOpacity:(GLubyte)opacity
-{
-	opacity_ = opacity;
-	
-	for( id child in children )
-		[child setOpacity:opacity_];
-}
--(void) setOpacityModifyRGB:(BOOL)modify
-{
-	opacityModifyRGB_ = modify;
-	for( id child in children)
-		[child setOpacityModifyRGB:modify];
-}
--(BOOL) doesOpacityModifyRGB
-{
-	return opacityModifyRGB_;
-}
 @end
 
 #pragma mark -
 #pragma mark TMXTiledMap
 
 @interface TMXTiledMap (Private)
--(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset;
+-(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset zOrder:(int)zOrder;
 @end
 
 @implementation TMXTiledMap
@@ -346,9 +314,10 @@ enum {
 		MapData *map = [MapData formatWithTMXFile:tmxFile];
 		NSAssert( [map->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
 		
+		int idx=0;
 		TilesetData *tileset = [map->tilesets objectAtIndex:0];
 		for( LayerData *layer in map->layers) {
-			[self parseLayer:layer tileset:tileset];
+			[self parseLayer:layer tileset:tileset zOrder:idx++];
 		}
 	}
 
@@ -361,12 +330,12 @@ enum {
 }
 
 // private
--(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset
+-(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset zOrder:(int)z
 {
 	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
 	tileset->imageSize = [[mgr texture] contentSize];
 	
-//	[[mgr texture] setAliasTexParameters];
+	[[mgr texture] setAliasTexParameters];
 
 	CFByteOrder o = CFByteOrderGetCurrent();
 	
@@ -389,13 +358,14 @@ enum {
 				rect = [tileset tileForGID:gid];
 
 				AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
+				tile.anchorPoint = CGPointZero;
 				[mgr addChild:tile z:0 tag:pos];
 				[tile setPosition:ccp( x * tileset->tileSize.width, (layer->layerSize.height - y) * tileset->tileSize.height ) ];
 			}
 		}
 	}
 	
-	[self addChild:mgr];
+	[self addChild:mgr z:z tag:z];
 }
 
 @end

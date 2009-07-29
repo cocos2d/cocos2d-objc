@@ -60,6 +60,8 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
+		self.isTouchEnabled = YES;
+
 		CGSize s = [[Director sharedDirector] winSize];
 			
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
@@ -85,6 +87,37 @@ Class restartAction()
 -(void) dealloc
 {
 	[super dealloc];
+}
+
+-(void) registerWithTouchDispatcher
+{
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:NO];
+}
+
+-(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
+{
+	return YES;
+}
+- (void)ccTouchMoved:(UITouch*)touch withEvent:(UIEvent *)event
+{
+	return [self ccTouchEnded:touch withEvent:event];
+}
+
+- (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
+{
+	CGSize s =[[Director sharedDirector] winSize];
+	
+	CGPoint location = [touch locationInView: [touch view]];
+	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+
+	CGPoint pos;
+	pos.x = -(convertedLocation.x - s.width/2);
+	pos.y = -(convertedLocation.y - s.height/2);
+	
+	id child = [self getChildByTag:kTagTileMap];
+	[child stopAllActions];
+	[child runAction: [MoveBy actionWithDuration:1 position:pos]];
+	
 }
 
 -(void) restartCallback: (id) sender
@@ -234,12 +267,8 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		[[Director sharedDirector] set2Dprojection];
-
 		TMXTiledMap *ortho = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
-		[self addChild:ortho z:0 tag:kTagTileMap];
-		
-		[ortho setScale:1.0f];
+		[self addChild:ortho z:0 tag:kTagTileMap];		
 	}	
 	return self;
 }
@@ -319,6 +348,12 @@ Class restartAction()
 	
 	Scene *scene = [Scene node];
 	[scene addChild: [nextAction() node]];
+	
+	//
+	// Run all the test with 2d projection
+	//
+	[[Director sharedDirector] set2Dprojection];
+	
 
 	[[Director sharedDirector] runWithScene: scene];
 }
