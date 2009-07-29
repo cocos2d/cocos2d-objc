@@ -89,10 +89,10 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 @synthesize hasPremultipliedAlpha=_hasPremultipliedAlpha;
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
-	GLint					saveName;
+//	GLint					saveName;
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
-		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
+//		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 
 		[self setAntiAliasTexParameters];
@@ -121,7 +121,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 				
 		}
 				
-		glBindTexture(GL_TEXTURE_2D, saveName);
+//		glBindTexture(GL_TEXTURE_2D, saveName);
 	
 		_size = size;
 		_width = width;
@@ -429,11 +429,11 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 @implementation Texture2D (PVRTC)
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
 {
-	GLint					saveName;
+//	GLint					saveName;
 
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
-		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
+//		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 
 		[self setAntiAliasTexParameters];
@@ -450,7 +450,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		}
 		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
 		
-		glBindTexture(GL_TEXTURE_2D, saveName);
+//		glBindTexture(GL_TEXTURE_2D, saveName);
 		
 		_size = CGSizeMake(length, length);
 		_width = length;

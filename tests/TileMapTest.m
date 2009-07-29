@@ -267,6 +267,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
+		[self addChild:color z:-1];
+
 		TMXTiledMap *ortho = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
 		[self addChild:ortho z:0 tag:kTagTileMap];		
 	}	
@@ -286,6 +289,11 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
+		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
+		[self addChild:color z:-1];
+		
+		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test1.tmx"];
+		[self addChild:iso z:0 tag:kTagTileMap];				
 	}	
 	return self;
 }

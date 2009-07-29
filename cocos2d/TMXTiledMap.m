@@ -46,7 +46,7 @@ enum
 @implementation LayerData
 - (void) dealloc
 {
-	CCLOG(@"dealling %@",self);
+	CCLOG(@"deallocing %@",self);
 	if( tiles )
 		free(tiles);
 	[super dealloc];
@@ -204,10 +204,10 @@ enum {
 		mapSize.height = [[attributeDict valueForKey:@"height"] intValue];
 		tileSize.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
 		tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
-	} else if([elementName isEqualToString:@"tileset"]) {
 
+	} else if([elementName isEqualToString:@"tileset"]) {
 		TilesetData *tileset = [TilesetData new];
-		tileset->name = [attributeDict valueForKey:@"name"];
+		tileset->name = [[attributeDict valueForKey:@"name"] retain];
 		tileset->firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
 		tileset->spacing = [[attributeDict valueForKey:@"spacing"] intValue];
 		tileset->margin = [[attributeDict valueForKey:@"margin"] intValue];
@@ -215,14 +215,16 @@ enum {
 		tileset->tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
 		
 		[tilesets addObject:tileset];
-	} else if([elementName isEqualToString:@"layer"]) {
+		[tileset release];
 
+	} else if([elementName isEqualToString:@"layer"]) {
 		LayerData *layer = [LayerData new];
 		layer->name = [[attributeDict valueForKey:@"name"] retain];
 		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
 		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
 		
 		[layers addObject:layer];
+		[layer release];
 		
 	} else if([elementName isEqualToString:@"image"]) {
 
@@ -230,7 +232,6 @@ enum {
 		tileset->sourceImage = [[attributeDict valueForKey:@"source"] retain];
 
 	} else if([elementName isEqualToString:@"data"]) {
-
 		NSString *encoding = [attributeDict valueForKey:@"encoding"];
 		NSString *compression = [attributeDict valueForKey:@"compression"];
 		
@@ -273,6 +274,8 @@ enum {
 			layer->tiles = deflated;
 		} else
 			layer->tiles = buffer;
+		
+		[currentString setString:@""];
 	}
 }
 
@@ -296,7 +299,10 @@ enum {
 #pragma mark TMXTiledMap
 
 @interface TMXTiledMap (Private)
--(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset zOrder:(int)zOrder;
+-(id) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset map:(MapData*)map;
+-(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
+-(void) setIsoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
+-(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
 @end
 
 @implementation TMXTiledMap
@@ -311,13 +317,27 @@ enum {
 	NSAssert(tmxFile != nil, @"TMXTiledMap: tmx file should not bi nil");
 
 	if ((self=[super init])) {
+		
+		[self setContentSize:CGSizeZero];
+
 		MapData *map = [MapData formatWithTMXFile:tmxFile];
 		NSAssert( [map->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
 		
 		int idx=0;
 		TilesetData *tileset = [map->tilesets objectAtIndex:0];
 		for( LayerData *layer in map->layers) {
-			[self parseLayer:layer tileset:tileset zOrder:idx++];
+			
+			id child = [self parseLayer:layer tileset:tileset map:map];
+			[self addChild:child z:idx tag:idx];
+			
+			// update content size with the max size
+			CGSize childSize = [child contentSize];
+			CGSize currentSize = [self contentSize];
+			currentSize.width = MAX( currentSize.width, childSize.width );
+			currentSize.height = MAX( currentSize.height, childSize.height );
+			[self setContentSize:currentSize];
+			
+			idx++;
 		}
 	}
 
@@ -330,7 +350,7 @@ enum {
 }
 
 // private
--(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset zOrder:(int)z
+-(id) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset map:(MapData*)map
 {
 	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
 	tileset->imageSize = [[mgr texture] contentSize];
@@ -351,7 +371,7 @@ enum {
 			if( o == CFByteOrderBigEndian )
 				gid = CFSwapInt32( gid );
 			
-			// gid == 0 --> empty tile
+			// XXX: gid == 0 --> empty tile
 			if( gid != 0 ) {
 				CGRect rect;
 
@@ -360,12 +380,37 @@ enum {
 				AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
 				tile.anchorPoint = CGPointZero;
 				[mgr addChild:tile z:0 tag:pos];
-				[tile setPosition:ccp( x * tileset->tileSize.width, (layer->layerSize.height - y) * tileset->tileSize.height ) ];
+				switch( map->orientation ) {
+					case TMXOrientationOrtho:
+						[self setOrthoTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
+						break;
+					case TMXOrientationIso:
+						[self setIsoTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
+						break;
+					case TMXOrientationHex:
+						[self setHexTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
+						break;
+						
+				}
 			}
 		}
-	}
-	
-	[self addChild:mgr z:z tag:z];
+	}	
+	return mgr;
 }
 
+-(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
+{
+	[tile setPosition:ccp( pos.x * tileSize.width, (layerSize.height - pos.y) * tileSize.height ) ];
+}
+
+-(void) setIsoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
+{
+	CGFloat mx = tileSize.width /2  *(pos.x - pos.y);
+	CGFloat my = (layerSize.height - (pos.x + pos.y)) * tileSize.height/2;
+	[tile setPosition:ccp(mx, my)];
+}
+-(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
+{
+	[tile setPosition:ccp( pos.x * tileSize.width, (layerSize.height - pos.y) * tileSize.height ) ];
+}		
 @end
