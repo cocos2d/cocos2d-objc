@@ -279,6 +279,39 @@
 		5038B6B30E196CD8009A621E /* ParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* ParticleSystem.m */; };
 		503909FB0FDFDC0B009F63EE /* menuitemsprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 503909FA0FDFDC0B009F63EE /* menuitemsprite.png */; };
 		503A2B070F64B26D00E436AB /* grossini_dance_atlas.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */; };
+		503F5C9A101FE930002A37E5 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		503F5C9B101FE930002A37E5 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		503F5C9C101FE930002A37E5 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		503F5C9D101FE930002A37E5 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		503F5C9E101FE930002A37E5 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		503F5C9F101FE930002A37E5 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		503F5CA0101FE930002A37E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		503F5CA1101FE930002A37E5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		503F5CA2101FE930002A37E5 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		503F5CA3101FE930002A37E5 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		503F5CA4101FE930002A37E5 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		503F5CA5101FE930002A37E5 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
+		503F5CA6101FE930002A37E5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		503F5CA7101FE930002A37E5 /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 506885B40E96AC4400F943E5 /* tuffy_bold_italic-charmap.png */; };
+		503F5CA8101FE930002A37E5 /* tiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 506886510E96C2D800F943E5 /* tiles.png */; };
+		503F5CA9101FE930002A37E5 /* levelmap.tga in Resources */ = {isa = PBXBuildFile; fileRef = 506888A20E96D7A200F943E5 /* levelmap.tga */; };
+		503F5CAA101FE930002A37E5 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		503F5CAB101FE930002A37E5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
+		503F5CAC101FE930002A37E5 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
+		503F5CAD101FE930002A37E5 /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 506416490F9C9B24007A7B24 /* bitmapFontTest.fnt */; };
+		503F5CAE101FE930002A37E5 /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 5064164A0F9C9B24007A7B24 /* bitmapFontTest.png */; };
+		503F5CAF101FE930002A37E5 /* bitmapFontTest2.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 506417EE0F9CBA72007A7B24 /* bitmapFontTest2.fnt */; };
+		503F5CB0101FE930002A37E5 /* bitmapFontTest2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */; };
+		503F5CB3101FE930002A37E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		503F5CB5101FE930002A37E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		503F5CB6101FE930002A37E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		503F5CB7101FE930002A37E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		503F5CB8101FE930002A37E5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		503F5CB9101FE930002A37E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		503F5CBA101FE930002A37E5 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		503F5CD1101FE9A9002A37E5 /* TileMapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F5CCF101FE9A9002A37E5 /* TileMapTest.m */; };
+		503F5D11101FEDAE002A37E5 /* orthogonal-test1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 503F5D0E101FEDAE002A37E5 /* orthogonal-test1.tmx */; };
+		503F5D12101FEDAE002A37E5 /* tankbrigade.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 503F5D0F101FEDAE002A37E5 /* tankbrigade.bmp */; };
 		504055B00E3230BD00213FEF /* ParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = 504055AE0E3230BD00213FEF /* ParticleExamples.h */; };
 		504055B10E3230BD00213FEF /* ParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 504055AF0E3230BD00213FEF /* ParticleExamples.m */; };
 		50405A140E3296AC00213FEF /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
@@ -629,6 +662,8 @@
 		509B3A630F31065C00F2FB95 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A620F31065C00F2FB95 /* UIKit.framework */; };
 		509B3A650F31067500F2FB95 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A640F31067500F2FB95 /* Foundation.framework */; };
 		509D05D3101DDED5007E1749 /* bitmapFontTest2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */; };
+		509D0818101E4FCE007E1749 /* TiledMapTMX.h in Headers */ = {isa = PBXBuildFile; fileRef = 509D0816101E4FCE007E1749 /* TiledMapTMX.h */; };
+		509D0819101E4FCE007E1749 /* TiledMapTMX.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* TiledMapTMX.m */; };
 		509E574C0E36234300BD7F09 /* TextureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E574A0E36234300BD7F09 /* TextureNode.h */; };
 		509E574D0E36234300BD7F09 /* TextureNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E574B0E36234300BD7F09 /* TextureNode.m */; };
 		509E665E0E06CD940050992C /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* Camera.h */; };
@@ -973,6 +1008,15 @@
 		50E676A70F658B68003DAA90 /* grossinis_sister1.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */; };
 		50EC53F21014DEEB00489A93 /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EC53F11014DEEB00489A93 /* ccHashSet.m */; };
 		50EC54CD101519E400489A93 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
+		50F29F5610204FD60046CA73 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F29F5510204FD60046CA73 /* base64.c */; };
+		50F29F6F102053370046CA73 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F29F6E102053370046CA73 /* base64.h */; };
+		50F29FD3102060440046CA73 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F29FD2102060440046CA73 /* libz.dylib */; };
+		50F29FDA1020607E0046CA73 /* orthogonal-test2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD71020607E0046CA73 /* orthogonal-test2.tmx */; };
+		50F29FDB1020607E0046CA73 /* orthogonal-test4.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */; };
+		50F29FDC1020607E0046CA73 /* orthogonal-test3.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */; };
+		50F2A006102064B50046CA73 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2A005102064B50046CA73 /* libz.dylib */; };
+		50F2A104102094550046CA73 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
+		50F2A105102094550046CA73 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F2A103102094550046CA73 /* ZipUtils.h */; };
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9924A0F9F183500767ABC /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F992450F9F183500767ABC /* AppController.m */; };
@@ -1222,6 +1266,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 50B2C4D00E100AEA00AE9530;
 			remoteInfo = Chipmunk;
+		};
+		503F5C98101FE930002A37E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
 		};
 		504226140FC0B5D500B992F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1638,6 +1689,11 @@
 		503F27250FD3F6DC009BAFB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		503F27270FD3F6E9009BAFB6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		503F272B0FD3F714009BAFB6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		503F5CBE101FE930002A37E5 /* TileMapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TileMapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		503F5CCF101FE9A9002A37E5 /* TileMapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TileMapTest.m; path = tests/TileMapTest.m; sourceTree = "<group>"; };
+		503F5CD0101FE9A9002A37E5 /* TileMapTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileMapTest.h; path = tests/TileMapTest.h; sourceTree = "<group>"; };
+		503F5D0E101FEDAE002A37E5 /* orthogonal-test1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test1.tmx"; sourceTree = "<group>"; };
+		503F5D0F101FEDAE002A37E5 /* tankbrigade.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = tankbrigade.bmp; sourceTree = "<group>"; };
 		504055AE0E3230BD00213FEF /* ParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleExamples.h; sourceTree = "<group>"; };
 		504055AF0E3230BD00213FEF /* ParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleExamples.m; sourceTree = "<group>"; };
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
@@ -1853,6 +1909,8 @@
 		509B3A620F31065C00F2FB95 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		509B3A640F31067500F2FB95 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = bitmapFontTest2.bmp; sourceTree = "<group>"; };
+		509D0816101E4FCE007E1749 /* TiledMapTMX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiledMapTMX.h; sourceTree = "<group>"; };
+		509D0817101E4FCE007E1749 /* TiledMapTMX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiledMapTMX.m; sourceTree = "<group>"; };
 		509E574A0E36234300BD7F09 /* TextureNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureNode.h; sourceTree = "<group>"; };
 		509E574B0E36234300BD7F09 /* TextureNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureNode.m; sourceTree = "<group>"; };
 		509E665C0E06CD940050992C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
@@ -2033,6 +2091,15 @@
 		50E676960F6587FD003DAA90 /* spritesheet1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = spritesheet1.pvr; sourceTree = "<group>"; };
 		50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossinis_sister1.pvr; sourceTree = "<group>"; };
 		50EC53F11014DEEB00489A93 /* ccHashSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccHashSet.m; sourceTree = "<group>"; };
+		50F29F5510204FD60046CA73 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
+		50F29F6E102053370046CA73 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		50F29FD2102060440046CA73 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		50F29FD71020607E0046CA73 /* orthogonal-test2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test2.tmx"; sourceTree = "<group>"; };
+		50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test4.tmx"; sourceTree = "<group>"; };
+		50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test3.tmx"; sourceTree = "<group>"; };
+		50F2A005102064B50046CA73 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		50F2A102102094550046CA73 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
+		50F2A103102094550046CA73 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		50F7B2760F28DE7C00057537 /* EaseAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseAction.h; sourceTree = "<group>"; };
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F992440F9F183500767ABC /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -2154,6 +2221,7 @@
 				5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */,
 				5018F2E50DFDEBBA00C013A5 /* OpenGLES.framework in Frameworks */,
 				5018F2E60DFDEBBA00C013A5 /* QuartzCore.framework in Frameworks */,
+				50F29FD3102060440046CA73 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2200,6 +2268,20 @@
 				502C67050DFEFE1000E4107D /* OpenGLES.framework in Frameworks */,
 				502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */,
 				502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		503F5CB4101FE930002A37E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				503F5CB5101FE930002A37E5 /* Foundation.framework in Frameworks */,
+				503F5CB6101FE930002A37E5 /* UIKit.framework in Frameworks */,
+				503F5CB7101FE930002A37E5 /* CoreGraphics.framework in Frameworks */,
+				503F5CB8101FE930002A37E5 /* OpenGLES.framework in Frameworks */,
+				503F5CB9101FE930002A37E5 /* QuartzCore.framework in Frameworks */,
+				503F5CBA101FE930002A37E5 /* libcocos2d.a in Frameworks */,
+				50F2A006102064B50046CA73 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2682,6 +2764,7 @@
 				50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */,
 				50CB34DD100765EF00B7A750 /* Bug422.app */,
 				504799B1100F6A4200D1C71A /* LayerTest.app */,
+				503F5CBE101FE930002A37E5 /* TileMapTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2733,6 +2816,8 @@
 				50CB30641004CACF00B7A750 /* AVFoundation.framework */,
 				50CB30661004CAD900B7A750 /* AudioToolbox.framework */,
 				50CB306A1004CAFB00B7A750 /* OpenAL.framework */,
+				50F29FD2102060440046CA73 /* libz.dylib */,
+				50F2A005102064B50046CA73 /* libz.dylib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2946,6 +3031,10 @@
 				50EC53F11014DEEB00489A93 /* ccHashSet.m */,
 				50C508C40F7C194400799124 /* FileUtils.h */,
 				50C508C50F7C194400799124 /* FileUtils.m */,
+				50F29F6E102053370046CA73 /* base64.h */,
+				50F29F5510204FD60046CA73 /* base64.c */,
+				50F2A103102094550046CA73 /* ZipUtils.h */,
+				50F2A102102094550046CA73 /* ZipUtils.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -2975,6 +3064,18 @@
 				501CCFAC0E99657C00B86F68 /* TGAlib.h */,
 			);
 			name = ImageSupport;
+			sourceTree = "<group>";
+		};
+		503F5D0C101FEDAE002A37E5 /* tilemap */ = {
+			isa = PBXGroup;
+			children = (
+				50F29FD71020607E0046CA73 /* orthogonal-test2.tmx */,
+				50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */,
+				50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */,
+				503F5D0E101FEDAE002A37E5 /* orthogonal-test1.tmx */,
+				503F5D0F101FEDAE002A37E5 /* tankbrigade.bmp */,
+			);
+			path = tilemap;
 			sourceTree = "<group>";
 		};
 		5042241F0FC0A9E100B992F7 /* StreakMotion */ = {
@@ -3225,6 +3326,8 @@
 				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
+				509D0816101E4FCE007E1749 /* TiledMapTMX.h */,
+				509D0817101E4FCE007E1749 /* TiledMapTMX.m */,
 			);
 			name = "Label, Tile, Parallax Nodes";
 			sourceTree = "<group>";
@@ -3463,6 +3566,8 @@
 				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
+				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
+				503F5CCF101FE9A9002A37E5 /* TileMapTest.m */,
 				50C938E30E0A9E1100517B01 /* TransitionsTest.h */,
 				50C938E40E0A9E1100517B01 /* TransitionsTest.m */,
 				50B2CB170E10EE0800AE9530 /* main.m */,
@@ -3474,6 +3579,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				503F5D0C101FEDAE002A37E5 /* tilemap */,
 				508A333B0FBADD9200D574A2 /* font related images */,
 				508A333A0FBADD6A00D574A2 /* grossini images */,
 				508A333D0FBADE2D00D574A2 /* menu related images */,
@@ -3832,6 +3938,9 @@
 				5012DAC50FE179BF00D6DDD1 /* TouchDelegateProtocol.h in Headers */,
 				50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */,
 				50D438DF101160B200895754 /* ccHashSet.h in Headers */,
+				509D0818101E4FCE007E1749 /* TiledMapTMX.h in Headers */,
+				50F29F6F102053370046CA73 /* base64.h in Headers */,
+				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4104,6 +4213,24 @@
 			name = RotateWorldTest;
 			productName = "demo-rotate-world";
 			productReference = 502C66180DFEFCCA00E4107D /* RotateWorldTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		503F5C96101FE930002A37E5 /* TileMapTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 503F5CBB101FE930002A37E5 /* Build configuration list for PBXNativeTarget "TileMapTest" */;
+			buildPhases = (
+				503F5C99101FE930002A37E5 /* Resources */,
+				503F5CB1101FE930002A37E5 /* Sources */,
+				503F5CB4101FE930002A37E5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				503F5C97101FE930002A37E5 /* PBXTargetDependency */,
+			);
+			name = TileMapTest;
+			productName = playground;
+			productReference = 503F5CBE101FE930002A37E5 /* TileMapTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5042256F0FC0B39C00B992F7 /* box2d */ = {
@@ -4784,6 +4911,7 @@
 				50C93A930E0BF6E000517B01 /* SpritesTest */,
 				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
+				503F5C96101FE930002A37E5 /* TileMapTest */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
 				50C938C60E0A9DBB00517B01 /* TransitionsTest */,
 				50DFC2870FF627B6007E7827 /* HelloWorldSample */,
@@ -4896,6 +5024,41 @@
 				50B2CB830E10EE4A00AE9530 /* grossinis_sister2.png in Resources */,
 				501CD16B0E99873000B86F68 /* fps_images.png in Resources */,
 				502AAD010F79715E001E3F87 /* fire.pvr in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		503F5C99101FE930002A37E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				503F5C9A101FE930002A37E5 /* b1.png in Resources */,
+				503F5C9B101FE930002A37E5 /* b2.png in Resources */,
+				503F5C9C101FE930002A37E5 /* f1.png in Resources */,
+				503F5C9D101FE930002A37E5 /* f2.png in Resources */,
+				503F5C9E101FE930002A37E5 /* r1.png in Resources */,
+				503F5C9F101FE930002A37E5 /* r2.png in Resources */,
+				503F5CA0101FE930002A37E5 /* Default.png in Resources */,
+				503F5CA1101FE930002A37E5 /* Icon.png in Resources */,
+				503F5CA2101FE930002A37E5 /* grossini.png in Resources */,
+				503F5CA3101FE930002A37E5 /* grossinis_sister1.png in Resources */,
+				503F5CA4101FE930002A37E5 /* grossinis_sister2.png in Resources */,
+				503F5CA5101FE930002A37E5 /* fire.png in Resources */,
+				503F5CA6101FE930002A37E5 /* atlastest.png in Resources */,
+				503F5CA7101FE930002A37E5 /* tuffy_bold_italic-charmap.png in Resources */,
+				503F5CA8101FE930002A37E5 /* tiles.png in Resources */,
+				503F5CA9101FE930002A37E5 /* levelmap.tga in Resources */,
+				503F5CAA101FE930002A37E5 /* fps_images.png in Resources */,
+				503F5CAB101FE930002A37E5 /* grossini_dance_atlas.png in Resources */,
+				503F5CAC101FE930002A37E5 /* fire.pvr in Resources */,
+				503F5CAD101FE930002A37E5 /* bitmapFontTest.fnt in Resources */,
+				503F5CAE101FE930002A37E5 /* bitmapFontTest.png in Resources */,
+				503F5CAF101FE930002A37E5 /* bitmapFontTest2.fnt in Resources */,
+				503F5CB0101FE930002A37E5 /* bitmapFontTest2.bmp in Resources */,
+				503F5D11101FEDAE002A37E5 /* orthogonal-test1.tmx in Resources */,
+				503F5D12101FEDAE002A37E5 /* tankbrigade.bmp in Resources */,
+				50F29FDA1020607E0046CA73 /* orthogonal-test2.tmx in Resources */,
+				50F29FDB1020607E0046CA73 /* orthogonal-test4.tmx in Resources */,
+				50F29FDC1020607E0046CA73 /* orthogonal-test3.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5710,6 +5873,9 @@
 				6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */,
 				50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */,
 				50EC53F21014DEEB00489A93 /* ccHashSet.m in Sources */,
+				509D0819101E4FCE007E1749 /* TiledMapTMX.m in Sources */,
+				50F29F5610204FD60046CA73 /* base64.c in Sources */,
+				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5744,6 +5910,15 @@
 			files = (
 				502C664F0DFEFD6800E4107D /* RotateWorldTest.m in Sources */,
 				50B2CB200E10EE0800AE9530 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		503F5CB1101FE930002A37E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				503F5CB3101FE930002A37E5 /* main.m in Sources */,
+				503F5CD1101FE9A9002A37E5 /* TileMapTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6184,6 +6359,11 @@
 			isa = PBXTargetDependency;
 			target = 50B2C4D00E100AEA00AE9530 /* Chipmunk */;
 			targetProxy = 50379A790F913FA300986724 /* PBXContainerItemProxy */;
+		};
+		503F5C97101FE930002A37E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 503F5C98101FE930002A37E5 /* PBXContainerItemProxy */;
 		};
 		504226130FC0B5D500B992F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6693,6 +6873,60 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = RotateWorldTest;
+				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		503F5CBC101FE930002A37E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TileMapTest;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		503F5CBD101FE930002A37E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = TileMapTest;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
@@ -8566,6 +8800,15 @@
 			buildConfigurations = (
 				502C661B0DFEFCCA00E4107D /* Debug */,
 				502C661C0DFEFCCA00E4107D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		503F5CBB101FE930002A37E5 /* Build configuration list for PBXNativeTarget "TileMapTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				503F5CBC101FE930002A37E5 /* Debug */,
+				503F5CBD101FE930002A37E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
