@@ -93,8 +93,8 @@ enum
 	int max_x = (imageSize.width - margin*2) / (tileSize.width + spacing);
 //	int max_y = (imageSize.height - margin*2) / (tileSize.height + spacing);
 	
-	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin + 1;
-	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin + 1;
+	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin + spacing;
+	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin + spacing;
 
 	return rect;
 }
