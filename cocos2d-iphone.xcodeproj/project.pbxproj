@@ -662,8 +662,8 @@
 		509B3A630F31065C00F2FB95 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A620F31065C00F2FB95 /* UIKit.framework */; };
 		509B3A650F31067500F2FB95 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A640F31067500F2FB95 /* Foundation.framework */; };
 		509D05D3101DDED5007E1749 /* bitmapFontTest2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */; };
-		509D0818101E4FCE007E1749 /* TiledMapTMX.h in Headers */ = {isa = PBXBuildFile; fileRef = 509D0816101E4FCE007E1749 /* TiledMapTMX.h */; };
-		509D0819101E4FCE007E1749 /* TiledMapTMX.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* TiledMapTMX.m */; };
+		509D0818101E4FCE007E1749 /* TMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 509D0816101E4FCE007E1749 /* TMXTiledMap.h */; };
+		509D0819101E4FCE007E1749 /* TMXTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* TMXTiledMap.m */; };
 		509E574C0E36234300BD7F09 /* TextureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E574A0E36234300BD7F09 /* TextureNode.h */; };
 		509E574D0E36234300BD7F09 /* TextureNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E574B0E36234300BD7F09 /* TextureNode.m */; };
 		509E665E0E06CD940050992C /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* Camera.h */; };
@@ -1909,8 +1909,8 @@
 		509B3A620F31065C00F2FB95 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		509B3A640F31067500F2FB95 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		509D05D2101DDED5007E1749 /* bitmapFontTest2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = bitmapFontTest2.bmp; sourceTree = "<group>"; };
-		509D0816101E4FCE007E1749 /* TiledMapTMX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiledMapTMX.h; sourceTree = "<group>"; };
-		509D0817101E4FCE007E1749 /* TiledMapTMX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiledMapTMX.m; sourceTree = "<group>"; };
+		509D0816101E4FCE007E1749 /* TMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMXTiledMap.h; sourceTree = "<group>"; };
+		509D0817101E4FCE007E1749 /* TMXTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMXTiledMap.m; sourceTree = "<group>"; };
 		509E574A0E36234300BD7F09 /* TextureNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureNode.h; sourceTree = "<group>"; };
 		509E574B0E36234300BD7F09 /* TextureNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureNode.m; sourceTree = "<group>"; };
 		509E665C0E06CD940050992C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
@@ -3326,8 +3326,8 @@
 				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
-				509D0816101E4FCE007E1749 /* TiledMapTMX.h */,
-				509D0817101E4FCE007E1749 /* TiledMapTMX.m */,
+				509D0816101E4FCE007E1749 /* TMXTiledMap.h */,
+				509D0817101E4FCE007E1749 /* TMXTiledMap.m */,
 			);
 			name = "Label, Tile, Parallax Nodes";
 			sourceTree = "<group>";
@@ -3938,7 +3938,7 @@
 				5012DAC50FE179BF00D6DDD1 /* TouchDelegateProtocol.h in Headers */,
 				50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */,
 				50D438DF101160B200895754 /* ccHashSet.h in Headers */,
-				509D0818101E4FCE007E1749 /* TiledMapTMX.h in Headers */,
+				509D0818101E4FCE007E1749 /* TMXTiledMap.h in Headers */,
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
 			);
@@ -5873,7 +5873,7 @@
 				6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */,
 				50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */,
 				50EC53F21014DEEB00489A93 /* ccHashSet.m in Sources */,
-				509D0819101E4FCE007E1749 /* TiledMapTMX.m in Sources */,
+				509D0819101E4FCE007E1749 /* TMXTiledMap.m in Sources */,
 				50F29F5610204FD60046CA73 /* base64.c in Sources */,
 				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
 			);
