@@ -27,8 +27,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 08 00
-#define COCOS2D_VERSION 0x00000800
+// 00   00 08 01
+#define COCOS2D_VERSION 0x00000801
 
 //
 // all cocos2d include files
@@ -73,6 +73,7 @@
 #import "BitmapFontAtlas.h"
 #import "ParallaxNode.h"
 #import "ActionManager.h"
+#import "TiledMapTMX.h"
 
 //
 // cocos2d macros
