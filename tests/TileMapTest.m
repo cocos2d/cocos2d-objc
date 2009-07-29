@@ -233,8 +233,13 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		TiledMapTMX *ortho = [TiledMapTMX tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
+		
+		[[Director sharedDirector] set2Dprojection];
+
+		TMXTiledMap *ortho = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
 		[self addChild:ortho z:0 tag:kTagTileMap];
+		
+		[ortho setScale:1.0f];
 	}	
 	return self;
 }

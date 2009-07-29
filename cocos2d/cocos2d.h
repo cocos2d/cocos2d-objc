@@ -73,7 +73,7 @@
 #import "BitmapFontAtlas.h"
 #import "ParallaxNode.h"
 #import "ActionManager.h"
-#import "TiledMapTMX.h"
+#import "TMXTiledMap.h"
 
 //
 // cocos2d macros

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
  <tileset name="adf" firstgid="1" tilewidth="32" tileheight="32" spacing="1" margin="32">
   <image source="tankbrigade.bmp" trans="ff00ff"/>
  </tileset>
- <layer name="Layer 0" width="64" height="64">
+ <layer name="Layer 0" width="20" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAO3WOwqAMBRFwbTiQqxE3IOV+1+QpBBELOIH0bwZuE2qHNIkJVbTzf3dtmUunH79+vXr/799f59i9+/XHJxF6i99/+69Kz/qSn+b6nz/iP/fbLywmkTvz4YTq5F+/frj9mclf5+a6Y/dDwAAAAAAAAAAAPBVC4NvSC8AQAAA=
+   H4sIAAAAAAAAAGNgGAWjYBTgAh5oGAR4kTAIJCBhEHBFwiDAhYRhZiADXjQ6AU3eFY3mQnMfpeYhm0lt/9ICOCGx9dDkupEwCEQiYUoAsnkMaGwnNLViUPoTDnPQ3YduHjGACc1d2MwgxjxdND6p4QcANf4bOUAGAAA=
   </data>
  </layer>
 </map>

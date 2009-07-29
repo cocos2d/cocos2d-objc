@@ -18,26 +18,113 @@
 #import <UIKit/UIKit.h>
 #include <zlib.h>
 
-#import "TiledMapTMX.h"
+#import "TMXTiledMap.h"
 #import "AtlasSprite.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"
 
+enum
+{
+	TMXOrientationOrtho,
+	TMXOrientationHex,
+	TMXOrientationIso,
+};
+
 #pragma mark -
-#pragma mark TMXTilesetFormat
-@implementation TMXTilesetFormat
+#pragma mark LayerData
+
+@interface LayerData : NSObject
+{
+@public
+	NSString		*name;
+	CGSize			layerSize;
+	unsigned char	*tiles;
+}
+@end
+@implementation LayerData
 @end
 
 #pragma mark -
-#pragma mark TMXLayerFormat
-@implementation TMXLayerFormat
+#pragma mark TilesetData
+
+@interface TilesetData : NSObject
+{
+@public
+	NSString	*name;
+	int			firstGid;
+	CGSize		tileSize;
+	int			spacing;
+	int			margin;
+	
+	// filename containing the tiles (should be spritesheet / texture atlas)
+	NSString	*sourceImage;
+	
+	// size in pixels of the image
+	CGSize		imageSize;
+}
+-(CGRect) tileForGID:(unsigned int)gid;
+@end
+@implementation TilesetData
+-(CGRect) tileForGID:(unsigned int)gid
+{
+	CGRect rect;
+	rect.size = tileSize;
+	
+	gid = gid - firstGid;
+
+	int max_x = (imageSize.width - margin*2) / (tileSize.width + spacing);
+//	int max_y = (imageSize.height - margin*2) / (tileSize.height + spacing);
+	
+	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin + 1;
+	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin + 1;
+	
+	NSLog(@"requesting GUID: %d. x,y=(%f,%f) max: %d", gid, rect.origin.x, rect.origin.y, max_x);
+
+	return rect;
+}
 @end
 
+enum {
+	TMXLayerAttribNone = 1 << 0,
+	TMXLayerAttribBase64 = 1 << 1,
+	TMXLayerAttribGzip = 1 << 2,
+};
+
 #pragma mark -
-#pragma mark TMXMapFormat
-@implementation TMXMapFormat
+#pragma mark MapData
+
+@interface MapData : NSObject
+{
+@public
+	int	orientation;
+	
+	// tmp variables
+	NSMutableString *currentString;
+    BOOL			storingCharacters;	
+	int				layerAttribs;
+	
+	// map width & height
+	CGSize	mapSize;
+	
+	// tiles width & height
+	CGSize	tileSize;
+	
+	// Layers
+	NSMutableArray *layers;
+	
+	// tilesets
+	NSMutableArray *tilesets;
+}
+
+/** creates a TMX Format with a tmx file */
++(id) formatWithTMXFile:(NSString*)tmxFile;
+/** initializes a TMX format witha  tmx file */
+-(id) initWithTMXFile:(NSString*)tmxFile;
+@end
+
+@implementation MapData
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
 	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
@@ -66,7 +153,7 @@
 		
 		NSError *parseError = [parser parserError];
 		if(parseError) {
-			CCLOG(@"TiledMapTMX: Error parsing TMX file: %@", parseError);
+			CCLOG(@"TMXTiledMap: Error parsing TMX file: %@", parseError);
 		}
 		
 		[parser release];
@@ -104,7 +191,7 @@
 		tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
 	} else if([elementName isEqualToString:@"tileset"]) {
 
-		TMXTilesetFormat *tileset = [TMXTilesetFormat new];
+		TilesetData *tileset = [TilesetData new];
 		tileset->name = [attributeDict valueForKey:@"name"];
 		tileset->firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
 		tileset->spacing = [[attributeDict valueForKey:@"spacing"] intValue];
@@ -115,7 +202,7 @@
 		[tilesets addObject:tileset];
 	} else if([elementName isEqualToString:@"layer"]) {
 
-		TMXLayerFormat *layer = [TMXLayerFormat new];
+		LayerData *layer = [LayerData new];
 		layer->name = [attributeDict valueForKey:@"name"];
 		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
 		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
@@ -124,8 +211,8 @@
 		
 	} else if([elementName isEqualToString:@"image"]) {
 
-		TMXTilesetFormat *tileset = [tilesets lastObject];
-		tileset->name = [attributeDict valueForKey:@"source"];
+		TilesetData *tileset = [tilesets lastObject];
+		tileset->sourceImage = [attributeDict valueForKey:@"source"];
 
 	} else if([elementName isEqualToString:@"data"]) {
 
@@ -149,7 +236,7 @@
 	if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) {
 		storingCharacters = NO;
 		
-		TMXLayerFormat *layer = [layers lastObject];
+		LayerData *layer = [layers lastObject];
 		
 		unsigned char *buffer;
 		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
@@ -191,52 +278,21 @@
 @end
 
 #pragma mark -
-#pragma mark TiledMapTMX
+#pragma mark TMXLayer
 
-@interface TiledMapTMX (Private)
--(NSString*) atlasNameFromFntFile:(NSString*)fntFile;
-@end
-
-@implementation TiledMapTMX
-
+@implementation TMXLayer
 @synthesize opacity=opacity_, color=color_;
 
-#pragma mark BitmapFontAtlas - Creation & Init
-+(id) tiledMapWithTMXFile:(NSString*)tmxFile
+-(id) init
 {
-	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
-}
-
-
--(id) initWithTMXFile:(NSString*)tmxFile
-{
-	TMXMapFormat *format = [TMXMapFormat formatWithTMXFile:tmxFile];
-	if( format->orientation == TMXOrientationHex )
-		CCLOG(@"hexagonal format");
-
-	if ((self=[super initWithFile:@"tankbrigade.bmp" capacity:100])) {
-
+	if( (self=[super init])) {
 		opacity_ = 255;
 		color_ = ccWHITE;
-
-		contentSize_ = CGSizeZero;
-		
-		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-
-		anchorPoint_ = ccp(0.5f, 0.5f);
-		
-	}
-
+		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];				
+	}			
 	return self;
 }
-
--(void) dealloc
-{
-	[super dealloc];
-}
-
-#pragma mark BitmapFontAtlas - CocosNodeRGBA protocol
-
+#pragma mark CocosNodeRGBA protocol
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
@@ -266,4 +322,80 @@
 {
 	return opacityModifyRGB_;
 }
+@end
+
+#pragma mark -
+#pragma mark TMXTiledMap
+
+@interface TMXTiledMap (Private)
+-(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset;
+@end
+
+@implementation TMXTiledMap
+
++(id) tiledMapWithTMXFile:(NSString*)tmxFile
+{
+	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
+}
+
+-(id) initWithTMXFile:(NSString*)tmxFile
+{
+	NSAssert(tmxFile != nil, @"TMXTiledMap: tmx file should not bi nil");
+
+	if ((self=[super init])) {
+		MapData *map = [MapData formatWithTMXFile:tmxFile];
+		NSAssert( [map->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
+		
+		TilesetData *tileset = [map->tilesets objectAtIndex:0];
+		for( LayerData *layer in map->layers) {
+			[self parseLayer:layer tileset:tileset];
+		}
+	}
+
+	return self;
+}
+
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+// private
+-(void) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset
+{
+	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
+	tileset->imageSize = [[mgr texture] contentSize];
+	
+//	[[mgr texture] setAliasTexParameters];
+
+	CFByteOrder o = CFByteOrderGetCurrent();
+	
+	unsigned int *tiles = (unsigned int*) layer->tiles;
+	for( unsigned int y=0; y < layer->layerSize.height; y++ ) {
+		for( unsigned int x=0; x < layer->layerSize.width; x++ ) {
+
+			unsigned int pos = x + layer->layerSize.width * y;
+			unsigned int gid = tiles[ pos ];
+
+			// gid are stored in little endian.
+			// if host is big endian, then swap
+			if( o == CFByteOrderBigEndian )
+				gid = CFSwapInt32( gid );
+			
+			// gid == 0 --> empty tile
+			if( gid != 0 ) {
+				CGRect rect;
+
+				rect = [tileset tileForGID:gid];
+
+				AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
+				[mgr addChild:tile z:0 tag:pos];
+				[tile setPosition:ccp( x * tileset->tileSize.width, (layer->layerSize.height - y) * tileset->tileSize.height ) ];
+			}
+		}
+	}
+	
+	[self addChild:mgr];
+}
+
 @end
