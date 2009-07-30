@@ -33,8 +33,8 @@ enum
 };
 
 #pragma mark -
-#pragma mark LayerData
-@implementation LayerData
+#pragma mark TMXLayerInfo
+@implementation TMXLayerInfo
 - (void) dealloc
 {
 	CCLOG(@"deallocing %@",self);
@@ -46,9 +46,9 @@ enum
 @end
 
 #pragma mark -
-#pragma mark TilesetData
+#pragma mark TMXTilesetInfo
 
-@implementation TilesetData
+@implementation TMXTilesetInfo
 - (void) dealloc
 {
 	CCLOG(@"deallocing %@", self);
@@ -81,8 +81,8 @@ enum {
 };
 
 #pragma mark -
-#pragma mark MapData
-@implementation MapData
+#pragma mark TMXMapInfo
+@implementation TMXMapInfo
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
 	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
@@ -150,7 +150,7 @@ enum {
 		tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
 
 	} else if([elementName isEqualToString:@"tileset"]) {
-		TilesetData *tileset = [TilesetData new];
+		TMXTilesetInfo *tileset = [TMXTilesetInfo new];
 		tileset->name = [[attributeDict valueForKey:@"name"] retain];
 		tileset->firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
 		tileset->spacing = [[attributeDict valueForKey:@"spacing"] intValue];
@@ -162,7 +162,7 @@ enum {
 		[tileset release];
 
 	} else if([elementName isEqualToString:@"layer"]) {
-		LayerData *layer = [LayerData new];
+		TMXLayerInfo *layer = [TMXLayerInfo new];
 		layer->name = [[attributeDict valueForKey:@"name"] retain];
 		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
 		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
@@ -178,7 +178,7 @@ enum {
 		
 	} else if([elementName isEqualToString:@"image"]) {
 
-		TilesetData *tileset = [tilesets lastObject];
+		TMXTilesetInfo *tileset = [tilesets lastObject];
 		tileset->sourceImage = [[attributeDict valueForKey:@"source"] retain];
 
 	} else if([elementName isEqualToString:@"data"]) {
@@ -202,7 +202,7 @@ enum {
 	if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) {
 		storingCharacters = NO;
 		
-		LayerData *layer = [layers lastObject];
+		TMXLayerInfo *layer = [layers lastObject];
 		
 		unsigned char *buffer;
 		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
@@ -249,7 +249,7 @@ enum {
 #pragma mark TMXTiledMap
 
 @interface TMXTiledMap (Private)
--(id) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset map:(MapData*)map;
+-(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)map;
 -(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
 -(void) setIsoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
 -(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
@@ -271,14 +271,14 @@ enum {
 		
 		[self setContentSize:CGSizeZero];
 
-		map_ = [[MapData formatWithTMXFile:tmxFile] retain];
+		map_ = [[TMXMapInfo formatWithTMXFile:tmxFile] retain];
 		NSAssert( [map_->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
 		
 		int idx=0;
-		TilesetData *tileset = [map_->tilesets objectAtIndex:0];
+		TMXTilesetInfo *tileset = [map_->tilesets objectAtIndex:0];
 		
 
-		for( LayerData *layer in map_->layers ) {
+		for( TMXLayerInfo *layer in map_->layers ) {
 			id child = [self parseLayer:layer tileset:tileset map:map_];
 			[self addChild:child z:idx tag:idx];
 			
@@ -303,7 +303,7 @@ enum {
 }
 
 // private
--(id) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset map:(MapData*)map
+-(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)map
 {
 	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
 	
@@ -365,7 +365,7 @@ enum {
 -(CocosNode*) layerNamed:(NSString *)layerName 
 {
 	int i=0;
-	for( LayerData *layer in map_->layers ) {
+	for( TMXLayerInfo *layer in map_->layers ) {
 		if( [layer->name isEqualToString:layerName] )
 			return [self getChildByTag:i];
 		i++;
