@@ -2927,8 +2927,6 @@
 				50CB30641004CACF00B7A750 /* AVFoundation.framework */,
 				50CB30661004CAD900B7A750 /* AudioToolbox.framework */,
 				50CB306A1004CAFB00B7A750 /* OpenAL.framework */,
-				50F29FD2102060440046CA73 /* libz.dylib */,
-				50F2A005102064B50046CA73 /* libz.dylib */,
 				50090DB11021E8660085B687 /* libz.dylib */,
 				50090DBA1021E8970085B687 /* libz.dylib */,
 				50090DBF1021E8B90085B687 /* libz.dylib */,
@@ -2961,6 +2959,8 @@
 				50090DFF1021EFEF0085B687 /* libz.dylib */,
 				50090E011021F0020085B687 /* libz.dylib */,
 				50090E031021F0170085B687 /* libz.dylib */,
+				50090E051021F0280085B687 /* libz.dylib */,
+				50090E051021F0280085B687 /* libz.dylib */,
 				50090E051021F0280085B687 /* libz.dylib */,
 			);
 			name = CustomTemplate;

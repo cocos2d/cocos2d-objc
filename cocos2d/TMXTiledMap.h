@@ -18,7 +18,16 @@
 #import "AtlasNode.h"
 #import "AtlasSpriteManager.h"
 
-@interface LayerData : NSObject
+/** TMXLayerInfo contains the information about the layers like:
+   - Layer name
+   - Layer size
+   - Layer opacity at creation time (it can be modified at runtime)
+   - Whether the layer is visible (if it's not visible, then the CocosNode won't be created)
+
+ This information is obtained from the TMX file.
+ @since v0.8.1
+ */
+@interface TMXLayerInfo : NSObject
 {
 @public
 	NSString		*name;
@@ -29,7 +38,19 @@
 }
 @end
 
-@interface TilesetData : NSObject
+/** TMXTilesetInfo contains the information about the tilesets like:
+   - Tileset name
+   - Tilset spacing
+   - Tileset margin
+   - size of the tiles
+   - Image used for the tiles
+   - Image size
+
+ This information is obtained from the TMX file.
+
+ @since v0.8.1
+*/
+@interface TMXTilesetInfo : NSObject
 {
 @public
 	NSString	*name;
@@ -46,7 +67,21 @@
 }
 -(CGRect) tileForGID:(unsigned int)gid;
 @end
-@interface MapData : NSObject
+
+/** TMXMapInfo contains the information about the map like:
+   - Map orientation (hexagonal, isometric or orthogonal)
+   - Tile size
+   - Map size
+
+ And it also contains:
+   - Layers (an array of TMXLayerInfo objects)
+   - Tilesets (an array of TMXTilesetInfo objects)
+ 
+ This information is obtained from the TMX file.
+ 
+ @since v0.8.1
+ */
+@interface TMXMapInfo : NSObject
 {
 	
 	NSMutableString		*currentLayer;
@@ -77,7 +112,7 @@
 -(id) initWithTMXFile:(NSString*)tmxFile;
 @end
 
-/** TMXTiledMap knows how to parse and render an TMX map.
+/** TMXTiledMap knows how to parse and render a TMX map.
  
  It adds support for the TMX tiled map format used by http://www.mapeditor.org
  It supports isometric, hexagonal and orthogonal tiles.
@@ -97,17 +132,24 @@
  - Embeded images are not supported
  - It only supports the TMX format (the JSON format is not supported)
  
+ Technical description:
+   Each layer is created using an AtlasSpriteManager. If you have 5 layers, then 5 AtlasSpriteManager will be created,
+   unless the layer visibility is off. In that case, the layer won't be created at all.
+   You can obtain the layers (AtlasSpriteManager objects) at runtime by using:
+  - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
+  - [map layerNamed: name_of_the_layer];
+   
  
  @since v0.8.1
  */
 @interface TMXTiledMap : CocosNode
 {
-	MapData *map_;
+	TMXMapInfo *map_;
 }
 
 /** returns the metadata of the map like: orientation, size, tile size, the tileset used, layers used, etc
  */
-@property(readonly) MapData *map;
+@property(readonly) TMXMapInfo *map;
 
 /** creates a TMX Tiled Map with a TMX file */
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile;
