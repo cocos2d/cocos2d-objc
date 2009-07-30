@@ -2,7 +2,7 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32">
  <tileset name="adf" firstgid="1" tilewidth="32" tileheight="32" spacing="1" margin="32">
-  <image source="tankbrigade.bmp" trans="ff00ff"/>
+  <image source="ortho-test1.png" trans="ff00ff"/>
  </tileset>
  <layer name="Layer 0" width="64" height="64">
   <data encoding="base64" compression="gzip">

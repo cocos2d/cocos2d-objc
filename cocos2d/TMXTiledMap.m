@@ -90,11 +90,11 @@ enum
 	
 	gid = gid - firstGid;
 
-	int max_x = (imageSize.width - margin*2) / (tileSize.width + spacing);
-//	int max_y = (imageSize.height - margin*2) / (tileSize.height + spacing);
+	int max_x = (imageSize.width - margin*2 + spacing) / (tileSize.width + spacing);
+//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
 	
-	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin + spacing;
-	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin + spacing;
+	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin;
+	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin;
 
 	return rect;
 }
@@ -354,7 +354,12 @@ enum {
 {
 	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
 	tileset->imageSize = [[mgr texture] contentSize];
-	
+
+	// By default all the tiles are aliased
+	// pros:
+	//  - easier to render
+	// cons:
+	//  - difficult to scale / rotate / etc.
 	[[mgr texture] setAliasTexParameters];
 
 	CFByteOrder o = CFByteOrderGetCurrent();

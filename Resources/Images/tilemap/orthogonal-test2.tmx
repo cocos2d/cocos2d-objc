@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
- <tileset name="adf" firstgid="1" tilewidth="32" tileheight="32" spacing="1" margin="32">
-  <image source="tankbrigade.bmp" trans="ff00ff"/>
+<map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32">
+ <tileset name="tile 0" firstgid="1" tilewidth="32" tileheight="32" spacing="2" margin="2">
+  <image source="fixed-ortho-test2.png"/>
  </tileset>
- <layer name="Layer 0" width="20" height="20">
+ <layer name="Layer 0" width="64" height="64">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAWjYBTgAh5oGAR4kTAIJCBhEHBFwiDAhYRhZiADXjQ6AU3eFY3mQnMfpeYhm0lt/9ICOCGx9dDkupEwCEQiYUoAsnkMaGwnNLViUPoTDnPQ3YduHjGACc1d2MwgxjxdND6p4QcANf4bOUAGAAA=
+   H4sIAAAAAAAAAO2bSUvDQBTHR61iD4LWk2uDVhHEpdX2qHjzKLh8B0/6DVwvCnpx6SdwwQ096U0/mm+wgdfxJZmsM0nmBz/aDNP0/TPZ0zJmMBgM/zkDz1UXoZBv8Ed1ETFTALslLSiq0ZAMZUFOTZBTF+RUCTkWoa6UibYa8b5O9Ks6TFtM78yYOPLbWEz/ZZH39d9goCgScvoE8wLOj8nLMtAt/wV4GeP83dZ/TFbHv+jQbvK7T2cFkz/7x78n8Bn5oracXHMCnqouQiGf4JfqIloE3S5GwTFwPMB36pQ/KPPgArjo0e8VfBPaHlj683M2JfpQ95h1H/938IN5Px9YE6b7wQE0jbctvF3pnt/G6fmAfe/IHn+r9ToBTkrMl+d/DFNYDPS6KNuP6k+h4/jPuCjbj+pPcQVegzeEtyFzBMUtzxa4De549JPNn7bxd8vXDPBdOua3sff9MjSRftA5vyxNQllU7v/3wP2Q86Cy+1kGKsefn3tGteyjXv/jvs/JuQPvI5pXGrd/nt/p2CsjPj4nmT/M9SZGx/HHz1OdkL3e9CLK/G7w39P0+NQLmetNL5LKHwdB8h+Ah8gj8Fjic37Og5IiivGP8tojyLmvG12EGLP+hyfN595h83cIBiGJczRMp4dxoeP+z6CGpNd5gxpK6D313Cbr2Pl3WT7+GyDC8xcI8wLPP4UcbL3mhQr7yzvN2pdD1hgCh8ERob3B2nN75U/rcXEWXAXnhPZ1BbWoYoVoKxFtWYXKX0m8CnVQ+RuJV6GODaJN3P7xf4OWwOWYaoniNwVh559VfwGOhF+mAEAAAA==
   </data>
  </layer>
 </map>
