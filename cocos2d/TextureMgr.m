@@ -18,6 +18,8 @@
 #import "Support/FileUtils.h"
 #import "Support/Texture2D.h"
 
+static EAGLContext *auxEAGLcontext = nil;
+
 @interface AsyncObject : NSObject
 {
 	SEL			selector_;
@@ -80,6 +82,7 @@ static TextureMgr *sharedTextureMgr;
 	if( (self=[super init]) ) {
 		textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
 		dictLock = [[NSLock alloc] init];
+		contextLock = [[NSLock alloc] init];
 	}
 
 	return self;
@@ -91,6 +94,9 @@ static TextureMgr *sharedTextureMgr;
 
 	[textures release];
 	[dictLock release];
+	[contextLock release];
+	[auxEAGLcontext release];
+	auxEAGLcontext = nil;
 	sharedTextureMgr = nil;
 	[super dealloc];
 }
@@ -102,11 +108,18 @@ static TextureMgr *sharedTextureMgr;
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 	
 	// textures will be created on the main OpenGL context
-	EAGLContext *k_context = [[[EAGLContext alloc]
+	[contextLock lock];
+	if( auxEAGLcontext == nil ) {
+		auxEAGLcontext = [[EAGLContext alloc]
 							   initWithAPI:kEAGLRenderingAPIOpenGLES1
-							   sharegroup:[[[[Director sharedDirector] openGLView] context] sharegroup]] autorelease];
+							   sharegroup:[[[[Director sharedDirector] openGLView] context] sharegroup]];
+		
+		if( ! auxEAGLcontext )
+			CCLOG(@"TextureMgr: Could not create EAGL context");
+	}
+	[contextLock unlock];
 	
-	[EAGLContext setCurrentContext:k_context];
+	[EAGLContext setCurrentContext:auxEAGLcontext];
 
 	// load / create the texture
 	Texture2D *tex = [self addImage:async.data];

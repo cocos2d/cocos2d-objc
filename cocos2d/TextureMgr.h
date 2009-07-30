@@ -24,6 +24,7 @@
 {
 	NSMutableDictionary *textures;
 	NSLock				*dictLock;
+	NSLock				*contextLock;
 }
 
 /** Retruns ths shared instance of the Texture Manager */
