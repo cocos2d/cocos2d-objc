@@ -263,6 +263,7 @@ Class restartAction()
 #pragma mark TMXOrthoTest
 
 @implementation TMXOrthoTest
+
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -278,15 +279,12 @@ Class restartAction()
 		TMXTiledMap *ortho = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
 		[self addChild:ortho z:0 tag:kTagTileMap];
 		
-		for( id child in [ortho children] ) {
+		for( AtlasSpriteManager* child in [ortho children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		float x, y, z;
-//		[[ortho camera] centerX:&x centerY:&y centerZ:&z];
-//		[[ortho camera ] setCenterX:y centerY:x centerZ:z];
-		
 		[[ortho camera] eyeX:&x eyeY:&y eyeZ:&z];
-		[[ortho camera] setEyeX:x-200 eyeY:y eyeZ:z+300];
+		[[ortho camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
 	}	
 	return self;
 }

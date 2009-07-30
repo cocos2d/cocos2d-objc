@@ -29,7 +29,7 @@
 @interface TextureAtlas : NSObject {
 	NSUInteger			totalQuads_;
 	NSUInteger			capacity_;
-	ccV3F_C4B_T2F_Quad	*quads;	// quads to be rendered
+	ccV3F_C4B_T2F_Quad	*quads_;	// quads to be rendered
 	GLushort			*indices;
 	Texture2D			*texture_;	
 }
@@ -40,6 +40,8 @@
 @property (readonly) NSUInteger capacity;
 /** Texture of the texture atlas */
 @property (nonatomic,retain) Texture2D *texture;
+/** Quads that are going to be rendered */
+@property (readwrite) ccV3F_C4B_T2F_Quad *quads;
 
 /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
  * The TextureAtlas capacity can be increased in runtime.

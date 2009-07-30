@@ -31,6 +31,7 @@
 
 @synthesize totalQuads = totalQuads_, capacity = capacity_;
 @synthesize texture = texture_;
+@synthesize quads = quads_;
 
 #pragma mark TextureAtlas - alloc & init
 
@@ -61,13 +62,13 @@
 		// retained in property
 		self.texture = tex;
 
-		quads = malloc( sizeof(quads[0]) * capacity_ );
+		quads_ = malloc( sizeof(quads_[0]) * capacity_ );
 		indices = malloc( sizeof(indices[0]) * capacity_ * 6 );
 		
-		if( ! ( quads && indices) ) {
+		if( ! ( quads_ && indices) ) {
 			NSLog(@"TextureAtlas: not enough memory");
-			if( quads )
-				free(quads);
+			if( quads_ )
+				free(quads_);
 			if( indices )
 				free(indices);
 			return nil;
@@ -88,7 +89,7 @@
 {
 	CCLOG(@"deallocing %@",self);
 
-	free(quads);
+	free(quads_);
 	free(indices);
 	
 	[texture_ release];
@@ -131,7 +132,7 @@
 
 	totalQuads_ =  MAX( n+1, totalQuads_);
 
-	quads[n] = *quad;
+	quads_[n] = *quad;
 }
 
 
@@ -146,10 +147,10 @@
 	// last object doesn't need to be moved
 	if( remaining ) {
 		// tex coordinates
-		memmove( &quads[index+1],&quads[index], sizeof(quads[0]) * remaining );
+		memmove( &quads_[index+1],&quads_[index], sizeof(quads_[0]) * remaining );
 	}
 	
-	quads[index] = *quad;
+	quads_[index] = *quad;
 }
 
 
@@ -170,9 +171,9 @@
 	}
 
 	// tex coordinates
-	ccV3F_C4B_T2F_Quad quadsBackup = quads[oldIndex];
-	memmove( &quads[dst],&quads[src], sizeof(quads[0]) * howMany );
-	quads[newIndex] = quadsBackup;
+	ccV3F_C4B_T2F_Quad quadsBackup = quads_[oldIndex];
+	memmove( &quads_[dst],&quads_[src], sizeof(quads_[0]) * howMany );
+	quads_[newIndex] = quadsBackup;
 }
 
 -(void) removeQuadAtIndex:(NSUInteger) index
@@ -184,7 +185,7 @@
 	// last object doesn't need to be moved
 	if( remaining ) {
 		// tex coordinates
-		memmove( &quads[index],&quads[index+1], sizeof(quads[0]) * remaining );
+		memmove( &quads_[index],&quads_[index+1], sizeof(quads_[0]) * remaining );
 	}
 	
 	totalQuads_--;
@@ -206,7 +207,7 @@
 	totalQuads_ = MIN(totalQuads_,newCapacity);
 	capacity_ = newCapacity;
 
-	void * tmpQuads = realloc( quads, sizeof(quads[0]) * capacity_ );
+	void * tmpQuads = realloc( quads_, sizeof(quads_[0]) * capacity_ );
 	void * tmpIndices = realloc( indices, sizeof(indices[0]) * capacity_ * 6 );
 	
 	if( ! ( tmpQuads && tmpIndices) ) {
@@ -214,7 +215,7 @@
 		if( tmpQuads )
 			free(tmpQuads);
 		else
-			free(quads);
+			free(quads_);
 		
 		if( tmpIndices )
 			free(tmpIndices);
@@ -222,12 +223,12 @@
 			free(indices);
 		
 		indices = nil;
-		quads = nil;
+		quads_ = nil;
 		capacity_ = totalQuads_ = 0;
 		return NO;
 	}
 		
-	quads = tmpQuads;
+	quads_ = tmpQuads;
 	indices = tmpIndices;
 
 	[self initIndices];	
@@ -244,10 +245,10 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n
 {	
-#define kPointSize sizeof(quads[0].bl)
+#define kPointSize sizeof(quads_[0].bl)
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
-	int offset = (int)quads;
+	int offset = (int)quads_;
 
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);
