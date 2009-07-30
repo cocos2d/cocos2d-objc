@@ -267,14 +267,42 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		//
+		// Test orthogonal with 3d camera and anti-alias textures
+		//
+		// it should not flicker. No artifacts should appear
+		//
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 
 		TMXTiledMap *ortho = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
-		[self addChild:ortho z:0 tag:kTagTileMap];		
+		[self addChild:ortho z:0 tag:kTagTileMap];
+		
+		for( id child in [ortho children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		float x, y, z;
+//		[[ortho camera] centerX:&x centerY:&y centerZ:&z];
+//		[[ortho camera ] setCenterX:y centerY:x centerZ:z];
+		
+		[[ortho camera] eyeX:&x eyeY:&y eyeZ:&z];
+		[[ortho camera] setEyeX:x-200 eyeY:y eyeZ:z+300];
 	}	
 	return self;
 }
+
+-(void) onEnter
+{
+	[super onEnter];
+	[[Director sharedDirector] set3Dprojection];	
+}
+
+-(void) onExit
+{
+	[[Director sharedDirector] set2Dprojection];
+	[super onExit];
+}
+
 
 -(NSString *) title
 {
