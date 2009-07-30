@@ -34,17 +34,6 @@ enum
 
 #pragma mark -
 #pragma mark LayerData
-
-@interface LayerData : NSObject
-{
-@public
-	NSString		*name;
-	CGSize			layerSize;
-	unsigned char	*tiles;
-	BOOL			visible;
-	GLubyte			opacity;
-}
-@end
 @implementation LayerData
 - (void) dealloc
 {
@@ -59,23 +48,6 @@ enum
 #pragma mark -
 #pragma mark TilesetData
 
-@interface TilesetData : NSObject
-{
-@public
-	NSString	*name;
-	int			firstGid;
-	CGSize		tileSize;
-	int			spacing;
-	int			margin;
-	
-	// filename containing the tiles (should be spritesheet / texture atlas)
-	NSString	*sourceImage;
-	
-	// size in pixels of the image
-	CGSize		imageSize;
-}
--(CGRect) tileForGID:(unsigned int)gid;
-@end
 @implementation TilesetData
 - (void) dealloc
 {
@@ -110,36 +82,6 @@ enum {
 
 #pragma mark -
 #pragma mark MapData
-
-@interface MapData : NSObject
-{
-@public
-	int	orientation;
-	
-	// tmp variables
-	NSMutableString *currentString;
-    BOOL			storingCharacters;	
-	int				layerAttribs;
-	
-	// map width & height
-	CGSize	mapSize;
-	
-	// tiles width & height
-	CGSize	tileSize;
-	
-	// Layers
-	NSMutableArray *layers;
-	
-	// tilesets
-	NSMutableArray *tilesets;
-}
-
-/** creates a TMX Format with a tmx file */
-+(id) formatWithTMXFile:(NSString*)tmxFile;
-/** initializes a TMX format witha  tmx file */
--(id) initWithTMXFile:(NSString*)tmxFile;
-@end
-
 @implementation MapData
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
@@ -314,6 +256,7 @@ enum {
 @end
 
 @implementation TMXTiledMap
+@synthesize map = map_;
 
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile
 {
@@ -328,15 +271,15 @@ enum {
 		
 		[self setContentSize:CGSizeZero];
 
-		MapData *map = [MapData formatWithTMXFile:tmxFile];
-		NSAssert( [map->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
+		map_ = [[MapData formatWithTMXFile:tmxFile] retain];
+		NSAssert( [map_->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
 		
 		int idx=0;
-		TilesetData *tileset = [map->tilesets objectAtIndex:0];
-		for( LayerData *layer in map->layers ) {
-			if( layer->visible == NO ) continue;
-			
-			id child = [self parseLayer:layer tileset:tileset map:map];
+		TilesetData *tileset = [map_->tilesets objectAtIndex:0];
+		
+
+		for( LayerData *layer in map_->layers ) {
+			id child = [self parseLayer:layer tileset:tileset map:map_];
 			[self addChild:child z:idx tag:idx];
 			
 			// update content size with the max size
@@ -355,6 +298,7 @@ enum {
 
 -(void) dealloc
 {
+	[map_ release];
 	[super dealloc];
 }
 
@@ -362,8 +306,10 @@ enum {
 -(id) parseLayer:(LayerData*)layer tileset:(TilesetData*)tileset map:(MapData*)map
 {
 	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
-	tileset->imageSize = [[mgr texture] contentSize];
+	
 
+	tileset->imageSize = [[mgr texture] contentSize];
+		
 	// By default all the tiles are aliased
 	// pros:
 	//  - easier to render
@@ -393,8 +339,11 @@ enum {
 
 				AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
 				[tile setOpacity:layer->opacity];
+				[tile setVisible:layer->visible];
+				
 				tile.anchorPoint = CGPointZero;
 				[mgr addChild:tile z:0 tag:pos];
+				
 				switch( map->orientation ) {
 					case TMXOrientationOrtho:
 						[self setOrthoTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
@@ -404,13 +353,24 @@ enum {
 						break;
 					case TMXOrientationHex:
 						[self setHexTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
-						break;
-						
+						break;						
 				}
 			}
 		}
 	}	
+	
 	return mgr;
+}
+
+-(CocosNode*) layerNamed:(NSString *)layerName 
+{
+	int i=0;
+	for( LayerData *layer in map_->layers ) {
+		if( [layer->name isEqualToString:layerName] )
+			return [self getChildByTag:i];
+		i++;
+	}
+	return nil;
 }
 
 -(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
@@ -426,6 +386,7 @@ enum {
 	int y = (layerSize.height - (pos.x + pos.y)) * tileSize.height/2 + 0.49f;
 	[tile setPosition:ccp(x, y)];
 }
+
 -(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
 {
 	float diffY = 0;
