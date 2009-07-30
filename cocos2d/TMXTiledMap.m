@@ -415,17 +415,26 @@ enum {
 
 -(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
 {
-	[tile setPosition:ccp( pos.x * tileSize.width, (layerSize.height - pos.y) * tileSize.height ) ];
+	int x = pos.x * tileSize.width + 0.49f;
+	int y = (layerSize.height - pos.y) * tileSize.height + 0.49f;
+	[tile setPosition:ccp( x,y)];
 }
 
 -(void) setIsoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
 {
-	CGFloat mx = tileSize.width /2  *(pos.x - pos.y);
-	CGFloat my = (layerSize.height - (pos.x + pos.y)) * tileSize.height/2;
-	[tile setPosition:ccp(mx, my)];
+	int x = tileSize.width /2  *(pos.x - pos.y) + 0.49f;
+	int y = (layerSize.height - (pos.x + pos.y)) * tileSize.height/2 + 0.49f;
+	[tile setPosition:ccp(x, y)];
 }
 -(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
 {
-	[tile setPosition:ccp( pos.x * tileSize.width, (layerSize.height - pos.y) * tileSize.height ) ];
-}		
+	float diffY = 0;
+	if( (int)pos.x % 2 == 1 )
+		diffY = -tileSize.height/2 ;
+	
+	int x =  pos.x * tileSize.width*3/4 + 0.49f;
+	int y =  (layerSize.height - pos.y) * tileSize.height + diffY + 0.49f;
+	
+	[tile setPosition:ccp(x, y)];
+}
 @end

@@ -337,6 +337,12 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
+		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
+		[self addChild:color z:-1];
+		
+		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"hexa-test.tmx"];
+		[self addChild:iso z:0 tag:kTagTileMap];
+
 	}	
 	return self;
 }
