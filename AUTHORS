@@ -56,6 +56,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MultiplexLayer
 	* Rolandas Razma (gamebit): added support for auto-remove-on-finish in particles
 		TMX maps support visibility and opacity patch
+		TMX maps possibility to access the layers patch
 	* Graham Perks: Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
 	* Mark Cooke: Added TintTo action
