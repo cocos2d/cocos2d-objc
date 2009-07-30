@@ -22,7 +22,7 @@
 #if 1
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (int)
+#define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
 enum {

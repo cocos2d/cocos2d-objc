@@ -42,6 +42,9 @@
 		500166040E72E1DB0085673F /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		500426C51020D2730032274D /* iso-test1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 500426C31020D2730032274D /* iso-test1.tmx */; };
 		500426C61020D2730032274D /* iso.png in Resources */ = {isa = PBXBuildFile; fileRef = 500426C41020D2730032274D /* iso.png */; };
+		500427A210211E0B0032274D /* ortho-test1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500427A010211E0B0032274D /* ortho-test1.png */; };
+		500427A310211E0B0032274D /* ortho-test2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500427A110211E0B0032274D /* ortho-test2.png */; };
+		500427D1102121C50032274D /* fixed-ortho-test2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500427D0102121C50032274D /* fixed-ortho-test2.png */; };
 		500AA21F0E77926900872752 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500AA2200E77926900872752 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500AA2210E77926900872752 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -313,7 +316,6 @@
 		503F5CBA101FE930002A37E5 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		503F5CD1101FE9A9002A37E5 /* TileMapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F5CCF101FE9A9002A37E5 /* TileMapTest.m */; };
 		503F5D11101FEDAE002A37E5 /* orthogonal-test1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 503F5D0E101FEDAE002A37E5 /* orthogonal-test1.tmx */; };
-		503F5D12101FEDAE002A37E5 /* tankbrigade.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 503F5D0F101FEDAE002A37E5 /* tankbrigade.bmp */; };
 		504055B00E3230BD00213FEF /* ParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = 504055AE0E3230BD00213FEF /* ParticleExamples.h */; };
 		504055B10E3230BD00213FEF /* ParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 504055AF0E3230BD00213FEF /* ParticleExamples.m */; };
 		50405A140E3296AC00213FEF /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
@@ -1548,6 +1550,9 @@
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
 		500426C31020D2730032274D /* iso-test1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "iso-test1.tmx"; sourceTree = "<group>"; };
 		500426C41020D2730032274D /* iso.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iso.png; sourceTree = "<group>"; };
+		500427A010211E0B0032274D /* ortho-test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho-test1.png"; sourceTree = "<group>"; };
+		500427A110211E0B0032274D /* ortho-test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho-test2.png"; sourceTree = "<group>"; };
+		500427D0102121C50032274D /* fixed-ortho-test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fixed-ortho-test2.png"; sourceTree = "<group>"; };
 		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
 		5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-mono.png"; sourceTree = "<group>"; };
 		5012DAC40FE179BF00D6DDD1 /* TouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDelegateProtocol.h; sourceTree = "<group>"; };
@@ -1697,7 +1702,6 @@
 		503F5CCF101FE9A9002A37E5 /* TileMapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TileMapTest.m; path = tests/TileMapTest.m; sourceTree = "<group>"; };
 		503F5CD0101FE9A9002A37E5 /* TileMapTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileMapTest.h; path = tests/TileMapTest.h; sourceTree = "<group>"; };
 		503F5D0E101FEDAE002A37E5 /* orthogonal-test1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test1.tmx"; sourceTree = "<group>"; };
-		503F5D0F101FEDAE002A37E5 /* tankbrigade.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = tankbrigade.bmp; sourceTree = "<group>"; };
 		504055AE0E3230BD00213FEF /* ParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleExamples.h; sourceTree = "<group>"; };
 		504055AF0E3230BD00213FEF /* ParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleExamples.m; sourceTree = "<group>"; };
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
@@ -3079,7 +3083,9 @@
 				50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */,
 				50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */,
 				503F5D0E101FEDAE002A37E5 /* orthogonal-test1.tmx */,
-				503F5D0F101FEDAE002A37E5 /* tankbrigade.bmp */,
+				500427A010211E0B0032274D /* ortho-test1.png */,
+				500427A110211E0B0032274D /* ortho-test2.png */,
+				500427D0102121C50032274D /* fixed-ortho-test2.png */,
 			);
 			path = tilemap;
 			sourceTree = "<group>";
@@ -5061,12 +5067,14 @@
 				503F5CAF101FE930002A37E5 /* bitmapFontTest2.fnt in Resources */,
 				503F5CB0101FE930002A37E5 /* bitmapFontTest2.bmp in Resources */,
 				503F5D11101FEDAE002A37E5 /* orthogonal-test1.tmx in Resources */,
-				503F5D12101FEDAE002A37E5 /* tankbrigade.bmp in Resources */,
 				50F29FDA1020607E0046CA73 /* orthogonal-test2.tmx in Resources */,
 				50F29FDB1020607E0046CA73 /* orthogonal-test4.tmx in Resources */,
 				50F29FDC1020607E0046CA73 /* orthogonal-test3.tmx in Resources */,
 				500426C51020D2730032274D /* iso-test1.tmx in Resources */,
 				500426C61020D2730032274D /* iso.png in Resources */,
+				500427A210211E0B0032274D /* ortho-test1.png in Resources */,
+				500427A310211E0B0032274D /* ortho-test2.png in Resources */,
+				500427D1102121C50032274D /* fixed-ortho-test2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
