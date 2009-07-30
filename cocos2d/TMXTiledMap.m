@@ -41,6 +41,8 @@ enum
 	NSString		*name;
 	CGSize			layerSize;
 	unsigned char	*tiles;
+	BOOL			visible;
+	GLubyte			opacity;
 }
 @end
 @implementation LayerData
@@ -222,6 +224,12 @@ enum {
 		layer->name = [[attributeDict valueForKey:@"name"] retain];
 		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
 		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
+		layer->visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
+		if( [attributeDict valueForKey:@"opacity"] ){
+			layer->opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
+		}else{
+			layer->opacity = 255;
+		}
 		
 		[layers addObject:layer];
 		[layer release];
@@ -325,7 +333,8 @@ enum {
 		
 		int idx=0;
 		TilesetData *tileset = [map->tilesets objectAtIndex:0];
-		for( LayerData *layer in map->layers) {
+		for( LayerData *layer in map->layers ) {
+			if( layer->visible == NO ) continue;
 			
 			id child = [self parseLayer:layer tileset:tileset map:map];
 			[self addChild:child z:idx tag:idx];
@@ -383,6 +392,7 @@ enum {
 				rect = [tileset tileForGID:gid];
 
 				AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
+				[tile setOpacity:layer->opacity];
 				tile.anchorPoint = CGPointZero;
 				[mgr addChild:tile z:0 tag:pos];
 				switch( map->orientation ) {
