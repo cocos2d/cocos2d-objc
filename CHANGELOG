@@ -1,5 +1,6 @@
 version 0.8.1 - XX-MMM-2009
  . TextureMgr: Async reuses EAGL context (issue #472)
+ . TiledMap: Added support for the TMX format: iso, ortho and hex maps (issue #462)
 
 version 0.8 - 27-Jul-2009
  . Action: Speed#stop calls other's stop (issue #460)
