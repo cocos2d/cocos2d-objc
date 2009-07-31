@@ -25,6 +25,11 @@
  http://blog.sapusmedia.com/2008/12/how-to-use-tilemap-editor-for-cocos2d.html
  
  All features from AtlasNode are valid in TileMapAtlas
+ 
+ IMPORTANT:
+ This class is deprecated. It is maintained for compatibility reasons only.
+ You SHOULD not use this class.
+ Instead, use the newer TMX file format: TMXTiledMap
  */
 @interface TileMapAtlas : AtlasNode {
 	

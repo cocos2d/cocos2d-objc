@@ -16,7 +16,7 @@
  */
 
 #import "TMXTiledMap.h"
-#import "TMXInfo.h"
+#import "TMXXMLParser.h"
 #import "AtlasSprite.h"
 #import "Support/CGPointExtension.h"
 
@@ -217,5 +217,12 @@
 	[super dealloc];
 }
 
+-(void) releaseMap
+{
+	if( tiles_) {
+		free( tiles_);
+		tiles_ = NULL;
+	}
+}
 @end
 

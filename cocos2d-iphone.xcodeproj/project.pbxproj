@@ -897,8 +897,8 @@
 		50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* ActionManager.h */; };
 		50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* ActionManager.m */; };
 		50CFABBA10235DC900175934 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CFABB910235DC900175934 /* libz.dylib */; };
-		50CFAC391023660000175934 /* TMXInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* TMXInfo.h */; };
-		50CFAC3A1023660000175934 /* TMXInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CFAC381023660000175934 /* TMXInfo.m */; };
+		50CFAC391023660000175934 /* TMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* TMXXMLParser.h */; };
+		50CFAC3A1023660000175934 /* TMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CFAC381023660000175934 /* TMXXMLParser.m */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -2083,8 +2083,8 @@
 		50CB3B0C100AC43A00B7A750 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
 		50CB3B0D100AC43A00B7A750 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
 		50CFABB910235DC900175934 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50CFAC371023660000175934 /* TMXInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMXInfo.h; sourceTree = "<group>"; };
-		50CFAC381023660000175934 /* TMXInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMXInfo.m; sourceTree = "<group>"; };
+		50CFAC371023660000175934 /* TMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMXXMLParser.h; sourceTree = "<group>"; };
+		50CFAC381023660000175934 /* TMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMXXMLParser.m; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -3830,10 +3830,10 @@
 			children = (
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
-				50CFAC371023660000175934 /* TMXInfo.h */,
-				50CFAC381023660000175934 /* TMXInfo.m */,
 				509D0816101E4FCE007E1749 /* TMXTiledMap.h */,
 				509D0817101E4FCE007E1749 /* TMXTiledMap.m */,
+				50CFAC371023660000175934 /* TMXXMLParser.h */,
+				50CFAC381023660000175934 /* TMXXMLParser.m */,
 			);
 			name = "TileMap Nodes";
 			sourceTree = "<group>";
@@ -4103,7 +4103,7 @@
 				509D0818101E4FCE007E1749 /* TMXTiledMap.h in Headers */,
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
-				50CFAC391023660000175934 /* TMXInfo.h in Headers */,
+				50CFAC391023660000175934 /* TMXXMLParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6045,7 +6045,7 @@
 				509D0819101E4FCE007E1749 /* TMXTiledMap.m in Sources */,
 				50F29F5610204FD60046CA73 /* base64.c in Sources */,
 				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
-				50CFAC3A1023660000175934 /* TMXInfo.m in Sources */,
+				50CFAC3A1023660000175934 /* TMXXMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

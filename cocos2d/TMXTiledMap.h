@@ -56,7 +56,8 @@ enum
 +(id) layerWithTilesetName:(NSString*)name;
 /** initializes a TMX Layer with an tileset image name */
 -(id) initWithTilesetName:(NSString*)name;
-
+/** dealloc the map from memory */
+-(void) releaseMap;
 @end
 
 /** TMXTiledMap knows how to parse and render a TMX map.
