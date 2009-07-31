@@ -18,6 +18,10 @@
 #import "AtlasNode.h"
 #import "AtlasSpriteManager.h"
 
+
+@class TMXLayer;
+@class TMXTilesetInfo;
+
 /** Possible oritentations of the TMX map */
 enum
 {
@@ -30,35 +34,6 @@ enum
 	/** Isometric orientation */
 	TMXOrientationIso,
 };
-
-/** TMXLayer represents the TMX layer.
- 
- It is a subclass of AtlasSpriteManager, so each "tile" is represented by an AtlasSprite.
- The benefits of using AtlasSprite objects as tiles are:
- - tiles (AtlasSprite) can be rotated/scaled/moved with a nice API
- 
- @since v0.8.1
- */
-@interface TMXLayer : AtlasSpriteManager
-{
-	NSString		*layerName_;
-	CGSize			layerSize_;
-	unsigned int	*tiles_;
-}
-/** name of the layer */
-@property (readwrite,retain) NSString *layerName;
-/** size of the layer in tiles */
-@property (readwrite) CGSize layerSize;
-/** pointer to the map of tiles */
-@property (readwrite) unsigned int *tiles;
-
-/** creates a TMX Layer with an tileset image name */
-+(id) layerWithTilesetName:(NSString*)name;
-/** initializes a TMX Layer with an tileset image name */
--(id) initWithTilesetName:(NSString*)name;
-/** dealloc the map from memory */
--(void) releaseMap;
-@end
 
 /** TMXTiledMap knows how to parse and render a TMX map.
  
@@ -111,7 +86,73 @@ enum
 
 /** return the TMXLayer for the specific layer */
 -(TMXLayer*) layerNamed:(NSString *)layerName;
+@end
 
+
+/** TMXLayer represents the TMX layer.
+ 
+ It is a subclass of AtlasSpriteManager, so each "tile" is represented by an AtlasSprite.
+ The benefits of using AtlasSprite objects as tiles are:
+ - tiles (AtlasSprite) can be rotated/scaled/moved with a nice API
+ 
+ @since v0.8.1
+ */
+@interface TMXLayer : AtlasSpriteManager
+{
+	TMXTilesetInfo	*tileset_;
+	NSString		*layerName_;
+	CGSize			layerSize_;
+	unsigned int	*tiles_;
+	int				layerOrientation_;
+}
+/** name of the layer */
+@property (readwrite,retain) NSString *layerName;
+/** size of the layer in tiles */
+@property (readwrite) CGSize layerSize;
+/** pointer to the map of tiles */
+@property (readwrite) unsigned int *tiles;
+/** Tilset information for the layer */
+@property (readwrite,retain) TMXTilesetInfo *tileset;
+/** Layer orientation, which is the same as the map orientation */
+@property (readwrite) int layerOrientation;
+
+
+/** creates a TMX Layer with an tileset image name */
++(id) layerWithTilesetName:(NSString*)name;
+/** initializes a TMX Layer with an tileset image name */
+-(id) initWithTilesetName:(NSString*)name;
+
+/** dealloc the map that contains the tile position from memory.
+ Unless you want to know at runtime the tiles positions, you can safely call this method.
+ If you are going to call [layer tileGIDAt:] then, don't release the map
+ */
+-(void) releaseMap;
+
+/** adds a tile given a GID and a tile coordinate.
+ The tile will be added with the z and tag the belongs to the tile coordinate
+ */
+-(AtlasSprite*) addTileForGID:(unsigned int)gid at:(CGPoint)pos;
+
+/** returns the tile (AtlasSprite) at a given a tile coordinate */
+-(AtlasSprite*) tileAt:(CGPoint)tileCoordinate;
+
+/** returns the tile gid at a given tile coordinate.
+ if it returns 0, it means that the tile is empty.
+ This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+ */
+-(unsigned int) tileGIDAt:(CGPoint)tileCoordinate;
+
+/** sets the tile gid (gid = tile global id) at a given tile coordinate.
+ The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
+ If a tile is already placed at that position, then it will be removed.
+ */
+-(void) setTileGID:(unsigned int)gid at:(CGPoint)tileCoordinate;
+
+/** removes a tile at given tile coordinate */
+-(void) removeTileAt:(CGPoint)tileCoordinate;
+
+/** returns the position in pixels of a given tile coordinate */
+-(CGPoint) positionAt:(CGPoint)tileCoordinate;
 @end
 
 

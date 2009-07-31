@@ -24,10 +24,7 @@
 #pragma mark TMXTiledMap
 
 @interface TMXTiledMap (Private)
--(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)map;
--(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
--(void) setIsoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
--(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize;
+-(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset;
 @end
 
 @implementation TMXTiledMap
@@ -48,29 +45,30 @@
 		
 		[self setContentSize:CGSizeZero];
 
-		TMXMapInfo *map = [TMXMapInfo formatWithTMXFile:tmxFile];
-		mapSize_ = map->mapSize;
-		tileSize_ = map->tileSize;
-		mapOrientation_ = map->orientation;
+		TMXMapInfo *mapInfo = [TMXMapInfo formatWithTMXFile:tmxFile];
+		mapSize_ = mapInfo->mapSize;
+		tileSize_ = mapInfo->tileSize;
+		mapOrientation_ = mapInfo->orientation;
 		
-		NSAssert( [map->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
+		NSAssert( [mapInfo->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
 		
 		int idx=0;
-		TMXTilesetInfo *tileset = [map->tilesets objectAtIndex:0];
-		
+		TMXTilesetInfo *tileset = [mapInfo->tilesets objectAtIndex:0];
 
-		for( TMXLayerInfo *layer in map->layers ) {
-			id child = [self parseLayer:layer tileset:tileset map:map];
-			[self addChild:child z:idx tag:idx];
-			
-			// update content size with the max size
-			CGSize childSize = [child contentSize];
-			CGSize currentSize = [self contentSize];
-			currentSize.width = MAX( currentSize.width, childSize.width );
-			currentSize.height = MAX( currentSize.height, childSize.height );
-			[self setContentSize:currentSize];
-			
-			idx++;
+		for( TMXLayerInfo *layerInfo in mapInfo->layers ) {
+			if( layerInfo->visible ) {
+				id child = [self parseLayer:layerInfo tileset:tileset];
+				[self addChild:child z:idx tag:idx];
+				
+				// update content size with the max size
+				CGSize childSize = [child contentSize];
+				CGSize currentSize = [self contentSize];
+				currentSize.width = MAX( currentSize.width, childSize.width );
+				currentSize.height = MAX( currentSize.height, childSize.height );
+				[self setContentSize:currentSize];
+	
+				idx++;
+			}
 		}
 	}
 
@@ -83,31 +81,36 @@
 }
 
 // private
--(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)map
+-(id) parseLayer:(TMXLayerInfo*)layerInfo tileset:(TMXTilesetInfo*)tileset
 {
-	TMXLayer *mgr = [TMXLayer layerWithTilesetName:tileset->sourceImage];
+	TMXLayer *layer = [TMXLayer layerWithTilesetName:tileset->sourceImage];
 	
-	mgr.layerName = layer->name;
-	mgr.layerSize = layer->layerSize;
-	mgr.tiles = layer->tiles;
-	layer->ownTiles = NO;
+	layer.layerName = layerInfo->name;
+	layer.layerSize = layerInfo->layerSize;
+	layer.tiles = layerInfo->tiles;
+	layer.tileset = tileset;
+	layer.layerOrientation = mapOrientation_;
+	
+	// tell the layerinfo to release the ownership of the tiles map.
+	layerInfo->ownTiles = NO;
 
-	tileset->imageSize = [[mgr texture] contentSize];
+	// XXX: quick hack that sets in the tileset the size of the image
+	tileset->imageSize = [[layer texture] contentSize];
 		
 	// By default all the tiles are aliased
 	// pros:
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	[[mgr texture] setAliasTexParameters];
+	[[layer texture] setAliasTexParameters];
 
 	CFByteOrder o = CFByteOrderGetCurrent();
 	
-	for( unsigned int y=0; y < layer->layerSize.height; y++ ) {
-		for( unsigned int x=0; x < layer->layerSize.width; x++ ) {
+	for( unsigned int y=0; y < layerInfo->layerSize.height; y++ ) {
+		for( unsigned int x=0; x < layerInfo->layerSize.width; x++ ) {
 
-			unsigned int pos = x + layer->layerSize.width * y;
-			unsigned int gid = layer->tiles[ pos ];
+			unsigned int pos = x + layerInfo->layerSize.width * y;
+			unsigned int gid = layerInfo->tiles[ pos ];
 
 			// gid are stored in little endian.
 			// if host is big endian, then swap
@@ -116,33 +119,13 @@
 			
 			// XXX: gid == 0 --> empty tile
 			if( gid != 0 ) {
-				CGRect rect;
-
-				rect = [tileset tileForGID:gid];
-
-				AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
-				[tile setOpacity:layer->opacity];
-				[tile setVisible:layer->visible];
-				
-				tile.anchorPoint = CGPointZero;
-				[mgr addChild:tile z:0 tag:pos];
-				
-				switch( map->orientation ) {
-					case TMXOrientationOrtho:
-						[self setOrthoTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
-						break;
-					case TMXOrientationIso:
-						[self setIsoTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
-						break;
-					case TMXOrientationHex:
-						[self setHexTile:tile at:ccp(x,y) tileSize:tileset->tileSize layerSize:layer->layerSize];
-						break;						
-				}
+				AtlasSprite *tile = [layer addTileForGID:gid at:ccp(x,y)];
+				[tile position]; // XXX
 			}
 		}
 	}	
 	
-	return mgr;
+	return layer;
 }
 
 -(TMXLayer*) layerNamed:(NSString *)layerName 
@@ -155,39 +138,21 @@
 	// layer not found
 	return nil;
 }
-
--(void) setOrthoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
-{
-	int x = pos.x * tileSize.width + 0.49f;
-	int y = (layerSize.height - pos.y) * tileSize.height + 0.49f;
-	[tile setPosition:ccp( x,y)];
-}
-
--(void) setIsoTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
-{
-	int x = tileSize.width /2  *(pos.x - pos.y) + 0.49f;
-	int y = (layerSize.height - (pos.x + pos.y)) * tileSize.height/2 + 0.49f;
-	[tile setPosition:ccp(x, y)];
-}
-
--(void) setHexTile:(CocosNode*)tile at:(CGPoint)pos tileSize:(CGSize)tileSize layerSize:(CGSize)layerSize
-{
-	float diffY = 0;
-	if( (int)pos.x % 2 == 1 )
-		diffY = -tileSize.height/2 ;
-	
-	int x =  pos.x * tileSize.width*3/4 + 0.49f;
-	int y =  (layerSize.height - pos.y) * tileSize.height + diffY + 0.49f;
-	
-	[tile setPosition:ccp(x, y)];
-}
 @end
 
 #pragma mark -
 #pragma mark TMXLayer
 
+@interface TMXLayer (Private)
+-(CGPoint) positionForIsoAt:(CGPoint)pos;
+-(CGPoint) positionForOrthoAt:(CGPoint)pos;
+-(CGPoint) positionForHexAt:(CGPoint)pos;
+@end
+
 @implementation TMXLayer
 @synthesize layerSize = layerSize_, layerName = layerName_, tiles=tiles_;
+@synthesize tileset=tileset_;
+@synthesize layerOrientation=layerOrientation_;
 
 +(id) layerWithTilesetName:(NSString*)name
 {
@@ -208,6 +173,7 @@
 - (void) dealloc
 {
 	[layerName_ release];
+	[tileset_ release];
 	
 	if( tiles_ ) {
 		free(tiles_);
@@ -223,6 +189,118 @@
 		free( tiles_);
 		tiles_ = NULL;
 	}
+}
+
+#pragma mark TMXLayer - obtaining tiles/gids
+
+-(AtlasSprite*) tileAt:(CGPoint)pos
+{
+	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+
+	int t = pos.x + pos.y * layerSize_.height;
+	return (AtlasSprite*) [self getChildByTag:t];
+}
+
+-(unsigned int) tileGIDAt:(CGPoint)pos
+{
+	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( tiles_ != NULL, @"TMXLayer: the tiles map has been released");
+	
+	int idx = pos.x + pos.y * layerSize_.height;
+	return tiles_[ idx ];
+}
+
+#pragma mark TMXLayer - adding / remove tiles
+
+-(void) setTileGID:(unsigned int)gid at:(CGPoint)pos
+{
+	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( tiles_ != NULL, @"TMXLayer: the tiles map has been released");
+	
+	unsigned int currentGID = [self tileGIDAt:pos];
+	
+	if( currentGID != gid ) {
+		AtlasSprite *tile = [self tileAt:pos];
+		if( ! tile ) {
+			tile = [self addTileForGID:gid at:pos];
+		} else {
+			CGRect rect = [tileset_ tileForGID:gid];
+			[tile setTextureRect:rect];
+		}
+	}
+}
+
+-(AtlasSprite*) addTileForGID:(unsigned int)gid at:(CGPoint)pos
+{
+	CGRect rect = [tileset_ tileForGID:gid];
+	
+	int z = pos.x + pos.y * layerSize_.height;
+	
+	AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:self];
+//	[tile setOpacity:layerInfo->opacity];
+//	[tile setVisible:layerInfo->visible];
+	
+	tile.anchorPoint = CGPointZero;
+	[self addChild:tile z:z tag:z];
+	
+	[tile setPosition: [self positionAt:pos]];
+	
+	return tile;
+}
+
+-(void) removeTileAt:(CGPoint)pos
+{
+	int z = pos.x + pos.y * layerSize_.height;
+	[self removeChildByTag:z cleanup:YES];
+}
+
+#pragma mark TMXLayer - obtaining positions
+
+-(CGPoint) positionAt:(CGPoint)pos
+{
+	CGPoint ret = CGPointZero;
+	switch( layerOrientation_ ) {
+		case TMXOrientationOrtho:
+			ret = [self positionForOrthoAt:pos];
+			break;
+		case TMXOrientationIso:
+			ret = [self positionForIsoAt:pos];
+			break;
+		case TMXOrientationHex:
+			ret = [self positionForHexAt:pos];
+			break;
+	}
+	return ret;
+}
+
+-(CGPoint) positionForOrthoAt:(CGPoint)pos
+{
+	CGSize tileSize = tileset_->tileSize;
+	int x = pos.x * tileSize.width + 0.49f;
+	int y = (layerSize_.height - pos.y) * tileSize.height + 0.49f;
+	return ccp(x,y);
+}
+
+-(CGPoint) positionForIsoAt:(CGPoint)pos
+{
+	CGSize tileSize = tileset_->tileSize;
+
+	int x = tileSize.width /2  *(pos.x - pos.y) + 0.49f;
+	int y = (layerSize_.height - (pos.x + pos.y)) * tileSize.height/2 + 0.49f;
+	return ccp(x, y);
+}
+
+-(CGPoint) positionForHexAt:(CGPoint)pos
+{
+	CGSize tileSize = tileset_->tileSize;
+
+	float diffY = 0;
+	if( (int)pos.x % 2 == 1 )
+		diffY = -tileSize.height/2 ;
+	
+	int x =  pos.x * tileSize.width*3/4 + 0.49f;
+	int y =  (layerSize_.height - pos.y) * tileSize.height + diffY + 0.49f;
+	return ccp(x,y);
 }
 @end
 
