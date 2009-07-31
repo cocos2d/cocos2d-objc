@@ -108,6 +108,8 @@ static TextureMgr *sharedTextureMgr;
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 	
 	// textures will be created on the main OpenGL context
+	// it seems that in SDK 2.2.x there can't be 2 threads creating textures at the same time
+	// the lock is used for this purpose: issue #472
 	[contextLock lock];
 	if( auxEAGLcontext == nil ) {
 		auxEAGLcontext = [[EAGLContext alloc]
@@ -117,12 +119,12 @@ static TextureMgr *sharedTextureMgr;
 		if( ! auxEAGLcontext )
 			CCLOG(@"TextureMgr: Could not create EAGL context");
 	}
-	[contextLock unlock];
 	
 	[EAGLContext setCurrentContext:auxEAGLcontext];
 
 	// load / create the texture
 	Texture2D *tex = [self addImage:async.data];
+	[contextLock unlock];
 
 	// The callback will be executed on the main thread
 	[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
