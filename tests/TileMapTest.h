@@ -30,6 +30,13 @@
 }
 @end
 
+@interface TMXReadWriteTest : TileDemo
+{
+	unsigned int gid;
+	unsigned int gid2;
+}
+@end
+
 @interface TMXHexTest : TileDemo
 {
 }

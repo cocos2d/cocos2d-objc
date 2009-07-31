@@ -17,6 +17,7 @@ static NSString *transitions[] = {
 			@"TMXOrthoTest",
 			@"TMXIsoTest",
 			@"TMXHexTest",
+			@"TMXReadWriteTest",
 };
 
 enum {
@@ -350,6 +351,87 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"TMX Hex test";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXReadWriteTest
+
+@implementation TMXReadWriteTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		gid = 0;
+		
+		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
+		[self addChild:iso z:0 tag:kTagTileMap];
+		
+		TMXLayer *layer = [iso layerNamed:@"Layer 0"];
+		[layer.texture setAntiAliasTexParameters];
+
+		AtlasSprite *tile = [layer tileAt:ccp(0,63)];
+		tile.anchorPoint = ccp(0.5f, 0.5f);
+
+		id move = [MoveBy actionWithDuration:2 position:ccp(240,160)];
+		id rotate = [RotateBy actionWithDuration:2 angle:360];
+		id scale = [ScaleBy actionWithDuration:2 scale:5];
+		id opacity = [FadeOut actionWithDuration:2];
+		id seq = [Sequence actions:move, rotate, scale, opacity, nil];
+		
+		gid = [layer tileGIDAt:ccp(0,63)];
+		NSLog(@"Tile GID at:(0,63) is: %d", gid);
+		
+		[self schedule:@selector(repaintWithGID:) interval:2];
+		[self schedule:@selector(removeTiles:) interval:3];
+		[self schedule:@selector(updateCol:) interval:0.5f];
+		
+		gid2 = 0;
+		
+		[tile runAction:seq];
+	}	
+	return self;
+}
+
+-(void) updateCol:(ccTime)dt
+{	
+	id map = [self getChildByTag:kTagTileMap];
+	TMXLayer *layer = (TMXLayer*) [map getChildByTag:0];
+		
+	CGSize s = [layer layerSize];
+	for( int y=0; y< s.height; y++ ) {
+		[layer setTileGID:gid2 at:ccp(3,y)];
+	}
+	gid2 = (gid2 + 1) % 80;
+}
+-(void) repaintWithGID:(ccTime)dt
+{
+	[self unschedule:_cmd];
+
+	id map = [self getChildByTag:kTagTileMap];
+	TMXLayer *layer = (TMXLayer*) [map getChildByTag:0];
+	
+	CGSize s = [layer layerSize];
+	for( int y=0; y< s.height; y++ ) {
+		[layer setTileGID:gid at:ccp(2,y)];
+	}
+}
+
+-(void) removeTiles:(ccTime)dt
+{
+	[self unschedule:_cmd];
+
+	id map = [self getChildByTag:kTagTileMap];
+	TMXLayer *layer = (TMXLayer*) [map getChildByTag:0];
+	CGSize s = [layer layerSize];
+	for( int y=0; y< s.height; y++ ) {
+		[layer removeTileAt:ccp(5,y)];
+	}
+}
+
+-(NSString *) title
+{
+	return @"TMX Read/Write test";
 }
 @end
 
