@@ -15,235 +15,10 @@
  *
  */
 
-#import <UIKit/UIKit.h>
-#include <zlib.h>
-
 #import "TMXTiledMap.h"
+#import "TMXInfo.h"
 #import "AtlasSprite.h"
-#import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "Support/base64.h"
-#import "Support/ZipUtils.h"
-
-enum
-{
-	TMXOrientationOrtho,
-	TMXOrientationHex,
-	TMXOrientationIso,
-};
-
-#pragma mark -
-#pragma mark TMXLayerInfo
-@implementation TMXLayerInfo
-- (void) dealloc
-{
-	CCLOG(@"deallocing %@",self);
-	if( tiles )
-		free(tiles);
-	[super dealloc];
-}
-
-@end
-
-#pragma mark -
-#pragma mark TMXTilesetInfo
-
-@implementation TMXTilesetInfo
-- (void) dealloc
-{
-	CCLOG(@"deallocing %@", self);
-	[sourceImage release];
-	[name release];
-	[super dealloc];
-}
-
--(CGRect) tileForGID:(unsigned int)gid
-{
-	CGRect rect;
-	rect.size = tileSize;
-	
-	gid = gid - firstGid;
-
-	int max_x = (imageSize.width - margin*2 + spacing) / (tileSize.width + spacing);
-//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
-	
-	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin;
-	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin;
-
-	return rect;
-}
-@end
-
-enum {
-	TMXLayerAttribNone = 1 << 0,
-	TMXLayerAttribBase64 = 1 << 1,
-	TMXLayerAttribGzip = 1 << 2,
-};
-
-#pragma mark -
-#pragma mark TMXMapInfo
-@implementation TMXMapInfo
-+(id) formatWithTMXFile:(NSString*)tmxFile
-{
-	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
-}
-
--(id) initWithTMXFile:(NSString*)tmxFile
-{
-	if( (self=[super init])) {
-		
-		tilesets = [[NSMutableArray arrayWithCapacity:4] retain];
-		layers = [[NSMutableArray arrayWithCapacity:4] retain];
-	
-		// tmp vars
-		currentString = [[NSMutableString alloc] initWithCapacity:200];
-		storingCharacters = NO;
-		layerAttribs = TMXLayerAttribNone;
-		
-		NSURL *url = [NSURL fileURLWithPath:[FileUtils fullPathFromRelativePath:tmxFile]];
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-		// we'll do the parsing
-		[parser setDelegate:self];
-		[parser setShouldProcessNamespaces:NO];
-		[parser setShouldReportNamespacePrefixes:NO];
-		[parser setShouldResolveExternalEntities:NO];
-		[parser parse];
-		
-		NSError *parseError = [parser parserError];
-		if(parseError) {
-			CCLOG(@"TMXTiledMap: Error parsing TMX file: %@", parseError);
-		}
-		
-		[parser release];
-	}
-	return self;
-}
-- (void) dealloc
-{
-	CCLOG(@"deallocing %@", self);
-	[tilesets release];
-	[layers release];
-	[currentString release];
-	[super dealloc];
-}
-
-// the XML parser calls here with all the elements
--(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{	
-	if([elementName isEqualToString:@"map"]) {
-		NSString *version = [attributeDict valueForKey:@"version"];
-		if( ! [version isEqualToString:@"1.0"] )
-			CCLOG(@"TMXFormat: Unsupported TMX version: %@", version);
-		NSString *orientationStr = [attributeDict valueForKey:@"orientation"];
-		if( [orientationStr isEqualToString:@"orthogonal"])
-			orientation = TMXOrientationOrtho;
-		else if ( [orientationStr isEqualToString:@"isometric"])
-			orientation = TMXOrientationIso;
-		else if( [orientationStr isEqualToString:@"hexagonal"])
-			orientation = TMXOrientationHex;
-		else
-			CCLOG(@"TMXFomat: Unsupported orientation: %@", orientation);
-
-		mapSize.width = [[attributeDict valueForKey:@"width"] intValue];
-		mapSize.height = [[attributeDict valueForKey:@"height"] intValue];
-		tileSize.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-		tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
-
-	} else if([elementName isEqualToString:@"tileset"]) {
-		TMXTilesetInfo *tileset = [TMXTilesetInfo new];
-		tileset->name = [[attributeDict valueForKey:@"name"] retain];
-		tileset->firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
-		tileset->spacing = [[attributeDict valueForKey:@"spacing"] intValue];
-		tileset->margin = [[attributeDict valueForKey:@"margin"] intValue];
-		tileset->tileSize.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-		tileset->tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
-		
-		[tilesets addObject:tileset];
-		[tileset release];
-
-	} else if([elementName isEqualToString:@"layer"]) {
-		TMXLayerInfo *layer = [TMXLayerInfo new];
-		layer->name = [[attributeDict valueForKey:@"name"] retain];
-		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
-		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
-		layer->visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
-		if( [attributeDict valueForKey:@"opacity"] ){
-			layer->opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
-		}else{
-			layer->opacity = 255;
-		}
-		
-		[layers addObject:layer];
-		[layer release];
-		
-	} else if([elementName isEqualToString:@"image"]) {
-
-		TMXTilesetInfo *tileset = [tilesets lastObject];
-		tileset->sourceImage = [[attributeDict valueForKey:@"source"] retain];
-
-	} else if([elementName isEqualToString:@"data"]) {
-		NSString *encoding = [attributeDict valueForKey:@"encoding"];
-		NSString *compression = [attributeDict valueForKey:@"compression"];
-		
-		if( [encoding isEqualToString:@"base64"] ) {
-			layerAttribs |= TMXLayerAttribBase64;
-			storingCharacters = YES;
-			
-			if( [compression isEqualToString:@"gzip"] )
-				layerAttribs |= TMXLayerAttribGzip;
-		}
-	}
-}
-
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
-	int len = 0;
-
-	if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) {
-		storingCharacters = NO;
-		
-		TMXLayerInfo *layer = [layers lastObject];
-		
-		unsigned char *buffer;
-		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
-		if( ! buffer ) {
-			CCLOG(@"TiledMap: decode data error");
-			return;
-		}
-		
-		if( layerAttribs & TMXLayerAttribGzip ) {
-			unsigned char *deflated;
-			len = inflateMemory(buffer, len, &deflated);
-			free( buffer );
-			
-			if( ! deflated ) {
-				CCLOG(@"TiledMap: inflate data error");
-				return;
-			}
-			
-			layer->tiles = deflated;
-		} else
-			layer->tiles = buffer;
-		
-		[currentString setString:@""];
-	}
-}
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
-    if (storingCharacters)
-		[currentString appendString:string];
-}
-
-
-//
-// the level did not load, file not found, etc.
-//
--(void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
-	CCLOG(@"Error on XML Parse: %@", [parseError localizedDescription] );
-}
-
-@end
 
 #pragma mark -
 #pragma mark TMXTiledMap
@@ -256,7 +31,9 @@ enum {
 @end
 
 @implementation TMXTiledMap
-@synthesize map = map_;
+@synthesize mapSize=mapSize_;
+@synthesize tileSize=tileSize_;
+@synthesize mapOrientation=mapOrientation_;
 
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile
 {
@@ -271,15 +48,19 @@ enum {
 		
 		[self setContentSize:CGSizeZero];
 
-		map_ = [[TMXMapInfo formatWithTMXFile:tmxFile] retain];
-		NSAssert( [map_->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
+		TMXMapInfo *map = [TMXMapInfo formatWithTMXFile:tmxFile];
+		mapSize_ = map->mapSize;
+		tileSize_ = map->tileSize;
+		mapOrientation_ = map->orientation;
+		
+		NSAssert( [map->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
 		
 		int idx=0;
-		TMXTilesetInfo *tileset = [map_->tilesets objectAtIndex:0];
+		TMXTilesetInfo *tileset = [map->tilesets objectAtIndex:0];
 		
 
-		for( TMXLayerInfo *layer in map_->layers ) {
-			id child = [self parseLayer:layer tileset:tileset map:map_];
+		for( TMXLayerInfo *layer in map->layers ) {
+			id child = [self parseLayer:layer tileset:tileset map:map];
 			[self addChild:child z:idx tag:idx];
 			
 			// update content size with the max size
@@ -298,15 +79,18 @@ enum {
 
 -(void) dealloc
 {
-	[map_ release];
 	[super dealloc];
 }
 
 // private
 -(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)map
 {
-	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:tileset->sourceImage capacity:100];
+	TMXLayer *mgr = [TMXLayer layerWithTilesetName:tileset->sourceImage];
 	
+	mgr.layerName = layer->name;
+	mgr.layerSize = layer->layerSize;
+	mgr.tiles = layer->tiles;
+	layer->ownTiles = NO;
 
 	tileset->imageSize = [[mgr texture] contentSize];
 		
@@ -319,12 +103,11 @@ enum {
 
 	CFByteOrder o = CFByteOrderGetCurrent();
 	
-	unsigned int *tiles = (unsigned int*) layer->tiles;
 	for( unsigned int y=0; y < layer->layerSize.height; y++ ) {
 		for( unsigned int x=0; x < layer->layerSize.width; x++ ) {
 
 			unsigned int pos = x + layer->layerSize.width * y;
-			unsigned int gid = tiles[ pos ];
+			unsigned int gid = layer->tiles[ pos ];
 
 			// gid are stored in little endian.
 			// if host is big endian, then swap
@@ -362,14 +145,14 @@ enum {
 	return mgr;
 }
 
--(CocosNode*) layerNamed:(NSString *)layerName 
+-(TMXLayer*) layerNamed:(NSString *)layerName 
 {
-	int i=0;
-	for( TMXLayerInfo *layer in map_->layers ) {
-		if( [layer->name isEqualToString:layerName] )
-			return [self getChildByTag:i];
-		i++;
+	for( TMXLayer *layer in children ) {
+		if( [layer.layerName isEqual:layerName] )
+			return layer;
 	}
+	
+	// layer not found
 	return nil;
 }
 
@@ -399,3 +182,40 @@ enum {
 	[tile setPosition:ccp(x, y)];
 }
 @end
+
+#pragma mark -
+#pragma mark TMXLayer
+
+@implementation TMXLayer
+@synthesize layerSize = layerSize_, layerName = layerName_, tiles=tiles_;
+
++(id) layerWithTilesetName:(NSString*)name
+{
+	return [[[self alloc] initWithTilesetName:name] autorelease];
+}
+
+-(id) initWithTilesetName:(NSString*)name
+{
+	// XXX: a better guess should be done regarding the quantity of tiles
+	if((self=[super initWithFile:name capacity:100])) {
+		layerName_ = nil;
+		layerSize_ = CGSizeZero;
+		tiles_ = NULL;
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[layerName_ release];
+	
+	if( tiles_ ) {
+		free(tiles_);
+		tiles_ = NULL;
+	}
+		
+	[super dealloc];
+}
+
+@end
+

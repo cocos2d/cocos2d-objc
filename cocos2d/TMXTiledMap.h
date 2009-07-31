@@ -18,98 +18,45 @@
 #import "AtlasNode.h"
 #import "AtlasSpriteManager.h"
 
-/** TMXLayerInfo contains the information about the layers like:
-   - Layer name
-   - Layer size
-   - Layer opacity at creation time (it can be modified at runtime)
-   - Whether the layer is visible (if it's not visible, then the CocosNode won't be created)
-
- This information is obtained from the TMX file.
- @since v0.8.1
- */
-@interface TMXLayerInfo : NSObject
+/** Possible oritentations of the TMX map */
+enum
 {
-@public
-	NSString		*name;
-	CGSize			layerSize;
-	unsigned char	*tiles;
-	BOOL			visible;
-	GLubyte			opacity;
-}
-@end
-
-/** TMXTilesetInfo contains the information about the tilesets like:
-   - Tileset name
-   - Tilset spacing
-   - Tileset margin
-   - size of the tiles
-   - Image used for the tiles
-   - Image size
-
- This information is obtained from the TMX file.
-
- @since v0.8.1
-*/
-@interface TMXTilesetInfo : NSObject
-{
-@public
-	NSString	*name;
-	int			firstGid;
-	CGSize		tileSize;
-	int			spacing;
-	int			margin;
+	/** Orthogonal orientation */
+	TMXOrientationOrtho,
 	
-	// filename containing the tiles (should be spritesheet / texture atlas)
-	NSString	*sourceImage;
+	/** Hexagonal orientation */
+	TMXOrientationHex,
 	
-	// size in pixels of the image
-	CGSize		imageSize;
-}
--(CGRect) tileForGID:(unsigned int)gid;
-@end
+	/** Isometric orientation */
+	TMXOrientationIso,
+};
 
-/** TMXMapInfo contains the information about the map like:
-   - Map orientation (hexagonal, isometric or orthogonal)
-   - Tile size
-   - Map size
-
- And it also contains:
-   - Layers (an array of TMXLayerInfo objects)
-   - Tilesets (an array of TMXTilesetInfo objects)
+/** TMXLayer represents the TMX layer.
  
- This information is obtained from the TMX file.
+ It is a subclass of AtlasSpriteManager, so each "tile" is represented by an AtlasSprite.
+ The benefits of using AtlasSprite objects as tiles are:
+ - tiles (AtlasSprite) can be rotated/scaled/moved with a nice API
  
  @since v0.8.1
  */
-@interface TMXMapInfo : NSObject
+@interface TMXLayer : AtlasSpriteManager
 {
-	
-	NSMutableString		*currentLayer;
-	NSMutableString		*currentString;
-    BOOL				storingCharacters;	
-	int					layerAttribs;
-	
-@public
-	int	orientation;
-	
-	
-	// map width & height
-	CGSize	mapSize;
-	
-	// tiles width & height
-	CGSize	tileSize;
-	
-	// Layers
-	NSMutableArray *layers;
-	
-	// tilesets
-	NSMutableArray *tilesets;
+	NSString		*layerName_;
+	CGSize			layerSize_;
+	unsigned int	*tiles_;
 }
+/** name of the layer */
+@property (readwrite,retain) NSString *layerName;
+/** size of the layer in tiles */
+@property (readwrite) CGSize layerSize;
+/** pointer to the map of tiles */
+@property (readwrite) unsigned int *tiles;
 
-/** creates a TMX Format with a tmx file */
-+(id) formatWithTMXFile:(NSString*)tmxFile;
-/** initializes a TMX format witha  tmx file */
--(id) initWithTMXFile:(NSString*)tmxFile;
+/** creates a TMX Layer with an tileset image name */
++(id) layerWithTilesetName:(NSString*)name;
+/** initializes a TMX Layer with an tileset image name */
+-(id) initWithTilesetName:(NSString*)name;
+
 @end
 
 /** TMXTiledMap knows how to parse and render a TMX map.
@@ -130,26 +77,30 @@
  Limitations:
  - It only supports one tileset.
  - Embeded images are not supported
- - It only supports the TMX format (the JSON format is not supported)
+ - It only supports the XML format (the JSON format is not supported)
  
  Technical description:
-   Each layer is created using an AtlasSpriteManager. If you have 5 layers, then 5 AtlasSpriteManager will be created,
+   Each layer is created using an TMXLayer (subclass of AtlasSpriteManager). If you have 5 layers, then 5 TMXLayer will be created,
    unless the layer visibility is off. In that case, the layer won't be created at all.
-   You can obtain the layers (AtlasSpriteManager objects) at runtime by using:
+   You can obtain the layers (TMXLayer objects) at runtime by:
   - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
   - [map layerNamed: name_of_the_layer];
-   
- 
+
  @since v0.8.1
  */
 @interface TMXTiledMap : CocosNode
 {
-	TMXMapInfo *map_;
+	CGSize		mapSize_;
+	CGSize		tileSize_;
+	int			mapOrientation_;
 }
 
-/** returns the metadata of the map like: orientation, size, tile size, the tileset used, layers used, etc
- */
-@property(readonly) TMXMapInfo *map;
+/** the map's size property measured in tiles */
+@property (readonly) CGSize mapSize;
+/** the tiles's size property measured in pixels */
+@property (readonly) CGSize tileSize;
+/** map orientation */
+@property (readonly) int mapOrientation;
 
 /** creates a TMX Tiled Map with a TMX file */
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile;
@@ -157,8 +108,9 @@
 /** initializes a TMX Tiled Map with a TMX file */
 -(id) initWithTMXFile:(NSString*)tmxFile;
 
-/** return the AtlasSpriteManager for the specific layer */
--(AtlasSpriteManager*) layerNamed:(NSString *)layerName;
+/** return the TMXLayer for the specific layer */
+-(TMXLayer*) layerNamed:(NSString *)layerName;
 
 @end
+
 
