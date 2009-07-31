@@ -30,6 +30,12 @@
 }
 @end
 
+@interface TMXOrthoTest2 : TileDemo
+{
+}
+@end
+
+
 @interface TMXReadWriteTest : TileDemo
 {
 	unsigned int gid;

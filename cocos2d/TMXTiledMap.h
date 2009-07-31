@@ -102,6 +102,7 @@ enum
 	TMXTilesetInfo	*tileset_;
 	NSString		*layerName_;
 	CGSize			layerSize_;
+	CGSize			mapTileSize_;
 	unsigned int	*tiles_;
 	int				layerOrientation_;
 }
@@ -109,6 +110,8 @@ enum
 @property (readwrite,retain) NSString *layerName;
 /** size of the layer in tiles */
 @property (readwrite) CGSize layerSize;
+/** size of the map's tile (could be differnt from the tile's size) */
+@property (readwrite) CGSize mapTileSize;
 /** pointer to the map of tiles */
 @property (readwrite) unsigned int *tiles;
 /** Tilset information for the layer */
