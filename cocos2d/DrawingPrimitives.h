@@ -12,6 +12,10 @@
  *
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
 /**
  @file
  Drawing OpenGL ES primitives.
@@ -56,3 +60,7 @@ void drawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int se
  @since v0.8
  */
 void drawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
+
+#ifdef __cplusplus
+}
+#endif
