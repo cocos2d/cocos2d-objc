@@ -89,6 +89,7 @@
 	layer.layerSize = layerInfo->layerSize;
 	layer.tiles = layerInfo->tiles;
 	layer.tileset = tileset;
+	layer.mapTileSize = tileSize_;
 	layer.layerOrientation = mapOrientation_;
 	
 	// tell the layerinfo to release the ownership of the tiles map.
@@ -153,6 +154,7 @@
 @synthesize layerSize = layerSize_, layerName = layerName_, tiles=tiles_;
 @synthesize tileset=tileset_;
 @synthesize layerOrientation=layerOrientation_;
+@synthesize mapTileSize=mapTileSize_;
 
 +(id) layerWithTilesetName:(NSString*)name
 {
@@ -275,31 +277,26 @@
 
 -(CGPoint) positionForOrthoAt:(CGPoint)pos
 {
-	CGSize tileSize = tileset_->tileSize;
-	int x = pos.x * tileSize.width + 0.49f;
-	int y = (layerSize_.height - pos.y) * tileSize.height + 0.49f;
+	int x = pos.x * mapTileSize_.width + 0.49f;
+	int y = (layerSize_.height - pos.y) * mapTileSize_.height + 0.49f;
 	return ccp(x,y);
 }
 
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
-	CGSize tileSize = tileset_->tileSize;
-
-	int x = tileSize.width /2  *(pos.x - pos.y) + 0.49f;
-	int y = (layerSize_.height - (pos.x + pos.y)) * tileSize.height/2 + 0.49f;
+	int x = mapTileSize_.width /2  *(pos.x - pos.y) + 0.49f;
+	int y = (layerSize_.height - (pos.x + pos.y)) * mapTileSize_.height/2 + 0.49f;
 	return ccp(x, y);
 }
 
 -(CGPoint) positionForHexAt:(CGPoint)pos
 {
-	CGSize tileSize = tileset_->tileSize;
-
 	float diffY = 0;
 	if( (int)pos.x % 2 == 1 )
-		diffY = -tileSize.height/2 ;
+		diffY = -mapTileSize_.height/2 ;
 	
-	int x =  pos.x * tileSize.width*3/4 + 0.49f;
-	int y =  (layerSize_.height - pos.y) * tileSize.height + diffY + 0.49f;
+	int x =  pos.x * mapTileSize_.width*3/4 + 0.49f;
+	int y =  (layerSize_.height - pos.y) * mapTileSize_.height + diffY + 0.49f;
 	return ccp(x,y);
 }
 @end

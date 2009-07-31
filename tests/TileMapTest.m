@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 			@"TileMapTest",
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
+			@"TMXOrthoTest2",
 			@"TMXIsoTest",
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
@@ -308,6 +309,33 @@ Class restartAction()
 	return @"TMX Orthogonal test";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXOrthoTest2
+
+@implementation TMXOrthoTest2
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test1.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+
+		for( AtlasSpriteManager* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+
+		[map runAction:[ScaleBy actionWithDuration:2 scale:0.5f]];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Ortho test2";
+}
+@end
+
 
 #pragma mark -
 #pragma mark TMXIsoTest
