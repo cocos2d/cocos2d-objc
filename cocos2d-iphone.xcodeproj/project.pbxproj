@@ -896,6 +896,9 @@
 		50CB31081004D05300B7A750 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* ActionManager.h */; };
 		50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* ActionManager.m */; };
+		50CFABBA10235DC900175934 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CFABB910235DC900175934 /* libz.dylib */; };
+		50CFAC391023660000175934 /* TMXInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* TMXInfo.h */; };
+		50CFAC3A1023660000175934 /* TMXInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CFAC381023660000175934 /* TMXInfo.m */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -1049,11 +1052,9 @@
 		50EC54CD101519E400489A93 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		50F29F5610204FD60046CA73 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F29F5510204FD60046CA73 /* base64.c */; };
 		50F29F6F102053370046CA73 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F29F6E102053370046CA73 /* base64.h */; };
-		50F29FD3102060440046CA73 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F29FD2102060440046CA73 /* libz.dylib */; };
 		50F29FDA1020607E0046CA73 /* orthogonal-test2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD71020607E0046CA73 /* orthogonal-test2.tmx */; };
 		50F29FDB1020607E0046CA73 /* orthogonal-test4.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */; };
 		50F29FDC1020607E0046CA73 /* orthogonal-test3.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */; };
-		50F2A006102064B50046CA73 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2A005102064B50046CA73 /* libz.dylib */; };
 		50F2A104102094550046CA73 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
 		50F2A105102094550046CA73 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F2A103102094550046CA73 /* ZipUtils.h */; };
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
@@ -2081,6 +2082,9 @@
 		50CB34DD100765EF00B7A750 /* Bug422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug422.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB3B0C100AC43A00B7A750 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
 		50CB3B0D100AC43A00B7A750 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
+		50CFABB910235DC900175934 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		50CFAC371023660000175934 /* TMXInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMXInfo.h; sourceTree = "<group>"; };
+		50CFAC381023660000175934 /* TMXInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMXInfo.m; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
 		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
@@ -2171,11 +2175,9 @@
 		50EC53F11014DEEB00489A93 /* ccHashSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccHashSet.m; sourceTree = "<group>"; };
 		50F29F5510204FD60046CA73 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		50F29F6E102053370046CA73 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		50F29FD2102060440046CA73 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		50F29FD71020607E0046CA73 /* orthogonal-test2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test2.tmx"; sourceTree = "<group>"; };
 		50F29FD81020607E0046CA73 /* orthogonal-test4.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test4.tmx"; sourceTree = "<group>"; };
 		50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test3.tmx"; sourceTree = "<group>"; };
-		50F2A005102064B50046CA73 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		50F2A102102094550046CA73 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
 		50F2A103102094550046CA73 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		50F7B2760F28DE7C00057537 /* EaseAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseAction.h; sourceTree = "<group>"; };
@@ -2301,7 +2303,6 @@
 				5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */,
 				5018F2E50DFDEBBA00C013A5 /* OpenGLES.framework in Frameworks */,
 				5018F2E60DFDEBBA00C013A5 /* QuartzCore.framework in Frameworks */,
-				50F29FD3102060440046CA73 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2364,7 +2365,7 @@
 				503F5CB8101FE930002A37E5 /* OpenGLES.framework in Frameworks */,
 				503F5CB9101FE930002A37E5 /* QuartzCore.framework in Frameworks */,
 				503F5CBA101FE930002A37E5 /* libcocos2d.a in Frameworks */,
-				50F2A006102064B50046CA73 /* libz.dylib in Frameworks */,
+				50CFABBA10235DC900175934 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2962,6 +2963,7 @@
 				50090E051021F0280085B687 /* libz.dylib */,
 				50090E051021F0280085B687 /* libz.dylib */,
 				50090E051021F0280085B687 /* libz.dylib */,
+				50CFABB910235DC900175934 /* libz.dylib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -3133,8 +3135,9 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				506414C50F9C67C0007A7B24 /* Label, Tile, Parallax Nodes */,
+				506414C50F9C67C0007A7B24 /* Label, Parallax Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
+				50CFAC3B1023661B00175934 /* TileMap Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
@@ -3463,7 +3466,7 @@
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
 		};
-		506414C50F9C67C0007A7B24 /* Label, Tile, Parallax Nodes */ = {
+		506414C50F9C67C0007A7B24 /* Label, Parallax Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */,
@@ -3474,12 +3477,8 @@
 				506884710E96734A00F943E5 /* LabelAtlas.m */,
 				502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */,
 				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
-				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
-				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
-				509D0816101E4FCE007E1749 /* TMXTiledMap.h */,
-				509D0817101E4FCE007E1749 /* TMXTiledMap.m */,
 			);
-			name = "Label, Tile, Parallax Nodes";
+			name = "Label, Parallax Nodes";
 			sourceTree = "<group>";
 		};
 		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
@@ -3826,6 +3825,19 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		50CFAC3B1023661B00175934 /* TileMap Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
+				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
+				50CFAC371023660000175934 /* TMXInfo.h */,
+				50CFAC381023660000175934 /* TMXInfo.m */,
+				509D0816101E4FCE007E1749 /* TMXTiledMap.h */,
+				509D0817101E4FCE007E1749 /* TMXTiledMap.m */,
+			);
+			name = "TileMap Nodes";
+			sourceTree = "<group>";
+		};
 		50DFC2CC0FF62852007E7827 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
@@ -4091,6 +4103,7 @@
 				509D0818101E4FCE007E1749 /* TMXTiledMap.h in Headers */,
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
+				50CFAC391023660000175934 /* TMXInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6032,6 +6045,7 @@
 				509D0819101E4FCE007E1749 /* TMXTiledMap.m in Sources */,
 				50F29F5610204FD60046CA73 /* base64.c in Sources */,
 				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
+				50CFAC3A1023660000175934 /* TMXInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
