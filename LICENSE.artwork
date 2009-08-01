@@ -20,16 +20,43 @@ LICENSE: unsure... don't use them in your project.
 TILES & TILEMAP:
 ----------------
 
-Resources/Images/tiles.png
-Resources/Images/levelmap.tga
-Resources/Images/background.png
+'Barbie Seahorse' tiles:
+    Resources/Images/tiles.png
+    Resources/Images/levelmap.tga
+    Resources/Images/background.png
 
-From 'Barbie Seahorse' game:
-    http://www.imitationpickles.org/barbie/
+    From 'Barbie Seahorse' game:
+        http://www.imitationpickles.org/barbie/
 
-LICENSE: GPL
+    LICENSE: GNU GPL v2
+
+'Hex tiles'
+    Resources/Images/tilemap/hexa-tiles.png
+    From 'Pioneers' game:
+        http://pio.sourceforge.net/
+
+    LICENSE: GNU GPL v2
+
+'Planet Cute' tiles:
+    Resources/Images/tilemap/ortho-test1.png
+
+    From Lost Garden:
+        http://lostgarden.com/2007/05/dancs-miraculously-flexible-game.html
+
+    LICENSE:
+        http://lostgarden.com/2007/03/lost-garden-license.html
 
 
+'Spritelib GPL':
+    Resources/Images/tilemap/fixed-ortho-test2.png
+    Resources/Images/tilemap/ortho-test2.png
+
+    From 'SpriteLib GPL':
+        http://www.flyingyogi.com/fun/spritelib.html
+
+    LICENSE: Common Public License
+    http://www.opensource.org/licenses/cpl.php
+        
 
 FONTS:
 ------
