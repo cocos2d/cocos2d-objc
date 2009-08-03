@@ -120,14 +120,19 @@ static TextureMgr *sharedTextureMgr;
 			CCLOG(@"TextureMgr: Could not create EAGL context");
 	}
 	
-	[EAGLContext setCurrentContext:auxEAGLcontext];
+	if( [EAGLContext setCurrentContext:auxEAGLcontext] ) {
 
-	// load / create the texture
-	Texture2D *tex = [self addImage:async.data];
+		// load / create the texture
+		Texture2D *tex = [self addImage:async.data];
+
+		// The callback will be executed on the main thread
+		[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
+		
+		[EAGLContext setCurrentContext:nil];
+	} else {
+		CCLOG(@"TetureMgr: EAGLContext error");
+	}
 	[contextLock unlock];
-
-	// The callback will be executed on the main thread
-	[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
 	
 	[autoreleasepool release];
 }
