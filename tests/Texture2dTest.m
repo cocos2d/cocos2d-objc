@@ -8,6 +8,8 @@
 #import "cocos2d.h"
 #import "Texture2dTest.h"
 
+#import "png.h"
+
 enum {
 	kTagLabel = 1,
 	kTagSprite1 = 2,
@@ -588,6 +590,127 @@ Class restartAction()
 
 #pragma mark TexturePNGAlpha
 @implementation TexturePNGAlpha
+
+#define PNG_SIG_BYTES 8
+-(Texture2D*) loadPNG:(NSString*)name
+{	
+	png_uint_32 width, height, width2, height2;
+	int bits;
+	NSString *newName = [FileUtils fullPathFromRelativePath:name];
+	
+	FILE *png_file = fopen([newName UTF8String], "rb");
+	NSAssert(png_file, @"PNG doesn't exists");
+
+	uint8_t header[PNG_SIG_BYTES];	
+	fread(header, 1, PNG_SIG_BYTES, png_file);
+	NSAssert(!png_sig_cmp(header, 0, PNG_SIG_BYTES), @"Unkonw file format");
+	
+	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	NSAssert(png_ptr, @"No mem");
+	
+	png_infop info_ptr = png_create_info_struct(png_ptr);
+	NSAssert(info_ptr, @"No mem");
+	
+	png_infop end_info = png_create_info_struct(png_ptr);
+	NSAssert(end_info, @"No mem");
+	
+	NSAssert(!setjmp(png_jmpbuf(png_ptr)), @"setjmp error");
+	png_init_io(png_ptr, png_file);
+	png_set_sig_bytes(png_ptr, PNG_SIG_BYTES);
+	png_read_info(png_ptr, info_ptr);
+	
+	width = png_get_image_width(png_ptr, info_ptr);
+	height = png_get_image_height(png_ptr, info_ptr);
+	
+	int bit_depth, color_type;
+	bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+	color_type = png_get_color_type(png_ptr, info_ptr);
+
+	if( color_type == PNG_COLOR_TYPE_PALETTE )
+		png_set_palette_to_rgb( png_ptr );
+	
+	if( color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8 )
+		png_set_gray_1_2_4_to_8( png_ptr );
+	
+	if( png_get_valid( png_ptr, info_ptr, PNG_INFO_tRNS ) )
+		png_set_tRNS_to_alpha (png_ptr);
+	
+	if( bit_depth == 16 )
+		png_set_strip_16( png_ptr );
+	
+	else if( bit_depth < 8 )
+		png_set_packing( png_ptr );
+	
+	png_read_update_info(png_ptr, info_ptr);
+	
+	png_get_IHDR( png_ptr, info_ptr,
+				&width, &height, &bit_depth, &color_type,
+				 NULL, NULL, NULL );
+	
+	switch( color_type )
+	{
+		case PNG_COLOR_TYPE_GRAY:
+			bits = 1;
+			break;
+			
+		case PNG_COLOR_TYPE_GRAY_ALPHA:
+			bits = 2;
+			break;
+			
+		case PNG_COLOR_TYPE_RGB:
+			bits = 3;
+			break;
+			
+		case PNG_COLOR_TYPE_RGB_ALPHA:
+			bits = 4;
+			break;
+	}
+
+	// wdith2 and height2 are the power of 2 versions of width and height
+	height2 = height;
+	width2 = width;
+
+	unsigned int i = 0;
+	if((width2 != 1) && (width2 & (width2 - 1))) {
+		i = 1;
+		while( i < width2)
+			i *= 2;
+		width2 = i;
+	}
+	if((height2 != 1) && (height2 & (height2 - 1))) {
+		i = 1;
+		while(i < height2)
+			i *= 2;
+		height2 = i;
+	}	
+
+	png_byte* pixels = calloc( width2 * height2 * bits, sizeof(png_byte) );
+	png_byte** row_ptrs = malloc(height * sizeof(png_bytep));
+	
+	// since Texture2D loads the image "upside-down", there's no need
+	// to flip the image here
+	for (i=0; i<height; i++)
+		row_ptrs[i] = pixels + i*width2*bits;
+
+	png_read_image(png_ptr, row_ptrs);	
+	png_read_end( png_ptr, NULL );
+	png_destroy_read_struct( &png_ptr, &info_ptr, &end_info );
+	free( row_ptrs );
+	
+	fclose(png_file);
+	
+	CGSize size = CGSizeMake(width,height);
+	
+	Texture2D *tex2d = [[Texture2D alloc] initWithData:pixels
+										 pixelFormat:kTexture2DPixelFormat_RGBA8888
+										  pixelsWide:width2
+										  pixelsHigh:height2
+										 contentSize:size];
+	free(pixels);
+	return [tex2d autorelease];
+}
+
+
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -606,8 +729,8 @@ Class restartAction()
 		Sprite *png1 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png1 z:0];
 		png1.position = ccp(size.width/6, size.height/2);
-		png1.opacity = 200;
-		png1.color = ccRED;
+//		png1.opacity = 200;
+//		png1.color = ccRED;
 		
 		// PNG compressed sprite has pre multiplied alpha channel
 		//   you CAN'T have opacity + tint at the same time
@@ -615,16 +738,16 @@ Class restartAction()
 		Sprite *png2 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png2 z:0];
 		png2.position = ccp(size.width/6*2, size.height/2);
-		png2.color = ccRED;
-		png2.opacity = 200;
+//		png2.color = ccRED;
+//		png2.opacity = 200;
 		
 		// PNG uncompressed sprite has pre multiplied alpha
 		//   Same rule as compressed sprites. why ???
 		Sprite *uncPNG = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.xxx"];
 		[self addChild:uncPNG z:0];
 		uncPNG.position = ccp(size.width/6*3, size.height/2);
-		uncPNG.color = ccRED;
-		uncPNG.opacity = 200;
+//		uncPNG.color = ccRED;
+//		uncPNG.opacity = 200;
 		
 		// PNG compressed sprite has pre multiplied alpha channel
 		//  - with opacity doesn't modify color
@@ -632,18 +755,18 @@ Class restartAction()
 		Sprite *png3 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png3 z:0];
 		png3.position = ccp(size.width/6*4, size.height/2);
-		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
-		[png3 setOpacityModifyRGB:NO];
-		png3.color = ccRED;
-		png3.opacity = 200;
+//		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
+//		[png3 setOpacityModifyRGB:NO];
+//		png3.color = ccRED;
+//		png3.opacity = 200;
+
+		Texture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.xxx"];
+		Sprite *rgba =[Sprite spriteWithTexture:tex2d];
+		[self addChild:rgba z:0];
+		rgba.position = ccp(size.width/6*5, size.height/2);
+//		rgba.color = ccRED;
+//		rgba.opacity = 200;
 		
-		// BMP  sprite doesn't have pre multiplied alpha channel
-		//   you CAN have opacity + tint at the same time
-		Sprite *bmp = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.bmp"];
-		[self addChild:bmp z:0];
-		bmp.position = ccp(size.width/6*5, size.height/2);
-		bmp.color = ccRED;
-		bmp.opacity = 200;
 	}
 	return self;
 }

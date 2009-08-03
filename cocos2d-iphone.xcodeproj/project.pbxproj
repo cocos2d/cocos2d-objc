@@ -308,11 +308,29 @@
 		502C6C6D0FB87970002BF3C2 /* ParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */; };
 		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
 		503162E6102726E8003ACFE7 /* background3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503162E5102726E8003ACFE7 /* background3.jpg */; };
-		5031631B10272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 5031631910272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp */; };
 		5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */; };
 		5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */ = {isa = PBXBuildFile; fileRef = 5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */; };
-		503163E810274764003ACFE7 /* grossinis_sister1-testalpha.xxx in Resources */ = {isa = PBXBuildFile; fileRef = 503163E710274764003ACFE7 /* grossinis_sister1-testalpha.xxx */; };
-		5031649710275792003ACFE7 /* grossinis_sister1-testalpha.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5031649610275792003ACFE7 /* grossinis_sister1-testalpha.tiff */; };
+		5031652410277785003ACFE7 /* png.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031650E10277785003ACFE7 /* png.c */; };
+		5031652510277785003ACFE7 /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 5031650F10277785003ACFE7 /* png.h */; };
+		5031652610277785003ACFE7 /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 5031651010277785003ACFE7 /* pngconf.h */; };
+		5031652710277785003ACFE7 /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651110277785003ACFE7 /* pngerror.c */; };
+		5031652810277785003ACFE7 /* pnggccrd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651210277785003ACFE7 /* pnggccrd.c */; };
+		5031652910277785003ACFE7 /* pngget.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651310277785003ACFE7 /* pngget.c */; };
+		5031652A10277785003ACFE7 /* pngmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651410277785003ACFE7 /* pngmem.c */; };
+		5031652B10277785003ACFE7 /* pngpread.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651510277785003ACFE7 /* pngpread.c */; };
+		5031652C10277785003ACFE7 /* pngread.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651610277785003ACFE7 /* pngread.c */; };
+		5031652D10277785003ACFE7 /* pngrio.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651710277785003ACFE7 /* pngrio.c */; };
+		5031652E10277785003ACFE7 /* pngrtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651810277785003ACFE7 /* pngrtran.c */; };
+		5031652F10277785003ACFE7 /* pngrutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651910277785003ACFE7 /* pngrutil.c */; };
+		5031653010277785003ACFE7 /* pngset.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651A10277785003ACFE7 /* pngset.c */; };
+		5031653110277785003ACFE7 /* pngtest.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651B10277785003ACFE7 /* pngtest.c */; };
+		5031653210277785003ACFE7 /* pngtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651C10277785003ACFE7 /* pngtrans.c */; };
+		5031653310277785003ACFE7 /* pngvcrd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651D10277785003ACFE7 /* pngvcrd.c */; };
+		5031653410277785003ACFE7 /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651E10277785003ACFE7 /* pngwio.c */; };
+		5031653510277785003ACFE7 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031651F10277785003ACFE7 /* pngwrite.c */; };
+		5031653610277785003ACFE7 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031652010277785003ACFE7 /* pngwtran.c */; };
+		5031653710277785003ACFE7 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031652110277785003ACFE7 /* pngwutil.c */; };
+		5031657D10277875003ACFE7 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 503164CD10277665003ACFE7 /* liblibpng.a */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -1306,6 +1324,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		5031657B10277864003ACFE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 503164CC10277665003ACFE7 /* libpng */;
+			remoteInfo = libpng;
+		};
 		50379A790F913FA300986724 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1754,11 +1779,35 @@
 		502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxNode.m; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		503162E5102726E8003ACFE7 /* background3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background3.jpg; sourceTree = "<group>"; };
-		5031631910272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "grossinis_sister1-testalpha.bmp"; sourceTree = "<group>"; };
 		5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister1-testalpha.png"; sourceTree = "<group>"; };
 		5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grossinis_sister1-testalpha.ppng"; sourceTree = "<group>"; };
-		503163E710274764003ACFE7 /* grossinis_sister1-testalpha.xxx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grossinis_sister1-testalpha.xxx"; sourceTree = "<group>"; };
-		5031649610275792003ACFE7 /* grossinis_sister1-testalpha.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "grossinis_sister1-testalpha.tiff"; sourceTree = "<group>"; };
+		503164CD10277665003ACFE7 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5031650910277785003ACFE7 /* ANNOUNCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ANNOUNCE; sourceTree = "<group>"; };
+		5031650A10277785003ACFE7 /* CHANGES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGES; sourceTree = "<group>"; };
+		5031650B10277785003ACFE7 /* libpng-1.2.38.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libpng-1.2.38.txt"; sourceTree = "<group>"; };
+		5031650C10277785003ACFE7 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		5031650E10277785003ACFE7 /* png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = png.c; sourceTree = "<group>"; };
+		5031650F10277785003ACFE7 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
+		5031651010277785003ACFE7 /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
+		5031651110277785003ACFE7 /* pngerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngerror.c; sourceTree = "<group>"; };
+		5031651210277785003ACFE7 /* pnggccrd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pnggccrd.c; sourceTree = "<group>"; };
+		5031651310277785003ACFE7 /* pngget.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngget.c; sourceTree = "<group>"; };
+		5031651410277785003ACFE7 /* pngmem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngmem.c; sourceTree = "<group>"; };
+		5031651510277785003ACFE7 /* pngpread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngpread.c; sourceTree = "<group>"; };
+		5031651610277785003ACFE7 /* pngread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngread.c; sourceTree = "<group>"; };
+		5031651710277785003ACFE7 /* pngrio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrio.c; sourceTree = "<group>"; };
+		5031651810277785003ACFE7 /* pngrtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrtran.c; sourceTree = "<group>"; };
+		5031651910277785003ACFE7 /* pngrutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrutil.c; sourceTree = "<group>"; };
+		5031651A10277785003ACFE7 /* pngset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngset.c; sourceTree = "<group>"; };
+		5031651B10277785003ACFE7 /* pngtest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngtest.c; sourceTree = "<group>"; };
+		5031651C10277785003ACFE7 /* pngtrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngtrans.c; sourceTree = "<group>"; };
+		5031651D10277785003ACFE7 /* pngvcrd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngvcrd.c; sourceTree = "<group>"; };
+		5031651E10277785003ACFE7 /* pngwio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwio.c; sourceTree = "<group>"; };
+		5031651F10277785003ACFE7 /* pngwrite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwrite.c; sourceTree = "<group>"; };
+		5031652010277785003ACFE7 /* pngwtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwtran.c; sourceTree = "<group>"; };
+		5031652110277785003ACFE7 /* pngwutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwutil.c; sourceTree = "<group>"; };
+		5031652210277785003ACFE7 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		5031652310277785003ACFE7 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -2367,6 +2416,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		503164CB10277665003ACFE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		503F5CB4101FE930002A37E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2442,6 +2498,7 @@
 				505B62D10F2E6A0F001B4104 /* QuartzCore.framework in Frameworks */,
 				505B62D20F2E6A0F001B4104 /* libcocos2d.a in Frameworks */,
 				50090DB21021E8660085B687 /* libz.dylib in Frameworks */,
+				5031657D10277875003ACFE7 /* liblibpng.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2889,6 +2946,7 @@
 				50CB34DD100765EF00B7A750 /* Bug422.app */,
 				504799B1100F6A4200D1C71A /* LayerTest.app */,
 				503F5CBE101FE930002A37E5 /* TileMapTest.app */,
+				503164CD10277665003ACFE7 /* liblibpng.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3103,6 +3161,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				5031650810277785003ACFE7 /* libpng */,
 				504225740FC0B44E00B992F7 /* Box2d */,
 				8E6CBE5F0F7A5A3E00D47B3A /* Tremor */,
 				5017569F0F336F8800624901 /* ChipmunkDemo */,
@@ -3223,6 +3282,40 @@
 				501CCFAC0E99657C00B86F68 /* TGAlib.h */,
 			);
 			name = ImageSupport;
+			sourceTree = "<group>";
+		};
+		5031650810277785003ACFE7 /* libpng */ = {
+			isa = PBXGroup;
+			children = (
+				5031650910277785003ACFE7 /* ANNOUNCE */,
+				5031650A10277785003ACFE7 /* CHANGES */,
+				5031650B10277785003ACFE7 /* libpng-1.2.38.txt */,
+				5031650C10277785003ACFE7 /* LICENSE */,
+				5031650E10277785003ACFE7 /* png.c */,
+				5031650F10277785003ACFE7 /* png.h */,
+				5031651010277785003ACFE7 /* pngconf.h */,
+				5031651110277785003ACFE7 /* pngerror.c */,
+				5031651210277785003ACFE7 /* pnggccrd.c */,
+				5031651310277785003ACFE7 /* pngget.c */,
+				5031651410277785003ACFE7 /* pngmem.c */,
+				5031651510277785003ACFE7 /* pngpread.c */,
+				5031651610277785003ACFE7 /* pngread.c */,
+				5031651710277785003ACFE7 /* pngrio.c */,
+				5031651810277785003ACFE7 /* pngrtran.c */,
+				5031651910277785003ACFE7 /* pngrutil.c */,
+				5031651A10277785003ACFE7 /* pngset.c */,
+				5031651B10277785003ACFE7 /* pngtest.c */,
+				5031651C10277785003ACFE7 /* pngtrans.c */,
+				5031651D10277785003ACFE7 /* pngvcrd.c */,
+				5031651E10277785003ACFE7 /* pngwio.c */,
+				5031651F10277785003ACFE7 /* pngwrite.c */,
+				5031652010277785003ACFE7 /* pngwtran.c */,
+				5031652110277785003ACFE7 /* pngwutil.c */,
+				5031652210277785003ACFE7 /* README */,
+				5031652310277785003ACFE7 /* TODO */,
+			);
+			name = libpng;
+			path = external/libpng;
 			sourceTree = "<group>";
 		};
 		503F5D0C101FEDAE002A37E5 /* tilemap */ = {
@@ -3519,11 +3612,8 @@
 			children = (
 				50B2CB280E10EE4A00AE9530 /* grossini.png */,
 				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
-				5031631910272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp */,
-				5031649610275792003ACFE7 /* grossinis_sister1-testalpha.tiff */,
 				5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */,
 				5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */,
-				503163E710274764003ACFE7 /* grossinis_sister1-testalpha.xxx */,
 				50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */,
 				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
 				5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */,
@@ -4132,6 +4222,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		503164C910277665003ACFE7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5031652510277785003ACFE7 /* png.h in Headers */,
+				5031652610277785003ACFE7 /* pngconf.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5042256C0FC0B39C00B992F7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -4396,6 +4495,23 @@
 			productReference = 502C66180DFEFCCA00E4107D /* RotateWorldTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		503164CC10277665003ACFE7 /* libpng */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 503164E0102776A4003ACFE7 /* Build configuration list for PBXNativeTarget "libpng" */;
+			buildPhases = (
+				503164C910277665003ACFE7 /* Headers */,
+				503164CA10277665003ACFE7 /* Sources */,
+				503164CB10277665003ACFE7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libpng;
+			productName = libpng;
+			productReference = 503164CD10277665003ACFE7 /* liblibpng.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		503F5C96101FE930002A37E5 /* TileMapTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 503F5CBB101FE930002A37E5 /* Build configuration list for PBXNativeTarget "TileMapTest" */;
@@ -4498,6 +4614,7 @@
 			);
 			dependencies = (
 				505B62AC0F2E6A0F001B4104 /* PBXTargetDependency */,
+				5031657C10277864003ACFE7 /* PBXTargetDependency */,
 			);
 			name = Texture2dTest;
 			productName = playground;
@@ -5062,6 +5179,7 @@
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
 				50CB2FC91004C8B100B7A750 /* CocosDenshion */,
 				509B3A0C0F31024E00F2FB95 /* cocosLive */,
+				503164CC10277665003ACFE7 /* libpng */,
 				509B39DE0F31020900F2FB95 /* TouchJSON */,
 				8E6CBEEE0F7A758000D47B3A /* vorbis */,
 				317070410E2940C900DD3360 /* AccelViewportTest */,
@@ -5388,11 +5506,8 @@
 				50D64B970FC1B03F00331D13 /* test_blend.bmp in Resources */,
 				50D64B980FC1B03F00331D13 /* test_blend.png in Resources */,
 				503162E6102726E8003ACFE7 /* background3.jpg in Resources */,
-				5031631B10272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp in Resources */,
 				5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */,
 				5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */,
-				503163E810274764003ACFE7 /* grossinis_sister1-testalpha.xxx in Resources */,
-				5031649710275792003ACFE7 /* grossinis_sister1-testalpha.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6107,6 +6222,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		503164CA10277665003ACFE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5031652410277785003ACFE7 /* png.c in Sources */,
+				5031652710277785003ACFE7 /* pngerror.c in Sources */,
+				5031652810277785003ACFE7 /* pnggccrd.c in Sources */,
+				5031652910277785003ACFE7 /* pngget.c in Sources */,
+				5031652A10277785003ACFE7 /* pngmem.c in Sources */,
+				5031652B10277785003ACFE7 /* pngpread.c in Sources */,
+				5031652C10277785003ACFE7 /* pngread.c in Sources */,
+				5031652D10277785003ACFE7 /* pngrio.c in Sources */,
+				5031652E10277785003ACFE7 /* pngrtran.c in Sources */,
+				5031652F10277785003ACFE7 /* pngrutil.c in Sources */,
+				5031653010277785003ACFE7 /* pngset.c in Sources */,
+				5031653110277785003ACFE7 /* pngtest.c in Sources */,
+				5031653210277785003ACFE7 /* pngtrans.c in Sources */,
+				5031653310277785003ACFE7 /* pngvcrd.c in Sources */,
+				5031653410277785003ACFE7 /* pngwio.c in Sources */,
+				5031653510277785003ACFE7 /* pngwrite.c in Sources */,
+				5031653610277785003ACFE7 /* pngwtran.c in Sources */,
+				5031653710277785003ACFE7 /* pngwutil.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		503F5CB1101FE930002A37E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6548,6 +6688,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 502C661E0DFEFCDF00E4107D /* PBXContainerItemProxy */;
+		};
+		5031657C10277864003ACFE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 503164CC10277665003ACFE7 /* libpng */;
+			targetProxy = 5031657B10277864003ACFE7 /* PBXContainerItemProxy */;
 		};
 		50379A7A0F913FA300986724 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7068,6 +7213,31 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = RotateWorldTest;
 				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		503164CE10277666003ACFE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = libpng;
+			};
+			name = Debug;
+		};
+		503164CF10277666003ACFE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = libpng;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -8996,6 +9166,15 @@
 			buildConfigurations = (
 				502C661B0DFEFCCA00E4107D /* Debug */,
 				502C661C0DFEFCCA00E4107D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		503164E0102776A4003ACFE7 /* Build configuration list for PBXNativeTarget "libpng" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				503164CE10277666003ACFE7 /* Debug */,
+				503164CF10277666003ACFE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
