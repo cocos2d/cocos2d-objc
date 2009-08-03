@@ -10,6 +10,8 @@
 
 enum {
 	kTagLabel = 1,
+	kTagSprite1 = 2,
+	kTagSprite2 = 3,
 };
 
 static int sceneIdx=-1;
@@ -28,6 +30,7 @@ static NSString *transitions[] = {
 						@"TexturePixelFormat",
 						@"TextureBlend",
 						@"TextureAsync",
+						@"TexturePNGAlpha",
 };
 
 #pragma mark Callbacks
@@ -583,6 +586,79 @@ Class restartAction()
 }
 @end
 
+#pragma mark TexturePNGAlpha
+@implementation TexturePNGAlpha
+-(id) init
+{
+	if( (self=[super init]) ) {
+				
+		CGSize size =[[Director sharedDirector] winSize];
+	
+		NSLog(@"background3.jpg");
+		Sprite *background = [Sprite spriteWithFile:@"background3.jpg"];
+		background.anchorPoint = CGPointZero;
+		[self addChild:background z:-1];
+		
+		
+		// PNG compressed sprite has pre multiplied alpha channel
+		//   you CAN have opacity + tint at the same time
+		//   but opacity SHOULD be before COLOR
+		Sprite *png1 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		[self addChild:png1 z:0];
+		png1.position = ccp(size.width/6, size.height/2);
+		png1.opacity = 200;
+		png1.color = ccRED;
+		
+		// PNG compressed sprite has pre multiplied alpha channel
+		//   you CAN'T have opacity + tint at the same time
+		//   if color goes BEFORE opacity
+		Sprite *png2 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		[self addChild:png2 z:0];
+		png2.position = ccp(size.width/6*2, size.height/2);
+		png2.color = ccRED;
+		png2.opacity = 200;
+		
+		// PNG uncompressed sprite has pre multiplied alpha
+		//   Same rule as compressed sprites. why ???
+		Sprite *uncPNG = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.xxx"];
+		[self addChild:uncPNG z:0];
+		uncPNG.position = ccp(size.width/6*3, size.height/2);
+		uncPNG.color = ccRED;
+		uncPNG.opacity = 200;
+		
+		// PNG compressed sprite has pre multiplied alpha channel
+		//  - with opacity doesn't modify color
+		//  - blend func: GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+		Sprite *png3 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		[self addChild:png3 z:0];
+		png3.position = ccp(size.width/6*4, size.height/2);
+		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
+		[png3 setOpacityModifyRGB:NO];
+		png3.color = ccRED;
+		png3.opacity = 200;
+		
+		// BMP  sprite doesn't have pre multiplied alpha channel
+		//   you CAN have opacity + tint at the same time
+		Sprite *bmp = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.bmp"];
+		[self addChild:bmp z:0];
+		bmp.position = ccp(size.width/6*5, size.height/2);
+		bmp.color = ccRED;
+		bmp.opacity = 200;
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"PNG alpha pre vs. non-pre";
+}
+@end
+
 
 
 
@@ -606,7 +682,7 @@ Class restartAction()
 //	[Director useFastDirector];
 
 	//
-//	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	[[Director sharedDirector] setPixelFormat:kRGBA8];
 
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
@@ -619,16 +695,16 @@ Class restartAction()
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-	// You can change anytime.
+	// You can change it at anytime.
 	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	Scene *scene = [Scene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[[Director sharedDirector] runWithScene: scene];
 }
 
-// getting a call, pause the game
+// geting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
 	[[Director sharedDirector] pause];
