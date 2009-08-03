@@ -75,3 +75,9 @@
 }
 @end
 
+@interface TexturePNGAlpha : TextureDemo
+{
+}
+
+@end
+

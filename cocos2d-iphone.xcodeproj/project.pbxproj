@@ -307,6 +307,12 @@
 		502C6C6C0FB87970002BF3C2 /* ParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */; };
 		502C6C6D0FB87970002BF3C2 /* ParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */; };
 		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
+		503162E6102726E8003ACFE7 /* background3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503162E5102726E8003ACFE7 /* background3.jpg */; };
+		5031631B10272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 5031631910272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp */; };
+		5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */; };
+		5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */ = {isa = PBXBuildFile; fileRef = 5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */; };
+		503163E810274764003ACFE7 /* grossinis_sister1-testalpha.xxx in Resources */ = {isa = PBXBuildFile; fileRef = 503163E710274764003ACFE7 /* grossinis_sister1-testalpha.xxx */; };
+		5031649710275792003ACFE7 /* grossinis_sister1-testalpha.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5031649610275792003ACFE7 /* grossinis_sister1-testalpha.tiff */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -1747,6 +1753,12 @@
 		502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxNode.h; sourceTree = "<group>"; };
 		502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxNode.m; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
+		503162E5102726E8003ACFE7 /* background3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background3.jpg; sourceTree = "<group>"; };
+		5031631910272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "grossinis_sister1-testalpha.bmp"; sourceTree = "<group>"; };
+		5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister1-testalpha.png"; sourceTree = "<group>"; };
+		5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grossinis_sister1-testalpha.ppng"; sourceTree = "<group>"; };
+		503163E710274764003ACFE7 /* grossinis_sister1-testalpha.xxx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grossinis_sister1-testalpha.xxx"; sourceTree = "<group>"; };
+		5031649610275792003ACFE7 /* grossinis_sister1-testalpha.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "grossinis_sister1-testalpha.tiff"; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -3507,6 +3519,11 @@
 			children = (
 				50B2CB280E10EE4A00AE9530 /* grossini.png */,
 				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
+				5031631910272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp */,
+				5031649610275792003ACFE7 /* grossinis_sister1-testalpha.tiff */,
+				5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */,
+				5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */,
+				503163E710274764003ACFE7 /* grossinis_sister1-testalpha.xxx */,
 				50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */,
 				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
 				5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */,
@@ -3757,6 +3774,7 @@
 				50A252290F38B8DC007CAEB0 /* background1.jpg */,
 				50A2522A0F38B8DC007CAEB0 /* background2.jpg */,
 				50479AFF100F80B000D1C71A /* background3.png */,
+				503162E5102726E8003ACFE7 /* background3.jpg */,
 				5084D25C0EE5906100BD237C /* powered.png */,
 				50C1959C0EE4B90800829067 /* background.png */,
 				50C723DB0EC062680046C5DB /* clouds.pvrtc */,
@@ -5369,6 +5387,12 @@
 				506E1ADA0FB34E8E00AAA494 /* test-rgba1.png in Resources */,
 				50D64B970FC1B03F00331D13 /* test_blend.bmp in Resources */,
 				50D64B980FC1B03F00331D13 /* test_blend.png in Resources */,
+				503162E6102726E8003ACFE7 /* background3.jpg in Resources */,
+				5031631B10272B4A003ACFE7 /* grossinis_sister1-testalpha.bmp in Resources */,
+				5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */,
+				5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */,
+				503163E810274764003ACFE7 /* grossinis_sister1-testalpha.xxx in Resources */,
+				5031649710275792003ACFE7 /* grossinis_sister1-testalpha.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7299,6 +7323,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -7325,6 +7350,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMPRESS_PNG_FILES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
