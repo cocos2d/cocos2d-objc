@@ -25,10 +25,9 @@
 
 -(id) init
 {
-	if( !(self=[super init]) )
-		return nil;
-
-	[self restore];
+	if( (self=[super init]) )
+		[self restore];
+	
 	return self;
 }
 

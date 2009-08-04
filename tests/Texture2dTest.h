@@ -96,7 +96,12 @@
 }
 @end
 
-@interface TextureLoop : TextureDemo
+@interface TextureGlRepeat : TextureDemo
+{
+}
+@end
+
+@interface TextureGlClamp : TextureDemo
 {
 }
 @end
