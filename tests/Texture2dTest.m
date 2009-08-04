@@ -32,7 +32,9 @@ static NSString *transitions[] = {
 						@"TexturePixelFormat",
 						@"TextureBlend",
 						@"TextureAsync",
-						@"TexturePNGAlpha",
+						@"TextureLibPNGTest1",
+						@"TextureLibPNGTest2",
+						@"TextureLibPNGTest3",
 };
 
 #pragma mark Callbacks
@@ -588,8 +590,8 @@ Class restartAction()
 }
 @end
 
-#pragma mark TexturePNGAlpha
-@implementation TexturePNGAlpha
+#pragma mark TextureLibPNG
+@implementation TextureLibPNG
 
 #define PNG_SIG_BYTES 8
 -(Texture2D*) loadPNG:(NSString*)name
@@ -710,14 +712,12 @@ Class restartAction()
 	return [tex2d autorelease];
 }
 
-
 -(id) init
 {
 	if( (self=[super init]) ) {
 				
 		CGSize size =[[Director sharedDirector] winSize];
 	
-		NSLog(@"background3.jpg");
 		Sprite *background = [Sprite spriteWithFile:@"background3.jpg"];
 		background.anchorPoint = CGPointZero;
 		[self addChild:background z:-1];
@@ -728,49 +728,41 @@ Class restartAction()
 		//   but opacity SHOULD be before COLOR
 		Sprite *png1 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png1 z:0];
-		png1.position = ccp(size.width/6, size.height/2);
-//		png1.opacity = 200;
-//		png1.color = ccRED;
-		
-		// PNG compressed sprite has pre multiplied alpha channel
-		//   you CAN'T have opacity + tint at the same time
-		//   if color goes BEFORE opacity
-		Sprite *png2 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
-		[self addChild:png2 z:0];
-		png2.position = ccp(size.width/6*2, size.height/2);
-//		png2.color = ccRED;
-//		png2.opacity = 200;
+		png1.position = ccp(size.width/5, size.height/2);
+		[self transformSprite:png1];
 		
 		// PNG uncompressed sprite has pre multiplied alpha
 		//   Same rule as compressed sprites. why ???
-		Sprite *uncPNG = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.xxx"];
+		Sprite *uncPNG = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
 		[self addChild:uncPNG z:0];
-		uncPNG.position = ccp(size.width/6*3, size.height/2);
-//		uncPNG.color = ccRED;
-//		uncPNG.opacity = 200;
+		uncPNG.position = ccp(size.width/5*2, size.height/2);
+		[self transformSprite:uncPNG];
+
 		
 		// PNG compressed sprite has pre multiplied alpha channel
 		//  - with opacity doesn't modify color
 		//  - blend func: GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
 		Sprite *png3 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png3 z:0];
-		png3.position = ccp(size.width/6*4, size.height/2);
-//		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
-//		[png3 setOpacityModifyRGB:NO];
-//		png3.color = ccRED;
-//		png3.opacity = 200;
-
-		Texture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.xxx"];
+		png3.position = ccp(size.width/5*3, size.height/2);
+		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
+		[png3 setOpacityModifyRGB:NO];
+		[self transformSprite:png3];
+		
+		// PNG 32-bit RGBA
+		Texture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.ppng"];
 		Sprite *rgba =[Sprite spriteWithTexture:tex2d];
 		[self addChild:rgba z:0];
-		rgba.position = ccp(size.width/6*5, size.height/2);
-//		rgba.color = ccRED;
-//		rgba.opacity = 200;
-		
+		rgba.position = ccp(size.width/5*4, size.height/2);
+		[self transformSprite:rgba];
 	}
 	return self;
 }
 
+-(void) transformSprite:(Sprite*)sprite
+{
+	CCLOG(@"override me");
+}
 - (void) dealloc
 {
 	[super dealloc];
@@ -778,12 +770,65 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PNG alpha pre vs. non-pre";
+	return @"N/A";
 }
 @end
 
+@implementation TextureLibPNGTest1
+-(void) transformSprite:(Sprite*)sprite
+{
+	id fade = [FadeOut actionWithDuration:2];
+	id dl = [DelayTime actionWithDuration:2];
+	id fadein = [fade reverse];
+	id seq = [Sequence actions: fade, fadein, dl, nil];
+	id repeat = [RepeatForever actionWithAction:seq];
+	[sprite runAction:repeat];	
+}
+-(NSString*) title
+{
+	return @"iPhone PNG vs libpng #1";
+}
+@end
 
+@implementation TextureLibPNGTest2
+-(void) transformSprite:(Sprite*)sprite
+{
+	id tint = [TintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
+	id dl = [DelayTime actionWithDuration:2];
+	id tintback = [tint reverse];
+	id seq = [Sequence actions: tint, dl, tintback, nil];
+	id repeat = [RepeatForever actionWithAction:seq];
+	[sprite runAction:repeat];
+}
+-(NSString*) title
+{
+	return @"iPhone PNG vs libpng #2";
+}
+@end
 
+@implementation TextureLibPNGTest3
+-(void) transformSprite:(Sprite*)sprite
+{	
+	id fade = [FadeOut actionWithDuration:2];
+	id dl = [DelayTime actionWithDuration:2];
+	id fadein = [fade reverse];
+	id seq = [Sequence actions: fade, fadein, dl, nil];
+	id repeat = [RepeatForever actionWithAction:seq];
+	[sprite runAction:repeat];
+	
+	id tint = [TintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
+	id dl2 = [DelayTime actionWithDuration:2];
+	id tintback = [tint reverse];
+	id seq2 = [Sequence actions: tint, dl2, tintback, nil];
+	id repeat2 = [RepeatForever actionWithAction:seq2];
+	[sprite runAction:repeat2];
+	
+}
+-(NSString*) title
+{
+	return @"iPhone PNG vs libpng #3";
+}
+@end
 
 #pragma mark -
 #pragma mark AppController - Main
@@ -805,7 +850,7 @@ Class restartAction()
 //	[Director useFastDirector];
 
 	//
-	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	[[Director sharedDirector] setPixelFormat:kRGB565];
 
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
@@ -823,6 +868,8 @@ Class restartAction()
 	
 	Scene *scene = [Scene node];
 	[scene addChild: [nextAction() node]];
+	
+//	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	[[Director sharedDirector] runWithScene: scene];
 }
