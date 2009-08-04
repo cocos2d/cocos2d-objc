@@ -152,6 +152,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 		for( TouchHandler *handler in handlers ) {
 			if( [handler ccTouchesBegan:mutableTouches withEvent:event] == kEventHandled )
 				break;
+			if([mutableTouches count] == 0)
+				break;
 		}
 		[handlers release];
 		[mutableTouches release];
@@ -166,6 +168,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 		
 		for( TouchHandler *handler in handlers ) {
 			if( [handler ccTouchesMoved:mutableTouches withEvent:event] == kEventHandled )
+				break;
+			if([mutableTouches count] == 0)
 				break;
 		}
 		[handlers release];
@@ -182,6 +186,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 		for( TouchHandler *handler in handlers ) {
 			if( [handler ccTouchesEnded:mutableTouches withEvent:event] == kEventHandled )
 				break;
+			if([mutableTouches count] == 0)
+				break;
 		}
 		[handlers release];
 		[mutableTouches release];
@@ -196,6 +202,8 @@ static TouchDispatcher *sharedDispatcher = nil;
 		
 		for( TouchHandler *handler in handlers ) {
 			if( [handler ccTouchesCancelled:mutableTouches withEvent:event] == kEventHandled )
+				break;
+			if([mutableTouches count] == 0)
 				break;
 		}
 		[handlers release];
