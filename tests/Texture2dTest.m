@@ -35,6 +35,7 @@ static NSString *transitions[] = {
 						@"TextureLibPNGTest1",
 						@"TextureLibPNGTest2",
 						@"TextureLibPNGTest3",
+						@"TextureLoop",
 };
 
 #pragma mark Callbacks
@@ -590,6 +591,45 @@ Class restartAction()
 }
 @end
 
+
+#pragma mark TextureLoop
+@implementation TextureLoop
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize size =[[Director sharedDirector] winSize];
+
+		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini.png"];
+		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 4096, 4096) spriteManager:mgr];
+		[mgr addChild:sprite z:0 tag:kTagSprite1];
+		[sprite setPosition:ccp(size.width/2,size.height/2)];
+		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
+		[mgr.texture setTexParameters:&params];
+		
+		id rotate = [RotateBy actionWithDuration:4 angle:360];
+		[sprite runAction:rotate];
+		id scale = [ScaleBy actionWithDuration:2 scale:0.04f];
+		id scaleBack = [scale reverse];
+		id seq = [Sequence actions:scale, scaleBack, nil];
+		[sprite runAction:seq];
+		
+		[self addChild:mgr z:-1];
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Texture Loops";
+}
+- (void) dealloc
+{
+	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[super dealloc];
+}
+@end
+
 #pragma mark TextureLibPNG
 @implementation TextureLibPNG
 
@@ -829,6 +869,7 @@ Class restartAction()
 	return @"iPhone PNG vs libpng #3";
 }
 @end
+
 
 #pragma mark -
 #pragma mark AppController - Main
