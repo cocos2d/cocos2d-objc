@@ -320,41 +320,43 @@
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
-	// not using detachChild improves speed here
-	for( CocosNode * c in children) {
+	for( CocosNode * c in children)
 		[c setParent: nil];
 
+	// not using detachChild improves speed here
+	for (CocosNode *c in children)
+	{
 		// IMPORTANT:
-		//  - 1st do onExit
+		//  -1st do onExit
 		//  -2nd cleanup
-		if( isRunning )
+		if (isRunning)
 			[c onExit];
 
-		if( cleanup) {
+		if (cleanup)
 			[c cleanup];
-		}
+
+//		[c setParent:nil];
 	}
-	
+
 	[children removeAllObjects];
 }
 
--(void) detachChild:(CocosNode *) child cleanup:(BOOL) doCleanup
+-(void) detachChild:(CocosNode *)child cleanup:(BOOL)doCleanup
 {
-	[child setParent: nil];
-
 	// IMPORTANT:
-	//  - 1st do onExit
-	//  -2nd cleanup	
-	// stop timers
-	if( isRunning )
+	//  -1st do onExit
+	//  -2nd cleanup
+	if (isRunning)
 		[child onExit];
-	
+
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors dict will not get released!
 	if (doCleanup)
 		[child cleanup];
-	
-	[children removeObject: child];
+
+	[child setParent:nil];
+
+	[children removeObject:child];
 }
 
 // used internally to alter the zOrder variable. DON'T call this method manually

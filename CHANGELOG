@@ -1,7 +1,9 @@
 version 0.8.1 - XX-MMM-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)
+ . CocosNode: parent is set to nil only after calling onExit (issue #476)
  . ParticleView: integrated Particle visual editor (issue #480)
  . TextureMgr: Async reuses EAGL context (issue #472)
+ . tools: added mkatlas.pl script (issue #xxx)
  . TiledMap: Added support for the TMX format: iso, ortho and hex maps (issue #462)
  . TouchDispatcher: don't dispatch empty touches (issue #468)
 
