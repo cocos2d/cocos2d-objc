@@ -46,38 +46,6 @@
 		500427A310211E0B0032274D /* ortho-test2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500427A110211E0B0032274D /* ortho-test2.png */; };
 		500427D1102121C50032274D /* fixed-ortho-test2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500427D0102121C50032274D /* fixed-ortho-test2.png */; };
 		50090DB21021E8660085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
-		50090DBB1021E8970085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DBA1021E8970085B687 /* libz.dylib */; };
-		50090DC01021E8B90085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DBF1021E8B90085B687 /* libz.dylib */; };
-		50090DC51021E8E50085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DC41021E8E50085B687 /* libz.dylib */; };
-		50090DC91021E8FF0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DC81021E8FF0085B687 /* libz.dylib */; };
-		50090DCE1021E9240085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DCD1021E9240085B687 /* libz.dylib */; };
-		50090DD01021E9340085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DCF1021E9340085B687 /* libz.dylib */; };
-		50090DD31021E94B0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DD21021E94B0085B687 /* libz.dylib */; };
-		50090DD51021E95D0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DD41021E95D0085B687 /* libz.dylib */; };
-		50090DD71021E96D0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DD61021E96D0085B687 /* libz.dylib */; };
-		50090DD91021E9800085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DD81021E9800085B687 /* libz.dylib */; };
-		50090DDB1021E9910085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DDA1021E9910085B687 /* libz.dylib */; };
-		50090DDD1021E9A20085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DDC1021E9A20085B687 /* libz.dylib */; };
-		50090DDF1021E9B30085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DDE1021E9B30085B687 /* libz.dylib */; };
-		50090DE11021E9C90085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DE01021E9C90085B687 /* libz.dylib */; };
-		50090DE31021E9DC0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DE21021E9DC0085B687 /* libz.dylib */; };
-		50090DE51021E9F40085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DE41021E9F40085B687 /* libz.dylib */; };
-		50090DE71021EA050085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DE61021EA050085B687 /* libz.dylib */; };
-		50090DE91021EA200085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DE81021EA200085B687 /* libz.dylib */; };
-		50090DEB1021EA340085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DEA1021EA340085B687 /* libz.dylib */; };
-		50090DEE1021EF530085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DED1021EF530085B687 /* libz.dylib */; };
-		50090DF01021EF630085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DEF1021EF630085B687 /* libz.dylib */; };
-		50090DF21021EF750085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DF11021EF750085B687 /* libz.dylib */; };
-		50090DF41021EF850085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DF31021EF850085B687 /* libz.dylib */; };
-		50090DF61021EF970085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DF51021EF970085B687 /* libz.dylib */; };
-		50090DF81021EFAA0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DF71021EFAA0085B687 /* libz.dylib */; };
-		50090DFA1021EFBD0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DF91021EFBD0085B687 /* libz.dylib */; };
-		50090DFC1021EFCF0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DFB1021EFCF0085B687 /* libz.dylib */; };
-		50090DFE1021EFDE0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DFD1021EFDE0085B687 /* libz.dylib */; };
-		50090E001021EFEF0085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DFF1021EFEF0085B687 /* libz.dylib */; };
-		50090E021021F0020085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090E011021F0020085B687 /* libz.dylib */; };
-		50090E041021F0170085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090E031021F0170085B687 /* libz.dylib */; };
-		50090E061021F0280085B687 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090E051021F0280085B687 /* libz.dylib */; };
 		500AA21F0E77926900872752 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500AA2200E77926900872752 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500AA2210E77926900872752 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -338,7 +306,6 @@
 		503167AD1028488E003ACFE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5048289B0F45AF7A00A30CEF /* OpenGLES.framework */; };
 		503167AE1028488E003ACFE7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5048289F0F45AF8800A30CEF /* CoreGraphics.framework */; };
 		503167AF1028488E003ACFE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504828A30F45AF9100A30CEF /* QuartzCore.framework */; };
-		503167B01028488E003ACFE7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DD81021E9800085B687 /* libz.dylib */; };
 		50316812102848F3003ACFE7 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 503167DA102848F2003ACFE7 /* 1.png */; };
 		50316813102848F3003ACFE7 /* 10.png in Resources */ = {isa = PBXBuildFile; fileRef = 503167DB102848F2003ACFE7 /* 10.png */; };
 		50316814102848F3003ACFE7 /* 11.png in Resources */ = {isa = PBXBuildFile; fileRef = 503167DC102848F2003ACFE7 /* 11.png */; };
@@ -956,7 +923,6 @@
 		50CB31081004D05300B7A750 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		50CB3B0E100AC43A00B7A750 /* ActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* ActionManager.h */; };
 		50CB3B0F100AC43A00B7A750 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* ActionManager.m */; };
-		50CFABBA10235DC900175934 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CFABB910235DC900175934 /* libz.dylib */; };
 		50CFAC391023660000175934 /* TMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* TMXXMLParser.h */; };
 		50CFAC3A1023660000175934 /* TMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CFAC381023660000175934 /* TMXXMLParser.m */; };
 		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
@@ -1294,6 +1260,41 @@
 		8EDF3FC10F6BE18B00F54643 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		8EDF3FDD0F6BE3FC00F54643 /* listener-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FD90F6BE3F400F54643 /* listener-marker.png */; };
 		8EDF3FDE0F6BE3FC00F54643 /* source-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FDA0F6BE3F400F54643 /* source-marker.png */; };
+		A9E2C1501028AA23006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1511028AA23006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1521028AA24006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1531028AA24006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1541028AA24006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1551028AA25006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1561028AA25006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1571028AA26006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1581028AA26006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1591028AA26006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C15A1028AA27006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C15B1028AA27006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C15C1028AA27006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C15D1028AA28006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C15E1028AA28006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C15F1028AA29006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1601028AA29006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1611028AA2A006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1621028AA2B006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1631028AA2B006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1641028AA2C006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1651028AA2D006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1661028AA2D006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1671028AA2D006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1681028AA2E006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1691028AA2E006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C16A1028AA2F006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C16B1028AA30006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C16C1028AA30006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C16D1028AA30006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C16E1028AA31006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C16F1028AA33006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1701028AA34006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1711028AA34006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		A9E2C1721028AA34006A9C4B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
 		AAC2C3941005ED8E005B9B2C /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */; };
 		AAC2C3951005ED8E005B9B2C /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC2C3931005ED8E005B9B2C /* CocosDenshion.m */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -1364,7 +1365,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 503164CC10277665003ACFE7 /* libpng */;
+			remoteGlobalIDString = 503164CC10277665003ACFE7;
 			remoteInfo = libpng;
 		};
 		503167A11028488E003ACFE7 /* PBXContainerItemProxy */ = {
@@ -1665,38 +1666,6 @@
 		500427D0102121C50032274D /* fixed-ortho-test2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fixed-ortho-test2.png"; sourceTree = "<group>"; };
 		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
 		50090DB11021E8660085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DBA1021E8970085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DBF1021E8B90085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DC41021E8E50085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DC81021E8FF0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DCD1021E9240085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DCF1021E9340085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DD21021E94B0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DD41021E95D0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DD61021E96D0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DD81021E9800085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DDA1021E9910085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DDC1021E9A20085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DDE1021E9B30085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DE01021E9C90085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DE21021E9DC0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DE41021E9F40085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DE61021EA050085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DE81021EA200085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DEA1021EA340085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DED1021EF530085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DEF1021EF630085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DF11021EF750085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DF31021EF850085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DF51021EF970085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DF71021EFAA0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DF91021EFBD0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DFB1021EFCF0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DFD1021EFDE0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090DFF1021EFEF0085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090E011021F0020085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090E031021F0170085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		50090E051021F0280085B687 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-mono.png"; sourceTree = "<group>"; };
 		5012DAC40FE179BF00D6DDD1 /* TouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDelegateProtocol.h; sourceTree = "<group>"; };
 		5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1852,7 +1821,6 @@
 		5031652210277785003ACFE7 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		5031652310277785003ACFE7 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		503167B41028488E003ACFE7 /* ParticleView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleView.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		503167B61028488E003ACFE7 /* AttachDemo-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AttachDemo-Info copy.plist"; sourceTree = "<group>"; };
 		503167DA102848F2003ACFE7 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		503167DB102848F2003ACFE7 /* 10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 10.png; sourceTree = "<group>"; };
 		503167DC102848F2003ACFE7 /* 11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 11.png; sourceTree = "<group>"; };
@@ -2225,7 +2193,6 @@
 		50CB34DD100765EF00B7A750 /* Bug422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug422.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB3B0C100AC43A00B7A750 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
 		50CB3B0D100AC43A00B7A750 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
-		50CFABB910235DC900175934 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		50CFAC371023660000175934 /* TMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMXXMLParser.h; sourceTree = "<group>"; };
 		50CFAC381023660000175934 /* TMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMXXMLParser.m; sourceTree = "<group>"; };
 		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2419,7 +2386,7 @@
 				317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */,
 				317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */,
 				50379A780F913F9E00986724 /* libChipmunk.a in Frameworks */,
-				50090DD31021E94B0085B687 /* libz.dylib in Frameworks */,
+				A9E2C1721028AA34006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2433,7 +2400,7 @@
 				5012DD350FE2994300D6DDD1 /* OpenGLES.framework in Frameworks */,
 				5012DD360FE2994300D6DDD1 /* QuartzCore.framework in Frameworks */,
 				5012DD370FE2994300D6DDD1 /* libcocos2d.a in Frameworks */,
-				50090DBB1021E8970085B687 /* libz.dylib in Frameworks */,
+				A9E2C1551028AA25006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2459,7 +2426,7 @@
 				5019456E0F964C620059CE7C /* OpenGLES.framework in Frameworks */,
 				5019456F0F964C620059CE7C /* QuartzCore.framework in Frameworks */,
 				501945700F964C620059CE7C /* libcocos2d.a in Frameworks */,
-				50090DE71021EA050085B687 /* libz.dylib in Frameworks */,
+				A9E2C1671028AA2D006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2473,7 +2440,7 @@
 				501C7C8B0F91EFFF0024A296 /* OpenGLES.framework in Frameworks */,
 				501C7C8C0F91EFFF0024A296 /* QuartzCore.framework in Frameworks */,
 				501C7C8D0F91EFFF0024A296 /* libcocos2d.a in Frameworks */,
-				50090DD71021E96D0085B687 /* libz.dylib in Frameworks */,
+				A9E2C1701028AA34006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2494,7 +2461,7 @@
 				502C67050DFEFE1000E4107D /* OpenGLES.framework in Frameworks */,
 				502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */,
 				502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */,
-				50090E001021EFEF0085B687 /* libz.dylib in Frameworks */,
+				A9E2C15A1028AA27006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2515,7 +2482,7 @@
 				503167AD1028488E003ACFE7 /* OpenGLES.framework in Frameworks */,
 				503167AE1028488E003ACFE7 /* CoreGraphics.framework in Frameworks */,
 				503167AF1028488E003ACFE7 /* QuartzCore.framework in Frameworks */,
-				503167B01028488E003ACFE7 /* libz.dylib in Frameworks */,
+				A9E2C15F1028AA29006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2529,7 +2496,7 @@
 				503F5CB8101FE930002A37E5 /* OpenGLES.framework in Frameworks */,
 				503F5CB9101FE930002A37E5 /* QuartzCore.framework in Frameworks */,
 				503F5CBA101FE930002A37E5 /* libcocos2d.a in Frameworks */,
-				50CFABBA10235DC900175934 /* libz.dylib in Frameworks */,
+				A9E2C1561028AA25006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2551,7 +2518,7 @@
 				504226280FC0B5D500B992F7 /* QuartzCore.framework in Frameworks */,
 				5042262A0FC0B5D500B992F7 /* libcocos2d.a in Frameworks */,
 				504226350FC0B67A00B992F7 /* libbox2d.a in Frameworks */,
-				50090DDB1021E9910085B687 /* libz.dylib in Frameworks */,
+				A9E2C16E1028AA31006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2565,7 +2532,7 @@
 				504799AB100F6A4200D1C71A /* OpenGLES.framework in Frameworks */,
 				504799AC100F6A4200D1C71A /* QuartzCore.framework in Frameworks */,
 				504799AD100F6A4200D1C71A /* libcocos2d.a in Frameworks */,
-				50090DF21021EF750085B687 /* libz.dylib in Frameworks */,
+				A9E2C1621028AA2B006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2579,7 +2546,7 @@
 				5048289C0F45AF7A00A30CEF /* OpenGLES.framework in Frameworks */,
 				504828A00F45AF8800A30CEF /* CoreGraphics.framework in Frameworks */,
 				504828A40F45AF9100A30CEF /* QuartzCore.framework in Frameworks */,
-				50090DD91021E9800085B687 /* libz.dylib in Frameworks */,
+				A9E2C16F1028AA33006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2608,7 +2575,7 @@
 				505B639D0F2F4210001B4104 /* OpenGLES.framework in Frameworks */,
 				505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */,
 				505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */,
-				50090DE91021EA200085B687 /* libz.dylib in Frameworks */,
+				A9E2C1661028AA2D006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2622,7 +2589,7 @@
 				505CC1D00F62BD1C000EDF26 /* Foundation.framework in Frameworks */,
 				505CC1D20F62BD24000EDF26 /* UIKit.framework in Frameworks */,
 				505CC1D40F62BD2B000EDF26 /* QuartzCore.framework in Frameworks */,
-				50090DFE1021EFDE0085B687 /* libz.dylib in Frameworks */,
+				A9E2C15B1028AA27006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2636,7 +2603,7 @@
 				506144020E589A2E003CCDB7 /* OpenGLES.framework in Frameworks */,
 				506144030E589A2E003CCDB7 /* QuartzCore.framework in Frameworks */,
 				506144040E589A2E003CCDB7 /* libcocos2d.a in Frameworks */,
-				50090DE51021E9F40085B687 /* libz.dylib in Frameworks */,
+				A9E2C1681028AA2E006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2650,7 +2617,7 @@
 				5068820B0E95761200F943E5 /* OpenGLES.framework in Frameworks */,
 				5068820C0E95761200F943E5 /* QuartzCore.framework in Frameworks */,
 				5068820D0E95761200F943E5 /* libcocos2d.a in Frameworks */,
-				50090DD51021E95D0085B687 /* libz.dylib in Frameworks */,
+				A9E2C1711028AA34006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2664,7 +2631,7 @@
 				506C77DC0E01520900B48100 /* OpenGLES.framework in Frameworks */,
 				506C77DD0E01520900B48100 /* QuartzCore.framework in Frameworks */,
 				506C77DE0E01520900B48100 /* libcocos2d.a in Frameworks */,
-				50090DE11021E9C90085B687 /* libz.dylib in Frameworks */,
+				A9E2C16B1028AA30006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2678,7 +2645,7 @@
 				506C7A030E01C73A00B48100 /* OpenGLES.framework in Frameworks */,
 				506C7A040E01C73A00B48100 /* QuartzCore.framework in Frameworks */,
 				506C7A050E01C73A00B48100 /* libcocos2d.a in Frameworks */,
-				50090DF41021EF850085B687 /* libz.dylib in Frameworks */,
+				A9E2C1611028AA2A006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2692,7 +2659,7 @@
 				506C80080E041C9300B48100 /* OpenGLES.framework in Frameworks */,
 				506C80090E041C9300B48100 /* QuartzCore.framework in Frameworks */,
 				506C800A0E041C9300B48100 /* libcocos2d.a in Frameworks */,
-				50090E021021F0020085B687 /* libz.dylib in Frameworks */,
+				A9E2C1591028AA26006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2706,7 +2673,7 @@
 				5078B5290E3E43540004233A /* OpenGLES.framework in Frameworks */,
 				5078B52A0E3E43540004233A /* QuartzCore.framework in Frameworks */,
 				5078B52B0E3E43540004233A /* libcocos2d.a in Frameworks */,
-				50090DF01021EF630085B687 /* libz.dylib in Frameworks */,
+				A9E2C1641028AA2C006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2736,6 +2703,7 @@
 				509B3A630F31065C00F2FB95 /* UIKit.framework in Frameworks */,
 				509B3A650F31067500F2FB95 /* Foundation.framework in Frameworks */,
 				501756F70F33738F00624901 /* CoreGraphics.framework in Frameworks */,
+				A9E2C1691028AA2E006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2749,7 +2717,7 @@
 				50A24E3E0F377FA1007CAEB0 /* OpenGLES.framework in Frameworks */,
 				50A24E3F0F377FA1007CAEB0 /* QuartzCore.framework in Frameworks */,
 				50A24E400F377FA1007CAEB0 /* libcocos2d.a in Frameworks */,
-				50090DEB1021EA340085B687 /* libz.dylib in Frameworks */,
+				A9E2C1651028AA2D006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2763,7 +2731,7 @@
 				50A783BE0F3AFCE500104C45 /* OpenGLES.framework in Frameworks */,
 				50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */,
 				50A783C00F3AFCE500104C45 /* libcocos2d.a in Frameworks */,
-				50090E061021F0280085B687 /* libz.dylib in Frameworks */,
+				A9E2C1571028AA26006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2785,7 +2753,7 @@
 				50B2C5E20E100EF000AE9530 /* QuartzCore.framework in Frameworks */,
 				50B2C5E30E100EF000AE9530 /* libcocos2d.a in Frameworks */,
 				50B2C60C0E1014AE00AE9530 /* libChipmunk.a in Frameworks */,
-				50090DDD1021E9A20085B687 /* libz.dylib in Frameworks */,
+				A9E2C16D1028AA30006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2800,7 +2768,7 @@
 				50B2CE560E12A03B00AE9530 /* QuartzCore.framework in Frameworks */,
 				50B2CE500E12A01C00AE9530 /* libChipmunk.a in Frameworks */,
 				50B2CE510E12A02100AE9530 /* libcocos2d.a in Frameworks */,
-				50090DDF1021E9B30085B687 /* libz.dylib in Frameworks */,
+				A9E2C16C1028AA30006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2814,7 +2782,7 @@
 				50C1955A0EE4B57E00829067 /* OpenGLES.framework in Frameworks */,
 				50C1955B0EE4B57E00829067 /* QuartzCore.framework in Frameworks */,
 				50C1955C0EE4B57E00829067 /* libcocos2d.a in Frameworks */,
-				50090DF61021EF970085B687 /* libz.dylib in Frameworks */,
+				A9E2C1601028AA29006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2828,7 +2796,7 @@
 				50C938D90E0A9DBB00517B01 /* OpenGLES.framework in Frameworks */,
 				50C938DA0E0A9DBB00517B01 /* QuartzCore.framework in Frameworks */,
 				50C938DB0E0A9DBB00517B01 /* libcocos2d.a in Frameworks */,
-				50090DC01021E8B90085B687 /* libz.dylib in Frameworks */,
+				A9E2C1541028AA24006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2842,7 +2810,7 @@
 				50C93AA60E0BF6E000517B01 /* OpenGLES.framework in Frameworks */,
 				50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */,
 				50C93AA80E0BF6E000517B01 /* libcocos2d.a in Frameworks */,
-				50090E041021F0170085B687 /* libz.dylib in Frameworks */,
+				A9E2C1581028AA26006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2867,7 +2835,7 @@
 				50CB30651004CACF00B7A750 /* AVFoundation.framework in Frameworks */,
 				50CB30671004CAD900B7A750 /* AudioToolbox.framework in Frameworks */,
 				50CB306B1004CAFB00B7A750 /* OpenAL.framework in Frameworks */,
-				50090DE31021E9DC0085B687 /* libz.dylib in Frameworks */,
+				A9E2C16A1028AA2F006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2881,7 +2849,7 @@
 				50D0E0590FF9232E00098927 /* OpenGLES.framework in Frameworks */,
 				50D0E05A0FF9232E00098927 /* QuartzCore.framework in Frameworks */,
 				50D0E05B0FF9232E00098927 /* libcocos2d.a in Frameworks */,
-				50090DC91021E8FF0085B687 /* libz.dylib in Frameworks */,
+				A9E2C1521028AA24006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2895,7 +2863,7 @@
 				50D0E0D80FF930BA00098927 /* OpenGLES.framework in Frameworks */,
 				50D0E0D90FF930BA00098927 /* QuartzCore.framework in Frameworks */,
 				50D0E0DA0FF930BA00098927 /* libcocos2d.a in Frameworks */,
-				50090DCE1021E9240085B687 /* libz.dylib in Frameworks */,
+				A9E2C1511028AA23006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2909,7 +2877,7 @@
 				50D56FCC0F3FABEC007CD6B9 /* OpenGLES.framework in Frameworks */,
 				50D56FCD0F3FABEC007CD6B9 /* QuartzCore.framework in Frameworks */,
 				50D56FCE0F3FABEC007CD6B9 /* libcocos2d.a in Frameworks */,
-				50090DEE1021EF530085B687 /* libz.dylib in Frameworks */,
+				A9E2C1631028AA2B006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2923,7 +2891,7 @@
 				50DB1BC40E1C1E5900A89DFF /* OpenGLES.framework in Frameworks */,
 				50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */,
 				50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */,
-				50090DF81021EFAA0085B687 /* libz.dylib in Frameworks */,
+				A9E2C15E1028AA28006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2937,7 +2905,7 @@
 				50DFC2990FF627B6007E7827 /* OpenGLES.framework in Frameworks */,
 				50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */,
 				50DFC29B0FF627B6007E7827 /* libcocos2d.a in Frameworks */,
-				50090DC51021E8E50085B687 /* libz.dylib in Frameworks */,
+				A9E2C1531028AA24006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2951,7 +2919,7 @@
 				50F992BE0F9F188700767ABC /* Foundation.framework in Frameworks */,
 				50F992BF0F9F188700767ABC /* UIKit.framework in Frameworks */,
 				50F992C00F9F188700767ABC /* QuartzCore.framework in Frameworks */,
-				50090DFC1021EFCF0085B687 /* libz.dylib in Frameworks */,
+				A9E2C15C1028AA27006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2975,7 +2943,7 @@
 				8EDF3F800F6BDEB400F54643 /* OpenAL.framework in Frameworks */,
 				8EDF3F860F6BDEDA00F54643 /* AudioToolbox.framework in Frameworks */,
 				8E6CBF330F7A790400D47B3A /* libvorbis.a in Frameworks */,
-				50090DFA1021EFBD0085B687 /* libz.dylib in Frameworks */,
+				A9E2C15D1028AA28006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2989,7 +2957,7 @@
 				DA5F0EDE0FFE96D400C7C82E /* OpenGLES.framework in Frameworks */,
 				DA5F0EDF0FFE96D400C7C82E /* QuartzCore.framework in Frameworks */,
 				DA5F0EE00FFE96D400C7C82E /* libcocos2d.a in Frameworks */,
-				50090DD01021E9340085B687 /* libz.dylib in Frameworks */,
+				A9E2C1501028AA23006A9C4B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3097,41 +3065,6 @@
 				50CB30661004CAD900B7A750 /* AudioToolbox.framework */,
 				50CB306A1004CAFB00B7A750 /* OpenAL.framework */,
 				50090DB11021E8660085B687 /* libz.dylib */,
-				50090DBA1021E8970085B687 /* libz.dylib */,
-				50090DBF1021E8B90085B687 /* libz.dylib */,
-				50090DC41021E8E50085B687 /* libz.dylib */,
-				50090DC81021E8FF0085B687 /* libz.dylib */,
-				50090DCD1021E9240085B687 /* libz.dylib */,
-				50090DCF1021E9340085B687 /* libz.dylib */,
-				50090DD21021E94B0085B687 /* libz.dylib */,
-				50090DD41021E95D0085B687 /* libz.dylib */,
-				50090DD61021E96D0085B687 /* libz.dylib */,
-				50090DD81021E9800085B687 /* libz.dylib */,
-				50090DDA1021E9910085B687 /* libz.dylib */,
-				50090DDC1021E9A20085B687 /* libz.dylib */,
-				50090DDE1021E9B30085B687 /* libz.dylib */,
-				50090DE01021E9C90085B687 /* libz.dylib */,
-				50090DE21021E9DC0085B687 /* libz.dylib */,
-				50090DE41021E9F40085B687 /* libz.dylib */,
-				50090DE61021EA050085B687 /* libz.dylib */,
-				50090DE81021EA200085B687 /* libz.dylib */,
-				50090DEA1021EA340085B687 /* libz.dylib */,
-				50090DED1021EF530085B687 /* libz.dylib */,
-				50090DEF1021EF630085B687 /* libz.dylib */,
-				50090DF11021EF750085B687 /* libz.dylib */,
-				50090DF31021EF850085B687 /* libz.dylib */,
-				50090DF51021EF970085B687 /* libz.dylib */,
-				50090DF71021EFAA0085B687 /* libz.dylib */,
-				50090DF91021EFBD0085B687 /* libz.dylib */,
-				50090DFB1021EFCF0085B687 /* libz.dylib */,
-				50090DFD1021EFDE0085B687 /* libz.dylib */,
-				50090DFF1021EFEF0085B687 /* libz.dylib */,
-				50090E011021F0020085B687 /* libz.dylib */,
-				50090E031021F0170085B687 /* libz.dylib */,
-				50090E051021F0280085B687 /* libz.dylib */,
-				50090E051021F0280085B687 /* libz.dylib */,
-				50090E051021F0280085B687 /* libz.dylib */,
-				50CFABB910235DC900175934 /* libz.dylib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -3706,7 +3639,6 @@
 				504828DE0F45B1B800A30CEF /* AttachDemo-Info.plist */,
 				504828C80F45B15700A30CEF /* attachDemo.h */,
 				504828C90F45B15700A30CEF /* attachDemo.m */,
-				503167B61028488E003ACFE7 /* AttachDemo-Info copy.plist */,
 			);
 			name = attachDemo;
 			path = tests/attachDemo;

@@ -113,6 +113,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* rac5372: compiler warning in MenuItem
 	* ratman: patch for TileMapAtlas: it works with 255 tiles
 		patch for TextureMgr: supports directory within image names
+	* Rolando Abarca: XCode only displays the libz dependency just once
 	* Serge Kolgan: patches for CocosNode
 	* sflory: new way to added CGImageRef to TextureMgr
 	* Steve Israelson: patches for Scheduler
@@ -125,6 +126,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Created Box2d + cocos2d demo example
 	* thoechsm: update the VBO buffer with only the needed particles
 	* Thomas Visser: MenuItem#rect works with anchorPoint
+	* trump-card: Author of ParticleView, the particle editor
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
 		Actions can have tags
