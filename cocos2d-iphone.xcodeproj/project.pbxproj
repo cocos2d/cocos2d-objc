@@ -366,6 +366,7 @@
 		50316836102848F3003ACFE7 /* ParticlesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50316809102848F3003ACFE7 /* ParticlesViewController.xib */; };
 		50316838102848F3003ACFE7 /* TableViewImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316810102848F3003ACFE7 /* TableViewImages.m */; };
 		50316839102848F3003ACFE7 /* TableViewImages.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50316811102848F3003ACFE7 /* TableViewImages.xib */; };
+		5031698010289F68003ACFE7 /* pattern1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5031697F10289F68003ACFE7 /* pattern1.png */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -1888,6 +1889,7 @@
 		5031680F102848F3003ACFE7 /* TableViewImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewImages.h; sourceTree = "<group>"; };
 		50316810102848F3003ACFE7 /* TableViewImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewImages.m; sourceTree = "<group>"; };
 		50316811102848F3003ACFE7 /* TableViewImages.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewImages.xib; sourceTree = "<group>"; };
+		5031697F10289F68003ACFE7 /* pattern1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern1.png; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -4016,6 +4018,7 @@
 				50E675060F65628C003DAA90 /* spritesheet1.png */,
 				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
 				5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */,
+				5031697F10289F68003ACFE7 /* pattern1.png */,
 				50B53B640F3F28DC00E81F83 /* test_image.gif */,
 				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
 				500044030F3CC15D00A5FBF4 /* test_image.pvrraw */,
@@ -5720,6 +5723,7 @@
 				503162E6102726E8003ACFE7 /* background3.jpg in Resources */,
 				5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */,
 				5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */,
+				5031698010289F68003ACFE7 /* pattern1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

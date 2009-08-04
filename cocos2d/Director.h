@@ -33,8 +33,13 @@
 
 /** Possible Pixel Formats for the EAGLView */
 typedef enum {
-	kRGB565,
-	kRGBA8
+	/** RGB565 pixel format. No alpha. 16-bit */
+	kPixelFormatRGB565,
+	/** RGBA format. 32-bit */
+	kPixelFormatRGBA8888,
+
+	kRGB565 = kPixelFormatRGB565,
+	kRGBA8 = kPixelFormatRGBA8888,
 } tPixelFormat;
 
 /** Possible DepthBuffer Formats for the EAGLView */

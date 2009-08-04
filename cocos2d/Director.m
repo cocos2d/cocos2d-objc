@@ -113,7 +113,7 @@ static Director *_sharedDirector = nil;
 	if( (self=[super init]) ) {
 
 		// default values
-		pixelFormat_ = kRGB565;
+		pixelFormat_ = kPixelFormatRGB565;
 		depthBufferFormat_ = 0;
 
 		// scenes
@@ -406,7 +406,7 @@ static Director *_sharedDirector = nil;
 		NSString	*pFormat = kEAGLColorFormatRGB565;
 	    GLuint		depthFormat = 0;
 		
-		if(pixelFormat_==kRGBA8)
+		if(pixelFormat_==kPixelFormatRGBA8888)
 			pFormat = kEAGLColorFormatRGBA8;
 		
 		if(depthBufferFormat_ == kDepthBuffer16)
