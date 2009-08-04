@@ -343,6 +343,8 @@
 
 -(void) detachChild:(CocosNode *)child cleanup:(BOOL)doCleanup
 {
+	[child setParent:nil];
+
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
@@ -353,8 +355,6 @@
 	// its scheduledSelectors dict will not get released!
 	if (doCleanup)
 		[child cleanup];
-
-	[child setParent:nil];
 
 	[children removeObject:child];
 }
