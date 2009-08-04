@@ -86,15 +86,19 @@
 }
 @end
 
-
 @interface TextureLibPNGTest2 : TextureLibPNG
 {
 }
 @end
 
-
 @interface TextureLibPNGTest3 : TextureLibPNG
 {
 }
 @end
+
+@interface TextureLoop : TextureDemo
+{
+}
+@end
+
 
