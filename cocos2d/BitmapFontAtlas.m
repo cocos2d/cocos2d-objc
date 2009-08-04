@@ -335,7 +335,7 @@ void FNTConfigRemoveCache( void )
 	// Finished with lines so release it
 	[lines release];	
 	
-	return propertyValue;
+	return [FileUtils fullPathFromRelativePath:propertyValue];
 }
 
 #pragma mark BitmapFontAtlas - FNT parser
