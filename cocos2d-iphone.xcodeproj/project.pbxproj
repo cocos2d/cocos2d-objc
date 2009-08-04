@@ -331,6 +331,7 @@
 		5031653610277785003ACFE7 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031652010277785003ACFE7 /* pngwtran.c */; };
 		5031653710277785003ACFE7 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5031652110277785003ACFE7 /* pngwutil.c */; };
 		5031657D10277875003ACFE7 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 503164CD10277665003ACFE7 /* liblibpng.a */; };
+		503167011027AC09003ACFE7 /* grossinis_sister1-testalpha.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 503167001027AC09003ACFE7 /* grossinis_sister1-testalpha.bmp */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -1808,6 +1809,7 @@
 		5031652110277785003ACFE7 /* pngwutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwutil.c; sourceTree = "<group>"; };
 		5031652210277785003ACFE7 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		5031652310277785003ACFE7 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
+		503167001027AC09003ACFE7 /* grossinis_sister1-testalpha.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "grossinis_sister1-testalpha.bmp"; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -3614,6 +3616,7 @@
 				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
 				5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */,
 				5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */,
+				503167001027AC09003ACFE7 /* grossinis_sister1-testalpha.bmp */,
 				50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */,
 				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
 				5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */,
@@ -5508,6 +5511,7 @@
 				503162E6102726E8003ACFE7 /* background3.jpg in Resources */,
 				5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */,
 				5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */,
+				503167011027AC09003ACFE7 /* grossinis_sister1-testalpha.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
