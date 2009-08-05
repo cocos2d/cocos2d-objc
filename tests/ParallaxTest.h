@@ -18,3 +18,8 @@
 {
 }
 @end
+
+@interface Parallax2 : ParallaxDemo
+{
+}
+@end

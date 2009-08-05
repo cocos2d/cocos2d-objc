@@ -1011,6 +1011,9 @@
 		50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DFC29B0FF627B6007E7827 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
+		50E3AF35102A248800A6634B /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		50E3AF36102A248800A6634B /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		50E3AF37102A248800A6634B /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
 		50E675070F65628C003DAA90 /* spritesheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675060F65628C003DAA90 /* spritesheet1.png */; };
 		50E6760E0F65857D003DAA90 /* sprite-0-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675CE0F65857D003DAA90 /* sprite-0-0.png */; };
 		50E6760F0F65857D003DAA90 /* sprite-0-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675CF0F65857D003DAA90 /* sprite-0-1.png */; };
@@ -1902,12 +1905,6 @@
 		50405A1F0E32A15500213FEF /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		50421E350FBD6D4000B992F7 /* bitmapFontTest3.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest3.fnt; sourceTree = "<group>"; };
 		50421E360FBD6D4000B992F7 /* bitmapFontTest3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest3.png; sourceTree = "<group>"; };
-		504224200FC0A9E100B992F7 /* MotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreak.h; sourceTree = "<group>"; };
-		504224210FC0A9E100B992F7 /* MotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionStreak.m; sourceTree = "<group>"; };
-		504224220FC0A9E100B992F7 /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
-		504224230FC0A9E100B992F7 /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
-		504224240FC0A9E100B992F7 /* StreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreakTest.h; sourceTree = "<group>"; };
-		504224250FC0A9E100B992F7 /* StreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreakTest.m; sourceTree = "<group>"; };
 		504225700FC0B39C00B992F7 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		504225760FC0B44E00B992F7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		5042262E0FC0B5D500B992F7 /* Box2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3461,19 +3458,6 @@
 			path = tilemap;
 			sourceTree = "<group>";
 		};
-		5042241F0FC0A9E100B992F7 /* StreakMotion */ = {
-			isa = PBXGroup;
-			children = (
-				504224200FC0A9E100B992F7 /* MotionStreak.h */,
-				504224210FC0A9E100B992F7 /* MotionStreak.m */,
-				504224220FC0A9E100B992F7 /* Ribbon.h */,
-				504224230FC0A9E100B992F7 /* Ribbon.m */,
-				504224240FC0A9E100B992F7 /* StreakTest.h */,
-				504224250FC0A9E100B992F7 /* StreakTest.m */,
-			);
-			path = StreakMotion;
-			sourceTree = "<group>";
-		};
 		504225740FC0B44E00B992F7 /* Box2d */ = {
 			isa = PBXGroup;
 			children = (
@@ -3890,7 +3874,6 @@
 		50A783D30F3AFDB300104C45 /* experimental */ = {
 			isa = PBXGroup;
 			children = (
-				5042241F0FC0A9E100B992F7 /* StreakMotion */,
 				8EDF3E910F6BD8E600F54643 /* sound-engine */,
 			);
 			path = experimental;
@@ -3935,6 +3918,8 @@
 				504799C2100F6AB100D1C71A /* LayerTest.m */,
 				506C7A0C0E01C78700B48100 /* MenuTest.h */,
 				506C7A0D0E01C78700B48100 /* MenuTest.m */,
+				50316ADC1029A365003ACFE7 /* MotionStreakTest.h */,
+				50316ADD1029A365003ACFE7 /* MotionStreakTest.m */,
 				50C195630EE4B5B700829067 /* ParallaxTest.h */,
 				50C195640EE4B5B700829067 /* ParallaxTest.m */,
 				50DB1BCE0E1C1EF000A89DFF /* ParticleTest.h */,
@@ -3945,8 +3930,6 @@
 				506C80120E041CDB00B48100 /* SceneTest.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesTest.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
-				50316ADC1029A365003ACFE7 /* MotionStreakTest.h */,
-				50316ADD1029A365003ACFE7 /* MotionStreakTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
 				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
@@ -6014,6 +5997,9 @@
 				50C195450EE4B57E00829067 /* f2.png in Resources */,
 				50C195460EE4B57E00829067 /* r1.png in Resources */,
 				50C195470EE4B57E00829067 /* r2.png in Resources */,
+				50E3AF35102A248800A6634B /* grossini.png in Resources */,
+				50E3AF36102A248800A6634B /* grossinis_sister1.png in Resources */,
+				50E3AF37102A248800A6634B /* grossinis_sister2.png in Resources */,
 				50C195480EE4B57E00829067 /* Default.png in Resources */,
 				50C195490EE4B57E00829067 /* Icon.png in Resources */,
 				50C195500EE4B57E00829067 /* tiles.png in Resources */,
