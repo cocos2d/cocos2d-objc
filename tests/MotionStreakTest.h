@@ -27,7 +27,14 @@
 	CocosNode* target;
 	MotionStreak* streak;
 }
--(NSString*) title;
+@end
+
+@interface Test2 : MotionStreakTest
+{
+	CocosNode* root;
+	CocosNode* target;
+	MotionStreak* streak;
+}
 @end
 
 

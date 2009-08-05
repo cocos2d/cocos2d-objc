@@ -70,9 +70,13 @@
 		mCurTime = 0;
 		mPastFirstPoint = NO;
 		
-		/* default blend function. Can be updated by the new texture */
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
+		/* XXX:
+		 Ribbon, by default uses this blend function, which might not be correct
+		 if you are using premultiplied alpha images,
+		 but 99% you might want to use this blending function regarding of the texture
+		 */
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
 		
 		self.texture = [[TextureMgr sharedTextureMgr] addImage:path];
 
@@ -261,10 +265,7 @@
 	[texture_ release];
 	texture_ = [texture retain];
 	[self setContentSize: texture.contentSize];
-	if( ! [texture hasPremultipliedAlpha] ) {
-		blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
+	/* XXX Don't update blending function in Ribbons */
 }
 
 -(Texture2D*) texture

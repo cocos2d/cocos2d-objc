@@ -17,6 +17,7 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"Test1",
+	@"Test2",
 };
 
 #pragma mark Callbacks
@@ -159,6 +160,44 @@ Class restartAction()
 }
 @end
 
+#pragma mark Test2
+
+@implementation Test2
+-(NSString*) title
+{
+	return @"MotionStreak test (tap screen)";
+}
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	self.isTouchEnabled = YES;
+
+	CGSize s = [[Director sharedDirector] winSize];
+		
+	// create the streak object and add it to the scene
+	streak = [MotionStreak streakWithFade:2 minSeg:2 image:@"streak.png" width:64 length:16 color:ccc4(255,255,255,255)];
+	[self addChild:streak];
+	
+	streak.position = ccp(s.width/2, s.height/2);
+}
+
+-(BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+	CGPoint touchLocation = [touch locationInView: [touch view]];	
+	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	
+	[streak setPosition:touchLocation];
+	
+	return YES;
+}
+@end
 
 
 // CLASS IMPLEMENTATIONS
