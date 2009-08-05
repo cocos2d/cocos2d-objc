@@ -1,12 +1,12 @@
 //
-// Streak Demo
+// MotionStreak Demo
 // a cocos2d example
 //
 // Example by Jason Booth (slipster216)
 
 // cocos import
 #import "cocos2d.h"
-#import "StreakTest.h"
+#import "MotionStreakTest.h"
 
 enum {
 	kTagLabel = 1,
@@ -109,6 +109,8 @@ Class restartAction()
 @end
 
 
+#pragma mark Test1
+
 @implementation Test1
 -(NSString*) title
 {
@@ -135,7 +137,7 @@ Class restartAction()
 	[target setPosition:ccp(100,0)];
 
 	// create the streak object and add it to the scene
-	streak = [MotionStreak streakWithFade:3 minSeg:3 image:@"streak.png" width:32 length:32 color:ccc4(0,255,0,255)];
+	streak = [MotionStreak streakWithFade:2 minSeg:3 image:@"streak.png" width:32 length:32 color:ccc4(0,255,0,255)];
 	[self addChild:streak];
 	// schedule an update on each frame so we can syncronize the streak with the target
 	[self schedule:@selector(onUpdate:)];
