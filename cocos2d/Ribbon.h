@@ -33,12 +33,13 @@
  */
 @interface Ribbon : CocosNode <CocosNodeTexture>
 {
+	NSMutableArray* mSegments;
+	NSMutableArray* dSegments;
+
 	CGPoint			mLastPoint1;
 	CGPoint			mLastPoint2;
 	CGPoint			mLastLocation;
 	int				mVertCount;
-	NSMutableArray* mSegments;
-	NSMutableArray* dSegments;
 	float			mTexVPos;
 	float			mCurTime;
 	float			mFadeTime;
