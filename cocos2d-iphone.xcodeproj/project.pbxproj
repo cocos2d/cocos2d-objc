@@ -334,6 +334,8 @@
 		50316838102848F3003ACFE7 /* TableViewImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316810102848F3003ACFE7 /* TableViewImages.m */; };
 		50316839102848F3003ACFE7 /* TableViewImages.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50316811102848F3003ACFE7 /* TableViewImages.xib */; };
 		5031698010289F68003ACFE7 /* pattern1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5031697F10289F68003ACFE7 /* pattern1.png */; };
+		50316AA610291280003ACFE7 /* RenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AA410291280003ACFE7 /* RenderTexture.h */; };
+		50316AA710291280003ACFE7 /* RenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AA510291280003ACFE7 /* RenderTexture.m */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -1858,6 +1860,8 @@
 		50316810102848F3003ACFE7 /* TableViewImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewImages.m; sourceTree = "<group>"; };
 		50316811102848F3003ACFE7 /* TableViewImages.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewImages.xib; sourceTree = "<group>"; };
 		5031697F10289F68003ACFE7 /* pattern1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern1.png; sourceTree = "<group>"; };
+		50316AA410291280003ACFE7 /* RenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTexture.h; sourceTree = "<group>"; };
+		50316AA510291280003ACFE7 /* RenderTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderTexture.m; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -3257,6 +3261,8 @@
 				50B2CCC30E119B8E00AE9530 /* DrawingPrimitives.m */,
 				509E665C0E06CD940050992C /* Camera.h */,
 				509E665D0E06CD940050992C /* Camera.m */,
+				50316AA410291280003ACFE7 /* RenderTexture.h */,
+				50316AA510291280003ACFE7 /* RenderTexture.m */,
 				5018F2560DFDEAFF00C013A5 /* Director.h */,
 				5018F2570DFDEAFF00C013A5 /* Director.m */,
 				5018F2670DFDEAFF00C013A5 /* TextureMgr.h */,
@@ -4312,6 +4318,7 @@
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
 				50CFAC391023660000175934 /* TMXXMLParser.h in Headers */,
+				50316AA610291280003ACFE7 /* RenderTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6333,6 +6340,7 @@
 				50F29F5610204FD60046CA73 /* base64.c in Sources */,
 				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
 				50CFAC3A1023660000175934 /* TMXXMLParser.m in Sources */,
+				50316AA710291280003ACFE7 /* RenderTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
