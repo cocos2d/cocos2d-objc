@@ -42,7 +42,6 @@
 	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
 }
 
-
 -(id) initWithTarget:(id) t selector:(SEL)s
 {
 	return [self initWithTarget:t selector:s interval:0];
@@ -64,6 +63,11 @@
 		interval = seconds;
 	}
 	return self;
+}
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
 }
 
 -(void) dealloc
