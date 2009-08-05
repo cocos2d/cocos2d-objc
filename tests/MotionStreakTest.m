@@ -181,7 +181,7 @@ Class restartAction()
 	CGSize s = [[Director sharedDirector] winSize];
 		
 	// create the streak object and add it to the scene
-	streak = [MotionStreak streakWithFade:2 minSeg:2 image:@"streak.png" width:64 length:16 color:ccc4(255,255,255,255)];
+	streak = [MotionStreak streakWithFade:3 minSeg:3 image:@"streak.png" width:64 length:32 color:ccc4(255,255,255,255)];
 	[self addChild:streak];
 	
 	streak.position = ccp(s.width/2, s.height/2);

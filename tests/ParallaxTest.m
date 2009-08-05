@@ -10,9 +10,15 @@
 // local import
 #import "ParallaxTest.h"
 
+enum {
+	kTagNode,
+	kTagGrossini,
+};
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Parallax1",
+			@"Parallax2",
 };
 
 Class nextAction()
@@ -178,6 +184,102 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Parallax: parent and 3 children";
+}
+@end
+
+#pragma mark Example Parallax 2
+
+@implementation Parallax2
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		self.isTouchEnabled = YES;
+		
+		// Top Layer, a simple image
+		Sprite *cocosImage = [Sprite spriteWithFile:@"powered.png"];
+		// scale the image (optional)
+		cocosImage.scale = 2.5f;
+		// change the transform anchor point to 0,0 (optional)
+		cocosImage.anchorPoint = ccp(0,0);
+		
+		
+		// Middle layer: a Tile map atlas
+		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		[tilemap releaseMap];
+		
+		// change the transform anchor to 0,0 (optional)
+		tilemap.anchorPoint = ccp(0, 0);
+		
+		// Aliased images
+		[tilemap.texture setAliasTexParameters];
+		
+		
+		// background layer: another image
+		Sprite *background = [Sprite spriteWithFile:@"background.png"];
+		// scale the image (optional)
+		background.scale = 1.5f;
+		// change the transform anchor point (optional)
+		background.anchorPoint = ccp(0,0);
+		
+		
+		// create a void node, a parent node
+		ParallaxNode *voidNode = [ParallaxNode node];
+		
+		// NOW add the 3 layers to the 'void' node
+		
+		// background image is moved at a ratio of 0.4x, 0.5y
+		[voidNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f) positionOffset:CGPointZero];
+		
+		// tiles are moved at a ratio of 1.0, 1.0y
+		[voidNode addChild:tilemap z:1 parallaxRatio:ccp(1.0f,1.0f) positionOffset:ccp(0,-200)];
+		
+		// top image is moved at a ratio of 3.0x, 2.5y
+		[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
+		[self addChild:voidNode z:0 tag:kTagNode];
+
+	}
+	
+	return self;
+}
+
+-(void) registerWithTouchDispatcher
+{
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+}
+
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	return YES;
+}
+
+-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+}
+
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+}
+
+-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	CGPoint touchLocation = [touch locationInView: [touch view]];	
+	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
+
+	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	prevLocation = [[Director sharedDirector] convertCoordinate: prevLocation];
+
+	CGPoint diff = ccpSub(touchLocation,prevLocation);
+	
+	CocosNode *node = [self getChildByTag:kTagNode];
+	CGPoint currentPos = [node position];
+	[node setPosition: ccpAdd(currentPos, diff)];
+}
+
+
+-(NSString *) title
+{
+	return @"Parallax: drag screen";
 }
 @end
 
