@@ -11,11 +11,21 @@
 }
 @end
 
-@interface StreakTest : Layer
+@interface MotionStreakTest : Layer
+{}
+
+-(NSString*) title;
+
+-(void) backCallback:(id) sender;
+-(void) nextCallback:(id) sender;
+-(void) restartCallback:(id) sender;
+@end
+
+@interface Test1 : MotionStreakTest
 {
 	CocosNode* root;
-  CocosNode* target;
-  MotionStreak* streak;
+	CocosNode* target;
+	MotionStreak* streak;
 }
 -(NSString*) title;
 @end

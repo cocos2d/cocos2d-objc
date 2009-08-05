@@ -76,7 +76,6 @@
 #import "TMXTiledMap.h"
 #import "RenderTexture.h"
 #import "MotionStreak.h"
-#import "Ribbon.h"
 
 //
 // cocos2d macros

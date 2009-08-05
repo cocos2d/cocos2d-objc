@@ -28,37 +28,57 @@
 
 
 #import "Ribbon.h"
-#import "cocos2d.h"
+#import "TextureMgr.h"
+#import "Support/CGPointExtension.h"
+#import "ccMacros.h"
 
 //
 // Ribbon
 //
 @implementation Ribbon
+@synthesize blendFunc=blendFunc_;
+@synthesize color=color_;
+@synthesize textureLength = textureLength_;
 
-+(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade
++(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade
 {
 	self = [[[Ribbon alloc] initWithWidth:w image:path length:l color:color fade:fade] autorelease];
 	return self;
 }
 
--(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade
+-(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade
 {
 	self = [super init];
 	if (self)
 	{
-		mTextureLength = l;
-		mTexture = [[[TextureMgr sharedTextureMgr] addImage:path] retain];
-		mColor = color;
+		
+		mSegments = [[NSMutableArray alloc] init];
+		dSegments = [[NSMutableArray alloc] init];
+
+		/* 1 initial segment */
+		RibbonSegment* seg = [[[RibbonSegment alloc] init] autorelease];
+		[mSegments addObject:seg];
+		
+		textureLength_ = l;
+		
+		color_ = color;
 		mFadeTime = fade;
 		mLastLocation = CGPointZero;
 		mLastWidth = w/2;
 		mTexVPos = 0.0f;
-		mSegments = [[NSMutableArray alloc] init];
-		dSegments = [[NSMutableArray alloc] init];
-		RibbonSegment* seg = [[[RibbonSegment alloc] init] autorelease];
-		[mSegments addObject:seg];
+		
 		mCurTime = 0;
 		mPastFirstPoint = NO;
+		
+		/* default blend function. Can be updated by the new texture */
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
+		
+		self.texture = [[TextureMgr sharedTextureMgr] addImage:path];
+
+		/* default texture parameter */
+		ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+		[texture_ setTexParameters:&params];
 	}
 	return self;
 }
@@ -67,7 +87,7 @@
 {
 	[mSegments release];
 	[dSegments release];
-	[mTexture release];
+	[texture_ release];
 	[super dealloc];
 }
 
@@ -107,11 +127,11 @@
 	}
 
 	CGPoint sub = ccpSub(mLastLocation, location);
-	float r = ccpToAngle(sub) + 1.57079637f;
+	float r = ccpToAngle(sub) + (float)M_PI_2;
 	CGPoint p1 = ccpAdd([self rotatePoint:ccp(-w, 0) rotation:r], location);
 	CGPoint p2 = ccpAdd([self rotatePoint:ccp(w, 0) rotation:r], location);
 	float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
-	float tend = mTexVPos + len/mTextureLength;
+	float tend = mTexVPos + len/textureLength_;
 	RibbonSegment* seg;
 	// grab last segment
 	seg = [mSegments objectAtIndex:[mSegments count]-1];
@@ -126,7 +146,7 @@
 	[mSegments removeObjectsInArray:dSegments];
 	// is the segment full?
 	if (seg->end >= 50)
-	[mSegments removeObjectsInArray:dSegments];
+		[mSegments removeObjectsInArray:dSegments];
 	// grab last segment and appent to it if it's not full
 	seg = [mSegments objectAtIndex:[mSegments count]-1];
 	// is the segment full?
@@ -207,32 +227,25 @@
 	seg->end++;
 }
 
--(void)draw
+-(void) draw
 {
 	if ([mSegments count] > 0)
 	{
 		glEnableClientState( GL_VERTEX_ARRAY);
 		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 		glEnable( GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, [mTexture name]);
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 
-		BOOL preMulti = [mTexture hasPremultipliedAlpha];
-		if( ! preMulti )
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	  
-		GLubyte r = mColor >> 24 & 0xFF;
-		GLubyte g = mColor >> 16 & 0xFF;
-		GLubyte b = mColor >> 8 & 0xFF;
-		GLubyte a = mColor & 0xFF;
+		BOOL newBlend = NO;
+		if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+			newBlend = YES;
+			glBlendFunc( blendFunc_.src, blendFunc_.dst );
+		}
 
 		for (RibbonSegment* seg in mSegments)
-		{
-			[seg draw:mCurTime fadeTime:mFadeTime r:r g:g b:b a:a];
-		}    
+			[seg draw:mCurTime fadeTime:mFadeTime color:color_];
 
-		if( !preMulti )
+		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	  
 		glDisable( GL_TEXTURE_2D);
@@ -240,6 +253,23 @@
 		glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 		glDisableClientState( GL_COLOR_ARRAY );
 	}
+}
+
+#pragma mark Ribbom - CocosNodeTexture protocol
+-(void) setTexture:(Texture2D*) texture
+{
+	[texture_ release];
+	texture_ = [texture retain];
+	[self setContentSize: texture.contentSize];
+	if( ! [texture hasPremultipliedAlpha] ) {
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	}
+}
+
+-(Texture2D*) texture
+{
+	return texture_;
 }
 
 @end
@@ -256,6 +286,17 @@
 	return self;
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | end = %i, begin = %i>", [self class], self, end, begin];
+}
+
+- (void) dealloc
+{
+	CCLOG(@"deallocing %@", self);
+	[super dealloc];
+}
+
 -(void)reset
 {
 	end = 0;
@@ -263,8 +304,13 @@
 	finished = NO;
 }
 
--(void)draw:(float)curTime fadeTime:(float)fadeTime r:(GLubyte)r g:(GLubyte)g b:(GLubyte)b a:(GLubyte)a
+-(void)draw:(float)curTime fadeTime:(float)fadeTime color:(ccColor4B)color
 {
+	GLubyte r = color.r;
+	GLubyte g = color.g;
+	GLubyte b = color.b;
+	GLubyte a = color.a;
+
 	if (begin < 50)
 	{
 		// the motion streak class will call update and cause time to change, thus, if mCurTime != 0
@@ -272,7 +318,7 @@
 		if (curTime == 0)
 		{
 			// no alpha over time, so just set the color
-			glColor4ub(r, g, b, a); 
+			glColor4ub(r,g,b,a);
 		}
 		else
 		{
