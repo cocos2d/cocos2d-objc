@@ -2135,7 +2135,7 @@
 		50A24E730F378087007CAEB0 /* TiledGridAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiledGridAction.m; sourceTree = "<group>"; };
 		50A252290F38B8DC007CAEB0 /* background1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background1.jpg; sourceTree = "<group>"; };
 		50A2522A0F38B8DC007CAEB0 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
-		50A783C40F3AFCE500104C45 /* StreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A783C40F3AFCE500104C45 /* MotionStreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionStreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3002,7 +3002,7 @@
 				509B3A0D0F31024E00F2FB95 /* libcocos Live.a */,
 				509B3A280F3102FD00F2FB95 /* cocosLiveTest.app */,
 				50A24E440F377FA1007CAEB0 /* EffectsTest.app */,
-				50A783C40F3AFCE500104C45 /* StreakTest.app */,
+				50A783C40F3AFCE500104C45 /* MotionStreakTest.app */,
 				50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedTest.app */,
 				504828800F45AED700A30CEF /* AttachTest.app */,
 				505CC1590F62BB03000EDF26 /* PerformanceSpriteTest.app */,
@@ -5000,7 +5000,7 @@
 			);
 			name = MotionStreakTest;
 			productName = playground;
-			productReference = 50A783C40F3AFCE500104C45 /* StreakTest.app */;
+			productReference = 50A783C40F3AFCE500104C45 /* MotionStreakTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50B2C4D00E100AEA00AE9530 /* Chipmunk */ = {
@@ -5349,6 +5349,7 @@
 				5078B5170E3E43540004233A /* IntervalTest */,
 				50479999100F6A4200D1C71A /* LayerTest */,
 				506C79F20E01C73A00B48100 /* MenuTest */,
+				50A783990F3AFCE500104C45 /* MotionStreakTest */,
 				50C1953E0EE4B57E00829067 /* ParallaxTest */,
 				5031679F1028488E003ACFE7 /* ParticleView */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
@@ -5358,7 +5359,6 @@
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
 				50C93A930E0BF6E000517B01 /* SpritesTest */,
-				50A783990F3AFCE500104C45 /* MotionStreakTest */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
@@ -8430,7 +8430,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = StreakTest;
+				PRODUCT_NAME = MotionStreakTest;
 				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
