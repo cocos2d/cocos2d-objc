@@ -336,6 +336,11 @@
 		5031698010289F68003ACFE7 /* pattern1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5031697F10289F68003ACFE7 /* pattern1.png */; };
 		50316AA610291280003ACFE7 /* RenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AA410291280003ACFE7 /* RenderTexture.h */; };
 		50316AA710291280003ACFE7 /* RenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AA510291280003ACFE7 /* RenderTexture.m */; };
+		50316AD41029A126003ACFE7 /* MotionStreak.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AD21029A126003ACFE7 /* MotionStreak.h */; };
+		50316AD51029A126003ACFE7 /* MotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AD31029A126003ACFE7 /* MotionStreak.m */; };
+		50316AD81029A137003ACFE7 /* Ribbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AD61029A137003ACFE7 /* Ribbon.h */; };
+		50316AD91029A137003ACFE7 /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AD71029A137003ACFE7 /* Ribbon.m */; };
+		50316ADE1029A365003ACFE7 /* StreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316ADD1029A365003ACFE7 /* StreakTest.m */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -386,9 +391,6 @@
 		50405A200E32A15500213FEF /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A1F0E32A15500213FEF /* smoke.png */; };
 		50421E370FBD6D4000B992F7 /* bitmapFontTest3.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 50421E350FBD6D4000B992F7 /* bitmapFontTest3.fnt */; };
 		50421E380FBD6D4000B992F7 /* bitmapFontTest3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50421E360FBD6D4000B992F7 /* bitmapFontTest3.png */; };
-		504224260FC0A9E100B992F7 /* MotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 504224210FC0A9E100B992F7 /* MotionStreak.m */; };
-		504224270FC0A9E100B992F7 /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 504224230FC0A9E100B992F7 /* Ribbon.m */; };
-		504224280FC0A9E100B992F7 /* StreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 504224250FC0A9E100B992F7 /* StreakTest.m */; };
 		504225BC0FC0B44E00B992F7 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 504225760FC0B44E00B992F7 /* Box2D.h */; };
 		504226180FC0B5D500B992F7 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
 		504226190FC0B5D500B992F7 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
@@ -1862,6 +1864,12 @@
 		5031697F10289F68003ACFE7 /* pattern1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern1.png; sourceTree = "<group>"; };
 		50316AA410291280003ACFE7 /* RenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTexture.h; sourceTree = "<group>"; };
 		50316AA510291280003ACFE7 /* RenderTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderTexture.m; sourceTree = "<group>"; };
+		50316AD21029A126003ACFE7 /* MotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreak.h; sourceTree = "<group>"; };
+		50316AD31029A126003ACFE7 /* MotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionStreak.m; sourceTree = "<group>"; };
+		50316AD61029A137003ACFE7 /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
+		50316AD71029A137003ACFE7 /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
+		50316ADC1029A365003ACFE7 /* StreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreakTest.h; path = tests/StreakTest.h; sourceTree = "<group>"; };
+		50316ADD1029A365003ACFE7 /* StreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreakTest.m; path = tests/StreakTest.m; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -3247,6 +3255,7 @@
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
+				50316ADA1029A14A003ACFE7 /* MotionStreak */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
 				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
@@ -3421,6 +3430,17 @@
 				503167E8102848F3003ACFE7 /* 9.png */,
 			);
 			name = "Particle Images";
+			sourceTree = "<group>";
+		};
+		50316ADA1029A14A003ACFE7 /* MotionStreak */ = {
+			isa = PBXGroup;
+			children = (
+				50316AD61029A137003ACFE7 /* Ribbon.h */,
+				50316AD71029A137003ACFE7 /* Ribbon.m */,
+				50316AD21029A126003ACFE7 /* MotionStreak.h */,
+				50316AD31029A126003ACFE7 /* MotionStreak.m */,
+			);
+			name = MotionStreak;
 			sourceTree = "<group>";
 		};
 		503F5D0C101FEDAE002A37E5 /* tilemap */ = {
@@ -3925,6 +3945,8 @@
 				506C80120E041CDB00B48100 /* SceneTest.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesTest.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
+				50316ADC1029A365003ACFE7 /* StreakTest.h */,
+				50316ADD1029A365003ACFE7 /* StreakTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
 				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
@@ -4319,6 +4341,8 @@
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
 				50CFAC391023660000175934 /* TMXXMLParser.h in Headers */,
 				50316AA610291280003ACFE7 /* RenderTexture.h in Headers */,
+				50316AD41029A126003ACFE7 /* MotionStreak.h in Headers */,
+				50316AD81029A137003ACFE7 /* Ribbon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6341,6 +6365,8 @@
 				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
 				50CFAC3A1023660000175934 /* TMXXMLParser.m in Sources */,
 				50316AA710291280003ACFE7 /* RenderTexture.m in Sources */,
+				50316AD51029A126003ACFE7 /* MotionStreak.m in Sources */,
+				50316AD91029A137003ACFE7 /* Ribbon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6639,9 +6665,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50A783B80F3AFCE500104C45 /* main.m in Sources */,
-				504224260FC0A9E100B992F7 /* MotionStreak.m in Sources */,
-				504224270FC0A9E100B992F7 /* Ribbon.m in Sources */,
-				504224280FC0A9E100B992F7 /* StreakTest.m in Sources */,
+				50316ADE1029A365003ACFE7 /* StreakTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

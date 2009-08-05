@@ -28,49 +28,49 @@
 
 +(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(uint)color
 {
-  self = [[[MotionStreak alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
-  return self;
+	self = [[[MotionStreak alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
+	return self;
 }
 
 -(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(uint)color
 {
-  self = [super init];
-  if (self)
-  {
-    mFadeTime = fade;
-    mSegThreshold = seg;
-    mPath = path;
-    mWidth = width;
-    mTextureLength = length;
-    mLastLocation = CGPointZero;
-    mColor = color;
-    mRibbon = [Ribbon ribbonWithWidth: mWidth image:mPath length:mTextureLength color:color fade:fade];
-    [self addChild:mRibbon];
-    
-    // manually add timer to scheduler
-    Timer *timer = [Timer timerWithTarget:self selector:@selector(update:) interval:0];
-    [[Scheduler sharedScheduler] scheduleTimer:timer];
-  }
-  return self;
+	self = [super init];
+	if (self)
+	{
+		mFadeTime = fade;
+		mSegThreshold = seg;
+		mPath = path;
+		mWidth = width;
+		mTextureLength = length;
+		mLastLocation = CGPointZero;
+		mColor = color;
+		mRibbon = [Ribbon ribbonWithWidth: mWidth image:mPath length:mTextureLength color:color fade:fade];
+		[self addChild:mRibbon];
+
+		// manually add timer to scheduler
+		Timer *timer = [Timer timerWithTarget:self selector:@selector(update:) interval:0];
+		[[Scheduler sharedScheduler] scheduleTimer:timer];
+	}
+	return self;
 }
 
 -(void)update:(ccTime)delta
 {
 	CGPoint location = [self convertToWorldSpace:CGPointZero];
-  [mRibbon setPosition:ccp(-1*location.x, -1*location.y)];
-  float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
-  if (len > mSegThreshold)
-  {
-    [mRibbon addPointAt:location width:mWidth];
-    mLastLocation = location;
-  }
-  [mRibbon update:delta];
+	[mRibbon setPosition:ccp(-1*location.x, -1*location.y)];
+	float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
+	if (len > mSegThreshold)
+	{
+		[mRibbon addPointAt:location width:mWidth];
+		mLastLocation = location;
+	}
+	[mRibbon update:delta];
 }
 
 
 -(void)dealloc
 {
-  [super dealloc];
+	[super dealloc];
 }
 
 @end

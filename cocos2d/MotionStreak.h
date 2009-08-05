@@ -28,14 +28,14 @@
 /** Motion Streak - creates a ribbon based on velocity of motion with fading tail */
 @interface MotionStreak : CocosNode 
 {
-  Ribbon* mRibbon;
-  float mFadeTime;
-  float mSegThreshold;
-  uint mColor;
-  NSString* mPath;
-  float mWidth;
-  float mTextureLength;
-  CGPoint mLastLocation;
+	Ribbon* mRibbon;
+	float mFadeTime;
+	float mSegThreshold;
+	uint mColor;
+	NSString* mPath;
+	float mWidth;
+	float mTextureLength;
+	CGPoint mLastLocation;
 }
 
 /** creates the streak */
