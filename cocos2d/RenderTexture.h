@@ -19,16 +19,16 @@
 
 enum  
 {
-  kJPG = 0,
-  kPNG = 1
+	kJPG = 0,
+	kPNG = 1
 };
 
 @interface RenderTexture : CocosNode 
 {
-  GLuint fbo;
-  GLint oldFBO;
-  Texture2D* texture;
-  Sprite* sprite;
+	GLuint fbo;
+	GLint oldFBO;
+	Texture2D* texture;
+	Sprite* sprite;
 }
 
 @property (readwrite, assign) Sprite* sprite;
