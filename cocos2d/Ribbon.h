@@ -31,30 +31,51 @@
  * the maximum size of some ribbons (motion streaks), a truely static allocation is not possible.
  *
  */
-@interface Ribbon : CocosNode 
+@interface Ribbon : CocosNode <CocosNodeTexture>
 {
-	CGPoint mLastPoint1;
-	CGPoint mLastPoint2;
-	CGPoint mLastLocation;
-	uint mColor;
-	Texture2D* mTexture;
-	float mTextureLength;
-	int mVertCount;
+	CGPoint			mLastPoint1;
+	CGPoint			mLastPoint2;
+	CGPoint			mLastLocation;
+	int				mVertCount;
 	NSMutableArray* mSegments;
 	NSMutableArray* dSegments;
-	float mTexVPos;
-	float mCurTime;
-	float mFadeTime;
-	float mDelta;
-	float mLastWidth;
-	float mLastSign;
-	bool mPastFirstPoint;
+	float			mTexVPos;
+	float			mCurTime;
+	float			mFadeTime;
+	float			mDelta;
+	float			mLastWidth;
+	float			mLastSign;
+	BOOL			mPastFirstPoint;
+
+	// Texture used
+	Texture2D*		texture_;
+
+	// texture lenght
+	float			textureLength_;
+
+	// RGBA protocol
+	ccColor4B color_;
+
+	// blend func
+	ccBlendFunc		blendFunc_;
 }
 
+/** Texture used by the ribbon. Conforms to CocosNodeTexture protocol */
+@property (readwrite,retain) Texture2D* texture;
+
+/** Texture lenghts in pixels */
+@property (readwrite) float textureLength;
+
+/** GL blendind function */
+@property (readwrite,assign) ccBlendFunc blendFunc;
+
+/** color used by the Ribbon (RGBA) */
+@property (readwrite) ccColor4B color;
+
 /** creates the ribbon */
-+(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
++(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade;
 /** init the ribbon */
--(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(uint)color fade:(float)fade;
+-(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade;
 /** add a point to the ribbon */
 -(void)addPointAt:(CGPoint)location width:(float)w;
 /** polling function */
@@ -67,16 +88,16 @@
 /** object to hold ribbon segment data */
 @interface RibbonSegment : NSObject
 {
-  @public
-  GLfloat verts[50*6];
-  GLfloat coords[50*4];
-  GLubyte colors[50*8];
-  float creationTime[50];
-  bool finished;
-  uint end;
-  uint begin;
+@public
+	GLfloat verts[50*6];
+	GLfloat coords[50*4];
+	GLubyte colors[50*8];
+	float creationTime[50];
+	bool finished;
+	uint end;
+	uint begin;
 }
 -(id)init;
 -(void)reset;
--(void)draw:(float)curTime fadeTime:(float)fadeTime r:(GLubyte)r g:(GLubyte)g b:(GLubyte)b a:(GLubyte)a;
+-(void)draw:(float)curTime fadeTime:(float)fadeTime color:(ccColor4B)color;
 @end

@@ -22,34 +22,32 @@
  */
 
 #import "MotionStreak.h"
-#import "cocos2d.h"
+#import "Support/CGPointExtension.h"
 
 @implementation MotionStreak
 
-+(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(uint)color
+@synthesize color=color_;
+@synthesize ribbon=ribbon_;
+
++(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
 {
-	self = [[[MotionStreak alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
-	return self;
+	return [[[MotionStreak alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
 }
 
--(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(uint)color
+-(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
 {
-	self = [super init];
-	if (self)
-	{
+	if( (self=[super init])) {
 		mFadeTime = fade;
 		mSegThreshold = seg;
-		mPath = path;
 		mWidth = width;
 		mTextureLength = length;
 		mLastLocation = CGPointZero;
-		mColor = color;
-		mRibbon = [Ribbon ribbonWithWidth: mWidth image:mPath length:mTextureLength color:color fade:fade];
-		[self addChild:mRibbon];
+		color_ = color;
+		ribbon_ = [Ribbon ribbonWithWidth: mWidth image:path length:mTextureLength color:color fade:fade];
+		[self addChild:ribbon_];
 
-		// manually add timer to scheduler
-		Timer *timer = [Timer timerWithTarget:self selector:@selector(update:) interval:0];
-		[[Scheduler sharedScheduler] scheduleTimer:timer];
+		// update ribbon position
+		[self schedule:@selector(update:) interval:0];
 	}
 	return self;
 }
@@ -57,14 +55,14 @@
 -(void)update:(ccTime)delta
 {
 	CGPoint location = [self convertToWorldSpace:CGPointZero];
-	[mRibbon setPosition:ccp(-1*location.x, -1*location.y)];
+	[ribbon_ setPosition:ccp(-1*location.x, -1*location.y)];
 	float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
 	if (len > mSegThreshold)
 	{
-		[mRibbon addPointAt:location width:mWidth];
+		[ribbon_ addPointAt:location width:mWidth];
 		mLastLocation = location;
 	}
-	[mRibbon update:delta];
+	[ribbon_ update:delta];
 }
 
 
