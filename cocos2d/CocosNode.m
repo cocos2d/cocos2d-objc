@@ -56,6 +56,7 @@
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
 @synthesize transformAnchor=transformAnchor_, relativeAnchorPoint=relativeAnchorPoint_;
+@synthesize userData;
 
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
@@ -178,6 +179,9 @@
 		
 		// scheduled selectors (lazy allocs)
 		scheduledSelectors = nil;
+		
+		// userData is always inited as nil
+		userData = nil;
 	}
 	
 	return self;

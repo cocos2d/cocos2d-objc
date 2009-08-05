@@ -114,7 +114,10 @@ enum {
 	int tag;
 
 	// scheduled selectors
-	NSMutableDictionary *scheduledSelectors;    
+	NSMutableDictionary *scheduledSelectors;
+    
+	// user data field
+	void *userData;
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
@@ -166,6 +169,8 @@ enum {
 @property(readwrite,assign) BOOL relativeAnchorPoint;
 /** A tag used to identify the node easily */
 @property(readwrite,assign) int tag;
+/** A custom user data pointer */
+@property(readwrite,assign) void *userData;
 
 // initializators
 /** allocates and initializes a node.
