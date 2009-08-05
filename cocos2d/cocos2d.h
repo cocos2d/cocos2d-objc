@@ -74,6 +74,9 @@
 #import "ParallaxNode.h"
 #import "ActionManager.h"
 #import "TMXTiledMap.h"
+#import "RenderTexture.h"
+#import "MotionStreak.h"
+#import "Ribbon.h"
 
 //
 // cocos2d macros

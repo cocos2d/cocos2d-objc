@@ -71,6 +71,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for ScaleTo/By action to support X and Y.
 		added endSize to ParticleSystem
 		added WorldSpace coordinates to ParticleSystem
+		author of RenderTexture class
 	* Jason Cecil: Fixed memory leak in Director#FPSLabel
 		patches for CocosDenshion
 		CocosNode: parent set to nil after onExit patch

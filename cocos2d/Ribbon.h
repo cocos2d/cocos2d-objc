@@ -11,7 +11,13 @@
  * distribution inside the "LICENSE" file.
  *
  *
- *
+ */
+
+#import "CocosNode.h"
+#import "Texture2D.h"
+#import <OpenGLES/ES1/gl.h>
+
+/**
  * A ribbon is a dynamically generated list of polygons drawn as a single or series
  * of triangle strips. The primary use of Ribbon is as the drawing class of Motion Streak,
  * but it is quite useful on it's own. When manually drawing a ribbon, you can call addPointAt
@@ -25,30 +31,24 @@
  * the maximum size of some ribbons (motion streaks), a truely static allocation is not possible.
  *
  */
-
-#import "CocosNode.h"
-#import "Texture2D.h"
-#import <OpenGLES/ES1/gl.h>
-
-/** Ribbon - dynamically extended connected polygon mesh */
 @interface Ribbon : CocosNode 
 {
-  CGPoint mLastPoint1;
-  CGPoint mLastPoint2;
-  CGPoint mLastLocation;
-  uint mColor;
-  Texture2D* mTexture;
-  float mTextureLength;
-  int mVertCount;
-  NSMutableArray* mSegments;
-  NSMutableArray* dSegments;
-  float mTexVPos;
-  float mCurTime;
-  float mFadeTime;
-  float mDelta;
-  float mLastWidth;
-  float mLastSign;
-  bool mPastFirstPoint;
+	CGPoint mLastPoint1;
+	CGPoint mLastPoint2;
+	CGPoint mLastLocation;
+	uint mColor;
+	Texture2D* mTexture;
+	float mTextureLength;
+	int mVertCount;
+	NSMutableArray* mSegments;
+	NSMutableArray* dSegments;
+	float mTexVPos;
+	float mCurTime;
+	float mFadeTime;
+	float mDelta;
+	float mLastWidth;
+	float mLastSign;
+	bool mPastFirstPoint;
 }
 
 /** creates the ribbon */
