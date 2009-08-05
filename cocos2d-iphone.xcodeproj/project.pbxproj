@@ -340,7 +340,7 @@
 		50316AD51029A126003ACFE7 /* MotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AD31029A126003ACFE7 /* MotionStreak.m */; };
 		50316AD81029A137003ACFE7 /* Ribbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AD61029A137003ACFE7 /* Ribbon.h */; };
 		50316AD91029A137003ACFE7 /* Ribbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AD71029A137003ACFE7 /* Ribbon.m */; };
-		50316ADE1029A365003ACFE7 /* StreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316ADD1029A365003ACFE7 /* StreakTest.m */; };
+		50316ADE1029A365003ACFE7 /* MotionStreakTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316ADD1029A365003ACFE7 /* MotionStreakTest.m */; };
 		5036DFC10E612F2D003B6155 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		5036DFC20E612F2D003B6155 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		503798C60F912C2000986724 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -1868,8 +1868,8 @@
 		50316AD31029A126003ACFE7 /* MotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionStreak.m; sourceTree = "<group>"; };
 		50316AD61029A137003ACFE7 /* Ribbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ribbon.h; sourceTree = "<group>"; };
 		50316AD71029A137003ACFE7 /* Ribbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ribbon.m; sourceTree = "<group>"; };
-		50316ADC1029A365003ACFE7 /* StreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreakTest.h; path = tests/StreakTest.h; sourceTree = "<group>"; };
-		50316ADD1029A365003ACFE7 /* StreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreakTest.m; path = tests/StreakTest.m; sourceTree = "<group>"; };
+		50316ADC1029A365003ACFE7 /* MotionStreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MotionStreakTest.h; path = tests/MotionStreakTest.h; sourceTree = "<group>"; };
+		50316ADD1029A365003ACFE7 /* MotionStreakTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MotionStreakTest.m; path = tests/MotionStreakTest.m; sourceTree = "<group>"; };
 		5036DFBF0E612F2D003B6155 /* SendScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButton.png; sourceTree = "<group>"; };
 		5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SendScoreButtonPressed.png; sourceTree = "<group>"; };
 		503798C40F912C2000986724 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -3945,8 +3945,8 @@
 				506C80120E041CDB00B48100 /* SceneTest.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesTest.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
-				50316ADC1029A365003ACFE7 /* StreakTest.h */,
-				50316ADD1029A365003ACFE7 /* StreakTest.m */,
+				50316ADC1029A365003ACFE7 /* MotionStreakTest.h */,
+				50316ADD1029A365003ACFE7 /* MotionStreakTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
 				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
@@ -4985,9 +4985,9 @@
 			productReference = 50A24E440F377FA1007CAEB0 /* EffectsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50A783990F3AFCE500104C45 /* StreakTest (experimental) */ = {
+		50A783990F3AFCE500104C45 /* MotionStreakTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50A783C10F3AFCE500104C45 /* Build configuration list for PBXNativeTarget "StreakTest (experimental)" */;
+			buildConfigurationList = 50A783C10F3AFCE500104C45 /* Build configuration list for PBXNativeTarget "MotionStreakTest" */;
 			buildPhases = (
 				50A7839C0F3AFCE500104C45 /* Resources */,
 				50A783B70F3AFCE500104C45 /* Sources */,
@@ -4998,7 +4998,7 @@
 			dependencies = (
 				50A7839A0F3AFCE500104C45 /* PBXTargetDependency */,
 			);
-			name = "StreakTest (experimental)";
+			name = MotionStreakTest;
 			productName = playground;
 			productReference = 50A783C40F3AFCE500104C45 /* StreakTest.app */;
 			productType = "com.apple.product-type.application";
@@ -5358,7 +5358,7 @@
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
 				50C93A930E0BF6E000517B01 /* SpritesTest */,
-				50A783990F3AFCE500104C45 /* StreakTest (experimental) */,
+				50A783990F3AFCE500104C45 /* MotionStreakTest */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
@@ -6665,7 +6665,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50A783B80F3AFCE500104C45 /* main.m in Sources */,
-				50316ADE1029A365003ACFE7 /* StreakTest.m in Sources */,
+				50316ADE1029A365003ACFE7 /* MotionStreakTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8404,7 +8404,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = StreakTest;
+				PRODUCT_NAME = MotionStreakTest;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -9600,7 +9600,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50A783C10F3AFCE500104C45 /* Build configuration list for PBXNativeTarget "StreakTest (experimental)" */ = {
+		50A783C10F3AFCE500104C45 /* Build configuration list for PBXNativeTarget "MotionStreakTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50A783C20F3AFCE500104C45 /* Debug */,
