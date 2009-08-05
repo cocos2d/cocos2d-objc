@@ -255,7 +255,7 @@
 	}
 }
 
-#pragma mark Ribbom - CocosNodeTexture protocol
+#pragma mark Ribbon - CocosNodeTexture protocol
 -(void) setTexture:(Texture2D*) texture
 {
 	[texture_ release];
@@ -273,6 +273,10 @@
 }
 
 @end
+
+
+#pragma mark -
+#pragma mark RibbonSegment
 
 @implementation RibbonSegment
 

@@ -26,7 +26,6 @@
 
 @implementation MotionStreak
 
-@synthesize color=color_;
 @synthesize ribbon=ribbon_;
 
 +(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
@@ -37,13 +36,10 @@
 -(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
 {
 	if( (self=[super init])) {
-		mFadeTime = fade;
 		mSegThreshold = seg;
 		mWidth = width;
-		mTextureLength = length;
 		mLastLocation = CGPointZero;
-		color_ = color;
-		ribbon_ = [Ribbon ribbonWithWidth: mWidth image:path length:mTextureLength color:color fade:fade];
+		ribbon_ = [Ribbon ribbonWithWidth: mWidth image:path length:length color:color fade:fade];
 		[self addChild:ribbon_];
 
 		// update ribbon position
@@ -69,6 +65,28 @@
 -(void)dealloc
 {
 	[super dealloc];
+}
+
+#pragma mark MotionStreak - CocosNodeTexture protocol
+
+-(void) setTexture:(Texture2D*) texture
+{
+	[ribbon_ setTexture: texture];
+}
+
+-(Texture2D*) texture
+{
+	return [ribbon_ texture];
+}
+
+-(ccBlendFunc) blendFunc
+{
+	return [ribbon_ blendFunc];
+}
+
+-(void) setBlendFunc:(ccBlendFunc)blendFunc
+{
+	[ribbon_ setBlendFunc:blendFunc];
 }
 
 @end

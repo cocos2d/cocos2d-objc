@@ -25,20 +25,13 @@
  * length is the how many pixels the texture is stretched across. The texture
  * is vertically aligned along the streak segemnts. 
  */
-@interface MotionStreak : CocosNode 
+@interface MotionStreak : CocosNode <CocosNodeTexture>
 {
 	Ribbon*	ribbon_;
-	float mFadeTime;
 	float mSegThreshold;
 	float mWidth;
-	float mTextureLength;
 	CGPoint mLastLocation;
-
-	ccColor4B	color_;
 }
-
-/** color used by the MotionStreak */
-@property (readwrite) ccColor4B color;
 
 /** Ribbon used by MotionStreak (weak reference) */
 @property (readonly) Ribbon *ribbon;
