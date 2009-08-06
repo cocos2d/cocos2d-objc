@@ -55,7 +55,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {
-		parallaxArray = ccArrayNew(5);
+		parallaxArray_ = ccArrayNew(5);
 		
 		[self schedule:@selector(updateCoords:)];
 		lastPosition = CGPointMake(-100,-100);
@@ -65,9 +65,9 @@
 
 - (void) dealloc
 {
-	if( parallaxArray ) {
-		ccArrayFree(parallaxArray);
-		parallaxArray = nil;
+	if( parallaxArray_ ) {
+		ccArrayFree(parallaxArray_);
+		parallaxArray_ = nil;
 	}
 	[super dealloc];
 }
@@ -81,7 +81,7 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];
 	obj.child = child;
-	ccArrayAppendObject(parallaxArray, obj);
+	ccArrayAppendObject(parallaxArray_, obj);
 	
 	CGPoint pos = self.position;
 	float x = pos.x * ratio.x + offset.x;
@@ -93,10 +93,10 @@
 
 -(void) removeChild:(CocosNode*)node cleanup:(BOOL)cleanup
 {
-	for( unsigned int i=0;i < parallaxArray->num;i++) {
-		CGPointObject *point = parallaxArray->arr[i];
+	for( unsigned int i=0;i < parallaxArray_->num;i++) {
+		CGPointObject *point = parallaxArray_->arr[i];
 		if( [point.child isEqual:node] ) {
-			ccArrayRemoveObjectAtIndex(parallaxArray, i);
+			ccArrayRemoveObjectAtIndex(parallaxArray_, i);
 			break;
 		}
 	}
@@ -105,7 +105,7 @@
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
-	ccArrayRemoveAllObjects(parallaxArray);
+	ccArrayRemoveAllObjects(parallaxArray_);
 	[super removeAllChildrenWithCleanup:cleanup];
 }
 
@@ -130,9 +130,9 @@
 	CGPoint pos = [self absolutePosition_];
 	if( ! CGPointEqualToPoint(pos, lastPosition) ) {
 		
-		for(unsigned int i=0; i < parallaxArray->num; i++ ) {
+		for(unsigned int i=0; i < parallaxArray_->num; i++ ) {
 
-			CGPointObject *point = parallaxArray->arr[i];
+			CGPointObject *point = parallaxArray_->arr[i];
 			float x = -pos.x + pos.x * point.ratio.x + point.offset.x;
 			float y = -pos.y + pos.y * point.ratio.y + point.offset.y;			
 			point.child.position = ccp(x,y);
