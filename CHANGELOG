@@ -1,6 +1,6 @@
 version 0.8.1 - XX-MMM-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)
-// . CocosNode: parent is set to nil only after calling onExit (issue #476)
+ . CocosNode: parent is set to nil only after calling onExit (issue #476)
  . CocosNode: added user data (issue #482)
  . MotionStreak: moved from experimental to stable. uses v0.8 API (issue #484)
  . ParticleView: integrated Particle visual editor (issue #480)

@@ -324,9 +324,6 @@
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
-	for( CocosNode * c in children)
-		[c setParent: nil];
-
 	// not using detachChild improves speed here
 	for (CocosNode *c in children)
 	{
@@ -339,7 +336,8 @@
 		if (cleanup)
 			[c cleanup];
 
-//		[c setParent:nil];
+		// set parent nil at the end (issue #476)
+		[c setParent:nil];
 	}
 
 	[children removeAllObjects];
@@ -347,8 +345,6 @@
 
 -(void) detachChild:(CocosNode *)child cleanup:(BOOL)doCleanup
 {
-	[child setParent:nil];
-
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
@@ -359,6 +355,9 @@
 	// its scheduledSelectors dict will not get released!
 	if (doCleanup)
 		[child cleanup];
+
+	// set parent nil at the end (issue #476)
+	[child setParent:nil];
 
 	[children removeObject:child];
 }
