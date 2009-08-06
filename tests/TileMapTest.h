@@ -12,6 +12,7 @@
     TextureAtlas *atlas;
 }
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
 @interface TileMapTest : TileDemo
