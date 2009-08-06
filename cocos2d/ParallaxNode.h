@@ -21,7 +21,7 @@
  
  */
 @interface ParallaxNode : CocosNode {
-	ccArray				*parallaxArray;
+	ccArray				*parallaxArray_;
 	CGPoint				lastPosition;
 }
 
