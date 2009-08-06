@@ -69,6 +69,10 @@ Class restartAction()
 		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		Label* subtitle = [Label labelWithString:[self subtitle] fontName:@"Arial" fontSize:20];
+		[self addChild: subtitle z:1];
+		[subtitle setPosition: ccp(s.width/2, s.height-85)];
+		
 		
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -93,33 +97,35 @@ Class restartAction()
 
 -(void) registerWithTouchDispatcher
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:NO];
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
 }
 
--(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	return YES;
 }
-- (void)ccTouchMoved:(UITouch*)touch withEvent:(UIEvent *)event
+
+-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	return [self ccTouchEnded:touch withEvent:event];
 }
 
-- (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	CGSize s =[[Director sharedDirector] winSize];
-	
-	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+}
 
-	CGPoint pos;
-	pos.x = -(convertedLocation.x - s.width/2);
-	pos.y = -(convertedLocation.y - s.height/2);
+-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	CGPoint touchLocation = [touch locationInView: [touch view]];	
+	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
 	
-	id child = [self getChildByTag:kTagTileMap];
-	[child stopAllActions];
-	[child runAction: [MoveBy actionWithDuration:1 position:pos]];
+	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	prevLocation = [[Director sharedDirector] convertCoordinate: prevLocation];
 	
+	CGPoint diff = ccpSub(touchLocation,prevLocation);
+	
+	CocosNode *node = [self getChildByTag:kTagTileMap];
+	CGPoint currentPos = [node position];
+	[node setPosition: ccpAdd(currentPos, diff)];
 }
 
 -(void) restartCallback: (id) sender
@@ -147,6 +153,10 @@ Class restartAction()
 {
 	return @"No title";
 }
+-(NSString*) subtitle
+{
+	return @"drag the screen";
+}
 @end
 
 
@@ -171,18 +181,14 @@ Class restartAction()
 		
 		tilemap.anchorPoint = ccp(0, 0.5f);
 		
-		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
-		id scaleBack = [s reverse];
-		id go = [MoveBy actionWithDuration:8 position:ccp(-1650,0)];
-		id goBack = [go reverse];
-		
-		id seq = [Sequence actions: s,
-								go,
-								goBack,
-								scaleBack,
-								nil];
-		
-		[tilemap runAction:seq];
+//		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
+//		id scaleBack = [s reverse];
+//		
+//		id seq = [Sequence actions: s,
+//								scaleBack,
+//								nil];
+//		
+//		[tilemap runAction:[RepeatForever actionWithAction:seq]];
 	}
 	
 	return self;
