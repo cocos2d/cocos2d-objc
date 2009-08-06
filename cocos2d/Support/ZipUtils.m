@@ -1,112 +1,112 @@
-/*
+/* cocos2d for iPhone
+ *
+ * http://www.cocos2d-iphone.org
+ *
+ *
  * Inflates either zlib or gzip deflated memory. The inflated memory is
  * expected to be freed by the caller.
  *
- * _inflateMemory and inflateMemory functions were taken from:
- * http://themanaworld.org/
+ * inflateMemory_ based on zlib example code
+ *		http://www.zlib.net
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
- *
+ * Some ideas were taken from:
+ *		http://themanaworld.org/
+ *		from the mapreader.cpp file 
  */
 
 #import <zlib.h>
 #import <stdlib.h>
 #import <assert.h>
 #import <stdio.h>
+#import <UIKit/UIKit.h>
 
 #import "ZipUtils.h"
+#import "ccMacros.h"
 
-int _inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
+int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {
-	int bufferSize = 256 * 1024;
-	int ret;
-	z_stream strm;
+	/* ret value */
+	int err = Z_OK;
 	
+	/* 256k initial decompress buffer */
+	int bufferSize = 256 * 1024;
 	*out = (unsigned char*) malloc(bufferSize);
 	
-	strm.zalloc = Z_NULL;
-	strm.zfree = Z_NULL;
-	strm.opaque = Z_NULL;
-	strm.next_in = in;
-	strm.avail_in = inLength;
-	strm.next_out = *out;
-	strm.avail_out = bufferSize;
+    z_stream d_stream; /* decompression stream */	
+    d_stream.zalloc = (alloc_func)0;
+    d_stream.zfree = (free_func)0;
+    d_stream.opaque = (voidpf)0;
 	
-	ret = inflateInit2(&strm, 15 + 32);
+    d_stream.next_in  = in;
+    d_stream.avail_in = inLength;
+	d_stream.next_out = *out;
+	d_stream.avail_out = bufferSize;
 	
-	if (ret != Z_OK)
-		return ret;
+	/* window size to hold 256k */
+	if( (err = inflateInit2(&d_stream, 15 + 32)) != Z_OK )
+		return err;
 	
-	do
-	{
-		if (strm.next_out == NULL)
-		{
-			inflateEnd(&strm);
-			return Z_MEM_ERROR;
-		}
+    for (;;) {
+        err = inflate(&d_stream, Z_NO_FLUSH);
+        
+		if (err == Z_STREAM_END)
+			break;
 		
-		ret = inflate(&strm, Z_NO_FLUSH);
-		assert(ret != Z_STREAM_ERROR);
-		
-		switch (ret) {
+		switch (err) {
 			case Z_NEED_DICT:
-				ret = Z_DATA_ERROR;
+				err = Z_DATA_ERROR;
 			case Z_DATA_ERROR:
 			case Z_MEM_ERROR:
-				(void) inflateEnd(&strm);
-				return ret;
+				inflateEnd(&d_stream);
+				return err;
 		}
 		
-		if (ret != Z_STREAM_END)
-		{
-			*out = (unsigned char*) realloc(*out, bufferSize * 2);
+		// not enough memory ?
+		if (err != Z_STREAM_END) {
 			
-			if (*out == NULL)
-			{
-				inflateEnd(&strm);
+			// memory in iPhone is precious
+			// Should buffer factor be 1.5 instead of 2 ?
+#define BUFFER_INC_FACTOR (2)
+			unsigned char *tmp = realloc(*out, bufferSize * BUFFER_INC_FACTOR);
+			
+			/* not enough memory, ouch */
+			if (! tmp ) {
+				CCLOG(@"ZipUtils: realloc failed");
+				inflateEnd(&d_stream);
 				return Z_MEM_ERROR;
 			}
+			/* only assign to *out if tmp is valid. it's not guaranteed that realloc will reuse the memory */
+			*out = tmp;
 			
-			strm.next_out = *out + bufferSize;
-			strm.avail_out = bufferSize;
-			bufferSize *= 2;
+			d_stream.next_out = *out + bufferSize;
+			d_stream.avail_out = bufferSize;
+			bufferSize *= BUFFER_INC_FACTOR;
 		}
-	}
-	while (ret != Z_STREAM_END);
-	assert(strm.avail_in == 0);
+    }
 	
-	*outLength = bufferSize - strm.avail_out;
-	(void) inflateEnd(&strm);
-	return ret == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
+
+	*outLength = bufferSize - d_stream.avail_out;
+    err = inflateEnd(&d_stream);
+	return err;
 }
 
 int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 {
 	unsigned int outLength = 0;
-	int ret = _inflateMemory(in, inLength, out, &outLength);
+	int err = inflateMemory_(in, inLength, out, &outLength);
 	
-	if (ret != Z_OK || *out == NULL)
-	{
-		if (ret == Z_MEM_ERROR)
-		{
-			printf("ZipUtils: Out of memory while decompressing map data!");
-		}
-		else if (ret == Z_VERSION_ERROR)
-		{
-			printf("ZipUtils: Incompatible zlib version!");
-		}
-		else if (ret == Z_DATA_ERROR)
-		{
-			printf("ZipUtils: Incorrect zlib compressed data!");
-		}
+	if (err != Z_OK || *out == NULL) {
+		if (err == Z_MEM_ERROR)
+			CCLOG(@"ZipUtils: Out of memory while decompressing map data!");
+
+		else if (err == Z_VERSION_ERROR)
+			CCLOG(@"ZipUtils: Incompatible zlib version!");
+
+		else if (err == Z_DATA_ERROR)
+			CCLOG(@"ZipUtils: Incorrect zlib compressed data!");
+
 		else
-		{
-			printf("ZipUtils: Unknown error while decompressing map data!");
-		}
+			CCLOG(@"ZipUtils: Unknown error while decompressing map data!");
 		
 		free(*out);
 		*out = NULL;

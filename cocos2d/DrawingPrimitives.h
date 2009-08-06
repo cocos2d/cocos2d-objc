@@ -12,9 +12,12 @@
  *
  */
 
+#ifndef __CC_DRAWING_PRIMITIVES_H
+#define __CC_DRAWING_PRIMITIVES_H
+
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif	
 	
 /**
  @file
@@ -64,3 +67,5 @@ void drawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint
 #ifdef __cplusplus
 }
 #endif
+
+#endif //  __CC_DRAWING_PRIMITIVES_H

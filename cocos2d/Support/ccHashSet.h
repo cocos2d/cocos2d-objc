@@ -21,6 +21,14 @@
  
 // ccHashSet uses a chained hashtable implementation.
 
+#ifndef __CC_HASH_SET_H
+#define __CC_HASH_SET_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif	
+	
+
 /** 
  @file
  Based on Chipmunk cpHashSet.
@@ -110,3 +118,10 @@ void ccHashSetEach(ccHashSet *set, ccHashSetIterFunc func, void *data);
 /** Iterate over a hashset while rejecting certain elements.
  */
 void ccHashSetReject(ccHashSet *set, ccHashSetRejectFunc func, void *data);
+	
+#ifdef __cplusplus
+}
+#endif	
+
+#endif // __CC_HASH_SET_H
+

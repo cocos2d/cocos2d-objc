@@ -1,18 +1,24 @@
-/*
- * _inflateMemory and inflateMemory functions were taken from:
- * http://themanaworld.org/
+/* cocos2d for iPhone
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
+ * http://www.cocos2d-iphone.org
  *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
+ *
+ * inflateMemory_ based on zlib example code
+ *		http://www.zlib.net
+ *
+ * Some ideas were taken from:
+ *		http://themanaworld.org/
+ *		from the mapreader.cpp file 
  *
  */
 
-#ifndef ZIP_UTILS_H
-#define ZIP_UTILS_H
+#ifndef __CC_ZIP_UTILS_H
+#define __CC_ZIP_UTILS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif	
+	
 /** @file
  * Zip helper functions
  */
@@ -21,11 +27,15 @@
  * Inflates either zlib or gzip deflated memory. The inflated memory is
  * expected to be freed by the caller.
  *
- * @returns the length of the out buffer
+ * @returns the length of the deflated buffer
  *
  @since v0.8.1
  */
 int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
 
 
-#endif // ZIP_UTILS_H
+#ifdef __cplusplus
+}
+#endif	
+		
+#endif // __CC_ZIP_UTILS_H

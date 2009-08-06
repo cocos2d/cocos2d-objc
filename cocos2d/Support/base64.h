@@ -5,8 +5,13 @@
  http://www.cocos2d-iphone.org
  */
 
-#ifndef BASE64_DECODE_H
-#define BASE64_DECODE_H
+#ifndef __CC_BASE64_DECODE_H
+#define __CC_BASE64_DECODE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif	
+	
 
 /** @file
  base64 helper functions
@@ -22,4 +27,8 @@
  */
 int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out);
 
-#endif // BASE64_DECODE_H
+#ifdef __cplusplus
+}
+#endif	
+
+#endif // __CC_BASE64_DECODE_H

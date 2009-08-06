@@ -24,6 +24,7 @@ Main features
     * Texture Atlas support
     * Tile Map support
     * Parallax scrolling
+    * Motion Streak
     * High Score server (cocosLive library)
     * Touch/Accelerometer
     * Portrait and Landscape mode
@@ -36,7 +37,6 @@ Main features
     * OpenGL ES 1.1 based 
 
 Experimental features:
-    * Motion Streak / Ribbon support
     * Integrated Box2d physics engine
 
 This library does not work with the toolchain, but it
