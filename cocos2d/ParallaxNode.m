@@ -14,21 +14,24 @@
 
 #import "ParallaxNode.h"
 #import "Support/CGPointExtension.h"
-
+#import "Support/ccArray.h"
 
 @interface CGPointObject : NSObject
 {
 	CGPoint	ratio_;
 	CGPoint offset_;
+	CocosNode *child_;	// weak ref
 }
 @property (readwrite) CGPoint ratio;
 @property (readwrite) CGPoint offset;
+@property (readwrite,assign) CocosNode *child;
 +(id) pointWithCGPoint:(CGPoint)point offset:(CGPoint)offset;
 -(id) initWithCGPoint:(CGPoint)point offset:(CGPoint)offset;
 @end
 @implementation CGPointObject
 @synthesize ratio = ratio_;
 @synthesize offset = offset_;
+@synthesize child=child_;
 
 +(id) pointWithCGPoint:(CGPoint)ratio offset:(CGPoint)offset
 {
@@ -47,12 +50,12 @@
 
 @implementation ParallaxNode
 
-@synthesize parallaxDictionary = parallaxDictionary_;
+@synthesize parallaxArray=parallaxArray_;
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-		self.parallaxDictionary = [NSMutableDictionary dictionaryWithCapacity:5];
+		parallaxArray = ccArrayNew(5);
 		
 		[self schedule:@selector(updateCoords:)];
 		lastPosition = CGPointMake(-100,-100);
@@ -62,7 +65,10 @@
 
 - (void) dealloc
 {
-	[parallaxDictionary_ release];
+	if( parallaxArray ) {
+		ccArrayFree(parallaxArray);
+		parallaxArray = nil;
+	}
 	[super dealloc];
 }
 
@@ -73,7 +79,9 @@
 -(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)ratio positionOffset:(CGPoint)offset
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	[parallaxDictionary_ setObject:[CGPointObject pointWithCGPoint:ratio offset:offset] forKey:[self addressForObject:child]];
+	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];
+	obj.child = child;
+	ccArrayAppendObject(parallaxArray, obj);
 	
 	CGPoint pos = self.position;
 	float x = pos.x * ratio.x + offset.x;
@@ -85,28 +93,49 @@
 
 -(void) removeChild:(CocosNode*)node cleanup:(BOOL)cleanup
 {
-	[parallaxDictionary_ removeObjectForKey:[self addressForObject:node]];
+	for( unsigned int i=0;i < parallaxArray->num;i++) {
+		CGPointObject *point = parallaxArray->arr[i];
+		if( [point.child isEqual:node] ) {
+			ccArrayRemoveObjectAtIndex(parallaxArray, i);
+			break;
+		}
+	}
 	[super removeChild:node cleanup:cleanup];
 }
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
-	[parallaxDictionary_ removeAllObjects];
+	ccArrayRemoveAllObjects(parallaxArray);
 	[super removeAllChildrenWithCleanup:cleanup];
+}
+
+-(CGPoint) absolutePosition_
+{
+	CGPoint ret = position_;
+	
+	CocosNode *cn = self;
+	
+	while (cn.parent != nil) {
+		cn = cn.parent;
+		ret = ccpAdd( ret,  cn.position );
+	}
+	
+	return ret;
 }
 
 -(void) updateCoords: (ccTime) dt
 {
-	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
-	
+//	CGPoint pos = position_;
+//	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
+	CGPoint pos = [self absolutePosition_];
 	if( ! CGPointEqualToPoint(pos, lastPosition) ) {
+		
+		for(unsigned int i=0; i < parallaxArray->num; i++ ) {
 
-		for( CocosNode *child in children) {
-			CGPointObject *point = [parallaxDictionary_ objectForKey:[self addressForObject:child]];
+			CGPointObject *point = parallaxArray->arr[i];
 			float x = -pos.x + pos.x * point.ratio.x + point.offset.x;
-			float y = -pos.y + pos.y * point.ratio.y + point.offset.y;
-			
-			child.position = ccp(x,y);
+			float y = -pos.y + pos.y * point.ratio.y + point.offset.y;			
+			point.child.position = ccp(x,y);
 		}
 		
 		lastPosition = pos;

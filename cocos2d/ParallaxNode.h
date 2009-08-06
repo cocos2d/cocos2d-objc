@@ -13,6 +13,7 @@
  */
 
 #import "CocosNode.h"
+#import "Support/ccArray.h"
 
 /** ParallaxNode: A node that simulates a parallax scroller
  
@@ -20,12 +21,12 @@
  
  */
 @interface ParallaxNode : CocosNode {
-	NSMutableDictionary	*parallaxDictionary_;
+	ccArray				*parallaxArray;
 	CGPoint				lastPosition;
 }
 
-/** dictionary that holds the offset / ratio of the children */
-@property (readwrite, retain) NSMutableDictionary * parallaxDictionary;
+/** array that holds the offset / ratio of the children */
+@property (readwrite) ccArray * parallaxArray;
 
 /** Adds a child to the container with a z-order, a parallax ratio and a position offset
  It returns self, so you can chain several addChilds.
