@@ -36,6 +36,11 @@
 }
 @end
 
+@interface TMXOrthoTest3 : TileDemo
+{
+}
+@end
+
 
 @interface TMXReadWriteTest : TileDemo
 {

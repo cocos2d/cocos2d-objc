@@ -5,6 +5,7 @@ version 0.8.1 - XX-MMM-2009
  . MotionStreak: moved from experimental to stable. uses v0.8 API (issue #484)
  . ParticleView: integrated Particle visual editor (issue #480)
  . Parallax: more precise absolute coords (issue #471)
+ . RenderTexture: let's you render CocosNode objects into a texture (issue #XXX)
  . TextureMgr: Async reuses EAGL context (issue #472)
  . tools: added mkatlas.pl script (issue #483)
  . TiledMap: Added support for the TMX format: iso, ortho and hex maps (issue #462)
