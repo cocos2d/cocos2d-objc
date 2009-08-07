@@ -446,8 +446,11 @@ Class restartAction()
 	TMXLayer *layer = (TMXLayer*) [map getChildByTag:0];
 	
 	CGSize s = [layer layerSize];
-	for( int y=0; y< s.height; y++ ) {
-		[layer setTileGID:gid at:ccp(2,y)];
+	for( int x=0; x<s.width;x++) {
+		for( int y=0; y< s.height; y++ ) {
+			unsigned int tmpgid = [layer tileGIDAt:ccp(x,y)];
+			[layer setTileGID:tmpgid+1 at:ccp(x,y)];
+		}
 	}
 }
 
