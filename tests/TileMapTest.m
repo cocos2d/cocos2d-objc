@@ -16,6 +16,7 @@ static NSString *transitions[] = {
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
 			@"TMXOrthoTest2",
+			@"TMXOrthoTest3",
 			@"TMXIsoTest",
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
@@ -342,6 +343,29 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXOrthoTest3
+
+@implementation TMXOrthoTest3
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"tilespacing-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		for( AtlasSpriteManager* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Ortho test3";
+}
+@end
+
 
 #pragma mark -
 #pragma mark TMXIsoTest
@@ -440,14 +464,14 @@ Class restartAction()
 }
 -(void) repaintWithGID:(ccTime)dt
 {
-	[self unschedule:_cmd];
+//	[self unschedule:_cmd];
 
 	id map = [self getChildByTag:kTagTileMap];
 	TMXLayer *layer = (TMXLayer*) [map getChildByTag:0];
 	
 	CGSize s = [layer layerSize];
 	for( int x=0; x<s.width;x++) {
-		for( int y=0; y< s.height; y++ ) {
+		for( int y=s.height-2; y< s.height; y++ ) {
 			unsigned int tmpgid = [layer tileGIDAt:ccp(x,y)];
 			[layer setTileGID:tmpgid+1 at:ccp(x,y)];
 		}

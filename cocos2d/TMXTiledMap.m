@@ -229,6 +229,10 @@
 			CGRect rect = [tileset_ tileForGID:gid];
 			[tile setTextureRect:rect];
 		}
+		
+		// update gid on map
+		int idx = pos.x + pos.y * layerSize_.height;
+		tiles_[ idx ] = gid;
 	}
 }
 
