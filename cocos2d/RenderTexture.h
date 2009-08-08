@@ -19,10 +19,9 @@
 
 enum  
 {
-	kJPG = 0,
-	kPNG = 1
+	kImageFormatJPG = 0,
+	kImageFormatPNG = 1
 };
-
 
 
 /**
@@ -50,10 +49,14 @@ enum
 -(id)initWithWidth:(int)width height:(int)height;
 -(void)begin;
 -(void)end;
+/* get buffer as UIImage */
+-(UIImage *)getUIImageFromBuffer;
 /** saves the texture into a file */
--(void)saveBuffer:(NSString*)name;
+-(BOOL)saveBuffer:(NSString*)name;
 /** saves the texture into a file. The format can be JPG or PNG */
--(void)saveBuffer:(NSString*)name format:(int)format;
+-(BOOL)saveBuffer:(NSString*)name format:(int)format;
 /** clears the texture with a color */
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
 @end
+
+
