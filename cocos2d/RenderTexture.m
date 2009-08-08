@@ -36,19 +36,19 @@
 		// textures must be power of two squared
 		int pow = 8;
 		while (pow < w || pow < h) pow*=2;
-
+    
 		void *data = malloc((int)(pow * pow * 4));
 		memset(data, 0, (int)(pow * pow * 4));
 		texture = [[[Texture2D alloc] initWithData:data pixelFormat:format pixelsWide:pow pixelsHigh:pow contentSize:CGSizeMake(w, h)] autorelease];
 		free( data );
-
+    
 		// generate FBO
 		glGenFramebuffersOES(1, &fbo);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
-
+    
 		// associate texture with FBO
 		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texture.name, 0);
-
+    
 		// check if it worked (probably worth doing :) )
 		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
 		if (status != GL_FRAMEBUFFER_COMPLETE_OES)
@@ -92,67 +92,98 @@
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
 }
 
--(void)saveBuffer:(NSString*)name
+-(BOOL)saveBuffer:(NSString*)name
 {
-	[self saveBuffer:name format:kJPG];
+	return [self saveBuffer:name format:kImageFormatJPG];
 }
 
--(void)saveBuffer:(NSString*)name format:(int)format
+-(BOOL)saveBuffer:(NSString*)fileName format:(int)format
 {
-	int tx = texture.contentSize.width;
-	int ty = texture.contentSize.height;
-	NSInteger myDataLength = tx * ty * 4;
-
-	// allocate array and read pixels into it.
-	GLubyte *buffer = (GLubyte *) malloc(myDataLength);
-	[self begin];
-
-
-	glReadPixels(0, 0, tx, ty, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-
-	// gl renders "upside down" so swap top to bottom into new array.
-	// there's gotta be a better way, but this works.
-	GLubyte *buffer2 = (GLubyte *) malloc(myDataLength);
-	for(int y = 0; y < ty; y++)
-	{
-		for(int x = 0; x < tx * 4; x++)
-		{
-			buffer2[(ty-1 - y) * tx * 4 + x] = buffer[y * 4 * tx + x];
-		}
-	}
-	free(buffer);
-	// make data provider with data.
-	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer2, myDataLength, NULL);
-
-	// prep the ingredients
-	int bitsPerComponent = 8;
-	int bitsPerPixel = 32;
-	int bytesPerRow = 4 * tx;
-	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-	CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-	CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
-
-	// make the cgimage
-	CGImageRef imageRef = CGImageCreate(tx, ty, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, NO, renderingIntent);
-
-	// then make the uiimage from that
-	UIImage *myImage = [UIImage imageWithCGImage:imageRef];
-
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0];
+	UIImage *myImage				= [self getUIImageFromBuffer];
+  
+	NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
+  
 	NSData *data;
-	if (format == kPNG)
+  
+	if (format == kImageFormatPNG)
 		data = UIImagePNGRepresentation(myImage);
 	else
 		data = UIImageJPEGRepresentation(myImage, 1.0f);
   
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:name];
-	[fileManager createFileAtPath:fullPath contents:data attributes:nil];
-	CGImageRelease(imageRef);
+	return [data writeToFile:fullPath atomically:YES];
+}
+
+/* get buffer as UIImage */
+-(UIImage *)getUIImageFromBuffer
+{
+	int tx = texture.contentSize.width;
+	int ty = texture.contentSize.height;
+  
+	int bitsPerComponent			= 8;
+	int bitsPerPixel				= 32;
+	int bytesPerPixel				= (bitsPerComponent * 4)/8;
+	int bytesPerRow					= bytesPerPixel * tx;
+	NSInteger myDataLength			= bytesPerRow * ty;
+  
+	unsigned char buffer[myDataLength];
+  
+	[self begin];
+	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, &buffer);
+	[self end];
+	/*
+	 CGImageCreate(size_t width, size_t height,
+	 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
+	 CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGDataProviderRef provider,
+	 const CGFloat decode[], bool shouldInterpolate,
+	 CGColorRenderingIntent intent)
+	 */
+	// make data provider with data.
+  
+	CGBitmapInfo bitmapInfo			= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
+	CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
+	CGImageRef iref					= CGImageCreate(tx, ty,
+                                          bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                          colorSpaceRef, bitmapInfo, provider,
+                                          NULL, false,
+                                          kCGRenderingIntentDefault);
+	/* Create a bitmap context. The context draws into a bitmap which is `width'
+	 pixels wide and `height' pixels high. The number of components for each
+	 pixel is specified by `colorspace', which may also specify a destination
+	 color profile. The number of bits for each component of a pixel is
+	 specified by `bitsPerComponent'. The number of bytes per pixel is equal
+	 to `(bitsPerComponent * number of components + 7)/8'. Each row of the
+	 bitmap consists of `bytesPerRow' bytes, which must be at least `width *
+	 bytes per pixel' bytes; in addition, `bytesPerRow' must be an integer
+	 multiple of the number of bytes per pixel. `data' points a block of
+	 memory at least `bytesPerRow * height' bytes. `bitmapInfo' specifies
+	 whether the bitmap should contain an alpha channel and how it's to be
+	 generated, along with whether the components are floating-point or
+	 integer.
+   
+	 CGContextRef CGBitmapContextCreate(void *data, size_t width,
+	 size_t height, size_t bitsPerComponent, size_t bytesPerRow,
+	 CGColorSpaceRef colorspace, CGBitmapInfo bitmapInfo)
+	 */
+	uint32_t* pixels				= (uint32_t *)malloc(myDataLength);
+	CGContextRef context			= CGBitmapContextCreate(pixels, tx,
+                                                    ty, CGImageGetBitsPerComponent(iref), CGImageGetBytesPerRow(iref),
+                                                    CGImageGetColorSpace(iref), bitmapInfo);
+	CGContextTranslateCTM(context, 0.0, ty);
+	CGContextScaleCTM(context, 1.0, -1.0);
+	CGContextDrawImage(context, CGRectMake(0.0, 0.0, tx, ty), iref);   
+	CGImageRef outputRef			= CGBitmapContextCreateImage(context);
+	UIImage* image					= [[UIImage alloc] initWithCGImage:outputRef];
+  
+	free(pixels);
+	CGImageRelease(iref);
+	CGContextRelease(context);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
-	free(buffer2);
-	[self end];
+	CGImageRelease(outputRef);
+  
+	return [image autorelease];
 }
 @end
