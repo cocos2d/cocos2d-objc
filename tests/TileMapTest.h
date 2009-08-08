@@ -58,3 +58,14 @@
 {
 }
 @end
+
+@interface TMXIsoTest1 : TileDemo
+{
+}
+@end
+
+@interface TMXIsoTest2 : TileDemo
+{
+}
+@end
+

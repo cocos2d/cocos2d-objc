@@ -79,7 +79,6 @@ def load_tilesets(map_node):
                 else:
                     print 'load_tilesets: unkown image format: %s' % format
             else:
-                print tile_node
                 print 'load_tilesets: unkown tile'
 
 def load_tile( node, name ):

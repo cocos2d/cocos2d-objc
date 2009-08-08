@@ -18,6 +18,8 @@ static NSString *transitions[] = {
 			@"TMXOrthoTest2",
 			@"TMXOrthoTest3",
 			@"TMXIsoTest",
+			@"TMXIsoTest1",
+			@"TMXIsoTest2",
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
 };
@@ -377,6 +379,28 @@ Class restartAction()
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
+		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test.tmx"];
+		[self addChild:iso z:0 tag:kTagTileMap];				
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Isometric test 0";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXIsoTest1
+
+@implementation TMXIsoTest1
+-(id) init
+{
+	if( (self=[super init]) ) {
+		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
+		[self addChild:color z:-1];
+		
 		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test1.tmx"];
 		[self addChild:iso z:0 tag:kTagTileMap];				
 	}	
@@ -385,9 +409,32 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"TMX Isometric test";
+	return @"TMX Isometric test 1";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXIsoTest2
+
+@implementation TMXIsoTest2
+-(id) init
+{
+	if( (self=[super init]) ) {
+		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
+		[self addChild:color z:-1];
+		
+		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test2.tmx"];
+		[self addChild:iso z:0 tag:kTagTileMap];				
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Isometric test 2";
+}
+@end
+
 
 #pragma mark -
 #pragma mark TMXHexTest
