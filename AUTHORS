@@ -28,6 +28,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Aymeric Bard: Repeat action works OK
 	* Brian Hammond: patches for Demos
 	* Bryan/Acceleroto: patch for CocosDenshion
+	* CJ Hanson: RenderTexture generates UIImages patch
 	* Clinth Harris: patches for Doc generator script
 	* Codemattic: patches for CocosNode
 		patches fro MenuItemFont
@@ -130,7 +131,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Created Box2d + cocos2d demo example
 	* thoechsm: update the VBO buffer with only the needed particles
 	* Thomas Visser: MenuItem#rect works with anchorPoint
-	* trump-card: Author of ParticleView, the particle editor
+	* Stanislav Skuratov (trump-card): Author of ParticleView, the particle editor
 	* Valentin Milea: clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite
 		Actions can have tags

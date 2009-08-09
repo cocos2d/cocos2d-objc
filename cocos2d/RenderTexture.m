@@ -171,9 +171,9 @@
 	CGContextRef context			= CGBitmapContextCreate(pixels, tx,
                                                     ty, CGImageGetBitsPerComponent(iref), CGImageGetBytesPerRow(iref),
                                                     CGImageGetColorSpace(iref), bitmapInfo);
-	CGContextTranslateCTM(context, 0.0, ty);
-	CGContextScaleCTM(context, 1.0, -1.0);
-	CGContextDrawImage(context, CGRectMake(0.0, 0.0, tx, ty), iref);   
+	CGContextTranslateCTM(context, 0.0f, ty);
+	CGContextScaleCTM(context, 1.0f, -1.0f);
+	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);   
 	CGImageRef outputRef			= CGBitmapContextCreateImage(context);
 	UIImage* image					= [[UIImage alloc] initWithCGImage:outputRef];
   
