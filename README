@@ -87,8 +87,9 @@ Select the test you want to view in both drop downs and hit Build and Go.
 How to start a new game
 -----------------------
 
-To start an "empty" cocos2d game, you can do it by using this "empty" XCode project:
-tests/samples/MyFirstGame/MyFirstGame.xcodeproj
+Run the 'install_template.sh' script:
+$ ./install_template.sh
+And then open XCode -> New Project -> cocos2d iphone Application
 
 
 

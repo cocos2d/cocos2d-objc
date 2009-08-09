@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # ----------------------------------------------------------------------------
 # TMX / TSX: embeded images to individual png files
 #

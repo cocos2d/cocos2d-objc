@@ -6,4 +6,8 @@
 @interface HelloWorld : Layer
 {
 }
+
+// returns a Scene that contains the HelloWorld as the only child
++(id) scene;
+
 @end

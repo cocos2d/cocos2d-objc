@@ -3,16 +3,26 @@
 // http://www.cocos2d-iphone.org
 //
 
-// IMPORTANT:
-//  This example ONLY shows the basic steps to render a label on the screen.
-//  Some advanced options regarding the initialization were removed to simplify the sample.
-//  Once you understand this example, read "HelloActions" sample.
-
 // Import the interfaces
-#import "HelloWorldLayer.h"
+#import "HelloWorldScene.h"
 
 // HelloWorld implementation
 @implementation HelloWorld
+
++(id) scene
+{
+	// 'scene' is an autorelease object.
+	Scene *scene = [Scene node];
+	
+	// 'layer' is an autorelease object.
+	HelloWorld *layer = [HelloWorld node];
+	
+	// add layer as a child to scene
+	[scene addChild: layer];
+	
+	// return the scene
+	return scene;
+}
 
 // on "init" you need to initialize your instance
 -(id) init
