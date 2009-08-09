@@ -30,6 +30,7 @@
  * allocating new memory and prefer a more static method. However, since there is no way to determine
  * the maximum size of some ribbons (motion streaks), a truely static allocation is not possible.
  *
+ * @since v0.8.1
  */
 @interface Ribbon : CocosNode <CocosNodeTexture>
 {

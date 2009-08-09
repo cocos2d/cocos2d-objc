@@ -24,6 +24,14 @@
  * streak will move before adding a new ribbon segement, and the texture
  * length is the how many pixels the texture is stretched across. The texture
  * is vertically aligned along the streak segemnts. 
+ *
+ * Limitations:
+ *   MotionStreak, by default, will use the GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA blending function.
+ *   This blending function might not be the correct one for certain textures.
+ *   But you can change it by using:
+ *     [obj setBlendFunc: (ccBlendfunc) {new_src_blend_func, new_dst_blend_func}];
+ *
+ * @since v0.8.1
  */
 @interface MotionStreak : CocosNode <CocosNodeTexture>
 {
