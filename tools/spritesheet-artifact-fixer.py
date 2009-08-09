@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # ----------------------------------------------------------------------------
 # SpriteSheet border adder
 # (c) 2009 Ricardo Quesada
