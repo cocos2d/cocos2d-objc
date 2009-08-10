@@ -898,7 +898,8 @@ void b2World::Step(float32 dt, int32 velocityIterations, int32 positionIteration
 	}
 
 	// Draw debug information.
-	DrawDebugData();
+	// cocos2d: DrawDebugData should be called from "draw", not "step"
+//	DrawDebugData();
 
 	if (step.dt > 0.0f)
 	{

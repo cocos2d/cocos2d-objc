@@ -208,6 +208,9 @@ public:
 	/// Get the global gravity vector.
 	b2Vec2 GetGravity() const;
 
+	/// cocos2d: moved from private to public
+	void DrawDebugData();
+
 private:
 
 	friend class b2Body;
@@ -219,7 +222,6 @@ private:
 
 	void DrawJoint(b2Joint* joint);
 	void DrawShape(b2Fixture* shape, const b2XForm& xf, const b2Color& color);
-	void DrawDebugData();
 
 	//Is it safe to pass private static function pointers?
 	static float32 RaycastSortKey(void* shape);
