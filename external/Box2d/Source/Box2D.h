@@ -31,37 +31,30 @@ For discussion please visit http://www.box2d.org/forum
 
 // These include files constitute the main Box2D API
 
-#include "../Source/Common/b2Settings.h"
+#include <Box2D/Common/b2Settings.h>
 
-#include "../Source/Collision/Shapes/b2CircleShape.h"
-#include "../Source/Collision/Shapes/b2PolygonShape.h"
-#include "../Source/Collision/Shapes/b2EdgeShape.h"
-#include "../Source/Collision/b2BroadPhase.h"
-#include "../Source/Collision/b2Distance.h"
-#include "../Source/Collision/b2DynamicTree.h"
-#include "../Source/Collision/b2TimeOfImpact.h"
-#include "../Source/Dynamics/b2Body.h"
-#include "../Source/Dynamics/b2EdgeChain.h"
-#include "../Source/Dynamics/b2Fixture.h"
-#include "../Source/Dynamics/b2WorldCallbacks.h"
-#include "../Source/Dynamics/b2World.h"
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
-#include "../Source/Dynamics/Contacts/b2Contact.h"
+#include <Box2D/Collision/b2BroadPhase.h>
+#include <Box2D/Collision/b2Distance.h>
+#include <Box2D/Collision/b2DynamicTree.h>
+#include <Box2D/Collision/b2TimeOfImpact.h>
 
-#include "../Source/Dynamics/Joints/b2DistanceJoint.h"
-#include "../Source/Dynamics/Joints/b2GearJoint.h"
-#include "../Source/Dynamics/Joints/b2LineJoint.h"
-#include "../Source/Dynamics/Joints/b2MouseJoint.h"
-#include "../Source/Dynamics/Joints/b2PrismaticJoint.h"
-#include "../Source/Dynamics/Joints/b2PulleyJoint.h"
-#include "../Source/Dynamics/Joints/b2RevoluteJoint.h"
-#include "../Source/Dynamics/Joints/b2FixedJoint.h"
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2Fixture.h>
+#include <Box2D/Dynamics/b2WorldCallbacks.h>
+#include <Box2D/Dynamics/b2TimeStep.h>
+#include <Box2D/Dynamics/b2World.h>
 
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
 
-#include "../Source/Dynamics/Controllers/b2BuoyancyController.h"
-#include "../Source/Dynamics/Controllers/b2ConstantForceController.h"
-#include "../Source/Dynamics/Controllers/b2ConstantAccelController.h"
-#include "../Source/Dynamics/Controllers/b2GravityController.h"
-#include "../Source/Dynamics/Controllers/b2TensorDampingController.h"
+#include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
+#include <Box2D/Dynamics/Joints/b2GearJoint.h>
+#include <Box2D/Dynamics/Joints/b2LineJoint.h>
+#include <Box2D/Dynamics/Joints/b2MouseJoint.h>
+#include <Box2D/Dynamics/Joints/b2PrismaticJoint.h>
+#include <Box2D/Dynamics/Joints/b2PulleyJoint.h>
+#include <Box2D/Dynamics/Joints/b2RevoluteJoint.h>
 
 #endif
