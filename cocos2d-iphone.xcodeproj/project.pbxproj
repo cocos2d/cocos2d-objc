@@ -2002,7 +2002,6 @@
 		506EDF08102FBC0C00A389B3 /* SphereStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereStack.h; sourceTree = "<group>"; };
 		506EDF09102FBC0C00A389B3 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		506EDF0B102FBC0C00A389B3 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
-		506EDF0C102FBC0C00A389B3 /* issue_493.patch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue_493.patch; sourceTree = "<group>"; };
 		506EDF0F102FBC0C00A389B3 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		506EDF10102FBC0C00A389B3 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
 		506EDF11102FBC0C00A389B3 /* b2CollideCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2CollideCircle.cpp; sourceTree = "<group>"; };
@@ -3578,7 +3577,6 @@
 			children = (
 				506EDF02102FBC0C00A389B3 /* Box2DTestBed */,
 				506EDF0A102FBC0C00A389B3 /* Include */,
-				506EDF0C102FBC0C00A389B3 /* issue_493.patch */,
 				506EDF0D102FBC0C00A389B3 /* Source */,
 			);
 			name = Box2d;
@@ -4739,9 +4737,9 @@
 			productReference = 504225700FC0B39C00B992F7 /* libbox2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		504226120FC0B5D500B992F7 /* Box2dTest (experimental) */ = {
+		504226120FC0B5D500B992F7 /* Box2dTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dTest (experimental)" */;
+			buildConfigurationList = 5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dTest" */;
 			buildPhases = (
 				504226170FC0B5D500B992F7 /* Resources */,
 				5042261A0FC0B5D500B992F7 /* Sources */,
@@ -4753,7 +4751,7 @@
 				504226130FC0B5D500B992F7 /* PBXTargetDependency */,
 				504226340FC0B67200B992F7 /* PBXTargetDependency */,
 			);
-			name = "Box2dTest (experimental)";
+			name = Box2dTest;
 			productName = ChipmunkDemo;
 			productReference = 5042262E0FC0B5D500B992F7 /* Box2dTest.app */;
 			productType = "com.apple.product-type.application";
@@ -5378,7 +5376,7 @@
 				506881F40E95761200F943E5 /* AtlasTest */,
 				501C7C6D0F91EFFF0024A296 /* AtlasSpriteTest */,
 				5048287F0F45AED700A30CEF /* AttachTest */,
-				504226120FC0B5D500B992F7 /* Box2dTest (experimental) */,
+				504226120FC0B5D500B992F7 /* Box2dTest */,
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
 				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
 				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
@@ -9512,7 +9510,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dTest (experimental)" */ = {
+		5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5042262C0FC0B5D500B992F7 /* Debug */,
