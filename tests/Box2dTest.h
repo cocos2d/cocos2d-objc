@@ -4,6 +4,7 @@
 
 #import "cocos2d.h"
 #import "Box2D.h"
+#import "GLES-Render.h"
 
 
 //CLASS INTERFACE
@@ -15,7 +16,8 @@
 
 @interface Box2DTestLayer : Layer {
 	b2World* world;
-	b2Body* body;	
+	b2Body* body;
+	GLESDebugDraw *m_debugDraw;
 }
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end

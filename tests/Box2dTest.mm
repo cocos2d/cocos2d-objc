@@ -40,6 +40,21 @@ enum {
 		
 		world = new b2World(worldAABB, gravity, doSleep);
 		
+		m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+		world->SetDebugDraw(m_debugDraw);
+		
+		uint32 flags = 0;
+		flags += 1			* b2DebugDraw::e_shapeBit;
+		flags += 1			* b2DebugDraw::e_jointBit;
+		flags += 1		* b2DebugDraw::e_controllerBit;
+		flags += 1		* b2DebugDraw::e_coreShapeBit;
+		flags += 1			* b2DebugDraw::e_aabbBit;
+		flags += 1				* b2DebugDraw::e_obbBit;
+		flags += 1			* b2DebugDraw::e_pairBit;
+		flags += 1				* b2DebugDraw::e_centerOfMassBit;
+		m_debugDraw->SetFlags(flags);		
+
+		
 		//Set up ground, we will make it as wide as the screen
 		b2BodyDef groundBodyDef;
 		groundBodyDef.position.Set(screenSize.width/PTM_RATIO/2, -1.0f);//This is a mid point, hence the /2
@@ -71,10 +86,21 @@ enum {
 -(void) dealloc
 {
 	delete world;
-	body = NULL;
 	world = NULL;
+	
+	delete m_debugDraw;
+
+	body = NULL;
 	[super dealloc];
 }	
+
+-(void) draw
+{
+	[super draw];
+	glEnableClientState(GL_VERTEX_ARRAY);
+	world->DrawDebugData();
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
@@ -197,7 +223,7 @@ enum {
 	Scene *scene = [Scene node];
 	id box2dLayer = [[Box2DTestLayer alloc] init];
 	[scene addChild:box2dLayer z:0];
-	glClearColor(1.0f,1.0f,1.0f,1.0f);
+//	glClearColor(1.0f,1.0f,1.0f,1.0f);
 
 	[window makeKeyAndVisible];
 
