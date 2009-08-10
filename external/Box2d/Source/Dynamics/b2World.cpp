@@ -879,7 +879,7 @@ void b2World::Step(float32 dt, int32 velocityIterations, int32 positionIteration
 	}
 
 	// Draw debug information.
-	DrawDebugData();
+//	DrawDebugData();
 
 	m_inv_dt0 = step.inv_dt;
 	m_lock = false;
