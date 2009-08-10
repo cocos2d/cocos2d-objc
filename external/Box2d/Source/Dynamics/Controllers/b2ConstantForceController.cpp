@@ -40,7 +40,7 @@ void b2ConstantForceController::Destroy(b2BlockAllocator* allocator)
 }
 
 
-b2ConstantForceController* b2ConstantForceControllerDef::Create(b2BlockAllocator* allocator)
+b2ConstantForceController* b2ConstantForceControllerDef::Create(b2BlockAllocator* allocator) const
 {
 	void* mem = allocator->Allocate(sizeof(b2ConstantForceController));
 	return new (mem) b2ConstantForceController(this);

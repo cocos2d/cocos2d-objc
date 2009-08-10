@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -21,31 +21,16 @@
 
 #include "b2Shape.h"
 
-/// This structure is used to build circle shapes.
-struct b2EdgeChainDef : public b2ShapeDef
-{
-	b2EdgeChainDef()
-	{
-		type = e_edgeShape;
-		vertexCount = 0;
-		isALoop = true;
-		vertices = NULL;
-	}
-	/// The vertices in local coordinates. You must manage the memory
-	/// of this array on your own, outside of Box2D. 
-	b2Vec2* vertices;
-	
-	/// The number of vertices in the chain. 
-	int32 vertexCount;
-	
-	/// Whether to create an extra edge between the first and last vertices:
-	bool isALoop;
-};
-
 /// A circle shape.
 class b2EdgeShape : public b2Shape
 {
 public:
+	b2EdgeShape();
+	~b2EdgeShape();
+
+	/// Initialize this edge using the two vertices.
+	void Set(const b2Vec2& v1, const b2Vec2& v2);
+
 	/// @see b2Shape::TestPoint
 	bool TestPoint(const b2XForm& transform, const b2Vec2& p) const;
 
@@ -59,13 +44,8 @@ public:
 	/// @see b2Shape::ComputeAABB
 	void ComputeAABB(b2AABB* aabb, const b2XForm& transform) const;
 
-	/// @see b2Shape::ComputeSweptAABB
-	void ComputeSweptAABB(	b2AABB* aabb,
-							const b2XForm& transform1,
-							const b2XForm& transform2) const;
-
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData) const;
+	void ComputeMass(b2MassData* massData, float32 density) const;
 
 	/// @warning This only gives a consistent and sensible answer when when summed over a body only contains loops of edges
 	/// @see b2Shape::ComputeSubmergedArea
@@ -74,6 +54,9 @@ public:
 									const b2XForm& xf, 
 									b2Vec2* c) const;
 	
+	/// @see b2Shape::ComputeSweepRadius
+	float32 ComputeSweepRadius(const b2Vec2& pivot) const;
+
 	/// Linear distance from vertex1 to vertex2:
 	float32 GetLength() const;
 
@@ -83,12 +66,6 @@ public:
 	/// Local position of vertex in parent body
 	const b2Vec2& GetVertex2() const;
 
-	/// "Core" vertex with TOI slop for b2Distance functions:
-	const b2Vec2& GetCoreVertex1() const;
-
-	/// "Core" vertex with TOI slop for b2Distance functions:
-	const b2Vec2& GetCoreVertex2() const;
-	
 	/// Perpendicular unit vector point, pointing from the solid side to the empty side: 
 	const b2Vec2& GetNormalVector() const;
 	
@@ -103,33 +80,29 @@ public:
 	
 	bool Corner2IsConvex() const;
 
-	b2Vec2 GetFirstVertex(const b2XForm& xf) const;
+	/// Get the supporting vertex index in the given direction.
+	int32 GetSupport(const b2Vec2& d) const;
 
-	b2Vec2 Support(const b2XForm& xf, const b2Vec2& d) const;
-	
+	/// Get the supporting vertex in the given direction.
+	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
+
+	/// Get the vertex count.
+	int32 GetVertexCount() const { return 2; }
+
+	/// Get a vertex by index. Used by b2Distance.
+	const b2Vec2& GetVertex(int32 index) const;
+
 	/// Get the next edge in the chain.
 	b2EdgeShape* GetNextEdge() const;
 	
 	/// Get the previous edge in the chain.
 	b2EdgeShape* GetPrevEdge() const;
 
-	void SetPrevEdge(b2EdgeShape* edge, const b2Vec2& core, const b2Vec2& cornerDir, bool convex);
-	void SetNextEdge(b2EdgeShape* edge, const b2Vec2& core, const b2Vec2& cornerDir, bool convex);
+	void SetPrevEdge(b2EdgeShape* edge, const b2Vec2& cornerDir, bool convex);
+	void SetNextEdge(b2EdgeShape* edge, const b2Vec2& cornerDir, bool convex);
 	
-private:
-
-	friend class b2Shape;
-	friend class b2Body;
-
-	b2EdgeShape(const b2Vec2& v1, const b2Vec2& v2, const b2ShapeDef* def);
-
-	void UpdateSweepRadius(const b2Vec2& center);
-
 	b2Vec2 m_v1;
 	b2Vec2 m_v2;
-	
-	b2Vec2 m_coreV1;
-	b2Vec2 m_coreV2;
 	
 	float32 m_length;
 	
@@ -165,16 +138,6 @@ inline const b2Vec2& b2EdgeShape::GetVertex2() const
 	return m_v2;
 }
 
-inline const b2Vec2& b2EdgeShape::GetCoreVertex1() const
-{
-	return m_coreV1;
-}
-
-inline const b2Vec2& b2EdgeShape::GetCoreVertex2() const
-{
-	return m_coreV2;
-}
-
 inline const b2Vec2& b2EdgeShape::GetNormalVector() const
 {
 	return m_normal;
@@ -195,19 +158,20 @@ inline const b2Vec2& b2EdgeShape::GetCorner2Vector() const
 	return m_cornerDir2;
 }
 
-inline b2EdgeShape* b2EdgeShape::GetNextEdge() const
+inline int32 b2EdgeShape::GetSupport(const b2Vec2& d) const
 {
-	return m_nextEdge;
+	return b2Dot(m_v1, d) > b2Dot(m_v2, d) ? 0 : 1;
 }
 
-inline b2EdgeShape* b2EdgeShape::GetPrevEdge() const
+inline const b2Vec2& b2EdgeShape::GetSupportVertex(const b2Vec2& d) const
 {
-	return m_prevEdge;
+	return b2Dot(m_v1, d) > b2Dot(m_v2, d) ? m_v1 : m_v2;
 }
 
-inline b2Vec2 b2EdgeShape::GetFirstVertex(const b2XForm& xf) const
+inline const b2Vec2& b2EdgeShape::GetVertex(int32 index) const
 {
-	return b2Mul(xf, m_coreV1);
+	b2Assert(0 <= index && index < 2);
+	return (&m_v1)[index];
 }
 
 inline bool b2EdgeShape::Corner1IsConvex() const
@@ -219,4 +183,12 @@ inline bool b2EdgeShape::Corner2IsConvex() const
 {
 	return m_cornerConvex2;
 }
+
+inline float32 b2EdgeShape::ComputeSweepRadius(const b2Vec2& pivot) const
+{
+	float32 ds1 = b2DistanceSquared(m_v1, pivot);
+	float32 ds2 = b2DistanceSquared(m_v2, pivot);
+	return b2Sqrt(b2Max(ds1, ds2));
+}
+
 #endif

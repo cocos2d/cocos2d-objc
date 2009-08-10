@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -26,8 +26,13 @@ class b2NullContact : public b2Contact
 {
 public:
 	b2NullContact() {}
-	void Evaluate(b2ContactListener*) {}
-	b2Manifold* GetManifolds() { return NULL; }
+	void Evaluate() {}
+	float32 ComputeTOI(const b2Sweep& sweepA, const b2Sweep& sweepB) const
+	{
+		B2_NOT_USED(sweepA);
+		B2_NOT_USED(sweepB);
+		return 1.0f;
+	}
 };
 
 #endif

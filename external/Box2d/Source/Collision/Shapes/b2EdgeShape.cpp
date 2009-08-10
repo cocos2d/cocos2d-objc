@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -18,39 +18,38 @@
 
 #include "b2EdgeShape.h"
 
-b2EdgeShape::b2EdgeShape(const b2Vec2& v1, const b2Vec2& v2, const b2ShapeDef* def)
-: b2Shape(def)
+b2EdgeShape::b2EdgeShape()
 {
-	b2Assert(def->type == e_edgeShape);
-
-	m_type = e_edgeShape;
-	
+	m_type = b2_edgeShape;
+	m_radius = b2_polygonRadius;
 	m_prevEdge = NULL;
 	m_nextEdge = NULL;
-	
-	m_v1 = v1;
-	m_v2 = v2;
-	
-	m_direction = m_v2 - m_v1;
-	m_length = m_direction.Normalize();
-	m_normal.Set(m_direction.y, -m_direction.x);
-	
-	m_coreV1 = -b2_toiSlop * (m_normal - m_direction) + m_v1;
-	m_coreV2 = -b2_toiSlop * (m_normal + m_direction) + m_v2;
-	
-	m_cornerDir1 = m_normal;
-	m_cornerDir2 = -1.0f * m_normal;
 }
 
-void b2EdgeShape::UpdateSweepRadius(const b2Vec2& center)
+b2EdgeShape::~b2EdgeShape()
 {
-	// Update the sweep radius (maximum radius) as measured from
-	// a local center point.
-	b2Vec2 d = m_coreV1 - center;
-	float32 d1 = b2Dot(d,d);
-	d = m_coreV2 - center;
-	float32 d2 = b2Dot(d,d);
-	m_sweepRadius = b2Sqrt(d1 > d2 ? d1 : d2);
+	if (m_prevEdge)
+	{
+		m_prevEdge->m_nextEdge = NULL;
+	}
+
+	if (m_nextEdge)
+	{
+		m_nextEdge->m_prevEdge = NULL;
+	}
+}
+
+void b2EdgeShape::Set(const b2Vec2& v1, const b2Vec2& v2)
+{
+	m_v1 = v1;
+	m_v2 = v2;
+
+	m_direction = m_v2 - m_v1;
+	m_length = m_direction.Normalize();
+	m_normal = b2Cross(m_direction, 1.0f);
+
+	m_cornerDir1 = m_normal;
+	m_cornerDir2 = -1.0f * m_normal;
 }
 
 bool b2EdgeShape::TestPoint(const b2XForm& transform, const b2Vec2& p) const
@@ -92,70 +91,53 @@ b2SegmentCollide b2EdgeShape::TestSegment(const b2XForm& transform,
 				n.Normalize();
 				*lambda = a;
 				*normal = n;
-				return e_hitCollide;
+				return b2_hitCollide;
 			}
 		}
 	}
 
-	return e_missCollide;
+	return b2_missCollide;
 }
 
 void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2XForm& transform) const
 {
 	b2Vec2 v1 = b2Mul(transform, m_v1);
 	b2Vec2 v2 = b2Mul(transform, m_v2);
-	aabb->lowerBound = b2Min(v1, v2);
-	aabb->upperBound = b2Max(v1, v2);
+
+	b2Vec2 r(m_radius, m_radius);
+	aabb->lowerBound = b2Min(v1, v2) - r;
+	aabb->upperBound = b2Max(v1, v2) + r;
 }
 
-void b2EdgeShape::ComputeSweptAABB(b2AABB* aabb, const b2XForm& transform1, const b2XForm& transform2) const
+void b2EdgeShape::ComputeMass(b2MassData* massData, float32 density) const
 {
-	b2Vec2 v1 = b2Mul(transform1, m_v1);
-	b2Vec2 v2 = b2Mul(transform1, m_v2);
-	b2Vec2 v3 = b2Mul(transform2, m_v1);
-	b2Vec2 v4 = b2Mul(transform2, m_v2);
-	aabb->lowerBound = b2Min(b2Min(b2Min(v1, v2), v3), v4);
-	aabb->upperBound = b2Max(b2Max(b2Max(v1, v2), v3), v4);
-}
+	B2_NOT_USED(density);
 
-void b2EdgeShape::ComputeMass(b2MassData* massData) const
-{
-	massData->mass = 0;
+	massData->mass = 0.0f;
 	massData->center = m_v1;
-
-	// inertia about the local origin
-	massData->I = 0;
+	massData->I = 0.0f;
 }
 
-b2Vec2 b2EdgeShape::Support(const b2XForm& xf, const b2Vec2& d) const
-{
-	b2Vec2 v1 = b2Mul(xf, m_coreV1);
-	b2Vec2 v2 = b2Mul(xf, m_coreV2);
-	return b2Dot(v1, d) > b2Dot(v2, d) ? v1 : v2;
-}
-
-void b2EdgeShape::SetPrevEdge(b2EdgeShape* edge, const b2Vec2& core, const b2Vec2& cornerDir, bool convex)
+void b2EdgeShape::SetPrevEdge(b2EdgeShape* edge, const b2Vec2& cornerDir, bool convex)
 {
 	m_prevEdge = edge;
-	m_coreV1 = core;
 	m_cornerDir1 = cornerDir;
 	m_cornerConvex1 = convex;
 }
 
-void b2EdgeShape::SetNextEdge(b2EdgeShape* edge, const b2Vec2& core, const b2Vec2& cornerDir, bool convex)
+void b2EdgeShape::SetNextEdge(b2EdgeShape* edge, const b2Vec2& cornerDir, bool convex)
 {
 	m_nextEdge = edge;
-	m_coreV2 = core;
 	m_cornerDir2 = cornerDir;
 	m_cornerConvex2 = convex;
 }
 
 float32 b2EdgeShape::ComputeSubmergedArea(	const b2Vec2& normal,
-												float32 offset,
-												const b2XForm& xf, 
-												b2Vec2* c) const
+											float32 offset,
+											const b2XForm& xf, 
+											b2Vec2* c) const
 {
-	//Note that v0 is independant of any details of the specific edge
+	//Note that v0 is independent of any details of the specific edge
 	//We are relying on v0 being consistent between multiple edges of the same body
 	b2Vec2 v0 = offset * normal;
 	//b2Vec2 v0 = xf.position + (offset - b2Dot(normal, xf.position)) * normal;
@@ -166,11 +148,11 @@ float32 b2EdgeShape::ComputeSubmergedArea(	const b2Vec2& normal,
 	float32 d1 = b2Dot(normal, v1) - offset;
 	float32 d2 = b2Dot(normal, v2) - offset;
 
-	if(d1>0)
+	if (d1 > 0.0f)
 	{
-		if(d2>0)
+		if (d2 > 0.0f)
 		{
-			return 0;
+			return 0.0f;
 		}
 		else
 		{
@@ -179,7 +161,7 @@ float32 b2EdgeShape::ComputeSubmergedArea(	const b2Vec2& normal,
 	}
 	else
 	{
-		if(d2>0)
+		if (d2 > 0.0f)
 		{
 			v2 = -d2 / (d1 - d2) * v1 + d1 / (d1 - d2) * v2;
 		}

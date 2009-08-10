@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -17,6 +17,7 @@
 */
 
 #include "b2BuoyancyController.h"
+#include "../b2Fixture.h"
 
 b2BuoyancyController::b2BuoyancyController(const b2BuoyancyControllerDef* def) : b2Controller(def)
 {
@@ -36,12 +37,15 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 	B2_NOT_USED(step);
 	if(!m_bodyList)
 		return;
-	if(useWorldGravity){
+	if(useWorldGravity)
+	{
 		gravity = m_world->GetGravity();
 	}
-	for(b2ControllerEdge *i=m_bodyList;i;i=i->nextBody){
+	for(b2ControllerEdge *i=m_bodyList;i;i=i->nextBody)
+	{
 		b2Body* body = i->body;
-		if(body->IsSleeping()){
+		if(body->IsSleeping())
+		{
 			//Buoyancy force is just a function of position,
 			//so unlike most forces, it is safe to ignore sleeping bodes
 			continue;
@@ -50,17 +54,21 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 		b2Vec2 massc(0,0);
 		float32 area = 0;
 		float32 mass = 0;
-		for(b2Shape* shape=body->GetShapeList();shape;shape=shape->GetNext()){
+		for(b2Fixture* shape=body->GetFixtureList();shape;shape=shape->GetNext())
+		{
 			b2Vec2 sc(0,0);
-			float32 sarea = shape->ComputeSubmergedArea(normal,offset,body->GetXForm(),&sc);
+			float32 sarea = shape->ComputeSubmergedArea(normal, offset, &sc);
 			area += sarea;
 			areac.x += sarea * sc.x;
 			areac.y += sarea * sc.y;
 			float shapeDensity = 0;
-			if(useDensity){
+			if(useDensity)
+			{
 				//TODO: Expose density publicly
 				shapeDensity=shape->GetDensity();
-			}else{
+			}
+			else
+			{
 				shapeDensity = 1;
 			}
 			mass += sarea*shapeDensity;
@@ -104,7 +112,7 @@ void b2BuoyancyController::Destroy(b2BlockAllocator* allocator)
 	allocator->Free(this, sizeof(b2BuoyancyController));
 }
 
-b2BuoyancyController* b2BuoyancyControllerDef::Create(b2BlockAllocator* allocator)
+b2BuoyancyController* b2BuoyancyControllerDef::Create(b2BlockAllocator* allocator) const
 {
 	void* mem = allocator->Allocate(sizeof(b2BuoyancyController));
 	return new (mem) b2BuoyancyController(this);

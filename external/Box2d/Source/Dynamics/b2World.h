@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -26,12 +26,11 @@
 #include "b2WorldCallbacks.h"
 
 struct b2AABB;
-struct b2ShapeDef;
 struct b2BodyDef;
 struct b2JointDef;
 class b2Body;
+class b2Fixture;
 class b2Joint;
-class b2Shape;
 class b2Contact;
 class b2BroadPhase;
 class b2Controller;
@@ -101,7 +100,7 @@ public:
 	void DestroyJoint(b2Joint* joint);
 
 	/// Add a controller to the world.
-	b2Controller* CreateController(b2ControllerDef* def);
+	b2Controller* CreateController( const b2ControllerDef* def);
 
 	/// Removes a controller from the world.
 	void DestroyController(b2Controller* controller);
@@ -117,28 +116,28 @@ public:
 	/// @param positionIterations for the position constraint solver.
 	void Step(float32 timeStep, int32 velocityIterations, int32 positionIterations);
 
-	/// Query the world for all shapes that potentially overlap the
-	/// provided AABB. You provide a shape pointer buffer of specified
+	/// Query the world for all fixtures that potentially overlap the
+	/// provided AABB. You provide a fixture pointer buffer of specified
 	/// size. The number of shapes found is returned.
 	/// @param aabb the query box.
-	/// @param shapes a user allocated shape pointer array of size maxCount (or greater).
+	/// @param fixtures a user allocated fixture pointer array of size maxCount (or greater).
 	/// @param maxCount the capacity of the shapes array.
-	/// @return the number of shapes found in aabb.
-	int32 Query(const b2AABB& aabb, b2Shape** shapes, int32 maxCount);
+	/// @return the number of fixtures found in aabb.
+	int32 Query(const b2AABB& aabb, b2Fixture** fixtures, int32 maxCount);
 
-	/// Query the world for all shapes that intersect a given segment. You provide a shap
-	/// pointer buffer of specified size. The number of shapes found is returned, and the buffer
+	/// Query the world for all fixtures that intersect a given segment. You provide a fixture
+	/// pointer buffer of specified size. The number of fixtures found is returned, and the buffer
 	/// is filled in order of intersection
 	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
 	/// Use b2Segment.Extend to create (semi-)infinite rays
-	/// @param shapes a user allocated shape pointer array of size maxCount (or greater).
+	/// @param fixtures a user allocated fixture pointer array of size maxCount (or greater).
 	/// @param maxCount the capacity of the shapes array
 	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
 	/// @param userData passed through the worlds contact filter, with method RayCollide. This can be used to filter valid shapes
 	/// @returns the number of shapes found
-	int32 Raycast(const b2Segment& segment, b2Shape** shapes, int32 maxCount, bool solidShapes, void* userData);
+	int32 Raycast(const b2Segment& segment, b2Fixture** fixtures, int32 maxCount, bool solidShapes, void* userData);
 
-	/// Performs a raycast as with Raycast, finding the first intersecting shape.
+	/// Performs a ray-cast as with Raycast, finding the first intersecting fixture.
 	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
 	/// Use b2Segment.Extend to create (semi-)infinite rays	
 	/// @param lambda returns the hit fraction. You can use this to compute the contact point
@@ -147,9 +146,9 @@ public:
 	/// is not set.
 	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
 	/// @returns the colliding shape shape, or null if not found
-	b2Shape* RaycastOne(const b2Segment& segment, float32* lambda, b2Vec2* normal, bool solidShapes, void* userData);
+	b2Fixture* RaycastOne(const b2Segment& segment, float32* lambda, b2Vec2* normal, bool solidShapes, void* userData);
 
-	/// Check if the AABB is within the broadphase limits.
+	/// Check if the AABB is within the broad-phase limits.
 	bool InRange(const b2AABB& aabb) const;
 
 	/// Get the world body list. With the returned body, use b2Body::GetNext to get
@@ -162,13 +161,19 @@ public:
 	/// @return the head of the world joint list.
 	b2Joint* GetJointList();
 
+	/// Get the world contact list. With the returned contact, use b2Contact::GetNext to get
+	/// the next contact in the world list. A NULL contact indicates the end of the list.
+	/// @return the head of the world contact list.
+	/// @warning contacts are 
+	b2Contact* GetContactList();
+
 	/// Get the world controller list. With the returned controller, use b2Controller::GetNext to get
 	/// the next controller in the world list. A NULL controller indicates the end of the list.
 	/// @return the head of the world controller list.
 	b2Controller* GetControllerList();
 
-	/// Re-filter a shape. This re-runs contact filtering on a shape.
-	void Refilter(b2Shape* shape);
+	/// Re-filter a fixture. This re-runs contact filtering on a fixture.
+	void Refilter(b2Fixture* fixture);
 
 	/// Enable/disable warm starting. For testing.
 	void SetWarmStarting(bool flag) { m_warmStarting = flag; }
@@ -202,9 +207,6 @@ public:
 	
 	/// Get the global gravity vector.
 	b2Vec2 GetGravity() const;
-	
-	
-	void DrawDebugData();
 
 private:
 
@@ -216,7 +218,8 @@ private:
 	void SolveTOI(const b2TimeStep& step);
 
 	void DrawJoint(b2Joint* joint);
-	void DrawShape(b2Shape* shape, const b2XForm& xf, const b2Color& color, bool core);
+	void DrawShape(b2Fixture* shape, const b2XForm& xf, const b2Color& color);
+	void DrawDebugData();
 
 	//Is it safe to pass private static function pointers?
 	static float32 RaycastSortKey(void* shape);
@@ -237,7 +240,6 @@ private:
 	void* m_raycastUserData;
 	const b2Segment* m_raycastSegment;
 	bool m_raycastSolidShape;
-
 
 	// Do not access
 	b2Contact* m_contactList;
@@ -282,6 +284,11 @@ inline b2Body* b2World::GetBodyList()
 inline b2Joint* b2World::GetJointList()
 {
 	return m_jointList;
+}
+
+inline b2Contact* b2World::GetContactList()
+{
+	return m_contactList;
 }
 
 inline b2Controller* b2World::GetControllerList()

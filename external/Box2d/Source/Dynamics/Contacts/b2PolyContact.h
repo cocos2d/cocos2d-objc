@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -16,8 +16,8 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef POLYCONTACT_H
-#define POLYCONTACT_H
+#ifndef B2_POLYCONTACT_H
+#define B2_POLYCONTACT_H
 
 #include "b2Contact.h"
 
@@ -26,19 +26,15 @@ class b2BlockAllocator;
 class b2PolygonContact : public b2Contact
 {
 public:
-	static b2Contact* Create(b2Shape* shape1, b2Shape* shape2, b2BlockAllocator* allocator);
+	static b2Contact* Create(b2Fixture* fixtureA, b2Fixture* fixtureB, b2BlockAllocator* allocator);
 	static void Destroy(b2Contact* contact, b2BlockAllocator* allocator);
 
-	b2PolygonContact(b2Shape* shape1, b2Shape* shape2);
+	b2PolygonContact(b2Fixture* fixtureA, b2Fixture* fixtureB);
 	~b2PolygonContact() {}
 
-	void Evaluate(b2ContactListener* listener);
-	b2Manifold* GetManifolds()
-	{
-		return &m_manifold;
-	}
+	void Evaluate();
 
-	b2Manifold m_manifold;
+	float32 ComputeTOI(const b2Sweep& sweepA, const b2Sweep& sweepB) const;
 };
 
 #endif
