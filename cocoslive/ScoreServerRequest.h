@@ -21,8 +21,10 @@
 // Server URL
 #if USE_LOCAL_SERVER
 #define SCORE_SERVER_REQUEST_URL @"http://localhost:8080/api/get-scores"
+#define SCORE_SERVER_GETRANK_URL @"http://localhost:8080/api/get-rank-for-score"
 #else
 #define SCORE_SERVER_REQUEST_URL @"http://www.cocoslive.net/api/get-scores"
+#define SCORE_SERVER_GETRANK_URL @"http://www.cocoslive.net/api/get-rank-for-score"
 #endif
 
 /** Type of predefined Query */
@@ -48,12 +50,16 @@ typedef enum {
 	
 	/// game name, used as a login name.
 	NSString	*gameName;
-
+	
 	/// delegate instance of fetch score
 	id			delegate;
-
+	
 	// data received
 	NSMutableData *receivedData;
+	
+	// To determine which delegate method will be called in connectionDidFinishLoading: of NSURLConnection Delegate
+	BOOL reqRankOnly;
+	
 }
 
 /** creates a ScoreServerRequest server with a game name*/
@@ -77,10 +83,21 @@ typedef enum {
 
 /** parse the received JSON scores and convert it to objective-c objects */
 -(NSArray*) parseScores;
+
+/** request rank for a given score using a predefined query. This is an asyncronous request.
+ * score: int for a score
+ * category: an NSString. For example: 'easy', 'medium', 'type1'... When requesting ranks, they can be filtered by this field.
+ */
+-(BOOL) requestRankForScore:(int)score andCategory:(NSString*)category;
+
+/** It's actually not parsing anything, just returning int for a rank. Kept name PARSE for convinience with parseScores */
+-(int) parseRank;
+
 @end
 
 /** CocosLiveRequest protocol */
 @protocol CocosLiveRequestDelegate <NSObject>
 -(void) scoreRequestOk:(id) sender;
+-(void) scoreRequestRankOk:(id) sender;
 -(void) scoreRequestFail:(id) sender;
 @end

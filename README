@@ -18,7 +18,7 @@ Main features
         * Ease Actions: Exp, Sin, Cubic, etc.
         * Misc actions: CallFunc, OrbitCamera
     * Basic menus and buttons
-    * Integrated Chipmunk 2d physics engine
+    * Integrated with physics engines: Box2d and Chipmunk
     * Particle system
     * Fast text rendering: Fixed and Variable width fonts
     * Texture Atlas support
@@ -36,8 +36,6 @@ Main features
     * Open Source: Compatible with open and closed source projects
     * OpenGL ES 1.1 based 
 
-Experimental features:
-    * Integrated Box2d physics engine
 
 This library does not work with the toolchain, but it
 should be easy to port it to it.
