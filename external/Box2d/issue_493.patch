@@ -1,33 +1,42 @@
+Index: b2World.cpp
+===================================================================
+--- b2World.cpp	(revision 1258)
++++ b2World.cpp	(working copy)
+@@ -898,7 +898,8 @@
+ 	}
+ 
+ 	// Draw debug information.
+-	DrawDebugData();
++	// cocos2d: DrawDebugData should be called from "draw", not "step"
++//	DrawDebugData();
+ 
+ 	if (step.dt > 0.0f)
+ 	{
 Index: b2World.h
 ===================================================================
---- b2World.h	(revision 1254)
+--- b2World.h	(revision 1258)
 +++ b2World.h	(working copy)
-@@ -126,26 +126,26 @@
- 	/// @return the number of shapes found in aabb.
- 	int32 Query(const b2AABB& aabb, b2Shape** shapes, int32 maxCount);
+@@ -127,24 +127,24 @@
  
--	/// Query the world for all shapes that intersect a given segment. You provide a shap
--	/// pointer buffer of specified size. The number of shapes found is returned, and the buffer
+ 	/// Query the world for all fixtures that intersect a given segment. You provide a fixture
+ 	/// pointer buffer of specified size. The number of fixtures found is returned, and the buffer
 -	/// is filled in order of intersection
 -	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
 -	/// Use b2Segment.Extend to create (semi-)infinite rays
--	/// @param shapes a user allocated shape pointer array of size maxCount (or greater).
--	/// @param maxCount the capacity of the shapes array
--	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
--	/// @param userData passed through the worlds contact filter, with method RayCollide. This can be used to filter valid shapes
-+	/// Query the world for all shapes that intersect a given segment. You provide a shap
-+	/// pointer buffer of specified size. The number of shapes found is returned, and the buffer
 +	/// is filled in order of intersection
 +	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
 +	/// Use b2Segment.Extend to create (semi-)infinite rays
-+	/// @param shapes a user allocated shape pointer array of size maxCount (or greater).
+ 	/// @param fixtures a user allocated fixture pointer array of size maxCount (or greater).
+-	/// @param maxCount the capacity of the shapes array
+-	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
+-	/// @param userData passed through the worlds contact filter, with method RayCollide. This can be used to filter valid shapes
 +	/// @param maxCount the capacity of the shapes array
 +	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
 +	/// @param userData passed through the worlds contact filter, with method RayCollide. This can be used to filter valid shapes
  	/// @returns the number of shapes found
- 	int32 Raycast(const b2Segment& segment, b2Shape** shapes, int32 maxCount, bool solidShapes, void* userData);
+ 	int32 Raycast(const b2Segment& segment, b2Fixture** fixtures, int32 maxCount, bool solidShapes, void* userData);
  
--	/// Performs a raycast as with Raycast, finding the first intersecting shape.
+ 	/// Performs a ray-cast as with Raycast, finding the first intersecting fixture.
 -	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
 -	/// Use b2Segment.Extend to create (semi-)infinite rays	
 -	/// @param lambda returns the hit fraction. You can use this to compute the contact point
@@ -35,7 +44,6 @@ Index: b2World.h
 -	/// @param normal returns the normal at the contact point. If there is no intersection, the normal
 -	/// is not set.
 -	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
-+	/// Performs a raycast as with Raycast, finding the first intersecting shape.
 +	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
 +	/// Use b2Segment.Extend to create (semi-)infinite rays	
 +	/// @param lambda returns the hit fraction. You can use this to compute the contact point
@@ -44,36 +52,23 @@ Index: b2World.h
 +	/// is not set.
 +	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
  	/// @returns the colliding shape shape, or null if not found
- 	b2Shape* RaycastOne(const b2Segment& segment, float32* lambda, b2Vec2* normal, bool solidShapes, void* userData);
+ 	b2Fixture* RaycastOne(const b2Segment& segment, float32* lambda, b2Vec2* normal, bool solidShapes, void* userData);
  
-@@ -202,6 +202,9 @@
- 	
+@@ -208,6 +208,9 @@
  	/// Get the global gravity vector.
  	b2Vec2 GetGravity() const;
-+	
-+	
-+	void DrawDebugData();
  
++	/// cocos2d: moved from private to public
++	void DrawDebugData();
++
  private:
  
-@@ -214,7 +217,6 @@
+ 	friend class b2Body;
+@@ -219,7 +222,6 @@
  
  	void DrawJoint(b2Joint* joint);
- 	void DrawShape(b2Shape* shape, const b2XForm& xf, const b2Color& color, bool core);
+ 	void DrawShape(b2Fixture* shape, const b2XForm& xf, const b2Color& color);
 -	void DrawDebugData();
  
  	//Is it safe to pass private static function pointers?
  	static float32 RaycastSortKey(void* shape);
-Index: b2World.cpp
-===================================================================
---- b2World.cpp	(revision 1254)
-+++ b2World.cpp	(working copy)
-@@ -879,7 +879,7 @@
- 	}
- 
- 	// Draw debug information.
--	DrawDebugData();
-+//	DrawDebugData();
- 
- 	m_inv_dt0 = step.inv_dt;
- 	m_lock = false;

@@ -3680,6 +3680,9 @@
 		506EDF32102FBC0D00A389B3 /* Dynamics */ = {
 			isa = PBXGroup;
 			children = (
+				506EDF41102FBC0D00A389B3 /* Contacts */,
+				506EDF51102FBC0D00A389B3 /* Controllers */,
+				506EDF5E102FBC0D00A389B3 /* Joints */,
 				506EDF33102FBC0D00A389B3 /* b2Body.cpp */,
 				506EDF34102FBC0D00A389B3 /* b2Body.h */,
 				506EDF35102FBC0D00A389B3 /* b2ContactManager.cpp */,
@@ -3694,9 +3697,6 @@
 				506EDF3E102FBC0D00A389B3 /* b2World.h */,
 				506EDF3F102FBC0D00A389B3 /* b2WorldCallbacks.cpp */,
 				506EDF40102FBC0D00A389B3 /* b2WorldCallbacks.h */,
-				506EDF41102FBC0D00A389B3 /* Contacts */,
-				506EDF51102FBC0D00A389B3 /* Controllers */,
-				506EDF5E102FBC0D00A389B3 /* Joints */,
 			);
 			path = Dynamics;
 			sourceTree = "<group>";
