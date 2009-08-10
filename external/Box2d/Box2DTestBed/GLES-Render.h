@@ -34,7 +34,12 @@ struct b2AABB;
 // inside b2World::Step.
 class GLESDebugDraw : public b2DebugDraw
 {
+	float32 mRatio;
 public:
+	GLESDebugDraw();
+
+	GLESDebugDraw( float32 ratio );
+
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
 
 	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
