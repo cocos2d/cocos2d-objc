@@ -27,7 +27,7 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 08 01
+// 00   00 08 01 - BETA
 #define COCOS2D_VERSION 0x00000801
 
 //

@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *version = @"cocos2d v0.8.1";
+static NSString *version = @"cocos2d v0.8.1-beta";
 
 NSString *cocos2dVersion()
 {	

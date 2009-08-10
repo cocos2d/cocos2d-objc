@@ -1,9 +1,10 @@
-version 0.8.1 - XX-MMM-2009
+version 0.8.1-beta - 10-Ago-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)
  . Box2d: possibility to call world.DrawDebugData() from draw (issue #493)
  . Box2d: updated box2d repository. using r228 (issue #494)
  . CocosNode: parent is set to nil only after calling onExit (issue #476)
  . CocosNode: added user data (issue #482)
+ . CocosLive: added support to request current ranking (issue #495)
  . MotionStreak: moved from experimental to stable. uses v0.8 API (issue #484)
  . MotionStreak: by default uses GL_SRC_ALPHA blend function (issue #405)
  . ParticleView: integrated Particle visual editor (issue #480)

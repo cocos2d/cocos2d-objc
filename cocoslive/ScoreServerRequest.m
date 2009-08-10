@@ -40,7 +40,7 @@
 -(void) dealloc
 {
 	CCLOG( @"deallocing %@", self);
-
+	
 	[delegate release];
 	[gameName release];
 	[receivedData release];
@@ -56,11 +56,13 @@
 	// create the request	
 	[receivedData setLength:0];
 	
+	// it's not a call for rank
+	reqRankOnly = NO;
 	
 	NSString *device = @"";
 	if( flags & kQueryFlagByDevice )
 		device = [[UIDevice currentDevice] uniqueIdentifier];
-
+	
 	// arguments:
 	//  query: type of query
 	//  limit: how many scores are being requested. Default is 25. Maximun is 100
@@ -76,20 +78,20 @@
 					flags,
 					[category stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
 					device
-	];
+					];
 	
-//	NSLog(@"%@", url);
-
+	//	NSLog(@"%@", url);
+	
 	NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]
 										   cachePolicy:NSURLRequestUseProtocolCachePolicy
-											timeoutInterval:10.0];
+									   timeoutInterval:10.0];
 	
 	// create the connection with the request
 	// and start loading the data
 	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
 	if (! theConnection)
 		return NO;
-
+	
 	// XXX: Don't release 'theConnection' here
 	// XXX: It will be released by the delegate
 	
@@ -116,8 +118,8 @@
 {	
 	NSArray *array = nil;
 	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
-//	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
-
+	//	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
+	
 	NSData *jsonData = [jsonString dataUsingEncoding:NSUTF32BigEndianStringEncoding];
 	NSError *error = nil;
 	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
@@ -131,6 +133,51 @@
 	return array;
 }
 
+#pragma mark Request rank for score
+
+-(BOOL) requestRankForScore:(int)score andCategory:(NSString*)category {
+	// create the request	
+	[receivedData setLength:0];
+	
+	reqRankOnly = YES;
+	
+	// arguments:
+	//  score: score for which you need rank
+	//  category: user defined string used to filter
+	NSString *url= [NSString stringWithFormat:@"%@?gamename=%@&category=%@&score=%d",
+					SCORE_SERVER_GETRANK_URL,
+					gameName,
+					[category stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
+					score
+					];
+	
+	NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]
+										   cachePolicy:NSURLRequestUseProtocolCachePolicy
+									   timeoutInterval:10.0];
+	
+	// create the connection with the request
+	// and start loading the data
+	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+	if (! theConnection)
+		return NO;
+	
+	// XXX: Don't release 'theConnection' here
+	// XXX: It will be released by the delegate
+	
+	return YES;
+}
+
+-(int) parseRank {
+	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
+	
+	// creating trimmed string by trimming everything that's not numbers from the receivedData
+	NSString *trimmedStr = [rankStr stringByTrimmingCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
+	
+	int scoreInt = [trimmedStr intValue];
+	
+	return scoreInt;
+}
+
 
 #pragma mark NSURLConnection Delegate
 
@@ -142,7 +189,7 @@
     // it can be called multiple times, for example in the case of a
     // redirect, so each time we reset the data.
     // receivedData is declared as a method instance elsewhere
-
+	
     [receivedData setLength:0];
 }
 
@@ -157,21 +204,30 @@
 {
 	// release the connection, and the data object
     [connection release];
-
+	
 	CCLOG(@"Error getting scores: %@", error);
-
+	
 	if( [delegate respondsToSelector:@selector(scoreRequestFail:) ] )
 		[delegate scoreRequestFail:self];
-
+	
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	// release the connection, and the data object
     [connection release];
-
-	if( [delegate respondsToSelector:@selector(scoreRequestOk:) ] ) {
-		[delegate scoreRequestOk:self];	
+	
+	if(reqRankOnly) {		
+		// because it's request for rank, different delegate method is called scoreRequestRankOk:
+		// if connection failed the same delegate method is used as for standard scores - scoreRequestFail:
+		if( [delegate respondsToSelector:@selector(scoreRequestRankOk:) ] ) {
+			[delegate scoreRequestRankOk:self];	
+		}
+	} else {
+		if( [delegate respondsToSelector:@selector(scoreRequestOk:) ] ) {
+			[delegate scoreRequestOk:self];	
+		}
+		
 	}
 }
 
