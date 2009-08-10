@@ -26,16 +26,37 @@
 
 #include <cstring>
 
-void GLESDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+GLESDebugDraw::GLESDebugDraw()
+	: mRatio( 1.0f )
 {
-	
-	glColor4f(color.r, color.g, color.b,1);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
+}
+GLESDebugDraw::GLESDebugDraw( float32 ratio )
+	: mRatio( ratio )
+{
 }
 
-void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+
+void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
+	b2Vec2 vertices[vertexCount];
+	for( int i=0;i<vertexCount;i++) {
+		vertices[i] = old_vertices[i];
+		vertices[i] *= mRatio;
+	}
+
+	glColor4f(color.r, color.g, color.b,1);
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);	
+}
+
+void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
+{
+	b2Vec2 vertices[vertexCount];
+	for( int i=0;i<vertexCount;i++) {
+		vertices[i] = old_vertices[i];
+		vertices[i] *= mRatio;
+	}
+	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	
 	glColor4f(color.r, color.g, color.b,0.5f);
@@ -57,8 +78,8 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 	for (int32 i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-		glVertices[i*2]=v.x;
-		glVertices[i*2+1]=v.y;
+		glVertices[i*2]=v.x * mRatio;
+		glVertices[i*2+1]=v.y * mRatio;
 		theta += k_increment;
 	}
 	
@@ -80,8 +101,8 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 	for (int32 i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-		glVertices[i*2]=v.x;
-		glVertices[i*2+1]=v.y;
+		glVertices[i*2]=v.x * mRatio;
+		glVertices[i*2+1]=v.y * mRatio;
 		theta += k_increment;
 	}
 	
@@ -99,7 +120,8 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 {
 	glColor4f(color.r, color.g, color.b,1);
 	GLfloat				glVertices[] = {
-		p1.x,p1.y,p2.x,p2.y
+		p1.x * mRatio, p1.y * mRatio,
+		p2.x * mRatio, p2.y * mRatio
 	};
 	glVertexPointer(2, GL_FLOAT, 0, glVertices);
 	glDrawArrays(GL_LINES, 0, 2);
@@ -122,7 +144,7 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
 	glColor4f(color.r, color.g, color.b,1);
 	glPointSize(size);
 	GLfloat				glVertices[] = {
-		p.x,p.y
+		p.x * mRatio, p.y * mRatio
 	};
 	glVertexPointer(2, GL_FLOAT, 0, glVertices);
 	glDrawArrays(GL_POINTS, 0, 1);
@@ -141,10 +163,10 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 	glColor4f(c.r, c.g, c.b,1);
 
 	GLfloat				glVertices[] = {
-		aabb->lowerBound.x, aabb->lowerBound.y,
-		aabb->upperBound.x, aabb->lowerBound.y,
-		aabb->upperBound.x, aabb->upperBound.y,
-		aabb->lowerBound.x, aabb->upperBound.y
+		aabb->lowerBound.x * mRatio, aabb->lowerBound.y * mRatio,
+		aabb->upperBound.x * mRatio, aabb->lowerBound.y * mRatio,
+		aabb->upperBound.x * mRatio, aabb->upperBound.y * mRatio,
+		aabb->lowerBound.x * mRatio, aabb->upperBound.y * mRatio
 	};
 	glVertexPointer(2, GL_FLOAT, 0, glVertices);
 	glDrawArrays(GL_LINE_LOOP, 0, 8);
