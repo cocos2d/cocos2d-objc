@@ -16,17 +16,45 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2Distance.h"
-#include "Shapes/b2CircleShape.h"
-#include "Shapes/b2PolygonShape.h"
-#include "Shapes/b2EdgeShape.h"
+#include <Box2D/Collision/b2Distance.h>
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
 // GJK using Voronoi regions (Christer Ericson) and Barycentric coordinates.
+int32 b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters;
+
+void b2DistanceProxy::Set(const b2Shape* shape)
+{
+	switch (shape->GetType())
+	{
+	case b2Shape::e_circle:
+		{
+			const b2CircleShape* circle = (b2CircleShape*)shape;
+			m_vertices = &circle->m_p;
+			m_count = 1;
+			m_radius = circle->m_radius;
+		}
+		break;
+
+	case b2Shape::e_polygon:
+		{
+			const b2PolygonShape* polygon = (b2PolygonShape*)shape;
+			m_vertices = polygon->m_vertices;
+			m_count = polygon->m_vertexCount;
+			m_radius = polygon->m_radius;
+		}
+		break;
+
+	default:
+		b2Assert(false);
+	}
+}
+
 
 struct b2SimplexVertex
 {
-	b2Vec2 wA;		// support point in shapeA
-	b2Vec2 wB;		// support point in shapeB
+	b2Vec2 wA;		// support point in proxyA
+	b2Vec2 wB;		// support point in proxyB
 	b2Vec2 w;		// wB - wA
 	float32 a;		// barycentric coordinate for closest point
 	int32 indexA;	// wA index
@@ -35,10 +63,9 @@ struct b2SimplexVertex
 
 struct b2Simplex
 {
-	template <typename TA, typename TB>
 	void ReadCache(	const b2SimplexCache* cache,
-					const TA* shapeA, const b2XForm& transformA,
-					const TB* shapeB, const b2XForm& transformB)
+					const b2DistanceProxy* proxyA, const b2Transform& transformA,
+					const b2DistanceProxy* proxyB, const b2Transform& transformB)
 	{
 		b2Assert(0 <= cache->count && cache->count <= 3);
 		
@@ -50,8 +77,8 @@ struct b2Simplex
 			b2SimplexVertex* v = vertices + i;
 			v->indexA = cache->indexA[i];
 			v->indexB = cache->indexB[i];
-			b2Vec2 wALocal = shapeA->GetVertex(v->indexA);
-			b2Vec2 wBLocal = shapeB->GetVertex(v->indexB);
+			b2Vec2 wALocal = proxyA->GetVertex(v->indexA);
+			b2Vec2 wBLocal = proxyB->GetVertex(v->indexB);
 			v->wA = b2Mul(transformA, wALocal);
 			v->wB = b2Mul(transformB, wBLocal);
 			v->w = v->wB - v->wA;
@@ -77,8 +104,8 @@ struct b2Simplex
 			b2SimplexVertex* v = vertices + 0;
 			v->indexA = 0;
 			v->indexB = 0;
-			b2Vec2 wALocal = shapeA->GetVertex(0);
-			b2Vec2 wBLocal = shapeB->GetVertex(0);
+			b2Vec2 wALocal = proxyA->GetVertex(0);
+			b2Vec2 wBLocal = proxyB->GetVertex(0);
 			v->wA = b2Mul(transformA, wALocal);
 			v->wB = b2Mul(transformB, wBLocal);
 			v->w = v->wB - v->wA;
@@ -95,6 +122,35 @@ struct b2Simplex
 		{
 			cache->indexA[i] = uint8(vertices[i].indexA);
 			cache->indexB[i] = uint8(vertices[i].indexB);
+		}
+	}
+
+	b2Vec2 GetSearchDirection() const
+	{
+		switch (m_count)
+		{
+		case 1:
+			return -m_v1.w;
+
+		case 2:
+			{
+				b2Vec2 e12 = m_v2.w - m_v1.w;
+				float32 sgn = b2Cross(e12, -m_v1.w);
+				if (sgn > 0.0f)
+				{
+					// Origin is left of e12.
+					return b2Cross(1.0f, e12);
+				}
+				else
+				{
+					// Origin is right of e12.
+					return b2Cross(e12, 1.0f);
+				}
+			}
+
+		default:
+			b2Assert(false);
+			return b2Vec2_zero;
 		}
 	}
 
@@ -352,39 +408,45 @@ void b2Simplex::Solve3()
 	m_count = 3;
 }
 
-template <typename TA, typename TB>
 void b2Distance(b2DistanceOutput* output,
 				b2SimplexCache* cache,
-				const b2DistanceInput* input,
-				const TA* shapeA,
-				const TB* shapeB)
+				const b2DistanceInput* input)
 {
-	b2XForm transformA = input->transformA;
-	b2XForm transformB = input->transformB;
+	++b2_gjkCalls;
+
+	const b2DistanceProxy* proxyA = &input->proxyA;
+	const b2DistanceProxy* proxyB = &input->proxyB;
+
+	b2Transform transformA = input->transformA;
+	b2Transform transformB = input->transformB;
 
 	// Initialize the simplex.
 	b2Simplex simplex;
-	simplex.ReadCache(cache, shapeA, transformA, shapeB, transformB);
+	simplex.ReadCache(cache, proxyA, transformA, proxyB, transformB);
 
 	// Get simplex vertices as an array.
 	b2SimplexVertex* vertices = &simplex.m_v1;
+	const int32 k_maxIters = 20;
 
 	// These store the vertices of the last simplex so that we
 	// can check for duplicates and prevent cycling.
-	int32 lastA[4], lastB[4];
-	int32 lastCount = 0;
+	int32 saveA[3], saveB[3];
+	int32 saveCount = 0;
+
+	b2Vec2 closestPoint = simplex.GetClosestPoint();
+	float32 distanceSqr1 = closestPoint.LengthSquared();
+	float32 distanceSqr2 = distanceSqr1;
 
 	// Main iteration loop.
 	int32 iter = 0;
-	const int32 k_maxIterationCount = 20;
-	while (iter < k_maxIterationCount)
+	while (iter < k_maxIters)
 	{
 		// Copy simplex so we can identify duplicates.
-		lastCount = simplex.m_count;
-		for (int32 i = 0; i < lastCount; ++i)
+		saveCount = simplex.m_count;
+		for (int32 i = 0; i < saveCount; ++i)
 		{
-			lastA[i] = vertices[i].indexA;
-			lastB[i] = vertices[i].indexB;
+			saveA[i] = vertices[i].indexA;
+			saveB[i] = vertices[i].indexB;
 		}
 
 		switch (simplex.m_count)
@@ -412,10 +474,20 @@ void b2Distance(b2DistanceOutput* output,
 
 		// Compute closest point.
 		b2Vec2 p = simplex.GetClosestPoint();
-		float32 distanceSqr = p.LengthSquared();
+		distanceSqr2 = p.LengthSquared();
+
+		// Ensure progress
+		if (distanceSqr2 >= distanceSqr1)
+		{
+			//break;
+		}
+		distanceSqr1 = distanceSqr2;
+
+		// Get search direction.
+		b2Vec2 d = simplex.GetSearchDirection();
 
 		// Ensure the search direction is numerically fit.
-		if (distanceSqr < B2_FLT_EPSILON * B2_FLT_EPSILON)
+		if (d.LengthSquared() < B2_FLT_EPSILON * B2_FLT_EPSILON)
 		{
 			// The origin is probably contained by a line segment
 			// or triangle. Thus the shapes are overlapped.
@@ -428,31 +500,22 @@ void b2Distance(b2DistanceOutput* output,
 
 		// Compute a tentative new simplex vertex using support points.
 		b2SimplexVertex* vertex = vertices + simplex.m_count;
-		vertex->indexA = shapeA->GetSupport(b2MulT(transformA.R, p));
-		vertex->wA = b2Mul(transformA, shapeA->GetVertex(vertex->indexA));
+		vertex->indexA = proxyA->GetSupport(b2MulT(transformA.R, -d));
+		vertex->wA = b2Mul(transformA, proxyA->GetVertex(vertex->indexA));
 		b2Vec2 wBLocal;
-		vertex->indexB = shapeB->GetSupport(b2MulT(transformB.R, -p));
-		vertex->wB = b2Mul(transformB, shapeB->GetVertex(vertex->indexB));
+		vertex->indexB = proxyB->GetSupport(b2MulT(transformB.R, d));
+		vertex->wB = b2Mul(transformB, proxyB->GetVertex(vertex->indexB));
 		vertex->w = vertex->wB - vertex->wA;
 
 		// Iteration count is equated to the number of support point calls.
 		++iter;
+		++b2_gjkIters;
 
-		// Check for convergence.
-		float32 lowerBound = b2Dot(p, vertex->w);
-		float32 upperBound = distanceSqr;
-		const float32 k_relativeTolSqr = 0.01f * 0.01f;	// 1:100
-		if (upperBound - lowerBound <= k_relativeTolSqr * upperBound)
-		{
-			// Converged!
-			break;
-		}
-
-		// Check for duplicate support points.
+		// Check for duplicate support points. This is the main termination criteria.
 		bool duplicate = false;
-		for (int32 i = 0; i < lastCount; ++i)
+		for (int32 i = 0; i < saveCount; ++i)
 		{
-			if (vertex->indexA == lastA[i] && vertex->indexB == lastB[i])
+			if (vertex->indexA == saveA[i] && vertex->indexB == saveB[i])
 			{
 				duplicate = true;
 				break;
@@ -469,6 +532,8 @@ void b2Distance(b2DistanceOutput* output,
 		++simplex.m_count;
 	}
 
+	b2_gjkMaxIters = b2Max(b2_gjkMaxIters, iter);
+
 	// Prepare output.
 	simplex.GetWitnessPoints(&output->pointA, &output->pointB);
 	output->distance = b2Distance(output->pointA, output->pointB);
@@ -480,8 +545,8 @@ void b2Distance(b2DistanceOutput* output,
 	// Apply radii if requested.
 	if (input->useRadii)
 	{
-		float32 rA = shapeA->m_radius;
-		float32 rB = shapeB->m_radius;
+		float32 rA = proxyA->m_radius;
+		float32 rB = proxyB->m_radius;
 
 		if (output->distance > rA + rB && output->distance > B2_FLT_EPSILON)
 		{
@@ -504,67 +569,3 @@ void b2Distance(b2DistanceOutput* output,
 		}
 	}
 }
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-			b2SimplexCache* cache,
-			const b2DistanceInput* input,
-			const b2CircleShape* shapeA,
-			const b2CircleShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2CircleShape* shapeA,
-		   const b2EdgeShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2CircleShape* shapeA,
-		   const b2PolygonShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2EdgeShape* shapeA,
-		   const b2CircleShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2EdgeShape* shapeA,
-		   const b2EdgeShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2EdgeShape* shapeA,
-		   const b2PolygonShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2PolygonShape* shapeA,
-		   const b2CircleShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2PolygonShape* shapeA,
-		   const b2EdgeShape* shapeB);
-
-template void 
-b2Distance(	b2DistanceOutput* output,
-		   b2SimplexCache* cache,
-		   const b2DistanceInput* input,
-		   const b2PolygonShape* shapeA,
-		   const b2PolygonShape* shapeB);
-

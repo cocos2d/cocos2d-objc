@@ -19,20 +19,11 @@
 #ifndef B2_SETTINGS_H
 #define B2_SETTINGS_H
 
-#include <assert.h>
-#include <math.h>
+#include <cassert>
+#include <cmath>
 
 #define B2_NOT_USED(x) x
 #define b2Assert(A) assert(A)
-
-// need to include NDS jtypes.h instead of 
-// usual typedefs because NDS jtypes defines
-// them slightly differently, oh well.
-#ifdef TARGET_IS_NDS
-
-#include "jtypes.h"
-
-#else
 
 typedef signed char	int8;
 typedef signed short int16;
@@ -40,29 +31,10 @@ typedef signed int int32;
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
-
-#endif
-
-#ifdef	TARGET_FLOAT32_IS_FIXED
-
-#include "Fixed.h"
-
-typedef Fixed float32;
-#define	B2_FLT_MAX	FIXED_MAX
-#define	B2_FLT_EPSILON	FIXED_EPSILON
-#define	B2FORCE_SCALE(x)	((x)<<7)
-#define	B2FORCE_INV_SCALE(x)	((x)>>7)
-
-#else
-
 typedef float float32;
+
 #define	B2_FLT_MAX	FLT_MAX
 #define	B2_FLT_EPSILON	FLT_EPSILON
-#define	B2FORCE_SCALE(x)	(x)
-#define	B2FORCE_INV_SCALE(x)	(x)
-
-#endif
-
 #define b2_pi						3.14159265359f
 
 /// @file
@@ -77,18 +49,10 @@ typedef float float32;
 /// The maximum number of vertices on a convex polygon.
 #define b2_maxPolygonVertices		8
 
-/// Factor used to fatten AABBs in b2DynamicTree. This allows client
-/// objects to move a small amount without needing to adjust the tree.
-#define b2_fatAABBFactor			1.5f
-
-/// The initial pool size for the dynamic tree.
-#define b2_nodePoolSize				50
-
-/// This must be a power of two
-#define b2_maxProxies				512
-
-/// This must be a power of two
-#define b2_maxPairs					(8 * b2_maxProxies)
+/// This is used to fatten AABBs in the dynamic tree. This allows proxies
+/// to move by a small amount without triggering a tree adjustment.
+/// This is in meters.
+#define b2_aabbExtension			0.1f
 
 /// A small length used as a collision and constraint tolerance. Usually it is
 /// chosen to be numerically significant, but visually insignificant.

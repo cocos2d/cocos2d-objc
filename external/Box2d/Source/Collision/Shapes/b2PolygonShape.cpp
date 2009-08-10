@@ -16,7 +16,16 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2PolygonShape.h"
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <new>
+
+b2Shape* b2PolygonShape::Clone(b2BlockAllocator* allocator) const
+{
+	void* mem = allocator->Allocate(sizeof(b2PolygonShape));
+	b2PolygonShape* clone = new (mem) b2PolygonShape;
+	*clone = *this;
+	return clone;
+}
 
 void b2PolygonShape::SetAsBox(float32 hx, float32 hy)
 {
@@ -45,7 +54,7 @@ void b2PolygonShape::SetAsBox(float32 hx, float32 hy, const b2Vec2& center, floa
 	m_normals[3].Set(-1.0f, 0.0f);
 	m_centroid = center;
 
-	b2XForm xf;
+	b2Transform xf;
 	xf.position = center;
 	xf.R.Set(angle);
 
@@ -70,10 +79,16 @@ void b2PolygonShape::SetAsEdge(const b2Vec2& v1, const b2Vec2& v2)
 
 static b2Vec2 ComputeCentroid(const b2Vec2* vs, int32 count)
 {
-	b2Assert(count >= 3);
+	b2Assert(count >= 2);
 
 	b2Vec2 c; c.Set(0.0f, 0.0f);
 	float32 area = 0.0f;
+
+	if (count == 2)
+	{
+		c = 0.5f * (vs[0] + vs[1]);
+		return c;
+	}
 
 	// pRef is the reference point for forming triangles.
 	// It's location doesn't change the result (except for rounding error).
@@ -116,7 +131,7 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, int32 count)
 
 void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 {
-	b2Assert(3 <= count && count <= b2_maxPolygonVertices);
+	b2Assert(2 <= count && count <= b2_maxPolygonVertices);
 	m_vertexCount = count;
 
 	// Copy vertices.
@@ -167,7 +182,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 	m_centroid = ComputeCentroid(m_vertices, m_vertexCount);
 }
 
-bool b2PolygonShape::TestPoint(const b2XForm& xf, const b2Vec2& p) const
+bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 {
 	b2Vec2 pLocal = b2MulT(xf.R, p - xf.position);
 
@@ -184,7 +199,7 @@ bool b2PolygonShape::TestPoint(const b2XForm& xf, const b2Vec2& p) const
 }
 
 b2SegmentCollide b2PolygonShape::TestSegment(
-	const b2XForm& xf,
+	const b2Transform& xf,
 	float32* lambda,
 	b2Vec2* normal,
 	const b2Segment& segment,
@@ -252,7 +267,7 @@ b2SegmentCollide b2PolygonShape::TestSegment(
 	return b2_startsInsideCollide;
 }
 
-void b2PolygonShape::ComputeAABB(b2AABB* aabb, const b2XForm& xf) const
+void b2PolygonShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf) const
 {
 	b2Vec2 lower = b2Mul(xf, m_vertices[0]);
 	b2Vec2 upper = lower;
@@ -295,7 +310,16 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 	//
 	// The rest of the derivation is handled by computer algebra.
 
-	b2Assert(m_vertexCount >= 3);
+	b2Assert(m_vertexCount >= 2);
+
+	// A line segment has zero mass.
+	if (m_vertexCount == 2)
+	{
+		massData->center = 0.5f * (m_vertices[0] + m_vertices[1]);
+		massData->mass = 0.0f;
+		massData->I = 0.0f;
+		return;
+	}
 
 	b2Vec2 center; center.Set(0.0f, 0.0f);
 	float32 area = 0.0f;
@@ -353,145 +377,4 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 
 	// Inertia tensor relative to the local origin.
 	massData->I = density * I;
-}
-
-
-float32 b2PolygonShape::ComputeSubmergedArea(	const b2Vec2& normal,
-												float32 offset,
-												const b2XForm& xf, 
-												b2Vec2* c) const
-{
-	//Transform plane into shape co-ordinates
-	b2Vec2 normalL = b2MulT(xf.R,normal);
-	float32 offsetL = offset - b2Dot(normal,xf.position);
-	
-	float32 depths[b2_maxPolygonVertices];
-	int32 diveCount = 0;
-	int32 intoIndex = -1;
-	int32 outoIndex = -1;
-	
-	bool lastSubmerged = false;
-	int32 i;
-	for (i = 0; i < m_vertexCount; ++i)
-	{
-		depths[i] = b2Dot(normalL,m_vertices[i]) - offsetL;
-		bool isSubmerged = depths[i]<-B2_FLT_EPSILON;
-		if (i > 0)
-		{
-			if (isSubmerged)
-			{
-				if (!lastSubmerged)
-				{
-					intoIndex = i-1;
-					diveCount++;
-				}
-			}
-			else
-			{
-				if (lastSubmerged)
-				{
-					outoIndex = i-1;
-					diveCount++;
-				}
-			}
-		}
-		lastSubmerged = isSubmerged;
-	}
-
-	switch(diveCount)
-	{
-	case 0:
-		if (lastSubmerged)
-		{
-			//Completely submerged
-			b2MassData md;
-			ComputeMass(&md, 1.0f);
-			*c = b2Mul(xf,md.center);
-			return md.mass;
-		}
-		else
-		{
-			//Completely dry
-			return 0;
-		}
-		break;
-
-	case 1:
-		if(intoIndex==-1)
-		{
-			intoIndex = m_vertexCount-1;
-		}
-		else
-		{
-			outoIndex = m_vertexCount-1;
-		}
-		break;
-	}
-
-	int32 intoIndex2 = (intoIndex+1) % m_vertexCount;
-	int32 outoIndex2 = (outoIndex+1) % m_vertexCount;
-	
-	float32 intoLambda = (0 - depths[intoIndex]) / (depths[intoIndex2] - depths[intoIndex]);
-	float32 outoLambda = (0 - depths[outoIndex]) / (depths[outoIndex2] - depths[outoIndex]);
-	
-	b2Vec2 intoVec(	m_vertices[intoIndex].x*(1-intoLambda)+m_vertices[intoIndex2].x*intoLambda,
-					m_vertices[intoIndex].y*(1-intoLambda)+m_vertices[intoIndex2].y*intoLambda);
-	b2Vec2 outoVec(	m_vertices[outoIndex].x*(1-outoLambda)+m_vertices[outoIndex2].x*outoLambda,
-					m_vertices[outoIndex].y*(1-outoLambda)+m_vertices[outoIndex2].y*outoLambda);
-	
-	// Initialize accumulator
-	float32 area = 0;
-	b2Vec2 center(0,0);
-	b2Vec2 p2 = m_vertices[intoIndex2];
-	b2Vec2 p3;
-	
-	float32 k_inv3 = 1.0f / 3.0f;
-	
-	// An awkward loop from intoIndex2+1 to outIndex2
-	i = intoIndex2;
-	while (i != outoIndex2)
-	{
-		i = (i+1) % m_vertexCount;
-		if (i == outoIndex2)
-			p3 = outoVec;
-		else
-			p3 = m_vertices[i];
-		
-		// Add the triangle formed by intoVec,p2,p3
-		{
-			b2Vec2 e1 = p2 - intoVec;
-			b2Vec2 e2 = p3 - intoVec;
-			
-			float32 D = b2Cross(e1, e2);
-			
-			float32 triangleArea = 0.5f * D;
-
-			area += triangleArea;
-			
-			// Area weighted centroid
-			center += triangleArea * k_inv3 * (intoVec + p2 + p3);
-
-		}
-		//
-		p2=p3;
-	}
-	
-	// Normalize and transform centroid
-	center *= 1.0f / area;
-	
-	*c = b2Mul(xf,center);
-	
-	return area;
-}
-
-float32 b2PolygonShape::ComputeSweepRadius(const b2Vec2& pivot) const
-{
-	b2Assert(m_vertexCount > 0);
-	float32 sr = b2DistanceSquared(m_vertices[0], pivot);
-	for (int32 i = 1; i < m_vertexCount; ++i)
-	{
-		sr = b2Max(sr, b2DistanceSquared(m_vertices[i], pivot));
-	}
-
-	return b2Sqrt(sr);
 }

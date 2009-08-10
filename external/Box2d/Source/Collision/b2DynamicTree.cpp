@@ -16,25 +16,25 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2DynamicTree.h"
-
-#include <string.h>
-#include <float.h>
+#include <Box2D/Collision/b2DynamicTree.h>
+#include <cstring>
+#include <cfloat>
 
 b2DynamicTree::b2DynamicTree()
 {
 	m_root = b2_nullNode;
-	m_nodeCount = b2Max(b2_nodePoolSize, 1);
-	m_nodes = (b2DynamicTreeNode*)b2Alloc(m_nodeCount * sizeof(b2DynamicTreeNode));
-	memset(m_nodes, 0, m_nodeCount * sizeof(b2DynamicTreeNode));
 
-	// Build a linked list for the free list. The parent
-	// pointer becomes the "next" pointer.
-	for (int32 i = 0; i < m_nodeCount - 1; ++i)
+	m_nodeCapacity = 16;
+	m_nodeCount = 0;
+	m_nodes = (b2DynamicTreeNode*)b2Alloc(m_nodeCapacity * sizeof(b2DynamicTreeNode));
+	memset(m_nodes, 0, m_nodeCapacity * sizeof(b2DynamicTreeNode));
+
+	// Build a linked list for the free list.
+	for (int32 i = 0; i < m_nodeCapacity - 1; ++i)
 	{
-		m_nodes[i].parent = uint16(i + 1);
+		m_nodes[i].next = i + 1;
 	}
-	m_nodes[m_nodeCount-1].parent = b2_nullNode;
+	m_nodes[m_nodeCapacity-1].next = b2_nullNode;
 	m_freeList = 0;
 
 	m_path = 0;
@@ -47,116 +47,99 @@ b2DynamicTree::~b2DynamicTree()
 }
 
 // Allocate a node from the pool. Grow the pool if necessary.
-uint16 b2DynamicTree::AllocateNode()
+int32 b2DynamicTree::AllocateNode()
 {
+	// Expand the node pool as needed.
+	if (m_freeList == b2_nullNode)
+	{
+		b2Assert(m_nodeCount == m_nodeCapacity);
+
+		// The free list is empty. Rebuild a bigger pool.
+		b2DynamicTreeNode* oldNodes = m_nodes;
+		m_nodeCapacity *= 2;
+		m_nodes = (b2DynamicTreeNode*)b2Alloc(m_nodeCapacity * sizeof(b2DynamicTreeNode));
+		memcpy(m_nodes, oldNodes, m_nodeCount * sizeof(b2DynamicTreeNode));
+		b2Free(oldNodes);
+
+		// Build a linked list for the free list. The parent
+		// pointer becomes the "next" pointer.
+		for (int32 i = m_nodeCount; i < m_nodeCapacity - 1; ++i)
+		{
+			m_nodes[i].next = i + 1;
+		}
+		m_nodes[m_nodeCapacity-1].next = b2_nullNode;
+		m_freeList = m_nodeCount;
+	}
+
 	// Peel a node off the free list.
-	if (m_freeList != b2_nullNode)
-	{
-		uint16 node = m_freeList;
-		m_freeList = m_nodes[node].parent;
-		m_nodes[node].parent = b2_nullNode;
-		m_nodes[node].child1 = b2_nullNode;
-		m_nodes[node].child2 = b2_nullNode;
-		return node;
-	}
-
-	// The free list is empty. Rebuild a bigger pool.
-	int32 newPoolCount = b2Min(2 * m_nodeCount, USHRT_MAX - 1);
-	b2Assert(newPoolCount > m_nodeCount);
-	b2DynamicTreeNode* newPool = (b2DynamicTreeNode*)b2Alloc(newPoolCount * sizeof(b2DynamicTreeNode));
-	memcpy(newPool, m_nodes, m_nodeCount * sizeof(b2DynamicTreeNode));
-	memset(newPool + m_nodeCount, 0, (newPoolCount - m_nodeCount) * sizeof(b2DynamicTreeNode));
-
-	// Build a linked list for the free list. The parent
-	// pointer becomes the "next" pointer.
-	for (int32 i = m_nodeCount; i < newPoolCount - 1; ++i)
-	{
-		newPool[i].parent = uint16(i + 1);
-	}
-	newPool[newPoolCount-1].parent = b2_nullNode;
-	m_freeList = uint16(m_nodeCount);
-
-	b2Free(m_nodes);
-	m_nodes = newPool;
-	m_nodeCount = newPoolCount;
-
-	// Finally peel a node off the new free list.
-	uint16 node = m_freeList;
-	m_freeList = m_nodes[node].parent;
-	return node;
+	int32 nodeId = m_freeList;
+	m_freeList = m_nodes[nodeId].next;
+	m_nodes[nodeId].parent = b2_nullNode;
+	m_nodes[nodeId].child1 = b2_nullNode;
+	m_nodes[nodeId].child2 = b2_nullNode;
+	++m_nodeCount;
+	return nodeId;
 }
 
 // Return a node to the pool.
-void b2DynamicTree::FreeNode(uint16 node)
+void b2DynamicTree::FreeNode(int32 nodeId)
 {
-	b2Assert(node < USHRT_MAX);
-	m_nodes[node].parent = m_freeList;
-	m_freeList = node;
+	b2Assert(0 <= nodeId && nodeId < m_nodeCapacity);
+	b2Assert(0 < m_nodeCount);
+	m_nodes[nodeId].next = m_freeList;
+	m_freeList = nodeId;
+	--m_nodeCount;
 }
 
 // Create a proxy in the tree as a leaf node. We return the index
 // of the node instead of a pointer so that we can grow
 // the node pool.
-uint16 b2DynamicTree::CreateProxy(const b2AABB& aabb, void* userData)
+int32 b2DynamicTree::CreateProxy(const b2AABB& aabb, void* userData)
 {
-	uint16 node = AllocateNode();
+	int32 proxyId = AllocateNode();
 
 	// Fatten the aabb.
-	b2Vec2 center = aabb.GetCenter();
-	b2Vec2 extents = b2_fatAABBFactor * aabb.GetExtents();
-	m_nodes[node].aabb.lowerBound = center - extents;
-	m_nodes[node].aabb.upperBound = center + extents;
-	m_nodes[node].userData = userData;
+	b2Vec2 r(b2_aabbExtension, b2_aabbExtension);
+	m_nodes[proxyId].aabb.lowerBound = aabb.lowerBound - r;
+	m_nodes[proxyId].aabb.upperBound = aabb.upperBound + r;
+	m_nodes[proxyId].userData = userData;
 
-	InsertLeaf(node);
+	InsertLeaf(proxyId);
 
-	return node;
+	return proxyId;
 }
 
-void b2DynamicTree::DestroyProxy(uint16 proxyId)
+void b2DynamicTree::DestroyProxy(int32 proxyId)
 {
-	b2Assert(proxyId < m_nodeCount);
+	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	b2Assert(m_nodes[proxyId].IsLeaf());
 
 	RemoveLeaf(proxyId);
 	FreeNode(proxyId);
 }
 
-void b2DynamicTree::MoveProxy(uint16 proxyId, const b2AABB& aabb)
+bool b2DynamicTree::MoveProxy(int32 proxyId, const b2AABB& aabb)
 {
-	b2Assert(proxyId < m_nodeCount);
+	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
 
 	b2Assert(m_nodes[proxyId].IsLeaf());
 
 	if (m_nodes[proxyId].aabb.Contains(aabb))
 	{
-		return;
+		return false;
 	}
 
 	RemoveLeaf(proxyId);
 
-	b2Vec2 center = aabb.GetCenter();
-	b2Vec2 extents = b2_fatAABBFactor * aabb.GetExtents();
-
-	m_nodes[proxyId].aabb.lowerBound = center - extents;
-	m_nodes[proxyId].aabb.upperBound = center + extents;
+	b2Vec2 r(b2_aabbExtension, b2_aabbExtension);
+	m_nodes[proxyId].aabb.lowerBound = aabb.lowerBound - r;
+	m_nodes[proxyId].aabb.upperBound = aabb.upperBound + r;
 
 	InsertLeaf(proxyId);
+	return true;
 }
 
-void* b2DynamicTree::GetProxy(uint16 proxyId)
-{
-	if (proxyId < m_nodeCount)
-	{
-		return m_nodes[proxyId].userData;
-	}
-	else
-	{
-		return NULL;
-	}
-}
-
-void b2DynamicTree::InsertLeaf(uint16 leaf)
+void b2DynamicTree::InsertLeaf(int32 leaf)
 {
 	if (m_root == b2_nullNode)
 	{
@@ -167,13 +150,13 @@ void b2DynamicTree::InsertLeaf(uint16 leaf)
 
 	// Find the best sibling for this node.
 	b2Vec2 center = m_nodes[leaf].aabb.GetCenter();
-	uint16 sibling = m_root;
+	int32 sibling = m_root;
 	if (m_nodes[sibling].IsLeaf() == false)
 	{
 		do 
 		{
-			uint16 child1 = m_nodes[sibling].child1;
-			uint16 child2 = m_nodes[sibling].child2;
+			int32 child1 = m_nodes[sibling].child1;
+			int32 child2 = m_nodes[sibling].child2;
 
 			b2Vec2 delta1 = b2Abs(m_nodes[child1].aabb.GetCenter() - center);
 			b2Vec2 delta2 = b2Abs(m_nodes[child2].aabb.GetCenter() - center);
@@ -195,8 +178,8 @@ void b2DynamicTree::InsertLeaf(uint16 leaf)
 	}
 
 	// Create a parent for the siblings.
-	uint16 node1 = m_nodes[sibling].parent;
-	uint16 node2 = AllocateNode();
+	int32 node1 = m_nodes[sibling].parent;
+	int32 node2 = AllocateNode();
 	m_nodes[node2].parent = node1;
 	m_nodes[node2].userData = NULL;
 	m_nodes[node2].aabb.Combine(m_nodes[leaf].aabb, m_nodes[sibling].aabb);
@@ -240,7 +223,7 @@ void b2DynamicTree::InsertLeaf(uint16 leaf)
 	}
 }
 
-void b2DynamicTree::RemoveLeaf(uint16 leaf)
+void b2DynamicTree::RemoveLeaf(int32 leaf)
 {
 	if (leaf == m_root)
 	{
@@ -248,9 +231,9 @@ void b2DynamicTree::RemoveLeaf(uint16 leaf)
 		return;
 	}
 
-	uint16 node2 = m_nodes[leaf].parent;
-	uint16 node1 = m_nodes[node2].parent;
-	uint16 sibling;
+	int32 node2 = m_nodes[leaf].parent;
+	int32 node1 = m_nodes[node2].parent;
+	int32 sibling;
 	if (m_nodes[node2].child1 == leaf)
 	{
 		sibling = m_nodes[node2].child2;
@@ -305,12 +288,12 @@ void b2DynamicTree::Rebalance(int32 iterations)
 
 	for (int32 i = 0; i < iterations; ++i)
 	{
-		uint16 node = m_root;
+		int32 node = m_root;
 
 		uint32 bit = 0;
 		while (m_nodes[node].IsLeaf() == false)
 		{
-			uint16* children = &m_nodes[node].child1;
+			int32* children = &m_nodes[node].child1;
 			node = children[(m_path >> bit) & 1];
 			bit = (bit + 1) & (8* sizeof(uint32) - 1);
 		}
@@ -319,4 +302,24 @@ void b2DynamicTree::Rebalance(int32 iterations)
 		RemoveLeaf(node);
 		InsertLeaf(node);
 	}
+}
+
+// Compute the height of a sub-tree.
+int32 b2DynamicTree::ComputeHeight(int32 nodeId) const
+{
+	if (nodeId == b2_nullNode)
+	{
+		return 0;
+	}
+
+	b2Assert(0 <= nodeId && nodeId < m_nodeCapacity);
+	b2DynamicTreeNode* node = m_nodes + nodeId;
+	int32 height1 = ComputeHeight(node->child1);
+	int32 height2 = ComputeHeight(node->child2);
+	return 1 + b2Max(height1, height2);
+}
+
+int32 b2DynamicTree::ComputeHeight() const
+{
+	return ComputeHeight(m_root);
 }

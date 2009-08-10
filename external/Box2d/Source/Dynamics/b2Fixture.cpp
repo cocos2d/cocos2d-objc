@@ -16,59 +16,31 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2Fixture.h"
-#include "../Collision/Shapes/b2CircleShape.h"
-#include "../Collision/Shapes/b2PolygonShape.h"
-#include "../Collision/Shapes/b2EdgeShape.h"
-#include "../Collision/b2Collision.h"
-#include "../Collision/b2BroadPhase.h"
-#include "../Common/b2BlockAllocator.h"
+#include <Box2D/Dynamics/b2Fixture.h>
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Collision/b2BroadPhase.h>
+#include <Box2D/Collision/b2Collision.h>
+#include <Box2D/Common/b2BlockAllocator.h>
 
-#include <new>
-
-void b2PolygonDef::SetAsBox(float32 hx, float32 hy)
-{
-	vertexCount = 4;
-	vertices[0].Set(-hx, -hy);
-	vertices[1].Set( hx, -hy);
-	vertices[2].Set( hx,  hy);
-	vertices[3].Set(-hx,  hy);
-}
-
-void b2PolygonDef::SetAsBox(float32 hx, float32 hy, const b2Vec2& center, float32 angle)
-{
-	vertexCount = 4;
-	vertices[0].Set(-hx, -hy);
-	vertices[1].Set( hx, -hy);
-	vertices[2].Set( hx,  hy);
-	vertices[3].Set(-hx,  hy);
-
-	b2XForm xf;
-	xf.position = center;
-	xf.R.Set(angle);
-
-	vertices[0] = b2Mul(xf, vertices[0]);
-	vertices[1] = b2Mul(xf, vertices[1]);
-	vertices[2] = b2Mul(xf, vertices[2]);
-	vertices[3] = b2Mul(xf, vertices[3]);
-}
 
 b2Fixture::b2Fixture()
 {
 	m_userData = NULL;
 	m_body = NULL;
 	m_next = NULL;
-	m_proxyId = b2_nullProxy;
+	m_proxyId = b2BroadPhase::e_nullProxy;
 	m_shape = NULL;
 }
 
 b2Fixture::~b2Fixture()
 {
 	b2Assert(m_shape == NULL);
-	b2Assert(m_proxyId == b2_nullProxy);
+	b2Assert(m_proxyId == b2BroadPhase::e_nullProxy);
 }
 
-void b2Fixture::Create(b2BlockAllocator* allocator, b2BroadPhase* broadPhase, b2Body* body, const b2XForm& xf, const b2FixtureDef* def)
+void b2Fixture::Create(b2BlockAllocator* allocator, b2BroadPhase* broadPhase, b2Body* body, const b2Transform& xf, const b2FixtureDef* def)
 {
 	m_userData = def->userData;
 	m_friction = def->friction;
@@ -82,79 +54,27 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2BroadPhase* broadPhase, b2
 
 	m_isSensor = def->isSensor;
 
-	m_type = def->type;
-
-	// Allocate and initialize the child shape.
-	switch (m_type)
-	{
-	case b2_circleShape:
-		{
-			void* mem = allocator->Allocate(sizeof(b2CircleShape));
-			b2CircleShape* circle = new (mem) b2CircleShape;
-			b2CircleDef* circleDef = (b2CircleDef*)def;
-			circle->m_p = circleDef->localPosition;
-			circle->m_radius = circleDef->radius;
-			m_shape = circle;
-		}
-		break;
-
-	case b2_polygonShape:
-		{
-			void* mem = allocator->Allocate(sizeof(b2PolygonShape));
-			b2PolygonShape* polygon = new (mem) b2PolygonShape;
-			b2PolygonDef* polygonDef = (b2PolygonDef*)def;
-			polygon->Set(polygonDef->vertices, polygonDef->vertexCount);
-			m_shape = polygon;
-		}
-		break;
-
-	case b2_edgeShape:
-		{
-			void* mem = allocator->Allocate(sizeof(b2EdgeShape));
-			b2EdgeShape* edge = new (mem) b2EdgeShape;
-			b2EdgeDef* edgeDef = (b2EdgeDef*)def;
-			edge->Set(edgeDef->vertex1, edgeDef->vertex2);
-			m_shape = edge;
-		}
-		break;
-
-	default:
-		b2Assert(false);
-		break;
-	}
+	m_shape = def->shape->Clone(allocator);
 
 	// Create proxy in the broad-phase.
-	b2AABB aabb;
-	m_shape->ComputeAABB(&aabb, xf);
+	m_shape->ComputeAABB(&m_aabb, xf);
 
-	bool inRange = broadPhase->InRange(aabb);
-
-	// You are creating a shape outside the world box.
-	b2Assert(inRange);
-
-	if (inRange)
-	{
-		m_proxyId = broadPhase->CreateProxy(aabb, this);
-	}
-	else
-	{
-		m_proxyId = b2_nullProxy;
-	}
+	m_proxyId = broadPhase->CreateProxy(m_aabb, this);
 }
 
 void b2Fixture::Destroy(b2BlockAllocator* allocator, b2BroadPhase* broadPhase)
 {
 	// Remove proxy from the broad-phase.
-	if (m_proxyId != b2_nullProxy)
+	if (m_proxyId != b2BroadPhase::e_nullProxy)
 	{
 		broadPhase->DestroyProxy(m_proxyId);
-		m_proxyId = b2_nullProxy;
+		m_proxyId = b2BroadPhase::e_nullProxy;
 	}
 
 	// Free the child shape.
-	switch (m_type)
+	switch (m_shape->m_type)
 	{
-	case b2_circleShape:
+	case b2Shape::e_circle:
 		{
 			b2CircleShape* s = (b2CircleShape*)m_shape;
 			s->~b2CircleShape();
@@ -162,19 +82,11 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator, b2BroadPhase* broadPhase)
 		}
 		break;
 
-	case b2_polygonShape:
+	case b2Shape::e_polygon:
 		{
 			b2PolygonShape* s = (b2PolygonShape*)m_shape;
 			s->~b2PolygonShape();
 			allocator->Free(s, sizeof(b2PolygonShape));
-		}
-		break;
-
-	case b2_edgeShape:
-		{
-			b2EdgeShape* s = (b2EdgeShape*)m_shape;
-			s->~b2EdgeShape();
-			allocator->Free(s, sizeof(b2EdgeShape));
 		}
 		break;
 
@@ -186,11 +98,11 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator, b2BroadPhase* broadPhase)
 	m_shape = NULL;
 }
 
-bool b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2XForm& transform1, const b2XForm& transform2)
+void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
 {
-	if (m_proxyId == b2_nullProxy)
+	if (m_proxyId == b2BroadPhase::e_nullProxy)
 	{	
-		return false;
+		return;
 	}
 
 	// Compute an AABB that covers the swept shape (may miss some rotation effect).
@@ -198,40 +110,58 @@ bool b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2XForm& transform1,
 	m_shape->ComputeAABB(&aabb1, transform1);
 	m_shape->ComputeAABB(&aabb2, transform2);
 	
-	b2AABB aabb;
-	aabb.Combine(aabb1, aabb2);
-
-	if (broadPhase->InRange(aabb))
-	{
-		broadPhase->MoveProxy(m_proxyId, aabb);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	m_aabb.Combine(aabb1, aabb2);
+	broadPhase->MoveProxy(m_proxyId, m_aabb);
 }
 
-void b2Fixture::RefilterProxy(b2BroadPhase* broadPhase, const b2XForm& transform)
+void b2Fixture::SetFilterData(const b2Filter& filter)
 {
-	if (m_proxyId == b2_nullProxy)
-	{	
+	m_filter = filter;
+
+	if (m_body == NULL)
+	{
 		return;
 	}
 
-	broadPhase->DestroyProxy(m_proxyId);
-
-	b2AABB aabb;
-	m_shape->ComputeAABB(&aabb, transform);
-
-	bool inRange = broadPhase->InRange(aabb);
-
-	if (inRange)
+	// Flag associated contacts for filtering.
+	b2ContactEdge* edge = m_body->GetConactList();
+	while (edge)
 	{
-		m_proxyId = broadPhase->CreateProxy(aabb, this);
-	}
-	else
-	{
-		m_proxyId = b2_nullProxy;
+		b2Contact* contact = edge->contact;
+		b2Fixture* fixtureA = contact->GetFixtureA();
+		b2Fixture* fixtureB = contact->GetFixtureB();
+		if (fixtureA == this || fixtureB == this)
+		{
+			contact->FlagForFiltering();
+		}
 	}
 }
+
+void b2Fixture::SetSensor(bool sensor)
+{
+	if (m_isSensor == sensor)
+	{
+		return;
+	}
+
+	m_isSensor = sensor;
+
+	if (m_body == NULL)
+	{
+		return;
+	}
+
+	// Flag associated contacts for filtering.
+	b2ContactEdge* edge = m_body->GetConactList();
+	while (edge)
+	{
+		b2Contact* contact = edge->contact;
+		b2Fixture* fixtureA = contact->GetFixtureA();
+		b2Fixture* fixtureB = contact->GetFixtureB();
+		if (fixtureA == this || fixtureB == this)
+		{
+			contact->SetAsSensor(m_isSensor);
+		}
+	}
+}
+

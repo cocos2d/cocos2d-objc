@@ -19,32 +19,19 @@
 #ifndef B2_WORLD_H
 #define B2_WORLD_H
 
-#include "../Common/b2Math.h"
-#include "../Common/b2BlockAllocator.h"
-#include "../Common/b2StackAllocator.h"
-#include "b2ContactManager.h"
-#include "b2WorldCallbacks.h"
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Common/b2BlockAllocator.h>
+#include <Box2D/Common/b2StackAllocator.h>
+#include <Box2D/Dynamics/b2ContactManager.h>
+#include <Box2D/Dynamics/b2WorldCallbacks.h>
 
 struct b2AABB;
 struct b2BodyDef;
 struct b2JointDef;
+struct b2TimeStep;
 class b2Body;
 class b2Fixture;
 class b2Joint;
-class b2Contact;
-class b2BroadPhase;
-class b2Controller;
-class b2ControllerDef;
-
-struct b2TimeStep
-{
-	float32 dt;			// time step
-	float32 inv_dt;		// inverse time step (0 if dt == 0).
-	float32 dtRatio;	// dt * inv_dt0
-	int32 velocityIterations;
-	int32 positionIterations;
-	bool warmStarting;
-};
 
 /// The world class manages all physics entities, dynamic simulation,
 /// and asynchronous queries. The world also contains efficient memory
@@ -53,19 +40,15 @@ class b2World
 {
 public:
 	/// Construct a world object.
-	/// @param worldAABB a bounding box that completely encompasses all your shapes.
 	/// @param gravity the world gravity vector.
 	/// @param doSleep improve performance by not simulating inactive bodies.
-	b2World(const b2AABB& worldAABB, const b2Vec2& gravity, bool doSleep);
+	b2World(const b2Vec2& gravity, bool doSleep);
 
 	/// Destruct the world. All physics entities are destroyed and all heap memory is released.
 	~b2World();
 
 	/// Register a destruction listener.
 	void SetDestructionListener(b2DestructionListener* listener);
-
-	/// Register a broad-phase boundary listener.
-	void SetBoundaryListener(b2BoundaryListener* listener);
 
 	/// Register a contact filter to provide specific control over collision.
 	/// Otherwise the default filter is used (b2_defaultFilter).
@@ -99,16 +82,6 @@ public:
 	/// @warning This function is locked during callbacks.
 	void DestroyJoint(b2Joint* joint);
 
-	/// Add a controller to the world.
-	b2Controller* CreateController( const b2ControllerDef* def);
-
-	/// Removes a controller from the world.
-	void DestroyController(b2Controller* controller);
-
-	/// The world provides a single static ground body with no collision shapes.
-	/// You can use this to simplify the creation of joints and static shapes.
-	b2Body* GetGroundBody();
-
 	/// Take a time step. This performs collision detection, integration,
 	/// and constraint solution.
 	/// @param timeStep the amount of time to simulate, this should not vary.
@@ -116,40 +89,14 @@ public:
 	/// @param positionIterations for the position constraint solver.
 	void Step(float32 timeStep, int32 velocityIterations, int32 positionIterations);
 
+	/// Call this to draw shapes and other debug draw data.
+	void DrawDebugData();
+
 	/// Query the world for all fixtures that potentially overlap the
-	/// provided AABB. You provide a fixture pointer buffer of specified
-	/// size. The number of shapes found is returned.
+	/// provided AABB.
+	/// @param callback a user implemented callback class.
 	/// @param aabb the query box.
-	/// @param fixtures a user allocated fixture pointer array of size maxCount (or greater).
-	/// @param maxCount the capacity of the shapes array.
-	/// @return the number of fixtures found in aabb.
-	int32 Query(const b2AABB& aabb, b2Fixture** fixtures, int32 maxCount);
-
-	/// Query the world for all fixtures that intersect a given segment. You provide a fixture
-	/// pointer buffer of specified size. The number of fixtures found is returned, and the buffer
-	/// is filled in order of intersection
-	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
-	/// Use b2Segment.Extend to create (semi-)infinite rays
-	/// @param fixtures a user allocated fixture pointer array of size maxCount (or greater).
-	/// @param maxCount the capacity of the shapes array
-	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
-	/// @param userData passed through the worlds contact filter, with method RayCollide. This can be used to filter valid shapes
-	/// @returns the number of shapes found
-	int32 Raycast(const b2Segment& segment, b2Fixture** fixtures, int32 maxCount, bool solidShapes, void* userData);
-
-	/// Performs a ray-cast as with Raycast, finding the first intersecting fixture.
-	/// @param segment defines the begin and end point of the ray cast, from p1 to p2.
-	/// Use b2Segment.Extend to create (semi-)infinite rays	
-	/// @param lambda returns the hit fraction. You can use this to compute the contact point
-	/// p = (1 - lambda) * segment.p1 + lambda * segment.p2.
-	/// @param normal returns the normal at the contact point. If there is no intersection, the normal
-	/// is not set.
-	/// @param solidShapes determines if shapes that the ray starts in are counted as hits.
-	/// @returns the colliding shape shape, or null if not found
-	b2Fixture* RaycastOne(const b2Segment& segment, float32* lambda, b2Vec2* normal, bool solidShapes, void* userData);
-
-	/// Check if the AABB is within the broad-phase limits.
-	bool InRange(const b2AABB& aabb) const;
+	void Query(b2QueryCallback* callback, const b2AABB& aabb);
 
 	/// Get the world body list. With the returned body, use b2Body::GetNext to get
 	/// the next body in the world list. A NULL body indicates the end of the list.
@@ -167,28 +114,14 @@ public:
 	/// @warning contacts are 
 	b2Contact* GetContactList();
 
-	/// Get the world controller list. With the returned controller, use b2Controller::GetNext to get
-	/// the next controller in the world list. A NULL controller indicates the end of the list.
-	/// @return the head of the world controller list.
-	b2Controller* GetControllerList();
-
-	/// Re-filter a fixture. This re-runs contact filtering on a fixture.
-	void Refilter(b2Fixture* fixture);
-
 	/// Enable/disable warm starting. For testing.
 	void SetWarmStarting(bool flag) { m_warmStarting = flag; }
 
 	/// Enable/disable continuous physics. For testing.
 	void SetContinuousPhysics(bool flag) { m_continuousPhysics = flag; }
 
-	/// Perform validation of internal data structures.
-	void Validate();
-
 	/// Get the number of broad-phase proxies.
 	int32 GetProxyCount() const;
-
-	/// Get the number of broad-phase pairs.
-	int32 GetPairCount() const;
 
 	/// Get the number of bodies.
 	int32 GetBodyCount() const;
@@ -208,10 +141,17 @@ public:
 	/// Get the global gravity vector.
 	b2Vec2 GetGravity() const;
 
-	/// cocos2d: moved from private to public
-	void DrawDebugData();
+	/// Is the world locked (in the middle of a time step).
+	bool IsLocked() const;
 
 private:
+
+	// m_flags
+	enum
+	{
+		e_newFixture	= 0x0001,
+		e_locked		= 0x0002,
+	};
 
 	friend class b2Body;
 	friend class b2ContactManager;
@@ -221,35 +161,20 @@ private:
 	void SolveTOI(const b2TimeStep& step);
 
 	void DrawJoint(b2Joint* joint);
-	void DrawShape(b2Fixture* shape, const b2XForm& xf, const b2Color& color);
-
-	//Is it safe to pass private static function pointers?
-	static float32 RaycastSortKey(void* shape);
+	void DrawShape(b2Fixture* shape, const b2Transform& xf, const b2Color& color);
 
 	b2BlockAllocator m_blockAllocator;
 	b2StackAllocator m_stackAllocator;
 
-	bool m_lock;
+	int32 m_flags;
 
-	b2BroadPhase* m_broadPhase;
 	b2ContactManager m_contactManager;
 
 	b2Body* m_bodyList;
 	b2Joint* m_jointList;
-	b2Controller* m_controllerList;
-
-	b2Vec2 m_raycastNormal;
-	void* m_raycastUserData;
-	const b2Segment* m_raycastSegment;
-	bool m_raycastSolidShape;
-
-	// Do not access
-	b2Contact* m_contactList;
 
 	int32 m_bodyCount;
-	int32 m_contactCount;
 	int32 m_jointCount;
-	int32 m_controllerCount;
 
 	b2Vec2 m_gravity;
 	bool m_allowSleep;
@@ -257,9 +182,6 @@ private:
 	b2Body* m_groundBody;
 
 	b2DestructionListener* m_destructionListener;
-	b2BoundaryListener* m_boundaryListener;
-	b2ContactFilter* m_contactFilter;
-	b2ContactListener* m_contactListener;
 	b2DebugDraw* m_debugDraw;
 
 	// This is used to compute the time step ratio to
@@ -273,11 +195,6 @@ private:
 	bool m_continuousPhysics;
 };
 
-inline b2Body* b2World::GetGroundBody()
-{
-	return m_groundBody;
-}
-
 inline b2Body* b2World::GetBodyList()
 {
 	return m_bodyList;
@@ -290,12 +207,7 @@ inline b2Joint* b2World::GetJointList()
 
 inline b2Contact* b2World::GetContactList()
 {
-	return m_contactList;
-}
-
-inline b2Controller* b2World::GetControllerList()
-{
-	return m_controllerList;
+	return m_contactManager.m_contactList;
 }
 
 inline int32 b2World::GetBodyCount() const
@@ -310,12 +222,7 @@ inline int32 b2World::GetJointCount() const
 
 inline int32 b2World::GetContactCount() const
 {
-	return m_contactCount;
-}
-
-inline int32 b2World::GetControllerCount() const
-{
-	return m_controllerCount;
+	return m_contactManager.m_contactCount;
 }
 
 inline void b2World::SetGravity(const b2Vec2& gravity)
@@ -326,6 +233,11 @@ inline void b2World::SetGravity(const b2Vec2& gravity)
 inline b2Vec2 b2World::GetGravity() const
 {
 	return m_gravity;
+}
+
+inline bool b2World::IsLocked() const
+{
+	return (m_flags & e_locked) == e_locked;
 }
 
 #endif
