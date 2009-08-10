@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -78,7 +78,7 @@ public:
 		m_joints[m_jointCount++] = joint;
 	}
 
-	void Report(b2ContactConstraint* constraints);
+	void Report(const b2ContactConstraint* constraints);
 
 	b2StackAllocator* m_allocator;
 	b2ContactListener* m_listener;

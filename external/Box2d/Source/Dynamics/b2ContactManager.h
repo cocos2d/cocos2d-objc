@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -30,23 +30,36 @@ struct b2TimeStep;
 class b2ContactManager : public b2PairCallback
 {
 public:
-	b2ContactManager() : m_world(NULL), m_destroyImmediate(false) {}
+	b2ContactManager() : 
+		m_world(NULL), 
+		m_destroyImmediate(false),
+		m_nextContact(NULL)
+		{}
 
 	// Implements PairCallback
-	void* PairAdded(void* proxyUserData1, void* proxyUserData2);
+	void* PairAdded(void* proxyUserDataA, void* proxyUserDataB);
 
 	// Implements PairCallback
-	void PairRemoved(void* proxyUserData1, void* proxyUserData2, void* pairUserData);
+	void PairRemoved(void* proxyUserDataA, void* proxyUserDataB, void* pairUserData);
 
 	void Destroy(b2Contact* c);
 
 	void Collide();
+            
+	/// Updates the contact, which includes re-evaluating it and calling user call backs.
+	/// Thus the world can be arbitrarily changed.
+	/// @return True if the contact has been destroyed during the callback.
+	bool Update(b2Contact* contact);
 
+private:
+	friend class b2World;
 	b2World* m_world;
 
 	// This lets us provide broadphase proxy pair user data for
 	// contacts that shouldn't exist.
 	b2NullContact m_nullContact;
+    
+    b2Contact* m_nextContact;
 
 	bool m_destroyImmediate;
 };

@@ -17,15 +17,13 @@
 */
 
 #include "b2Body.h"
+#include "b2Fixture.h"
 #include "b2World.h"
+#include "Controllers/b2Controller.h"
 #include "Joints/b2Joint.h"
-#include "../Collision/Shapes/b2Shape.h"
-#include "../Collision/Shapes/b2EdgeShape.h"
 
 b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 {
-	b2Assert(world->m_lock == false);
-
 	m_flags = 0;
 
 	if (bd->isBullet)
@@ -61,6 +59,9 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 	m_prev = NULL;
 	m_next = NULL;
 
+	m_linearVelocity = bd->linearVelocity;
+	m_angularVelocity = bd->angularVelocity;
+
 	m_linearDamping = bd->linearDamping;
 	m_angularDamping = bd->angularDamping;
 
@@ -83,12 +84,9 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 		m_invMass = 1.0f / m_mass;
 	}
 
-	if ((m_flags & b2Body::e_fixedRotationFlag) == 0)
-	{
-		m_I = bd->massData.I;
-	}
+	m_I = bd->massData.I;
 	
-	if (m_I > 0.0f)
+	if (m_I > 0.0f && (m_flags & b2Body::e_fixedRotationFlag) == 0)
 	{
 		m_invI = 1.0f / m_I;
 	}
@@ -104,121 +102,46 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 
 	m_userData = bd->userData;
 
-	m_shapeList = NULL;
-	m_shapeCount = 0;
+	m_fixtureList = NULL;
+	m_fixtureCount = 0;
 }
 
 b2Body::~b2Body()
 {
-	b2Assert(m_world->m_lock == false);
 	// shapes and joints are destroyed in b2World::Destroy
 }
 
-
-float32 connectEdges(b2EdgeShape * const & s1, b2EdgeShape * const & s2, float32 angle1)
+b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
 {
-	float32 angle2 = b2Atan2(s2->GetDirectionVector().y, s2->GetDirectionVector().x);
-	b2Vec2 core = tanf((angle2 - angle1) * 0.5f) * s2->GetDirectionVector();
-	core = b2_toiSlop * (core - s2->GetNormalVector()) + s2->GetVertex1();
-	b2Vec2 cornerDir = s1->GetDirectionVector() + s2->GetDirectionVector();
-	cornerDir.Normalize();
-	bool convex = b2Dot(s1->GetDirectionVector(), s2->GetNormalVector()) > 0.0f;
-	s1->SetNextEdge(s2, core, cornerDir, convex);
-	s2->SetPrevEdge(s1, core, cornerDir, convex);
-	return angle2;
+	b2BlockAllocator* allocator = &m_world->m_blockAllocator;
+	b2BroadPhase* broadPhase = m_world->m_broadPhase;
+
+	void* mem = allocator->Allocate(sizeof(b2Fixture));
+	b2Fixture* fixture = new (mem) b2Fixture;
+	fixture->Create(allocator, broadPhase, this, m_xf, def);
+
+	fixture->m_next = m_fixtureList;
+	m_fixtureList = fixture;
+	++m_fixtureCount;
+
+	fixture->m_body = this;
+
+	return fixture;
 }
 
-b2Shape* b2Body::CreateShape(b2ShapeDef* def)
+void b2Body::DestroyFixture(b2Fixture* fixture)
 {
-	b2Assert(m_world->m_lock == false);
-	if (m_world->m_lock == true)
-	{
-		return NULL;
-	}
-	
-	
-	// TODO: Decide on a better place to initialize edgeShapes. (b2Shape::Create() can't
-	//       return more than one shape to add to parent body... maybe it should add
-	//       shapes directly to the body instead of returning them?)
-	if (def->type == e_edgeShape) {
-		b2EdgeChainDef* edgeDef = (b2EdgeChainDef*)def;
-		b2Vec2 v1;
-		b2Vec2 v2;
-		int i;
-		
-		if (edgeDef->isALoop) {
-			v1 = edgeDef->vertices[edgeDef->vertexCount-1];
-			i = 0;
-		} else {
-			v1 = edgeDef->vertices[0];
-			i = 1;
-		}
-		
-		b2EdgeShape* s0 = NULL;
-		b2EdgeShape* s1 = NULL;
-		b2EdgeShape* s2 = NULL;
-		float32 angle = 0.0f;
-		for (; i < edgeDef->vertexCount; i++) {
-			v2 = edgeDef->vertices[i];
-			
-			void* mem = m_world->m_blockAllocator.Allocate(sizeof(b2EdgeShape));
-			s2 = new (mem) b2EdgeShape(v1, v2, def);
-			s2->m_next = m_shapeList;
-			m_shapeList = s2;
-			++m_shapeCount;
-			s2->m_body = this;
-			s2->CreateProxy(m_world->m_broadPhase, m_xf);
-			s2->UpdateSweepRadius(m_sweep.localCenter);
-			
-			if (s1 == NULL) {
-				s0 = s2;
-				angle = b2Atan2(s2->GetDirectionVector().y, s2->GetDirectionVector().x);
-			} else {
-				angle = connectEdges(s1, s2, angle);
-			}
-			s1 = s2;
-			v1 = v2;
-		}
-		if (edgeDef->isALoop) connectEdges(s1, s0, angle);
-		return s0;
-	}
-	
-	b2Shape* s = b2Shape::Create(def, &m_world->m_blockAllocator);
+	b2Assert(fixture->m_body == this);
 
-	s->m_next = m_shapeList;
-	m_shapeList = s;
-	++m_shapeCount;
-
-	s->m_body = this;
-
-	// Add the shape to the world's broad-phase.
-	s->CreateProxy(m_world->m_broadPhase, m_xf);
-
-	// Compute the sweep radius for CCD.
-	s->UpdateSweepRadius(m_sweep.localCenter);
-
-	return s;
-}
-
-void b2Body::DestroyShape(b2Shape* s)
-{
-	b2Assert(m_world->m_lock == false);
-	if (m_world->m_lock == true)
-	{
-		return;
-	}
-
-	b2Assert(s->GetBody() == this);
-	s->DestroyProxy(m_world->m_broadPhase);
-
-	b2Assert(m_shapeCount > 0);
-	b2Shape** node = &m_shapeList;
+	// Remove the fixture from this body's singly linked list.
+	b2Assert(m_fixtureCount > 0);
+	b2Fixture** node = &m_fixtureList;
 	bool found = false;
 	while (*node != NULL)
 	{
-		if (*node == s)
+		if (*node == fixture)
 		{
-			*node = s->m_next;
+			*node = fixture->m_next;
 			found = true;
 			break;
 		}
@@ -229,23 +152,21 @@ void b2Body::DestroyShape(b2Shape* s)
 	// You tried to remove a shape that is not attached to this body.
 	b2Assert(found);
 
-	s->m_body = NULL;
-	s->m_next = NULL;
+	b2BlockAllocator* allocator = &m_world->m_blockAllocator;
+	b2BroadPhase* broadPhase = m_world->m_broadPhase;
 
-	--m_shapeCount;
+	fixture->Destroy(allocator, broadPhase);
+	fixture->m_body = NULL;
+	fixture->m_next = NULL;
+	fixture->~b2Fixture();
+	allocator->Free(fixture, sizeof(b2Fixture));
 
-	b2Shape::Destroy(s, &m_world->m_blockAllocator);
+	--m_fixtureCount;
 }
 
 // TODO_ERIN adjust linear velocity and torque to account for movement of center.
-void b2Body::SetMass(const b2MassData* massData)
+void b2Body::SetMassData(const b2MassData* massData)
 {
-	b2Assert(m_world->m_lock == false);
-	if (m_world->m_lock == true)
-	{
-		return;
-	}
-
 	m_invMass = 0.0f;
 	m_I = 0.0f;
 	m_invI = 0.0f;
@@ -257,12 +178,9 @@ void b2Body::SetMass(const b2MassData* massData)
 		m_invMass = 1.0f / m_mass;
 	}
 
-	if ((m_flags & b2Body::e_fixedRotationFlag) == 0)
-	{
-		m_I = massData->I;
-	}
+	m_I = massData->I;
 
-	if (m_I > 0.0f)
+	if (m_I > 0.0f && (m_flags & b2Body::e_fixedRotationFlag) == 0)
 	{
 		m_invI = 1.0f / m_I;
 	}
@@ -270,12 +188,6 @@ void b2Body::SetMass(const b2MassData* massData)
 	// Move center of mass.
 	m_sweep.localCenter = massData->center;
 	m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
-
-	// Update the sweep radii of all child shapes.
-	for (b2Shape* s = m_shapeList; s; s = s->m_next)
-	{
-		s->UpdateSweepRadius(m_sweep.localCenter);
-	}
 
 	int16 oldType = m_type;
 	if (m_invMass == 0.0f && m_invI == 0.0f)
@@ -290,9 +202,9 @@ void b2Body::SetMass(const b2MassData* massData)
 	// If the body type changed, we need to refilter the broad-phase proxies.
 	if (oldType != m_type)
 	{
-		for (b2Shape* s = m_shapeList; s; s = s->m_next)
+		for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 		{
-			s->RefilterProxy(m_world->m_broadPhase, m_xf);
+			f->RefilterProxy(m_world->m_broadPhase, m_xf);
 		}
 	}
 }
@@ -300,12 +212,6 @@ void b2Body::SetMass(const b2MassData* massData)
 // TODO_ERIN adjust linear velocity and torque to account for movement of center.
 void b2Body::SetMassFromShapes()
 {
-	b2Assert(m_world->m_lock == false);
-	if (m_world->m_lock == true)
-	{
-		return;
-	}
-
 	// Compute mass data from shapes. Each shape has its own density.
 	m_mass = 0.0f;
 	m_invMass = 0.0f;
@@ -313,10 +219,10 @@ void b2Body::SetMassFromShapes()
 	m_invI = 0.0f;
 
 	b2Vec2 center = b2Vec2_zero;
-	for (b2Shape* s = m_shapeList; s; s = s->m_next)
+	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 	{
 		b2MassData massData;
-		s->ComputeMass(&massData);
+		f->ComputeMass(&massData);
 		m_mass += massData.mass;
 		center += massData.mass * massData.center;
 		m_I += massData.I;
@@ -346,12 +252,6 @@ void b2Body::SetMassFromShapes()
 	m_sweep.localCenter = center;
 	m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
-	// Update the sweep radii of all child shapes.
-	for (b2Shape* s = m_shapeList; s; s = s->m_next)
-	{
-		s->UpdateSweepRadius(m_sweep.localCenter);
-	}
-
 	int16 oldType = m_type;
 	if (m_invMass == 0.0f && m_invI == 0.0f)
 	{
@@ -365,21 +265,47 @@ void b2Body::SetMassFromShapes()
 	// If the body type changed, we need to refilter the broad-phase proxies.
 	if (oldType != m_type)
 	{
-		for (b2Shape* s = m_shapeList; s; s = s->m_next)
+		for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 		{
-			s->RefilterProxy(m_world->m_broadPhase, m_xf);
+			f->RefilterProxy(m_world->m_broadPhase, m_xf);
 		}
 	}
 }
 
-bool b2Body::SetXForm(const b2Vec2& position, float32 angle)
+void b2Body::SetStatic()
 {
-	b2Assert(m_world->m_lock == false);
-	if (m_world->m_lock == true)
+	if (m_type == e_staticType)
 	{
-		return true;
+		return;
 	}
 
+	m_mass = 0.0;
+	m_invMass = 0.0f;
+	m_I = 0.0f;
+	m_invI = 0.0f;
+	m_type = e_staticType;
+	
+	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+	{
+		f->RefilterProxy(m_world->m_broadPhase, m_xf);
+	}
+}
+
+bool b2Body::IsConnected(const b2Body* other) const
+{
+	for (b2JointEdge* jn = m_jointList; jn; jn = jn->next)
+	{
+		if (jn->other == other)
+		{
+			return jn->joint->m_collideConnected == false;
+		}
+	}
+
+	return false;
+}
+
+bool b2Body::SetXForm(const b2Vec2& position, float32 angle)
+{
 	if (IsFrozen())
 	{
 		return false;
@@ -392,9 +318,9 @@ bool b2Body::SetXForm(const b2Vec2& position, float32 angle)
 	m_sweep.a0 = m_sweep.a = angle;
 
 	bool freeze = false;
-	for (b2Shape* s = m_shapeList; s; s = s->m_next)
+	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 	{
-		bool inRange = s->Synchronize(m_world->m_broadPhase, m_xf, m_xf);
+		bool inRange = f->Synchronize(m_world->m_broadPhase, m_xf, m_xf);
 
 		if (inRange == false)
 		{
@@ -408,10 +334,6 @@ bool b2Body::SetXForm(const b2Vec2& position, float32 angle)
 		m_flags |= e_frozenFlag;
 		m_linearVelocity.SetZero();
 		m_angularVelocity = 0.0f;
-		for (b2Shape* s = m_shapeList; s; s = s->m_next)
-		{
-			s->DestroyProxy(m_world->m_broadPhase);
-		}
 
 		// Failure
 		return false;
@@ -422,16 +344,16 @@ bool b2Body::SetXForm(const b2Vec2& position, float32 angle)
 	return true;
 }
 
-bool b2Body::SynchronizeShapes()
+bool b2Body::SynchronizeFixtures()
 {
 	b2XForm xf1;
 	xf1.R.Set(m_sweep.a0);
 	xf1.position = m_sweep.c0 - b2Mul(xf1.R, m_sweep.localCenter);
 
 	bool inRange = true;
-	for (b2Shape* s = m_shapeList; s; s = s->m_next)
+	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 	{
-		inRange = s->Synchronize(m_world->m_broadPhase, xf1, m_xf);
+		inRange = f->Synchronize(m_world->m_broadPhase, xf1, m_xf);
 		if (inRange == false)
 		{
 			break;
@@ -443,10 +365,6 @@ bool b2Body::SynchronizeShapes()
 		m_flags |= e_frozenFlag;
 		m_linearVelocity.SetZero();
 		m_angularVelocity = 0.0f;
-		for (b2Shape* s = m_shapeList; s; s = s->m_next)
-		{
-			s->DestroyProxy(m_world->m_broadPhase);
-		}
 
 		// Failure
 		return false;

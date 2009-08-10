@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -17,32 +17,33 @@
 */
 
 #include "b2WorldCallbacks.h"
-#include "../Collision/Shapes/b2Shape.h"
-
-b2ContactFilter b2_defaultFilter;
+#include "b2Fixture.h"
 
 // Return true if contact calculations should be performed between these two shapes.
 // If you implement your own collision filter you may want to build from this implementation.
-bool b2ContactFilter::ShouldCollide(b2Shape* shape1, b2Shape* shape2)
+bool b2ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 {
-	const b2FilterData& filter1 = shape1->GetFilterData();
-	const b2FilterData& filter2 = shape2->GetFilterData();
+	const b2FilterData& filterA = fixtureA->GetFilterData();
+	const b2FilterData& filterB = fixtureB->GetFilterData();
 
-	if (filter1.groupIndex == filter2.groupIndex && filter1.groupIndex != 0)
+	if (filterA.groupIndex == filterB.groupIndex && filterA.groupIndex != 0)
 	{
-		return filter1.groupIndex > 0;
+		return filterA.groupIndex > 0;
 	}
 
-	bool collide = (filter1.maskBits & filter2.categoryBits) != 0 && (filter1.categoryBits & filter2.maskBits) != 0;
+	bool collide = (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
 	return collide;
 }
 
-bool b2ContactFilter::RayCollide(void* userData, b2Shape* shape)
+bool b2ContactFilter::RayCollide(void* userData, b2Fixture* fixture)
 {
-	//By default, cast userData as a shape, and then collide if the shapes would collide
-	if(!userData)
+	// By default, cast userData as a fixture, and then collide if the shapes would collide
+	if (userData == NULL)
+	{
 		return true;
-	return ShouldCollide((b2Shape*)userData,shape);
+	}
+
+	return ShouldCollide((b2Fixture*)userData,fixture);
 }
 
 b2DebugDraw::b2DebugDraw()

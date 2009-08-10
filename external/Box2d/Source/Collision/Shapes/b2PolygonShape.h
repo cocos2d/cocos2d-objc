@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -21,15 +21,16 @@
 
 #include "b2Shape.h"
 
-/// Convex polygon. The vertices must be in CCW order for a right-handed
-/// coordinate system with the z-axis coming out of the screen.
-struct b2PolygonDef : public b2ShapeDef
+/// A convex polygon. It is assumed that the interior of the polygon is to
+/// the left of each edge.
+class b2PolygonShape : public b2Shape
 {
-	b2PolygonDef()
-	{
-		type = e_polygonShape;
-		vertexCount = 0;
-	}
+public:
+	b2PolygonShape() { m_type = b2_polygonShape; m_radius = b2_polygonRadius; }
+
+	/// Copy vertices. This assumes the vertices define a convex polygon.
+	/// It is assumed that the exterior is the the right of each edge.
+	void Set(const b2Vec2* vertices, int32 vertexCount);
 
 	/// Build vertices to represent an axis-aligned box.
 	/// @param hx the half-width.
@@ -43,18 +44,9 @@ struct b2PolygonDef : public b2ShapeDef
 	/// @param angle the rotation of the box in local coordinates.
 	void SetAsBox(float32 hx, float32 hy, const b2Vec2& center, float32 angle);
 
-	/// The polygon vertices in local coordinates.
-	b2Vec2 vertices[b2_maxPolygonVertices];
+	/// Set this as a single edge.
+	void SetAsEdge(const b2Vec2& v1, const b2Vec2& v2);
 
-	/// The number of polygon vertices.
-	int32 vertexCount;
-};
-
-
-/// A convex polygon.
-class b2PolygonShape : public b2Shape
-{
-public:
 	/// @see b2Shape::TestPoint
 	bool TestPoint(const b2XForm& transform, const b2Vec2& p) const;
 
@@ -68,13 +60,8 @@ public:
 	/// @see b2Shape::ComputeAABB
 	void ComputeAABB(b2AABB* aabb, const b2XForm& transform) const;
 
-	/// @see b2Shape::ComputeSweptAABB
-	void ComputeSweptAABB(	b2AABB* aabb,
-		const b2XForm& transform1,
-		const b2XForm& transform2) const;
-
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData) const;
+	void ComputeMass(b2MassData* massData, float32 density) const;
 
 	/// @see b2Shape::ComputeSubmergedArea
 	float32 ComputeSubmergedArea(	const b2Vec2& normal,
@@ -82,88 +69,65 @@ public:
 									const b2XForm& xf, 
 									b2Vec2* c) const;
 
-	/// Get the oriented bounding box relative to the parent body.
-	const b2OBB& GetOBB() const;
+	/// @see b2Shape::ComputeSweepRadius
+	float32 ComputeSweepRadius(const b2Vec2& pivot) const;
 
-	/// Get local centroid relative to the parent body.
-	const b2Vec2& GetCentroid() const;
+	/// Get the supporting vertex index in the given direction.
+	int32 GetSupport(const b2Vec2& d) const;
+
+	/// Get the supporting vertex in the given direction.
+	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
 
 	/// Get the vertex count.
-	int32 GetVertexCount() const;
+	int32 GetVertexCount() const { return m_vertexCount; }
 
-	/// Get the vertices in local coordinates.
-	const b2Vec2* GetVertices() const;
+	/// Get a vertex by index.
+	const b2Vec2& GetVertex(int32 index) const;
 
-	/// Get the core vertices in local coordinates. These vertices
-	/// represent a smaller polygon that is used for time of impact
-	/// computations.
-	const b2Vec2* GetCoreVertices() const;
-
-	/// Get the edge normal vectors. There is one for each vertex.
-	const b2Vec2* GetNormals() const;
-
-	/// Get the first vertex and apply the supplied transform.
-	b2Vec2 GetFirstVertex(const b2XForm& xf) const;
-
-	/// Get the centroid and apply the supplied transform.
-	b2Vec2 Centroid(const b2XForm& xf) const;
-
-	/// Get the support point in the given world direction.
-	/// Use the supplied transform.
-	b2Vec2 Support(const b2XForm& xf, const b2Vec2& d) const;
-
-private:
-
-	friend class b2Shape;
-
-	b2PolygonShape(const b2ShapeDef* def);
-
-	void UpdateSweepRadius(const b2Vec2& center);
-
-	// Local position of the polygon centroid.
 	b2Vec2 m_centroid;
-
-	b2OBB m_obb;
-
 	b2Vec2 m_vertices[b2_maxPolygonVertices];
 	b2Vec2 m_normals[b2_maxPolygonVertices];
-	b2Vec2 m_coreVertices[b2_maxPolygonVertices];
 	int32 m_vertexCount;
 };
 
-inline b2Vec2 b2PolygonShape::GetFirstVertex(const b2XForm& xf) const
+inline int32 b2PolygonShape::GetSupport(const b2Vec2& d) const
 {
-	return b2Mul(xf, m_coreVertices[0]);
+	int32 bestIndex = 0;
+	float32 bestValue = b2Dot(m_vertices[0], d);
+	for (int32 i = 1; i < m_vertexCount; ++i)
+	{
+		float32 value = b2Dot(m_vertices[i], d);
+		if (value > bestValue)
+		{
+			bestIndex = i;
+			bestValue = value;
+		}
+	}
+
+	return bestIndex;
 }
 
-inline const b2OBB& b2PolygonShape::GetOBB() const
+inline const b2Vec2& b2PolygonShape::GetSupportVertex(const b2Vec2& d) const
 {
-	return m_obb;
+	int32 bestIndex = 0;
+	float32 bestValue = b2Dot(m_vertices[0], d);
+	for (int32 i = 1; i < m_vertexCount; ++i)
+	{
+		float32 value = b2Dot(m_vertices[i], d);
+		if (value > bestValue)
+		{
+			bestIndex = i;
+			bestValue = value;
+		}
+	}
+
+	return m_vertices[bestIndex];
 }
 
-inline const b2Vec2& b2PolygonShape::GetCentroid() const
+inline const b2Vec2& b2PolygonShape::GetVertex(int32 index) const
 {
-	return m_centroid;
-}
-
-inline int32 b2PolygonShape::GetVertexCount() const
-{
-	return m_vertexCount;
-}
-
-inline const b2Vec2* b2PolygonShape::GetVertices() const
-{
-	return m_vertices;
-}
-
-inline const b2Vec2* b2PolygonShape::GetCoreVertices() const
-{
-	return m_coreVertices;
-}
-
-inline const b2Vec2* b2PolygonShape::GetNormals() const
-{
-	return m_normals;
+	b2Assert(0 <= index && index < m_vertexCount);
+	return m_vertices[index];
 }
 
 #endif

@@ -63,7 +63,7 @@ public:
 	/// Sets damping independantly along the x and y axes
 	void SetAxisAligned(float32 xDamping,float32 yDamping);
 private:
-	b2TensorDampingController* Create(b2BlockAllocator* allocator);
+	b2TensorDampingController* Create(b2BlockAllocator* allocator) const;
 };
 
 #endif

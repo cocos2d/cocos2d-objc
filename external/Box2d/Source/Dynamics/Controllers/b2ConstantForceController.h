@@ -48,7 +48,7 @@ public:
 	/// The force to apply
 	b2Vec2 F;
 private:
-	b2ConstantForceController* Create(b2BlockAllocator* allocator);
+	b2ConstantForceController* Create(b2BlockAllocator* allocator) const;
 };
 
 #endif

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -30,31 +30,33 @@ class b2StackAllocator;
 
 struct b2ContactConstraintPoint
 {
-	b2Vec2 localAnchor1;
-	b2Vec2 localAnchor2;
-	b2Vec2 r1;
-	b2Vec2 r2;
+	b2Vec2 localPoint;
+	b2Vec2 rA;
+	b2Vec2 rB;
 	float32 normalImpulse;
 	float32 tangentImpulse;
 	float32 normalMass;
 	float32 tangentMass;
 	float32 equalizedMass;
-	float32 separation;
 	float32 velocityBias;
 };
 
 struct b2ContactConstraint
 {
 	b2ContactConstraintPoint points[b2_maxManifoldPoints];
+	b2Vec2 localPlaneNormal;
+	b2Vec2 localPoint;
 	b2Vec2 normal;
 	b2Mat22 normalMass;
 	b2Mat22 K;
-	b2Manifold* manifold;
-	b2Body* body1;
-	b2Body* body2;
+	b2Body* bodyA;
+	b2Body* bodyB;
+	b2Manifold::Type type;
+	float32 radius;
 	float32 friction;
 	float32 restitution;
 	int32 pointCount;
+	b2Manifold* manifold;
 };
 
 class b2ContactSolver

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -18,6 +18,7 @@
 
 #include "b2Island.h"
 #include "b2Body.h"
+#include "b2Fixture.h"
 #include "b2World.h"
 #include "Contacts/b2Contact.h"
 #include "Contacts/b2ContactSolver.h"
@@ -204,39 +205,6 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 		// v2 = (1.0f - c * dt) * v1
 		b->m_linearVelocity *= b2Clamp(1.0f - step.dt * b->m_linearDamping, 0.0f, 1.0f);
 		b->m_angularVelocity *= b2Clamp(1.0f - step.dt * b->m_angularDamping, 0.0f, 1.0f);
-
-		// Check for large velocities.
-#ifdef TARGET_FLOAT32_IS_FIXED
-		// Fixed point code written this way to prevent
-		// overflows, float code is optimized for speed
-
-		float32 vMagnitude = b->m_linearVelocity.Length();
-		if(vMagnitude > b2_maxLinearVelocity) {
-			b->m_linearVelocity *= b2_maxLinearVelocity/vMagnitude;
-		}
-		b->m_angularVelocity = b2Clamp(b->m_angularVelocity, 
-			-b2_maxAngularVelocity, b2_maxAngularVelocity);
-
-#else
-
-		if (b2Dot(b->m_linearVelocity, b->m_linearVelocity) > b2_maxLinearVelocitySquared)
-		{
-			b->m_linearVelocity.Normalize();
-			b->m_linearVelocity *= b2_maxLinearVelocity;
-		}
-		if (b->m_angularVelocity * b->m_angularVelocity > b2_maxAngularVelocitySquared)
-		{
-			if (b->m_angularVelocity < 0.0f)
-			{
-				b->m_angularVelocity = -b2_maxAngularVelocity;
-			}
-			else
-			{
-				b->m_angularVelocity = b2_maxAngularVelocity;
-			}
-		}
-#endif
-
 	}
 
 	b2ContactSolver contactSolver(step, m_contacts, m_contactCount, m_allocator);
@@ -270,6 +238,27 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 
 		if (b->IsStatic())
 			continue;
+
+		// Check for large velocities.
+		b2Vec2 translation = step.dt * b->m_linearVelocity;
+		if (b2Dot(translation, translation) > b2_maxTranslationSquared)
+		{
+			translation.Normalize();
+			b->m_linearVelocity = (b2_maxTranslation * step.inv_dt) * translation;
+		}
+
+		float32 rotation = step.dt * b->m_angularVelocity;
+		if (rotation * rotation > b2_maxRotationSquared)
+		{
+			if (rotation < 0.0)
+			{
+				b->m_angularVelocity = -step.inv_dt * b2_maxRotation;
+			}
+			else
+			{
+				b->m_angularVelocity = step.inv_dt * b2_maxRotation;
+			}
+		}
 
 		// Store positions for continuous collision.
 		b->m_sweep.c0 = b->m_sweep.c;
@@ -366,7 +355,8 @@ void b2Island::SolveTOI(b2TimeStep& subStep)
 {
 	b2ContactSolver contactSolver(subStep, m_contacts, m_contactCount, m_allocator);
 
-	// No warm starting needed for TOI contact events.
+	// No warm starting is needed for TOI events because warm
+	// starting impulses were applied in the discrete solver.
 
 	// Warm starting for joints is off for now, but we need to
 	// call this function to compute Jacobians.
@@ -396,6 +386,27 @@ void b2Island::SolveTOI(b2TimeStep& subStep)
 		if (b->IsStatic())
 			continue;
 
+		// Check for large velocities.
+		b2Vec2 translation = subStep.dt * b->m_linearVelocity;
+		if (b2Dot(translation, translation) > b2_maxTranslationSquared)
+		{
+			translation.Normalize();
+			b->m_linearVelocity = (b2_maxTranslation * subStep.inv_dt) * translation;
+		}
+
+		float32 rotation = subStep.dt * b->m_angularVelocity;
+		if (rotation * rotation > b2_maxRotationSquared)
+		{
+			if (rotation < 0.0)
+			{
+				b->m_angularVelocity = -subStep.inv_dt * b2_maxRotation;
+			}
+			else
+			{
+				b->m_angularVelocity = subStep.inv_dt * b2_maxRotation;
+			}
+		}
+
 		// Store positions for continuous collision.
 		b->m_sweep.c0 = b->m_sweep.c;
 		b->m_sweep.a0 = b->m_sweep.a;
@@ -409,6 +420,28 @@ void b2Island::SolveTOI(b2TimeStep& subStep)
 
 		// Note: shapes are synchronized later.
 	}
+
+#if 0
+	{
+		for (int32 i = 0; i < m_contactCount; ++i)
+		{
+			m_contacts[i]->Update(NULL);
+		}
+		b2ContactSolver contactSolver2(subStep, m_contacts, m_contactCount, m_allocator);
+
+		// Solve position constraints.
+		const float32 k_toiBaumgarte = 0.75f;
+		for (int32 i = 0; i < subStep.positionIterations; ++i)
+		{
+			bool contactsOkay = contactSolver2.SolvePositionConstraints(k_toiBaumgarte);
+
+			if (contactsOkay)
+			{
+				break;
+			}
+		}
+	}
+#else
 
 	// Solve position constraints.
 	const float32 k_toiBaumgarte = 0.75f;
@@ -427,11 +460,12 @@ void b2Island::SolveTOI(b2TimeStep& subStep)
 			break;
 		}
 	}
+#endif
 
 	Report(contactSolver.m_constraints);
 }
 
-void b2Island::Report(b2ContactConstraint* constraints)
+void b2Island::Report(const b2ContactConstraint* constraints)
 {
 	if (m_listener == NULL)
 	{
@@ -441,31 +475,16 @@ void b2Island::Report(b2ContactConstraint* constraints)
 	for (int32 i = 0; i < m_contactCount; ++i)
 	{
 		b2Contact* c = m_contacts[i];
-		b2ContactConstraint* cc = constraints + i;
-		b2ContactResult cr;
-		cr.shape1 = c->GetShape1();
-		cr.shape2 = c->GetShape2();
-		b2Body* b1 = cr.shape1->GetBody();
-		int32 manifoldCount = c->GetManifoldCount();
-		b2Manifold* manifolds = c->GetManifolds();
-		for (int32 j = 0; j < manifoldCount; ++j)
+
+		const b2ContactConstraint* cc = constraints + i;
+		
+		b2ContactImpulse impulse;
+		for (int32 j = 0; j < cc->pointCount; ++j)
 		{
-			b2Manifold* manifold = manifolds + j;
-			cr.normal = manifold->normal;
-			for (int32 k = 0; k < manifold->pointCount; ++k)
-			{
-				b2ManifoldPoint* point = manifold->points + k;
-				b2ContactConstraintPoint* ccp = cc->points + k;
-				cr.position = b1->GetWorldPoint(point->localPoint1);
-
-				// TOI constraint results are not stored, so get
-				// the result from the constraint.
-				cr.normalImpulse = ccp->normalImpulse;
-				cr.tangentImpulse = ccp->tangentImpulse;
-				cr.id = point->id;
-
-				m_listener->Result(&cr);
-			}
+			impulse.normalImpulses[j] = cc->points[j].normalImpulse;
+			impulse.tangentImpulses[j] = cc->points[j].tangentImpulse;
 		}
+
+		m_listener->PostSolve(c, &impulse);
 	}
 }

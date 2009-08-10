@@ -39,7 +39,7 @@ void b2ConstantAccelController::Destroy(b2BlockAllocator* allocator)
 }
 
 
-b2ConstantAccelController* b2ConstantAccelControllerDef::Create(b2BlockAllocator* allocator)
+b2ConstantAccelController* b2ConstantAccelControllerDef::Create(b2BlockAllocator* allocator) const
 {
 	void* mem = allocator->Allocate(sizeof(b2ConstantAccelController));
 	return new (mem) b2ConstantAccelController(this);

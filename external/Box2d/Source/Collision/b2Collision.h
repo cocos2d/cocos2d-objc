@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -50,24 +50,102 @@ union b2ContactID
 /// A manifold point is a contact point belonging to a contact
 /// manifold. It holds details related to the geometry and dynamics
 /// of the contact points.
-/// The point is stored in local coordinates because CCD
-/// requires sub-stepping in which the separation is stale.
+/// The local point usage depends on the manifold type:
+/// -e_circles: the local center of circleB
+/// -e_faceA: the local center of cirlceB or the clip point of polygonB
+/// -e_faceB: the clip point of polygonA
+/// This structure is stored across time steps, so we keep it small.
+/// Note: the impulses are used for internal caching and may not
+/// provide reliable contact forces, especially for high speed collisions.
 struct b2ManifoldPoint
 {
-	b2Vec2 localPoint1;		///< local position of the contact point in body1
-	b2Vec2 localPoint2;		///< local position of the contact point in body2
-	float32 separation;		///< the separation of the shapes along the normal vector
-	float32 normalImpulse;	///< the non-penetration impulse
-	float32 tangentImpulse;	///< the friction impulse
-	b2ContactID id;			///< uniquely identifies a contact point between two shapes
+	b2Vec2 m_localPoint;		///< usage depends on manifold type
+	float32 m_normalImpulse;	///< the non-penetration impulse
+	float32 m_tangentImpulse;	///< the friction impulse
+	b2ContactID m_id;			///< uniquely identifies a contact point between two shapes
 };
 
 /// A manifold for two touching convex shapes.
+/// Box2D supports multiple types of contact:
+/// - clip point versus plane with radius
+/// - point versus point with radius (circles)
+/// The local point usage depends on the manifold type:
+/// -e_circles: the local center of circleA
+/// -e_faceA: the center of faceA
+/// -e_faceB: the center of faceB
+/// Similarly the local normal usage:
+/// -e_circles: not used
+/// -e_faceA: the normal on polygonA
+/// -e_faceB: the normal on polygonB
+/// We store contacts in this way so that position correction can
+/// account for movement, which is critical for continuous physics.
+/// All contact scenarios must be expressed in one of these types.
+/// This structure is stored across time steps, so we keep it small.
 struct b2Manifold
 {
-	b2ManifoldPoint points[b2_maxManifoldPoints];	///< the points of contact
-	b2Vec2 normal;	///< the shared unit normal vector
-	int32 pointCount;	///< the number of manifold points
+	enum Type
+	{
+		e_circles,
+		e_faceA,
+		e_faceB
+	};
+
+	b2ManifoldPoint m_points[b2_maxManifoldPoints];	///< the points of contact
+	b2Vec2 m_localPlaneNormal;						///< not use for Type::e_points
+	b2Vec2 m_localPoint;							///< usage depends on manifold type
+	Type m_type;
+	int32 m_pointCount;								///< the number of manifold points
+};
+
+/// This is used to compute the current state of a contact manifold.
+struct b2WorldManifold
+{
+	/// Evaluate the manifold with supplied transforms. This assumes
+	/// modest motion from the original state. This does not change the
+	/// point count, impulses, etc. The radii must come from the shapes
+	/// that generated the manifold.
+	void Initialize(const b2Manifold* manifold,
+					const b2XForm& xfA, float32 radiusA,
+					const b2XForm& xfB, float32 radiusB);
+
+	b2Vec2 m_normal;						///< world vector pointing from A to B
+	b2Vec2 m_points[b2_maxManifoldPoints];	///< world contact point (point of intersection)
+};
+
+/// This is used for determining the state of contact points.
+enum b2PointState
+{
+	b2_nullState,		///< point does not exist
+	b2_addState,		///< point was added in the update
+	b2_persistState,	///< point persisted across the update
+	b2_removeState		///< point was removed in the update
+};
+
+/// Compute the point states given two manifolds. The states pertain to the transition from manifold1
+/// to manifold2. So state1 is either persist or remove while state2 is either add or persist.
+void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints],
+					  const b2Manifold* manifold1, const b2Manifold* manifold2);
+
+/// Used for computing contact manifolds.
+struct b2ClipVertex
+{
+	b2Vec2 v;
+	b2ContactID id;
+};
+
+/// Ray-cast input data.
+struct b2RayCastInput
+{
+	b2Vec2 p1, p2;
+	float32 maxFraction;
+};
+
+/// Ray-cast output data.
+struct b2RayCastOutput
+{
+	b2Vec2 normal;
+	float32 fraction;
+	bool hit;
 };
 
 /// A line segment.
@@ -86,16 +164,40 @@ struct b2AABB
 	/// Verify that the bounds are sorted.
 	bool IsValid() const;
 
+	/// Get the center of the AABB.
+	b2Vec2 GetCenter() const
+	{
+		return 0.5f * (lowerBound + upperBound);
+	}
+
+	/// Get the extents of the AABB (half-widths).
+	b2Vec2 GetExtents() const
+	{
+		return 0.5f * (upperBound - lowerBound);
+	}
+
+	/// Combine two AABBs into this one.
+	void Combine(const b2AABB& aabb1, const b2AABB& aabb2)
+	{
+		lowerBound = b2Min(aabb1.lowerBound, aabb2.lowerBound);
+		upperBound = b2Max(aabb1.upperBound, aabb2.upperBound);
+	}
+
+	/// Does this aabb contain the provided AABB.
+	bool Contains(const b2AABB& aabb)
+	{
+		bool result = true;
+		result = result && lowerBound.x <= aabb.lowerBound.x;
+		result = result && lowerBound.y <= aabb.lowerBound.y;
+		result = result && aabb.upperBound.x <= upperBound.x;
+		result = result && aabb.upperBound.y <= upperBound.y;
+		return result;
+	}
+
+	void RayCast(b2RayCastOutput* output, const b2RayCastInput& input);
+
 	b2Vec2 lowerBound;	///< the lower vertex
 	b2Vec2 upperBound;	///< the upper vertex
-};
-
-/// An oriented bounding box.
-struct b2OBB
-{
-	b2Mat22 R;			///< the rotation matrix
-	b2Vec2 center;		///< the local centroid
-	b2Vec2 extents;		///< the half-widths
 };
 
 /// Compute the collision manifold between two circles.
@@ -108,23 +210,24 @@ void b2CollidePolygonAndCircle(b2Manifold* manifold,
 							   const b2PolygonShape* polygon, const b2XForm& xf1,
 							   const b2CircleShape* circle, const b2XForm& xf2);
 
-/// Compute the collision manifold between two circles.
+/// Compute the collision manifold between two polygons.
 void b2CollidePolygons(b2Manifold* manifold,
 					   const b2PolygonShape* polygon1, const b2XForm& xf1,
 					   const b2PolygonShape* polygon2, const b2XForm& xf2);
 
-/// Compute the distance between two shapes and the closest points.
-/// @return the distance between the shapes or zero if they are overlapped/touching.
-float32 b2Distance(b2Vec2* x1, b2Vec2* x2,
-				   const b2Shape* shape1, const b2XForm& xf1,
-				   const b2Shape* shape2, const b2XForm& xf2);
+/// Compute the collision manifold between an edge and a circle.
+void b2CollideEdgeAndCircle(b2Manifold* manifold,
+							const b2EdgeShape* edge, const b2XForm& xf1,
+							const b2CircleShape* circle, const b2XForm& xf2);
 
-/// Compute the time when two shapes begin to touch or touch at a closer distance.
-/// @warning the sweeps must have the same time interval.
-/// @return the fraction between [0,1] in which the shapes first touch.
-/// fraction=0 means the shapes begin touching/overlapped, and fraction=1 means the shapes don't touch.
-float32 b2TimeOfImpact(const b2Shape* shape1, const b2Sweep& sweep1,
-					   const b2Shape* shape2, const b2Sweep& sweep2);
+/// Compute the collision manifold between a polygon and an edge.
+void b2CollidePolyAndEdge(b2Manifold* manifold,
+						  const b2PolygonShape* poly, const b2XForm& xf1,
+						  const b2EdgeShape* edge, const b2XForm& xf2);
+
+/// Clipping for contact manifolds.
+int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
+							const b2Vec2& normal, float32 offset);
 
 
 // ---------------- Inline Functions ------------------------------------------

@@ -61,7 +61,7 @@ enum {
 		b2Body* groundBody = world->CreateBody(&groundBodyDef);
 		b2PolygonDef groundShapeDef;
 		groundShapeDef.SetAsBox(screenSize.width/PTM_RATIO/2, 1.0f);//This is a mid point, hence the /2
-		groundBody->CreateShape(&groundShapeDef);
+		groundBody->CreateFixture(&groundShapeDef);
 		
 		[self schedule: @selector(tick:)];
 		
@@ -125,7 +125,7 @@ enum {
 	shapeDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
 	shapeDef.density = 1.0f;
 	shapeDef.friction = 0.3f;
-	body->CreateShape(&shapeDef);
+	body->CreateFixture(&shapeDef);
 	body->SetMassFromShapes();
 }
 

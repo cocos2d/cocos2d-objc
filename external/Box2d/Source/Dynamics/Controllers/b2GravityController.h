@@ -53,7 +53,7 @@ public:
 	/// If true, gravity is proportional to r^-2, otherwise r^-1
 	bool invSqr;
 private:
-	b2GravityController* Create(b2BlockAllocator* allocator);
+	b2GravityController* Create(b2BlockAllocator* allocator) const;
 };
 
 #endif

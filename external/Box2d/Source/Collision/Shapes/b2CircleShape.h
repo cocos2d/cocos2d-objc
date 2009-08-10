@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -21,24 +21,12 @@
 
 #include "b2Shape.h"
 
-/// This structure is used to build circle shapes.
-struct b2CircleDef : public b2ShapeDef
-{
-	b2CircleDef()
-	{
-		type = e_circleShape;
-		localPosition.SetZero();
-		radius = 1.0f;
-	}
-
-	b2Vec2 localPosition;
-	float32 radius;
-};
-
 /// A circle shape.
 class b2CircleShape : public b2Shape
 {
 public:
+	b2CircleShape() { m_type = b2_circleShape; }
+
 	/// @see b2Shape::TestPoint
 	bool TestPoint(const b2XForm& transform, const b2Vec2& p) const;
 
@@ -52,13 +40,8 @@ public:
 	/// @see b2Shape::ComputeAABB
 	void ComputeAABB(b2AABB* aabb, const b2XForm& transform) const;
 
-	/// @see b2Shape::ComputeSweptAABB
-	void ComputeSweptAABB(	b2AABB* aabb,
-							const b2XForm& transform1,
-							const b2XForm& transform2) const;
-
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData) const;
+	void ComputeMass(b2MassData* massData, float32 density) const;
 
 	/// @see b2Shape::ComputeSubmergedArea
 	float32 ComputeSubmergedArea(	const b2Vec2& normal,
@@ -66,33 +49,47 @@ public:
 									const b2XForm& xf, 
 									b2Vec2* c) const;
 
-	/// Get the local position of this circle in its parent body.
-	const b2Vec2& GetLocalPosition() const;
+	/// @see b2Shape::ComputeSweepRadius
+	float32 ComputeSweepRadius(const b2Vec2& pivot) const;
 
-	/// Get the radius of this circle.
-	float32 GetRadius() const;
+	/// Get the supporting vertex index in the given direction.
+	int32 GetSupport(const b2Vec2& d) const;
 
-private:
+	/// Get the supporting vertex in the given direction.
+	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
 
-	friend class b2Shape;
+	/// Get the vertex count.
+	int32 GetVertexCount() const { return 1; }
 
-	b2CircleShape(const b2ShapeDef* def);
+	/// Get a vertex by index. Used by b2Distance.
+	const b2Vec2& GetVertex(int32 index) const;
 
-	void UpdateSweepRadius(const b2Vec2& center);
-
-	// Local position in parent body
-	b2Vec2 m_localPosition;
-	float32 m_radius;
+	/// Position
+	b2Vec2 m_p;
 };
 
-inline const b2Vec2& b2CircleShape::GetLocalPosition() const
+inline int32 b2CircleShape::GetSupport(const b2Vec2 &d) const
 {
-	return m_localPosition;
+	B2_NOT_USED(d);
+	return 0;
 }
 
-inline float32 b2CircleShape::GetRadius() const
+inline const b2Vec2& b2CircleShape::GetSupportVertex(const b2Vec2 &d) const
 {
-	return m_radius;
+	B2_NOT_USED(d);
+	return m_p;
+}
+
+inline const b2Vec2& b2CircleShape::GetVertex(int32 index) const
+{
+	B2_NOT_USED(index);
+	b2Assert(index == 0);
+	return m_p;
+}
+
+inline float32 b2CircleShape::ComputeSweepRadius(const b2Vec2& pivot) const
+{
+	return b2Distance(m_p, pivot);
 }
 
 #endif

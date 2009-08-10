@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -21,31 +21,23 @@
 
 #include "../../Common/b2Math.h"
 #include "../../Collision/b2Collision.h"
-#include "../../Collision/Shapes/b2EdgeShape.h"
-#include "../../Collision/Shapes/b2CircleShape.h"
 #include "b2Contact.h"
 
 class b2BlockAllocator;
+class b2Fixture;
 
 class b2EdgeAndCircleContact : public b2Contact
 {
 public:
-	static b2Contact* Create(b2Shape* shape1, b2Shape* shape2, b2BlockAllocator* allocator);
+	static b2Contact* Create(b2Fixture* fixtureA, b2Fixture* fixtureB, b2BlockAllocator* allocator);
 	static void Destroy(b2Contact* contact, b2BlockAllocator* allocator);
 
-	b2EdgeAndCircleContact(b2Shape* shape1, b2Shape* shape2);
+	b2EdgeAndCircleContact(b2Fixture* fixtureA, b2Fixture* fixtureB);
 	~b2EdgeAndCircleContact() {}
 
-	void Evaluate(b2ContactListener* listener);
-	void b2CollideEdgeAndCircle(b2Manifold* manifold,
-									  const b2EdgeShape* edge, const b2XForm& xf1,
-									  const b2CircleShape* circle, const b2XForm& xf2);
-	b2Manifold* GetManifolds()
-	{
-		return &m_manifold;
-	}
+	void Evaluate();
 
-	b2Manifold m_manifold;
+	float32 ComputeTOI(const b2Sweep& sweepA, const b2Sweep& sweepB) const;
 };
 
 #endif

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -16,21 +16,23 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef CONTACT_H
-#define CONTACT_H
+#ifndef B2_CONTACT_H
+#define B2_CONTACT_H
 
 #include "../../Common/b2Math.h"
 #include "../../Collision/b2Collision.h"
 #include "../../Collision/Shapes/b2Shape.h"
+#include "../b2Fixture.h"
 
 class b2Body;
 class b2Contact;
+class b2Fixture;
 class b2World;
 class b2BlockAllocator;
 class b2StackAllocator;
 class b2ContactListener;
 
-typedef b2Contact* b2ContactCreateFcn(b2Shape* shape1, b2Shape* shape2, b2BlockAllocator* allocator);
+typedef b2Contact* b2ContactCreateFcn(b2Fixture* fixtureA, b2Fixture* fixtureB, b2BlockAllocator* allocator);
 typedef void b2ContactDestroyFcn(b2Contact* contact, b2BlockAllocator* allocator);
 
 struct b2ContactRegister
@@ -53,32 +55,6 @@ struct b2ContactEdge
 	b2ContactEdge* next;	///< the next contact edge in the body's contact list
 };
 
-/// This structure is used to report contact points.
-struct b2ContactPoint
-{
-	b2Shape* shape1;		///< the first shape
-	b2Shape* shape2;		///< the second shape
-	b2Vec2 position;		///< position in world coordinates
-	b2Vec2 velocity;		///< velocity of point on body2 relative to point on body1 (pre-solver)
-	b2Vec2 normal;			///< points from shape1 to shape2
-	float32 separation;		///< the separation is negative when shapes are touching
-	float32 friction;		///< the combined friction coefficient
-	float32 restitution;	///< the combined restitution coefficient
-	b2ContactID id;			///< the contact id identifies the features in contact
-};
-
-/// This structure is used to report contact point results.
-struct b2ContactResult
-{
-	b2Shape* shape1;		///< the first shape
-	b2Shape* shape2;		///< the second shape
-	b2Vec2 position;		///< position in world coordinates
-	b2Vec2 normal;			///< points from shape1 to shape2
-	float32 normalImpulse;	///< the normal impulse applied to body2
-	float32 tangentImpulse;	///< the tangent impulse applied to body2
-	b2ContactID id;			///< the contact id identifies the features in contact
-};
-
 /// The class manages contact between two shapes. A contact exists for each overlapping
 /// AABB in the broad-phase (except if filtered). Therefore a contact object may exist
 /// that has no contact points.
@@ -86,74 +62,130 @@ class b2Contact
 {
 public:
 
-	/// Get the manifold array.
-	virtual b2Manifold* GetManifolds() = 0;
+	/// Get the contact manifold.
+	b2Manifold* GetManifold();
 
-	/// Get the number of manifolds. This is 0 or 1 between convex shapes.
-	/// This may be greater than 1 for convex-vs-concave shapes. Each
-	/// manifold holds up to two contact points with a shared contact normal.
-	int32 GetManifoldCount() const;
+	/// Get the world manifold.
+	void GetWorldManifold(b2WorldManifold* worldManifold) const;
 
 	/// Is this contact solid?
 	/// @return true if this contact should generate a response.
 	bool IsSolid() const;
 
+    //TODO: Doc
+	void SetSolid(bool solid);
+
+	/// Is this contact invalid?
+	/// Contacts created or modified during a step are invalid,
+	/// and won't participate until the next step.
+	bool IsInvalid() const;
+
+	/// Has this contact been removed from the world
+	/// And is about to be destroyed.
+	bool IsDestroyed() const;
+
+	/// Are fixtures touching?
+	bool AreTouching() const;
+
 	/// Get the next contact in the world's contact list.
 	b2Contact* GetNext();
 
-	/// Get the first shape in this contact.
-	b2Shape* GetShape1();
+	/// Get the first fixture in this contact.
+	b2Fixture* GetFixtureA();
 
-	/// Get the second shape in this contact.
-	b2Shape* GetShape2();
+	/// Get the second fixture in this contact.
+	b2Fixture* GetFixtureB();
+    
+	/// Disables the collision response. Can be called from within a
+	/// contact-callback.
+	//void DisableCollisionResponses();
+	
+	/// Use these to track information specific to a contact over its lifetime.
+	void* GetUserData();
+	void SetUserData(void* data);
 
 	//--------------- Internals Below -------------------
-public:
+protected:
+	friend class b2ContactManager;
+	friend class b2World;
+	friend class b2ContactSolver;
 
 	// m_flags
 	enum
 	{
+		// This contact should not participate in Solve
+		// The contact equivalent of sensors
 		e_nonSolidFlag	= 0x0001,
+		// Do not use TOI solve.
 		e_slowFlag		= 0x0002,
+		// Used when crawling contact graph when forming islands.
 		e_islandFlag	= 0x0004,
+		// Used in SolveTOI to indicate the cached toi value is still valid.
 		e_toiFlag		= 0x0008,
+        // TODO: Doc
+		e_touchFlag		= 0x0010,
+		// Contacts are invalid if they have been created or modified inside a step
+		// and remain invalid until the next step.
+		e_invalidFlag	= 0x0020,
+		// Marked for deferred destruction.
+		e_destroyFlag	= 0x0040,
+		// This marks if contact is currently being evaluated.
+		// Meaning it should be deferred instead of destroyed.
+		// This is essntially a poor mans recursive lock.
+		e_lockedFlag	= 0x0080,
 	};
 
 	static void AddType(b2ContactCreateFcn* createFcn, b2ContactDestroyFcn* destroyFcn,
-						b2ShapeType type1, b2ShapeType type2);
+						b2ShapeType typeA, b2ShapeType typeB);
 	static void InitializeRegisters();
-	static b2Contact* Create(b2Shape* shape1, b2Shape* shape2, b2BlockAllocator* allocator);
+	static b2Contact* Create(b2Fixture* fixtureA, b2Fixture* fixtureB, b2BlockAllocator* allocator);
+    static void Destroy(b2Contact* contact, b2ShapeType typeA, b2ShapeType typeB, b2BlockAllocator* allocator);
 	static void Destroy(b2Contact* contact, b2BlockAllocator* allocator);
 
-	b2Contact() : m_shape1(NULL), m_shape2(NULL) {}
-	b2Contact(b2Shape* shape1, b2Shape* shape2);
+	b2Contact() : m_fixtureA(NULL), m_fixtureB(NULL) {}
+	b2Contact(b2Fixture* fixtureA, b2Fixture* fixtureB);
 	virtual ~b2Contact() {}
 
-	void Update(b2ContactListener* listener);
-	virtual void Evaluate(b2ContactListener* listener) = 0;
-	static b2ContactRegister s_registers[e_shapeTypeCount][e_shapeTypeCount];
+	virtual void Evaluate() = 0;
+
+	virtual float32 ComputeTOI(const b2Sweep& sweepA, const b2Sweep& sweepB) const = 0;
+
+	static b2ContactRegister s_registers[b2_shapeTypeCount][b2_shapeTypeCount];
 	static bool s_initialized;
 
 	uint32 m_flags;
-	int32 m_manifoldCount;
 
 	// World pool and list pointers.
 	b2Contact* m_prev;
 	b2Contact* m_next;
 
 	// Nodes for connecting bodies.
-	b2ContactEdge m_node1;
-	b2ContactEdge m_node2;
+	b2ContactEdge m_nodeA;
+	b2ContactEdge m_nodeB;
 
-	b2Shape* m_shape1;
-	b2Shape* m_shape2;
+	b2Fixture* m_fixtureA;
+	b2Fixture* m_fixtureB;
+
+	b2Manifold m_manifold;
 
 	float32 m_toi;
+    
+    void* m_userData;
 };
 
-inline int32 b2Contact::GetManifoldCount() const
+inline b2Manifold* b2Contact::GetManifold()
 {
-	return m_manifoldCount;
+	return &m_manifold;
+}
+
+inline void b2Contact::GetWorldManifold(b2WorldManifold* worldManifold) const
+{
+	const b2Body* bodyA = m_fixtureA->GetBody();
+	const b2Body* bodyB = m_fixtureB->GetBody();
+	const b2Shape* shapeA = m_fixtureA->GetShape();
+	const b2Shape* shapeB = m_fixtureB->GetShape();
+
+	worldManifold->Initialize(&m_manifold, bodyA->GetXForm(), shapeA->m_radius, bodyB->GetXForm(), shapeB->m_radius);
 }
 
 inline bool b2Contact::IsSolid() const
@@ -161,19 +193,49 @@ inline bool b2Contact::IsSolid() const
 	return (m_flags & e_nonSolidFlag) == 0;
 }
 
+inline bool b2Contact::IsInvalid() const
+{
+	return (m_flags & e_invalidFlag) != 0;
+}
+
+inline bool b2Contact::IsDestroyed() const
+{
+	return (m_flags & e_destroyFlag) != 0;
+}
+
+inline bool b2Contact::AreTouching() const
+{
+	return (m_flags & e_touchFlag) == e_touchFlag;
+}
+
 inline b2Contact* b2Contact::GetNext()
 {
 	return m_next;
 }
 
-inline b2Shape* b2Contact::GetShape1()
+inline b2Fixture* b2Contact::GetFixtureA()
 {
-	return m_shape1;
+	return m_fixtureA;
 }
 
-inline b2Shape* b2Contact::GetShape2()
+inline b2Fixture* b2Contact::GetFixtureB()
 {
-	return m_shape2;
+	return m_fixtureB;
+}
+
+//inline void b2Contact::DisableCollisionResponses()
+//{
+//	m_flags |= e_nonSolidFlag;
+//}
+
+inline void* b2Contact::GetUserData()
+{
+	return m_userData;
+}
+
+inline void b2Contact::SetUserData(void* data)
+{
+	m_userData = data;
 }
 
 #endif

@@ -65,7 +65,7 @@ void b2TensorDampingController::Destroy(b2BlockAllocator* allocator)
 }
 
 
-b2TensorDampingController* b2TensorDampingControllerDef::Create(b2BlockAllocator* allocator)
+b2TensorDampingController* b2TensorDampingControllerDef::Create(b2BlockAllocator* allocator) const
 {
 	void* mem = allocator->Allocate(sizeof(b2TensorDampingController));
 	return new (mem) b2TensorDampingController(this);

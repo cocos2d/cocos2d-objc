@@ -196,7 +196,7 @@ inline Fixed::operator float() { return g * (float)STEP(); }
 inline Fixed::operator double() { return g * (double)STEP(); }
 inline Fixed::operator int() { return g>>BP; }
 inline Fixed::operator long() { return g>>BP; }
-//#pragma warning(disable: 4244) //HARDWIRE added pragma to prevent VS2005 compilation error
+#pragma warning(disable: 4244) //HARDWIRE added pragma to prevent VS2005 compilation error
 inline Fixed::operator unsigned short() { return g>>BP; }
 inline Fixed::operator float() const { return g / (float)(1<<BP); }
 
