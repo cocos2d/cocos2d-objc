@@ -19,38 +19,32 @@
 #ifndef B2_CIRCLE_SHAPE_H
 #define B2_CIRCLE_SHAPE_H
 
-#include "b2Shape.h"
+#include <Box2D/Collision/Shapes/b2Shape.h>
 
 /// A circle shape.
 class b2CircleShape : public b2Shape
 {
 public:
-	b2CircleShape() { m_type = b2_circleShape; }
+	b2CircleShape();
+
+	/// Implement b2Shape.
+	b2Shape* Clone(b2BlockAllocator* allocator) const;
 
 	/// @see b2Shape::TestPoint
-	bool TestPoint(const b2XForm& transform, const b2Vec2& p) const;
+	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
 
 	/// @see b2Shape::TestSegment
-	b2SegmentCollide TestSegment(	const b2XForm& transform,
+	b2SegmentCollide TestSegment(	const b2Transform& transform,
 						float32* lambda,
 						b2Vec2* normal,
 						const b2Segment& segment,
 						float32 maxLambda) const;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2XForm& transform) const;
+	void ComputeAABB(b2AABB* aabb, const b2Transform& transform) const;
 
 	/// @see b2Shape::ComputeMass
 	void ComputeMass(b2MassData* massData, float32 density) const;
-
-	/// @see b2Shape::ComputeSubmergedArea
-	float32 ComputeSubmergedArea(	const b2Vec2& normal,
-									float32 offset,
-									const b2XForm& xf, 
-									b2Vec2* c) const;
-
-	/// @see b2Shape::ComputeSweepRadius
-	float32 ComputeSweepRadius(const b2Vec2& pivot) const;
 
 	/// Get the supporting vertex index in the given direction.
 	int32 GetSupport(const b2Vec2& d) const;
@@ -67,6 +61,13 @@ public:
 	/// Position
 	b2Vec2 m_p;
 };
+
+inline b2CircleShape::b2CircleShape()
+{
+	m_type = e_circle;
+	m_radius = 0.0f;
+	m_p.SetZero();
+}
 
 inline int32 b2CircleShape::GetSupport(const b2Vec2 &d) const
 {
@@ -85,11 +86,6 @@ inline const b2Vec2& b2CircleShape::GetVertex(int32 index) const
 	B2_NOT_USED(index);
 	b2Assert(index == 0);
 	return m_p;
-}
-
-inline float32 b2CircleShape::ComputeSweepRadius(const b2Vec2& pivot) const
-{
-	return b2Distance(m_p, pivot);
 }
 
 #endif

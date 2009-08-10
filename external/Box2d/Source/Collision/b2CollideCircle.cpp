@@ -16,14 +16,14 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2Collision.h"
-#include "Shapes/b2CircleShape.h"
-#include "Shapes/b2PolygonShape.h"
+#include <Box2D/Collision/b2Collision.h>
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
 void b2CollideCircles(
 	b2Manifold* manifold,
-	const b2CircleShape* circle1, const b2XForm& xf1,
-	const b2CircleShape* circle2, const b2XForm& xf2)
+	const b2CircleShape* circle1, const b2Transform& xf1,
+	const b2CircleShape* circle2, const b2Transform& xf2)
 {
 	manifold->m_pointCount = 0;
 
@@ -49,8 +49,8 @@ void b2CollideCircles(
 
 void b2CollidePolygonAndCircle(
 	b2Manifold* manifold,
-	const b2PolygonShape* polygon, const b2XForm& xf1,
-	const b2CircleShape* circle, const b2XForm& xf2)
+	const b2PolygonShape* polygon, const b2Transform& xf1,
+	const b2CircleShape* circle, const b2Transform& xf2)
 {
 	manifold->m_pointCount = 0;
 

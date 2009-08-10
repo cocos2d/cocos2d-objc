@@ -19,8 +19,9 @@
 #ifndef B2_SHAPE_H
 #define B2_SHAPE_H
 
-#include "../../Common/b2Math.h"
-#include "../b2Collision.h"
+#include <Box2D/Common/b2BlockAllocator.h>
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Collision/b2Collision.h>
 
 /// This holds the mass data computed for a shape.
 struct b2MassData
@@ -33,16 +34,6 @@ struct b2MassData
 
 	/// The rotational inertia of the shape.
 	float32 I;
-};
-
-/// The various collision shape types supported by Box2D.
-enum b2ShapeType
-{
-	b2_unknownShape = -1,
-	b2_circleShape,
-	b2_polygonShape,
-	b2_edgeShape,
-	b2_shapeTypeCount,
 };
 
 /// Return codes from TestSegment
@@ -60,17 +51,28 @@ class b2Shape
 {
 public:
 	
-	b2Shape() { m_type = b2_unknownShape; }
+	enum Type
+	{
+		e_unknown= -1,
+		e_circle = 0,
+		e_polygon = 1,
+		e_typeCount = 2,
+	};
+
+	b2Shape() { m_type = e_unknown; }
 	virtual ~b2Shape() {}
+
+	/// Clone the concrete shape using the provided allocator.
+	virtual b2Shape* Clone(b2BlockAllocator* allocator) const = 0;
 
 	/// Get the type of this shape. You can use this to down cast to the concrete shape.
 	/// @return the shape type.
-	b2ShapeType GetType() const;
+	Type GetType() const;
 
 	/// Test a point for containment in this shape. This only works for convex shapes.
 	/// @param xf the shape world transform.
 	/// @param p a point in world coordinates.
-	virtual bool TestPoint(const b2XForm& xf, const b2Vec2& p) const = 0;
+	virtual bool TestPoint(const b2Transform& xf, const b2Vec2& p) const = 0;
 
 	/// Perform a ray cast against this shape.
 	/// @param xf the shape world transform.
@@ -80,7 +82,7 @@ public:
 	/// is not set.
 	/// @param segment defines the begin and end point of the ray cast.
 	/// @param maxLambda a number typically in the range [0,1].
-	virtual b2SegmentCollide TestSegment(	const b2XForm& xf,
+	virtual b2SegmentCollide TestSegment(	const b2Transform& xf,
 											float32* lambda,
 											b2Vec2* normal,
 											const b2Segment& segment,
@@ -89,7 +91,7 @@ public:
 	/// Given a transform, compute the associated axis aligned bounding box for this shape.
 	/// @param aabb returns the axis aligned box.
 	/// @param xf the world transform of the shape.
-	virtual void ComputeAABB(b2AABB* aabb, const b2XForm& xf) const = 0;
+	virtual void ComputeAABB(b2AABB* aabb, const b2Transform& xf) const = 0;
 
 	/// Compute the mass properties of this shape using its dimensions and density.
 	/// The inertia tensor is computed about the local origin, not the centroid.
@@ -97,28 +99,11 @@ public:
 	/// @param density the density in kilograms per meter squared.
 	virtual void ComputeMass(b2MassData* massData, float32 density) const = 0;
 
-	/// Compute the volume and centroid of this shape intersected with a half plane
-	/// @param normal the surface normal
-	/// @param offset the surface offset along normal
-	/// @param xf the shape transform
-	/// @param c returns the centroid
-	/// @return the total volume less than offset along normal
-	virtual float32 ComputeSubmergedArea(	const b2Vec2& normal,
-											float32 offset,
-											const b2XForm& xf, 
-											b2Vec2* c) const = 0;
-
-	/// Compute the sweep radius. This is used for conservative advancement (continuous
-	/// collision detection).
-	/// @param pivot is the pivot point for rotation.
-	/// @return the distance of the furthest point from the pivot.
-	virtual float32 ComputeSweepRadius(const b2Vec2& pivot) const = 0;
-
-	b2ShapeType m_type;
+	Type m_type;
 	float32 m_radius;
 };
 
-inline b2ShapeType b2Shape::GetType() const
+inline b2Shape::Type b2Shape::GetType() const
 {
 	return m_type;
 }

@@ -19,28 +19,31 @@
 #ifndef B2_ISLAND_H
 #define B2_ISLAND_H
 
-#include "../Common/b2Math.h"
-#include "b2Body.h"
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2TimeStep.h>
 
 class b2Contact;
 class b2Joint;
 class b2StackAllocator;
 class b2ContactListener;
 struct b2ContactConstraint;
-struct b2TimeStep;
 
+/// This is an internal structure.
 struct b2Position
 {
 	b2Vec2 x;
 	float32 a;
 };
 
+/// This is an internal structure.
 struct b2Velocity
 {
 	b2Vec2 v;
 	float32 w;
 };
 
+/// This is an internal class.
 class b2Island
 {
 public:

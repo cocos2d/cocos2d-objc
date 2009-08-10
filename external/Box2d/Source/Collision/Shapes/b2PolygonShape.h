@@ -19,14 +19,17 @@
 #ifndef B2_POLYGON_SHAPE_H
 #define B2_POLYGON_SHAPE_H
 
-#include "b2Shape.h"
+#include <Box2D/Collision/Shapes/b2Shape.h>
 
 /// A convex polygon. It is assumed that the interior of the polygon is to
 /// the left of each edge.
 class b2PolygonShape : public b2Shape
 {
 public:
-	b2PolygonShape() { m_type = b2_polygonShape; m_radius = b2_polygonRadius; }
+	b2PolygonShape();
+
+	/// Implement b2Shape.
+	b2Shape* Clone(b2BlockAllocator* allocator) const;
 
 	/// Copy vertices. This assumes the vertices define a convex polygon.
 	/// It is assumed that the exterior is the the right of each edge.
@@ -48,29 +51,20 @@ public:
 	void SetAsEdge(const b2Vec2& v1, const b2Vec2& v2);
 
 	/// @see b2Shape::TestPoint
-	bool TestPoint(const b2XForm& transform, const b2Vec2& p) const;
+	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
 
 	/// @see b2Shape::TestSegment
-	b2SegmentCollide TestSegment(	const b2XForm& transform,
+	b2SegmentCollide TestSegment(	const b2Transform& transform,
 		float32* lambda,
 		b2Vec2* normal,
 		const b2Segment& segment,
 		float32 maxLambda) const;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2XForm& transform) const;
+	void ComputeAABB(b2AABB* aabb, const b2Transform& transform) const;
 
 	/// @see b2Shape::ComputeMass
 	void ComputeMass(b2MassData* massData, float32 density) const;
-
-	/// @see b2Shape::ComputeSubmergedArea
-	float32 ComputeSubmergedArea(	const b2Vec2& normal,
-									float32 offset,
-									const b2XForm& xf, 
-									b2Vec2* c) const;
-
-	/// @see b2Shape::ComputeSweepRadius
-	float32 ComputeSweepRadius(const b2Vec2& pivot) const;
 
 	/// Get the supporting vertex index in the given direction.
 	int32 GetSupport(const b2Vec2& d) const;
@@ -89,6 +83,14 @@ public:
 	b2Vec2 m_normals[b2_maxPolygonVertices];
 	int32 m_vertexCount;
 };
+
+inline b2PolygonShape::b2PolygonShape()
+{
+	m_type = e_polygon;
+	m_radius = b2_polygonRadius;
+	m_vertexCount = 0;
+	m_centroid.SetZero();
+}
 
 inline int32 b2PolygonShape::GetSupport(const b2Vec2& d) const
 {

@@ -16,9 +16,18 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2CircleShape.h"
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
+#include <new>
 
-bool b2CircleShape::TestPoint(const b2XForm& transform, const b2Vec2& p) const
+b2Shape* b2CircleShape::Clone(b2BlockAllocator* allocator) const
+{
+	void* mem = allocator->Allocate(sizeof(b2CircleShape));
+	b2CircleShape* clone = new (mem) b2CircleShape;
+	*clone = *this;
+	return clone;
+}
+
+bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) const
 {
 	b2Vec2 center = transform.position + b2Mul(transform.R, m_p);
 	b2Vec2 d = p - center;
@@ -29,7 +38,7 @@ bool b2CircleShape::TestPoint(const b2XForm& transform, const b2Vec2& p) const
 // From Section 3.1.2
 // x = s + a * r
 // norm(x) = radius
-b2SegmentCollide b2CircleShape::TestSegment(const b2XForm& transform,
+b2SegmentCollide b2CircleShape::TestSegment(const b2Transform& transform,
 								float32* lambda,
 								b2Vec2* normal,
 								const b2Segment& segment,
@@ -74,13 +83,12 @@ b2SegmentCollide b2CircleShape::TestSegment(const b2XForm& transform,
 	return b2_missCollide;
 }
 
-void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2XForm& transform) const
+void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform) const
 {
 	b2Vec2 p = transform.position + b2Mul(transform.R, m_p);
 	aabb->lowerBound.Set(p.x - m_radius, p.y - m_radius);
 	aabb->upperBound.Set(p.x + m_radius, p.y + m_radius);
 }
-
 
 void b2CircleShape::ComputeMass(b2MassData* massData, float32 density) const
 {
@@ -89,33 +97,4 @@ void b2CircleShape::ComputeMass(b2MassData* massData, float32 density) const
 
 	// inertia about the local origin
 	massData->I = massData->mass * (0.5f * m_radius * m_radius + b2Dot(m_p, m_p));
-}
-
-float32 b2CircleShape::ComputeSubmergedArea(	const b2Vec2& normal,
-												float32 offset,
-												const b2XForm& xf, 
-												b2Vec2* c) const
-{
-	b2Vec2 p = b2Mul(xf,m_p);
-	float32 l = -(b2Dot(normal,p) - offset);
-	if(l<-m_radius+B2_FLT_EPSILON){
-		//Completely dry
-		return 0;
-	}
-	if(l>m_radius){
-		//Completely wet
-		*c = p;
-		return b2_pi*m_radius*m_radius;
-	}
-	
-	//Magic
-	float32 r2 = m_radius*m_radius;
-	float32 l2 = l*l;
-	float32 area = r2 * (asinf(l/m_radius) + b2_pi/2.0f)+ l * b2Sqrt(r2 - l2);
-	float32 com = -2.0f/3.0f*pow(r2-l2,1.5f)/area;
-	
-	c->x = p.x + normal.x * com;
-	c->y = p.y + normal.y * com;
-	
-	return area;
 }

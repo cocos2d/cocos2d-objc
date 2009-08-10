@@ -19,10 +19,10 @@
 #ifndef B2_WORLD_CALLBACKS_H
 #define B2_WORLD_CALLBACKS_H
 
-#include "../Common/b2Settings.h"
+#include <Box2D/Common/b2Settings.h>
 
 struct b2Vec2;
-struct b2XForm;
+struct b2Transform;
 class b2Fixture;
 class b2Body;
 class b2Joint;
@@ -47,19 +47,6 @@ public:
 	/// to the destruction of its parent body.
 	virtual void SayGoodbye(b2Fixture* fixture) = 0;
 };
-
-
-/// This is called when a body's shape passes outside of the world boundary.
-class b2BoundaryListener
-{
-public:
-	virtual ~b2BoundaryListener() {}
-
-	/// This is called for each body that leaves the world boundary.
-	/// @warning you can't modify the world inside this callback.
-	virtual void Violation(b2Body* body) = 0;
-};
-
 
 /// Implement this class to provide collision filtering. In other words, you can implement
 /// this class if you want finer control over contact creation.
@@ -134,6 +121,17 @@ public:
 	}
 };
 
+/// Callback class for queries.
+class b2QueryCallback
+{
+public:
+	virtual ~b2QueryCallback() {}
+
+	/// Called for each fixture found in the query.
+	/// @return false to terminate the query.
+	virtual bool ReportFixture(b2Fixture* fixture) = 0;
+};
+
 /// Color for debug drawing. Each value has the range [0,1].
 struct b2Color
 {
@@ -156,12 +154,9 @@ public:
 	{
 		e_shapeBit				= 0x0001, ///< draw shapes
 		e_jointBit				= 0x0002, ///< draw joint connections
-		e_coreShapeBit			= 0x0004, ///< draw core (TOI) shapes
-		e_aabbBit				= 0x0008, ///< draw axis aligned bounding boxes
-		e_obbBit				= 0x0010, ///< draw oriented bounding boxes
-		e_pairBit				= 0x0020, ///< draw broad-phase pairs
-		e_centerOfMassBit		= 0x0040, ///< draw center of mass frame
-		e_controllerBit			= 0x0080, ///< draw controllers
+		e_aabbBit				= 0x0004, ///< draw axis aligned bounding boxes
+		e_pairBit				= 0x0008, ///< draw broad-phase pairs
+		e_centerOfMassBit		= 0x0010, ///< draw center of mass frame
 	};
 
 	/// Set the drawing flags.
@@ -193,7 +188,7 @@ public:
 
 	/// Draw a transform. Choose your own length scale.
 	/// @param xf a transform.
-	virtual void DrawXForm(const b2XForm& xf) = 0;
+	virtual void DrawXForm(const b2Transform& xf) = 0;
 
 protected:
 	uint32 m_drawFlags;

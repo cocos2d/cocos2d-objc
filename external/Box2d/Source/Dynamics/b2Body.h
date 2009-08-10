@@ -19,9 +19,8 @@
 #ifndef B2_BODY_H
 #define B2_BODY_H
 
-#include "../Common/b2Math.h"
-#include "../Collision/Shapes/b2Shape.h"
-
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Collision/Shapes/b2Shape.h>
 #include <memory>
 
 class b2Fixture;
@@ -32,10 +31,10 @@ class b2World;
 struct b2FixtureDef;
 struct b2JointEdge;
 struct b2ContactEdge;
-struct b2ControllerEdge;
 
 /// A body definition holds all the data needed to construct a rigid body.
 /// You can safely re-use body definitions.
+/// Shapes are added to a body after construction.
 struct b2BodyDef
 {
 	/// This constructor sets the body definition default values.
@@ -60,6 +59,9 @@ struct b2BodyDef
 	/// You can use this to initialized the mass properties of the body.
 	/// If you prefer, you can set the mass properties after the shapes
 	/// have been added using b2Body::SetMassFromShapes.
+	/// By default the mass data is set to zero, meaning the body is seen
+	/// as static. If you intend the body to be dynamic, a small performance
+	/// gain can be had by setting the mass to some positive value.
 	b2MassData massData;
 
 	/// Use this to store application specific body data.
@@ -109,10 +111,20 @@ struct b2BodyDef
 class b2Body
 {
 public:
-	/// Creates a fixture and attach it to this body.
+	/// Creates a fixture and attach it to this body. Use this function if you need
+	/// to set some fixture parameters, like friction. Otherwise you can create the
+	/// fixture directly from a shape.
 	/// @param def the fixture definition.
 	/// @warning This function is locked during callbacks.
 	b2Fixture* CreateFixture(const b2FixtureDef* def);
+
+	/// Creates a fixture from a shape and attach it to this body.
+	/// This is a convenience function. Use b2FixtureDef if you need to set parameters
+	/// like friction, restitution, user data, or filtering.
+	/// @param shape the shape to be cloned.
+	/// @param density the shape density (set to zero for static bodies).
+	/// @warning This function is locked during callbacks.
+	b2Fixture* CreateFixture(const b2Shape* shape, float32 density = 0.0f);
 
 	/// Destroy a fixture. This removes the fixture from the broad-phase and
 	/// therefore destroys any contacts associated with this fixture. All fixtures
@@ -124,6 +136,7 @@ public:
 	/// Set the mass properties. Note that this changes the center of mass position.
 	/// If you are not sure how to compute mass properties, use SetMassFromShapes.
 	/// The inertia tensor is assumed to be relative to the center of mass.
+	/// You can make the body static by using a zero mass.
 	/// @param massData the mass properties.
 	void SetMassData(const b2MassData* data);
 
@@ -132,35 +145,15 @@ public:
 	/// to call this again. Note that this changes the center of mass position.
 	void SetMassFromShapes();
 
-	/// Set the position of the body's origin and rotation (radians).
+	/// Set the position of the body's origin and rotation.
 	/// This breaks any contacts and wakes the other bodies.
-	/// @param position the new world position of the body's origin (not necessarily
-	/// the center of mass).
-	/// @param angle the new world rotation angle of the body in radians.
-	/// @return false if the movement put a shape outside the world. In this case the
-	/// body is automatically frozen.
-	bool SetXForm(const b2Vec2& position, float32 angle);
-
-	/// Set the position of the body's origin and rotation (radians).
-	/// This breaks any contacts and wakes the other bodies.
-	/// Note this is less efficient than the other overload - you should use that
-	/// if the angle is available.
-	/// @param xf the transform of position and angle to set the body to.
-	/// @return false if the movement put a shape outside the world. In this case the
-	/// body is automatically frozen.
-	bool SetXForm(const b2XForm& xf);
+	/// @param position the world position of the body's local origin.
+	/// @param angle the world rotation in radians.
+	void SetTransform(const b2Vec2& position, float32 angle);
 
 	/// Get the body transform for the body's origin.
 	/// @return the world transform of the body's origin.
-	const b2XForm& GetXForm() const;
-
-	/// Set the world body origin position.
-	/// @param position the new position of the body.
-	void SetPosition(const b2Vec2& position);
-
-	/// Set the world body angle.
-	/// @param angle the new angle of the body.
-	void SetAngle(float32 angle);
+	const b2Transform& GetTransform() const;
 
 	/// Get the world body origin position.
 	/// @return the world position of the body's origin.
@@ -272,24 +265,11 @@ public:
 	/// Should this body be treated like a bullet for continuous collision detection?
 	void SetBullet(bool flag);
 
-	/// Is this body prevented from rotating.
-	bool IsFixedRotation() const;
-
-	/// Set if this body is prevented from rotating.
-	void SetFixedRotation(bool fixed);
-
 	/// Is this body static (immovable)?
 	bool IsStatic() const;
 
-	/// Make this body static (immovable).
-	/// Use SetMass and SetMassFromShapes to make bodies dynamic.
-	void SetStatic();
-
 	/// Is this body dynamic (movable)?
 	bool IsDynamic() const;
-
-	/// Is this body frozen?
-	bool IsFrozen() const;
 
 	/// Is this body sleeping (not simulating).
 	bool IsSleeping() const;
@@ -321,9 +301,6 @@ public:
 	/// miss some collisions if you don't use b2ContactListener.
 	b2ContactEdge* GetConactList();
 
-	/// Get the list of all controllers attached to this body.
-	b2ControllerEdge* GetControllerList();
-
 	/// Get the next body in the world's body list.
 	b2Body* GetNext();
 
@@ -353,19 +330,15 @@ private:
 	friend class b2PrismaticJoint;
 	friend class b2PulleyJoint;
 	friend class b2RevoluteJoint;
-	friend class b2FixedJoint;
-
-	friend class b2Controller;
 
 	// m_flags
 	enum
 	{
-		e_frozenFlag		= 0x0002,
-		e_islandFlag		= 0x0004,
-		e_sleepFlag			= 0x0008,
-		e_allowSleepFlag	= 0x0010,
-		e_bulletFlag		= 0x0020,
-		e_fixedRotationFlag	= 0x0040,
+		e_islandFlag		= 0x0001,
+		e_sleepFlag			= 0x0002,
+		e_allowSleepFlag	= 0x0004,
+		e_bulletFlag		= 0x0008,
+		e_fixedRotationFlag	= 0x0010,
 	};
 
 	// m_type
@@ -379,8 +352,7 @@ private:
 	b2Body(const b2BodyDef* bd, b2World* world);
 	~b2Body();
 
-	bool SynchronizeFixtures();
-
+	void SynchronizeFixtures();
 	void SynchronizeTransform();
 
 	// This is used to prevent connected bodies from colliding.
@@ -394,7 +366,7 @@ private:
 
 	int32 m_islandIndex;
 
-	b2XForm m_xf;		// the body origin transform
+	b2Transform m_xf;		// the body origin transform
 	b2Sweep m_sweep;	// the swept motion for CCD
 
 	b2Vec2 m_linearVelocity;
@@ -413,8 +385,6 @@ private:
 	b2JointEdge* m_jointList;
 	b2ContactEdge* m_contactList;
 
-	b2ControllerEdge* m_controllerList;
-
 	float32 m_mass, m_invMass;
 	float32 m_I, m_invI;
 
@@ -426,24 +396,9 @@ private:
 	void* m_userData;
 };
 
-inline const b2XForm& b2Body::GetXForm() const
+inline const b2Transform& b2Body::GetTransform() const
 {
 	return m_xf;
-}
-
-inline bool b2Body::SetXForm(const b2XForm& xf)
-{
-	return SetXForm(xf.position, xf.GetAngle());
-}
-
-inline void b2Body::SetPosition(const b2Vec2& position)
-{
-	SetXForm(position, GetAngle());
-}
-
-inline void b2Body::SetAngle(float32 angle)
-{
-	SetXForm(GetPosition(), angle);
 }
 
 inline const b2Vec2& b2Body::GetPosition() const
@@ -501,7 +456,7 @@ inline b2MassData b2Body::GetMassData() const
 	b2MassData massData;
 	massData.mass = m_mass;
 	massData.I = m_I;
-	massData.center = GetWorldCenter();
+	massData.center = m_sweep.localCenter;
 	return massData;
 }
 
@@ -572,32 +527,6 @@ inline void b2Body::SetBullet(bool flag)
 	}
 }
 
-inline bool b2Body::IsFixedRotation() const
-{
-	return (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
-}
-
-inline void b2Body::SetFixedRotation(bool fixed)
-{
-	if(fixed)
-	{
-		m_angularVelocity = 0.0f;
-		m_invI = 0.0f;
-		m_flags |= e_fixedRotationFlag;
-	}
-	else
-	{
-		if(m_I > 0.0f)
-		{
-			// Recover m_invI from m_I.
-			m_invI = 1.0f / m_I;
-			m_flags &= e_fixedRotationFlag;
-		}
-		// TODO: Else what?
-	}
-}
-
-
 inline bool b2Body::IsStatic() const
 {
 	return m_type == e_staticType;
@@ -606,11 +535,6 @@ inline bool b2Body::IsStatic() const
 inline bool b2Body::IsDynamic() const
 {
 	return m_type == e_dynamicType;
-}
-
-inline bool b2Body::IsFrozen() const
-{
-	return (m_flags & e_frozenFlag) == e_frozenFlag;
 }
 
 inline bool b2Body::IsSleeping() const
@@ -670,11 +594,6 @@ inline b2JointEdge* b2Body::GetJointList()
 inline 	b2ContactEdge* b2Body::GetConactList()
 {
 	return m_contactList;
-}
-
-inline b2ControllerEdge* b2Body::GetControllerList()
-{
-	return m_controllerList;
 }
 
 inline b2Body* b2Body::GetNext()
