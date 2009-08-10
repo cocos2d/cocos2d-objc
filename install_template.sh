@@ -6,6 +6,11 @@ DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project 
 
 #rm -rf $DST_DIR
 
+if [[ -d $DST_DIR ]];  then
+    echo "template alredy installed"
+    exit 1
+fi
+
 echo ...creating destination directory: $DST_DIR
 mkdir "$DST_DIR"
 echo ...copying template files
