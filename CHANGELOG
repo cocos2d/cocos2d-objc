@@ -1,3 +1,7 @@
+version 0.8.1-rc -
+ . Box2d: using google code r6 (issue #494)
+ . Parallax: update children at draw (issue #471)
+ 
 version 0.8.1-beta - 10-Ago-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)
  . Box2d: possibility to call world.DrawDebugData() from draw (issue #493)

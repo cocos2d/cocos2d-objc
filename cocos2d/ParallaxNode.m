@@ -57,7 +57,6 @@
 	if( (self=[super init]) ) {
 		parallaxArray_ = ccArrayNew(5);
 		
-		[self schedule:@selector(updateCoords:)];
 		lastPosition = CGPointMake(-100,-100);
 	}
 	return self;
@@ -123,7 +122,14 @@
 	return ret;
 }
 
--(void) updateCoords: (ccTime) dt
+//
+// IMPORTANT:
+// ParallaxNode is using "draw" to update the position of it children
+// because it needs to be called AFTER all the updates were done.
+//
+// This is the only case when you should update positions in draw and not update
+//
+-(void) draw
 {
 //	CGPoint pos = position_;
 //	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
