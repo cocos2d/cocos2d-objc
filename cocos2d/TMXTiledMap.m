@@ -282,14 +282,17 @@
 -(CGPoint) positionForOrthoAt:(CGPoint)pos
 {
 	int x = pos.x * mapTileSize_.width + 0.49f;
-	int y = (layerSize_.height - pos.y) * mapTileSize_.height + 0.49f;
+	int y = (layerSize_.height - pos.y - 1) * mapTileSize_.height + 0.49f;
 	return ccp(x,y);
 }
 
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
-	int x = mapTileSize_.width /2  *(pos.x - pos.y) + 0.49f;
-	int y = (layerSize_.height - (pos.x + pos.y)) * mapTileSize_.height/2 + 0.49f;
+	int x = mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1) + 0.49f;
+	int y = mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2) + 0.49f;
+
+//	int x = mapTileSize_.width /2  *(pos.x - pos.y) + 0.49f;
+//	int y = (layerSize_.height - (pos.x + pos.y) - 1) * mapTileSize_.height/2 + 0.49f;
 	return ccp(x, y);
 }
 
@@ -300,7 +303,7 @@
 		diffY = -mapTileSize_.height/2 ;
 	
 	int x =  pos.x * mapTileSize_.width*3/4 + 0.49f;
-	int y =  (layerSize_.height - pos.y) * mapTileSize_.height + diffY + 0.49f;
+	int y =  (layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY + 0.49f;
 	return ccp(x,y);
 }
 @end

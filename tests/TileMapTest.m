@@ -379,8 +379,14 @@ Class restartAction()
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test.tmx"];
-		[self addChild:iso z:0 tag:kTagTileMap];				
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"iso-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];		
+		
+		// move map to the center of the screen
+		CGSize ms = [map mapSize];
+		CGSize ts = [map tileSize];
+		[map runAction:[MoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
+		
 	}	
 	return self;
 }
@@ -423,8 +429,14 @@ Class restartAction()
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test2.tmx"];
-		[self addChild:iso z:0 tag:kTagTileMap];				
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"iso-test2.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];	
+		
+		// move map to the center of the screen
+		CGSize ms = [map mapSize];
+		CGSize ts = [map tileSize];
+		[map runAction:[MoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
+		
 	}	
 	return self;
 }
