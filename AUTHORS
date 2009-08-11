@@ -105,6 +105,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Manu Valladolid: added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
 		MenuItemLabel: color is saved when item is disabled
+		Update status in CocosDenshion patch
 	* mark at abitofthought: author of the single threaded Fast Director
 	* Michal Szymerski: Added support for AtlasSprite as MenuItems
 	* Mitch: patches for Menu
@@ -114,6 +115,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Matt Oswald: fix to set depthbuffer size on Director
 		TextureAtlas supports Texture2D objects
 		author of the original AtlasSprite and AtlasSpriteManager
+	* myBuddyCJ: correct channel in SimpleAudioEngine patch
 	* Nerezus: Fixed compile error when keyboard registry is enabled
 	* rac5372: compiler warning in MenuItem
 	* ratman: patch for TileMapAtlas: it works with 255 tiles

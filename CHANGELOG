@@ -1,5 +1,8 @@
 version 0.8.1-rc -
  . Box2d: using google code r6 (issue #494)
+ . CocosDenshion: correct channel in SimpleAudioEngine (issue #465)
+ . CocosDenshion: update buffer status after deletion ( issue #486)
+ . CocosDenshion: SimpleAudioEngine can stop sounds (issue #498)
  . Parallax: update children at draw (issue #471)
  
 version 0.8.1-beta - 10-Ago-2009
@@ -31,7 +34,7 @@ version 0.8-rc2 - 21-Jul-2009
  . Actions: Prevents division by 0 when duration==0 (issue #452)
  . ActionManager: 5% increase in performance (issue #451)
  . CocosDenshion: fixed clicking on looped waves sounds (issue #440)
- . CocosDenshion: Added properties in SimpleSondEngine (issue #454)
+ . CocosDenshion: Added properties in SimpleAudioEngine (issue #454)
  . CocosLive: using the deprecated CString API (issue #441)
  . CocosLive: send-score object can be reused (issue #417)
  . CocosNode: children is an explicit "property" (issue #411)
