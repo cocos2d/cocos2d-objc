@@ -16,7 +16,6 @@
 
 @interface Box2DTestLayer : Layer {
 	b2World* world;
-	b2Body* body;
 	GLESDebugDraw *m_debugDraw;
 }
 -(void) addNewSpriteWithCoords:(CGPoint)p;

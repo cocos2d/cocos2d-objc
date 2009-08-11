@@ -16,11 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2GearJoint.h"
-#include "b2RevoluteJoint.h"
-#include "b2PrismaticJoint.h"
-#include "../b2Body.h"
-#include "../b2World.h"
+#include <Box2D/Dynamics/Joints/b2GearJoint.h>
+#include <Box2D/Dynamics/Joints/b2RevoluteJoint.h>
+#include <Box2D/Dynamics/Joints/b2PrismaticJoint.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2TimeStep.h>
 
 // Gear Joint:
 // C0 = (coordinate1 + ratio * coordinate2)_initial
@@ -61,7 +61,7 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 	float32 coordinate1, coordinate2;
 
 	m_ground1 = def->joint1->GetBody1();
-	m_body1 = def->joint1->GetBody2();
+	m_bodyA = def->joint1->GetBody2();
 	if (type1 == e_revoluteJoint)
 	{
 		m_revolute1 = (b2RevoluteJoint*)def->joint1;
@@ -78,7 +78,7 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 	}
 
 	m_ground2 = def->joint2->GetBody1();
-	m_body2 = def->joint2->GetBody2();
+	m_bodyB = def->joint2->GetBody2();
 	if (type2 == e_revoluteJoint)
 	{
 		m_revolute2 = (b2RevoluteJoint*)def->joint2;
@@ -105,8 +105,8 @@ void b2GearJoint::InitVelocityConstraints(const b2TimeStep& step)
 {
 	b2Body* g1 = m_ground1;
 	b2Body* g2 = m_ground2;
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	float32 K = 0.0f;
 	m_J.SetZero();
@@ -118,8 +118,8 @@ void b2GearJoint::InitVelocityConstraints(const b2TimeStep& step)
 	}
 	else
 	{
-		b2Vec2 ug = b2Mul(g1->GetXForm().R, m_prismatic1->m_localXAxis1);
-		b2Vec2 r = b2Mul(b1->GetXForm().R, m_localAnchor1 - b1->GetLocalCenter());
+		b2Vec2 ug = b2Mul(g1->GetTransform().R, m_prismatic1->m_localXAxis1);
+		b2Vec2 r = b2Mul(b1->GetTransform().R, m_localAnchor1 - b1->GetLocalCenter());
 		float32 crug = b2Cross(r, ug);
 		m_J.linear1 = -ug;
 		m_J.angular1 = -crug;
@@ -133,8 +133,8 @@ void b2GearJoint::InitVelocityConstraints(const b2TimeStep& step)
 	}
 	else
 	{
-		b2Vec2 ug = b2Mul(g2->GetXForm().R, m_prismatic2->m_localXAxis1);
-		b2Vec2 r = b2Mul(b2->GetXForm().R, m_localAnchor2 - b2->GetLocalCenter());
+		b2Vec2 ug = b2Mul(g2->GetTransform().R, m_prismatic2->m_localXAxis1);
+		b2Vec2 r = b2Mul(b2->GetTransform().R, m_localAnchor2 - b2->GetLocalCenter());
 		float32 crug = b2Cross(r, ug);
 		m_J.linear2 = -m_ratio * ug;
 		m_J.angular2 = -m_ratio * crug;
@@ -163,8 +163,8 @@ void b2GearJoint::SolveVelocityConstraints(const b2TimeStep& step)
 {
 	B2_NOT_USED(step);
 
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	float32 Cdot = m_J.Compute(	b1->m_linearVelocity, b1->m_angularVelocity,
 								b2->m_linearVelocity, b2->m_angularVelocity);
@@ -184,8 +184,8 @@ bool b2GearJoint::SolvePositionConstraints(float32 baumgarte)
 	
 	float32 linearError = 0.0f;
 
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	float32 coordinate1, coordinate2;
 	if (m_revolute1)
@@ -224,12 +224,12 @@ bool b2GearJoint::SolvePositionConstraints(float32 baumgarte)
 
 b2Vec2 b2GearJoint::GetAnchor1() const
 {
-	return m_body1->GetWorldPoint(m_localAnchor1);
+	return m_bodyA->GetWorldPoint(m_localAnchor1);
 }
 
 b2Vec2 b2GearJoint::GetAnchor2() const
 {
-	return m_body2->GetWorldPoint(m_localAnchor2);
+	return m_bodyB->GetWorldPoint(m_localAnchor2);
 }
 
 b2Vec2 b2GearJoint::GetReactionForce(float32 inv_dt) const
@@ -242,7 +242,7 @@ b2Vec2 b2GearJoint::GetReactionForce(float32 inv_dt) const
 float32 b2GearJoint::GetReactionTorque(float32 inv_dt) const
 {
 	// TODO_ERIN not tested
-	b2Vec2 r = b2Mul(m_body2->GetXForm().R, m_localAnchor2 - m_body2->GetLocalCenter());
+	b2Vec2 r = b2Mul(m_bodyB->GetTransform().R, m_localAnchor2 - m_bodyB->GetLocalCenter());
 	b2Vec2 P = m_impulse * m_J.linear2;
 	float32 L = m_impulse * m_J.angular2 - b2Cross(r, P);
 	return inv_dt * L;

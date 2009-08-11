@@ -19,9 +19,7 @@
 #ifndef B2_CIRCLE_CONTACT_H
 #define B2_CIRCLE_CONTACT_H
 
-#include "../../Common/b2Math.h"
-#include "../../Collision/b2Collision.h"
-#include "b2Contact.h"
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
 
 class b2BlockAllocator;
 
@@ -35,8 +33,6 @@ public:
 	~b2CircleContact() {}
 
 	void Evaluate();
-
-	float32 ComputeTOI(const b2Sweep& sweepA, const b2Sweep& sweepB) const;
 };
 
 #endif

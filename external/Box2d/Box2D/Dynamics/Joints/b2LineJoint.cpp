@@ -16,9 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2LineJoint.h"
-#include "../b2Body.h"
-#include "../b2World.h"
+#include <Box2D/Dynamics/Joints/b2LineJoint.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2TimeStep.h>
 
 // Linear constraint (point-to-line)
 // d = p2 - p1 = x2 + r2 - x1 - r1
@@ -103,7 +103,7 @@ b2LineJoint::b2LineJoint(const b2LineJointDef* def)
 
 	m_lowerTranslation = def->lowerTranslation;
 	m_upperTranslation = def->upperTranslation;
-	m_maxMotorForce = B2FORCE_INV_SCALE(def->maxMotorForce);
+	m_maxMotorForce = def->maxMotorForce;
 	m_motorSpeed = def->motorSpeed;
 	m_enableLimit = def->enableLimit;
 	m_enableMotor = def->enableMotor;
@@ -115,14 +115,14 @@ b2LineJoint::b2LineJoint(const b2LineJointDef* def)
 
 void b2LineJoint::InitVelocityConstraints(const b2TimeStep& step)
 {
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	m_localCenter1 = b1->GetLocalCenter();
 	m_localCenter2 = b2->GetLocalCenter();
 
-	b2XForm xf1 = b1->GetXForm();
-	b2XForm xf2 = b2->GetXForm();
+	b2Transform xf1 = b1->GetTransform();
+	b2Transform xf2 = b2->GetTransform();
 
 	// Compute the effective masses.
 	b2Vec2 r1 = b2Mul(xf1.R, m_localAnchor1 - m_localCenter1);
@@ -228,8 +228,8 @@ void b2LineJoint::InitVelocityConstraints(const b2TimeStep& step)
 
 void b2LineJoint::SolveVelocityConstraints(const b2TimeStep& step)
 {
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	b2Vec2 v1 = b1->m_linearVelocity;
 	float32 w1 = b1->m_angularVelocity;
@@ -322,8 +322,8 @@ bool b2LineJoint::SolvePositionConstraints(float32 baumgarte)
 {
 	B2_NOT_USED(baumgarte);
 
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	b2Vec2 c1 = b1->m_sweep.c;
 	float32 a1 = b1->m_sweep.a;
@@ -437,12 +437,12 @@ bool b2LineJoint::SolvePositionConstraints(float32 baumgarte)
 
 b2Vec2 b2LineJoint::GetAnchor1() const
 {
-	return m_body1->GetWorldPoint(m_localAnchor1);
+	return m_bodyA->GetWorldPoint(m_localAnchor1);
 }
 
 b2Vec2 b2LineJoint::GetAnchor2() const
 {
-	return m_body2->GetWorldPoint(m_localAnchor2);
+	return m_bodyB->GetWorldPoint(m_localAnchor2);
 }
 
 b2Vec2 b2LineJoint::GetReactionForce(float32 inv_dt) const
@@ -458,8 +458,8 @@ float32 b2LineJoint::GetReactionTorque(float32 inv_dt) const
 
 float32 b2LineJoint::GetJointTranslation() const
 {
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
 	b2Vec2 p1 = b1->GetWorldPoint(m_localAnchor1);
 	b2Vec2 p2 = b2->GetWorldPoint(m_localAnchor2);
@@ -472,11 +472,11 @@ float32 b2LineJoint::GetJointTranslation() const
 
 float32 b2LineJoint::GetJointSpeed() const
 {
-	b2Body* b1 = m_body1;
-	b2Body* b2 = m_body2;
+	b2Body* b1 = m_bodyA;
+	b2Body* b2 = m_bodyB;
 
-	b2Vec2 r1 = b2Mul(b1->GetXForm().R, m_localAnchor1 - b1->GetLocalCenter());
-	b2Vec2 r2 = b2Mul(b2->GetXForm().R, m_localAnchor2 - b2->GetLocalCenter());
+	b2Vec2 r1 = b2Mul(b1->GetTransform().R, m_localAnchor1 - b1->GetLocalCenter());
+	b2Vec2 r2 = b2Mul(b2->GetTransform().R, m_localAnchor2 - b2->GetLocalCenter());
 	b2Vec2 p1 = b1->m_sweep.c + r1;
 	b2Vec2 p2 = b2->m_sweep.c + r2;
 	b2Vec2 d = p2 - p1;
@@ -498,8 +498,8 @@ bool b2LineJoint::IsLimitEnabled() const
 
 void b2LineJoint::EnableLimit(bool flag)
 {
-	m_body1->WakeUp();
-	m_body2->WakeUp();
+	m_bodyA->WakeUp();
+	m_bodyB->WakeUp();
 	m_enableLimit = flag;
 }
 
@@ -516,8 +516,8 @@ float32 b2LineJoint::GetUpperLimit() const
 void b2LineJoint::SetLimits(float32 lower, float32 upper)
 {
 	b2Assert(lower <= upper);
-	m_body1->WakeUp();
-	m_body2->WakeUp();
+	m_bodyA->WakeUp();
+	m_bodyB->WakeUp();
 	m_lowerTranslation = lower;
 	m_upperTranslation = upper;
 }
@@ -529,23 +529,23 @@ bool b2LineJoint::IsMotorEnabled() const
 
 void b2LineJoint::EnableMotor(bool flag)
 {
-	m_body1->WakeUp();
-	m_body2->WakeUp();
+	m_bodyA->WakeUp();
+	m_bodyB->WakeUp();
 	m_enableMotor = flag;
 }
 
 void b2LineJoint::SetMotorSpeed(float32 speed)
 {
-	m_body1->WakeUp();
-	m_body2->WakeUp();
+	m_bodyA->WakeUp();
+	m_bodyB->WakeUp();
 	m_motorSpeed = speed;
 }
 
 void b2LineJoint::SetMaxMotorForce(float32 force)
 {
-	m_body1->WakeUp();
-	m_body2->WakeUp();
-	m_maxMotorForce = B2FORCE_SCALE(float32(1.0))*force;
+	m_bodyA->WakeUp();
+	m_bodyB->WakeUp();
+	m_maxMotorForce = force;
 }
 
 float32 b2LineJoint::GetMotorForce() const
