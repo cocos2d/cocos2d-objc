@@ -133,6 +133,10 @@ static CDAudioManager *am = nil;
 	return [soundEngine playSound:[soundId intValue] channelGroupId:0 pitch:pitch pan:pan gain:gain loop:false];
 }
 
+-(void) stopEffect:(ALuint) soundId {
+	[soundEngine stopSound:soundId];
+}	
+
 -(void) preloadEffect:(NSString*) filePath
 {
 	NSNumber* soundId = (NSNumber*)[loadedEffects objectForKey:filePath];
