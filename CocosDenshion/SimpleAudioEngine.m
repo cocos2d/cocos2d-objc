@@ -126,6 +126,7 @@ static CDAudioManager *am = nil;
 										   reason:filePath userInfo:nil] autorelease];
 #else
 		[self preloadEffect:filePath];
+		soundId = (NSNumber*)[loadedEffects objectForKey:filePath];//Issue 465 - thanks myBuddyCJ
 #endif
 	}
 	
