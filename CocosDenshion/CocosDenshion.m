@@ -266,10 +266,12 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		CCLOG(@"Denshion: error regenerating buffer: %x\n", lastErrorCode);
 		_bufferStates[soundId] = CD_BS_FAILED;
 		return FALSE;
-	} 
-	
-	return TRUE;
-	
+	} else {
+		//We now have an empty buffer
+		_bufferStates[soundId] = CD_BS_EMPTY;
+		CCLOG(@"Denshion: buffer %i successfully unloaded\n",soundId);
+		return TRUE;
+	}	
 }	
 
 /**
