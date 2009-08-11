@@ -19,7 +19,7 @@
 #ifndef B2_GEAR_JOINT_H
 #define B2_GEAR_JOINT_H
 
-#include "b2Joint.h"
+#include <Box2D/Dynamics/Joints/b2Joint.h>
 
 class b2RevoluteJoint;
 class b2PrismaticJoint;

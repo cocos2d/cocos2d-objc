@@ -16,4 +16,23 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2Shape.h"
+#ifndef B2_POLYGON_AND_CIRCLE_CONTACT_H
+#define B2_POLYGON_AND_CIRCLE_CONTACT_H
+
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
+
+class b2BlockAllocator;
+
+class b2PolygonAndCircleContact : public b2Contact
+{
+public:
+	static b2Contact* Create(b2Fixture* fixtureA, b2Fixture* fixtureB, b2BlockAllocator* allocator);
+	static void Destroy(b2Contact* contact, b2BlockAllocator* allocator);
+
+	b2PolygonAndCircleContact(b2Fixture* fixtureA, b2Fixture* fixtureB);
+	~b2PolygonAndCircleContact() {}
+
+	void Evaluate();
+};
+
+#endif

@@ -19,7 +19,7 @@
 #ifndef B2_PULLEY_JOINT_H
 #define B2_PULLEY_JOINT_H
 
-#include "b2Joint.h"
+#include <Box2D/Dynamics/Joints/b2Joint.h>
 
 const float32 b2_minPulleyLength = 2.0f;
 
@@ -115,7 +115,6 @@ public:
 	void SolveVelocityConstraints(const b2TimeStep& step);
 	bool SolvePositionConstraints(float32 baumgarte);
 
-	b2Body* m_ground;
 	b2Vec2 m_groundAnchor1;
 	b2Vec2 m_groundAnchor2;
 	b2Vec2 m_localAnchor1;

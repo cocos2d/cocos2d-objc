@@ -16,9 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2MouseJoint.h"
-#include "../b2Body.h"
-#include "../b2World.h"
+#include <Box2D/Dynamics/Joints/b2MouseJoint.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2TimeStep.h>
 
 // p = attached point, m = mouse point
 // C = p - m
@@ -32,7 +32,7 @@ b2MouseJoint::b2MouseJoint(const b2MouseJointDef* def)
 : b2Joint(def)
 {
 	m_target = def->target;
-	m_localAnchor = b2MulT(m_body2->GetXForm(), m_target);
+	m_localAnchor = b2MulT(m_bodyB->GetTransform(), m_target);
 
 	m_maxForce = def->maxForce;
 	m_impulse.SetZero();
@@ -46,16 +46,16 @@ b2MouseJoint::b2MouseJoint(const b2MouseJointDef* def)
 
 void b2MouseJoint::SetTarget(const b2Vec2& target)
 {
-	if (m_body2->IsSleeping())
+	if (m_bodyB->IsSleeping())
 	{
-		m_body2->WakeUp();
+		m_bodyB->WakeUp();
 	}
 	m_target = target;
 }
 
 void b2MouseJoint::InitVelocityConstraints(const b2TimeStep& step)
 {
-	b2Body* b = m_body2;
+	b2Body* b = m_bodyB;
 
 	float32 mass = b->GetMass();
 
@@ -76,7 +76,7 @@ void b2MouseJoint::InitVelocityConstraints(const b2TimeStep& step)
 	m_beta = step.dt * k * m_gamma;
 
 	// Compute the effective mass matrix.
-	b2Vec2 r = b2Mul(b->GetXForm().R, m_localAnchor - b->GetLocalCenter());
+	b2Vec2 r = b2Mul(b->GetTransform().R, m_localAnchor - b->GetLocalCenter());
 
 	// K    = [(1/m1 + 1/m2) * eye(2) - skew(r1) * invI1 * skew(r1) - skew(r2) * invI2 * skew(r2)]
 	//      = [1/m1+1/m2     0    ] + invI1 * [r1.y*r1.y -r1.x*r1.y] + invI2 * [r1.y*r1.y -r1.x*r1.y]
@@ -111,9 +111,9 @@ void b2MouseJoint::InitVelocityConstraints(const b2TimeStep& step)
 
 void b2MouseJoint::SolveVelocityConstraints(const b2TimeStep& step)
 {
-	b2Body* b = m_body2;
+	b2Body* b = m_bodyB;
 
-	b2Vec2 r = b2Mul(b->GetXForm().R, m_localAnchor - b->GetLocalCenter());
+	b2Vec2 r = b2Mul(b->GetTransform().R, m_localAnchor - b->GetLocalCenter());
 
 	// Cdot = v + cross(w, r)
 	b2Vec2 Cdot = b->m_linearVelocity + b2Cross(b->m_angularVelocity, r);
@@ -139,7 +139,7 @@ b2Vec2 b2MouseJoint::GetAnchor1() const
 
 b2Vec2 b2MouseJoint::GetAnchor2() const
 {
-	return m_body2->GetWorldPoint(m_localAnchor);
+	return m_bodyB->GetWorldPoint(m_localAnchor);
 }
 
 b2Vec2 b2MouseJoint::GetReactionForce(float32 inv_dt) const

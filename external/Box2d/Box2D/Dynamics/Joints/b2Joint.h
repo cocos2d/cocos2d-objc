@@ -16,10 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef JOINT_H
-#define JOINT_H
+#ifndef B2_JOINT_H
+#define B2_JOINT_H
 
-#include "../../Common/b2Math.h"
+#include <Box2D/Common/b2Math.h>
 
 class b2Body;
 class b2Joint;
@@ -136,7 +136,6 @@ public:
 	/// Set the user data pointer.
 	void SetUserData(void* data);
 
-	//--------------- Internals Below -------------------
 protected:
 	friend class b2World;
 	friend class b2Body;
@@ -154,15 +153,15 @@ protected:
 	// This returns true if the position errors are within tolerance.
 	virtual bool SolvePositionConstraints(float32 baumgarte) = 0;
 
-	void ComputeXForm(b2XForm* xf, const b2Vec2& center, const b2Vec2& localCenter, float32 angle) const;
+	void ComputeXForm(b2Transform* xf, const b2Vec2& center, const b2Vec2& localCenter, float32 angle) const;
 
 	b2JointType m_type;
 	b2Joint* m_prev;
 	b2Joint* m_next;
-	b2JointEdge m_node1;
-	b2JointEdge m_node2;
-	b2Body* m_body1;
-	b2Body* m_body2;
+	b2JointEdge m_edgeA;
+	b2JointEdge m_edgeB;
+	b2Body* m_bodyA;
+	b2Body* m_bodyB;
 
 	bool m_islandFlag;
 	bool m_collideConnected;
@@ -199,12 +198,12 @@ inline b2JointType b2Joint::GetType() const
 
 inline b2Body* b2Joint::GetBody1()
 {
-	return m_body1;
+	return m_bodyA;
 }
 
 inline b2Body* b2Joint::GetBody2()
 {
-	return m_body2;
+	return m_bodyB;
 }
 
 inline b2Joint* b2Joint::GetNext()
@@ -222,7 +221,7 @@ inline void b2Joint::SetUserData(void* data)
 	m_userData = data;
 }
 
-inline void b2Joint::ComputeXForm(b2XForm* xf, const b2Vec2& center, const b2Vec2& localCenter, float32 angle) const
+inline void b2Joint::ComputeXForm(b2Transform* xf, const b2Vec2& center, const b2Vec2& localCenter, float32 angle) const
 {
 	xf->R.Set(angle);
 	xf->position = center - b2Mul(xf->R, localCenter);

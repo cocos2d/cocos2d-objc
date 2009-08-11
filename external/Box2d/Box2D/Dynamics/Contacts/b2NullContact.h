@@ -19,8 +19,7 @@
 #ifndef B2_NULL_CONTACT_H
 #define B2_NULL_CONTACT_H
 
-#include "../../Common/b2Math.h"
-#include "b2Contact.h"
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
 
 class b2NullContact : public b2Contact
 {

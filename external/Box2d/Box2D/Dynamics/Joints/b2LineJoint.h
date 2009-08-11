@@ -19,7 +19,7 @@
 #ifndef B2_LINE_JOINT_H
 #define B2_LINE_JOINT_H
 
-#include "b2Joint.h"
+#include <Box2D/Dynamics/Joints/b2Joint.h>
 
 /// Line joint definition. This requires defining a line of
 /// motion using an axis and an anchor point. The definition uses local

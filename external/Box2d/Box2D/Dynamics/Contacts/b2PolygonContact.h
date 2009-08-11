@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -16,32 +16,23 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2ConstantForceController.h"
+#ifndef B2_POLYGON_CONTACT_H
+#define B2_POLYGON_CONTACT_H
 
-b2ConstantForceController::b2ConstantForceController(const b2ConstantForceControllerDef* def) : b2Controller(def)
+#include <Box2D/Dynamics/Contacts/b2Contact.h>
+
+class b2BlockAllocator;
+
+class b2PolygonContact : public b2Contact
 {
-	F = def->F;
-}
+public:
+	static b2Contact* Create(b2Fixture* fixtureA, b2Fixture* fixtureB, b2BlockAllocator* allocator);
+	static void Destroy(b2Contact* contact, b2BlockAllocator* allocator);
 
-void b2ConstantForceController::Step(const b2TimeStep& step)
-{
-	B2_NOT_USED(step);
-	for(b2ControllerEdge *i=m_bodyList;i;i=i->nextBody){
-		b2Body* body = i->body;
-		if(body->IsSleeping())
-			continue;
-		body->ApplyForce(F,body->GetWorldCenter());
-	}
-}
+	b2PolygonContact(b2Fixture* fixtureA, b2Fixture* fixtureB);
+	~b2PolygonContact() {}
 
-void b2ConstantForceController::Destroy(b2BlockAllocator* allocator)
-{
-	allocator->Free(this, sizeof(b2ConstantForceController));
-}
+	void Evaluate();
+};
 
-
-b2ConstantForceController* b2ConstantForceControllerDef::Create(b2BlockAllocator* allocator) const
-{
-	void* mem = allocator->Allocate(sizeof(b2ConstantForceController));
-	return new (mem) b2ConstantForceController(this);
-}
+#endif

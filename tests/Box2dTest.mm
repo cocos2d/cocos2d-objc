@@ -25,45 +25,65 @@ enum {
 -(id) init
 {
 	if( (self=[super init])) {
+		
+		self.isTouchEnabled = YES;
+		self.isAccelerometerEnabled = YES;
+
 		CGSize screenSize = [Director sharedDirector].winSize;
 		CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
+
+		// Define the gravity vector.
+		b2Vec2 gravity;
+		gravity.Set(0.0f, -10.0f);
 		
-		//Set up world bounds - this should be larger than screen as any body that reaches
-		//the boundary will be frozen
-		b2AABB worldAABB;
-		float borderSize = 96 / PTM_RATIO;//We want a 96 pixel border between the screen and the world bounds
-		worldAABB.lowerBound.Set(-borderSize, -borderSize);//Bottom left
-		worldAABB.upperBound.Set(screenSize.width/PTM_RATIO + borderSize, screenSize.height/PTM_RATIO + borderSize);//Top right
-		
-		b2Vec2 gravity(0.0f, -30.0f);//Set up gravity
+		// Do we want to let bodies sleep?
 		bool doSleep = true;
-		
-		world = new b2World(worldAABB, gravity, doSleep);
+
+		// Construct a world object, which will hold and simulate the rigid bodies.
+		world = new b2World(gravity, doSleep);
+				
+		world->SetContinuousPhysics(true);
 		
 		m_debugDraw = new GLESDebugDraw( PTM_RATIO );
 		world->SetDebugDraw(m_debugDraw);
 		
 		uint32 flags = 0;
-		flags += 1			* b2DebugDraw::e_shapeBit;
-		flags += 1			* b2DebugDraw::e_jointBit;
-		flags += 1		* b2DebugDraw::e_controllerBit;
-		flags += 1		* b2DebugDraw::e_coreShapeBit;
-		flags += 1			* b2DebugDraw::e_aabbBit;
-		flags += 1				* b2DebugDraw::e_obbBit;
-		flags += 1			* b2DebugDraw::e_pairBit;
-		flags += 1				* b2DebugDraw::e_centerOfMassBit;
+		flags += b2DebugDraw::e_shapeBit;
+		flags += b2DebugDraw::e_jointBit;
+		flags += b2DebugDraw::e_aabbBit;
+		flags += b2DebugDraw::e_pairBit;
+		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
 
 		
-		//Set up ground, we will make it as wide as the screen
+		// Define the ground body.
 		b2BodyDef groundBodyDef;
-		groundBodyDef.position.Set(screenSize.width/PTM_RATIO/2, -1.0f);//This is a mid point, hence the /2
-		b2Body* groundBody = world->CreateBody(&groundBodyDef);
-		b2PolygonDef groundShapeDef;
-		groundShapeDef.SetAsBox(screenSize.width/PTM_RATIO/2, 1.0f);//This is a mid point, hence the /2
-		groundBody->CreateFixture(&groundShapeDef);
+		groundBodyDef.position.Set(0, 0); // bottom-left corner
 		
-		[self schedule: @selector(tick:)];
+		// Call the body factory which allocates memory for the ground body
+		// from a pool and creates the ground box shape (also from a pool).
+		// The body is also added to the world.
+		b2Body* groundBody = world->CreateBody(&groundBodyDef);
+		
+		// Define the ground box shape.
+		b2PolygonShape groundBox;		
+		
+		// bottom
+		groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
+		groundBody->CreateFixture(&groundBox);
+		
+		// top
+		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
+		groundBody->CreateFixture(&groundBox);
+		
+		// left
+		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
+		groundBody->CreateFixture(&groundBox);
+		
+		// right
+		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
+		groundBody->CreateFixture(&groundBox);
+
 		
 		//Set up sprite
 		
@@ -77,8 +97,7 @@ enum {
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
 		
-		self.isTouchEnabled = YES;
-		self.isAccelerometerEnabled = YES;
+		[self schedule: @selector(tick:)];
 	}
 	return self;
 }
@@ -90,7 +109,6 @@ enum {
 	
 	delete m_debugDraw;
 
-	body = NULL;
 	[super dealloc];
 }	
 
@@ -116,17 +134,24 @@ enum {
 	
 	sprite.position = ccp( p.x, p.y);
 	
+	// Define the dynamic body.
 	//Set up a 1m squared box in the physics world
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
 	bodyDef.userData = sprite;
-	body = world->CreateBody(&bodyDef);
-	b2PolygonDef shapeDef;
-	shapeDef.SetAsBox(.5f, .5f);//These are mid points for our 1m box
-	shapeDef.density = 1.0f;
-	shapeDef.friction = 0.3f;
-	body->CreateFixture(&shapeDef);
-	body->SetMassFromShapes();
+	b2Body *body = world->CreateBody(&bodyDef);
+	
+	// Define another box shape for our dynamic body.
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	
+	// Define the dynamic body fixture.
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;	
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);
+	body->SetMassFromShapes();	
 }
 
 
@@ -138,7 +163,13 @@ enum {
 	//You need to make an informed choice, the following URL is useful
 	//http://gafferongames.com/game-physics/fix-your-timestep/
 	
-	world->Step(dt, 10, 8);//Step the physics world
+	int32 velocityIterations = 8;
+	int32 positionIterations = 1;
+
+	// Instruct the world to perform a single step of simulation. It is
+	// generally best to keep the time step and iterations fixed.
+	world->Step(dt, velocityIterations, positionIterations);
+	
 	//Iterate over the bodies in the physics world
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{

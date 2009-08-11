@@ -16,12 +16,12 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef CONTACT_SOLVER_H
-#define CONTACT_SOLVER_H
+#ifndef B2_CONTACT_SOLVER_H
+#define B2_CONTACT_SOLVER_H
 
-#include "../../Common/b2Math.h"
-#include "../../Collision/b2Collision.h"
-#include "../b2World.h"
+#include <Box2D/Common/b2Math.h>
+#include <Box2D/Collision/b2Collision.h>
+#include <Box2D/Dynamics/b2Island.h>
 
 class b2Contact;
 class b2Body;

@@ -16,19 +16,17 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "b2Joint.h"
-#include "b2DistanceJoint.h"
-#include "b2LineJoint.h"
-#include "b2MouseJoint.h"
-#include "b2RevoluteJoint.h"
-#include "b2PrismaticJoint.h"
-#include "b2PulleyJoint.h"
-#include "b2GearJoint.h"
-#include "b2FixedJoint.h"
-#include "../b2Body.h"
-#include "../b2World.h"
-#include "../../Common/b2BlockAllocator.h"
-#include "../../Collision/b2BroadPhase.h"
+#include <Box2D/Dynamics/Joints/b2Joint.h>
+#include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
+#include <Box2D/Dynamics/Joints/b2LineJoint.h>
+#include <Box2D/Dynamics/Joints/b2MouseJoint.h>
+#include <Box2D/Dynamics/Joints/b2RevoluteJoint.h>
+#include <Box2D/Dynamics/Joints/b2PrismaticJoint.h>
+#include <Box2D/Dynamics/Joints/b2PulleyJoint.h>
+#include <Box2D/Dynamics/Joints/b2GearJoint.h>
+#include <Box2D/Dynamics/b2Body.h>
+#include <Box2D/Dynamics/b2World.h>
+#include <Box2D/Common/b2BlockAllocator.h>
 
 #include <new>
 
@@ -87,13 +85,6 @@ b2Joint* b2Joint::Create(const b2JointDef* def, b2BlockAllocator* allocator)
 		}
 		break;
         
-	case e_fixedJoint:
-		{
-			void* mem = allocator->Allocate(sizeof(b2FixedJoint));
-			joint = new (mem) b2FixedJoint((b2FixedJointDef*)def);
-		}
-		break;
-
 	default:
 		b2Assert(false);
 		break;
@@ -135,10 +126,6 @@ void b2Joint::Destroy(b2Joint* joint, b2BlockAllocator* allocator)
 		allocator->Free(joint, sizeof(b2LineJoint));
 		break;
     
-	case e_fixedJoint:
-		allocator->Free(joint, sizeof(b2FixedJoint));
-		break;
-
 	default:
 		b2Assert(false);
 		break;
@@ -150,9 +137,19 @@ b2Joint::b2Joint(const b2JointDef* def)
 	m_type = def->type;
 	m_prev = NULL;
 	m_next = NULL;
-	m_body1 = def->body1;
-	m_body2 = def->body2;
+	m_bodyA = def->body1;
+	m_bodyB = def->body2;
 	m_collideConnected = def->collideConnected;
 	m_islandFlag = false;
 	m_userData = def->userData;
+
+	m_edgeA.joint = NULL;
+	m_edgeA.other = NULL;
+	m_edgeA.prev = NULL;
+	m_edgeA.next = NULL;
+
+	m_edgeB.joint = NULL;
+	m_edgeB.other = NULL;
+	m_edgeB.prev = NULL;
+	m_edgeB.next = NULL;
 }
