@@ -134,7 +134,7 @@ Class restartAction()
 	tilemap.anchorPoint = ccp(0, 0);
 
 	// Aliased images
-	[tilemap.texture setAliasTexParameters];
+//	[tilemap.texture setAliasTexParameters];
 	
 
 	// background layer: another image
@@ -212,7 +212,7 @@ Class restartAction()
 		tilemap.anchorPoint = ccp(0, 0);
 		
 		// Aliased images
-		[tilemap.texture setAliasTexParameters];
+//		[tilemap.texture setAliasTexParameters];
 		
 		
 		// background layer: another image
