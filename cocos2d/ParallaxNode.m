@@ -57,6 +57,7 @@
 	if( (self=[super init]) ) {
 		parallaxArray_ = ccArrayNew(5);
 		
+//		[self schedule:@selector(updateCoords:)];
 		lastPosition = CGPointMake(-100,-100);
 	}
 	return self;
@@ -71,10 +72,12 @@
 	[super dealloc];
 }
 
--(NSString*) addressForObject:(CocosNode*)child
+-(id) addChild:(CocosNode*)child z:(int)z tag:(int)tag
 {
-	return [NSString stringWithFormat:@"<%08X>", child];
+	NSAssert(NO,@"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
+	return nil;
 }
+
 -(id) addChild: (CocosNode*) child z:(int)z parallaxRatio:(CGPoint)ratio positionOffset:(CGPoint)offset
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
@@ -122,14 +125,12 @@
 	return ret;
 }
 
-//
-// IMPORTANT:
-// ParallaxNode is using "draw" to update the position of it children
-// because it needs to be called AFTER all the updates were done.
-//
-// This is the only case when you should update positions in draw and not update
-//
--(void) draw
+/*
+ The positions are updated at visit because:
+   - using a timer is not guaranteed that it will called after all the positions were updated
+   - overriding "draw" will only precise if the children have a z > 0
+*/
+-(void) visit
 {
 //	CGPoint pos = position_;
 //	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
@@ -146,5 +147,7 @@
 		
 		lastPosition = pos;
 	}
+	
+	[super visit];
 }
 @end
