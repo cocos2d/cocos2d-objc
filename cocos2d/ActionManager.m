@@ -314,7 +314,6 @@ static ActionManager *_sharedManager = nil;
 		ccHashSetBin *bin;
 		for(bin = targets->table[i]; bin; ) {
 			currentTarget = (tHashElement*) bin->elt;
-			bin = bin->next;
 			currentTargetSalvaged = NO;
 			
 			if( ! currentTarget->paused ) {
@@ -343,6 +342,10 @@ static ActionManager *_sharedManager = nil;
 					currentTarget->currentAction = nil;
 				}
 			}
+
+			// bin, at this moment, is still valid
+			// so it is safe to ask this here (issue #490)
+			bin = bin->next;
 
 			if( currentTargetSalvaged )
 				[self deleteHashElement:currentTarget];
