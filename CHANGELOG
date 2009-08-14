@@ -1,4 +1,5 @@
 version 0.8.1-rc -
+ . ActionManager: fixed crash (issue #490)
  . Box2d: using google code r6 (issue #494)
  . CocosDenshion: correct channel in SimpleAudioEngine (issue #465)
  . CocosDenshion: update buffer status after deletion ( issue #486)
