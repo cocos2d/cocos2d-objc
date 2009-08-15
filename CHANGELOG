@@ -6,6 +6,7 @@ version 0.8.1-rc -
  . CocosDenshion: SimpleAudioEngine can stop sounds (issue #498)
  . Parallax: update children at draw (issue #471)
  . TileMap: TMX maps starts at 0,0 position (part of issue #462)
+ . XCode: COCOS2D_DEBUG used instead of DEBUG (issue #507)
  
 version 0.8.1-beta - 10-Ago-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)

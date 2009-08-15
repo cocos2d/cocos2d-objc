@@ -436,6 +436,32 @@
 		504828EE0F45B71A00A30CEF /* attachDemo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 504828ED0F45B71A00A30CEF /* attachDemo.xib */; };
 		504829620F45BBCF00A30CEF /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
 		504829720F45BBFC00A30CEF /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		504CC3101035BDE90096894C /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		504CC3111035BDE90096894C /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		504CC3121035BDE90096894C /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		504CC3131035BDE90096894C /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		504CC3141035BDE90096894C /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		504CC3151035BDE90096894C /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		504CC3161035BDE90096894C /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		504CC3171035BDE90096894C /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		504CC3181035BDE90096894C /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		504CC3191035BDE90096894C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		504CC31A1035BDE90096894C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		504CC31B1035BDE90096894C /* tiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 506886510E96C2D800F943E5 /* tiles.png */; };
+		504CC31C1035BDE90096894C /* levelmap.tga in Resources */ = {isa = PBXBuildFile; fileRef = 506888A20E96D7A200F943E5 /* levelmap.tga */; };
+		504CC31D1035BDE90096894C /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		504CC31E1035BDE90096894C /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
+		504CC31F1035BDE90096894C /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D25C0EE5906100BD237C /* powered.png */; };
+		504CC3201035BDE90096894C /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
+		504CC3221035BDE90096894C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		504CC3251035BDE90096894C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		504CC3261035BDE90096894C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		504CC3271035BDE90096894C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		504CC3281035BDE90096894C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		504CC3291035BDE90096894C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		504CC32A1035BDE90096894C /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		504CC32B1035BDE90096894C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		504CC3461035BECA0096894C /* ActionManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CC3451035BECA0096894C /* ActionManagerTest.m */; };
 		5057B1C80F6E85790019C38F /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		505B62AF0F2E6A0F001B4104 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		505B62B00F2E6A0F001B4104 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
@@ -1416,6 +1442,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		504CC30E1035BDE90096894C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		505B62AD0F2E6A0F001B4104 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1915,6 +1948,9 @@
 		504828C90F45B15700A30CEF /* attachDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = attachDemo.m; sourceTree = "<group>"; };
 		504828DE0F45B1B800A30CEF /* AttachDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AttachDemo-Info.plist"; sourceTree = "<group>"; };
 		504828ED0F45B71A00A30CEF /* attachDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = attachDemo.xib; sourceTree = "<group>"; };
+		504CC32F1035BDE90096894C /* ActionManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		504CC3441035BECA0096894C /* ActionManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionManagerTest.h; path = tests/ActionManagerTest.h; sourceTree = "<group>"; };
+		504CC3451035BECA0096894C /* ActionManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionManagerTest.m; path = tests/ActionManagerTest.m; sourceTree = "<group>"; };
 		5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoWithStatusBar.plist; path = Resources/InfoWithStatusBar.plist; sourceTree = "<group>"; };
 		505B62D60F2E6A0F001B4104 /* Texture2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Texture2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B62DE0F2E6A66001B4104 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
@@ -2539,6 +2575,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		504CC3241035BDE90096894C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				504CC3251035BDE90096894C /* Foundation.framework in Frameworks */,
+				504CC3261035BDE90096894C /* UIKit.framework in Frameworks */,
+				504CC3271035BDE90096894C /* CoreGraphics.framework in Frameworks */,
+				504CC3281035BDE90096894C /* OpenGLES.framework in Frameworks */,
+				504CC3291035BDE90096894C /* QuartzCore.framework in Frameworks */,
+				504CC32A1035BDE90096894C /* libcocos2d.a in Frameworks */,
+				504CC32B1035BDE90096894C /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		505B62CC0F2E6A0F001B4104 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3001,6 +3051,7 @@
 				503F5CBE101FE930002A37E5 /* TileMapTest.app */,
 				503164CD10277665003ACFE7 /* liblibpng.a */,
 				503167B41028488E003ACFE7 /* ParticleView.app */,
+				504CC32F1035BDE90096894C /* ActionManagerTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3226,13 +3277,13 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				506414C50F9C67C0007A7B24 /* Label, Parallax Nodes */,
+				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
-				50CFAC3B1023661B00175934 /* TileMap Nodes */,
+				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
-				50316ADA1029A14A003ACFE7 /* MotionStreak */,
+				50316ADA1029A14A003ACFE7 /* MotionStreak Nodes */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
 				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
@@ -3409,7 +3460,7 @@
 			name = "Particle Images";
 			sourceTree = "<group>";
 		};
-		50316ADA1029A14A003ACFE7 /* MotionStreak */ = {
+		50316ADA1029A14A003ACFE7 /* MotionStreak Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				50316AD61029A137003ACFE7 /* Ribbon.h */,
@@ -3417,7 +3468,7 @@
 				50316AD21029A126003ACFE7 /* MotionStreak.h */,
 				50316AD31029A126003ACFE7 /* MotionStreak.m */,
 			);
-			name = MotionStreak;
+			name = "MotionStreak Nodes";
 			sourceTree = "<group>";
 		};
 		503F5D0C101FEDAE002A37E5 /* tilemap */ = {
@@ -3482,7 +3533,7 @@
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
 		};
-		506414C50F9C67C0007A7B24 /* Label, Parallax Nodes */ = {
+		506414C50F9C67C0007A7B24 /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				506414EB0F9C7021007A7B24 /* BitmapFontAtlas.h */,
@@ -3491,10 +3542,8 @@
 				5018F25D0DFDEAFF00C013A5 /* Label.m */,
 				506884700E96734A00F943E5 /* LabelAtlas.h */,
 				506884710E96734A00F943E5 /* LabelAtlas.m */,
-				502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */,
-				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
 			);
-			name = "Label, Parallax Nodes";
+			name = "Label Nodes";
 			sourceTree = "<group>";
 		};
 		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
@@ -3844,6 +3893,8 @@
 				50DFC2CC0FF62852007E7827 /* Samples */,
 				317070360E29409E00DD3360 /* AccelViewportTest.h */,
 				317070350E29409E00DD3360 /* AccelViewportTest.m */,
+				504CC3441035BECA0096894C /* ActionManagerTest.h */,
+				504CC3451035BECA0096894C /* ActionManagerTest.m */,
 				506881E60E9575E100F943E5 /* AtlasTest.h */,
 				506881E70E9575E100F943E5 /* AtlasTest.m */,
 				501C7CA60F91F1B20024A296 /* AtlasSpriteTest.h */,
@@ -3996,9 +4047,11 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
-		50CFAC3B1023661B00175934 /* TileMap Nodes */ = {
+		50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				502C6C6A0FB87970002BF3C2 /* ParallaxNode.h */,
+				502C6C6B0FB87970002BF3C2 /* ParallaxNode.m */,
 				506886540E96C6CC00F943E5 /* TileMapAtlas.h */,
 				506886550E96C6CC00F943E5 /* TileMapAtlas.m */,
 				509D0816101E4FCE007E1749 /* TMXTiledMap.h */,
@@ -4006,7 +4059,7 @@
 				50CFAC371023660000175934 /* TMXXMLParser.h */,
 				50CFAC381023660000175934 /* TMXXMLParser.m */,
 			);
-			name = "TileMap Nodes";
+			name = "TileMap and Parallax Nodes";
 			sourceTree = "<group>";
 		};
 		50DFC2CC0FF62852007E7827 /* Samples */ = {
@@ -4682,6 +4735,24 @@
 			productReference = 504828800F45AED700A30CEF /* AttachTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		504CC30C1035BDE90096894C /* ActionManagerTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 504CC32C1035BDE90096894C /* Build configuration list for PBXNativeTarget "ActionManagerTest" */;
+			buildPhases = (
+				504CC30F1035BDE90096894C /* Resources */,
+				504CC3211035BDE90096894C /* Sources */,
+				504CC3241035BDE90096894C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				504CC30D1035BDE90096894C /* PBXTargetDependency */,
+			);
+			name = ActionManagerTest;
+			productName = playground;
+			productReference = 504CC32F1035BDE90096894C /* ActionManagerTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		505B62AB0F2E6A0F001B4104 /* Texture2dTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 505B62D30F2E6A0F001B4104 /* Build configuration list for PBXNativeTarget "Texture2dTest" */;
@@ -5298,6 +5369,7 @@
 				50D0E0480FF9232E00098927 /* HelloActionsSample */,
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
 				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
+				504CC30C1035BDE90096894C /* ActionManagerTest */,
 			);
 		};
 /* End PBXProject section */
@@ -5519,6 +5591,30 @@
 				504829720F45BBFC00A30CEF /* fps_images.png in Resources */,
 				504829620F45BBCF00A30CEF /* grossini.png in Resources */,
 				504828EE0F45B71A00A30CEF /* attachDemo.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		504CC30F1035BDE90096894C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				504CC3101035BDE90096894C /* b1.png in Resources */,
+				504CC3111035BDE90096894C /* b2.png in Resources */,
+				504CC3121035BDE90096894C /* f1.png in Resources */,
+				504CC3131035BDE90096894C /* f2.png in Resources */,
+				504CC3141035BDE90096894C /* r1.png in Resources */,
+				504CC3151035BDE90096894C /* r2.png in Resources */,
+				504CC3161035BDE90096894C /* grossini.png in Resources */,
+				504CC3171035BDE90096894C /* grossinis_sister1.png in Resources */,
+				504CC3181035BDE90096894C /* grossinis_sister2.png in Resources */,
+				504CC3191035BDE90096894C /* Default.png in Resources */,
+				504CC31A1035BDE90096894C /* Icon.png in Resources */,
+				504CC31B1035BDE90096894C /* tiles.png in Resources */,
+				504CC31C1035BDE90096894C /* levelmap.tga in Resources */,
+				504CC31D1035BDE90096894C /* fps_images.png in Resources */,
+				504CC31E1035BDE90096894C /* background.png in Resources */,
+				504CC31F1035BDE90096894C /* powered.png in Resources */,
+				504CC3201035BDE90096894C /* fire.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6459,6 +6555,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		504CC3211035BDE90096894C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				504CC3221035BDE90096894C /* main.m in Sources */,
+				504CC3461035BECA0096894C /* ActionManagerTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		505B62C90F2E6A0F001B4104 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6853,6 +6958,11 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 504828900F45AF2F00A30CEF /* PBXContainerItemProxy */;
 		};
+		504CC30D1035BDE90096894C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 504CC30E1035BDE90096894C /* PBXContainerItemProxy */;
+		};
 		505B62AC0F2E6A0F001B4104 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -7021,7 +7131,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7075,7 +7185,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7167,7 +7277,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7221,7 +7331,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7302,7 +7412,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7432,7 +7542,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7519,7 +7629,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
@@ -7579,7 +7689,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7670,6 +7780,60 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = AttachTest;
 				SDKROOT = iphoneos2.2.1;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		504CC32D1035BDE90096894C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ParallaxTest;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		504CC32E1035BDE90096894C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ActionManagerTest;
+				SDKROOT = iphoneos2.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -7843,7 +8007,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7897,7 +8061,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -7951,7 +8115,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8005,7 +8169,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8059,7 +8223,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8113,7 +8277,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8419,7 +8583,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8473,7 +8637,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Resources/ChipmunkDemo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8527,7 +8691,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8581,7 +8745,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8635,7 +8799,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8769,7 +8933,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8823,7 +8987,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8930,7 +9094,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -8984,7 +9148,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -9173,7 +9337,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_STRICT_ALIASING = YES;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -9246,7 +9410,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_DEBUG;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -9415,6 +9579,15 @@
 			buildConfigurations = (
 				5048288D0F45AED800A30CEF /* Debug */,
 				5048288E0F45AED800A30CEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		504CC32C1035BDE90096894C /* Build configuration list for PBXNativeTarget "ActionManagerTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				504CC32D1035BDE90096894C /* Debug */,
+				504CC32E1035BDE90096894C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
