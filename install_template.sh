@@ -2,7 +2,7 @@
 
 echo 'cocos2d-iphone template installer'
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.8.1-beta Application/'
+DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.8.1-rc Application/'
 
 #rm -rf $DST_DIR
 
