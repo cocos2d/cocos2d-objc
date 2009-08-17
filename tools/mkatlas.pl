@@ -48,10 +48,9 @@
 # -r sets the root directory for images. All paths from the atl file are relative to this directory
 #
 # Happy coding! - Matthias
-#
-# BUGS
-# - alpha channel not set correctly for the first image in the *.atl file.
-#   Currently, I am using a dummy entry as first entry. No time to fix yet. If someone is quicker with fixing, I appreciate it!
+
+# Changes
+# 08-16-09 fixed bug: alpha channel not copied for first image in atl file
 
 use GD;
 use Getopt::Std;
@@ -298,6 +297,28 @@ sub generateAtlas
 		$atlasParam->{ATLAS_REF}->copyResized($gd_image_src, $x_dest+$margin, $y_dest+$margin, 0, 0, $w_dst, $h_dst, $w_src, $h_src);
 	}
 
+	# fix alpha bug 
+	# For the first image, I duplicated the code so it reads & writes the first image again in the same spot.
+	# For whatever reason, it works.  Must be some weird bug in one of the libraries your using.		
+	if( $init == 0 )			
+	{
+		$init = 1;
+		
+		my $gd_image_src = GD::Image->new($node->{IMG_REF}->{FILENAME});
+		$gd_image_src->saveAlpha(1);
+		$gd_image_src->alphaBlending(0);
+		$gd_image_src->trueColor(1);
+		if($scaleUp == 1)
+		{
+			$atlasParam->{ATLAS_REF}->copy($gd_image_src, $x_dest+$margin, $y_dest+$margin, 0, 0, $w_src, $h_src);
+		}
+		else
+		{
+			$atlasParam->{ATLAS_REF}->copyResized($gd_image_src, $x_dest+$margin, $y_dest+$margin, 0, 0, $w_dst, $h_dst, $w_src, $h_src);
+		}
+	}		
+		
+		
 	# fill surrounding margin with image bg color
 	# This should reduce pvr artefacts but there should be better ways to do that ...
 	if($margin != 0)
