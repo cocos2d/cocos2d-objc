@@ -23,7 +23,9 @@
 	int priority;
 }
 
+/** delegate */
 @property(nonatomic, readwrite, retain) id delegate;
+/** priority */
 @property(nonatomic, readwrite) int priority; // default 0
 
 /** allocates a TouchHandler with a delegate and a priority */

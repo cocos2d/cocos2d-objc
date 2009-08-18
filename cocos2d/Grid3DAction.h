@@ -22,8 +22,10 @@
 	float amplitudeRate;
 }
 
-@property float amplitude;
-@property float amplitudeRate;
+/** amplitude of the wave */
+@property (nonatomic,readwrite) float amplitude;
+/** amplitude rate of the wave */
+@property (nonatomic,readwrite) float amplitudeRate;
 
 +(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
 -(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
@@ -65,9 +67,9 @@
 }
 
 /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
-@property float lensEffect;
+@property (nonatomic,readwrite) float lensEffect;
 /** lens center position */
-@property CGPoint position;
+@property (nonatomic,readwrite) CGPoint position;
 
 /** creates the action with center position, radius, a grid size and duration */
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d;
@@ -89,11 +91,11 @@
 }
 
 /** center position */
-@property CGPoint position;
+@property (nonatomic,readwrite) CGPoint position;
 /** amplitude */
-@property float amplitude;
+@property (nonatomic,readwrite) float amplitude;
 /** amplitude rate */
-@property float amplitudeRate;
+@property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with radius, number of waves, amplitude, a grid size and duration */
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
@@ -130,9 +132,9 @@
 }
 
 /** amplitude */
-@property float amplitude;
+@property (nonatomic,readwrite) float amplitude;
 /** amplitude rate */
-@property float amplitudeRate;
+@property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with amplitude, a grid and duration */
 +(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
@@ -154,9 +156,9 @@
 }
 
 /** amplitude */
-@property float amplitude;
+@property (nonatomic,readwrite) float amplitude;
 /** amplitude rate */
-@property float amplitudeRate;
+@property (nonatomic,readwrite) float amplitudeRate;
 
 /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
 +(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(ccGridSize)gridSize duration:(ccTime)d;
@@ -177,11 +179,11 @@
 }
 
 /** twirl center */
-@property CGPoint position;
+@property (nonatomic,readwrite) CGPoint position;
 /** amplitude */
-@property float amplitude;
+@property (nonatomic,readwrite) float amplitude;
 /** amplitude rate */
-@property float amplitudeRate;
+@property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
 +(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;

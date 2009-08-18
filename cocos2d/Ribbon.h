@@ -63,16 +63,16 @@
 }
 
 /** Texture used by the ribbon. Conforms to CocosNodeTexture protocol */
-@property (readwrite,retain) Texture2D* texture;
+@property (nonatomic,readwrite,retain) Texture2D* texture;
 
 /** Texture lenghts in pixels */
-@property (readwrite) float textureLength;
+@property (nonatomic,readwrite) float textureLength;
 
 /** GL blendind function */
-@property (readwrite,assign) ccBlendFunc blendFunc;
+@property (nonatomic,readwrite,assign) ccBlendFunc blendFunc;
 
 /** color used by the Ribbon (RGBA) */
-@property (readwrite) ccColor4B color;
+@property (nonatomic,readwrite) ccColor4B color;
 
 /** creates the ribbon */
 +(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade;

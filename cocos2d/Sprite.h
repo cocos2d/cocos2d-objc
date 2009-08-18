@@ -64,11 +64,11 @@
 	NSMutableArray *frames;
 }
 
-@property (readwrite,copy) NSString * name;
+@property (nonatomic,readwrite,copy) NSString * name;
 
 // CocosAnimation
-@property (readwrite,assign) float delay;
-@property (readwrite,retain) NSMutableArray *frames;
+@property (nonatomic,readwrite,assign) float delay;
+@property (nonatomic,readwrite,retain) NSMutableArray *frames;
 
 /** creates an Animation with name, delay and frames from image files */
 +(id) animationWithName: (NSString*) name delay:(float)delay;

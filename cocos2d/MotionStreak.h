@@ -42,7 +42,7 @@
 }
 
 /** Ribbon used by MotionStreak (weak reference) */
-@property (readonly) Ribbon *ribbon;
+@property (nonatomic,readonly) Ribbon *ribbon;
 
 /** creates the streak */
 +(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;

@@ -31,7 +31,7 @@
 + (TouchDispatcher*)sharedDispatcher;
 
 /** Whether or not the events are going to be dispatched. Default: YES */
-@property (readwrite, assign) BOOL dispatchEvents;
+@property (nonatomic,readwrite, assign) BOOL dispatchEvents;
 
 /** Adds a standard touch delegate to the dispatcher's list.
  See StandardTouchDelegate description.

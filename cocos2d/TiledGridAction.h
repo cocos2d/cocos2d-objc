@@ -134,9 +134,9 @@
 }
 
 /** waves amplitude */
-@property float amplitude;
+@property (nonatomic,readwrite) float amplitude;
 /** waves amplitude rate */
-@property float amplitudeRate;
+@property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
 +(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
@@ -158,9 +158,9 @@
 }
 
 /** amplitude of the sin*/
-@property float amplitude;
+@property (nonatomic,readwrite) float amplitude;
 /** amplitude rate */
-@property float amplitudeRate;
+@property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
 +(id)actionWithJumps:(int)j amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;

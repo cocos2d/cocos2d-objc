@@ -88,9 +88,9 @@
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
 /** Opacity: conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity;
+@property (nonatomic,readonly) GLubyte opacity;
 /** Opacity: conforms to CocosNodeRGBA protocol */
-@property (readonly) ccColor3B color;
+@property (nonatomic,readonly) ccColor3B color;
 
 @end
 

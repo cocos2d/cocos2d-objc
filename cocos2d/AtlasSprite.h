@@ -69,21 +69,21 @@
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
-@property (readonly) BOOL dirty;
+@property (nonatomic,readonly) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
-@property (readonly) ccV3F_C4B_T2F_Quad quad;
+@property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** returns the altas index of the AtlasSprite */
-@property (readonly) NSUInteger atlasIndex;
+@property (nonatomic,readonly) NSUInteger atlasIndex;
 /** returns the rect of the AtlasSprite */
-@property (readonly) CGRect textureRect;
+@property (nonatomic,readonly) CGRect textureRect;
 /** whether or not the sprite is flipped horizontally */
-@property (readwrite) BOOL flipX;
+@property (nonatomic,readwrite) BOOL flipX;
 /** whether or not the sprite is flipped vertically */
-@property (readwrite) BOOL flipY;
+@property (nonatomic,readwrite) BOOL flipY;
 /** opacity: conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity;
+@property (nonatomic,readonly) GLubyte opacity;
 /** RGB colors: conforms to CocosNodeRGBA protocol */
-@property (readonly) ccColor3B color;
+@property (nonatomic,readonly) ccColor3B color;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(AtlasSpriteManager*)manager;
@@ -107,12 +107,12 @@
 	NSMutableArray		*frames;
 }
 
-@property (readwrite,assign) NSString *name;
+@property (nonatomic,readwrite,assign) NSString *name;
 
 /** delay between frames in seconds */
-@property (readwrite,assign) float delay;
+@property (nonatomic,readwrite,assign) float delay;
 /** array of frames */
-@property (readonly) NSMutableArray *frames;
+@property (nonatomic,readonly) NSMutableArray *frames;
 
 /** creates an AtlasAnimation with an AtlasSpriteManager, a name, delay between frames */
 +(id) animationWithName:(NSString*)name delay:(float)delay;
@@ -139,7 +139,7 @@
 	CGRect	rect;
 }
 /** rect of the frame */
-@property (readwrite) CGRect rect;
+@property (nonatomic,readwrite) CGRect rect;
 
 /** create an AtlasSpriteFrame with a CGRect */
 +(id) frameWithRect:(CGRect)frame;

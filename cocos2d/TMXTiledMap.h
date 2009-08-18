@@ -74,11 +74,11 @@ enum
 }
 
 /** the map's size property measured in tiles */
-@property (readonly) CGSize mapSize;
+@property (nonatomic,readonly) CGSize mapSize;
 /** the tiles's size property measured in pixels */
-@property (readonly) CGSize tileSize;
+@property (nonatomic,readonly) CGSize tileSize;
 /** map orientation */
-@property (readonly) int mapOrientation;
+@property (nonatomic,readonly) int mapOrientation;
 
 /** creates a TMX Tiled Map with a TMX file */
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile;
@@ -109,17 +109,17 @@ enum
 	int				layerOrientation_;
 }
 /** name of the layer */
-@property (readwrite,retain) NSString *layerName;
+@property (nonatomic,readwrite,retain) NSString *layerName;
 /** size of the layer in tiles */
-@property (readwrite) CGSize layerSize;
+@property (nonatomic,readwrite) CGSize layerSize;
 /** size of the map's tile (could be differnt from the tile's size) */
-@property (readwrite) CGSize mapTileSize;
+@property (nonatomic,readwrite) CGSize mapTileSize;
 /** pointer to the map of tiles */
-@property (readwrite) unsigned int *tiles;
+@property (nonatomic,readwrite) unsigned int *tiles;
 /** Tilset information for the layer */
-@property (readwrite,retain) TMXTilesetInfo *tileset;
+@property (nonatomic,readwrite,retain) TMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
-@property (readwrite) int layerOrientation;
+@property (nonatomic,readwrite) int layerOrientation;
 
 
 /** creates a TMX Layer with an tileset info, a layer info and a map info */

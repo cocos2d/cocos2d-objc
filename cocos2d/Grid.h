@@ -33,11 +33,17 @@
 	Grabber *	grabber;
 }
 
-@property BOOL active;
-@property int reuseGrid;
-@property (readonly) ccGridSize gridSize;
-@property CGPoint step;
+/** wheter or not the grid is active */
+@property (nonatomic,readwrite) BOOL active;
+/** number of times that the grid will be reused */
+@property (nonatomic,readwrite) int reuseGrid;
+/** size of the grid */
+@property (nonatomic,readonly) ccGridSize gridSize;
+/** pixels between the grids */
+@property (nonatomic,readwrite) CGPoint step;
+/** texture used */
 @property (nonatomic, retain) Texture2D *texture;
+/** grabber used */
 @property (nonatomic, retain) Grabber *grabber;
 
 -(id)initWithSize:(ccGridSize)gridSize;

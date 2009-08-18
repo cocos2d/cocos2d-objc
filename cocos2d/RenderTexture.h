@@ -43,7 +43,7 @@ enum
 }
 
 /** sprite being used */
-@property (readwrite, assign) Sprite* sprite;
+@property (nonatomic,readwrite, assign) Sprite* sprite;
 
 /** creates a RenderTexture object with width and height */
 +(id)renderTextureWithWidth:(int)width height:(int)height;

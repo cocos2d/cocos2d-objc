@@ -30,9 +30,9 @@ enum {
 }
 
 /** The "target". The action will modify the target properties */
-@property (readwrite,assign) id target;
+@property (nonatomic,readwrite,assign) id target;
 /** The action tag. An identifier of the action */
-@property (readwrite,assign) int tag;
+@property (nonatomic,readwrite,assign) int tag;
 
 +(id) action;
 -(id) init;
@@ -68,7 +68,7 @@ enum {
 	ccTime duration;
 }
 //! duration in seconds of the action
-@property (readwrite) ccTime duration;
+@property (nonatomic,readwrite) ccTime duration;
 
 /** returns a reversed action */
 - (FiniteTimeAction*) reverse;
@@ -101,7 +101,7 @@ enum {
 	float speed;
 }
 /** alter the speed of the inner function in runtime */
-@property (readwrite) float speed;
+@property (nonatomic,readwrite) float speed;
 /** creates the action */
 +(id) actionWithAction: (IntervalAction*) action speed:(float)rate;
 /** initializes the action */

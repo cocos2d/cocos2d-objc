@@ -110,16 +110,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
 
-@property(readonly) GLuint framebuffer;
-@property(readonly) NSString* pixelFormat;
-@property(readonly) GLuint depthFormat;
-@property(readonly) EAGLContext *context;
+/** frame buffer id */
+@property(nonatomic,readonly) GLuint framebuffer;
+/** pixel format */
+@property(nonatomic,readonly) NSString* pixelFormat;
+/** depth format */
+@property(nonatomic,readonly) GLuint depthFormat;
+/** EAGL context */
+@property(nonatomic,readonly) EAGLContext *context;
 
-@property BOOL autoresizesSurface; //NO by default - Set to YES to have the EAGL surface automatically resized when the view bounds change, otherwise the EAGL surface contents is rendered scaled
-@property(readonly, nonatomic) CGSize surfaceSize;
+/** whether or not the surface will auto resize.
+ NO by default - Set to YES to have the EAGL surface automatically resized when the view bounds change,
+ otherwise the EAGL surface contents is rendered scaled
+ */
+@property (nonatomic,readwrite) BOOL autoresizesSurface;
+/** surface size */
+@property(nonatomic,readonly, nonatomic) CGSize surfaceSize;
 
-@property(assign) id<EAGLViewDelegate> delegate;
-@property(assign) id<EAGLTouchDelegate> touchDelegate;
+/** delegate */
+@property(nonatomic,readwrite,assign) id<EAGLViewDelegate> delegate;
+/** touch delegate */
+@property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
 
 - (void) setAutoresizesEAGLSurface:(BOOL)autoresizesEAGLSurface;
 

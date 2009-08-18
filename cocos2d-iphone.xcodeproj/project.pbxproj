@@ -28,6 +28,23 @@
 		500043780F3CB58600A5FBF4 /* test_image.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 500043740F3CB58600A5FBF4 /* test_image.tiff */; };
 		500044040F3CC15D00A5FBF4 /* test_image.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 500044020F3CC15D00A5FBF4 /* test_image.pvr */; };
 		500044050F3CC15D00A5FBF4 /* test_image.pvrraw in Resources */ = {isa = PBXBuildFile; fileRef = 500044030F3CC15D00A5FBF4 /* test_image.pvrraw */; };
+		50010EC0103B3DB80059EC2E /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		50010EC7103B3DB80059EC2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50010EC8103B3DB80059EC2E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50010EC9103B3DB80059EC2E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50010ECA103B3DB80059EC2E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50010ECB103B3DB80059EC2E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50010ECC103B3DB80059EC2E /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		50010ECD103B3DB80059EC2E /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 504225700FC0B39C00B992F7 /* libbox2d.a */; };
+		50010ECE103B3DB80059EC2E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50090DB11021E8660085B687 /* libz.dylib */; };
+		50010EF5103B3E580059EC2E /* Box2DAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50010EE6103B3E580059EC2E /* Box2DAppDelegate.mm */; };
+		50010EF6103B3E580059EC2E /* Box2DView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50010EE8103B3E580059EC2E /* Box2DView.mm */; };
+		50010EF7103B3E580059EC2E /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50010EEB103B3E580059EC2E /* GLES-Render.mm */; };
+		50010EF8103B3E580059EC2E /* iPhoneTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50010EED103B3E580059EC2E /* iPhoneTest.mm */; };
+		50010EF9103B3E580059EC2E /* iPhoneTestEntries.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50010EEE103B3E580059EC2E /* iPhoneTestEntries.mm */; };
+		50010EFA103B3E580059EC2E /* TestEntriesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50010EF0103B3E580059EC2E /* TestEntriesViewController.mm */; };
+		50010EFB103B3E580059EC2E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50010EF1103B3E580059EC2E /* Icon.png */; };
+		50010EFD103B3E580059EC2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50010EF3103B3E580059EC2E /* main.m */; };
 		500165A10E72DB470085673F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500165A20E72DB470085673F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500165A30E72DB470085673F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -1357,6 +1374,20 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		50010EBC103B3DB80059EC2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		50010EBE103B3DB80059EC2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5042256F0FC0B39C00B992F7;
+			remoteInfo = box2d;
+		};
 		5012DD1A0FE2994300D6DDD1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1684,6 +1715,24 @@
 		500043740F3CB58600A5FBF4 /* test_image.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test_image.tiff; sourceTree = "<group>"; };
 		500044020F3CC15D00A5FBF4 /* test_image.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvr; sourceTree = "<group>"; };
 		500044030F3CC15D00A5FBF4 /* test_image.pvrraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvrraw; sourceTree = "<group>"; };
+		50010ED2103B3DB80059EC2E /* Box2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50010ED4103B3DB90059EC2E /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
+		50010EE3103B3E580059EC2E /* Box2D_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D_Prefix.pch; sourceTree = "<group>"; };
+		50010EE5103B3E580059EC2E /* Box2DAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DAppDelegate.h; sourceTree = "<group>"; };
+		50010EE6103B3E580059EC2E /* Box2DAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DAppDelegate.mm; sourceTree = "<group>"; };
+		50010EE7103B3E580059EC2E /* Box2DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DView.h; sourceTree = "<group>"; };
+		50010EE8103B3E580059EC2E /* Box2DView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DView.mm; sourceTree = "<group>"; };
+		50010EE9103B3E580059EC2E /* Delegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delegates.h; sourceTree = "<group>"; };
+		50010EEA103B3E580059EC2E /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
+		50010EEB103B3E580059EC2E /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
+		50010EEC103B3E580059EC2E /* iPhoneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTest.h; sourceTree = "<group>"; };
+		50010EED103B3E580059EC2E /* iPhoneTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iPhoneTest.mm; sourceTree = "<group>"; };
+		50010EEE103B3E580059EC2E /* iPhoneTestEntries.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iPhoneTestEntries.mm; sourceTree = "<group>"; };
+		50010EEF103B3E580059EC2E /* TestEntriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEntriesViewController.h; sourceTree = "<group>"; };
+		50010EF0103B3E580059EC2E /* TestEntriesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestEntriesViewController.mm; sourceTree = "<group>"; };
+		50010EF1103B3E580059EC2E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		50010EF2103B3E580059EC2E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50010EF3103B3E580059EC2E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		500165990E72DB0E0085673F /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r1.png; sourceTree = "<group>"; };
 		5001659A0E72DB0E0085673F /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
 		5001659D0E72DB470085673F /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b1.png; sourceTree = "<group>"; };
@@ -2413,6 +2462,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50010EC6103B3DB80059EC2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50010EC7103B3DB80059EC2E /* Foundation.framework in Frameworks */,
+				50010EC8103B3DB80059EC2E /* UIKit.framework in Frameworks */,
+				50010EC9103B3DB80059EC2E /* CoreGraphics.framework in Frameworks */,
+				50010ECA103B3DB80059EC2E /* OpenGLES.framework in Frameworks */,
+				50010ECB103B3DB80059EC2E /* QuartzCore.framework in Frameworks */,
+				50010ECC103B3DB80059EC2E /* libcocos2d.a in Frameworks */,
+				50010ECD103B3DB80059EC2E /* libbox2d.a in Frameworks */,
+				50010ECE103B3DB80059EC2E /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5012DD310FE2994300D6DDD1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3050,6 +3114,7 @@
 				503164CD10277665003ACFE7 /* liblibpng.a */,
 				503167B41028488E003ACFE7 /* ParticleView.app */,
 				504CC32F1035BDE90096894C /* ActionManagerTest.app */,
+				50010ED2103B3DB80059EC2E /* Box2dTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3118,6 +3183,7 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
+				50010ED4103B3DB90059EC2E /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -3132,6 +3198,37 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		50010EDF103B3E580059EC2E /* iPhoneCocos2d */ = {
+			isa = PBXGroup;
+			children = (
+				50010EE3103B3E580059EC2E /* Box2D_Prefix.pch */,
+				50010EE4103B3E580059EC2E /* Classes */,
+				50010EF1103B3E580059EC2E /* Icon.png */,
+				50010EF2103B3E580059EC2E /* Info.plist */,
+				50010EF3103B3E580059EC2E /* main.m */,
+			);
+			path = iPhoneCocos2d;
+			sourceTree = "<group>";
+		};
+		50010EE4103B3E580059EC2E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				50010EE5103B3E580059EC2E /* Box2DAppDelegate.h */,
+				50010EE6103B3E580059EC2E /* Box2DAppDelegate.mm */,
+				50010EE7103B3E580059EC2E /* Box2DView.h */,
+				50010EE8103B3E580059EC2E /* Box2DView.mm */,
+				50010EE9103B3E580059EC2E /* Delegates.h */,
+				50010EEA103B3E580059EC2E /* GLES-Render.h */,
+				50010EEB103B3E580059EC2E /* GLES-Render.mm */,
+				50010EEC103B3E580059EC2E /* iPhoneTest.h */,
+				50010EED103B3E580059EC2E /* iPhoneTest.mm */,
+				50010EEE103B3E580059EC2E /* iPhoneTestEntries.mm */,
+				50010EEF103B3E580059EC2E /* TestEntriesViewController.h */,
+				50010EF0103B3E580059EC2E /* TestEntriesViewController.mm */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		5012DD3E0FE299EA00D6DDD1 /* TouchesTest */ = {
@@ -3567,6 +3664,7 @@
 		506EDF01102FBC0C00A389B3 /* Box2d */ = {
 			isa = PBXGroup;
 			children = (
+				50010EDF103B3E580059EC2E /* iPhoneCocos2d */,
 				506EE3881030F19500A389B3 /* Box2D */,
 				506EDF02102FBC0C00A389B3 /* Box2DTestBed */,
 			);
@@ -4500,6 +4598,25 @@
 			productReference = 3170705B0E2940C900DD3360 /* AccelViewportTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50010EBA103B3DB80059EC2E /* Box2dTestBed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50010ECF103B3DB80059EC2E /* Build configuration list for PBXNativeTarget "Box2dTestBed" */;
+			buildPhases = (
+				50010EBF103B3DB80059EC2E /* Resources */,
+				50010EC3103B3DB80059EC2E /* Sources */,
+				50010EC6103B3DB80059EC2E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50010EBB103B3DB80059EC2E /* PBXTargetDependency */,
+				50010EBD103B3DB80059EC2E /* PBXTargetDependency */,
+			);
+			name = Box2dTestBed;
+			productName = ChipmunkDemo;
+			productReference = 50010ED2103B3DB80059EC2E /* Box2dTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5012DD180FE2994300D6DDD1 /* TouchesTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5012DD380FE2994300D6DDD1 /* Build configuration list for PBXNativeTarget "TouchesTest" */;
@@ -5335,6 +5452,7 @@
 				501C7C6D0F91EFFF0024A296 /* AtlasSpriteTest */,
 				5048287F0F45AED700A30CEF /* AttachTest */,
 				504226120FC0B5D500B992F7 /* Box2dTest */,
+				50010EBA103B3DB80059EC2E /* Box2dTestBed */,
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
 				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
 				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
@@ -5384,6 +5502,15 @@
 				501CD1740E99873000B86F68 /* fps_images.png in Resources */,
 				50C723DD0EC062680046C5DB /* clouds.pvrtc in Resources */,
 				502AACF40F79715E001E3F87 /* fire.pvr in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50010EBF103B3DB80059EC2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50010EC0103B3DB80059EC2E /* fps_images.png in Resources */,
+				50010EFB103B3E580059EC2E /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6327,6 +6454,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50010EC3103B3DB80059EC2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50010EF5103B3E580059EC2E /* Box2DAppDelegate.mm in Sources */,
+				50010EF6103B3E580059EC2E /* Box2DView.mm in Sources */,
+				50010EF7103B3E580059EC2E /* GLES-Render.mm in Sources */,
+				50010EF8103B3E580059EC2E /* iPhoneTest.mm in Sources */,
+				50010EF9103B3E580059EC2E /* iPhoneTestEntries.mm in Sources */,
+				50010EFA103B3E580059EC2E /* TestEntriesViewController.mm in Sources */,
+				50010EFD103B3E580059EC2E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5012DD2E0FE2994300D6DDD1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6894,6 +7035,16 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 317070430E2940C900DD3360 /* PBXContainerItemProxy */;
 		};
+		50010EBB103B3DB80059EC2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 50010EBC103B3DB80059EC2E /* PBXContainerItemProxy */;
+		};
+		50010EBD103B3DB80059EC2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5042256F0FC0B39C00B992F7 /* box2d */;
+			targetProxy = 50010EBE103B3DB80059EC2E /* PBXContainerItemProxy */;
+		};
 		5012DD190FE2994300D6DDD1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -7167,6 +7318,66 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = AccelViewportTest;
 				SDKROOT = iphoneos2.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		50010ED0103B3DB80059EC2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				INFOPLIST_FILE = external/Box2d/iPhoneCocos2d/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Box2dTest;
+				SDKROOT = iphoneos2.0;
+				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/** external/Box2d";
+			};
+			name = Debug;
+		};
+		50010ED1103B3DB80059EC2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				INFOPLIST_FILE = external/Box2d/iPhoneCocos2d/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Box2dTest;
+				SDKROOT = iphoneos2.0;
+				USER_HEADER_SEARCH_PATHS = external/Box2d;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -9458,6 +9669,15 @@
 			buildConfigurations = (
 				317070590E2940C900DD3360 /* Debug */,
 				3170705A0E2940C900DD3360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50010ECF103B3DB80059EC2E /* Build configuration list for PBXNativeTarget "Box2dTestBed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50010ED0103B3DB80059EC2E /* Debug */,
+				50010ED1103B3DB80059EC2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

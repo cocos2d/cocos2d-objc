@@ -174,80 +174,80 @@ typedef struct sParticle
 }
 
 /** Is the emitter active */
-@property (readonly) BOOL active;
+@property (nonatomic,readonly) BOOL active;
 /** Quantity of particles that are being simulated at the moment */
-@property (readonly) int	particleCount;
+@property (nonatomic,readonly) int	particleCount;
 /** Gravity value */
-@property (readwrite,assign) CGPoint gravity;
+@property (nonatomic,readwrite,assign) CGPoint gravity;
 /** How many seconds the emitter wil run. -1 means 'forever' */
-@property (readwrite,assign) float duration;
+@property (nonatomic,readwrite,assign) float duration;
 /** centerOfGravity of the emitter */
-@property (readwrite,assign) CGPoint centerOfGravity;
+@property (nonatomic,readwrite,assign) CGPoint centerOfGravity;
 /** Position variance of the emitter */
-@property (readwrite,assign) CGPoint posVar;
+@property (nonatomic,readwrite,assign) CGPoint posVar;
 /** life, and life variation of each particle */
-@property (readwrite,assign) float life;
+@property (nonatomic,readwrite,assign) float life;
 /** life variance of each particle */
-@property (readwrite,assign) float lifeVar;
+@property (nonatomic,readwrite,assign) float lifeVar;
 /** angle and angle variation of each particle */
-@property (readwrite,assign) float angle;
+@property (nonatomic,readwrite,assign) float angle;
 /** angle variance of each particle */
-@property (readwrite,assign) float angleVar;
+@property (nonatomic,readwrite,assign) float angleVar;
 /** speed of each particle */
-@property (readwrite,assign) float speed;
+@property (nonatomic,readwrite,assign) float speed;
 /** speed variance of each particle */
-@property (readwrite,assign) float speedVar;
+@property (nonatomic,readwrite,assign) float speedVar;
 /** tangential acceleration of each particle */
-@property (readwrite,assign) float tangentialAccel;
+@property (nonatomic,readwrite,assign) float tangentialAccel;
 /** tangential acceleration variance of each particle */
-@property (readwrite,assign) float tangentialAccelVar;
+@property (nonatomic,readwrite,assign) float tangentialAccelVar;
 /** radial acceleration of each particle */
-@property (readwrite,assign) float radialAccel;
+@property (nonatomic,readwrite,assign) float radialAccel;
 /** radial acceleration variance of each particle */
-@property (readwrite,assign) float radialAccelVar;
+@property (nonatomic,readwrite,assign) float radialAccelVar;
 /** start size in pixels of each particle */
-@property (readwrite,assign) float startSize;
+@property (nonatomic,readwrite,assign) float startSize;
 /** size variance in pixels of each particle */
-@property (readwrite,assign) float startSizeVar;
+@property (nonatomic,readwrite,assign) float startSizeVar;
 /** end size in pixels of each particle */
-@property (readwrite,assign) float endSize;
+@property (nonatomic,readwrite,assign) float endSize;
 /** end size variance in pixels of each particle */
-@property (readwrite,assign) float endSizeVar;
+@property (nonatomic,readwrite,assign) float endSizeVar;
 /** start color of each particle */
-@property (readwrite,assign) ccColor4F startColor;
+@property (nonatomic,readwrite,assign) ccColor4F startColor;
 /** start color variance of each particle */
-@property (readwrite,assign) ccColor4F startColorVar;
+@property (nonatomic,readwrite,assign) ccColor4F startColorVar;
 /** end color and end color variation of each particle */
-@property (readwrite,assign) ccColor4F endColor;
+@property (nonatomic,readwrite,assign) ccColor4F endColor;
 /** end color variance of each particle */
-@property (readwrite,assign) ccColor4F endColorVar;
+@property (nonatomic,readwrite,assign) ccColor4F endColorVar;
 //* initial angle of each particle
-@property (readwrite,assign) float startSpin;
+@property (nonatomic,readwrite,assign) float startSpin;
 //* initial angle of each particle
-@property (readwrite,assign) float startSpinVar;
+@property (nonatomic,readwrite,assign) float startSpinVar;
 //* initial angle of each particle
-@property (readwrite,assign) float endSpin;
+@property (nonatomic,readwrite,assign) float endSpin;
 //* initial angle of each particle
-@property (readwrite,assign) float endSpinVar;
+@property (nonatomic,readwrite,assign) float endSpinVar;
 /** emission rate of the particles */
-@property (readwrite,assign) float emissionRate;
+@property (nonatomic,readwrite,assign) float emissionRate;
 /** maximum particles of the system */
-@property (readwrite,assign) int totalParticles;
+@property (nonatomic,readwrite,assign) int totalParticles;
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite, retain) Texture2D * texture;
+@property (nonatomic,readwrite, retain) Texture2D * texture;
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite) ccBlendFunc blendFunc;
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 /** whether or not the particles are using "blend additive */
-@property (readwrite) BOOL blendAdditive;
+@property (nonatomic,readwrite) BOOL blendAdditive;
 /** particles movement type: Free or Grouped
  @since v0.8
  */
-@property (readwrite) tPositionType positionType;
+@property (nonatomic,readwrite) tPositionType positionType;
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
  @since v0.8
  */
-@property (readwrite) BOOL autoRemoveOnFinish;
+@property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;

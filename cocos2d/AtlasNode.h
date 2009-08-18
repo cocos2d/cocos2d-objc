@@ -54,15 +54,15 @@
 }
 
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite,retain) TextureAtlas *textureAtlas;
+@property (nonatomic,readwrite,retain) TextureAtlas *textureAtlas;
 
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite) ccBlendFunc blendFunc;
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity;
+@property (nonatomic,readonly) GLubyte opacity;
 /** conforms to CocosNodeRGBA protocol */
-@property (readwrite) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3B color;
 
 
 /** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/

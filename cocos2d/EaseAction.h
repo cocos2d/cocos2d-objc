@@ -33,7 +33,7 @@
 	float	rate;
 }
 /** rate value for the actions */
-@property (readwrite,assign) float rate;
+@property (nonatomic,readwrite,assign) float rate;
 /** Creates the action with the inner action and the rate parameter */
 +(id) actionWithAction: (IntervalAction*) action rate:(float)rate;
 /** Initializes the action with the inner action and the rate parameter */

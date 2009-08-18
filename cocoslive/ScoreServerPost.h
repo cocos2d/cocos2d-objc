@@ -84,17 +84,17 @@ enum {
 }
 
 /** status from the score post */ 
-@property (readonly) tPostStatus postStatus;
+@property (nonatomic,readonly) tPostStatus postStatus;
  
 /** ranking of your score
  @since v0.7.3
  */
-@property (readonly) NSUInteger ranking;
+@property (nonatomic,readonly) NSUInteger ranking;
 
 /** whether or not the score was updated
  @since v0.7.3
  */
-@property (readonly) BOOL scoreDidUpdate;
+@property (nonatomic,readonly) BOOL scoreDidUpdate;
 
 /** creates a cocos server with a game name and a game key */
 +(id) serverWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id)delegate;

@@ -106,23 +106,23 @@ typedef enum {
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
 /** pixelFormat */
-@property(readonly) Texture2DPixelFormat pixelFormat;
+@property(nonatomic,readonly) Texture2DPixelFormat pixelFormat;
 /** width in pixels */
-@property(readonly) NSUInteger pixelsWide;
+@property(nonatomic,readonly) NSUInteger pixelsWide;
 /** hight in pixels */
-@property(readonly) NSUInteger pixelsHigh;
+@property(nonatomic,readonly) NSUInteger pixelsHigh;
 
 /** texture name */
-@property(readonly) GLuint name;
+@property(nonatomic,readonly) GLuint name;
 
 /** content size */
-@property(readonly, nonatomic) CGSize contentSize;
+@property(nonatomic,readonly, nonatomic) CGSize contentSize;
 /** texture max S */
-@property(readonly) GLfloat maxS;
+@property(nonatomic,readonly) GLfloat maxS;
 /** texture max T */
-@property(readonly) GLfloat maxT;
+@property(nonatomic,readonly) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
-@property(readonly) BOOL hasPremultipliedAlpha;
+@property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 @end
 
 /**
