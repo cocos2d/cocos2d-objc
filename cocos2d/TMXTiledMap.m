@@ -208,7 +208,7 @@
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
 	NSAssert( tiles_ != NULL, @"TMXLayer: the tiles map has been released");
 	
-	int idx = pos.x + pos.y * layerSize_.height;
+	int idx = pos.x + pos.y * layerSize_.width;
 	return tiles_[ idx ];
 }
 
@@ -231,7 +231,7 @@
 		}
 		
 		// update gid on map
-		int idx = pos.x + pos.y * layerSize_.height;
+		int idx = pos.x + pos.y * layerSize_.width;
 		tiles_[ idx ] = gid;
 	}
 }
