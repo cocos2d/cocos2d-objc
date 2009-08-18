@@ -19,7 +19,9 @@
 #import "AtlasSpriteManager.h"
 
 
+@class TMXMapInfo;
 @class TMXLayer;
+@class TMXLayerInfo;
 @class TMXTilesetInfo;
 
 /** Possible oritentations of the TMX map */
@@ -120,10 +122,10 @@ enum
 @property (readwrite) int layerOrientation;
 
 
-/** creates a TMX Layer with an tileset image name */
-+(id) layerWithTilesetName:(NSString*)name;
-/** initializes a TMX Layer with an tileset image name */
--(id) initWithTilesetName:(NSString*)name;
+/** creates a TMX Layer with an tileset info, a layer info and a map info */
++(id) layerWithTilesetInfo:(TMXTilesetInfo*)tilesetInfo layerInfo:(TMXLayerInfo*)layerInfo mapInfo:(TMXMapInfo*)mapInfo;
+/** initializes a TMX Layer with a tileset info, a layer info and a map info */
+-(id) initWithTilesetInfo:(TMXTilesetInfo*)tilesetInfo layerInfo:(TMXLayerInfo*)layerInfo mapInfo:(TMXMapInfo*)mapInfo;
 
 /** dealloc the map that contains the tile position from memory.
  Unless you want to know at runtime the tiles positions, you can safely call this method.
