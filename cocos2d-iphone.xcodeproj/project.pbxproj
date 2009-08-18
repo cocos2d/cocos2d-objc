@@ -690,7 +690,6 @@
 		5078B52A0E3E43540004233A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		5078B52B0E3E43540004233A /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		5078B5340E3E437F0004233A /* IntervalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5078B5330E3E437F0004233A /* IntervalTest.m */; };
-		507D4E65102CBEA500A69927 /* tilespacing-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 507D4E63102CBEA500A69927 /* tilespacing-test.tmx */; };
 		507D4E66102CBEA600A69927 /* tmw_desert_spacing.png in Resources */ = {isa = PBXBuildFile; fileRef = 507D4E64102CBEA500A69927 /* tmw_desert_spacing.png */; };
 		507D4EB2102E13B400A69927 /* iso-test.png in Resources */ = {isa = PBXBuildFile; fileRef = 507D4EB0102E13B400A69927 /* iso-test.png */; };
 		507D4EB3102E13B400A69927 /* iso-test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 507D4EB1102E13B400A69927 /* iso-test.tmx */; };
@@ -2078,7 +2077,6 @@
 		506EE3D01030F19600A389B3 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		5078B5320E3E437F0004233A /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalTest.h; path = tests/IntervalTest.h; sourceTree = "<group>"; };
 		5078B5330E3E437F0004233A /* IntervalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalTest.m; path = tests/IntervalTest.m; sourceTree = "<group>"; };
-		507D4E63102CBEA500A69927 /* tilespacing-test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tilespacing-test.tmx"; sourceTree = "<group>"; };
 		507D4E64102CBEA500A69927 /* tmw_desert_spacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmw_desert_spacing.png; sourceTree = "<group>"; };
 		507D4EB0102E13B400A69927 /* iso-test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iso-test.png"; sourceTree = "<group>"; };
 		507D4EB1102E13B400A69927 /* iso-test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "iso-test.tmx"; sourceTree = "<group>"; };
@@ -3478,7 +3476,6 @@
 				507D4EE0102E182600A69927 /* iso-test2.tmx */,
 				507D4EB0102E13B400A69927 /* iso-test.png */,
 				507D4EB1102E13B400A69927 /* iso-test.tmx */,
-				507D4E63102CBEA500A69927 /* tilespacing-test.tmx */,
 				507D4E64102CBEA500A69927 /* tmw_desert_spacing.png */,
 				5023600E102237540005F2DE /* hexa-tiles.png */,
 				5023600F102237540005F2DE /* hexa-test.tmx */,
@@ -5545,7 +5542,6 @@
 				500427D1102121C50032274D /* fixed-ortho-test2.png in Resources */,
 				50236010102237540005F2DE /* hexa-tiles.png in Resources */,
 				50236011102237540005F2DE /* hexa-test.tmx in Resources */,
-				507D4E65102CBEA500A69927 /* tilespacing-test.tmx in Resources */,
 				507D4E66102CBEA600A69927 /* tmw_desert_spacing.png in Resources */,
 				507D4EB2102E13B400A69927 /* iso-test.png in Resources */,
 				507D4EB3102E13B400A69927 /* iso-test.tmx in Resources */,
