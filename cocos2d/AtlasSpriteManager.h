@@ -40,7 +40,7 @@
 @property (readwrite,retain) TextureAtlas * textureAtlas;
 
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite) ccBlendFunc blendFunc;
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** creates an AtlasSpriteManager with a texture2d */
 +(id)spriteManagerWithTexture:(Texture2D *)tex;

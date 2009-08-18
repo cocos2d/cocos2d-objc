@@ -39,7 +39,7 @@ Example:
 	BOOL	firstTick;
 }
 
-@property (readonly) ccTime elapsed;
+@property (nonatomic,readonly) ccTime elapsed;
 
 /** creates the action */
 +(id) actionWithDuration: (ccTime) d;

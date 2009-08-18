@@ -116,21 +116,21 @@ and when to execute the Scenes
 }
 
 /** The current running Scene. Director can only run one Scene at the time */
-@property (readonly) Scene* runningScene;
+@property (nonatomic,readonly) Scene* runningScene;
 /** The FPS value */
-@property (readwrite, assign) NSTimeInterval animationInterval;
+@property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display the FPS on the bottom-left corner */
-@property (readwrite, assign) BOOL displayFPS;
+@property (nonatomic,readwrite, assign) BOOL displayFPS;
 /** The OpenGL view */
-@property (readonly) EAGLView *openGLView;
+@property (nonatomic,readonly) EAGLView *openGLView;
 /** Pixel format used to create the context */
-@property (readonly) tPixelFormat pixelFormat;
+@property (nonatomic,readonly) tPixelFormat pixelFormat;
 /** whether or not the next delta time will be zero */
-@property (readwrite,assign) BOOL nextDeltaTimeZero;
+@property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** The device orientattion */
-@property (readwrite) ccDeviceOrientation deviceOrientation;
+@property (nonatomic,readwrite) ccDeviceOrientation deviceOrientation;
 /** Whether or not the Director is paused */
-@property (readonly) BOOL isPaused;
+@property (nonatomic,readonly) BOOL isPaused;
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;

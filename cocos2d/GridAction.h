@@ -26,7 +26,8 @@
 	ccGridSize gridSize;
 }
 
-@property ccGridSize gridSize;
+/** size of the grid */
+@property (nonatomic,readwrite) ccGridSize gridSize;
 
 /** creates the action with size and duration */
 +(id) actionWithSize:(ccGridSize)size duration:(ccTime)d;
@@ -83,7 +84,7 @@
 }
 
 /** amplitude rate */
-@property float rate;
+@property (nonatomic,readwrite) float rate;
 
 /** creates the action with an inner action that has the amplitude property, and a duration time */
 +(id)actionWithAction:(Action*)action duration:(ccTime)d;
@@ -102,7 +103,7 @@
 }
 
 /** amplitude rate */
-@property float rate;
+@property (nonatomic,readwrite) float rate;
 
 /** creates the action with an inner action that has the amplitude property, and a duration time */
 +(id)actionWithAction:(Action*)action duration:(ccTime)d;
@@ -121,7 +122,7 @@
 }
 
 /** amplitude rate */
-@property float rate;
+@property (nonatomic,readwrite) float rate;
 
 /** creates the action with an inner action that has the amplitude property, and a duration time */
 +(id)actionWithAction:(Action*)action duration:(ccTime)d;

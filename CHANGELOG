@@ -1,6 +1,7 @@
 version 0.8.1-rc -
+ . All: Use nonatomic properties (issue #509)
  . ActionManager: fixed crash (issue #490)
- . Box2d: using google code r6 (issue #494)
+ . Box2d: using google code r8 (issue #494)
  . CocosDenshion: correct channel in SimpleAudioEngine (issue #465)
  . CocosDenshion: update buffer status after deletion ( issue #486)
  . CocosDenshion: SimpleAudioEngine can stop sounds (issue #498)

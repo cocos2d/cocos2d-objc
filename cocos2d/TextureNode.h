@@ -45,13 +45,13 @@
 }
 
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite,retain) Texture2D *texture;
+@property (nonatomic,readwrite,retain) Texture2D *texture;
 
 /** conforms to CocosNodeTexture protocol */
-@property (readwrite) ccBlendFunc blendFunc;
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CocosNodeRGBA protocol */
-@property (readonly) GLubyte opacity;
+@property (nonatomic,readonly) GLubyte opacity;
 /** conforms to CocosNodeRGBA protocol */
-@property (readwrite) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3B color;
 @end

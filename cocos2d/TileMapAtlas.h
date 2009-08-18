@@ -44,7 +44,7 @@
 }
 
 /** TileMap info */
-@property (readonly) tImageTGA *tgaInfo;
+@property (nonatomic,readonly) tImageTGA *tgaInfo;
 
 /** creates the TileMap with a tile file (atlas) with a map file and the width and height of each tile */
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;

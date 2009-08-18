@@ -35,7 +35,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 }
 
 /** interval in seconds */
-@property (readwrite,assign) ccTime interval;
+@property (nonatomic,readwrite,assign) ccTime interval;
 
 /** Allocates a timer with a target and a selector.
 */
@@ -80,7 +80,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  @since v0.8
  @warning It will affect EVERY scheduled selector / action.
  */
-@property (readwrite) ccTime	timeScale;
+@property (nonatomic,readwrite) ccTime	timeScale;
 
 /** returns a shared instance of the Scheduler */
 +(Scheduler *)sharedScheduler;

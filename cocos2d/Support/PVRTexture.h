@@ -67,14 +67,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 + (id)pvrTextureWithContentsOfFile:(NSString *)path;
 + (id)pvrTextureWithContentsOfURL:(NSURL *)url;
 
-@property (readonly) GLuint name;
-@property (readonly) uint32_t width;
-@property (readonly) uint32_t height;
-@property (readonly) GLenum internalFormat;
-@property (readonly) BOOL hasAlpha;
+@property (nonatomic,readonly) GLuint name;
+@property (nonatomic,readonly) uint32_t width;
+@property (nonatomic,readonly) uint32_t height;
+@property (nonatomic,readonly) GLenum internalFormat;
+@property (nonatomic,readonly) BOOL hasAlpha;
 
 // cocos2d integration
-@property (readwrite) BOOL retainName;
+@property (nonatomic,readwrite) BOOL retainName;
 
 @end
 

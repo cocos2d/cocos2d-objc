@@ -90,7 +90,7 @@
 }
 
 /** Invocation object that has the target#selector and the parameters */
-@property (readwrite,retain) NSInvocation *invocation;
+@property (nonatomic,readwrite,retain) NSInvocation *invocation;
 
 /** creates the action with the callback and the data to pass as an argument */
 +(id) actionWithTarget: (id) t selector:(SEL) s data:(void*)d;

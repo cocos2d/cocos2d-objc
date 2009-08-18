@@ -121,7 +121,7 @@ enum {
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
-@property(readonly) int zOrder;
+@property(nonatomic,readonly) int zOrder;
 /** The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
    - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
@@ -130,47 +130,47 @@ enum {
  @warning: Use it at your own risk since it might break the cocos2d parent-children z order
  @since v0.8
  */
-@property (readwrite) float vertexZ;
+@property (nonatomic,readwrite) float vertexZ;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle */
-@property(readwrite,assign) float rotation;
+@property(nonatomic,readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor */
-@property(readwrite,assign) float scale, scaleX, scaleY;
+@property(nonatomic,readwrite,assign) float scale, scaleX, scaleY;
 /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner */
-@property(readwrite,assign) CGPoint position;
+@property(nonatomic,readwrite,assign) CGPoint position;
 /** A Camera object that lets you move the node using camera coordinates.
  * If you use the Camera then position, scale & rotation won't be used */
-@property(readonly) Camera* camera;
+@property(nonatomic,readonly) Camera* camera;
 /** A Grid object that is used when applying Effects */
-@property(readwrite,retain) GridBase* grid;
+@property(nonatomic,readwrite,retain) GridBase* grid;
 /** Whether of not the node is visible. Default is YES */
-@property(readwrite,assign) BOOL visible;
+@property(nonatomic,readwrite,assign) BOOL visible;
 /** The transformation anchor point in absolute pixels.
  since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
-@property(readonly) CGPoint transformAnchor;
+@property(nonatomic,readonly) CGPoint transformAnchor;
 /** The normalized coordinates of the anchor point.
  Anchor point. (0,0) means bottom-left corner, (1,1) means top-right corner, (0.5, 0.5) means the center.
  Sprites and other "textured" Nodes have a default anchorPoint of (0.5f, 0.5f)
  @since v0.8
  */
-@property(readwrite) CGPoint anchorPoint;
+@property(nonatomic,readwrite) CGPoint anchorPoint;
 /** The untransformed size of the node.
  The contentSize remains the same no matter the node is scaled or rotated.
  All nodes has a size. Layer and Scene has the same size of the screen.
  @since v0.8
  */
-@property (readwrite) CGSize contentSize;
+@property (nonatomic,readwrite) CGSize contentSize;
 /** A weak reference to the parent */
-@property(readwrite,assign) CocosNode* parent;
+@property(nonatomic,readwrite,assign) CocosNode* parent;
 /** If YES the transformtions will be relative to it's anchor point.
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
  * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
  */
-@property(readwrite,assign) BOOL relativeAnchorPoint;
+@property(nonatomic,readwrite,assign) BOOL relativeAnchorPoint;
 /** A tag used to identify the node easily */
-@property(readwrite,assign) int tag;
+@property(nonatomic,readwrite,assign) int tag;
 /** A custom user data pointer */
-@property(readwrite,assign) void *userData;
+@property(nonatomic,readwrite,assign) void *userData;
 
 // initializators
 /** allocates and initializes a node.
