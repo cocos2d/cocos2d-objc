@@ -45,3 +45,7 @@
 @interface StressTest2 : TestDemo
 {}
 @end
+
+@interface SchedulerTest1 : TestDemo
+{}
+@end
