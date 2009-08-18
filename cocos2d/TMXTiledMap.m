@@ -24,7 +24,7 @@
 #pragma mark TMXTiledMap
 
 @interface TMXTiledMap (Private)
--(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset;
+-(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)mapInfo;
 @end
 
 @implementation TMXTiledMap
@@ -57,7 +57,7 @@
 
 		for( TMXLayerInfo *layerInfo in mapInfo->layers ) {
 			if( layerInfo->visible ) {
-				id child = [self parseLayer:layerInfo tileset:tileset];
+				id child = [self parseLayer:layerInfo tileset:tileset map:mapInfo];
 				[self addChild:child z:idx tag:idx];
 				
 				// update content size with the max size
@@ -81,17 +81,10 @@
 }
 
 // private
--(id) parseLayer:(TMXLayerInfo*)layerInfo tileset:(TMXTilesetInfo*)tileset
+-(id) parseLayer:(TMXLayerInfo*)layerInfo tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)mapInfo
 {
-	TMXLayer *layer = [TMXLayer layerWithTilesetName:tileset->sourceImage];
-	
-	layer.layerName = layerInfo->name;
-	layer.layerSize = layerInfo->layerSize;
-	layer.tiles = layerInfo->tiles;
-	layer.tileset = tileset;
-	layer.mapTileSize = tileSize_;
-	layer.layerOrientation = mapOrientation_;
-	
+	TMXLayer *layer = [TMXLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
+
 	// tell the layerinfo to release the ownership of the tiles map.
 	layerInfo->ownTiles = NO;
 
@@ -156,18 +149,25 @@
 @synthesize layerOrientation=layerOrientation_;
 @synthesize mapTileSize=mapTileSize_;
 
-+(id) layerWithTilesetName:(NSString*)name
++(id) layerWithTilesetInfo:(TMXTilesetInfo*)tilesetInfo layerInfo:(TMXLayerInfo*)layerInfo mapInfo:(TMXMapInfo*)mapInfo
 {
-	return [[[self alloc] initWithTilesetName:name] autorelease];
+	return [[[self alloc] initWithTilesetInfo:tilesetInfo layerInfo:layerInfo mapInfo:mapInfo] autorelease];
 }
 
--(id) initWithTilesetName:(NSString*)name
-{
-	// XXX: a better guess should be done regarding the quantity of tiles
-	if((self=[super initWithFile:name capacity:100])) {
-		layerName_ = nil;
-		layerSize_ = CGSizeZero;
-		tiles_ = NULL;
+-(id) initWithTilesetInfo:(TMXTilesetInfo*)tilesetInfo layerInfo:(TMXLayerInfo*)layerInfo mapInfo:(TMXMapInfo*)mapInfo
+{	
+	// XXX: is 35% a good estimate ?
+	float totalNumberOfTiles = layerInfo->layerSize.width * layerInfo->layerSize.height;
+	float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
+	if((self=[super initWithFile:tilesetInfo->sourceImage capacity:capacity])) {		
+		self.layerName = layerInfo->name;
+		self.layerSize = layerInfo->layerSize;
+		self.tiles = layerInfo->tiles;
+		self.tileset = tilesetInfo;
+		self.mapTileSize = mapInfo->tileSize;
+		self.layerOrientation = mapInfo->orientation;
+		
+		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
 	}
 	return self;
 }

@@ -408,14 +408,16 @@ Class restartAction()
 		[self addChild:color z:-1];
 		
 		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test1.tmx"];
-		[self addChild:iso z:0 tag:kTagTileMap];				
+		[self addChild:iso z:0 tag:kTagTileMap];
+		
+		[iso setAnchorPoint:ccp(0.5f, 0.5f)];
 	}	
 	return self;
 }
 
 -(NSString *) title
 {
-	return @"TMX Isometric test 1";
+	return @"TMX Isometric test + anchorPoint";
 }
 @end
 
