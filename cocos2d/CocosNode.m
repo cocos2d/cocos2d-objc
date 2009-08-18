@@ -584,8 +584,9 @@
 	if( !scheduledSelectors )
 		[self timerAlloc];
 	
+	NSString *key = NSStringFromSelector(selector);
 	// already scheduled ?
-	if( [scheduledSelectors objectForKey: NSStringFromSelector(selector) ] ) {
+	if( [scheduledSelectors objectForKey:key  ] ) {
 		return;
 	}
 	
@@ -594,7 +595,7 @@
 	if( isRunning )
 		[[Scheduler sharedScheduler] scheduleTimer:timer];
 	
-	[scheduledSelectors setObject:timer forKey:NSStringFromSelector(selector) ];
+	[scheduledSelectors setObject:timer forKey:key ];
 }
 
 -(void) unschedule: (SEL) selector
@@ -604,14 +605,18 @@
 		return;
 	
 	Timer *timer = nil;
-	
-	if( ! (timer = [scheduledSelectors objectForKey: NSStringFromSelector(selector)] ) )
+	NSString *key = NSStringFromSelector(selector);
+
+	if( ! (timer = [scheduledSelectors objectForKey:key] ) )
 	 {
-		 CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",NSStringFromSelector(selector) );
+		 CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",key );
 		 return;
 	 }
 	
-	[scheduledSelectors removeObjectForKey: NSStringFromSelector(selector) ];
+	NSLog(@"after count: %d", [scheduledSelectors count]);
+	[scheduledSelectors removeObjectForKey: key];
+	NSLog(@"before count: %d", [scheduledSelectors count]);
+
 	if( isRunning )
 		[[Scheduler sharedScheduler] unscheduleTimer:timer];
 }

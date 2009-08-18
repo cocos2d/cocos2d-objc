@@ -27,6 +27,7 @@ static NSString *transitions[] = {
 			@"Test6",
 			@"StressTest1",
 			@"StressTest2",
+			@"SchedulerTest1",
 };
 
 Class nextAction()
@@ -535,6 +536,40 @@ Class restartAction()
 	return @"stress test #2: no leaks";
 }
 @end
+
+@implementation SchedulerTest1
+-(id) init
+{
+	// 
+	// Purpose of this test:
+	// Scheduler should be released
+	//
+	
+	if( ( self=[super init]) ) {
+		Layer *layer = [Layer node];
+		NSLog(@"retain count after init is %d", [layer retainCount]);                // 1
+		
+		[self addChild:layer z:0];
+		NSLog(@"retain count after addChild is %d", [layer retainCount]);      // 2
+		
+		[layer schedule:@selector(doSomething:)];
+		NSLog(@"retain count after schedule is %d", [layer retainCount]);      // 3
+		
+		[layer unschedule:@selector(doSomething:)];
+		NSLog(@"retain count after unschedule is %d", [layer retainCount]);		// STILL 3!
+	}
+	
+	return self;
+}
+-(void) doSomething:(ccTime)dt
+{
+}
+-(NSString *) title
+{
+	return @"cocosnode scheduler test #1";
+}
+@end
+
 
 
 
