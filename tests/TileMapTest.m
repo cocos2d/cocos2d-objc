@@ -17,6 +17,7 @@ static NSString *transitions[] = {
 			@"TMXOrthoTest",
 			@"TMXOrthoTest2",
 			@"TMXOrthoTest3",
+			@"TMXOrthoTest4",
 			@"TMXIsoTest",
 			@"TMXIsoTest1",
 			@"TMXIsoTest2",
@@ -352,21 +353,63 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {		
-		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"tilespacing-test.tmx"];
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test3.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		for( AtlasSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
+		
+		[map setScale:0.2f];
+		[map setAnchorPoint:ccp(0.5f, 0.5f)];
 	}	
 	return self;
 }
 
 -(NSString *) title
 {
-	return @"TMX Ortho test3";
+	return @"TMX anchorPoint test";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXOrthoTest4
+
+@implementation TMXOrthoTest4
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test4.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		for( AtlasSpriteManager* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		[map setAnchorPoint:ccp(0, 0)];
+
+		TMXLayer *layer = [map layerNamed:@"Layer 0"];
+		CGSize s = [layer layerSize];
+		
+		AtlasSprite *sprite;
+		sprite = [layer tileAt:ccp(0,0)];
+		[sprite setScale:2];
+		sprite = [layer tileAt:ccp(s.width-1,0)];
+		[sprite setScale:2];
+		sprite = [layer tileAt:ccp(0,s.height-1)];
+		[sprite setScale:2];
+		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
+		[sprite setScale:2];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX width/height test";
+}
+@end
+
 
 
 #pragma mark -

@@ -199,7 +199,7 @@
 {
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
 
-	int t = pos.x + pos.y * layerSize_.height;
+	int t = pos.x + pos.y * layerSize_.width;
 	return (AtlasSprite*) [self getChildByTag:t];
 }
 
@@ -240,7 +240,7 @@
 {
 	CGRect rect = [tileset_ tileForGID:gid];
 	
-	int z = pos.x + pos.y * layerSize_.height;
+	int z = pos.x + pos.y * layerSize_.width;
 	
 	AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:self];
 //	[tile setOpacity:layerInfo->opacity];
@@ -256,7 +256,7 @@
 
 -(void) removeTileAt:(CGPoint)pos
 {
-	int z = pos.x + pos.y * layerSize_.height;
+	int z = pos.x + pos.y * layerSize_.width;
 	[self removeChildByTag:z cleanup:YES];
 }
 
