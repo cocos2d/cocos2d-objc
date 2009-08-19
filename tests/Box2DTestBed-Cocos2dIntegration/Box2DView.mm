@@ -39,7 +39,7 @@ enum {
 		
 		Box2DView *view = [Box2DView viewWithEntryID:entryId];
 		[self addChild:view z:0 tag:kTagBox2DNode];
-		[view setScale:10];
+		[view setScale:15];
 		[view setAnchorPoint:ccp(0,0)];
 		[view setPosition:ccp(s.width/2, s.height/3)];
 		
@@ -219,7 +219,7 @@ enum {
 	// Only run for valid values
 	if (acceleration.y!=0 && acceleration.x!=0)
 	{
-		if (test) test->SetGravity(acceleration.x,acceleration.y);
+		if (test) test->SetGravity(-acceleration.y,acceleration.x);
 	}
 }
 
