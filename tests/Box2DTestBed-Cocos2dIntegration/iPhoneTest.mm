@@ -18,6 +18,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
+//
+// File modified for cocos2d integration
+// http://www.cocos2d-iphone.org
+//
+
 #include "iPhoneTest.h"
 #include "GLES-Render.h"
 
@@ -151,13 +156,14 @@ class QueryCallback : public b2QueryCallback
 		b2Fixture* m_fixture;
 	};
 
-void Test::MouseDown(const b2Vec2& p)
+bool Test::MouseDown(const b2Vec2& p)
 {
+	bool ret = false;
 	m_mouseWorld = p;
 	
 	if (m_mouseJoint != NULL)
 	{
-		return;
+		return false;
 	}
 	
 	// Make a small box.
@@ -187,7 +193,11 @@ void Test::MouseDown(const b2Vec2& p)
 #endif
 		m_mouseJoint = (b2MouseJoint*)m_world->CreateJoint(&md);
 		body->WakeUp();
+		
+		ret = true;
 	}
+	
+	return ret;
 }
 
 void Test::SpawnBomb(const b2Vec2& worldPt)

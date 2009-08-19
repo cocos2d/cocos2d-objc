@@ -18,6 +18,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
+//
+// File modified for cocos2d integration
+// http://www.cocos2d-iphone.org
+//
 
 
 #ifndef TEST_H
@@ -140,7 +144,7 @@ class Test : public b2ContactListener
 		virtual void Step(Settings* settings);
 		virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
 		void ShiftMouseDown(const b2Vec2& p);
-		virtual void MouseDown(const b2Vec2& p);
+		virtual bool MouseDown(const b2Vec2& p);
 		virtual void MouseUp(const b2Vec2& p);
 		void MouseMove(const b2Vec2& p);
 		void LaunchBomb();
@@ -163,6 +167,7 @@ class Test : public b2ContactListener
 		}
 		
 		b2World* m_world;
+		b2MouseJoint* m_mouseJoint;
 
 	protected:
 		friend class DestructionListener;
@@ -177,7 +182,6 @@ class Test : public b2ContactListener
 		GLESDebugDraw m_debugDraw;
 		int32 m_textLine;
 		b2Body* m_bomb;
-		b2MouseJoint* m_mouseJoint;
 		b2Vec2 m_bombSpawnPoint;
 		bool m_bombSpawning;
 		b2Vec2 m_mouseWorld;
