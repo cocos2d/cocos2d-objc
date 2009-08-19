@@ -1997,7 +1997,7 @@
 		504828C90F45B15700A30CEF /* attachDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = attachDemo.m; sourceTree = "<group>"; };
 		504828DE0F45B1B800A30CEF /* AttachDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AttachDemo-Info.plist"; sourceTree = "<group>"; };
 		504828ED0F45B71A00A30CEF /* attachDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = attachDemo.xib; sourceTree = "<group>"; };
-		504CC32F1035BDE90096894C /* ActionManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		504CC32F1035BDE90096894C /* ParallaxTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParallaxTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504CC3441035BECA0096894C /* ActionManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionManagerTest.h; path = tests/ActionManagerTest.h; sourceTree = "<group>"; };
 		504CC3451035BECA0096894C /* ActionManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionManagerTest.m; path = tests/ActionManagerTest.m; sourceTree = "<group>"; };
 		5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoWithStatusBar.plist; path = Resources/InfoWithStatusBar.plist; sourceTree = "<group>"; };
@@ -3114,7 +3114,7 @@
 				503F5CBE101FE930002A37E5 /* TileMapTest.app */,
 				503164CD10277665003ACFE7 /* liblibpng.a */,
 				503167B41028488E003ACFE7 /* ParticleView.app */,
-				504CC32F1035BDE90096894C /* ActionManagerTest.app */,
+				504CC32F1035BDE90096894C /* ParallaxTest.app */,
 				50010ED2103B3DB80059EC2E /* Box2dTest.app */,
 			);
 			name = Products;
@@ -3974,8 +3974,8 @@
 				50175B240F33B22300624901 /* cocosLiveDemo */,
 				50F992430F9F183500767ABC /* PerformanceSpriteTest */,
 				50F998EC0F9F277D00767ABC /* PerformanceParticleTest */,
-				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				50DFC2CC0FF62852007E7827 /* Samples */,
+				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				317070360E29409E00DD3360 /* AccelViewportTest.h */,
 				317070350E29409E00DD3360 /* AccelViewportTest.m */,
 				504CC3441035BECA0096894C /* ActionManagerTest.h */,
@@ -4854,7 +4854,7 @@
 			);
 			name = ActionManagerTest;
 			productName = playground;
-			productReference = 504CC32F1035BDE90096894C /* ActionManagerTest.app */;
+			productReference = 504CC32F1035BDE90096894C /* ParallaxTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		505B62AB0F2E6A0F001B4104 /* Texture2dTest */ = {
