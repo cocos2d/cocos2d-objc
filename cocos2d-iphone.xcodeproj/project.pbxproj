@@ -7372,7 +7372,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dTest;
 				SDKROOT = iphoneos2.0;
-				USER_HEADER_SEARCH_PATHS = external/Box2d;
+				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/** external/Box2d";
 				ZERO_LINK = NO;
 			};
 			name = Release;
