@@ -1997,7 +1997,7 @@
 		504828C90F45B15700A30CEF /* attachDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = attachDemo.m; sourceTree = "<group>"; };
 		504828DE0F45B1B800A30CEF /* AttachDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AttachDemo-Info.plist"; sourceTree = "<group>"; };
 		504828ED0F45B71A00A30CEF /* attachDemo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = attachDemo.xib; sourceTree = "<group>"; };
-		504CC32F1035BDE90096894C /* ParallaxTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParallaxTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		504CC32F1035BDE90096894C /* ActionManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504CC3441035BECA0096894C /* ActionManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionManagerTest.h; path = tests/ActionManagerTest.h; sourceTree = "<group>"; };
 		504CC3451035BECA0096894C /* ActionManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionManagerTest.m; path = tests/ActionManagerTest.m; sourceTree = "<group>"; };
 		5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoWithStatusBar.plist; path = Resources/InfoWithStatusBar.plist; sourceTree = "<group>"; };
@@ -3114,7 +3114,7 @@
 				503F5CBE101FE930002A37E5 /* TileMapTest.app */,
 				503164CD10277665003ACFE7 /* liblibpng.a */,
 				503167B41028488E003ACFE7 /* ParticleView.app */,
-				504CC32F1035BDE90096894C /* ParallaxTest.app */,
+				504CC32F1035BDE90096894C /* ActionManagerTest.app */,
 				50010ED2103B3DB80059EC2E /* Box2dTest.app */,
 			);
 			name = Products;
@@ -4784,9 +4784,9 @@
 			productReference = 504225700FC0B39C00B992F7 /* libbox2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		504226120FC0B5D500B992F7 /* Box2dTest */ = {
+		504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dTest" */;
+			buildConfigurationList = 5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dAccelTouchTest" */;
 			buildPhases = (
 				504226170FC0B5D500B992F7 /* Resources */,
 				5042261A0FC0B5D500B992F7 /* Sources */,
@@ -4798,7 +4798,7 @@
 				504226130FC0B5D500B992F7 /* PBXTargetDependency */,
 				504226340FC0B67200B992F7 /* PBXTargetDependency */,
 			);
-			name = Box2dTest;
+			name = Box2dAccelTouchTest;
 			productName = ChipmunkDemo;
 			productReference = 5042262E0FC0B5D500B992F7 /* Box2dTest.app */;
 			productType = "com.apple.product-type.application";
@@ -4854,7 +4854,7 @@
 			);
 			name = ActionManagerTest;
 			productName = playground;
-			productReference = 504CC32F1035BDE90096894C /* ParallaxTest.app */;
+			productReference = 504CC32F1035BDE90096894C /* ActionManagerTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		505B62AB0F2E6A0F001B4104 /* Texture2dTest */ = {
@@ -5438,10 +5438,11 @@
 				509B39DE0F31020900F2FB95 /* TouchJSON */,
 				8E6CBEEE0F7A758000D47B3A /* vorbis */,
 				317070410E2940C900DD3360 /* AccelViewportTest */,
+				504CC30C1035BDE90096894C /* ActionManagerTest */,
 				506881F40E95761200F943E5 /* AtlasTest */,
 				501C7C6D0F91EFFF0024A296 /* AtlasSpriteTest */,
 				5048287F0F45AED700A30CEF /* AttachTest */,
-				504226120FC0B5D500B992F7 /* Box2dTest */,
+				504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */,
 				50010EBA103B3DB80059EC2E /* Box2dTestBed */,
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
 				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
@@ -5474,7 +5475,6 @@
 				50D0E0480FF9232E00098927 /* HelloActionsSample */,
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
 				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
-				504CC30C1035BDE90096894C /* ActionManagerTest */,
 			);
 		};
 /* End PBXProject section */
@@ -7998,7 +7998,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -8008,7 +8008,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = ParallaxTest;
+				PRODUCT_NAME = ActionManagerTest;
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -9767,7 +9767,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dTest" */ = {
+		5042262B0FC0B5D500B992F7 /* Build configuration list for PBXNativeTarget "Box2dAccelTouchTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5042262C0FC0B5D500B992F7 /* Debug */,

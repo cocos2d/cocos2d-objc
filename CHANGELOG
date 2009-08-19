@@ -1,4 +1,4 @@
-version 0.8.1-rc -
+version 0.8.1-rc -19-Ago-2009
  . All: Using nonatomic properties (issue #509)
  . ActionManager: fixed crash (issue #490)
  . Actions: RotateTo always rotates to shortest angle fix (issue #499)
