@@ -5,6 +5,11 @@
 //  Box2D iPhone port by Simon Oliver - http://www.simonoliver.com - http://www.handcircus.com
 //
 
+//
+// File heavily modified for cocos2d integration
+// http://www.cocos2d-iphone.org
+//
+
 #import "Box2DView.h"
 
 #define kAccelerometerFrequency 30
@@ -124,6 +129,8 @@ enum {
 }
 @end
 
+#pragma mark -
+#pragma mark Box2DView
 @implementation Box2DView
 
 +(id) viewWithEntryID:(int)entryId
@@ -136,6 +143,7 @@ enum {
     if ((self = [super init])) {
 		
 		self.isAccelerometerEnabled = YES;
+		self.isTouchEnabled = YES;
 
 		[self schedule:@selector(tick:)];
 
@@ -169,6 +177,42 @@ enum {
 	delete test;
     [super dealloc];
 }
+
+-(void) registerWithTouchDispatcher
+{
+	// higher priority than dragging
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:-10 swallowsTouches:YES];
+}
+
+- (BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
+{
+	
+	CGPoint touchLocation=[touch locationInView:[touch view]];
+	touchLocation=[[Director sharedDirector] convertCoordinate:touchLocation];
+	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
+//	NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
+
+	return test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));	
+}
+
+- (void) ccTouchMoved:(UITouch*)touch withEvent:(UIEvent*)event
+{
+	CGPoint touchLocation=[touch locationInView:[touch view]];
+	touchLocation=[[Director sharedDirector] convertCoordinate:touchLocation];
+	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
+	
+	test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
+}
+
+- (void) ccTouchEnded:(UITouch*)touch withEvent:(UIEvent*)event
+{
+	CGPoint touchLocation=[touch locationInView:[touch view]];
+	touchLocation=[[Director sharedDirector] convertCoordinate:touchLocation];
+	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
+	
+	test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
+}
+
 
 - (void) accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
 {

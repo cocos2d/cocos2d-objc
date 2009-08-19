@@ -50,7 +50,6 @@
 		50011200103B878B0059EC2E /* iPhoneTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500111F6103B878B0059EC2E /* iPhoneTest.mm */; };
 		50011201103B878B0059EC2E /* iPhoneTestEntries.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500111F7103B878B0059EC2E /* iPhoneTestEntries.mm */; };
 		50011202103B878B0059EC2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 500111F8103B878B0059EC2E /* main.m */; };
-		50011203103B878B0059EC2E /* TestEntriesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500111FA103B878B0059EC2E /* TestEntriesViewController.mm */; };
 		500165A10E72DB470085673F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500165A20E72DB470085673F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500165A30E72DB470085673F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -1727,7 +1726,6 @@
 		500111ED103B878B0059EC2E /* Box2DAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DAppDelegate.mm; sourceTree = "<group>"; };
 		500111EE103B878B0059EC2E /* Box2DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DView.h; sourceTree = "<group>"; };
 		500111EF103B878B0059EC2E /* Box2DView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DView.mm; sourceTree = "<group>"; };
-		500111F0103B878B0059EC2E /* Delegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delegates.h; sourceTree = "<group>"; };
 		500111F1103B878B0059EC2E /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		500111F2103B878B0059EC2E /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		500111F3103B878B0059EC2E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1736,8 +1734,6 @@
 		500111F6103B878B0059EC2E /* iPhoneTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iPhoneTest.mm; sourceTree = "<group>"; };
 		500111F7103B878B0059EC2E /* iPhoneTestEntries.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iPhoneTestEntries.mm; sourceTree = "<group>"; };
 		500111F8103B878B0059EC2E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		500111F9103B878B0059EC2E /* TestEntriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEntriesViewController.h; sourceTree = "<group>"; };
-		500111FA103B878B0059EC2E /* TestEntriesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestEntriesViewController.mm; sourceTree = "<group>"; };
 		500165990E72DB0E0085673F /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r1.png; sourceTree = "<group>"; };
 		5001659A0E72DB0E0085673F /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
 		5001659D0E72DB470085673F /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b1.png; sourceTree = "<group>"; };
@@ -3212,7 +3208,6 @@
 				500111ED103B878B0059EC2E /* Box2DAppDelegate.mm */,
 				500111EE103B878B0059EC2E /* Box2DView.h */,
 				500111EF103B878B0059EC2E /* Box2DView.mm */,
-				500111F0103B878B0059EC2E /* Delegates.h */,
 				500111F1103B878B0059EC2E /* GLES-Render.h */,
 				500111F2103B878B0059EC2E /* GLES-Render.mm */,
 				500111F3103B878B0059EC2E /* Icon.png */,
@@ -3221,8 +3216,6 @@
 				500111F6103B878B0059EC2E /* iPhoneTest.mm */,
 				500111F7103B878B0059EC2E /* iPhoneTestEntries.mm */,
 				500111F8103B878B0059EC2E /* main.m */,
-				500111F9103B878B0059EC2E /* TestEntriesViewController.h */,
-				500111FA103B878B0059EC2E /* TestEntriesViewController.mm */,
 			);
 			name = "Box2DTestBed-Cocos2dIntegration";
 			path = "tests/Box2DTestBed-Cocos2dIntegration";
@@ -6467,7 +6460,6 @@
 				50011200103B878B0059EC2E /* iPhoneTest.mm in Sources */,
 				50011201103B878B0059EC2E /* iPhoneTestEntries.mm in Sources */,
 				50011202103B878B0059EC2E /* main.m in Sources */,
-				50011203103B878B0059EC2E /* TestEntriesViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

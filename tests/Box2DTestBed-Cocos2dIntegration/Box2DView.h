@@ -5,13 +5,17 @@
 //  Box2D iPhone port by Simon Oliver - http://www.simonoliver.com - http://www.handcircus.com
 //
 
+//
+// File heavily modified for cocos2d integration
+// http://www.cocos2d-iphone.org
+//
+
 
 #import <UIKit/UIKit.h>
 
 #import "cocos2d.h"
 
 #import "iPhoneTest.h"
-#import "Delegates.h"
 
 
 @interface MenuLayer : Layer
@@ -26,9 +30,7 @@
     
 	TestEntry* entry;
 	Test* test;
-	int		entryID;
-	
-	int doubleClickValidCountdown;
+	int		entryID;	
 }
 +(id) viewWithEntryID:(int)entryId;
 -(id) initWithEntryID:(int)entryId;

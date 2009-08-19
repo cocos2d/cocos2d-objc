@@ -5,9 +5,12 @@
 //  Box2D iPhone port by Simon Oliver - http://www.simonoliver.com - http://www.handcircus.com
 //
 
+//
+// File heavily modified for cocos2d integration
+// http://www.cocos2d-iphone.org
+//
+
 #import <UIKit/UIKit.h>
-#import "TestEntriesViewController.h"
-#import "Delegates.h"
 
 @class Box2DView;
 

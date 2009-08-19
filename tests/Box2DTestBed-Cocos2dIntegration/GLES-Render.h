@@ -18,6 +18,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
+//
+// File modified for cocos2d integration
+// http://www.cocos2d-iphone.org
+//
+
 #ifndef RENDER_H
 #define RENDER_H
 
