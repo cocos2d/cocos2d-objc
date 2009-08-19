@@ -1,6 +1,7 @@
 version 0.8.1-rc -
  . All: Using nonatomic properties (issue #509)
  . ActionManager: fixed crash (issue #490)
+ . Actions: RotateTo always rotates to shortest angle fix (issue #499)
  . Box2d: using google code r8 (issue #494)
  . Box2d: added box2dTestBed (part of issue #494)
  . CocosDenshion: correct channel in SimpleAudioEngine (issue #465)

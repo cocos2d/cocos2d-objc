@@ -127,7 +127,7 @@ Class restartAction()
 
 -(void) registerWithTouchDispatcher
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:NO];
+	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
 }
 
 -(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event

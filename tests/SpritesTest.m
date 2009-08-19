@@ -206,12 +206,19 @@ Class restartAction()
 	[self centerSprites];
 		
 	id actionTo = [RotateTo actionWithDuration: 2 angle:45];
+	id actionTo2 = [RotateTo actionWithDuration: 2 angle:-45];
+	id actionTo0 = [RotateTo actionWithDuration:2  angle:0];
+	[tamara runAction: [Sequence actions:actionTo, actionTo0, nil]];
+
 	id actionBy = [RotateBy actionWithDuration:2  angle: 360];
 	id actionByBack = [actionBy reverse];
-
-	
-	[tamara runAction: actionTo];
 	[grossini runAction: [Sequence actions:actionBy, actionByBack, nil]];
+
+	Sprite *kathia = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	[self addChild:kathia];
+	[kathia setPosition:ccp(240,160)];
+	[kathia runAction: [Sequence actions:actionTo2, [[actionTo0 copy] autorelease], nil]];
+	
 }
 -(NSString *) title
 {

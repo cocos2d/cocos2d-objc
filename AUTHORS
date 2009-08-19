@@ -29,6 +29,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Brian Hammond: patches for Demos
 	* Bryan/Acceleroto: patch for CocosDenshion
 	* CJ Hanson: RenderTexture generates UIImages patch
+	* cjlesh: RotateTo action rotates to shortest angle patch
 	* Clinth Harris: patches for Doc generator script
 	* Codemattic: patches for CocosNode
 		patches fro MenuItemFont
