@@ -613,9 +613,7 @@
 		 return;
 	 }
 	
-	NSLog(@"after count: %d", [scheduledSelectors count]);
 	[scheduledSelectors removeObjectForKey: key];
-	NSLog(@"before count: %d", [scheduledSelectors count]);
 
 	if( isRunning )
 		[[Scheduler sharedScheduler] unscheduleTimer:timer];
