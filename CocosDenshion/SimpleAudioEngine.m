@@ -100,6 +100,10 @@ static CDAudioManager *am = nil;
 	[am pauseBackgroundMusic];
 }	
 
+-(void) resumeBackgroundMusic {
+	[am resumeBackgroundMusic];
+}	
+
 -(void) rewindBackgroundMusic {
 	[am rewindBackgroundMusic];
 }
