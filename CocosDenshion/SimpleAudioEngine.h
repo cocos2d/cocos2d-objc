@@ -46,6 +46,8 @@
 -(void) stopBackgroundMusic;
 /** pauses the background music */
 -(void) pauseBackgroundMusic;
+/** resume background music that has been paused */
+-(void) resumeBackgroundMusic;
 /** rewind the background music */
 -(void) rewindBackgroundMusic;
 /** returns whether or not the background music is playing */
@@ -55,7 +57,6 @@
 -(ALuint) playEffect:(NSString*) filePath;
 /** stop a sound that is playing, note you must pass in the soundId that is returned when you started playing the sound with playEffect */
 -(void) stopEffect:(ALuint) soundId;
-
 /** plays an audio effect with a file path, pitch, pan and gain */
 -(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain;
 /** preloads an audio effect */
