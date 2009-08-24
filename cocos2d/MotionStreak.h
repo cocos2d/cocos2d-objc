@@ -44,10 +44,10 @@
 /** Ribbon used by MotionStreak (weak reference) */
 @property (nonatomic,readonly) Ribbon *ribbon;
 
-/** creates the streak */
+/** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
 +(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
 
-/** init the streak */
+/** initializes a MotionStreak. The file will be loaded using the TextureMgr. */
 -(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
 
 /** polling function */

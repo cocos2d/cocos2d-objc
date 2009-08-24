@@ -46,10 +46,14 @@
 /** TileMap info */
 @property (nonatomic,readonly) tImageTGA *tgaInfo;
 
-/** creates the TileMap with a tile file (atlas) with a map file and the width and height of each tile */
+/** creates the TileMap with a tile file (atlas) with a map file and the width and height of each tile.
+ The tile file will be loaded using the TextureMgr.
+ */
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;
 
-/** initializes the TileMap with a tile file (atlas) with a map file and the width and height of each tile */
+/** initializes the TileMap with a tile file (atlas) with a map file and the width and height of each tile.
+ The file will be loaded using the TextureMgr.
+ */
 -(id) initWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;
 
 /** returns a tile from position x,y.

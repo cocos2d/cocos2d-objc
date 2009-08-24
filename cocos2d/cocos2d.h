@@ -18,7 +18,9 @@
  * @image html cocos2d-Icon.png
  *
  * @section intro Introduction
- * cocos2d API reference
+ * This is cocos2d API reference
+ *
+ * The programming guide is hosted here: http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:index
  *
  * <hr>
  *
