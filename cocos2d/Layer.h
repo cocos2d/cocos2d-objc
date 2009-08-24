@@ -94,19 +94,27 @@
 
 @end
 
-/** A Layer with the ability to multiplex it's children */
+/** A Layer with the ability to multiplex it's children.
+ Features:
+   - It supports one or more children
+   - Only one children will be active a time
+ */
 @interface MultiplexLayer : Layer
 {
 	unsigned int enabledLayer;
 	NSMutableArray *layers;
 }
 
-/** creates a MultiplexLayer with one or more layers */
+/** creates a MultiplexLayer with one or more layers using a variable argument list. */
 +(id) layerWithLayers: (Layer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
-/** initializes a MultiplexLayer with one or more layers */
+/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 -(id) initWithLayers: (Layer*) layer vaList:(va_list) params;
-/** switches to a certain layer indexed by n*/
+/** switches to a certain layer indexed by n. 
+ The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+ */
 -(void) switchTo: (unsigned int) n;
-/** release the current layer and switches to another layer indexed by n */
+/** release the current layer and switches to another layer indexed by n.
+ The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+ */
 -(void) switchToAndReleaseMe: (unsigned int) n;
 @end

@@ -275,7 +275,7 @@
 {
 	if( (self=[super init]) ) {
 	
-		layers = [[NSMutableArray array] retain];
+		layers = [[NSMutableArray arrayWithCapacity:5] retain];
 		
 		[layers addObject: layer];
 		
@@ -300,15 +300,9 @@
 
 -(void) switchTo: (unsigned int) n
 {
-	if( n >= [layers count] ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"MultiplexLayerInvalidIndex"
-									reason:@"Invalid index in MultiplexLayer switchTo message"
-									userInfo:nil];
-		@throw myException;		
-	}
+	NSAssert( n < [layers count], @"Invalid index in MultiplexLayer switchTo message" );
 		
-	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:NO];
+	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:YES];
 	
 	enabledLayer = n;
 	
@@ -317,15 +311,9 @@
 
 -(void) switchToAndReleaseMe: (unsigned int) n
 {
-	if( n >= [layers count] ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"MultiplexLayerInvalidIndex"
-									reason:@"Invalid index in MultiplexLayer switchTo message"
-									userInfo:nil];
-		@throw myException;		
-	}
+	NSAssert( n < [layers count], @"Invalid index in MultiplexLayer switchTo message" );
 	
-	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:NO];
+	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:YES];
 	
 	[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
 	
