@@ -120,6 +120,8 @@
 			
 			p->size += (p->deltaSize * dt);
 			
+			NSAssert(p->size >= 0, @"Particle system: size can't be negative");
+			
 			p->life -= dt;
 			
 			//

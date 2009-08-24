@@ -37,7 +37,7 @@
 }
 
 /** returns the TextureAtlas that is used */
-@property (readwrite,retain) TextureAtlas * textureAtlas;
+@property (nonatomic,readwrite,retain) TextureAtlas * textureAtlas;
 
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
@@ -46,14 +46,20 @@
 +(id)spriteManagerWithTexture:(Texture2D *)tex;
 /** creates an AtlasSpriteManager with a texture2d and capacity */
 +(id)spriteManagerWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity;
-/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
+/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc).
+ The file will be loaded using the TextureMgr.
+ */
 +(id)spriteManagerWithFile:(NSString*) fileImage;
-/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) and capacity */
+/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) and capacity. 
+ The file will be loaded using the TextureMgr.
+*/
 +(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 /** initializes an AtlasSpriteManager with a texture2d and capacity */
 -(id)initWithTexture:(Texture2D *)tex capacity:(NSUInteger)capacity;
-/** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) */
+/** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc).
+ The file will be loaded using the TextureMgr.
+ */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 -(NSUInteger)indexForNewChildAtZ:(int)z;

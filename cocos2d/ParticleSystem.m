@@ -148,6 +148,7 @@
 	
 	// life
 	particle->life = life + lifeVar * CCRANDOM_MINUS1_1();
+	particle->life = MAX(0, particle->life);  // no negative life
 	
 	// Color
 	ccColor4F start;
@@ -170,6 +171,8 @@
 
 	// size
 	float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
+	startS = MAX(0, startS);	// no negative size
+	
 	particle->size = startS;
 	if( endSize == kParticleStartSizeEqualToEndSize )
 		particle->deltaSize = 0;

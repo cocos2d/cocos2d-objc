@@ -128,7 +128,7 @@
 /** get the font name */
 +(NSString*) fontName;
 
-/** creates a menu item from a string. Use it with MenuItemToggle */
+/** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
 +(id) itemFromString: (NSString*) value;
 
 /** creates a menu item from a string with a target/selector */

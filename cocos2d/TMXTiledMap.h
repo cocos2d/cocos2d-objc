@@ -51,6 +51,9 @@ enum
  - The anchorPoint of the TMXTileMap is (0,0)
  - The TMX layers will be added as a child
  - The TMX layers will be aliased by default
+ - The tileset image will be loaded using the TextureMgr
+ - Each tile will have a unique tag
+ - Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
  
  Limitations:
  - It only supports one tileset.
@@ -80,7 +83,7 @@ enum
 /** map orientation */
 @property (nonatomic,readonly) int mapOrientation;
 
-/** creates a TMX Tiled Map with a TMX file */
+/** creates a TMX Tiled Map with a TMX file.*/
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile;
 
 /** initializes a TMX Tiled Map with a TMX file */

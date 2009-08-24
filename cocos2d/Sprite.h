@@ -39,12 +39,12 @@
 	NSMutableDictionary *animations;	
 }
 
-/** creates an sprite with an image file */
+/** creates an sprite with an image file. The file will be loaded using the TextureMgr */
 + (id) spriteWithFile:(NSString *)imageFile;
 /** creates an sprite from a CGImageRef image */
 + (id) spriteWithCGImage:(CGImageRef)image;
 
-/** initializes the sprite with an image file */
+/** initializes the sprite with an image file. The file will be loaded using the TextureMg */
 - (id) initWithFile:(NSString *) imageFile;
 /** creates an sprite from a CGImageRef image */
 - (id) initWithCGImage:(CGImageRef)image;
