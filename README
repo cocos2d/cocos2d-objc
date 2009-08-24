@@ -34,7 +34,7 @@ Main features
     * Fast textures: PVRTC 2-bit & 4-bit textures, RGBA 16-bit (and 32-bit) textures
     * Language: objective-c
     * Open Source: Compatible with open and closed source projects
-    * OpenGL ES 1.1 based 
+    * OpenGL ES 1.1 based
 
 
 This library does not work with the toolchain, but it

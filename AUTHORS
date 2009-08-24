@@ -118,6 +118,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of the original AtlasSprite and AtlasSpriteManager
 	* myBuddyCJ: correct channel in SimpleAudioEngine patch
 	* Nerezus: Fixed compile error when keyboard registry is enabled
+	* psionic81: ActionManager doesn't purge running actions patch
 	* rac5372: compiler warning in MenuItem
 	* ratman: patch for TileMapAtlas: it works with 255 tiles
 		patch for TextureMgr: supports directory within image names

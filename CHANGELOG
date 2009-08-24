@@ -1,4 +1,5 @@
 version 0.8.1-rc -19-Ago-2009
+ . ActionManager: doesn't delete running actions (issue #481)
  . Particles: no negative size (issue #514)
 
 version 0.8.1-rc -19-Ago-2009

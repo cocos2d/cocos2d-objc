@@ -122,14 +122,20 @@ Class restartAction()
 		[child setPosition:ccp(200,200)];
 		[self addChild:child z:1];
 
-		//Sum of all action's duration is 0.5 second.
-		[child runAction:[RotateBy actionWithDuration:0.5f angle:90]];
-		[child runAction:[Sequence actions:[DelayTime actionWithDuration:0.4f], [FadeOut 
-																				 actionWithDuration:0.1f], nil]];
+		//Sum of all action's duration is 1.5 second.
+		[child runAction:[RotateBy actionWithDuration:1.5f angle:90]];
+		[child runAction:[Sequence actions:
+						  [DelayTime actionWithDuration:1.4f],
+						  [FadeOut actionWithDuration:1.1f],
+						  nil]
+		];
 		
-		//After 0.5 second, self will be removed.
-		[self runAction:[Sequence actions:[DelayTime actionWithDuration:0.4f], [CallFunc 
-																				actionWithTarget:self selector:@selector(removeThis)], nil]];
+		//After 1.5 second, self will be removed.
+		[self runAction:[Sequence actions:
+						 [DelayTime actionWithDuration:1.4f],
+						 [CallFunc actionWithTarget:self selector:@selector(removeThis)],
+						 nil]
+		];
 	}
 	
 	return self;
@@ -139,11 +145,13 @@ Class restartAction()
 -(void) removeThis
 {
 	[parent removeChild:self cleanup:YES];
+	
+	[self nextCallback:self];
 }
 
 -(NSString *) title
 {
-	return @"ActionManagerTest 1";
+	return @"Test 1. Should not crash";
 }
 @end
 
@@ -153,15 +161,32 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] )) {
+		
+		Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
+		[self addChild:grossini];
+		[grossini setPosition:ccp(200,200)];
 
+		[grossini runAction: [Sequence actions: 
+							  [MoveBy actionWithDuration:1
+												position:ccp(150,0)],
+							  [CallFuncN actionWithTarget:self
+												 selector:@selector(bugMe:)],
+							  nil]
+		];
 	}
 	
 	return self;
 }
+		
+- (void)bugMe:(CocosNode *)node
+{
+	[node stopAllActions]; //After this stop next action not working, if remove this stop everything is working
+	[node runAction:[ScaleTo actionWithDuration:2 scale:2]];
+}
 
 -(NSString *) title
 {
-	return @"ActionManagerTest 2";
+	return @"Test 2. Logic test";
 }
 @end
 

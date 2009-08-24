@@ -347,7 +347,8 @@ static ActionManager *_sharedManager = nil;
 			// so it is safe to ask this here (issue #490)
 			bin = bin->next;
 
-			if( currentTargetSalvaged )
+			// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
+			if( currentTargetSalvaged && currentTarget->actions->num == 0 )
 				[self deleteHashElement:currentTarget];
 		}
 	}
