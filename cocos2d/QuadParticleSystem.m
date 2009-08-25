@@ -162,8 +162,7 @@
 			p->color.a += (p->deltaColor.a * dt);
 			
 			p->size += (p->deltaSize * dt);
-
-			NSAssert(p->size >= 0, @"Particle system: size can't be negative");
+			p->size = MAX( 0, p->size );
 
 			p->life -= dt;
 			
