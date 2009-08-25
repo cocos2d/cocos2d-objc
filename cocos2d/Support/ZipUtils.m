@@ -25,6 +25,7 @@
 
 int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {
+#if 1
 	/* ret value */
 	int err = Z_OK;
 	
@@ -88,10 +89,14 @@ int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out
 	*outLength = bufferSize - d_stream.avail_out;
     err = inflateEnd(&d_stream);
 	return err;
+#else
+	return 0;
+#endif
 }
 
 int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 {
+#if 1
 	unsigned int outLength = 0;
 	int err = inflateMemory_(in, inLength, out, &outLength);
 	
@@ -114,4 +119,7 @@ int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 	}
 	
 	return outLength;
+#else
+	return 0;
+#endif
 }

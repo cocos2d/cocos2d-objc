@@ -39,6 +39,7 @@
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
+extern NSString * cocos2dVersion(void);
 
 @interface Director (Private)
 -(BOOL)isOpenGLAttached;
@@ -109,7 +110,9 @@ static Director *_sharedDirector = nil;
 }
 
 - (id) init
-{   
+{  
+	CCLOG(@"%@", cocos2dVersion() );
+
 	if( (self=[super init]) ) {
 
 		// default values
@@ -818,13 +821,13 @@ static Director *_sharedDirector = nil;
 
 - (id) init
 {
-#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
-	CCLOG(@"Using Fast Director with Fast Events");
-#else
-	CCLOG(@"Using Fast Director");
-#endif
-
 	if(( self = [super init] )) {
+		
+#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+		CCLOG(@"Using Fast Director with Fast Events");
+#else
+		CCLOG(@"Using Fast Director");
+#endif		
 		isRunning = NO;
 		
 		// XXX:
