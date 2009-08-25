@@ -4412,7 +4412,7 @@
 				50379A7A0F913FA300986724 /* PBXTargetDependency */,
 			);
 			name = AccelViewportTest;
-			productName = playground;
+			productName = AccelViewportTest;
 			productReference = 3170705B0E2940C900DD3360 /* AccelViewportTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4449,7 +4449,7 @@
 				5012DD190FE2994300D6DDD1 /* PBXTargetDependency */,
 			);
 			name = TouchesTest;
-			productName = playground;
+			productName = TouchesTest;
 			productReference = 5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4484,7 +4484,7 @@
 				501945560F964C620059CE7C /* PBXTargetDependency */,
 			);
 			name = drawPrimitivesTest;
-			productName = playground;
+			productName = drawPrimitivesTest;
 			productReference = 501945740F964C620059CE7C /* drawPrimitivesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4502,7 +4502,7 @@
 				501C7C6E0F91EFFF0024A296 /* PBXTargetDependency */,
 			);
 			name = AtlasSpriteTest;
-			productName = playground;
+			productName = AtlasSpriteTest;
 			productReference = 501C7C910F91EFFF0024A296 /* AtlasSpriteTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4591,7 +4591,7 @@
 				503F5C97101FE930002A37E5 /* PBXTargetDependency */,
 			);
 			name = TileMapTest;
-			productName = playground;
+			productName = TileMapTest;
 			productReference = 503F5CBE101FE930002A37E5 /* TileMapTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4645,7 +4645,7 @@
 				5047999A100F6A4200D1C71A /* PBXTargetDependency */,
 			);
 			name = LayerTest;
-			productName = playground;
+			productName = LayerTest;
 			productReference = 504799B1100F6A4200D1C71A /* LayerTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4681,7 +4681,7 @@
 				504CC30D1035BDE90096894C /* PBXTargetDependency */,
 			);
 			name = ActionManagerTest;
-			productName = playground;
+			productName = ActionManagerTest;
 			productReference = 504CC32F1035BDE90096894C /* ActionManagerTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4700,7 +4700,7 @@
 				5031657C10277864003ACFE7 /* PBXTargetDependency */,
 			);
 			name = Texture2dTest;
-			productName = playground;
+			productName = Texture2dTest;
 			productReference = 505B62D60F2E6A0F001B4104 /* Texture2dTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4718,7 +4718,7 @@
 				505B63790F2F4210001B4104 /* PBXTargetDependency */,
 			);
 			name = EaseActionsTest;
-			productName = playground;
+			productName = EaseActionsTest;
 			productReference = 505B63A30F2F4210001B4104 /* EaseActionsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4736,7 +4736,7 @@
 				506143F20E589A2E003CCDB7 /* PBXTargetDependency */,
 			);
 			name = cocosnodeTest;
-			productName = playground;
+			productName = cocosnodeTest;
 			productReference = 506144080E589A2E003CCDB7 /* cocosnodeTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4754,7 +4754,7 @@
 				506881F50E95761200F943E5 /* PBXTargetDependency */,
 			);
 			name = AtlasTest;
-			productName = playground;
+			productName = AtlasTest;
 			productReference = 506882110E95761200F943E5 /* AtlasTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4772,7 +4772,7 @@
 				506C77CC0E01520900B48100 /* PBXTargetDependency */,
 			);
 			name = ClickAndMoveTest;
-			productName = playground;
+			productName = ClickAndMoveTest;
 			productReference = 506C77E20E01520900B48100 /* ClickAndMoveTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4790,7 +4790,7 @@
 				506C79F30E01C73A00B48100 /* PBXTargetDependency */,
 			);
 			name = MenuTest;
-			productName = playground;
+			productName = MenuTest;
 			productReference = 506C7A090E01C73A00B48100 /* MenuTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4808,7 +4808,7 @@
 				506C7FF80E041C9300B48100 /* PBXTargetDependency */,
 			);
 			name = SceneTest;
-			productName = playground;
+			productName = SceneTest;
 			productReference = 506C800E0E041C9300B48100 /* SceneTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4826,7 +4826,7 @@
 				5078B5180E3E43540004233A /* PBXTargetDependency */,
 			);
 			name = IntervalTest;
-			productName = playground;
+			productName = IntervalTest;
 			productReference = 50C7D4950E5C2ED80035ACA2 /* IntervalTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4897,7 +4897,7 @@
 				50A24E1A0F377FA1007CAEB0 /* PBXTargetDependency */,
 			);
 			name = EffectsTest;
-			productName = playground;
+			productName = EffectsTest;
 			productReference = 50A24E440F377FA1007CAEB0 /* EffectsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4915,7 +4915,7 @@
 				50A7839A0F3AFCE500104C45 /* PBXTargetDependency */,
 			);
 			name = MotionStreakTest;
-			productName = playground;
+			productName = MotionStreakTest;
 			productReference = 50A783C40F3AFCE500104C45 /* MotionStreakTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4951,7 +4951,7 @@
 				50B2C60B0E1014A700AE9530 /* PBXTargetDependency */,
 			);
 			name = ChipmunkAccelTouchTest;
-			productName = playground;
+			productName = ChipmunkAccelTouchTest;
 			productReference = 50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -4988,7 +4988,7 @@
 				50C1953F0EE4B57E00829067 /* PBXTargetDependency */,
 			);
 			name = ParallaxTest;
-			productName = playground;
+			productName = ParallaxTest;
 			productReference = 50C195600EE4B57E00829067 /* ParallaxTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5006,7 +5006,7 @@
 				50C938C90E0A9DBB00517B01 /* PBXTargetDependency */,
 			);
 			name = TransitionsTest;
-			productName = playground;
+			productName = TransitionsTest;
 			productReference = 50C938E00E0A9DBB00517B01 /* TransitionsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5024,7 +5024,7 @@
 				50C93A960E0BF6E000517B01 /* PBXTargetDependency */,
 			);
 			name = SpritesTest;
-			productName = playground;
+			productName = SpritesTest;
 			productReference = 50C93AAD0E0BF6E000517B01 /* SpritesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5060,7 +5060,7 @@
 				50CB30621004CA9100B7A750 /* PBXTargetDependency */,
 			);
 			name = "CocosDenshionDemo (soundengine)";
-			productName = playground;
+			productName = "CocosDenshionDemo (soundengine)";
 			productReference = 50CB30361004C9D300B7A750 /* CocosDenshionDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5114,7 +5114,7 @@
 				50D56FA70F3FABEC007CD6B9 /* PBXTargetDependency */,
 			);
 			name = EffectsAdvancedTest;
-			productName = playground;
+			productName = EffectsAdvancedTest;
 			productReference = 50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5132,7 +5132,7 @@
 				50DB1BB20E1C1E5900A89DFF /* PBXTargetDependency */,
 			);
 			name = ParticleTest;
-			productName = playground;
+			productName = ParticleTest;
 			productReference = 50DB1BCA0E1C1E5900A89DFF /* ParticleTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5186,7 +5186,7 @@
 				8E6CBF320F7A78F800D47B3A /* PBXTargetDependency */,
 			);
 			name = "PASoundEngineTest (experimental)";
-			productName = playground;
+			productName = "PASoundEngineTest (experimental)";
 			productReference = 8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -5204,7 +5204,7 @@
 				DA5F0EC20FFE96D400C7C82E /* PBXTargetDependency */,
 			);
 			name = Bug422;
-			productName = playground;
+			productName = Bug422;
 			productReference = 50CB34DD100765EF00B7A750 /* Bug422.app */;
 			productType = "com.apple.product-type.application";
 		};
