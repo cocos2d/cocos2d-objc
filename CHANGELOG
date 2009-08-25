@@ -1,5 +1,6 @@
 version 0.8.1 - dd-MMM-2009
  . ActionManager: doesn't delete running actions (issue #481)
+ . Box2d: using google code r10 (v2.1.0) (issue #494)
  . CocosDenshion: resumeBackground music (issue #513)
  . MultiplexLayer: removes child using cleanup:YES (issue #466)
  . Particles: no negative size (issue #514)

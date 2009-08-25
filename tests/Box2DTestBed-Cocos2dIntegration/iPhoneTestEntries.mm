@@ -42,6 +42,7 @@
 #include "Prismatic.h"
 #include "Pulleys.h"
 #include "Pyramid.h"
+#include "RayCast.h"
 #include "Revolute.h"
 #include "SensorTest.h"
 #include "ShapeEditing.h"
@@ -56,35 +57,36 @@
 
 TestEntry g_testEntries[] =
 {
-{"Pyramid", Pyramid::Create},
-{"One-Sided Platform", OneSidedPlatform::Create},
-{"Apply Force", ApplyForce::Create},
-{"Bridge", Bridge::Create},
-{"CCD Test", CCDTest::Create},
-{"Chain", Chain::Create},
-{"Collision Filtering", CollisionFiltering::Create},
-{"Collision Processing", CollisionProcessing::Create},
-{"Compound Shapes", CompoundShapes::Create},
-//{"Distance Test", DistanceTest::Create},
-{"Dominos", Dominos::Create},
-{"Dynamic Tree", DynamicTreeTest::Create},
-{"Gears", Gears::Create},
-{"Line Joint", LineJoint::Create},
-{"PolyCollision", PolyCollision::Create},
-{"Polygon Shapes", PolyShapes::Create},
-{"Prismatic", Prismatic::Create},
-{"Pulleys", Pulleys::Create},
-{"Revolute", Revolute::Create},
-{"Sensor Test", SensorTest::Create},
-{"Shape Editing", ShapeEditing::Create},
-{"Slider Crank", SliderCrank::Create},
-{"SphereStack", SphereStack::Create},
-{"Theo Jansen's Walker", TheoJansen::Create},
-{"Time of Impact", TimeOfImpact::Create},
-{"Varying Friction", VaryingFriction::Create},
-{"Varying Restitution", VaryingRestitution::Create},
-{"Vertical Stack", VerticalStack::Create},
-{"Web", Web::Create},
+	{"Ray-Cast", RayCast::Create},
+	{"Pyramid", Pyramid::Create},
+	{"One-Sided Platform", OneSidedPlatform::Create},
+	{"Apply Force", ApplyForce::Create},
+	{"Bridge", Bridge::Create},
+	{"CCD Test", CCDTest::Create},
+	{"Chain", Chain::Create},
+	{"Collision Filtering", CollisionFiltering::Create},
+	{"Collision Processing", CollisionProcessing::Create},
+	{"Compound Shapes", CompoundShapes::Create},
+	//{"Distance Test", DistanceTest::Create},
+	{"Dominos", Dominos::Create},
+	{"Dynamic Tree", DynamicTreeTest::Create},
+	{"Gears", Gears::Create},
+	{"Line Joint", LineJoint::Create},
+	{"PolyCollision", PolyCollision::Create},
+	{"Polygon Shapes", PolyShapes::Create},
+	{"Prismatic", Prismatic::Create},
+	{"Pulleys", Pulleys::Create},
+	{"Revolute", Revolute::Create},
+	{"Sensor Test", SensorTest::Create},
+	{"Shape Editing", ShapeEditing::Create},
+	{"Slider Crank", SliderCrank::Create},
+	{"SphereStack", SphereStack::Create},
+	{"Theo Jansen's Walker", TheoJansen::Create},
+	{"Time of Impact", TimeOfImpact::Create},
+	{"Varying Friction", VaryingFriction::Create},
+	{"Varying Restitution", VaryingRestitution::Create},
+	{"Vertical Stack", VerticalStack::Create},
+	{"Web", Web::Create},
 };
 
 int g_totalEntries = sizeof(g_testEntries) / sizeof(g_testEntries[0]);
