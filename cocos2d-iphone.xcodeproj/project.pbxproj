@@ -1025,6 +1025,7 @@
 		50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DB1BD10E1C1EF000A89DFF /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */; };
+		50DF7F98104498FF0089218C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		50DFC28B0FF627B6007E7827 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50DFC28C0FF627B6007E7827 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50DFC28D0FF627B6007E7827 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -2484,6 +2485,7 @@
 				50E386DD10445EDA00150883 /* OpenGLES.framework in Frameworks */,
 				50E386DE10445EF500150883 /* CoreGraphics.framework in Frameworks */,
 				50E386E810445F4600150883 /* QuartzCore.framework in Frameworks */,
+				50DF7F98104498FF0089218C /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
