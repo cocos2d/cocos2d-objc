@@ -637,7 +637,6 @@
 		506E1ADA0FB34E8E00AAA494 /* test-rgba1.png in Resources */ = {isa = PBXBuildFile; fileRef = 506E1AD50FB34E8E00AAA494 /* test-rgba1.png */; };
 		506E1B380FB350F000AAA494 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
 		506EDF71102FBC0D00A389B3 /* GLES-Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EDF03102FBC0C00A389B3 /* GLES-Render.h */; };
-		506EDF72102FBC0D00A389B3 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506EDF04102FBC0C00A389B3 /* GLES-Render.mm */; };
 		506EDF75102FBC0D00A389B3 /* SphereStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EDF08102FBC0C00A389B3 /* SphereStack.h */; };
 		506EDF76102FBC0D00A389B3 /* VerticalStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EDF09102FBC0C00A389B3 /* VerticalStack.h */; };
 		506EE3D11030F19700A389B3 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EE3891030F19500A389B3 /* Box2D.h */; };
@@ -1060,6 +1059,7 @@
 		50F29FDC1020607E0046CA73 /* orthogonal-test3.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */; };
 		50F2A104102094550046CA73 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
 		50F2A105102094550046CA73 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F2A103102094550046CA73 /* ZipUtils.h */; };
+		50F48A531045943000755CFB /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500111F2103B878B0059EC2E /* GLES-Render.mm */; };
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
@@ -6299,7 +6299,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506EDF72102FBC0D00A389B3 /* GLES-Render.mm in Sources */,
 				506EE3D21030F19700A389B3 /* b2BroadPhase.cpp in Sources */,
 				506EE3D41030F19700A389B3 /* b2CollideCircle.cpp in Sources */,
 				506EE3D51030F19700A389B3 /* b2CollidePolygon.cpp in Sources */,
@@ -6341,6 +6340,7 @@
 			files = (
 				504226310FC0B64700B992F7 /* main.m in Sources */,
 				504227140FC0B96E00B992F7 /* Box2dTest.mm in Sources */,
+				50F48A531045943000755CFB /* GLES-Render.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
