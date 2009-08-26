@@ -67,6 +67,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <OpenGLES/ES1/glext.h>
 
+#import "ccMacros.h"
 #import "Texture2D.h"
 #import "PVRTexture.h"
 
@@ -137,9 +138,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 - (void) dealloc
 {
-#if DEBUG
-	NSLog(@"deallocing %@", self);
-#endif
+	CCLOG(@"deallocing %@", self);
 	if(_name)
 		glDeleteTextures(1, &_name);
 	
