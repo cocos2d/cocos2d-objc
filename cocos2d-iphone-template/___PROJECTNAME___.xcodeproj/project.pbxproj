@@ -11,6 +11,13 @@
 		1F3B9A2D0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B9A2B0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
 		505573C01045D1BE00A31725 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 505573BF1045D1BE00A31725 /* Icon.png */; };
 		505573C21045D1EA00A31725 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 505573C11045D1EA00A31725 /* Default.png */; };
+		505574581045D68500A31725 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
+		505574591045D68500A31725 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
+		5055745A1045D68500A31725 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
+		5055745B1045D68500A31725 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
+		5055745C1045D68500A31725 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */; };
+		5055745D1045D68500A31725 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1BC0F6022AE0040855A /* QuartzCore.framework */; };
+		5055745E1045D69D00A31725 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		506EDC31102F528A00A389B3 /* HelloWorldScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 506EDC30102F528A00A389B3 /* HelloWorldScene.m */; };
@@ -375,6 +382,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				505574581045D68500A31725 /* AVFoundation.framework in Frameworks */,
+				505574591045D68500A31725 /* AudioToolbox.framework in Frameworks */,
+				5055745A1045D68500A31725 /* CoreGraphics.framework in Frameworks */,
+				5055745B1045D68500A31725 /* OpenAL.framework in Frameworks */,
+				5055745C1045D68500A31725 /* OpenGLES.framework in Frameworks */,
+				5055745D1045D68500A31725 /* QuartzCore.framework in Frameworks */,
+				5055745E1045D69D00A31725 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
