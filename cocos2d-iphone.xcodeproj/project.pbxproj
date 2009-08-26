@@ -2238,16 +2238,6 @@
 		50F489CC10458B6300755CFB /* sfchromefenders.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfchromefenders.ttf; sourceTree = "<group>"; };
 		50F7B2760F28DE7C00057537 /* EaseAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseAction.h; sourceTree = "<group>"; };
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
-		50F992440F9F183500767ABC /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		50F992450F9F183500767ABC /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		50F992460F9F183500767ABC /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
-		50F992470F9F183500767ABC /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodePerformance.m; sourceTree = "<group>"; };
-		50F992480F9F183500767ABC /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
-		50F992490F9F183500767ABC /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
-		50F998ED0F9F277D00767ABC /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		50F998EE0F9F277D00767ABC /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		50F998F10F9F277D00767ABC /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
-		50F998F20F9F277D00767ABC /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 		6F167CB90F9EF1D800843D49 /* TouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDispatcher.h; sourceTree = "<group>"; };
@@ -3785,8 +3775,6 @@
 				5069C791100B84BC00489758 /* bugs */,
 				50CB30B71004CE9400B7A750 /* CocosDenshionDemo */,
 				50175B240F33B22300624901 /* cocosLiveDemo */,
-				50F992430F9F183500767ABC /* PerformanceSpriteTest */,
-				50F998EC0F9F277D00767ABC /* PerformanceParticleTest */,
 				50DFC2CC0FF62852007E7827 /* Samples */,
 				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				317070360E29409E00DD3360 /* AccelViewportTest.h */,
@@ -4102,32 +4090,6 @@
 			);
 			name = "cocos2d-artwork";
 			path = "Resources/cocos2d-artwork";
-			sourceTree = "<group>";
-		};
-		50F992430F9F183500767ABC /* PerformanceSpriteTest */ = {
-			isa = PBXGroup;
-			children = (
-				50F992440F9F183500767ABC /* AppController.h */,
-				50F992450F9F183500767ABC /* AppController.m */,
-				50F992460F9F183500767ABC /* CocosNodePerformance.h */,
-				50F992470F9F183500767ABC /* CocosNodePerformance.m */,
-				50F992480F9F183500767ABC /* MainScene.h */,
-				50F992490F9F183500767ABC /* MainScene.m */,
-			);
-			name = PerformanceSpriteTest;
-			path = tests/PerformanceSpriteTest;
-			sourceTree = "<group>";
-		};
-		50F998EC0F9F277D00767ABC /* PerformanceParticleTest */ = {
-			isa = PBXGroup;
-			children = (
-				50F998ED0F9F277D00767ABC /* AppController.h */,
-				50F998EE0F9F277D00767ABC /* AppController.m */,
-				50F998F10F9F277D00767ABC /* MainScene.h */,
-				50F998F20F9F277D00767ABC /* MainScene.m */,
-			);
-			name = PerformanceParticleTest;
-			path = tests/PerformanceParticleTest;
 			sourceTree = "<group>";
 		};
 		6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */ = {
