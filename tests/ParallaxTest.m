@@ -157,7 +157,7 @@ Class restartAction()
 	[voidNode addChild:tilemap z:1 parallaxRatio:ccp(2.2f,1.0f) positionOffset:ccp(0,-200)];
 	
 	// top image is moved at a ratio of 3.0x, 2.5y
-	[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
+	[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,800)];
 	
 	
 	// now create some actions that will move the 'void' node
