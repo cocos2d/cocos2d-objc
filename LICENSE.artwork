@@ -56,7 +56,15 @@ TILES & TILEMAP:
 
     LICENSE: Common Public License
     http://www.opensource.org/licenses/cpl.php
-        
+
+'Tiled examples':
+    Resources/Images/tilemap/iso_test.png
+    Resources/Images/tilemap/iso_test2.png
+    Resources/Images/tilemap/tmw_desert_spacing.png
+
+    From 'Tiled' editor.
+        http://www.mapeditor.og
+    LICENSE: GNU GPL v2
 
 FONTS:
 ------
