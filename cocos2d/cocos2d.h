@@ -15,7 +15,7 @@
 
 /** @mainpage cocos2d for iPhone API reference
  *
- * @image html cocos2d-Icon.png
+ * @image html Icon.png
  *
  * @section intro Introduction
  * This is cocos2d API reference
