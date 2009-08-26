@@ -2219,6 +2219,23 @@
 		50F29FD91020607E0046CA73 /* orthogonal-test3.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test3.tmx"; sourceTree = "<group>"; };
 		50F2A102102094550046CA73 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
 		50F2A103102094550046CA73 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
+		50F489BC10458B6300755CFB /* 320x480-Splash-angry-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-angry-01.png"; sourceTree = "<group>"; };
+		50F489BD10458B6300755CFB /* 320x480-Splash-angry-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-angry-02.png"; sourceTree = "<group>"; };
+		50F489BE10458B6300755CFB /* 320x480-Splash-happy-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-happy-01.png"; sourceTree = "<group>"; };
+		50F489BF10458B6300755CFB /* 320x480-Splash-happy-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-happy-02.png"; sourceTree = "<group>"; };
+		50F489C010458B6300755CFB /* 480x320-splash-angry-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "480x320-splash-angry-01.png"; sourceTree = "<group>"; };
+		50F489C110458B6300755CFB /* 480x320-splash-angry-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "480x320-splash-angry-02.png"; sourceTree = "<group>"; };
+		50F489C210458B6300755CFB /* 480x320-splash-happy-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "480x320-splash-happy-01.png"; sourceTree = "<group>"; };
+		50F489C310458B6300755CFB /* 480x320-splash-happy-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "480x320-splash-happy-02.png"; sourceTree = "<group>"; };
+		50F489C410458B6300755CFB /* Official-cocos2d-Icon-Angry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Icon-Angry.png"; sourceTree = "<group>"; };
+		50F489C510458B6300755CFB /* Official-cocos2d-Icon-Happy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Icon-Happy.png"; sourceTree = "<group>"; };
+		50F489C610458B6300755CFB /* Official-cocos2d-Logo-Landscape-Angry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Logo-Landscape-Angry.png"; sourceTree = "<group>"; };
+		50F489C710458B6300755CFB /* Official-cocos2d-Logo-Landscape-Happy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Logo-Landscape-Happy.png"; sourceTree = "<group>"; };
+		50F489C810458B6300755CFB /* Official-cocos2d-Logo-Portrait-Angry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Logo-Portrait-Angry.png"; sourceTree = "<group>"; };
+		50F489C910458B6300755CFB /* Official-cocos2d-Logo-Portrait-Happy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Logo-Portrait-Happy.png"; sourceTree = "<group>"; };
+		50F489CA10458B6300755CFB /* Official-cocos2d-Tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Tag.png"; sourceTree = "<group>"; };
+		50F489CB10458B6300755CFB /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		50F489CC10458B6300755CFB /* sfchromefenders.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfchromefenders.ttf; sourceTree = "<group>"; };
 		50F7B2760F28DE7C00057537 /* EaseAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseAction.h; sourceTree = "<group>"; };
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F992440F9F183500767ABC /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -2970,6 +2987,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50F489BB10458B6300755CFB /* cocos2d-artwork */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
 				500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */,
@@ -4059,6 +4077,31 @@
 				50E6760D0F65857D003DAA90 /* sprite-7-7.png */,
 			);
 			path = sprites_test;
+			sourceTree = "<group>";
+		};
+		50F489BB10458B6300755CFB /* cocos2d-artwork */ = {
+			isa = PBXGroup;
+			children = (
+				50F489BC10458B6300755CFB /* 320x480-Splash-angry-01.png */,
+				50F489BD10458B6300755CFB /* 320x480-Splash-angry-02.png */,
+				50F489BE10458B6300755CFB /* 320x480-Splash-happy-01.png */,
+				50F489BF10458B6300755CFB /* 320x480-Splash-happy-02.png */,
+				50F489C010458B6300755CFB /* 480x320-splash-angry-01.png */,
+				50F489C110458B6300755CFB /* 480x320-splash-angry-02.png */,
+				50F489C210458B6300755CFB /* 480x320-splash-happy-01.png */,
+				50F489C310458B6300755CFB /* 480x320-splash-happy-02.png */,
+				50F489C410458B6300755CFB /* Official-cocos2d-Icon-Angry.png */,
+				50F489C510458B6300755CFB /* Official-cocos2d-Icon-Happy.png */,
+				50F489C610458B6300755CFB /* Official-cocos2d-Logo-Landscape-Angry.png */,
+				50F489C710458B6300755CFB /* Official-cocos2d-Logo-Landscape-Happy.png */,
+				50F489C810458B6300755CFB /* Official-cocos2d-Logo-Portrait-Angry.png */,
+				50F489C910458B6300755CFB /* Official-cocos2d-Logo-Portrait-Happy.png */,
+				50F489CA10458B6300755CFB /* Official-cocos2d-Tag.png */,
+				50F489CB10458B6300755CFB /* README.txt */,
+				50F489CC10458B6300755CFB /* sfchromefenders.ttf */,
+			);
+			name = "cocos2d-artwork";
+			path = "Resources/cocos2d-artwork";
 			sourceTree = "<group>";
 		};
 		50F992430F9F183500767ABC /* PerformanceSpriteTest */ = {

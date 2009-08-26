@@ -4,6 +4,7 @@ version 0.8.1 - dd-MMM-2009
  . CocosDenshion: resumeBackground music (issue #513)
  . MultiplexLayer: removes child using cleanup:YES (issue #466)
  . Particles: no negative size (issue #514)
+ . Resources: added new cocos2d logos (issue #521)
 
 version 0.8.1-rc - 19-Ago-2009
  . All: Using nonatomic properties (issue #509)
