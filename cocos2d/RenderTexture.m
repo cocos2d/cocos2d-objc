@@ -72,10 +72,30 @@
 
 -(void)begin
 {
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);//Will direct drawing to the frame buffer created above
-	glDisable(GL_DITHER);
+  // Save the current matrix
+  glPushMatrix();
+  
+  // Calculate the adjustment ratios based on the old and new projections
+  float widthRatio = [[Director sharedDirector] openGLView].frame.size.width / texture.contentSize.width;
+  float heightRatio = [[Director sharedDirector] openGLView].frame.size.height / texture.contentSize.height;
+  
+  // Adjust the orthographic propjection and viewport
+  glOrthof(-1.0 / widthRatio,  1.0 / widthRatio, -1.0 / heightRatio, 1.0 / heightRatio, -1,1);
+  glViewport(0, 0, texture.contentSize.width, texture.contentSize.height);
+  
+  glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);//Will direct drawing to the frame buffer created above
+  glDisable(GL_DITHER);
 }
+
+-(void)end
+{
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+  // Restore the original matrix and viewport
+  glPopMatrix();
+  glViewport(0, 0, [[Director sharedDirector] openGLView].frame.size.width, [[Director sharedDirector] openGLView].frame.size.height);
+}
+
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
 {
@@ -85,11 +105,6 @@
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColorMask(TRUE, TRUE, TRUE, FALSE);
 	[self end];
-}
-
--(void)end
-{	
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
 }
 
 -(BOOL)saveBuffer:(NSString*)name
