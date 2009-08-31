@@ -20,6 +20,25 @@
 		317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		3170705E0E29410900DD3360 /* AccelViewportTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportTest.m */; };
+		495E73FD104B75090012BB52 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		495E73FE104B75090012BB52 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		495E73FF104B75090012BB52 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		495E7400104B75090012BB52 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		495E7404104B75090012BB52 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		495E7405104B75090012BB52 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		495E7406104B75090012BB52 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		495E7407104B75090012BB52 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		495E7408104B75090012BB52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 501CD16A0E99873000B86F68 /* fps_images.png */; };
+		495E74EE104B752C0012BB52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		495E74EF104B752C0012BB52 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		495E74F0104B752C0012BB52 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		495E74F1104B752C0012BB52 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		495E74F2104B752C0012BB52 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		495E74F3104B752C0012BB52 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		495E74F4104B752C0012BB52 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		495E74F5104B75390012BB52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		495E74F8104B756D0012BB52 /* RenderTextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 495E74F7104B756D0012BB52 /* RenderTextureTest.m */; };
+		495E74F9104B75CC0012BB52 /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
 		500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 500043210F3C9FBA00A5FBF4 /* PVRTexture.h */; };
 		500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 500043220F3C9FBA00A5FBF4 /* PVRTexture.m */; };
 		500043750F3CB58600A5FBF4 /* test_image.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 500043710F3CB58600A5FBF4 /* test_image.bmp */; };
@@ -1567,6 +1586,12 @@
 		317070350E29409E00DD3360 /* AccelViewportTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelViewportTest.m; path = tests/AccelViewportTest.m; sourceTree = "<group>"; };
 		317070360E29409E00DD3360 /* AccelViewportTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccelViewportTest.h; path = tests/AccelViewportTest.h; sourceTree = "<group>"; };
 		3170705B0E2940C900DD3360 /* AccelViewportTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccelViewportTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		495E7179104AE8C20012BB52 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
+		495E71B9104AEA480012BB52 /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy 2.plist"; path = "Resources/Info copy 2.plist"; sourceTree = "<group>"; };
+		495E73F7104B74E20012BB52 /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		495E73F9104B74E20012BB52 /* RenderTextureTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RenderTextureTest-Info.plist"; sourceTree = "<group>"; };
+		495E74F6104B756D0012BB52 /* RenderTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTextureTest.h; path = tests/RenderTextureTest.h; sourceTree = "<group>"; };
+		495E74F7104B756D0012BB52 /* RenderTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderTextureTest.m; path = tests/RenderTextureTest.m; sourceTree = "<group>"; };
 		500043210F3C9FBA00A5FBF4 /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
 		500043220F3C9FBA00A5FBF4 /* PVRTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVRTexture.m; sourceTree = "<group>"; };
 		500043710F3CB58600A5FBF4 /* test_image.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = test_image.bmp; sourceTree = "<group>"; };
@@ -2323,6 +2348,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		495E73F5104B74E20012BB52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				495E74EE104B752C0012BB52 /* Foundation.framework in Frameworks */,
+				495E74EF104B752C0012BB52 /* UIKit.framework in Frameworks */,
+				495E74F0104B752C0012BB52 /* CoreGraphics.framework in Frameworks */,
+				495E74F1104B752C0012BB52 /* OpenGLES.framework in Frameworks */,
+				495E74F2104B752C0012BB52 /* QuartzCore.framework in Frameworks */,
+				495E74F3104B752C0012BB52 /* libcocos2d.a in Frameworks */,
+				495E74F4104B752C0012BB52 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50010EC6103B3DB80059EC2E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2944,6 +2983,7 @@
 				503167B41028488E003ACFE7 /* ParticleView.app */,
 				504CC32F1035BDE90096894C /* ActionManagerTest.app */,
 				50010ED2103B3DB80059EC2E /* Box2dTest.app */,
+				495E73F7104B74E20012BB52 /* RenderTextureTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2966,6 +3006,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				495E73F9104B74E20012BB52 /* RenderTextureTest-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2982,6 +3023,8 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
+				495E7179104AE8C20012BB52 /* Info copy.plist */,
+				495E71B9104AEA480012BB52 /* Info copy 2.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -3779,6 +3822,8 @@
 				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				317070360E29409E00DD3360 /* AccelViewportTest.h */,
 				317070350E29409E00DD3360 /* AccelViewportTest.m */,
+				495E74F6104B756D0012BB52 /* RenderTextureTest.h */,
+				495E74F7104B756D0012BB52 /* RenderTextureTest.m */,
 				504CC3441035BECA0096894C /* ActionManagerTest.h */,
 				504CC3451035BECA0096894C /* ActionManagerTest.m */,
 				506881E60E9575E100F943E5 /* AtlasTest.h */,
@@ -4421,6 +4466,23 @@
 			name = AccelViewportTest;
 			productName = AccelViewportTest;
 			productReference = 3170705B0E2940C900DD3360 /* AccelViewportTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		495E73F6104B74E20012BB52 /* RenderTextureTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 495E73FC104B74E40012BB52 /* Build configuration list for PBXNativeTarget "RenderTextureTest" */;
+			buildPhases = (
+				495E73F3104B74E20012BB52 /* Resources */,
+				495E73F4104B74E20012BB52 /* Sources */,
+				495E73F5104B74E20012BB52 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RenderTextureTest;
+			productName = RenderTextureTest;
+			productReference = 495E73F7104B74E20012BB52 /* RenderTextureTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50010EBA103B3DB80059EC2E /* Box2dTestBed */ = {
@@ -5272,6 +5334,7 @@
 				50D0E0480FF9232E00098927 /* HelloActionsSample */,
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
 				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
+				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 			);
 		};
 /* End PBXProject section */
@@ -5289,6 +5352,23 @@
 				501CD1740E99873000B86F68 /* fps_images.png in Resources */,
 				50C723DD0EC062680046C5DB /* clouds.pvrtc in Resources */,
 				502AACF40F79715E001E3F87 /* fire.pvr in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		495E73F3104B74E20012BB52 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				495E73FD104B75090012BB52 /* r1.png in Resources */,
+				495E73FE104B75090012BB52 /* r2.png in Resources */,
+				495E73FF104B75090012BB52 /* Default.png in Resources */,
+				495E7400104B75090012BB52 /* Icon.png in Resources */,
+				495E7404104B75090012BB52 /* b1.png in Resources */,
+				495E7405104B75090012BB52 /* b2.png in Resources */,
+				495E7406104B75090012BB52 /* f1.png in Resources */,
+				495E74F9104B75CC0012BB52 /* stars.png in Resources */,
+				495E7407104B75090012BB52 /* f2.png in Resources */,
+				495E7408104B75090012BB52 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6125,6 +6205,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		495E73F4104B74E20012BB52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				495E74F8104B756D0012BB52 /* RenderTextureTest.m in Sources */,
+				495E74F5104B75390012BB52 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50010EC3103B3DB80059EC2E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6955,6 +7044,55 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AccelViewportTest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		495E73FA104B74E30012BB52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "RenderTextureTest-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = RenderTextureTest;
+				SDKROOT = iphoneos2.1;
+			};
+			name = Debug;
+		};
+		495E73FB104B74E30012BB52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "RenderTextureTest-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = RenderTextureTest;
+				SDKROOT = iphoneos2.1;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -9007,7 +9145,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jason Booth";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jason Booth";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
@@ -9133,6 +9272,15 @@
 			buildConfigurations = (
 				317070590E2940C900DD3360 /* Debug */,
 				3170705A0E2940C900DD3360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		495E73FC104B74E40012BB52 /* Build configuration list for PBXNativeTarget "RenderTextureTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				495E73FA104B74E30012BB52 /* Debug */,
+				495E73FB104B74E30012BB52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

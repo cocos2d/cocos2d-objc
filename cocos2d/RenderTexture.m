@@ -80,7 +80,7 @@
   float heightRatio = [[Director sharedDirector] openGLView].frame.size.height / texture.contentSize.height;
   
   // Adjust the orthographic propjection and viewport
-  glOrthof(-1.0 / widthRatio,  1.0 / widthRatio, -1.0 / heightRatio, 1.0 / heightRatio, -1,1);
+  glOrthof((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
   glViewport(0, 0, texture.contentSize.width, texture.contentSize.height);
   
   glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
