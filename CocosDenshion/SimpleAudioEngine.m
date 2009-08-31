@@ -183,15 +183,8 @@ static CDAudioManager *am = nil;
 
 -(void) setMuted:(BOOL)muted
 {
-	if( muted_ != muted ) {
-		muted_ = muted;
-		[soundEngine setMute:muted];
-		if( muted ) {
-			[am pauseBackgroundMusic];
-		} else {
-			[am resumeBackgroundMusic];
-		}
-	}
+	muted_ = muted;
+	am.mute = muted;
 }
 
 #pragma mark SimpleAudioEngine - BackgroundMusicVolume
