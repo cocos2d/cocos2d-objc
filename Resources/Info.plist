@@ -11,7 +11,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.jasonbooth.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
+	<string></string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
