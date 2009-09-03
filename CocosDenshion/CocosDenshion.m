@@ -329,6 +329,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 			CCLOG(@"Denshion: non empty buffer, regenerating");
 			if (![self unloadBuffer:soundId]) {
 				//Deletion of buffer failed, delete buffer routine has set buffer state and lastErrorCode
+				CFRelease(fileURL);//Thanks clang ;)
 				return FALSE;
 			}	
 		}	
