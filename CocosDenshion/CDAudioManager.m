@@ -122,6 +122,10 @@ static BOOL configured = FALSE;
 	configuredChannelGroupDefinitions = (int *)malloc( sizeof(configuredChannelGroupDefinitions[0]) * channelGroupTotal);
 	if(!configuredChannelGroupDefinitions) {
 		CCLOG(@"Denshion: configuredChannelGroupDefinitions memory allocation failed");
+		//If this happens we are toast, basically run out of memory but we'll return to avoid a null
+		//pointer reference below and keep clang happy.
+		configured = FALSE;
+		return;
 	}
 	
 	for (int i=0; i < channelGroupTotal; i++) {

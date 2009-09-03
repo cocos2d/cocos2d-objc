@@ -92,7 +92,7 @@ typedef enum {
 /** Returns the shared singleton */
 + (CDAudioManager *) sharedManager;
 + (tAudioManagerState) sharedManagerState;
-/** Configures the shared singletong with a mode, a channel definition and a total number of channels */
+/** Configures the shared singleton with a mode, a channel definition and a total number of channels */
 + (void) configure: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
 /** Initializes the engine asynchronously with a mode, channel definition and a total number of channels */
 + (void) initAsynchronously: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
