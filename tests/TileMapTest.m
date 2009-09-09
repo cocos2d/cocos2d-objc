@@ -173,17 +173,20 @@ Class restartAction()
 	if( (self=[super init]) ) {
 	
 		
-		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		TileMapAtlas *map = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 		// Convert it to "alias" (GL_LINEAR filtering)
-		[tilemap.texture setAliasTexParameters];
+		[map.texture setAliasTexParameters];
 		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+
 		// If you are not going to use the Map, you can free it now
 		// NEW since v0.7
-		[tilemap releaseMap];
+		[map releaseMap];
 		
-		[self addChild:tilemap z:0 tag:kTagTileMap];
+		[self addChild:map z:0 tag:kTagTileMap];
 		
-		tilemap.anchorPoint = ccp(0, 0.5f);
+		map.anchorPoint = ccp(0, 0.5f);
 		
 //		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
 //		id scaleBack = [s reverse];
@@ -192,7 +195,7 @@ Class restartAction()
 //								scaleBack,
 //								nil];
 //		
-//		[tilemap runAction:[RepeatForever actionWithAction:seq]];
+//		[map runAction:[RepeatForever actionWithAction:seq]];
 	}
 	
 	return self;
@@ -214,20 +217,23 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		
-		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		TileMapAtlas *map = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 
 		// Create an Aliased Atlas
-		[tilemap.texture setAliasTexParameters];
+		[map.texture setAliasTexParameters];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
 		// If you are not going to use the Map, you can free it now
 		// [tilemap releaseMap];
 		// And if you are going to use, it you can access the data with:
 		[self schedule:@selector(updateMap:) interval:0.2f];
 		
-		[self addChild:tilemap z:0 tag:kTagTileMap];
+		[self addChild:map z:0 tag:kTagTileMap];
 		
-		tilemap.anchorPoint = ccp(0, 0);
-		tilemap.position = ccp(-20,-200);
+		map.anchorPoint = ccp(0, 0);
+		map.position = ccp(-20,-200);
 	}	
 	return self;
 }
@@ -288,15 +294,18 @@ Class restartAction()
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 
-		TMXTiledMap *ortho = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
-		[self addChild:ortho z:0 tag:kTagTileMap];
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
 		
-		for( AtlasSpriteManager* child in [ortho children] ) {
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( AtlasSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		float x, y, z;
-		[[ortho camera] eyeX:&x eyeY:&y eyeZ:&z];
-		[[ortho camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
+		[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
+		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
 	}	
 	return self;
 }
@@ -330,6 +339,9 @@ Class restartAction()
 		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test1.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+
 		for( AtlasSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
@@ -355,6 +367,9 @@ Class restartAction()
 	if( (self=[super init]) ) {		
 		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test3.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
 		for( AtlasSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
@@ -382,6 +397,9 @@ Class restartAction()
 		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test4.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
 		for( AtlasSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
@@ -389,7 +407,7 @@ Class restartAction()
 		[map setAnchorPoint:ccp(0, 0)];
 
 		TMXLayer *layer = [map layerNamed:@"Layer 0"];
-		CGSize s = [layer layerSize];
+		s = [layer layerSize];
 		
 		AtlasSprite *sprite;
 		sprite = [layer tileAt:ccp(0,0)];
@@ -450,10 +468,13 @@ Class restartAction()
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"iso-test1.tmx"];
-		[self addChild:iso z:0 tag:kTagTileMap];
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"iso-test1.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
 		
-		[iso setAnchorPoint:ccp(0.5f, 0.5f)];
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		[map setAnchorPoint:ccp(0.5f, 0.5f)];
 	}	
 	return self;
 }
@@ -476,6 +497,9 @@ Class restartAction()
 		
 		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"iso-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];	
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
 		// move map to the center of the screen
 		CGSize ms = [map mapSize];
@@ -503,9 +527,11 @@ Class restartAction()
 		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"hexa-test.tmx"];
-		[self addChild:iso z:0 tag:kTagTileMap];
-
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"hexa-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 	}	
 	return self;
 }
@@ -526,10 +552,14 @@ Class restartAction()
 
 		gid = 0;
 		
-		TMXTiledMap *iso = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
-		[self addChild:iso z:0 tag:kTagTileMap];
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
 		
-		TMXLayer *layer = [iso layerNamed:@"Layer 0"];
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+
+		
+		TMXLayer *layer = [map layerNamed:@"Layer 0"];
 		[layer.texture setAntiAliasTexParameters];
 
 		AtlasSprite *tile = [layer tileAt:ccp(0,63)];
