@@ -16,6 +16,8 @@ static NSString *transitions[] = {
 				@"SpriteEaseExponentialInOut",
 				@"SpriteEaseSine",
 				@"SpriteEaseSineInOut",
+				@"SpriteEaseElastic",
+				@"SpriteEaseElasticInOut",
 				@"SpeedTest",
 				@"SchedulerTest",
 };
@@ -265,6 +267,7 @@ Class restartAction()
 }
 @end
 
+#pragma mark SpriteEaseExponential
 
 @implementation SpriteEaseExponential
 -(void) onEnter
@@ -296,6 +299,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark SpriteEaseExponentialInOut
+
 @implementation SpriteEaseExponentialInOut
 -(void) onEnter
 {
@@ -320,6 +325,67 @@ Class restartAction()
 	return @"EaseExponentialInOut action";
 }
 @end
+
+#pragma mark SpriteEaseElasticInOut
+
+@implementation SpriteEaseElasticInOut
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move_back = [move reverse];
+	
+	id move_ease = [EaseElasticInOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_back = [move_ease reverse];
+	
+	id seq1 = [Sequence actions: move, move_back, nil];
+	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	
+	[self positionForTwo];
+	
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+}
+-(NSString *) title
+{
+	return @"EaseElasticInOut action";
+}
+@end
+
+#pragma mark SpriteEaseElastic
+
+@implementation SpriteEaseElastic
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move_back = [move reverse];
+	
+	id move_ease_in = [EaseElasticIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in_back = [move_ease_in reverse];
+	
+	id move_ease_out = [EaseElasticOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out_back = [move_ease_out reverse];
+	
+	
+	id seq1 = [Sequence actions: move, move_back, nil];
+	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	
+	
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+}
+-(NSString *) title
+{
+	return @"Elastic In - Out actions";
+}
+@end
+
+#pragma mark SpeedTest
 
 @implementation SpeedTest
 -(void) onEnter

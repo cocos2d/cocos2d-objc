@@ -119,6 +119,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TextureAtlas supports Texture2D objects
 		author of the original AtlasSprite and AtlasSpriteManager
 	* myBuddyCJ: correct channel in SimpleAudioEngine patch
+		Added Ease Elastic actions
 	* Nerezus: Fixed compile error when keyboard registry is enabled
 	* psionic81: ActionManager doesn't purge running actions patch
 	* rac5372: compiler warning in MenuItem

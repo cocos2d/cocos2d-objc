@@ -48,6 +48,15 @@
 {}
 @end
 
+@interface SpriteEaseElastic : SpriteDemo
+{}
+@end
+
+@interface SpriteEaseElasticInOut : SpriteDemo
+{}
+@end
+
+
 @interface SpeedTest : SpriteDemo
 {}
 @end
@@ -57,3 +66,4 @@
 	UISlider	*sliderCtl;
 }
 @end
+
