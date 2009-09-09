@@ -64,7 +64,7 @@ Class restartAction()
 @synthesize emitter;
 -(id) init
 {
-	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
+	if( (self=[super initWithColor:ccc4(0,0,0,255)] )) {
 
 		self.isTouchEnabled = YES;
 		
@@ -92,24 +92,25 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		item4.position = ccp( 0, 100);
+		item4.position = ccp( 0, 60);
 		item4.anchorPoint = ccp(0,0);
 
 		[self addChild: menu z:100];	
 		
 		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
-		labelAtlas.position = ccp(254,50);
+		labelAtlas.position = ccp(s.width-100,50);
 		
 		// moving background
-		background = [Sprite spriteWithFile:@"background3.png"];
-		[self addChild:background z:5];
-		[background setPosition:ccp(s.width/2, s.height-180)];
-
-		id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
-		id move_back = [move reverse];
-		id seq = [Sequence actions: move, move_back, nil];
-		[background runAction:[RepeatForever actionWithAction:seq]];
+		background = (Sprite*) self;
+//		background = [Sprite spriteWithFile:@"background3.png"];
+//		[self addChild:background z:5];
+//		[background setPosition:ccp(s.width/2, s.height-180)];
+//
+//		id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
+//		id move_back = [move reverse];
+//		id seq = [Sequence actions: move, move_back, nil];
+//		[background runAction:[RepeatForever actionWithAction:seq]];
 		
 		
 		[self schedule:@selector(step:)];
@@ -195,7 +196,8 @@ Class restartAction()
 
 -(void) setEmitterPosition
 {
-	emitter.position = ccp(200, 70);
+	CGSize s = [[Director sharedDirector] winSize];
+	emitter.position = ccp(s.width/2, s.height/2);
 }
 
 @end
@@ -381,7 +383,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[QuadParticleSystem alloc] initWithTotalParticles:300];
+	self.emitter = [[QuadParticleSystem alloc] initWithTotalParticles:200];
 	[background addChild: emitter z:10];
 	[emitter release];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars2.png"];
@@ -725,7 +727,7 @@ Class restartAction()
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	[[Director sharedDirector] setDisplayFPS: YES];
 
 	// AnimationInterval doesn't work with FastDirector, yet

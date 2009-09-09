@@ -76,6 +76,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		added endSize to ParticleSystem
 		added WorldSpace coordinates to ParticleSystem
 		author of RenderTexture class
+		author of RenderTexture sample
 	* Jason Cecil: Fixed memory leak in Director#FPSLabel
 		patches for CocosDenshion
 		CocosNode: parent set to nil after onExit patch
