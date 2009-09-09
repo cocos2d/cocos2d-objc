@@ -70,3 +70,12 @@
 /** Ease Sine InOut
  */
 @interface EaseSineInOut : EaseAction <NSCopying> {} @end
+/** Ease Elastic In
+ */
+@interface EaseElasticIn : EaseAction <NSCopying> {} @end
+/** Ease Elastic Out
+ */
+@interface EaseElasticOut : EaseAction <NSCopying> {} @end
+/** Ease Elastic InOut
+ */
+@interface EaseElasticInOut : EaseAction <NSCopying> {} @end

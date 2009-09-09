@@ -1,4 +1,5 @@
 version 0.8.2 - XX-MMM-2009
+ . Actions: added Ease Elastic actions (issue #530)
  . CocosDenshion: muted property in SimpleAudioEngine (issue #526)
  . RenderTexture: added RenderTexture test (issue #XXX)
  

@@ -216,6 +216,10 @@
 }
 @end
 
+#ifndef M_PI_X_2
+#define M_PI_X_2 (float)M_PI * 2.0f
+#endif
+
 //
 // EaseSineInOut
 //
@@ -226,5 +230,89 @@
 }
 @end
 
+//
+// EaseElasticIn
+//
+@implementation EaseElasticIn
+-(void) update: (ccTime) t
+{
+	/*
+	 t:Number — time
+	 b:Number — beginning position
+	 c:Number — total change in position
+	 d:Number — duration of the tween
+	 a:Number (default = 0) — (optional) amplitude, or magnitude of wave's oscillation
+	 p:Number (default = 0) — (optional) period 
+	 */
+	float b = 0.0f;
+	float c = 1.0f;
+	float d = 1.0f;
+	float a = 0.0f;
+	float p = 0.0f;
 
+	float s;
+	if (t==0.0f){[other update:b]; return;}
+	if ((t/=d)==1.0f){[other update: b+c]; return;}
+	if (!p) p=d*0.3f;
+	if (!a || a < ABS(c)) {
+		a=c; s = p/4.0f;
+	}else{
+		s = p/M_PI_X_2 * asinf(c/a);
+	}
+	return [other update: -(a*powf(2.0f,10.0f*(t-=1.0f)) * sinf( (t*d-s)*M_PI_X_2/p )) + b];
+}
+@end
 
+//
+// EaseElasticOut
+//
+@implementation EaseElasticOut
+-(void) update: (ccTime) t
+{
+	float b = 0.0f;
+	float c = 1.0f;
+	float d = 1.0f;
+	float a = 0.0f;
+	float p = 0.0f;
+	
+	float s;
+	if (t==0.0f){[other update:b]; return;}
+	if ((t/=d)==1.0f){[other update:b+c]; return;}
+	if (!p) p=d*0.3f;
+	if (!a || a < ABS(c)) {
+		a=c; s = p/4.0f;
+	}else{
+		s = p/M_PI_X_2 * asinf (c/a);
+	}
+	[other update: (a*powf(2.0f,-10.0f*t) * sinf( (t*d-s)*M_PI_X_2/p ) + c + b)];
+}
+@end
+
+//
+// EaseElasticInOut
+//
+@implementation EaseElasticInOut
+-(void) update: (ccTime) t
+{
+	float b = 0.0f;
+	float c = 1.0f;
+	float d = 1.0f;
+	float a = 0.0f;
+	float p = 0.0f;
+	
+	float s;
+	if (t==0.0f){[other update:b]; return;}
+	if ((t/=d/2.0f)==2.0f){ [other update: b+c]; return;}
+	if (!p) p=d*(0.3f*1.5f);
+	if (!a || a < ABS(c)) {
+		a=c; s = p/4.0f;
+	}else{
+		s = p/M_PI_X_2 * asinf(c/a);
+	}
+	if (t < 1.0f){
+		[other update: -0.5f*(a*powf(2.0f,10.0f*(t-=1.0f)) * sinf( (t*d-s)*M_PI_X_2/p )) + b];
+	}else{
+		[other update: a*powf(2.0f,-10.0f*(t-=1.0f)) * sinf( (t*d-s)*M_PI_X_2/p )*0.5f + c + b];
+	}
+}
+@end
