@@ -3816,8 +3816,6 @@
 				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				317070360E29409E00DD3360 /* AccelViewportTest.h */,
 				317070350E29409E00DD3360 /* AccelViewportTest.m */,
-				495E74F6104B756D0012BB52 /* RenderTextureTest.h */,
-				495E74F7104B756D0012BB52 /* RenderTextureTest.m */,
 				504CC3441035BECA0096894C /* ActionManagerTest.h */,
 				504CC3451035BECA0096894C /* ActionManagerTest.m */,
 				506881E60E9575E100F943E5 /* AtlasTest.h */,
@@ -3852,6 +3850,8 @@
 				50C195640EE4B5B700829067 /* ParallaxTest.m */,
 				50DB1BCE0E1C1EF000A89DFF /* ParticleTest.h */,
 				50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */,
+				495E74F6104B756D0012BB52 /* RenderTextureTest.h */,
+				495E74F7104B756D0012BB52 /* RenderTextureTest.m */,
 				502C664D0DFEFD6800E4107D /* RotateWorldTest.h */,
 				502C664E0DFEFD6800E4107D /* RotateWorldTest.m */,
 				506C80110E041CDB00B48100 /* SceneTest.h */,
@@ -5317,6 +5317,7 @@
 				5031679F1028488E003ACFE7 /* ParticleView */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
 				8EDF3EA90F6BDA0000F54643 /* PASoundEngineTest (experimental) */,
+				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
 				50C93A930E0BF6E000517B01 /* SpritesTest */,
@@ -5328,7 +5329,6 @@
 				50D0E0480FF9232E00098927 /* HelloActionsSample */,
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
 				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
-				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 			);
 		};
 /* End PBXProject section */

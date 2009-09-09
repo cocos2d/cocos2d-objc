@@ -1,5 +1,5 @@
 //
-// MotionStreak Demo
+// RenderTexture Demo
 // a cocos2d example
 //
 // Example by Jason Booth (slipster216)
@@ -17,27 +17,26 @@
 		Label* label = [Label labelWithString:@"Render Texture Test" fontName:@"Arial" fontSize:32];
 		[self addChild:label z:0];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-    // create a render texture, this is what we're going to draw into
-    target = [RenderTexture renderTextureWithWidth:s.width height:s.height];
-    [target setPosition:ccp(s.width/2, s.height/2)];
-    // note that the render texture is a cocosnode, and contains a sprite of it's texture for convience,
-    // so we can just parent it to the scene like any other cocos node
-    [self addChild:target z:1];
-    // create a brush image to draw into the texture with
-    brush = [[Sprite spriteWithFile:@"stars.png"] retain];
-    [brush setBlendFunc: (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA }];  
-    [brush setOpacity:20];
-    isTouchEnabled = YES;
-		
+		// create a render texture, this is what we're going to draw into
+		target = [RenderTexture renderTextureWithWidth:s.width height:s.height];
+		[target setPosition:ccp(s.width/2, s.height/2)];
+		// note that the render texture is a cocosnode, and contains a sprite of it's texture for convience,
+		// so we can just parent it to the scene like any other cocos node
+		[self addChild:target z:1];
+		// create a brush image to draw into the texture with
+		brush = [[Sprite spriteWithFile:@"stars.png"] retain];
+		[brush setBlendFunc: (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA }];  
+		[brush setOpacity:20];
+		isTouchEnabled = YES;		
 	}
 	return self;
 }
 
 -(void) dealloc
 {
-  [brush release];
-  [target release];
-  [[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[brush release];
+	[target release];
+	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
 	[super dealloc];
 	
 }
@@ -49,33 +48,33 @@
 	CGPoint start = [touch locationInView: [touch view]];	
 	start = [[Director sharedDirector] convertCoordinate: start];
 	CGPoint end = [touch previousLocationInView:[touch view]];
-  end = [[Director sharedDirector] convertCoordinate:end];
+	end = [[Director sharedDirector] convertCoordinate:end];
 
-  // begin drawing to the render texture
-  [target begin];
+	// begin drawing to the render texture
+	[target begin];
 
-  // for extra points, we'll draw this smoothly from the last position and vary the sprite's
-  // scale/rotation/offset
-  float distance = ccpDistance(start, end);
-  if (distance > 1)
-  {
-    int d = (int)distance;
-    for (int i = 0; i < d; i++)
-    {
-      float difx = end.x - start.x;
-      float dify = end.y - start.y;
-      float delta = (float)i / distance;
-      [brush setPosition:ccp(start.x + (difx * delta), start.y + (dify * delta))];
-      [brush setRotation:rand()%360];
-      float r = ((float)(rand()%50)/50.f) + 0.25f;
-      [brush setScale:r];
-      // Call visit to draw the brush, don't call draw..
-      [brush visit];
-    }
-  }
-  // finish drawing and return context back to the screen
-  [target end];
-	
+	// for extra points, we'll draw this smoothly from the last position and vary the sprite's
+	// scale/rotation/offset
+	float distance = ccpDistance(start, end);
+	if (distance > 1)
+	{
+		int d = (int)distance;
+		for (int i = 0; i < d; i++)
+		{
+			float difx = end.x - start.x;
+			float dify = end.y - start.y;
+			float delta = (float)i / distance;
+			[brush setPosition:ccp(start.x + (difx * delta), start.y + (dify * delta))];
+			[brush setRotation:rand()%360];
+			float r = ((float)(rand()%50)/50.f) + 0.25f;
+			[brush setScale:r];
+			// Call visit to draw the brush, don't call draw..
+			[brush visit];
+		}
+	}
+	// finish drawing and return context back to the screen
+	[target end];
+
 	return YES;
 }
 @end

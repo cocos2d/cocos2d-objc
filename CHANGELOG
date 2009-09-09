@@ -1,3 +1,7 @@
+version 0.8.2 - XX-MMM-2009
+ . CocosDenshion: muted property in SimpleAudioEngine (issue #526)
+ . RenderTexture: added RenderTexture test (issue #XXX)
+ 
 version 0.8.1 - 26-Ago-2009
  . ActionManager: doesn't delete running actions (issue #481)
  . Box2d: using google code r10 (v2.1.0) (issue #494)
