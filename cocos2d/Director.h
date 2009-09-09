@@ -179,18 +179,28 @@ and when to execute the Scenes
 -(CGSize) displaySize;
 
 /** returns whether or not the screen is in landscape mode
- @deprecated Use deviceOrientation instead
+ @deprecated Use deviceOrientation instead. This method will be removed in v0.9
  */
 - (BOOL) landscape __attribute__((deprecated));
 /** sets lanscape mode
- @deprecated Use setDeviceOrientation instead
+ @deprecated Use setDeviceOrientation: instead. This method will be removedin v0.9
  */
 - (void) setLandscape: (BOOL) on __attribute__((deprecated));
 
 /** converts a UIKit coordinate to an OpenGL coordinate
+ Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape).
+ @deprecated Use convertToGL: instead. This method will be removed in v0.9
+ */
+-(CGPoint) convertCoordinate: (CGPoint) p __attribute__((deprecated));
+
+/** converts a UIKit coordinate to an OpenGL coordinate
  Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
  */
--(CGPoint) convertCoordinate: (CGPoint) p;
+-(CGPoint) convertToGL: (CGPoint) p;
+/** converts an OpenGL coordinate to a UIKit coordinate
+ Useful to convert node points to window points for calls such as glScissor
+ */
+-(CGPoint) convertToUI:(CGPoint)p;
 
 // Scene Management
 

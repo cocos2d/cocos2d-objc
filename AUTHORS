@@ -105,6 +105,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added RGB protocol in CocosNode, Atlas, Texture
 		Particle reset system works as expected
 		CocosNode: fixed "already scheduled exception" bug
+		Director: added converToUI method
 	* Manu Valladolid: added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
 		MenuItemLabel: color is saved when item is disabled
