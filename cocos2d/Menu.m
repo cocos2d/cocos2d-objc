@@ -440,7 +440,7 @@ enum {
 -(MenuItem *) itemForTouch: (UITouch *) touch;
 {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
 	
 	for( MenuItem* item in children ) {
 		CGPoint local = [item convertToNodeSpace:touchLocation];
