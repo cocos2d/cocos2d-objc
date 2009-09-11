@@ -237,7 +237,7 @@ typedef struct sParticle
 @property (nonatomic,readwrite, retain) Texture2D * texture;
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
-/** whether or not the particles are using "blend additive */
+/** whether or not the particles are using blend additive */
 @property (nonatomic,readwrite) BOOL blendAdditive;
 /** particles movement type: Free or Grouped
  @since v0.8
