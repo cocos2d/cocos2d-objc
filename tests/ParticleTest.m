@@ -143,7 +143,7 @@ Class restartAction()
 - (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
 {
 	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+	CGPoint convertedLocation = [[Director sharedDirector] convertToGL:location];
 	
 	CGPoint	pos = [background convertToWorldSpace:CGPointZero];
 	emitter.position = ccpSub(convertedLocation, pos);	

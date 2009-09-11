@@ -137,7 +137,7 @@ Class restartAction()
 -(void) updateSize:(UITouch*)touch
 {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
 	
 	CGSize s = [[Director sharedDirector] winSize];
 	

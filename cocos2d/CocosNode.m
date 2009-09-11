@@ -32,6 +32,8 @@
 #define RENDER_IN_SUBPIXEL (int)
 #endif
 
+#define COCOSNODE_DEBUG 1
+
 @interface CocosNode (Private)
 // lazy allocs
 -(void) childrenAlloc;

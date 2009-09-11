@@ -46,9 +46,9 @@
 {
 	UITouch *touch = [touches anyObject];
 	CGPoint start = [touch locationInView: [touch view]];	
-	start = [[Director sharedDirector] convertCoordinate: start];
+	start = [[Director sharedDirector] convertToGL: start];
 	CGPoint end = [touch previousLocationInView:[touch view]];
-	end = [[Director sharedDirector] convertCoordinate:end];
+	end = [[Director sharedDirector] convertToGL:end];
 
 	// begin drawing to the render texture
 	[target begin];

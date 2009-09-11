@@ -48,7 +48,7 @@ enum
 	UITouch *touch = [touches anyObject];
 	
 	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertCoordinate:location];
+	CGPoint convertedLocation = [[Director sharedDirector] convertToGL:location];
 
 	CocosNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
