@@ -183,8 +183,9 @@ enum {
 
 // scene managment
 
-/** callback that is called every time the CocosNode enters the 'stage'
+/** callback that is called every time the CocosNode enters the 'stage'.
  If the CocosNode enters the 'stage' with a transition, this callback is called when the transition starts.
+ During onEnter you can't a "sister/brother" node.
  */
 -(void) onEnter;
 /** callback that is called when the CocosNode enters in the 'stage'.
@@ -194,6 +195,7 @@ enum {
 -(void) onEnterTransitionDidFinish;
 /** callback that is called every time the CocosNode leaves the 'stage'.
  If the CocosNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
+ During onExit you can't a "sister/brother" node.
  */
 -(void) onExit;
 

@@ -316,7 +316,9 @@ Class restartAction()
 	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	Scene *scene = [Scene node];
-	[scene addChild: [nextAction() node]];	
+	[scene addChild: [nextAction() node]];
+	
+//	[[Director sharedDirector] set2Dprojection];
 	
 	[[Director sharedDirector] runWithScene: scene];
 }
