@@ -64,7 +64,7 @@
 	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");	
 	
 	CGPoint touchPoint = [touch locationInView:[touch view]];
-	touchPoint = [[Director sharedDirector] convertCoordinate:touchPoint];
+	touchPoint = [[Director sharedDirector] convertToGL:touchPoint];
 	
 	self.position = CGPointMake(touchPoint.x, self.position.y);
 }

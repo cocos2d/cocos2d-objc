@@ -148,7 +148,7 @@ eachShape(void *ptr, void* unused)
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
 				
-		location = [[Director sharedDirector] convertCoordinate: location];
+		location = [[Director sharedDirector] convertToGL: location];
 		
 		[self addNewSpriteX: location.x y:location.y];
 	}

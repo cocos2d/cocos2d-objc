@@ -95,7 +95,7 @@ enum {
 		
 		// IMPORTANT:
 		// The touches are always in "portrait" coordinates. You need to convert them to your current orientation
-		CGPoint convertedPoint = [[Director sharedDirector] convertCoordinate:location];
+		CGPoint convertedPoint = [[Director sharedDirector] convertToGL:location];
 		
 		CocosNode *sprite = [self getChildByTag:kTagSprite];
 		

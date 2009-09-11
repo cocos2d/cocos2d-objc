@@ -87,7 +87,7 @@ float randfloat() {
 	UITouch *touch = [touches anyObject];	
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
 	CGPoint location = ccp(touchLocation.x, touchLocation.y);
 	location = ccpSub(location, cloudsPos);
 	location = ccpMult(location, 1.0f/CLOUDS_SCALE);

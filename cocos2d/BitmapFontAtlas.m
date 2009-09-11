@@ -23,10 +23,6 @@
 #import "AtlasSprite.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "DrawingPrimitives.h"
-
-// will draw a bounding box
-//#define BITMAP_FONT_ATLAS_DEBUG 1
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -463,18 +459,4 @@ void FNTConfigRemoveCache( void )
 		[self createFontChars];
 	}
 }
-
-#pragma mark BitmapFontAtlas - Debug
-
-#if BITMAP_FONT_ATLAS_DEBUG
--(void) draw
-{
-	[super draw];
-	CGSize s = [self contentSize];
-	drawLine( CGPointZero, ccp(s.width,0) );
-	drawLine(CGPointZero, ccp(0,s.height));
-	drawLine( ccp(s.width,0), ccp(s.width,s.height) );
-	drawLine( ccp(s.width,s.height), ccp(0,s.height));
-}
-#endif // BITMAP_FONT_ATLAS_DEBUG
 @end

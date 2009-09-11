@@ -191,7 +191,7 @@ Class restartAction()
 {
 	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];	
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
+	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
 	
 	[streak setPosition:touchLocation];
 	
