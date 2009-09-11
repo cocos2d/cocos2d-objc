@@ -55,9 +55,6 @@ enum {
  
  Limitations:
  - A CocosNode is a "void" object. It doesn't have a texture
- - Since it has no texture, is has no size
- - It can't receive touches
- - It can't receive accelerometer values
  */ 
 @interface CocosNode : NSObject {
 	
@@ -133,8 +130,12 @@ enum {
 @property (nonatomic,readwrite) float vertexZ;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle */
 @property(nonatomic,readwrite,assign) float rotation;
-/** The scale factor of the node. 1.0 is the default scale factor */
-@property(nonatomic,readwrite,assign) float scale, scaleX, scaleY;
+/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time */
+@property(nonatomic,readwrite,assign) float scale;
+/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
+@property(nonatomic,readwrite,assign) float scaleX;
+/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
+@property(nonatomic,readwrite,assign) float scaleY;
 /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** A Camera object that lets you move the node using camera coordinates.
@@ -149,8 +150,9 @@ enum {
  */
 @property(nonatomic,readonly) CGPoint transformAnchor;
 /** The normalized coordinates of the anchor point.
- Anchor point. (0,0) means bottom-left corner, (1,1) means top-right corner, (0.5, 0.5) means the center.
- Sprites and other "textured" Nodes have a default anchorPoint of (0.5f, 0.5f)
+ A (0,0) value means bottom-left corner. (1,1) means top-right corner, (0.5, 0.5) means the center.
+ Sprites and other "textured" Nodes have a default anchorPoint of (0.5f, 0.5f).
+ IMPORTANT: The anchorPoint can have values lower than 0 and higher than 1.
  @since v0.8
  */
 @property(nonatomic,readwrite) CGPoint anchorPoint;
