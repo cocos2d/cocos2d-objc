@@ -150,6 +150,8 @@ static Director *_sharedDirector = nil;
 	[runningScene_ release];
 	[scenesStack_ release];
 	
+	_sharedDirector = nil;
+	
 	[super dealloc];
 }
 
@@ -694,10 +696,19 @@ static Director *_sharedDirector = nil;
 	[self stopAnimation];
 	[self detach];
 	
+#if DIRECTOR_DISPLAY_FAST_FPS
+	[FPSLabel release];
+	FPSLabel = nil;
+#endif	
+
 	// Purge all managers
 	[[Scheduler sharedScheduler] release];
 	[[ActionManager sharedManager] release];
 	[[TextureMgr sharedTextureMgr] release];
+	
+	// OpenGL view
+	[openGLView_ release];
+	openGLView_ = nil;
 }
 
 -(void) setNextScene

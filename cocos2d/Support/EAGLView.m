@@ -65,6 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "EAGLView.h"
 #import "OpenGL_Internal.h"
+#import "ccMacros.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -197,6 +198,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) dealloc
 {
+	CCLOG(@"deallocing %@", self);
+
 	[self _destroySurface];
 	
 	[_context release];
