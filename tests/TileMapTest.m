@@ -122,8 +122,8 @@ Class restartAction()
 	CGPoint touchLocation = [touch locationInView: [touch view]];	
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
 	
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
-	prevLocation = [[Director sharedDirector] convertCoordinate: prevLocation];
+	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
+	prevLocation = [[Director sharedDirector] convertToGL: prevLocation];
 	
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
