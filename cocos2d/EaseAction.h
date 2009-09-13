@@ -70,12 +70,28 @@
 /** Ease Sine InOut
  */
 @interface EaseSineInOut : EaseAction <NSCopying> {} @end
+
+/** Ease Elastic abstract class */
+@interface ElasticAction : EaseAction <NSCopying>
+{
+	float period_;
+}
+
+/** period of the wave in radians. default is 0.3 */
+@property (nonatomic,readwrite) float period;
+
+/** Creates the action with the inner action and the period in radians (default is 0.3) */
++(id) actionWithAction: (IntervalAction*) action period:(float)period;
+/** Initializes the action with the inner action and the period in radians (default is 0.3) */
+-(id) initWithAction: (IntervalAction*) action period:(float)period;
+@end
+
 /** Ease Elastic In
  */
-@interface EaseElasticIn : EaseAction <NSCopying> {} @end
+@interface EaseElasticIn : ElasticAction <NSCopying> {} @end
 /** Ease Elastic Out
  */
-@interface EaseElasticOut : EaseAction <NSCopying> {} @end
+@interface EaseElasticOut : ElasticAction <NSCopying> {} @end
 /** Ease Elastic InOut
  */
-@interface EaseElasticInOut : EaseAction <NSCopying> {} @end
+@interface EaseElasticInOut : ElasticAction <NSCopying> {} @end

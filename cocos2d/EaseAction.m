@@ -131,8 +131,8 @@
 	int r = (int) rate;
 	if (r % 2 == 0)
 		sign = -1;
-
-	if ((t*=2) < 1) 
+	t *= 2;
+	if (t < 1) 
 		[other update: 0.5f * powf (t, rate)];
 	else
 		[other update: sign*0.5f * (powf (t-2, rate) + sign*2)];	
@@ -180,7 +180,8 @@
 @implementation EaseExponentialInOut
 -(void) update: (ccTime) t
 {
-	if ((t/=0.5f) < 1)
+	t /= 0.5f;
+	if (t < 1)
 		t = 0.5f * powf(2, 10 * (t - 1));
 	else
 		t = 0.5f * (-powf(2, -10 * --t) + 2);
@@ -231,61 +232,99 @@
 @end
 
 //
+// ElasticAction
+//
+@implementation ElasticAction
+
+@synthesize period=period_;
+
++(id) actionWithAction: (IntervalAction*) action
+{
+	return [[[self alloc] initWithAction:action period:0.3f] autorelease];
+}
+
++(id) actionWithAction: (IntervalAction*) action period:(float)period
+{
+	return [[[self alloc] initWithAction:action period:period] autorelease];
+}
+
+-(id) initWithAction: (IntervalAction*) action
+{
+	return [self initWithAction:action period:0.3f];
+}
+
+-(id) initWithAction: (IntervalAction*) action period:(float)period
+{
+	if( (self=[super initWithAction:action]) ) {
+		period_ = period;
+	}
+	
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	Action *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] period:period_];
+	return copy;
+}
+
+-(IntervalAction*) reverse
+{
+	NSAssert(NO,@"Override me");
+	return nil;
+}
+
+@end
+
+//
 // EaseElasticIn
 //
+
 @implementation EaseElasticIn
 -(void) update: (ccTime) t
-{
-	/*
-	 t:Number — time
-	 b:Number — beginning position
-	 c:Number — total change in position
-	 d:Number — duration of the tween
-	 a:Number (default = 0) — (optional) amplitude, or magnitude of wave's oscillation
-	 p:Number (default = 0) — (optional) period 
-	 */
-	float b = 0.0f;
-	float c = 1.0f;
-	float d = 1.0f;
-	float a = 0.0f;
-	float p = 0.0f;
-
-	float s;
-	if (t==0.0f){[other update:b]; return;}
-	if ((t/=d)==1.0f){[other update: b+c]; return;}
-	if (!p) p=d*0.3f;
-	if (!a || a < ABS(c)) {
-		a=c; s = p/4.0f;
-	}else{
-		s = p/M_PI_X_2 * asinf(c/a);
+{	
+	ccTime newT = 0;
+	if (t == 0 || t == 1) {
+		newT = t;
+		
+	} else {
+		float s = period_ / 4;
+		t = t - 1;
+		newT = -powf(2, 10 * t) * sinf( (t-s) *M_PI_X_2 / period_);
 	}
-	return [other update: -(a*powf(2.0f,10.0f*(t-=1.0f)) * sinf( (t*d-s)*M_PI_X_2/p )) + b];
+	[other update:newT];
 }
+
+- (IntervalAction*) reverse
+{
+	return [EaseElasticOut actionWithAction: [other reverse] period:period_];
+}
+
 @end
 
 //
 // EaseElasticOut
 //
 @implementation EaseElasticOut
+
 -(void) update: (ccTime) t
-{
-	float b = 0.0f;
-	float c = 1.0f;
-	float d = 1.0f;
-	float a = 0.0f;
-	float p = 0.0f;
-	
-	float s;
-	if (t==0.0f){[other update:b]; return;}
-	if ((t/=d)==1.0f){[other update:b+c]; return;}
-	if (!p) p=d*0.3f;
-	if (!a || a < ABS(c)) {
-		a=c; s = p/4.0f;
-	}else{
-		s = p/M_PI_X_2 * asinf (c/a);
+{	
+	ccTime newT = 0;
+	if (t == 0 || t == 1) {
+		newT = t;
+		
+	} else {
+		float s = period_ / 4;
+		newT = powf(2, -10 * t) * sinf( (t-s) *M_PI_X_2 / period_) + 1;
 	}
-	[other update: (a*powf(2.0f,-10.0f*t) * sinf( (t*d-s)*M_PI_X_2/p ) + c + b)];
+	[other update:newT];
 }
+
+- (IntervalAction*) reverse
+{
+	return [EaseElasticIn actionWithAction: [other reverse] period:period_];
+}
+
 @end
 
 //
@@ -294,25 +333,29 @@
 @implementation EaseElasticInOut
 -(void) update: (ccTime) t
 {
-	float b = 0.0f;
-	float c = 1.0f;
-	float d = 1.0f;
-	float a = 0.0f;
-	float p = 0.0f;
+	ccTime newT = 0;
 	
-	float s;
-	if (t==0.0f){[other update:b]; return;}
-	if ((t/=d/2.0f)==2.0f){ [other update: b+c]; return;}
-	if (!p) p=d*(0.3f*1.5f);
-	if (!a || a < ABS(c)) {
-		a=c; s = p/4.0f;
-	}else{
-		s = p/M_PI_X_2 * asinf(c/a);
+	if( t == 0 || t == 1 )
+		newT = t;
+	else {
+		t = t * 2;
+		if(! period_ )
+			period_ = 0.3f * 1.5f;
+		ccTime s = period_ / 4;
+		
+		t = t -1;
+		if( t < 0 ) {
+			newT = -0.5f * powf(2, 10 * t) * sinf((t - s) * M_PI_X_2 / period_);
+		} else {
+			newT = powf(2, -10 * t) * sinf((t - s) * M_PI_X_2 / period_) * 0.5f + 1;
+		}
 	}
-	if (t < 1.0f){
-		[other update: -0.5f*(a*powf(2.0f,10.0f*(t-=1.0f)) * sinf( (t*d-s)*M_PI_X_2/p )) + b];
-	}else{
-		[other update: a*powf(2.0f,-10.0f*(t-=1.0f)) * sinf( (t*d-s)*M_PI_X_2/p )*0.5f + c + b];
-	}
+	[other update:newT];	
 }
+
+- (IntervalAction*) reverse
+{
+	return [EaseElasticInOut actionWithAction: [other reverse] period:period_];
+}
+
 @end
