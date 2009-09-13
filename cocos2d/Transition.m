@@ -814,10 +814,11 @@ enum {
 				nil
 			  ];
 	[self runAction: [Sequence actions:
-			   [EaseInOut actionWithAction:seq rate:3.0f],
-			   [CallFunc actionWithTarget:self selector:@selector(finish)],
-			   [StopGrid action],
-			   nil]
+					  [EaseInOut actionWithAction:seq rate:3.0f],
+//					  [EaseElasticOut actionWithAction:seq],
+					  [CallFunc actionWithTarget:self selector:@selector(finish)],
+					  [StopGrid action],
+					  nil]
 	 ];
 }
 

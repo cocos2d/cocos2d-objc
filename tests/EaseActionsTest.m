@@ -332,20 +332,26 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
-	id move_back = [move reverse];
+
+	id move_ease_inout1 = [EaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.3f];
+	id move_ease_inout_back1 = [move_ease_inout1 reverse];
 	
-	id move_ease = [EaseElasticInOut actionWithAction:[[move copy] autorelease]];
-	id move_ease_back = [move_ease reverse];
+	id move_ease_inout2 = [EaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.45f];
+	id move_ease_inout_back2 = [move_ease_inout2 reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	id move_ease_inout3 = [EaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.6f];
+	id move_ease_inout_back3 = [move_ease_inout3 reverse];
 	
-	[self positionForTwo];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	id seq1 = [Sequence actions: move_ease_inout1, move_ease_inout_back1, nil];
+	id seq2 = [Sequence actions: move_ease_inout2, move_ease_inout_back2, nil];
+	id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+	
+	[tamara runAction: [RepeatForever actionWithAction:seq1]];
+	[kathia runAction: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [RepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -368,12 +374,10 @@ Class restartAction()
 	
 	id move_ease_out = [EaseElasticOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
-	
-	
+
 	id seq1 = [Sequence actions: move, move_back, nil];
 	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
 	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
-	
 	
 	[grossini runAction: [RepeatForever actionWithAction:seq1]];
 	[tamara runAction: [RepeatForever actionWithAction:seq2]];
