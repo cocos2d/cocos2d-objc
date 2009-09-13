@@ -12,7 +12,20 @@
  *
  */
 
+/*
+ * Elastic and Bounce actions based on code from:
+ * http://github.com/NikhilK/silverlightfx/
+ *
+ * by http://github.com/NikhilK
+ */
+
 #import "EaseAction.h"
+
+#ifndef M_PI_X_2
+#define M_PI_X_2 (float)M_PI * 2.0f
+#endif
+
+#pragma mark EaseAction
 
 //
 // EaseAction
@@ -65,6 +78,9 @@
 }
 @end
 
+
+#pragma mark -
+#pragma mark EaseRate
 
 //
 // EaseRateAction
@@ -146,6 +162,9 @@
 
 @end
 
+#pragma mark -
+#pragma mark EaseExponential
+
 //
 // EaseExponentialIn
 //
@@ -189,6 +208,10 @@
 }
 @end
 
+
+#pragma mark -
+#pragma mark EaseSin actions
+
 //
 // EaseSineIn
 //
@@ -217,10 +240,6 @@
 }
 @end
 
-#ifndef M_PI_X_2
-#define M_PI_X_2 (float)M_PI * 2.0f
-#endif
-
 //
 // EaseSineInOut
 //
@@ -230,6 +249,9 @@
 	[other update:-0.5f*(cosf( (float)M_PI*t) - 1)];
 }
 @end
+
+#pragma mark -
+#pragma mark EaseElastic actions
 
 //
 // ElasticAction
@@ -358,4 +380,79 @@
 	return [EaseElasticInOut actionWithAction: [other reverse] period:period_];
 }
 
+@end
+
+#pragma mark -
+#pragma mark EaseBounce actions
+
+//
+// EaseBounce
+//
+@implementation EaseBounce
+-(ccTime) bounceTime:(ccTime) t
+{
+	if (t < 1 / 2.75) {
+		return 7.5625f * t * t;
+	}
+	else if (t < 2 / 2.75) {
+		t -= 1.5f / 2.75f;
+		return 7.5625f * t * t + 0.75f;
+	}
+	else if (t < 2.5 / 2.75) {
+		t -= 2.25f / 2.75f;
+		return 7.5625f * t * t + 0.9375f;
+	}
+
+	t -= 2.625f / 2.75f;
+	return 7.5625f * t * t + 0.984375f;
+}
+@end
+
+//
+// EaseBounceIn
+//
+
+@implementation EaseBounceIn
+
+-(void) update: (ccTime) t
+{
+	ccTime newT = 1 - [self bounceTime:1-t];	
+	[other update:newT];
+}
+
+- (IntervalAction*) reverse
+{
+	return [EaseBounceOut actionWithAction: [other reverse]];
+}
+
+@end
+
+@implementation EaseBounceOut
+
+-(void) update: (ccTime) t
+{
+	ccTime newT = [self bounceTime:t];	
+	[other update:newT];
+}
+
+- (IntervalAction*) reverse
+{
+	return [EaseBounceIn actionWithAction: [other reverse]];
+}
+
+@end
+
+@implementation EaseBounceInOut
+
+-(void) update: (ccTime) t
+{
+	ccTime newT = 0;
+	if (t < 0.5) {
+		t = t * 2;
+		newT = (1 - [self bounceTime:1-t] ) * 0.5f;
+	} else
+		newT = [self bounceTime:t * 2 - 1] * 0.5f + 0.5f;
+	
+	[other update:newT];
+}
 @end

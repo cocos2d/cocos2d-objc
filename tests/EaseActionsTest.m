@@ -18,6 +18,8 @@ static NSString *transitions[] = {
 				@"SpriteEaseSineInOut",
 				@"SpriteEaseElastic",
 				@"SpriteEaseElasticInOut",
+				@"SpriteEaseBounce",
+				@"SpriteEaseBounceInOut",
 				@"SpeedTest",
 				@"SchedulerTest",
 };
@@ -386,6 +388,61 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Elastic In - Out actions";
+}
+@end
+
+#pragma mark SpriteEaseBounce
+
+@implementation SpriteEaseBounce
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move_back = [move reverse];
+	
+	id move_ease_in = [EaseBounceIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in_back = [move_ease_in reverse];
+	
+	id move_ease_out = [EaseBounceOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out_back = [move_ease_out reverse];
+	
+	id seq1 = [Sequence actions: move, move_back, nil];
+	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+}
+-(NSString *) title
+{
+	return @"Bounce In - Out actions";
+}
+@end
+
+@implementation SpriteEaseBounceInOut
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move_back = [move reverse];
+	
+	id move_ease = [EaseBounceInOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_back = [move_ease reverse];
+	
+	id seq1 = [Sequence actions: move, move_back, nil];
+	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	
+	[self positionForTwo];
+	
+	[grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+}
+-(NSString *) title
+{
+	return @"EaseBounceInOut action";
 }
 @end
 
