@@ -1,5 +1,6 @@
 version 0.8.2 - XX-MMM-2009
  . Actions: added Ease Elastic actions (issue #530)
+ . Actions: added Ease Bounce actions (issue #546)
  . BitmapFontAtlas: fixed contentSize (issue #536, #537, #538)
  . CocosDenshion: muted property in SimpleAudioEngine (issue #526)
  . CocosNode: improved doxygen documentation (issue #XXX)

@@ -86,12 +86,21 @@
 -(id) initWithAction: (IntervalAction*) action period:(float)period;
 @end
 
-/** Ease Elastic In
- */
+/** Ease Elastic In action */
 @interface EaseElasticIn : ElasticAction <NSCopying> {} @end
-/** Ease Elastic Out
- */
+/** Ease Elastic Out action. */
 @interface EaseElasticOut : ElasticAction <NSCopying> {} @end
-/** Ease Elastic InOut
- */
+/** Ease Elastic InOut action */
 @interface EaseElasticInOut : ElasticAction <NSCopying> {} @end
+
+
+@interface EaseBounce : EaseAction <NSCopying> {} @end
+
+@interface EaseBounceIn : EaseBounce <NSCopying> {} @end
+
+@interface EaseBounceOut : EaseBounce <NSCopying> {} @end
+
+@interface EaseBounceInOut : EaseBounce <NSCopying> {} @end
+
+
+
