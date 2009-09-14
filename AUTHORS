@@ -36,6 +36,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches fro MenuItemFont
 	* Corey.B.Painter: Speed action calls other#stop patch
 	* magicyu (crmagicxxx): CocosLive client supports ranking request patch
+	* Dave Durbin: author of PageTurn3D action
+		author of PageTurn3DTransition
 	* Dominique Bongard: patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
 	* effervens: patches for Director
