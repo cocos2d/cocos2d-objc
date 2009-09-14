@@ -203,7 +203,7 @@
 	if (t < 1)
 		t = 0.5f * powf(2, 10 * (t - 1));
 	else
-		t = 0.5f * (-powf(2, -10 * --t) + 2);
+		t = 0.5f * (-powf(2, -10 * (t -1) ) + 2);
 	[other update:t];
 }
 @end
