@@ -19,7 +19,7 @@
 /** TouchDispatcher.
  Singleton that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
- @since v0.8
+ @since v0.8.0
  */
 @interface TouchDispatcher : NSObject <EAGLTouchDelegate>
 {

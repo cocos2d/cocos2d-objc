@@ -78,6 +78,8 @@
 #import "TMXTiledMap.h"
 #import "RenderTexture.h"
 #import "MotionStreak.h"
+#import "PageTurn3DAction.h"
+#import "PageTurnTransition.h"
 
 //
 // cocos2d macros

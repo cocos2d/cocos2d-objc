@@ -1,6 +1,7 @@
 version 0.8.2 - XX-MMM-2009
  . Actions: added Ease Elastic actions (issue #530)
  . Actions: added Ease Bounce actions (issue #546)
+ . Actions: added PageTurn3D action (issue #522)
  . BitmapFontAtlas: fixed contentSize (issue #536, #537, #538)
  . CocosDenshion: muted property in SimpleAudioEngine (issue #526)
  . CocosNode: improved doxygen documentation (issue #XXX)
@@ -10,6 +11,7 @@ version 0.8.2 - XX-MMM-2009
  . RenderTexture: added RenderTexture test (issue #XXX)
  . TileMap: TMX supports multiple tilesets (1 tileset per layer) (issue #510)
  . Transition: ease actions can be overriden (issue #548)
+ . Transition: added PageTurnTransition (issue #522)
  
 version 0.8.1 - 26-Ago-2009
  . ActionManager: doesn't delete running actions (issue #481)

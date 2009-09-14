@@ -49,6 +49,13 @@
 @interface ZoomFlipAngularRightOver : ZoomFlipAngularTransition 
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
 @end
+@interface PageTransitionForward : PageTurnTransition
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+@interface PageTransitionBackward : PageTurnTransition
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
+@end
+
 
 @implementation FlipXLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
@@ -117,11 +124,26 @@
 }
 @end
 
+@implementation PageTransitionForward
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s backwards:NO];
+}
+@end
+
+@implementation PageTransitionBackward
++(id) transitionWithDuration:(ccTime) t scene:(Scene*)s {
+	return [self transitionWithDuration:t scene:s backwards:YES];
+}
+@end
+
+
 
 
 static int sceneIdx=0;
 static NSString *transitions[] = {
 						@"JumpZoomTransition",
+						@"PageTransitionForward",
+						@"PageTransitionBackward",
 						@"FadeTRTransition",
 						@"FadeBLTransition",
 						@"FadeUpTransition",
@@ -383,6 +405,11 @@ Class restartTransition()
 	
 	// must be called before any othe call to the director
 //	[Director useFastDirector];
+	
+	// Create a depth buffer of 16 bits
+	// Needed for some transitions
+	// These means that openGL z-order will be taken into account
+	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
