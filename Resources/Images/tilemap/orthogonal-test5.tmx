@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
+ <tileset name="tileset1" firstgid="1" tilewidth="101" tileheight="171" spacing="2" margin="2">
+  <image source="ortho-test1.png"/>
+ </tileset>
+ <tileset name="tileset2" firstgid="46" tilewidth="101" tileheight="171" spacing="2" margin="2">
+  <image source="ortho-test1_bw.png"/>
+ </tileset>
+ <layer name="Layer 0" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAGNgGAX4AB8Q8wOxAJSvRIJeZiBmAmIWIGYFYjYS9AoBsTAQawCxKhCrQMVVkbAgEGsDsQQQiwCxKFQ9F4nqKTEfAM9UTSZAAgAA
+  </data>
+ </layer>
+ <layer name="Layer 1" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAGNgGAXUBNZAbAPEtmToNQBifSA2BGIjIDYmQa89GfZRAwAAdiADqEACAAA=
+  </data>
+ </layer>
+ <layer name="Layer 2" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAGNgGAUDCfiAmB+IBcjQywzETEDMAsSsQMxGgl4hMuzDBgAgyUssQAIAAA==
+  </data>
+ </layer>
+</map>

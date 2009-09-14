@@ -8,6 +8,7 @@ version 0.8.2 - XX-MMM-2009
  . Director: fixed 2 leaks on Director#end (issue #524)
  . Documentation: doxygen builds OK when there are spaces in the path (issue #540)
  . RenderTexture: added RenderTexture test (issue #XXX)
+ . TileMap: TMX supports multiple tilesets (1 tileset per layer) (issue #510)
  . Transition: ease actions can be overriden (issue #548)
  
 version 0.8.1 - 26-Ago-2009
