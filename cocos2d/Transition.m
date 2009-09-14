@@ -246,14 +246,21 @@ enum {
 	IntervalAction *a = [self action];
 
 	[inScene runAction: [Sequence actions:
-		[EaseOut actionWithAction:a rate:2.0f],
-		[CallFunc actionWithTarget:self selector:@selector(finish)],
-		nil] ];
+						 [self easeActionWithAction:a],
+						 [CallFunc actionWithTarget:self selector:@selector(finish)],
+						 nil]
+	];
 	 		
 }
 -(IntervalAction*) action
 {
 	return [MoveTo actionWithDuration:duration position:ccp(0,0)];
+}
+
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action
+{
+	return [EaseOut actionWithAction:action rate:2.0f];
+//	return [EaseElasticOut actionWithAction:action period:0.4f];
 }
 
 -(void) initScenes
@@ -315,9 +322,9 @@ enum {
 	IntervalAction *in = [self action];
 	IntervalAction *out = [self action];
 
-	id inAction = [EaseOut actionWithAction:in rate:2.0f];
+	id inAction = [self easeActionWithAction:in];
 	id outAction = [Sequence actions:
-					[EaseOut actionWithAction:out rate:2.0f],
+					[self easeActionWithAction:out],
 					[CallFunc actionWithTarget:self selector:@selector(finish)],
 					nil];
 	
@@ -337,6 +344,12 @@ enum {
 {
 	CGSize s = [[Director sharedDirector] winSize];
 	return [MoveBy actionWithDuration:duration position:ccp(s.width-ADJUST_FACTOR,0)];
+}
+
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action
+{
+	return [EaseOut actionWithAction:action rate:2.0f];
+//	return [EaseElasticOut actionWithAction:action period:0.4f];
 }
 
 @end
@@ -424,11 +437,16 @@ enum {
 	IntervalAction *scaleOut = [ScaleTo actionWithDuration:duration scale:0.01f];
 	IntervalAction *scaleIn = [ScaleTo actionWithDuration:duration scale:1.0f];
 
-	[inScene runAction: [EaseOut actionWithAction:scaleIn rate:2.0f]];
+	[inScene runAction: [self easeActionWithAction:scaleIn]];
 	[outScene runAction: [Sequence actions:
-					[EaseOut actionWithAction:scaleOut rate:2.0f],
+					[self easeActionWithAction:scaleOut],
 					[CallFunc actionWithTarget:self selector:@selector(finish)],
 					nil] ];
+}
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action
+{
+	return [EaseOut actionWithAction:action rate:2.0f];
+//	return [EaseElasticOut actionWithAction:action period:0.3f];
 }
 @end
 
@@ -784,12 +802,18 @@ enum {
 	int y = 12;
 	
 	id toff = [TurnOffTiles actionWithSize: ccg(x,y) duration:duration];
-	[outScene runAction: [Sequence actions: toff,
+	id action = [self easeActionWithAction:toff];
+	[outScene runAction: [Sequence actions: action,
 				   [CallFunc actionWithTarget:self selector:@selector(finish)],
 				   [StopGrid action],
 				   nil]
 	 ];
 
+}
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action
+{
+	return action;
+//	return [EaseIn actionWithAction:action rate:2.0f];
 }
 @end
 
@@ -814,17 +838,21 @@ enum {
 				nil
 			  ];
 	[self runAction: [Sequence actions:
-					  [EaseInOut actionWithAction:seq rate:3.0f],
-//					  [EaseElasticOut actionWithAction:seq],
-					  [CallFunc actionWithTarget:self selector:@selector(finish)],
-					  [StopGrid action],
-					  nil]
+			   [self easeActionWithAction:seq],
+			   [CallFunc actionWithTarget:self selector:@selector(finish)],
+			   [StopGrid action],
+			   nil]
 	 ];
 }
 
 -(IntervalAction*) action
 {
 	return [SplitCols actionWithCols:3 duration:duration/2.0f];
+}
+
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action
+{
+	return [EaseInOut actionWithAction:action rate:3.0f];
 }
 @end
 
@@ -862,7 +890,7 @@ enum {
 	id action  = [self actionWithSize:ccg(x,y)];
 
 	[outScene runAction: [Sequence actions:
-					action,
+					[self easeActionWithAction:action],
 				    [CallFunc actionWithTarget:self selector:@selector(finish)],
 				    [StopGrid action],
 				    nil]
@@ -872,6 +900,12 @@ enum {
 -(IntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [FadeOutTRTiles actionWithSize:v duration:duration];
+}
+
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action
+{
+	return action;
+//	return [EaseIn actionWithAction:action rate:2.0f];
 }
 @end
 
