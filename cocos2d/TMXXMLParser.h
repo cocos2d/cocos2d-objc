@@ -47,6 +47,8 @@ enum {
 	BOOL			visible;
 	unsigned char	opacity;
 	BOOL			ownTiles;
+	unsigned int	minGID;
+	unsigned int	maxGID;
 }
 @end
 
@@ -63,11 +65,11 @@ enum {
 @interface TMXTilesetInfo : NSObject
 {
 @public
-	NSString	*name;
-	int			firstGid;
-	CGSize		tileSize;
-	int			spacing;
-	int			margin;
+	NSString		*name;
+	unsigned int	firstGid;
+	CGSize			tileSize;
+	unsigned int	spacing;
+	unsigned int	margin;
 	
 	// filename containing the tiles (should be spritesheet / texture atlas)
 	NSString	*sourceImage;

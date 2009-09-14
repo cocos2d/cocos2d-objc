@@ -23,6 +23,7 @@ static NSString *transitions[] = {
 			@"TMXIsoTest2",
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
+			@"TMXTilesetTest",
 };
 
 enum {
@@ -629,6 +630,41 @@ Class restartAction()
 	return @"TMX Read/Write test";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXTilesetTest
+
+@implementation TMXTilesetTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+				
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test5.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		TMXLayer *layer;
+		layer = [map layerNamed:@"Layer 0"];
+		[layer.texture setAntiAliasTexParameters];
+		
+		layer = [map layerNamed:@"Layer 1"];
+		[layer.texture setAntiAliasTexParameters];
+
+		layer = [map layerNamed:@"Layer 2"];
+		[layer.texture setAntiAliasTexParameters];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Tileset test";
+}
+@end
+
 
 
 #pragma mark -

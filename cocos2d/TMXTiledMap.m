@@ -18,13 +18,15 @@
 #import "TMXTiledMap.h"
 #import "TMXXMLParser.h"
 #import "AtlasSprite.h"
+#import "TextureMgr.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
 #pragma mark TMXTiledMap
 
 @interface TMXTiledMap (Private)
--(id) parseLayer:(TMXLayerInfo*)layer tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)mapInfo;
+-(id) parseLayer:(TMXLayerInfo*)layer map:(TMXMapInfo*)mapInfo;
+-(TMXTilesetInfo*) tilesetForLayer:(TMXLayerInfo*)layerInfo map:(TMXMapInfo*)mapInfo;
 @end
 
 @implementation TMXTiledMap
@@ -49,15 +51,13 @@
 		mapSize_ = mapInfo->mapSize;
 		tileSize_ = mapInfo->tileSize;
 		mapOrientation_ = mapInfo->orientation;
-		
-		NSAssert( [mapInfo->tilesets count] == 1, @"TMXTiledMap: only supports 1 tileset");
-		
+				
 		int idx=0;
-		TMXTilesetInfo *tileset = [mapInfo->tilesets objectAtIndex:0];
 
 		for( TMXLayerInfo *layerInfo in mapInfo->layers ) {
+
 			if( layerInfo->visible ) {
-				id child = [self parseLayer:layerInfo tileset:tileset map:mapInfo];
+				id child = [self parseLayer:layerInfo map:mapInfo];
 				[self addChild:child z:idx tag:idx];
 				
 				// update content size with the max size
@@ -81,14 +81,15 @@
 }
 
 // private
--(id) parseLayer:(TMXLayerInfo*)layerInfo tileset:(TMXTilesetInfo*)tileset map:(TMXMapInfo*)mapInfo
+-(id) parseLayer:(TMXLayerInfo*)layerInfo map:(TMXMapInfo*)mapInfo
 {
+	TMXTilesetInfo *tileset = [self tilesetForLayer:layerInfo map:mapInfo];
 	TMXLayer *layer = [TMXLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
 
 	// tell the layerinfo to release the ownership of the tiles map.
 	layerInfo->ownTiles = NO;
 
-	// XXX: quick hack that sets in the tileset the size of the image
+	// Optimization: quick hack that sets the image size on the tileset
 	tileset->imageSize = [[layer texture] contentSize];
 		
 	// By default all the tiles are aliased
@@ -113,14 +114,57 @@
 			
 			// XXX: gid == 0 --> empty tile
 			if( gid != 0 ) {
-				AtlasSprite *tile = [layer addTileForGID:gid at:ccp(x,y)];
-				[tile position]; // XXX
+				[layer addTileForGID:gid at:ccp(x,y)];
+				
+				// Optimization: update min and max GID rendered by the layer
+				layerInfo->minGID = MIN(gid, layerInfo->minGID);
+				layerInfo->maxGID = MAX(gid, layerInfo->maxGID);
 			}
 		}
-	}	
+	}
+	
+	NSAssert( layerInfo->maxGID >= tileset->firstGid &&
+			 layerInfo->minGID >= tileset->firstGid, @"TMX: Only 1 tilset per layer is supported");
 	
 	return layer;
 }
+
+-(TMXTilesetInfo*) tilesetForLayer:(TMXLayerInfo*)layerInfo map:(TMXMapInfo*)mapInfo
+{
+	TMXTilesetInfo *tileset = nil;
+	CFByteOrder o = CFByteOrderGetCurrent();
+	
+	id iter = [mapInfo->tilesets reverseObjectEnumerator];
+	for( TMXTilesetInfo* tileset in iter) {
+		for( unsigned int y=0; y < layerInfo->layerSize.height; y++ ) {
+			for( unsigned int x=0; x < layerInfo->layerSize.width; x++ ) {
+				
+				unsigned int pos = x + layerInfo->layerSize.width * y;
+				unsigned int gid = layerInfo->tiles[ pos ];
+				
+				// gid are stored in little endian.
+				// if host is big endian, then swap
+				if( o == CFByteOrderBigEndian )
+					gid = CFSwapInt32( gid );
+				
+				// XXX: gid == 0 --> empty tile
+				if( gid != 0 ) {
+					
+					// Optimization: quick return
+					// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
+					if( gid >= tileset->firstGid )
+						return tileset;
+				}
+			}
+		}		
+	}
+	
+	NSAssert(NO,@"TMXTiledMap#tilesetForLayer unexpected error");
+	return tileset;
+}
+
+
+// public
 
 -(TMXLayer*) layerNamed:(NSString *)layerName 
 {
@@ -159,7 +203,12 @@
 	// XXX: is 35% a good estimate ?
 	float totalNumberOfTiles = layerInfo->layerSize.width * layerInfo->layerSize.height;
 	float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
-	if((self=[super initWithFile:tilesetInfo->sourceImage capacity:capacity])) {		
+	
+	Texture2D *tex = nil;
+	if( tilesetInfo )
+		tex = [[TextureMgr sharedTextureMgr] addImage:tilesetInfo->sourceImage];
+
+	if((self=[super initWithTexture:tex capacity:capacity])) {		
 		self.layerName = layerInfo->name;
 		self.layerSize = layerInfo->layerSize;
 		self.tiles = layerInfo->tiles;

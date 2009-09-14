@@ -82,6 +82,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CocosNode: parent set to nil after onExit patch
 	* Joe Vennix: patches for CocosNode
 	* jkrippy: patch for menu align. takes scale into account
+	* johnnyflash71: TMX suports 1 tileset per layer patch
 	* kasatani: AtlasSprite index 0 is not overwritten
 	* kermidt.zed: patches for absolutePosition in CocosNode
 		patches for Labels in Texture2D

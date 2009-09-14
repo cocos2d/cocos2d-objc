@@ -73,3 +73,8 @@
 }
 @end
 
+@interface TMXTilesetTest : TileDemo
+{
+}
+@end
+

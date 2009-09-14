@@ -34,6 +34,8 @@
 {
 	if( (self=[super init])) {
 		ownTiles = YES;
+		minGID = 100000;
+		maxGID = 0;
 	}
 	return self;
 }
