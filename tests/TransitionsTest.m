@@ -8,6 +8,8 @@
 #import "cocos2d.h"
 #import "TransitionsTest.h"
 
+#define TRANSITION_DURATION (1.2f)
+
 @interface FadeWhiteTransition : FadeTransition 
 +(id) transitionWithDuration:(ccTime) t scene:(Scene*)s;
 @end
@@ -240,7 +242,7 @@ Class restartTransition()
 	Class transition = nextTransition();
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:1.2f scene:s2]];
+	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 
 }	
 
@@ -249,7 +251,7 @@ Class restartTransition()
 	Class transition = backTransition();
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:1.2f scene:s2]];
+	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
@@ -257,7 +259,7 @@ Class restartTransition()
 	Class transition = restartTransition();
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer2 node]];
-	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:1.2f scene:s2]];
+	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }	
 -(void) onEnter
 {
@@ -325,7 +327,7 @@ Class restartTransition()
 	Class transition = nextTransition();
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:1.2f scene:s2]];
+	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }	
 
 -(void) backCallback:(id) sender
@@ -333,7 +335,7 @@ Class restartTransition()
 	Class transition = backTransition();
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:1.2f scene:s2]];
+	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
@@ -341,7 +343,7 @@ Class restartTransition()
 	Class transition = restartTransition();
 	Scene *s2 = [Scene node];
 	[s2 addChild: [TextLayer node]];
-	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:1.2f scene:s2]];
+	[[Director sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }
 -(void) step:(ccTime)dt
 {

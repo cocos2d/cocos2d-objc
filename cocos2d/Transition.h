@@ -16,6 +16,16 @@
 @class IntervalAction;
 @class CocosNode;
 
+/** Transition can Ease the actions of the scene protocol.
+ @since v0.8.2
+ */
+@protocol TransitionEaseScene <NSObject>
+/** returns the Ease action that will be performed on a linear action.
+ @since v0.8.2
+ */
+-(IntervalAction*) easeActionWithAction:(IntervalAction*)action;
+@end
+
 /** Orientation Type used by some transitions
  */
 typedef enum {
@@ -78,7 +88,7 @@ typedef enum {
 /** MoveInL Transition.
  Move in from to the left the incoming scene.
 */
-@interface MoveInLTransition : TransitionScene
+@interface MoveInLTransition : TransitionScene <TransitionEaseScene>
 {}
 /** initializes the scenes */
 -(void) initScenes;
@@ -96,7 +106,7 @@ typedef enum {
 /** MoveInT Transition.
  Move in from to the top the incoming scene.
  */
-@interface MoveInTTransition : MoveInLTransition
+@interface MoveInTTransition : MoveInLTransition 
 {}
 @end
 
@@ -110,7 +120,7 @@ typedef enum {
 /** SlideInL Transition.
  Slide in the incoming scene from the left border.
  */
-@interface SlideInLTransition : TransitionScene
+@interface SlideInLTransition : TransitionScene <TransitionEaseScene>
 {}
 /** initializes the scenes */
 -(void) initScenes;
@@ -121,7 +131,7 @@ typedef enum {
 /** SlideInR Transition.
  Slide in the incoming scene from the right border.
  */
-@interface SlideInRTransition : SlideInLTransition
+@interface SlideInRTransition : SlideInLTransition 
 {}
 @end
 
@@ -142,7 +152,7 @@ typedef enum {
 /**
  Shrink the outgoing scene while grow the incoming scene
  */
-@interface ShrinkGrowTransition : TransitionScene
+@interface ShrinkGrowTransition : TransitionScene <TransitionEaseScene>
 {}
 @end
 
@@ -213,14 +223,14 @@ typedef enum {
 /** TurnOffTiles Transition.
  Turn off the tiles of the outgoing scene in random order
  */
-@interface TurnOffTilesTransition : TransitionScene
+@interface TurnOffTilesTransition : TransitionScene <TransitionEaseScene>
 {}
 @end
 
 /** SplitCols Transition.
  The odd columns goes upwards while the even columns goes downwards.
  */
-@interface SplitColsTransition : TransitionScene
+@interface SplitColsTransition : TransitionScene <TransitionEaseScene>
 {}
 -(IntervalAction*) action;
 @end
@@ -235,7 +245,7 @@ typedef enum {
 /** FadeTRTransition.
  Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
  */
-@interface FadeTRTransition : TransitionScene
+@interface FadeTRTransition : TransitionScene <TransitionEaseScene>
 {}
 -(IntervalAction*) actionWithSize:(ccGridSize) vector;
 @end
