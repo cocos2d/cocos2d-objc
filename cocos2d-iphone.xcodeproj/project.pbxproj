@@ -532,6 +532,10 @@
 		504CC3461035BECA0096894C /* ActionManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CC3451035BECA0096894C /* ActionManagerTest.m */; };
 		50545B82105E7B5600AB7C52 /* ortho-test1_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 50545B80105E7B5600AB7C52 /* ortho-test1_bw.png */; };
 		50545B83105E7B5600AB7C52 /* orthogonal-test5.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 50545B81105E7B5600AB7C52 /* orthogonal-test5.tmx */; };
+		50545BFF105E8D6C00AB7C52 /* PageTurn3DAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50545BFD105E8D6C00AB7C52 /* PageTurn3DAction.h */; };
+		50545C00105E8D6C00AB7C52 /* PageTurn3DAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50545BFE105E8D6C00AB7C52 /* PageTurn3DAction.m */; };
+		50545C0A105E8E7200AB7C52 /* PageTurnTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 50545C08105E8E7200AB7C52 /* PageTurnTransition.h */; };
+		50545C0B105E8E7200AB7C52 /* PageTurnTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 50545C09105E8E7200AB7C52 /* PageTurnTransition.m */; };
 		5057B1C80F6E85790019C38F /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		505B62AF0F2E6A0F001B4104 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		505B62B00F2E6A0F001B4104 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
@@ -1865,6 +1869,10 @@
 		5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoWithStatusBar.plist; path = Resources/InfoWithStatusBar.plist; sourceTree = "<group>"; };
 		50545B80105E7B5600AB7C52 /* ortho-test1_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho-test1_bw.png"; sourceTree = "<group>"; };
 		50545B81105E7B5600AB7C52 /* orthogonal-test5.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test5.tmx"; sourceTree = "<group>"; };
+		50545BFD105E8D6C00AB7C52 /* PageTurn3DAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageTurn3DAction.h; sourceTree = "<group>"; };
+		50545BFE105E8D6C00AB7C52 /* PageTurn3DAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageTurn3DAction.m; sourceTree = "<group>"; };
+		50545C08105E8E7200AB7C52 /* PageTurnTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageTurnTransition.h; sourceTree = "<group>"; };
+		50545C09105E8E7200AB7C52 /* PageTurnTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageTurnTransition.m; sourceTree = "<group>"; };
 		505B62D60F2E6A0F001B4104 /* Texture2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Texture2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B62DE0F2E6A66001B4104 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
 		505B62DF0F2E6A66001B4104 /* Texture2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dTest.m; path = tests/Texture2dTest.m; sourceTree = "<group>"; };
@@ -3446,6 +3454,8 @@
 				5018F2610DFDEAFF00C013A5 /* Scene.m */,
 				502B3E980E09A59500886982 /* Transition.h */,
 				502B3E990E09A59500886982 /* Transition.m */,
+				50545C08105E8E7200AB7C52 /* PageTurnTransition.h */,
+				50545C09105E8E7200AB7C52 /* PageTurnTransition.m */,
 			);
 			name = "Layers, Scenes, Transitions Nodes";
 			sourceTree = "<group>";
@@ -3770,6 +3780,8 @@
 				50A24E0E0F377E8E007CAEB0 /* Grid3DAction.m */,
 				50A24E0F0F377E8E007CAEB0 /* GridAction.h */,
 				50A24E100F377E8E007CAEB0 /* GridAction.m */,
+				50545BFD105E8D6C00AB7C52 /* PageTurn3DAction.h */,
+				50545BFE105E8D6C00AB7C52 /* PageTurn3DAction.m */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -4296,6 +4308,8 @@
 				50316AA610291280003ACFE7 /* RenderTexture.h in Headers */,
 				50316AD41029A126003ACFE7 /* MotionStreak.h in Headers */,
 				50316AD81029A137003ACFE7 /* Ribbon.h in Headers */,
+				50545BFF105E8D6C00AB7C52 /* PageTurn3DAction.h in Headers */,
+				50545C0A105E8E7200AB7C52 /* PageTurnTransition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6301,6 +6315,8 @@
 				50316AA710291280003ACFE7 /* RenderTexture.m in Sources */,
 				50316AD51029A126003ACFE7 /* MotionStreak.m in Sources */,
 				50316AD91029A137003ACFE7 /* Ribbon.m in Sources */,
+				50545C00105E8D6C00AB7C52 /* PageTurn3DAction.m in Sources */,
+				50545C0B105E8E7200AB7C52 /* PageTurnTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -297,7 +297,7 @@ Class restartAction()
 	// BUG: glClearColor() in FBO needs to be converted to RGB565
 	[[Director sharedDirector] setPixelFormat:kRGBA8];
 
-	// Create a depth buffer of 24 bits
+	// Create a depth buffer of 16 bits
 	// Needed for the orbit + lens + waves examples
 	// These means that openGL z-order will be taken into account
 	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
