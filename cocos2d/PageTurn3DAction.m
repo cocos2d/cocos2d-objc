@@ -2,7 +2,8 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2009 Dave Durbin
+ * Copyright (C) 2009 Sindesso Pty Ltd http://www.sindesso.com/
+ *
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
