@@ -36,7 +36,7 @@
 }
 
 - (id)initWithFrame:(CGRect)frame zFont:(ZFont *)font {
-	if (self = [super initWithFrame:frame]) {
+	if ((self = [super initWithFrame:frame])) {
 		zFont = [font retain];
 	}
 	return self;
