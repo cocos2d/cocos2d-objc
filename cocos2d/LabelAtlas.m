@@ -55,7 +55,7 @@
 	const char *s = [string_ UTF8String];
 
 	for( int i=0; i<n; i++) {
-		char a = s[i] - mapStartChar;
+		unsigned char a = s[i] - mapStartChar;
 		float row = (a % itemsPerRow) * texStepX;
 		float col = (a / itemsPerRow) * texStepY;
 		
