@@ -89,7 +89,7 @@ enum {
    - chage the opacity
  - It can be used as part of a menu item.
  - anchorPoint can be used to align the "label"
- - Supports AngelCode format
+ - Supports AngelCode text format
  
  Limitations:
   - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it

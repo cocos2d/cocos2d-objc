@@ -16,6 +16,7 @@ static NSString *transitions[] = {
 			@"Atlas3",
 			@"Atlas4",
 			@"Atlas5",
+			@"Atlas6",
 			@"AtlasFastBitmap",
 };
 
@@ -435,7 +436,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		// Upper Label
 		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
 		[self addChild:label];
 		
@@ -451,6 +451,49 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"BitmapFontAtlas: padding";
+}
+@end
+
+#pragma mark Example Atlas6
+
+/*
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
+ */
+
+@implementation Atlas6
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CGSize s = [[Director sharedDirector] winSize];
+
+		BitmapFontAtlas *label = nil;
+		label = [BitmapFontAtlas bitmapFontAtlasWithString:@"FaFeFiFoFu" fntFile:@"bitmapFontTest5.fnt"];
+		[self addChild:label];
+		label.position = ccp(s.width/2, s.height/2+50);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		
+		label = [BitmapFontAtlas bitmapFontAtlasWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
+		[self addChild:label];
+		label.position = ccp(s.width/2, s.height/2);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+
+		label = [BitmapFontAtlas bitmapFontAtlasWithString:@"aeiou" fntFile:@"bitmapFontTest5.fnt"];
+		[self addChild:label];
+		label.position = ccp(s.width/2, s.height/2-50);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"BitmapFontAtlas: offset";
 }
 @end
 
