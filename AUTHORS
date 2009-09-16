@@ -151,6 +151,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Particle reset system works as expected
 		CocosNode: fixed "already scheduled exception" bug
 		Director: added converToUI method
+		Added support for FontLabel
+		Author of FontTest
 	* Manu Valladolid:
 		added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
