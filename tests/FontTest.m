@@ -1,6 +1,8 @@
 //
 // Font Test
+// a cocos2d example
 //
+// Example by Maarten Billemont (lhunath)
 
 // cocos2d import
 #import "cocos2d.h"
@@ -8,7 +10,15 @@
 // local import
 #import "FontTest.h"
 
-#pragma mark Demo - order
+#pragma mark Demo - Font
+
+enum {
+	kTagLabel1,
+	kTagLabel2,
+	kTagLabel3,
+	kTagLabel4,
+
+};
 
 static int fontIdx=0;
 static NSString *fontList[] =
@@ -66,17 +76,39 @@ NSString* restartAction()
 	return self;
 }
 
-- (void)showFont:(NSString *)aFont {
+- (void)showFont:(NSString *)aFont
+{
+	
+	[self removeChildByTag:kTagLabel1 cleanup:YES];
+	[self removeChildByTag:kTagLabel2 cleanup:YES];
+	[self removeChildByTag:kTagLabel3 cleanup:YES];
+	[self removeChildByTag:kTagLabel4 cleanup:YES];
     
-    if (label) {
-        [self removeChild:label cleanup:YES];
-        [label release];
-    }
-    
-    label = [[Label alloc] initWithString:aFont fontName:aFont fontSize:30];
-    label.color = ccc3(0xff, 0xff, 0xff);
-    label.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
-    [self addChild:label];
+	
+	Label *top = [Label labelWithString:aFont fontName:aFont fontSize:24];
+	Label *left = [Label labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:aFont fontSize:32];
+	Label *center = [Label labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:aFont fontSize:32];
+	Label *right = [Label labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:aFont fontSize:32];
+
+	CGSize s = [[Director sharedDirector] winSize];
+	
+	top.position = ccp(s.width/2,250);
+	left.position = ccp(s.width/2,200);
+	center.position = ccp(s.width/2,150);
+	right.position = ccp(s.width/2,100);
+	
+	[[[[self addChild:left z:0 tag:kTagLabel1]
+	  addChild:right z:0 tag:kTagLabel2]
+	 addChild:center z:0 tag:kTagLabel3]
+	 addChild:top z:0 tag:kTagLabel4];
+	
+//    label = [[Label alloc] initWithString:"This is a test: left" fontName:aFont fontSize:30];
+//    label.color = ccc3(0xff, 0xff, 0xff);
+//    label.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
+	
+//	NSLog(@"s: %f, t:%f", [[label texture] maxS], [[label texture] maxT]);
+//	[[label texture] setMaxS:1];
+//	[[label texture] setMaxT:1];	
 }
 
 -(void) nextCallback:(id) sender

@@ -118,9 +118,9 @@ typedef enum {
 /** content size */
 @property(nonatomic,readonly, nonatomic) CGSize contentSize;
 /** texture max S */
-@property(nonatomic,readonly) GLfloat maxS;
+@property(nonatomic,readwrite) GLfloat maxS;
 /** texture max T */
-@property(nonatomic,readonly) GLfloat maxT;
+@property(nonatomic,readwrite) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 @end

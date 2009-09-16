@@ -9,8 +9,8 @@
 
 @interface FontLayer : Layer
 {
-    Label       *label;
 }
-
 @end
+
+
 
