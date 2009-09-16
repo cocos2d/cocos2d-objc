@@ -15,8 +15,11 @@
  *   by Michael Daley
  *
  *
- * Use this editor to generate bitmap font atlas:
- *  http://slick.cokeandcode.com/demos/hiero.jnlp
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
+ *
  */
 
 #import "BitmapFontAtlas.h"
@@ -56,6 +59,7 @@ void FNTConfigRemoveCache( void )
 @interface BitmapFontConfiguration (Private)
 -(void) parseConfigFile:(NSString*)controlFile;
 -(void) parseCharacterDefinition:(NSString*)line charDef:(ccBitmapFontDef*)characterDefinition;
+-(void) parseInfoArguments:(NSString*)line;
 -(void) parseCommonArguments:(NSString*)line;
 -(void) parseKerningCapacity:(NSString*)line;
 -(void) parseKerningEntry:(NSString*)line;
@@ -100,27 +104,106 @@ void FNTConfigRemoveCache( void )
 	
 	// Loop through all the lines in the lines array processing each one
 	while( (line = [nse nextObject]) ) {
+		// parse spacing / padding
+		if([line hasPrefix:@"info face"]) {
+			// XXX: info parsing is incomplete
+			// Not needed for the Hiero editors, but needed for the AngelCode editor
+//			[self parseInfoArguments:line];
+		}
 		// Check to see if the start of the line is something we are interested in
-		if([line hasPrefix:@"common lineHeight"]) {
+		else if([line hasPrefix:@"common lineHeight"]) {
 			[self parseCommonArguments:line];
 		}
-		if([line hasPrefix:@"chars c"]) {
+		else if([line hasPrefix:@"chars c"]) {
 			// Ignore this line
-		} else if([line hasPrefix:@"char"]) {
+		}
+		else if([line hasPrefix:@"char"]) {
 			// Parse the current line and create a new CharDef
 			ccBitmapFontDef characterDefinition;
 			[self parseCharacterDefinition:line charDef:&characterDefinition];
 			
 			// Add the CharDef returned to the charArray
 			bitmapFontArray[ characterDefinition.charID ] = characterDefinition;
-		}	else if([line hasPrefix:@"kernings count"]) {
+		}
+		else if([line hasPrefix:@"kernings count"]) {
 			[self parseKerningCapacity:line];
-		} else if([line hasPrefix:@"kerning first"]) {
+		}
+		else if([line hasPrefix:@"kerning first"]) {
 			[self parseKerningEntry:line];
 		}
 	}
 	// Finished with lines so release it
 	[lines release];	
+}
+
+-(void) parseInfoArguments:(NSString*)line
+{
+	//
+	// possible lines to parse:
+	// info face="Script" size=32 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=1,4,3,2 spacing=0,0 outline=0
+	// info face="Cracked" size=36 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1
+	//
+	NSArray *values = [line componentsSeparatedByString:@"="];
+	NSEnumerator *nse = [values objectEnumerator];	
+	NSString *propertyValue = nil;
+	
+	// We need to move past the first entry in the array before we start assigning values
+	[nse nextObject];
+	
+	// face (ignore)
+	[nse nextObject];
+	
+	// size (ignore)
+	[nse nextObject];
+
+	// bold (ignore)
+	[nse nextObject];
+
+	// italic (ignore)
+	[nse nextObject];
+	
+	// charset (ignore)
+	[nse nextObject];
+
+	// unicode (ignore)
+	[nse nextObject];
+
+	// strechH (ignore)
+	[nse nextObject];
+
+	// smooth (ignore)
+	[nse nextObject];
+	
+	// aa (ignore)
+	[nse nextObject];
+	
+	// padding (ignore)
+	propertyValue = [nse nextObject];
+	{
+		
+		NSArray *paddingValues = [propertyValue componentsSeparatedByString:@","];
+		NSEnumerator *paddingEnum = [paddingValues objectEnumerator];
+		// padding top
+		propertyValue = [paddingEnum nextObject];
+		padding.top = [propertyValue intValue];
+		
+		// padding right
+		propertyValue = [paddingEnum nextObject];
+		padding.right = [propertyValue intValue];
+
+		// padding bottom
+		propertyValue = [paddingEnum nextObject];
+		padding.bottom = [propertyValue intValue];
+		
+		// padding left
+		propertyValue = [paddingEnum nextObject];
+		padding.left = [propertyValue intValue];
+		
+		CCLOG(@"padding: %d,%d,%d,%d", padding.left, padding.top, padding.right, padding.bottom);
+	}
+
+	// spacing (ignore)
+	[nse nextObject];	
 }
 
 -(void) parseCommonArguments:(NSString*)line
@@ -363,7 +446,7 @@ void FNTConfigRemoveCache( void )
 
 	NSUInteger l = [string_ length];
 	for(NSUInteger i=0; i<l; i++) {
-		unichar c = [string_ characterAtIndex:i];
+		unichar c = [string_ characterAtIndex:i] % 256; // Keep only the lower byte of the unicode point (issue #517)
 		
 		kerningAmmount = [self kerningAmmountForFirst:prev second:c];
 		

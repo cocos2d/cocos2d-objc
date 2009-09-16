@@ -33,6 +33,20 @@ typedef struct _bitmapFontDef {
 	int xAdvance;
 } ccBitmapFontDef;
 
+/** bitmap font padding
+ @since v0.8.2
+ */
+typedef struct _bitmapFontPadding {
+	/// padding left
+	int	left;
+	/// padding top
+	int top;
+	/// padding right
+	int right;
+	/// padding bottom
+	int bottom;
+} ccBitmapFontPadding;
+
 enum {
 	kBitmapFontAtlasMaxChars = 256,
 };
@@ -49,6 +63,9 @@ enum {
 	
 	// FNTConfig: Common Height
 	NSUInteger		commonHeight;
+	
+	// Padding
+	ccBitmapFontPadding	padding;
 
 	// values for kerning
 	NSMutableDictionary	*kerningDictionary;
@@ -72,7 +89,7 @@ enum {
    - chage the opacity
  - It can be used as part of a menu item.
  - anchorPoint can be used to align the "label"
- - Supports Hiero format (http://slick.cokeandcode.com/demos/hiero.jnlp)
+ - Supports AngelCode format
  
  Limitations:
   - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
@@ -81,6 +98,11 @@ enum {
  BitmapFontAtlas implements the protocol CocosNodeLabel, like Label and LabelAtlas.
  BitmapFontAtlas has the flexibility of Label, the speed of LabelAtlas and all the features of AtlasSprite.
  If in doubt, use BitmapFontAtlas instead of LabelAtlas / Label.
+ 
+ Supported editors:
+  - http://www.n4te.com/hiero/hiero.jnlp
+  - http://slick.cokeandcode.com/demos/hiero.jnlp
+  - http://www.angelcode.com/products/bmfont/
  
  @since v0.8
  */
