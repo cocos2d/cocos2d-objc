@@ -18,8 +18,6 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-						@"TextureLabel",
-						@"TextureLabel2",
 						@"TextureAlias",
 						@"TexturePVRMipMap",
 						@"TexturePVR",
@@ -130,59 +128,6 @@ Class restartAction()
 
 #pragma mark -
 #pragma mark Examples
-
-@implementation TextureLabel
--(void) onEnter
-{
-	[super onEnter];
-
-	Label *left = [Label labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:@"Marker Felt" fontSize:32];
-	Label *center = [Label labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
-	Label *right = [Label labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:@"Marker Felt" fontSize:32];
-
-	left.position = ccp(240,200);
-	center.position = ccp(240,150);
-	right.position = ccp(240,100);
-
-	[[[self addChild:left z:0]
-			addChild:right z:0]
-			addChild:center z:0];
-	
-//	id s = [Sprite spriteWithFile:@"grossini_indexed.png"];
-//	id s2 = [Sprite spriteWithFile:@"grossini_indexed.gif"];
-//	[self addChild:s];
-//	[self addChild:s2];
-}
-
--(NSString *) title
-{
-	return @"Label Alignments";
-}
-@end
-
-@implementation TextureLabel2
--(void) onEnter
-{
-	[super onEnter];
-	
-	Label *center1 = [Label labelWithString:@"Marker Felt 32" fontName:@"Marker Felt" fontSize:32];
-	Label *center2 = [Label labelWithString:@"Times New Roman 48" fontName:@"Times New Roman" fontSize:48];
-	Label *center3 = [Label labelWithString:@"Courier 64" fontName:@"Courier" fontSize:64];
-	
-	center1.position = ccp(240,200);
-	center2.position = ccp(240,150);
-	center3.position = ccp(240,100);
-	
-	[[[self addChild:center1 z:0]
-			addChild:center2 z:0]
-			addChild:center3 z:0];
-}
-
--(NSString *) title
-{
-	return @"Label Dynamic Size";
-}
-@end
 
 @implementation TexturePNG
 -(void) onEnter

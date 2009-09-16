@@ -17,14 +17,6 @@
 -(void) restartCallback:(id) sender;
 @end
 
-@interface TextureLabel : TextureDemo
-{}
-@end
-
-@interface TextureLabel2 : TextureDemo
-{}
-@end
-
 @interface TexturePNG : TextureDemo
 {}
 @end
