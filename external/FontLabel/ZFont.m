@@ -34,7 +34,7 @@
 }
 
 - (id)initWithCGFont:(CGFontRef)cgFont size:(CGFloat)fontSize {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_cgFont = CGFontRetain(cgFont);
 		_pointSize = fontSize;
 		_ratio = fontSize/CGFontGetUnitsPerEm(cgFont);

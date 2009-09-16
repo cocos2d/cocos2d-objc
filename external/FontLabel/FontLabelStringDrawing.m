@@ -78,6 +78,7 @@ static void freeFontTable(fontTable *table) {
 	}
 }
 
+
 // read the cmap table from the font
 // we only know how to understand some of the table formats at the moment
 static fontTable *readFontTableFromCGFont(CGFontRef font) {
@@ -112,7 +113,7 @@ static fontTable *readFontTableFromCGFont(CGFontRef font) {
 				UInt32 offset = OSReadBigInt32(encodingSubtable, 4);
 				const UInt8 *subtable = &bytes[offset];
 				UInt16 format = OSReadBigInt16(subtable, 0);
-				for (int i = 0; i < supportedFormatsCount; i++) {
+				for (NSUInteger i = 0; i < supportedFormatsCount; i++) {
 					if (format == supportedFormats[i]) {
 						if (format >= 8) {
 							// the version is a fixed-point
@@ -243,7 +244,7 @@ static CGSize mapGlyphsToAdvancesInFont(ZFont *font, size_t n, CGGlyph glyphs[],
 		CGFloat ratio = font.ratio;
 		
 		int width = 0;
-		for (int i = 0; i < n; i++) {
+		for (NSUInteger i = 0; i < n; i++) {
 			width += outAdvances[i];
 			if (outWidths != NULL) outWidths[i] = outAdvances[i]*ratio;
 		}

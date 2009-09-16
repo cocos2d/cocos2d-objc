@@ -35,7 +35,7 @@ static FontManager *sharedFontManager = nil;
 }
 
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		fonts = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
 	}
 	return self;
