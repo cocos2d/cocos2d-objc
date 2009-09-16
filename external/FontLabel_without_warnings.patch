@@ -1,0 +1,120 @@
+Index: FontLabelStringDrawing.h
+===================================================================
+--- FontLabelStringDrawing.h	(revision 1358)
++++ FontLabelStringDrawing.h	(working copy)
+@@ -23,6 +23,7 @@
+ 
+ @class ZFont;
+ 
++
+ @interface NSString (FontLabelStringDrawing)
+ // CGFontRef-based methods
+ - (CGSize)sizeWithCGFont:(CGFontRef)font pointSize:(CGFloat)pointSize __AVAILABILITY_INTERNAL_DEPRECATED;
+Index: FontLabel.m
+===================================================================
+--- FontLabel.m	(revision 1358)
++++ FontLabel.m	(working copy)
+@@ -36,7 +36,7 @@
+ }
+ 
+ - (id)initWithFrame:(CGRect)frame zFont:(ZFont *)font {
+-	if (self = [super initWithFrame:frame]) {
++	if ((self = [super initWithFrame:frame])) {
+ 		zFont = [font retain];
+ 	}
+ 	return self;
+Index: FontLabelStringDrawing.m
+===================================================================
+--- FontLabelStringDrawing.m	(revision 1358)
++++ FontLabelStringDrawing.m	(working copy)
+@@ -78,6 +78,7 @@
+ 	}
+ }
+ 
++
+ // read the cmap table from the font
+ // we only know how to understand some of the table formats at the moment
+ static fontTable *readFontTableFromCGFont(CGFontRef font) {
+@@ -112,7 +113,7 @@
+ 				UInt32 offset = OSReadBigInt32(encodingSubtable, 4);
+ 				const UInt8 *subtable = &bytes[offset];
+ 				UInt16 format = OSReadBigInt16(subtable, 0);
+-				for (int i = 0; i < supportedFormatsCount; i++) {
++				for (NSUInteger i = 0; i < supportedFormatsCount; i++) {
+ 					if (format == supportedFormats[i]) {
+ 						if (format >= 8) {
+ 							// the version is a fixed-point
+@@ -243,7 +244,7 @@
+ 		CGFloat ratio = font.ratio;
+ 		
+ 		int width = 0;
+-		for (int i = 0; i < n; i++) {
++		for (NSUInteger i = 0; i < n; i++) {
+ 			width += outAdvances[i];
+ 			if (outWidths != NULL) outWidths[i] = outAdvances[i]*ratio;
+ 		}
+Index: ZFont.h
+===================================================================
+--- ZFont.h	(revision 1358)
++++ ZFont.h	(working copy)
+@@ -19,7 +19,7 @@
+ // limitations under the License.
+ //
+ 
+-#import <Foundation/Foundation.h>
++#import <UIKit/UIKit.h>
+ 
+ @interface ZFont : NSObject {
+ 	CGFontRef _cgFont;
+Index: FontManager.h
+===================================================================
+--- FontManager.h	(revision 1358)
++++ FontManager.h	(working copy)
+@@ -19,7 +19,7 @@
+ // limitations under the License.
+ //
+ 
+-#import <Foundation/Foundation.h>
++#import <UIKit/UIKit.h>
+ 
+ @class ZFont;
+ 
+Index: ZFont.m
+===================================================================
+--- ZFont.m	(revision 1358)
++++ ZFont.m	(working copy)
+@@ -34,7 +34,7 @@
+ }
+ 
+ - (id)initWithCGFont:(CGFontRef)cgFont size:(CGFloat)fontSize {
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		_cgFont = CGFontRetain(cgFont);
+ 		_pointSize = fontSize;
+ 		_ratio = fontSize/CGFontGetUnitsPerEm(cgFont);
+Index: FontLabel.h
+===================================================================
+--- FontLabel.h	(revision 1358)
++++ FontLabel.h	(working copy)
+@@ -19,7 +19,7 @@
+ // limitations under the License.
+ //
+ 
+-#import <Foundation/Foundation.h>
++#import <UIKit/UIKit.h>
+ 
+ @class ZFont;
+ 
+Index: FontManager.m
+===================================================================
+--- FontManager.m	(revision 1358)
++++ FontManager.m	(working copy)
+@@ -35,7 +35,7 @@
+ }
+ 
+ - (id)init {
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		fonts = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+ 	}
+ 	return self;
