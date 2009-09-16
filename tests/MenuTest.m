@@ -65,6 +65,24 @@ enum {
 		[menu alignItemsVertically];
 		
 		
+		// elastic effect
+		CGSize s = [[Director sharedDirector] winSize];
+		int i=0;
+		for( CocosNode *child in [menu children] ) {
+			CGPoint dstPoint = child.position;
+			int offset = s.width/2 + 50;
+			if( i % 2 == 0)
+				offset = -offset;
+			child.position = ccp( dstPoint.x + offset, dstPoint.y);
+			[child runAction: 
+			 [EaseElasticOut actionWithAction:
+			  [MoveBy actionWithDuration:2 position:ccp(dstPoint.x - offset,0)]
+									   period: 0.35f]
+			];
+			i++;
+		}
+		
+		
 		// IMPORTANT
 		// If you are going to use AtlasSprite as items, you should
 		// re-position the AtlasSpriteManager AFTER modifying the menu position
