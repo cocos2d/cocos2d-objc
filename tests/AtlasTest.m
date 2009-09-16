@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 			@"Atlas2",
 			@"Atlas3",
 			@"Atlas4",
+			@"Atlas5",
 			@"AtlasFastBitmap",
 };
 
@@ -258,9 +259,11 @@ Class restartAction()
 #pragma mark Example Atlas3
 
 /*
-* Use this editor to generate bitmap font atlas:
-*  http://slick.cokeandcode.com/demos/hiero.jnlp
-*/
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
+ */
 @implementation Atlas3
 -(id) init
 {
@@ -326,15 +329,17 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas test #1";
+	return @"BitmapFontAtlas: alignment";
 }
 @end
 
 #pragma mark Example Atlas4
 
 /*
- * Use this editor to generate bitmap font atlas:
- *  http://slick.cokeandcode.com/demos/hiero.jnlp
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
  */
 
 @implementation Atlas4
@@ -402,7 +407,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas test #2";
+	return @"BitmapFontAtlas: animation";
 }
 -(void) step:(ccTime) dt
 {
@@ -415,11 +420,47 @@ Class restartAction()
 
 @end
 
+
+#pragma mark Example Atlas5
+
+/*
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
+ */
+
+@implementation Atlas5
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		// Upper Label
+		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
+		[self addChild:label];
+		
+		CGSize s = [[Director sharedDirector] winSize];
+		
+		label.position = ccp(s.width/2, s.height/2);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"BitmapFontAtlas: padding";
+}
+@end
+
 #pragma mark Example AtlasFastBitmap
 
 /*
- * Use this editor to generate bitmap font atlas:
- *  http://slick.cokeandcode.com/demos/hiero.jnlp
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
  */
 
 @implementation AtlasFastBitmap

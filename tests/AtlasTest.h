@@ -38,6 +38,12 @@
 }
 @end
 
+@interface Atlas5 : AtlasDemo
+{
+}
+@end
+
+
 @interface AtlasFastBitmap : AtlasDemo
 {}
 @end

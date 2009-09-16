@@ -56,6 +56,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Dominique Bongard:
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
+		Prevent crash with BitmapFontAtlas patch
 	* effervens:
 		patches for Director
 	* Ernesto Corvi & On-Core (http://www.on-core.com/):
