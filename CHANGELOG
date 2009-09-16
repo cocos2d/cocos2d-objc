@@ -12,6 +12,7 @@ version 0.8.2 - XX-MMM-2009
  . Documentation: doxygen builds OK when there are spaces in the path (issue #540)
  . LabelAtlas: works with 256 different chars (issue #516)
  . RenderTexture: added RenderTexture test (issue #XXX)
+ . Texture2D: Supports any .ttf via FontLabel (issue #534)
  . TileMap: TMX supports multiple tilesets (1 tileset per layer) (issue #510)
  . Transition: ease actions can be overriden (issue #548)
  . Transition: added PageTurnTransition (issue #522)
