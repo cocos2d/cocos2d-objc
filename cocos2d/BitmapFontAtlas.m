@@ -315,10 +315,10 @@ void FNTConfigRemoveCache( void )
 	
 	// second
 	propertyValue = [nse nextObject];
-	int ammount = [propertyValue intValue];
+	int amount = [propertyValue intValue];
 	
 	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
-	NSNumber *value = [NSNumber numberWithInt:ammount];
+	NSNumber *value = [NSNumber numberWithInt:amount];
 	
 	[kerningDictionary setObject:value forKey:key];
 }
@@ -331,7 +331,7 @@ void FNTConfigRemoveCache( void )
 @interface BitmapFontAtlas (Private)
 -(NSString*) atlasNameFromFntFile:(NSString*)fntFile;
 
--(int) kerningAmmountForFirst:(unichar)first second:(unichar)second;
+-(int) kerningAmountForFirst:(unichar)first second:(unichar)second;
 
 @end
 
@@ -425,7 +425,7 @@ void FNTConfigRemoveCache( void )
 
 #pragma mark BitmapFontAtlas - Atlas generation
 
--(int) kerningAmmountForFirst:(unichar)first second:(unichar)second
+-(int) kerningAmountForFirst:(unichar)first second:(unichar)second
 {
 	int ret = 0;
 	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
@@ -440,7 +440,7 @@ void FNTConfigRemoveCache( void )
 {
 	int nextFontPositionX = 0;
 	unichar prev = -1;
-	int kerningAmmount = 0;
+	int kerningAmount = 0;
 	
 	CGSize tmpSize = CGSizeZero;
 
@@ -448,7 +448,7 @@ void FNTConfigRemoveCache( void )
 	for(NSUInteger i=0; i<l; i++) {
 		unichar c = [string_ characterAtIndex:i] % 256; // Keep only the lower byte of the unicode point (issue #517)
 		
-		kerningAmmount = [self kerningAmmountForFirst:prev second:c];
+		kerningAmount = [self kerningAmountForFirst:prev second:c];
 		
 		ccBitmapFontDef fontDef = configuration->bitmapFontArray[c];
 		
@@ -473,11 +473,11 @@ void FNTConfigRemoveCache( void )
 //		NSLog(@"position.y: %f", fontChar.position.y);
 		
 		// update kerning
-		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmmount,0));
-		nextFontPositionX += configuration->bitmapFontArray[c].xAdvance + kerningAmmount;
+		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmount,0));
+		nextFontPositionX += configuration->bitmapFontArray[c].xAdvance + kerningAmount;
 		prev = c;
 		
-		tmpSize.width += configuration->bitmapFontArray[c].xAdvance + kerningAmmount;
+		tmpSize.width += configuration->bitmapFontArray[c].xAdvance + kerningAmount;
 		tmpSize.height = configuration->commonHeight;
 		
 		// Apply label properties
