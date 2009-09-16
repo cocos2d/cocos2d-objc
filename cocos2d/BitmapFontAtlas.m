@@ -466,9 +466,8 @@ void FNTConfigRemoveCache( void )
 
 		fontChar.visible = YES;
 
-		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset +
-								fontDef.xAdvance/2.0f, (configuration->commonHeight - fontDef.yOffset) -
-								rect.size.height/2.0f );		
+		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f ,
+								(configuration->commonHeight - fontDef.yOffset) - rect.size.height/2.0f );		
 		
 //		NSLog(@"position.y: %f", fontChar.position.y);
 		
