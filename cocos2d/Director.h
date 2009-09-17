@@ -14,22 +14,11 @@
 
 
 //
+#import "ccConfig.h"
 #import "ccTypes.h"
 
 // OpenGL related
 #import "Support/EAGLView.h"
-
-// Fast FPS display. FPS are updated 10 times per second without consuming resources
-// uncomment this line to use the old method that updated
-// You need to add the "fps_images.png" file to your project
-#define DIRECTOR_DISPLAY_FAST_FPS 1
-
-// If you want a Fast Director that dispatches the events more frequently, 
-// define the following line.
-// Limitations:
-//  - The events are dispatched faster (?)
-//  - But it doesn't refresh the screen as fast as the "slow events"
-#define DIRECTOR_FASTDIRECTOR_FAST_EVENTS 0
 
 /** Possible Pixel Formats for the EAGLView */
 typedef enum {
@@ -90,7 +79,7 @@ and when to execute the Scenes
 	int frames;
 	ccTime accumDt;
 	ccTime frameRate;
-#ifdef DIRECTOR_DISPLAY_FAST_FPS
+#ifdef CC_DIRECTOR_FAST_FPS
 	LabelAtlas *FPSLabel;
 #endif
 	

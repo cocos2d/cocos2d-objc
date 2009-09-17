@@ -14,6 +14,7 @@
  */
 
 
+#import "ccConfig.h"
 #import "CocosNode.h"
 #import "Camera.h"
 #import "Grid.h"
@@ -26,7 +27,7 @@
 #import "Support/TransformUtils.h"
 
 
-#if 1
+#if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL (int)

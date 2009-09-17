@@ -67,18 +67,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <OpenGLES/ES1/glext.h>
 
+#import "ccConfig.h"
 #import "ccMacros.h"
 #import "Texture2D.h"
 #import "PVRTexture.h"
 
-// Enable by default FontLabel support
-#define FONTLABEL_SUPPORT 1
 
-#ifdef FONTLABEL_SUPPORT
+#if CC_FONT_LABEL_SUPPORT
 // FontLabel support
 #import "FontManager.h"
 #import "FontLabelStringDrawing.h"
-#endif// FONTLABEL_SUPPORT
+#endif// CC_FONT_LABEL_SUPPORT
 
 
 //CONSTANTS:
@@ -332,7 +331,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 {
     CGSize dim;
 	
-#ifdef FONTLABEL_SUPPORT
+#if CC_FONT_LABEL_SUPPORT
     ZFont *zFont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
     if (zFont != nil)
         dim = [string sizeWithZFont:zFont];
@@ -380,12 +379,12 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	UIGraphicsPushContext(context);
     
 
-#ifdef FONTLABEL_SUPPORT
+#if CC_FONT_LABEL_SUPPORT
 	uiFont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
     if (uiFont != nil)
         [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
     else
-#endif // FONTLABEL_SUPPORT
+#endif // CC_FONT_LABEL_SUPPORT
 	{
         uiFont = [UIFont fontWithName:name size:size];
         [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
