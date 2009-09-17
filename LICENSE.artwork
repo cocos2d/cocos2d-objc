@@ -69,9 +69,17 @@ TILES & TILEMAP:
 FONTS:
 ------
 
-Resources/Images/tuffy_bold_italic-charmap.png
+TTF fonts:
+    Resources/Fonts/*.ttf
+    From:
+        http://www.webpagepublicity.com/free-fonts.html
+    LICENSE: For personal Use.
+        
 
-From:
-    http://tulrich.com/fonts/
+SpriteSheet fonts:
+    Resources/Images/tuffy_bold_italic-charmap.png
 
-LICENSE: Public Domain
+    From:
+        http://tulrich.com/fonts/
+
+    LICENSE: Public Domain
