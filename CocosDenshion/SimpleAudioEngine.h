@@ -30,13 +30,18 @@
 
 /** whether or not the engine is muted */
 @property (readwrite) BOOL muted;
-/** Background music volume. Range is 0.0f to 1.0f */
+/** Background music volume. Range is 0.0f to 1.0f. This will only have an effect if willPlayBackgroundMusic returns YES */
 @property (readwrite) float backgroundMusicVolume;
 /** Effects volume. Range is 0.0f to 1.0f */
 @property (readwrite) float effectsVolume;
+/** If NO it indicates background music will not be played either because no background music is loaded or the audio session does not permit it.*/
+@property (readonly) BOOL willPlayBackgroundMusic;
 
 /** returns the shared instance of the SimpleAudioEngine object */
 + (SimpleAudioEngine*) sharedEngine;
+
+/** Preloads a music file so it will be ready to play as background music */
+-(void) preloadBackgroundMusic:(NSString*) filePath;
 
 /** plays background music in a loop*/
 -(void) playBackgroundMusic:(NSString*) filePath;

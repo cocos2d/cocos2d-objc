@@ -81,6 +81,10 @@ static CDAudioManager *am = nil;
 
 #pragma mark SimpleAudioEngine - background music
 
+-(void) preloadBackgroundMusic:(NSString*) filePath {
+	[am preloadBackgroundMusic:filePath];
+}
+
 -(void) playBackgroundMusic:(NSString*) filePath
 {
 	[am playBackgroundMusic:filePath loop:TRUE];
@@ -111,6 +115,10 @@ static CDAudioManager *am = nil;
 -(BOOL) isBackgroundMusicPlaying {
 	return [am isBackgroundMusicPlaying];
 }	
+
+-(BOOL) willPlayBackgroundMusic {
+	return [am willPlayBackgroundMusic];
+}
 
 #pragma mark SimpleAudioEngine - sound effects
 
