@@ -144,7 +144,7 @@ static Director *_sharedDirector = nil;
 {
 	CCLOG( @"deallocing %@", self);
 
-#if DIRECTOR_DISPLAY_FAST_FPS
+#if CC_DIRECTOR_FAST_FPS
 	[FPSLabel release];
 #endif
 	[runningScene_ release];
@@ -167,7 +167,7 @@ static Director *_sharedDirector = nil;
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
-#if DIRECTOR_DISPLAY_FAST_FPS
+#if CC_DIRECTOR_FAST_FPS
     if (!FPSLabel)
         FPSLabel = [[LabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
 #endif	
@@ -696,7 +696,7 @@ static Director *_sharedDirector = nil;
 	[self stopAnimation];
 	[self detach];
 	
-#if DIRECTOR_DISPLAY_FAST_FPS
+#if CC_DIRECTOR_FAST_FPS
 	[FPSLabel release];
 	FPSLabel = nil;
 #endif	
@@ -801,7 +801,7 @@ static Director *_sharedDirector = nil;
 	}
 }
 
-#if DIRECTOR_DISPLAY_FAST_FPS
+#if CC_DIRECTOR_FAST_FPS
 
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
@@ -864,7 +864,7 @@ static Director *_sharedDirector = nil;
 {
 	if(( self = [super init] )) {
 		
-#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		CCLOG(@"Using Fast Director with Fast Events");
 #else
 		CCLOG(@"Using Fast Director");
@@ -918,7 +918,7 @@ static Director *_sharedDirector = nil;
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
-#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 #else
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
@@ -930,7 +930,7 @@ static Director *_sharedDirector = nil;
 		
 		[self mainLoop];
 
-#if DIRECTOR_FASTDIRECTOR_FAST_EVENTS
+#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 #else
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);

@@ -22,8 +22,10 @@
  *
  */
 
+#import "ccConfig.h"
 #import "BitmapFontAtlas.h"
 #import "AtlasSprite.h"
+#import "DrawingPrimitives.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
 
@@ -420,9 +422,6 @@ void FNTConfigRemoveCache( void )
 	return [FileUtils fullPathFromRelativePath:propertyValue];
 }
 
-#pragma mark BitmapFontAtlas - FNT parser
-
-
 #pragma mark BitmapFontAtlas - Atlas generation
 
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second
@@ -541,4 +540,17 @@ void FNTConfigRemoveCache( void )
 		[self createFontChars];
 	}
 }
+
+#pragma mark BitmapFontAtlas - Debug draw
+#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+-(void) draw
+{
+	[super draw];
+	CGSize s = [self contentSize];
+	drawLine( CGPointZero, ccp(s.width,0) );
+	drawLine(CGPointZero, ccp(0,s.height));
+	drawLine( ccp(s.width,0), ccp(s.width,s.height) );
+	drawLine( ccp(s.width,s.height), ccp(0,s.height));
+}
+#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
 @end

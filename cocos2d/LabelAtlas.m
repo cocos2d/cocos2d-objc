@@ -12,8 +12,12 @@
  *
  */
 
-#import "LabelAtlas.h"
+#import "ccConfig.h"
 #import "ccMacros.h"
+#import "DrawingPrimitives.h"
+#import "LabelAtlas.h"
+#import "Support/CGPointExtension.h"
+
 
 
 @implementation LabelAtlas
@@ -132,5 +136,14 @@
 	
 	glDisableClientState(GL_VERTEX_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	
+#if CC_LABELATLAS_DEBUG_DRAW
+	CGSize s = [self contentSize];
+	drawLine( CGPointZero, ccp(s.width,0) );
+	drawLine(CGPointZero, ccp(0,s.height));
+	drawLine( ccp(s.width,0), ccp(s.width,s.height) );
+	drawLine( ccp(s.width,s.height), ccp(0,s.height));
+#endif // CC_LABELATLAS_DEBUG_DRAW
+
 }
 @end

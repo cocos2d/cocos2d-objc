@@ -1,4 +1,5 @@
 version 0.8.2 - XX-MMM-2009
+ . All: ccConfig.h file added (issue #551)
  . Actions: added Ease Elastic actions (issue #530)
  . Actions: added Ease Bounce actions (issue #546)
  . Actions: added PageTurn3D action (issue #522)
@@ -6,6 +7,7 @@ version 0.8.2 - XX-MMM-2009
  . BitmapFontAtlas: fixed offset/width (issue #537)
  . BitmapFontAtlas: only supports Latin 1 chars (issue #517)
  . CocosDenshion: muted property in SimpleAudioEngine (issue #526)
+ . CocosDenshion: added preloadBackgroundMusic and willBackgroundMusicPlay to SimpleAudioEngine (issue #545)
  . CocosNode: improved doxygen documentation (issue #XXX)
  . Director: added convertToUI and renamed convertCoordinate to convertToGL (issue #531)
  . Director: fixed 2 leaks on Director#end (issue #524)

@@ -12,6 +12,7 @@
  *
  */
 
+#import "ccConfig.h"
 #import "AtlasSpriteManager.h"
 #import "AtlasSprite.h"
 #import "Support/CGPointExtension.h"
@@ -19,7 +20,7 @@
 #pragma mark -
 #pragma mark AltasSprite
 
-#if 1
+#if CC_ATLAS_SPRITE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))

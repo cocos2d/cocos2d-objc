@@ -16,15 +16,13 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+#import "ccConfig.h"
 #import "TextureMgr.h"
 #import "TextureNode.h"
 #import "ccMacros.h"
 #import "DrawingPrimitives.h"
 #import "Support/CGPointExtension.h"
 
-
-// draw contentSize
-#define TEXTURENODE_DEBUG 0
 
 @implementation TextureNode
 
@@ -119,12 +117,12 @@
 	glDisableClientState(GL_VERTEX_ARRAY );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 	
-#if TEXTURENODE_DEBUG
+#if CC_TEXTURENODE_DEBUG_DRAW
 	CGSize s = [self contentSize];
 	drawLine( CGPointZero, ccp(s.width,0) );
 	drawLine(CGPointZero, ccp(0,s.height));
 	drawLine( ccp(s.width,0), ccp(s.width,s.height) );
 	drawLine( ccp(s.width,s.height), ccp(0,s.height));
-#endif // TEXTURENODE_DEBUG
+#endif // CC_TEXTURENODE_DEBUG_DRAW
 }	
 @end
