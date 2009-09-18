@@ -48,6 +48,9 @@
 		[self setContentSize:CGSizeZero];
 
 		TMXMapInfo *mapInfo = [TMXMapInfo formatWithTMXFile:tmxFile];
+		
+		NSAssert( [mapInfo->tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
+		
 		mapSize_ = mapInfo->mapSize;
 		tileSize_ = mapInfo->tileSize;
 		mapOrientation_ = mapInfo->orientation;
