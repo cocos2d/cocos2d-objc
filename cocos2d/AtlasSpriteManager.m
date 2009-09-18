@@ -15,6 +15,9 @@
 #import "AtlasSprite.h"
 #import "AtlasSpriteManager.h"
 #import "Grid.h"
+#import "ccConfig.h"
+#import "DrawingPrimitives.h"
+#import "Support/CGPointExtension.h"
 
 const int defaultCapacity = 29;
 
@@ -267,35 +270,45 @@ const int defaultCapacity = 29;
 #pragma mark AtlasSpriteManager - draw
 -(void)draw
 {
+	if(totalSprites_== 0)
+		return;
+	
 	for( AtlasSprite *child in children )
 	{
 		if( child.dirty )
 			[child updatePosition];
+		
+#ifdef CC_ATLASSPRITE_DEBUG_DRAW
+		CGRect rect = [child boundingBox]; //Inssue 528
+		CGPoint vertices[4]={
+			ccp(rect.origin.x,rect.origin.y),
+			ccp(rect.origin.x+rect.size.width,rect.origin.y),
+			ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
+			ccp(rect.origin.x,rect.origin.y+rect.size.height),
+		};
+		drawPoly(vertices, 4, YES);
+#endif // CC_ATLASSPRITE_DEBUG_DRAW
 	}
 
-	if(totalSprites_ > 0)
-	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnable(GL_TEXTURE_2D);
-		
-		BOOL newBlend = NO;
-		if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-			newBlend = YES;
-			glBlendFunc( blendFunc_.src, blendFunc_.dst );
-		}
-		
-		[textureAtlas_ drawNumberOfQuads:totalSprites_];
-
-		if( newBlend )
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-		
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);
+	
+	BOOL newBlend = NO;
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+		newBlend = YES;
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
+	
+	[textureAtlas_ drawNumberOfQuads:totalSprites_];
+	if( newBlend )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 #pragma mark AtlasSpriteManager - private

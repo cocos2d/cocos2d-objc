@@ -18,7 +18,6 @@
 */
 
 
-
 /**
  If enabled, FontLabel will be used to render .ttf files.
  If the .ttf file is not found, then it will use the standard UIFont class
@@ -76,3 +75,9 @@
  */
 //#define CC_LABELATLAS_DEBUG_DRAW 1
 
+/**
+ If enabled, all subclasses of AtlasSprite will draw a bounding box
+ Useful for debugging purposes only.
+ It is recommened to leave it disabled.
+ */
+//#define CC_ATLASSPRITE_DEBUG_DRAW 1

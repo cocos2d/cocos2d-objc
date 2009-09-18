@@ -158,6 +158,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for the setColor API for the RGBA protocol
 		MenuItemLabel: color is saved when item is disabled
 		Update status in CocosDenshion patch
+		Added CocosNode#boundingBox method
+		Added debuging draw method to AtlasSpriteManager 
 	* mark at abitofthought:
 		author of the single threaded Fast Director
 	* Michal Szymerski:
