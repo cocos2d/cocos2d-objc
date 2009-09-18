@@ -119,10 +119,11 @@
 	
 #if CC_TEXTURENODE_DEBUG_DRAW
 	CGSize s = [self contentSize];
-	drawLine( CGPointZero, ccp(s.width,0) );
-	drawLine(CGPointZero, ccp(0,s.height));
-	drawLine( ccp(s.width,0), ccp(s.width,s.height) );
-	drawLine( ccp(s.width,s.height), ccp(0,s.height));
+	CGPoint vertices[4]={
+		ccp(0,0),ccp(s.width,0),
+		ccp(s.width,s.height),ccp(0,s.height),
+	};
+	drawPoly(vertices, 4, YES);
 #endif // CC_TEXTURENODE_DEBUG_DRAW
 }	
 @end

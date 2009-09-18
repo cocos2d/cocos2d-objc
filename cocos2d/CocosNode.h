@@ -279,6 +279,12 @@ enum {
  */
 -(void) transformAncestors;
 
+/** returns the bounding box the node.
+ It takes into account any kind of transformation.
+ @since v0.8.2
+ */
+- (CGRect) boundingBox;
+
 
 // actions
 

@@ -121,6 +121,12 @@
 	return contentSize_;
 }
 
+- (CGRect) boundingBox
+{
+	CGRect rect = CGRectMake(0, 0, contentSize_.width, contentSize_.height);
+	return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
+}
+
 -(float) scale
 {
 	if( scaleX_ == scaleY_)
