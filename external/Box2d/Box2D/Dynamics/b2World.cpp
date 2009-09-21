@@ -227,7 +227,7 @@ b2Joint* b2World::CreateJoint(const b2JointDef* def)
 			b2Swap(bodyA, bodyB);
 		}
 
-		b2ContactEdge* edge = bodyB->GetConactList();
+		b2ContactEdge* edge = bodyB->GetContactList();
 		while (edge)
 		{
 			if (edge->other == bodyA)
@@ -326,7 +326,7 @@ void b2World::DestroyJoint(b2Joint* j)
 	// If the joint prevents collisions, then flag any contacts for filtering.
 	if (collideConnected == false)
 	{
-		b2ContactEdge* edge = bodyB->GetConactList();
+		b2ContactEdge* edge = bodyB->GetContactList();
 		while (edge)
 		{
 			if (edge->other == bodyA)
@@ -689,7 +689,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 				// Does the TOI island still have space for contacts?
 				if (island.m_contactCount == island.m_contactCapacity)
 				{
-					continue;
+					break;
 				}
 
 				// Has this contact already been added to an island?
@@ -881,10 +881,10 @@ void b2World::Step(float32 dt, int32 velocityIterations, int32 positionIteration
 
 struct b2WorldQueryWrapper
 {
-	void QueryCallback(int32 proxyId)
+	bool QueryCallback(int32 proxyId)
 	{
 		b2Fixture* fixture = (b2Fixture*)broadPhase->GetUserData(proxyId);
-		callback->ReportFixture(fixture);
+		return callback->ReportFixture(fixture);
 	}
 
 	b2BroadPhase* broadPhase;
