@@ -22,12 +22,14 @@
 #include <cstring>
 
 #include "ApplyForce.h"
+#include "Breakable.h"
 #include "Bridge.h"
 #include "CCDTest.h"
 #include "Chain.h"
 #include "CollisionFiltering.h"
 #include "CollisionProcessing.h"
 #include "CompoundShapes.h"
+#include "Confined.h"
 #include "DistanceTest.h"
 #include "Dominos.h"
 #include "DynamicTreeTest.h"
@@ -54,12 +56,15 @@
 
 TestEntry g_testEntries[] =
 {
+	{"Confined", Confined::Create},
+	{"Bridge", Bridge::Create},
+	{"Breakable", Breakable::Create},
+	{"Varying Restitution", VaryingRestitution::Create},
 	{"Ray-Cast", RayCast::Create},
 	{"Pyramid", Pyramid::Create},
 	{"PolyCollision", PolyCollision::Create},
 	{"One-Sided Platform", OneSidedPlatform::Create},
 	{"Apply Force", ApplyForce::Create},
-	{"Bridge", Bridge::Create},
 	{"CCD Test", CCDTest::Create},
 	{"Chain", Chain::Create},
 	{"Collision Filtering", CollisionFiltering::Create},
@@ -81,7 +86,6 @@ TestEntry g_testEntries[] =
 	{"Theo Jansen's Walker", TheoJansen::Create},
 	{"Time of Impact", TimeOfImpact::Create},
 	{"Varying Friction", VaryingFriction::Create},
-	{"Varying Restitution", VaryingRestitution::Create},
 	{"Vertical Stack", VerticalStack::Create},
 	{"Web", Web::Create},
 	{NULL, NULL}
