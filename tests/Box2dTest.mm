@@ -151,7 +151,6 @@ enum {
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
 	body->CreateFixture(&fixtureDef);
-	body->SetMassFromShapes();	
 }
 
 
