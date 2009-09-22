@@ -277,5 +277,22 @@ and when to execute the Scenes
 -(void) preMainLoop;
 @end
 
+/** FastDirector2 is a Director that triggers the main loop from a thread.
+ *
+ * Features and Limitations:
+ *  - Faster than "normal" director
+ *  - Consumes more battery than the "normal" director
+ *  - It can be used with UIKit objects
+ *
+ * @since v0.8.2
+ */
+@interface FastDirector2 : Director
+{
+	BOOL isRunning;	
+}
+-(void) preMainLoop;
+@end
+
+
 
 

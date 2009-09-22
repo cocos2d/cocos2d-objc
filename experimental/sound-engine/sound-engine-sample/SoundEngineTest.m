@@ -139,7 +139,7 @@
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint point = [touch locationInView: [touch view]];
-    point = [[Director sharedDirector] convertCoordinate: point];
+    point = [[Director sharedDirector] convertToGL: point];
     listenerSprite.position = ccp(point.x, point.y);
     return kEventHandled;
 }    
