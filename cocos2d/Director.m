@@ -94,7 +94,37 @@ static Director *_sharedDirector = nil;
 + (void) useFastDirector
 {
 	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Fast Director this must be the first call to Director");
-	[FastDirector2 sharedDirector];
+	[FastDirector sharedDirector];
+}
+
+// This function was created to avoid confussion for the users
+// Calling [ThreadedFastDirector sharedDirector] is enough, but is somewhat
+// confusing since the user needs to understand what's under the hood
++ (void) useThreadedFastDirector
+{
+	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Fast Director this must be the first call to Director");
+	[ThreadedFastDirector sharedDirector];
+}
+
+
+// This function was created to avoid confussion for the users
+// Calling [DisplayLinkDirector sharedDirector] is enough, but is somewhat
+// confusing since the user needs to understand what's under the hood
++ (void) useDisplayLinkDirector
+{
+	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Display Link Director this must be the first call to Director");
+	
+	NSString *reqSysVer = @"3.1";
+	NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+	
+	if([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending){
+		CCLOG(@"Using Display Link Director. OS Version: %@", currSysVer);
+		[DisplayLinkDirector sharedDirector];
+	}else{
+		// Fall back to standard director if pre 3.1
+		CCLOG(@"Using Standard Director. OS Version: %@", currSysVer);
+		[Director sharedDirector];
+	}
 }
 
 +(id)alloc
@@ -116,7 +146,7 @@ static Director *_sharedDirector = nil;
 	if( (self=[super init]) ) {
 
 		// default values
-		pixelFormat_ = kPixelFormatRGB565;
+		pixelFormat_ = kPixelFormatRGBA8888;
 		depthBufferFormat_ = 0;
 
 		// scenes
@@ -939,19 +969,15 @@ static Director *_sharedDirector = nil;
 @end
 
 #pragma mark -
-#pragma mark Director FastDirector2
+#pragma mark Director ThreadedFastDirector
 
-@implementation FastDirector2
+@implementation ThreadedFastDirector
 
 - (id) init
 {
 	if(( self = [super init] )) {
 		
-#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
-		CCLOG(@"Using Fast Director2 with Fast Events");
-#else
-		CCLOG(@"Using Fast Director2");
-#endif		
+		CCLOG(@"Using Threaded Fast Director");
 		isRunning = NO;		
 	}
 	
@@ -962,10 +988,9 @@ static Director *_sharedDirector = nil;
 {
 	
 	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"Director: Error on gettimeofday");
+		CCLOG(@"ThreadedFastDirector: Error on gettimeofday");
 	}
-	
-	
+
 	isRunning = YES;
 
 	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(preMainLoop) object:nil];
@@ -997,3 +1022,54 @@ static Director *_sharedDirector = nil;
 }
 @end
 
+#pragma mark -
+#pragma mark DisplayLinkDirector
+
+// Allows building DisplayLinkDirector for pre-3.1 SDKS
+// without getting compiler warnings.
+@interface NSObject(CADisplayLink)
+
++ (id) displayLinkWithTarget:(id)arg1 selector:(SEL)arg2;
+- (void) addToRunLoop:(id)arg1 forMode:(id)arg2;
+- (void) setFrameInterval:(int)interval;
+- (void) invalidate;
+
+@end
+
+@implementation DisplayLinkDirector
+
+- (void)setAnimationInterval:(NSTimeInterval)interval
+{
+	animationInterval = interval;
+	if(displayLink){
+		[self stopAnimation];
+		[self startAnimation];
+	}
+}
+
+- (void) startAnimation
+{
+	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		CCLOG(@"DisplayLinkDirector: Error on gettimeofday");
+	}
+	
+	// approximate frame rate
+	// assumes device refreshes at 60 fps
+	int frameInterval	= (int) floor(animationInterval * 60.0f);
+
+	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(preMainLoop:)];
+	[displayLink setFrameInterval:frameInterval];
+	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+-(void) preMainLoop:(id)sender
+{
+	[self mainLoop];
+}
+
+- (void) stopAnimation
+{
+	[displayLink invalidate];
+	displayLink = nil;
+}
+@end
