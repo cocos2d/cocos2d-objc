@@ -94,7 +94,7 @@ static Director *_sharedDirector = nil;
 + (void) useFastDirector
 {
 	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Fast Director this must be the first call to Director");
-	[FastDirector sharedDirector];
+	[FastDirector2 sharedDirector];
 }
 
 +(id)alloc
@@ -751,11 +751,7 @@ static Director *_sharedDirector = nil;
 	[self setAnimationInterval: oldAnimationInterval];
 
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
+		CCLOG(@"Director: Error in gettimeofday");
 	}
 	
 	isPaused_ = NO;
@@ -767,11 +763,7 @@ static Director *_sharedDirector = nil;
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
 
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
+		CCLOG(@"Director: Error in gettimeofday");
 	}
 	
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
@@ -891,11 +883,7 @@ static Director *_sharedDirector = nil;
 	autoreleasePool = nil;
 
 	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"GetTimeOfDay"
-									reason:@"GetTimeOfDay abnormal error"
-									userInfo:nil];
-		@throw myException;
+		CCLOG(@"Director: Error in gettimeofday");
 	}
 	
 
@@ -937,6 +925,65 @@ static Director *_sharedDirector = nil;
 #endif
 
 		[loopPool release];
+	}	
+}
+- (void) stopAnimation
+{
+	isRunning = NO;
+}
+
+- (void)setAnimationInterval:(NSTimeInterval)interval
+{
+	NSLog(@"FastDirectory doesn't support setAnimationInterval, yet");
+}
+@end
+
+#pragma mark -
+#pragma mark Director FastDirector2
+
+@implementation FastDirector2
+
+- (id) init
+{
+	if(( self = [super init] )) {
+		
+#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
+		CCLOG(@"Using Fast Director2 with Fast Events");
+#else
+		CCLOG(@"Using Fast Director2");
+#endif		
+		isRunning = NO;		
+	}
+	
+	return self;
+}
+
+- (void) startAnimation
+{
+	
+	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		CCLOG(@"Director: Error on gettimeofday");
+	}
+	
+	
+	isRunning = YES;
+
+	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(preMainLoop) object:nil];
+	[thread start];
+	[thread release];
+}
+
+-(void) preMainLoop
+{
+	while( ![[NSThread currentThread] isCancelled] ) {
+		if( isRunning )
+			[self performSelectorOnMainThread:@selector(mainLoop) withObject:nil waitUntilDone:YES];
+		
+		if (isPaused_) {
+			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
+		} else {
+//			usleep(2000);
+		}
 	}	
 }
 - (void) stopAnimation
