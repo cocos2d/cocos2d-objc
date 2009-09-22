@@ -162,8 +162,6 @@
 		50F4132D106926B2002A0D5E /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F4130A106926B2002A0D5E /* FontLabelStringDrawing.m */; };
 		50F4132E106926B2002A0D5E /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F4130B106926B2002A0D5E /* FontManager.h */; };
 		50F4132F106926B2002A0D5E /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F4130C106926B2002A0D5E /* FontManager.m */; };
-		50F41330106926B2002A0D5E /* FontTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F4130D106926B2002A0D5E /* FontTest.h */; };
-		50F41331106926B2002A0D5E /* FontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F4130E106926B2002A0D5E /* FontTest.m */; };
 		50F41332106926B2002A0D5E /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F4130F106926B2002A0D5E /* ZFont.h */; };
 		50F41333106926B2002A0D5E /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F41310106926B2002A0D5E /* ZFont.m */; };
 		50F41334106926B2002A0D5E /* CDataScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F41312106926B2002A0D5E /* CDataScanner.h */; };
@@ -426,8 +424,6 @@
 		50F4130A106926B2002A0D5E /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
 		50F4130B106926B2002A0D5E /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
 		50F4130C106926B2002A0D5E /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
-		50F4130D106926B2002A0D5E /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontTest.h; sourceTree = "<group>"; };
-		50F4130E106926B2002A0D5E /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontTest.m; sourceTree = "<group>"; };
 		50F4130F106926B2002A0D5E /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
 		50F41310106926B2002A0D5E /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		50F41312106926B2002A0D5E /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
@@ -814,8 +810,6 @@
 				50F4130A106926B2002A0D5E /* FontLabelStringDrawing.m */,
 				50F4130B106926B2002A0D5E /* FontManager.h */,
 				50F4130C106926B2002A0D5E /* FontManager.m */,
-				50F4130D106926B2002A0D5E /* FontTest.h */,
-				50F4130E106926B2002A0D5E /* FontTest.m */,
 				50F4130F106926B2002A0D5E /* ZFont.h */,
 				50F41310106926B2002A0D5E /* ZFont.m */,
 			);
@@ -1079,7 +1073,6 @@
 				50F4132A106926B2002A0D5E /* FontLabel.h in Headers */,
 				50F4132C106926B2002A0D5E /* FontLabelStringDrawing.h in Headers */,
 				50F4132E106926B2002A0D5E /* FontManager.h in Headers */,
-				50F41330106926B2002A0D5E /* FontTest.h in Headers */,
 				50F41332106926B2002A0D5E /* ZFont.h in Headers */,
 				50F41334106926B2002A0D5E /* CDataScanner.h in Headers */,
 				50F41336106926B2002A0D5E /* CDataScanner_Extensions.h in Headers */,
@@ -1279,7 +1272,6 @@
 				50F4132B106926B2002A0D5E /* FontLabel.m in Sources */,
 				50F4132D106926B2002A0D5E /* FontLabelStringDrawing.m in Sources */,
 				50F4132F106926B2002A0D5E /* FontManager.m in Sources */,
-				50F41331106926B2002A0D5E /* FontTest.m in Sources */,
 				50F41333106926B2002A0D5E /* ZFont.m in Sources */,
 				50F41335106926B2002A0D5E /* CDataScanner.m in Sources */,
 				50F41337106926B2002A0D5E /* CDataScanner_Extensions.m in Sources */,
