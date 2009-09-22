@@ -295,7 +295,7 @@ Class restartAction()
 	
 	// Use this pixel format to have transparent buffers
 	// BUG: glClearColor() in FBO needs to be converted to RGB565
-	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	[[Director sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
 
 	// Create a depth buffer of 16 bits
 	// Needed for the orbit + lens + waves examples

@@ -25,17 +25,25 @@
 	
 	// must be called before any othe call to the director
 	// WARNING: FastDirector doesn't interact well with UIKit controls
-	//	[Director useFastDirector];
+//	[Director useFastDirector];
 	
-	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	// Use RGBA_8888 buffers
+	// Default is: RGB_565 buffers
+	[[Director sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+	
+	// Create a depth buffer of 16 bits
+	// Enable it if you are going to use 3D transitions or 3d objects
+//	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	
+	// before creating any layer, set the landscape mode
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[Director sharedDirector] setAnimationInterval:1.0/60];
+	[[Director sharedDirector] setDisplayFPS:YES];
 	
 	// create an openGL view inside a window
 	[[Director sharedDirector] attachInView:window];	
@@ -55,7 +63,7 @@
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

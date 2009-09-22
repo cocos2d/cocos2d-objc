@@ -57,6 +57,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
 		Prevent crash with BitmapFontAtlas patch
+		Template: uses removeUnusedTextures patch
 	* effervens:
 		patches for Director
 	* Ernesto Corvi & On-Core (http://www.on-core.com/):
