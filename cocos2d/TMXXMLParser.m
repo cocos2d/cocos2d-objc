@@ -192,6 +192,11 @@
 			if( [compression isEqualToString:@"gzip"] )
 				layerAttribs |= TMXLayerAttribGzip;
 		}
+		
+		if( layerAttribs == TMXLayerAttribNone ) {
+			NSLog(@"TMX: Only bas64 and or gzip maps are supported");
+			[NSException raise:@"TMX Exception" format:@"Only base64 and/or gzip maps are supported"];
+		}
 	}
 }
 
