@@ -14,4 +14,7 @@
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
 
+// adds a new sprite at a given coordinate
+-(void) addNewSpriteWithCoords:(CGPoint)p;
+
 @end
