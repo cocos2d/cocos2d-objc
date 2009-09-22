@@ -41,12 +41,20 @@
      {
         [[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
      }
+ @since v0.8.0
  */
 -(void) registerWithTouchDispatcher;
 
-// whether or not it will receive Touch events
+/** whether or not it will receive Touch events.
+ You can enable / disable touch events with this property.
+ Only the touches of this node will be affected. This "method" is not propagated to it's children.
+ @since v0.8.1
+ */
 @property(nonatomic,assign) BOOL isTouchEnabled;
-// whether or not it will receive Accelerometer events
+/** whether or not it will receive Accelerometer events
+ You can enable / disable accelerometer events with this property.
+ @since v0.8.1
+ */
 @property(nonatomic,assign) BOOL isAccelerometerEnabled;
 
 @end
