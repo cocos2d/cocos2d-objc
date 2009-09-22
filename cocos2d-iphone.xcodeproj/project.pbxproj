@@ -721,9 +721,6 @@
 		506C80130E041CDB00B48100 /* SceneTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C80120E041CDB00B48100 /* SceneTest.m */; };
 		506E1ADA0FB34E8E00AAA494 /* test-rgba1.png in Resources */ = {isa = PBXBuildFile; fileRef = 506E1AD50FB34E8E00AAA494 /* test-rgba1.png */; };
 		506E1B380FB350F000AAA494 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
-		506EDF71102FBC0D00A389B3 /* GLES-Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EDF03102FBC0C00A389B3 /* GLES-Render.h */; };
-		506EDF75102FBC0D00A389B3 /* SphereStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EDF08102FBC0C00A389B3 /* SphereStack.h */; };
-		506EDF76102FBC0D00A389B3 /* VerticalStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EDF09102FBC0C00A389B3 /* VerticalStack.h */; };
 		506EE3D11030F19700A389B3 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EE3891030F19500A389B3 /* Box2D.h */; };
 		506EE3D21030F19700A389B3 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506EE38B1030F19500A389B3 /* b2BroadPhase.cpp */; };
 		506EE3D31030F19700A389B3 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 506EE38C1030F19500A389B3 /* b2BroadPhase.h */; };
@@ -2020,10 +2017,6 @@
 		506C80110E041CDB00B48100 /* SceneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneTest.h; path = tests/SceneTest.h; sourceTree = "<group>"; };
 		506C80120E041CDB00B48100 /* SceneTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneTest.m; path = tests/SceneTest.m; sourceTree = "<group>"; };
 		506E1AD50FB34E8E00AAA494 /* test-rgba1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-rgba1.png"; sourceTree = "<group>"; };
-		506EDF03102FBC0C00A389B3 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
-		506EDF04102FBC0C00A389B3 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
-		506EDF08102FBC0C00A389B3 /* SphereStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereStack.h; sourceTree = "<group>"; };
-		506EDF09102FBC0C00A389B3 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		506EE3891030F19500A389B3 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		506EE38B1030F19500A389B3 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		506EE38C1030F19500A389B3 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -3691,29 +3684,9 @@
 			isa = PBXGroup;
 			children = (
 				506EE3881030F19500A389B3 /* Box2D */,
-				506EDF02102FBC0C00A389B3 /* Box2DTestBed */,
 			);
 			name = Box2d;
 			path = external/Box2d;
-			sourceTree = "<group>";
-		};
-		506EDF02102FBC0C00A389B3 /* Box2DTestBed */ = {
-			isa = PBXGroup;
-			children = (
-				506EDF03102FBC0C00A389B3 /* GLES-Render.h */,
-				506EDF04102FBC0C00A389B3 /* GLES-Render.mm */,
-				506EDF07102FBC0C00A389B3 /* Tests */,
-			);
-			path = Box2DTestBed;
-			sourceTree = "<group>";
-		};
-		506EDF07102FBC0C00A389B3 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				506EDF08102FBC0C00A389B3 /* SphereStack.h */,
-				506EDF09102FBC0C00A389B3 /* VerticalStack.h */,
-			);
-			path = Tests;
 			sourceTree = "<group>";
 		};
 		506EE3881030F19500A389B3 /* Box2D */ = {
@@ -4462,9 +4435,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506EDF71102FBC0D00A389B3 /* GLES-Render.h in Headers */,
-				506EDF75102FBC0D00A389B3 /* SphereStack.h in Headers */,
-				506EDF76102FBC0D00A389B3 /* VerticalStack.h in Headers */,
 				506EE3D11030F19700A389B3 /* Box2D.h in Headers */,
 				506EE3D31030F19700A389B3 /* b2BroadPhase.h in Headers */,
 				506EE3D71030F19700A389B3 /* b2Collision.h in Headers */,

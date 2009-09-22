@@ -91,7 +91,6 @@ TestEntry g_testEntries[] =
 {"Varying Friction", VaryingFriction::Create},
 {"Vertical Stack", VerticalStack::Create},
 {"Web", Web::Create},
-{NULL, NULL}
 };
 
 int g_totalEntries = sizeof(g_testEntries) / sizeof(g_testEntries[0]);
