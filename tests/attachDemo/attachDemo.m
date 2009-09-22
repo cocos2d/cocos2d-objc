@@ -192,7 +192,7 @@ enum {
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
-	[Director useFastDirector];
+	[Director useDisplayLinkDirector];
 
 	[[Director sharedDirector] setDisplayFPS:YES];
 	[[Director sharedDirector] setAnimationInterval:1/240.0f];

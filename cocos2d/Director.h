@@ -24,18 +24,23 @@
 typedef enum {
 	/** RGB565 pixel format. No alpha. 16-bit */
 	kPixelFormatRGB565,
-	/** RGBA format. 32-bit */
+	/** RGBA format. 32-bit (default) */
 	kPixelFormatRGBA8888,
 
 	kRGB565 = kPixelFormatRGB565,
 	kRGBA8 = kPixelFormatRGBA8888,
 } tPixelFormat;
 
-/** Possible DepthBuffer Formats for the EAGLView */
+/** Possible DepthBuffer Formats for the EAGLView.
+ Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
+ */
 typedef enum {
-   kDepthBufferNone,
-   kDepthBuffer16,
-   kDepthBuffer24,
+	/// A Depth Buffer of 0 bits will be used (default)
+	kDepthBufferNone,
+	/// A depth buffer of 16 bits will be used
+	kDepthBuffer16,
+	/// A depth buffer of 24 bits will be used
+	kDepthBuffer24,
 } tDepthBufferFormat;
 
 /** Possible device orientations */
@@ -123,6 +128,7 @@ and when to execute the Scenes
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
+
 /** Uses a Director that triggers the main loop as fast as it can.
  * To use it, it must be called before calling any director function
  * Features and Limitations:
@@ -131,6 +137,30 @@ and when to execute the Scenes
  *  - It has some issues while using UIKit objects
  */
 +(void) useFastDirector;
+
+/** Uses a Director that triggers the main loop as fast as it can from a thread
+ * To use it, it must be called before calling any director function
+ * Features and Limitations:
+ *  - Faster than "normal" director
+ *  - Consumes more battery than the "normal" director
+ *  - It has some issues while using UIKit objects
+ *
+ * @since v0.8.2
+ */
++(void) useThreadedFastDirector;
+
+
+/** Uses a Director that synchronizes timers with the refresh rate of the display.
+ *
+ * Features and Limitations:
+ * - Only available on 3.1+
+ * (pre 3.1 devices will gracefully fallback to standard Director)
+ * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
+ * - Only supports animation intervals of 1/60 1/30 & 1/15
+ *
+ * @since v0.8.2
+ */
++(void) useDisplayLinkDirector;
  
 
 // iPhone Specific
@@ -255,9 +285,9 @@ and when to execute the Scenes
 - (void) setTexture2D: (BOOL) on;
 /** sets Cocos OpenGL default projection */
 - (void) setDefaultProjection;
-/** sets a 2D projection */
+/** sets a 2D projection (orthogonal projection) */
 -(void) set2Dprojection;
-/** sets a 3D projection */
+/** sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500 */
 -(void) set3Dprojection;
 @end
 
@@ -277,7 +307,7 @@ and when to execute the Scenes
 -(void) preMainLoop;
 @end
 
-/** FastDirector2 is a Director that triggers the main loop from a thread.
+/** ThreadedFastDirector is a Director that triggers the main loop from a thread.
  *
  * Features and Limitations:
  *  - Faster than "normal" director
@@ -286,13 +316,24 @@ and when to execute the Scenes
  *
  * @since v0.8.2
  */
-@interface FastDirector2 : Director
+@interface ThreadedFastDirector : Director
 {
 	BOOL isRunning;	
 }
 -(void) preMainLoop;
 @end
 
-
-
-
+/** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+ *
+ * Features and Limitations:
+ * - Only available on 3.1+
+ * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
+ * - Only supports animation intervals of 1/60 1/30 & 1/15
+ *
+ * @since v0.8.2
+ */
+@interface DisplayLinkDirector : Director
+{
+	id displayLink;
+}
+@end
