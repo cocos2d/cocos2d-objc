@@ -1,4 +1,4 @@
-version 0.8.2 - XX-MMM-2009
+version 0.8.2 - 23-Sept-2009
  . All: ccConfig.h file added (issue #551)
  . Actions: added Ease Elastic actions (issue #530)
  . Actions: added Ease Bounce actions (issue #546)
@@ -15,6 +15,7 @@ version 0.8.2 - XX-MMM-2009
  . Director: fixed 2 leaks on Director#end (issue #524)
  . Director: Added a threaded FastDirector (issue #560)
  . Director: Added a CADisplayLink Director (issue #560)
+ . Director: buffer default pixel format is RGBA_8888
  . Documentation: doxygen builds OK when there are spaces in the path (issue #540)
  . Label / Texture2D: Supports any .ttf via FontLabel (issue #534)
  . LabelAtlas: works with 256 different chars (issue #516)

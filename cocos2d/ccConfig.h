@@ -17,7 +17,6 @@
  cocos2d (cc) configuration file
 */
 
-
 /**
  If enabled, FontLabel will be used to render .ttf files.
  If the .ttf file is not found, then it will use the standard UIFont class
