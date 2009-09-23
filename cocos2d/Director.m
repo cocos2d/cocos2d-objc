@@ -79,8 +79,16 @@ static Director *_sharedDirector = nil;
 {
 	@synchronized([Director class])
 	{
-		if (!_sharedDirector)
-			[[self alloc] init];
+		if (!_sharedDirector) {
+
+			//
+			// Default Director is TimerDirector
+			// 
+			if( [ [Director class] isEqual:[self class]] )
+				[[TimerDirector alloc] init];
+			else
+				[[self alloc] init];
+		}
 		
 		return _sharedDirector;
 	}
@@ -97,34 +105,35 @@ static Director *_sharedDirector = nil;
 	[FastDirector sharedDirector];
 }
 
-// This function was created to avoid confussion for the users
-// Calling [ThreadedFastDirector sharedDirector] is enough, but is somewhat
-// confusing since the user needs to understand what's under the hood
-+ (void) useThreadedFastDirector
++ (BOOL) setDirectorType:(ccDirectorType)type
 {
-	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Fast Director this must be the first call to Director");
-	[ThreadedFastDirector sharedDirector];
-}
+	NSAssert(_sharedDirector==nil, @"A Director was alloced. setDirectorType must be the first call to Director");
 
-
-// This function was created to avoid confussion for the users
-// Calling [DisplayLinkDirector sharedDirector] is enough, but is somewhat
-// confusing since the user needs to understand what's under the hood
-+ (void) useDisplayLinkDirector
-{
-	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Display Link Director this must be the first call to Director");
-	
-	NSString *reqSysVer = @"3.1";
-	NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-	
-	if([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending){
-		CCLOG(@"Using Display Link Director. OS Version: %@", currSysVer);
-		[DisplayLinkDirector sharedDirector];
-	}else{
-		// Fall back to standard director if pre 3.1
-		CCLOG(@"Using Standard Director. OS Version: %@", currSysVer);
-		[Director sharedDirector];
+	if( type == CCDirectorTypeDisplayLink ) {
+		NSString *reqSysVer = @"3.1";
+		NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+		
+		if([currSysVer compare:reqSysVer options:NSNumericSearch] == NSOrderedAscending)
+			return NO;
 	}
+	switch (type) {
+		case CCDirectorTypeNSTimer:
+			[TimerDirector sharedDirector];
+			break;
+		case CCDirectorTypeDisplayLink:
+			[DisplayLinkDirector sharedDirector];
+			break;
+		case CCDirectorTypeMainLoop:
+			[FastDirector sharedDirector];
+			break;
+		case CCDirectorTypeThreadMainLoop:
+			[ThreadedFastDirector sharedDirector];
+			break;
+		default:
+			NSAssert(NO,@"Unknown director type");
+	}
+	
+	return YES;
 }
 
 +(id)alloc
@@ -144,6 +153,8 @@ static Director *_sharedDirector = nil;
 	CCLOG(@"%@", cocos2dVersion() );
 
 	if( (self=[super init]) ) {
+
+		CCLOG(@"Using Director Type:%@", [self class]);
 
 		// default values
 		pixelFormat_ = kPixelFormatRGBA8888;
@@ -790,37 +801,17 @@ static Director *_sharedDirector = nil;
 
 - (void)startAnimation
 {
-	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
-
-	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"Director: Error in gettimeofday");
-	}
-	
-	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
-
-//
-//	If you want to attach the opengl view into UIScrollView
-//  uncomment this line to prevent 'freezing'.
-//	It doesn't work on with the Fast Director
-//
-//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
-//								 forMode:NSRunLoopCommonModes];
+	CCLOG(@"Director#startAnimation. Override me");
 }
 
 - (void)stopAnimation
 {
-	[animationTimer invalidate];
-	animationTimer = nil;
+	CCLOG(@"Director#stopAnimation. Override me");
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	animationInterval = interval;
-	
-	if(animationTimer) {
-		[self stopAnimation];
-		[self startAnimation];
-	}
+	CCLOG(@"Director#setAnimationInterval. Override me");
 }
 
 #if CC_DIRECTOR_FAST_FPS
@@ -878,6 +869,47 @@ static Director *_sharedDirector = nil;
 @end
 
 #pragma mark -
+#pragma mark Director TimerDirector
+
+@implementation TimerDirector
+- (void)startAnimation
+{
+	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
+	
+	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
+		CCLOG(@"Director: Error in gettimeofday");
+	}
+	
+	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
+	
+	//
+	//	If you want to attach the opengl view into UIScrollView
+	//  uncomment this line to prevent 'freezing'.
+	//	It doesn't work on with the Fast Director
+	//
+	//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
+	//								 forMode:NSRunLoopCommonModes];
+}
+
+- (void)stopAnimation
+{
+	[animationTimer invalidate];
+	animationTimer = nil;
+}
+
+- (void)setAnimationInterval:(NSTimeInterval)interval
+{
+	animationInterval = interval;
+	
+	if(animationTimer) {
+		[self stopAnimation];
+		[self startAnimation];
+	}
+}
+@end
+
+
+#pragma mark -
 #pragma mark Director FastDirector
 
 @implementation FastDirector
@@ -887,9 +919,9 @@ static Director *_sharedDirector = nil;
 	if(( self = [super init] )) {
 		
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
-		CCLOG(@"Using Fast Director with Fast Events");
+		CCLOG(@"Fast Events enabled");
 #else
-		CCLOG(@"Using Fast Director");
+		CCLOG(@"Fast Events disabled");
 #endif		
 		isRunning = NO;
 		
@@ -975,9 +1007,7 @@ static Director *_sharedDirector = nil;
 
 - (id) init
 {
-	if(( self = [super init] )) {
-		
-		CCLOG(@"Using Threaded Fast Director");
+	if(( self = [super init] )) {		
 		isRunning = NO;		
 	}
 	
@@ -1056,6 +1086,8 @@ static Director *_sharedDirector = nil;
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval	= (int) floor(animationInterval * 60.0f);
+	
+	CCLOG(@"Frame interval: %d", frameInterval);
 
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(preMainLoop:)];
 	[displayLink setFrameInterval:frameInterval];

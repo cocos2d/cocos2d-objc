@@ -43,6 +43,49 @@ typedef enum {
 	kDepthBuffer24,
 } tDepthBufferFormat;
 
+/** Possible Director Types.
+ @since v0.8.2
+ */
+typedef enum {
+	/** Will use a Director that triggers the main loop from an NSTimer object
+	 *
+	 * Features and Limitations:
+	 * - Integrates OK with UIKit objects
+	 * - It the slowest director
+	 * - The invertal update is customizable from 1 to 60
+	 */
+	CCDirectorTypeNSTimer,
+	
+	/** will use a Director that triggers the main loop from a custom main loop.
+	 *
+	 * Features and Limitations:
+	 * - Faster than NSTimer Director
+	 * - It doesn't integrate well with UIKit objecgts
+	 * - The interval update can't be customizable
+	 */
+	CCDirectorTypeMainLoop,
+	
+	/** Will use a Director that triggers the main loop from a thread, but the main loop will be executed on the main thread.
+	 *
+	 * Features and Limitations:
+	 * - Faster than NSTimer Director
+	 * - It doesn't integrate well with UIKit objecgts
+	 * - The interval update can't be customizable
+	 */
+	CCDirectorTypeThreadMainLoop,
+	
+	/** Will use a Director that synchronizes timers with the refresh rate of the display.
+	 *
+	 * Features and Limitations:
+	 * - Faster than NSTimer Director
+	 * - Only available on 3.1+
+	 * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
+	 * - Integrates OK with UIKit objects
+	 * - The interval update can be 1/60, 1/30, 1/15
+	 */	
+	CCDirectorTypeDisplayLink,
+} ccDirectorType;
+
 /** Possible device orientations */
 typedef enum {
 	/// Device oriented vertically, home button on the bottom
@@ -59,14 +102,13 @@ typedef enum {
 @class Scene;
 
 /**Class that creates and handle the main Window and manages how
-and when to execute the Scenes
+and when to execute the Scenes.
 */
 @interface Director : NSObject
 {
 	EAGLView	*openGLView_;
 
 	// internal timer
-	NSTimer *animationTimer;
 	NSTimeInterval animationInterval;
 	NSTimeInterval oldAnimationInterval;
 
@@ -84,7 +126,7 @@ and when to execute the Scenes
 	int frames;
 	ccTime accumDt;
 	ccTime frameRate;
-#ifdef CC_DIRECTOR_FAST_FPS
+#if	CC_DIRECTOR_FAST_FPS
 	LabelAtlas *FPSLabel;
 #endif
 	
@@ -135,33 +177,28 @@ and when to execute the Scenes
  *  - Faster than "normal" director
  *  - Consumes more battery than the "normal" director
  *  - It has some issues while using UIKit objects
- */
-+(void) useFastDirector;
-
-/** Uses a Director that triggers the main loop as fast as it can from a thread
- * To use it, it must be called before calling any director function
- * Features and Limitations:
- *  - Faster than "normal" director
- *  - Consumes more battery than the "normal" director
- *  - It has some issues while using UIKit objects
  *
- * @since v0.8.2
+ * @deprecated Use [Director setDirectorType:CCDirectorTypeMainLoop] instead. Will be removed in v0.9
  */
-+(void) useThreadedFastDirector;
++(void) useFastDirector __attribute__ ((deprecated));
 
-
-/** Uses a Director that synchronizes timers with the refresh rate of the display.
- *
- * Features and Limitations:
- * - Only available on 3.1+
- * (pre 3.1 devices will gracefully fallback to standard Director)
- * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
- * - Only supports animation intervals of 1/60 1/30 & 1/15
- *
- * @since v0.8.2
- */
-+(void) useDisplayLinkDirector;
+/** There are 4 types of Director.
+ - CCDirectorTypeNSTimer (default)
+ - CCDirectorTypeMainLoop
+ - CCDirectorTypeThreadMainLoop
+ - CCDirectorTypeDisplayLink
  
+ Each Director has it's own benefits, limitations.
+ If you are using SDK 3.1 or newer it is recommed to use the DisplayLink director
+ 
+ This method should be called before any other call to the director.
+
+ It will return NO if the director type is CCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
+ 
+ @since v0.8.2
+ */
++(BOOL) setDirectorType:(ccDirectorType) directorType;
+
 
 // iPhone Specific
 
@@ -330,6 +367,8 @@ and when to execute the Scenes
  * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
  * - Only supports animation intervals of 1/60 1/30 & 1/15
  *
+ * It is the recommended Director if the SDK is 3.1 or newer
+ *
  * @since v0.8.2
  */
 @interface DisplayLinkDirector : Director
@@ -337,3 +376,19 @@ and when to execute the Scenes
 	id displayLink;
 }
 @end
+
+/** TimerDirector is a Director that calls the main loop from an NSTimer object
+ *
+ * Features and Limitations:
+ * - Integrates OK with UIKit objects
+ * - It the slowest director
+ * - The invertal update is customizable from 1 to 60
+ *
+ * It is the default Director.
+ */
+@interface TimerDirector : Director
+{
+	NSTimer *animationTimer;
+}
+@end
+

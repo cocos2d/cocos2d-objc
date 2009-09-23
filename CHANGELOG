@@ -22,6 +22,7 @@ version 0.8.2 - XX-MMM-2009
  . Resources: improved directory structure (issue #552)
  . Template: using removeUnusedTextures (issue #550)
  . TileMap: TMX supports multiple tilesets (1 tileset per layer) (issue #510)
+ . TileMap: TMX raises expection if map is not encoded and/or gzipped (issue #559)
  . Transition: ease actions can be overriden (issue #548)
  . Transition: added PageTurnTransition (issue #522)
  
