@@ -906,6 +906,12 @@ static Director *_sharedDirector = nil;
 		[self startAnimation];
 	}
 }
+
+-(void) dealloc
+{
+	[animationTimer release];
+	[super dealloc];
+}
 @end
 
 
@@ -1103,5 +1109,11 @@ static Director *_sharedDirector = nil;
 {
 	[displayLink invalidate];
 	displayLink = nil;
+}
+
+-(void) dealloc
+{
+	[displayLink release];
+	[super dealloc];
 }
 @end
