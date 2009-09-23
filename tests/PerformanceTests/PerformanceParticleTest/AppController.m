@@ -14,10 +14,11 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[window setUserInteractionEnabled:YES];
 	
-//	[Director useFastDirector];
-//	[Director useThreadedFastDirector];
-	[Director useDisplayLinkDirector];
-
+	// Try to use CADisplayLink director
+	// if it fails (SDK < 3.1) use Threaded director
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeThreadMainLoop];
+		
 //	[[Director sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
 
 	[[Director sharedDirector] attachInWindow:window];
