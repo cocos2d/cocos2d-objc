@@ -74,7 +74,7 @@
 /** Ease Elastic abstract class
  @since v0.8.2
  */
-@interface ElasticAction : EaseAction <NSCopying>
+@interface EaseElastic : EaseAction <NSCopying>
 {
 	float period_;
 }
@@ -92,17 +92,17 @@
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface EaseElasticIn : ElasticAction <NSCopying> {} @end
+@interface EaseElasticIn : EaseElastic <NSCopying> {} @end
 /** Ease Elastic Out action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface EaseElasticOut : ElasticAction <NSCopying> {} @end
+@interface EaseElasticOut : EaseElastic <NSCopying> {} @end
 /** Ease Elastic InOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface EaseElasticInOut : ElasticAction <NSCopying> {} @end
+@interface EaseElasticInOut : EaseElastic <NSCopying> {} @end
 
 /** EaseBounce abstract class.
  @since v0.8.2
@@ -127,5 +127,21 @@
  */
 @interface EaseBounceInOut : EaseBounce <NSCopying> {} @end
 
+/** EaseBackIn action.
+ @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @since v0.8.2
+ */
+@interface EaseBackIn : EaseAction <NSCopying> {} @end
 
+/** EaseBackOut action.
+ @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @since v0.8.2
+ */
+@interface EaseBackOut : EaseAction <NSCopying> {} @end
+
+/** EaseBackInOut action.
+ @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @since v0.8.2
+ */
+@interface EaseBackInOut : EaseAction <NSCopying> {} @end
 

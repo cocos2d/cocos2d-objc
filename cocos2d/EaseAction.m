@@ -13,7 +13,7 @@
  */
 
 /*
- * Elastic and Bounce actions based on code from:
+ * Elastic, Back and Bounce actions based on code from:
  * http://github.com/NikhilK/silverlightfx/
  *
  * by http://github.com/NikhilK
@@ -254,9 +254,9 @@
 #pragma mark EaseElastic actions
 
 //
-// ElasticAction
+// EaseElastic
 //
-@implementation ElasticAction
+@implementation EaseElastic
 
 @synthesize period=period_;
 
@@ -454,5 +454,62 @@
 		newT = [self bounceTime:t * 2 - 1] * 0.5f + 0.5f;
 	
 	[other update:newT];
+}
+@end
+
+#pragma mark -
+#pragma mark Ease Back actions
+
+//
+// EaseBackIn
+//
+@implementation EaseBackIn
+
+-(void) update: (ccTime) t
+{
+	ccTime overshoot = 1.70158f;
+	[other update: t * t * ((overshoot + 1) * t - overshoot)];
+}
+
+- (IntervalAction*) reverse
+{
+	return [EaseBackOut actionWithAction: [other reverse]];
+}
+@end
+
+//
+// EaseBackOut
+//
+@implementation EaseBackOut
+-(void) update: (ccTime) t
+{
+	ccTime overshoot = 1.70158f;
+	
+	t = t - 1;
+	[other update: t * t * ((overshoot + 1) * t + overshoot) + 1];
+}
+
+- (IntervalAction*) reverse
+{
+	return [EaseBackIn actionWithAction: [other reverse]];
+}
+@end
+
+//
+// EaseBackInOut
+//
+@implementation EaseBackInOut
+
+-(void) update: (ccTime) t
+{
+	ccTime overshoot = 1.70158f * 1.525f;
+	
+	t = t * 2;
+	if (t < 1) {
+		[other update: (t * t * ((overshoot + 1) * t - overshoot)) / 2];
+	} else {
+		t = t - 2;
+		[other update: (t * t * ((overshoot + 1) * t + overshoot)) / 2 + 1];
+	}
 }
 @end

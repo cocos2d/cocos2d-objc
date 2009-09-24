@@ -64,6 +64,15 @@
 {}
 @end
 
+@interface SpriteEaseBack : SpriteDemo
+{}
+@end
+
+@interface SpriteEaseBackInOut : SpriteDemo
+{}
+@end
+
+
 @interface SpeedTest : SpriteDemo
 {}
 @end
