@@ -186,10 +186,9 @@ eachShape(void *ptr, void* unused)
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeThreadMainLoop];
 	
-	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
 	
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[Director sharedDirector] setAnimationInterval:1.0/60];
