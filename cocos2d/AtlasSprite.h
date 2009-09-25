@@ -20,6 +20,11 @@
 
 #pragma mark AltasSprite
 
+enum {
+	/// AtlasSprite invalid index on the AtlasSpriteManager
+	CCAtlasSpriteIndexNotInitialized = 0xffffffff,
+};
+
 /** AtlasSprite is a CocosNode object that implements the CocosNodeFrames and CocosNodeRGBA protocols.
  * 
  * AtlasSprite can be used as a replacement of Sprite.

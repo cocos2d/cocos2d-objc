@@ -26,9 +26,6 @@
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
-enum {
-	kIndexNotInitialized = 0xffffffff,
-};
 
 @interface AtlasSprite (Private)
 -(void)updateTextureCoords;
@@ -55,7 +52,7 @@ enum {
 		
 		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
 		
-		atlasIndex_ = kIndexNotInitialized;
+		atlasIndex_ = CCAtlasSpriteIndexNotInitialized;
 
 		dirty = YES;
 		
@@ -103,8 +100,8 @@ enum {
 
 	[self updateTextureCoords];
 	
-	// Don't update Atlas if index == -1. issue #283
-	if( atlasIndex_ == kIndexNotInitialized)
+	// Don't update Atlas if index == CCAtlasSpriteIndexNotInitialized. issue #283
+	if( atlasIndex_ == CCAtlasSpriteIndexNotInitialized)
 		dirty = YES;
 	else
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
@@ -323,7 +320,7 @@ enum {
 #pragma mark AtlasSprite - RGBA protocol
 -(void) updateColor
 {
-	if( atlasIndex_ != kIndexNotInitialized)
+	if( atlasIndex_ != CCAtlasSpriteIndexNotInitialized)
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	else
 		dirty = YES;

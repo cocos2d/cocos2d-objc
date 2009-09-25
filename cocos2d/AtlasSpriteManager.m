@@ -199,6 +199,35 @@ const int defaultCapacity = 29;
 	return self;
 }
 
+// override reorderChild
+-(void) reorderChild:(AtlasSprite*)child z:(int)z
+{
+	// reorder child in the children array
+	[super reorderChild:child z:z];
+	
+	
+	// What's the new atlas index ?
+	NSUInteger newAtlasIndex = 0;
+	for( AtlasSprite *sprite in children) {
+		if( [sprite isEqual:child] )
+			break;
+		newAtlasIndex++;
+	}
+	
+	if( newAtlasIndex != child.atlasIndex ) {
+		
+		[textureAtlas_ insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
+		
+		// update atlas index
+		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
+		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
+		for( ; index < count+1 ; index++ ) {
+			AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
+			[sprite setIndex: index];
+		}
+	}
+}
+
 // override removeChild:
 -(void)removeChild: (AtlasSprite *)sprite cleanup:(BOOL)doCleanup
 {
@@ -210,6 +239,10 @@ const int defaultCapacity = 29;
 		return;
 	
 	NSUInteger index= sprite.atlasIndex;
+	
+	// When the AtlasSprite is removed, the index should be invalid. issue #569
+	[sprite setIndex: CCAtlasSpriteIndexNotInitialized];
+	
 	[super removeChild:sprite cleanup:doCleanup];
 
 	[textureAtlas_ removeQuadAtIndex:index];
@@ -225,35 +258,6 @@ const int defaultCapacity = 29;
 	totalSprites_--;
 }
 
-// override reorderChild
--(void) reorderChild:(AtlasSprite*)child z:(int)z
-{
-	// reorder child in the children array
-	[super reorderChild:child z:z];
-
-	
-	// What's the new atlas index ?
-	NSUInteger newAtlasIndex = 0;
-	for( AtlasSprite *sprite in children) {
-		if( [sprite isEqual:child] )
-			break;
-		newAtlasIndex++;
-	}
-	
-	if( newAtlasIndex != child.atlasIndex ) {
-
-		[textureAtlas_ insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
-		
-		// update atlas index
-		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
-		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
-		for( ; index < count+1 ; index++ ) {
-			AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
-			[sprite setIndex: index];
-		}
-	}
-}
-
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
 {
 	[self removeChild:(AtlasSprite *)[children objectAtIndex:index] cleanup:doCleanup];
@@ -261,6 +265,10 @@ const int defaultCapacity = 29;
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
+	// Invalidate atlas index. issue #569
+	for( AtlasSprite *sprite in children )
+		[sprite setIndex:CCAtlasSpriteIndexNotInitialized];
+	
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
 	totalSprites_ = 0;

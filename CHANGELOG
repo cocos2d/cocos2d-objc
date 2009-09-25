@@ -1,5 +1,6 @@
 version 0.8.2 - XX-MMM-2009
  . Actions: Added EaseBack family actios (issue #568)
+ . AtlasSprite: set atlasIndex to invalid on remove (issue #569)
  . Parallax: fixed limit of 5 children (issue #565)
  
 version 0.8.2-beta - 23-Sept-2009
