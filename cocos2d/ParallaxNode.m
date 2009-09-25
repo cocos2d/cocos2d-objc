@@ -55,9 +55,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {
-		parallaxArray_ = ccArrayNew(5);
-		
-//		[self schedule:@selector(updateCoords:)];
+		parallaxArray_ = ccArrayNew(5);		
 		lastPosition = CGPointMake(-100,-100);
 	}
 	return self;
@@ -83,7 +81,7 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];
 	obj.child = child;
-	ccArrayAppendObject(parallaxArray_, obj);
+	ccArrayAppendObjectWithResize(parallaxArray_, obj);
 	
 	CGPoint pos = self.position;
 	float x = pos.x * ratio.x + offset.x;
