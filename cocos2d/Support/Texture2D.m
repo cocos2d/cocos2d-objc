@@ -146,7 +146,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	if(_name)
 		glDeleteTextures(1, &_name);
 	
@@ -390,7 +390,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
         [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
     }
 	if( ! uiFont )
-		CCLOG(@"Texture2D: Font '%@' not found", name);
+		CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
 	UIGraphicsPopContext();
 	
 	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];

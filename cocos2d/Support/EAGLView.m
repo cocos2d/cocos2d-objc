@@ -198,7 +198,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[self _destroySurface];
 	

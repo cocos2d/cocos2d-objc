@@ -46,6 +46,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 */
 
 #import "PVRTexture.h"
+#import "ccMacros.h"
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 
@@ -268,6 +269,8 @@ typedef struct _PVRTexHeader
 
 - (void)dealloc
 {
+	CCLOG( @"cocos2d: deallocing %@", self);
+
 	[_imageData release];
 	
 	if (_name != 0 && ! _retainName )
