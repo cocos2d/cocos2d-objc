@@ -129,12 +129,8 @@
 
 -(float) scale
 {
-	if( scaleX_ == scaleY_)
-		return scaleX_;
-	else
-		[NSException raise:@"CocosNode scale:" format:@"scaleX is different from scaleY"];
-	
-	return 0;
+	NSAssert( scaleX_ == scaleY_, @"CocosNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	return scaleX_;
 }
 
 -(void) setScale:(float) s
