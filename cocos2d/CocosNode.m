@@ -215,7 +215,7 @@
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG( @"cocos2d: deallocing %@", self);
 	
 	// attributes
 	[camera release];
@@ -326,7 +326,7 @@
 	CocosNode *child = [self getChildByTag:aTag];
 	
 	if (child == nil)
-		CCLOG(@"removeChildByTag: child not found!");
+		CCLOG(@"cocos2d: removeChildByTag: child not found!");
 	else
 		[self removeChild:child cleanup:cleanup];
 }
@@ -618,7 +618,7 @@
 
 	if( ! (timer = [scheduledSelectors objectForKey:key] ) )
 	 {
-		 CCLOG(@"CocosNode.unschedule: Selector not scheduled: %@",key );
+		 CCLOG(@"cocos2d: CocosNode.unschedule: Selector not scheduled: %@",key );
 		 return;
 	 }
 	

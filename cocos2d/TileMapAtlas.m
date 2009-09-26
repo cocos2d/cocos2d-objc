@@ -118,7 +118,7 @@
 	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
 	if( value.r == 0 ) {
-		CCLOG(@"Value.r must be non 0.");
+		CCLOG(@"cocos2d: Value.r must be non 0.");
 	} else {
 		ptr[pos.x + pos.y * tgaInfo->width] = tile;
 		

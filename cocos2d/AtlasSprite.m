@@ -272,7 +272,7 @@
 
 -(void)setRelativeTransformAnchor:(BOOL)relative
 {
-	CCLOG(@"relativeTransformAnchor is ignored in AtlasSprite");
+	CCLOG(@"cocos2d: relativeTransformAnchor is ignored in AtlasSprite");
 }
 
 -(void)setVisible:(BOOL)v
@@ -310,7 +310,7 @@
 //
 -(id) addChild:(CocosNode*)child z:(int)z tag:(int) aTag
 {
-	NSAssert(NO, @"AtlasSprite can't have children");
+	NSAssert(NO, @"cocos2d: AtlasSprite can't have children");
 	return nil;
 }
 
@@ -476,7 +476,7 @@
 
 -(void) dealloc
 {
-	CCLOG( @"deallocing %@",self);
+	CCLOG( @"cocos2d: deallocing %@",self);
 	[frames release];
 	[super dealloc];
 }
@@ -516,7 +516,7 @@
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@",self);
+	CCLOG( @"cocos2d: deallocing %@",self);
 	[super dealloc];
 }
 @end

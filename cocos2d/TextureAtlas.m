@@ -87,7 +87,7 @@
 
 -(void) dealloc
 {
-	CCLOG(@"deallocing %@",self);
+	CCLOG(@"cocos2d: deallocing %@",self);
 
 	free(quads_);
 	free(indices);

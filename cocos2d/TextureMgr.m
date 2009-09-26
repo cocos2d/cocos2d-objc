@@ -37,7 +37,7 @@ static EAGLContext *auxEAGLcontext = nil;
 @synthesize data = data_;
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[target_ release];
 	[data_ release];
 	[super dealloc];
@@ -90,7 +90,7 @@ static TextureMgr *sharedTextureMgr;
 
 -(void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[textures release];
 	[dictLock release];
@@ -117,7 +117,7 @@ static TextureMgr *sharedTextureMgr;
 							   sharegroup:[[[[Director sharedDirector] openGLView] context] sharegroup]];
 		
 		if( ! auxEAGLcontext )
-			CCLOG(@"TextureMgr: Could not create EAGL context");
+			CCLOG(@"cocos2d: TextureMgr: Could not create EAGL context");
 	}
 	
 	if( [EAGLContext setCurrentContext:auxEAGLcontext] ) {
@@ -130,7 +130,7 @@ static TextureMgr *sharedTextureMgr;
 		
 		[EAGLContext setCurrentContext:nil];
 	} else {
-		CCLOG(@"TetureMgr: EAGLContext error");
+		CCLOG(@"cocos2d: TetureMgr: EAGLContext error");
 	}
 	[contextLock unlock];
 	
@@ -273,7 +273,7 @@ static TextureMgr *sharedTextureMgr;
 	for( id key in keys ) {
 		id value = [textures objectForKey:key];		
 		if( [value retainCount] == 1 ) {
-			CCLOG(@"removing texture: %@", key);
+			CCLOG(@"cocos2d: removing texture: %@", key);
 			[textures removeObjectForKey:key];
 		}
 	}

@@ -72,7 +72,7 @@
 
 -(void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[target release];
 	[super dealloc];
 }
@@ -139,7 +139,7 @@ static Scheduler *sharedScheduler;
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[scheduledMethods release];
 	[methodsToRemove release];
 	[methodsToAdd release];

@@ -41,7 +41,7 @@
 }
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@",self);
+	CCLOG(@"cocos2d: deallocing %@",self);
 	if( ownTiles && tiles ) {
 		free( tiles );
 		tiles = NULL;
@@ -56,7 +56,7 @@
 @implementation TMXTilesetInfo
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[sourceImage release];
 	[name release];
 	[super dealloc];
@@ -111,7 +111,7 @@
 		
 		NSError *parseError = [parser parserError];
 		if(parseError) {
-			CCLOG(@"TMXTiledMap: Error parsing TMX file: %@", parseError);
+			CCLOG(@"cocos2d: TMXTiledMap: Error parsing TMX file: %@", parseError);
 		}
 		
 		[parser release];
@@ -120,7 +120,7 @@
 }
 - (void) dealloc
 {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[tilesets release];
 	[layers release];
 	[currentString release];
@@ -133,7 +133,7 @@
 	if([elementName isEqualToString:@"map"]) {
 		NSString *version = [attributeDict valueForKey:@"version"];
 		if( ! [version isEqualToString:@"1.0"] )
-			CCLOG(@"TMXFormat: Unsupported TMX version: %@", version);
+			CCLOG(@"cocos2d: TMXFormat: Unsupported TMX version: %@", version);
 		NSString *orientationStr = [attributeDict valueForKey:@"orientation"];
 		if( [orientationStr isEqualToString:@"orthogonal"])
 			orientation = TMXOrientationOrtho;
@@ -142,7 +142,7 @@
 		else if( [orientationStr isEqualToString:@"hexagonal"])
 			orientation = TMXOrientationHex;
 		else
-			CCLOG(@"TMXFomat: Unsupported orientation: %@", orientation);
+			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %@", orientation);
 
 		mapSize.width = [[attributeDict valueForKey:@"width"] intValue];
 		mapSize.height = [[attributeDict valueForKey:@"height"] intValue];
@@ -212,7 +212,7 @@
 		unsigned char *buffer;
 		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
 		if( ! buffer ) {
-			CCLOG(@"TiledMap: decode data error");
+			CCLOG(@"cocos2d: TiledMap: decode data error");
 			return;
 		}
 		
@@ -222,7 +222,7 @@
 			free( buffer );
 			
 			if( ! deflated ) {
-				CCLOG(@"TiledMap: inflate data error");
+				CCLOG(@"cocos2d: TiledMap: inflate data error");
 				return;
 			}
 			
@@ -245,7 +245,7 @@
 // the level did not load, file not found, etc.
 //
 -(void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
-	CCLOG(@"Error on XML Parse: %@", [parseError localizedDescription] );
+	CCLOG(@"cocos2d: Error on XML Parse: %@", [parseError localizedDescription] );
 }
 
 @end
