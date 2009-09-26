@@ -160,7 +160,7 @@
 
 -(void) dealloc
 {
-	CCLOG( @"deallocing %@",self);
+	CCLOG( @"cocos2d: deallocing %@",self);
 	[name release];
 	[frames release];
 	[super dealloc];

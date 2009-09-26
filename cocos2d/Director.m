@@ -150,11 +150,11 @@ static Director *_sharedDirector = nil;
 
 - (id) init
 {  
-	CCLOG(@"%@", cocos2dVersion() );
+	CCLOG(@"cocos2d: %@", cocos2dVersion() );
 
 	if( (self=[super init]) ) {
 
-		CCLOG(@"Using Director Type:%@", [self class]);
+		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 
 		// default values
 		pixelFormat_ = kPixelFormatRGBA8888;
@@ -183,7 +183,7 @@ static Director *_sharedDirector = nil;
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG( @"cocos2d: deallocing %@", self);
 
 #if CC_DIRECTOR_FAST_FPS
 	[FPSLabel release];
@@ -252,7 +252,7 @@ static Director *_sharedDirector = nil;
 	struct timeval now;
 	
 	if( gettimeofday( &now, NULL) != 0 ) {
-		CCLOG(@"error in gettimeofday");
+		CCLOG(@"cocos2d: error in gettimeofday");
 		dt = 0;
 		return;
 	}
@@ -792,7 +792,7 @@ static Director *_sharedDirector = nil;
 	[self setAnimationInterval: oldAnimationInterval];
 
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"Director: Error in gettimeofday");
+		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
 	isPaused_ = NO;
@@ -801,17 +801,17 @@ static Director *_sharedDirector = nil;
 
 - (void)startAnimation
 {
-	CCLOG(@"Director#startAnimation. Override me");
+	CCLOG(@"cocos2d: Director#startAnimation. Override me");
 }
 
 - (void)stopAnimation
 {
-	CCLOG(@"Director#stopAnimation. Override me");
+	CCLOG(@"cocos2d: Director#stopAnimation. Override me");
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	CCLOG(@"Director#setAnimationInterval. Override me");
+	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
 #if CC_DIRECTOR_FAST_FPS
@@ -877,7 +877,7 @@ static Director *_sharedDirector = nil;
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
 	
 	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"Director: Error in gettimeofday");
+		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
@@ -925,9 +925,9 @@ static Director *_sharedDirector = nil;
 	if(( self = [super init] )) {
 		
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
-		CCLOG(@"Fast Events enabled");
+		CCLOG(@"cocos2d: Fast Events enabled");
 #else
-		CCLOG(@"Fast Events disabled");
+		CCLOG(@"cocos2d: Fast Events disabled");
 #endif		
 		isRunning = NO;
 		
@@ -951,7 +951,7 @@ static Director *_sharedDirector = nil;
 	autoreleasePool = nil;
 
 	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"Director: Error in gettimeofday");
+		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
 
@@ -1024,7 +1024,7 @@ static Director *_sharedDirector = nil;
 {
 	
 	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"ThreadedFastDirector: Error on gettimeofday");
+		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
 	}
 
 	isRunning = YES;
@@ -1086,14 +1086,14 @@ static Director *_sharedDirector = nil;
 - (void) startAnimation
 {
 	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
-		CCLOG(@"DisplayLinkDirector: Error on gettimeofday");
+		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}
 	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval	= (int) floor(animationInterval * 60.0f);
 	
-	CCLOG(@"Frame interval: %d", frameInterval);
+	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(preMainLoop:)];
 	[displayLink setFrameInterval:frameInterval];

@@ -84,7 +84,7 @@ static ActionManager *_sharedManager = nil;
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
 	ccHashSetFree(targets);
@@ -100,7 +100,7 @@ static ActionManager *_sharedManager = nil;
 {
 	ccArrayFree(element->actions);
 	ccHashSetRemove(targets, CC_HASH_INT(element->target), element);
-//	CCLOG(@"---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
+//	CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 	[element->target release];
 	free(element);
 }
@@ -140,7 +140,7 @@ static ActionManager *_sharedManager = nil;
 	if( element )
 		element->paused = YES;
 //	else
-//		CCLOG(@"pauseAllActions: Target not found");
+//		CCLOG(@"cocos2d: pauseAllActions: Target not found");
 }
 -(void) resumeAllActionsForTarget:(id)target
 {
@@ -150,7 +150,7 @@ static ActionManager *_sharedManager = nil;
 	if( element )
 		element->paused = NO;
 //	else
-//		CCLOG(@"resumeAllActions: Target not found");
+//		CCLOG(@"cocos2d: resumeAllActions: Target not found");
 }
 
 #pragma mark ActionManager - run
@@ -169,7 +169,7 @@ static ActionManager *_sharedManager = nil;
 		element->paused = paused;
 		element->target = [target retain];
 		ccHashSetInsert(targets, CC_HASH_INT(target), element, nil);
-//		CCLOG(@"---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
+//		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 
 	}
 	
@@ -216,7 +216,7 @@ static ActionManager *_sharedManager = nil;
 		else
 			[self deleteHashElement:element];
 	} else {
-//		CCLOG(@"removeAllActionsFromTarget: Target not found");
+//		CCLOG(@"cocos2d: removeAllActionsFromTarget: Target not found");
 	}
 }
 
@@ -240,7 +240,7 @@ static ActionManager *_sharedManager = nil;
 			[self removeActionAtIndex:i hashElement:element];
 		}
 	} else {
-//		CCLOG(@"removeAction: Target not found");
+//		CCLOG(@"cocos2d: removeAction: Target not found");
 	}
 }
 
@@ -261,9 +261,9 @@ static ActionManager *_sharedManager = nil;
 			if( a.tag == aTag && [a target]==target)
 				return [self removeActionAtIndex:i hashElement:element];
 		}
-//		CCLOG(@"removeActionByTag: Action not found!");
+//		CCLOG(@"cocos2d: removeActionByTag: Action not found!");
 	} else {
-//		CCLOG(@"removeActionByTag: Target not found!");
+//		CCLOG(@"cocos2d: removeActionByTag: Target not found!");
 	}
 }
 
@@ -287,9 +287,9 @@ static ActionManager *_sharedManager = nil;
 					return a; 
 			}
 		}
-//		CCLOG(@"getActionByTag: Action not found");
+//		CCLOG(@"cocos2d: getActionByTag: Action not found");
 	} else {
-//		CCLOG(@"getActionByTag: Target not found");
+//		CCLOG(@"cocos2d: getActionByTag: Target not found");
 	}
 	return nil;
 }
@@ -302,7 +302,7 @@ static ActionManager *_sharedManager = nil;
 	if( element )
 		return element->actions ? element->actions->num : 0;
 
-//	CCLOG(@"numberOfRunningActionsInTarget: Target not found");
+//	CCLOG(@"cocos2d: numberOfRunningActionsInTarget: Target not found");
 	return 0;
 }
 

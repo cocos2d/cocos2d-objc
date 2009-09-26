@@ -39,7 +39,7 @@
 }
 
 - (void)dealloc {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[delegate release];
 	[super dealloc];
 }

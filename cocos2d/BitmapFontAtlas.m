@@ -84,7 +84,7 @@ void FNTConfigRemoveCache( void )
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG( @"cocos2d: deallocing %@", self);
 	[kerningDictionary release];
 	[super dealloc];
 }
@@ -201,7 +201,7 @@ void FNTConfigRemoveCache( void )
 		propertyValue = [paddingEnum nextObject];
 		padding.left = [propertyValue intValue];
 		
-		CCLOG(@"padding: %d,%d,%d,%d", padding.left, padding.top, padding.right, padding.bottom);
+		CCLOG(@"cocos2d: padding: %d,%d,%d,%d", padding.left, padding.top, padding.right, padding.bottom);
 	}
 
 	// spacing (ignore)

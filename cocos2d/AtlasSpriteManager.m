@@ -327,12 +327,12 @@ const int defaultCapacity = 29;
 	// this is likely computationally expensive
 	NSUInteger quantity = (textureAtlas_.totalQuads + 1) * 4 / 3;
 
-	CCLOG(@"Resizing TextureAtlas capacity, from [%d] to [%d].", textureAtlas_.totalQuads, quantity);
+	CCLOG(@"cocos2d: Resizing TextureAtlas capacity, from [%d] to [%d].", textureAtlas_.totalQuads, quantity);
 
 
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
-		CCLOG(@"WARNING: Not enough memory to resize the atlas");
+		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: AltasSpriteManager#resizeAtlas SHALL handle this assert");
 	}	
 }

@@ -72,7 +72,7 @@ int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out
 			
 			/* not enough memory, ouch */
 			if (! tmp ) {
-				CCLOG(@"ZipUtils: realloc failed");
+				CCLOG(@"cocos2d: ZipUtils: realloc failed");
 				inflateEnd(&d_stream);
 				return Z_MEM_ERROR;
 			}
@@ -102,16 +102,16 @@ int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 	
 	if (err != Z_OK || *out == NULL) {
 		if (err == Z_MEM_ERROR)
-			CCLOG(@"ZipUtils: Out of memory while decompressing map data!");
+			CCLOG(@"cocos2d: ZipUtils: Out of memory while decompressing map data!");
 
 		else if (err == Z_VERSION_ERROR)
-			CCLOG(@"ZipUtils: Incompatible zlib version!");
+			CCLOG(@"cocos2d: ZipUtils: Incompatible zlib version!");
 
 		else if (err == Z_DATA_ERROR)
-			CCLOG(@"ZipUtils: Incorrect zlib compressed data!");
+			CCLOG(@"cocos2d: ZipUtils: Incorrect zlib compressed data!");
 
 		else
-			CCLOG(@"ZipUtils: Unknown error while decompressing map data!");
+			CCLOG(@"cocos2d: ZipUtils: Unknown error while decompressing map data!");
 		
 		free(*out);
 		*out = NULL;

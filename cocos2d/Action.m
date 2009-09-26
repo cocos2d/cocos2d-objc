@@ -45,7 +45,7 @@
 
 -(void) dealloc
 {
-	CCLOG(@"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 	[super dealloc];
 }
 
@@ -98,7 +98,7 @@
 
 - (FiniteTimeAction*) reverse
 {
-	CCLOG(@"FiniteTimeAction#reverse: Implement me");
+	CCLOG(@"cocos2d: FiniteTimeAction#reverse: Implement me");
 	return nil;
 }
 @end

@@ -68,7 +68,7 @@
 
 - (void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[texture release];
 	[grabber release];
