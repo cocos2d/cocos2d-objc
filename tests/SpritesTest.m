@@ -236,10 +236,17 @@ Class restartAction()
 	
 	id actionTo = [ScaleTo actionWithDuration: 2 scale:0.5f];
 	id actionBy = [ScaleBy actionWithDuration:2  scale: 2];
+	id actionBy2 = [ScaleBy actionWithDuration:2 scaleX:0.25f scaleY:4.5f];
 	id actionByBack = [actionBy reverse];
 
 	[tamara runAction: actionTo];
 	[grossini runAction: [Sequence actions:actionBy, actionByBack, nil]];
+	
+	Sprite *kathia = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	[self addChild:kathia];
+	[kathia setPosition:ccp(240,160)];
+	[kathia runAction: [Sequence actions:actionBy2, [actionBy2 reverse], nil]];
+	
 }
 -(NSString *) title
 {

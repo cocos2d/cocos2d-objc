@@ -710,11 +710,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithDuration: (ccTime) t scale:(float) s
 {
-	if( !(self=[super initWithDuration: t]) )
-		return nil;
-	
-	endScaleX = s;
-	endScaleY = s;
+	if( (self=[super initWithDuration: t]) ) {
+		endScaleX = s;
+		endScaleY = s;
+	}
 	return self;
 }
 
@@ -725,11 +724,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
 {
-	if( !(self=[super initWithDuration: t]) )
-		return nil;
-	
-	endScaleX = sx;
-	endScaleY = sy;
+	if( (self=[super initWithDuration: t]) ) {	
+		endScaleX = sx;
+		endScaleY = sy;
+	}
 	return self;
 }
 
@@ -787,9 +785,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithDuration: (ccTime) t blinks: (unsigned int) b
 {
-	if( ! (self=[super initWithDuration: t] ) )
-		return nil;
-	times = b;
+	if( (self=[super initWithDuration: t] ) ) {
+		times = b;
+	}
 	return self;
 }
 
