@@ -174,12 +174,13 @@
 /** SplitRows action */
 @interface SplitRows : TiledGrid3DAction
 {
+	int		rows;
 	CGSize	winSize;
 }
 /** creates the action with the number of rows to split and the duration */
-+(id)actionWithRows:(int)r duration:(ccTime)d;
++(id)actionWithRows:(int)rows duration:(ccTime)duration;
 /** initializes the action with the number of rows to split and the duration */
--(id)initWithRows:(int)r duration:(ccTime)d;
+-(id)initWithRows:(int)rows duration:(ccTime)duration;
 
 @end
 
@@ -188,11 +189,12 @@
 /** SplitCols action */
 @interface SplitCols : TiledGrid3DAction
 {
+	int		cols;
 	CGSize	winSize;
 }
 /** creates the action with the number of columns to split and the duration */
-+(id)actionWithCols:(int)c duration:(ccTime)d;
++(id)actionWithCols:(int)cols duration:(ccTime)duration;
 /** initializes the action with the number of columns to split and the duration */
--(id)initWithCols:(int)c duration:(ccTime)d;
+-(id)initWithCols:(int)cols duration:(ccTime)duration;
 
 @end

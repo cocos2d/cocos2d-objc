@@ -15,6 +15,9 @@
 #import "Grid3DAction.h"
 #import "Support/CGPointExtension.h"
 
+#pragma mark -
+#pragma mark Waves3D
+
 @implementation Waves3D
 
 @synthesize amplitude;
@@ -37,6 +40,13 @@
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration];
+	return copy;
+}
+
+
 -(void)update:(ccTime)time
 {
 	int i, j;
@@ -54,6 +64,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark FlipX3D
 
 @implementation FlipX3D
 
@@ -76,6 +89,13 @@
 	
 	return [super initWithSize:gSize duration:d];
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -144,6 +164,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark FlipY3D
 
 @implementation FlipY3D
 
@@ -215,6 +238,9 @@
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark Lens3D
+
 @implementation Lens3D
 
 @synthesize lensEffect;
@@ -229,7 +255,7 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		self.position = pos;
+		position = pos;
 		radius = r;
 		lensEffect = 0.7f;
 		lastPosition = ccp(-1,-1);
@@ -237,6 +263,13 @@
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -280,6 +313,9 @@
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark Ripple3D
+
 @implementation Ripple3D
 
 @synthesize position;
@@ -295,7 +331,7 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		self.position = pos;
+		position = pos;
 		radius = r;
 		waves = wav;
 		amplitude = amp;
@@ -304,6 +340,13 @@
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius waves:waves amplitude:amplitude grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -333,6 +376,9 @@
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark Shaky3D
+
 @implementation Shaky3D
 
 +(id)actionWithRange:(int)range shakeZ:(BOOL)sz grid:(ccGridSize)gridSize duration:(ccTime)d
@@ -350,6 +396,13 @@
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -373,6 +426,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark Liquid
 
 @implementation Liquid
 
@@ -412,9 +468,18 @@
 	}
 }	
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration];
+	return copy;
+}
+
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark Waves
 
 @implementation Waves
 
@@ -459,11 +524,20 @@
 			[self setVertex:ccg(i,j) vertex:v];
 		}
 	}
-}	
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude horizontal:horizontal vertical:vertical grid:gridSize duration:duration];
+	return copy;
+}
 
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark Twirl
 
 @implementation Twirl
 
@@ -518,5 +592,12 @@
 		}
 	}
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position twirls:twirls amplitude:amplitude grid:gridSize duration:duration];
+	return copy;
+}
+
 
 @end

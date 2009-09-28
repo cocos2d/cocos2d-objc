@@ -15,6 +15,9 @@
 #import "GridAction.h"
 #import "Director.h"
 
+#pragma mark -
+#pragma mark GridAction
+
 @implementation GridAction
 
 @synthesize gridSize;
@@ -72,9 +75,18 @@
 {
 	return [ReverseTime actionWithAction:self];
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize duration:duration];
+	return copy;
+}
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark Grid3DAction
 
 @implementation Grid3DAction
 
@@ -103,6 +115,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark TiledGrid3DAction
 
 @implementation TiledGrid3DAction
 
@@ -152,6 +167,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark AccelDeccelAmplitude
 
 @implementation AccelDeccelAmplitude
 
@@ -209,6 +227,9 @@
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark AccelAmplitude
+
 @implementation AccelAmplitude
 
 @synthesize rate;
@@ -256,6 +277,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark DeccelAmplitude
 
 @implementation DeccelAmplitude
 
@@ -305,6 +329,9 @@
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark StopGrid
+
 @implementation StopGrid
 
 -(void)start
@@ -318,6 +345,9 @@
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark ReuseGrid
 
 @implementation ReuseGrid
 
