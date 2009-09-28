@@ -96,7 +96,7 @@
 		layers = [[NSMutableArray arrayWithCapacity:4] retain];
 	
 		// tmp vars
-		currentString = [[NSMutableString alloc] initWithCapacity:200];
+		currentString = [[NSMutableString alloc] initWithCapacity:1024];
 		storingCharacters = NO;
 		layerAttribs = TMXLayerAttribNone;
 		
@@ -193,10 +193,7 @@
 				layerAttribs |= TMXLayerAttribGzip;
 		}
 		
-		if( layerAttribs == TMXLayerAttribNone ) {
-			NSLog(@"TMX: Only bas64 and or gzip maps are supported");
-			[NSException raise:@"TMX Exception" format:@"Only base64 and/or gzip maps are supported"];
-		}
+		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip maps are supported");
 	}
 }
 
