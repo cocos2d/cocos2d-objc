@@ -14,7 +14,7 @@
  */
 #import "PageTurn3DAction.h"
 
-@implementation PageTurn3DAction
+@implementation PageTurn3D
 
 /*
  * Update each tick

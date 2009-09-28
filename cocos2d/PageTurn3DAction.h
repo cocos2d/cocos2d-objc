@@ -23,7 +23,7 @@
  * 
  * @since v0.8.2
  */
-@interface PageTurn3DAction : Grid3DAction {
+@interface PageTurn3D : Grid3DAction {
 }
 
 @end

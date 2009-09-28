@@ -90,12 +90,12 @@
 	{
 		// Get hold of the PageTurn3DAction
 		return [ReverseTime actionWithAction:
-				[PageTurn3DAction actionWithSize:v duration:duration]];
+				[PageTurn3D actionWithSize:v duration:duration]];
 	}
 	else
 	{
 		// Get hold of the PageTurn3DAction
-		return [PageTurn3DAction actionWithSize:v duration:duration];
+		return [PageTurn3D actionWithSize:v duration:duration];
 	}
 }
 

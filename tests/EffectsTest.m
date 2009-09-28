@@ -84,6 +84,10 @@ enum {
 @interface SplitColsDemo : SplitCols
 +(id) actionWithDuration:(ccTime)t;
 @end
+@interface PageTurn3DDemo : PageTurn3D
++(id) actionWithDuration:(ccTime)t;
+@end
+
 
 
 @implementation Shaky3DDemo
@@ -248,6 +252,14 @@ enum {
 }
 @end
 
+@implementation PageTurn3DDemo
++(id) actionWithDuration:(ccTime)t
+{
+	return [self actionWithSize:ccg(15,10) duration:t];
+}
+@end
+
+
 #pragma mark Demo - order
 
 static int actionIdx=0;
@@ -273,7 +285,8 @@ static NSString *actionList[] =
 	@"WavesTiles3DDemo",
 	@"JumpTiles3DDemo",
 	@"SplitRowsDemo",
-	@"SplitColsDemo"
+	@"SplitColsDemo",
+	@"PageTurn3DDemo",
 };
 
 static NSString *effectsList[] =
@@ -298,7 +311,8 @@ static NSString *effectsList[] =
 	@"WavesTiles3D",
 	@"JumpTiles3D",
 	@"SplitRows",
-	@"SplitCols"
+	@"SplitCols",
+	@"PageTurn3D",
 };
 
 Class nextAction()
