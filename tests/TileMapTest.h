@@ -73,6 +73,12 @@
 }
 @end
 
+@interface TMXUncompressedTest : TileDemo
+{
+}
+@end
+
+
 @interface TMXTilesetTest : TileDemo
 {
 }
