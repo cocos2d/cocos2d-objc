@@ -21,6 +21,7 @@ enum {
 	kTagBox2DNode,
 };
 
+
 @implementation MenuLayer
 +(id) menuWithEntryID:(int)entryId
 {
@@ -45,7 +46,7 @@ enum {
 		
 		Label* label = [Label labelWithString:[view title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
-		[label setPosition: ccp(s.width/2, s.height-50)];		
+		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -118,8 +119,8 @@ enum {
 	CGPoint touchLocation = [touch locationInView: [touch view]];	
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
 	
-	touchLocation = [[Director sharedDirector] convertCoordinate: touchLocation];
-	prevLocation = [[Director sharedDirector] convertCoordinate: prevLocation];
+	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
+	prevLocation = [[Director sharedDirector] convertToGL: prevLocation];
 	
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
@@ -148,7 +149,7 @@ enum {
 		[self schedule:@selector(tick:)];
 
 		entry = g_testEntries + entryId;
-		test = entry->createFcn();
+		test = entry->createFcn();		
     }
 		
     return self;
@@ -167,6 +168,7 @@ enum {
 -(void) draw
 {
 	[super draw];
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	test->m_world->DrawDebugData();
 	glDisableClientState(GL_VERTEX_ARRAY);	
@@ -188,7 +190,7 @@ enum {
 {
 	
 	CGPoint touchLocation=[touch locationInView:[touch view]];
-	touchLocation=[[Director sharedDirector] convertCoordinate:touchLocation];
+	touchLocation=[[Director sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 //	NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
@@ -198,7 +200,7 @@ enum {
 - (void) ccTouchMoved:(UITouch*)touch withEvent:(UIEvent*)event
 {
 	CGPoint touchLocation=[touch locationInView:[touch view]];
-	touchLocation=[[Director sharedDirector] convertCoordinate:touchLocation];
+	touchLocation=[[Director sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 	
 	test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
@@ -207,7 +209,7 @@ enum {
 - (void) ccTouchEnded:(UITouch*)touch withEvent:(UIEvent*)event
 {
 	CGPoint touchLocation=[touch locationInView:[touch view]];
-	touchLocation=[[Director sharedDirector] convertCoordinate:touchLocation];
+	touchLocation=[[Director sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 	
 	test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
@@ -219,7 +221,7 @@ enum {
 	// Only run for valid values
 	if (acceleration.y!=0 && acceleration.x!=0)
 	{
-		if (test) test->SetGravity(-acceleration.y,acceleration.x);
+		if (test) test->SetGravity((float)-acceleration.y,(float)acceleration.x);
 	}
 }
 

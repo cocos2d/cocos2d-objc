@@ -24,6 +24,8 @@ typedef struct
 	ccGridSize	delta;
 } Tile;
 
+#pragma mark -
+#pragma mark ShakyTiles3D
 
 @implementation ShakyTiles3D
 
@@ -42,6 +44,13 @@ typedef struct
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -81,6 +90,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark ShatteredTiles3D
+
 @implementation ShatteredTiles3D
 
 +(id)actionWithRange:(int)range shatterZ:(BOOL)sz grid:(ccGridSize)gridSize duration:(ccTime)d
@@ -99,6 +111,13 @@ typedef struct
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shatterZ:shatterZ grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -143,6 +162,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark ShuffleTiles
+
 @implementation ShuffleTiles
 
 +(id)actionWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d
@@ -161,6 +183,13 @@ typedef struct
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithSeed:seed grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)dealloc
 {
@@ -265,6 +294,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark FadeOutTRTiles
+
 @implementation FadeOutTRTiles
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
@@ -330,6 +362,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark FadeOutBLTiles
+
 @implementation FadeOutBLTiles
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
@@ -344,6 +379,9 @@ typedef struct
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark FadeOutUpTiles
 
 @implementation FadeOutUpTiles
 
@@ -372,6 +410,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark FadeOutDownTiles
+
 @implementation FadeOutDownTiles
 
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
@@ -385,6 +426,9 @@ typedef struct
 @end
 
 ////////////////////////////////////////////////////////////
+
+#pragma mark -
+#pragma mark TurnOffTiles
 
 @implementation TurnOffTiles
 
@@ -402,6 +446,12 @@ typedef struct
 	}
 	
 	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithSeed:seed grid:gridSize duration:duration];
+	return copy;
 }
 
 -(void)dealloc
@@ -475,6 +525,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark WavesTiles3D
+
 @implementation WavesTiles3D
 
 @synthesize amplitude;
@@ -496,6 +549,13 @@ typedef struct
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -520,6 +580,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark JumpTiles3D
+
 @implementation JumpTiles3D
 
 @synthesize amplitude;
@@ -541,6 +604,13 @@ typedef struct
 	
 	return self;
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithJumps:jumps amplitude:amplitude grid:gridSize duration:duration];
+	return copy;
+}
+
 
 -(void)update:(ccTime)time
 {
@@ -578,6 +648,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark SplitRows
+
 @implementation SplitRows
 
 +(id)actionWithRows:(int)r duration:(ccTime)d
@@ -587,7 +660,14 @@ typedef struct
 
 -(id)initWithRows:(int)r duration:(ccTime)d
 {
+	rows = r;
 	return [super initWithSize:ccg(1,r) duration:d];
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithRows:rows duration:duration];
+	return copy;
 }
 
 -(void)start
@@ -621,6 +701,9 @@ typedef struct
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark SplitCols
+
 @implementation SplitCols
 
 +(id)actionWithCols:(int)c duration:(ccTime)d
@@ -630,7 +713,14 @@ typedef struct
 
 -(id)initWithCols:(int)c duration:(ccTime)d
 {
+	cols = c;
 	return [super initWithSize:ccg(c,1) duration:d];
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	GridAction *copy = [[[self class] allocWithZone:zone] initWithCols:cols duration:duration];
+	return copy;
 }
 
 -(void)start

@@ -34,4 +34,5 @@
 }
 +(id) viewWithEntryID:(int)entryId;
 -(id) initWithEntryID:(int)entryId;
+-(NSString*) title;
 @end

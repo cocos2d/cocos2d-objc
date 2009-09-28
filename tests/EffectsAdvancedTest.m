@@ -151,6 +151,36 @@ enum {
 }
 @end
 
+#pragma mark -
+#pragma mark Effect5
+
+@interface Effect5 : TextLayer
+{}
+@end
+
+@implementation Effect5
+-(void) onEnter
+{
+	[super onEnter];
+	
+	id effect = [Liquid actionWithWaves:1 amplitude:20 grid:ccg(32,24) duration:2];	
+
+	id stopEffect = [Sequence actions:
+					 effect,
+					 [DelayTime actionWithDuration:2],
+					 [StopGrid action],
+					 [DelayTime actionWithDuration:2],
+					 [[effect copy] autorelease],
+					 nil];
+	
+	[self runAction:stopEffect];
+	
+}
+-(NSString*) title
+{
+	return @"Test Stop-Copy-Restart";
+}
+@end
 
 
 #pragma mark Demo - order
@@ -162,6 +192,7 @@ static NSString *actionList[] =
 	@"Effect1",
 	@"Effect2",
 	@"Effect4",
+	@"Effect5",
 };
 
 Class nextAction()
