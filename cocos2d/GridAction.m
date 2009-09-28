@@ -338,8 +338,11 @@
 {
 	[super start];
 
-	if ( [[self target] grid] && [[[self target] grid] active] )
+	if ( [[self target] grid] && [[[self target] grid] active] ) {
 		[[[self target] grid] setActive: NO];
+		
+//		[[self target] setGrid: nil];
+	}
 }
 
 @end

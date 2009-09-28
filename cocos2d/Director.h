@@ -43,6 +43,19 @@ typedef enum {
 	kDepthBuffer24,
 } tDepthBufferFormat;
 
+/** Possible OpenGL projections used by director */
+typedef enum {
+	/// sets a 2D projection (orthogonal projection)
+	CCDirectorProjection2D,
+	
+	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+	CCDirectorProjection3D,
+	
+	/// Detault projection is 3D projection
+	CCDirectorProjectionDefault = CCDirectorProjection3D,
+
+} ccDirectorProjection;
+
 /** Possible Director Types.
  @since v0.8.2
  */
@@ -148,7 +161,10 @@ and when to execute the Scenes.
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */
-	BOOL nextDeltaTimeZero_;	
+	BOOL nextDeltaTimeZero_;
+	
+	/* projection used */
+	ccDirectorProjection projection_;
 }
 
 /** The current running Scene. Director can only run one Scene at the time */
@@ -167,6 +183,8 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite) ccDeviceOrientation deviceOrientation;
 /** Whether or not the Director is paused */
 @property (nonatomic,readonly) BOOL isPaused;
+/** Sets an OpenGL projection */
+@property (nonatomic,readwrite) ccDirectorProjection projection;
 
 /** returns a shared instance of the director */
 +(Director *)sharedDirector;
@@ -320,12 +338,18 @@ and when to execute the Scenes.
 - (void) setDepthTest: (BOOL) on;
 /** enables/disables OpenGL texture 2D */
 - (void) setTexture2D: (BOOL) on;
-/** sets Cocos OpenGL default projection */
-- (void) setDefaultProjection;
-/** sets a 2D projection (orthogonal projection) */
--(void) set2Dprojection;
-/** sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500 */
--(void) set3Dprojection;
+/** sets cocos2d OpenGL default projection
+ @deprecated Used Director#setProjection:CCDirectorProjectionDefault instead. This method will be removed in v0.9
+ */
+- (void) setDefaultProjection __attribute__ ((deprecated));
+/** sets a 2D projection (orthogonal projection)
+ @deprecated Used Director#setProjection:CCDirectorProjection2D instead. This method will be removed in v0.9
+ */
+-(void) set2Dprojection __attribute__ ((deprecated));
+/** sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+ @deprecated Used Director#setProjection:CCDirectorProjection3D instead. This method will be removed in v0.9
+ */
+-(void) set3Dprojection __attribute__ ((deprecated));
 @end
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.

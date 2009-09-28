@@ -25,12 +25,12 @@
  */
 @interface GridBase : NSObject
 {
-	BOOL		active;
-	int			reuseGrid;
-	ccGridSize	gridSize;
-	Texture2D *	texture;
-	CGPoint		step;
-	Grabber *	grabber;
+	BOOL		active_;
+	int			reuseGrid_;
+	ccGridSize	gridSize_;
+	Texture2D *	texture_;
+	CGPoint		step_;
+	Grabber *	grabber_;
 }
 
 /** wheter or not the grid is active */

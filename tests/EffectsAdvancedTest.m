@@ -163,22 +163,36 @@ enum {
 {
 	[super onEnter];
 	
+	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
+	
 	id effect = [Liquid actionWithWaves:1 amplitude:20 grid:ccg(32,24) duration:2];	
 
 	id stopEffect = [Sequence actions:
 					 effect,
 					 [DelayTime actionWithDuration:2],
 					 [StopGrid action],
-					 [DelayTime actionWithDuration:2],
-					 [[effect copy] autorelease],
+//					 [DelayTime actionWithDuration:2],
+//					 [[effect copy] autorelease],
 					 nil];
 	
-	[self runAction:stopEffect];
+	id bg = [self getChildByTag:kTagBackground];
+	[bg runAction:stopEffect];
 	
 }
+-(void) onExit
+{
+	[super onExit];
+	[[Director sharedDirector] setProjection:CCDirectorProjection3D];
+}
+
 -(NSString*) title
 {
 	return @"Test Stop-Copy-Restart";
+}
+
+-(void) draw
+{
+	[super draw];
 }
 @end
 

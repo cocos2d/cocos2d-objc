@@ -4,6 +4,7 @@ version 0.8.2 - XX-MMM-2009
  . Box2d: using google code r22 (pre v2.1.0) (issue #494)
  . CocosNode: Better message error on scale (issue #556)
  . Effects: [effect copy] works (issue #573)
+ . Effects: restore orignal director projection (issue #573)
  . Macros: CCLOG uses the "cocos2d:" prefix (issue #XXX)
  . Parallax: fixed limit of 5 children (issue #565)
  
