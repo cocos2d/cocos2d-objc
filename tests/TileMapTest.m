@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 			@"TMXIsoTest",
 			@"TMXIsoTest1",
 			@"TMXIsoTest2",
+			@"TMXUncompressedTest",
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
 			@"TMXTilesetTest",
@@ -514,6 +515,34 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"TMX Isometric test 2";
+}
+@end
+
+@implementation TMXUncompressedTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		ColorLayer *color = [ColorLayer layerWithColor:ccc4(64,64,64,255)];
+		[self addChild:color z:-1];
+		
+		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"iso-test2-uncompressed.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];	
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		// move map to the center of the screen
+		CGSize ms = [map mapSize];
+		CGSize ts = [map tileSize];
+		[map runAction:[MoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Uncompressed test";
 }
 @end
 

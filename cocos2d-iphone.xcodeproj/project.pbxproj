@@ -801,6 +801,7 @@
 		5078B52A0E3E43540004233A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		5078B52B0E3E43540004233A /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		5078B5340E3E437F0004233A /* IntervalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5078B5330E3E437F0004233A /* IntervalTest.m */; };
+		507AFC9F1070F98200BD7E27 /* iso-test2-uncompressed.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 507AFC9E1070F98200BD7E27 /* iso-test2-uncompressed.tmx */; };
 		5084D25D0EE5906100BD237C /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D25C0EE5906100BD237C /* powered.png */; };
 		5084D47E0EE5C7D100BD237C /* btn-about-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D4780EE5C7D100BD237C /* btn-about-normal.png */; };
 		5084D47F0EE5C7D100BD237C /* btn-about-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D4790EE5C7D100BD237C /* btn-about-selected.png */; };
@@ -2085,6 +2086,7 @@
 		506EE3D01030F19600A389B3 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		5078B5320E3E437F0004233A /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalTest.h; path = tests/IntervalTest.h; sourceTree = "<group>"; };
 		5078B5330E3E437F0004233A /* IntervalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalTest.m; path = tests/IntervalTest.m; sourceTree = "<group>"; };
+		507AFC9E1070F98200BD7E27 /* iso-test2-uncompressed.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "iso-test2-uncompressed.tmx"; sourceTree = "<group>"; };
 		5084D25C0EE5906100BD237C /* powered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powered.png; sourceTree = "<group>"; };
 		5084D4780EE5C7D100BD237C /* btn-about-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-about-normal.png"; sourceTree = "<group>"; };
 		5084D4790EE5C7D100BD237C /* btn-about-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-about-selected.png"; sourceTree = "<group>"; };
@@ -3595,6 +3597,7 @@
 				505463D01062877100AB7C52 /* iso-test1.tmx */,
 				505463D11062877100AB7C52 /* iso-test2.png */,
 				505463D21062877100AB7C52 /* iso-test2.tmx */,
+				507AFC9E1070F98200BD7E27 /* iso-test2-uncompressed.tmx */,
 				505463D31062877100AB7C52 /* iso.png */,
 				505463D41062877100AB7C52 /* ortho-test1.png */,
 				505463D51062877100AB7C52 /* ortho-test1_bw.png */,
@@ -5703,6 +5706,7 @@
 				5054642B106287F300AB7C52 /* levelmap.tga in Resources */,
 				5054642C106287F300AB7C52 /* tiles.png in Resources */,
 				505464311062886600AB7C52 /* fps_images.png in Resources */,
+				507AFC9F1070F98200BD7E27 /* iso-test2-uncompressed.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
