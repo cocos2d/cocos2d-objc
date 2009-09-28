@@ -112,6 +112,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		added WorldSpace coordinates to ParticleSystem
 		author of RenderTexture class
 		author of RenderTexture sample
+		author of Joystick / ProximityManager
 	* Jason Cecil:
 		Fixed memory leak in Director#FPSLabel
 		patches for CocosDenshion
