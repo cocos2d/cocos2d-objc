@@ -5,6 +5,7 @@ version 0.8.2 - XX-MMM-2009
  . CocosNode: Better message error on scale (issue #556)
  . Effects: [effect copy] works (issue #573)
  . Effects: restore orignal director projection (issue #573)
+ . Extras: added Joystick (issue #XXX)
  . Macros: CCLOG uses the "cocos2d:" prefix (issue #XXX)
  . Parallax: fixed limit of 5 children (issue #565)
  
