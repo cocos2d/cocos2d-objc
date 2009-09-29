@@ -363,7 +363,7 @@ Class restartAction()
 	Scene *scene = [Scene node];
 	[scene addChild: [nextAction() node]];
 	
-//	[[Director sharedDirector] set2Dprojection];
+//	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
 	
 	[[Director sharedDirector] runWithScene: scene];
 }

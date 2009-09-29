@@ -333,6 +333,11 @@ static Director *_sharedDirector = nil;
 					  openGLView_.frame.size.width/2, openGLView_.frame.size.height/2, 0,
 					  0.0f, 1.0f, 0.0f);			
 			break;
+			
+		case CCDirectorProjectionCustom:
+			// if custom, ignore it. The user is resposible for setting the correct projection
+			break;
+			
 		default:
 			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
 			break;

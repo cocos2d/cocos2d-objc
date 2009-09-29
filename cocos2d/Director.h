@@ -51,6 +51,9 @@ typedef enum {
 	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
 	CCDirectorProjection3D,
 	
+	/// it does nothing. But if you are using a custom projection set it this value.
+	CCDirectorProjectionCustom,
+	
 	/// Detault projection is 3D projection
 	CCDirectorProjectionDefault = CCDirectorProjection3D,
 
@@ -183,7 +186,9 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite) ccDeviceOrientation deviceOrientation;
 /** Whether or not the Director is paused */
 @property (nonatomic,readonly) BOOL isPaused;
-/** Sets an OpenGL projection */
+/** Sets an OpenGL projection
+ @since v0.8.2
+ */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
 
 /** returns a shared instance of the director */
