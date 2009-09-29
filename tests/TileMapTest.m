@@ -315,12 +315,12 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	[[Director sharedDirector] set3Dprojection];	
+	[[Director sharedDirector] setProjection:CCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-	[[Director sharedDirector] set2Dprojection];
+	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
 	[super onExit];
 }
 
@@ -734,7 +734,8 @@ Class restartAction()
 	//
 	// Run all the test with 2d projection
 	//
-	[[Director sharedDirector] set2Dprojection];
+	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
+
 	
 
 	[[Director sharedDirector] runWithScene: scene];
