@@ -8,6 +8,8 @@ version 0.8.2 - XX-MMM-2009
  . Extras: added Joystick (issue #XXX)
  . Macros: CCLOG uses the "cocos2d:" prefix (issue #XXX)
  . Parallax: fixed limit of 5 children (issue #565)
+ . Templates: works with FontLabel (issue #XXX)
+ . Templates: added cocos2d+chipmunk template (issue #XXX)
  
 version 0.8.2-beta - 23-Sept-2009
  . All: ccConfig.h file added (issue #551)

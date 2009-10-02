@@ -11,7 +11,7 @@
 		activeExecutable = 5070229C107672A200393637 /* ___PROJECTNAME___ */;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* ___PROJECTNAME___ */;
 		addToTargets = (
-			506EE05D10304ED200A389B3 /* cocos2d libraries */,
+			1D6058900D05DD3D006BFB54 /* ___PROJECTNAME___ */,
 		);
 		codeSenseManager = 507022A0107672BB00393637 /* Code sense */;
 		executables = (
@@ -25,7 +25,7 @@
 					20,
 					621,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 					20,
@@ -40,16 +40,26 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 276198050;
-			PBXWorkspaceStateSaveDate = 276198050;
+			PBXPerProjectTemplateStateSaveDate = 276198771;
+			PBXWorkspaceStateSaveDate = 276198771;
 		};
 		perUserProjectItems = {
 			507022DE107673ED00393637 /* PBXTextBookmark */ = 507022DE107673ED00393637 /* PBXTextBookmark */;
-			507022DF107673ED00393637 /* PBXTextBookmark */ = 507022DF107673ED00393637 /* PBXTextBookmark */;
 			507022E0107673ED00393637 /* PBXTextBookmark */ = 507022E0107673ED00393637 /* PBXTextBookmark */;
-			507022E1107673ED00393637 /* PBXTextBookmark */ = 507022E1107673ED00393637 /* PBXTextBookmark */;
 			507022E2107673ED00393637 /* PBXTextBookmark */ = 507022E2107673ED00393637 /* PBXTextBookmark */;
-			507022E3107673ED00393637 /* PBXTextBookmark */ = 507022E3107673ED00393637 /* PBXTextBookmark */;
+			507023321076770200393637 /* PlistBookmark */ = 507023321076770200393637 /* PlistBookmark */;
+			507023331076770200393637 /* PBXBookmark */ = 507023331076770200393637 /* PBXBookmark */;
+			507023341076770200393637 /* PBXBookmark */ = 507023341076770200393637 /* PBXBookmark */;
+			507023351076770200393637 /* PBXBookmark */ = 507023351076770200393637 /* PBXBookmark */;
+			507023361076770200393637 /* PBXBookmark */ = 507023361076770200393637 /* PBXBookmark */;
+			507023371076770200393637 /* PBXTextBookmark */ = 507023371076770200393637 /* PBXTextBookmark */;
+			507023381076770200393637 /* PBXTextBookmark */ = 507023381076770200393637 /* PBXTextBookmark */;
+			507023391076770200393637 /* PlistBookmark */ = 507023391076770200393637 /* PlistBookmark */;
+			5070233A1076770200393637 /* PBXBookmark */ = 5070233A1076770200393637 /* PBXBookmark */;
+			5070233B1076770200393637 /* PBXBookmark */ = 5070233B1076770200393637 /* PBXBookmark */;
+			5070233C1076770200393637 /* PBXBookmark */ = 5070233C1076770200393637 /* PBXBookmark */;
+			5070233D1076770200393637 /* PBXBookmark */ = 5070233D1076770200393637 /* PBXBookmark */;
+			5070233E1076770200393637 /* PBXTextBookmark */ = 5070233E1076770200393637 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 5070229F107672BB00393637 /* Source Control */;
 		userBuildSettings = {
@@ -58,8 +68,8 @@
 	506EDC2F102F528A00A389B3 /* HelloWorldScene.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {799, 650}}";
-			sepNavSelRange = "{237, 0}";
-			sepNavVisRange = "{0, 314}";
+			sepNavSelRange = "{116, 0}";
+			sepNavVisRange = "{0, 366}";
 		};
 	};
 	506EE05D10304ED200A389B3 /* cocos2d libraries */ = {
@@ -116,16 +126,6 @@
 		vrLen = 969;
 		vrLoc = 0;
 	};
-	507022DF107673ED00393637 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 506EDC2F102F528A00A389B3 /* HelloWorldScene.h */;
-		name = "HelloWorldScene.h: 14";
-		rLen = 0;
-		rLoc = 314;
-		rType = 0;
-		vrLen = 227;
-		vrLoc = 0;
-	};
 	507022E0107673ED00393637 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 506EDC2F102F528A00A389B3 /* HelloWorldScene.h */;
@@ -133,17 +133,7 @@
 		rLen = 0;
 		rLoc = 0;
 		rType = 0;
-		vrLen = 402;
-		vrLoc = 0;
-	};
-	507022E1107673ED00393637 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 506EDC2F102F528A00A389B3 /* HelloWorldScene.h */;
-		name = "HelloWorldScene.h: 14";
-		rLen = 0;
-		rLoc = 314;
-		rType = 0;
-		vrLen = 227;
+		vrLen = 314;
 		vrLoc = 0;
 	};
 	507022E2107673ED00393637 /* PBXTextBookmark */ = {
@@ -156,14 +146,88 @@
 		vrLen = 969;
 		vrLoc = 0;
 	};
-	507022E3107673ED00393637 /* PBXTextBookmark */ = {
+	507023321076770200393637 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 50F4144710692EE7002A0D5E /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/riq/progs/cocos2d-iphone/trunk/templates/cocos2d_chipmunk_app/Resources/Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	507023331076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144610692EE7002A0D5E /* Icon.png */;
+	};
+	507023341076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144510692EE7002A0D5E /* fps_images.png */;
+	};
+	507023351076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144410692EE7002A0D5E /* Default.png */;
+	};
+	507023361076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 507023141076758E00393637 /* grossini_dance_atlas.png */;
+	};
+	507023371076770200393637 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 506EDC2F102F528A00A389B3 /* HelloWorldScene.h */;
 		name = "HelloWorldScene.h: 12";
 		rLen = 0;
-		rLoc = 237;
+		rLoc = 289;
 		rType = 0;
 		vrLen = 314;
+		vrLoc = 0;
+	};
+	507023381076770200393637 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 506EDC2F102F528A00A389B3 /* HelloWorldScene.h */;
+		name = "HelloWorldScene.h: 12";
+		rLen = 0;
+		rLoc = 289;
+		rType = 0;
+		vrLen = 314;
+		vrLoc = 0;
+	};
+	507023391076770200393637 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 50F4144710692EE7002A0D5E /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/riq/progs/cocos2d-iphone/trunk/templates/cocos2d_chipmunk_app/Resources/Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	5070233A1076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144610692EE7002A0D5E /* Icon.png */;
+	};
+	5070233B1076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144510692EE7002A0D5E /* fps_images.png */;
+	};
+	5070233C1076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144410692EE7002A0D5E /* Default.png */;
+	};
+	5070233D1076770200393637 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 507023141076758E00393637 /* grossini_dance_atlas.png */;
+	};
+	5070233E1076770200393637 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 506EDC2F102F528A00A389B3 /* HelloWorldScene.h */;
+		name = "HelloWorldScene.h: 5";
+		rLen = 0;
+		rLoc = 116;
+		rType = 0;
+		vrLen = 366;
 		vrLoc = 0;
 	};
 }
