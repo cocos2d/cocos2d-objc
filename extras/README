@@ -1,3 +1,4 @@
 stuff that might be useful for you game
 
 joystick/  Joystick implementation
+proximity/ A proximity manager useful for checking distances between many objects in an efficient manner
