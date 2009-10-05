@@ -1,20 +1,8 @@
-Index: FontLabelStringDrawing.h
-===================================================================
---- FontLabelStringDrawing.h	(revision 1358)
-+++ FontLabelStringDrawing.h	(working copy)
-@@ -23,6 +23,7 @@
- 
- @class ZFont;
- 
-+
- @interface NSString (FontLabelStringDrawing)
- // CGFontRef-based methods
- - (CGSize)sizeWithCGFont:(CGFontRef)font pointSize:(CGFloat)pointSize __AVAILABILITY_INTERNAL_DEPRECATED;
 Index: FontLabel.m
 ===================================================================
---- FontLabel.m	(revision 1358)
+--- FontLabel.m	(revision 1425)
 +++ FontLabel.m	(working copy)
-@@ -36,7 +36,7 @@
+@@ -37,7 +37,7 @@
  }
  
  - (id)initWithFrame:(CGRect)frame zFont:(ZFont *)font {
@@ -23,67 +11,108 @@ Index: FontLabel.m
  		zFont = [font retain];
  	}
  	return self;
-Index: FontLabelStringDrawing.m
+Index: ZAttributedString.m
 ===================================================================
---- FontLabelStringDrawing.m	(revision 1358)
-+++ FontLabelStringDrawing.m	(working copy)
-@@ -78,6 +78,7 @@
+--- ZAttributedString.m	(revision 1425)
++++ ZAttributedString.m	(working copy)
+@@ -26,7 +26,7 @@
+ 
+ - (id)initWithAttributedString:(ZAttributedString *)attr {
+ 	NSParameterAssert(attr != nil);
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		_buffer = [attr->_buffer mutableCopy];
+ 		_attributes = [[NSMutableArray alloc] initWithArray:attr->_attributes copyItems:YES];
  	}
+@@ -38,7 +38,7 @@
  }
  
-+
- // read the cmap table from the font
- // we only know how to understand some of the table formats at the moment
- static fontTable *readFontTableFromCGFont(CGFontRef font) {
-@@ -112,7 +113,7 @@
+ - (id)initWithString:(NSString *)str attributes:(NSDictionary *)attributes {
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		_buffer = [str mutableCopy];
+ 		_attributes = [[NSMutableArray alloc] initWithObjects:[ZAttributeRun attributeRunWithIndex:0 attributes:attributes], nil];
+ 	}
+@@ -50,7 +50,7 @@
+ }
+ 
+ - (id)initWithCoder:(NSCoder *)decoder {
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		_buffer = [[decoder decodeObjectForKey:@"buffer"] mutableCopy];
+ 		_attributes = [[decoder decodeObjectForKey:@"attributes"] mutableCopy];
+ 	}
+@@ -531,7 +531,7 @@
+ 
+ - (id)initWithIndex:(NSUInteger)idx attributes:(NSDictionary *)attrs {
+ 	NSParameterAssert(idx >= 0);
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		_index = idx;
+ 		if (attrs == nil) {
+ 			_attributes = [[NSMutableDictionary alloc] init];
+@@ -543,7 +543,7 @@
+ }
+ 
+ - (id)initWithCoder:(NSCoder *)decoder {
+-	if (self = [super init]) {
++	if ((self = [super init])) {
+ 		_index = [[decoder decodeObjectForKey:@"index"] unsignedIntegerValue];
+ 		_attributes = [[decoder decodeObjectForKey:@"attributes"] mutableCopy];
+ 	}
+Index: FontLabelStringDrawing.m
+===================================================================
+--- FontLabelStringDrawing.m	(revision 1425)
++++ FontLabelStringDrawing.m	(working copy)
+@@ -34,8 +34,8 @@
+ #define kUnicodeLowSurrogateEnd 0xDFFF
+ #define kUnicodeLowSurrogateMask kUnicodeLowSurrogateStart
+ #define kUnicodeSurrogateTypeMask 0xFC00
+-#define UnicharIsHighSurrogate(c) (c & kUnicodeSurrogateTypeMask == kUnicodeHighSurrogateMask)
+-#define UnicharIsLowSurrogate(c) (c & kUnicodeSurrogateTypeMask == kUnicodeLowSurrogateMask)
++#define UnicharIsHighSurrogate(c) ((c & kUnicodeSurrogateTypeMask) == kUnicodeHighSurrogateMask)
++#define UnicharIsLowSurrogate(c) ((c & kUnicodeSurrogateTypeMask) == kUnicodeLowSurrogateMask)
+ #define ConvertSurrogatePairToUTF32(high, low) ((UInt32)((high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000))
+ 
+ typedef enum {
+@@ -145,7 +145,7 @@
  				UInt32 offset = OSReadBigInt32(encodingSubtable, 4);
  				const UInt8 *subtable = &bytes[offset];
  				UInt16 format = OSReadBigInt16(subtable, 0);
 -				for (int i = 0; i < supportedFormatsCount; i++) {
-+				for (NSUInteger i = 0; i < supportedFormatsCount; i++) {
++				for (unsigned int i = 0; i < supportedFormatsCount; i++) {
  					if (format == supportedFormats[i]) {
  						if (format >= 8) {
  							// the version is a fixed-point
-@@ -243,7 +244,7 @@
- 		CGFloat ratio = font.ratio;
- 		
- 		int width = 0;
--		for (int i = 0; i < n; i++) {
-+		for (NSUInteger i = 0; i < n; i++) {
- 			width += outAdvances[i];
- 			if (outWidths != NULL) outWidths[i] = outAdvances[i]*ratio;
- 		}
 Index: ZFont.h
 ===================================================================
---- ZFont.h	(revision 1358)
+--- ZFont.h	(revision 1425)
 +++ ZFont.h	(working copy)
-@@ -19,7 +19,7 @@
- // limitations under the License.
+@@ -20,6 +20,7 @@
  //
  
--#import <Foundation/Foundation.h>
+ #import <Foundation/Foundation.h>
 +#import <UIKit/UIKit.h>
  
  @interface ZFont : NSObject {
  	CGFontRef _cgFont;
 Index: FontManager.h
 ===================================================================
---- FontManager.h	(revision 1358)
+--- FontManager.h	(revision 1425)
 +++ FontManager.h	(working copy)
-@@ -19,7 +19,7 @@
- // limitations under the License.
+@@ -20,6 +20,7 @@
  //
  
--#import <Foundation/Foundation.h>
+ #import <Foundation/Foundation.h>
 +#import <UIKit/UIKit.h>
  
  @class ZFont;
  
 Index: ZFont.m
 ===================================================================
---- ZFont.m	(revision 1358)
+--- ZFont.m	(revision 1425)
 +++ ZFont.m	(working copy)
-@@ -34,7 +34,7 @@
+@@ -42,7 +42,7 @@
  }
  
  - (id)initWithCGFont:(CGFontRef)cgFont size:(CGFloat)fontSize {
@@ -94,20 +123,19 @@ Index: ZFont.m
  		_ratio = fontSize/CGFontGetUnitsPerEm(cgFont);
 Index: FontLabel.h
 ===================================================================
---- FontLabel.h	(revision 1358)
+--- FontLabel.h	(revision 1425)
 +++ FontLabel.h	(working copy)
-@@ -19,7 +19,7 @@
- // limitations under the License.
+@@ -20,6 +20,7 @@
  //
  
--#import <Foundation/Foundation.h>
+ #import <Foundation/Foundation.h>
 +#import <UIKit/UIKit.h>
  
  @class ZFont;
- 
+ @class ZAttributedString;
 Index: FontManager.m
 ===================================================================
---- FontManager.m	(revision 1358)
+--- FontManager.m	(revision 1425)
 +++ FontManager.m	(working copy)
 @@ -35,7 +35,7 @@
  }
@@ -116,5 +144,5 @@ Index: FontManager.m
 -	if (self = [super init]) {
 +	if ((self = [super init])) {
  		fonts = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+ 		urls = [[NSMutableDictionary alloc] init];
  	}
- 	return self;
