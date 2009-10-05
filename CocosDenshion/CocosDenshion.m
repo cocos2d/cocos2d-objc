@@ -162,6 +162,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 			//Set up audio session
 			OSStatus result = AudioSessionInitialize(NULL, NULL,interruptionListenerCallback, self); 
 			result = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory); 
+			#pragma unused(result)
 		}	
 		
 		//Set up channel groups
@@ -590,6 +591,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error suspending context %x\n", error);
 	} 
+	#pragma unused(error)
 } 
 
 //Code to handle audio session resumption.  Thanks to Andy Fitter and Ben Britten.
@@ -602,6 +604,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	
 	// Reactivate the current audio session 
     result = AudioSessionSetActive(YES); 
+	#pragma unused(result)
 	
     // Restore open al context 
     alcMakeContextCurrent(context); 
@@ -613,6 +616,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error processing context%x\n", error);
 	} 
+	#pragma unused(error)
 } 
 
 @end

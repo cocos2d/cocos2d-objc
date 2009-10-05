@@ -468,6 +468,7 @@ static BOOL configured = FALSE;
 	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error suspending context %x\n", error);
 	} 
+	#pragma unused(error)
 } 
 
 //Code to handle audio session resumption.  Thanks to Andy Fitter and Ben Britten.
@@ -480,12 +481,14 @@ static BOOL configured = FALSE;
 	
 	// Reactivate the current audio session 
     result = AudioSessionSetActive(YES); 
+	#pragma unused(result)
 	
     // Restore open al context 
     alcMakeContextCurrent([soundEngine openALContext]); 
 	if((error = alGetError()) != AL_NO_ERROR) {
 		CCLOG(@"Denshion: Error making context current%x\n", error);
 	} 
+    #pragma unused(error)
     // 'unpause' my context 
     alcProcessContext([soundEngine openALContext]); 
 	if((error = alGetError()) != AL_NO_ERROR) {
