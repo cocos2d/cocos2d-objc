@@ -26,7 +26,7 @@
 
 - (id)initWithAttributedString:(ZAttributedString *)attr {
 	NSParameterAssert(attr != nil);
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_buffer = [attr->_buffer mutableCopy];
 		_attributes = [[NSMutableArray alloc] initWithArray:attr->_attributes copyItems:YES];
 	}
@@ -38,7 +38,7 @@
 }
 
 - (id)initWithString:(NSString *)str attributes:(NSDictionary *)attributes {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_buffer = [str mutableCopy];
 		_attributes = [[NSMutableArray alloc] initWithObjects:[ZAttributeRun attributeRunWithIndex:0 attributes:attributes], nil];
 	}
@@ -50,7 +50,7 @@
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_buffer = [[decoder decodeObjectForKey:@"buffer"] mutableCopy];
 		_attributes = [[decoder decodeObjectForKey:@"attributes"] mutableCopy];
 	}
@@ -531,7 +531,7 @@
 
 - (id)initWithIndex:(NSUInteger)idx attributes:(NSDictionary *)attrs {
 	NSParameterAssert(idx >= 0);
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_index = idx;
 		if (attrs == nil) {
 			_attributes = [[NSMutableDictionary alloc] init];
@@ -543,7 +543,7 @@
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_index = [[decoder decodeObjectForKey:@"index"] unsignedIntegerValue];
 		_attributes = [[decoder decodeObjectForKey:@"attributes"] mutableCopy];
 	}
