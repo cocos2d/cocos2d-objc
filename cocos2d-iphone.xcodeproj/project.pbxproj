@@ -667,6 +667,9 @@
 		506414EE0F9C7021007A7B24 /* BitmapFontAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */; };
 		506602110E38A70D000B500E /* Scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* Scheduler.h */; };
 		506602120E38A70D000B500E /* Scheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* Scheduler.m */; };
+		506747C4107A32AE0090963A /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 506747C1107A32AE0090963A /* ZAttributedString.h */; };
+		506747C5107A32AE0090963A /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 506747C2107A32AE0090963A /* ZAttributedString.m */; };
+		506747C6107A32AE0090963A /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 506747C3107A32AE0090963A /* ZAttributedStringPrivate.h */; };
 		506881F80E95761200F943E5 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		506881F90E95761200F943E5 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		506881FA0E95761200F943E5 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -1992,6 +1995,9 @@
 		506414EC0F9C7021007A7B24 /* BitmapFontAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapFontAtlas.m; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scheduler.h; sourceTree = "<group>"; };
 		506602100E38A70D000B500E /* Scheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scheduler.m; sourceTree = "<group>"; };
+		506747C1107A32AE0090963A /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
+		506747C2107A32AE0090963A /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
+		506747C3107A32AE0090963A /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
 		506881E60E9575E100F943E5 /* AtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasTest.h; path = tests/AtlasTest.h; sourceTree = "<group>"; };
 		506881E70E9575E100F943E5 /* AtlasTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtlasTest.m; path = tests/AtlasTest.m; sourceTree = "<group>"; };
 		506882110E95761200F943E5 /* AtlasTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtlasTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3524,6 +3530,9 @@
 		505461F510616B0700AB7C52 /* FontLabel */ = {
 			isa = PBXGroup;
 			children = (
+				506747C1107A32AE0090963A /* ZAttributedString.h */,
+				506747C2107A32AE0090963A /* ZAttributedString.m */,
+				506747C3107A32AE0090963A /* ZAttributedStringPrivate.h */,
 				505461F610616B0700AB7C52 /* FontLabel.h */,
 				505461F710616B0700AB7C52 /* FontLabel.m */,
 				505461F810616B0700AB7C52 /* FontLabelStringDrawing.h */,
@@ -4483,6 +4492,8 @@
 				5054620010616B0700AB7C52 /* FontLabelStringDrawing.h in Headers */,
 				5054620210616B0700AB7C52 /* FontManager.h in Headers */,
 				5054620410616B0700AB7C52 /* ZFont.h in Headers */,
+				506747C4107A32AE0090963A /* ZAttributedString.h in Headers */,
+				506747C6107A32AE0090963A /* ZAttributedStringPrivate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6682,6 +6693,7 @@
 				5054620110616B0700AB7C52 /* FontLabelStringDrawing.m in Sources */,
 				5054620310616B0700AB7C52 /* FontManager.m in Sources */,
 				5054620510616B0700AB7C52 /* ZFont.m in Sources */,
+				506747C5107A32AE0090963A /* ZAttributedString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

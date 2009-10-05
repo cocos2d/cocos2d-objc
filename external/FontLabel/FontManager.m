@@ -35,8 +35,9 @@ static FontManager *sharedFontManager = nil;
 }
 
 - (id)init {
-	if ((self = [super init])) {
+	if (self = [super init]) {
 		fonts = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+		urls = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -48,29 +49,56 @@ static FontManager *sharedFontManager = nil;
 	}
 	if (fontPath == nil) return NO;
 	
-	CGDataProviderRef fontDataProvider = CGDataProviderCreateWithFilename([fontPath fileSystemRepresentation]);
+	NSURL *url = [NSURL fileURLWithPath:fontPath];
+	if ([self loadFontURL:url]) {
+		[urls setObject:url forKey:filename];
+		return YES;
+	}
+	return NO;
+}
+
+- (BOOL)loadFontURL:(NSURL *)url {
+	CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((CFURLRef)url);
 	if (fontDataProvider == NULL) return NO;
 	CGFontRef newFont = CGFontCreateWithDataProvider(fontDataProvider); 
 	CGDataProviderRelease(fontDataProvider); 
 	if (newFont == NULL) return NO;
 	
-	CFDictionarySetValue(fonts, filename, newFont);
+	CFDictionarySetValue(fonts, url, newFont);
 	CGFontRelease(newFont);
 	return YES;
 }
 
 - (CGFontRef)fontWithName:(NSString *)filename {
-	CGFontRef font = (CGFontRef)CFDictionaryGetValue(fonts, filename);
-	if (font == NULL && [self loadFont:filename]) {
-		font = (CGFontRef)CFDictionaryGetValue(fonts, filename);
+	CGFontRef font = NULL;
+	NSURL *url = [urls objectForKey:filename];
+	if (url == nil && [self loadFont:filename]) {
+		url = [urls objectForKey:filename];
+	}
+	if (url != nil) {
+		font = (CGFontRef)CFDictionaryGetValue(fonts, url);
 	}
 	return font;
 }
 
 - (ZFont *)zFontWithName:(NSString *)filename pointSize:(CGFloat)pointSize {
-	CGFontRef cgFont = (CGFontRef)CFDictionaryGetValue(fonts, filename);
-	if (cgFont == NULL && [self loadFont:filename]) {
-		cgFont = (CGFontRef)CFDictionaryGetValue(fonts, filename);
+	NSURL *url = [urls objectForKey:filename];
+	if (url == nil && [self loadFont:filename]) {
+		url = [urls objectForKey:filename];
+	}
+	if (url != nil) {
+		CGFontRef cgFont = (CGFontRef)CFDictionaryGetValue(fonts, url);
+		if (cgFont != NULL) {
+			return [ZFont fontWithCGFont:cgFont size:pointSize];
+		}
+	}
+	return nil;
+}
+
+- (ZFont *)zFontWithURL:(NSURL *)url pointSize:(CGFloat)pointSize {
+	CGFontRef cgFont = (CGFontRef)CFDictionaryGetValue(fonts, url);
+	if (cgFont == NULL && [self loadFontURL:url]) {
+		cgFont = (CGFontRef)CFDictionaryGetValue(fonts, url);
 	}
 	if (cgFont != NULL) {
 		return [ZFont fontWithCGFont:cgFont size:pointSize];
@@ -89,6 +117,7 @@ static FontManager *sharedFontManager = nil;
 
 - (void)dealloc {
 	CFRelease(fonts);
+	[urls release];
 	[super dealloc];
 }
 @end

@@ -33,8 +33,16 @@
 	return [[[self alloc] initWithCGFont:cgFont size:fontSize] autorelease];
 }
 
++ (ZFont *)fontWithUIFont:(UIFont *)uiFont {
+	NSParameterAssert(uiFont != nil);
+	CGFontRef cgFont = CGFontCreateWithFontName((CFStringRef)uiFont.fontName);
+	ZFont *zFont = [[self alloc] initWithCGFont:cgFont size:uiFont.pointSize];
+	CGFontRelease(cgFont);
+	return [zFont autorelease];
+}
+
 - (id)initWithCGFont:(CGFontRef)cgFont size:(CGFloat)fontSize {
-	if ((self = [super init])) {
+	if (self = [super init]) {
 		_cgFont = CGFontRetain(cgFont);
 		_pointSize = fontSize;
 		_ratio = fontSize/CGFontGetUnitsPerEm(cgFont);

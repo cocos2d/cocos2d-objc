@@ -30,13 +30,14 @@
 
 @implementation FontLabel
 @synthesize zFont;
+@synthesize zAttributedText;
 
 - (id)initWithFrame:(CGRect)frame fontName:(NSString *)fontName pointSize:(CGFloat)pointSize {
 	return [self initWithFrame:frame zFont:[[FontManager sharedManager] zFontWithName:fontName pointSize:pointSize]];
 }
 
 - (id)initWithFrame:(CGRect)frame zFont:(ZFont *)font {
-	if ((self = [super initWithFrame:frame])) {
+	if (self = [super initWithFrame:frame]) {
 		zFont = [font retain];
 	}
 	return self;
@@ -66,67 +67,102 @@
 	}
 }
 
+- (void)setZAttributedText:(ZAttributedString *)attStr {
+	if (zAttributedText != attStr) {
+		[zAttributedText release];
+		zAttributedText = [attStr copy];
+		[self setNeedsDisplay];
+	}
+}
+
 - (void)drawTextInRect:(CGRect)rect {
-	if (self.zFont == NULL) {
+	if (self.zFont == NULL && self.zAttributedText == nil) {
 		[super drawTextInRect:rect];
 		return;
 	}
 	
-	// this method is documented as setting the text color for us, but that doesn't appear to be the case
-	[self.textColor setFill];
-	
-	ZFont *actualFont = self.zFont;
-	CGSize origSize = rect.size;
-	if (self.numberOfLines == 1) {
-		origSize.height = actualFont.leading;
-		CGPoint point = CGPointMake(rect.origin.x,
-									rect.origin.y + roundf(((rect.size.height - actualFont.leading) / 2.0f)));
-		CGSize size = [self.text sizeWithZFont:actualFont];
-		if (self.adjustsFontSizeToFitWidth && self.minimumFontSize < actualFont.pointSize) {
-			if (size.width > origSize.width) {
-				CGFloat desiredRatio = (origSize.width * actualFont.ratio) / size.width;
-				CGFloat desiredPointSize = desiredRatio * actualFont.pointSize / actualFont.ratio;
-				actualFont = [actualFont fontWithSize:MAX(MAX(desiredPointSize, self.minimumFontSize), 1.0f)];
-				size = [self.text sizeWithZFont:actualFont];
-			}
-			if (!CGSizeEqualToSize(origSize, size)) {
-				switch (self.baselineAdjustment) {
-					case UIBaselineAdjustmentAlignCenters:
-						point.y += roundf((origSize.height - size.height) / 2.0f);
-						break;
-					case UIBaselineAdjustmentAlignBaselines:
-						point.y += (self.zFont.ascender - actualFont.ascender);
-						break;
-					case UIBaselineAdjustmentNone:
-						break;
+	if (self.zAttributedText == nil) {
+		// this method is documented as setting the text color for us, but that doesn't appear to be the case
+		if (self.highlighted) {
+			[(self.highlightedTextColor ?: [UIColor whiteColor]) setFill];
+		} else {
+			[(self.textColor ?: [UIColor blackColor]) setFill];
+		}
+		
+		ZFont *actualFont = self.zFont;
+		CGSize origSize = rect.size;
+		if (self.numberOfLines == 1) {
+			origSize.height = actualFont.leading;
+			CGPoint point = CGPointMake(rect.origin.x,
+										rect.origin.y + roundf(((rect.size.height - actualFont.leading) / 2.0f)));
+			CGSize size = [self.text sizeWithZFont:actualFont];
+			if (self.adjustsFontSizeToFitWidth && self.minimumFontSize < actualFont.pointSize) {
+				if (size.width > origSize.width) {
+					CGFloat desiredRatio = (origSize.width * actualFont.ratio) / size.width;
+					CGFloat desiredPointSize = desiredRatio * actualFont.pointSize / actualFont.ratio;
+					actualFont = [actualFont fontWithSize:MAX(MAX(desiredPointSize, self.minimumFontSize), 1.0f)];
+					size = [self.text sizeWithZFont:actualFont];
+				}
+				if (!CGSizeEqualToSize(origSize, size)) {
+					switch (self.baselineAdjustment) {
+						case UIBaselineAdjustmentAlignCenters:
+							point.y += roundf((origSize.height - size.height) / 2.0f);
+							break;
+						case UIBaselineAdjustmentAlignBaselines:
+							point.y += (self.zFont.ascender - actualFont.ascender);
+							break;
+						case UIBaselineAdjustmentNone:
+							break;
+					}
 				}
 			}
+			size.width = MIN(size.width, origSize.width);
+			// adjust the point for alignment
+			switch (self.textAlignment) {
+				case UITextAlignmentLeft:
+					break;
+				case UITextAlignmentCenter:
+					point.x += (origSize.width - size.width) / 2.0f;
+					break;
+				case UITextAlignmentRight:
+					point.x += origSize.width - size.width;
+					break;
+			}
+			[self.text drawAtPoint:point forWidth:size.width withZFont:actualFont lineBreakMode:self.lineBreakMode];
+		} else {
+			CGSize size = [self.text sizeWithZFont:actualFont constrainedToSize:origSize lineBreakMode:self.lineBreakMode numberOfLines:self.numberOfLines];
+			CGPoint point = rect.origin;
+			point.y += roundf((rect.size.height - size.height) / 2.0f);
+			rect = (CGRect){point, CGSizeMake(rect.size.width, size.height)};
+			[self.text drawInRect:rect withZFont:actualFont lineBreakMode:self.lineBreakMode alignment:self.textAlignment numberOfLines:self.numberOfLines];
 		}
-		size.width = MIN(size.width, origSize.width);
-		// adjust the point for alignment
-		switch (self.textAlignment) {
-			case UITextAlignmentLeft:
-				break;
-			case UITextAlignmentCenter:
-				point.x += (origSize.width - size.width) / 2.0f;
-				break;
-			case UITextAlignmentRight:
-				point.x += origSize.width - size.width;
-				break;
-		}
-		[self.text drawAtPoint:point forWidth:size.width withZFont:actualFont lineBreakMode:self.lineBreakMode];
 	} else {
-		if (self.numberOfLines > 0) origSize.height = MIN(origSize.height, self.numberOfLines * actualFont.leading);
-		CGSize size = [self.text sizeWithZFont:actualFont constrainedToSize:origSize lineBreakMode:self.lineBreakMode];
+		ZAttributedString *attStr = self.zAttributedText;
+		if (self.highlighted) {
+			// modify the string to change the base color
+			ZMutableAttributedString *mutStr = [[attStr mutableCopy] autorelease];
+			NSRange activeRange = NSMakeRange(0, attStr.length);
+			while (activeRange.length > 0) {
+				NSRange effective;
+				UIColor *color = [attStr attribute:ZForegroundColorAttributeName atIndex:activeRange.location
+							 longestEffectiveRange:&effective inRange:activeRange];
+				if (color == nil) {
+					[mutStr addAttribute:ZForegroundColorAttributeName value:[UIColor whiteColor] range:effective];
+				}
+				activeRange.location += effective.length, activeRange.length -= effective.length;
+			}
+			attStr = mutStr;
+		}
+		CGSize size = [attStr sizeConstrainedToSize:rect.size lineBreakMode:self.lineBreakMode numberOfLines:self.numberOfLines];
 		CGPoint point = rect.origin;
 		point.y += roundf((rect.size.height - size.height) / 2.0f);
 		rect = (CGRect){point, CGSizeMake(rect.size.width, size.height)};
-		[self.text drawInRect:rect withZFont:actualFont lineBreakMode:self.lineBreakMode alignment:self.textAlignment];
+		[attStr drawInRect:rect withLineBreakMode:self.lineBreakMode alignment:self.textAlignment numberOfLines:self.numberOfLines];
 	}
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines {
-	if (self.zFont == NULL) {
+	if (self.zFont == NULL && self.zAttributedText == nil) {
 		return [super textRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
 	}
 	
@@ -144,6 +180,7 @@
 
 - (void)dealloc {
 	[zFont release];
+	[zAttributedText release];
 	[super dealloc];
 }
 @end
