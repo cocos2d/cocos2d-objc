@@ -399,8 +399,8 @@ Class restartAction()
 		TMXTiledMap *map = [TMXTiledMap tiledMapWithTMXFile:@"orthogonal-test4.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
-		CGSize s = map.contentSize;
-		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		CGSize s1 = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s1.width,s1.height);
 		
 		for( AtlasSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
@@ -409,7 +409,7 @@ Class restartAction()
 		[map setAnchorPoint:ccp(0, 0)];
 
 		TMXLayer *layer = [map layerNamed:@"Layer 0"];
-		s = [layer layerSize];
+		CGSize s = [layer layerSize];
 		
 		AtlasSprite *sprite;
 		sprite = [layer tileAt:ccp(0,0)];

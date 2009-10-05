@@ -9,7 +9,7 @@ version 0.8.2 - XX-MMM-2009
  . FontLabel: updates version from git (issue #582)
  . Macros: CCLOG uses the "cocos2d:" prefix (issue #XXX)
  . Parallax: fixed limit of 5 children (issue #565)
- . Templates: works with FontLabel (issue #XXX)
+ . Templates: works with FontLabel (part of issue #534)
  . Templates: added cocos2d+chipmunk template (issue #XXX)
  . TextureAtlas: insertQuad fixed signed math (issue #575)
  
