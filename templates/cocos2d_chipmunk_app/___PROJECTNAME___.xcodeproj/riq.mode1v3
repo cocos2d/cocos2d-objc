@@ -232,6 +232,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -269,6 +271,7 @@
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>506EDAA3102F461B00A389B3</string>
+								<string>50F41306106926B2002A0D5E</string>
 								<string>2D500B1D0D5A766B00DBA0E3</string>
 								<string>50F4144210692EE7002A0D5E</string>
 								<string>1C37FABC05509CD000000102</string>
@@ -276,8 +279,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>11</integer>
-									<integer>8</integer>
+									<integer>4</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -312,8 +315,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -331,7 +332,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>5070233E1076770200393637</string>
+										<string>50674877107A3B600090963A</string>
 										<key>history</key>
 										<array>
 											<string>507022DE107673ED00393637</string>
@@ -340,13 +341,12 @@
 											<string>507023341076770200393637</string>
 											<string>507023351076770200393637</string>
 											<string>507023361076770200393637</string>
-											<string>507023371076770200393637</string>
+											<string>5070233E1076770200393637</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>507022E0107673ED00393637</string>
 											<string>507022E2107673ED00393637</string>
-											<string>507023381076770200393637</string>
 											<string>507023391076770200393637</string>
 											<string>5070233A1076770200393637</string>
 											<string>5070233B1076770200393637</string>
@@ -409,9 +409,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>5070233F1076770200393637</string>
+				<string>5067486E107A3B430090963A</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>507023401076770200393637</string>
+				<string>5067486F107A3B430090963A</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
