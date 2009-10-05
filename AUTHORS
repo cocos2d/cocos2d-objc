@@ -192,6 +192,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Rolando Abarca:
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
+	* Scott Iisystems:
+		TextureAtlas signed math error patch
 	* Serge Kolgan:
 		patches for CocosNode
 	* sflory:

@@ -11,6 +11,7 @@ version 0.8.2 - XX-MMM-2009
  . Parallax: fixed limit of 5 children (issue #565)
  . Templates: works with FontLabel (issue #XXX)
  . Templates: added cocos2d+chipmunk template (issue #XXX)
+ . TextureAtlas: insertQuad fixed signed math (issue #575)
  
 version 0.8.2-beta - 23-Sept-2009
  . All: ccConfig.h file added (issue #551)

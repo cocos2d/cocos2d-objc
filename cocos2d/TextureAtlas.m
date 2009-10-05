@@ -138,14 +138,15 @@
 
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
 {
-	NSAssert( index >= 0 && index < capacity_, @"updateQuadWithTexture: Invalid index");
+	NSAssert( index >= 0 && index < capacity_, @"insertQuadWithTexture: Invalid index");
 	
 	totalQuads_++;
 	
-	NSUInteger remaining = (totalQuads_-1) - index;
+	// issue #575. index can be > totalQuads
+	int remaining = (totalQuads_-1) - index;
 	
 	// last object doesn't need to be moved
-	if( remaining ) {
+	if( remaining > 0) {
 		// tex coordinates
 		memmove( &quads_[index+1],&quads_[index], sizeof(quads_[0]) * remaining );
 	}
