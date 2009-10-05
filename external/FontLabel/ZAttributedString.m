@@ -63,7 +63,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-	return [[ZAttributedString allocWithZone:zone] initWithAttributedString:self];
+	return [self retain];
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
@@ -348,6 +348,10 @@
 @end
 
 @implementation ZMutableAttributedString
+- (id)copyWithZone:(NSZone *)zone {
+	return [[ZAttributedString allocWithZone:zone] initWithAttributedString:self];
+}
+
 - (void)addAttribute:(NSString *)name value:(id)value range:(NSRange)range {
 	range = [self rangeOfAttributeRunsForRange:range];
 	for (ZAttributeRun *run in [_attributes subarrayWithRange:range]) {
@@ -421,6 +425,8 @@
 	}
 	[self cleanupAttributesInRange:range];
 }
+
+#pragma mark -
 
 // splits the existing runs to provide one or more new runs for the given range
 - (NSRange)rangeOfAttributeRunsForRange:(NSRange)range {

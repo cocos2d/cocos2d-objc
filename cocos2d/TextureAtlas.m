@@ -100,7 +100,7 @@
 -(void) initIndices
 {
 	for( NSUInteger i=0;i< capacity_;i++) {
-#ifdef USE_TRIANGLE_STRIP
+#if USE_TRIANGLE_STRIP
 		indices[i*6+0] = i*4+0;
 		indices[i*6+1] = i*4+0;
 		indices[i*6+2] = i*4+2;		
@@ -263,7 +263,7 @@
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (void*)(offset + diff));
 	
-#ifdef USE_TRIANGLE_STRIP
+#if USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices);	
 #else
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	

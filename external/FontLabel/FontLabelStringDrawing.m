@@ -145,7 +145,7 @@ static fontTable *readFontTableFromCGFont(CGFontRef font) {
 				UInt32 offset = OSReadBigInt32(encodingSubtable, 4);
 				const UInt8 *subtable = &bytes[offset];
 				UInt16 format = OSReadBigInt16(subtable, 0);
-				for (unsigned int i = 0; i < supportedFormatsCount; i++) {
+				for (size_t i = 0; i < supportedFormatsCount; i++) {
 					if (format == supportedFormats[i]) {
 						if (format >= 8) {
 							// the version is a fixed-point
@@ -384,6 +384,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 			NSRange newlineRange = [string rangeOfCharacterFromSet:charset options:0 range:range];
 			if (newlineRange.location == NSNotFound) {
 				[string getCharacters:&characters[cIdx] range:range];
+				cIdx += range.length;
 				break;
 			} else {
 				NSUInteger delta = newlineRange.location - range.location;
@@ -395,8 +396,15 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 				cIdx++;
 				delta += newlineRange.length;
 				range.location += delta, range.length -= delta;
+				if (newlineRange.length == 1 && range.length >= 1 &&
+					[string characterAtIndex:newlineRange.location] == (unichar)'\r' &&
+					[string characterAtIndex:range.location] == (unichar)'\n') {
+					// CRLF sequence, skip the LF
+					range.location += 1, range.length -= 1;
+				}
 			}
 		}
+		len = cIdx;
 	} else {
 		[string getCharacters:characters range:NSMakeRange(0, len)];
 	}
@@ -476,7 +484,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 			NSUInteger glyphIndex;
 			NSUInteger currentRunIdx;
 			CGSize lineSize;
-		} lastWrapCache = {0};
+		} lastWrapCache = {0, 0, 0, CGSizeZero};
 		BOOL inAlpha = NO; // used for calculating wrap points
 		
 		BOOL finishLine = NO;
