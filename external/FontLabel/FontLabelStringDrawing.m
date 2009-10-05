@@ -21,6 +21,7 @@
 
 #import "FontLabelStringDrawing.h"
 #import "ZFont.h"
+#import "ZAttributedStringPrivate.h"
 
 @interface ZFont (ZFontPrivate)
 @property (nonatomic, readonly) CGFloat ratio;
@@ -28,10 +29,13 @@
 
 #define kUnicodeHighSurrogateStart 0xD800
 #define kUnicodeHighSurrogateEnd 0xDBFF
+#define kUnicodeHighSurrogateMask kUnicodeHighSurrogateStart
 #define kUnicodeLowSurrogateStart 0xDC00
 #define kUnicodeLowSurrogateEnd 0xDFFF
-#define UnicharIsHighSurrogate(c) (c >= kUnicodeHighSurrogateStart && c <= kUnicodeHighSurrogateEnd)
-#define UnicharIsLowSurrogate(c) (c >= kUnicodeLowSurrogateStart && c <= kUnicodeLowSurrogateEnd)
+#define kUnicodeLowSurrogateMask kUnicodeLowSurrogateStart
+#define kUnicodeSurrogateTypeMask 0xFC00
+#define UnicharIsHighSurrogate(c) (c & kUnicodeSurrogateTypeMask == kUnicodeHighSurrogateMask)
+#define UnicharIsLowSurrogate(c) (c & kUnicodeSurrogateTypeMask == kUnicodeLowSurrogateMask)
 #define ConvertSurrogatePairToUTF32(high, low) ((UInt32)((high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000))
 
 typedef enum {
@@ -40,6 +44,7 @@ typedef enum {
 } FontTableFormat;
 
 typedef struct fontTable {
+	NSUInteger retainCount;
 	CFDataRef cmapTable;
 	FontTableFormat format;
 	union {
@@ -66,18 +71,45 @@ static size_t supportedFormatsCount = sizeof(supportedFormats) / sizeof(FontTabl
 
 static fontTable *newFontTable(CFDataRef cmapTable, FontTableFormat format) {
 	fontTable *table = (struct fontTable *)malloc(sizeof(struct fontTable));
+	table->retainCount = 1;
 	table->cmapTable = CFRetain(cmapTable);
 	table->format = format;
 	return table;
 }
 
-static void freeFontTable(fontTable *table) {
+static fontTable *retainFontTable(fontTable *table) {
 	if (table != NULL) {
-		CFRelease(table->cmapTable);
-		free(table);
+		table->retainCount++;
+	}
+	return table;
+}
+
+static void releaseFontTable(fontTable *table) {
+	if (table != NULL) {
+		if (table->retainCount <= 1) {
+			CFRelease(table->cmapTable);
+			free(table);
+		} else {
+			table->retainCount--;
+		}
 	}
 }
 
+static const void *fontTableRetainCallback(CFAllocatorRef allocator, const void *value) {
+	return retainFontTable((fontTable *)value);
+}
+
+static void fontTableReleaseCallback(CFAllocatorRef allocator, const void *value) {
+	releaseFontTable((fontTable *)value);
+}
+
+static const CFDictionaryValueCallBacks kFontTableDictionaryValueCallBacks = {
+	.version = 0,
+	.retain = &fontTableRetainCallback,
+	.release = &fontTableReleaseCallback,
+	.copyDescription = NULL,
+	.equal = NULL
+};
 
 // read the cmap table from the font
 // we only know how to understand some of the table formats at the moment
@@ -113,7 +145,7 @@ static fontTable *readFontTableFromCGFont(CGFontRef font) {
 				UInt32 offset = OSReadBigInt32(encodingSubtable, 4);
 				const UInt8 *subtable = &bytes[offset];
 				UInt16 format = OSReadBigInt16(subtable, 0);
-				for (NSUInteger i = 0; i < supportedFormatsCount; i++) {
+				for (int i = 0; i < supportedFormatsCount; i++) {
 					if (format == supportedFormats[i]) {
 						if (format >= 8) {
 							// the version is a fixed-point
@@ -156,7 +188,7 @@ static fontTable *readFontTableFromCGFont(CGFontRef font) {
 				table->cmap.format12.groups = (void *)&unicodeSubtable[16];
 				break;
 			default:
-				freeFontTable(table);
+				releaseFontTable(table);
 				table = NULL;
 		}
 	}
@@ -168,10 +200,10 @@ static fontTable *readFontTableFromCGFont(CGFontRef font) {
 static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characters[], size_t charLen, CGGlyph outGlyphs[], size_t *outGlyphLen) {
 	if (table != NULL) {
 		NSUInteger j = 0;
-		for (NSUInteger i = 0; i < charLen; i++, j++) {
-			unichar c = characters[i];
-			switch (table->format) {
-				case kFontTableFormat4: {
+		switch (table->format) {
+			case kFontTableFormat4: {
+				for (NSUInteger i = 0; i < charLen; i++, j++) {
+					unichar c = characters[i];
 					UInt16 segOffset;
 					BOOL foundSegment = NO;
 					for (segOffset = 0; segOffset < table->cmap.format4.segCountX2; segOffset += 2) {
@@ -202,9 +234,13 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 							}
 						}
 					}
-					break;
 				}
-				case kFontTableFormat12: {
+				break;
+			}
+			case kFontTableFormat12: {
+				UInt32 lastSegment = UINT32_MAX;
+				for (NSUInteger i = 0; i < charLen; i++, j++) {
+					unichar c = characters[i];
 					UInt32 c32 = c;
 					if (UnicharIsHighSurrogate(c)) {
 						if (i+1 < charLen) { // do we have another character after this one?
@@ -215,19 +251,63 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 							}
 						}
 					}
-					for (UInt32 idx = 0;; idx++) {
-						if (idx >= table->cmap.format12.nGroups) {
-							outGlyphs[j] = 0;
-							break;
+					// Start the heuristic search
+					// If this is an ASCII char, just do a linear search
+					// Otherwise do a hinted, modified binary search
+					// Start the first pivot at the last range found
+					// And when moving the pivot, limit the movement by increasing
+					// powers of two. This should help with locality
+					__typeof__(table->cmap.format12.groups[0]) *foundGroup = NULL;
+					if (c32 <= 0x7F) {
+						// ASCII
+						for (UInt32 idx = 0; idx < table->cmap.format12.nGroups; idx++) {
+							__typeof__(table->cmap.format12.groups[idx]) *group = &table->cmap.format12.groups[idx];
+							if (c32 < OSSwapBigToHostInt32(group->startCharCode)) {
+								// we've fallen into a hole
+								break;
+							} else if (c32 <= OSSwapBigToHostInt32(group->endCharCode)) {
+								// this is the range
+								foundGroup = group;
+								break;
+							}
 						}
-						__typeof__(table->cmap.format12.groups[idx]) group = table->cmap.format12.groups[idx];
-						if (c32 >= OSSwapBigToHostInt32(group.startCharCode) && c32 <= OSSwapBigToHostInt32(group.endCharCode)) {
-							outGlyphs[j] = (CGGlyph)(OSSwapBigToHostInt32(group.startGlyphCode) + (c32 - OSSwapBigToHostInt32(group.startCharCode)));
-							break;
+					} else {
+						// heuristic search
+						UInt32 maxJump = (lastSegment == UINT32_MAX ? UINT32_MAX / 2 : 8);
+						UInt32 lowIdx = 0, highIdx = table->cmap.format12.nGroups; // highIdx is the first invalid idx
+						UInt32 pivot = (lastSegment == UINT32_MAX ? lowIdx + (highIdx - lowIdx) / 2 : lastSegment);
+						while (highIdx > lowIdx) {
+							__typeof__(table->cmap.format12.groups[pivot]) *group = &table->cmap.format12.groups[pivot];
+							if (c32 < OSSwapBigToHostInt32(group->startCharCode)) {
+								highIdx = pivot;
+							} else if (c32 > OSSwapBigToHostInt32(group->endCharCode)) {
+								lowIdx = pivot + 1;
+							} else {
+								// we've hit the range
+								foundGroup = group;
+								break;
+							}
+							if (highIdx - lowIdx > maxJump * 2) {
+								if (highIdx == pivot) {
+									pivot -= maxJump;
+								} else {
+									pivot += maxJump;
+								}
+								maxJump *= 2;
+							} else {
+								pivot = lowIdx + (highIdx - lowIdx) / 2;
+							}
 						}
+						if (foundGroup != NULL) lastSegment = pivot;
 					}
-					break;
+					if (foundGroup == NULL) {
+						outGlyphs[j] = 0;
+					} else {
+						outGlyphs[j] = (CGGlyph)(OSSwapBigToHostInt32(foundGroup->startGlyphCode) +
+												 (c32 - OSSwapBigToHostInt32(foundGroup->startCharCode)));
+					}
 				}
+				break;
 			}
 		}
 		if (outGlyphLen != NULL) *outGlyphLen = j;
@@ -238,253 +318,414 @@ static void mapCharactersToGlyphsInFont(const fontTable *table, unichar characte
 	}
 }
 
-static CGSize mapGlyphsToAdvancesInFont(ZFont *font, size_t n, CGGlyph glyphs[], int outAdvances[], CGFloat outWidths[]) {
-	CGSize retVal = CGSizeMake(0, font.leading);
-	if (CGFontGetGlyphAdvances(font.cgFont, glyphs, n, outAdvances)) {
+static BOOL mapGlyphsToAdvancesInFont(ZFont *font, size_t n, CGGlyph glyphs[], CGFloat outAdvances[]) {
+	int advances[n];
+	if (CGFontGetGlyphAdvances(font.cgFont, glyphs, n, advances)) {
 		CGFloat ratio = font.ratio;
 		
-		int width = 0;
-		for (NSUInteger i = 0; i < n; i++) {
-			width += outAdvances[i];
-			if (outWidths != NULL) outWidths[i] = outAdvances[i]*ratio;
+		for (size_t i = 0; i < n; i++) {
+			outAdvances[i] = advances[i]*ratio;
 		}
-		
-		retVal.width = width*ratio;
+		return YES;
+	} else {
+		bzero(outAdvances, n*sizeof(CGFloat));
 	}
-	return retVal;
+	return NO;
 }
 
-static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string, ZFont *font, CGSize constrainedSize,
-											  UILineBreakMode lineBreakMode, UITextAlignment alignment, BOOL convertNewlines) {
+static id getValueOrDefaultForRun(ZAttributeRun *run, NSString *key) {
+	id value = [run.attributes objectForKey:key];
+	if (value == nil) {
+		static NSDictionary *defaultValues = nil;
+		if (defaultValues == nil) {
+			defaultValues = [[NSDictionary alloc] initWithObjectsAndKeys:
+							 [ZFont fontWithUIFont:[UIFont systemFontOfSize:12]], ZFontAttributeName,
+							 [UIColor blackColor], ZForegroundColorAttributeName,
+							 [UIColor clearColor], ZBackgroundColorAttributeName,
+							 [NSNumber numberWithInt:ZUnderlineStyleNone], ZUnderlineStyleAttributeName,
+							 nil];
+		}
+		value = [defaultValues objectForKey:key];
+	}
+	return value;
+}
+
+static void readRunInformation(NSArray *attributes, NSUInteger len, CFMutableDictionaryRef fontTableMap,
+							   NSUInteger index, ZAttributeRun **currentRun, NSUInteger *nextRunStart,
+							   ZFont **currentFont, fontTable **currentTable) {
+	*currentRun = [attributes objectAtIndex:index];
+	*nextRunStart = ([attributes count] > index+1 ? [[attributes objectAtIndex:index+1] index] : len);
+	*currentFont = getValueOrDefaultForRun(*currentRun, ZFontAttributeName);
+	if (!CFDictionaryGetValueIfPresent(fontTableMap, (*currentFont).cgFont, (const void **)currentTable)) {
+		*currentTable = readFontTableFromCGFont((*currentFont).cgFont);
+		CFDictionarySetValue(fontTableMap, (*currentFont).cgFont, *currentTable);
+		releaseFontTable(*currentTable);
+	}
+}
+
+static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string, NSArray *attributes, CGSize constrainedSize, NSUInteger maxLines,
+											  UILineBreakMode lineBreakMode, UITextAlignment alignment, BOOL ignoreColor) {
 	NSUInteger len = [string length];
+	NSUInteger idx = 0;
 	CGPoint drawPoint = CGPointZero;
+	CGSize retValue = CGSizeZero;
 	CGContextRef ctx = (performDraw ? UIGraphicsGetCurrentContext() : NULL);
 	
-	// Map the characters to glyphs
-	// split on hard newlines and calculate each run separately
-	// convert newlines to spaces if convertNewlines is specified
-	unichar characters[len];
-	{
-		// convert newlines to spaces
-		NSRange range = NSMakeRange(0, [string length]);
+	BOOL convertNewlines = (maxLines == 1);
+	
+	// Extract the characters from the string
+	// Convert newlines to spaces if necessary
+	unichar *characters = (unichar *)malloc(sizeof(unichar) * len);
+	if (convertNewlines) {
 		NSCharacterSet *charset = [NSCharacterSet newlineCharacterSet];
-		NSUInteger idx = 0;
+		NSRange range = NSMakeRange(0, len);
+		size_t cIdx = 0;
 		while (range.length > 0) {
-			NSRange needle = [string rangeOfCharacterFromSet:charset options:0 range:range];
-			if (needle.location == NSNotFound) {
-				// we're done here
-				[string getCharacters:&characters[idx] range:range];
-				idx += range.length;
+			NSRange newlineRange = [string rangeOfCharacterFromSet:charset options:0 range:range];
+			if (newlineRange.location == NSNotFound) {
+				[string getCharacters:&characters[cIdx] range:range];
 				break;
 			} else {
-				// suck out the characters up to the needle
-				// squash CRLF sequences down to a single newline, and convert non-newline line breaks to a newline
-				// if convertNewlines is specified, convert line breaks to a space instead
-				// We can safely ignore the size of needle as we're only testing the first character
-				// Granted, needle should always have length 1 anyway as line breaks cannot be composed characters
-				NSRange charRange = NSMakeRange(range.location, (needle.location + 1) - range.location);
-				[string getCharacters:&characters[idx] range:charRange];
-				idx += charRange.length;
-				range = NSMakeRange(NSMaxRange(needle), NSMaxRange(range) - NSMaxRange(needle));
-				unichar *cPtr = &characters[idx - 1];
-				if (range.length > 0 && *cPtr == (unichar)'\r') {
-					// is this CRLF?
-					if ([string characterAtIndex:range.location] == (unichar)'\n') {
-						// yes. Skip the \n
-						range.location++, range.length--;
+				NSUInteger delta = newlineRange.location - range.location;
+				if (newlineRange.location > range.location) {
+					[string getCharacters:&characters[cIdx] range:NSMakeRange(range.location, delta)];
+				}
+				cIdx += delta;
+				characters[cIdx] = (unichar)' ';
+				cIdx++;
+				delta += newlineRange.length;
+				range.location += delta, range.length -= delta;
+			}
+		}
+	} else {
+		[string getCharacters:characters range:NSMakeRange(0, len)];
+	}
+	
+	// Create storage for glyphs and advances
+	CGGlyph *glyphs;
+	CGFloat *advances;
+	{
+		NSUInteger maxRunLength = 0;
+		ZAttributeRun *a = [attributes objectAtIndex:0];
+		for (NSUInteger i = 1; i < [attributes count]; i++) {
+			ZAttributeRun *b = [attributes objectAtIndex:i];
+			maxRunLength = MAX(maxRunLength, b.index - a.index);
+			a = b;
+		}
+		maxRunLength = MAX(maxRunLength, len - a.index);
+		maxRunLength++; // for a potential ellipsis
+		glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * maxRunLength);
+		advances = (CGFloat *)malloc(sizeof(CGFloat) * maxRunLength);
+	}
+	
+	// Use this table to cache all fontTable objects
+	CFMutableDictionaryRef fontTableMap = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks,
+																	 &kFontTableDictionaryValueCallBacks);
+	
+	// Fetch initial style values
+	NSUInteger currentRunIdx = 0;
+	ZAttributeRun *currentRun;
+	NSUInteger nextRunStart;
+	ZFont *currentFont;
+	fontTable *currentTable;
+	
+#define READ_RUN() readRunInformation(attributes, len, fontTableMap, \
+									  currentRunIdx, &currentRun, &nextRunStart, \
+									  &currentFont, &currentTable)
+	
+	READ_RUN();
+	
+	// fetch the glyphs for the first run
+	size_t glyphCount;
+	NSUInteger glyphIdx;
+	
+#define READ_GLYPHS() do { \
+		mapCharactersToGlyphsInFont(currentTable, &characters[currentRun.index], (nextRunStart - currentRun.index), glyphs, &glyphCount); \
+		mapGlyphsToAdvancesInFont(currentFont, (nextRunStart - currentRun.index), glyphs, advances); \
+		glyphIdx = 0; \
+	} while (0)
+	
+	READ_GLYPHS();
+	
+	NSCharacterSet *alphaCharset = [NSCharacterSet alphanumericCharacterSet];
+	
+	// scan left-to-right looking for newlines or until we hit the width constraint
+	// When we hit a wrapping point, calculate truncation as follows:
+	// If we have room to draw at least one more character on the next line, no truncation
+	// Otherwise apply the truncation algorithm to the current line.
+	// After calculating any truncation, draw.
+	// Each time we hit the end of an attribute run, calculate the new font and make sure
+	// it fits (vertically) within the size constraint. If not, truncate this line.
+	// When we draw, iterate over the attribute runs for this line and draw each run separately
+	BOOL lastLine = NO; // used to indicate truncation and to stop the iterating
+	NSUInteger lineCount = 1;
+	while (idx < len && !lastLine) {
+		if (maxLines > 0 && lineCount == maxLines) {
+			lastLine = YES;
+		}
+		// scan left-to-right
+		struct {
+			NSUInteger index;
+			NSUInteger glyphIndex;
+			NSUInteger currentRunIdx;
+		} indexCache = { idx, glyphIdx, currentRunIdx };
+		CGSize lineSize = CGSizeMake(0, currentFont.leading);
+		CGFloat lineAscender = currentFont.ascender;
+		struct {
+			NSUInteger index;
+			NSUInteger glyphIndex;
+			NSUInteger currentRunIdx;
+			CGSize lineSize;
+		} lastWrapCache = {0};
+		BOOL inAlpha = NO; // used for calculating wrap points
+		
+		BOOL finishLine = NO;
+		for (;idx <= len && !finishLine;) {
+			NSUInteger skipCount = 0;
+			if (idx == len) {
+				finishLine = YES;
+				lastLine = YES;
+			} else {
+				if (idx >= nextRunStart) {
+					// cycle the font and table and grab the next set of glyphs
+					do {
+						currentRunIdx++;
+						READ_RUN();
+					} while (idx >= nextRunStart);
+					READ_GLYPHS();
+					// re-scan the characters to synchronize the glyph index
+					for (NSUInteger j = currentRun.index; j < idx; j++) {
+						if (UnicharIsHighSurrogate(characters[j]) && j+1<len && UnicharIsLowSurrogate(characters[j+1])) {
+							j++;
+						}
+						glyphIdx++;
+					}
+					if (currentFont.leading > lineSize.height) {
+						lineSize.height = currentFont.leading;
+						if (retValue.height + currentFont.ascender > constrainedSize.height) {
+							lastLine = YES;
+							finishLine = YES;
+						}
+					}
+					lineAscender = MAX(lineAscender, currentFont.ascender);
+				}
+				unichar c = characters[idx];
+				if (c == (unichar)'\n' || c == 0x0085) { // U+0085 is the NEXT_LINE unicode character
+					finishLine = YES;
+					skipCount = 1;
+				} else if (c == (unichar)'\r') {
+					finishLine = YES;
+					// check for CRLF
+					if (idx+1 < len && characters[idx+1] == (unichar)'\n') {
+						skipCount = 2;
+					} else {
+						skipCount = 1;
+					}
+				} else if (lineSize.width + advances[glyphIdx] > constrainedSize.width) {
+					finishLine = YES;
+					if (retValue.height + lineSize.height + currentFont.ascender > constrainedSize.height) {
+						lastLine = YES;
+					}
+					// walk backwards if wrapping is necessary
+					if (lastWrapCache.index > indexCache.index && lineBreakMode != UILineBreakModeCharacterWrap &&
+						(!lastLine || lineBreakMode != UILineBreakModeClip)) {
+						// we're doing some sort of word wrapping
+						idx = lastWrapCache.index;
+						lineSize = lastWrapCache.lineSize;
+						if (!lastLine) {
+							// re-check if this is the last line
+							if (lastWrapCache.currentRunIdx != currentRunIdx) {
+								currentRunIdx = lastWrapCache.currentRunIdx;
+								READ_RUN();
+								READ_GLYPHS();
+							}
+							if (retValue.height + lineSize.height + currentFont.ascender > constrainedSize.height) {
+								lastLine = YES;
+							}
+						}
+						glyphIdx = lastWrapCache.glyphIndex;
+						// skip any spaces
+						for (NSUInteger j = idx; j < len && characters[j] == (unichar)' '; j++) {
+							skipCount++;
+						}
 					}
 				}
-				if (convertNewlines) {
-					*cPtr = (unichar)' ';
-				} else if (*cPtr != '\n') {
-					*cPtr = (unichar)'\n';
+			}
+			if (finishLine) {
+				// TODO: support head/middle truncation
+				if (lastLine && idx < len && lineBreakMode == UILineBreakModeTailTruncation) {
+					// truncate
+					unichar ellipsis = 0x2026; // ellipsis (…)
+					CGGlyph ellipsisGlyph;
+					mapCharactersToGlyphsInFont(currentTable, &ellipsis, 1, &ellipsisGlyph, NULL);
+					CGFloat ellipsisWidth;
+					mapGlyphsToAdvancesInFont(currentFont, 1, &ellipsisGlyph, &ellipsisWidth);
+					while ((idx - indexCache.index) > 1 && lineSize.width + ellipsisWidth > constrainedSize.width) {
+						// we have more than 1 character and we're too wide, so back up
+						idx--;
+						if (UnicharIsHighSurrogate(characters[idx]) && UnicharIsLowSurrogate(characters[idx+1])) {
+							idx--;
+						}
+						if (idx < currentRun.index) {
+							ZFont *oldFont = currentFont;
+							do {
+								currentRunIdx--;
+								READ_RUN();
+							} while (idx < currentRun.index);
+							READ_GLYPHS();
+							glyphIdx = glyphCount-1;
+							if (oldFont != currentFont) {
+								mapCharactersToGlyphsInFont(currentTable, &ellipsis, 1, &ellipsisGlyph, NULL);
+								mapGlyphsToAdvancesInFont(currentFont, 1, &ellipsisGlyph, &ellipsisWidth);
+							}
+						} else {
+							glyphIdx--;
+						}
+						lineSize.width -= advances[glyphIdx];
+					}
+					// skip any spaces before truncating
+					while ((idx - indexCache.index) > 1 && characters[idx-1] == (unichar)' ') {
+						idx--;
+						if (idx < currentRun.index) {
+							currentRunIdx--;
+							READ_RUN();
+							READ_GLYPHS();
+							glyphIdx = glyphCount-1;
+						} else {
+							glyphIdx--;
+						}
+						lineSize.width -= advances[glyphIdx];
+					}
+					lineSize.width += ellipsisWidth;
+					glyphs[glyphIdx] = ellipsisGlyph;
+					idx++;
+					glyphIdx++;
+				}
+				retValue.width = MAX(retValue.width, lineSize.width);
+				retValue.height += lineSize.height;
+				
+				// draw
+				if (performDraw) {
+					switch (alignment) {
+						case UITextAlignmentLeft:
+							drawPoint.x = 0;
+							break;
+						case UITextAlignmentCenter:
+							drawPoint.x = (constrainedSize.width - lineSize.width) / 2.0f;
+							break;
+						case UITextAlignmentRight:
+							drawPoint.x = constrainedSize.width - lineSize.width;
+							break;
+					}
+					NSUInteger stopGlyphIdx = glyphIdx;
+					NSUInteger lastRunIdx = currentRunIdx;
+					NSUInteger stopCharIdx = idx;
+					idx = indexCache.index;
+					if (currentRunIdx != indexCache.currentRunIdx) {
+						currentRunIdx = indexCache.currentRunIdx;
+						READ_RUN();
+						READ_GLYPHS();
+					}
+					glyphIdx = indexCache.glyphIndex;
+					for (NSUInteger drawIdx = currentRunIdx; drawIdx <= lastRunIdx; drawIdx++) {
+						if (drawIdx != currentRunIdx) {
+							currentRunIdx = drawIdx;
+							READ_RUN();
+							READ_GLYPHS();
+						}
+						NSUInteger numGlyphs;
+						if (drawIdx == lastRunIdx) {
+							numGlyphs = stopGlyphIdx - glyphIdx;
+							idx = stopCharIdx;
+						} else {
+							numGlyphs = glyphCount - glyphIdx;
+							idx = nextRunStart;
+						}
+						CGContextSetFont(ctx, currentFont.cgFont);
+						CGContextSetFontSize(ctx, currentFont.pointSize);
+						// calculate the fragment size
+						CGFloat fragmentWidth = 0;
+						for (NSUInteger g = 0; g < numGlyphs; g++) {
+							fragmentWidth += advances[glyphIdx + g];
+						}
+						
+						if (!ignoreColor) {
+							UIColor *foregroundColor = getValueOrDefaultForRun(currentRun, ZForegroundColorAttributeName);
+							UIColor *backgroundColor = getValueOrDefaultForRun(currentRun, ZBackgroundColorAttributeName);
+							if (backgroundColor != nil && ![backgroundColor isEqual:[UIColor clearColor]]) {
+								[backgroundColor setFill];
+								UIRectFillUsingBlendMode((CGRect){ drawPoint, { fragmentWidth, lineSize.height } }, kCGBlendModeNormal);
+							}
+							[foregroundColor setFill];
+						}
+						
+						CGContextShowGlyphsAtPoint(ctx, drawPoint.x, drawPoint.y + lineAscender, &glyphs[glyphIdx], numGlyphs);
+						NSNumber *underlineStyle = getValueOrDefaultForRun(currentRun, ZUnderlineStyleAttributeName);
+						if ([underlineStyle	integerValue] & ZUnderlineStyleMask) {
+							// we only support single for the time being
+							UIRectFill(CGRectMake(drawPoint.x, drawPoint.y + lineAscender, fragmentWidth, 1));
+						}
+						drawPoint.x += fragmentWidth;
+						glyphIdx += numGlyphs;
+					}
+					drawPoint.y += lineSize.height;
+				}
+				idx += skipCount;
+				glyphIdx += skipCount;
+				lineCount++;
+			} else {
+				// Mark a wrap point before spaces and after any stretch of non-alpha characters
+				BOOL markWrap = NO;
+				if (characters[idx] == (unichar)' ') {
+					markWrap = YES;
+				} else if ([alphaCharset characterIsMember:characters[idx]]) {
+					if (!inAlpha) {
+						markWrap = YES;
+						inAlpha = YES;
+					}
+				} else {
+					inAlpha = NO;
+				}
+				if (markWrap) {
+					lastWrapCache = (__typeof__(lastWrapCache)){
+						.index = idx,
+						.glyphIndex = glyphIdx,
+						.currentRunIdx = currentRunIdx,
+						.lineSize = lineSize
+					};
+				}
+				lineSize.width += advances[glyphIdx];
+				glyphIdx++;
+				idx++;
+				if (idx < len && UnicharIsHighSurrogate(characters[idx-1]) && UnicharIsLowSurrogate(characters[idx])) {
+					// skip the second half of the surrogate pair
+					idx++;
 				}
 			}
 		}
-		len = idx;
 	}
-		
-	fontTable *table = readFontTableFromCGFont(font.cgFont);
-	CGSize retVal = CGSizeZero;
-	CGFloat ascender = font.ascender;
-	NSUInteger idx = 0;
-	BOOL lastLine = NO;
-	while (idx < len && !lastLine) {
-		unichar *charPtr = &characters[idx];
-		NSUInteger i;
-		for (i = idx; i < len && characters[i] != (unichar)'\n'; i++);
-		size_t rowLen = i - idx;
-		idx = i + 1;
-		CGGlyph glyphs[(rowLen ?: 1)]; // 0-sized arrays are undefined, so ensure we declare at least 1 elt
-		size_t glyphLen;
-		mapCharactersToGlyphsInFont(table, charPtr, rowLen, glyphs, &glyphLen);
-		// Get the advances for the glyphs
-		int advances[(glyphLen ?: 1)];
-		CGFloat widths[(glyphLen ?: 1)];
-		CGSize rowSize = mapGlyphsToAdvancesInFont(font, glyphLen, glyphs, advances, widths);
-		NSUInteger glyphIdx = 0;
-		NSUInteger rowIdx = 0;
-		do {
-			NSUInteger softGlyphLen = glyphLen - glyphIdx;
-			NSUInteger skipGlyphIdx = 0;
-			NSUInteger softRowLen = rowLen - rowIdx;
-			NSUInteger skipRowIdx = 0;
-			CGFloat curWidth = rowSize.width;
-			retVal.height += rowSize.height;
-			if (retVal.height + ascender > constrainedSize.height) {
-				lastLine = YES;
-				// UILineBreakModeClip appears to behave like UILineBreakModeCharacterWrap
-				// on the last line of rendered text. This should be researched more fully
-				// (as it doesn't seem to match the documentation), but for the time being
-				// we should follow the same behavior.
-				if (lineBreakMode == UILineBreakModeClip) {
-					lineBreakMode = UILineBreakModeCharacterWrap;
-				}
-			}
-			if (curWidth > constrainedSize.width) {
-				// wrap to a new line
-				CGFloat skipWidth = 0;
-				NSUInteger lastRowSpace = 0;
-				NSUInteger lastGlyphSpace = 0;
-				CGFloat lastSpaceWidth = 0;
-				curWidth = 0;
-				for (NSUInteger j = glyphIdx, cj = rowIdx; j < glyphLen; j++, cj++) {
-					CGFloat newWidth = curWidth + widths[j];
-					// if we're at the start of a surrogate pair, skip the high surrogate
-					// any character-testing we do will never match any surrogate, so it doesn't matter
-					// which of the pair we test against, and this keeps our character count in sync
-					if (UnicharIsHighSurrogate(charPtr[cj]) && cj+1 < rowLen && UnicharIsLowSurrogate(charPtr[cj+1])) cj++;
-					// never wrap if we haven't consumed at least 1 character
-					if (newWidth > constrainedSize.width && j > glyphIdx) {
-						// we've gone over the limit now
-						if (charPtr[cj] == (unichar)' ') {
-							// we're at a space already, just break here regardless of the line break mode
-							// walk backwards to find the begnining of this run of spaces
-							for (NSUInteger k = j-1, ck = cj-1; k >= glyphIdx && charPtr[ck] == (unichar)' '; k--, ck--) {
-								curWidth -= widths[k];
-								skipWidth += widths[k];
-								j = k;
-								cj = ck;
-							}
-							softGlyphLen = j - glyphIdx;
-							softRowLen = cj - rowIdx;
-						} else if (lastRowSpace == 0 || lineBreakMode == UILineBreakModeCharacterWrap ||
-								   (lastLine && (lineBreakMode == UILineBreakModeTailTruncation ||
-												 lineBreakMode == UILineBreakModeMiddleTruncation ||
-												 lineBreakMode == UILineBreakModeHeadTruncation))) {
-							// if this is the first word, fall back to character wrap instead
-							softGlyphLen = j - glyphIdx;
-							softRowLen = cj - rowIdx;
-						} else {
-							softGlyphLen = lastGlyphSpace - glyphIdx;
-							softRowLen = lastRowSpace - rowIdx;
-							curWidth = lastSpaceWidth;
-						}
-						while (glyphIdx + softGlyphLen + skipGlyphIdx < glyphLen && charPtr[rowIdx+softRowLen+skipRowIdx] == (unichar)' ') {
-							skipWidth += widths[glyphIdx+softGlyphLen+skipGlyphIdx];
-							skipGlyphIdx++;
-							skipRowIdx++;
-						}
-						break;
-					} else if (charPtr[cj] == (unichar)' ') {
-						lastGlyphSpace = j;
-						lastRowSpace = cj;
-						lastSpaceWidth = curWidth;
-					}
-					curWidth = newWidth;
-				}
-				rowSize.width -= (curWidth + skipWidth);
-			}
-			if (lastLine) {
-				// we're on the last line, check for truncation
-				if (glyphIdx + softGlyphLen < glyphLen || idx < len) {
-					// there's still remaining text
-					if (lineBreakMode == UILineBreakModeTailTruncation ||
-						lineBreakMode == UILineBreakModeMiddleTruncation ||
-						lineBreakMode == UILineBreakModeHeadTruncation) {
-						//softRowLen = truncationRowLen;
-						unichar ellipsis = 0x2026; // ellipsis (…)
-						CGGlyph ellipsisGlyph;
-						mapCharactersToGlyphsInFont(table, &ellipsis, 1, &ellipsisGlyph, NULL);
-						int ellipsisAdvance;
-						CGFloat ellipsisWidth;
-						mapGlyphsToAdvancesInFont(font, 1, &ellipsisGlyph, &ellipsisAdvance, &ellipsisWidth);
-						switch (lineBreakMode) {
-							case UILineBreakModeTailTruncation: {
-								while (curWidth + ellipsisWidth > constrainedSize.width && softGlyphLen > 1) {
-									softRowLen--;
-									softGlyphLen--;
-									curWidth -= widths[glyphIdx+softGlyphLen];
-								}
-								// keep going backwards if we've stopped at a space or just after the first letter
-								// of a multi-letter word
-								if (softGlyphLen > 1 && charPtr[rowIdx+softRowLen-1] != (unichar)' ') {
-									// handle surrogate pairs properly
-									NSUInteger offset = 2;
-									if (UnicharIsHighSurrogate(charPtr[rowIdx+softRowLen-1]) &&
-										UnicharIsLowSurrogate(charPtr[rowIdx+softRowLen-2])) {
-										offset = 3;
-									}
-									if (softGlyphLen >= offset && charPtr[rowIdx+softRowLen-offset] == (unichar)' ') {
-										// we're right after the first letter of a word. Is it a multi-letter word?
-										NSCharacterSet *set = [NSCharacterSet alphanumericCharacterSet];
-										if (rowIdx+softRowLen < rowLen && [set characterIsMember:charPtr[rowIdx+softRowLen]]) {
-											softRowLen--;
-											softGlyphLen--;
-											curWidth -= widths[glyphIdx+softGlyphLen];
-										}
-									}
-								}
-								while (softRowLen > 1 && charPtr[rowIdx+softRowLen-1] == (unichar)' ') {
-									softRowLen--;
-									softGlyphLen--;
-									curWidth -= widths[glyphIdx+softGlyphLen];
-								}
-								curWidth += ellipsisWidth;
-								glyphs[glyphIdx+softGlyphLen] = ellipsisGlyph;
-								softRowLen++;
-								softGlyphLen++;
-								break;
-							}
-							default:
-								;// we don't support any other types at the moment
-						}
-					}
-				}
-			}
-			retVal.width = MAX(retVal.width, curWidth);
-			if (performDraw) {
-				switch (alignment) {
-					case UITextAlignmentLeft:
-						drawPoint.x = 0;
-						break;
-					case UITextAlignmentCenter:
-						drawPoint.x = (constrainedSize.width - curWidth) / 2.0f;
-						break;
-					case UITextAlignmentRight:
-						drawPoint.x = constrainedSize.width - curWidth;
-						break;
-				}
-				CGContextShowGlyphsAtPoint(ctx, drawPoint.x, drawPoint.y + ascender, &glyphs[glyphIdx], softGlyphLen);
-				drawPoint.y += rowSize.height;
-			}
-			glyphIdx += softGlyphLen + skipGlyphIdx;
-			rowIdx += softRowLen + skipRowIdx;
-		} while (!lastLine && glyphIdx < glyphLen);
-	}
-	freeFontTable(table);
+	CFRelease(fontTableMap);
+	free(glyphs);
+	free(advances);
+	free(characters);
 	
-	return retVal;
+#undef READ_GLYPHS
+#undef READ_RUN
+	
+	return retValue;
 }
 
-static CGSize drawTextInRect(CGRect rect, NSString *text, ZFont *font, UILineBreakMode lineBreakMode,
-							 UITextAlignment alignment, BOOL convertNewlines) {
+static NSArray *attributeRunForFont(ZFont *font) {
+	return [NSArray arrayWithObject:[ZAttributeRun attributeRunWithIndex:0
+															  attributes:[NSDictionary dictionaryWithObject:font
+																									 forKey:ZFontAttributeName]]];
+}
+
+static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, UILineBreakMode lineBreakMode,
+							 UITextAlignment alignment, NSUInteger numberOfLines, BOOL ignoreColor) {
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
 	
 	CGContextSaveGState(ctx);
-	
-	CGContextSetFont(ctx, font.cgFont);
-	CGContextSetFontSize(ctx, font.pointSize);
 	
 	// flip it upside-down because our 0,0 is upper-left, whereas ttfs are for screens where 0,0 is lower-left
 	CGAffineTransform textTransform = CGAffineTransformMake(1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f);
@@ -493,7 +734,7 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, ZFont *font, UILineBre
 	CGContextTranslateCTM(ctx, rect.origin.x, rect.origin.y);
 	
 	CGContextSetTextDrawingMode(ctx, kCGTextFill);
-	CGSize size = drawOrSizeTextConstrainedToSize(YES, text, font, rect.size, lineBreakMode, alignment, convertNewlines);
+	CGSize size = drawOrSizeTextConstrainedToSize(YES, text, attributes, rect.size, numberOfLines, lineBreakMode, alignment, ignoreColor);
 	
 	CGContextRestoreGState(ctx);
 	
@@ -534,7 +775,8 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, ZFont *font, UILineBre
 
 // ZFont-based methods
 - (CGSize)sizeWithZFont:(ZFont *)font {
-	CGSize size = drawOrSizeTextConstrainedToSize(NO, self, font, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), UILineBreakModeClip, UITextAlignmentLeft, YES);
+	CGSize size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
+												  UILineBreakModeClip, UITextAlignmentLeft, YES);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
@@ -554,7 +796,13 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, ZFont *font, UILineBre
  be present in the output size.
  */
 - (CGSize)sizeWithZFont:(ZFont *)font constrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode {
-	size = drawOrSizeTextConstrainedToSize(NO, self, font, size, lineBreakMode, UITextAlignmentLeft, NO);
+	size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), size, 0, lineBreakMode, UITextAlignmentLeft, YES);
+	return CGSizeMake(ceilf(size.width), ceilf(size.height));
+}
+
+- (CGSize)sizeWithZFont:(ZFont *)font constrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode
+		  numberOfLines:(NSUInteger)numberOfLines {
+	size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), size, numberOfLines, lineBreakMode, UITextAlignmentLeft, YES);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
@@ -563,7 +811,7 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, ZFont *font, UILineBre
 }
 
 - (CGSize)drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode {
-	return drawTextInRect((CGRect){ point, { width, font.leading } }, self, font, lineBreakMode, UITextAlignmentLeft, YES);
+	return drawTextInRect((CGRect){ point, { width, CGFLOAT_MAX } }, self, attributeRunForFont(font), lineBreakMode, UITextAlignmentLeft, 1, YES);
 }
 
 - (CGSize)drawInRect:(CGRect)rect withZFont:(ZFont *)font {
@@ -576,6 +824,59 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, ZFont *font, UILineBre
 
 - (CGSize)drawInRect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode
 		   alignment:(UITextAlignment)alignment {
-	return drawTextInRect(rect, self, font, lineBreakMode, alignment, NO);
+	return drawTextInRect(rect, self, attributeRunForFont(font), lineBreakMode, alignment, 0, YES);
+}
+
+- (CGSize)drawInRect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode
+		   alignment:(UITextAlignment)alignment numberOfLines:(NSUInteger)numberOfLines {
+	return drawTextInRect(rect, self, attributeRunForFont(font), lineBreakMode, alignment, numberOfLines, YES);
+}
+@end
+
+@implementation ZAttributedString (ZAttributedStringDrawing)
+- (CGSize)size {
+	CGSize size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
+												  UILineBreakModeClip, UITextAlignmentLeft, NO);
+	return CGSizeMake(ceilf(size.width), ceilf(size.height));
+}
+
+- (CGSize)sizeConstrainedToSize:(CGSize)size {
+	return [self sizeConstrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
+}
+
+- (CGSize)sizeConstrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode {
+	size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, size, 0, lineBreakMode, UITextAlignmentLeft, NO);
+	return CGSizeMake(ceilf(size.width), ceilf(size.height));
+}
+
+- (CGSize)sizeConstrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode
+				  numberOfLines:(NSUInteger)numberOfLines {
+	size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, size, numberOfLines, lineBreakMode, UITextAlignmentLeft, NO);
+	return CGSizeMake(ceilf(size.width), ceilf(size.height));
+}
+
+- (CGSize)drawAtPoint:(CGPoint)point {
+	return [self drawAtPoint:point forWidth:CGFLOAT_MAX lineBreakMode:UILineBreakModeClip];
+}
+
+- (CGSize)drawAtPoint:(CGPoint)point forWidth:(CGFloat)width lineBreakMode:(UILineBreakMode)lineBreakMode {
+	return drawTextInRect((CGRect){ point, { width, CGFLOAT_MAX } }, self.string, self.attributes, lineBreakMode, UITextAlignmentLeft, 1, NO);
+}
+
+- (CGSize)drawInRect:(CGRect)rect {
+	return [self drawInRect:rect withLineBreakMode:UILineBreakModeWordWrap];
+}
+
+- (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode {
+	return [self drawInRect:rect withLineBreakMode:lineBreakMode alignment:UITextAlignmentLeft];
+}
+
+- (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode alignment:(UITextAlignment)alignment {
+	return drawTextInRect(rect, self.string, self.attributes, lineBreakMode, alignment, 0, NO);
+}
+
+- (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode alignment:(UITextAlignment)alignment
+	   numberOfLines:(NSUInteger)numberOfLines {
+	return drawTextInRect(rect, self.string, self.attributes, lineBreakMode, alignment, numberOfLines, NO);
 }
 @end
