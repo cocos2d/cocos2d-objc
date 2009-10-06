@@ -1,4 +1,4 @@
-version 0.8.2 - XX-MMM-2009
+version 0.8.2-rc0 - 5-Oct-2009
  . Actions: Added EaseBack family actios (issue #568)
  . AtlasSprite: set atlasIndex to invalid on remove (issue #569)
  . Box2d: using google code r22 (pre v2.1.0) (issue #494)
