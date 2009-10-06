@@ -188,7 +188,10 @@
 	particle->deltaAngle = (endA - startA) / particle->life;
 	
 	// position
-	particle->startPos = self.position;
+	if( positionType_ == kPositionTypeFree )
+		particle->startPos = [self convertToWorldSpace:CGPointZero];
+	else
+		particle->startPos = self.position;
 }
 
 -(void) stopSystem
