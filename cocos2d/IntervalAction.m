@@ -83,6 +83,7 @@
 
 -(void) start
 {
+	[super start];
 	elapsed = 0.0f;
 	firstTick = YES;
 }
