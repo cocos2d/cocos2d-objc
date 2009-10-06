@@ -83,3 +83,8 @@
 {}
 @end
 
+@interface ParallaxParticle : ParticleDemo
+{}
+@end
+
+

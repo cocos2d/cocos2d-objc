@@ -28,6 +28,7 @@ static NSString *transitions[] = {
 		@"DemoRotFlower",
 		@"DemoModernArt",
 		@"DemoRing",
+		@"ParallaxParticle",
 };
 
 Class nextAction()
@@ -64,7 +65,7 @@ Class restartAction()
 @synthesize emitter;
 -(id) init
 {
-	if( (self=[super initWithColor:ccc4(0,0,0,255)] )) {
+	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
 
 		self.isTouchEnabled = YES;
 		
@@ -92,25 +93,24 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		item4.position = ccp( 0, 60);
+		item4.position = ccp( 0, 100);
 		item4.anchorPoint = ccp(0,0);
 
 		[self addChild: menu z:100];	
 		
 		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
-		labelAtlas.position = ccp(s.width-100,50);
+		labelAtlas.position = ccp(254,50);
 		
 		// moving background
-		background = (Sprite*) self;
-//		background = [Sprite spriteWithFile:@"background3.png"];
-//		[self addChild:background z:5];
-//		[background setPosition:ccp(s.width/2, s.height-180)];
-//
-//		id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
-//		id move_back = [move reverse];
-//		id seq = [Sequence actions: move, move_back, nil];
-//		[background runAction:[RepeatForever actionWithAction:seq]];
+		background = [Sprite spriteWithFile:@"background3.png"];
+		[self addChild:background z:5];
+		[background setPosition:ccp(s.width/2, s.height-180)];
+
+		id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
+		id move_back = [move reverse];
+		id seq = [Sequence actions: move, move_back, nil];
+		[background runAction:[RepeatForever actionWithAction:seq]];
 		
 		
 		[self schedule:@selector(step:)];
@@ -196,8 +196,7 @@ Class restartAction()
 
 -(void) setEmitterPosition
 {
-	CGSize s = [[Director sharedDirector] winSize];
-	emitter.position = ccp(s.width/2, s.height/2);
+	emitter.position = ccp(200, 70);
 }
 
 @end
@@ -383,7 +382,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[QuadParticleSystem alloc] initWithTotalParticles:200];
+	self.emitter = [[QuadParticleSystem alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
 	[emitter release];
 	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars2.png"];
@@ -709,6 +708,47 @@ Class restartAction()
 @end
 
 #pragma mark -
+
+@implementation ParallaxParticle
+-(void) onEnter
+{
+	[super onEnter];
+
+	[[background parent] removeChild:background cleanup:YES];
+
+	ParallaxNode *p = [[ParallaxNode alloc] init];
+	[self addChild:p z:5];
+
+	Sprite *p1 = [Sprite spriteWithFile:@"background3.png"];
+	Sprite *p2 = [Sprite spriteWithFile:@"background3.png"];
+	
+	[p addChild:p1 z:1 parallaxRatio:ccp(0.5f,1) positionOffset:ccp(0,250)];
+	[p addChild:p2 z:2 parallaxRatio:ccp(1.5f,1) positionOffset:ccp(0,50)];
+
+	
+	self.emitter = [[ParticleFlower alloc] initWithTotalParticles:500];
+	[p1 addChild: emitter z:10];
+	[emitter release];
+	[emitter setPosition:ccp(250,200)];
+	
+	id par = [[ParticleSun alloc] initWithTotalParticles:250];
+	[p2 addChild:par z:10];
+	[par release];
+	
+	
+	id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
+	id move_back = [move reverse];
+	id seq = [Sequence actions: move, move_back, nil];
+	[p runAction:[RepeatForever actionWithAction:seq]];	
+}
+
+-(NSString *) title
+{
+	return @"Parallax + Particles";
+}
+@end
+
+#pragma mark -
 #pragma mark App Delegate
 
 // CLASS IMPLEMENTATIONS
@@ -727,7 +767,7 @@ Class restartAction()
 //	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
 	[[Director sharedDirector] setDisplayFPS: YES];
 
 	// AnimationInterval doesn't work with FastDirector, yet
