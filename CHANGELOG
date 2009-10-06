@@ -1,3 +1,6 @@
+version 0.8.2-rc1 - dd-MMM-2009
+ . Actions: start/stop sets the target (issue #489)
+ 
 version 0.8.2-rc0 - 5-Oct-2009
  . Actions: Added EaseBack family actios (issue #568)
  . AtlasSprite: set atlasIndex to invalid on remove (issue #569)

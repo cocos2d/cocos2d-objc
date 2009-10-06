@@ -25,7 +25,6 @@
 #pragma mark Action
 @implementation Action
 
-@synthesize target;
 @synthesize tag;
 
 +(id) action
@@ -35,11 +34,10 @@
 
 -(id) init
 {
-	if( !(self=[super init]) )
-		return nil;
-	
-	target = nil;
-	tag = kActionTagInvalid;
+	if( (self=[super init]) ) {	
+		targetCopy = target = nil;
+		tag = kActionTagInvalid;
+	}
 	return self;
 }
 
@@ -64,12 +62,22 @@
 
 -(void) start
 {
-	// override me
+	target = targetCopy;
 }
 
 -(void) stop
 {
-	// override me
+	target = nil;
+}
+
+-(void) setTarget:(id)t
+{
+	targetCopy = t;
+}
+
+-(id) target
+{
+	return target;
 }
 
 -(BOOL) isDone
