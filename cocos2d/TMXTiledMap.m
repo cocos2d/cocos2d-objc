@@ -276,7 +276,7 @@
 	if( currentGID != gid ) {
 		AtlasSprite *tile = [self tileAt:pos];
 		if( ! tile ) {
-			tile = [self addTileForGID:gid at:pos];
+			[self addTileForGID:gid at:pos];
 		} else {
 			CGRect rect = [tileset_ tileForGID:gid];
 			[tile setTextureRect:rect];

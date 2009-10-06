@@ -625,7 +625,7 @@ Class restartAction()
 -(Texture2D*) loadPNG:(NSString*)name
 {	
 	png_uint_32 width, height, width2, height2;
-	int bits;
+	int bits = 0;
 	NSString *newName = [FileUtils fullPathFromRelativePath:name];
 	
 	FILE *png_file = fopen([newName UTF8String], "rb");
