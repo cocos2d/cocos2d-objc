@@ -287,7 +287,6 @@ Class restartAction()
 	
 	// sprite 1
 	ccBezierConfig bezier;
-	bezier.startPosition = ccp(0,0);
 	bezier.controlPoint_1 = ccp(0, s.height/2);
 	bezier.controlPoint_2 = ccp(300, -s.height/2);
 	bezier.endPosition = ccp(300,100);
@@ -300,7 +299,6 @@ Class restartAction()
 
 	// sprite 2
 	ccBezierConfig bezier2;
-	bezier2.startPosition = ccp(0,0);
 	bezier2.controlPoint_1 = ccp(100, s.height/2);
 	bezier2.controlPoint_2 = ccp(200, -s.height/2);
 	bezier2.endPosition = ccp(300,0);

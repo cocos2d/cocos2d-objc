@@ -180,8 +180,8 @@ Example:
 /** bezier configuration structure
  */
 typedef struct _ccBezierConfig {
-	//! startPosition of the bezier
-	CGPoint startPosition;
+	//! startPosition of the bezier.
+//	CGPoint startPosition;
 	//! end position of the bezier
 	CGPoint endPosition;
 	//! Bezier control point 1
