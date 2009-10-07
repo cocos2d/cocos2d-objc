@@ -595,10 +595,19 @@
 
 -(void) update: (ccTime) t
 {
-	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
+	// Sin jump. Less realistic
+//	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
+//	y += delta.y * t;
+//	ccTime x = delta.x * t;
+//	[target setPosition: ccp( startPosition.x + x, startPosition.y + y )];	
+	
+	// parabolic jump (since v0.8.2)
+	ccTime frac = fmodf( t * jumps, 1.0f );
+	ccTime y = height * 4 * frac * (1 - frac);
 	y += delta.y * t;
 	ccTime x = delta.x * t;
 	[target setPosition: ccp( startPosition.x + x, startPosition.y + y )];
+	
 }
 
 -(IntervalAction*) reverse
