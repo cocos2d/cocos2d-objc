@@ -25,6 +25,7 @@ static NSString *transitions[] = {
 						 @"SpriteTint",
 						 @"SpriteAnimate",
 						 @"SpriteSequence",
+						 @"SpriteSequence2",
 						 @"SpriteSpawn",
 						 @"SpriteReverse",
 						 @"SpriteDelayTime",
@@ -422,6 +423,60 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sequence: Move + Rotate";
+}
+@end
+
+@implementation SpriteSequence2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[tamara setVisible:NO];
+	[grossini setVisible:NO];
+	
+	id action = [Sequence actions:
+				 [Place actionWithPosition:ccp(200,200)],
+				 [Show action],
+				 [MoveBy actionWithDuration:1 position:ccp(100,0)],
+				 [CallFunc actionWithTarget:self selector:@selector(callback1)],
+				 [CallFuncN actionWithTarget:self selector:@selector(callback2:)],
+				 [CallFuncND actionWithTarget:self selector:@selector(callback3:data:) data:(void*)0xbebabeba],
+				 nil];
+	
+	[grossini runAction:action];
+}
+
+-(void) callback1
+{
+	CGSize s = [[Director sharedDirector] winSize];
+	Label *label = [Label labelWithString:@"callback 1 called" fontName:@"Marker Felt" fontSize:16];
+	[label setPosition:ccp( s.width/4*1,s.height/2)];
+	
+	[self addChild:label];
+}
+
+-(void) callback2:(id)sender
+{
+	CGSize s = [[Director sharedDirector] winSize];
+	Label *label = [Label labelWithString:@"callback 2 called" fontName:@"Marker Felt" fontSize:16];
+	[label setPosition:ccp( s.width/4*2,s.height/2)];
+	
+	[self addChild:label];
+}
+
+-(void) callback3:(id)sender data:(void*)data
+{
+	CGSize s = [[Director sharedDirector] winSize];
+	Label *label = [Label labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
+	[label setPosition:ccp( s.width/4*3,s.height/2)];
+	
+	[self addChild:label];
+}
+
+
+-(NSString *) title
+{
+	return @"Sequence of InstantActions";
 }
 @end
 

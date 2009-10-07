@@ -194,6 +194,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		added userData property in CocosNode
 	* Scott Iisystems:
 		TextureAtlas signed math error patch
+		BezierBy#reverse patch
 	* Serge Kolgan:
 		patches for CocosNode
 	* sflory:

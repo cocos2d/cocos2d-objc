@@ -54,6 +54,10 @@
 {}
 @end
 
+@interface SpriteSequence2 : SpriteDemo
+{}
+@end
+
 @interface SpriteSpawn : SpriteDemo
 {}
 @end
