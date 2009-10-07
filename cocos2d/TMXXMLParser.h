@@ -64,19 +64,26 @@ enum {
  */
 @interface TMXTilesetInfo : NSObject
 {
-@public
-	NSString		*name;
-	unsigned int	firstGid;
-	CGSize			tileSize;
-	unsigned int	spacing;
-	unsigned int	margin;
+	NSString		*name_;
+	unsigned int	firstGid_;
+	CGSize			tileSize_;
+	unsigned int	spacing_;
+	unsigned int	margin_;
 	
 	// filename containing the tiles (should be spritesheet / texture atlas)
-	NSString	*sourceImage;
+	NSString	*sourceImage_;
 	
 	// size in pixels of the image
-	CGSize		imageSize;
+	CGSize		imageSize_;
 }
+@property (nonatomic,readwrite,retain) NSString *name;
+@property (nonatomic,readwrite,assign) unsigned int firstGid;
+@property (nonatomic,readwrite,assign) CGSize tileSize;
+@property (nonatomic,readwrite,assign) unsigned int spacing;
+@property (nonatomic,readwrite,assign) unsigned int margin;
+@property (nonatomic,readwrite,retain) NSString *sourceImage;
+@property (nonatomic,readwrite,assign) CGSize imageSize;
+
 -(CGRect) tileForGID:(unsigned int)gid;
 @end
 
@@ -100,22 +107,28 @@ enum {
     BOOL				storingCharacters;	
 	int					layerAttribs;
 	
-@public
-	int	orientation;
-	
+	// map orientation
+	int	orientation_;	
 	
 	// map width & height
-	CGSize	mapSize;
+	CGSize	mapSize_;
 	
 	// tiles width & height
-	CGSize	tileSize;
+	CGSize	tileSize_;
 	
 	// Layers
-	NSMutableArray *layers;
+	NSMutableArray *layers_;
 	
 	// tilesets
-	NSMutableArray *tilesets;
+	NSMutableArray *tilesets_;
 }
+
+@property (nonatomic,readwrite,assign) int orientation;
+@property (nonatomic,readwrite,assign) CGSize mapSize;
+@property (nonatomic,readwrite,assign) CGSize tileSize;
+@property (nonatomic,readwrite,retain) NSMutableArray *layers;
+@property (nonatomic,readwrite,retain) NSMutableArray *tilesets;
+
 
 /** creates a TMX Format with a tmx file */
 +(id) formatWithTMXFile:(NSString*)tmxFile;
