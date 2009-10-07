@@ -242,9 +242,9 @@ typedef struct
 	[self setTile:pos coords:coords];
 }
 
--(void)start
+-(void)startWithTarget:(id)aTarget
 {
-	[super start];
+	[super startWithTarget:aTarget];
 	
 	if ( seed != -1 )
 		srand(seed);
@@ -485,11 +485,11 @@ typedef struct
 	[self setTile:pos coords:coords];
 }
 
--(void)start
+-(void)startWithTarget:(id)aTarget
 {
 	int i;
 	
-	[super start];
+	[super startWithTarget:aTarget];
 	
 	if ( seed != -1 )
 		srand(seed);
@@ -670,9 +670,9 @@ typedef struct
 	return copy;
 }
 
--(void)start
+-(void)startWithTarget:(id)aTarget
 {
-	[super start];
+	[super startWithTarget:aTarget];
 	winSize = [[Director sharedDirector] winSize];
 }
 
@@ -723,9 +723,9 @@ typedef struct
 	return copy;
 }
 
--(void)start
+-(void)startWithTarget:(id)aTarget
 {
-	[super start];
+	[super startWithTarget:aTarget];
 	winSize = [[Director sharedDirector] winSize];
 }
 

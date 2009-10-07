@@ -45,8 +45,6 @@ Example:
 +(id) actionWithDuration: (ccTime) d;
 /** initializes the action */
 -(id) initWithDuration: (ccTime) d;
-/** called when the action is about to start */
--(void) start;
 /** returns YES if the action has finished */
 -(BOOL) isDone;
 /** returns a reversed action */

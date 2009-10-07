@@ -139,7 +139,6 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
-
 #pragma mark CocosNode - Init & cleanup
 
 +(id) node

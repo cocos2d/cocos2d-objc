@@ -25,7 +25,7 @@
 #pragma mark Action
 @implementation Action
 
-@synthesize tag;
+@synthesize tag, target;
 
 +(id) action
 {
@@ -35,7 +35,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {	
-		targetCopy = target = nil;
+		target = nil;
 		tag = kActionTagInvalid;
 	}
 	return self;
@@ -55,29 +55,18 @@
 -(id) copyWithZone: (NSZone*) zone
 {
 	Action *copy = [[[self class] allocWithZone: zone] init];
-	[copy setTarget: target];
 	copy.tag = tag;
 	return copy;
 }
 
--(void) start
+-(void) startWithTarget:(id)aTarget
 {
-	target = targetCopy;
+	target = aTarget;
 }
 
 -(void) stop
 {
 	target = nil;
-}
-
--(void) setTarget:(id)t
-{
-	targetCopy = t;
-}
-
--(id) target
-{
-	return target;
 }
 
 -(BOOL) isDone
@@ -144,18 +133,17 @@
 	[super dealloc];
 }
 
--(void) start
+-(void) startWithTarget:(id)aTarget
 {
-	[super start];
-	[other setTarget: target];
-	[other start];
+	[super startWithTarget:aTarget];
+	[other startWithTarget:target];
 }
 
 -(void) step:(ccTime) dt
 {
 	[other step: dt];
 	if( [other isDone] ) {
-		[other start];
+		[other startWithTarget:target];
 	}
 }
 
@@ -207,11 +195,10 @@
 	[super dealloc];
 }
 
--(void) start
+-(void) startWithTarget:(id)aTarget
 {
-	[super start];
-	[other setTarget: target];
-	[other start];
+	[super startWithTarget:aTarget];
+	[other startWithTarget:target];
 }
 
 -(void) stop

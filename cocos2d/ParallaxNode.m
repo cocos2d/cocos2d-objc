@@ -47,7 +47,6 @@
 }
 @end
 
-
 @implementation ParallaxNode
 
 @synthesize parallaxArray=parallaxArray_;

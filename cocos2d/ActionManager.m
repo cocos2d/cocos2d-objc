@@ -178,8 +178,7 @@ static ActionManager *_sharedManager = nil;
 	NSAssert( !ccArrayContainsObject(element->actions, action), @"runAction: Action already running");	
 	ccArrayAppendObject(element->actions, action);
 	
-	[action setTarget: target];
-	[action start];
+	[action startWithTarget:target];
 }
 
 #pragma mark ActionManager - remove
