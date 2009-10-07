@@ -670,12 +670,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) update: (ccTime) t
 {
 	float xa = 0;
-//	float xa = config.startPosition.x;
 	float xb = config.controlPoint_1.x;
 	float xc = config.controlPoint_2.x;
 	float xd = config.endPosition.x;
 	
-//	float ya = config.startPosition.y;
 	float ya = 0;
 	float yb = config.controlPoint_1.y;
 	float yc = config.controlPoint_2.y;
@@ -688,13 +686,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 - (IntervalAction*) reverse
 {
-	// XXX: reverse only works when startPosition is CGPointZero
-	// Otherwise, a sequence needs to be returned to reverse the initial jump
 	ccBezierConfig r;
-//	r.startPosition  = CGPointZero;
-//	r.endPosition	 = ccpSub(config.startPosition, config.endPosition);
-	r.endPosition	 = ccpNeg(config.endPosition);
 
+	r.endPosition	 = ccpNeg(config.endPosition);
 	r.controlPoint_1 = ccpAdd(config.controlPoint_2, ccpNeg(config.endPosition));
 	r.controlPoint_2 = ccpAdd(config.controlPoint_1, ccpNeg(config.endPosition));
 	
