@@ -413,13 +413,12 @@
 {
 	[super start];
 	
-	// 
+	startAngle = [target rotation];
 	if (startAngle > 0)
 		startAngle = fmodf(startAngle, 360.0f);
 	else
 		startAngle = fmodf(startAngle, -360.0f);
 	
-	startAngle = [target rotation];
 	angle -= startAngle;
 	if (angle > 180)
 		angle = -360 + angle;

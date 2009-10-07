@@ -1,6 +1,7 @@
 version 0.8.2-rc1 - dd-MMM-2009
  . Actions: start/stop sets the target (issue #489)
  . Actions: Fixed BezierBy reverse. BezierBy doesn't use startPosition (issue #586)
+ . Actions: RotateTo uses min distance (issue #584)
  . Particles: FreeMovement uses World-Coordinates (issue #241)
  . Tests: Added Particle + Parallax test (part of issue #241)
  

@@ -84,10 +84,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
 		patches for Layer
 		patches for MultiplexLayer
-	* Rolandas Razma (gamebit):
-		added support for auto-remove-on-finish in particles
-		TMX maps support visibility and opacity patch
-		TMX maps possibility to access the layers patch
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
@@ -123,6 +119,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for menu align. takes scale into account
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
+	* jtbowden
+		RotateTo uses min distance patch
 	* kasatani:
 		AtlasSprite index 0 is not overwritten
 	* kermidt.zed:
@@ -189,6 +187,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* ratman:
 		patch for TileMapAtlas: it works with 255 tiles
 		patch for TextureMgr: supports directory within image names
+	* Rolandas Razma (gamebit):
+		added support for auto-remove-on-finish in particles
+		TMX maps support visibility and opacity patch
+		TMX maps possibility to access the layers patch
 	* Rolando Abarca:
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
