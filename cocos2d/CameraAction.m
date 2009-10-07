@@ -22,9 +22,9 @@
 // CameraAction
 //
 @implementation CameraAction
--(void) start
+-(void) startWithTarget:(id)aTarget
 {
-	[super start];
+	[super startWithTarget:aTarget];
 	[[target camera] centerX:&centerXOrig centerY:&centerYOrig centerZ: &centerZOrig];
 	[[target camera] eyeX:&eyeXOrig eyeY:&eyeYOrig eyeZ: &eyeZOrig];
 	[[target camera] upX:&upXOrig upY:&upYOrig upZ: &upZOrig];
@@ -66,9 +66,9 @@
 	return self;
 }
 
--(void) start
+-(void) startWithTarget:(id)aTarget
 {
-	[super start];
+	[super startWithTarget:aTarget];
 	float r, zenith, azimuth;
 	
 	[self sphericalRadius: &r zenith:&zenith azimuth:&azimuth];

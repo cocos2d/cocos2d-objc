@@ -60,11 +60,16 @@
 	[super dealloc];
 }
 
--(void) start
+-(void) startWithTarget:(id)aTarget
 {
-	[super start];
-	[other setTarget: target];
-	[other start];
+	[super startWithTarget:aTarget];
+	[other startWithTarget:target];
+}
+
+-(void) stop
+{
+	[other stop];
+	[super stop];
 }
 
 -(void) update: (ccTime) t
