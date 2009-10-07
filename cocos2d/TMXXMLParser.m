@@ -54,26 +54,29 @@
 #pragma mark -
 #pragma mark TMXTilesetInfo
 @implementation TMXTilesetInfo
+
+@synthesize name=name_, firstGid=firstGid_, tileSize=tileSize_, spacing=spacing_, margin=margin_, sourceImage=sourceImage_, imageSize=imageSize_;
+
 - (void) dealloc
 {
 	CCLOG(@"cocos2d: deallocing %@", self);
-	[sourceImage release];
-	[name release];
+	[sourceImage_ release];
+	[name_ release];
 	[super dealloc];
 }
 
 -(CGRect) tileForGID:(unsigned int)gid
 {
 	CGRect rect;
-	rect.size = tileSize;
+	rect.size = tileSize_;
 	
-	gid = gid - firstGid;
+	gid = gid - firstGid_;
 	
-	int max_x = (imageSize.width - margin*2 + spacing) / (tileSize.width + spacing);
+	int max_x = (imageSize_.width - margin_*2 + spacing_) / (tileSize_.width + spacing_);
 	//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
 	
-	rect.origin.x = (gid % max_x) * (tileSize.width + spacing) + margin;
-	rect.origin.y = (gid / max_x) * (tileSize.height + spacing) + margin;
+	rect.origin.x = (gid % max_x) * (tileSize_.width + spacing_) + margin_;
+	rect.origin.y = (gid / max_x) * (tileSize_.height + spacing_) + margin_;
 	
 	return rect;
 }
@@ -83,6 +86,9 @@
 #pragma mark TMXMapInfo
 
 @implementation TMXMapInfo
+
+@synthesize orientation=orientation_, mapSize=mapSize_, layers=layers_, tilesets=tilesets_, tileSize=tileSize_;
+
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
 	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
@@ -92,8 +98,8 @@
 {
 	if( (self=[super init])) {
 		
-		tilesets = [[NSMutableArray arrayWithCapacity:4] retain];
-		layers = [[NSMutableArray arrayWithCapacity:4] retain];
+		self.tilesets = [NSMutableArray arrayWithCapacity:4];
+		self.layers = [NSMutableArray arrayWithCapacity:4];
 	
 		// tmp vars
 		currentString = [[NSMutableString alloc] initWithCapacity:1024];
@@ -121,8 +127,8 @@
 - (void) dealloc
 {
 	CCLOG(@"cocos2d: deallocing %@", self);
-	[tilesets release];
-	[layers release];
+	[tilesets_ release];
+	[layers_ release];
 	[currentString release];
 	[super dealloc];
 }
@@ -136,29 +142,31 @@
 			CCLOG(@"cocos2d: TMXFormat: Unsupported TMX version: %@", version);
 		NSString *orientationStr = [attributeDict valueForKey:@"orientation"];
 		if( [orientationStr isEqualToString:@"orthogonal"])
-			orientation = TMXOrientationOrtho;
+			orientation_ = TMXOrientationOrtho;
 		else if ( [orientationStr isEqualToString:@"isometric"])
-			orientation = TMXOrientationIso;
+			orientation_ = TMXOrientationIso;
 		else if( [orientationStr isEqualToString:@"hexagonal"])
-			orientation = TMXOrientationHex;
+			orientation_ = TMXOrientationHex;
 		else
-			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %@", orientation);
+			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %@", orientation_);
 
-		mapSize.width = [[attributeDict valueForKey:@"width"] intValue];
-		mapSize.height = [[attributeDict valueForKey:@"height"] intValue];
-		tileSize.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-		tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
+		mapSize_.width = [[attributeDict valueForKey:@"width"] intValue];
+		mapSize_.height = [[attributeDict valueForKey:@"height"] intValue];
+		tileSize_.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
+		tileSize_.height = [[attributeDict valueForKey:@"tileheight"] intValue];
 
 	} else if([elementName isEqualToString:@"tileset"]) {
 		TMXTilesetInfo *tileset = [TMXTilesetInfo new];
-		tileset->name = [[attributeDict valueForKey:@"name"] retain];
-		tileset->firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
-		tileset->spacing = [[attributeDict valueForKey:@"spacing"] intValue];
-		tileset->margin = [[attributeDict valueForKey:@"margin"] intValue];
-		tileset->tileSize.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-		tileset->tileSize.height = [[attributeDict valueForKey:@"tileheight"] intValue];
+		tileset.name = [attributeDict valueForKey:@"name"];
+		tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
+		tileset.spacing = [[attributeDict valueForKey:@"spacing"] intValue];
+		tileset.margin = [[attributeDict valueForKey:@"margin"] intValue];
+		CGSize s;
+		s.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
+		s.height = [[attributeDict valueForKey:@"tileheight"] intValue];
+		tileset.tileSize = s;
 		
-		[tilesets addObject:tileset];
+		[tilesets_ addObject:tileset];
 		[tileset release];
 
 	} else if([elementName isEqualToString:@"layer"]) {
@@ -173,13 +181,13 @@
 			layer->opacity = 255;
 		}
 		
-		[layers addObject:layer];
+		[layers_ addObject:layer];
 		[layer release];
 		
 	} else if([elementName isEqualToString:@"image"]) {
 
-		TMXTilesetInfo *tileset = [tilesets lastObject];
-		tileset->sourceImage = [[attributeDict valueForKey:@"source"] retain];
+		TMXTilesetInfo *tileset = [tilesets_ lastObject];
+		tileset.sourceImage = [attributeDict valueForKey:@"source"];
 
 	} else if([elementName isEqualToString:@"data"]) {
 		NSString *encoding = [attributeDict valueForKey:@"encoding"];
@@ -204,7 +212,7 @@
 	if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) {
 		storingCharacters = NO;
 		
-		TMXLayerInfo *layer = [layers lastObject];
+		TMXLayerInfo *layer = [layers_ lastObject];
 		
 		unsigned char *buffer;
 		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);

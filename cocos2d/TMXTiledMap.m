@@ -49,15 +49,15 @@
 
 		TMXMapInfo *mapInfo = [TMXMapInfo formatWithTMXFile:tmxFile];
 		
-		NSAssert( [mapInfo->tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
+		NSAssert( [mapInfo.tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
 		
-		mapSize_ = mapInfo->mapSize;
-		tileSize_ = mapInfo->tileSize;
-		mapOrientation_ = mapInfo->orientation;
+		mapSize_ = mapInfo.mapSize;
+		tileSize_ = mapInfo.tileSize;
+		mapOrientation_ = mapInfo.orientation;
 				
 		int idx=0;
 
-		for( TMXLayerInfo *layerInfo in mapInfo->layers ) {
+		for( TMXLayerInfo *layerInfo in mapInfo.layers ) {
 
 			if( layerInfo->visible ) {
 				id child = [self parseLayer:layerInfo map:mapInfo];
@@ -93,7 +93,7 @@
 	layerInfo->ownTiles = NO;
 
 	// Optimization: quick hack that sets the image size on the tileset
-	tileset->imageSize = [[layer texture] contentSize];
+	tileset.imageSize = [[layer texture] contentSize];
 		
 	// By default all the tiles are aliased
 	// pros:
@@ -126,8 +126,8 @@
 		}
 	}
 	
-	NSAssert( layerInfo->maxGID >= tileset->firstGid &&
-			 layerInfo->minGID >= tileset->firstGid, @"TMX: Only 1 tilset per layer is supported");
+	NSAssert( layerInfo->maxGID >= tileset.firstGid &&
+			 layerInfo->minGID >= tileset.firstGid, @"TMX: Only 1 tilset per layer is supported");
 	
 	return layer;
 }
@@ -137,7 +137,7 @@
 	TMXTilesetInfo *tileset = nil;
 	CFByteOrder o = CFByteOrderGetCurrent();
 	
-	id iter = [mapInfo->tilesets reverseObjectEnumerator];
+	id iter = [mapInfo.tilesets reverseObjectEnumerator];
 	for( TMXTilesetInfo* tileset in iter) {
 		for( unsigned int y=0; y < layerInfo->layerSize.height; y++ ) {
 			for( unsigned int x=0; x < layerInfo->layerSize.width; x++ ) {
@@ -155,14 +155,15 @@
 					
 					// Optimization: quick return
 					// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
-					if( gid >= tileset->firstGid )
+					if( gid >= tileset.firstGid )
 						return tileset;
 				}
 			}
 		}		
 	}
 	
-	NSAssert(NO,@"TMXTiledMap#tilesetForLayer unexpected error");
+	// If all the tiles are 0, return empty tileset
+	CCLOG(@"cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->name);
 	return tileset;
 }
 
@@ -209,15 +210,15 @@
 	
 	Texture2D *tex = nil;
 	if( tilesetInfo )
-		tex = [[TextureMgr sharedTextureMgr] addImage:tilesetInfo->sourceImage];
+		tex = [[TextureMgr sharedTextureMgr] addImage:tilesetInfo.sourceImage];
 
 	if((self=[super initWithTexture:tex capacity:capacity])) {		
 		self.layerName = layerInfo->name;
 		self.layerSize = layerInfo->layerSize;
 		self.tiles = layerInfo->tiles;
 		self.tileset = tilesetInfo;
-		self.mapTileSize = mapInfo->tileSize;
-		self.layerOrientation = mapInfo->orientation;
+		self.mapTileSize = mapInfo.tileSize;
+		self.layerOrientation = mapInfo.orientation;
 		
 		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
 	}

@@ -536,6 +536,10 @@ Class restartAction()
 		CGSize ts = [map tileSize];
 		[map runAction:[MoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
 		
+		// testing release map
+		for( TMXLayer *layer in [map children])
+			[layer releaseMap];
+		
 	}	
 	return self;
 }
