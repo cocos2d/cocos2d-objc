@@ -154,6 +154,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added support for FontLabel
 		Author of FontTest
 		PointParticleSystem doesn't draw if there are no particles patch
+		Actions: cleaner way to start/stop actions patches
 	* Manu Valladolid:
 		added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
