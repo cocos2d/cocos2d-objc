@@ -206,6 +206,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of PageTurn3DTransition
 	* SmallMike (http://www.smallrocksoftware.com/)
 		author of DisplayLink Director
+	* spoon.reloaded:
+		JumpBy/To uses parabolic function patch
 	* Steve Israelson:
 		patches for Scheduler
 		pactches for Actions
@@ -219,7 +221,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of CocosDenshion Sound Engine
 		Integrated Box2d physics engine
 		Created Box2d + cocos2d demo example
-	TheArsenik:
+	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
 		update the VBO buffer with only the needed particles

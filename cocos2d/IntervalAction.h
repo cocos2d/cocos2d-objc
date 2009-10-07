@@ -155,7 +155,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
-/** Moves a CocosNode object simulating a jump movement by modifying it's position attribute.
+/** Moves a CocosNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
  @interface JumpBy : IntervalAction <NSCopying>
 {
@@ -170,7 +170,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(int)jumps;
 @end
 
-/** Moves a CocosNode object to a position simulating a jump movement by modifying it's position attribute.
+/** Moves a CocosNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
 */ 
  @interface JumpTo : JumpBy <NSCopying>
 {
