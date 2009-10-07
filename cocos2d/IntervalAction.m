@@ -697,6 +697,22 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @end
 
 //
+// BezierTo
+//
+#pragma mark -
+#pragma mark BezierTo
+@implementation BezierTo
+-(void) start
+{
+	[super start];
+	config.controlPoint_1 = ccpSub(config.controlPoint_1, startPosition);
+	config.controlPoint_2 = ccpSub(config.controlPoint_2, startPosition);
+	config.endPosition = ccpSub(config.endPosition, startPosition);
+}
+@end
+
+
+//
 // ScaleTo
 //
 #pragma mark -

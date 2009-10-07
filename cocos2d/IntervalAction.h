@@ -188,9 +188,7 @@ typedef struct _ccBezierConfig {
 	CGPoint controlPoint_2;
 } ccBezierConfig;
 
-/** A action that moves the target with a cubic Bezier curve.
- Since BezierBy moves the target "relative" it will be easier if
- the startPosition of the Bezier configuration is (0,0)
+/** An action that moves the target with a cubic Bezier curve by a certain distance.
  */
 @interface BezierBy : IntervalAction <NSCopying>
 {
@@ -203,6 +201,14 @@ typedef struct _ccBezierConfig {
 
 /** initializes the action with a duration and a bezier configuration */
 -(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c;
+@end
+
+/** An action that moves the target with a cubic Bezier curve to a destination point.
+ @since v0.8.2
+ */
+@interface BezierTo : BezierBy
+{
+}
 @end
 
 /** Scales a CocosNode object to a zoom factor by modifying it's scale attribute.

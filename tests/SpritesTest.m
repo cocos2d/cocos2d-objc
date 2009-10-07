@@ -299,23 +299,28 @@ Class restartAction()
 	
 
 	// sprite 2
+	[tamara setPosition:ccp(80,160)];
 	ccBezierConfig bezier2;
 	bezier2.controlPoint_1 = ccp(100, s.height/2);
 	bezier2.controlPoint_2 = ccp(200, -s.height/2);
-	bezier2.endPosition = ccp(300,0);
+	bezier2.endPosition = ccp(240,160);
 	
-	id bezierForward2 = [BezierBy actionWithDuration:3 bezier:bezier2];
-	id bezierBack2 = [bezierForward2 reverse];	
-	id seq2 = [Sequence actions: bezierForward2, bezierBack2, nil];
-	id rep2 = [RepeatForever actionWithAction:seq2];
+	id bezierTo1 = [BezierTo actionWithDuration:2 bezier:bezier2];	
 	
+	// sprite 3
+	Sprite *kathia = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	[self addChild:kathia];
+	[kathia setPosition:ccp(400,160)];
+	id bezierTo2 = [BezierTo actionWithDuration:2 bezier:bezier2];
 	
 	[grossini runAction: rep];
-	[tamara runAction:rep2];
+	[tamara runAction:bezierTo1];
+	[kathia runAction:bezierTo2];
+
 }
 -(NSString *) title
 {
-	return @"BezierBy";
+	return @"BezierBy / BezierTo";
 }
 @end
 

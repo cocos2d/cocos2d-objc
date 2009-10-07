@@ -219,6 +219,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of CocosDenshion Sound Engine
 		Integrated Box2d physics engine
 		Created Box2d + cocos2d demo example
+	TheArsenik:
+		added BezierTo action
 	* thoechsm:
 		update the VBO buffer with only the needed particles
 	* Thomas Visser:
