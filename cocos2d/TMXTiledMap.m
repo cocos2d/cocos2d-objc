@@ -18,8 +18,50 @@
 #import "TMXTiledMap.h"
 #import "TMXXMLParser.h"
 #import "AtlasSprite.h"
+#import "AtlasSpriteManager.h"
 #import "TextureMgr.h"
 #import "Support/CGPointExtension.h"
+
+#pragma mark -
+#pragma mark AtlasSpriteManager extension
+
+@interface AtlasSpriteManager (TileMapExtension)
+
+/* Adds a quad into the texture atlas but it won't be added into the children array.
+ This method should be called only when you are dealing with very big AtlasSrite and when most of the AtlasSprite won't be updated.
+ For example: a tile map (TMXMap) or a label with lots of characgers (BitmapFontAtlas)
+ @since v0.8.2
+ */
+-(void) addQuadFromSprite:(AtlasSprite*)sprite quadIndex:(unsigned int)index;
+
+-(id)addSpriteWithoutQuad:(AtlasSprite*)child z:(int)z tag:(int)aTag;
+@end
+
+@implementation AtlasSpriteManager (TileMapExtension)
+-(void) addQuadFromSprite:(AtlasSprite*)sprite quadIndex:(unsigned int)index
+{
+	NSAssert( sprite != nil, @"Argument must be non-nil");
+	NSAssert( [sprite isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
+	
+	while(index >= textureAtlas_.capacity)
+		[self increaseAtlasCapacity];
+	
+	[sprite insertInAtlasAtIndex:index];
+	[sprite updatePosition];
+}
+
+-(id) addSpriteWithoutQuad:(AtlasSprite*)child z:(int)z tag:(int)aTag
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
+	
+	// quad index is Z
+	[child setAtlasIndex:z];
+	[super addChild:child z:z tag:aTag];	
+	return self;	
+}
+@end
+
 
 #pragma mark -
 #pragma mark TMXLayer
@@ -32,7 +74,9 @@
 // optimizations
 -(AtlasSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
 -(AtlasSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
--(unsigned int) atlasIndexForZ:(unsigned int)z;
+-(AtlasSprite*) udpateTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(unsigned int) atlasIndexForExistantZ:(unsigned int)z;
+-(unsigned int) atlasIndexForNewZ:(int)z;
 @end
 
 @implementation TMXLayer
@@ -109,6 +153,7 @@
 -(AtlasSprite*) tileAt:(CGPoint)pos
 {
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 	
 	AtlasSprite *tile = nil;
 	unsigned int gid = [self tileGIDAt:pos];
@@ -120,13 +165,13 @@
 		
 		// tile not created yet. create it
 		if( ! tile ) {
-			CGRect rect = [tileset_ tileForGID:gid];			
+			CGRect rect = [tileset_ rectForGID:gid];			
 			tile = [AtlasSprite spriteWithRect:rect spriteManager:self];
 			[tile setPosition: [self positionAt:pos]];
 			tile.anchorPoint = CGPointZero;
 			
-			unsigned int indexForZ = [self atlasIndexForZ:z];
-			[self addChildWithoutQuad:tile z:indexForZ tag:z];
+			unsigned int indexForZ = [self atlasIndexForExistantZ:z];
+			[self addSpriteWithoutQuad:tile z:indexForZ tag:z];
 		}
 	}
 	return tile;
@@ -135,7 +180,7 @@
 -(unsigned int) tileGIDAt:(CGPoint)pos
 {
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
-	NSAssert( tiles_ != NULL, @"TMXLayer: the tiles map has been released");
+	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 	
 	int idx = pos.x + pos.y * layerSize_.width;
 	return tiles_[ idx ];
@@ -145,12 +190,11 @@
 
 -(AtlasSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos
 {
-	CGRect rect = [tileset_ tileForGID:gid];
+	CGRect rect = [tileset_ rectForGID:gid];
 	
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		
 		reusedTile = [[AtlasSprite spriteWithRect:rect spriteManager:self] retain];
 	else
 		[reusedTile initWithRect:rect spriteManager:self];
@@ -158,14 +202,13 @@
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
 	
-	// It needs to objetain the correct position of the texture atlas
-	// it takes more time than appending it at the end
-	unsigned int indexForZ = [self indexForNewChildAtZ:z];
+	// get atlas index
+	unsigned int indexForZ = [self atlasIndexForNewZ:z];
 	
-	// don't add it using the "standard" way.
+	// Optimization: add the quad without adding a child
 	[self addQuadFromSprite:reusedTile quadIndex:indexForZ];
 	
-	// append should after addQuadFromSprite since it modifies the quantity values
+	// insert it into the local atlasindex array
 	ccCArrayInsertValueAtIndex(atlasIndexArray, (void*)z, indexForZ);
 	
 	// update possible children
@@ -175,12 +218,41 @@
 			[sprite setAtlasIndex: ai+1];
 	}
 	
+	tiles_[z] = gid;
+	
 	return reusedTile;
 }
 
+-(AtlasSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos
+{
+	CGRect rect = [tileset_ rectForGID:gid];
+	
+	int z = pos.x + pos.y * layerSize_.width;
+	
+	if( ! reusedTile )
+		reusedTile = [[AtlasSprite spriteWithRect:rect spriteManager:self] retain];
+	else
+		[reusedTile initWithRect:rect spriteManager:self];
+	
+	[reusedTile setPosition: [self positionAt:pos]];
+	reusedTile.anchorPoint = CGPointZero;
+	
+	// get atlas index
+	unsigned int indexForZ = [self atlasIndexForExistantZ:z];
+
+	[reusedTile setAtlasIndex:indexForZ];
+	[reusedTile updatePosition];
+	tiles_[z] = gid;
+	
+	return reusedTile;
+}
+
+
+// used only when parsing the map. useless after the map was parsed
+// since lot's of assumptions are no longer true
 -(AtlasSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos
 {
-	CGRect rect = [tileset_ tileForGID:gid];
+	CGRect rect = [tileset_ rectForGID:gid];
 	
 	int z = pos.x + pos.y * layerSize_.width;
 	
@@ -206,12 +278,14 @@
 	return reusedTile;
 }
 
+#pragma mark TMXLayer - atlasIndex and Z
+
 int compareInts (const void * a, const void * b)
 {
 	return ( *(int*)a - *(int*)b );
 }
 
--(unsigned int) atlasIndexForZ:(unsigned int)z
+-(unsigned int) atlasIndexForExistantZ:(unsigned int)z
 {
 	int key=z;
 	int *item = bsearch((void*)&key, (void*)&atlasIndexArray->arr[0], atlasIndexArray->num, sizeof(void*), compareInts);
@@ -225,7 +299,7 @@ int compareInts (const void * a, const void * b)
 	return NSNotFound;
 }
 
--(NSUInteger)indexForNewChildAtZ:(int)z
+-(unsigned int)atlasIndexForNewZ:(int)z
 {
 	// XXX: This can be improved with a sort of binary search
 	unsigned int i=0;
@@ -242,48 +316,66 @@ int compareInts (const void * a, const void * b)
 -(void) setTileGID:(unsigned int)gid at:(CGPoint)pos
 {
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
-	NSAssert( tiles_ != NULL, @"TMXLayer: the tiles map has been released");
-	
+	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
+		
 	unsigned int currentGID = [self tileGIDAt:pos];
 	
 	if( currentGID != gid ) {
-		AtlasSprite *tile = [self tileAt:pos];
-		if( ! tile ) {
-			[self insertTileForGID:gid at:pos];
-		} else {
-			CGRect rect = [tileset_ tileForGID:gid];
-			[tile setTextureRect:rect];
-		}
 		
-		// update gid on map
-		int idx = pos.x + pos.y * layerSize_.width;
-		tiles_[ idx ] = gid;
+		if( gid == 0 )
+			return [self removeTileAt:pos];
+
+		// empty tile. create a new one
+		if( currentGID == 0 ) {
+			[self insertTileForGID:gid at:pos];
+
+		} else {
+
+			unsigned int z = pos.x + pos.y * layerSize_.width;
+			id sprite = [self getChildByTag:z];
+			if( sprite ) {
+				CGRect rect = [tileset_ rectForGID:gid];
+				[sprite setTextureRect:rect];
+				tiles_[z] = gid;
+			} else {
+				[self updateTileForGID:gid at:pos];
+			}
+		}
 	}
 }
 
 -(void) removeTileAt:(CGPoint)pos
 {
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 
 	unsigned int gid = [self tileGIDAt:pos];
 	
 	if( gid ) {
 		
 		unsigned int z = pos.x + pos.y * layerSize_.width;
-		unsigned atlasIndex = [self atlasIndexForZ:z];
+		unsigned atlasIndex = [self atlasIndexForExistantZ:z];
 		
 		// remove tile from GID map
 		tiles_[z] = 0;
 
 		// remove tile from atlas position array
-		ccCArrayRemoveValue(atlasIndexArray, (void*) z);
+		ccCArrayRemoveValueAtIndex(atlasIndexArray, atlasIndex);
 		
 		// remove it from sprites and/or texture atlas
 		id sprite = [self getChildByTag:z];
 		if( sprite )
-			[self removeChildByTag:z cleanup:YES];
+			[self removeChild:sprite cleanup:YES];
 		else {
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
+
+			// update possible children
+			for( AtlasSprite *sprite in children) {
+				unsigned int ai = [sprite atlasIndex];
+				if( ai >= atlasIndex) {
+					[sprite setAtlasIndex: ai-1];
+				}
+			}
 		}
 	}
 }
@@ -374,8 +466,6 @@ int compareInts (const void * a, const void * b)
 
 		for( TMXLayerInfo *layerInfo in mapInfo.layers ) {
 			
-			NSLog(@"parsing layer: %@", layerInfo.name);
-
 			if( layerInfo.visible ) {
 				id child = [self parseLayer:layerInfo map:mapInfo];
 				[self addChild:child z:idx tag:idx];

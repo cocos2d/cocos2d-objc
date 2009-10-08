@@ -596,27 +596,52 @@ Class restartAction()
 		TMXLayer *layer = [map layerNamed:@"Layer 0"];
 		[layer.texture setAntiAliasTexParameters];
 
-		AtlasSprite *tile = [layer tileAt:ccp(0,63)];
-		tile.anchorPoint = ccp(0.5f, 0.5f);
+		AtlasSprite *tile0 = [layer tileAt:ccp(1,63)];
+		AtlasSprite *tile1 = [layer tileAt:ccp(2,63)];
+		AtlasSprite *tile2 = [layer tileAt:ccp(1,62)];
+		AtlasSprite *tile3 = [layer tileAt:ccp(2,62)];
+		tile0.anchorPoint = ccp(0.5f, 0.5f);
+		tile1.anchorPoint = ccp(0.5f, 0.5f);
+		tile2.anchorPoint = ccp(0.5f, 0.5f);
+		tile3.anchorPoint = ccp(0.5f, 0.5f);
 
-		id move = [MoveBy actionWithDuration:2 position:ccp(240,160)];
+		id move = [MoveBy actionWithDuration:5 position:ccp(240,160)];
 		id rotate = [RotateBy actionWithDuration:2 angle:360];
 		id scale = [ScaleBy actionWithDuration:2 scale:5];
 		id opacity = [FadeOut actionWithDuration:2];
-		id seq = [Sequence actions:move, rotate, scale, opacity, nil];
+		id fadein = [FadeIn actionWithDuration:2];
+		id scaleback = [ScaleTo actionWithDuration:1 scale:1];
+		id finish = [CallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+		id seq0 = [Sequence actions:move, rotate, scale, opacity, fadein, scaleback, finish, nil];
+		id seq1 = [[seq0 copy] autorelease];
+		id seq2 = [[seq0 copy] autorelease];
+		id seq3 = [[seq0 copy] autorelease];
+		
+		[tile0 runAction:seq0];
+		[tile1 runAction:seq1];
+		[tile2 runAction:seq2];
+		[tile3 runAction:seq3];
+		
 		
 		gid = [layer tileGIDAt:ccp(0,63)];
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
-		
-		[self schedule:@selector(repaintWithGID:) interval:2];
-		[self schedule:@selector(removeTiles:) interval:3];
+
 		[self schedule:@selector(updateCol:) interval:0.5f];
+		[self schedule:@selector(repaintWithGID:) interval:2];
+		[self schedule:@selector(removeTiles:) interval:1];
 		
 		gid2 = 0;
 		
-		[tile runAction:seq];
 	}	
 	return self;
+}
+
+-(void) removeSprite:(id) sender
+{
+	NSLog(@"removing tile: %@", sender);
+	id p = [sender parent];
+	[p removeChild:sender cleanup:YES];
+	NSLog(@"atlas quantity: %d", [[p textureAtlas] totalQuads]);
 }
 
 -(void) updateCol:(ccTime)dt
@@ -633,16 +658,15 @@ Class restartAction()
 -(void) repaintWithGID:(ccTime)dt
 {
 //	[self unschedule:_cmd];
-
+	
 	id map = [self getChildByTag:kTagTileMap];
 	TMXLayer *layer = (TMXLayer*) [map getChildByTag:0];
 	
 	CGSize s = [layer layerSize];
 	for( int x=0; x<s.width;x++) {
-		for( int y=s.height-2; y< s.height; y++ ) {
-			unsigned int tmpgid = [layer tileGIDAt:ccp(x,y)];
-			[layer setTileGID:tmpgid+1 at:ccp(x,y)];
-		}
+		int y = s.height-1;
+		unsigned int tmpgid = [layer tileGIDAt:ccp(x,y)];
+		[layer setTileGID:tmpgid+1 at:ccp(x,y)];
 	}
 }
 

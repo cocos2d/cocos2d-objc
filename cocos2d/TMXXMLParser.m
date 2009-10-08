@@ -73,7 +73,7 @@
 	[super dealloc];
 }
 
--(CGRect) tileForGID:(unsigned int)gid
+-(CGRect) rectForGID:(unsigned int)gid
 {
 	CGRect rect;
 	rect.size = tileSize_;

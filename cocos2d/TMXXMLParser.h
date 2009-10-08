@@ -93,7 +93,7 @@ enum {
 @property (nonatomic,readwrite,retain) NSString *sourceImage;
 @property (nonatomic,readwrite,assign) CGSize imageSize;
 
--(CGRect) tileForGID:(unsigned int)gid;
+-(CGRect) rectForGID:(unsigned int)gid;
 @end
 
 /* TMXMapInfo contains the information about the map like:

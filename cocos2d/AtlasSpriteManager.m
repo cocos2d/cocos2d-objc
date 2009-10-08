@@ -165,7 +165,7 @@ const int defaultCapacity = 29;
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
-		[self increateAtlasCapacity];
+		[self increaseAtlasCapacity];
 
 	NSUInteger index = [self indexForNewChildAtZ:z];
 	[child insertInAtlasAtIndex: index];
@@ -182,30 +182,6 @@ const int defaultCapacity = 29;
 	
 	return self;
 }
-
--(void) addQuadFromSprite:(AtlasSprite*)sprite quadIndex:(unsigned int)index
-{
-	NSAssert( sprite != nil, @"Argument must be non-nil");
-	NSAssert( [sprite isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
-	
-	while(index >= textureAtlas_.capacity)
-		[self increateAtlasCapacity];
-	
-	[sprite insertInAtlasAtIndex:index];
-	[sprite updatePosition];
-}
-
--(id) addChildWithoutQuad:(AtlasSprite*)child z:(int)z tag:(int)aTag
-{
-	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
-
-	// quad index is Z
-	[child setAtlasIndex:z];
-	[super addChild:child z:z tag:aTag];	
-	return self;	
-}
-
 
 // override reorderChild
 -(void) reorderChild:(AtlasSprite*)child z:(int)z
@@ -250,7 +226,7 @@ const int defaultCapacity = 29;
 	
 	NSUInteger index= sprite.atlasIndex;
 	
-	// When the AtlasSprite is removed, the index should be invalid. issue #569
+	// When the AtlasSprite is removed, the index should be invalidated. issue #569
 	[sprite setAtlasIndex: CCAtlasSpriteIndexNotInitialized];
 	
 	[super removeChild:sprite cleanup:doCleanup];
@@ -328,7 +304,7 @@ const int defaultCapacity = 29;
 }
 
 #pragma mark AtlasSpriteManager - private
--(void) increateAtlasCapacity
+-(void) increaseAtlasCapacity
 {
 	// if we're going beyond the current TextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
