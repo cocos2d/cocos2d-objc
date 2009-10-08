@@ -17,6 +17,7 @@
 
 #import "AtlasNode.h"
 #import "AtlasSpriteManager.h"
+#import "Support/carray.h"
 
 
 @class TMXMapInfo;
@@ -113,6 +114,7 @@ enum
 	
 	// used for optimization
 	AtlasSprite		*reusedTile;
+	CArray			*atlasPositionsArray;
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;

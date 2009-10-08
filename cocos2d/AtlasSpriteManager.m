@@ -21,25 +21,12 @@
 
 const int defaultCapacity = 29;
 
-#pragma mark AtlasSprite
-
-@interface AtlasSprite (Remove)
--(void)setIndex:(int)index;
-@end
-
-@implementation AtlasSprite (Remove)
--(void)setIndex:(int)index
-{
-	atlasIndex_ = index;
-}
-@end
+#pragma mark AtlasSpriteManager
 
 @interface AtlasSpriteManager (private)
--(void) resizeAtlas;
 -(void) updateBlendFunc;
 @end
 
-#pragma mark AtlasSpriteManager
 @implementation AtlasSpriteManager
 
 @synthesize textureAtlas = textureAtlas_;
@@ -178,7 +165,7 @@ const int defaultCapacity = 29;
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
-		[self resizeAtlas];
+		[self increateAtlasCapacity];
 
 	NSUInteger index = [self indexForNewChildAtZ:z];
 	[child insertInAtlasAtIndex: index];
@@ -190,7 +177,7 @@ const int defaultCapacity = 29;
 	for(; index < count; index++) {
 		AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
 		NSAssert([sprite atlasIndex] == index - 1, @"AtlasSpriteManager: index failed");
-		[sprite setIndex:index];		
+		[sprite setAtlasIndex:index];		
 	}
 	
 	return self;
@@ -202,9 +189,9 @@ const int defaultCapacity = 29;
 	NSAssert( [sprite isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
 	while(index >= textureAtlas_.capacity)
-		[self resizeAtlas];
+		[self increateAtlasCapacity];
 	
-	[sprite setIndex:index];
+	[sprite insertInAtlasAtIndex:index];
 	[sprite updatePosition];
 }
 
@@ -214,7 +201,7 @@ const int defaultCapacity = 29;
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 
 	// quad index is Z
-	[child setIndex:z];
+	[child setAtlasIndex:z];
 	[super addChild:child z:z tag:aTag];	
 	return self;	
 }
@@ -244,7 +231,7 @@ const int defaultCapacity = 29;
 		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
 		for( ; index < count+1 ; index++ ) {
 			AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:index];
-			[sprite setIndex: index];
+			[sprite setAtlasIndex: index];
 		}
 	}
 }
@@ -264,7 +251,7 @@ const int defaultCapacity = 29;
 	NSUInteger index= sprite.atlasIndex;
 	
 	// When the AtlasSprite is removed, the index should be invalid. issue #569
-	[sprite setIndex: CCAtlasSpriteIndexNotInitialized];
+	[sprite setAtlasIndex: CCAtlasSpriteIndexNotInitialized];
 	
 	[super removeChild:sprite cleanup:doCleanup];
 
@@ -276,7 +263,7 @@ const int defaultCapacity = 29;
 	{
 		AtlasSprite *other = (AtlasSprite *)[children objectAtIndex:index];
 		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
-		[other setIndex:index];
+		[other setAtlasIndex:index];
 	}	
 }
 
@@ -289,7 +276,7 @@ const int defaultCapacity = 29;
 {
 	// Invalidate atlas index. issue #569
 	for( AtlasSprite *sprite in children )
-		[sprite setIndex:CCAtlasSpriteIndexNotInitialized];
+		[sprite setAtlasIndex:CCAtlasSpriteIndexNotInitialized];
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
@@ -341,7 +328,7 @@ const int defaultCapacity = 29;
 }
 
 #pragma mark AtlasSpriteManager - private
--(void) resizeAtlas
+-(void) increateAtlasCapacity
 {
 	// if we're going beyond the current TextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
@@ -354,7 +341,7 @@ const int defaultCapacity = 29;
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
-		NSAssert(NO,@"XXX: AltasSpriteManager#resizeAtlas SHALL handle this assert");
+		NSAssert(NO,@"XXX: AltasSpriteManager#increateAtlasCapacity SHALL handle this assert");
 	}	
 }
 

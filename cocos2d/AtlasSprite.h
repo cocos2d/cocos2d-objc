@@ -77,8 +77,8 @@ enum {
 @property (nonatomic,readonly) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
-/** returns the altas index of the AtlasSprite */
-@property (nonatomic,readonly) NSUInteger atlasIndex;
+/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
+@property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the rect of the AtlasSprite */
 @property (nonatomic,readonly) CGRect textureRect;
 /** whether or not the sprite is flipped horizontally */

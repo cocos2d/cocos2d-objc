@@ -28,7 +28,10 @@
 -(CGPoint) positionForIsoAt:(CGPoint)pos;
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
 -(CGPoint) positionForHexAt:(CGPoint)pos;
+
+// optimizations
 -(AtlasSprite*) fastAddTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(unsigned int) atlasIndexForZ:(unsigned int)z;
 @end
 
 @implementation TMXLayer
@@ -61,6 +64,8 @@
 		self.mapTileSize = mapInfo.tileSize;
 		self.layerOrientation = mapInfo.orientation;
 		
+		atlasPositionsArray = CArrayNew(totalNumberOfTiles);
+		
 		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
 	}
 	return self;
@@ -71,6 +76,11 @@
 	[layerName_ release];
 	[tileset_ release];
 	[reusedTile release];
+	
+	if( atlasPositionsArray ) {
+		CArrayFree(atlasPositionsArray);
+		atlasPositionsArray = NULL;
+	}
 	
 	if( tiles_ ) {
 		free(tiles_);
@@ -85,6 +95,11 @@
 	if( tiles_) {
 		free( tiles_);
 		tiles_ = NULL;
+	}
+	
+	if( atlasPositionsArray ) {
+		CArrayFree(atlasPositionsArray);
+		atlasPositionsArray = NULL;
 	}
 }
 
@@ -103,12 +118,15 @@
 		tile = (AtlasSprite*) [self getChildByTag:z];
 		
 		// tile not created yet. create it
-//		if( ! tile ) {
-//			CGRect rect = [tileset_ tileForGID:gid];			
-//			tile = [AtlasSprite spriteWithRect:rect spriteManager:self];
-//			[tile setPosition: [self positionAt:pos]];
-//			[self addChildWithoutQuad:tile z:z tag:z];
-//		}
+		if( ! tile ) {
+			CGRect rect = [tileset_ tileForGID:gid];			
+			tile = [AtlasSprite spriteWithRect:rect spriteManager:self];
+			[tile setPosition: [self positionAt:pos]];
+			tile.anchorPoint = CGPointZero;
+			
+			unsigned int indexForZ = [self atlasIndexForZ:z];
+			[self addChildWithoutQuad:tile z:indexForZ tag:z];
+		}
 	}
 	return tile;
 }
@@ -159,15 +177,37 @@
 	else
 		[reusedTile initWithRect:rect spriteManager:self];
 	
-	//	[tile setOpacity:layerInfo->opacity];
-	//	[tile setVisible:layerInfo->visible];
-	
-	reusedTile.anchorPoint = CGPointZero;
 	[reusedTile setPosition: [self positionAt:pos]];
+	reusedTile.anchorPoint = CGPointZero;
+
+	// optimization:
+	// No need to search for the correct value here, since the index is the last element of the array at this point
+	unsigned int indexForZ = atlasPositionsArray->num;
+
+	// don't add it using the "standard" way.
+	[self addQuadFromSprite:reusedTile quadIndex:indexForZ];
 	
-	[self addQuadFromSprite:reusedTile quadIndex:z];
+	// append should after addQuadFromSprite since it modifies the quantity values
+	CArrayInsertValueAtIndex(atlasPositionsArray, (void*)z, indexForZ);
+	
+	// update possible children
+	NSUInteger count = [children count];
+	indexForZ++;
+	for(; indexForZ < count; indexForZ++) {
+		AtlasSprite *sprite = (AtlasSprite *)[children objectAtIndex:indexForZ];
+		NSAssert([sprite atlasIndex] == indexForZ - 1, @"AtlasSpriteManager: index failed");
+		[sprite setAtlasIndex:indexForZ];		
+	}
 	
 	return reusedTile;
+}
+
+-(unsigned int) atlasIndexForZ:(unsigned int)z
+{
+	// XXX do quick search
+	
+	unsigned int value = (unsigned int) CArrayGetIndexOfValue(atlasPositionsArray, (void*)z);
+	return value;
 }
 
 -(AtlasSprite*) addTileForGID:(unsigned int)gid at:(CGPoint)pos
@@ -176,19 +216,71 @@
 	
 	int z = pos.x + pos.y * layerSize_.width;
 	
-	AtlasSprite *tile = [AtlasSprite spriteWithRect:rect spriteManager:self];
+	if( ! reusedTile )
+		
+		reusedTile = [[AtlasSprite spriteWithRect:rect spriteManager:self] retain];
+	else
+		[reusedTile initWithRect:rect spriteManager:self];
 	
-	tile.anchorPoint = CGPointZero;
-	[tile setPosition: [self positionAt:pos]];
+	[reusedTile setPosition: [self positionAt:pos]];
+	reusedTile.anchorPoint = CGPointZero;
 	
-	[self addChild:tile z:z tag:z];
-	return tile;
+	// optimization:
+	unsigned int indexForZ = [self indexForNewChildAtZ:z];
+	
+	// don't add it using the "standard" way.
+	[self addQuadFromSprite:reusedTile quadIndex:indexForZ];
+	
+	// append should after addQuadFromSprite since it modifies the quantity values
+	CArrayInsertValueAtIndex(atlasPositionsArray, (void*)z, indexForZ);
+	
+	// update possible children
+	for( AtlasSprite *sprite in children) {
+		unsigned int ai = [sprite atlasIndex];
+		if( ai >= indexForZ)
+			[sprite setAtlasIndex: ai+1];
+	}
+	
+	return reusedTile;
 }
+
+-(NSUInteger)indexForNewChildAtZ:(int)z
+{
+	unsigned int i=0;
+	for( ; i< atlasPositionsArray->num ; i++) {
+		int val = (int) atlasPositionsArray->arr[i];
+		if( z < val )
+			break;
+	}	
+	return i;
+}
+
 
 -(void) removeTileAt:(CGPoint)pos
 {
-	int z = pos.x + pos.y * layerSize_.width;
-	[self removeChildByTag:z cleanup:YES];
+	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+
+	unsigned int gid = [self tileGIDAt:pos];
+	
+	if( gid ) {
+		
+		unsigned int z = pos.x + pos.y * layerSize_.width;
+		unsigned atlasIndex = [self atlasIndexForZ:z];
+		
+		// remove tile from GID map
+		tiles_[z] = 0;
+
+		// remove tile from atlas position array
+		CArrayRemoveValue(atlasPositionsArray, (void*) z);
+		
+		// remove it from sprites and/or texture atlas
+		id sprite = [self getChildByTag:z];
+		if( sprite )
+			[self removeChildByTag:z cleanup:YES];
+		else {
+			[textureAtlas_ removeQuadAtIndex:atlasIndex];
+		}
+	}
 }
 
 #pragma mark TMXLayer - obtaining positions
@@ -339,8 +431,8 @@
 			
 			// XXX: gid == 0 --> empty tile
 			if( gid != 0 ) {
-//				[layer fastAddTileForGID:gid at:ccp(x,y)];
-				[layer addTileForGID:gid at:ccp(x,y)];
+				[layer fastAddTileForGID:gid at:ccp(x,y)];
+//				[layer addTileForGID:gid at:ccp(x,y)];
 				
 				// Optimization: update min and max GID rendered by the layer
 				layerInfo.minGID = MIN(gid, layerInfo.minGID);
