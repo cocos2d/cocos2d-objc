@@ -62,6 +62,7 @@
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 -(NSUInteger)indexForNewChildAtZ:(int)z;
+-(void) increateAtlasCapacity;
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the AtlasSprite won't be updated.
