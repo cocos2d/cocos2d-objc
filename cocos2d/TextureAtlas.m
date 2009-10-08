@@ -62,11 +62,11 @@
 		// retained in property
 		self.texture = tex;
 
-		quads_ = malloc( sizeof(quads_[0]) * capacity_ );
-		indices = malloc( sizeof(indices[0]) * capacity_ * 6 );
+		quads_ = calloc( sizeof(quads_[0]) * capacity_, 1 );
+		indices = calloc( sizeof(indices[0]) * capacity_ * 6, 1 );
 		
 		if( ! ( quads_ && indices) ) {
-			NSLog(@"TextureAtlas: not enough memory");
+			CCLOG(@"cocos2d: TextureAtlas: not enough memory");
 			if( quads_ )
 				free(quads_);
 			if( indices )
@@ -127,9 +127,8 @@
 
 -(void) updateQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger) n
 {
-	
 	NSAssert( n >= 0 && n < capacity_, @"updateQuadWithTexture: Invalid index");
-
+	
 	totalQuads_ =  MAX( n+1, totalQuads_);
 
 	quads_[n] = *quad;
@@ -139,7 +138,7 @@
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
 {
 	NSAssert( index >= 0 && index < capacity_, @"insertQuadWithTexture: Invalid index");
-	
+
 	totalQuads_++;
 	
 	// issue #575. index can be > totalQuads
@@ -212,7 +211,7 @@
 	void * tmpIndices = realloc( indices, sizeof(indices[0]) * capacity_ * 6 );
 	
 	if( ! ( tmpQuads && tmpIndices) ) {
-		NSLog(@"TextureAtlas: not enough memory");
+		CCLOG(@"cocos2d: TextureAtlas: not enough memory");
 		if( tmpQuads )
 			free(tmpQuads);
 		else

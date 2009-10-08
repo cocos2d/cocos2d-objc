@@ -88,7 +88,6 @@ const int defaultCapacity = 29;
 		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-		totalSprites_ = 0;
 		textureAtlas_ = [[TextureAtlas alloc] initWithTexture:tex capacity:capacity];
 		
 		[self updateBlendFunc];
@@ -109,7 +108,6 @@ const int defaultCapacity = 29;
 		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-		totalSprites_ = 0;
 		textureAtlas_ = [[TextureAtlas alloc] initWithFile:fileImage capacity:capacity];
 		
 		[self updateBlendFunc];
@@ -179,13 +177,12 @@ const int defaultCapacity = 29;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
 	
-	if(totalSprites_ == textureAtlas_.capacity)
+	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
 		[self resizeAtlas];
 
 	NSUInteger index = [self indexForNewChildAtZ:z];
 	[child insertInAtlasAtIndex: index];
 
-	totalSprites_++;
 	[super addChild:child z:z tag:aTag];
 
 	NSUInteger count = [children count];
@@ -198,6 +195,30 @@ const int defaultCapacity = 29;
 	
 	return self;
 }
+
+-(void) addQuadFromSprite:(AtlasSprite*)sprite quadIndex:(unsigned int)index
+{
+	NSAssert( sprite != nil, @"Argument must be non-nil");
+	NSAssert( [sprite isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
+	
+	while(index >= textureAtlas_.capacity)
+		[self resizeAtlas];
+	
+	[sprite setIndex:index];
+	[sprite updatePosition];
+}
+
+-(id) addChildWithoutQuad:(AtlasSprite*)child z:(int)z tag:(int)aTag
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	NSAssert( [child isKindOfClass:[AtlasSprite class]], @"AtlasSpriteManager only supports AtlasSprites as children");
+
+	// quad index is Z
+	[child setIndex:z];
+	[super addChild:child z:z tag:aTag];	
+	return self;	
+}
+
 
 // override reorderChild
 -(void) reorderChild:(AtlasSprite*)child z:(int)z
@@ -234,7 +255,9 @@ const int defaultCapacity = 29;
 	// explicit nil handling
 	if (sprite == nil)
 		return;
-	// ignore non-children 
+
+	// ignore non-children
+	// XXX. why ? This should raise an exception.
 	if( ![children containsObject:sprite] )
 		return;
 	
@@ -255,7 +278,6 @@ const int defaultCapacity = 29;
 		NSAssert([other atlasIndex] == index + 1, @"AtlasSpriteManager: index failed");
 		[other setIndex:index];
 	}	
-	totalSprites_--;
 }
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
@@ -271,14 +293,13 @@ const int defaultCapacity = 29;
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
-	totalSprites_ = 0;
 	[textureAtlas_ removeAllQuads];
 }
 
 #pragma mark AtlasSpriteManager - draw
 -(void)draw
 {
-	if(totalSprites_== 0)
+	if(textureAtlas_.totalQuads == 0)
 		return;
 	
 	for( AtlasSprite *child in children )
@@ -309,7 +330,7 @@ const int defaultCapacity = 29;
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
 	
-	[textureAtlas_ drawNumberOfQuads:totalSprites_];
+	[textureAtlas_ drawQuads];
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		
@@ -325,9 +346,9 @@ const int defaultCapacity = 29;
 	// if we're going beyond the current TextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
 	// this is likely computationally expensive
-	NSUInteger quantity = (textureAtlas_.totalQuads + 1) * 4 / 3;
+	NSUInteger quantity = (textureAtlas_.capacity + 1) * 4 / 3;
 
-	CCLOG(@"cocos2d: Resizing TextureAtlas capacity, from [%d] to [%d].", textureAtlas_.totalQuads, quantity);
+	CCLOG(@"cocos2d: Resizing TextureAtlas capacity, from [%d] to [%d].", textureAtlas_.capacity, quantity);
 
 
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {

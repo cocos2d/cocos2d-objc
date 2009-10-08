@@ -40,16 +40,25 @@ enum {
  */
 @interface TMXLayerInfo : NSObject
 {
-@public
-	NSString		*name;
-	CGSize			layerSize;
-	unsigned int	*tiles;
-	BOOL			visible;
-	unsigned char	opacity;
-	BOOL			ownTiles;
-	unsigned int	minGID;
-	unsigned int	maxGID;
+	NSString		*name_;
+	CGSize			layerSize_;
+	unsigned int	*tiles_;
+	BOOL			visible_;
+	unsigned char	opacity_;
+	BOOL			ownTiles_;
+	unsigned int	minGID_;
+	unsigned int	maxGID_;
 }
+
+@property (nonatomic,readwrite,retain) NSString *name;
+@property (nonatomic,readwrite,assign) CGSize layerSize;
+@property (nonatomic,readwrite,assign) unsigned int *tiles;
+@property (nonatomic,readwrite,assign) BOOL visible;
+@property (nonatomic,readwrite,assign) unsigned char opacity;
+@property (nonatomic,readwrite,assign) BOOL ownTiles;
+@property (nonatomic,readwrite,assign) unsigned int minGID;
+@property (nonatomic,readwrite,assign) unsigned int maxGID;
+
 @end
 
 /* TMXTilesetInfo contains the information about the tilesets like:
@@ -100,9 +109,7 @@ enum {
  
  */
 @interface TMXMapInfo : NSObject
-{
-	
-	NSMutableString		*currentLayer;
+{	
 	NSMutableString		*currentString;
     BOOL				storingCharacters;	
 	int					layerAttribs;

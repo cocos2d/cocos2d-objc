@@ -30,21 +30,29 @@
 
 
 @implementation TMXLayerInfo
+
+@synthesize name=name_, layerSize=layerSize_, tiles=tiles_, visible=visible_,opacity=opacity_, ownTiles=ownTiles_, minGID=minGID_, maxGID=maxGID_;
+
 -(id) init
 {
 	if( (self=[super init])) {
-		ownTiles = YES;
-		minGID = 100000;
-		maxGID = 0;
+		ownTiles_ = YES;
+		minGID_ = 100000;
+		maxGID_ = 0;
+		self.name = nil;
+		tiles_ = NULL;
 	}
 	return self;
 }
 - (void) dealloc
 {
 	CCLOG(@"cocos2d: deallocing %@",self);
-	if( ownTiles && tiles ) {
-		free( tiles );
-		tiles = NULL;
+	
+	[name_ release];
+
+	if( ownTiles_ && tiles_ ) {
+		free( tiles_ );
+		tiles_ = NULL;
 	}
 	[super dealloc];
 }
@@ -171,14 +179,18 @@
 
 	} else if([elementName isEqualToString:@"layer"]) {
 		TMXLayerInfo *layer = [TMXLayerInfo new];
-		layer->name = [[attributeDict valueForKey:@"name"] retain];
-		layer->layerSize.width = [[attributeDict valueForKey:@"width"] intValue];
-		layer->layerSize.height = [[attributeDict valueForKey:@"height"] intValue];
-		layer->visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
+		layer.name = [attributeDict valueForKey:@"name"];
+		
+		CGSize s;
+		s.width = [[attributeDict valueForKey:@"width"] intValue];
+		s.height = [[attributeDict valueForKey:@"height"] intValue];
+		layer.layerSize = s;
+		
+		layer.visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
 		if( [attributeDict valueForKey:@"opacity"] ){
-			layer->opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
+			layer.opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
 		}else{
-			layer->opacity = 255;
+			layer.opacity = 255;
 		}
 		
 		[layers_ addObject:layer];
@@ -231,9 +243,9 @@
 				return;
 			}
 			
-			layer->tiles = (unsigned int*) deflated;
+			layer.tiles = (unsigned int*) deflated;
 		} else
-			layer->tiles = (unsigned int*) buffer;
+			layer.tiles = (unsigned int*) buffer;
 		
 		[currentString setString:@""];
 	}
