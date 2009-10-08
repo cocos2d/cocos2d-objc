@@ -73,7 +73,7 @@ enum
 {
 	CGSize		mapSize_;
 	CGSize		tileSize_;
-	int			mapOrientation_;
+	int			mapOrientation_;	
 }
 
 /** the map's size property measured in tiles */
@@ -110,6 +110,9 @@ enum
 	CGSize			mapTileSize_;
 	unsigned int	*tiles_;
 	int				layerOrientation_;
+	
+	// used for optimization
+	AtlasSprite		*reusedTile;
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;
