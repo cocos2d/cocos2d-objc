@@ -17,7 +17,7 @@
 
 #import "AtlasNode.h"
 #import "AtlasSpriteManager.h"
-#import "Support/carray.h"
+#import "Support/ccArray.h"
 
 
 @class TMXMapInfo;
@@ -114,7 +114,7 @@ enum
 	
 	// used for optimization
 	AtlasSprite		*reusedTile;
-	CArray			*atlasPositionsArray;
+	ccCArray		*atlasIndexArray;
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;
@@ -140,11 +140,6 @@ enum
  If you are going to call [layer tileGIDAt:] then, don't release the map
  */
 -(void) releaseMap;
-
-/** adds a tile given a GID and a tile coordinate.
- The tile will be added with the z and tag the belongs to the tile coordinate
- */
--(AtlasSprite*) addTileForGID:(unsigned int)gid at:(CGPoint)pos;
 
 /** returns the tile (AtlasSprite) at a given a tile coordinate */
 -(AtlasSprite*) tileAt:(CGPoint)tileCoordinate;
