@@ -172,14 +172,29 @@ Class restartAction()
 	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
 	
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
-	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+	Action *a2 = [grossini runAction: [RepeatForever actionWithAction:seq1]];
+	[a2 setTag:1];
+
+	Action *a1 =[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[a1 setTag:1];
+
+	Action *a = [kathia runAction: [RepeatForever actionWithAction:seq3]];
+	[a setTag:1];
+	
+	[self schedule:@selector(testStopAction:) interval:6];
+}
+
+-(void) testStopAction:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	[tamara stopActionByTag:1];
+	[kathia stopActionByTag:1];
+	[grossini stopActionByTag:1];
 }
 
 -(NSString *) title
 {
-	return @"EaseIn - EaseOut";
+	return @"EaseIn - EaseOut - Stop";
 }
 @end
 
