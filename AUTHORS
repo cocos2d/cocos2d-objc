@@ -202,6 +202,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
 	* sflory:
 		new way to added CGImageRef to TextureMgr
+		added unicode support in BitmapFontAtlas
 	* Sindesso Pty Ltd & David Durbin (http://www.sindesso.com/):
 		author of PageTurn3D action
 		author of PageTurn3DTransition
