@@ -1127,6 +1127,8 @@
 		50F2A104102094550046CA73 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
 		50F2A105102094550046CA73 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F2A103102094550046CA73 /* ZipUtils.h */; };
 		50F48A531045943000755CFB /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500111F2103B878B0059EC2E /* GLES-Render.mm */; };
+		50F49CFF108384A200E3BDCD /* bitmapFontTestUnicode.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 50F49CFD108384A200E3BDCD /* bitmapFontTestUnicode.fnt */; };
+		50F49D00108384A200E3BDCD /* bitmapFontTestUnicode.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F49CFE108384A200E3BDCD /* bitmapFontTestUnicode.png */; };
 		50F7B2780F28DE7C00057537 /* EaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* EaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* EaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* EaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
@@ -2335,6 +2337,8 @@
 		50F489CA10458B6300755CFB /* Official-cocos2d-Tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Official-cocos2d-Tag.png"; sourceTree = "<group>"; };
 		50F489CB10458B6300755CFB /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		50F489CC10458B6300755CFB /* sfchromefenders.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfchromefenders.ttf; sourceTree = "<group>"; };
+		50F49CFD108384A200E3BDCD /* bitmapFontTestUnicode.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTestUnicode.fnt; sourceTree = "<group>"; };
+		50F49CFE108384A200E3BDCD /* bitmapFontTestUnicode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTestUnicode.png; sourceTree = "<group>"; };
 		50F7B2760F28DE7C00057537 /* EaseAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseAction.h; sourceTree = "<group>"; };
 		50F7B2770F28DE7C00057537 /* EaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseAction.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
@@ -3562,6 +3566,8 @@
 		505463B81062868100AB7C52 /* BitmapFontAtlas fonts */ = {
 			isa = PBXGroup;
 			children = (
+				50F49CFD108384A200E3BDCD /* bitmapFontTestUnicode.fnt */,
+				50F49CFE108384A200E3BDCD /* bitmapFontTestUnicode.png */,
 				505463971062867800AB7C52 /* bitmapFontTest.fnt */,
 				505463981062867800AB7C52 /* bitmapFontTest.png */,
 				505463991062867800AB7C52 /* bitmapFontTest2.bmp */,
@@ -5961,6 +5967,8 @@
 				505463AB1062867800AB7C52 /* bitmapFontTest5.png in Resources */,
 				505463AC1062867800AB7C52 /* tuffy_bold_italic-charmap.png in Resources */,
 				505464351062886600AB7C52 /* fps_images.png in Resources */,
+				50F49CFF108384A200E3BDCD /* bitmapFontTestUnicode.fnt in Resources */,
+				50F49D00108384A200E3BDCD /* bitmapFontTestUnicode.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

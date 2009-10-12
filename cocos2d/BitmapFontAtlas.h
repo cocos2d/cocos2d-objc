@@ -22,7 +22,7 @@
 /** bitmap font definition */
 typedef struct _bitmapFontDef {
 	//! ID of the character
-	unsigned char charID;
+	unsigned int charID;
 	//! origin and size of the font
 	CGRect rect;
 	//! The X amount the image should be offset when drawing the image (in pixels)
@@ -48,7 +48,7 @@ typedef struct _bitmapFontPadding {
 } ccBitmapFontPadding;
 
 enum {
-	kBitmapFontAtlasMaxChars = 256,
+	kBitmapFontAtlasMaxChars = 2048, //256,
 };
 
 /** BitmapFontConfiguration has parsed configuration of the the .fnt file

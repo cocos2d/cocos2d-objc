@@ -48,8 +48,11 @@
 }
 @end
 
-
 @interface AtlasFastBitmap : AtlasDemo
+{}
+@end
+
+@interface AtlasUnicodeBitmap : AtlasDemo
 {}
 @end
 
