@@ -48,6 +48,7 @@ typedef struct _bitmapFontPadding {
 } ccBitmapFontPadding;
 
 enum {
+	// how many characters are supported
 	kBitmapFontAtlasMaxChars = 2048, //256,
 };
 
