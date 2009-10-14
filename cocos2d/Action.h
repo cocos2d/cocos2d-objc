@@ -26,6 +26,7 @@ enum {
  */
 @interface Action : NSObject <NSCopying> {
 
+	id	originalTarget;
 	id	target;
 	int	tag;
 }
@@ -36,6 +37,12 @@ enum {
  The target is 'assigned', it is not 'retained'.
  */
 @property (nonatomic,readonly,assign) id target;
+
+/** The original target, since target can be nil.
+ Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
+ @since v0.8.2
+ */
+@property (nonatomic,readonly,assign) id originalTarget;
 
 /** The action tag. An identifier of the action */
 @property (nonatomic,readwrite,assign) int tag;

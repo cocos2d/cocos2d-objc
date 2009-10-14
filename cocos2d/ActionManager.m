@@ -226,7 +226,7 @@ static ActionManager *_sharedManager = nil;
 		return;
 	
 	tHashElement elementTmp;
-	elementTmp.target = [action target];
+	elementTmp.target = [action originalTarget];
 	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(elementTmp.target), &elementTmp);
 	if( element ) {
 		NSUInteger i = ccArrayGetIndexOfObject(element->actions, action);
@@ -257,7 +257,7 @@ static ActionManager *_sharedManager = nil;
 		for( NSUInteger i = 0; i < limit; i++) {
 			Action *a = element->actions->arr[i];
 			
-			if( a.tag == aTag && [a target]==target)
+			if( a.tag == aTag && [a originalTarget]==target)
 				return [self removeActionAtIndex:i hashElement:element];
 		}
 //		CCLOG(@"cocos2d: removeActionByTag: Action not found!");
