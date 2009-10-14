@@ -158,7 +158,7 @@ static Director *_sharedDirector = nil;
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 
 		// default values
-		pixelFormat_ = kPixelFormatRGBA8888;
+		pixelFormat_ = kPixelFormatDefault;
 		depthBufferFormat_ = 0;
 
 		// scenes
@@ -396,36 +396,15 @@ static Director *_sharedDirector = nil;
 // detach or attach to a view or a window
 -(BOOL)detach
 {
-	// check if the view is attached
-	if(![self isOpenGLAttached])
-	{
-		// the view is not attached
-		NSException* myException = [NSException
-									exceptionWithName:kccException_OpenGLViewNotAttached
-									reason:@"Can't detach the OpenGL View, because it is not attached. Attach it first."
-									userInfo:nil];
-		@throw myException;
-		
-		return NO;
-	}
+	NSAssert([self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, because it is not attached. Attach it first.");
 	
 	// remove from the superview
 	[openGLView_ removeFromSuperview];
 	
-	// check if the view is not attached anymore
-	if(![self isOpenGLAttached])
-	{
-		return YES;
-	}
+	NSAssert(![self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, it is still attached to the superview.");
 	
-	// the view is still attached
-	NSException* myException = [NSException
-								exceptionWithName:kccException_OpenGLViewCantDetach
-								reason:@"Can't detach the OpenGL View, it is still attached to the superview."
-								userInfo:nil];
-	@throw myException;
 	
-	return NO;
+	return YES;
 }
 
 -(BOOL)attachInWindow:(UIWindow *)window
@@ -460,49 +439,38 @@ static Director *_sharedDirector = nil;
 
 -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
 {
-	// check if the view is not attached
-	if([self isOpenGLAttached])
-	{
-		// the view is already attached
-		NSException* myException = [NSException
-									exceptionWithName:kccException_OpenGLViewAlreadyAttached
-									reason:@"Can't re-attach the OpenGL View, because it is already attached. Detach it first."
-									userInfo:nil];
-		@throw myException;
-		
-		return NO;
-	}
+	NSAssert( ! [self isOpenGLAttached], @"FATAL: Can't re-attach the OpenGL View, because it is already attached. Detach it first");
 	
 	// check if the view is not initialized
 	if(!openGLView_)
 	{
 		// define the pixel format
-		NSString	*pFormat = kEAGLColorFormatRGB565;
+		NSString	*pFormat = nil;
 	    GLuint		depthFormat = 0;
 		
 		if(pixelFormat_==kPixelFormatRGBA8888)
 			pFormat = kEAGLColorFormatRGBA8;
+		else if(pixelFormat_== kPixelFormatRGB565)
+			pFormat = kEAGLColorFormatRGB565;
+		else {
+			CCLOG(@"cocos2d: Director: Unknown pixel format.");
+		}
 		
 		if(depthBufferFormat_ == kDepthBuffer16)
 			depthFormat = GL_DEPTH_COMPONENT16_OES;
 		else if(depthBufferFormat_ == kDepthBuffer24)
 			depthFormat = GL_DEPTH_COMPONENT24_OES;
+		else if(depthBufferFormat_ == kDepthBufferNone)
+			depthFormat = 0;
+		else {
+			CCLOG(@"cocos2d: Director: Unknown buffer depth.");
+		}
 		
 		// alloc and init the opengl view
 		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
-		
+
 		// check if the view was alloced and initialized
-		if(!openGLView_)
-		{
-			// the view was not created
-			NSException* myException = [NSException
-										exceptionWithName:kccException_OpenGLViewCantInit
-										reason:@"Could not alloc and init the OpenGL View."
-										userInfo:nil];
-			@throw myException;
-			
-			return NO;
-		}
+		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
 		
 		// set autoresizing enabled when attaching the glview to another view
 		[openGLView_ setAutoresizesEAGLSurface:YES];		
@@ -545,21 +513,11 @@ static Director *_sharedDirector = nil;
 	// set the background color of the glview
 	//	[backgroundColor setOpenGLClearColor];
 	
-	// check if the glview is attached now
-	if([self isOpenGLAttached])
-	{
-		[self initGLDefaultValues];
-		return YES;
-	}
 	
-	// the glview is not attached, but it should have been
-	NSException* myException = [NSException
-								exceptionWithName:kccException_OpenGLViewCantAttach
-								reason:@"Can't attach the OpenGL View."
-								userInfo:nil];
-	@throw myException;
-	
-	return NO;
+	NSAssert( [self isOpenGLAttached], @"FATAL: Director: Could not attach OpenGL view");
+
+	[self initGLDefaultValues];
+	return YES;
 }
 
 #pragma mark Director Scene Landscape
