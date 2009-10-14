@@ -25,7 +25,7 @@
 #pragma mark Action
 @implementation Action
 
-@synthesize tag, target;
+@synthesize tag, target, originalTarget;
 
 +(id) action
 {
@@ -35,7 +35,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {	
-		target = nil;
+		originalTarget = target = nil;
 		tag = kActionTagInvalid;
 	}
 	return self;
@@ -61,7 +61,7 @@
 
 -(void) startWithTarget:(id)aTarget
 {
-	target = aTarget;
+	originalTarget = target = aTarget;
 }
 
 -(void) stop
