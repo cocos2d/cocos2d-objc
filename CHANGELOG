@@ -6,6 +6,7 @@ version 0.8.2-rc1 - 13-Oct-2009
  . Actions: RotateTo uses min distance (issue #584)
  . Actions: JumpBy/To uses parabolic function (issue #324)
  . BitmapFontAtlas: added limited unicode support (issue #596)
+ . Director: Rolling back buffer format. Default buffer format is RGB565.
  . FontLabel: updates version from git 2009-10-07 (issue #582)
  . Particles: FreeMovement uses World-Coordinates (issue #241)
  . Tests: Added Particle + Parallax test (part of issue #241)

@@ -16,8 +16,3 @@
 // based on OC3D OC3DConstants.h file
 //
 
-static NSString *kccException_OpenGLViewAlreadyAttached = @"kccException_OpenGLViewAlreadyAttached";
-static NSString *kccException_OpenGLViewNotAttached     = @"kccException_OpenGLViewNotAttached";
-static NSString *kccException_OpenGLViewCantDetach      = @"kccException_OpenGLViewCantDetach";
-static NSString *kccException_OpenGLViewCantAttach      = @"kccException_OpenGLViewCantAttach";
-static NSString *kccException_OpenGLViewCantInit        = @"kccException_OpenGLViewCantInit";
