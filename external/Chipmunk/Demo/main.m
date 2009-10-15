@@ -272,8 +272,9 @@ void drawCollisions(void *ptr, void *data)
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// FastDirector is faster, but consumes more battery
-	[Director useFastDirector];
+	// Try to use DisplayLink director (SDK >= 3.1) if it fails, use FastDirector
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeMainLoop];
 	
 	// before creating any layer, set the landscape mode
 //	[[Director sharedDirector] setLandscape: YES];
