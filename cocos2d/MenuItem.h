@@ -29,7 +29,8 @@
 @interface MenuItem : CocosNode
 {
 	NSInvocation *invocation;
-	BOOL isEnabled;
+	BOOL isEnabled_;
+	BOOL isSelected_;
 }
 
 /** Creates a menu item with a target/selector */
@@ -40,6 +41,11 @@
 
 /** Returns the outside box */
 -(CGRect) rect;
+
+/** returns whether or not the item is selected
+ @since v0.8.2
+ */
+@property (nonatomic,readonly) BOOL isSelected;
 
 /** Activate the item */
 -(void) activate;
@@ -52,6 +58,7 @@
 
 /** Enable or disabled the MenuItem */
 -(void) setIsEnabled:(BOOL)enabled;
+
 /** Returns whether or not the MenuItem is enabled */
 -(BOOL) isEnabled;
 @end
@@ -148,7 +155,6 @@
  */
 @interface MenuItemSprite : MenuItem <CocosNodeRGBA>
 {
-	BOOL selected;
 	CocosNode<CocosNodeRGBA> *normalImage_, *selectedImage_, *disabledImage_;
 }
 
