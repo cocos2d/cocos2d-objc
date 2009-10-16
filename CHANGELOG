@@ -1,3 +1,7 @@
+version 0.8.2 - dd-MMM-2009
+ . ChipmunkTest: uses new API to set director type (issue #XXX)
+ . MenuItem: added isSelected property (issue #601)
+ 
 version 0.8.2-rc1 - 14-Oct-2009
  . Actions: start/stop sets the target (issue #489 and issue #589)
  . Actions: Compound actions call "inner" stop (issue #489 and #issue #589)

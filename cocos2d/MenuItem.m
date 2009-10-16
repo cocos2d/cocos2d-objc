@@ -39,6 +39,8 @@ enum {
 
 @implementation MenuItem
 
+@synthesize isSelected=isSelected_;
+
 -(id) init
 {
 	NSException* myException = [NSException
@@ -71,7 +73,8 @@ enum {
 			[invocation retain];
 		}
 		
-		isEnabled = YES;
+		isEnabled_ = YES;
+		isSelected_ = NO;
 	}
 	
 	return self;
@@ -85,28 +88,28 @@ enum {
 
 -(void) selected
 {
-	NSAssert(1,@"MenuItem.selected must be overriden");
+	isSelected_ = YES;
 }
 
 -(void) unselected
 {
-	NSAssert(1,@"MenuItem.unselected must be overriden");
+	isSelected_ = NO;
 }
 
 -(void) activate
 {
-	if(isEnabled)
+	if(isEnabled_)
         [invocation invoke];
 }
 
 -(void) setIsEnabled: (BOOL)enabled
 {
-    isEnabled = enabled;
+    isEnabled_ = enabled;
 }
 
 -(BOOL) isEnabled
 {
-    return isEnabled;
+    return isEnabled_;
 }
 
 -(CGRect) rect
@@ -164,7 +167,7 @@ enum {
 }
 
 -(void) activate {
-	if(isEnabled) {
+	if(isEnabled_) {
 		[self stopAllActions];
         
 		self.scale = 1.0f;
@@ -176,7 +179,9 @@ enum {
 -(void) selected
 {
 	// subclass to change the default action
-	if(isEnabled) {		
+	if(isEnabled_) {		
+		[super selected];
+		
 		[self stopActionByTag:kZoomActionTag];
 		Action *zoomAction = [ScaleTo actionWithDuration:0.1f scale:1.2f];
 		zoomAction.tag = kZoomActionTag;
@@ -187,7 +192,9 @@ enum {
 -(void) unselected
 {
 	// subclass to change the default action
-	if(isEnabled) {
+	if(isEnabled_) {
+		[super unselected];
+		
 		[self stopActionByTag:kZoomActionTag];
 		Action *zoomAction = [ScaleTo actionWithDuration:0.1f scale:1.0f];
 		zoomAction.tag = kZoomActionTag;
@@ -197,7 +204,7 @@ enum {
 
 -(void) setIsEnabled: (BOOL)enabled
 {
-	if( isEnabled != enabled ) {
+	if( isEnabled_ != enabled ) {
 		if(enabled == NO) {
 			colorBackup = [label_ color];
 			[label_ setColor: disabledColor_];
@@ -370,20 +377,10 @@ enum {
 	[super dealloc];
 }
 
--(void) selected
-{
-	selected = YES;
-}
-
--(void) unselected
-{
-	selected = NO;
-}
-
 -(void) draw
 {
-	if(isEnabled) {
-		if( selected )
+	if(isEnabled_) {
+		if( isSelected_ )
 			[selectedImage_ draw];
 		else
 			[normalImage_ draw];
@@ -467,7 +464,7 @@ enum {
 
 - (void)selected
 {
-	if( isEnabled ) {
+	if( isEnabled_ ) {
 		[super selected];
 		[normalImage_ setVisible:NO];
 		[selectedImage_ setVisible:YES];
@@ -477,7 +474,7 @@ enum {
 
 - (void)unselected
 {
-	if( isEnabled ) {
+	if( isEnabled_ ) {
 		[super unselected];
 		[normalImage_ setVisible:YES];
 		[selectedImage_ setVisible:NO];
@@ -621,18 +618,20 @@ enum {
 
 -(void) selected
 {
+	[super selected];
 	[[subItems_ objectAtIndex:selectedIndex_] selected];
 }
 
 -(void) unselected
 {
+	[super unselected];
 	[[subItems_ objectAtIndex:selectedIndex_] unselected];
 }
 
 -(void) activate
 {
 	// update index
-	if( isEnabled ) {
+	if( isEnabled_ ) {
 		NSUInteger newIndex = (selectedIndex_ + 1) % [subItems_ count];
 		[self setSelectedIndex:newIndex];
 
