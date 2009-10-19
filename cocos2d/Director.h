@@ -102,6 +102,10 @@ typedef enum {
 	 * - The interval update can be 1/60, 1/30, 1/15
 	 */	
 	CCDirectorTypeDisplayLink,
+	
+	/** Default director is the NSTimer directory */
+	CCDirectorTypeDefault = CCDirectorTypeNSTimer,
+
 } ccDirectorType;
 
 /** Possible device orientations */

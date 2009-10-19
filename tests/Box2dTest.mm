@@ -230,8 +230,11 @@ enum {
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
-
+	// Try to use CADisplayLink director
+	// if it fails (SDK < 3.1) use Threaded director
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeDefault];
+	
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[Director sharedDirector] setAnimationInterval:1.0/60];
 	[[Director sharedDirector] setDisplayFPS:YES];

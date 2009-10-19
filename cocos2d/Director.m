@@ -274,27 +274,13 @@ static Director *_sharedDirector = nil;
 
 -(void) setPixelFormat: (tPixelFormat) format
 {	
-	if( [self isOpenGLAttached] ) {
-		NSException* myException = [NSException
-									exceptionWithName:@"DirectorAlreadyInitialized"
-									reason:@"Can't change the pixel format after the director was initialized"
-									userInfo:nil];
-		@throw myException;		
-	}
-	
+	NSAssert( ! [self isOpenGLAttached], @"Can't change the pixel format after the director was initialized" );	
 	pixelFormat_ = format;
 }
 
 -(void) setDepthBufferFormat: (tDepthBufferFormat) format
 {
-	if( [self isOpenGLAttached] ) {
-		NSException* myException = [NSException
-                                  exceptionWithName:@"DirectorAlreadyInitialized"
-                                  reason:@"Can't change the depth buffer format after the director was initialized"
-                                  userInfo:nil];
-		@throw myException;		
-	}
-
+	NSAssert( ! [self isOpenGLAttached], @"Can't change the depth buffer format after the director was initialized");
    depthBufferFormat_ = format;
 }
 
