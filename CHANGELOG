@@ -1,6 +1,7 @@
 version 0.8.2 - dd-MMM-2009
+ . Actions: Animate copy restoreOriginalFrame parameter (issue #602)
  . ChipmunkTest: uses new API to set director type (issue #XXX)
- . CocosLive: doesn't use deprecated methods (issue #XXX)
+ . CocosLive: doesn't use deprecated methods (issue #604)
  . MenuItem: added isSelected property (issue #601)
  
 version 0.8.2-rc1 - 14-Oct-2009
