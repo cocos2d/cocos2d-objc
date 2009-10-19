@@ -211,6 +211,11 @@ Class restartAction()
 	// cocos2d will inherit these values
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
+	
+	// Try to use CADisplayLink director
+	// if it fails (SDK < 3.1) use Threaded director
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeDefault];	
 
 	// before creating any layer, set the landscape mode
 	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];

@@ -404,7 +404,10 @@ Class restartTransition()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	// Try to use CADisplayLink director
+	// if it fails (SDK < 3.1) use Threaded director
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeDefault];
 	
 	// Create a depth buffer of 16 bits
 	// Needed for some transitions

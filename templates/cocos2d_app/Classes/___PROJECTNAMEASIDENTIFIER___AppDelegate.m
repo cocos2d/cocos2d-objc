@@ -23,9 +23,10 @@
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:YES];
 	
-	// must be called before any othe call to the director
-	// WARNING: FastDirector doesn't interact well with UIKit controls
-//	[Director useFastDirector];
+	// Try to use CADisplayLink director
+	// if it fails (SDK < 3.1) use Threaded director
+	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
+		[Director setDirectorType:CCDirectorTypeDefault];
 	
 	// Use RGBA_8888 buffers
 	// Default is: RGB_565 buffers

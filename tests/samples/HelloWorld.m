@@ -67,8 +67,8 @@
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use Threaded director
 	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeThreadMainLoop];
-		
+		[Director setDirectorType:CCDirectorTypeDefault];
+	
 	// create an initilize the main UIWindow
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
