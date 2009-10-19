@@ -1117,7 +1117,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAnimation: animation];
+	return [[[self class] allocWithZone: zone] initWithAnimation: animation restoreOriginalFrame: restoreOriginalFrame];
 }
 
 -(void) dealloc
