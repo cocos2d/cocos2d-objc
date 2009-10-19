@@ -18,7 +18,6 @@ static NSString *transitions[] = {
 			@"Atlas5",
 			@"Atlas6",
 			@"AtlasFastBitmap",
-			@"AtlasUnicodeBitmap",
 };
 
 enum {
@@ -534,37 +533,6 @@ Class restartAction()
 }
 @end
 
-#pragma mark Example AtlasUnicodeBitmap
-
-/*
- * Use any of these editors to generate bitmap font atlas:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
- */
-
-@implementation AtlasUnicodeBitmap
--(id) init
-{
-	if( (self=[super init]) ) {
-		
-		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"unicode test: \u0401\u0410\u0411\u0412\u0413" fntFile:@"bitmapFontTestUnicode.fnt"];
-		[self addChild:label];
-			
-		CGSize s = [[Director sharedDirector] winSize];			
-		CGPoint p = ccp( s.width/2, s.height/2);
-		label.position = p;
-		label.anchorPoint = ccp(0.5f, 0.5f);
-	}
-	
-	return self;
-}
-
--(NSString*) title
-{
-	return @"BitmapFontAtlas Unicode";
-}
-@end
 
 #pragma mark -
 #pragma mark Application Delegate
