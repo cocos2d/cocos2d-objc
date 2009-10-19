@@ -1,5 +1,6 @@
 version 0.8.2 - dd-MMM-2009
  . ChipmunkTest: uses new API to set director type (issue #XXX)
+ . CocosLive: doesn't use deprecated methods (issue #XXX)
  . MenuItem: added isSelected property (issue #601)
  
 version 0.8.2-rc1 - 14-Oct-2009

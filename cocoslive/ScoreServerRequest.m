@@ -117,18 +117,13 @@
 -(NSArray*) parseScores
 {	
 	NSArray *array = nil;
-	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
-	//	NSString *jsonString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
-	
-	NSData *jsonData = [jsonString dataUsingEncoding:NSUTF32BigEndianStringEncoding];
 	NSError *error = nil;
-	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
+	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:receivedData error:&error];
 	
 	if( ! error ) {
 		array = [dictionary objectForKey:@"scores"];
 	} else {
 		CCLOG(@"Error parsing scores: %@", error);
-		CCLOG(@"Data: %@", jsonString);
 	}
 	return array;
 }
@@ -168,7 +163,8 @@
 }
 
 -(int) parseRank {
-	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
+//	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
+	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
 	
 	// creating trimmed string by trimming everything that's not numbers from the receivedData
 	NSString *trimmedStr = [rankStr stringByTrimmingCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
