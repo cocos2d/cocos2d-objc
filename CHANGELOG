@@ -1,4 +1,4 @@
-version 0.8.2 - dd-MMM-2009
+version 0.8.2 - 19-Oct-2009
  . Actions: Animate copy restoreOriginalFrame parameter (issue #602)
  . ChipmunkTest: uses new API to set director type (issue #XXX)
  . CocosLive: doesn't use deprecated methods (issue #604)
