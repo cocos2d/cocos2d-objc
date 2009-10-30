@@ -76,17 +76,17 @@ Class restartAction()
 	[super init];
 
 
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 		
-	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+	CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label z:1];
 	[label setPosition: ccp(s.width/2, s.height-50)];
 	
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+	CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+	CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+	CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 	
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+	CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 	
 	menu.position = CGPointZero;
 	item1.position = ccp( s.width/2 - 100,30);
@@ -104,23 +104,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -139,9 +139,9 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
-	textureAtlas = [[TextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
+	textureAtlas = [[CCTextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
 	
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	//
 	// Notice: u,v tex coordinates are inverted
@@ -219,12 +219,12 @@ Class restartAction()
 	if( ![super init] )
 		return nil;
 	
-	LabelAtlas *label1 = [LabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+	CCLabelAtlas *label1 = [CCLabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	[self addChild:label1 z:0 tag:kTagSprite1];
 	label1.position = ccp(10,100);
 	label1.opacity = 200;
 
-	LabelAtlas *label2 = [LabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+	CCLabelAtlas *label2 = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 	[self addChild:label2 z:0 tag:kTagSprite2];
 	label2.position = ccp(10,200);
 	label2.opacity = 32;
@@ -238,10 +238,10 @@ Class restartAction()
 {
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
-	LabelAtlas *label1 = (LabelAtlas*) [self getChildByTag:kTagSprite1];
+	CCLabelAtlas *label1 = (CCLabelAtlas*) [self getChildByTag:kTagSprite1];
 	[label1 setString:string];
 
-	LabelAtlas *label2 = (LabelAtlas*) [self getChildByTag:kTagSprite2];
+	CCLabelAtlas *label2 = (CCLabelAtlas*) [self getChildByTag:kTagSprite2];
 	[label2 setString: [NSString stringWithFormat:@"%d", (int)time]];
 }
 
@@ -270,18 +270,18 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		ColorLayer *col = [ColorLayer layerWithColor:ccc4(128,128,128,255)];
+		CCColorLayer *col = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
 		
-		BitmapFontAtlas *label1 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		
 		// testing anchors
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
-		id fade = [FadeOut actionWithDuration:1.0f];
+		id fade = [CCFadeOut actionWithDuration:1.0f];
 		id fade_in = [fade reverse];
-		id seq = [Sequence actions:fade, fade_in, nil];
-		id repeat = [RepeatForever actionWithAction:seq];
+		id seq = [CCSequence actions:fade, fade_in, nil];
+		id repeat = [CCRepeatForever actionWithAction:seq];
 		[label1 runAction:repeat];
 		
 
@@ -289,20 +289,20 @@ Class restartAction()
 		// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
 		// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
 		// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
 		label2.anchorPoint = ccp(0.5f, 0.5f);
 		label2.color = ccRED;
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		[label2 runAction: [[repeat copy] autorelease]];
 		
-		BitmapFontAtlas *label3 = [BitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCBitmapFontAtlas *label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
 		label3.anchorPoint = ccp(1,1);
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
 		
 		
-		CGSize s = [[Director sharedDirector] winSize];	
+		CGSize s = [[CCDirector sharedDirector] winSize];	
 		label1.position = ccp( 0,0);
 		label2.position = ccp( s.width/2, s.height/2);
 		label3.position = ccp( s.width, s.height);
@@ -318,13 +318,13 @@ Class restartAction()
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%2.2f Test j", time];
 	
-	BitmapFontAtlas *label1 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas1];
+	CCBitmapFontAtlas *label1 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas1];
 	[label1 setString:string];
 	
-	BitmapFontAtlas *label2 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
+	CCBitmapFontAtlas *label2 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
 	[label2 setString:string];
 	
-	BitmapFontAtlas *label3 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas3];
+	CCBitmapFontAtlas *label3 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas3];
 	[label3 setString:string];
 }
 
@@ -349,35 +349,35 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		// Upper Label
-		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
+		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 		
 		
-		AtlasSprite *BChar = (AtlasSprite*) [label getChildByTag:0];
-		AtlasSprite *FChar = (AtlasSprite*) [label getChildByTag:7];
-		AtlasSprite *AChar = (AtlasSprite*) [label getChildByTag:12];
+		CCAtlasSprite *BChar = (CCAtlasSprite*) [label getChildByTag:0];
+		CCAtlasSprite *FChar = (CCAtlasSprite*) [label getChildByTag:7];
+		CCAtlasSprite *AChar = (CCAtlasSprite*) [label getChildByTag:12];
 		
 		
-		id rotate = [RotateBy actionWithDuration:2 angle:360];
-		id rot_4ever = [RepeatForever actionWithAction:rotate];
+		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
+		id rot_4ever = [CCRepeatForever actionWithAction:rotate];
 		
-		id scale = [ScaleBy actionWithDuration:2 scale:1.5f];
+		id scale = [CCScaleBy actionWithDuration:2 scale:1.5f];
 		id scale_back = [scale reverse];
-		id scale_seq = [Sequence actions:scale, scale_back,nil];
-		id scale_4ever = [RepeatForever actionWithAction:scale_seq];
+		id scale_seq = [CCSequence actions:scale, scale_back,nil];
+		id scale_4ever = [CCRepeatForever actionWithAction:scale_seq];
 		
-		id jump = [JumpBy actionWithDuration:0.5f position:CGPointZero height:60 jumps:1];
-		id jump_4ever = [RepeatForever actionWithAction:jump];
+		id jump = [CCJumpBy actionWithDuration:0.5f position:CGPointZero height:60 jumps:1];
+		id jump_4ever = [CCRepeatForever actionWithAction:jump];
 		
-		id fade_out = [FadeOut actionWithDuration:1];
-		id fade_in = [FadeIn actionWithDuration:1];
-		id seq = [Sequence actions:fade_out, fade_in, nil];
-		id fade_4ever = [RepeatForever actionWithAction:seq];
+		id fade_out = [CCFadeOut actionWithDuration:1];
+		id fade_in = [CCFadeIn actionWithDuration:1];
+		id seq = [CCSequence actions:fade_out, fade_in, nil];
+		id fade_4ever = [CCRepeatForever actionWithAction:seq];
 		
 		[BChar runAction:rot_4ever];
 		[BChar runAction:scale_4ever];
@@ -386,11 +386,11 @@ Class restartAction()
 		
 		
 		// Bottom Label
-		BitmapFontAtlas *label2 = [BitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
+		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		label2.position = ccp(s.width/2.0f, 80);
 		
-		AtlasSprite *lastChar = (AtlasSprite*) [label2 getChildByTag:3];
+		CCAtlasSprite *lastChar = (CCAtlasSprite*) [label2 getChildByTag:3];
 		[lastChar runAction: [[rot_4ever copy] autorelease]];
 		
 		[self schedule:@selector(step:) interval:0.1f];
@@ -400,7 +400,7 @@ Class restartAction()
 }
 -(void) draw
 {
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	drawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
 	drawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 
@@ -415,7 +415,7 @@ Class restartAction()
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%04.1f", time];
 	
-	BitmapFontAtlas *label1 = (BitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
+	CCBitmapFontAtlas *label1 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
 	[label1 setString:string];	
 }
 
@@ -436,10 +436,10 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
+		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
 		[self addChild:label];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
@@ -468,20 +468,20 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		BitmapFontAtlas *label = nil;
-		label = [BitmapFontAtlas bitmapFontAtlasWithString:@"FaFeFiFoFu" fntFile:@"bitmapFontTest5.fnt"];
+		CCBitmapFontAtlas *label = nil;
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"FaFeFiFoFu" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2+50);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 		
-		label = [BitmapFontAtlas bitmapFontAtlasWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 
-		label = [BitmapFontAtlas bitmapFontAtlasWithString:@"aeiou" fntFile:@"bitmapFontTest5.fnt"];
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"aeiou" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2-50);
 		label.anchorPoint = ccp(0.5f, 0.5f);
@@ -513,10 +513,10 @@ Class restartAction()
 		
 		// Upper Label
 		for( int i=0 ; i < 100;i ++ ) {
-			BitmapFontAtlas *label = [BitmapFontAtlas bitmapFontAtlasWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
+			CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
 			[self addChild:label];
 			
-			CGSize s = [[Director sharedDirector] winSize];
+			CGSize s = [[CCDirector sharedDirector] winSize];
 
 			CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 			label.position = p;
@@ -533,7 +533,6 @@ Class restartAction()
 }
 @end
 
-
 #pragma mark -
 #pragma mark Application Delegate
 
@@ -549,53 +548,51 @@ Class restartAction()
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
 	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	// must be called before any othe call to the director
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];		
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

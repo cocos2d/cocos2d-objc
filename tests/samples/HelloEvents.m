@@ -37,14 +37,14 @@ enum {
 		self.isAccelerometerEnabled = YES;
 
 		//
-		// Label
+		// CCLabel
 		//
 		
-		// create and initialize a Label
-		Label* label = [Label labelWithString:@"Hello Events" fontName:@"Marker Felt" fontSize:64];
+		// create and initialize a CCLabel
+		CCLabel* label = [CCLabel labelWithString:@"Hello Events" fontName:@"Marker Felt" fontSize:64];
 
 		// ask director the the window size
-		CGSize size = [[Director sharedDirector] winSize];
+		CGSize size = [[CCDirector sharedDirector] winSize];
 	
 		// position the label on the center of the screen
 		// "ccp" is a helper macro that creates a point. It means: "CoCos Point"
@@ -57,7 +57,7 @@ enum {
 		// Sprite
 		//
 		
-		Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.position = ccp( 50, 50);
 		
 		// z is the z-order. Greater values means on top of lower values.
@@ -73,7 +73,7 @@ enum {
 {
 	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
-	// cocos2d will automatically release all the children (Label)
+	// cocos2d will automatically release all the children (CCLabel)
 	
 	// don't forget to call "super dealloc"
 	[super dealloc];
@@ -95,15 +95,15 @@ enum {
 		
 		// IMPORTANT:
 		// The touches are always in "portrait" coordinates. You need to convert them to your current orientation
-		CGPoint convertedPoint = [[Director sharedDirector] convertToGL:location];
+		CGPoint convertedPoint = [[CCDirector sharedDirector] convertToGL:location];
 		
-		CocosNode *sprite = [self getChildByTag:kTagSprite];
+		CCNode *sprite = [self getChildByTag:kTagSprite];
 		
 		// we stop the all running actions
 		[sprite stopAllActions];
 		
 		// and we run a new action
-		[sprite runAction: [MoveTo actionWithDuration:1 position:convertedPoint]];
+		[sprite runAction: [CCMoveTo actionWithDuration:1 position:convertedPoint]];
 		
 		// no other handlers will receive this event
 		return kEventHandled;
@@ -116,7 +116,7 @@ enum {
 // This callback will be called because 'isAccelerometerEnabled' is YES.
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
 {	
-	CocosNode *sprite = [self getChildByTag:kTagSprite];
+	CCNode *sprite = [self getChildByTag:kTagSprite];
 
 	// Convert the coordinates to 'landscape' coords
 	// since they are always in 'portrait' coordinates
@@ -148,8 +148,8 @@ enum {
 
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeDefault];
 	
 	// create an initilize the main UIWindow
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -158,24 +158,24 @@ enum {
 	[window setMultipleTouchEnabled:NO];
 
 	// Attach cocos2d to the window
-	[[Director sharedDirector] attachInWindow:window];
+	[[CCDirector sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
 	// Make the window visible
 	[window makeKeyAndVisible];
 	
 	// Create and initialize parent and empty Scene
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 
 	// Create and initialize our HelloEvents Layer
-	Layer *layer = [HelloEvents node];
+	CCLayer *layer = [HelloEvents node];
 	// add our HelloEvents Layer as a child of the main scene
 	[scene addChild:layer];
 
 	// Run!
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc

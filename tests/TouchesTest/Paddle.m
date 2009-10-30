@@ -1,7 +1,7 @@
 /* TouchesTest (c) Valentin Milea 2009
  */
 #import "Paddle.h"
-#import "TouchDispatcher.h"
+#import "cocos2d.h"
 
 @implementation Paddle
 
@@ -11,12 +11,12 @@
 	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
-+ (id)paddleWithTexture:(Texture2D *)aTexture
++ (id)paddleWithTexture:(CCTexture2D *)aTexture
 {
 	return [[[self alloc] initWithTexture:aTexture] autorelease];
 }
 
-- (id)initWithTexture:(Texture2D *)aTexture
+- (id)initWithTexture:(CCTexture2D *)aTexture
 {
 	if ((self = [super init]) == nil) return nil;
 	
@@ -28,13 +28,13 @@
 
 - (void)onEnter
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 	[super onEnter];
 }
 
 - (void)onExit
 {
-	[[TouchDispatcher sharedDispatcher] removeDelegate:self];
+	[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 	[super onExit];
 }	
 
@@ -64,7 +64,7 @@
 	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");	
 	
 	CGPoint touchPoint = [touch locationInView:[touch view]];
-	touchPoint = [[Director sharedDirector] convertToGL:touchPoint];
+	touchPoint = [[CCDirector sharedDirector] convertToGL:touchPoint];
 	
 	self.position = CGPointMake(touchPoint.x, self.position.y);
 }

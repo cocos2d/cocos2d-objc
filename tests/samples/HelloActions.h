@@ -15,7 +15,7 @@
 @end
 
 // HelloActions Layer
-@interface HelloActions : Layer
+@interface HelloActions : CCLayer
 {
 }
 @end

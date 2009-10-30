@@ -29,7 +29,7 @@
     if ((self = [super init])) {
         isTouchEnabled = YES;
         
-		CGSize size = [[Director sharedDirector] winSize];
+		CGSize size = [[CCDirector sharedDirector] winSize];
 		
         // init sound manager/OpenAL support
         [PASoundMgr sharedSoundManager];
@@ -44,15 +44,15 @@
         [bgTrack setGain:0.3f];
         [bgTrack playAtListenerPosition];
 
-        Label *info = [Label labelWithString:@"Tap and move your finger to update\nthe listener's position." dimensions:CGSizeMake(320, 40) alignment:UITextAlignmentCenter fontName:@"TrebuchetMS-Bold" fontSize:14];
+		CCLabel *info = [CCLabel labelWithString:@"Tap and move your finger to update\nthe listener's position." dimensions:CGSizeMake(320, 40) alignment:UITextAlignmentCenter fontName:@"TrebuchetMS-Bold" fontSize:14];
         [self addChild:info z:1];
         info.position = ccp(size.width/2, size.height-40);
         
         // set bottom menu (its actions play some sample interface-like sound, right from the manager)
-        MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(selectedBackForwardMenuItem:)];
-        MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(selectedCenterMenuItem:)];
-        MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(selectedBackForwardMenuItem:)];
-        Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+        CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(selectedBackForwardMenuItem:)];
+        CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(selectedCenterMenuItem:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(selectedBackForwardMenuItem:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
         menu.position = CGPointZero;
         item1.position = ccp(size.width/2-100,30);
         item2.position = ccp(size.width/2, 30);
@@ -61,13 +61,13 @@
         
         // set listener's position and sprite
         [[[PASoundMgr sharedSoundManager] listener] setPosition:ccp(size.width/2, size.height/2)];
-        listenerSprite = [Sprite spriteWithFile:@"listener-marker.png"];
+        listenerSprite = [CCSprite spriteWithFile:@"listener-marker.png"];
         [self addChild:listenerSprite z:1];
         listenerSprite.position = ccp(size.width/2, size.height/2);
         
         // set first sound source (static waterfall)
         source1 = [[PASoundSource alloc] initWithFile:@"waterfall" looped:YES];
-        source1Sprite = [Sprite spriteWithFile:@"source-marker.png"];
+        source1Sprite = [CCSprite spriteWithFile:@"source-marker.png"];
         [self addChild:source1Sprite z:0];
         source1Sprite.position = ccp(50,100);
         [source1 setGain:.5f];
@@ -75,15 +75,15 @@
         
         // set the 2nd sound source (moving chicken)
         source2 = [[PASoundSource alloc] initWithFile:@"chicken" looped:YES];
-        source2Sprite = [Sprite spriteWithFile:@"source-marker.png"];
+        source2Sprite = [CCSprite spriteWithFile:@"source-marker.png"];
         [self addChild:source2Sprite z:0];
         source2Sprite.position = ccp(10,size.height-100);
         [source2 setGain:.5f];
         [source2 playAtPosition:source2.position];
         
-        id move = [MoveBy actionWithDuration:2 position:ccp(size.width-10,0)];
-        id sequence = [Sequence actions:move,[move reverse],nil];
-        [source2Sprite runAction:[RepeatForever actionWithAction:sequence]];
+        id move = [CCMoveBy actionWithDuration:2 position:ccp(size.width-10,0)];
+        id sequence = [CCSequence actions:move,[move reverse],nil];
+        [source2Sprite runAction:[CCRepeatForever actionWithAction:sequence]];
         
         // schedule selector for updating openal listener and sources position with the sprites' position
         [self schedule:@selector(loop:)];
@@ -93,7 +93,7 @@
 
 -(void) newOrientation
 {
-	ccDeviceOrientation orientation = [[Director sharedDirector] deviceOrientation];
+	ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 	switch (orientation) {
 		case CCDeviceOrientationLandscapeLeft:
 			orientation = CCDeviceOrientationPortrait;
@@ -108,15 +108,15 @@
 			orientation = CCDeviceOrientationLandscapeLeft;
 			break;
 	}
-	[[Director sharedDirector] setDeviceOrientation:orientation];
+	[[CCDirector sharedDirector] setDeviceOrientation:orientation];
 }
 
 - (void)selectedBackForwardMenuItem:(id)sender {
     // play the common interface "clank" sound
 	[self newOrientation];
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [SoundEngineTest node]];
-	[[Director sharedDirector] replaceScene: scene];
+	[[CCDirector sharedDirector] replaceScene: scene];
 }
 
 - (void)selectedCenterMenuItem:(id)sender {
@@ -139,7 +139,7 @@
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint point = [touch locationInView: [touch view]];
-    point = [[Director sharedDirector] convertToGL: point];
+    point = [[CCDirector sharedDirector] convertToGL: point];
     listenerSprite.position = ccp(point.x, point.y);
     return kEventHandled;
 }    
@@ -171,40 +171,40 @@
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
 	
-	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationPortrait];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationPortrait];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
     
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];		
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [SoundEngineTest node]];
     
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

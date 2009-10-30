@@ -65,17 +65,17 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -94,23 +94,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -124,14 +124,14 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	Sprite *sp0 = [Sprite spriteWithFile:@"grossini.png"];
-	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	Sprite *point0 = [Sprite spriteWithFile:@"r1.png"];
-	Sprite *point1 = [Sprite spriteWithFile:@"r1.png"];
-	Sprite *point2 = [Sprite spriteWithFile:@"r1.png"];
+	CCSprite *sp0 = [CCSprite spriteWithFile:@"grossini.png"];
+	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *point0 = [CCSprite spriteWithFile:@"r1.png"];
+	CCSprite *point1 = [CCSprite spriteWithFile:@"r1.png"];
+	CCSprite *point2 = [CCSprite spriteWithFile:@"r1.png"];
 
 	point0.scale = 0.25f;
 	point1.scale = 0.25f;
@@ -157,11 +157,11 @@ Class restartAction()
 	[self addChild: point2 z:1];
 	
 
-	id a1 = [RotateBy actionWithDuration:2 angle:360];
-	id a2 = [ScaleBy actionWithDuration:2 scale:2];
+	id a1 = [CCRotateBy actionWithDuration:2 angle:360];
+	id a2 = [CCScaleBy actionWithDuration:2 scale:2];
 
-	id action1 = [RepeatForever actionWithAction:
-				  [Sequence actions: a1, a2, [a2 reverse], nil]
+	id action1 = [CCRepeatForever actionWithAction:
+				  [CCSequence actions: a1, a2, [a2 reverse], nil]
 									];
 	id action2 = [[action1 copy] autorelease];
 	id action0 = [[action1 copy] autorelease];
@@ -181,12 +181,12 @@ Class restartAction()
 {
 	[super onEnter];
 
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	Sprite *sp3 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	Sprite *sp4 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *sp3 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sp4 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	
 	sp1.position = ccp(100, s.height /2 );
 	sp2.position = ccp(380, s.height /2 );
@@ -199,14 +199,14 @@ Class restartAction()
 	[sp1 addChild:sp3];
 	[sp2 addChild:sp4];
 	
-	id a1 = [RotateBy actionWithDuration:2 angle:360];
-	id a2 = [ScaleBy actionWithDuration:2 scale:2];
+	id a1 = [CCRotateBy actionWithDuration:2 angle:360];
+	id a2 = [CCScaleBy actionWithDuration:2 scale:2];
 	
-	id action1 = [RepeatForever actionWithAction:
-				  [Sequence actions: a1, a2, [a2 reverse], nil]
+	id action1 = [CCRepeatForever actionWithAction:
+				  [CCSequence actions: a1, a2, [a2 reverse], nil]
 									];
-	id action2 = [RepeatForever actionWithAction:
-				  [Sequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
+	id action2 = [CCRepeatForever actionWithAction:
+				  [CCSequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
 									];
 	
 	sp2.anchorPoint = ccp(0,0);
@@ -226,11 +226,11 @@ Class restartAction()
 	[super onEnter];
 
 	
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-	Sprite *sp3 = [Sprite spriteWithFile:@"grossini.png"];
+	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *sp3 = [CCSprite spriteWithFile:@"grossini.png"];
 	
 	sp1.position = ccp(20,80);
 	sp2.position = ccp(70,50);
@@ -243,8 +243,8 @@ Class restartAction()
 	// this tag belong to Test3 (kTagSprite1)
 	[self addChild:sp3 z:0 tag:kTagSprite1];
 	
-	id a1 = [RotateBy actionWithDuration:4 angle:360];
-	id action1 = [RepeatForever actionWithAction:a1];
+	id a1 = [CCRotateBy actionWithDuration:4 angle:360];
+	id action1 = [CCRepeatForever actionWithAction:a1];
 	[sp3 runAction:action1];	
 	
 	[self schedule:@selector(changeZOrder:) interval:2.0f];
@@ -252,10 +252,10 @@ Class restartAction()
 
 -(void) changeZOrder:(ccTime) dt
 {
-	CocosNode *grossini = [self getChildByTag:kTagSprite1];
+	CCNode *grossini = [self getChildByTag:kTagSprite1];
 
-	CocosNode *sprite1 = [grossini getChildByTag:kTagSprite1];
-	CocosNode *sprite2 = [grossini getChildByTag:kTagSprite2];
+	CCNode *sprite1 = [grossini getChildByTag:kTagSprite1];
+	CCNode *sprite2 = [grossini getChildByTag:kTagSprite2];
 	
 	int zt = sprite1.zOrder;
 	[grossini reorderChild:sprite1 z:sprite2.zOrder];
@@ -274,8 +274,8 @@ Class restartAction()
 	if( !( self=[super init]) )
 		return nil;
 		
-	Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-	Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	
 	sp1.position = ccp(100,160);
 	sp2.position = ccp(380,160);
@@ -292,7 +292,7 @@ Class restartAction()
 -(void) delay2:(ccTime) dt
 {
 	id node = [self getChildByTag:2];
-	id action1 = [RotateBy actionWithDuration:1 angle:360];
+	id action1 = [CCRotateBy actionWithDuration:1 angle:360];
 	[node runAction:action1];
 }
 
@@ -314,16 +314,16 @@ Class restartAction()
 {
 	if( ( self=[super init]) ) {
 
-		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-		Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		
 		sp1.position = ccp(100,160);
 		sp2.position = ccp(380,160);
 
-		id rot = [RotateBy actionWithDuration:2 angle:360];
+		id rot = [CCRotateBy actionWithDuration:2 angle:360];
 		id rot_back = [rot reverse];
-		id forever = [RepeatForever actionWithAction:
-						[Sequence actions:rot, rot_back, nil]];
+		id forever = [CCRepeatForever actionWithAction:
+						[CCSequence actions:rot, rot_back, nil]];
 		id forever2 = [[forever copy] autorelease];
 		[forever setTag:101];
 		[forever2 setTag:102];
@@ -342,8 +342,8 @@ Class restartAction()
 
 -(void) addAndRemove:(ccTime) dt
 {
-	CocosNode *sp1 = [self getChildByTag:kTagSprite1];
-	CocosNode *sp2 = [self getChildByTag:kTagSprite2];
+	CCNode *sp1 = [self getChildByTag:kTagSprite1];
+	CCNode *sp2 = [self getChildByTag:kTagSprite2];
 
 	[sp1 retain];
 	[sp2 retain];
@@ -371,20 +371,20 @@ Class restartAction()
 {
 	if( ( self=[super init]) ) {
 		
-		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
-		Sprite *sp11 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sp11 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 
-		Sprite *sp2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
-		Sprite *sp21 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+		CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCSprite *sp21 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		
 		sp1.position = ccp(100,160);
 		sp2.position = ccp(380,160);
 		
 		
-		id rot = [RotateBy actionWithDuration:2 angle:360];
+		id rot = [CCRotateBy actionWithDuration:2 angle:360];
 		id rot_back = [rot reverse];
-		id forever1 = [RepeatForever actionWithAction:
-					  [Sequence actions:rot, rot_back, nil]];
+		id forever1 = [CCRepeatForever actionWithAction:
+					  [CCSequence actions:rot, rot_back, nil]];
 		id forever11 = [[forever1 copy] autorelease];
 
 		id forever2 = [[forever1 copy] autorelease];
@@ -408,8 +408,8 @@ Class restartAction()
 
 -(void) addAndRemove:(ccTime) dt
 {
-	CocosNode *sp1 = [self getChildByTag:kTagSprite1];
-	CocosNode *sp2 = [self getChildByTag:kTagSprite2];
+	CCNode *sp1 = [self getChildByTag:kTagSprite1];
+	CCNode *sp2 = [self getChildByTag:kTagSprite2];
 	
 	[sp1 retain];
 	[sp2 retain];
@@ -437,9 +437,9 @@ Class restartAction()
 {
 	if( ( self=[super init]) ) {
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[self addChild:sp1 z:0 tag:kTagSprite1];
 		
 		sp1.position = ccp(s.width/2, s.height/2);		
@@ -454,19 +454,19 @@ Class restartAction()
 {	
 	[self unschedule:_cmd];
 
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// if the node has timers, it crashes
-	CocosNode *explosion = [ParticleSun node];
+	CCNode *explosion = [CCParticleSun node];
 	
 	// if it doesn't, it works Ok.
 //	CocosNode *explosion = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 
 	explosion.position = ccp(s.width/2, s.height/2);
 	
-	[self runAction:[Sequence actions:
-						[RotateBy actionWithDuration:2 angle:360],
-						[CallFuncN actionWithTarget:self selector:@selector(removeMe:)],
+	[self runAction:[CCSequence actions:
+						[CCRotateBy actionWithDuration:2 angle:360],
+						[CCCallFuncN actionWithTarget:self selector:@selector(removeMe:)],
 						nil]];
 	
 	[self addChild:explosion];
@@ -496,24 +496,24 @@ Class restartAction()
 	
 	if( ( self=[super init]) ) {
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		Layer *sublayer = [Layer node];
+		CCLayer *sublayer = [CCLayer node];
 		
-		Sprite *sp1 = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		sp1.position = ccp(80, s.height/2);
 		
-		id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
-		id move_ease_inout3 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
+		id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+		id move_ease_inout3 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
 		id move_ease_inout_back3 = [move_ease_inout3 reverse];
-		id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
-		[sp1 runAction: [RepeatForever actionWithAction:seq3]];
+		id seq3 = [CCSequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+		[sp1 runAction: [CCRepeatForever actionWithAction:seq3]];
 		[sublayer addChild:sp1 z:1];
 		
-		ParticleFire *fire = [ParticleFire node];
+		CCParticleFire *fire = [CCParticleFire node];
 		fire.position = ccp(80, s.height/2-50);
 		id copy_seq3 = [[seq3 copy] autorelease];
-		[fire runAction:[RepeatForever actionWithAction:copy_seq3]];
+		[fire runAction:[CCRepeatForever actionWithAction:copy_seq3]];
 		[sublayer addChild:fire z:2];
 				
 		[self schedule:@selector(shouldNotLeak:) interval:6.0f];
@@ -546,7 +546,7 @@ Class restartAction()
 	//
 	
 	if( ( self=[super init]) ) {
-		Layer *layer = [Layer node];
+		CCLayer *layer = [CCLayer node];
 		NSLog(@"retain count after init is %d", [layer retainCount]);                // 1
 		
 		[self addChild:layer z:0];
@@ -588,52 +588,49 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];		
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

@@ -70,12 +70,12 @@ CDSourceWrapper *toneSource;
 {
 	[super init];
 	
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-	Sprite* bg = [Sprite spriteWithFile:@"bg.png"];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	CCSprite* bg = [CCSprite spriteWithFile:@"bg.png"];
 	[bg setPosition:CGPointMake(480/2, 320/2)]; 
 	[self addChild:bg ];
 	
-	slider = [Sprite spriteWithFile:@"slider.png"];
+	slider = [CCSprite spriteWithFile:@"slider.png"];
 	[slider setPosition:CGPointMake(SLIDER_POS_X, ((SLIDER_POS_MAX - SLIDER_POS_MIN)/2) + SLIDER_POS_MIN)]; 
 	[slider setRotation:180.0f];
 	[slider retain];
@@ -89,7 +89,7 @@ CDSourceWrapper *toneSource;
 		
 	padFlashes = [[NSMutableArray alloc] init];
 	for (int i=0; i < 9; i++) {
-		Sprite *flash = [Sprite spriteWithFile:@"flash.png"];
+		CCSprite *flash = [CCSprite spriteWithFile:@"flash.png"];
 		[flash retain];
 		[flash setPosition:CGPointMake(flashLocations[i][0],flashLocations[i][1])];
 		flash.opacity = 128;
@@ -290,7 +290,7 @@ CDSourceWrapper *toneSource;
 		for (int i=0; i < FLASH_FADE_TOTAL; i++) {
 			 
 			if (flashIndex[i] < FLASH_FADE_TOTAL) {
-				Sprite *flash = [padFlashes objectAtIndex:i];
+				CCSprite *flash = [padFlashes objectAtIndex:i];
 				if (flashIndex[i] == 0) {
 					//Turn on visibility
 					flash.visible = YES;
@@ -373,7 +373,7 @@ CDSourceWrapper *toneSource;
 -(void) dealloc
 {
 	
-	for (Sprite *sprite in padFlashes) {
+	for (CCSprite *sprite in padFlashes) {
 		[sprite release];
 	}	
 	
@@ -387,7 +387,7 @@ CDSourceWrapper *toneSource;
 -(void) onQuit: (id) sender
 {
 	
-	[[Director sharedDirector] end];
+	[[CCDirector sharedDirector] end];
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
 		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
@@ -423,50 +423,50 @@ CDSourceWrapper *toneSource;
 	window.multipleTouchEnabled = TRUE;
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
 	
 	// show FPS
-	[[Director sharedDirector] setDisplayFPS:NO];
+	[[CCDirector sharedDirector] setDisplayFPS:NO];
 	
 	
 	// frames per second
-	[[Director sharedDirector] setAnimationInterval:1.0/60];	
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
 	
 	// attach cocos2d to a window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 	
 	//Set up audio engine
 	[self setUpAudioManager:nil];
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	
 	[scene addChild: [DenshionLayer node]];
 	
 	[window makeKeyAndVisible];
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

@@ -18,20 +18,20 @@ enum
 	{
 		self.isTouchEnabled = YES;
 		
-		Sprite *sprite = [Sprite spriteWithFile: @"grossini.png"];
+		CCSprite *sprite = [CCSprite spriteWithFile: @"grossini.png"];
 		
-		id layer = [ColorLayer layerWithColor: ccc4(255,255,0,255)];
+		id layer = [CCColorLayer layerWithColor: ccc4(255,255,0,255)];
 		[self addChild: layer z:-1];
 			
 		[self addChild: sprite z:0 tag:kTagSprite];
 		[sprite setPosition: ccp(20,150)];
 		
-		[sprite runAction: [JumpTo actionWithDuration:4 position:ccp(300,48) height:100 jumps:4] ];
+		[sprite runAction: [CCJumpTo actionWithDuration:4 position:ccp(300,48) height:100 jumps:4] ];
 		
-		[layer runAction: [RepeatForever actionWithAction: 
-									[Sequence actions:
-									[FadeIn actionWithDuration:1],
-									[FadeOut actionWithDuration:1],
+		[layer runAction: [CCRepeatForever actionWithAction: 
+									[CCSequence actions:
+									[CCFadeIn actionWithDuration:1],
+									[CCFadeOut actionWithDuration:1],
 									nil]
 						] ];
 	}	
@@ -48,11 +48,11 @@ enum
 	UITouch *touch = [touches anyObject];
 	
 	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertToGL:location];
+	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
 
-	CocosNode *s = [self getChildByTag:kTagSprite];
+	CCNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
-	[s runAction: [MoveTo actionWithDuration:1 position:ccp(convertedLocation.x, convertedLocation.y)]];
+	[s runAction: [CCMoveTo actionWithDuration:1 position:ccp(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
 	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
@@ -64,7 +64,7 @@ enum
 			at = 180 - abs(at);	
 	}
 	
-	[s runAction: [RotateTo actionWithDuration:1 angle: at]];
+	[s runAction: [CCRotateTo actionWithDuration:1 angle: at]];
 	
 	return kEventHandled;
 }
@@ -88,19 +88,16 @@ enum
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+//	[Director useFastDirector];
 	
 	// Attach cocos2d to the window
-	[[Director sharedDirector] attachInWindow:window];	
+	[[CCDirector sharedDirector] attachInWindow:window];	
 	
 	// Setup the layout Propertys
 //	[[Director sharedDirector] setLandscape:YES];
 	
 	// Show FPS, useful when debugging performance
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// Make the window visible
 	[window makeKeyAndVisible];
@@ -108,36 +105,36 @@ enum
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	MainLayer * mainLayer =[MainLayer node];	
 	[scene addChild: mainLayer z:2];
 	
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

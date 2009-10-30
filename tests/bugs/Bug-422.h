@@ -10,11 +10,11 @@
 @end
 
 
-@interface Layer1 : Layer
+@interface Layer1 : CCLayer
 {
 }
 
 -(void) reset;
--(void) check:(CocosNode *)target;
+-(void) check:(CCNode *)target;
 -(void) menuCallback:(id) sender;
 @end

@@ -62,7 +62,7 @@
 
 -(void) startWithTarget:(id)aTarget
 {
-	target = aTarget;
+	originalTarget = target = aTarget;
 }
 
 -(void) stop

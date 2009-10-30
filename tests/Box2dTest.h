@@ -14,7 +14,7 @@
 }
 @end
 
-@interface Box2DTestLayer : Layer {
+@interface Box2DTestLayer : CCLayer {
 	b2World* world;
 	GLESDebugDraw *m_debugDraw;
 }

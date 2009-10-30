@@ -193,9 +193,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMX maps support visibility and opacity patch
 		TMX maps possibility to access the layers patch
 		Actions: Animate copy originalFrame patch
-	* Rolando Abarca:
+	* Rolando Abarca (funkaster) (http://rolando.cl/):
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
+		migrated all cocos2d code and all test to using the CC namespace
 	* Scott Iisystems:
 		TextureAtlas signed math error patch
 		BezierBy#reverse patch

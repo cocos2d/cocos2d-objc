@@ -73,16 +73,16 @@ Class restartAction()
 {
 	if( (self = [super init]) ) {
 
-		CGSize s = [[Director sharedDirector] winSize];	
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CGSize s = [[CCDirector sharedDirector] winSize];	
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:0 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp(480/2-100,30);
 		item2.position = ccp(480/2, 30);
@@ -96,28 +96,28 @@ Class restartAction()
 -(void) dealloc
 {
 	[super dealloc];
-	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
 }
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -134,9 +134,9 @@ Class restartAction()
 {
 	[super onEnter];	
 
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	Sprite *img = [Sprite spriteWithFile:@"test_image.png"];
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.png"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -152,9 +152,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *img = [Sprite spriteWithFile:@"test_image.jpeg"];
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.jpeg"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -170,9 +170,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *img = [Sprite spriteWithFile:@"test_image.bmp"];
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.bmp"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -188,9 +188,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *img = [Sprite spriteWithFile:@"test_image.tiff"];
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.tiff"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -206,9 +206,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *img = [Sprite spriteWithFile:@"test_image.gif"];
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.gif"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -226,27 +226,27 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	Sprite *imgMipMap = [Sprite spriteWithFile:@"logo-mipmap.pvr"];
+	CCSprite *imgMipMap = [CCSprite spriteWithFile:@"logo-mipmap.pvr"];
 	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
 	[self addChild:imgMipMap];
 
 	// support mipmap filtering
 	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
 	[imgMipMap.texture setTexParameters:&texParams];
-	Sprite *img = [Sprite spriteWithFile:@"logo-nomipmap.pvr"];
+	CCSprite *img = [CCSprite spriteWithFile:@"logo-nomipmap.pvr"];
 	img.position = ccp( s.width/2.0f+100, s.height/2.0f);
 	[self addChild:img];
 	
-	id scale1 = [EaseOut actionWithAction: [ScaleBy actionWithDuration:4 scale:0.01f] rate:3];
+	id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
 	id sc_back = [scale1 reverse];
 	
 	id scale2 = [[scale1 copy] autorelease];
 	id sc_back2 = [scale2 reverse];
 	
-	[imgMipMap runAction: [RepeatForever actionWithAction: [Sequence actions: scale1, sc_back, nil]]];
-	[img runAction: [RepeatForever actionWithAction: [Sequence actions: scale2, sc_back2, nil]]];
+	[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
+	[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
 }
 
 -(NSString *) title
@@ -261,9 +261,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *img = [Sprite spriteWithFile:@"test_image.pvr"];
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -281,10 +281,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Texture2D *tex = [[TextureMgr sharedTextureMgr] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
-	Sprite *img = [Sprite spriteWithTexture:tex];
+	CCTexture2D *tex = [[CCTextureMgr sharedTextureMgr] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
+	CCSprite *img = [CCSprite spriteWithTexture:tex];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	
@@ -300,14 +300,14 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	//
 	// Sprite 1: GL_LINEAR
 	//
 	// Default filter is GL_LINEAR
 	
-	Sprite *sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	sprite.position = ccp( s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite];
 	
@@ -318,7 +318,7 @@ Class restartAction()
 	// Sprite 1: GL_NEAREST
 	//	
 	
-	Sprite *sprite2 = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *sprite2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	sprite2.position = ccp( 2*s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite2];
 	
@@ -327,9 +327,9 @@ Class restartAction()
 
 		
 	// scale them to show
-	id sc = [ScaleBy actionWithDuration:3 scale:8.0f];
+	id sc = [CCScaleBy actionWithDuration:3 scale:8.0f];
 	id sc_back = [sc reverse];
-	id scaleforever = [RepeatForever actionWithAction: [Sequence actions: sc, sc_back, nil]];
+	id scaleforever = [CCRepeatForever actionWithAction: [CCSequence actions: sc, sc_back, nil]];
 	
 	[sprite2 runAction:scaleforever];
 	[sprite runAction: [[scaleforever copy] autorelease]];
@@ -354,56 +354,56 @@ Class restartAction()
 	// 4- 16-bit RGB565
 	[super onEnter];
 	
-	Label *label = (Label*) [self getChildByTag:kTagLabel];
+	CCLabel *label = (CCLabel*) [self getChildByTag:kTagLabel];
 	[label setColor:ccc3(16,16,255)];
 	
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	Sprite *background = [Sprite spriteWithFile:@"background1.jpg"];
+	CCSprite *background = [CCSprite spriteWithFile:@"background1.jpg"];
 	background.position = ccp(240,160);
 	[self addChild:background z:-1];
 	
 	// RGBA 8888 image (32-bit)
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-	Sprite *sprite1 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	CCSprite *sprite1 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite1.position = ccp(64, s.height/2);
 	[self addChild:sprite1 z:0];
 	
 	// remove texture from texture manager	
-	[[TextureMgr sharedTextureMgr] removeTexture:sprite1.texture];
+	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite1.texture];
 
 	// RGBA 4444 image (16-bit)
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-	Sprite *sprite2 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+	CCSprite *sprite2 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite2.position = ccp(64+128, s.height/2);
 	[self addChild:sprite2 z:0];
 
 	// remove texture from texture manager	
-	[[TextureMgr sharedTextureMgr] removeTexture:sprite2.texture];
+	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite2.texture];
 
 	// RGB5A1 image (16-bit)
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB5A1];
-	Sprite *sprite3 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB5A1];
+	CCSprite *sprite3 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite3.position = ccp(64+128*2, s.height/2);
 	[self addChild:sprite3 z:0];
 
 	// remove texture from texture manager	
-	[[TextureMgr sharedTextureMgr] removeTexture:sprite3.texture];
+	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite3.texture];
 
 	// RGB565 image (16-bit)
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB565];
-	Sprite *sprite4 = [Sprite spriteWithFile:@"test-rgba1.png"];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB565];
+	CCSprite *sprite4 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite4.position = ccp(64+128*3, s.height/2);
 	[self addChild:sprite4 z:0];
 
 	// remove texture from texture manager	
-	[[TextureMgr sharedTextureMgr] removeTexture:sprite4.texture];
+	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite4.texture];
 
 	
-	id fadeout = [FadeOut actionWithDuration:2];
-	id fadein = [FadeIn actionWithDuration:2];
-	id seq = [Sequence actions: [DelayTime actionWithDuration:2], fadeout, fadein, nil];
-	id seq_4ever = [RepeatForever actionWithAction:seq];
+	id fadeout = [CCFadeOut actionWithDuration:2];
+	id fadein = [CCFadeIn actionWithDuration:2];
+	id seq = [CCSequence actions: [CCDelayTime actionWithDuration:2], fadeout, fadein, nil];
+	id seq_4ever = [CCRepeatForever actionWithAction:seq];
 	
 	[sprite1 runAction:seq_4ever];
 	[sprite2 runAction: [[seq_4ever copy] autorelease]];
@@ -411,7 +411,7 @@ Class restartAction()
 	[sprite4 runAction: [[seq_4ever copy] autorelease]];
 
 	// restore default
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
 }
 
 -(NSString *) title
@@ -431,7 +431,7 @@ Class restartAction()
 			
 			// BOTTOM sprites have alpha pre-multiplied
 			// they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
-			Sprite *cloud = [Sprite spriteWithFile:@"test_blend.png"];
+			CCSprite *cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:100+i];
 			cloud.position = ccp(50+25*i, 80);
 			if( ! cloud.texture.hasPremultipliedAlpha )
@@ -439,7 +439,7 @@ Class restartAction()
 
 			// CENTER sprites don't have alpha pre-multiplied
 			// they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
-			cloud = [Sprite spriteWithFile:@"test_blend.bmp"];
+			cloud = [CCSprite spriteWithFile:@"test_blend.bmp"];
 			[self addChild:cloud z:i+1 tag:200+i];
 			cloud.position = ccp(50+25*i, 160);
 			if( cloud.texture.hasPremultipliedAlpha )
@@ -447,7 +447,7 @@ Class restartAction()
 			
 			// UPPER sprites are using custom blending function
 			// You can set any blend function to your sprites
-			cloud = [Sprite spriteWithFile:@"test_blend.bmp"];
+			cloud = [CCSprite spriteWithFile:@"test_blend.bmp"];
 			[self addChild:cloud z:i+1 tag:200+i];
 			cloud.position = ccp(50+25*i, 320-80);
 			cloud.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
@@ -470,16 +470,16 @@ Class restartAction()
 		
 		imageOffset = 0;
 	
-		CGSize size =[[Director sharedDirector] winSize];
+		CGSize size =[[CCDirector sharedDirector] winSize];
 
-		Label *label = [Label labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
+		CCLabel *label = [CCLabel labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
 		label.position = ccp( size.width/2, size.height/2);
 		[self addChild:label z:10];
 		
-		id scale = [ScaleBy actionWithDuration:0.3f scale:2];
+		id scale = [CCScaleBy actionWithDuration:0.3f scale:2];
 		id scale_back = [scale reverse];
-		id seq = [Sequence actions: scale, scale_back, nil];
-		[label runAction: [RepeatForever actionWithAction:seq]];
+		id seq = [CCSequence actions: scale, scale_back, nil];
+		[label runAction: [CCRepeatForever actionWithAction:seq]];
 		
 		[self schedule:@selector(loadImages:) interval:1.0f];
 		
@@ -489,7 +489,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 	[super dealloc];
 }
 
@@ -501,29 +501,29 @@ Class restartAction()
 	for( int i=0;i < 8;i++) {
 		for( int j=0;j < 8; j++) {
 			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
-			[[TextureMgr sharedTextureMgr] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
+			[[CCTextureMgr sharedTextureMgr] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
 		}
 	}	
 
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
-	[[TextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
 }
 
 
--(void) imageLoaded: (Texture2D*) tex
+-(void) imageLoaded: (CCTexture2D*) tex
 {
 	// IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
 	// This test just creates a sprite based on the Texture
 	
-	Sprite *sprite = [Sprite spriteWithTexture:tex];
+	CCSprite *sprite = [CCSprite spriteWithTexture:tex];
 	sprite.anchorPoint = ccp(0,0);
 	[self addChild:sprite z:-1];
 	
-	CGSize size =[[Director sharedDirector] winSize];
+	CGSize size =[[CCDirector sharedDirector] winSize];
 	
 	int i = imageOffset * 32;
 	sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
@@ -544,22 +544,22 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CGSize size =[[Director sharedDirector] winSize];
+		CGSize size =[[CCDirector sharedDirector] winSize];
 
 		// The .png image MUST be power of 2 in order to create a continue effect.
 		// eg: 32x64, 512x128, 256x1024, 64x64, etc..
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"pattern1.png"];
-		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 512, 256) spriteManager:mgr];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"pattern1.png"];
+		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 512, 256) spriteManager:mgr];
 		[mgr addChild:sprite z:0 tag:kTagSprite1];
 		[sprite setPosition:ccp(size.width/2,size.height/2)];
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
 		[mgr.texture setTexParameters:&params];
 		
-		id rotate = [RotateBy actionWithDuration:4 angle:360];
+		id rotate = [CCRotateBy actionWithDuration:4 angle:360];
 		[sprite runAction:rotate];
-		id scale = [ScaleBy actionWithDuration:2 scale:0.04f];
+		id scale = [CCScaleBy actionWithDuration:2 scale:0.04f];
 		id scaleBack = [scale reverse];
-		id seq = [Sequence actions:scale, scaleBack, nil];
+		id seq = [CCSequence actions:scale, scaleBack, nil];
 		[sprite runAction:seq];
 		
 		[self addChild:mgr z:-1];
@@ -573,7 +573,7 @@ Class restartAction()
 }
 - (void) dealloc
 {
-	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
 	[super dealloc];
 }
 @end
@@ -584,22 +584,22 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CGSize size =[[Director sharedDirector] winSize];
+		CGSize size =[[CCDirector sharedDirector] winSize];
 		
 		// The .png image MUST be power of 2 in order to create a continue effect.
 		// eg: 32x64, 512x128, 256x1024, 64x64, etc..
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"pattern1.png"];
-		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 4096, 4096) spriteManager:mgr];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"pattern1.png"];
+		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 4096, 4096) spriteManager:mgr];
 		[mgr addChild:sprite z:0 tag:kTagSprite1];
 		[sprite setPosition:ccp(size.width/2,size.height/2)];
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
 		[mgr.texture setTexParameters:&params];
 		
-		id rotate = [RotateBy actionWithDuration:4 angle:360];
+		id rotate = [CCRotateBy actionWithDuration:4 angle:360];
 		[sprite runAction:rotate];
-		id scale = [ScaleBy actionWithDuration:2 scale:0.04f];
+		id scale = [CCScaleBy actionWithDuration:2 scale:0.04f];
 		id scaleBack = [scale reverse];
-		id seq = [Sequence actions:scale, scaleBack, nil];
+		id seq = [CCSequence actions:scale, scaleBack, nil];
 		[sprite runAction:seq];
 		
 		[self addChild:mgr z:-1];
@@ -613,7 +613,7 @@ Class restartAction()
 }
 - (void) dealloc
 {
-	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
 	[super dealloc];
 }
 @end
@@ -622,7 +622,7 @@ Class restartAction()
 @implementation TextureLibPNG
 
 #define PNG_SIG_BYTES 8
--(Texture2D*) loadPNG:(NSString*)name
+-(CCTexture2D*) loadPNG:(NSString*)name
 {	
 	png_uint_32 width, height, width2, height2;
 	int bits = 0;
@@ -731,7 +731,7 @@ Class restartAction()
 	
 	CGSize size = CGSizeMake(width,height);
 	
-	Texture2D *tex2d = [[Texture2D alloc] initWithData:pixels
+	CCTexture2D *tex2d = [[CCTexture2D alloc] initWithData:pixels
 										 pixelFormat:kTexture2DPixelFormat_RGBA8888
 										  pixelsWide:width2
 										  pixelsHigh:height2
@@ -744,9 +744,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 				
-		CGSize size =[[Director sharedDirector] winSize];
+		CGSize size =[[CCDirector sharedDirector] winSize];
 	
-		Sprite *background = [Sprite spriteWithFile:@"background3.jpg"];
+		CCSprite *background = [CCSprite spriteWithFile:@"background3.jpg"];
 		background.anchorPoint = CGPointZero;
 		[self addChild:background z:-1];
 		
@@ -754,14 +754,14 @@ Class restartAction()
 		// PNG compressed sprite has pre multiplied alpha channel
 		//   you CAN have opacity + tint at the same time
 		//   but opacity SHOULD be before COLOR
-		Sprite *png1 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		CCSprite *png1 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png1 z:0];
 		png1.position = ccp(size.width/5, size.height/2);
 		[self transformSprite:png1];
 		
 		// PNG uncompressed sprite has pre multiplied alpha
 		//   Same rule as compressed sprites. why ???
-		Sprite *uncPNG = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
+		CCSprite *uncPNG = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
 		[self addChild:uncPNG z:0];
 		uncPNG.position = ccp(size.width/5*2, size.height/2);
 		[self transformSprite:uncPNG];
@@ -770,7 +770,7 @@ Class restartAction()
 		// PNG compressed sprite has pre multiplied alpha channel
 		//  - with opacity doesn't modify color
 		//  - blend func: GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
-		Sprite *png3 = [Sprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		CCSprite *png3 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png3 z:0];
 		png3.position = ccp(size.width/5*3, size.height/2);
 		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
@@ -778,8 +778,8 @@ Class restartAction()
 		[self transformSprite:png3];
 		
 		// PNG 32-bit RGBA
-		Texture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.ppng"];
-		Sprite *rgba =[Sprite spriteWithTexture:tex2d];
+		CCTexture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.ppng"];
+		CCSprite *rgba =[CCSprite spriteWithTexture:tex2d];
 		[self addChild:rgba z:0];
 		rgba.position = ccp(size.width/5*4, size.height/2);
 		[self transformSprite:rgba];
@@ -787,7 +787,7 @@ Class restartAction()
 	return self;
 }
 
--(void) transformSprite:(Sprite*)sprite
+-(void) transformSprite:(CCSprite*)sprite
 {
 	CCLOG(@"override me");
 }
@@ -803,13 +803,13 @@ Class restartAction()
 @end
 
 @implementation TextureLibPNGTest1
--(void) transformSprite:(Sprite*)sprite
+-(void) transformSprite:(CCSprite*)sprite
 {
-	id fade = [FadeOut actionWithDuration:2];
-	id dl = [DelayTime actionWithDuration:2];
+	id fade = [CCFadeOut actionWithDuration:2];
+	id dl = [CCDelayTime actionWithDuration:2];
 	id fadein = [fade reverse];
-	id seq = [Sequence actions: fade, fadein, dl, nil];
-	id repeat = [RepeatForever actionWithAction:seq];
+	id seq = [CCSequence actions: fade, fadein, dl, nil];
+	id repeat = [CCRepeatForever actionWithAction:seq];
 	[sprite runAction:repeat];	
 }
 -(NSString*) title
@@ -819,13 +819,13 @@ Class restartAction()
 @end
 
 @implementation TextureLibPNGTest2
--(void) transformSprite:(Sprite*)sprite
+-(void) transformSprite:(CCSprite*)sprite
 {
-	id tint = [TintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
-	id dl = [DelayTime actionWithDuration:2];
+	id tint = [CCTintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
+	id dl = [CCDelayTime actionWithDuration:2];
 	id tintback = [tint reverse];
-	id seq = [Sequence actions: tint, dl, tintback, nil];
-	id repeat = [RepeatForever actionWithAction:seq];
+	id seq = [CCSequence actions: tint, dl, tintback, nil];
+	id repeat = [CCRepeatForever actionWithAction:seq];
 	[sprite runAction:repeat];
 }
 -(NSString*) title
@@ -835,20 +835,20 @@ Class restartAction()
 @end
 
 @implementation TextureLibPNGTest3
--(void) transformSprite:(Sprite*)sprite
+-(void) transformSprite:(CCSprite*)sprite
 {	
-	id fade = [FadeOut actionWithDuration:2];
-	id dl = [DelayTime actionWithDuration:2];
+	id fade = [CCFadeOut actionWithDuration:2];
+	id dl = [CCDelayTime actionWithDuration:2];
 	id fadein = [fade reverse];
-	id seq = [Sequence actions: fade, fadein, dl, nil];
-	id repeat = [RepeatForever actionWithAction:seq];
+	id seq = [CCSequence actions: fade, fadein, dl, nil];
+	id repeat = [CCRepeatForever actionWithAction:seq];
 	[sprite runAction:repeat];
 	
-	id tint = [TintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
-	id dl2 = [DelayTime actionWithDuration:2];
+	id tint = [CCTintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
+	id dl2 = [CCDelayTime actionWithDuration:2];
 	id tintback = [tint reverse];
-	id seq2 = [Sequence actions: tint, dl2, tintback, nil];
-	id repeat2 = [RepeatForever actionWithAction:seq2];
+	id seq2 = [CCSequence actions: tint, dl2, tintback, nil];
+	id repeat2 = [CCRepeatForever actionWithAction:seq2];
 	[sprite runAction:repeat2];
 	
 }
@@ -876,57 +876,54 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
-	
+//	[Director useFastDirector];
+
 	//
-	[[Director sharedDirector] setPixelFormat:kRGB565];
+	[[CCDirector sharedDirector] setPixelFormat:kRGB565];
 
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change it at anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
 //	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // geting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 

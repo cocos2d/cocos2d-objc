@@ -7,9 +7,9 @@
 }
 @end
 
-@interface ParallaxDemo: Layer
+@interface ParallaxDemo: CCLayer
 {
-    TextureAtlas *atlas;
+    CCTextureAtlas *atlas;
 }
 -(NSString*) title;
 @end

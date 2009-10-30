@@ -12,7 +12,7 @@
 
 @class ParticlesLayer;
 
-@interface ParticlesScene : Scene
+@interface ParticlesScene : CCScene
 {
 	ParticlesLayer *layer;
 }
@@ -23,7 +23,7 @@
 
 @end
 
-@interface ParticlesLayer : Layer
+@interface ParticlesLayer : CCLayer
 {
 	ParticleSmoke2 *smoke;
 }

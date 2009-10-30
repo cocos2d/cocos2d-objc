@@ -7,13 +7,13 @@ typedef enum tagPaddleState {
 	kPaddleStateUngrabbed
 } PaddleState;
 
-@interface Paddle : TextureNode <TargetedTouchDelegate> {
+@interface Paddle : CCTextureNode <CCTargetedTouchDelegate> {
 @private
 	PaddleState state;
 }
 
 @property(nonatomic, readonly) CGRect rect;
 
-+ (id)paddleWithTexture:(Texture2D *)texture;
-- (id)initWithTexture:(Texture2D *)texture;
++ (id)paddleWithTexture:(CCTexture2D *)texture;
+- (id)initWithTexture:(CCTexture2D *)texture;
 @end

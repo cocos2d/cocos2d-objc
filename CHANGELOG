@@ -1,3 +1,6 @@
+version 0.9.0 - XX-MMM-2009
+ . All: using CC namespace (issue #520)
+
 version 0.8.2 - 19-Oct-2009
  . Actions: Animate copy restoreOriginalFrame parameter (issue #602)
  . ChipmunkTest: uses new API to set director type (issue #XXX)

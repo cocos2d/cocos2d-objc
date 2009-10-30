@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface ParticleSmoke2 : QuadParticleSystem
+@interface ParticleSmoke2 : CCQuadParticleSystem
 {
 
 }

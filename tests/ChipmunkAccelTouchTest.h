@@ -12,7 +12,7 @@
 }
 @end
 
-@interface Layer1 : Layer
+@interface Layer1 : CCLayer
 {
 	cpSpace *space;
 }

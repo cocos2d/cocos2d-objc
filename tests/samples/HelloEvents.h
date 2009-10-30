@@ -15,7 +15,7 @@
 @end
 
 // HelloEvents Layer
-@interface HelloEvents : Layer
+@interface HelloEvents : CCLayer
 {
 }
 @end

@@ -18,7 +18,7 @@
 #import "iPhoneTest.h"
 
 
-@interface MenuLayer : Layer
+@interface MenuLayer : CCLayer
 {    
 	int		entryID;	
 }
@@ -26,7 +26,7 @@
 -(id) initWithEntryID:(int)entryId;
 @end
 
-@interface Box2DView : Layer {
+@interface Box2DView : CCLayer {
     
 	TestEntry* entry;
 	Test* test;

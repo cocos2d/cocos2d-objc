@@ -1,6 +1,6 @@
 #import "cocos2d.h"
 
-@class Sprite;
+@class CCSprite;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
@@ -9,11 +9,11 @@
 }
 @end
 
-@interface SpriteDemo : Layer
+@interface SpriteDemo : CCLayer
 {
-	Sprite * grossini;
-	Sprite *tamara;
-	Sprite *kathia;
+	CCSprite * grossini;
+	CCSprite *tamara;
+	CCSprite *kathia;
 }
 -(void) positionForTwo;
 -(NSString*) title;

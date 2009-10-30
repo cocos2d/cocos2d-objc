@@ -14,7 +14,7 @@ static void
 eachShape(void *ptr, void* unused)
 {
 	cpShape *shape = (cpShape*) ptr;
-	Sprite *sprite = shape->data;
+	CCSprite *sprite = shape->data;
 	if( sprite ) {
 		cpBody *body = shape->body;
 		
@@ -37,7 +37,7 @@ eachShape(void *ptr, void* unused)
 {
 	int posx, posy;
 
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagAtlasSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagAtlasSpriteManager];
 	
 	posx = (CCRANDOM_0_1() * 200);
 	posy = (CCRANDOM_0_1() * 200);
@@ -45,7 +45,7 @@ eachShape(void *ptr, void* unused)
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 	
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
 	[mgr addChild: sprite];
 	
 	sprite.position = ccp(x,y);
@@ -79,7 +79,7 @@ eachShape(void *ptr, void* unused)
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
 		
-		CGSize wins = [[Director sharedDirector] winSize];
+		CGSize wins = [[CCDirector sharedDirector] winSize];
 		cpInitChipmunk();
 		
 		cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
@@ -112,7 +112,7 @@ eachShape(void *ptr, void* unused)
 		shape->e = 1.0f; shape->u = 1.0f;
 		cpSpaceAddStaticShape(space, shape);
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 		[self addChild:mgr z:0 tag:kTagAtlasSpriteManager];
 		
 		[self addNewSpriteX: 200 y:200];
@@ -148,7 +148,7 @@ eachShape(void *ptr, void* unused)
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
 				
-		location = [[Director sharedDirector] convertToGL: location];
+		location = [[CCDirector sharedDirector] convertToGL: location];
 		
 		[self addNewSpriteX: location.x y:location.y];
 	}
@@ -186,39 +186,39 @@ eachShape(void *ptr, void* unused)
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeThreadMainLoop];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeThreadMainLoop];
 	
 	
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 
 	// And you can later, once the openGLView was created
 	// you can change it's properties
-	[[[Director sharedDirector] openGLView] setMultipleTouchEnabled:YES];
+	[[[CCDirector sharedDirector] openGLView] setMultipleTouchEnabled:YES];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	// add layer
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [Layer1 node] z:0];
 	
 	// add the label
-	CGSize s = [[Director sharedDirector] winSize];
-	Label* label = [Label labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCLabel* label = [CCLabel labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
 	label.position = ccp( s.width / 2, s.height - 30);
 	[scene addChild:label z:-1];
 
 	[window makeKeyAndVisible];
 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc
@@ -230,24 +230,24 @@ eachShape(void *ptr, void* unused)
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 @end

@@ -12,15 +12,15 @@
 	[window setUserInteractionEnabled:YES];
 	[window setMultipleTouchEnabled:YES];
 
-	[Director useFastDirector];
+	[CCDirector useFastDirector];
 	
-	[[Director sharedDirector] attachInWindow:window];
-	[Director sharedDirector].displayFPS = YES;
+	[[CCDirector sharedDirector] attachInWindow:window];
+	[CCDirector sharedDirector].displayFPS = YES;
 
 	[window makeKeyAndVisible];
 	
-//	[[TouchDispatcher sharedDispatcher] link];
-	[[Director sharedDirector] runWithScene:[PongScene node]];
+//	[[CCTouchDispatcher sharedDispatcher] link];
+	[[CCDirector sharedDirector] runWithScene:[PongScene node]];
 }
 
 -(void)dealloc
@@ -30,17 +30,17 @@
 
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 @end

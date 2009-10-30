@@ -2,14 +2,14 @@
  */
 #import "cocos2d.h"
 
-@interface PongScene : Scene {
+@interface PongScene : CCScene {
 @private
 }
 @end
 
 @class Ball;
 
-@interface PongLayer: Layer {
+@interface PongLayer: CCLayer {
 @private
 	Ball *ball;
 	NSArray *paddles;

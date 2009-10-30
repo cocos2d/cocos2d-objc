@@ -77,17 +77,17 @@ Class restartAction()
 	if( (self = [super init]) ) {
 
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 			
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -105,23 +105,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -140,10 +140,10 @@ Class restartAction()
 		
 		self.isTouchEnabled = YES;
 
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
 		
 	}	
@@ -152,14 +152,14 @@ Class restartAction()
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
 	[mgr addChild:sprite];
 
 	sprite.position = ccp( p.x, p.y);
@@ -168,19 +168,19 @@ Class restartAction()
 	float rand = CCRANDOM_0_1();
 	
 	if( rand < 0.20 )
-		action = [ScaleBy actionWithDuration:3 scale:2];
+		action = [CCScaleBy actionWithDuration:3 scale:2];
 	else if(rand < 0.40)
-		action = [RotateBy actionWithDuration:3 angle:360];
+		action = [CCRotateBy actionWithDuration:3 angle:360];
 	else if( rand < 0.60)
-		action = [Blink actionWithDuration:1 blinks:3];
+		action = [CCBlink actionWithDuration:1 blinks:3];
 	else if( rand < 0.8 )
-		action = [TintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
 	else 
-		action = [FadeOut actionWithDuration:2];
+		action = [CCFadeOut actionWithDuration:2];
 	id action_back = [action reverse];
-	id seq = [Sequence actions:action, action_back, nil];
+	id seq = [CCSequence actions:action, action_back, nil];
 	
-	[sprite runAction: [RepeatForever actionWithAction:seq]];
+	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -188,7 +188,7 @@ Class restartAction()
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
 		
-		location = [[Director sharedDirector] convertToGL: location];
+		location = [[CCDirector sharedDirector] convertToGL: location];
 		
 		[self addNewSpriteWithCoords: location];
 	}
@@ -209,14 +209,14 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite3 = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite3 = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
 		
-		AtlasAnimation *animation = [AtlasAnimation animationWithName:@"dance" delay:0.2f];
+		CCAtlasAnimation *animation = [CCAtlasAnimation animationWithName:@"dance" delay:0.2f];
 		for(int i=0;i<14;i++) {
 			int x= i % 5;
 			int y= i / 5;
@@ -228,12 +228,12 @@ Class restartAction()
 		[mgr addChild:sprite2];
 		[mgr addChild:sprite3];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		sprite.position = ccp( s.width /2, s.height/2);
 		sprite2.position = ccp( s.width /2 - 100, s.height/2);
 		sprite3.position = ccp( s.width /2 + 100, s.height/2);
 		
-		id action = [Animate actionWithAnimation: animation];
+		id action = [CCAnimate actionWithAnimation: animation];
 		id action2 = [[action copy] autorelease];
 		id action3 = [[action copy] autorelease];
 		
@@ -266,19 +266,19 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite3 = [AtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite4 = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite5 = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite6 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite7 = [AtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
-		AtlasSprite *sprite8 = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite3 = [CCAtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite4 = [CCAtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite5 = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite6 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite7 = [CCAtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite8 = [CCAtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		sprite1.position = ccp( (s.width/5)*1, (s.height/3)*1);
 		sprite2.position = ccp( (s.width/5)*2, (s.height/3)*1);
 		sprite3.position = ccp( (s.width/5)*3, (s.height/3)*1);
@@ -288,21 +288,21 @@ Class restartAction()
 		sprite7.position = ccp( (s.width/5)*3, (s.height/3)*2);
 		sprite8.position = ccp( (s.width/5)*4, (s.height/3)*2);
 
-		id action = [FadeIn actionWithDuration:2];
+		id action = [CCFadeIn actionWithDuration:2];
 		id action_back = [action reverse];
-		id fade = [RepeatForever actionWithAction: [Sequence actions: action, action_back, nil]];
+		id fade = [CCRepeatForever actionWithAction: [CCSequence actions: action, action_back, nil]];
 
-		id tintred = [TintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+		id tintred = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
 		id tintred_back = [tintred reverse];
-		id red = [RepeatForever actionWithAction: [Sequence actions: tintred, tintred_back, nil]];
+		id red = [CCRepeatForever actionWithAction: [CCSequence actions: tintred, tintred_back, nil]];
 
-		id tintgreen = [TintBy actionWithDuration:2 red:-255 green:0 blue:-255];
+		id tintgreen = [CCTintBy actionWithDuration:2 red:-255 green:0 blue:-255];
 		id tintgreen_back = [tintgreen reverse];
-		id green = [RepeatForever actionWithAction: [Sequence actions: tintgreen, tintgreen_back, nil]];
+		id green = [CCRepeatForever actionWithAction: [CCSequence actions: tintgreen, tintgreen_back, nil]];
 
-		id tintblue = [TintBy actionWithDuration:2 red:-255 green:-255 blue:0];
+		id tintblue = [CCTintBy actionWithDuration:2 red:-255 green:-255 blue:0];
 		id tintblue_back = [tintblue reverse];
-		id blue = [RepeatForever actionWithAction: [Sequence actions: tintblue, tintblue_back, nil]];
+		id blue = [CCRepeatForever actionWithAction: [CCSequence actions: tintblue, tintblue_back, nil]];
 		
 		
 		[sprite5 runAction:red];
@@ -360,24 +360,24 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		for(int i=0;i<5;i++) {
-			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			[mgr addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
-			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			[mgr addChild:sprite z:14-i];
 		}
 		
-		AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
 		[mgr addChild:sprite z:-1 tag:kTagSprite1];
 		sprite.position = ccp(s.width/2, s.height/2 - 20);
 		sprite.scaleX = 6;
@@ -432,15 +432,15 @@ Class restartAction()
 		dir = 1;
 		time = 0;
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		for(int i=0;i<5;i++) {
-			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			sprite.vertexZ = 10 + i*40;
 			[mgr addChild:sprite z:0];
@@ -448,7 +448,7 @@ Class restartAction()
 		}
 		
 		for(int i=5;i<11;i++) {
-			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
 			[mgr addChild:sprite z:0];
@@ -476,20 +476,20 @@ Class restartAction()
 
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		
-		id rotate = [RotateBy actionWithDuration:10 angle:360];
-		id action = [RepeatForever actionWithAction:rotate];
+		id rotate = [CCRotateBy actionWithDuration:10 angle:360];
+		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
-			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			
-			Sprite *point = [Sprite spriteWithFile:@"r1.png"];
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
 			point.position = sprite.position;
 			[self addChild:point z:1];
@@ -531,10 +531,10 @@ Class restartAction()
 		
 		// small capacity. Testing resizing
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		mgr.relativeAnchorPoint = NO;
 		mgr.anchorPoint = ccp(0.5f, 0.5f);
@@ -542,22 +542,22 @@ Class restartAction()
 		
 		
 		// AtlasSprite actions
-		id rotate = [RotateBy actionWithDuration:5 angle:360];
-		id action = [RepeatForever actionWithAction:rotate];
+		id rotate = [CCRotateBy actionWithDuration:5 angle:360];
+		id action = [CCRepeatForever actionWithAction:rotate];
 
 		// AtlasSpriteManager actions
 		id rotate_back = [rotate reverse];
-		id rotate_seq = [Sequence actions:rotate, rotate_back, nil];
-		id rotate_forever = [RepeatForever actionWithAction:rotate_seq];
+		id rotate_seq = [CCSequence actions:rotate, rotate_back, nil];
+		id rotate_forever = [CCRepeatForever actionWithAction:rotate_seq];
 		
-		id scale = [ScaleBy actionWithDuration:5 scale:1.5f];
+		id scale = [CCScaleBy actionWithDuration:5 scale:1.5f];
 		id scale_back = [scale reverse];
-		id scale_seq = [Sequence actions: scale, scale_back, nil];
-		id scale_forever = [RepeatForever actionWithAction:scale_seq];
+		id scale_seq = [CCSequence actions: scale, scale_back, nil];
+		id scale_forever = [CCRepeatForever actionWithAction:scale_seq];
 
 
 		for(int i=0;i<3;i++) {
-			AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
 			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			[sprite runAction: [[action copy] autorelease]];
@@ -582,16 +582,16 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
 		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
 		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
 		
@@ -624,23 +624,23 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		AtlasSprite *sprite1 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
 		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		AtlasSprite *sprite2 = [AtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
 		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
 		
-		id scale = [ScaleBy actionWithDuration:2 scale:5];
+		id scale = [CCScaleBy actionWithDuration:2 scale:5];
 		id scale_back = [scale reverse];
-		id seq = [Sequence actions: scale, scale_back, nil];
-		id repeat = [RepeatForever actionWithAction:seq];
+		id seq = [CCSequence actions: scale, scale_back, nil];
+		id repeat = [CCRepeatForever actionWithAction:seq];
 		
 		id repeat2 = [[repeat copy] autorelease];
 		
@@ -653,14 +653,14 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	[mgr.texture setAliasTexParameters];
 }
 
 -(void) onExit
 {
 	// restore the tex parameter to AntiAliased.
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	[mgr.texture setAntiAliasTexParameters];
 	[super onExit];
 }
@@ -681,11 +681,11 @@ Class restartAction()
 		
 		isTouchEnabled = YES;
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		texture1 = [[mgr texture] retain];
-		texture2 = [[[TextureMgr sharedTextureMgr] addImage:@"grossini_dance_atlas-mono.png"] retain];
+		texture2 = [[[CCTextureMgr sharedTextureMgr] addImage:@"grossini_dance_atlas-mono.png"] retain];
 				
 		for(int i=0;i<30;i++)
 			[self addNewSprite];
@@ -703,18 +703,18 @@ Class restartAction()
 
 -(void) addNewSprite
 {
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 	
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 	
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
 	[mgr addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
@@ -723,24 +723,24 @@ Class restartAction()
 	float rand = CCRANDOM_0_1();
 	
 	if( rand < 0.20 )
-		action = [ScaleBy actionWithDuration:3 scale:2];
+		action = [CCScaleBy actionWithDuration:3 scale:2];
 	else if(rand < 0.40)
-		action = [RotateBy actionWithDuration:3 angle:360];
+		action = [CCRotateBy actionWithDuration:3 angle:360];
 	else if( rand < 0.60)
-		action = [Blink actionWithDuration:1 blinks:3];
+		action = [CCBlink actionWithDuration:1 blinks:3];
 	else if( rand < 0.8 )
-		action = [TintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
 	else 
-		action = [FadeOut actionWithDuration:2];
+		action = [CCFadeOut actionWithDuration:2];
 	id action_back = [action reverse];
-	id seq = [Sequence actions:action, action_back, nil];
+	id seq = [CCSequence actions:action, action_back, nil];
 	
-	[sprite runAction: [RepeatForever actionWithAction:seq]];
+	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
 	if( [mgr texture] == texture1 )
 		[mgr setTexture:texture2];
@@ -771,60 +771,58 @@ Class restartAction()
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
 
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	// must be called before any othe call to the director
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// Use this pixel format to have transparent buffers
-	[[Director sharedDirector] setPixelFormat:kRGBA8];
+	[[CCDirector sharedDirector] setPixelFormat:kRGBA8];
 	
 	// Create a depth buffer of 24 bits
 	// These means that openGL z-order will be taken into account
-	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer24];
+	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer24];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

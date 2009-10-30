@@ -38,18 +38,18 @@ enum {
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
 	
-	CGSize size = [[Director sharedDirector] winSize];
-	id lens = [Lens3D actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:ccg(15,10) duration:0.0f];
-	id waves = [Waves3D actionWithWaves:18 amplitude:15 grid:ccg(15,10) duration:10];
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	id lens = [CCLens3D actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:ccg(15,10) duration:0.0f];
+	id waves = [CCWaves3D actionWithWaves:18 amplitude:15 grid:ccg(15,10) duration:10];
 
-	id reuse = [ReuseGrid actionWithTimes:1];
-	id delay = [DelayTime actionWithDuration:8];
+	id reuse = [CCReuseGrid actionWithTimes:1];
+	id delay = [CCDelayTime actionWithDuration:8];
 
 	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 	id orbit_back = [orbit reverse];
 
-	[target runAction: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
-	[target runAction: [Sequence actions: lens, delay, reuse, waves, nil]];	
+	[target runAction: [CCRepeatForever actionWithAction: [CCSequence actions: orbit, orbit_back, nil]]];
+	[target runAction: [CCSequence actions: lens, delay, reuse, waves, nil]];	
 }
 -(NSString*) title
 {
@@ -73,24 +73,24 @@ enum {
 	//     ShakyTiles is TiledGrid3D and it's size is (15,10)
 	//     Shuffletiles is TiledGrid3D and it's size is (15,10)
 	//	   TurnOfftiles is TiledGrid3D and it's size is (15,10)
-	id shaky = [ShakyTiles3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
-	id shuffle = [ShuffleTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
-	id turnoff = [TurnOffTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
+	id shaky = [CCShakyTiles3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
+	id shuffle = [CCShuffleTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
+	id turnoff = [CCTurnOffTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
 	id turnon = [turnoff reverse];
 	
 	// reuse 2 times:
 	//   1 for shuffle
 	//   2 for turn off
 	//   turnon tiles will use a new grid
-	id reuse = [ReuseGrid actionWithTimes:2];
+	id reuse = [CCReuseGrid actionWithTimes:2];
 
-	id delay = [DelayTime actionWithDuration:1];
+	id delay = [CCDelayTime actionWithDuration:1];
 	
 //	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 //	id orbit_back = [orbit reverse];
 //
 //	[target runAction: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];
-	[target runAction: [Sequence actions: shaky, delay, reuse, shuffle, [[delay copy] autorelease], turnoff, turnon, nil]];
+	[target runAction: [CCSequence actions: shaky, delay, reuse, shuffle, [[delay copy] autorelease], turnoff, turnon, nil]];
 }
 -(NSString*) title
 {
@@ -111,15 +111,15 @@ enum {
 	id target1 = [bg getChildByTag:kTagSprite1];
 	id target2 = [bg getChildByTag:kTagSprite2];	
 	
-	id waves = [Waves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:ccg(15,10) duration:5];
-	id shaky = [Shaky3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
+	id waves = [CCWaves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:ccg(15,10) duration:5];
+	id shaky = [CCShaky3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
 	
-	[target1 runAction: [RepeatForever actionWithAction: waves]];
-	[target2 runAction: [RepeatForever actionWithAction: shaky]];
+	[target1 runAction: [CCRepeatForever actionWithAction: waves]];
+	[target2 runAction: [CCRepeatForever actionWithAction: shaky]];
 	
 	// moving background. Testing issue #244
-	id move = [MoveBy actionWithDuration:3 position:ccp(200,0)];
-	[bg runAction:[RepeatForever actionWithAction:[Sequence actions:move, [move reverse], nil]]];	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(200,0)];
+	[bg runAction:[CCRepeatForever actionWithAction:[CCSequence actions:move, [move reverse], nil]]];	
 }
 -(NSString*) title
 {
@@ -136,12 +136,12 @@ enum {
 {
 	[super onEnter];
 		
-	id lens = [Lens3D actionWithPosition:ccp(100,180) radius:150 grid:ccg(32,24) duration:10];
+	id lens = [CCLens3D actionWithPosition:ccp(100,180) radius:150 grid:ccg(32,24) duration:10];
 //	id move = [MoveBy actionWithDuration:5 position:ccp(400,0)];
-	id move = [JumpBy actionWithDuration:5 position:ccp(380,0) height:100 jumps:4];
+	id move = [CCJumpBy actionWithDuration:5 position:ccp(380,0) height:100 jumps:4];
 	id move_back = [move reverse];
-	id seq = [Sequence actions: move, move_back, nil];
-	[[ActionManager sharedManager] addAction:seq target:lens paused:NO];
+	id seq = [CCSequence actions: move, move_back, nil];
+	[[CCActionManager sharedManager] addAction:seq target:lens paused:NO];
 
 	[self runAction: lens];
 }
@@ -163,15 +163,15 @@ enum {
 {
 	[super onEnter];
 	
-	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
 	
-	id effect = [Liquid actionWithWaves:1 amplitude:20 grid:ccg(32,24) duration:2];	
+	id effect = [CCLiquid actionWithWaves:1 amplitude:20 grid:ccg(32,24) duration:2];	
 
-	id stopEffect = [Sequence actions:
+	id stopEffect = [CCSequence actions:
 					 effect,
-					 [DelayTime actionWithDuration:2],
-					 [StopGrid action],
-//					 [DelayTime actionWithDuration:2],
+					 [CCDelayTime actionWithDuration:2],
+					 [CCStopGrid action],
+//					 [CCDelayTime actionWithDuration:2],
 //					 [[effect copy] autorelease],
 					 nil];
 	
@@ -182,7 +182,7 @@ enum {
 -(void) onExit
 {
 	[super onExit];
-	[[Director sharedDirector] setProjection:CCDirectorProjection3D];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 }
 
 -(NSString*) title
@@ -243,42 +243,42 @@ Class restartAction()
 	
 		float x,y;
 		
-		CGSize size = [[Director sharedDirector] winSize];
+		CGSize size = [[CCDirector sharedDirector] winSize];
 		x = size.width;
 		y = size.height;
 		
-		Sprite *bg = [Sprite spriteWithFile:@"background3.png"];
+		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
 		[self addChild: bg z:0 tag:kTagBackground];
 		bg.anchorPoint = CGPointZero;
 //		bg.position = ccp(x/2,y/2);
 		
-		Sprite *grossini = [Sprite spriteWithFile:@"grossinis_sister2.png"];
+		CCSprite *grossini = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[bg addChild:grossini z:1 tag:kTagSprite1];
 		grossini.position = ccp(x/3.0f,200);
-		id sc = [ScaleBy actionWithDuration:2 scale:5];
+		id sc = [CCScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
 	
-		[grossini runAction: [RepeatForever actionWithAction: [Sequence actions:sc, sc_back, nil]]];
+		[grossini runAction: [CCRepeatForever actionWithAction: [CCSequence actions:sc, sc_back, nil]]];
 
-		Sprite *tamara = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[bg addChild:tamara z:1 tag:kTagSprite2];
 		tamara.position = ccp(2*x/3.0f,200);
-		id sc2 = [ScaleBy actionWithDuration:2 scale:5];
+		id sc2 = [CCScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];
-		[tamara runAction: [RepeatForever actionWithAction: [Sequence actions:sc2, sc2_back, nil]]];
+		[tamara runAction: [CCRepeatForever actionWithAction: [CCSequence actions:sc2, sc2_back, nil]]];
 		
 		
-		Label* label = [Label labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
 		
 		[label setPosition: ccp(x/2,y-80)];
 		[self addChild: label];
 		label.tag = kTagLabel;
 		
 		// menu
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp(480/2-100,30);
 		item2.position = ccp(480/2, 30);
@@ -297,23 +297,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 - (void) dealloc
@@ -336,39 +336,36 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+//	[Director useFastDirector];
 	
 	// Use this pixel format to have transparent buffers
 	// BUG: glClearColor() in FBO needs to be converted to RGB565
-	[[Director sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
 
 	// Create a depth buffer of 16 bits
 	// Needed for the orbit + lens + waves examples
 	// These means that openGL z-order will be taken into account
-	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
 //	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
 	
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc
@@ -381,24 +378,24 @@ Class restartAction()
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 @end

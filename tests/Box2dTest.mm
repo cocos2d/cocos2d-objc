@@ -29,7 +29,7 @@ enum {
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
 
-		CGSize screenSize = [Director sharedDirector].winSize;
+		CGSize screenSize = [CCDirector sharedDirector].winSize;
 		CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 
 		// Define the gravity vector.
@@ -87,12 +87,12 @@ enum {
 		
 		//Set up sprite
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
+		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
 		
-		Label *label = [Label labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
+		CCLabel *label = [CCLabel labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
@@ -123,13 +123,13 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(32 * idx,32 * idy,32,32) spriteManager:mgr];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(32 * idx,32 * idy,32,32) spriteManager:mgr];
 	[mgr addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
@@ -174,7 +174,7 @@ enum {
 	{
 		if (b->GetUserData() != NULL) {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			AtlasSprite* myActor = (AtlasSprite*)b->GetUserData();
+			CCAtlasSprite* myActor = (CCAtlasSprite*)b->GetUserData();
 			myActor.position = CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
 			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
 		}	
@@ -187,7 +187,7 @@ enum {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
 		
-		location = [[Director sharedDirector] convertCoordinate: location];
+		location = [[CCDirector sharedDirector] convertToGL: location];
 		
 		[self addNewSpriteWithCoords: location];
 	}
@@ -230,37 +230,34 @@ enum {
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
-	
+//	[CCDirector useFastDirector];
+
 	// AnimationInterval doesn't work with FastDirector, yet
-//	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 
 	// And you can later, once the openGLView was created
 	// you can change it's properties
-	[[[Director sharedDirector] openGLView] setMultipleTouchEnabled:YES];
+	[[[CCDirector sharedDirector] openGLView] setMultipleTouchEnabled:YES];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	// add layer
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	id box2dLayer = [[Box2DTestLayer alloc] init];
 	[scene addChild:box2dLayer z:0];
 //	glClearColor(1.0f,1.0f,1.0f,1.0f);
 
 	[window makeKeyAndVisible];
 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc
@@ -272,24 +269,24 @@ enum {
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 @end

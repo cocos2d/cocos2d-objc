@@ -69,25 +69,25 @@ Class restartAction()
 
 		self.isTouchEnabled = YES;
 		
-		CGSize s = [[Director sharedDirector] winSize];
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:100];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		Label *tapScreen = [Label labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
+		CCLabel *tapScreen = [CCLabel labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
 		[tapScreen setPosition: ccp(s.width/2, s.height-80)];
 		[self addChild:tapScreen z:100];
 		
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		MenuItemToggle *item4 = [MenuItemToggle itemWithTarget:self selector:@selector(toggleCallback:) items:
-								 [MenuItemFont itemFromString: @"Free Movement"],
-								 [MenuItemFont itemFromString: @"Grouped Movement"],
+		CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(toggleCallback:) items:
+								 [CCMenuItemFont itemFromString: @"Free Movement"],
+								 [CCMenuItemFont itemFromString: @"Grouped Movement"],
 								 nil];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, item4, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, nil];
 			
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -98,19 +98,19 @@ Class restartAction()
 
 		[self addChild: menu z:100];	
 		
-		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
 		labelAtlas.position = ccp(254,50);
 		
 		// moving background
-		background = [Sprite spriteWithFile:@"background3.png"];
+		background = [CCSprite spriteWithFile:@"background3.png"];
 		[self addChild:background z:5];
 		[background setPosition:ccp(s.width/2, s.height-180)];
 
-		id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
+		id move = [CCMoveBy actionWithDuration:4 position:ccp(300,0)];
 		id move_back = [move reverse];
-		id seq = [Sequence actions: move, move_back, nil];
-		[background runAction:[RepeatForever actionWithAction:seq]];
+		id seq = [CCSequence actions: move, move_back, nil];
+		[background runAction:[CCRepeatForever actionWithAction:seq]];
 		
 		
 		[self schedule:@selector(step:)];
@@ -128,7 +128,7 @@ Class restartAction()
 
 -(void) registerWithTouchDispatcher
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
 }
 
 -(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
@@ -143,7 +143,7 @@ Class restartAction()
 - (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
 {
 	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertToGL:location];
+	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
 	
 	CGPoint	pos = [background convertToWorldSpace:CGPointZero];
 	emitter.position = ccpSub(convertedLocation, pos);	
@@ -151,7 +151,7 @@ Class restartAction()
 
 -(void) step:(ccTime) dt
 {
-	LabelAtlas *atlas = (LabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
 
 	NSString *str = [NSString stringWithFormat:@"%4d", emitter.particleCount];
 	[atlas setString:str];
@@ -182,16 +182,16 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) setEmitterPosition
@@ -207,10 +207,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleFireworks node];
+	self.emitter = [CCParticleFireworks node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	
 	[self setEmitterPosition];
 }
@@ -226,10 +226,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleFire node];
+	self.emitter = [CCParticleFire node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	CGPoint p = emitter.position;
 	emitter.position = ccp(p.x, 100);
 	
@@ -247,10 +247,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleSun node];
+	self.emitter = [CCParticleSun node];
 	[background addChild: emitter z:10];
 
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -266,10 +266,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleGalaxy node];
+	self.emitter = [CCParticleGalaxy node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -286,9 +286,9 @@ Class restartAction()
 {
 	[super onEnter];
 
-	self.emitter = [ParticleFlower node];
+	self.emitter = [CCParticleFlower node];
 	[background addChild: emitter z:10];
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	
 	[self setEmitterPosition];
 }
@@ -304,9 +304,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[QuadParticleSystem alloc] initWithTotalParticles:50];
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:50];
 	[background addChild: emitter z:10];
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	
 	// duration
 	emitter.duration = -1;
@@ -382,10 +382,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[QuadParticleSystem alloc] initWithTotalParticles:300];
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
 	[emitter release];
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars2.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars2.png"];
 	
 	// duration
 	emitter.duration = -1;
@@ -462,10 +462,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleMeteor node];
+	self.emitter = [CCParticleMeteor node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -481,10 +481,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleSpiral node];
+	self.emitter = [CCParticleSpiral node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -500,10 +500,10 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleExplosion node];
+	self.emitter = [CCParticleExplosion node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	
 	emitter.autoRemoveOnFinish = YES;
 	
@@ -521,7 +521,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleSmoke node];
+	self.emitter = [CCParticleSmoke node];
 	[background addChild: emitter z:10];
 	
 	CGPoint p = emitter.position;
@@ -541,7 +541,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleSnow node];
+	self.emitter = [CCParticleSnow node];
 	[background addChild: emitter z:10];
 	
 	CGPoint p = emitter.position;
@@ -569,7 +569,7 @@ Class restartAction()
 	
 	emitter.emissionRate = emitter.totalParticles/emitter.life;
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"snow.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"snow.png"];
 	
 	[self setEmitterPosition];
 
@@ -586,14 +586,14 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [ParticleRain node];
+	self.emitter = [CCParticleRain node];
 	[background addChild: emitter z:10];
 	
 	CGPoint p = emitter.position;
 	emitter.position = ccp( p.x, p.y-100);
 	emitter.life = 4;
 	
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 
@@ -610,11 +610,11 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[PointParticleSystem alloc] initWithTotalParticles:1000];
+	self.emitter = [[CCPointParticleSystem alloc] initWithTotalParticles:1000];
 	[background addChild: emitter z:10];
 	[emitter release];
 	
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// duration
 	emitter.duration = -1;
@@ -688,11 +688,11 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[ParticleFlower alloc] initWithTotalParticles:500];
+	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[background addChild: emitter z:10];
 	[emitter release];
 
-	emitter.texture = [[TextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
 	emitter.lifeVar = 0;
 	emitter.life = 10;
 	emitter.speed = 100;
@@ -716,30 +716,30 @@ Class restartAction()
 
 	[[background parent] removeChild:background cleanup:YES];
 
-	ParallaxNode *p = [[ParallaxNode alloc] init];
+	CCParallaxNode *p = [[CCParallaxNode alloc] init];
 	[self addChild:p z:5];
 
-	Sprite *p1 = [Sprite spriteWithFile:@"background3.png"];
-	Sprite *p2 = [Sprite spriteWithFile:@"background3.png"];
+	CCSprite *p1 = [CCSprite spriteWithFile:@"background3.png"];
+	CCSprite *p2 = [CCSprite spriteWithFile:@"background3.png"];
 	
 	[p addChild:p1 z:1 parallaxRatio:ccp(0.5f,1) positionOffset:ccp(0,250)];
 	[p addChild:p2 z:2 parallaxRatio:ccp(1.5f,1) positionOffset:ccp(0,50)];
 
 	
-	self.emitter = [[ParticleFlower alloc] initWithTotalParticles:500];
+	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[p1 addChild: emitter z:10];
 	[emitter release];
 	[emitter setPosition:ccp(250,200)];
 	
-	id par = [[ParticleSun alloc] initWithTotalParticles:250];
+	id par = [[CCParticleSun alloc] initWithTotalParticles:250];
 	[p2 addChild:par z:10];
 	[par release];
 	
 	
-	id move = [MoveBy actionWithDuration:4 position:ccp(300,0)];
+	id move = [CCMoveBy actionWithDuration:4 position:ccp(300,0)];
 	id move_back = [move reverse];
-	id seq = [Sequence actions: move, move_back, nil];
-	[p runAction:[RepeatForever actionWithAction:seq]];	
+	id seq = [CCSequence actions: move, move_back, nil];
+	[p runAction:[CCRepeatForever actionWithAction:seq]];	
 }
 
 -(NSString *) title
@@ -764,32 +764,29 @@ Class restartAction()
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
-	[[Director sharedDirector] setDisplayFPS: YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
+	[[CCDirector sharedDirector] setDisplayFPS: YES];
 
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[Director sharedDirector] setAnimationInterval: 1.0/60];
 
 	// create OpenGL view and attach it to a window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
 	[window makeKeyAndVisible];
 			 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc
@@ -802,24 +799,24 @@ Class restartAction()
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 @end

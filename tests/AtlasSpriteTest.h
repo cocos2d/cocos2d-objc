@@ -7,9 +7,9 @@
 }
 @end
 
-@interface AtlasDemo: Layer
+@interface AtlasDemo: CCLayer
 {
-    TextureAtlas *atlas;
+    CCTextureAtlas *atlas;
 }
 -(NSString*) title;
 @end
@@ -59,8 +59,8 @@
 
 @interface AtlasNewTexture : AtlasDemo
 {
-	Texture2D	*texture1;
-	Texture2D	*texture2;
+	CCTexture2D	*texture1;
+	CCTexture2D	*texture2;
 }
 -(void) addNewSprite;
 @end

@@ -7,7 +7,7 @@
 }
 @end
 
-@interface FontLayer : Layer
+@interface FontLayer : CCLayer
 {
 }
 @end
