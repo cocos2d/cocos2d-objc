@@ -57,17 +57,17 @@ Class restartAction()
 	[super init];
 
 
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 		
-	Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+	CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 	[self addChild: label z:1];
 	[label setPosition: ccp(s.width/2, s.height-50)];
 	
-	MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+	CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+	CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+	CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 	
-	Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+	CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 	
 	menu.position = CGPointZero;
 	item1.position = ccp( s.width/2 - 100,30);
@@ -85,23 +85,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -119,7 +119,7 @@ Class restartAction()
 		return nil;
 
 	// Top Layer, a simple image
-	Sprite *cocosImage = [Sprite spriteWithFile:@"powered.png"];
+	CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
 	// scale the image (optional)
 	cocosImage.scale = 2.5f;
 	// change the transform anchor point to 0,0 (optional)
@@ -127,7 +127,7 @@ Class restartAction()
 	
 
 	// Middle layer: a Tile map atlas
-	TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 	[tilemap releaseMap];
 	
 	// change the transform anchor to 0,0 (optional)
@@ -138,7 +138,7 @@ Class restartAction()
 	
 
 	// background layer: another image
-	Sprite *background = [Sprite spriteWithFile:@"background.png"];
+	CCSprite *background = [CCSprite spriteWithFile:@"background.png"];
 	// scale the image (optional)
 	background.scale = 1.5f;
 	// change the transform anchor point (optional)
@@ -146,7 +146,7 @@ Class restartAction()
 
 	
 	// create a void node, a parent node
-	ParallaxNode *voidNode = [ParallaxNode node];
+	CCParallaxNode *voidNode = [CCParallaxNode node];
 	
 	// NOW add the 3 layers to the 'void' node
 
@@ -163,17 +163,17 @@ Class restartAction()
 	// now create some actions that will move the 'void' node
 	// and the children of the 'void' node will move at different
 	// speed, thus, simulation the 3D environment
-	id goUp = [MoveBy actionWithDuration:4 position:ccp(0,-500)];
+	id goUp = [CCMoveBy actionWithDuration:4 position:ccp(0,-500)];
 	id goDown = [goUp reverse];
-	id go = [MoveBy actionWithDuration:8 position:ccp(-1000,0)];
+	id go = [CCMoveBy actionWithDuration:8 position:ccp(-1000,0)];
 	id goBack = [go reverse];
-	id seq = [Sequence actions:
+	id seq = [CCSequence actions:
 			  goUp,
 			  go,
 			  goDown,
 			  goBack,
 			  nil];	
-	[voidNode runAction: [RepeatForever actionWithAction:seq ] ];
+	[voidNode runAction: [CCRepeatForever actionWithAction:seq ] ];
 	
 	[self addChild:voidNode];
 	
@@ -197,7 +197,7 @@ Class restartAction()
 		self.isTouchEnabled = YES;
 		
 		// Top Layer, a simple image
-		Sprite *cocosImage = [Sprite spriteWithFile:@"powered.png"];
+		CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
 		// scale the image (optional)
 		cocosImage.scale = 2.5f;
 		// change the transform anchor point to 0,0 (optional)
@@ -205,7 +205,7 @@ Class restartAction()
 		
 		
 		// Middle layer: a Tile map atlas
-		TileMapAtlas *tilemap = [TileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
 		[tilemap releaseMap];
 		
 		// change the transform anchor to 0,0 (optional)
@@ -216,7 +216,7 @@ Class restartAction()
 		
 		
 		// background layer: another image
-		Sprite *background = [Sprite spriteWithFile:@"background.png"];
+		CCSprite *background = [CCSprite spriteWithFile:@"background.png"];
 		// scale the image (optional)
 		background.scale = 1.5f;
 		// change the transform anchor point (optional)
@@ -224,7 +224,7 @@ Class restartAction()
 		
 		
 		// create a void node, a parent node
-		ParallaxNode *voidNode = [ParallaxNode node];
+		CCParallaxNode *voidNode = [CCParallaxNode node];
 		
 		// NOW add the 3 layers to the 'void' node
 		
@@ -245,7 +245,7 @@ Class restartAction()
 
 -(void) registerWithTouchDispatcher
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -266,12 +266,12 @@ Class restartAction()
 	CGPoint touchLocation = [touch locationInView: [touch view]];	
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
 
-	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
-	prevLocation = [[Director sharedDirector] convertToGL: prevLocation];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	prevLocation = [[CCDirector sharedDirector] convertToGL: prevLocation];
 
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
-	CocosNode *node = [self getChildByTag:kTagNode];
+	CCNode *node = [self getChildByTag:kTagNode];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
@@ -297,52 +297,49 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

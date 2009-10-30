@@ -68,34 +68,34 @@ Class restartAction()
 
 		// Example:
 		// You can create a sprite using a Texture2D
-		Texture2D *tex = [ [Texture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
-		grossini = [[Sprite spriteWithTexture:tex] retain];
+		CCTexture2D *tex = [[CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
+		grossini = [[CCSprite spriteWithTexture:tex] retain];
 		[tex release];
 		
 		// Example:
 		// Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-		tamara = [[Sprite spriteWithFile:@"grossinis_sister1.png"] retain];
-		kathia = [[Sprite spriteWithFile:@"grossinis_sister2.png"] retain];
+		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
+		kathia = [[CCSprite spriteWithFile:@"grossinis_sister2.png"] retain];
 		
 		[self addChild: grossini z:3];
 		[self addChild: kathia z:2];
 		[self addChild: tamara z:1];
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		[grossini setPosition: ccp(60, 50)];
 		[kathia setPosition: ccp(60, 150)];
 		[tamara setPosition: ccp(60, 250)];
 		
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp(480/2-100,30);
 		item2.position = ccp(480/2, 30);
@@ -117,23 +117,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 
@@ -157,28 +157,28 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseIn actionWithAction:[[move copy] autorelease] rate:3.0f];
+	id move_ease_in = [CCEaseIn actionWithAction:[[move copy] autorelease] rate:3.0f];
 	id move_ease_in_back = [move_ease_in reverse];
 	
-	id move_ease_out = [EaseOut actionWithAction:[[move copy] autorelease] rate:3.0f];
+	id move_ease_out = [CCEaseOut actionWithAction:[[move copy] autorelease] rate:3.0f];
 	id move_ease_out_back = [move_ease_out reverse];
 	
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
 	
 	
-	Action *a2 = [grossini runAction: [RepeatForever actionWithAction:seq1]];
+	CCAction *a2 = [grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[a2 setTag:1];
 
-	Action *a1 =[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	CCAction *a1 =[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[a1 setTag:1];
 
-	Action *a = [kathia runAction: [RepeatForever actionWithAction:seq3]];
+	CCAction *a = [kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 	[a setTag:1];
 	
 	[self schedule:@selector(testStopAction:) interval:6];
@@ -203,26 +203,26 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 //	id move_back = [move reverse];
 	
-	id move_ease_inout1 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
+	id move_ease_inout1 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
 	id move_ease_inout_back1 = [move_ease_inout1 reverse];
 	
-	id move_ease_inout2 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:3.0f];
+	id move_ease_inout2 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:3.0f];
 	id move_ease_inout_back2 = [move_ease_inout2 reverse];
 
-	id move_ease_inout3 = [EaseInOut actionWithAction:[[move copy] autorelease] rate:4.0f];
+	id move_ease_inout3 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:4.0f];
 	id move_ease_inout_back3 = [move_ease_inout3 reverse];
 
 	
-	id seq1 = [Sequence actions: move_ease_inout1, move_ease_inout_back1, nil];
-	id seq2 = [Sequence actions: move_ease_inout2, move_ease_inout_back2, nil];
-	id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+	id seq1 = [CCSequence actions: move_ease_inout1, move_ease_inout_back1, nil];
+	id seq2 = [CCSequence actions: move_ease_inout2, move_ease_inout_back2, nil];
+	id seq3 = [CCSequence actions: move_ease_inout3, move_ease_inout_back3, nil];
 		
-	[tamara runAction: [RepeatForever actionWithAction:seq1]];
-	[kathia runAction: [RepeatForever actionWithAction:seq2]];
-	[grossini runAction: [RepeatForever actionWithAction:seq3]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -236,24 +236,24 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseSineIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in = [CCEaseSineIn actionWithAction:[[move copy] autorelease]];
 	id move_ease_in_back = [move_ease_in reverse];
 	
-	id move_ease_out = [EaseSineOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out = [CCEaseSineOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
 	
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
-	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -266,19 +266,19 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease = [EaseSineInOut actionWithAction:[[move copy] autorelease]];
+	id move_ease = [CCEaseSineInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
 
 	[self positionForTwo];
 
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
@@ -293,24 +293,24 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseExponentialIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in = [CCEaseExponentialIn actionWithAction:[[move copy] autorelease]];
 	id move_ease_in_back = [move_ease_in reverse];
 	
-	id move_ease_out = [EaseExponentialOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out = [CCEaseExponentialOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
 	
 
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
-	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -325,19 +325,19 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease = [EaseExponentialInOut actionWithAction:[[move copy] autorelease]];
+	id move_ease = [CCEaseExponentialInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
 	
 	[self positionForTwo];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
@@ -352,25 +352,25 @@ Class restartAction()
 {
 	[super onEnter];
 
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 
-	id move_ease_inout1 = [EaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.3f];
+	id move_ease_inout1 = [CCEaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.3f];
 	id move_ease_inout_back1 = [move_ease_inout1 reverse];
 	
-	id move_ease_inout2 = [EaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.45f];
+	id move_ease_inout2 = [CCEaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.45f];
 	id move_ease_inout_back2 = [move_ease_inout2 reverse];
 	
-	id move_ease_inout3 = [EaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.6f];
+	id move_ease_inout3 = [CCEaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.6f];
 	id move_ease_inout_back3 = [move_ease_inout3 reverse];
 	
 	
-	id seq1 = [Sequence actions: move_ease_inout1, move_ease_inout_back1, nil];
-	id seq2 = [Sequence actions: move_ease_inout2, move_ease_inout_back2, nil];
-	id seq3 = [Sequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+	id seq1 = [CCSequence actions: move_ease_inout1, move_ease_inout_back1, nil];
+	id seq2 = [CCSequence actions: move_ease_inout2, move_ease_inout_back2, nil];
+	id seq3 = [CCSequence actions: move_ease_inout3, move_ease_inout_back3, nil];
 	
-	[tamara runAction: [RepeatForever actionWithAction:seq1]];
-	[kathia runAction: [RepeatForever actionWithAction:seq2]];
-	[grossini runAction: [RepeatForever actionWithAction:seq3]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -385,22 +385,22 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseElasticIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in = [CCEaseElasticIn actionWithAction:[[move copy] autorelease]];
 	id move_ease_in_back = [move_ease_in reverse];
 	
-	id move_ease_out = [EaseElasticOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out = [CCEaseElasticOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
-	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -415,22 +415,22 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseBounceIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in = [CCEaseBounceIn actionWithAction:[[move copy] autorelease]];
 	id move_ease_in_back = [move_ease_in reverse];
 	
-	id move_ease_out = [EaseBounceOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out = [CCEaseBounceOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
-	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -443,19 +443,19 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease = [EaseBounceInOut actionWithAction:[[move copy] autorelease]];
+	id move_ease = [CCEaseBounceInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
 	
 	[self positionForTwo];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
@@ -470,22 +470,22 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease_in = [EaseBackIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in = [CCEaseBackIn actionWithAction:[[move copy] autorelease]];
 	id move_ease_in_back = [move_ease_in reverse];
 	
-	id move_ease_out = [EaseBackOut actionWithAction:[[move copy] autorelease]];
+	id move_ease_out = [CCEaseBackOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [Sequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
+	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
-	[kathia runAction: [RepeatForever actionWithAction:seq3]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 }
 -(NSString *) title
 {
@@ -498,19 +498,19 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [MoveBy actionWithDuration:3 position:ccp(350,0)];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 	id move_back = [move reverse];
 	
-	id move_ease = [EaseBackInOut actionWithAction:[[move copy] autorelease]];
+	id move_ease = [CCEaseBackInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [Sequence actions: move, move_back, nil];
-	id seq2 = [Sequence actions: move_ease, move_ease_back, nil];
+	id seq1 = [CCSequence actions: move, move_back, nil];
+	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
 	
 	[self positionForTwo];
 	
-	[grossini runAction: [RepeatForever actionWithAction:seq1]];
-	[tamara runAction: [RepeatForever actionWithAction:seq2]];
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 }
 -(NSString *) title
 {
@@ -528,15 +528,15 @@ Class restartAction()
 	
 
 	// rotate and jump
-	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
-	IntervalAction *jump2 = [jump1 reverse];
-	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
-	IntervalAction *rot2 = [rot1 reverse];
+	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+	CCIntervalAction *jump2 = [jump1 reverse];
+	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCIntervalAction *rot2 = [rot1 reverse];
 	
-	id seq3_1 = [Sequence actions:jump2, jump1, nil];
-	id seq3_2 = [Sequence actions: rot1, rot2, nil];
-	id spawn = [Spawn actions:seq3_1, seq3_2, nil];
-	id action = [Speed actionWithAction: [RepeatForever actionWithAction:spawn] speed:1.0f];
+	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
+	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
+	id spawn = [CCSpawn actions:seq3_1, seq3_2, nil];
+	id action = [CCSpeed actionWithAction: [CCRepeatForever actionWithAction:spawn] speed:1.0f];
 	[action setTag: kTagAction1];
 	
 	id action2 = [[action copy] autorelease];
@@ -595,7 +595,7 @@ Class restartAction()
 
 -(void) sliderAction:(id) sender
 {
-	[[Scheduler sharedScheduler] setTimeScale: sliderCtl.value];
+	[[CCScheduler sharedScheduler] setTimeScale: sliderCtl.value];
 }
 
 -(void) onEnter
@@ -604,29 +604,29 @@ Class restartAction()
 	
 	
 	// rotate and jump
-	IntervalAction *jump1 = [JumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
-	IntervalAction *jump2 = [jump1 reverse];
-	IntervalAction *rot1 = [RotateBy actionWithDuration:4 angle:360*2];
-	IntervalAction *rot2 = [rot1 reverse];
+	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+	CCIntervalAction *jump2 = [jump1 reverse];
+	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCIntervalAction *rot2 = [rot1 reverse];
 	
-	id seq3_1 = [Sequence actions:jump2, jump1, nil];
-	id seq3_2 = [Sequence actions: rot1, rot2, nil];
-	id spawn = [Spawn actions:seq3_1, seq3_2, nil];
-	id action = [RepeatForever actionWithAction:spawn];
+	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
+	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
+	id spawn = [CCSpawn actions:seq3_1, seq3_2, nil];
+	id action = [CCRepeatForever actionWithAction:spawn];
 	
 	id action2 = [[action copy] autorelease];
 	id action3 = [[action copy] autorelease];
 	
 	
-	[grossini runAction: [Speed actionWithAction:action speed:0.5f]];
-	[tamara runAction: [Speed actionWithAction:action2 speed:1.5f]];
-	[kathia runAction: [Speed actionWithAction:action3 speed:1.0f]];
+	[grossini runAction: [CCSpeed actionWithAction:action speed:0.5f]];
+	[tamara runAction: [CCSpeed actionWithAction:action2 speed:1.5f]];
+	[kathia runAction: [CCSpeed actionWithAction:action3 speed:1.0f]];
 	
-	ParticleSystem *emitter = [ParticleFireworks node];
+	CCParticleSystem *emitter = [CCParticleFireworks node];
 	[self addChild:emitter];
 	
 	sliderCtl = [self sliderCtl];
-	[[[[Director sharedDirector] openGLView] window] addSubview: sliderCtl];
+	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
 }
 
 -(void) onExit
@@ -661,50 +661,50 @@ Class restartAction()
 	// must be called before any othe call to the director
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeDefault];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];	
 	
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

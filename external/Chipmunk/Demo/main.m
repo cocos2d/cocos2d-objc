@@ -185,7 +185,7 @@ void drawCollisions(void *ptr, void *data)
 -(id) init
 {
 	[super init];
-	isTouchEnabled = YES;
+	self.isTouchEnabled = YES;
 	cpInitChipmunk();	
 	init_funcs[demo_index]();
 
@@ -273,19 +273,19 @@ void drawCollisions(void *ptr, void *data)
 	
 	// must be called before any othe call to the director
 	// Try to use DisplayLink director (SDK >= 3.1) if it fails, use FastDirector
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeMainLoop];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
 	
 	// before creating any layer, set the landscape mode
-//	[[Director sharedDirector] setLandscape: YES];
-	[[Director sharedDirector] setDisplayFPS:YES];
+//	[[CCDirector sharedDirector] setLandscape: YES];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// Fast Director doesn't support setAnimationInterval yet
-//	[[Director sharedDirector] setAnimationInterval:1.0/60];
+//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
 	
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	
 	MainLayer * mainLayer =[MainLayer node];
 	
@@ -293,25 +293,25 @@ void drawCollisions(void *ptr, void *data)
 	
 	[window makeKeyAndVisible];
 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

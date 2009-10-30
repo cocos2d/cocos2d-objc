@@ -46,12 +46,12 @@ enum {
 	
 	ballStartingVelocity = CGPointMake(20.0f, -100.0f);
 	
-	ball = [Ball ballWithTexture:[[TextureMgr sharedTextureMgr] addImage:@"ball.png"]];
+	ball = [Ball ballWithTexture:[[CCTextureMgr sharedTextureMgr] addImage:@"ball.png"]];
 	ball.position = CGPointMake(160.0f, 240.0f);
 	ball.velocity = ballStartingVelocity;
 	[self addChild:ball];
 	
-	Texture2D *paddleTexture = [[TextureMgr sharedTextureMgr] addImage:@"paddle.png"];
+	CCTexture2D *paddleTexture = [[CCTextureMgr sharedTextureMgr] addImage:@"paddle.png"];
 	
 	NSMutableArray *paddlesM = [NSMutableArray arrayWithCapacity:4];
 	

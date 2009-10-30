@@ -10,10 +10,10 @@
 }
 @end
 
-@interface RenderTextureTest : Layer
+@interface RenderTextureTest : CCLayer
 {
-  RenderTexture* target;
-	Sprite* brush;
+	CCRenderTexture* target;
+	CCSprite* brush;
 }
 
 

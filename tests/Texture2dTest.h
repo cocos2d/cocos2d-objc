@@ -7,7 +7,7 @@
 }
 @end
 
-@interface TextureDemo : Layer
+@interface TextureDemo : CCLayer
 {}
 
 -(NSString*) title;
@@ -70,7 +70,7 @@
 @interface TextureLibPNG : TextureDemo
 {
 }
--(void) transformSprite:(Sprite*)sprite;
+-(void) transformSprite:(CCSprite*)sprite;
 @end
 
 @interface TextureLibPNGTest1 : TextureLibPNG

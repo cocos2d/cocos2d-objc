@@ -35,7 +35,7 @@
 - (void)setPosition:(CGPoint)pos {
     position = pos;
     float x,y;
-	switch ( [[Director sharedDirector] deviceOrientation] ) {
+	switch ( [[CCDirector sharedDirector] deviceOrientation] ) {
 		case CCDeviceOrientationLandscapeLeft:
 			x = pos.x - 240.0f;
 			y = 160.0f - pos.y;

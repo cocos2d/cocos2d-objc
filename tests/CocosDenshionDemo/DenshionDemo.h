@@ -16,11 +16,11 @@ typedef enum {
 @end
 
 
-@interface DenshionLayer : Layer
+@interface DenshionLayer : CCLayer
 {
 	CDAudioManager *am;
 	CDSoundEngine  *soundEngine;
-	Sprite *slider;
+	CCSprite *slider;
 	NSMutableArray *padFlashes;
 	tAppState		_appState;
 	

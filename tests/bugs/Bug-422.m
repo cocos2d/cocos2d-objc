@@ -28,18 +28,18 @@
 	// The menu will be removed, but the instance will be alive
 	// and then a new node will be allocated occupying the memory.
 	// => CRASH BOOM BANG
-	CocosNode *node = [self getChildByTag:localtag-1];
+	CCNode *node = [self getChildByTag:localtag-1];
 	NSLog(@"Menu: %@", node);
 	[self removeChild:node cleanup:NO];
 //	[self removeChildByTag:localtag-1 cleanup:NO];
 	
-    MenuItem *item1 = [MenuItemFont itemFromString: @"One"
+	CCMenuItem *item1 = [CCMenuItemFont itemFromString: @"One"
                                             target: self selector:@selector(menuCallback:)];
 	NSLog(@"MenuItemFont: %@", item1);
-    MenuItem *item2 = [MenuItemFont itemFromString: @"Two"
+    CCMenuItem *item2 = [CCMenuItemFont itemFromString: @"Two"
                                             target: self selector:@selector(menuCallback:)];
     
-    Menu *menu = [Menu menuWithItems: item1, item2, nil];
+    CCMenu *menu = [CCMenu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
 	
 	float x = CCRANDOM_0_1() * 50;
@@ -53,10 +53,10 @@
     //[self check:self];
 }
 
--(void) check:(CocosNode *)t {
+-(void) check:(CCNode *)t {
 	
 	NSArray *array = [t children];
-    for (CocosNode *node in array) {
+    for (CCNode *node in array) {
         NSLog(@"0x%x, rc: %d", node, [node retainCount]);
         [self check:node];
     }
@@ -82,54 +82,54 @@
 	//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
+	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
 	
 	// show FPS
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// multiple touches or not ?
 	//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
 	
 	// frames per second
-	[[Director sharedDirector] setAnimationInterval:1.0/60];	
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
 	
 	// attach cocos2d to a window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	
 	[scene addChild:[Layer1 node] z:0];
 	
 	[window makeKeyAndVisible];
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

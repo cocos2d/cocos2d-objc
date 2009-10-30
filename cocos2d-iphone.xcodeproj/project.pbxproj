@@ -901,6 +901,8 @@
 		50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50A783C00F3AFCE500104C45 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50A783DD0F3AFDD700104C45 /* streak.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A783DC0F3AFDD700104C45 /* streak.png */; };
+		50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */; };
+		50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */; };
 		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -2154,6 +2156,8 @@
 		50A2522A0F38B8DC007CAEB0 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
 		50A783C40F3AFCE500104C45 /* MotionStreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionStreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
+		50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
+		50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTileMapAtlas.m; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkAccelTouchTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4141,6 +4145,8 @@
 		50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */,
+				50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */,
 				502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */,
 				502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */,
 				509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */,
@@ -4423,6 +4429,7 @@
 				50545C0A105E8E7200AB7C52 /* CCPageTurnTransition.h in Headers */,
 				505462FC1062768000AB7C52 /* ccConfig.h in Headers */,
 				50BA77B3107DF35000954850 /* carray.h in Headers */,
+				50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6522,6 +6529,7 @@
 				50316AD91029A137003ACFE7 /* CCRibbon.m in Sources */,
 				50545C00105E8D6C00AB7C52 /* CCPageTurn3DAction.m in Sources */,
 				50545C0B105E8E7200AB7C52 /* CCPageTurnTransition.m in Sources */,
+				50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

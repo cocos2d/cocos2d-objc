@@ -1,6 +1,6 @@
 #import "cocos2d.h"
 
-@class Menu;
+@class CCMenu;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
@@ -10,9 +10,9 @@
 @end
 
 
-@interface Layer1 : Layer
+@interface Layer1 : CCLayer
 {
-	MenuItem	*disabledItem;
+	CCMenuItem	*disabledItem;
 }
 
 -(void) menuCallback:(id) sender;
@@ -20,7 +20,7 @@
 -(void) onQuit:(id) sender;
 @end
 
-@interface Layer2 : Layer
+@interface Layer2 : CCLayer
 {
 	CGPoint	centeredMenu;
 	BOOL alignedH;
@@ -30,15 +30,15 @@
 -(void) menuCallbackAlign: (id) sender;
 @end
 
-@interface Layer3 : Layer
+@interface Layer3 : CCLayer
 {
-	MenuItem	*disabledItem;
+	CCMenuItem	*disabledItem;
 }
 -(void) menuCallback: (id) sender;
 -(void) menuCallback2: (id) sender;
 @end
 
-@interface Layer4 : Layer
+@interface Layer4 : CCLayer
 {
 }
 -(void) menuCallback: (id) sender;

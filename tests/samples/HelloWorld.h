@@ -15,7 +15,7 @@
 @end
 
 // HelloWorld Layer
-@interface HelloWorld : Layer
+@interface HelloWorld : CCLayer
 {
 }
 @end

@@ -1,6 +1,6 @@
 #import "cocos2d.h"
 
-@class Label;
+@class CCLabel;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
@@ -9,7 +9,7 @@
 }
 @end
 
-@interface TextLayer: ColorLayer
+@interface TextLayer: CCColorLayer
 {
 }
 

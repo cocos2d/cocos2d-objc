@@ -1,6 +1,6 @@
 #import "cocos2d.h"
 
-@class Label;
+@class CCLabel;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
@@ -10,17 +10,17 @@
 @property (nonatomic, retain) UIWindow *window;
 @end
 
-@interface SpriteLayer: Layer
+@interface SpriteLayer: CCLayer
 {
 }
 @end
 
-@interface TextLayer: Layer
+@interface TextLayer: CCLayer
 {
 }
 @end
 
-@interface MainLayer : Layer
+@interface MainLayer : CCLayer
 {
 }
 @end

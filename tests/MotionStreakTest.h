@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
-#import "CocosNode.h"
-#import "MotionStreak.h"
+#import "CCNode.h"
+#import "CCMotionStreak.h"
 
-@class Sprite;
+@class CCSprite;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
@@ -11,7 +11,7 @@
 }
 @end
 
-@interface MotionStreakTest : Layer
+@interface MotionStreakTest : CCLayer
 {}
 
 -(NSString*) title;
@@ -23,17 +23,17 @@
 
 @interface Test1 : MotionStreakTest
 {
-	CocosNode* root;
-	CocosNode* target;
-	MotionStreak* streak;
+	CCNode* root;
+	CCNode* target;
+	CCMotionStreak* streak;
 }
 @end
 
 @interface Test2 : MotionStreakTest
 {
-	CocosNode* root;
-	CocosNode* target;
-	MotionStreak* streak;
+	CCNode* root;
+	CCNode* target;
+	CCMotionStreak* streak;
 }
 @end
 

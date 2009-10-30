@@ -24,11 +24,11 @@
 
 @class PASoundSource;
 
-@interface SoundEngineTest : Layer
+@interface SoundEngineTest : CCLayer
 {
-    Sprite *listenerSprite;
-    Sprite *source1Sprite;
-    Sprite *source2Sprite;
+    CCSprite *listenerSprite;
+    CCSprite *source1Sprite;
+    CCSprite *source2Sprite;
     
     PASoundSource *source1;
     PASoundSource *source2;

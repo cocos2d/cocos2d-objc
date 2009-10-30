@@ -32,7 +32,7 @@ enum {
 {
 	if ((self = [super init])) {
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		entryID = entryId;
 		
@@ -44,15 +44,15 @@ enum {
 		[view setAnchorPoint:ccp(0,0)];
 		[view setPosition:ccp(s.width/2, s.height/3)];
 		
-		Label* label = [Label labelWithString:[view title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[view title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -66,26 +66,26 @@ enum {
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id box = [MenuLayer menuWithEntryID:entryID];
 	[s addChild:box];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	int next = entryID + 1;
 	if( next >= g_totalEntries)
 		next = 0;
 	id box = [MenuLayer menuWithEntryID:next];
 	[s addChild:box];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	int next = entryID - 1;
 	if( next < 0 ) {
 		next = g_totalEntries - 1;
@@ -93,12 +93,12 @@ enum {
 	
 	id box = [MenuLayer menuWithEntryID:next];
 	[s addChild:box];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) registerWithTouchDispatcher
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -119,12 +119,12 @@ enum {
 	CGPoint touchLocation = [touch locationInView: [touch view]];	
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
 	
-	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
-	prevLocation = [[Director sharedDirector] convertToGL: prevLocation];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	prevLocation = [[CCDirector sharedDirector] convertToGL: prevLocation];
 	
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
-	CocosNode *node = [self getChildByTag:kTagBox2DNode];
+	CCNode *node = [self getChildByTag:kTagBox2DNode];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
@@ -183,14 +183,14 @@ enum {
 -(void) registerWithTouchDispatcher
 {
 	// higher priority than dragging
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:-10 swallowsTouches:YES];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:-10 swallowsTouches:YES];
 }
 
 - (BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
 {
 	
 	CGPoint touchLocation=[touch locationInView:[touch view]];
-	touchLocation=[[Director sharedDirector] convertToGL:touchLocation];
+	touchLocation=[[CCDirector sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 //	NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
@@ -200,7 +200,7 @@ enum {
 - (void) ccTouchMoved:(UITouch*)touch withEvent:(UIEvent*)event
 {
 	CGPoint touchLocation=[touch locationInView:[touch view]];
-	touchLocation=[[Director sharedDirector] convertToGL:touchLocation];
+	touchLocation=[[CCDirector sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 	
 	test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
@@ -209,7 +209,7 @@ enum {
 - (void) ccTouchEnded:(UITouch*)touch withEvent:(UIEvent*)event
 {
 	CGPoint touchLocation=[touch locationInView:[touch view]];
-	touchLocation=[[Director sharedDirector] convertToGL:touchLocation];
+	touchLocation=[[CCDirector sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 	
 	test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));

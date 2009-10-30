@@ -24,15 +24,15 @@ float randfloat() {
 
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-		Texture2D *tex = [[TextureMgr sharedTextureMgr] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
-		clouds = [Sprite spriteWithTexture:tex];
+		CCTexture2D *tex = [[CCTextureMgr sharedTextureMgr] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
+		clouds = [CCSprite spriteWithTexture:tex];
 		[clouds setScale: CLOUDS_SCALE];
 		
 		CGSize cs = clouds.texture.contentSize;
 		cloudsSize = ccp(cs.width, cs.height);
 		[self addChild: clouds z:0];
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		screenSize = ccp(s.width, s.height);
 		
 		halfCloudsSize = ccpMult(cloudsSize, 0.5f*CLOUDS_SCALE);
@@ -48,22 +48,22 @@ float randfloat() {
 		for (int n=0; n<NUM_GROSSINIS; n++) {
 			CGPoint pos = ccp((randfloat())*cloudsSize.x, (randfloat())*cloudsSize.y);
 			grossini[n] = [self addNewSpritePosition:pos scale:0.15];
-			[grossini[n] runAction:[Repeat actionWithAction:[RotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
+			[grossini[n] runAction:[CCRepeat actionWithAction:[CCRotateBy actionWithDuration:.5f*(n%5) angle:(n>NUM_GROSSINIS/2)?360:-360 ] times:100000]];
 		}
 			
 	//	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
 		NSString *info = @"Grossini's iPhone";
 		
-		label = [Label labelWithString:info fontName:@"Arial" fontSize:16];
+		label = [CCLabel labelWithString:info fontName:@"Arial" fontSize:16];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 	}
 	return self;
 }
 
--(Sprite *) addNewSpritePosition:(CGPoint)pos scale:(double)scle
+-(CCSprite *) addNewSpritePosition:(CGPoint)pos scale:(double)scle
 {
-	Sprite *g = [Sprite spriteWithFile:@"grossini.png"];
+	CCSprite *g = [CCSprite spriteWithFile:@"grossini.png"];
 	[clouds addChild: g];
 	[g setScale: (float) scle];
 	[g setPosition: pos ];
@@ -87,7 +87,7 @@ float randfloat() {
 	UITouch *touch = [touches anyObject];	
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 
-	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	CGPoint location = ccp(touchLocation.x, touchLocation.y);
 	location = ccpSub(location, cloudsPos);
 	location = ccpMult(location, 1.0f/CLOUDS_SCALE);
@@ -147,15 +147,13 @@ float randfloat() {
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
 	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	// must be called before any othe call to the director
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// multiple touches or not ?
 //	[[Director sharedDirector] setMultipleTouchEnabled:YES];
@@ -163,44 +161,44 @@ float randfloat() {
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	// frames per second
-	[[Director sharedDirector] setAnimationInterval:1.0/60];	
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
 
 	// create OpenGL context and add it to window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	AccelViewportDemo *layer = [AccelViewportDemo node];
 	[scene addChild: layer];
 	
 	[window makeKeyAndVisible];
 			 
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

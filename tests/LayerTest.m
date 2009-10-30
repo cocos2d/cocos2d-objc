@@ -55,17 +55,17 @@ Class restartAction()
 {
 	if( (self=[super init])) {
 	
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
-		Menu *menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -84,23 +84,23 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -118,8 +118,8 @@ Class restartAction()
 		
 		self.isTouchEnabled = YES;
 		
-		CGSize s = [[Director sharedDirector] winSize];
-		ColorLayer* layer = [ColorLayer layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCColorLayer* layer = [CCColorLayer layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
 												 width: 200 
 												height: 200];
 		layer.relativeAnchorPoint =  YES;
@@ -131,19 +131,19 @@ Class restartAction()
 
 -(void) registerWithTouchDispatcher
 {
-	[[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
 }
 
 -(void) updateSize:(UITouch*)touch
 {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[Director sharedDirector] convertToGL: touchLocation];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
-	CGSize s = [[Director sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CGSize newSize = CGSizeMake( abs( touchLocation.x - s.width/2)*2, abs(touchLocation.y - s.height/2)*2);
 	
-	ColorLayer *l = (ColorLayer*) [self getChildByTag:kTagLayer];
+	CCColorLayer *l = (CCColorLayer*) [self getChildByTag:kTagLayer];
 
 //	[l changeWidth:newSize.width];
 //	[l changeHeight:newSize.height];
@@ -187,30 +187,30 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 		
-		CGSize s = [[Director sharedDirector] winSize];
-		ColorLayer* layer1 = [ColorLayer layerWithColor: ccc4(255, 255, 0, 80)
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCColorLayer* layer1 = [CCColorLayer layerWithColor: ccc4(255, 255, 0, 80)
 												 width: 100 
 												height: 300];
 		layer1.position = ccp(s.width/3, s.height/2);
 		layer1.relativeAnchorPoint = YES;
 		[self addChild: layer1 z:1];
 		
-		ColorLayer* layer2 = [ColorLayer layerWithColor: ccc4(0, 0, 255, 255)
+		CCColorLayer* layer2 = [CCColorLayer layerWithColor: ccc4(0, 0, 255, 255)
 												 width: 100 
 												height: 300];
 		layer2.position = ccp((s.width/3)*2, s.height/2);
 		layer2.relativeAnchorPoint = YES;
 		[self addChild: layer2 z:1];
 		
-		id actionTint = [TintBy actionWithDuration:2 red:-255 green:-127 blue:0];
+		id actionTint = [CCTintBy actionWithDuration:2 red:-255 green:-127 blue:0];
 		id actionTintBack = [actionTint reverse];
-		id seq1 = [Sequence actions: actionTint, actionTintBack, nil];
+		id seq1 = [CCSequence actions: actionTint, actionTintBack, nil];
 		[layer1 runAction:seq1];
 
 
-		id actionFade = [FadeOut actionWithDuration:2.0f];
+		id actionFade = [CCFadeOut actionWithDuration:2.0f];
 		id actionFadeBack = [actionFade reverse];
-		id seq2 = [Sequence actions:actionFade, actionFadeBack, nil];		
+		id seq2 = [CCSequence actions:actionFade, actionFadeBack, nil];		
 		[layer2 runAction:seq2];
 
 	}
@@ -238,52 +238,49 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 	
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];	
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

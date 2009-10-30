@@ -75,6 +75,7 @@
 #import "CCParallaxNode.h"
 #import "CCActionManager.h"
 #import "CCTMXTiledMap.h"
+#import "CCTileMapAtlas.h"
 #import "CCRenderTexture.h"
 #import "CCMotionStreak.h"
 #import "CCPageTurn3DAction.h"

@@ -35,23 +35,23 @@
 	//	[Director useFastDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];
+	[[CCDirector sharedDirector] attachInView:window];
 	[window makeKeyAndVisible];		
 	
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
 	
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -12,12 +12,12 @@
 	return self.texture.contentSize.width / 2;
 }
 
-+ (id)ballWithTexture:(Texture2D *)aTexture
++ (id)ballWithTexture:(CCTexture2D *)aTexture
 {
 	return [[[self alloc] initWithTexture:aTexture] autorelease];
 }
 
-- (id)initWithTexture:(Texture2D *)aTexture
+- (id)initWithTexture:(CCTexture2D *)aTexture
 {
 	if ((self = [super init]) == nil) return nil;
 	
@@ -26,7 +26,7 @@
 	return self;
 }
 
-- (void)setTexture:(Texture2D *)newTexture
+- (void)setTexture:(CCTexture2D *)newTexture
 {
 	super.texture = newTexture;
 

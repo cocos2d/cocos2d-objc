@@ -1,5 +1,5 @@
 
-@class Sprite;
+@class CCSprite;
 
 //CLASS INTERFACE
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
@@ -8,7 +8,7 @@
 }
 @end
 
-@interface TestDemo : Layer
+@interface TestDemo : CCLayer
 {
 }
 -(NSString*) title;

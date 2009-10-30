@@ -25,10 +25,10 @@
 	if( (self=[super init] )) {
 		
 		// create and initialize a Label
-		Label* label = [Label labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
+		CCLabel* label = [CCLabel labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 
 		// ask director the the window size
-		CGSize size = [[Director sharedDirector] winSize];
+		CGSize size = [[CCDirector sharedDirector] winSize];
 	
 		// position the label on the center of the screen
 		label.position =  ccp( size.width /2 , size.height/2 );
@@ -66,31 +66,31 @@
 {
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeDefault];
 	
 	// create an initilize the main UIWindow
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// Attach cocos2d to the window
-	[[Director sharedDirector] attachInWindow:window];
+	[[CCDirector sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
 	// Make the window visible
 	[window makeKeyAndVisible];
 	
 	// Create and initialize parent and empty Scene
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 
 	// Create and initialize our HelloWorld Layer
-	Layer *layer = [HelloWorld node];
+	CCLayer *layer = [HelloWorld node];
 	// add our HelloWorld Layer as a child of the main scene
 	[scene addChild:layer];
 
 	// Run!
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc

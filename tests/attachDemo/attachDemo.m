@@ -25,7 +25,7 @@ enum {
 	kTagSprite = 1,
 };
 
-@interface LayerExample : Layer
+@interface LayerExample : CCLayer
 {}
 @end
 
@@ -36,10 +36,10 @@ enum {
 	{
 		self.isTouchEnabled = YES;
 		
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		Sprite *grossini = [Sprite spriteWithFile:@"grossini.png"];
-		Label *label = [Label labelWithString:[NSString stringWithFormat:@"%dx%d",(int)s.width, (int)s.height] fontName:@"Marker Felt" fontSize:28];
+		CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
+		CCLabel *label = [CCLabel labelWithString:[NSString stringWithFormat:@"%dx%d",(int)s.width, (int)s.height] fontName:@"Marker Felt" fontSize:28];
 		
 		[self addChild:label];
 		[self addChild:grossini z:0 tag:kTagSprite];
@@ -47,10 +47,10 @@ enum {
 		grossini.position = ccp( s.width/2, s.height/2);
 		label.position = ccp( s.width/2, s.height-40);
 		
-		id sc = [ScaleBy actionWithDuration:2 scale:1.5f];
+		id sc = [CCScaleBy actionWithDuration:2 scale:1.5f];
 		id sc_back = [sc reverse];
-		[grossini runAction: [RepeatForever actionWithAction:
-					   [Sequence actions: sc, sc_back, nil]]];
+		[grossini runAction: [CCRepeatForever actionWithAction:
+					   [CCSequence actions: sc, sc_back, nil]]];
 	}
 	return self;
 }
@@ -65,11 +65,11 @@ enum {
 	UITouch *touch = [touches anyObject];
 	
 	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[Director sharedDirector] convertToGL:location];
+	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
 	
-	CocosNode *s = [self getChildByTag:kTagSprite];
+	CCNode *s = [self getChildByTag:kTagSprite];
 	[s stopAllActions];
-	[s runAction: [MoveTo actionWithDuration:1 position:ccp(convertedLocation.x, convertedLocation.y)]];
+	[s runAction: [CCMoveTo actionWithDuration:1 position:ccp(convertedLocation.x, convertedLocation.y)]];
 	float o = convertedLocation.x - [s position].x;
 	float a = convertedLocation.y - [s position].y;
 	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
@@ -81,7 +81,7 @@ enum {
 			at = 180 - abs(at);	
 	}
 	
-	[s runAction: [RotateTo actionWithDuration:1 angle: at]];
+	[s runAction: [CCRotateTo actionWithDuration:1 angle: at]];
 	
 	return kEventHandled;
 }
@@ -113,13 +113,13 @@ enum {
 -(void) runCocos2d
 {
 	if( state == kStateEnd ) {
-		[[Director sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
+		[[CCDirector sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
 		
-		Scene *scene = [Scene node];
+		CCScene *scene = [CCScene node];
 		id node = [LayerExample node];
 		[scene addChild: node];
 		
-		[[Director sharedDirector] runWithScene:scene];
+		[[CCDirector sharedDirector] runWithScene:scene];
 		
 		state = kStateRun;
 	}
@@ -132,7 +132,7 @@ enum {
 {
 	if( state == kStateRun || state == kStateAttach) {
 		// Director end releases the "inner" objects from memory
-		[[Director sharedDirector] end];
+		[[CCDirector sharedDirector] end];
 		state = kStateEnd;
 	}
 	else
@@ -148,8 +148,8 @@ enum {
 -(void) attachView
 {
 	if( state == kStateDetach ) {
-		[[Director sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
-		[[Director sharedDirector] startAnimation];
+		[[CCDirector sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
+		[[CCDirector sharedDirector] startAnimation];
 
 		state = kStateAttach;
 	}
@@ -160,8 +160,8 @@ enum {
 -(void) detachView
 {
 	if( state == kStateRun || state == kStateAttach ) {
-		[[Director sharedDirector] detach];
-		[[Director sharedDirector] stopAnimation];
+		[[CCDirector sharedDirector] detach];
+		[[CCDirector sharedDirector] stopAnimation];
 		state = kStateDetach;
 	} else {
 		NSLog(@"Run or Attach the view before calling detach");
@@ -192,11 +192,11 @@ enum {
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeThreadMainLoop];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeThreadMainLoop];
 
-	[[Director sharedDirector] setDisplayFPS:YES];
-	[[Director sharedDirector] setAnimationInterval:1/240.0f];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setAnimationInterval:1/240.0f];
 
 
 	[window makeKeyAndVisible];	

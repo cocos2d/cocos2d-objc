@@ -6,7 +6,7 @@
 }
 @end
 
-@interface TestDemo : Layer
+@interface TestDemo : CCLayer
 {
 }
 -(NSString*) title;

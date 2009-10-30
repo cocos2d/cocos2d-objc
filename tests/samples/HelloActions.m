@@ -29,10 +29,10 @@
 		//
 		
 		// create and initialize a Label
-		Label* label = [Label labelWithString:@"Hello Actions" fontName:@"Marker Felt" fontSize:64];
+		CCLabel* label = [CCLabel labelWithString:@"Hello Actions" fontName:@"Marker Felt" fontSize:64];
 
 		// ask director the the window size
-		CGSize size = [[Director sharedDirector] winSize];
+		CGSize size = [[CCDirector sharedDirector] winSize];
 	
 		// position the label on the center of the screen
 		// "ccp" is a helper macro that creates a point. It means: "CoCos Point"
@@ -44,7 +44,7 @@
 		// objective-c can be an static or dynamic language.
 		// "id" is a reserved word that means "this is an object, but I don't care it's type"
 		// scales the label 2.5x in 3 seconds.
-		id action = [ScaleBy actionWithDuration:3.0f scale:2.5f];
+		id action = [CCScaleBy actionWithDuration:3.0f scale:2.5f];
 		
 		// tell the "label" to run the action
 		// The action will be execute once this Layer appears on the screen (not before).
@@ -54,7 +54,7 @@
 		// Sprite
 		//
 		
-		Sprite *sprite = [Sprite spriteWithFile:@"grossini.png"];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.position = ccp( 0, 50);
 		
 		// z is the z-order. Greater values means on top of lower values.
@@ -64,24 +64,24 @@
 		
 		// create a RotateBy action.
 		// "By" means relative. "To" means absolute.
-		id rotateAction = [RotateBy actionWithDuration:4 angle:180*4];
+		id rotateAction = [CCRotateBy actionWithDuration:4 angle:180*4];
 		
 		// create a JumpBy action.
-		id jumpAction = [JumpBy actionWithDuration:4 position:ccp(size.width,0) height:100 jumps:4];
+		id jumpAction = [CCJumpBy actionWithDuration:4 position:ccp(size.width,0) height:100 jumps:4];
 		
 		// spawn is an action that executes 2 or more actions at the same time
-		id fordward = [Spawn actions:rotateAction, jumpAction, nil];
+		id fordward = [CCSpawn actions:rotateAction, jumpAction, nil];
 		
 		// almost all actions supports the "reverse" method. 
 		// It will create a new actions that is the reversed action.
 		id backwards = [fordward reverse];
 		
 		// Sequence is an action that executes one action after another one
-		id sequence = [Sequence actions: fordward, backwards, nil];
+		id sequence = [CCSequence actions: fordward, backwards, nil];
 		
 		// Finally, you can repeat an action as many times as you want.
 		// You can repeat an action forever using the "RepeatForEver" action.
-		id repeat = [Repeat actionWithAction:sequence times:2];
+		id repeat = [CCRepeat actionWithAction:sequence times:2];
 		
 		// Tell the sprite to execute the actions.
 		// The action will be execute once this Layer appears on the screen (not before).
@@ -117,31 +117,31 @@
 {
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeDefault];
 	
 	// create an initilize the main UIWindow
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// Attach cocos2d to the window
-	[[Director sharedDirector] attachInWindow:window];
+	[[CCDirector sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
 	// Make the window visible
 	[window makeKeyAndVisible];
 	
 	// Create and initialize parent and empty Scene
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 
 	// Create and initialize our HelloActions Layer
-	Layer *layer = [HelloActions node];
+	CCLayer *layer = [HelloActions node];
 	// add our HelloWorld Layer as a child of the main scene
 	[scene addChild:layer];
 
 	// Run!
-	[[Director sharedDirector] runWithScene: scene];
+	[[CCDirector sharedDirector] runWithScene: scene];
 }
 
 - (void) dealloc

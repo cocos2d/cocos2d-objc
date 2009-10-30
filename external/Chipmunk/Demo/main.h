@@ -8,7 +8,7 @@
 }
 @end
 
-@interface MainLayer : Layer
+@interface MainLayer : CCLayer
 {
 }
 @end

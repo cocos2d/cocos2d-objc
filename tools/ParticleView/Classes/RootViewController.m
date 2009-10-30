@@ -208,67 +208,67 @@
 	switch (textureNum)
 	{
 		case 1 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"1.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"1.png"];
 			[smoke.texture retain];								
 			break;
 		case 2 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"2.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"2.png"];
 			[smoke.texture retain];								
 			break;
 		case 3 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"3.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"3.png"];
 			[smoke.texture retain];								
 			break;
 		case 4 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"4.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"4.png"];
 			[smoke.texture retain];								
 			break;
 		case 5 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"5.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"5.png"];
 			[smoke.texture retain];								
 			break;
 		case 6 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"6.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"6.png"];
 			[smoke.texture retain];								
 			break;
 		case 7 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"7.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"7.png"];
 			[smoke.texture retain];								
 			break;
 		case 8 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"8.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"8.png"];
 			[smoke.texture retain];								
 			break;
 		case 9 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"9.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"9.png"];
 			[smoke.texture retain];								
 			break;
 		case 10 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"10.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"10.png"];
 			[smoke.texture retain];								
 			break;
 		case 11 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"11.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"11.png"];
 			[smoke.texture retain];								
 			break;
 		case 12 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"12.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"12.png"];
 			[smoke.texture retain];								
 			break;
 		case 13 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"13.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"13.png"];
 			[smoke.texture retain];								
 			break;
 		case 14 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"14.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"14.png"];
 			[smoke.texture retain];								
 			break;
 		case 15 :
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"15.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"15.png"];
 			[smoke.texture retain];								
 			break;
 		default:
-			smoke.texture = [[TextureMgr sharedTextureMgr] addImage: @"fire.png"];
+			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
 			[smoke.texture retain];				
 	}
 	
@@ -288,7 +288,7 @@
 {
 	if( state == kStateEnd ) 
 	{
-		[[Director sharedDirector] attachInView:self.view withFrame:CGRectMake(0, 0, 320,400)];
+		[[CCDirector sharedDirector] attachInView:self.view withFrame:CGRectMake(0, 0, 320,400)];
 		
 		ParticlesScene *scene = [ParticlesScene node];
 		ParticleViewAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
@@ -314,8 +314,8 @@
 			[self initWithValues: delegate.settings5 scene:scene];
 		}
 
-		[Director sharedDirector].displayFPS = YES;
-		[[Director sharedDirector] runWithScene:scene];
+		[CCDirector sharedDirector].displayFPS = YES;
+		[[CCDirector sharedDirector] runWithScene:scene];
 
 		state = kStateRun;
 	}
@@ -329,7 +329,7 @@
 {
 	if( state == kStateRun || state == kStateAttach) {
 		// Director end releases the "inner" objects from memory
-		[[Director sharedDirector] end];
+		[[CCDirector sharedDirector] end];
 		state = kStateEnd;
 	}
 	else
@@ -345,8 +345,8 @@
 -(void) attachView
 {
 	if( state == kStateDetach ) {
-		[[Director sharedDirector] attachInView:self.view withFrame:CGRectMake(0, 0, 320,350)];
-		[[Director sharedDirector] startAnimation];
+		[[CCDirector sharedDirector] attachInView:self.view withFrame:CGRectMake(0, 0, 320,350)];
+		[[CCDirector sharedDirector] startAnimation];
 		
 		state = kStateAttach;
 	}
@@ -357,8 +357,8 @@
 -(void) detachView
 {
 	if( state == kStateRun || state == kStateAttach ) {
-		[[Director sharedDirector] detach];
-		[[Director sharedDirector] stopAnimation];
+		[[CCDirector sharedDirector] detach];
+		[[CCDirector sharedDirector] stopAnimation];
 		state = kStateDetach;
 	} else {
 		NSLog(@"Run or Attach the view before calling detach");
