@@ -17,7 +17,7 @@
 #import "ccConfig.h"
 #import "CCNode.h"
 #import "CCCamera.h"
-#import "Grid.h"
+#import "CCGrid.h"
 #import "CCScheduler.h"
 #import "ccMacros.h"
 #import "CCDirector.h"

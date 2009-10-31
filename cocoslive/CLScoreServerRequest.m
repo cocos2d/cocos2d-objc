@@ -16,11 +16,11 @@
 #import "CJSONDeserializer.h"
 
 // local imports
-#import "ScoreServerPost.h"
-#import "ScoreServerRequest.h"
+#import "CLScoreServerPost.h"
+#import "CLScoreServerRequest.h"
 #import "ccMacros.h"
 
-@implementation ScoreServerRequest
+@implementation CLScoreServerRequest
 +(id) serverWithGameName:(NSString*) name delegate:(id)delegate
 {
 	return [[[self alloc] initWithGameName:name delegate:delegate] autorelease];

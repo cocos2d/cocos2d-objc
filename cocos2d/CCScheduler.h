@@ -85,6 +85,11 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** returns a shared instance of the Scheduler */
 +(CCScheduler *)sharedScheduler;
 
+/** purges the shared scheduler. It releases the retained instance.
+ @since v0.9.0
+ */
++(void)purgeSharedScheduler;
+
 /** 'tick' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
  */

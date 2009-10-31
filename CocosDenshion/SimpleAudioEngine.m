@@ -32,18 +32,16 @@ static CDAudioManager *am = nil;
 {
 	@synchronized(self)     {
 		if (!sharedEngine)
-			[[SimpleAudioEngine alloc] init];
-		return sharedEngine;
+			sharedEngine = [[SimpleAudioEngine alloc] init];
 	}
-	return nil;
+	return sharedEngine;
 }
 
 + (id) alloc
 {
 	@synchronized(self)     {
 		NSAssert(sharedEngine == nil, @"Attempted to allocate a second instance of a singleton.");
-		sharedEngine = [super alloc];
-		return sharedEngine;
+		return [super alloc];
 	}
 	return nil;
 }

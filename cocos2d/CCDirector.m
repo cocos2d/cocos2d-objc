@@ -41,6 +41,7 @@
 
 extern NSString * cocos2dVersion(void);
 
+
 @interface CCDirector (Private)
 -(BOOL)isOpenGLAttached;
 -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
@@ -86,15 +87,13 @@ static CCDirector *_sharedDirector = nil;
 			// Default Director is TimerDirector
 			// 
 			if( [ [CCDirector class] isEqual:[self class]] )
-				[[CCTimerDirector alloc] init];
+				_sharedDirector = [[CCTimerDirector alloc] init];
 			else
-				[[self alloc] init];
+				_sharedDirector = [[self alloc] init];
 		}
 		
-		return _sharedDirector;
 	}
-	// to avoid compiler warning
-	return nil;
+	return _sharedDirector;
 }
 
 // This function was created to avoid confussion for the users
@@ -142,8 +141,7 @@ static CCDirector *_sharedDirector = nil;
 	@synchronized([CCDirector class])
 	{
 		NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
-		_sharedDirector = [super alloc];
-		return _sharedDirector;
+		return [super alloc];
 	}
 	// to avoid compiler warning
 	return nil;
@@ -715,9 +713,10 @@ static CCDirector *_sharedDirector = nil;
 #endif	
 
 	// Purge all managers
-	[[CCScheduler sharedScheduler] release];
-	[[CCActionManager sharedManager] release];
-	[[CCTextureMgr sharedTextureMgr] release];
+	[CCScheduler purgeSharedScheduler];
+	[CCActionManager purgeSharedManager];
+	[CCTextureMgr purgeSharedTextureMgr];
+	
 	
 	// OpenGL view
 	[openGLView_ release];

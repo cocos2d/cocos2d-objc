@@ -75,12 +75,11 @@ static BOOL configured = FALSE;
 				configuredChannelGroupDefinitions[0] = CD_MAX_SOURCES;
 				configuredChannelGroupTotal = 1;
 			}
-			[[CDAudioManager alloc] init:configuredMode channelGroupDefinitions:configuredChannelGroupDefinitions channelGroupTotal:configuredChannelGroupTotal];
+			sharedManager = [[CDAudioManager alloc] init:configuredMode channelGroupDefinitions:configuredChannelGroupDefinitions channelGroupTotal:configuredChannelGroupTotal];
 			_sharedManagerState = kAMStateInitialised;//This is only really relevant when using asynchronous initialisation
 		}	
-		return sharedManager;
 	}
-	return nil;
+	return sharedManager;
 }
 
 + (tAudioManagerState) sharedManagerState {
@@ -106,8 +105,7 @@ static BOOL configured = FALSE;
 {
 	@synchronized(self)     {
 		NSAssert(sharedManager == nil, @"Attempted to allocate a second instance of a singleton.");
-		sharedManager = [super alloc];
-		return sharedManager;
+		return [super alloc];
 	}
 	return nil;
 }

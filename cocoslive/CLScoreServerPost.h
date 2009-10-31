@@ -53,7 +53,7 @@ enum {
 /**
  * Handles the Score Post to the cocos live server
  */
-@interface ScoreServerPost : NSObject {
+@interface CLScoreServerPost : NSObject {
 	/// game key. secret shared with the server.
 	/// used to sign the values to prevent spoofing.
 	NSString	*gameKey;
@@ -115,7 +115,7 @@ enum {
 @end
 
 /** CocosLivePost protocol */
-@protocol CocosLivePostDelegate <NSObject>
+@protocol CLPostDelegate <NSObject>
 /** callback method that will be called if the post is successful */
 -(void) scorePostOk:(id) sender;
 /** callback method that will be called if the post fails */

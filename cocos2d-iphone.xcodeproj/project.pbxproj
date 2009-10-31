@@ -834,10 +834,10 @@
 		509A7A980F61A2400032F449 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		509B3A170F31027600F2FB95 /* cocoslive.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A110F31027600F2FB95 /* cocoslive.h */; };
 		509B3A180F31027600F2FB95 /* cocoslive.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A120F31027600F2FB95 /* cocoslive.m */; };
-		509B3A190F31027600F2FB95 /* ScoreServerPost.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A130F31027600F2FB95 /* ScoreServerPost.h */; };
-		509B3A1A0F31027600F2FB95 /* ScoreServerPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A140F31027600F2FB95 /* ScoreServerPost.m */; };
-		509B3A1B0F31027600F2FB95 /* ScoreServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A150F31027600F2FB95 /* ScoreServerRequest.h */; };
-		509B3A1C0F31027600F2FB95 /* ScoreServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A160F31027600F2FB95 /* ScoreServerRequest.m */; };
+		509B3A190F31027600F2FB95 /* CLScoreServerPost.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A130F31027600F2FB95 /* CLScoreServerPost.h */; };
+		509B3A1A0F31027600F2FB95 /* CLScoreServerPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A140F31027600F2FB95 /* CLScoreServerPost.m */; };
+		509B3A1B0F31027600F2FB95 /* CLScoreServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A150F31027600F2FB95 /* CLScoreServerRequest.h */; };
+		509B3A1C0F31027600F2FB95 /* CLScoreServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A160F31027600F2FB95 /* CLScoreServerRequest.m */; };
 		509B3A200F31029C00F2FB95 /* libTouchJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B39DF0F31020900F2FB95 /* libTouchJSON.a */; };
 		509B3A300F31030F00F2FB95 /* libTouchJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B39DF0F31020900F2FB95 /* libTouchJSON.a */; };
 		509B3A310F31031300F2FB95 /* libcocos Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 509B3A0D0F31024E00F2FB95 /* libcocos Live.a */; };
@@ -2125,10 +2125,10 @@
 		509B3A0D0F31024E00F2FB95 /* libcocos Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A110F31027600F2FB95 /* cocoslive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoslive.h; sourceTree = "<group>"; };
 		509B3A120F31027600F2FB95 /* cocoslive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocoslive.m; sourceTree = "<group>"; };
-		509B3A130F31027600F2FB95 /* ScoreServerPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreServerPost.h; sourceTree = "<group>"; };
-		509B3A140F31027600F2FB95 /* ScoreServerPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreServerPost.m; sourceTree = "<group>"; };
-		509B3A150F31027600F2FB95 /* ScoreServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreServerRequest.h; sourceTree = "<group>"; };
-		509B3A160F31027600F2FB95 /* ScoreServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreServerRequest.m; sourceTree = "<group>"; };
+		509B3A130F31027600F2FB95 /* CLScoreServerPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLScoreServerPost.h; sourceTree = "<group>"; };
+		509B3A140F31027600F2FB95 /* CLScoreServerPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLScoreServerPost.m; sourceTree = "<group>"; };
+		509B3A150F31027600F2FB95 /* CLScoreServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLScoreServerRequest.h; sourceTree = "<group>"; };
+		509B3A160F31027600F2FB95 /* CLScoreServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLScoreServerRequest.m; sourceTree = "<group>"; };
 		509B3A280F3102FD00F2FB95 /* cocosLiveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosLiveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
 		509D0817101E4FCE007E1749 /* CCTMXTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXTiledMap.m; sourceTree = "<group>"; };
@@ -3895,10 +3895,10 @@
 			children = (
 				509B3A110F31027600F2FB95 /* cocoslive.h */,
 				509B3A120F31027600F2FB95 /* cocoslive.m */,
-				509B3A130F31027600F2FB95 /* ScoreServerPost.h */,
-				509B3A140F31027600F2FB95 /* ScoreServerPost.m */,
-				509B3A150F31027600F2FB95 /* ScoreServerRequest.h */,
-				509B3A160F31027600F2FB95 /* ScoreServerRequest.m */,
+				509B3A130F31027600F2FB95 /* CLScoreServerPost.h */,
+				509B3A140F31027600F2FB95 /* CLScoreServerPost.m */,
+				509B3A150F31027600F2FB95 /* CLScoreServerRequest.h */,
+				509B3A160F31027600F2FB95 /* CLScoreServerRequest.m */,
 			);
 			path = cocoslive;
 			sourceTree = "<group>";
@@ -4523,8 +4523,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				509B3A170F31027600F2FB95 /* cocoslive.h in Headers */,
-				509B3A190F31027600F2FB95 /* ScoreServerPost.h in Headers */,
-				509B3A1B0F31027600F2FB95 /* ScoreServerRequest.h in Headers */,
+				509B3A190F31027600F2FB95 /* CLScoreServerPost.h in Headers */,
+				509B3A1B0F31027600F2FB95 /* CLScoreServerRequest.h in Headers */,
 				8EDF3E9E0F6BD8E600F54643 /* MyOpenALSupport.h in Headers */,
 				8EDF3E9F0F6BD8E600F54643 /* PASoundListener.h in Headers */,
 				8EDF3EA10F6BD8E600F54643 /* PASoundMgr.h in Headers */,
@@ -6795,8 +6795,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				509B3A180F31027600F2FB95 /* cocoslive.m in Sources */,
-				509B3A1A0F31027600F2FB95 /* ScoreServerPost.m in Sources */,
-				509B3A1C0F31027600F2FB95 /* ScoreServerRequest.m in Sources */,
+				509B3A1A0F31027600F2FB95 /* CLScoreServerPost.m in Sources */,
+				509B3A1C0F31027600F2FB95 /* CLScoreServerRequest.m in Sources */,
 				8EDF3EA00F6BD8E600F54643 /* PASoundListener.m in Sources */,
 				8EDF3EA20F6BD8E600F54643 /* PASoundMgr.m in Sources */,
 				8EDF3EA40F6BD8E600F54643 /* PASoundSource.m in Sources */,

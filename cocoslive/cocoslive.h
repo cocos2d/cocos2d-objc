@@ -22,8 +22,8 @@
 
 // all cocos live include files
 //
-#import "ScoreServerPost.h"
-#import "ScoreServerRequest.h"
+#import "CLScoreServerPost.h"
+#import "CLScoreServerRequest.h"
 
 
 // free functions

@@ -12,7 +12,7 @@
  *
  */
 
-#import "ScoreServerPost.h"
+#import "CLScoreServerPost.h"
 #import "ccMacros.h"
 
 // free function used to sort
@@ -24,7 +24,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 }
 
 
-@interface ScoreServerPost (Private)
+@interface CLScoreServerPost (Private)
 -(void) addValue:(NSString*)value key:(NSString*)key;
 -(void) calculateHashAndAddValue:(id)value key:(NSString*)key;
 -(NSString*) getHashForData;
@@ -35,7 +35,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 @end
 
 
-@implementation ScoreServerPost
+@implementation CLScoreServerPost
 
 @synthesize postStatus = postStatus_;
 @synthesize ranking = ranking_;

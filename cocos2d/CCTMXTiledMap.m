@@ -16,7 +16,7 @@
  */
 
 #import "CCTMXTiledMap.h"
-#import "TMXXMLParser.h"
+#import "CCTMXXMLParser.h"
 #import "CCAtlasSprite.h"
 #import "CCAtlasSpriteManager.h"
 #import "CCTextureMgr.h"
