@@ -401,8 +401,8 @@ Class restartAction()
 -(void) draw
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	drawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
-	drawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
+	ccDrawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
+	ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 
 }
 

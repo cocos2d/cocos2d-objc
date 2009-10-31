@@ -12,7 +12,7 @@
  *
  */
 
-#import "TouchDelegateProtocol.h"
+#import "CCTouchDelegateProtocol.h"
 
 /**
  TouchHandler

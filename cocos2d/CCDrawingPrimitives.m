@@ -17,9 +17,9 @@
 #import <stdlib.h>
 #import <string.h>
 
-#import "DrawingPrimitives.h"
+#import "CCDrawingPrimitives.h"
 
-void drawPoint( CGPoint point )
+void ccDrawPoint( CGPoint point )
 {
 	glVertexPointer(2, GL_FLOAT, 0, &point);
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -29,7 +29,7 @@ void drawPoint( CGPoint point )
 	glDisableClientState(GL_VERTEX_ARRAY);	
 }
 
-void drawPoints( CGPoint *points, unsigned int numberOfPoints )
+void ccDrawPoints( CGPoint *points, unsigned int numberOfPoints )
 {
 	glVertexPointer(2, GL_FLOAT, 0, points);
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -40,7 +40,7 @@ void drawPoints( CGPoint *points, unsigned int numberOfPoints )
 }
 
 
-void drawLine( CGPoint origin, CGPoint destination )
+void ccDrawLine( CGPoint origin, CGPoint destination )
 {
 	CGPoint vertices[2];
 	
@@ -56,7 +56,7 @@ void drawLine( CGPoint origin, CGPoint destination )
 }
 
 
-void drawPoly( CGPoint *poli, int points, BOOL closePolygon )
+void ccDrawPoly( CGPoint *poli, int points, BOOL closePolygon )
 {
 	glVertexPointer(2, GL_FLOAT, 0, poli);
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -69,7 +69,7 @@ void drawPoly( CGPoint *poli, int points, BOOL closePolygon )
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void drawCircle( CGPoint center, float r, float a, int segs, BOOL drawLineToCenter)
+void ccDrawCircle( CGPoint center, float r, float a, int segs, BOOL drawLineToCenter)
 {
 	int additionalSegment = 1;
 	if (drawLineToCenter)
@@ -105,7 +105,7 @@ void drawCircle( CGPoint center, float r, float a, int segs, BOOL drawLineToCent
 	free( vertices );
 }
 
-void drawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments)
+void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments)
 {
 	CGPoint vertices[segments + 1];
 	
@@ -127,7 +127,7 @@ void drawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int se
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void drawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments)
+void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments)
 {
 	CGPoint vertices[segments + 1];
 	

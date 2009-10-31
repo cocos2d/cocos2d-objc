@@ -16,7 +16,7 @@
 
 #import "CCIntervalAction.h"
 #import "CCInstantAction.h"
-#import "Grid.h"
+#import "CCGrid.h"
 
 @class CCGridBase;
 
