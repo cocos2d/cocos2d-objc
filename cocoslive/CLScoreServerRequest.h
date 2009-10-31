@@ -46,7 +46,7 @@ typedef enum {
 /**
  * Handles the Request Scores to the cocos live server
  */
-@interface ScoreServerRequest : NSObject {
+@interface CLScoreServerRequest : NSObject {
 	
 	/// game name, used as a login name.
 	NSString	*gameName;
@@ -95,8 +95,8 @@ typedef enum {
 
 @end
 
-/** CocosLiveRequest protocol */
-@protocol CocosLiveRequestDelegate <NSObject>
+/** CocosLive Request protocol */
+@protocol CLRequestDelegate <NSObject>
 -(void) scoreRequestOk:(id) sender;
 -(void) scoreRequestRankOk:(id) sender;
 -(void) scoreRequestFail:(id) sender;

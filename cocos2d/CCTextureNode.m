@@ -20,7 +20,7 @@
 #import "CCTextureMgr.h"
 #import "CCTextureNode.h"
 #import "ccMacros.h"
-#import "DrawingPrimitives.h"
+#import "CCDrawingPrimitives.h"
 #import "Support/CGPointExtension.h"
 
 

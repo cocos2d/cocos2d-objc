@@ -57,12 +57,11 @@ static CCTextureMgr *sharedTextureMgr;
 	@synchronized([CCTextureMgr class])
 	{
 		if (!sharedTextureMgr)
-			[[CCTextureMgr alloc] init];
+			sharedTextureMgr = [[CCTextureMgr alloc] init];
 		
-		return sharedTextureMgr;
 	}
 	// to avoid compiler warning
-	return nil;
+	return sharedTextureMgr;
 }
 
 +(id)alloc
@@ -70,11 +69,17 @@ static CCTextureMgr *sharedTextureMgr;
 	@synchronized([CCTextureMgr class])
 	{
 		NSAssert(sharedTextureMgr == nil, @"Attempted to allocate a second instance of a singleton.");
-		sharedTextureMgr = [super alloc];
-		return sharedTextureMgr;
+		return [super alloc];
 	}
 	// to avoid compiler warning
 	return nil;
+}
+
++(void)purgeSharedTextureMgr
+{
+	@synchronized( self ) {
+		[sharedTextureMgr release];
+	}
 }
 
 -(id) init

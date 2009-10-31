@@ -25,7 +25,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 {
 	@synchronized(self) {
 		if (sharedDispatcher == nil)
-			[[self alloc] init]; // assignment not done here
+			sharedDispatcher = [[self alloc] init]; // assignment not done here
 	}
 	return sharedDispatcher;
 }
@@ -33,10 +33,8 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 +(id) allocWithZone:(NSZone *)zone
 {
 	@synchronized(self) {
-		if (sharedDispatcher == nil) {
-			sharedDispatcher = [super allocWithZone:zone];
-			return sharedDispatcher;  // assignment and return on first allocation
-		}
+		NSAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
+		return [super allocWithZone:zone];
 	}
 	return nil; // on subsequent allocation attempts return nil
 }

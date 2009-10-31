@@ -30,6 +30,12 @@
 /** Retruns ths shared instance of the Texture Manager */
 + (CCTextureMgr *) sharedTextureMgr;
 
+/** purges the shared manager. It releases the retained instance.
+ @since v0.9.0
+ */
++(void)purgeSharedTextureMgr;
+
+
 /** Returns a Texture2D object given an file image
  * If the file image was not previously loaded, it will create a new Texture2D
  *  object and it will return it.

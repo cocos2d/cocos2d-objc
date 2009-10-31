@@ -48,6 +48,11 @@ typedef struct _hashElement
 /** returns a shared instance of the ActionManager */
 + (CCActionManager *)sharedManager;
 
+/** purges the shared action manager. It releases the retained instance.
+ @since v0.9.0
+ */
++(void)purgeSharedManager;
+
 // actions
 
 /** Adds an action with a target. The action can be added paused or unpaused.
