@@ -19,7 +19,7 @@
 #include <zlib.h>
 
 #import "ccMacros.h"
-#import "TMXXMLParser.h"
+#import "CCTMXXMLParser.h"
 #import "CCTMXTiledMap.h"
 #import "Support/FileUtils.h"
 #import "Support/base64.h"
