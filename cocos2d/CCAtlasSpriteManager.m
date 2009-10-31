@@ -15,9 +15,9 @@
 
 #import "CCAtlasSprite.h"
 #import "CCAtlasSpriteManager.h"
-#import "Grid.h"
+#import "CCGrid.h"
 #import "ccConfig.h"
-#import "DrawingPrimitives.h"
+#import "CCDrawingPrimitives.h"
 #import "Support/CGPointExtension.h"
 
 const int defaultCapacity = 29;

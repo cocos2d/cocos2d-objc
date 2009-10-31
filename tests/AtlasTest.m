@@ -273,7 +273,7 @@ Class restartAction()
 		CCColorLayer *col = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
 		
-		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"Resources/Fonts/bitmapFontTest2.fnt"];
 		
 		// testing anchors
 		label1.anchorPoint = ccp(0,0);
