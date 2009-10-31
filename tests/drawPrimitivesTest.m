@@ -165,7 +165,7 @@ Class restartAction()
 	// color: 255,255,255,255 (white, non-transparent)
 	// Anti-Aliased
 	glEnable(GL_LINE_SMOOTH);
-	drawLine( ccp(0, 0), ccp(s.width, s.height) );
+	ccDrawLine( ccp(0, 0), ccp(s.width, s.height) );
 	
 	// line: color, width, aliased
 	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
@@ -173,7 +173,7 @@ Class restartAction()
 	glDisable(GL_LINE_SMOOTH);
 	glLineWidth( 5.0f );
 	glColor4ub(255,0,0,255);
-	drawLine( ccp(0, s.height), ccp(s.width, 0) );
+	ccDrawLine( ccp(0, s.height), ccp(s.width, 0) );
 
 	// TIP:
 	// If you are going to use always the same color or width, you don't
@@ -184,41 +184,41 @@ Class restartAction()
 	// draw big point in the center
 	glPointSize(64);
 	glColor4ub(0,0,255,128);
-	drawPoint( ccp(s.width / 2, s.height / 2) );
+	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
 	
 	// draw 4 small points
 	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
 	glPointSize(4);
 	glColor4ub(0,255,255,255);
-	drawPoints( points, 4);
+	ccDrawPoints( points, 4);
 	
 	// draw a green circle with 10 segments
 	glLineWidth(16);
 	glColor4ub(0, 255, 0, 255);
-	drawCircle( ccp(s.width/2,  s.height/2), 100, 0, 10, NO);
+	ccDrawCircle( ccp(s.width/2,  s.height/2), 100, 0, 10, NO);
 
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
 	glColor4ub(0, 255, 255, 255);
-	drawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);	
+	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);	
 	
 	// open yellow poly
 	glColor4ub(255, 255, 0, 255);
 	glLineWidth(10);
 	CGPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
-	drawPoly( vertices, 5, NO);
+	ccDrawPoly( vertices, 5, NO);
 	
 	// closed purble poly
 	glColor4ub(255, 0, 255, 255);
 	glLineWidth(2);
 	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
-	drawPoly( vertices2, 3, YES);
+	ccDrawPoly( vertices2, 3, YES);
 	
 	// draw quad bezier path
-	drawQuadBezier(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50);
+	ccDrawQuadBezier(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50);
 
 	// draw cubic bezier path
-	drawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
+	ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
 
 	
 	// restore original values

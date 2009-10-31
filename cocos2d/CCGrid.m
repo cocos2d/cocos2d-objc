@@ -13,7 +13,7 @@
  */
 
 #import "ccMacros.h"
-#import "Grid.h"
+#import "CCGrid.h"
 #import "CCTexture2D.h"
 #import "CCDirector.h"
 #import "CCGrabber.h"

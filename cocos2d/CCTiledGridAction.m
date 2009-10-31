@@ -12,7 +12,7 @@
  *
  */
 
-#import "TiledGridAction.h"
+#import "CCTiledGridAction.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"

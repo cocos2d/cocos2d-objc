@@ -17,7 +17,7 @@
  
 // cocos2d imports
 #import "CCDirector.h"
-#import "TouchDelegateProtocol.h"
+#import "CCTouchDelegateProtocol.h"
 #import "CCCamera.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
@@ -25,7 +25,7 @@
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
 #import "ccExceptions.h"
-#import "Transition.h"
+#import "CCTransition.h"
 #import "CCScene.h"
 #import "CCTouchDispatcher.h"
 

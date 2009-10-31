@@ -12,7 +12,7 @@
  *
  */
 
-#import "Transition.h"
+#import "CCTransition.h"
 
 /**
  * A transition which peels back the bottom right hand corner of a scene

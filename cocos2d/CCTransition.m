@@ -13,7 +13,7 @@
  */
 
 
-#import "Transition.h"
+#import "CCTransition.h"
 #import "CCNode.h"
 #import "CCDirector.h"
 #import "CCIntervalAction.h"
@@ -21,7 +21,7 @@
 #import "CCCameraAction.h"
 #import "CCLayer.h"
 #import "CCCamera.h"
-#import "TiledGridAction.h"
+#import "CCTiledGridAction.h"
 #import "CCEaseAction.h"
 #import "CCTouchDispatcher.h"
 #import "Support/CGPointExtension.h"

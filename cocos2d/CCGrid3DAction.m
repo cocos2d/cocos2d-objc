@@ -12,7 +12,7 @@
  *
  */
 
-#import "Grid3DAction.h"
+#import "CCGrid3DAction.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -

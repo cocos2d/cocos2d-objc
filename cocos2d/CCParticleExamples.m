@@ -14,7 +14,7 @@
 
 
 // cocos2d
-#import "ParticleExamples.h"
+#import "CCParticleExamples.h"
 #import "CCTextureMgr.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"

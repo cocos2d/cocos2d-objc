@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "CCNode.h"
-#import "TouchDelegateProtocol.h"
+#import "CCTouchDelegateProtocol.h"
 
 //
 // Layer
