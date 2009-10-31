@@ -25,7 +25,7 @@
 #import "ccConfig.h"
 #import "CCBitmapFontAtlas.h"
 #import "CCAtlasSprite.h"
-#import "DrawingPrimitives.h"
+#import "CCDrawingPrimitives.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
 
@@ -354,8 +354,10 @@ void FNTConfigRemoveCache( void )
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
 	NSString *textureAtlasName = [self atlasNameFromFntFile:fntFile];
+	NSString *relDirPathOfTextureAtlas = [fntFile stringByDeletingLastPathComponent];
+	NSString *textureAtlasFile = [relDirPathOfTextureAtlas stringByAppendingPathComponent:textureAtlasName];
 	
-	if ((self=[super initWithFile:textureAtlasName capacity:[theString length]])) {
+	if ((self=[super initWithFile:textureAtlasFile capacity:[theString length]])) {
 
 		opacity_ = 255;
 		color_ = ccWHITE;
@@ -422,7 +424,9 @@ void FNTConfigRemoveCache( void )
 	// Finished with lines so release it
 	[lines release];	
 	
-	return [FileUtils fullPathFromRelativePath:propertyValue];
+	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
+
+	return [FileUtils fullPathFromRelativePath:propertyValue];	
 }
 
 #pragma mark BitmapFontAtlas - Atlas generation

@@ -14,7 +14,7 @@
 
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "DrawingPrimitives.h"
+#import "CCDrawingPrimitives.h"
 #import "CCLabelAtlas.h"
 #import "Support/CGPointExtension.h"
 

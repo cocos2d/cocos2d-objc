@@ -93,6 +93,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of tools/mkatlas.pl script
 	* Hans Larsen:
 		Possibility to create empty menus
+		Fixed CLang compiling warnings
 	* Ishaq Malik:
 		patches for CocosNode
 	* Joao Caxaria:
@@ -113,6 +114,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed memory leak in Director#FPSLabel
 		patches for CocosDenshion
 		CocosNode: parent set to nil after onExit patch
+		BitmapFontAtlas supports sub-directories patch
 	* Joe Vennix:
 		patches for CocosNode
 	* jkrippy:
