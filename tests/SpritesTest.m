@@ -74,13 +74,13 @@ Class restartAction()
 		// Example:
 		// You can create a sprite using a Texture2D
 		CCTexture2D *tex = [ [CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
-		grossini = [[CCSprite spriteWithTexture:tex] retain];
+		grossini = [[CCAtlasSprite spriteWithTexture:tex rect:CGRectZero] retain];
 		[tex release];
 
 		
 		// Example:
 		// Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
-		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
+		tamara = [[CCAtlasSprite spriteWithFile:@"grossinis_sister1.png" rect:CGRectZero] retain];
 		
 		[self addChild: grossini z:1];
 		[self addChild: tamara z:2];

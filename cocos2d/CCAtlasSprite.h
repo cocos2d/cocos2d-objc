@@ -25,11 +25,11 @@ enum {
 	CCAtlasSpriteIndexNotInitialized = 0xffffffff,
 };
 
-/** AtlasSprite is a CocosNode object that implements the CCNodeFrames and CCNodeRGBA protocols.
+/** CCAtlasSprite is a CCNode object that implements the CCNodeFrames and CCNodeRGBA protocols.
  * 
- * AtlasSprite can be used as a replacement of Sprite.
+ * CCAtlasSprite can be used as a replacement of CCSprite.
  *
- * AtlasSprite has all the features from CocosNode with the following additions and limitations:
+ * CCAtlasSprite has all the features from CCNode with the following additions and limitations:
  *	- New features
  *		- It is MUCH faster than Sprite
  *		- supports flipX, flipY
@@ -45,7 +45,7 @@ enum {
  *
  * @since v0.7.1
  */
-@interface CCAtlasSprite : CCNode <CCNodeFrames, CCNodeRGBA>
+@interface CCAtlasSprite : CCNode <CCNodeFrames, CCNodeRGBA, CCNodeTexture>
 {
 	// weak reference
 	CCTextureAtlas *textureAtlas_;
@@ -54,11 +54,14 @@ enum {
 	// texture pixels
 	CGRect rect_;
 
-	// texture, vertex and color info
+	// vertex coords, texture coors and color info
 	ccV3F_C4B_T2F_Quad quad_;
 	
 	// whether or not this Sprite needs to be updated in the Atlas
 	BOOL	dirty;
+	
+	// whether or not it's parent is an Atlas manager
+	BOOL	useAtlasRendering_;
 	
 	// opacity and RGB protocol
 	GLubyte		opacity_;
@@ -71,6 +74,9 @@ enum {
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
+	
+	// Textured Node
+	ccBlendFunc	blendFunc_;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -89,11 +95,25 @@ enum {
 @property (nonatomic,readonly) GLubyte opacity;
 /** RGB colors: conforms to CCNodeRGBA protocol */
 @property (nonatomic,readonly) ccColor3B color;
+/** whether or not the Sprite is rendered using a AtlasSprite manager */
+@property (nonatomic,readonly) BOOL useAtlasRendering;
+
+/** conforms to CCNodeTexture protocol */
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
 +(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
 /** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */
 -(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
+
+
++(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
++(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
++(id) spriteWithCGImage: (CGImageRef)image;
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+-(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
+-(id) initWithCGImage: (CGImageRef)image;
+
 
 -(void)insertInAtlasAtIndex:(NSUInteger)index;
 -(void)updatePosition;
