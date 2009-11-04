@@ -44,6 +44,7 @@
 @synthesize opacity=opacity_, color=color_;
 @synthesize blendFunc = blendFunc_;
 @synthesize useAtlasRendering = useAtlasRendering_;
+@synthesize textureAtlas = textureAtlas_;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -83,7 +84,9 @@
 
 -(id) initWithTexture:(CCTexture2D*)texture
 {
-	return [self initWithTexture:texture rect:CGRectZero offset:CGPointZero];
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
+	return [self initWithTexture:texture rect:rect offset:CGPointZero];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
@@ -121,11 +124,7 @@
 
 		// lazy alloc
 		animations = nil;
-		
-		// calcualte sprite rect
-		if( CGRectIsEmpty(rect) )
-			rect.size = texture_.contentSize;
-		
+
 		// default transform anchor: center
 		anchorPoint_ = ccp( (offset.x / rect.size.width) + 0.5f,
 						   (offset.y / rect.size.height) + 0.5f );
@@ -157,7 +156,10 @@
 
 -(id) initWithFile:(NSString*)filename
 {
-	return [self initWithFile:filename rect:CGRectZero offset:CGPointZero];
+	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage: filename];
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
+	return [self initWithTexture:texture rect:rect offset:CGPointZero];
 }
 
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect

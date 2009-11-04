@@ -45,7 +45,9 @@
 	
 	while(index >= textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
-	
+
+	[sprite setUseAtlasRendering:YES];
+	[sprite setTextureAtlas:textureAtlas_];
 	[sprite insertInAtlasAtIndex:index];
 	[sprite updatePosition];
 }
@@ -196,11 +198,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-//		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
 		reusedTile = [[self createSpriteWithRect:rect] retain];
 	else
-//		[reusedTile initWithRect:rect spriteManager:self];
-		[reusedTile initWithTexture:textureAtlas_.texture rect:rect];
+		[self initSprite:reusedTile rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
@@ -233,11 +233,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-//		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
 		reusedTile = [[self createSpriteWithRect:rect] retain];
 	else
-//		[reusedTile initWithRect:rect spriteManager:self];
-		[reusedTile initWithTexture:textureAtlas_.texture rect:rect];
+		[self initSprite:reusedTile rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
@@ -262,11 +260,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-//		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
 		reusedTile = [[self createSpriteWithRect:rect] retain];
 	else
-//		[reusedTile initWithRect:rect spriteManager:self];
-		[reusedTile initWithTexture:textureAtlas_.texture rect:rect];
+		[self initSprite:reusedTile rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;

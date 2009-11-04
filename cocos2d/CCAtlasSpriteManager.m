@@ -23,26 +23,6 @@
 const int defaultCapacity = 29;
 
 #pragma mark -
-#pragma mark CCAtlasSprite
-@interface CCAtlasSprite (AtlasManagerExtension)
--(void) setUseAtlasRendering:(BOOL)value;
--(void) setTextureAtlas:(CCTextureAtlas*)textureAtlas;
-@end
-
-@implementation CCAtlasSprite (AtlasManagerExtension)
--(void) setUseAtlasRendering:(BOOL)value
-{
-	useAtlasRendering_ = value;
-}
-
--(void) setTextureAtlas:(CCTextureAtlas*)textureAtlas
-{
-	textureAtlas_ = textureAtlas;
-}
-@end
-
-
-#pragma mark -
 #pragma mark CCAtlasSpriteManager
 
 @interface CCAtlasSpriteManager (private)
@@ -177,9 +157,19 @@ const int defaultCapacity = 29;
 
 -(CCAtlasSprite*) createSpriteWithRect:(CGRect)rect
 {
-//	return [CCAtlasSprite spriteWithRect:rect spriteManager:self];
-	return [CCAtlasSprite spriteWithTexture:textureAtlas_.texture rect:rect];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:textureAtlas_.texture rect:rect];
+	[sprite setUseAtlasRendering:YES];
+	[sprite setTextureAtlas:textureAtlas_];
+	return sprite;
 }
+
+-(void) initSprite:(CCAtlasSprite*)sprite rect:(CGRect)rect
+{
+	[sprite initWithTexture:textureAtlas_.texture rect:rect];
+	[sprite setUseAtlasRendering:YES];
+	[sprite setTextureAtlas:textureAtlas_];
+}
+
 
 // override addChild:
 -(id) addChild:(CCAtlasSprite*)child z:(int)z tag:(int) aTag
@@ -192,7 +182,6 @@ const int defaultCapacity = 29;
 		[self increaseAtlasCapacity];
 
 	NSUInteger index = [self indexForNewChildAtZ:z];
-	[child setAtlasIndex:index];
 	[child setTextureAtlas:textureAtlas_];
 	[child insertInAtlasAtIndex:index];
 	
