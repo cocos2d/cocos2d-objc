@@ -52,13 +52,13 @@ enum {
 	BOOL	useAtlasRendering_;
 
 	// Data used when the sprite is rendered using the manager
-	CCTextureAtlas *textureAtlas_;	// Sprite Manager texture atlas (weak reference)
-	NSUInteger atlasIndex_;			// Index on the Sprite Manager
+	CCTextureAtlas *textureAtlas_;		// Sprite Manager texture atlas (weak reference)
+	NSUInteger atlasIndex_;				// Index on the Sprite Manager
 	BOOL	dirty;						// Sprite needs to be updated
 	
 	// Data used when the sprite is self-rendered
 	CCTextureAtlas *selfRenderTextureAtlas_;		// Texture Atlas of 1 element (self)
-	ccBlendFunc	blendFunc_;					// Needed for the texture protocol
+	ccBlendFunc	blendFunc_;							// Needed for the texture protocol
 
 	// texture pixels
 	CGRect rect_;
@@ -101,7 +101,9 @@ enum {
 /** RGB colors: conforms to CCNodeRGBA protocol */
 @property (nonatomic,readonly) ccColor3B color;
 /** whether or not the Sprite is rendered using a AtlasSprite manager */
-@property (nonatomic,readonly) BOOL useAtlasRendering;
+@property (nonatomic,readwrite) BOOL useAtlasRendering;
+/** weak reference of the TextureAtlas used when the sprite is rendered using an SpriteManager */
+@property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 
 /** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;

@@ -65,8 +65,22 @@
 -(NSUInteger)indexForNewChildAtZ:(int)z;
 -(void) increaseAtlasCapacity;
 
-/** creates an sprite with a rect in the CCAtlasSpriteManage */
+/** creates an sprite with a rect in the CCAtlasSpriteManage.
+ It's the same as:
+   - create an standard CCSsprite
+   - set the useAtlasRendering = YES
+   - set the textureAtlas to the same texture Atlas as the CCSpriteManager
+ */
 -(CCAtlasSprite*) createSpriteWithRect:(CGRect)rect;
+
+/** initializes a previously created sprite with a rect. This sprite will have the same texture as the SpriteManager
+ It's the same as:
+ - initialize an standard CCSsprite
+ - set the useAtlasRendering = YES
+ - set the textureAtlas to the same texture Atlas as the CCSpriteManager
+ @since v0.9.0
+*/ 
+-(void) initSprite:(CCAtlasSprite*)sprite rect:(CGRect)rect;
 
 /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
  @warning Removing a child from an AtlasSpriteManager is very slow
