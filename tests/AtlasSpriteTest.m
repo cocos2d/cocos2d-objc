@@ -159,7 +159,7 @@ Class restartAction()
 	int y = (idx/5) * 121;
 	
 
-	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(x,y,85,121)];
 	[mgr addChild:sprite];
 
 	sprite.position = ccp( p.x, p.y);
@@ -212,9 +212,9 @@ Class restartAction()
 		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite3 = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(0, 0, 85, 121)];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(0, 0, 85, 121)];
+		CCAtlasSprite *sprite3 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(0, 0, 85, 121)];
 		
 		CCAtlasAnimation *animation = [CCAtlasAnimation animationWithName:@"dance" delay:0.2f];
 		for(int i=0;i<14;i++) {
@@ -269,14 +269,16 @@ Class restartAction()
 		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
-		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite3 = [CCAtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite4 = [CCAtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite5 = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite6 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite7 = [CCAtlasSprite spriteWithRect:CGRectMake(85*2, 121*1, 85, 121) spriteManager: mgr];
-		CCAtlasSprite *sprite8 = [CCAtlasSprite spriteWithRect:CGRectMake(85*3, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCAtlasSprite *sprite3 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
+		CCAtlasSprite *sprite4 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
+		
+		CCAtlasSprite *sprite5 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+		CCAtlasSprite *sprite6 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCAtlasSprite *sprite7 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
+		CCAtlasSprite *sprite8 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
+		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sprite1.position = ccp( (s.width/5)*1, (s.height/3)*1);
@@ -366,18 +368,18 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		for(int i=0;i<5;i++) {
-			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			[mgr addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
-			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			[mgr addChild:sprite z:14-i];
 		}
 		
-		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*3, 121*0, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*3, 121*0, 85, 121)];
 		[mgr addChild:sprite z:-1 tag:kTagSprite1];
 		sprite.position = ccp(s.width/2, s.height/2 - 20);
 		sprite.scaleX = 6;
@@ -440,7 +442,7 @@ Class restartAction()
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		for(int i=0;i<5;i++) {
-			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*0, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			sprite.vertexZ = 10 + i*40;
 			[mgr addChild:sprite z:0];
@@ -448,7 +450,7 @@ Class restartAction()
 		}
 		
 		for(int i=5;i<11;i++) {
-			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*0, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
 			[mgr addChild:sprite z:0];
@@ -485,7 +487,7 @@ Class restartAction()
 		id rotate = [CCRotateBy actionWithDuration:10 angle:360];
 		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
-			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
 			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			
@@ -557,7 +559,7 @@ Class restartAction()
 
 
 		for(int i=0;i<3;i++) {
-			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(85*i, 121*1, 85, 121) spriteManager: mgr];
+			CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
 			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			[sprite runAction: [[action copy] autorelease]];
@@ -587,11 +589,11 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
 		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
 		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
 		
@@ -629,11 +631,11 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite1 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
 		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithRect:CGRectMake(85*1, 121*1, 85, 121) spriteManager: mgr];
+		CCAtlasSprite *sprite2 = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
 		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
 		
@@ -714,7 +716,7 @@ Class restartAction()
 	int y = (idx/5) * 121;
 	
 	
-	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:mgr];
+	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:mgr.texture rect:CGRectMake(x,y,85,121)];
 	[mgr addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);

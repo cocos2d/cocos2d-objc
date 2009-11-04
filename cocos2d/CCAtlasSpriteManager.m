@@ -13,15 +13,36 @@
  *
  */
 
+#import "ccConfig.h"
 #import "CCAtlasSprite.h"
 #import "CCAtlasSpriteManager.h"
 #import "CCGrid.h"
-#import "ccConfig.h"
 #import "CCDrawingPrimitives.h"
 #import "Support/CGPointExtension.h"
 
 const int defaultCapacity = 29;
 
+#pragma mark -
+#pragma mark CCAtlasSprite
+@interface CCAtlasSprite (AtlasManagerExtension)
+-(void) setUseAtlasRendering:(BOOL)value;
+-(void) setTextureAtlas:(CCTextureAtlas*)textureAtlas;
+@end
+
+@implementation CCAtlasSprite (AtlasManagerExtension)
+-(void) setUseAtlasRendering:(BOOL)value
+{
+	useAtlasRendering_ = value;
+}
+
+-(void) setTextureAtlas:(CCTextureAtlas*)textureAtlas
+{
+	textureAtlas_ = textureAtlas;
+}
+@end
+
+
+#pragma mark -
 #pragma mark CCAtlasSpriteManager
 
 @interface CCAtlasSpriteManager (private)
@@ -156,7 +177,8 @@ const int defaultCapacity = 29;
 
 -(CCAtlasSprite*) createSpriteWithRect:(CGRect)rect
 {
-	return [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+//	return [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+	return [CCAtlasSprite spriteWithTexture:textureAtlas_.texture rect:rect];
 }
 
 // override addChild:
@@ -164,12 +186,17 @@ const int defaultCapacity = 29;
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCAtlasSprite class]], @"CCAtlasSpriteManager only supports CCAtlasSprites as children");
+	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 	
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
 
 	NSUInteger index = [self indexForNewChildAtZ:z];
-	[child insertInAtlasAtIndex: index];
+	[child setAtlasIndex:index];
+	[child setTextureAtlas:textureAtlas_];
+	[child insertInAtlasAtIndex:index];
+	
+	[child setUseAtlasRendering:YES];
 
 	[super addChild:child z:z tag:aTag];
 
@@ -229,7 +256,10 @@ const int defaultCapacity = 29;
 	
 	// When the CCAtlasSprite is removed, the index should be invalidated. issue #569
 	[sprite setAtlasIndex: CCAtlasSpriteIndexNotInitialized];
-	
+
+	// when removed, in case it would be child of a "normal" node, set as "no render using manager"
+	[sprite setUseAtlasRendering:NO];
+
 	[super removeChild:sprite cleanup:doCleanup];
 
 	[textureAtlas_ removeQuadAtIndex:index];
@@ -252,8 +282,10 @@ const int defaultCapacity = 29;
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	// Invalidate atlas index. issue #569
-	for( CCAtlasSprite *sprite in children )
+	for( CCAtlasSprite *sprite in children ) {
 		[sprite setAtlasIndex:CCAtlasSpriteIndexNotInitialized];
+		[sprite setUseAtlasRendering:NO];
+	}
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
@@ -271,7 +303,7 @@ const int defaultCapacity = 29;
 		if( child.dirty )
 			[child updatePosition];
 		
-#ifdef CC_ATLASSPRITE_DEBUG_DRAW
+#if CC_ATLASSPRITE_DEBUG_DRAW
 		CGRect rect = [child boundingBox]; //Inssue 528
 		CGPoint vertices[4]={
 			ccp(rect.origin.x,rect.origin.y),
@@ -279,7 +311,7 @@ const int defaultCapacity = 29;
 			ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
 			ccp(rect.origin.x,rect.origin.y+rect.size.height),
 		};
-		drawPoly(vertices, 4, YES);
+		ccDrawPoly(vertices, 4, YES);
 #endif // CC_ATLASSPRITE_DEBUG_DRAW
 	}
 

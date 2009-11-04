@@ -465,7 +465,10 @@ void FNTConfigRemoveCache( void )
 		
 		fontChar = (CCAtlasSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+//			fontChar = [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+//			fontChar = [CCAtlasSprite spriteWithTexture:textureAtlas_.texture rect:rect];
+			fontChar = [self createSpriteWithRect:rect];
+
 			[self addChild:fontChar z:0 tag:i];
 		}
 		else
