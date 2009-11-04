@@ -166,7 +166,8 @@
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-			tile = [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+//			tile = [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+			tile = [self createSpriteWithRect:rect];
 			[tile setPosition: [self positionAt:pos]];
 			tile.anchorPoint = CGPointZero;
 			
@@ -195,9 +196,11 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
+//		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
+		reusedTile = [[self createSpriteWithRect:rect] retain];
 	else
-		[reusedTile initWithRect:rect spriteManager:self];
+//		[reusedTile initWithRect:rect spriteManager:self];
+		[reusedTile initWithTexture:textureAtlas_.texture rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
@@ -230,9 +233,11 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
+//		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
+		reusedTile = [[self createSpriteWithRect:rect] retain];
 	else
-		[reusedTile initWithRect:rect spriteManager:self];
+//		[reusedTile initWithRect:rect spriteManager:self];
+		[reusedTile initWithTexture:textureAtlas_.texture rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
@@ -257,9 +262,11 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
+//		reusedTile = [[CCAtlasSprite spriteWithRect:rect spriteManager:self] retain];
+		reusedTile = [[self createSpriteWithRect:rect] retain];
 	else
-		[reusedTile initWithRect:rect spriteManager:self];
+//		[reusedTile initWithRect:rect spriteManager:self];
+		[reusedTile initWithTexture:textureAtlas_.texture rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;

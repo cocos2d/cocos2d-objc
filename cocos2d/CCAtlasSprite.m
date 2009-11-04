@@ -31,6 +31,7 @@
 
 @interface CCAtlasSprite (Private)
 -(void)updateTextureCoords;
+-(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 @end
 
@@ -94,31 +95,41 @@
 {
 	if( (self = [super init]) )
 	{
-		textureAtlas_ = [CCTextureAtlas textureAtlasWithTexture:texture capacity:1];
-		[textureAtlas_ retain];
 		
-		if( CGRectIsEmpty(rect) )
-			rect.size = textureAtlas_.texture.contentSize;
+		// by default sprites are self-rendered
+		useAtlasRendering_ = NO;
 
+		// Stuff in case the Sprite is self-rendered
+		selfRenderTextureAtlas_ = [[CCTextureAtlas textureAtlasWithTexture:texture capacity:1] retain];
+		
+		// Stuff in case the Sprite is rendered using an Sprite Manager
+		textureAtlas_ = nil;
+		atlasIndex_ = CCAtlasSpriteIndexNotInitialized;
+		dirty = YES;
+		
+		// update texture
+		[self setTexture:texture];
+				
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-
+		[self updateBlendFunc];
+		
+		// clean the Quad
 		bzero(&quad_, sizeof(quad_));
-	
-		useAtlasRendering_ = NO;
-		atlasIndex_ = 0;
-		dirty = NO;
-
+		
 		flipY_ = flipX_ = NO;
 
 		// lazy alloc
 		animations = nil;
 		
-		// default transform anchor: center
+		// calcualte sprite rect
+		if( CGRectIsEmpty(rect) )
+			rect.size = texture_.contentSize;
 		
+		// default transform anchor: center
 		anchorPoint_ = ccp( (offset.x / rect.size.width) + 0.5f,
 						   (offset.y / rect.size.height) + 0.5f );
-		
+
 		// Atlas: Color
 		opacity_ = 255;
 		color_ = ccWHITE;
@@ -139,7 +150,7 @@
 		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
 		
 		// Atlas: TexCoords
-		[self setTextureRect:rect];
+		[self setTextureRect:rect];		
 	}
 	return self;
 }
@@ -166,13 +177,13 @@
 
 - (id) initWithCGImage: (CGImageRef)image
 {
-	self = [super init];
-	if( self ) {
+	if( (self = [super init]) ) {
 		// XXX: possible bug. See issue #349. New API should be added
 		NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
 		CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addCGImage:image forKey:key];
 		
-		CGRect rect = CGRectMake(0, 0, textureAtlas_.texture.pixelsWide, textureAtlas_.texture.pixelsHigh );
+		CGSize size = texture.contentSize;
+		CGRect rect = CGRectMake(0, 0, size.width, size.height );
 		
 		[self initWithTexture:texture rect:rect];
 		 
@@ -181,43 +192,43 @@
 	return self;
 }
 
-+(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager
-{
-	return [[[self alloc] initWithRect:rect spriteManager:manager] autorelease];
-}
-
--(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager
-{
-	if( (self = [super init])) {
-		textureAtlas_ = [manager textureAtlas];	// weak reference. Don't release
-		
-		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-		
-		dirty = YES;
-		useAtlasRendering_ = YES;
-		atlasIndex_ = CCAtlasSpriteIndexNotInitialized;
-
-		flipY_ = flipX_ = NO;
-		
-		// default transform anchor: center
-		anchorPoint_ = ccp(0.5f, 0.5f);
-
-		// RGB and opacity
-		opacity_ = 255;
-		color_ = ccWHITE;
-		ccColor4B tmpColor = {255,255,255,255};
-		quad_.bl.colors = tmpColor;
-		quad_.br.colors = tmpColor;
-		quad_.tl.colors = tmpColor;
-		quad_.tr.colors = tmpColor;
-		
-		animations = nil;		// lazy alloc
-		
-		[self setTextureRect:rect];
-	}
-
-	return self;
-}
+//+(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager
+//{
+//	return [[[self alloc] initWithRect:rect spriteManager:manager] autorelease];
+//}
+//
+//-(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager
+//{
+//	if( (self = [super init])) {
+//		textureAtlas_ = [manager textureAtlas];	// weak reference. Don't release
+//		
+//		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
+//		
+//		dirty = YES;
+//		useAtlasRendering_ = YES;
+//		atlasIndex_ = CCAtlasSpriteIndexNotInitialized;
+//
+//		flipY_ = flipX_ = NO;
+//		
+//		// default transform anchor: center
+//		anchorPoint_ = ccp(0.5f, 0.5f);
+//
+//		// RGB and opacity
+//		opacity_ = 255;
+//		color_ = ccWHITE;
+//		ccColor4B tmpColor = {255,255,255,255};
+//		quad_.bl.colors = tmpColor;
+//		quad_.br.colors = tmpColor;
+//		quad_.tl.colors = tmpColor;
+//		quad_.tr.colors = tmpColor;
+//		
+//		animations = nil;		// lazy alloc
+//		
+//		[self setTextureRect:rect];
+//	}
+//
+//	return self;
+//}
 
 - (NSString*) description
 {
@@ -227,8 +238,7 @@
 - (void) dealloc
 {
 	[animations release];
-	if( ! useAtlasRendering_ )
-		[textureAtlas_ release];
+	[selfRenderTextureAtlas_ release];
 	[super dealloc];
 }
 
@@ -243,24 +253,34 @@
 
 	[self updateTextureCoords];
 	
-	// Don't update Atlas if index == CCAtlasSpriteIndexNotInitialized. issue #283
-	if( atlasIndex_ == CCAtlasSpriteIndexNotInitialized)
-		dirty = YES;
-	else
-		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-
-	if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
-		[self setContentSize:rect.size];
-		
-		if( useAtlasRendering_)
+	// rendering using Sprite Manager
+	if( useAtlasRendering_ ) {
+		// Don't update Atlas if index == CCAtlasSpriteIndexNotInitialized. issue #283
+		if( atlasIndex_ == CCAtlasSpriteIndexNotInitialized)
 			dirty = YES;
+		else
+			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+
+		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
+			[self setContentSize:rect.size];
+			dirty = YES;
+		}
+	}
+	// self rendering
+	else
+	{
+		[selfRenderTextureAtlas_ updateQuad:&quad_ atIndex:0];
+		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
+			[self setContentSize:rect.size];
+		}
 	}
 }
 
 -(void)updateTextureCoords
 {
-	float atlasWidth = textureAtlas_.texture.pixelsWide;
-	float atlasHeight = textureAtlas_.texture.pixelsHigh;
+	
+	float atlasWidth = texture_.pixelsWide;
+	float atlasHeight = texture_.pixelsHigh;
 
 	float left = rect_.origin.x / atlasWidth;
 	float right = (rect_.origin.x + rect_.size.width) / atlasWidth;
@@ -375,7 +395,7 @@
 
 -(void) draw
 {	
-	NSAssert(!dirty, @"CCSprite can't be dirty when it's parent is not an CCSpriteManager");
+	NSAssert(!useAtlasRendering_, @"CCSprite can't be dirty when it's parent is not an CCSpriteManager");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -388,7 +408,7 @@
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
 	
-	[textureAtlas_ drawNumberOfQuads:1];
+	[selfRenderTextureAtlas_ drawNumberOfQuads:1];
 
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
@@ -495,10 +515,18 @@
 #pragma mark AtlasSprite - RGBA protocol
 -(void) updateColor
 {
-	if( atlasIndex_ != CCAtlasSpriteIndexNotInitialized)
-		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+	// renders using Sprite Manager
+	if( useAtlasRendering_ ) {
+		if( atlasIndex_ != CCAtlasSpriteIndexNotInitialized)
+			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+		else
+			dirty = YES;
+	}
+	// self render
 	else
-		dirty = YES;
+	{
+		[selfRenderTextureAtlas_ updateQuad:&quad_ atIndex:0];
+	}
 }
 
 -(void) setOpacity:(GLubyte) anOpacity
@@ -602,21 +630,27 @@
 {
 	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCAtlasSprite manager");
 
-	if( ! [textureAtlas_.texture hasPremultipliedAlpha] ) {
+	if( ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
+	
+	opacityModifyRGB_ = [texture_ hasPremultipliedAlpha];
 }
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	textureAtlas_.texture = texture;
+	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCAtlasSprite manager");
+
+	selfRenderTextureAtlas_.texture = texture;
 	[self updateBlendFunc];
+	
+	texture_ = texture;
 }
 
 -(CCTexture2D*) texture
 {
-	return textureAtlas_.texture;
+	return texture_;
 }
 
 @end

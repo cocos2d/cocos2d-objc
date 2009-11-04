@@ -47,36 +47,41 @@ enum {
  */
 @interface CCAtlasSprite : CCNode <CCNodeFrames, CCNodeRGBA, CCNodeTexture>
 {
-	// weak reference
-	CCTextureAtlas *textureAtlas_;
-	NSUInteger atlasIndex_;
-
-	// texture pixels
-	CGRect rect_;
-
-	// vertex coords, texture coors and color info
-	ccV3F_C4B_T2F_Quad quad_;
-	
-	// whether or not this Sprite needs to be updated in the Atlas
-	BOOL	dirty;
 	
 	// whether or not it's parent is an Atlas manager
 	BOOL	useAtlasRendering_;
+
+	// Data used when the sprite is rendered using the manager
+	CCTextureAtlas *textureAtlas_;	// Sprite Manager texture atlas (weak reference)
+	NSUInteger atlasIndex_;			// Index on the Sprite Manager
+	BOOL	dirty;						// Sprite needs to be updated
+	
+	// Data used when the sprite is self-rendered
+	CCTextureAtlas *selfRenderTextureAtlas_;		// Texture Atlas of 1 element (self)
+	ccBlendFunc	blendFunc_;					// Needed for the texture protocol
+
+	// texture pixels
+	CGRect rect_;
+	
+	// texture (weak reference)
+	// used as an optimization
+	CCTexture2D		*texture_;
+
+	// vertex coords, texture coors and color info
+	ccV3F_C4B_T2F_Quad quad_;
 	
 	// opacity and RGB protocol
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	BOOL		opacityModifyRGB_;
 	
-	// Animations that belong to the sprite
-	NSMutableDictionary *animations;
-	
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
 	
-	// Textured Node
-	ccBlendFunc	blendFunc_;
+	
+	// Animations that belong to the sprite
+	NSMutableDictionary *animations;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -102,9 +107,9 @@ enum {
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
-+(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
+//+(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
 /** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */
--(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
+//-(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
 
 
 +(id) spriteWithTexture:(CCTexture2D*)texture;
