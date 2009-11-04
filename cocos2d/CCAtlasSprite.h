@@ -107,11 +107,24 @@ enum {
 -(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
 
 
++(id) spriteWithTexture:(CCTexture2D*)texture;
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
++(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
+
++(id) spriteWithFile:(NSString*)filename;
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
++(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset;
+
 +(id) spriteWithCGImage: (CGImageRef)image;
+
+-(id) initWithTexture:(CCTexture2D*)texture;
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
+
+-(id) initWithFile:(NSString*)filename;
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
+-(id) initWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset;
+
 -(id) initWithCGImage: (CGImageRef)image;
 
 

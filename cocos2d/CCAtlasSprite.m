@@ -45,9 +45,24 @@
 @synthesize useAtlasRendering = useAtlasRendering_;
 
 
++(id)spriteWithTexture:(CCTexture2D*)texture
+{
+	return [[[self alloc] initWithTexture:texture] autorelease];
+}
+
 +(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
 	return [[[self alloc] initWithTexture:texture rect:rect] autorelease];
+}
+
++(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
+{
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset] autorelease];
+}
+
++(id)spriteWithFile:(NSString*)filename
+{
+	return [[[self alloc] initWithFile:filename] autorelease];
 }
 
 +(id)spriteWithFile:(NSString*)filename rect:(CGRect)rect
@@ -55,12 +70,27 @@
 	return [[[self alloc] initWithFile:filename rect:rect] autorelease];
 }
 
++(id)spriteWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset
+{
+	return [[[self alloc] initWithFile:filename rect:rect offset:offset] autorelease];
+}
+
 +(id)spriteWithCGImage:(CGImageRef)image
 {
 	return [[[self alloc] initWithCGImage:image] autorelease];
 }
 
+-(id) initWithTexture:(CCTexture2D*)texture
+{
+	return [self initWithTexture:texture rect:CGRectZero offset:CGPointZero];
+}
+
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	return [self initWithTexture:texture rect:rect offset:CGPointZero];
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
 	if( (self = [super init]) )
 	{
@@ -85,7 +115,9 @@
 		animations = nil;
 		
 		// default transform anchor: center
-		anchorPoint_ = ccp(0.5f, 0.5f);
+		
+		anchorPoint_ = ccp( (offset.x / rect.size.width) + 0.5f,
+						   (offset.y / rect.size.height) + 0.5f );
 		
 		// Atlas: Color
 		opacity_ = 255;
@@ -112,12 +144,22 @@
 	return self;
 }
 
+-(id) initWithFile:(NSString*)filename
+{
+	return [self initWithFile:filename rect:CGRectZero offset:CGPointZero];
+}
+
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect
+{
+	return [self initWithFile:filename rect:rect offset:CGPointZero];
+}
+
+-(id) initWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset
 {
 	if( (self = [super init]) ) {
 		CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage: filename];
 		
-		[self initWithTexture:texture rect:rect];
+		[self initWithTexture:texture rect:rect offset:offset];
 	}
 	return self;
 }
