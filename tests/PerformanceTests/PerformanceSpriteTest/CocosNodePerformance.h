@@ -5,7 +5,7 @@
 
 #import "cocos2d.h"
 
-@interface CocosNode (PerformanceTest)
+@interface CCNode (PerformanceTest)
 - (void)performanceRotationScale;
 - (void)performanceScale;
 - (void)performancePosition;

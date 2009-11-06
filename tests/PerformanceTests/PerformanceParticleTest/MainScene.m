@@ -67,49 +67,49 @@ Class restartAction()
 		srandom(0);
 		
 		subtestNumber = asubtest;
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		lastRenderedCount = 0;
 		quantityParticles = particles;
 
-		[MenuItemFont setFontSize:65];
-		MenuItemFont *decrease = [MenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
+		[CCMenuItemFont setFontSize:65];
+		CCMenuItemFont *decrease = [CCMenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
 		[decrease.label setColor:ccc3(0,200,20)];
-		MenuItemFont *increase = [MenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
+		CCMenuItemFont *increase = [CCMenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
 		[increase.label setColor:ccc3(0,200,20)];
 		
-		Menu *menu = [Menu menuWithItems: decrease, increase, nil];
+		CCMenu *menu = [CCMenu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, s.height-65);
 		[self addChild:menu z:1];
 		
-		Label *infoLabel = [Label labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
+		CCLabel *infoLabel = [CCLabel labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 		
 		// particles on stage
-		LabelAtlas *labelAtlas = [LabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
 		labelAtlas.position = CGPointMake(254,50);
 		
 		// Next Prev Test
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 30);
 		[self addChild: menu z:1];	
 		
 		// Sub Tests
-		[MenuItemFont setFontSize:40];
-		MenuItemFont  *itemF1 = [MenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF4 = [MenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF5 = [MenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF6 = [MenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
+		[CCMenuItemFont setFontSize:40];
+		CCMenuItemFont  *itemF1 = [CCMenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF2 = [CCMenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF3 = [CCMenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF4 = [CCMenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF5 = [CCMenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF6 = [CCMenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
@@ -118,7 +118,7 @@ Class restartAction()
 		itemF5.tag = 5;
 		itemF6.tag = 6;
 
-		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, nil];
+		menu = [CCMenu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, nil];
 		
 		int i=0;
 		for( id child in [menu children] ) {
@@ -134,7 +134,7 @@ Class restartAction()
 		[self addChild:menu z:2];
 		
 
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:40];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setColor:ccc3(255,255,40)];
@@ -160,8 +160,8 @@ Class restartAction()
 
 -(void) step:(ccTime) dt
 {
-	LabelAtlas *atlas = (LabelAtlas*) [self getChildByTag:kTagLabelAtlas];
-	ParticleSystem *emitter = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	CCParticleSystem *emitter = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 	
 	NSString *str = [NSString stringWithFormat:@"%4d", emitter.particleCount];
 	[atlas setString:str];
@@ -170,7 +170,7 @@ Class restartAction()
 -(void) createParticleSystem
 {
 	
-	ParticleSystem *particleSystem;
+	CCParticleSystem *particleSystem;
 
 	/*
 	 * Tests:
@@ -187,38 +187,38 @@ Class restartAction()
 	[self removeChildByTag:kTagParticleSystem cleanup:YES];
 	
 	// remove the "fire.png" from the TextureMgr cache. 
-	Texture2D *texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
-	[[TextureMgr sharedTextureMgr] removeTexture:texture];
+	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
+	[[CCTextureMgr sharedTextureMgr] removeTexture:texture];
 	
 
 	switch( subtestNumber) {
 		case 1:
-			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;
 		case 2:
-			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;			
 		case 3:
-			particleSystem = [[PointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
+			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		case 4:
-			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;
 		case 5:
-			[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
 			break;			
 		case 6:
-			particleSystem = [[QuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
+			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
 			break;
 		default:
 			particleSystem = nil;
@@ -234,28 +234,28 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id scene = [restartAction() testWithSubTest:subtestNumber particles:quantityParticles];
 	[s addChild:scene];
 
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id scene = [nextAction() testWithSubTest:subtestNumber particles:quantityParticles];
 	[s addChild:scene];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id scene = [backAction() testWithSubTest:subtestNumber particles:quantityParticles];
 	[s addChild:scene];
 
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) testNCallback:(id) sender
@@ -293,7 +293,7 @@ Class restartAction()
 {
 	if( quantityParticles != lastRenderedCount ) {
 		
-		Label *infoLabel = (Label *) [self getChildByTag:kTagInfoLayer];
+		CCLabel *infoLabel = (CCLabel *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u particles", quantityParticles] ];
 		
 		lastRenderedCount = quantityParticles;
@@ -314,8 +314,8 @@ Class restartAction()
 
 -(void) doTest
 {
-	CGSize s = [[Director sharedDirector] winSize];
-	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 	
 	// duration
 	particleSystem.duration = -1;
@@ -379,8 +379,8 @@ Class restartAction()
 
 -(void) doTest
 {
-	CGSize s = [[Director sharedDirector] winSize];
-	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 
 	// duration
 	particleSystem.duration = -1;
@@ -441,8 +441,8 @@ Class restartAction()
 }
 -(void) doTest
 {
-	CGSize s = [[Director sharedDirector] winSize];
-	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 	
 	// duration
 	particleSystem.duration = -1;
@@ -504,8 +504,8 @@ Class restartAction()
 }
 -(void) doTest
 {
-	CGSize s = [[Director sharedDirector] winSize];
-	ParticleSystem *particleSystem = (ParticleSystem*) [self getChildByTag:kTagParticleSystem];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 	
 	// duration
 	particleSystem.duration = -1;

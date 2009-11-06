@@ -12,7 +12,7 @@ enum {
 	kNodesIncrease = 100,
 };
 
-@interface MainScene : Scene {
+@interface MainScene : CCScene {
 	int			lastRenderedCount;
 	int			quantityParticles;
 	int			subtestNumber;
