@@ -26,7 +26,7 @@
  
  A more flexible class is CCBitmapFontAtlas. It supports variable width characters and it also has a nice editor.
  */
-@interface CCLabelAtlas : CCAtlasNode  <CCNodeLabel> {
+@interface CCLabelAtlas : CCAtlasNode  <CCLabelProtocol> {
 		
 	// string to render
 	NSString		*string_;

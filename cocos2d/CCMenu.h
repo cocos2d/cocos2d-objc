@@ -28,7 +28,7 @@ typedef enum  {
  *  - You can add MenuItem objects in runtime using addChild:
  *  - But the only accecpted children are MenuItem objects
  */
-@interface CCMenu : CCLayer <CCNodeRGBA>
+@interface CCMenu : CCLayer <CCRGBAProtocol>
 {
 	MenuState state;
 	CCMenuItem *selectedItem;
@@ -66,9 +66,9 @@ typedef enum  {
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
 
 
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
 
 @end

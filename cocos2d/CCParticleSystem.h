@@ -12,8 +12,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
-
+#import "CCProtocols.h"
 #import "CCNode.h"
 #import "ccTypes.h"
 
@@ -70,7 +69,7 @@ typedef struct sParticle
   * size can't be bigger than 64
   * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
  */
-@interface CCParticleSystem : CCNode <CCNodeTexture>
+@interface CCParticleSystem : CCNode <CCTextureProtocol>
 {
 	int id;
 	

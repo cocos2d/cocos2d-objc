@@ -96,7 +96,7 @@ enum {
   - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
     because it might affect the rendering
  
- CCBitmapFontAtlas implements the protocol CCNodeLabel, like CCLabel and CCLabelAtlas.
+ CCBitmapFontAtlas implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
  CCBitmapFontAtlas has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCAtlasSprite.
  If in doubt, use CCBitmapFontAtlas instead of CCLabelAtlas / CCLabel.
  
@@ -108,7 +108,7 @@ enum {
  @since v0.8
  */
 
-@interface CCBitmapFontAtlas : CCSpriteManager <CCNodeLabel, CCNodeRGBA>
+@interface CCBitmapFontAtlas : CCSpriteManager <CCLabelProtocol, CCRGBAProtocol>
 {
 	// string to render
 	NSString		*string_;
@@ -121,9 +121,9 @@ enum {
 	BOOL opacityModifyRGB_;
 }
 
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
 
 

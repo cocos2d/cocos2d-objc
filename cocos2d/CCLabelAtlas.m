@@ -89,7 +89,7 @@
 	}
 }
 
-#pragma mark CCLabelAtlas - CCNodeLabel
+#pragma mark CCLabelAtlas - CCLabelProtocol
 
 - (void) setString:(NSString*) newString
 {

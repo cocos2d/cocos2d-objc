@@ -15,6 +15,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CCProtocols.h"
 #import "CCNode.h"
 #import "CCTouchDelegateProtocol.h"
 
@@ -62,13 +63,13 @@
 //
 // CCColorLayer
 //
-/** CCColorLayer is a subclass of CCLayer that implements the CCNodeRGBA protocol.
+/** CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
  
  All features from CCLayer are valid, plus the following new features:
  - opacity
  - RGB colors
  */
-@interface CCColorLayer : CCLayer <CCNodeRGBA>
+@interface CCColorLayer : CCLayer <CCRGBAProtocol>
 {
 	GLubyte		opacity_;
 	ccColor3B	color_;	
@@ -95,9 +96,9 @@
  */
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
-/** Opacity: conforms to CCNodeRGBA protocol */
+/** Opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** Opacity: conforms to CCNodeRGBA protocol */
+/** Opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
 
 @end

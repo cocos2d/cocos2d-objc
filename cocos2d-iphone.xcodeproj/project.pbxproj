@@ -1111,6 +1111,7 @@
 		50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
 		50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */; };
 		50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */; };
+		50E2A25210A46CC600D894CE /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A25110A46CC600D894CE /* CCProtocols.h */; };
 		50E386DD10445EDA00150883 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50E386DE10445EF500150883 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		50E386E810445F4600150883 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
@@ -2246,6 +2247,7 @@
 		50DFC2CA0FF62843007E7827 /* HelloWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloWorld.m; path = tests/samples/HelloWorld.m; sourceTree = "<group>"; };
 		50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
 		50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
+		50E2A25110A46CC600D894CE /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
 		50E3876C10446C6E00150883 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50E3876E10446C6E00150883 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50E3877010446C6E00150883 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -3335,6 +3337,7 @@
 				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
 				50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */,
 				50B2CCC30E119B8E00AE9530 /* CCDrawingPrimitives.m */,
+				50E2A25110A46CC600D894CE /* CCProtocols.h */,
 				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
 				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
@@ -4430,6 +4433,7 @@
 				50BA77B3107DF35000954850 /* carray.h in Headers */,
 				50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */,
 				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
+				50E2A25210A46CC600D894CE /* CCProtocols.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

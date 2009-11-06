@@ -15,6 +15,7 @@
 
 #import "CCNode.h"
 #import "CCTexture2D.h"
+#import "CCProtocols.h"
 #import <OpenGLES/ES1/gl.h>
 
 /**
@@ -32,7 +33,7 @@
  *
  * @since v0.8.1
  */
-@interface CCRibbon : CCNode <CCNodeTexture>
+@interface CCRibbon : CCNode <CCTextureProtocol>
 {
 	NSMutableArray* mSegments;
 	NSMutableArray* dSegments;
@@ -62,7 +63,7 @@
 	ccBlendFunc		blendFunc_;
 }
 
-/** Texture used by the ribbon. Conforms to CCNodeTexture protocol */
+/** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite,retain) CCTexture2D* texture;
 
 /** Texture lenghts in pixels */
