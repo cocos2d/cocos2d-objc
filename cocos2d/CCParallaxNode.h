@@ -15,7 +15,7 @@
 #import "CCNode.h"
 #import "Support/ccArray.h"
 
-/** ParallaxNode: A node that simulates a parallax scroller
+/** CCParallaxNode: A node that simulates a parallax scroller
  
  The children will be moved faster / slower than the parent according the the parallax ratio.
  

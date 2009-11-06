@@ -18,7 +18,7 @@
 #import "CCAction.h"
 
 /** Instant actions are immediate actions. They don't have a duration like
- the Interval Actions.
+ the CCIntervalAction actions.
 */ 
 @interface CCInstantAction : CCFiniteTimeAction <NSCopying>
 {}

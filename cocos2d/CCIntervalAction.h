@@ -21,7 +21,7 @@
 It has an start time, and a finish time. The finish time is the parameter
 duration plus the start time.
 
-These IntervalAction actions have some interesting properties, like:
+These CCIntervalAction actions have some interesting properties, like:
  - They can run normally (default)
  - They can run reversed with the reverse method
  - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
@@ -31,7 +31,7 @@ then running it again in Reverse mode.
 
 Example:
  
-	Action * pingPongAction = [Sequence actions: action, [action reverse], nil];
+	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
 */
 @interface CCIntervalAction: CCFiniteTimeAction <NSCopying>
 {
@@ -69,7 +69,7 @@ Example:
 
 
 /** Repeats an action a number of times.
- * To repeat an action forever use the RepeatForever action.
+ * To repeat an action forever use the CCRepeatForever action.
  */
 @interface CCRepeat : CCIntervalAction <NSCopying>
 {
@@ -77,9 +77,9 @@ Example:
 	unsigned int total;
 	CCFiniteTimeAction *other;
 }
-/** creates the Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
+/** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 +(id) actionWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
-/** initializes the action. Times is an unsigned integer between 1 and pow(2,30) */
+/** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 -(id) initWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
 @end
 
@@ -98,7 +98,7 @@ Example:
 -(id) initOne: (CCFiniteTimeAction*) one two:(CCFiniteTimeAction*) two;
 @end
 
-/**  Rotates a CocosNode object to a certain angle by modifying it's
+/**  Rotates a CCNode object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
 */ 
@@ -113,7 +113,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
 @end
 
-/** Rotates a CocosNode object clockwise a number of degrees by modiying it's rotation attribute.
+/** Rotates a CCNode object clockwise a number of degrees by modiying it's rotation attribute.
 */
 @interface CCRotateBy : CCIntervalAction <NSCopying>
 {
@@ -126,7 +126,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
 @end
 
-/** Moves a CocosNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
 */
 @interface CCMoveTo : CCIntervalAction <NSCopying>
 {
@@ -140,7 +140,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
 @end
 
-/**  Moves a CocosNode object x,y pixels by modifying it's position attribute.
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
 */ 
@@ -153,7 +153,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
-/** Moves a CocosNode object simulating a parabolic jump movement by modifying it's position attribute.
+/** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
  @interface CCJumpBy : CCIntervalAction <NSCopying>
 {
@@ -168,7 +168,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(int)jumps;
 @end
 
-/** Moves a CocosNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
+/** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
 */ 
  @interface CCJumpTo : CCJumpBy <NSCopying>
 {
@@ -209,7 +209,7 @@ typedef struct _ccBezierConfig {
 }
 @end
 
-/** Scales a CocosNode object to a zoom factor by modifying it's scale attribute.
+/** Scales a CCNode object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
  */
 @interface CCScaleTo : CCIntervalAction <NSCopying>
@@ -233,14 +233,14 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
 @end
 
-/** Scales a CocosNode object a zoom factor by modifying it's scale attribute.
+/** Scales a CCNode object a zoom factor by modifying it's scale attribute.
 */
 @interface CCScaleBy : CCScaleTo <NSCopying>
 {
 }
 @end
 
-/** Blinks a CocosNode object by modifying it's visible attribute
+/** Blinks a CCNode object by modifying it's visible attribute
 */
 @interface CCBlink : CCIntervalAction <NSCopying>
 {
@@ -282,7 +282,7 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration:(ccTime)duration opacity:(GLubyte)opacity;
 @end
 
-/** Tints a CocosNode that implements the CocosNodeRGB protocol from current tint to a custom one.
+/** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"
  @since v0.7.2
 */
@@ -297,7 +297,7 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
 @end
 
-/** Tints a CocosNode that implements the CocosNodeRGB protocol from current tint to a custom one.
+/** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @since v0.7.2
  */
 @interface CCTintBy : CCIntervalAction <NSCopying>

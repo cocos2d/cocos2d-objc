@@ -38,7 +38,7 @@ enum
 	CCTMXOrientationIso,
 };
 
-/** TMXTiledMap knows how to parse and render a TMX map.
+/** CCTMXTiledMap knows how to parse and render a TMX map.
  
  It adds support for the TMX tiled map format used by http://www.mapeditor.org
  It supports isometric, hexagonal and orthogonal tiles.
@@ -95,7 +95,7 @@ enum
 @end
 
 
-/** TMXLayer represents the TMX layer.
+/** CCTMXLayer represents the TMX layer.
  
  It is a subclass of CCSpriteManager, so each "tile" is represented by an CCSprite.
  The benefits of using CCSprite objects as tiles are:
@@ -130,9 +130,9 @@ enum
 @property (nonatomic,readwrite) int layerOrientation;
 
 
-/** creates a TMX Layer with an tileset info, a layer info and a map info */
+/** creates a CCTMXLayer with an tileset info, a layer info and a map info */
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
-/** initializes a TMX Layer with a tileset info, a layer info and a map info */
+/** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
 -(id) initWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
 
 /** dealloc the map that contains the tile position from memory.

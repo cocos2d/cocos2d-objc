@@ -456,7 +456,7 @@ Class restartAction()
 			[mgr addChild:sprite z:0];
 		}
 
-		[mgr runAction:[OrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
+		[mgr runAction:[CCOrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
 	}	
 	return self;
 }

@@ -150,7 +150,7 @@
 	}
 }
 
-#pragma mark TMXLayer - obtaining tiles/gids
+#pragma mark CCTMXLayer - obtaining tiles/gids
 
 -(CCSprite*) tileAt:(CGPoint)pos
 {
@@ -189,7 +189,7 @@
 	return tiles_[ idx ];
 }
 
-#pragma mark TMXLayer - adding helper methods
+#pragma mark CCTMXLayer - adding helper methods
 
 -(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos
 {
@@ -281,7 +281,7 @@
 	return reusedTile;
 }
 
-#pragma mark TMXLayer - atlasIndex and Z
+#pragma mark CCTMXLayer - atlasIndex and Z
 
 int compareInts (const void * a, const void * b)
 {
@@ -314,7 +314,7 @@ int compareInts (const void * a, const void * b)
 	return i;
 }
 
-#pragma mark TMXLayer - adding / remove tiles
+#pragma mark CCTMXLayer - adding / remove tiles
 
 -(void) setTileGID:(unsigned int)gid at:(CGPoint)pos
 {
@@ -383,7 +383,7 @@ int compareInts (const void * a, const void * b)
 	}
 }
 
-#pragma mark TMXLayer - obtaining positions
+#pragma mark CCTMXLayer - obtaining positions
 
 -(CGPoint) positionAt:(CGPoint)pos
 {

@@ -22,7 +22,7 @@
 
 @implementation CCLabelAtlas
 
-#pragma mark LabelAtlas - Creation & Init
+#pragma mark CCLabelAtlas - Creation & Init
 +(id) labelAtlasWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
 {
 	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
@@ -48,7 +48,7 @@
 	[super dealloc];
 }
 
-#pragma mark LabelAtlas - Atlas generation
+#pragma mark CCLabelAtlas - Atlas generation
 
 -(void) updateAtlasValues
 {
@@ -89,7 +89,7 @@
 	}
 }
 
-#pragma mark LabelAtlas - CCNodeLabel
+#pragma mark CCLabelAtlas - CCNodeLabel
 
 - (void) setString:(NSString*) newString
 {
@@ -106,7 +106,7 @@
 	[self setContentSize:s];
 }
 
-#pragma mark LabelAtlas - draw
+#pragma mark CCLabelAtlas - draw
 
 // XXX: overriding draw from AtlasNode
 - (void) draw

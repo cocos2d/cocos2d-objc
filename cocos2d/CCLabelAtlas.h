@@ -15,16 +15,16 @@
 #import "CCAtlasNode.h"
 #import "CCTextureAtlas.h"
 
-/** LabelAtlas is a subclass of AtlasNode.
+/** CCLabelAtlas is a subclass of CCAtlasNode.
  
- It can be as a replacement of Label since it is MUCH faster.
+ It can be as a replacement of CCLabel since it is MUCH faster.
  
- LabelAtlas versus Label:
- - LabelAtlas is MUCH faster than Label
- - LabelAtlas "characters" have a fixed height and width
- - LabelAtlas "characters" can be anything you want since they are taken from an image file
+ CCLabelAtlas versus CCLabel:
+ - CCLabelAtlas is MUCH faster than CCLabel
+ - CCLabelAtlas "characters" have a fixed height and width
+ - CCLabelAtlas "characters" can be anything you want since they are taken from an image file
  
- A more flexible class is BitmapFontAtlas. It supports variable width characters and it also has a nice editor.
+ A more flexible class is CCBitmapFontAtlas. It supports variable width characters and it also has a nice editor.
  */
 @interface CCLabelAtlas : CCAtlasNode  <CCNodeLabel> {
 		
@@ -35,9 +35,9 @@
 	char			mapStartChar;
 }
 
-/** creates the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+/** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 +(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c;
 
-/** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+/** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 -(id) initWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c;
 @end

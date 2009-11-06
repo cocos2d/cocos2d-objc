@@ -28,12 +28,12 @@ typedef struct _hashElement
 } tHashElement;
 
 
-/** ActionManager is a singleton that manages all the actions.
- Normally you won't need to use this singleton directly. 99% of the cases you will use the CocosNode interface,
+/** CCActionManager is a singleton that manages all the actions.
+ Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
  which uses this singleton.
  But there are some cases where you might need to use this singleton.
  Examples:
-	- When you want to run an action where the target is different from a CocosNode. 
+	- When you want to run an action where the target is different from a CCNode. 
 	- When you want to pause / resume the actions
  
  @since v0.8
@@ -45,7 +45,7 @@ typedef struct _hashElement
 	BOOL			currentTargetSalvaged;
 }
 
-/** returns a shared instance of the ActionManager */
+/** returns a shared instance of the CCActionManager */
 + (CCActionManager *)sharedManager;
 
 /** purges the shared action manager. It releases the retained instance.

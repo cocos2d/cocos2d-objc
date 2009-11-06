@@ -14,7 +14,7 @@
 
 #import "CCParticleSystem.h"
 
-/** QuadParticleSystem is a subclass of ParticleSystem
+/** CCQuadParticleSystem is a subclass of CCParticleSystem
 
  It includes all the features of ParticleSystem.
  

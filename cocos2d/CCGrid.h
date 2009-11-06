@@ -57,7 +57,7 @@
 ////////////////////////////////////////////////////////////
 
 /**
- Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+ CCGrid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
 @interface CCGrid3D : CCGridBase
 {
@@ -86,7 +86,7 @@
 ////////////////////////////////////////////////////////////
 
 /**
- TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
+ CCTiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
  the tiles can be separated from the grid.
 */
 @interface CCTiledGrid3D : CCGridBase

@@ -19,11 +19,11 @@
 #import "CCTouchDelegateProtocol.h"
 
 //
-// Layer
+// CCLayer
 //
-/** Layer is a subclass of CocosNode that implements the TouchEventsDelegate protocol.
+/** CCLayer is a subclass of CCNode that implements the TouchEventsDelegate protocol.
  
- All features from CocosNode are valid, plus the following new features:
+ All features from CCNode are valid, plus the following new features:
  - It can receive iPhone Touches
  - It can receive Accelerometer input
 */
@@ -34,7 +34,7 @@
 }
 
 /** If isTouchEnabled, this method is called onEnter. Override it to change the
- way Layer receives touch events.
+ way CCLayer receives touch events.
  ( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
  Example:
      -(void) registerWithTouchDispatcher
@@ -60,11 +60,11 @@
 @end
 
 //
-// ColorLayer
+// CCColorLayer
 //
-/** ColorLayer is a subclass of Layer that implements the CCNodeRGBA protocol.
+/** CCColorLayer is a subclass of CCLayer that implements the CCNodeRGBA protocol.
  
- All features from Layer are valid, plus the following new features:
+ All features from CCLayer are valid, plus the following new features:
  - opacity
  - RGB colors
  */
@@ -76,14 +76,14 @@
 	GLubyte squareColors[4 * 4];
 }
 
-/** creates the Layer with color, width and height */
+/** creates a CCLayer with color, width and height */
 + (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/** creates the layer with color. Width and height are the window size. */
+/** creates a CCLayer with color. Width and height are the window size. */
 + (id) layerWithColor: (ccColor4B)color;
 
-/** initializes a Layer with color, width and height */
+/** initializes a CCLayer with color, width and height */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/** initializes a Layer with color. Width and height are the window size. */
+/** initializes a CCLayer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
 
 /** change width */
@@ -102,7 +102,7 @@
 
 @end
 
-/** A Layer with the ability to multiplex it's children.
+/** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
  Features:
    - It supports one or more children
    - Only one children will be active a time
@@ -113,7 +113,7 @@
 	NSMutableArray *layers;
 }
 
-/** creates a MultiplexLayer with one or more layers using a variable argument list. */
+/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
 +(id) layerWithLayers: (CCLayer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
 /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 -(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params;

@@ -22,7 +22,7 @@ enum {
 	kActionTagInvalid = -1,
 };
 
-/** Base class for actions
+/** Base class for CCAction objects.
  */
 @interface CCAction : NSObject <NSCopying> {
 	id	originalTarget;

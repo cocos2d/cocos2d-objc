@@ -17,7 +17,7 @@
 #import "CCRibbon.h"
 
 /**
- * Motion Streak manages a Ribbon based on it's motion in absolute space.
+ * CCMotionStreak manages a Ribbon based on it's motion in absolute space.
  * You construct it with a fadeTime, minimum segment size, texture path, texture
  * length and color. The fadeTime controls how long it takes each vertex in
  * the streak to fade out, the minimum segment size it how many pixels the
@@ -26,7 +26,7 @@
  * is vertically aligned along the streak segemnts. 
  *
  * Limitations:
- *   MotionStreak, by default, will use the GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA blending function.
+ *   CCMotionStreak, by default, will use the GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA blending function.
  *   This blending function might not be the correct one for certain textures.
  *   But you can change it by using:
  *     [obj setBlendFunc: (ccBlendfunc) {new_src_blend_func, new_dst_blend_func}];

@@ -14,7 +14,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- TargetedTouchDelegate.
+ CCTargetedTouchDelegate.
  
  Using this type of delegate results in two benefits:
  1. You don't need to deal with NSSets, the dispatcher does the job of splitting
@@ -42,7 +42,7 @@
 @end
 
 /**
- StandardTouchDelegate.
+ CCStandardTouchDelegate.
  Each event that is received will be propagated to the delegate,
  unless a previous delegate consumes the event.
  To consume the event (prevent propagation) the delegate should return kEventHandled.

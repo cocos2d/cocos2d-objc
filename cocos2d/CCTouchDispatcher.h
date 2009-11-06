@@ -16,7 +16,7 @@
 #import "Support/EAGLView.h"
 
 
-/** TouchDispatcher.
+/** CCTouchDispatcher.
  Singleton that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
  @since v0.8.0
@@ -27,7 +27,7 @@
 	BOOL dispatchEvents;
 }
 
-/** singleton of the TouchDispatcher */
+/** singleton of the CCTouchDispatcher */
 + (CCTouchDispatcher*)sharedDispatcher;
 
 /** Whether or not the events are going to be dispatched. Default: YES */
