@@ -192,8 +192,6 @@
 		5018F2760DFDEAFF00C013A5 /* CCLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25F0DFDEAFF00C013A5 /* CCLayer.m */; };
 		5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2600DFDEAFF00C013A5 /* CCScene.h */; };
 		5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2610DFDEAFF00C013A5 /* CCScene.m */; };
-		5018F2790DFDEAFF00C013A5 /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2620DFDEAFF00C013A5 /* CCSprite.h */; };
-		5018F27A0DFDEAFF00C013A5 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2630DFDEAFF00C013A5 /* CCSprite.m */; };
 		5018F27D0DFDEAFF00C013A5 /* CCTextureMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2670DFDEAFF00C013A5 /* CCTextureMgr.h */; };
 		5018F27E0DFDEAFF00C013A5 /* CCTextureMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2680DFDEAFF00C013A5 /* CCTextureMgr.m */; };
 		5018F2E20DFDEBBA00C013A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -1787,8 +1785,6 @@
 		5018F25F0DFDEAFF00C013A5 /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayer.m; sourceTree = "<group>"; };
 		5018F2600DFDEAFF00C013A5 /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
 		5018F2610DFDEAFF00C013A5 /* CCScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScene.m; sourceTree = "<group>"; };
-		5018F2620DFDEAFF00C013A5 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite.h; sourceTree = "<group>"; };
-		5018F2630DFDEAFF00C013A5 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite.m; sourceTree = "<group>"; };
 		5018F2670DFDEAFF00C013A5 /* CCTextureMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureMgr.h; sourceTree = "<group>"; };
 		5018F2680DFDEAFF00C013A5 /* CCTextureMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureMgr.m; sourceTree = "<group>"; };
 		501945740F964C620059CE7C /* drawPrimitivesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = drawPrimitivesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3652,8 +3648,6 @@
 		506414C40F9C6792007A7B24 /* Sprite Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				5018F2620DFDEAFF00C013A5 /* CCSprite.h */,
-				5018F2630DFDEAFF00C013A5 /* CCSprite.m */,
 				509A79990F6188500032F449 /* CCAtlasSpriteManager.h */,
 				509A799A0F6188500032F449 /* CCAtlasSpriteManager.m */,
 				509A79950F6188420032F449 /* CCAtlasSprite.h */,
@@ -4375,7 +4369,6 @@
 				5018F2730DFDEAFF00C013A5 /* CCLabel.h in Headers */,
 				5018F2750DFDEAFF00C013A5 /* CCLayer.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */,
-				5018F2790DFDEAFF00C013A5 /* CCSprite.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* CCTextureMgr.h in Headers */,
 				506C78A70E016A7300B48100 /* CCMenu.h in Headers */,
 				506C78EC0E0178FD00B48100 /* CCMenuItem.h in Headers */,
@@ -6483,7 +6476,6 @@
 				5018F2740DFDEAFF00C013A5 /* CCLabel.m in Sources */,
 				5018F2760DFDEAFF00C013A5 /* CCLayer.m in Sources */,
 				5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */,
-				5018F27A0DFDEAFF00C013A5 /* CCSprite.m in Sources */,
 				5018F27E0DFDEAFF00C013A5 /* CCTextureMgr.m in Sources */,
 				506C78A80E016A7300B48100 /* CCMenu.m in Sources */,
 				506C78ED0E0178FD00B48100 /* CCMenuItem.m in Sources */,
