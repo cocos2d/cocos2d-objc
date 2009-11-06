@@ -164,7 +164,7 @@
 
 -(int) parseRank {
 //	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
-	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
+	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] encoding: NSASCIIStringEncoding];
 	
 	// creating trimmed string by trimming everything that's not numbers from the receivedData
 	NSString *trimmedStr = [rankStr stringByTrimmingCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];

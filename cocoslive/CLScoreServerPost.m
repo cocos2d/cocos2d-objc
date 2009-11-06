@@ -259,7 +259,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     [connection release];
 	
 //	NSString *dataString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
-	NSString *dataString = [NSString stringWithCString:[receivedData bytes] encoding: NSUTF8StringEncoding];
+	NSString *dataString = [NSString stringWithCString:[receivedData bytes] encoding: NSASCIIStringEncoding];
 	if( [dataString isEqual: @"OK"] ) {
 		
 		// Ok
