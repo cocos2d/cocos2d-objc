@@ -548,12 +548,11 @@ Class restartAction()
 
 		// The .png image MUST be power of 2 in order to create a continue effect.
 		// eg: 32x64, 512x128, 256x1024, 64x64, etc..
-		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"pattern1.png"];
-		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 512, 256) spriteManager:mgr];
-		[mgr addChild:sprite z:0 tag:kTagSprite1];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"pattern1.png" rect:CGRectMake(0,0,512,256)];
+		[self addChild:sprite z:-1 tag:kTagSprite1];
 		[sprite setPosition:ccp(size.width/2,size.height/2)];
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-		[mgr.texture setTexParameters:&params];
+		[sprite.texture setTexParameters:&params];
 		
 		id rotate = [CCRotateBy actionWithDuration:4 angle:360];
 		[sprite runAction:rotate];
@@ -562,7 +561,6 @@ Class restartAction()
 		id seq = [CCSequence actions:scale, scaleBack, nil];
 		[sprite runAction:seq];
 		
-		[self addChild:mgr z:-1];
 	}
 	return self;
 }
@@ -588,21 +586,18 @@ Class restartAction()
 		
 		// The .png image MUST be power of 2 in order to create a continue effect.
 		// eg: 32x64, 512x128, 256x1024, 64x64, etc..
-		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"pattern1.png"];
-		CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(0, 0, 4096, 4096) spriteManager:mgr];
-		[mgr addChild:sprite z:0 tag:kTagSprite1];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"pattern1.png" rect:CGRectMake(0, 0, 4096, 4096)];
+		[self addChild:sprite z:-1 tag:kTagSprite1];
 		[sprite setPosition:ccp(size.width/2,size.height/2)];
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
-		[mgr.texture setTexParameters:&params];
+		[sprite.texture setTexParameters:&params];
 		
 		id rotate = [CCRotateBy actionWithDuration:4 angle:360];
 		[sprite runAction:rotate];
 		id scale = [CCScaleBy actionWithDuration:2 scale:0.04f];
 		id scaleBack = [scale reverse];
 		id seq = [CCSequence actions:scale, scaleBack, nil];
-		[sprite runAction:seq];
-		
-		[self addChild:mgr z:-1];
+		[sprite runAction:seq];		
 	}
 	return self;
 }

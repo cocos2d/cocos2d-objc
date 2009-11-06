@@ -302,7 +302,7 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
-		for( CCAtlasSpriteManager* child in [map children] ) {
+		for( CCSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		float x, y, z;
@@ -344,7 +344,7 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
-		for( CCAtlasSpriteManager* child in [map children] ) {
+		for( CCSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 
@@ -373,7 +373,7 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
-		for( CCAtlasSpriteManager* child in [map children] ) {
+		for( CCSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		
@@ -402,7 +402,7 @@ Class restartAction()
 		CGSize s1 = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s1.width,s1.height);
 		
-		for( CCAtlasSpriteManager* child in [map children] ) {
+		for( CCSpriteManager* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		
@@ -411,7 +411,7 @@ Class restartAction()
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
 		CGSize s = [layer layerSize];
 		
-		CCAtlasSprite *sprite;
+		CCSprite *sprite;
 		sprite = [layer tileAt:ccp(0,0)];
 		[sprite setScale:2];
 		sprite = [layer tileAt:ccp(s.width-1,0)];
@@ -596,10 +596,10 @@ Class restartAction()
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
 		[layer.texture setAntiAliasTexParameters];
 
-		CCAtlasSprite *tile0 = [layer tileAt:ccp(1,63)];
-		CCAtlasSprite *tile1 = [layer tileAt:ccp(2,63)];
-		CCAtlasSprite *tile2 = [layer tileAt:ccp(1,62)];
-		CCAtlasSprite *tile3 = [layer tileAt:ccp(2,62)];
+		CCSprite *tile0 = [layer tileAt:ccp(1,63)];
+		CCSprite *tile1 = [layer tileAt:ccp(2,63)];
+		CCSprite *tile2 = [layer tileAt:ccp(1,62)];
+		CCSprite *tile3 = [layer tileAt:ccp(2,62)];
 		tile0.anchorPoint = ccp(0.5f, 0.5f);
 		tile1.anchorPoint = ccp(0.5f, 0.5f);
 		tile2.anchorPoint = ccp(0.5f, 0.5f);

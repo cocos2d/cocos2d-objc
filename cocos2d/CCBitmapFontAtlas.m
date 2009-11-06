@@ -24,7 +24,7 @@
 
 #import "ccConfig.h"
 #import "CCBitmapFontAtlas.h"
-#import "CCAtlasSprite.h"
+#import "CCSprite.h"
 #import "CCDrawingPrimitives.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
@@ -461,9 +461,9 @@ void FNTConfigRemoveCache( void )
 		
 		CGRect rect = fontDef.rect;
 		
-		CCAtlasSprite *fontChar;
+		CCSprite *fontChar;
 		
-		fontChar = (CCAtlasSprite*) [self getChildByTag:i];
+		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
 			fontChar = [self createSpriteWithRect:rect];
 			[self addChild:fontChar z:0 tag:i];
@@ -513,7 +513,7 @@ void FNTConfigRemoveCache( void )
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
-	for( CCAtlasSprite* child in children )
+	for( CCSprite* child in children )
 		[child setColor:color_];
 }
 

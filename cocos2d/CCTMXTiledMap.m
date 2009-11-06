@@ -17,31 +17,31 @@
 
 #import "CCTMXTiledMap.h"
 #import "CCTMXXMLParser.h"
-#import "CCAtlasSprite.h"
-#import "CCAtlasSpriteManager.h"
+#import "CCSprite.h"
+#import "CCSpriteManager.h"
 #import "CCTextureMgr.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
-#pragma mark CCAtlasSpriteManager extension
+#pragma mark CCSpriteManager extension
 
-@interface CCAtlasSpriteManager (TileMapExtension)
+@interface CCSpriteManager (TileMapExtension)
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
- This method should be called only when you are dealing with very big AtlasSrite and when most of the CCAtlasSprite won't be updated.
+ This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
  For example: a tile map (CCTMXMap) or a label with lots of characgers (BitmapFontAtlas)
  @since v0.8.2
  */
--(void) addQuadFromSprite:(CCAtlasSprite*)sprite quadIndex:(unsigned int)index;
+-(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index;
 
--(id)addSpriteWithoutQuad:(CCAtlasSprite*)child z:(int)z tag:(int)aTag;
+-(id)addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag;
 @end
 
-@implementation CCAtlasSpriteManager (TileMapExtension)
--(void) addQuadFromSprite:(CCAtlasSprite*)sprite quadIndex:(unsigned int)index
+@implementation CCSpriteManager (TileMapExtension)
+-(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index
 {
 	NSAssert( sprite != nil, @"Argument must be non-nil");
-	NSAssert( [sprite isKindOfClass:[CCAtlasSprite class]], @"CCAtlasSpriteManager only supports CCAtlasSprites as children");
+	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteManager only supports CCSprites as children");
 	
 	while(index >= textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
@@ -52,10 +52,10 @@
 	[sprite updatePosition];
 }
 
--(id) addSpriteWithoutQuad:(CCAtlasSprite*)child z:(int)z tag:(int)aTag
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCAtlasSprite class]], @"CCAtlasSpriteManager only supports CCAtlasSprites as children");
+	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteManager only supports CCSprites as children");
 	
 	// quad index is Z
 	[child setAtlasIndex:z];
@@ -74,9 +74,9 @@
 -(CGPoint) positionForHexAt:(CGPoint)pos;
 
 // optimizations
--(CCAtlasSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
--(CCAtlasSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
--(CCAtlasSprite*) udpateTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(CCSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(CCSprite*) udpateTileForGID:(unsigned int)gid at:(CGPoint)pos;
 -(unsigned int) atlasIndexForExistantZ:(unsigned int)z;
 -(unsigned int) atlasIndexForNewZ:(int)z;
 @end
@@ -152,23 +152,23 @@
 
 #pragma mark TMXLayer - obtaining tiles/gids
 
--(CCAtlasSprite*) tileAt:(CGPoint)pos
+-(CCSprite*) tileAt:(CGPoint)pos
 {
 	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 	
-	CCAtlasSprite *tile = nil;
+	CCSprite *tile = nil;
 	unsigned int gid = [self tileGIDAt:pos];
 	
 	// if GID == 0, then no tile is present
 	if( gid ) {
 		int z = pos.x + pos.y * layerSize_.width;
-		tile = (CCAtlasSprite*) [self getChildByTag:z];
+		tile = (CCSprite*) [self getChildByTag:z];
 		
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-//			tile = [CCAtlasSprite spriteWithRect:rect spriteManager:self];
+//			tile = [CCSprite spriteWithRect:rect spriteManager:self];
 			tile = [self createSpriteWithRect:rect];
 			[tile setPosition: [self positionAt:pos]];
 			tile.anchorPoint = CGPointZero;
@@ -191,7 +191,7 @@
 
 #pragma mark TMXLayer - adding helper methods
 
--(CCAtlasSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos
+-(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
@@ -215,7 +215,7 @@
 	ccCArrayInsertValueAtIndex(atlasIndexArray, (void*)z, indexForZ);
 	
 	// update possible children
-	for( CCAtlasSprite *sprite in children) {
+	for( CCSprite *sprite in children) {
 		unsigned int ai = [sprite atlasIndex];
 		if( ai >= indexForZ)
 			[sprite setAtlasIndex: ai+1];
@@ -226,7 +226,7 @@
 	return reusedTile;
 }
 
--(CCAtlasSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos
+-(CCSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
@@ -253,7 +253,7 @@
 
 // used only when parsing the map. useless after the map was parsed
 // since lot's of assumptions are no longer true
--(CCAtlasSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos
+-(CCSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
@@ -373,7 +373,7 @@ int compareInts (const void * a, const void * b)
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			for( CCAtlasSprite *sprite in children) {
+			for( CCSprite *sprite in children) {
 				unsigned int ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {
 					[sprite setAtlasIndex: ai-1];

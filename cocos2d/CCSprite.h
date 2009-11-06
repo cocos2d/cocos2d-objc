@@ -15,10 +15,10 @@
 #import "CCNode.h"
 #import "CCTextureAtlas.h"
 
-@class CCAtlasSpriteManager;
-@class CCAtlasSpriteFrame;
+@class CCSpriteManager;
+@class CCSpriteFrame;
 
-#pragma mark AltasSprite
+#pragma mark CCSprite
 
 enum {
 	/// AtlasSprite invalid index on the AtlasSpriteManager
@@ -45,7 +45,7 @@ enum {
  *
  * @since v0.7.1
  */
-@interface CCAtlasSprite : CCNode <CCNodeFrames, CCNodeRGBA, CCNodeTexture>
+@interface CCSprite : CCNode <CCNodeFrames, CCNodeRGBA, CCNodeTexture>
 {
 	
 	// whether or not it's parent is an Atlas manager
@@ -108,12 +108,6 @@ enum {
 /** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** creates an AtlasSprite with an AtlasSpriteManager inidicating the Rect of the Atlas */
-//+(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
-/** initializes an AtlasSprite with an AtlasSpriteManager indicating the rect of the Atlas */
-//-(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager;
-
-
 +(id) spriteWithTexture:(CCTexture2D*)texture;
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
@@ -138,14 +132,14 @@ enum {
 -(void)insertInAtlasAtIndex:(NSUInteger)index;
 -(void)updatePosition;
 
-/** updates the texture rect of the AtlasSprite */
+/** updates the texture rect of the CCSprite */
 -(void) setTextureRect:(CGRect) rect;
 
 @end
 
-#pragma mark AtlasAnimation
+#pragma mark CCAnimation
 /** an Animation object used within Sprites to perform animations */
-@interface CCAtlasAnimation : NSObject <CCAnimation>
+@interface CCAnimation : NSObject <CCAnimation>
 {
 	NSString			*name;
 	float				delay;
@@ -159,36 +153,36 @@ enum {
 /** array of frames */
 @property (nonatomic,readonly) NSMutableArray *frames;
 
-/** creates an AtlasAnimation with an AtlasSpriteManager, a name, delay between frames */
+/** creates a CCAnimation with a name and delay between frames */
 +(id) animationWithName:(NSString*)name delay:(float)delay;
 
-/** creates an AtlasAnimation with an AtlasSpriteManager, a name, delay between frames and the AtlasSpriteFrames */
+/** creates an CCAnimation with a name, delay between frames and the CCSpriteFrames frames */
 +(id) animationWithName:(NSString*)name delay:(float)delay frames:frame1,... NS_REQUIRES_NIL_TERMINATION;
 
-/** initializes an Animation with an AtlasSpriteManger, a name and delay between frames */
+/** initializes a CCAnimation with a name and delay between frames */
 -(id) initWithName:(NSString*)name delay:(float)delay;
 
-/** initializes an AtlasAnimation with an AtlasSpriteManager, a name, and the AltasSpriteFrames */
--(id) initWithName:(NSString*)name delay:(float)delay firstFrame:(CCAtlasSpriteFrame*)frame vaList:(va_list) args;
+/** initializes a CCAnimation with a name, and the CCSpriteFrames */
+-(id) initWithName:(NSString*)name delay:(float)delay firstFrame:(CCSpriteFrame*)frame vaList:(va_list) args;
 
-/** adds a frame to an Animation */
+/** adds a frame to a CCAnimation */
 -(void) addFrameWithRect:(CGRect)rect;
 @end
 
-#pragma mark AltasSpriteFrame
-/** An AtlasSpriteFrame is an NSObject that encapsulates a CGRect.
- * And a CGRect represents a frame within the AtlasSpriteManager
+#pragma mark CCSpriteFrame
+/** A CCSpriteFrame is an NSObject that encapsulates a CGRect.
+ * And a CGRect represents a frame within the CCSpriteManager
  */
-@interface CCAtlasSpriteFrame : NSObject
+@interface CCSpriteFrame : NSObject
 {
 	CGRect	rect;
 }
 /** rect of the frame */
 @property (nonatomic,readwrite) CGRect rect;
 
-/** create an AtlasSpriteFrame with a CGRect */
+/** create a CCSpriteFrame with a CGRect */
 +(id) frameWithRect:(CGRect)frame;
-/** initializes an AtlasSpriteFrame with a CGRect */
+/** initializes a CCSpriteFrame with a CGRect */
 -(id) initWithRect:(CGRect)frame;
 @end
 

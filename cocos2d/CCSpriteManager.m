@@ -14,8 +14,8 @@
  */
 
 #import "ccConfig.h"
-#import "CCAtlasSprite.h"
-#import "CCAtlasSpriteManager.h"
+#import "CCSprite.h"
+#import "CCSpriteManager.h"
 #import "CCGrid.h"
 #import "CCDrawingPrimitives.h"
 #import "Support/CGPointExtension.h"
@@ -23,13 +23,13 @@
 const int defaultCapacity = 29;
 
 #pragma mark -
-#pragma mark CCAtlasSpriteManager
+#pragma mark CCSpriteManager
 
-@interface CCAtlasSpriteManager (private)
+@interface CCSpriteManager (private)
 -(void) updateBlendFunc;
 @end
 
-@implementation CCAtlasSpriteManager
+@implementation CCSpriteManager
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
@@ -46,12 +46,12 @@ const int defaultCapacity = 29;
  */
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex
 {
-	return [[[CCAtlasSpriteManager alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
+	return [[[CCSpriteManager alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
 
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
-	return [[[CCAtlasSpriteManager alloc] initWithTexture:tex capacity:capacity] autorelease];
+	return [[[CCSpriteManager alloc] initWithTexture:tex capacity:capacity] autorelease];
 }
 
 /*
@@ -59,12 +59,12 @@ const int defaultCapacity = 29;
  */
 +(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[[CCAtlasSpriteManager alloc] initWithFile:fileImage capacity:capacity] autorelease];
+	return [[[CCSpriteManager alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
 
 +(id)spriteManagerWithFile:(NSString*) imageFile
 {
-	return [[[CCAtlasSpriteManager alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
+	return [[[CCSpriteManager alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
 
 
@@ -109,7 +109,7 @@ const int defaultCapacity = 29;
 }
 
 
-#pragma mark CCAtlasSpriteManager - composition
+#pragma mark CCSpriteManager - composition
 
 // override visit.
 // Don't call visit on it's children
@@ -120,7 +120,7 @@ const int defaultCapacity = 29;
 	// This visit is almost identical to CocosNode#visit
 	// with the exception that it doesn't call visit on it's children
 	//
-	// The alternative is to have a void CCAtlasSprite#visit, but this
+	// The alternative is to have a void CCSprite#visit, but this
 	// although is less mantainable, is faster
 	//
 	if (!visible)
@@ -145,7 +145,7 @@ const int defaultCapacity = 29;
 {
 	NSUInteger index = 0;
 
-	for( CCAtlasSprite *sprite in children) {
+	for( CCSprite *sprite in children) {
 		if ( sprite.zOrder > z ) {
 			break;
 		}
@@ -155,15 +155,15 @@ const int defaultCapacity = 29;
 	return index;
 }
 
--(CCAtlasSprite*) createSpriteWithRect:(CGRect)rect
+-(CCSprite*) createSpriteWithRect:(CGRect)rect
 {
-	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithTexture:textureAtlas_.texture rect:rect];
+	CCSprite *sprite = [CCSprite spriteWithTexture:textureAtlas_.texture rect:rect];
 	[sprite setUseAtlasRendering:YES];
 	[sprite setTextureAtlas:textureAtlas_];
 	return sprite;
 }
 
--(void) initSprite:(CCAtlasSprite*)sprite rect:(CGRect)rect
+-(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect
 {
 	[sprite initWithTexture:textureAtlas_.texture rect:rect];
 	[sprite setUseAtlasRendering:YES];
@@ -172,10 +172,10 @@ const int defaultCapacity = 29;
 
 
 // override addChild:
--(id) addChild:(CCAtlasSprite*)child z:(int)z tag:(int) aTag
+-(id) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCAtlasSprite class]], @"CCAtlasSpriteManager only supports CCAtlasSprites as children");
+	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteManager only supports CCSprites as children");
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 	
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
@@ -192,8 +192,8 @@ const int defaultCapacity = 29;
 	NSUInteger count = [children count];
 	index++;
 	for(; index < count; index++) {
-		CCAtlasSprite *sprite = (CCAtlasSprite *)[children objectAtIndex:index];
-		NSAssert([sprite atlasIndex] == index - 1, @"CCAtlasSpriteManager: index failed");
+		CCSprite *sprite = (CCSprite *)[children objectAtIndex:index];
+		NSAssert([sprite atlasIndex] == index - 1, @"CCSpriteManager: index failed");
 		[sprite setAtlasIndex:index];		
 	}
 	
@@ -201,7 +201,7 @@ const int defaultCapacity = 29;
 }
 
 // override reorderChild
--(void) reorderChild:(CCAtlasSprite*)child z:(int)z
+-(void) reorderChild:(CCSprite*)child z:(int)z
 {
 	// reorder child in the children array
 	[super reorderChild:child z:z];
@@ -209,7 +209,7 @@ const int defaultCapacity = 29;
 	
 	// What's the new atlas index ?
 	NSUInteger newAtlasIndex = 0;
-	for( CCAtlasSprite *sprite in children) {
+	for( CCSprite *sprite in children) {
 		if( [sprite isEqual:child] )
 			break;
 		newAtlasIndex++;
@@ -223,14 +223,14 @@ const int defaultCapacity = 29;
 		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
 		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
 		for( ; index < count+1 ; index++ ) {
-			CCAtlasSprite *sprite = (CCAtlasSprite *)[children objectAtIndex:index];
+			CCSprite *sprite = (CCSprite *)[children objectAtIndex:index];
 			[sprite setAtlasIndex: index];
 		}
 	}
 }
 
 // override removeChild:
--(void)removeChild: (CCAtlasSprite *)sprite cleanup:(BOOL)doCleanup
+-(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
 	// explicit nil handling
 	if (sprite == nil)
@@ -243,7 +243,7 @@ const int defaultCapacity = 29;
 	
 	NSUInteger index= sprite.atlasIndex;
 	
-	// When the CCAtlasSprite is removed, the index should be invalidated. issue #569
+	// When the CCSprite is removed, the index should be invalidated. issue #569
 	[sprite setAtlasIndex: CCAtlasSpriteIndexNotInitialized];
 
 	// when removed, in case it would be child of a "normal" node, set as "no render using manager"
@@ -257,21 +257,21 @@ const int defaultCapacity = 29;
 	NSUInteger count = [children count];
 	for(; index < count; index++)
 	{
-		CCAtlasSprite *other = (CCAtlasSprite *)[children objectAtIndex:index];
-		NSAssert([other atlasIndex] == index + 1, @"CCAtlasSpriteManager: index failed");
+		CCSprite *other = (CCSprite *)[children objectAtIndex:index];
+		NSAssert([other atlasIndex] == index + 1, @"CCSpriteManager: index failed");
 		[other setAtlasIndex:index];
 	}	
 }
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
 {
-	[self removeChild:(CCAtlasSprite *)[children objectAtIndex:index] cleanup:doCleanup];
+	[self removeChild:(CCSprite *)[children objectAtIndex:index] cleanup:doCleanup];
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	// Invalidate atlas index. issue #569
-	for( CCAtlasSprite *sprite in children ) {
+	for( CCSprite *sprite in children ) {
 		[sprite setAtlasIndex:CCAtlasSpriteIndexNotInitialized];
 		[sprite setUseAtlasRendering:NO];
 	}
@@ -281,13 +281,13 @@ const int defaultCapacity = 29;
 	[textureAtlas_ removeAllQuads];
 }
 
-#pragma mark CCAtlasSpriteManager - draw
+#pragma mark CCSpriteManager - draw
 -(void)draw
 {
 	if(textureAtlas_.totalQuads == 0)
 		return;
 	
-	for( CCAtlasSprite *child in children )
+	for( CCSprite *child in children )
 	{
 		if( child.dirty )
 			[child updatePosition];
@@ -325,7 +325,7 @@ const int defaultCapacity = 29;
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-#pragma mark CCAtlasSpriteManager - private
+#pragma mark CCSpriteManager - private
 -(void) increaseAtlasCapacity
 {
 	// if we're going beyond the current TextureAtlas's capacity,
@@ -343,7 +343,7 @@ const int defaultCapacity = 29;
 	}	
 }
 
-#pragma mark CCAtlasSpriteManager - CocosNodeTexture protocol
+#pragma mark CCSpriteManager - CocosNodeTexture protocol
 
 -(void) updateBlendFunc
 {
