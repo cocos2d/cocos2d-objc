@@ -244,7 +244,7 @@ const int defaultCapacity = 29;
 	NSUInteger index= sprite.atlasIndex;
 	
 	// When the CCSprite is removed, the index should be invalidated. issue #569
-	[sprite setAtlasIndex: CCAtlasSpriteIndexNotInitialized];
+	[sprite setAtlasIndex: CCSpriteIndexNotInitialized];
 
 	// when removed, in case it would be child of a "normal" node, set as "no render using manager"
 	[sprite setUseAtlasRendering:NO];
@@ -272,7 +272,7 @@ const int defaultCapacity = 29;
 {
 	// Invalidate atlas index. issue #569
 	for( CCSprite *sprite in children ) {
-		[sprite setAtlasIndex:CCAtlasSpriteIndexNotInitialized];
+		[sprite setAtlasIndex:CCSpriteIndexNotInitialized];
 		[sprite setUseAtlasRendering:NO];
 	}
 	

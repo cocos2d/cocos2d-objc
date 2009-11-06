@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2009 Matt Oswald
+ * Copyright (C) 2009 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -15,6 +15,7 @@
 #import "ccConfig.h"
 #import "CCSpriteManager.h"
 #import "CCSprite.h"
+#import "CCSpriteFrame.h"
 #import "CCTextureMgr.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
@@ -107,7 +108,7 @@
 		
 		// Stuff in case the Sprite is rendered using an Sprite Manager
 		textureAtlas_ = nil;
-		atlasIndex_ = CCAtlasSpriteIndexNotInitialized;
+		atlasIndex_ = CCSpriteIndexNotInitialized;
 		dirty = YES;
 		
 		// update texture
@@ -219,8 +220,8 @@
 	
 	// rendering using Sprite Manager
 	if( useAtlasRendering_ ) {
-		// Don't update Atlas if index == CCAtlasSpriteIndexNotInitialized. issue #283
-		if( atlasIndex_ == CCAtlasSpriteIndexNotInitialized)
+		// Don't update Atlas if index == CCSpriteIndexNotInitialized. issue #283
+		if( atlasIndex_ == CCSpriteIndexNotInitialized)
 			dirty = YES;
 		else
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
@@ -385,8 +386,9 @@
 
 //
 // CCNode property overloads
+// used only when parent is CCSpriteManager
 //
-#pragma mark AltasSprite - property overloads
+#pragma mark CCSprite - property overloads
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
@@ -481,7 +483,7 @@
 {
 	// renders using Sprite Manager
 	if( useAtlasRendering_ ) {
-		if( atlasIndex_ != CCAtlasSpriteIndexNotInitialized)
+		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
 			dirty = YES;
@@ -618,101 +620,3 @@
 }
 
 @end
-
-
-#pragma mark -
-#pragma mark CCAnimation
-
-@implementation CCAnimation
-@synthesize name, delay, frames;
-
-+(id) animationWithName:(NSString*)aname delay:(float)d frames:rect1,...
-{
-	va_list args;
-	va_start(args,rect1);
-	
-	id s = [[[self alloc] initWithName:aname delay:d firstFrame:rect1 vaList:args] autorelease];
-	
-	va_end(args);
-	return s;
-}
-
-+(id) animationWithName:(NSString*)aname delay:(float)d
-{
-	return [[[self alloc] initWithName:aname delay:d] autorelease];
-}
-
--(id) initWithName:(NSString*)t delay:(float)d
-{
-	return [self initWithName:t delay:d firstFrame:nil vaList:nil];
-}
-
-/* initializes a CCAnimation with a name, and the frames from CCSpriteFrames */
--(id) initWithName:(NSString*)t delay:(float)d firstFrame:(CCSpriteFrame*)frame vaList:(va_list)args
-{
-	if( (self=[super init]) ) {
-	
-		name = t;
-		frames = [[NSMutableArray array] retain];
-		delay = d;
-		
-		if( frame ) {
-			[frames addObject:frame];
-			
-			CCSpriteFrame *frame2 = va_arg(args, CCSpriteFrame*);
-			while(frame2) {
-				[frames addObject:frame2];
-				frame2 = va_arg(args, CCSpriteFrame*);
-			}	
-		}
-	}
-	return self;
-}
-
--(void) dealloc
-{
-	CCLOG( @"cocos2d: deallocing %@",self);
-	[frames release];
-	[super dealloc];
-}
-
--(void) addFrameWithRect:(CGRect)rect
-{
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithRect:rect];
-	[frames addObject:frame];
-}
-@end
-
-#pragma mark -
-#pragma mark CCSpriteFrame
-@implementation CCSpriteFrame
-@synthesize rect;
-
-+(id) frameWithRect:(CGRect)frame
-{
-	return [[[self alloc] initWithRect:(CGRect)frame] autorelease];
-}
--(id) initWithRect:(CGRect)frame
-{
-	if( ([super init]) ) {
-		rect = frame;
-	}
-	return self;
-}
-
-- (NSString*) description
-{
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f)>", [self class], self,
-			rect.origin.x,
-			rect.origin.y,
-			rect.size.width,
-			rect.size.height];
-}
-
-- (void) dealloc
-{
-	CCLOG( @"cocos2d: deallocing %@",self);
-	[super dealloc];
-}
-@end
-

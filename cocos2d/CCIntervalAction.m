@@ -15,6 +15,7 @@
 
 #import "CCIntervalAction.h"
 #import "CCSprite.h"
+#import "CCSpriteFrame.h"
 #import "CCNode.h"
 #import "Support/CGPointExtension.h"
 

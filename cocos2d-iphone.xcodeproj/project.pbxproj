@@ -1109,6 +1109,8 @@
 		50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DFC29B0FF627B6007E7827 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
+		50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */; };
+		50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */; };
 		50E386DD10445EDA00150883 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50E386DE10445EF500150883 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		50E386E810445F4600150883 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
@@ -1791,7 +1793,7 @@
 		5019457F0F964CFD0059CE7C /* drawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = drawPrimitivesTest.h; path = tests/drawPrimitivesTest.h; sourceTree = "<group>"; };
 		501945800F964CFD0059CE7C /* drawPrimitivesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = drawPrimitivesTest.m; path = tests/drawPrimitivesTest.m; sourceTree = "<group>"; };
 		501A7CAC0EBC97BA005BC158 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
-		501C7C910F91EFFF0024A296 /* AtlasSpriteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtlasSpriteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501C7CA60F91F1B20024A296 /* AtlasSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasSpriteTest.h; path = tests/AtlasSpriteTest.h; sourceTree = "<group>"; };
 		501C7CA70F91F1B20024A296 /* AtlasSpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtlasSpriteTest.m; path = tests/AtlasSpriteTest.m; sourceTree = "<group>"; };
 		501CCFA40E99657C00B86F68 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
@@ -2242,6 +2244,8 @@
 		50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorldSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DFC2C90FF62843007E7827 /* HelloWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorld.h; path = tests/samples/HelloWorld.h; sourceTree = "<group>"; };
 		50DFC2CA0FF62843007E7827 /* HelloWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloWorld.m; path = tests/samples/HelloWorld.m; sourceTree = "<group>"; };
+		50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
+		50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
 		50E3876C10446C6E00150883 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50E3876E10446C6E00150883 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50E3877010446C6E00150883 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -3064,7 +3068,7 @@
 				504828800F45AED700A30CEF /* AttachTest.app */,
 				8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */,
 				8E6CBEEF0F7A758000D47B3A /* libvorbis.a */,
-				501C7C910F91EFFF0024A296 /* AtlasSpriteTest.app */,
+				501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */,
 				501945740F964C620059CE7C /* drawPrimitivesTest.app */,
 				504225700FC0B39C00B992F7 /* libbox2d.a */,
 				5042262E0FC0B5D500B992F7 /* Box2dTest.app */,
@@ -3652,6 +3656,8 @@
 				509A799A0F6188500032F449 /* CCSpriteManager.m */,
 				509A79950F6188420032F449 /* CCSprite.h */,
 				509A79960F6188420032F449 /* CCSprite.m */,
+				50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */,
+				50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */,
 			);
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
@@ -4423,6 +4429,7 @@
 				505462FC1062768000AB7C52 /* ccConfig.h in Headers */,
 				50BA77B3107DF35000954850 /* carray.h in Headers */,
 				50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */,
+				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4695,9 +4702,9 @@
 			productReference = 501945740F964C620059CE7C /* drawPrimitivesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		501C7C6D0F91EFFF0024A296 /* AtlasSpriteTest */ = {
+		501C7C6D0F91EFFF0024A296 /* SpriteManagerTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "AtlasSpriteTest" */;
+			buildConfigurationList = 501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "SpriteManagerTest" */;
 			buildPhases = (
 				501C7C700F91EFFF0024A296 /* Resources */,
 				501C7C840F91EFFF0024A296 /* Sources */,
@@ -4708,9 +4715,9 @@
 			dependencies = (
 				501C7C6E0F91EFFF0024A296 /* PBXTargetDependency */,
 			);
-			name = AtlasSpriteTest;
+			name = SpriteManagerTest;
 			productName = AtlasSpriteTest;
-			productReference = 501C7C910F91EFFF0024A296 /* AtlasSpriteTest.app */;
+			productReference = 501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */ = {
@@ -5475,7 +5482,6 @@
 				317070410E2940C900DD3360 /* AccelViewportTest */,
 				504CC30C1035BDE90096894C /* ActionManagerTest */,
 				506881F40E95761200F943E5 /* AtlasTest */,
-				501C7C6D0F91EFFF0024A296 /* AtlasSpriteTest */,
 				5048287F0F45AED700A30CEF /* AttachTest */,
 				504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */,
 				50010EBA103B3DB80059EC2E /* Box2dTestBed */,
@@ -5502,6 +5508,7 @@
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
 				50C93A930E0BF6E000517B01 /* SpritesTest */,
+				501C7C6D0F91EFFF0024A296 /* SpriteManagerTest */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
@@ -6522,6 +6529,7 @@
 				50545C00105E8D6C00AB7C52 /* CCPageTurn3DAction.m in Sources */,
 				50545C0B105E8E7200AB7C52 /* CCPageTurnTransition.m in Sources */,
 				50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */,
+				50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7583,7 +7591,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AtlasSpriteTest;
+				PRODUCT_NAME = SpriteManagerTest;
 			};
 			name = Debug;
 		};
@@ -7608,7 +7616,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AtlasSpriteTest;
+				PRODUCT_NAME = SpriteManagerTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -9661,7 +9669,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "AtlasSpriteTest" */ = {
+		501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "SpriteManagerTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				501C7C8F0F91EFFF0024A296 /* Debug */,
