@@ -29,7 +29,7 @@
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
 
-#pragma mark AtlasNode - Creation & Init
+#pragma mark CCAtlasNode - Creation & Init
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c
 {
 	return [[[self alloc] initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender:c] autorelease];
@@ -70,7 +70,7 @@
 	[super dealloc];
 }
 
-#pragma mark AtlasNode - Atlas generation
+#pragma mark CCAtlasNode - Atlas generation
 
 -(void) calculateMaxItems
 {
@@ -87,10 +87,10 @@
 
 -(void) updateAtlasValues
 {
-	[NSException raise:@"AtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
+	[NSException raise:@"CCAtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
 }
 
-#pragma mark AtlasNode - draw
+#pragma mark CCAtlasNode - draw
 - (void) draw
 {
 	glEnableClientState( GL_VERTEX_ARRAY);
@@ -120,7 +120,7 @@
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 
-#pragma mark AtlasNode - RGBA protocol
+#pragma mark CCAtlasNode - RGBA protocol
 
 -(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
 {
@@ -147,7 +147,7 @@
 	return opacityModifyRGB_;
 }
 
-#pragma mark AtlasNode - CocosNodeTexture protocol
+#pragma mark CCAtlasNode - CocosNodeTexture protocol
 
 -(void) updateBlendFunc
 {

@@ -479,11 +479,11 @@ enum {
 	inA = [CCSequence actions:
 		   [CCDelayTime actionWithDuration:duration/2],
 		   [CCShow action],
-		   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:0 deltaAngleX:0],
+		   [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:0 deltaAngleX:0],
 		   [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 		   nil ];
 	outA = [CCSequence actions:
-			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:0 deltaAngleX:0],
+			[CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:0 deltaAngleX:0],
 			[CCHide action],
 			[CCDelayTime actionWithDuration:duration/2],							
 			nil ];
@@ -522,11 +522,11 @@ enum {
 	inA = [CCSequence actions:
 		   [CCDelayTime actionWithDuration:duration/2],
 		   [CCShow action],
-		   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:90 deltaAngleX:0],
+		   [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:90 deltaAngleX:0],
 		   [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 		   nil ];
 	outA = [CCSequence actions:
-			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:90 deltaAngleX:0],
+			[CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:90 deltaAngleX:0],
 			[CCHide action],
 			[CCDelayTime actionWithDuration:duration/2],							
 			nil ];
@@ -565,11 +565,11 @@ enum {
 	inA = [CCSequence actions:
 			   [CCDelayTime actionWithDuration:duration/2],
 			   [CCShow action],
-			   [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:-45 deltaAngleX:0],
+			   [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:-45 deltaAngleX:0],
 			   [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 			   nil ];
 	outA = [CCSequence actions:
-				[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:45 deltaAngleX:0],
+				[CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:45 deltaAngleX:0],
 				[CCHide action],
 				[CCDelayTime actionWithDuration:duration/2],							
 				nil ];
@@ -607,7 +607,7 @@ enum {
 	inA = [CCSequence actions:
 		   [CCDelayTime actionWithDuration:duration/2],
 		   [CCSpawn actions:
-			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:0 deltaAngleX:0],
+			[CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:0 deltaAngleX:0],
 			[CCScaleTo actionWithDuration:duration/2 scale:1],
 			[CCShow action],
 			nil],
@@ -615,7 +615,7 @@ enum {
 		   nil ];
 	outA = [CCSequence actions:
 			[CCSpawn actions:
-			 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:0 deltaAngleX:0],
+			 [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:0 deltaAngleX:0],
 			 [CCScaleTo actionWithDuration:duration/2 scale:0.5f],
 			 nil],
 			[CCHide action],
@@ -657,7 +657,7 @@ enum {
 	inA = [CCSequence actions:
 			   [CCDelayTime actionWithDuration:duration/2],
 			   [CCSpawn actions:
-				 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:90 deltaAngleX:0],
+				 [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:90 deltaAngleX:0],
 				 [CCScaleTo actionWithDuration:duration/2 scale:1],
 				 [CCShow action],
 				 nil],
@@ -665,7 +665,7 @@ enum {
 			   nil ];
 	outA = [CCSequence actions:
 				[CCSpawn actions:
-				 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:90 deltaAngleX:0],
+				 [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:90 deltaAngleX:0],
 				 [CCScaleTo actionWithDuration:duration/2 scale:0.5f],
 				 nil],							
 				[CCHide action],
@@ -707,7 +707,7 @@ enum {
 	inA = [CCSequence actions:
 		   [CCDelayTime actionWithDuration:duration/2],
 		   [CCSpawn actions:
-			[OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:-45 deltaAngleX:0],
+			[CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:inAngleZ deltaAngleZ:inDeltaZ angleX:-45 deltaAngleX:0],
 			[CCScaleTo actionWithDuration:duration/2 scale:1],
 			[CCShow action],
 			nil],						   
@@ -716,7 +716,7 @@ enum {
 		   nil ];
 	outA = [CCSequence actions:
 			[CCSpawn actions:
-			 [OrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:45 deltaAngleX:0],
+			 [CCOrbitCamera actionWithDuration: duration/2 radius: 1 deltaRadius:0 angleZ:outAngleZ deltaAngleZ:outDeltaZ angleX:45 deltaAngleX:0],
 			 [CCScaleTo actionWithDuration:duration/2 scale:0.5f],
 			 nil],							
 			[CCHide action],

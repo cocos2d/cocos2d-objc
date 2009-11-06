@@ -15,7 +15,7 @@
 #import "CCTouchDelegateProtocol.h"
 
 /**
- TouchHandler
+ CCTouchHandler
  Object than contains the delegate and priority of the event handler.
 */
 @interface CCTouchHandler : NSObject {
@@ -39,7 +39,7 @@
 - (BOOL)ccTouchesCancelled:(NSMutableSet *)touches withEvent:(UIEvent *)event;
 @end
 
-/** StandardTouchHandler
+/** CCStandardTouchHandler
  It forwardes each event to the delegate until one delegate returns kEventHandled.
  */
 @interface CCStandardTouchHandler : CCTouchHandler
@@ -48,7 +48,7 @@
 @end
 
 /**
- TargetedTouchHandler
+ CCTargetedTouchHandler
  Object than contains the claimed touches and if it swallos touches.
  Used internally by TouchDispatcher
  */

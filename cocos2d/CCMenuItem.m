@@ -34,7 +34,7 @@ enum {
 
 
 #pragma mark -
-#pragma mark MenuItem
+#pragma mark CCMenuItem
 
 @implementation CCMenuItem
 
@@ -120,7 +120,7 @@ enum {
 
 
 #pragma mark -
-#pragma mark MenuItemLabel
+#pragma mark CCMenuItemLabel
 
 @implementation CCMenuItemLabel
 
@@ -240,7 +240,7 @@ enum {
 @end
 
 #pragma mark  -
-#pragma mark MenuItemAtlasFont
+#pragma mark CCMenuItemAtlasFont
 
 @implementation CCMenuItemAtlasFont
 
@@ -276,7 +276,7 @@ enum {
 
 
 #pragma mark -
-#pragma mark MenuItemFont
+#pragma mark CCMenuItemFont
 
 @implementation CCMenuItemFont
 
@@ -334,7 +334,7 @@ enum {
 @end
 
 #pragma mark -
-#pragma mark MenuItemSprite
+#pragma mark CCMenuItemSprite
 @implementation CCMenuItemSprite
 
 @synthesize normalImage=normalImage_, selectedImage=selectedImage_, disabledImage=disabledImage_;
@@ -391,7 +391,7 @@ enum {
 	}
 }
 
-#pragma mark MenuItemImage - CCNodeRGBA protocol
+#pragma mark CCMenuItemImage - CCNodeRGBA protocol
 - (void) setOpacity: (GLubyte)opacity
 {
 	[normalImage_ setOpacity:opacity];
@@ -420,7 +420,7 @@ enum {
 @end
 
 #pragma mark -
-#pragma mark MenuItemImage
+#pragma mark CCMenuItemImage
 
 @implementation CCMenuItemImage
 
@@ -458,7 +458,7 @@ enum {
 @end
 
 #pragma mark -
-#pragma mark MenuItemToggle
+#pragma mark CCMenuItemToggle
 
 //
 // MenuItemToggle
@@ -563,7 +563,7 @@ enum {
 	return [subItems_ objectAtIndex:selectedIndex_];
 }
 
-#pragma mark MenuItemToggle - CCNodeRGBA protocol
+#pragma mark CCMenuItemToggle - CCNodeRGBA protocol
 
 - (void) setOpacity: (GLubyte)opacity
 {

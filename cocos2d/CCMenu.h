@@ -22,7 +22,7 @@ typedef enum  {
 	kMenuStateTrackingTouch
 } MenuState;
 
-/** A Menu
+/** A CCMenu
  * 
  * Features and Limitation:
  *  - You can add MenuItem objects in runtime using addChild:
@@ -36,10 +36,10 @@ typedef enum  {
 	ccColor3B	color_;
 }
 
-/** creates a menu with it's items */
+/** creates a CCMenu with it's items */
 + (id) menuWithItems: (CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
 
-/** initializes a menu with it's items */
+/** initializes a CCMenu with it's items */
 - (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
 
 /** align items vertically */

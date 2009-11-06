@@ -16,7 +16,7 @@
 @class CCIntervalAction;
 @class CCNode;
 
-/** Transition can Ease the actions of the scene protocol.
+/** CCTransitionEaseScene can ease the actions of the scene protocol.
  @since v0.8.2
  */
 @protocol CCTransitionEaseScene <NSObject>
@@ -39,7 +39,7 @@ typedef enum {
 	kOrientationDownOver = 1,
 } tOrientation;
 
-/** Base class for Transition scenes
+/** Base class for CCTransition scenes
  */
 @interface CCTransitionScene : CCScene {
 	CCScene	*inScene;
@@ -57,7 +57,7 @@ typedef enum {
 -(void) hideOutShowIn;
 @end
 
-/** A Transition that supports orientation like.
+/** A CCTransition that supports orientation like.
  * Possible orientation: LeftOver, RightOver, UpOver, DownOver
  */
 @interface CCOrientedTransitionScene : CCTransitionScene
@@ -71,21 +71,21 @@ typedef enum {
 @end
 
 
-/** RotoZoom Transition.
+/** CCRotoZoomTransition:
  Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
  */
 @interface CCRotoZoomTransition : CCTransitionScene
 {}
 @end
 
-/** JumpZoom Transition.
+/** CCJumpZoomTransition:
  Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
 */
 @interface CCJumpZoomTransition : CCTransitionScene
 {}
 @end
 
-/** MoveInL Transition.
+/** CCMoveInLTransition:
  Move in from to the left the incoming scene.
 */
 @interface CCMoveInLTransition : CCTransitionScene <CCTransitionEaseScene>
@@ -96,28 +96,28 @@ typedef enum {
 -(CCIntervalAction*) action;
 @end
 
-/** MoveInR Transition.
+/** CCMoveInRTransition:
  Move in from to the right the incoming scene.
  */
 @interface CCMoveInRTransition : CCMoveInLTransition
 {}
 @end
 
-/** MoveInT Transition.
+/** CCMoveInTTransition:
  Move in from to the top the incoming scene.
  */
 @interface CCMoveInTTransition : CCMoveInLTransition 
 {}
 @end
 
-/** MoveInB Transition.
+/** CCMoveInBTransition:
  Move in from to the bottom the incoming scene.
  */
 @interface CCMoveInBTransition : CCMoveInLTransition
 {}
 @end
 
-/** SlideInL Transition.
+/** CCSlideInLTransition:
  Slide in the incoming scene from the left border.
  */
 @interface CCSlideInLTransition : CCTransitionScene <CCTransitionEaseScene>
@@ -128,21 +128,21 @@ typedef enum {
 -(CCIntervalAction*) action;
 @end
 
-/** SlideInR Transition.
+/** CCSlideInRTransition:
  Slide in the incoming scene from the right border.
  */
 @interface CCSlideInRTransition : CCSlideInLTransition 
 {}
 @end
 
-/** SlideInB Transition.
+/** CCSlideInBTransition:
  Slide in the incoming scene from the bottom border.
  */
 @interface CCSlideInBTransition : CCSlideInLTransition
 {}
 @end
 
-/** SlideInT Transition.
+/** CCSlideInTTransition:
  Slide in the incoming scene from the top border.
  */
 @interface CCSlideInTTransition : CCSlideInLTransition
@@ -156,7 +156,7 @@ typedef enum {
 {}
 @end
 
-/** FlipX Transition.
+/** CCFlipXTransition:
  Flips the screen horizontally.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -164,7 +164,7 @@ typedef enum {
 {}
 @end
 
-/** FlipY Transition.
+/** CCFlipYTransition:
  Flips the screen vertically.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -172,7 +172,7 @@ typedef enum {
 {}
 @end
 
-/** FlipAngular Transition.
+/** CCFlipAngularTransition:
  Flips the screen half horizontally and half vertically.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -180,7 +180,7 @@ typedef enum {
 {}
 @end
 
-/** ZoomFlipX Transition.
+/** CCZoomFlipXTransition:
  Flips the screen horizontally doing a zoom out/in
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -189,7 +189,7 @@ typedef enum {
 }
 @end
 
-/** ZoomFlipY Transition.
+/** CCZoomFlipYTransition:
  Flips the screen vertically doing a little zooming out/in
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -197,7 +197,7 @@ typedef enum {
 {}
 @end
 
-/** ZoomFlipAngular Transition.
+/** CCZoomFlipAngularTransition:
  Flips the screen half horizontally and half vertically doing a little zooming out/in.
  The front face is the outgoing scene and the back face is the incoming scene.
  */
@@ -205,7 +205,7 @@ typedef enum {
 {}
 @end
 
-/** Fade Transition.
+/** CCFadeTransition:
  Fade out the outgoing scene and then fade in the incoming scene.'''
  */
 @interface CCFadeTransition : CCTransitionScene
@@ -220,14 +220,14 @@ typedef enum {
 -(id) initWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3B)color;
 @end
 
-/** TurnOffTiles Transition.
+/** CCTurnOffTilesTransition:
  Turn off the tiles of the outgoing scene in random order
  */
 @interface CCTurnOffTilesTransition : CCTransitionScene <CCTransitionEaseScene>
 {}
 @end
 
-/** SplitCols Transition.
+/** CCSplitColsTransition:
  The odd columns goes upwards while the even columns goes downwards.
  */
 @interface CCSplitColsTransition : CCTransitionScene <CCTransitionEaseScene>
@@ -235,14 +235,14 @@ typedef enum {
 -(CCIntervalAction*) action;
 @end
 
-/** SplitRows Transition.
+/** CCSplitRowsTransition:
  The odd rows goes to the left while the even rows goes to the right.
  */
 @interface CCSplitRowsTransition : CCSplitColsTransition
 {}
 @end
 
-/** FadeTRTransition.
+/** CCFadeTRTransition:
  Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
  */
 @interface CCFadeTRTransition : CCTransitionScene <CCTransitionEaseScene>
@@ -250,21 +250,21 @@ typedef enum {
 -(CCIntervalAction*) actionWithSize:(ccGridSize) vector;
 @end
 
-/** FadeBLTransition.
+/** CCFadeBLTransition:
  Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
  */
 @interface CCFadeBLTransition : CCFadeTRTransition
 {}
 @end
 
-/** FadeUp Transition.
+/** CCFadeUpTransition:
  * Fade the tiles of the outgoing scene from the bottom to the top.
  */
 @interface CCFadeUpTransition : CCFadeTRTransition
 {}
 @end
 
-/** FadeDown Transition.
+/** CCFadeDownTransition:
  * Fade the tiles of the outgoing scene from the top to the bottom.
  */
 @interface CCFadeDownTransition : CCFadeTRTransition

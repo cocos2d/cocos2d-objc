@@ -22,9 +22,9 @@
 
 #define kItemSize 32
 
-/** Menu Item base class
+/** CCMenuItem base class
  *
- *  Subclass MenuItem (or any subclass) to create your custom MenuItem
+ *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
  */
 @interface CCMenuItem : CCNode
 {
@@ -38,10 +38,10 @@
 */
 @property (nonatomic,readonly) BOOL isSelected;
 
-/** Creates a menu item with a target/selector */
+/** Creates a CCMenuItem with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector;
 
-/** Initializes a menu item with a target/selector */
+/** Initializes a CCMenuItem with a target/selector */
 -(id) initWithTarget:(id)target selector:(SEL)selector;
 
 /** Returns the outside box */
@@ -56,18 +56,18 @@
 /** The item was unselected */
 -(void) unselected;
 
-/** Enable or disabled the MenuItem */
+/** Enable or disabled the CCMenuItem */
 -(void) setIsEnabled:(BOOL)enabled;
-/** Returns whether or not the MenuItem is enabled */
+/** Returns whether or not the CCMenuItem is enabled */
 -(BOOL) isEnabled;
 @end
 
-/** An abstract class for "label" MenuItems 
- Any CocosNode that supports the CCNodeLabel protocol can be added.
+/** An abstract class for "label" CCMenuItemLabel items 
+ Any CCNode that supports the CCNodeLabel protocol can be added.
  Supported nodes:
-   - BitmapFontAtlas
-   - LabelAtlas
-   - Label
+   - CCBitmapFontAtlas
+   - CCLabelAtlas
+   - CCLabel
  */
 @interface CCMenuItemLabel : CCMenuItem  <CCNodeRGBA>
 {
@@ -79,25 +79,25 @@
 /** the color that will be used to disable the item */
 @property (nonatomic,readwrite) ccColor3B disabledColor;
 
-/** Label that is rendered. It can be any CocosNode that implements the CCNodeLabel */
+/** Label that is rendered. It can be any CCNode that implements the CCNodeLabel */
 @property (nonatomic,readwrite,retain) CCNode<CCNodeLabel, CCNodeRGBA>* label;
 
-/** creates a MenuItemLabel with a Label, target and selector */
+/** creates a CCMenuItemLabel with a Label, target and selector */
 +(id) itemWithLabel:(CCNode<CCNodeLabel,CCNodeRGBA>*)label target:(id)target selector:(SEL)selector;
 
-/** initializes a MenuItemLabel with a Label, target and selector */
+/** initializes a CCMenuItemLabel with a Label, target and selector */
 -(id) initWithLabel:(CCNode<CCNodeLabel,CCNodeRGBA>*)label target:(id)target selector:(SEL)selector;
 
 /** sets a new string to the inner label */
 -(void) setString:(NSString*)label;
 
-/** Enable or disabled the MenuItemFont
+/** Enable or disabled the CCMenuItemFont
  @warning setIsEnabled changes the RGB color of the font
  */
 -(void) setIsEnabled: (BOOL)enabled;
 @end
 
-/** A MenuItemAtlasFont
+/** A CCMenuItemAtlasFont
  Helper class that creates a MenuItemLabel class with a LabelAtlas
  */
 @interface CCMenuItemAtlasFont : CCMenuItemLabel
@@ -116,8 +116,8 @@
 
 @end
 
-/** A MenuItemFont
- Helper class that creates a MenuItemLabel class with a Label
+/** A CCMenuItemFont
+ Helper class that creates a CCMenuItemLabel class with a Label
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
@@ -134,7 +134,7 @@
 /** get the font name */
 +(NSString*) fontName;
 
-/** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
+/** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
 +(id) itemFromString: (NSString*) value;
 
 /** creates a menu item from a string with a target/selector */
@@ -144,7 +144,7 @@
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
 
-/** MenuItemSprite accepts CocosNode<CCNodeRGBA> objects as items.
+/** CCMenuItemSprite accepts CCNode<CCNodeRGBA> objects as items.
  The images has 3 different states:
  - unselected image
  - selected image
@@ -175,7 +175,7 @@
 
 @end
 
-/** MenuItemImage accepts images as items.
+/** CCMenuItemImage accepts images as items.
  The images has 3 different states:
  - unselected image
  - selected image
@@ -199,7 +199,7 @@
 
 
 
-/** A MenuItemToggle
+/** A CCMenuItemToggle
  A simple container class that "toggles" it's inner items
  The inner itmes can be any MenuItem
  */

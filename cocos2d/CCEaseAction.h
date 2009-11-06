@@ -40,19 +40,19 @@
 -(id) initWithAction: (CCIntervalAction*) action rate:(float)rate;
 @end
 
-/** EaseIn action with a rate
+/** CCEaseIn action with a rate
  */
 @interface CCEaseIn : CCEaseRateAction <NSCopying> {} @end
 
-/** EaseOut action with a rate
+/** CCEaseOut action with a rate
  */
 @interface CCEaseOut : CCEaseRateAction <NSCopying> {} @end
 
-/** EaseInOut action with a rate
+/** CCEaseInOut action with a rate
  */
 @interface CCEaseInOut : CCEaseRateAction <NSCopying> {} @end
 
-/** Ease Exponential In
+/** CCEase Exponential In
  */
 @interface CCEaseExponentialIn : CCEaseAction <NSCopying> {} @end
 /** Ease Exponential Out
@@ -104,12 +104,12 @@
  */
 @interface CCEaseElasticInOut : CCEaseElastic <NSCopying> {} @end
 
-/** EaseBounce abstract class.
+/** CCEaseBounce abstract class.
  @since v0.8.2
 */
 @interface CCEaseBounce : CCEaseAction <NSCopying> {} @end
 
-/** EaseBounceIn action.
+/** CCEaseBounceIn action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
 */
@@ -121,25 +121,25 @@
  */
 @interface CCEaseBounceOut : CCEaseBounce <NSCopying> {} @end
 
-/** EaseBounceInOut action.
+/** CCEaseBounceInOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
 @interface CCEaseBounceInOut : CCEaseBounce <NSCopying> {} @end
 
-/** EaseBackIn action.
+/** CCEaseBackIn action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
 @interface CCEaseBackIn : CCEaseAction <NSCopying> {} @end
 
-/** EaseBackOut action.
+/** CCEaseBackOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
 @interface CCEaseBackOut : CCEaseAction <NSCopying> {} @end
 
-/** EaseBackInOut action.
+/** CCEaseBackInOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */

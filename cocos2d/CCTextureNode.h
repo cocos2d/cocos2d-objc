@@ -20,12 +20,12 @@
 #import "CCNode.h"
 
 
-/** TextureNode is a subclass of CocosNode that implements the CCNodeRGBA
- * and CocosNodeTexture protocol.
+/** TextureNode is a subclass of CCNode that implements the CCNodeRGBA
+ * and CCNodeTexture protocol.
  *
  * As the name implies it, it knows how to render a textures.
  *
- * All features from CocosNode are valid, plus the following new features:
+ * All features from CCNode are valid, plus the following new features:
  *  - opacity and RGB
  *  - texture (can be Aliased or AntiAliased)
  */
@@ -44,10 +44,10 @@
 	
 }
 
-/** conforms to CocosNodeTexture protocol */
+/** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite,retain) CCTexture2D *texture;
 
-/** conforms to CocosNodeTexture protocol */
+/** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CCNodeRGBA protocol */

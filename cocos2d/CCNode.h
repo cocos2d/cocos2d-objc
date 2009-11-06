@@ -20,28 +20,28 @@
 #import "Support/CCTexture2D.h"
 
 enum {
-	kCocosNodeTagInvalid = -1,
+	kCCNodeTagInvalid = -1,
 };
 
 @class CCCamera;
 @class CCGridBase;
 
-/** CocosNode is the main element. Anything thats gets drawn or contains things that get drawn is a CocosNode.
- The most popular CocosNodes are: Scene, Layer, Sprite, Menu.
+/** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
+ The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
  
- The main features of a CocosNode are:
- - They can contain other cocos nodes (addChild, getChildByTag, removeChild, etc)
+ The main features of a CCNode are:
+ - They can contain other CCnode nodes (addChild, getChildByTag, removeChild, etc)
  - They can schedule periodic callback (schedule, unschedule, etc)
  - They can execute actions (runAction, stopAction, etc)
  
- Some CocosNodes provide extra functionality for them or their children.
+ Some CCNode nodes provide extra functionality for them or their children.
  
- Subclassing a CocosNode usually means (one/all) of:
+ Subclassing a CCNode usually means (one/all) of:
  - overriding init to initialize resources and schedule callbacks
  - create callbacks to handle the advancement of time
  - overriding draw to render the node
  
- Features of CocosNode:
+ Features of CCNode:
  - position
  - scale (x, y)
  - rotation (in degrees)
@@ -54,7 +54,7 @@ enum {
  - openGL z position
  
  Limitations:
- - A CocosNode is a "void" object. It doesn't have a texture
+ - A CCNode is a "void" object. It doesn't have a texture
  */ 
 @interface CCNode : NSObject {
 	
@@ -185,18 +185,18 @@ enum {
 
 // scene managment
 
-/** callback that is called every time the CocosNode enters the 'stage'.
- If the CocosNode enters the 'stage' with a transition, this callback is called when the transition starts.
+/** callback that is called every time the CCNode enters the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
  During onEnter you can't a "sister/brother" node.
  */
 -(void) onEnter;
-/** callback that is called when the CocosNode enters in the 'stage'.
- If the CocosNode enters the 'stage' with a transition, this callback is called when the transition finishes.
+/** callback that is called when the CCNode enters in the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
  @since v0.8
  */
 -(void) onEnterTransitionDidFinish;
-/** callback that is called every time the CocosNode leaves the 'stage'.
- If the CocosNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
+/** callback that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
  During onExit you can't a "sister/brother" node.
  */
 -(void) onExit;
@@ -241,7 +241,7 @@ enum {
 
 // composition: GET
 /** Gets a child from the container given its tag
- @return returns a CocosNode object
+ @return returns a CCNode object
  @since v0.7.1
  */
 -(CCNode*) getChildByTag:(int) tag;
@@ -392,7 +392,7 @@ enum {
 // protocols
 //
 
-/// CocosNode RGBA protocol
+/// CCNode RGBA protocol
 @protocol CCNodeRGBA <NSObject>
 /** sets Color
  @since v0.8
@@ -442,7 +442,7 @@ enum {
 @end
 
 
-/** CocosNodes that uses a Texture2D to render the images.
+/** CCNode objects that uses a Texture2D to render the images.
  The texture can have a blending function.
  If the texture has alpha premultiplied the default blending function is:
     src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA

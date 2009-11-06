@@ -30,7 +30,7 @@ enum {
 	TMXLayerAttribGzip = 1 << 2,
 };
 
-/* TMXLayerInfo contains the information about the layers like:
+/* CCTMXLayerInfo contains the information about the layers like:
  - Layer name
  - Layer size
  - Layer opacity at creation time (it can be modified at runtime)
@@ -61,7 +61,7 @@ enum {
 
 @end
 
-/* TMXTilesetInfo contains the information about the tilesets like:
+/* CCTMXTilesetInfo contains the information about the tilesets like:
  - Tileset name
  - Tilset spacing
  - Tileset margin
@@ -96,7 +96,7 @@ enum {
 -(CGRect) rectForGID:(unsigned int)gid;
 @end
 
-/* TMXMapInfo contains the information about the map like:
+/* CCTMXMapInfo contains the information about the map like:
  - Map orientation (hexagonal, isometric or orthogonal)
  - Tile size
  - Map size

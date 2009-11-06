@@ -40,7 +40,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** Base class for Grid3D actions.
+/** Base class for CCGrid3D actions.
  Grid3D actions can modify a non-tiled grid.
  */
 @interface CCGrid3DAction : CCGridAction
@@ -59,7 +59,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** Base class for TiledGrid3D actions */
+/** Base class for CCTiledGrid3D actions */
 @interface CCTiledGrid3DAction : CCGridAction
 {
 	
@@ -76,7 +76,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** AccelDeccelAmplitude action */
+/** CCAccelDeccelAmplitude action */
 @interface CCAccelDeccelAmplitude : CCIntervalAction
 {
 	float			rate;
@@ -95,7 +95,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** AccelAmplitude action */
+/** CCAccelAmplitude action */
 @interface CCAccelAmplitude : CCIntervalAction
 {
 	float			rate;
@@ -114,7 +114,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** DeccelAmplitude action */
+/** CCDeccelAmplitude action */
 @interface CCDeccelAmplitude : CCIntervalAction
 {
 	float			rate;
@@ -133,7 +133,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** StopGrid action.
+/** CCStopGrid action.
  Don't call this action if another grid action is active.
  Call if you want to remove the the grid effect. Example:
  [Sequence actions:[Lens ...], [StopGrid action], nil];
@@ -145,7 +145,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** ReuseGrid action */
+/** CCReuseGrid action */
 @interface CCReuseGrid : CCInstantAction
 {
 	int t;

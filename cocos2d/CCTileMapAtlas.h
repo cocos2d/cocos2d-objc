@@ -24,7 +24,7 @@
  For more information regarding the format, please see this post:
  http://blog.sapusmedia.com/2008/12/how-to-use-tilemap-editor-for-cocos2d.html
  
- All features from AtlasNode are valid in TileMapAtlas
+ All features from CCAtlasNode are valid in CCTileMapAtlas
  
  IMPORTANT:
  This class is deprecated. It is maintained for compatibility reasons only.
@@ -46,12 +46,12 @@
 /** TileMap info */
 @property (nonatomic,readonly) tImageTGA *tgaInfo;
 
-/** creates the TileMap with a tile file (atlas) with a map file and the width and height of each tile.
+/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
  The tile file will be loaded using the TextureMgr.
  */
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;
 
-/** initializes the TileMap with a tile file (atlas) with a map file and the width and height of each tile.
+/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
  The file will be loaded using the TextureMgr.
  */
 -(id) initWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;

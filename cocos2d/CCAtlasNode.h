@@ -15,13 +15,13 @@
 #import "CCTextureAtlas.h"
 #import "CCNode.h"
 
-/** AtlasNode is a subclass of CocosNode that implements the CCNodeRGBA and
- CocosNodeTexture protocol
+/** CCAtlasNode is a subclass of CCNode that implements the CCNodeRGBA and
+ CCNodeTexture protocol
  
  It knows how to render a TextureAtlas object.
- If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode)
+ If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a subclass of CCAtlasNode)
  
- All features from CocosNode are valid, plus the following features:
+ All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
  */
 @interface CCAtlasNode : CCNode <CCNodeRGBA, CCNodeTexture> {
@@ -53,10 +53,10 @@
 	BOOL opacityModifyRGB_;
 }
 
-/** conforms to CocosNodeTexture protocol */
+/** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite,retain) CCTextureAtlas *textureAtlas;
 
-/** conforms to CocosNodeTexture protocol */
+/** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CCNodeRGBA protocol */
@@ -65,10 +65,10 @@
 @property (nonatomic,readwrite) ccColor3B color;
 
 
-/** creates an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;
 
-/** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 -(id) initWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;
 
 /** updates the Atlas (indexed vertex array).

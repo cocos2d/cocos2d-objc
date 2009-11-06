@@ -85,7 +85,7 @@ typedef enum {
 
 //CLASS INTERFACES:
 
-/** Texture2D class
+/** CCTexture2D class
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
  * The created Texture2D object will always have power-of-two dimensions. 
  * Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
@@ -126,7 +126,7 @@ typedef enum {
 @end
 
 /**
-Drawing extensions to make it easy to draw basic quads using a Texture2D object.
+Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
 These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 */
 @interface CCTexture2D (Drawing)
@@ -137,7 +137,7 @@ These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_CO
 @end
 
 /**
-Extensions to make it easy to create a Texture2D object from an image file.
+Extensions to make it easy to create a CCTexture2D object from an image file.
 Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface CCTexture2D (Image)
@@ -146,7 +146,7 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 @end
 
 /**
-Extensions to make it easy to create a Texture2D object from a string of text.
+Extensions to make it easy to create a CCTexture2D object from a string of text.
 Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface CCTexture2D (Text)
@@ -157,7 +157,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 @end
 
 /**
- Extensions to make it easy to create a Texture2D object from a PVRTC file
+ Extensions to make it easy to create a CCTexture2D object from a PVRTC file
  Note that the generated textures are don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
 @interface CCTexture2D (PVRTC)

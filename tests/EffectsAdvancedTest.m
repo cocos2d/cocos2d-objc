@@ -45,7 +45,7 @@ enum {
 	id reuse = [CCReuseGrid actionWithTimes:1];
 	id delay = [CCDelayTime actionWithDuration:8];
 
-	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
+	id orbit = [CCOrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 	id orbit_back = [orbit reverse];
 
 	[target runAction: [CCRepeatForever actionWithAction: [CCSequence actions: orbit, orbit_back, nil]]];
@@ -53,7 +53,7 @@ enum {
 }
 -(NSString*) title
 {
-	return @"Lens + Waves3d and OrbitCamera";
+	return @"Lens + Waves3d and CCOrbitCamera";
 }
 @end
 
@@ -86,7 +86,7 @@ enum {
 
 	id delay = [CCDelayTime actionWithDuration:1];
 	
-//	id orbit = [OrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
+//	id orbit = [CCOrbitCamera actionWithDuration:5 radius:1 deltaRadius:2 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:-90];
 //	id orbit_back = [orbit reverse];
 //
 //	[target runAction: [RepeatForever actionWithAction: [Sequence actions: orbit, orbit_back, nil]]];

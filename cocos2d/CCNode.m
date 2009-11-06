@@ -55,7 +55,7 @@
 @synthesize tag;
 @synthesize vertexZ = vertexZ_;
 
-#pragma mark CocosNode - Transform related properties
+#pragma mark CCNode - Transform related properties
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
 @synthesize transformAnchor=transformAnchor_, relativeAnchorPoint=relativeAnchorPoint_;
@@ -129,7 +129,7 @@
 
 -(float) scale
 {
-	NSAssert( scaleX_ == scaleY_, @"CocosNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
 	return scaleX_;
 }
 
@@ -139,7 +139,7 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
-#pragma mark CocosNode - Init & cleanup
+#pragma mark CCNode - Init & cleanup
 
 +(id) node
 {
@@ -171,7 +171,7 @@
 		
 		visible = YES;
 
-		tag = kCocosNodeTagInvalid;
+		tag = kCCNodeTagInvalid;
 		
 		zOrder = 0;
 
@@ -232,7 +232,7 @@
 	[super dealloc];
 }
 
-#pragma mark CocosNode Composition
+#pragma mark CCNode Composition
 
 -(void) childrenAlloc
 {
@@ -250,7 +250,7 @@
 
 -(CCNode*) getChildByTag:(int) aTag
 {
-	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
 	for( CCNode *node in children ) {
 		if( node.tag == aTag )
@@ -316,7 +316,7 @@
 
 -(void) removeChildByTag:(int)aTag cleanup:(BOOL)cleanup
 {
-	NSAssert( aTag != kCocosNodeTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 
 	CCNode *child = [self getChildByTag:aTag];
 	
@@ -404,7 +404,7 @@
 	[child release];
 }
 
-#pragma mark CocosNode Draw
+#pragma mark CCNode Draw
 
 -(void) draw
 {
@@ -447,7 +447,7 @@
 	glPopMatrix();
 }
 
-#pragma mark CocosNode - Transformations
+#pragma mark CCNode - Transformations
 
 -(void) transformAncestors
 {
@@ -502,7 +502,7 @@
 	*/
 }
 
-#pragma mark CocosNode SceneManagement
+#pragma mark CCNode SceneManagement
 
 -(void) onEnter
 {
@@ -530,7 +530,7 @@
 		[child onExit];
 }
 
-#pragma mark CocosNode Actions
+#pragma mark CCNode Actions
 
 -(CCAction*) runAction:(CCAction*) action
 {
@@ -568,7 +568,7 @@
 	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
 
-#pragma mark CocosNode Timers 
+#pragma mark CCNode Timers 
 
 -(void) timerAlloc
 {
@@ -613,7 +613,7 @@
 
 	if( ! (timer = [scheduledSelectors objectForKey:key] ) )
 	 {
-		 CCLOG(@"cocos2d: CocosNode.unschedule: Selector not scheduled: %@",key );
+		 CCLOG(@"cocos2d: CCNode.unschedule: Selector not scheduled: %@",key );
 		 return;
 	 }
 	
@@ -640,7 +640,7 @@
 }
 
 
-#pragma mark CocosNode Transform
+#pragma mark CCNode Transform
 
 - (CGAffineTransform)nodeToParentTransform
 {

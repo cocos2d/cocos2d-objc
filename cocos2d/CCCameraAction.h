@@ -14,7 +14,7 @@
 
 #import "CCIntervalAction.h"
 
-/** Base class for Camera actions
+/** Base class for CCCamera actions
  */
 @interface CCCameraAction : CCIntervalAction <NSCopying> {
 	float centerXOrig;
@@ -31,10 +31,10 @@
 }
 @end
 
-/** Orbit Camera action
+/** CCOrbitCamera action
  Orbits the camera around the center of the screen using spherical coordinates
  */
-@interface OrbitCamera : CCCameraAction <NSCopying> {
+@interface CCOrbitCamera : CCCameraAction <NSCopying> {
 	float radius;
 	float deltaRadius;
 	float angleZ;
@@ -48,9 +48,9 @@
 	float radDeltaX;
 	
 }
-/** creates an OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+/** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
 +(id) actionWithDuration:(float) t radius:(float)r deltaRadius:(float) dr angleZ:(float)z deltaAngleZ:(float)dz angleX:(float)x deltaAngleX:(float)dx;
-/** initializes an OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+/** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
 -(id) initWithDuration:(float) t radius:(float)r deltaRadius:(float) dr angleZ:(float)z deltaAngleZ:(float)dz angleX:(float)x deltaAngleX:(float)dx;
 /** positions the camera according to spherical coordinates */
 -(void) sphericalRadius:(float*) r zenith:(float*) zenith azimuth:(float*) azimuth;

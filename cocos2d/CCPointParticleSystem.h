@@ -14,7 +14,7 @@
 
 #import "CCParticleSystem.h"
 
-/** PointParticleSystem is a subclass of ParticleSystem
+/** CCPointParticleSystem is a subclass of CCParticleSystem
  Attributes of a Particle System:
  * All the attributes of Particle System
 

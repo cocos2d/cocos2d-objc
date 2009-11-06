@@ -19,11 +19,11 @@
 
 #import "CCTextureNode.h"
 
-/** Label is a subclass of TextureNode that knows how to render text labels
+/** CCLabel is a subclass of CCTextureNode that knows how to render text labels
  *
- * All features from TextureNode are valid in Label
+ * All features from CCTextureNode are valid in CCLabel
  *
- * Label are slow. Consider using LabelAtlas or BitmapFontAtlas instead.
+ * CCLabel objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
  */
 @interface CCLabel : CCTextureNode <CCNodeLabel>
 {
@@ -33,17 +33,17 @@
 	CGFloat _fontSize;
 }
 
-/** creates a label from a fontname, alignment, dimension and font size */
+/** creates a CCLabel from a fontname, alignment, dimension and font size */
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** creates a label from a fontname and font size */
+/** creates a CCLabel from a fontname and font size */
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
-/** initializes the label with a font name, alignment, dimension and font size */
+/** initializes the CCLabel with a font name, alignment, dimension and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** initializes the label with a font name and font size */
+/** initializes the CCLabel with a font name and font size */
 - (id) initWithString:(NSString*)string  fontName:(NSString*)name fontSize:(CGFloat)size;
 
 /** changes the string to render
- * @warning Changing the string is as expensive as creating a new Label. To obtain better performance use LabelAtlas
+ * @warning Changing the string is as expensive as creating a new CCLabel. To obtain better performance use CCLabelAtlas
  */
 - (void) setString:(NSString*)string;
 

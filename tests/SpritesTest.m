@@ -694,13 +694,13 @@ Class restartAction()
 
 	[self centerSprites];
 	
-	id orbit1 = [OrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+	id orbit1 = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
 	id action1 = [CCSequence actions:
 					orbit1,
 					[orbit1 reverse],
 					nil ];
 
-	id orbit2 = [OrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:-45 deltaAngleX:0];
+	id orbit2 = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:-45 deltaAngleX:0];
 	id action2 = [CCSequence actions:
 				  orbit2,
 				  [orbit2 reverse],
@@ -714,7 +714,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"OrbitCamera action";
+	return @"CCOrbitCamera action";
 }
 @end
 

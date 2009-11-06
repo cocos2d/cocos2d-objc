@@ -14,7 +14,7 @@
 
 #import "CCGridAction.h"
 
-/** ShakyTiles3D action */
+/** CCShakyTiles3D action */
 @interface CCShakyTiles3D : CCTiledGrid3DAction
 {
 	int		randrange;
@@ -30,7 +30,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** ShatteredTiles3D action */
+/** CCShatteredTiles3D action */
 @interface CCShatteredTiles3D : CCTiledGrid3DAction
 {
 	int		randrange;
@@ -47,7 +47,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** ShuffleTiles action
+/** CCShuffleTiles action
  Shuffle the tiles in random order
  */
 @interface CCShuffleTiles : CCTiledGrid3DAction
@@ -67,7 +67,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutTRTiles action
+/** CCFadeOutTRTiles action
  Fades out the tiles in a Top-Right direction
  */
 @interface CCFadeOutTRTiles : CCTiledGrid3DAction
@@ -77,7 +77,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutBLTiles action.
+/** CCFadeOutBLTiles action.
  Fades out the tiles in a Bottom-Left direction
  */
 @interface CCFadeOutBLTiles : CCFadeOutTRTiles
@@ -87,7 +87,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutUpTiles action.
+/** CCFadeOutUpTiles action.
  Fades out the tiles in upwards direction
  */
 @interface CCFadeOutUpTiles : CCFadeOutTRTiles
@@ -97,7 +97,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** FadeOutDownTiles action.
+/** CCFadeOutDownTiles action.
  Fades out the tiles in downwards direction
  */
 @interface CCFadeOutDownTiles : CCFadeOutUpTiles
@@ -107,7 +107,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** TurnOffTiles action.
+/** CCTurnOffTiles action.
  Turn off the files in random order
  */
 @interface CCTurnOffTiles : CCTiledGrid3DAction
@@ -125,7 +125,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** WavesTiles3D action. */
+/** CCWavesTiles3D action. */
 @interface CCWavesTiles3D : CCTiledGrid3DAction
 {
 	int waves;
@@ -147,7 +147,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** JumpTiles3D action.
+/** CCJumpTiles3D action.
  A sin function is executed to move the tiles across the Z axis
  */
 @interface CCJumpTiles3D : CCTiledGrid3DAction
@@ -171,7 +171,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** SplitRows action */
+/** CCSplitRows action */
 @interface CCSplitRows : CCTiledGrid3DAction
 {
 	int		rows;
@@ -186,7 +186,7 @@
 
 ////////////////////////////////////////////////////////////
 
-/** SplitCols action */
+/** CCSplitCols action */
 @interface CCSplitCols : CCTiledGrid3DAction
 {
 	int		cols;

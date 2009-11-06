@@ -18,7 +18,7 @@
 #import <OpenGLES/ES1/gl.h>
 
 /**
- * A ribbon is a dynamically generated list of polygons drawn as a single or series
+ * A CCRibbon is a dynamically generated list of polygons drawn as a single or series
  * of triangle strips. The primary use of Ribbon is as the drawing class of Motion Streak,
  * but it is quite useful on it's own. When manually drawing a ribbon, you can call addPointAt
  * and pass in the parameters for the next location in the ribbon. The system will automatically
@@ -62,7 +62,7 @@
 	ccBlendFunc		blendFunc_;
 }
 
-/** Texture used by the ribbon. Conforms to CocosNodeTexture protocol */
+/** Texture used by the ribbon. Conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite,retain) CCTexture2D* texture;
 
 /** Texture lenghts in pixels */

@@ -105,7 +105,7 @@
 #endif
 }
 
-#pragma mark TileMapAtlas - Atlas generation / updates
+#pragma mark CCTileMapAtlas - Atlas generation / updates
 
 -(void) setTile:(ccColor3B) tile at:(ccGridSize) pos
 {
