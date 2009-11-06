@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2009 Matt Oswald
+ * Copyright (C) 2009 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -21,27 +21,29 @@
 #pragma mark CCSprite
 
 enum {
-	/// AtlasSprite invalid index on the AtlasSpriteManager
-	CCAtlasSpriteIndexNotInitialized = 0xffffffff,
+	/// CCSprite invalid index on the CCSpriteManager
+	CCSpriteIndexNotInitialized = 0xffffffff,
 };
 
-/** CCAtlasSprite is a CCNode object that implements the CCNodeFrames and CCNodeRGBA protocols.
- * 
- * CCAtlasSprite can be used as a replacement of CCSprite.
+/** CCSprite is a CCNode object that implements the CCNodeFrames and CCNodeRGBA protocols.
  *
- * CCAtlasSprite has all the features from CCNode with the following additions and limitations:
- *	- New features
- *		- It is MUCH faster than Sprite
- *		- supports flipX, flipY
+ * If the parent is a CCSpriteManager then the following features/limitations are valid
+ *	- Features when the parent is a CCSpriteManager
+ *		- It is MUCH faster if you render multiptle sprites at the same time (eg: 50 or more CCSprite nodes)
  *
  *	- Limitations
- *		- Their parent can only be an AtlasSpriteManager
  *		- They can't have children
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
  *		- GridBase actions are not supported (eg: Lens, Ripple, Twirl)
- *		- The Alias/Antialias property belongs to AtlasSpriteManager, so you can't individually set the aliased property.
- *		- The Blending function property belongs to AtlasSpriteManager, so you can't individually set the blending function property.
+ *		- The Alias/Antialias property belongs to CCSpriteManager, so you can't individually set the aliased property.
+ *		- The Blending function property belongs to CCSpriteManager, so you can't individually set the blending function property.
  *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
+ *
+ *  If the parent is an standard CCNode, then CCSprite behaves like any other CCTextureNode:
+ *    - It can have children
+ *    - It supports blending functions
+ *    - It supports aliasing / antialiasing
+ *    - But the rendering will be slower
  *
  * @since v0.7.1
  */
@@ -136,53 +138,3 @@ enum {
 -(void) setTextureRect:(CGRect) rect;
 
 @end
-
-#pragma mark CCAnimation
-/** an Animation object used within Sprites to perform animations */
-@interface CCAnimation : NSObject <CCAnimation>
-{
-	NSString			*name;
-	float				delay;
-	NSMutableArray		*frames;
-}
-
-@property (nonatomic,readwrite,assign) NSString *name;
-
-/** delay between frames in seconds */
-@property (nonatomic,readwrite,assign) float delay;
-/** array of frames */
-@property (nonatomic,readonly) NSMutableArray *frames;
-
-/** creates a CCAnimation with a name and delay between frames */
-+(id) animationWithName:(NSString*)name delay:(float)delay;
-
-/** creates an CCAnimation with a name, delay between frames and the CCSpriteFrames frames */
-+(id) animationWithName:(NSString*)name delay:(float)delay frames:frame1,... NS_REQUIRES_NIL_TERMINATION;
-
-/** initializes a CCAnimation with a name and delay between frames */
--(id) initWithName:(NSString*)name delay:(float)delay;
-
-/** initializes a CCAnimation with a name, and the CCSpriteFrames */
--(id) initWithName:(NSString*)name delay:(float)delay firstFrame:(CCSpriteFrame*)frame vaList:(va_list) args;
-
-/** adds a frame to a CCAnimation */
--(void) addFrameWithRect:(CGRect)rect;
-@end
-
-#pragma mark CCSpriteFrame
-/** A CCSpriteFrame is an NSObject that encapsulates a CGRect.
- * And a CGRect represents a frame within the CCSpriteManager
- */
-@interface CCSpriteFrame : NSObject
-{
-	CGRect	rect;
-}
-/** rect of the frame */
-@property (nonatomic,readwrite) CGRect rect;
-
-/** create a CCSpriteFrame with a CGRect */
-+(id) frameWithRect:(CGRect)frame;
-/** initializes a CCSpriteFrame with a CGRect */
--(id) initWithRect:(CGRect)frame;
-@end
-
