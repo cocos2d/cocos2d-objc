@@ -17,7 +17,7 @@
  */
 
 #import "CCAtlasNode.h"
-#import "CCAtlasSpriteManager.h"
+#import "CCSpriteManager.h"
 
 /** bitmap font definition */
 typedef struct _bitmapFontDef {
@@ -108,7 +108,7 @@ enum {
  @since v0.8
  */
 
-@interface CCBitmapFontAtlas : CCAtlasSpriteManager <CCNodeLabel, CCNodeRGBA>
+@interface CCBitmapFontAtlas : CCSpriteManager <CCNodeLabel, CCNodeRGBA>
 {
 	// string to render
 	NSString		*string_;

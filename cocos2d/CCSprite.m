@@ -13,14 +13,14 @@
  */
 
 #import "ccConfig.h"
-#import "CCAtlasSpriteManager.h"
-#import "CCAtlasSprite.h"
+#import "CCSpriteManager.h"
+#import "CCSprite.h"
 #import "CCTextureMgr.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
 
 #pragma mark -
-#pragma mark AltasSprite
+#pragma mark CCSprite
 
 #if CC_ATLAS_SPRITE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -29,13 +29,13 @@
 #endif
 
 
-@interface CCAtlasSprite (Private)
+@interface CCSprite (Private)
 -(void)updateTextureCoords;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 @end
 
-@implementation CCAtlasSprite
+@implementation CCSprite
 
 @synthesize dirty;
 @synthesize quad = quad_;
@@ -193,44 +193,6 @@
 	
 	return self;
 }
-
-//+(id)spriteWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager
-//{
-//	return [[[self alloc] initWithRect:rect spriteManager:manager] autorelease];
-//}
-//
-//-(id)initWithRect:(CGRect)rect spriteManager:(CCAtlasSpriteManager*)manager
-//{
-//	if( (self = [super init])) {
-//		textureAtlas_ = [manager textureAtlas];	// weak reference. Don't release
-//		
-//		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-//		
-//		dirty = YES;
-//		useAtlasRendering_ = YES;
-//		atlasIndex_ = CCAtlasSpriteIndexNotInitialized;
-//
-//		flipY_ = flipX_ = NO;
-//		
-//		// default transform anchor: center
-//		anchorPoint_ = ccp(0.5f, 0.5f);
-//
-//		// RGB and opacity
-//		opacity_ = 255;
-//		color_ = ccWHITE;
-//		ccColor4B tmpColor = {255,255,255,255};
-//		quad_.bl.colors = tmpColor;
-//		quad_.br.colors = tmpColor;
-//		quad_.tl.colors = tmpColor;
-//		quad_.tr.colors = tmpColor;
-//		
-//		animations = nil;		// lazy alloc
-//		
-//		[self setTextureRect:rect];
-//	}
-//
-//	return self;
-//}
 
 - (NSString*) description
 {
@@ -393,7 +355,7 @@
 }
 
 
-#pragma mark AtlasSprite - draw
+#pragma mark CCSprite - draw
 
 -(void) draw
 {	
@@ -476,7 +438,7 @@
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
 {
-	NSAssert( ! useAtlasRendering_, @"relativeTransformAnchor is invalid in AtlasSprite");
+	NSAssert( ! useAtlasRendering_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setRelativeAnchorPoint:relative];
 }
 
@@ -514,7 +476,7 @@
 //
 // RGBA protocol
 //
-#pragma mark AtlasSprite - RGBA protocol
+#pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
 	// renders using Sprite Manager
@@ -575,10 +537,10 @@
 //
 // CCNodeFrames protocol
 //
-#pragma mark AtlasSprite - CCNodeFrames protocol
+#pragma mark CCSprite - CCNodeFrames protocol
 -(void) setDisplayFrame:(id)newFrame
 {
-	CCAtlasSpriteFrame *frame = (CCAtlasSpriteFrame*)newFrame;
+	CCSpriteFrame *frame = (CCSpriteFrame*)newFrame;
 	CGRect rect = [frame rect];
 
 	[self setTextureRect: rect];	
@@ -589,10 +551,10 @@
 	if( ! animations )
 		[self initAnimationDictionary];
 	
-	CCAtlasAnimation *a = [animations objectForKey: animationName];
-	CCAtlasSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
+	CCAnimation *a = [animations objectForKey: animationName];
+	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	
-	NSAssert( frame, @"AtlasSprite#setDisplayFrame. Invalid frame");
+	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
 	CGRect rect = [frame rect];
 
 	[self setTextureRect: rect];
@@ -601,16 +563,16 @@
 
 -(BOOL) isFrameDisplayed:(id)frame 
 {
-	CCAtlasSpriteFrame *spr = (CCAtlasSpriteFrame*)frame;
+	CCSpriteFrame *spr = (CCSpriteFrame*)frame;
 	CGRect r = [spr rect];
 	return CGRectEqualToRect(r, rect_);
 }
 
 -(id) displayFrame
 {
-	return [CCAtlasSpriteFrame frameWithRect:rect_];
+	return [CCSpriteFrame frameWithRect:rect_];
 }
-// XXX: duplicated code. Sprite.m and AtlasSprite.m share this same piece of code
+
 -(void) addAnimation: (id<CCAnimation>) anim
 {
 	// lazy alloc
@@ -619,18 +581,18 @@
 	
 	[animations setObject:anim forKey:[anim name]];
 }
-// XXX: duplicated code. Sprite.m and AtlasSprite.m share this same piece of code
+
 -(id<CCAnimation>)animationByName: (NSString*) animationName
 {
 	NSAssert( animationName != nil, @"animationName parameter must be non nil");
     return [animations objectForKey:animationName];
 }
 
-#pragma mark CCAtlasSpriteManager - CocosNodeTexture protocol
+#pragma mark CCSprite - CocosNodeTexture protocol
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCAtlasSprite manager");
+	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	if( ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
@@ -642,7 +604,7 @@
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCAtlasSprite manager");
+	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	selfRenderTextureAtlas_.texture = texture;
 	[self updateBlendFunc];
@@ -659,9 +621,9 @@
 
 
 #pragma mark -
-#pragma mark AltasAnimation
+#pragma mark CCAnimation
 
-@implementation CCAtlasAnimation
+@implementation CCAnimation
 @synthesize name, delay, frames;
 
 +(id) animationWithName:(NSString*)aname delay:(float)d frames:rect1,...
@@ -685,8 +647,8 @@
 	return [self initWithName:t delay:d firstFrame:nil vaList:nil];
 }
 
-/* initializes an AtlasAnimation with an AtlasSpriteManager, a name, and the frames from AtlasSpriteFrames */
--(id) initWithName:(NSString*)t delay:(float)d firstFrame:(CCAtlasSpriteFrame*)frame vaList:(va_list)args
+/* initializes a CCAnimation with a name, and the frames from CCSpriteFrames */
+-(id) initWithName:(NSString*)t delay:(float)d firstFrame:(CCSpriteFrame*)frame vaList:(va_list)args
 {
 	if( (self=[super init]) ) {
 	
@@ -697,10 +659,10 @@
 		if( frame ) {
 			[frames addObject:frame];
 			
-			CCAtlasSpriteFrame *frame2 = va_arg(args, CCAtlasSpriteFrame*);
+			CCSpriteFrame *frame2 = va_arg(args, CCSpriteFrame*);
 			while(frame2) {
 				[frames addObject:frame2];
-				frame2 = va_arg(args, CCAtlasSpriteFrame*);
+				frame2 = va_arg(args, CCSpriteFrame*);
 			}	
 		}
 	}
@@ -716,14 +678,14 @@
 
 -(void) addFrameWithRect:(CGRect)rect
 {
-	CCAtlasSpriteFrame *frame = [CCAtlasSpriteFrame frameWithRect:rect];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithRect:rect];
 	[frames addObject:frame];
 }
 @end
 
 #pragma mark -
-#pragma mark AtlasSpriteFrame
-@implementation CCAtlasSpriteFrame
+#pragma mark CCSpriteFrame
+@implementation CCSpriteFrame
 @synthesize rect;
 
 +(id) frameWithRect:(CGRect)frame

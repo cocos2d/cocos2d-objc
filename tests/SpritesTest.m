@@ -74,13 +74,13 @@ Class restartAction()
 		// Example:
 		// You can create a sprite using a Texture2D
 		CCTexture2D *tex = [ [CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
-		grossini = [[CCAtlasSprite spriteWithTexture:tex] retain];
+		grossini = [[CCSprite spriteWithTexture:tex] retain];
 		[tex release];
 
 		
 		// Example:
 		// Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
-		tamara = [[CCAtlasSprite spriteWithFile:@"grossinis_sister1.png"] retain];
+		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
 		
 		[self addChild: grossini z:1];
 		[self addChild: tamara z:2];
@@ -215,7 +215,7 @@ Class restartAction()
 	id actionByBack = [actionBy reverse];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 
-	CCNode *kathia = [CCAtlasSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCNode *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	[self addChild:kathia];
 	[kathia setPosition:ccp(240,160)];
 	[kathia runAction: [CCSequence actions:actionTo2, [[actionTo0 copy] autorelease], nil]];
@@ -243,7 +243,7 @@ Class restartAction()
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	
-	CCNode *kathia = [CCAtlasSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCNode *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	[self addChild:kathia];
 	[kathia setPosition:ccp(240,160)];
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];
@@ -308,7 +308,7 @@ Class restartAction()
 	id bezierTo1 = [CCBezierTo actionWithDuration:2 bezier:bezier2];	
 	
 	// sprite 3
-	CCNode *kathia = [CCAtlasSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCNode *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	[self addChild:kathia];
 	[kathia setPosition:ccp(400,160)];
 	id bezierTo2 = [CCBezierTo actionWithDuration:2 bezier:bezier2];
@@ -396,13 +396,13 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-	CCAnimation* animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
-	for( int i=1;i<15;i++)
-		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
-	
-	id action = [CCAnimate actionWithAnimation: animation];
-	
-	[grossini runAction:action];
+//	CCAnimation* animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
+//	for( int i=1;i<15;i++)
+//		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+//	
+//	id action = [CCAnimate actionWithAnimation: animation];
+//	
+//	[grossini runAction:action];
 }
 -(NSString *) title
 {
@@ -624,7 +624,7 @@ Class restartAction()
 	[super onEnter];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCNode *sprite = [CCAtlasSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCNode *sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	[self addChild:sprite];
 	[sprite setPosition:ccp(s.width-100, s.height/2)];
 	

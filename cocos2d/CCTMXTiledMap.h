@@ -16,7 +16,7 @@
  */
 
 #import "CCAtlasNode.h"
-#import "CCAtlasSpriteManager.h"
+#import "CCSpriteManager.h"
 #import "Support/ccArray.h"
 
 
@@ -44,7 +44,7 @@ enum
  It supports isometric, hexagonal and orthogonal tiles.
  
  Features:
- - Each tile will be treated as an AtlasSprite
+ - Each tile will be treated as an CCSprite
  - Each tile can be rotated / moved / scaled / tinted / "opacitied"
  - Tiles can be added/removed in runtime
  - The z-order of the tiles can be modified in runtime.
@@ -62,7 +62,7 @@ enum
  - It only supports the XML format (the JSON format is not supported)
  
  Technical description:
-   Each layer is created using an TMXLayer (subclass of AtlasSpriteManager). If you have 5 layers, then 5 TMXLayer will be created,
+   Each layer is created using an TMXLayer (subclass of CCSpriteManager). If you have 5 layers, then 5 TMXLayer will be created,
    unless the layer visibility is off. In that case, the layer won't be created at all.
    You can obtain the layers (TMXLayer objects) at runtime by:
   - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
@@ -97,13 +97,13 @@ enum
 
 /** TMXLayer represents the TMX layer.
  
- It is a subclass of AtlasSpriteManager, so each "tile" is represented by an AtlasSprite.
- The benefits of using AtlasSprite objects as tiles are:
- - tiles (AtlasSprite) can be rotated/scaled/moved with a nice API
+ It is a subclass of CCSpriteManager, so each "tile" is represented by an CCSprite.
+ The benefits of using CCSprite objects as tiles are:
+ - tiles (CCSprite) can be rotated/scaled/moved with a nice API
  
  @since v0.8.1
  */
-@interface CCTMXLayer : CCAtlasSpriteManager
+@interface CCTMXLayer : CCSpriteManager
 {
 	CCTMXTilesetInfo	*tileset_;
 	NSString			*layerName_;
@@ -113,7 +113,7 @@ enum
 	int					layerOrientation_;
 	
 	// used for optimization
-	CCAtlasSprite		*reusedTile;
+	CCSprite		*reusedTile;
 	ccCArray		*atlasIndexArray;
 }
 /** name of the layer */
@@ -141,8 +141,8 @@ enum
  */
 -(void) releaseMap;
 
-/** returns the tile (AtlasSprite) at a given a tile coordinate */
--(CCAtlasSprite*) tileAt:(CGPoint)tileCoordinate;
+/** returns the tile (CCSprite) at a given a tile coordinate */
+-(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
 /** returns the tile gid at a given tile coordinate.
  if it returns 0, it means that the tile is empty.

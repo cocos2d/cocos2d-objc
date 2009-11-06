@@ -17,7 +17,6 @@
 #import "CCLabelAtlas.h"
 #import "CCIntervalAction.h"
 #import "CCSprite.h"
-#import "CCAtlasSprite.h"
 #import "Support/CGPointExtension.h"
 
 static int _fontSize = kItemSize;
@@ -419,91 +418,6 @@ enum {
 	return [normalImage_ color];
 }
 @end
-
-#pragma mark -
-#pragma mark MenuItemAtlasSprite
-@implementation CCMenuItemAtlasSprite
-
--(id) initFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite disabledSprite:(CCNode<CCNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
-{
-	if( (self=[super initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector]) ) {
-		
-		[normalImage_ setVisible:YES];
-		[selectedImage_ setVisible:NO];
-		[disabledImage_ setVisible:NO];
-	}
-	return self;	
-}
-
-- (void)setPosition:(CGPoint)pos
-{
-	[super setPosition:pos];
-	[normalImage_ setPosition:pos];
-	[selectedImage_ setPosition:pos];
-	[disabledImage_ setPosition:pos];	
-}
-
-- (void)setRotation:(float)angle
-{
-	[super setRotation:angle];
-	[normalImage_ setRotation:angle];
-	[selectedImage_ setRotation:angle];
-	[disabledImage_ setRotation:angle];
-}
-
-- (void)setScale:(float)scale
-{
-	[super setScale:scale];
-	[normalImage_ setScale:scale];
-	[selectedImage_ setScale:scale];
-	[disabledImage_ setScale:scale];
-}
-
-- (void)selected
-{
-	if( isEnabled_ ) {
-		[super selected];
-		[normalImage_ setVisible:NO];
-		[selectedImage_ setVisible:YES];
-		[disabledImage_ setVisible:NO];
-	}
-}
-
-- (void)unselected
-{
-	if( isEnabled_ ) {
-		[super unselected];
-		[normalImage_ setVisible:YES];
-		[selectedImage_ setVisible:NO];
-		[disabledImage_ setVisible:NO];
-	}
-}
-
-- (void)setisEnabled_:(BOOL)enabled
-{
-	[super setIsEnabled:enabled];
-	if(enabled) {
-		[normalImage_ setVisible:YES];
-		[selectedImage_ setVisible:NO];
-		[disabledImage_ setVisible:NO];
-
-	} else {
-		[normalImage_ setVisible:NO];
-		[selectedImage_ setVisible:NO];
-		if( disabledImage_ )
-			[disabledImage_ setVisible:YES];
-		else
-			[normalImage_ setVisible:YES];
-	}
-}
-
--(void) draw
-{
-	// override parent draw
-	// since AtlasSpriteManager is the one that draws all the AtlasSprite objects
-}
-@end
-
 
 #pragma mark -
 #pragma mark MenuItemImage

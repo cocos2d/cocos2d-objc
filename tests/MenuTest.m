@@ -25,16 +25,11 @@ enum {
 
 		// Font Item
 		// AtlasSprite Item
-		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"menuitemsprite.png"];
-		[self addChild:mgr];
 		
-		CCAtlasSprite *spriteNormal = [CCAtlasSprite spriteWithRect:CGRectMake(0,23*2,115,23) spriteManager:mgr];
-		CCAtlasSprite *spriteSelected = [CCAtlasSprite spriteWithRect:CGRectMake(0,23*1,115,23) spriteManager:mgr];
-		CCAtlasSprite *spriteDisabled = [CCAtlasSprite spriteWithRect:CGRectMake(0,23*0,115,23) spriteManager:mgr];
-		[mgr addChild:spriteNormal];
-		[mgr addChild:spriteSelected];
-		[mgr addChild:spriteDisabled];
-		CCMenuItemSprite *item1 = [CCMenuItemAtlasSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback:)];
+		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
+		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
+		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
+		CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback:)];
 		
 		// Image Item
 		CCMenuItem *item2 = [CCMenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
@@ -81,12 +76,6 @@ enum {
 			];
 			i++;
 		}
-		
-		
-		// IMPORTANT
-		// If you are going to use AtlasSprite as items, you should
-		// re-position the AtlasSpriteManager AFTER modifying the menu position
-		mgr.position = menu.position;
 
 		disabledItem = [item3 retain];
 		disabledItem.isEnabled = NO;
@@ -255,18 +244,11 @@ enum {
 	CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
 	CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 	
-	CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"menuitemsprite.png"];
-	[self addChild:mgr];
-
-	CCAtlasSprite *spriteNormal = [CCAtlasSprite spriteWithRect:CGRectMake(0,23*2,115,23) spriteManager:mgr];
-	CCAtlasSprite *spriteSelected = [CCAtlasSprite spriteWithRect:CGRectMake(0,23*1,115,23) spriteManager:mgr];
-	CCAtlasSprite *spriteDisabled = [CCAtlasSprite spriteWithRect:CGRectMake(0,23*0,115,23) spriteManager:mgr];
-	[mgr addChild:spriteNormal];
-	[mgr addChild:spriteSelected];
-	[mgr addChild:spriteDisabled];
+	CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
+	CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
+	CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
 	
-	
-	CCMenuItemSprite *item3 = [CCMenuItemAtlasSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
+	CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
 	disabledItem = item3;
 	disabledItem.isEnabled = NO;
 	

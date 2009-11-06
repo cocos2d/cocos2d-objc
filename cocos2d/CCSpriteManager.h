@@ -17,20 +17,20 @@
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
 
-#pragma mark CCAtlasSpriteManager
+#pragma mark CCSpriteManager
 
-@class CCAtlasSprite;
+@class CCSprite;
 
-/** AtlasSpriteManager is the object that draws all the AtlasSprite objects
- * that belongs to this Manager. Use 1 AtlasSpriteManager per TextureAtlas
+/** CCSpriteManager is the object that draws all the CCSprite objects
+ * that belongs to this Manager. Use 1 CCSpriteManager per TextureAtlas
 *
  * Limitations:
- *  - The only object that is accepted as child is AtlasSprite
+ *  - The only object that is accepted as child is CCSprite
  *  - It's children are all Aliased or all Antialiased.
  * 
  * @since v0.7.1
  */
-@interface CCAtlasSpriteManager : CCNode <CCNodeTexture>
+@interface CCSpriteManager : CCNode <CCNodeTexture>
 {
 	CCTextureAtlas *textureAtlas_;
 	ccBlendFunc	blendFunc_;
@@ -42,22 +42,22 @@
 /** conforms to CCNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** creates an AtlasSpriteManager with a texture2d */
+/** creates a CCSpriteManager with a texture2d */
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex;
-/** creates an AtlasSpriteManager with a texture2d and capacity */
+/** creates a CCSpriteManager with a texture2d and capacity */
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc).
+/** creates a CCSpriteManager with a file image (.png, .jpeg, .pvr, etc).
  The file will be loaded using the TextureMgr.
  */
 +(id)spriteManagerWithFile:(NSString*) fileImage;
-/** creates an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc) and capacity. 
+/** creates a CCSpriteManager with a file image (.png, .jpeg, .pvr, etc) and capacity. 
  The file will be loaded using the TextureMgr.
 */
 +(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
-/** initializes an AtlasSpriteManager with a texture2d and capacity */
+/** initializes a CCSpriteManager with a texture2d and capacity */
 -(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-/** initializes an AtlasSpriteManager with a file image (.png, .jpeg, .pvr, etc).
+/** initializes a CCSpriteManager with a file image (.png, .jpeg, .pvr, etc).
  The file will be loaded using the TextureMgr.
  */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
@@ -65,13 +65,13 @@
 -(NSUInteger)indexForNewChildAtZ:(int)z;
 -(void) increaseAtlasCapacity;
 
-/** creates an sprite with a rect in the CCAtlasSpriteManage.
+/** creates an sprite with a rect in the CCSpriteManage.
  It's the same as:
    - create an standard CCSsprite
    - set the useAtlasRendering = YES
    - set the textureAtlas to the same texture Atlas as the CCSpriteManager
  */
--(CCAtlasSprite*) createSpriteWithRect:(CGRect)rect;
+-(CCSprite*) createSpriteWithRect:(CGRect)rect;
 
 /** initializes a previously created sprite with a rect. This sprite will have the same texture as the SpriteManager
  It's the same as:
@@ -80,15 +80,15 @@
  - set the textureAtlas to the same texture Atlas as the CCSpriteManager
  @since v0.9.0
 */ 
--(void) initSprite:(CCAtlasSprite*)sprite rect:(CGRect)rect;
+-(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect;
 
 /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
- @warning Removing a child from an AtlasSpriteManager is very slow
+ @warning Removing a child from a CCSpriteManager is very slow
  */
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup;
 
 /** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
- @warning Removing a child from an AtlasSpriteManager is very slow
+ @warning Removing a child from a CCSpriteManager is very slow
  */
--(void)removeChild: (CCAtlasSprite *)sprite cleanup:(BOOL)doCleanup;
+-(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 @end

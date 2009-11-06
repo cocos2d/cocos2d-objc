@@ -175,25 +175,6 @@
 
 @end
 
-/** MenuItemAtlasCocosNode<CCNodeRGBA> accepts AtlasCocosNode<CCNodeRGBA> objects as items.
- The images has 3 different states:
- - unselected image
- - selected image
- - disabled image
- 
- Limitations:
-  - AtlasSprite objects can only have as a parent an AltasSpriteManager
-  - So they need to be added twice:
-    - To the Menu
-	- And to the AtlasSpriteManager
-  - To respect the menu aligments, the AtlasSpriteManager should have the same coordinates as the Menu
- @since v0.8.0
- */
-@interface CCMenuItemAtlasSprite : CCMenuItemSprite
-{
-}
-@end
-
 /** MenuItemImage accepts images as items.
  The images has 3 different states:
  - unselected image
