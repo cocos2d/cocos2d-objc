@@ -12,9 +12,8 @@
  *
  */
 
-#import <UIKit/UIKit.h>
-
 #import "CCNode.h"
+#import "CCProtocols.h"
 
 @class CCLabel;
 @class CCLabelAtlas;
@@ -63,15 +62,15 @@
 @end
 
 /** An abstract class for "label" CCMenuItemLabel items 
- Any CCNode that supports the CCNodeLabel protocol can be added.
+ Any CCNode that supports the CCLabelProtocol protocol can be added.
  Supported nodes:
    - CCBitmapFontAtlas
    - CCLabelAtlas
    - CCLabel
  */
-@interface CCMenuItemLabel : CCMenuItem  <CCNodeRGBA>
+@interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
 {
-	CCNode<CCNodeLabel, CCNodeRGBA> *label_;
+	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
 	ccColor3B	colorBackup;
 	ccColor3B	disabledColor_;
 }
@@ -79,14 +78,14 @@
 /** the color that will be used to disable the item */
 @property (nonatomic,readwrite) ccColor3B disabledColor;
 
-/** Label that is rendered. It can be any CCNode that implements the CCNodeLabel */
-@property (nonatomic,readwrite,retain) CCNode<CCNodeLabel, CCNodeRGBA>* label;
+/** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
+@property (nonatomic,readwrite,retain) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
 
 /** creates a CCMenuItemLabel with a Label, target and selector */
-+(id) itemWithLabel:(CCNode<CCNodeLabel,CCNodeRGBA>*)label target:(id)target selector:(SEL)selector;
++(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector;
 
 /** initializes a CCMenuItemLabel with a Label, target and selector */
--(id) initWithLabel:(CCNode<CCNodeLabel,CCNodeRGBA>*)label target:(id)target selector:(SEL)selector;
+-(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector;
 
 /** sets a new string to the inner label */
 -(void) setString:(NSString*)label;
@@ -144,7 +143,7 @@
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 @end
 
-/** CCMenuItemSprite accepts CCNode<CCNodeRGBA> objects as items.
+/** CCMenuItemSprite accepts CCNode<CCRGBAProtocol> objects as items.
  The images has 3 different states:
  - unselected image
  - selected image
@@ -152,26 +151,26 @@
  
  @since v0.8.0
  */
-@interface CCMenuItemSprite : CCMenuItem <CCNodeRGBA>
+@interface CCMenuItemSprite : CCMenuItem <CCRGBAProtocol>
 {
-	CCNode<CCNodeRGBA> *normalImage_, *selectedImage_, *disabledImage_;
+	CCNode<CCRGBAProtocol> *normalImage_, *selectedImage_, *disabledImage_;
 }
 
 /** the image used when the item is not selected */
-@property (nonatomic,readwrite,retain) CCNode<CCNodeRGBA> *normalImage;
+@property (nonatomic,readwrite,retain) CCNode<CCRGBAProtocol> *normalImage;
 /** the image used when the item is selected */
-@property (nonatomic,readwrite,retain) CCNode<CCNodeRGBA> *selectedImage;
+@property (nonatomic,readwrite,retain) CCNode<CCRGBAProtocol> *selectedImage;
 /** the image used when the item is disabled */
-@property (nonatomic,readwrite,retain) CCNode<CCNodeRGBA> *disabledImage;
+@property (nonatomic,readwrite,retain) CCNode<CCRGBAProtocol> *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
-+(id) itemFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite;
 /** creates a menu item with a normal and selected image with target/selector */
-+(id) itemFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite target:(id)target selector:(SEL)selector;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
 /** creates a menu item with a normal,selected  and disabled image with target/selector */
-+(id) itemFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite disabledSprite:(CCNode<CCNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
 /** initializes a menu item with a normal, selected  and disabled image with target/selector */
--(id) initFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite disabledSprite:(CCNode<CCNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector;
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
 
 @end
 
@@ -203,7 +202,7 @@
  A simple container class that "toggles" it's inner items
  The inner itmes can be any MenuItem
  */
-@interface CCMenuItemToggle : CCMenuItem <CCNodeRGBA>
+@interface CCMenuItemToggle : CCMenuItem <CCRGBAProtocol>
 {
 	NSUInteger selectedIndex_;
 	NSMutableArray* subItems_;
@@ -211,9 +210,9 @@
 	ccColor3B	color_;
 }
 
-/** conforms with CCNodeRGBA protocol */
+/** conforms with CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** conforms with CCNodeRGBA protocol */
+/** conforms with CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
 
 /** returns the selected item */

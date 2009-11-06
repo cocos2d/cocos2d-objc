@@ -14,6 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CCNode.h"
+#import "CCProtocols.h"
 
 #pragma mark -
 #pragma mark CCSpriteFrame
@@ -38,7 +39,7 @@
 #pragma mark CCAnimation
 
 /** an Animation object used within Sprites to perform animations */
-@interface CCAnimation : NSObject <CCAnimation>
+@interface CCAnimation : NSObject <CCAnimationProtocol>
 {
 	NSString			*name;
 	float				delay;

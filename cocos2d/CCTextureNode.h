@@ -13,15 +13,14 @@
  */
 
 
-#import <UIKit/UIKit.h>
-
+#import "CCProtocols.h"
 #import "Support/CCTexture2D.h"
 
 #import "CCNode.h"
 
 
-/** TextureNode is a subclass of CCNode that implements the CCNodeRGBA
- * and CCNodeTexture protocol.
+/** TextureNode is a subclass of CCNode that implements the CCRGBAProtocol
+ * and CCTextureProtocol protocol.
  *
  * As the name implies it, it knows how to render a textures.
  *
@@ -29,7 +28,7 @@
  *  - opacity and RGB
  *  - texture (can be Aliased or AntiAliased)
  */
-@interface CCTextureNode : CCNode <CCNodeRGBA, CCNodeTexture> {
+@interface CCTextureNode : CCNode <CCRGBAProtocol, CCTextureProtocol> {
 
 	// texture
 	CCTexture2D *texture_;
@@ -44,14 +43,14 @@
 	
 }
 
-/** conforms to CCNodeTexture protocol */
+/** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite,retain) CCTexture2D *texture;
 
-/** conforms to CCNodeTexture protocol */
+/** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3B color;
 @end

@@ -859,7 +859,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCFadeIn
 -(void) update: (ccTime) t
 {
-	[(id<CCNodeRGBA>) target setOpacity: 255 *t];
+	[(id<CCRGBAProtocol>) target setOpacity: 255 *t];
 }
 -(CCIntervalAction*) reverse
 {
@@ -875,7 +875,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCFadeOut
 -(void) update: (ccTime) t
 {
-	[(id<CCNodeRGBA>) target setOpacity: 255 *(1-t)];
+	[(id<CCRGBAProtocol>) target setOpacity: 255 *(1-t)];
 }
 -(CCIntervalAction*) reverse
 {
@@ -910,12 +910,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	fromOpacity = [(id<CCNodeRGBA>)target opacity];
+	fromOpacity = [(id<CCRGBAProtocol>)target opacity];
 }
 
 -(void) update: (ccTime) t
 {
-	[(id<CCNodeRGBA>)target setOpacity: fromOpacity + ( toOpacity - fromOpacity ) * t];
+	[(id<CCRGBAProtocol>)target setOpacity: fromOpacity + ( toOpacity - fromOpacity ) * t];
 }
 @end
 
@@ -948,13 +948,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[super startWithTarget:aTarget];
 	
-	id<CCNodeRGBA> tn = (id<CCNodeRGBA>) target;
+	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target;
 	from = [tn color];
 }
 
 -(void) update: (ccTime) t
 {
-	id<CCNodeRGBA> tn = (id<CCNodeRGBA>) target;
+	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target;
 	[tn setColor:ccc3(from.r + (to.r - from.r) * t, from.g + (to.g - from.g) * t, from.b + (to.b - from.b) * t)];
 }
 @end
@@ -989,7 +989,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[super startWithTarget:aTarget];
 	
-	id<CCNodeRGBA> tn = (id<CCNodeRGBA>) target;
+	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target;
 	ccColor3B color = [tn color];
 	fromR = color.r;
 	fromG = color.g;
@@ -998,7 +998,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	id<CCNodeRGBA> tn = (id<CCNodeRGBA>) target;
+	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target;
 	[tn setColor:ccc3( fromR + deltaR * t, fromG + deltaG * t, fromB + deltaB * t)];
 }
 - (CCIntervalAction*) reverse
@@ -1087,23 +1087,23 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark Animate
 @implementation CCAnimate
 
-+(id) actionWithAnimation: (id<CCAnimation>)anim
++(id) actionWithAnimation: (id<CCAnimationProtocol>)anim
 {
 	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:YES] autorelease];
 }
 
-+(id) actionWithAnimation: (id<CCAnimation>)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithAnimation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL)b
 {
 	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:b] autorelease];
 }
 
--(id) initWithAnimation: (id<CCAnimation>)anim
+-(id) initWithAnimation: (id<CCAnimationProtocol>)anim
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 	return [self initWithAnimation:anim restoreOriginalFrame:YES];
 }
 
--(id) initWithAnimation: (id<CCAnimation>)anim restoreOriginalFrame:(BOOL) b
+-(id) initWithAnimation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL) b
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
@@ -1131,7 +1131,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	id<CCNodeFrames> sprite = (id<CCNodeFrames>) target;
+	id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
 
 	[origFrame release];
 
@@ -1141,7 +1141,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) stop
 {
 	if( restoreOriginalFrame ) {
-		id<CCNodeFrames> sprite = (id<CCNodeFrames>) target;
+		id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
 		[sprite setDisplayFrame:origFrame];
 	}
 	
@@ -1160,7 +1160,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	if( idx >= [[animation frames] count] ) {
 		idx = [[animation frames] count] -1;
 	}
-	id<CCNodeFrames> sprite = (id<CCNodeFrames>) target;
+	id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
 	if (! [sprite isFrameDisplayed: [[animation frames] objectAtIndex: idx]] ) {
 		[sprite setDisplayFrame: [[animation frames] objectAtIndex:idx]];
 	}

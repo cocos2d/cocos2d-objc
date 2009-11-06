@@ -537,9 +537,9 @@
 }
 
 //
-// CCNodeFrames protocol
+// CCFrameProtocol protocol
 //
-#pragma mark CCSprite - CCNodeFrames protocol
+#pragma mark CCSprite - CCFrameProtocol protocol
 -(void) setDisplayFrame:(id)newFrame
 {
 	CCSpriteFrame *frame = (CCSpriteFrame*)newFrame;
@@ -575,7 +575,7 @@
 	return [CCSpriteFrame frameWithRect:rect_];
 }
 
--(void) addAnimation: (id<CCAnimation>) anim
+-(void) addAnimation: (id<CCAnimationProtocol>) anim
 {
 	// lazy alloc
 	if( ! animations )
@@ -584,7 +584,7 @@
 	[animations setObject:anim forKey:[anim name]];
 }
 
--(id<CCAnimation>)animationByName: (NSString*) animationName
+-(id<CCAnimationProtocol>)animationByName: (NSString*) animationName
 {
 	NSAssert( animationName != nil, @"animationName parameter must be non nil");
     return [animations objectForKey:animationName];

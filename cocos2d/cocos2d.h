@@ -38,6 +38,7 @@
 #import "CCAction.h"
 #import "CCCamera.h"
 #import "CCCameraAction.h"
+#import "CCProtocols.h"
 #import "CCNode.h"
 #import "CCDirector.h"
 #import "CCTouchDispatcher.h"

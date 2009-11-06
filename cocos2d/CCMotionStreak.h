@@ -33,7 +33,7 @@
  *
  * @since v0.8.1
  */
-@interface CCMotionStreak : CCNode <CCNodeTexture>
+@interface CCMotionStreak : CCNode <CCTextureProtocol>
 {
 	CCRibbon*	ribbon_;
 	float mSegThreshold;

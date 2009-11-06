@@ -14,9 +14,10 @@
 
 #import "CCTextureAtlas.h"
 #import "CCNode.h"
+#import "CCProtocols.h"
 
-/** CCAtlasNode is a subclass of CCNode that implements the CCNodeRGBA and
- CCNodeTexture protocol
+/** CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
+ CCTextureProtocol protocol
  
  It knows how to render a TextureAtlas object.
  If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a subclass of CCAtlasNode)
@@ -24,7 +25,7 @@
  All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
  */
-@interface CCAtlasNode : CCNode <CCNodeRGBA, CCNodeTexture> {
+@interface CCAtlasNode : CCNode <CCRGBAProtocol, CCTextureProtocol> {
 
 	// texture atlas
 	CCTextureAtlas	*textureAtlas_;
@@ -53,15 +54,15 @@
 	BOOL opacityModifyRGB_;
 }
 
-/** conforms to CCNodeTexture protocol */
+/** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite,retain) CCTextureAtlas *textureAtlas;
 
-/** conforms to CCNodeTexture protocol */
+/** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCNodeRGBA protocol */
+/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3B color;
 
 

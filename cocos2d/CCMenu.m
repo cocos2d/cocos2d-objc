@@ -415,7 +415,7 @@ enum {
 - (void) setOpacity:(GLubyte)newOpacity
 {
 	opacity_ = newOpacity;
-	for(id<CCNodeRGBA> item in children)
+	for(id<CCRGBAProtocol> item in children)
 		[item setOpacity:opacity_];
 }
 
@@ -424,14 +424,14 @@ enum {
 	color_.r=r;
 	color_.g=g;
 	color_.b=b;
-	for(id<CCNodeRGBA> item in children)
+	for(id<CCRGBAProtocol> item in children)
 		[item setColor:color_];
 }
 
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
-	for(id<CCNodeRGBA> item in children)
+	for(id<CCRGBAProtocol> item in children)
 		[item setColor:color_];
 }
 

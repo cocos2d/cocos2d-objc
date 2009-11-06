@@ -13,6 +13,7 @@
  */
 
 #import "CCNode.h"
+#import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 
 @class CCSpriteManager;
@@ -25,7 +26,7 @@ enum {
 	CCSpriteIndexNotInitialized = 0xffffffff,
 };
 
-/** CCSprite is a CCNode object that implements the CCNodeFrames and CCNodeRGBA protocols.
+/** CCSprite is a CCNode object that implements the CCFrameProtocol and CCRGBAProtocol protocols.
  *
  * If the parent is a CCSpriteManager then the following features/limitations are valid
  *	- Features when the parent is a CCSpriteManager
@@ -47,7 +48,7 @@ enum {
  *
  * @since v0.7.1
  */
-@interface CCSprite : CCNode <CCNodeFrames, CCNodeRGBA, CCNodeTexture>
+@interface CCSprite : CCNode <CCFrameProtocol, CCRGBAProtocol, CCTextureProtocol>
 {
 	
 	// whether or not it's parent is an Atlas manager
@@ -98,16 +99,16 @@ enum {
 @property (nonatomic,readwrite) BOOL flipX;
 /** whether or not the sprite is flipped vertically */
 @property (nonatomic,readwrite) BOOL flipY;
-/** opacity: conforms to CCNodeRGBA protocol */
+/** opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
-/** RGB colors: conforms to CCNodeRGBA protocol */
+/** RGB colors: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
 /** whether or not the Sprite is rendered using a AtlasSprite manager */
 @property (nonatomic,readwrite) BOOL useAtlasRendering;
 /** weak reference of the TextureAtlas used when the sprite is rendered using an SpriteManager */
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 
-/** conforms to CCNodeTexture protocol */
+/** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 +(id) spriteWithTexture:(CCTexture2D*)texture;

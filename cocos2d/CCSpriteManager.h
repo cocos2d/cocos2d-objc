@@ -14,6 +14,7 @@
  */
 
 #import "CCNode.h"
+#import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
 
@@ -30,7 +31,7 @@
  * 
  * @since v0.7.1
  */
-@interface CCSpriteManager : CCNode <CCNodeTexture>
+@interface CCSpriteManager : CCNode <CCTextureProtocol>
 {
 	CCTextureAtlas *textureAtlas_;
 	ccBlendFunc	blendFunc_;
@@ -39,7 +40,7 @@
 /** returns the TextureAtlas that is used */
 @property (nonatomic,readwrite,retain) CCTextureAtlas * textureAtlas;
 
-/** conforms to CCNodeTexture protocol */
+/** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** creates a CCSpriteManager with a texture2d */

@@ -496,7 +496,7 @@ void FNTConfigRemoveCache( void )
 	[self setContentSize:tmpSize];
 }
 
-#pragma mark BitmapFontAtlas - CCNodeLabel protocol
+#pragma mark BitmapFontAtlas - CCLabelProtocol protocol
 - (void) setString:(NSString*) newString
 {	
 	[string_ release];
@@ -508,7 +508,7 @@ void FNTConfigRemoveCache( void )
 	[self createFontChars];
 }
 
-#pragma mark BitmapFontAtlas - CCNodeRGBA protocol
+#pragma mark BitmapFontAtlas - CCRGBAProtocol protocol
 
 -(void) setColor:(ccColor3B)color
 {
@@ -526,13 +526,13 @@ void FNTConfigRemoveCache( void )
 {
 	opacity_ = opacity;
 
- 	for( id<CCNodeRGBA> child in children )
+ 	for( id<CCRGBAProtocol> child in children )
 		[child setOpacity:opacity_];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;
- 	for( id<CCNodeRGBA> child in children )
+ 	for( id<CCRGBAProtocol> child in children )
 		[child setOpacityModifyRGB:modify];
 }
 -(BOOL) doesOpacityModifyRGB

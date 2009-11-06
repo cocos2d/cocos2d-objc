@@ -25,7 +25,7 @@
  *
  * CCLabel objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
  */
-@interface CCLabel : CCTextureNode <CCNodeLabel>
+@interface CCLabel : CCTextureNode <CCLabelProtocol>
 {
 	CGSize _dimensions;
 	UITextAlignment _alignment;

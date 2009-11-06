@@ -126,12 +126,12 @@ enum {
 
 @synthesize disabledColor = disabledColor_;
 
-+(id) itemWithLabel:(CCNode<CCNodeLabel,CCNodeRGBA>*)label target:(id)target selector:(SEL)selector
++(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
 	return [[[self alloc] initWithLabel:label target:target selector:selector] autorelease];
 }
 
--(id) initWithLabel:(CCNode<CCNodeLabel,CCNodeRGBA>*)label target:(id)target selector:(SEL)selector
+-(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
 		self.label = label;
@@ -141,11 +141,11 @@ enum {
 	return self;
 }
 
--(CCNode<CCNodeLabel, CCNodeRGBA>*) label
+-(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
 	return label_;
 }
--(void) setLabel:(CCNode<CCNodeLabel, CCNodeRGBA>*) label
+-(void) setLabel:(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
 	[label_ release];
 	label_ = [label retain];
@@ -339,19 +339,19 @@ enum {
 
 @synthesize normalImage=normalImage_, selectedImage=selectedImage_, disabledImage=disabledImage_;
 
-+(id) itemFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite
 {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:nil selector:nil];
 }
-+(id) itemFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite target:(id)target selector:(SEL)selector
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector
 {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:target selector:selector];
 }
-+(id) itemFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite disabledSprite:(CCNode<CCNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
 {
 	return [[[self alloc] initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector] autorelease];
 }
--(id) initFromNormalSprite:(CCNode<CCNodeRGBA>*)normalSprite selectedSprite:(CCNode<CCNodeRGBA>*)selectedSprite disabledSprite:(CCNode<CCNodeRGBA>*)disabledSprite target:(id)target selector:(SEL)selector
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
 		
@@ -391,7 +391,7 @@ enum {
 	}
 }
 
-#pragma mark CCMenuItemImage - CCNodeRGBA protocol
+#pragma mark CCMenuItemImage - CCRGBAProtocol protocol
 - (void) setOpacity: (GLubyte)opacity
 {
 	[normalImage_ setOpacity:opacity];
@@ -446,9 +446,9 @@ enum {
 
 -(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id)t selector:(SEL)sel
 {
-	CCNode<CCNodeRGBA> *normalImage = [CCSprite spriteWithFile:normalI];
-	CCNode<CCNodeRGBA> *selectedImage = [CCSprite spriteWithFile:selectedI]; 
-	CCNode<CCNodeRGBA> *disabledImage = nil;
+	CCNode<CCRGBAProtocol> *normalImage = [CCSprite spriteWithFile:normalI];
+	CCNode<CCRGBAProtocol> *selectedImage = [CCSprite spriteWithFile:selectedI]; 
+	CCNode<CCRGBAProtocol> *disabledImage = nil;
 
 	if(disabledI)
 		disabledImage = [CCSprite spriteWithFile:disabledI];
@@ -563,19 +563,19 @@ enum {
 	return [subItems_ objectAtIndex:selectedIndex_];
 }
 
-#pragma mark CCMenuItemToggle - CCNodeRGBA protocol
+#pragma mark CCMenuItemToggle - CCRGBAProtocol protocol
 
 - (void) setOpacity: (GLubyte)opacity
 {
 	opacity_ = opacity;
-	for(CCMenuItem<CCNodeRGBA>* item in subItems_)
+	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
 		[item setOpacity:opacity];
 }
 
 - (void) setColor:(ccColor3B)color
 {
 	color_ = color;
-	for(CCMenuItem<CCNodeRGBA>* item in subItems_)
+	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
 		[item setColor:color];
 }
 

@@ -14,6 +14,7 @@
 
 #import "CCNode.h"
 #import "CCAction.h"
+#import "CCProtocols.h"
 
 #include <sys/time.h>
 
@@ -252,7 +253,7 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
 @end
 
-/** Fades In an object that implements the CCNodeRGBA protocol. It modifies the opacity from 0 to 255.
+/** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
  */
 @interface CCFadeIn : CCIntervalAction <NSCopying>
@@ -260,7 +261,7 @@ typedef struct _ccBezierConfig {
 }
 @end
 
-/** Fades Out an object that implements the CCNodeRGBA protocol. It modifies the opacity from 255 to 0.
+/** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
 */
 @interface CCFadeOut : CCIntervalAction <NSCopying>
@@ -268,7 +269,7 @@ typedef struct _ccBezierConfig {
 }
 @end
 
-/** Fades an object that implements the CCNodeRGBA protocol. It modifies the opacity from the current value to a custom one.
+/** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  @warning This action doesn't support "reverse"
  */
 @interface CCFadeTo : CCIntervalAction <NSCopying>
@@ -346,13 +347,13 @@ typedef struct _ccBezierConfig {
 	BOOL restoreOriginalFrame;
 }
 /** creates the action with an Animation and will restore the original frame when the animation is over */
-+(id) actionWithAnimation:(id<CCAnimation>) a;
++(id) actionWithAnimation:(id<CCAnimationProtocol>) a;
 /** initializes the action with an Animation and will restore the original frame when the animtion is over */
--(id) initWithAnimation:(id<CCAnimation>) a;
+-(id) initWithAnimation:(id<CCAnimationProtocol>) a;
 /** creates the action with an Animation */
-+(id) actionWithAnimation:(id<CCAnimation>) a restoreOriginalFrame:(BOOL)b;
++(id) actionWithAnimation:(id<CCAnimationProtocol>) a restoreOriginalFrame:(BOOL)b;
 /** initializes the action with an Animation */
--(id) initWithAnimation:(id<CCAnimation>) a restoreOriginalFrame:(BOOL)b;
+-(id) initWithAnimation:(id<CCAnimationProtocol>) a restoreOriginalFrame:(BOOL)b;
 @end
 
 
