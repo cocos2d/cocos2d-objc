@@ -11,7 +11,7 @@ Class nextAction();
 @interface SubTest : NSObject
 {
 	int					subtestNumber;
-	AtlasSpriteManager	*sheet;
+	CCSpriteManager		*sheet;
 	id					parent;
 }
 -(id) createSpriteWithTag:(int)tag;
@@ -19,7 +19,7 @@ Class nextAction();
 -(id) initWithSubTest:(int) subtest parent:(id)parent;
 @end
 
-@interface MainScene : Scene {
+@interface MainScene : CCScene {
 	int			lastRenderedCount;
 	int			quantityNodes;
 	SubTest		*subTest;

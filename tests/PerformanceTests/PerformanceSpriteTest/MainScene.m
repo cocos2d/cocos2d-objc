@@ -85,7 +85,7 @@ Class restartAction()
  */
 		
 		// purge textures
-		TextureMgr *mgr = [TextureMgr sharedTextureMgr];
+		CCTextureMgr *mgr = [CCTextureMgr sharedTextureMgr];
 		[mgr removeTexture: [mgr addImage:@"grossinis_sister1.png"]];
 		[mgr removeTexture: [mgr addImage:@"grossini_dance_atlas.png"]];
 		[mgr removeTexture: [mgr addImage:@"spritesheet1.png"]];
@@ -97,49 +97,49 @@ Class restartAction()
 				break;
 				///
 			case 2:
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
+				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 			case 3:
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
+				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 4:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 				
 				///
 			case 6:
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 7:
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;								
 			case 8:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 
 				///
 			case 10:
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
+				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 			case 11:
-				[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
+				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 12:
-				sheet = [AtlasSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
+				sheet = [CCSpriteManager spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 				
@@ -149,7 +149,7 @@ Class restartAction()
 		
 		[sheet retain];
 
-		[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+		[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
 
 	}
 	
@@ -165,19 +165,19 @@ Class restartAction()
 -(id) createSpriteWithTag:(int)tag
 {
 	// create 
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 
 	id sprite = nil;
 	switch (subtestNumber) {
 		case 1: {
-			sprite = [Sprite spriteWithFile:@"grossinis_sister1.png"];
+			sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 		case 2:
 		case 3: 
 		case 4: {
-			sprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 52, 139) spriteManager:sheet];
+			sprite = [sheet createSpriteWithRect:CGRectMake(0, 0, 52, 139)];
 			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -185,7 +185,7 @@ Class restartAction()
 		case 5:
 		{
 			int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
-			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
+			sprite = [CCSprite spriteWithFile: [NSString stringWithFormat:@"grossini_dance_%02d.png", idx]];
 			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -201,7 +201,7 @@ Class restartAction()
 
 			x *= 85;
 			y *= 121;
-			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,85,121) spriteManager:sheet];
+			sprite = [sheet createSpriteWithRect:CGRectMake(x,y,85,121)];
 			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -214,7 +214,7 @@ Class restartAction()
 			y = r / 8;
 			x = r % 8;
 			
-			sprite = [Sprite spriteWithFile: [NSString stringWithFormat:@"sprite-%d-%d.png", x, y]];
+			sprite = [CCSprite spriteWithFile: [NSString stringWithFormat:@"sprite-%d-%d.png", x, y]];
 			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -231,7 +231,7 @@ Class restartAction()
 			
 			x *= 32;
 			y *= 32;
-			sprite = [AtlasSprite spriteWithRect:CGRectMake(x,y,32,32) spriteManager:sheet];
+			sprite = [sheet createSpriteWithRect:CGRectMake(x,y,32,32)];
 			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -240,7 +240,7 @@ Class restartAction()
 			break;
 	}
 		
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
 
 	return sprite;
 }
@@ -290,51 +290,51 @@ Class restartAction()
 		subtestNumber = asubtest;
 		subTest = [[SubTest alloc] initWithSubTest:asubtest parent:self];
 
-		CGSize s = [[Director sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		lastRenderedCount = 0;
 		quantityNodes = 0;
 		
-		[MenuItemFont setFontSize:65];
-		MenuItemFont *decrease = [MenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
+		[CCMenuItemFont setFontSize:65];
+		CCMenuItemFont *decrease = [CCMenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
 		[decrease.label setColor:ccc3(0,200,20)];
-		MenuItemFont *increase = [MenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
+		CCMenuItemFont *increase = [CCMenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
 		[increase.label setColor:ccc3(0,200,20)];
 		
-		Menu *menu = [Menu menuWithItems: decrease, increase, nil];
+		CCMenu *menu = [CCMenu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, s.height-65);
 		[self addChild:menu z:1];
 		
-		Label *infoLabel = [Label labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
+		CCLabel *infoLabel = [CCLabel labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 				
 		
 		// Next Prev Test
-		MenuItemImage *item1 = [MenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		MenuItemImage *item2 = [MenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		MenuItemImage *item3 = [MenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		menu = [Menu menuWithItems:item1, item2, item3, nil];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 30);
 		[self addChild: menu z:1];	
 		
 		// Sub Tests
-		[MenuItemFont setFontSize:32];
-		MenuItemFont  *itemF1 = [MenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF2 = [MenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF3 = [MenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF4 = [MenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF5 = [MenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF6 = [MenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF7 = [MenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF8 = [MenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF9 = [MenuItemFont itemFromString:@"9 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF10 = [MenuItemFont itemFromString:@"10 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF11 = [MenuItemFont itemFromString:@"11 " target:self selector:@selector(testNCallback:)];
-		MenuItemFont  *itemF12 = [MenuItemFont itemFromString:@"12 " target:self selector:@selector(testNCallback:)];
+		[CCMenuItemFont setFontSize:32];
+		CCMenuItemFont  *itemF1 = [CCMenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF2 = [CCMenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF3 = [CCMenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF4 = [CCMenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF5 = [CCMenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF6 = [CCMenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF7 = [CCMenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF8 = [CCMenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF9 = [CCMenuItemFont itemFromString:@"9 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF10 = [CCMenuItemFont itemFromString:@"10 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF11 = [CCMenuItemFont itemFromString:@"11 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF12 = [CCMenuItemFont itemFromString:@"12 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
@@ -350,7 +350,7 @@ Class restartAction()
 		itemF12.tag = 12;
 
 
-		menu = [Menu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, itemF10, itemF11, itemF12, nil];
+		menu = [CCMenu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, itemF10, itemF11, itemF12, nil];
 		
 		int i=0;
 		for( id child in [menu children] ) {
@@ -368,7 +368,7 @@ Class restartAction()
 		[self addChild:menu z:2];
 		
 
-		Label* label = [Label labelWithString:[self title] fontName:@"Arial" fontSize:40];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setColor:ccc3(255,255,40)];
@@ -394,28 +394,28 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id scene = [restartAction() testWithSubTest:subtestNumber nodes:quantityNodes];
 	[s addChild:scene];
 
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id scene = [nextAction() testWithSubTest:subtestNumber nodes:quantityNodes];
 	[s addChild:scene];
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	Scene *s = [Scene node];
+	CCScene *s = [CCScene node];
 	id scene = [backAction() testWithSubTest:subtestNumber nodes:quantityNodes];
 	[s addChild:scene];
 
-	[[Director sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) testNCallback:(id) sender
@@ -428,7 +428,7 @@ Class restartAction()
 {
 	if( quantityNodes != lastRenderedCount ) {
 
-		Label *infoLabel = (Label *) [self getChildByTag:kTagInfoLayer];
+		CCLabel *infoLabel = (CCLabel *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u nodes", quantityNodes] ];
 		
 		lastRenderedCount = quantityNodes;
@@ -447,7 +447,7 @@ Class restartAction()
 	
 	for( int i=0;i< kNodesIncrease;i++) {
 		
-		Sprite *sprite = [subTest createSpriteWithTag: quantityNodes];
+		CCSprite *sprite = [subTest createSpriteWithTag: quantityNodes];
 		[self doTest:sprite];
 		
 		quantityNodes++;
