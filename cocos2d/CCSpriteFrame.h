@@ -62,7 +62,7 @@
 /** delay between frames in seconds */
 @property (nonatomic,readwrite,assign) float delay;
 /** array of frames */
-@property (nonatomic,readonly) NSMutableArray *frames;
+@property (nonatomic,readwrite,retain) NSMutableArray *frames;
 
 /** creates a CCAnimation with a name and delay between frames */
 +(id) animationWithName:(NSString*)name delay:(float)delay;

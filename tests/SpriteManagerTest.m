@@ -12,9 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"SpriteFrameTest",
 			@"Atlas1",
-			@"Atlas2",
+			@"SpriteFrameTest",
 			@"Atlas3",
 			@"Atlas4",
 			@"AtlasZVertex",
@@ -199,61 +198,6 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"AtlasSprite (tap screen)";
-}
-@end
-
-#pragma mark Example Atlas 2
-
-@implementation Atlas2
-
--(id) init
-{
-	if( (self=[super init]) ) {
-		
-		CCSpriteManager *mgr = [CCSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self addChild:mgr z:0 tag:kTagSpriteManager];		
-		
-		CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(0, 0, 85, 121)];
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(0, 0, 85, 121)];
-		CCSprite *sprite3 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(0, 0, 85, 121)];
-		
-		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
-		for(int i=0;i<14;i++) {
-			int x= i % 5;
-			int y= i / 5;
-			[animation addFrameWithRect: CGRectMake(x*85, y*121, 85, 121) ];
-
-		}
-		
-		[mgr addChild:sprite];
-		[mgr addChild:sprite2];
-		[mgr addChild:sprite3];
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		sprite.position = ccp( s.width /2, s.height/2);
-		sprite2.position = ccp( s.width /2 - 100, s.height/2);
-		sprite3.position = ccp( s.width /2 + 100, s.height/2);
-		
-		id action = [CCAnimate actionWithAnimation: animation];
-		id action2 = [[action copy] autorelease];
-		id action3 = [[action copy] autorelease];
-		
-		sprite.scale = 0.5f;
-		sprite2.scale = 1.0f;
-		sprite3.scale = 1.5f;
-		
-		[sprite runAction:action];
-		[sprite2 runAction:action2];
-		[sprite3 runAction:action3];
-		
-		
-	}	
-	return self;
-}
-
--(NSString *) title
-{
-	return @"AtlasSprite: Animation";
 }
 @end
 
@@ -767,11 +711,35 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithPlist:@"animations/grossini.plist"];
-		
-		CCSpriteFrame *frame = [[CCSpriteFrameMgr sharedSpriteFrameMgr] spriteFrameByName:@"grossini_dance_01"];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		frame.texture = nil;
+		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithFilename:@"animations/grossini.plist"];
+
+		// Animation using Sprite Manager
+		CCSprite *sprite = [[CCSpriteFrameMgr sharedSpriteFrameMgr] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite.position = ccp( s.width/2-80, s.height/2);
+		
+		CCSpriteManager *spritemgr = [CCSpriteManager spriteManagerWithFile:@"animations/grossini.png"];
+		[spritemgr addChild:sprite];
+		[self addChild:spritemgr];
+
+		// Animation using standard Sprite
+		CCSprite *sprite2 = [[CCSpriteFrameMgr sharedSpriteFrameMgr] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite2.position = ccp( s.width/2 + 80, s.height/2);
+		[self addChild:sprite2];
+		
+		NSMutableArray *animFrames = [NSMutableArray array];
+		for(int i = 0; i < 14; i++) {
+
+			CCSpriteFrame *frame = [[CCSpriteFrameMgr sharedSpriteFrameMgr] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+			[animFrames addObject:frame];
+		}
+		
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.5f];
+		animation.frames = animFrames;
+		
+		[sprite runAction:[CCAnimate actionWithAnimation:animation]];
+		[sprite2 runAction:[CCAnimate actionWithAnimation:animation]];
 	}	
 	return self;
 }

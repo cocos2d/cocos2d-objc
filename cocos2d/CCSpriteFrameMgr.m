@@ -18,6 +18,7 @@
 #import "CCTextureMgr.h"
 #import "CCSpriteFrameMgr.h"
 #import "CCSpriteFrame.h"
+#import "CCSprite.h"
 #import "Support/FileUtils.h"
 
 
@@ -94,16 +95,16 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr;
 	
 }
 
--(void) addSpriteFramesWithPlist:(NSString*)plist texture:(CCTexture2D*)texture
+-(void) addSpriteFramesWithFilename:(NSString*)plist texture:(CCTexture2D*)texture
 {
 }
 
--(void) addSpriteFramesWithPlist:(NSString*)plist
+-(void) addSpriteFramesWithFilename:(NSString*)plist
 {
 	NSString *path = [FileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 	
-	NSString *texturePath = [NSString stringWithString:path];
+	NSString *texturePath = [NSString stringWithString:plist];
 	texturePath = [texturePath stringByDeletingPathExtension];
 	texturePath = [texturePath stringByAppendingPathExtension:@"png"];
 	
@@ -116,21 +117,39 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr;
 
 -(void) removeSpriteFrames
 {
+	[spriteFrames removeAllObjects];
 }
 
 -(void) removeUnusedSpriteFrames
 {
+	NSArray *keys = [spriteFrames allKeys];
+	for( id key in keys ) {
+		id value = [spriteFrames objectForKey:key];		
+		if( [value retainCount] == 1 ) {
+			CCLOG(@"cocos2d: removing sprite frame: %@", key);
+			[spriteFrames removeObjectForKey:key];
+		}
+	}	
 }
 
 -(void) removeSpriteFrameByName:(NSString*)name
 {
+	[spriteFrames removeObjectForKey:name];
 }
 
 #pragma mark CCSpriteFrameMgr - getting
 
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name
 {
-	return nil;
+	return [spriteFrames objectForKey:name];
 }
 
+#pragma mark CCSpriteFrameMgr - sprite creation
+
+-(CCSprite*) createSpriteWithFrameName:(NSString*)name
+{
+	CCSpriteFrame *frame = [spriteFrames objectForKey:name];
+	CCSprite *sprite = [CCSprite spriteWithTexture:frame.texture rect:frame.rect offset:frame.offset];
+	return sprite;
+}
 @end
