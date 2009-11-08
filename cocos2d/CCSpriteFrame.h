@@ -24,10 +24,18 @@
  */
 @interface CCSpriteFrame : NSObject
 {
-	CGRect	rect;
+	CGRect			rect_;
+	CGPoint			offset_;
+	CCTexture2D		*texture_;
 }
 /** rect of the frame */
 @property (nonatomic,readwrite) CGRect rect;
+
+/** offset of the frame */
+@property (nonatomic,readwrite) CGPoint offset;
+
+/** texture of the frame */
+@property (nonatomic, retain, readwrite) CCTexture2D *texture;
 
 /** create a CCSpriteFrame with a CGRect */
 +(id) frameWithRect:(CGRect)frame;
