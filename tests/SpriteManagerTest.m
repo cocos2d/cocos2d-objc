@@ -8,10 +8,11 @@
 #import "cocos2d.h"
 
 // local import
-#import "AtlasSpriteTest.h"
+#import "SpriteManagerTest.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+@"SpriteFrameTest",
 			@"Atlas1",
 			@"Atlas2",
 			@"Atlas3",
@@ -755,6 +756,34 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"AtlasSpriteMgr texture (tap)";
+}
+@end
+
+#pragma mark Example SpriteManager - SpriteFrame
+
+@implementation SpriteFrameTest
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithPlist:@"animations/grossini.plist"];
+		
+		CCSpriteFrame *frame = [[CCSpriteFrameMgr sharedSpriteFrameMgr] spriteFrameByName:@"grossini_dance_01"];
+
+		frame.texture = nil;
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteFrame test";
 }
 @end
 

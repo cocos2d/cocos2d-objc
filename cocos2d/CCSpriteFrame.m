@@ -83,27 +83,23 @@
 @implementation CCSpriteFrame
 @synthesize rect = rect_, offset = offset_, texture = texture_;
 
-+(id) frameWithRect:(CGRect)frame
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
-	return [[[self alloc] initWithRect:(CGRect)frame] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset] autorelease];
 }
 
--(id) initWithRect:(CGRect)frame
++(id) frameWithRect:(CGRect)rect
 {
-	if( (self=[super init]) ) {
-		rect_ = frame;
-	}
-	return self;
+	return [[[self alloc] initWithTexture:nil rect:rect offset:CGPointZero] autorelease];
 }
 
--(id) initWithRect:(CGRect)rect offset:(CGPoint)offset texture:(CCTexture2D*)texture
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
 	if( (self=[super init]) ) {
-		rect_ = rect;
-		offset_ = offset;
 		self.texture = texture;
+		offset_ = offset;
+		rect_ = rect;
 	}
-	
 	return self;
 }
 

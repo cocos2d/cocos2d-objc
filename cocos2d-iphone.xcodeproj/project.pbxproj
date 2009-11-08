@@ -242,7 +242,7 @@
 		501C7C8B0F91EFFF0024A296 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		501C7C8C0F91EFFF0024A296 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		501C7C8D0F91EFFF0024A296 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		501C7CA80F91F1B20024A296 /* AtlasSpriteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 501C7CA70F91F1B20024A296 /* AtlasSpriteTest.m */; };
+		501C7CA80F91F1B20024A296 /* SpriteManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */; };
 		501CCFAD0E99657C00B86F68 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA40E99657C00B86F68 /* EAGLView.h */; };
 		501CCFAE0E99657C00B86F68 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFA50E99657C00B86F68 /* EAGLView.m */; };
 		501CCFAF0E99657C00B86F68 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFA60E99657C00B86F68 /* glu.c */; };
@@ -281,6 +281,9 @@
 		502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		502C6C6C0FB87970002BF3C2 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */; };
 		502C6C6D0FB87970002BF3C2 /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */; };
+		502C8BE010A661E200D137BA /* CCSpriteFrameMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C8BDE10A661E200D137BA /* CCSpriteFrameMgr.h */; };
+		502C8BE110A661E200D137BA /* CCSpriteFrameMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C8BDF10A661E200D137BA /* CCSpriteFrameMgr.m */; };
+		502C8CA510A701D300D137BA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
 		5030927310446E0B005F7AFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		5030927410446E0B005F7AFC /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
@@ -1233,14 +1236,6 @@
 		50E2A65310A4AF3F00D894CE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		50E2A65410A4AF5100D894CE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		50E2A65510A4AF5700D894CE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
-		50E2A7E910A5D16F00D894CE /* atlas_01.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7DE10A5D16F00D894CE /* atlas_01.plist */; };
-		50E2A7EA10A5D16F00D894CE /* atlas_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7DF10A5D16F00D894CE /* atlas_01.png */; };
-		50E2A7EB10A5D16F00D894CE /* atlas_02.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7E010A5D16F00D894CE /* atlas_02.plist */; };
-		50E2A7EC10A5D16F00D894CE /* atlas_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7E110A5D16F00D894CE /* atlas_02.png */; };
-		50E2A7EE10A5D16F00D894CE /* atlas_03.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7E310A5D16F00D894CE /* atlas_03.plist */; };
-		50E2A7EF10A5D16F00D894CE /* atlas_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7E410A5D16F00D894CE /* atlas_03.png */; };
-		50E2A7F110A5D16F00D894CE /* grossini.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7E610A5D16F00D894CE /* grossini.plist */; };
-		50E2A7F210A5D16F00D894CE /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A7E710A5D16F00D894CE /* grossini.png */; };
 		50E386DD10445EDA00150883 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50E386DE10445EF500150883 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		50E386E810445F4600150883 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
@@ -1703,7 +1698,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
 		8E6CBF310F7A78F800D47B3A /* PBXContainerItemProxy */ = {
@@ -1874,8 +1869,8 @@
 		501945800F964CFD0059CE7C /* drawPrimitivesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = drawPrimitivesTest.m; path = tests/drawPrimitivesTest.m; sourceTree = "<group>"; };
 		501A7CAC0EBC97BA005BC158 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		501C7CA60F91F1B20024A296 /* AtlasSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasSpriteTest.h; path = tests/AtlasSpriteTest.h; sourceTree = "<group>"; };
-		501C7CA70F91F1B20024A296 /* AtlasSpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtlasSpriteTest.m; path = tests/AtlasSpriteTest.m; sourceTree = "<group>"; };
+		501C7CA60F91F1B20024A296 /* SpriteManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteManagerTest.h; path = tests/SpriteManagerTest.h; sourceTree = "<group>"; };
+		501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteManagerTest.m; path = tests/SpriteManagerTest.m; sourceTree = "<group>"; };
 		501CCFA40E99657C00B86F68 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		501CCFA50E99657C00B86F68 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
 		501CCFA60E99657C00B86F68 /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
@@ -1894,6 +1889,11 @@
 		502C664E0DFEFD6800E4107D /* RotateWorldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorldTest.m; path = tests/RotateWorldTest.m; sourceTree = "<group>"; };
 		502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
+		502C8BCC10A65D0F00D137BA /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocos2d; sourceTree = "<group>"; };
+		502C8BCD10A65D0F00D137BA /* LICENSE.cocosdenshion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocosdenshion; sourceTree = "<group>"; };
+		502C8BDE10A661E200D137BA /* CCSpriteFrameMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameMgr.h; sourceTree = "<group>"; };
+		502C8BDF10A661E200D137BA /* CCSpriteFrameMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameMgr.m; sourceTree = "<group>"; };
+		502C8C9810A701D300D137BA /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Resources/animations; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		503092B210447296005F7AFC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		503162E5102726E8003ACFE7 /* background3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background3.jpg; sourceTree = "<group>"; };
@@ -2242,7 +2242,6 @@
 		50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkAccelTouchTest.h; path = tests/ChipmunkAccelTouchTest.h; sourceTree = "<group>"; };
 		50B2C5EC0E100F8800AE9530 /* ChipmunkAccelTouchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkAccelTouchTest.m; path = tests/ChipmunkAccelTouchTest.m; sourceTree = "<group>"; };
 		50B2C9BF0E109A5900AE9530 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
-		50B2C9C00E109A5900AE9530 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		50B2C9C10E109A5900AE9530 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		50B2CB170E10EE0800AE9530 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tests/main.m; sourceTree = "<group>"; };
 		50B2CB180E10EE0800AE9530 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = tests/Prefix.pch; sourceTree = "<group>"; };
@@ -2410,16 +2409,6 @@
 		50E2A5EE10A4ABFE00D894CE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		50E2A5F010A4ABFE00D894CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		50E2A5F210A4ABFE00D894CE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		50E2A7DE10A5D16F00D894CE /* atlas_01.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_01.plist; sourceTree = "<group>"; };
-		50E2A7DF10A5D16F00D894CE /* atlas_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas_01.png; sourceTree = "<group>"; };
-		50E2A7E010A5D16F00D894CE /* atlas_02.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_02.plist; sourceTree = "<group>"; };
-		50E2A7E110A5D16F00D894CE /* atlas_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas_02.png; sourceTree = "<group>"; };
-		50E2A7E310A5D16F00D894CE /* atlas_03.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_03.plist; sourceTree = "<group>"; };
-		50E2A7E410A5D16F00D894CE /* atlas_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas_03.png; sourceTree = "<group>"; };
-		50E2A7E610A5D16F00D894CE /* grossini.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = grossini.plist; sourceTree = "<group>"; };
-		50E2A7E710A5D16F00D894CE /* grossini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini.png; sourceTree = "<group>"; };
-		50E2A7F410A63A4D00D894CE /* CCSpriteFrameMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameMgr.h; sourceTree = "<group>"; };
-		50E2A7F510A63A4D00D894CE /* CCSpriteFrameMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameMgr.m; sourceTree = "<group>"; };
 		50E3876C10446C6E00150883 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50E3876E10446C6E00150883 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50E3877010446C6E00150883 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -3233,7 +3222,8 @@
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
-				50B2C9C00E109A5900AE9530 /* LICENSE */,
+				502C8BCC10A65D0F00D137BA /* LICENSE.cocos2d */,
+				502C8BCD10A65D0F00D137BA /* LICENSE.cocosdenshion */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				509B3A100F31027600F2FB95 /* cocoslive */,
 				50CB2FEF1004C93600B7A750 /* CocosDenshion */,
@@ -3259,7 +3249,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				50E2A7DD10A5D16F00D894CE /* animations */,
+				502C8C9810A701D300D137BA /* animations */,
 				50F489BB10458B6300755CFB /* cocos2d-artwork */,
 				505460E91061413300AB7C52 /* Fonts */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
@@ -3801,8 +3791,8 @@
 				509A79960F6188420032F449 /* CCSprite.m */,
 				50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */,
 				50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */,
-				50E2A7F410A63A4D00D894CE /* CCSpriteFrameMgr.h */,
-				50E2A7F510A63A4D00D894CE /* CCSpriteFrameMgr.m */,
+				502C8BDE10A661E200D137BA /* CCSpriteFrameMgr.h */,
+				502C8BDF10A661E200D137BA /* CCSpriteFrameMgr.m */,
 			);
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
@@ -4141,8 +4131,6 @@
 				504CC3451035BECA0096894C /* ActionManagerTest.m */,
 				506881E60E9575E100F943E5 /* AtlasTest.h */,
 				506881E70E9575E100F943E5 /* AtlasTest.m */,
-				501C7CA60F91F1B20024A296 /* AtlasSpriteTest.h */,
-				501C7CA70F91F1B20024A296 /* AtlasSpriteTest.m */,
 				504227120FC0B96E00B992F7 /* Box2dTest.h */,
 				504227130FC0B96E00B992F7 /* Box2dTest.mm */,
 				506C77E50E01524200B48100 /* ClickAndMoveTest.h */,
@@ -4179,6 +4167,8 @@
 				502C664E0DFEFD6800E4107D /* RotateWorldTest.m */,
 				506C80110E041CDB00B48100 /* SceneTest.h */,
 				506C80120E041CDB00B48100 /* SceneTest.m */,
+				501C7CA60F91F1B20024A296 /* SpriteManagerTest.h */,
+				501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */,
 				50C93AC30E0BF8FC00517B01 /* SpritesTest.h */,
 				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
@@ -4414,22 +4404,6 @@
 			path = sprites_test;
 			sourceTree = "<group>";
 		};
-		50E2A7DD10A5D16F00D894CE /* animations */ = {
-			isa = PBXGroup;
-			children = (
-				50E2A7DE10A5D16F00D894CE /* atlas_01.plist */,
-				50E2A7DF10A5D16F00D894CE /* atlas_01.png */,
-				50E2A7E010A5D16F00D894CE /* atlas_02.plist */,
-				50E2A7E110A5D16F00D894CE /* atlas_02.png */,
-				50E2A7E310A5D16F00D894CE /* atlas_03.plist */,
-				50E2A7E410A5D16F00D894CE /* atlas_03.png */,
-				50E2A7E610A5D16F00D894CE /* grossini.plist */,
-				50E2A7E710A5D16F00D894CE /* grossini.png */,
-			);
-			name = animations;
-			path = Resources/animations;
-			sourceTree = "<group>";
-		};
 		50F489BB10458B6300755CFB /* cocos2d-artwork */ = {
 			isa = PBXGroup;
 			children = (
@@ -4620,6 +4594,7 @@
 				50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */,
 				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
 				50E2A25210A46CC600D894CE /* CCProtocols.h in Headers */,
+				502C8BE010A661E200D137BA /* CCSpriteFrameMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5866,14 +5841,7 @@
 				501C7C830F91EFFF0024A296 /* fire.pvr in Resources */,
 				5012DA190FE109C100D6DDD1 /* grossini_dance_atlas-mono.png in Resources */,
 				505464361062886600AB7C52 /* fps_images.png in Resources */,
-				50E2A7E910A5D16F00D894CE /* atlas_01.plist in Resources */,
-				50E2A7EA10A5D16F00D894CE /* atlas_01.png in Resources */,
-				50E2A7EB10A5D16F00D894CE /* atlas_02.plist in Resources */,
-				50E2A7EC10A5D16F00D894CE /* atlas_02.png in Resources */,
-				50E2A7EE10A5D16F00D894CE /* atlas_03.plist in Resources */,
-				50E2A7EF10A5D16F00D894CE /* atlas_03.png in Resources */,
-				50E2A7F110A5D16F00D894CE /* grossini.plist in Resources */,
-				50E2A7F210A5D16F00D894CE /* grossini.png in Resources */,
+				502C8CA510A701D300D137BA /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6822,6 +6790,7 @@
 				50545C0B105E8E7200AB7C52 /* CCPageTurnTransition.m in Sources */,
 				50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */,
 				50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */,
+				502C8BE110A661E200D137BA /* CCSpriteFrameMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6839,7 +6808,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
-				501C7CA80F91F1B20024A296 /* AtlasSpriteTest.m in Sources */,
+				501C7CA80F91F1B20024A296 /* SpriteManagerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

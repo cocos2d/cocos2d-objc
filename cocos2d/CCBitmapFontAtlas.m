@@ -354,10 +354,8 @@ void FNTConfigRemoveCache( void )
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
 	NSString *textureAtlasName = [self atlasNameFromFntFile:fntFile];
-	NSString *relDirPathOfTextureAtlas = [fntFile stringByDeletingLastPathComponent];
-	NSString *textureAtlasFile = [relDirPathOfTextureAtlas stringByAppendingPathComponent:textureAtlasName];
 	
-	if ((self=[super initWithFile:textureAtlasFile capacity:[theString length]])) {
+	if ((self=[super initWithFile:textureAtlasName capacity:[theString length]])) {
 
 		opacity_ = 255;
 		color_ = ccWHITE;
@@ -426,7 +424,9 @@ void FNTConfigRemoveCache( void )
 	
 	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
 
-	return [FileUtils fullPathFromRelativePath:propertyValue];	
+	NSString *textureAtlasName = [FileUtils fullPathFromRelativePath:propertyValue];
+	NSString *relDirPathOfTextureAtlas = [fntFile stringByDeletingLastPathComponent];
+	return [relDirPathOfTextureAtlas stringByAppendingPathComponent:textureAtlasName];
 }
 
 #pragma mark BitmapFontAtlas - Atlas generation

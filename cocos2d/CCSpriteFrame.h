@@ -37,10 +37,13 @@
 /** texture of the frame */
 @property (nonatomic, retain, readwrite) CCTexture2D *texture;
 
-/** create a CCSpriteFrame with a CGRect */
-+(id) frameWithRect:(CGRect)frame;
-/** initializes a CCSpriteFrame with a CGRect */
--(id) initWithRect:(CGRect)frame;
+/** create a CCSpriteFrame with a texture, rect and offset */
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
+
+/** initializes a CCSpriteFrame with a texture, rect and offset */
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
+
++(id) frameWithRect:(CGRect)rect;
 @end
 
 #pragma mark -

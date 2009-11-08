@@ -60,6 +60,7 @@
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteManager.h"
+#import "CCSpriteFrameMgr.h"
 #import "CCTextureMgr.h"
 #import "CCTextureNode.h"
 #import "CCTransition.h"
