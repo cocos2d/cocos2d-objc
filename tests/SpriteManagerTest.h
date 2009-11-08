@@ -65,3 +65,9 @@
 -(void) addNewSprite;
 @end
 
+@interface SpriteFrameTest : AtlasDemo
+{
+}
+@end
+
+

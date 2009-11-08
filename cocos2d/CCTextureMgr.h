@@ -12,7 +12,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #import "Support/CCTexture2D.h"
 
