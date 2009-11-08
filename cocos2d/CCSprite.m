@@ -127,9 +127,11 @@
 		animations = nil;
 
 		// default transform anchor: center
-		anchorPoint_ = ccp( (offset.x / rect.size.width) + 0.5f,
-						   (offset.y / rect.size.height) + 0.5f );
+		anchorPoint_ = ccp( (-offset.x / rect.size.width) + 0.5f,
+						   (-offset.y / rect.size.height) + 0.5f );
 
+//		anchorPoint_ = ccp(0.5f, 0.5f);
+		
 		// Atlas: Color
 		opacity_ = 255;
 		color_ = ccWHITE;
@@ -214,6 +216,11 @@
 
 -(void)setTextureRect:(CGRect) rect
 {
+	BOOL updateVertex = NO;
+
+	if( (rect.size.width != rect_.size.width) || (rect.size.height != rect_.size.height) )
+		updateVertex = YES;
+		
 	rect_ = rect;
 
 	[self updateTextureCoords];
@@ -223,21 +230,33 @@
 		// Don't update Atlas if index == CCSpriteIndexNotInitialized. issue #283
 		if( atlasIndex_ == CCSpriteIndexNotInitialized)
 			dirty = YES;
-		else
-			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 
 		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
 			[self setContentSize:rect.size];
 			dirty = YES;
-		}
+		} else
+			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+
 	}
 	// self rendering
 	else
 	{
+		if( updateVertex ) {
+			// Atlas: Vertex
+			float x1 = 0;
+			float y1 = 0;
+			float x2 = x1 + rect.size.width;
+			float y2 = y1 + rect.size.height;		
+			quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+			quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
+			quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+			quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };			
+		}
+		
 		[selfRenderTextureAtlas_ updateQuad:&quad_ atIndex:0];
 		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
 			[self setContentSize:rect.size];
-		}
+		}		
 	}
 }
 
@@ -543,9 +562,18 @@
 -(void) setDisplayFrame:(id)newFrame
 {
 	CCSpriteFrame *frame = (CCSpriteFrame*)newFrame;
-	CGRect rect = [frame rect];
 
+	// update anchor point
+	anchorPoint_ = ccp( (- frame.offset.x / frame.rect.size.width) + 0.5f,
+					   ( - frame.offset.y / frame.rect.size.height) + 0.5f );
+	
+	// update rect
+	CGRect rect = [frame rect];
 	[self setTextureRect: rect];	
+
+	// update texture
+	if ( frame.texture.name != self.texture.name )
+		[self setTexture: frame.texture];
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
@@ -557,22 +585,21 @@
 	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	
 	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
-	CGRect rect = [frame rect];
-
-	[self setTextureRect: rect];
 	
+	[self setDisplayFrame:frame];
 }
 
 -(BOOL) isFrameDisplayed:(id)frame 
 {
 	CCSpriteFrame *spr = (CCSpriteFrame*)frame;
 	CGRect r = [spr rect];
-	return CGRectEqualToRect(r, rect_);
+	return ( CGRectEqualToRect(r, rect_) &&
+			spr.texture.name == self.texture.name);
 }
 
 -(id) displayFrame
 {
-	return [CCSpriteFrame frameWithRect:rect_];
+	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_ offset:CGPointZero];
 }
 
 -(void) addAnimation: (id<CCAnimationProtocol>) anim

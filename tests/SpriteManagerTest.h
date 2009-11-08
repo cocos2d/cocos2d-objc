@@ -20,10 +20,6 @@
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
-@interface Atlas2 : AtlasDemo
-{}
-@end
-
 @interface Atlas3 : AtlasDemo
 {}
 @end

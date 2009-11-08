@@ -23,6 +23,8 @@
  @since v0.9
  */
 
+@class CCSprite;
+
 @interface CCSpriteFrameMgr : NSObject {
 
 	NSMutableDictionary *spriteFrames;
@@ -40,15 +42,15 @@
  */
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture;
 
-/** Adds multiple Sprite Frames with a plist file.
+/** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by: a) replacing the .plist suffix with .png
- * If you want to use another texture, you should use the addSpriteFramesWithPlist:texture method.
+ * If you want to use another texture, you should use the addSpriteFramesWithFilename:texture method.
  */
--(void) addSpriteFramesWithPlist:(NSString*)plist;
+-(void) addSpriteFramesWithFilename:(NSString*)plist;
 
-/** Adds multiple Sprite Frames with a plist file and a texture
+/** Adds multiple Sprite Frames from a plist file and a texture
  */
--(void) addSpriteFramesWithPlist:(NSString*)plist texture:(CCTexture2D*)texture;
+-(void) addSpriteFramesWithFilename:(NSString*)plist texture:(CCTexture2D*)texture;
 
 
 /** Purges the dictionary of loaded sprite frames.
@@ -69,10 +71,16 @@
  */
 -(void) removeSpriteFrameByName:(NSString*)name;
 
-/** Returns an Sprite Frame by name.
+/** Returns an Sprite Frame that was previously added.
  If the name is not found it will return nil.
  You should retain the returned copy if you are going to use it.
  */
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name;
+
+/** Creates an sprite with the name of an sprite frame.
+ The created sprite will contain the texture, rect and offset of the sprite frame.
+ It returns an autorelease object.
+ */
+-(CCSprite*) createSpriteWithFrameName:(NSString*)name;
 
 @end
