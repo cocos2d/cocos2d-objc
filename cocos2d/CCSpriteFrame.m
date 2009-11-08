@@ -81,32 +81,45 @@
 #pragma mark -
 #pragma mark CCSpriteFrame
 @implementation CCSpriteFrame
-@synthesize rect;
+@synthesize rect = rect_, offset = offset_, texture = texture_;
 
 +(id) frameWithRect:(CGRect)frame
 {
 	return [[[self alloc] initWithRect:(CGRect)frame] autorelease];
 }
+
 -(id) initWithRect:(CGRect)frame
 {
-	if( ([super init]) ) {
-		rect = frame;
+	if( (self=[super init]) ) {
+		rect_ = frame;
 	}
+	return self;
+}
+
+-(id) initWithRect:(CGRect)rect offset:(CGPoint)offset texture:(CCTexture2D*)texture
+{
+	if( (self=[super init]) ) {
+		rect_ = rect;
+		offset_ = offset;
+		self.texture = texture;
+	}
+	
 	return self;
 }
 
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f)>", [self class], self,
-			rect.origin.x,
-			rect.origin.y,
-			rect.size.width,
-			rect.size.height];
+			rect_.origin.x,
+			rect_.origin.y,
+			rect_.size.width,
+			rect_.size.height];
 }
 
 - (void) dealloc
 {
 	CCLOG( @"cocos2d: deallocing %@",self);
+	[texture_ release];
 	[super dealloc];
 }
 @end
