@@ -830,8 +830,8 @@
 		508A33390FBADD5F00D574A2 /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */; };
 		509A79970F6188420032F449 /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* CCSprite.h */; };
 		509A79980F6188420032F449 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* CCSprite.m */; };
-		509A799B0F6188500032F449 /* CCSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* CCSpriteManager.h */; };
-		509A799C0F6188500032F449 /* CCSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A799A0F6188500032F449 /* CCSpriteManager.m */; };
+		509A799B0F6188500032F449 /* CCSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* CCSpriteSheet.h */; };
+		509A799C0F6188500032F449 /* CCSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A799A0F6188500032F449 /* CCSpriteSheet.m */; };
 		509A7A980F61A2400032F449 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		509B3A170F31027600F2FB95 /* cocoslive.h in Headers */ = {isa = PBXBuildFile; fileRef = 509B3A110F31027600F2FB95 /* cocoslive.h */; };
 		509B3A180F31027600F2FB95 /* cocoslive.m in Sources */ = {isa = PBXBuildFile; fileRef = 509B3A120F31027600F2FB95 /* cocoslive.m */; };
@@ -2196,8 +2196,8 @@
 		508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite.m; sourceTree = "<group>"; };
-		509A79990F6188500032F449 /* CCSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteManager.h; sourceTree = "<group>"; };
-		509A799A0F6188500032F449 /* CCSpriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteManager.m; sourceTree = "<group>"; };
+		509A79990F6188500032F449 /* CCSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteSheet.h; sourceTree = "<group>"; };
+		509A799A0F6188500032F449 /* CCSpriteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteSheet.m; sourceTree = "<group>"; };
 		509A7A970F61A2400032F449 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		509B39DF0F31020900F2FB95 /* libTouchJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		509B3A0D0F31024E00F2FB95 /* libcocos Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3785,8 +3785,8 @@
 		506414C40F9C6792007A7B24 /* Sprite Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				509A79990F6188500032F449 /* CCSpriteManager.h */,
-				509A799A0F6188500032F449 /* CCSpriteManager.m */,
+				509A79990F6188500032F449 /* CCSpriteSheet.h */,
+				509A799A0F6188500032F449 /* CCSpriteSheet.m */,
 				509A79950F6188420032F449 /* CCSprite.h */,
 				509A79960F6188420032F449 /* CCSprite.m */,
 				50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */,
@@ -4566,7 +4566,7 @@
 				50A24E740F378087007CAEB0 /* CCTiledGridAction.h in Headers */,
 				500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
-				509A799B0F6188500032F449 /* CCSpriteManager.h in Headers */,
+				509A799B0F6188500032F449 /* CCSpriteSheet.h in Headers */,
 				50C508C60F7C194400799124 /* FileUtils.h in Headers */,
 				6F8321EF0F8BD08E00CBAD06 /* ccArray.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
@@ -6767,7 +6767,7 @@
 				50A24E750F378087007CAEB0 /* CCTiledGridAction.m in Sources */,
 				500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
-				509A799C0F6188500032F449 /* CCSpriteManager.m in Sources */,
+				509A799C0F6188500032F449 /* CCSpriteSheet.m in Sources */,
 				50C508C70F7C194400799124 /* FileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				50D413270F9A3FE00040C3C8 /* CCQuadParticleSystem.m in Sources */,
