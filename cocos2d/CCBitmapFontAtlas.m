@@ -517,11 +517,6 @@ void FNTConfigRemoveCache( void )
 		[child setColor:color_];
 }
 
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
-{
-	[self setColor:ccc3(r,g,b)];
-}
-
 -(void) setOpacity:(GLubyte)opacity
 {
 	opacity_ = opacity;

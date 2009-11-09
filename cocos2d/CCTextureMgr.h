@@ -71,13 +71,6 @@
 
 /** Returns a Texture2D object given an CGImageRef image
  * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
- * Otherwise it will return a reference of a previously loaded image.
- * The CGImageRef (a memory pointer) will be used as the "key" for the cache.
- * @deprecated Use addCGImage:forKey: instead
- */
--(CCTexture2D*) addCGImage: (CGImageRef) image __attribute__((deprecated));
-/** Returns a Texture2D object given an CGImageRef image
- * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
  * Otherwise it will return a reference of a previously loaded image
  * The "key" parameter will be used as the "key" for the cache.
  * @since v0.8

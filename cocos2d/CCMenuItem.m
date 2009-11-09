@@ -225,10 +225,6 @@ enum {
 {
 	return [label_ opacity];
 }
-- (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
-{
-	[label_ setColor: ccc3(r,g,b)];
-}
 -(void) setColor:(ccColor3B)color
 {
 	[label_ setColor:color];

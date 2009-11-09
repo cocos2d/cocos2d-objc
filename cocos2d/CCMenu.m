@@ -419,15 +419,6 @@ enum {
 		[item setOpacity:opacity_];
 }
 
-- (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
-{
-	color_.r=r;
-	color_.g=g;
-	color_.b=b;
-	for(id<CCRGBAProtocol> item in children)
-		[item setColor:color_];
-}
-
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
