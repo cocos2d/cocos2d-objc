@@ -14,6 +14,11 @@
  *
  */
 
+/*
+ * To create sprite frames and texture atlas, use this tool:
+ * http://zwoptex.zwopple.com/
+ */
+
 #import <Foundation/Foundation.h>
 
 #import "CCSpriteFrame.h"

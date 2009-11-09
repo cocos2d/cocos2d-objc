@@ -175,7 +175,7 @@ static CCScheduler *sharedScheduler;
 	[methodsToAdd addObject: t];
 }
 
--(void) unscheduleTimer: (CCTimer*) t;
+-(void) unscheduleTimer: (CCTimer*) t
 {
 	// someone wants to remove it before it was added
 	if( [methodsToAdd containsObject:t] ) {

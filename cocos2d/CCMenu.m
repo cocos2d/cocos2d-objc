@@ -428,7 +428,7 @@ enum {
 
 #pragma mark Menu - Private
 
--(CCMenuItem *) itemForTouch: (UITouch *) touch;
+-(CCMenuItem *) itemForTouch: (UITouch *) touch
 {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];

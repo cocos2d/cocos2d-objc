@@ -14,6 +14,11 @@
  *
  */
 
+/*
+ * To create sprite frames and texture atlas, use this tool:
+ * http://zwoptex.zwopple.com/
+ */
+
 #import "ccMacros.h"
 #import "CCTextureMgr.h"
 #import "CCSpriteFrameMgr.h"
@@ -26,24 +31,24 @@
 
 #pragma mark CCSpriteFrameMgr - Alloc, Init & Dealloc
 
-static CCSpriteFrameMgr *sharedSpriteFrameMgr;
+static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
 
 + (CCSpriteFrameMgr *)sharedSpriteFrameMgr
 {
 	@synchronized([CCSpriteFrameMgr class])
 	{
-		if (!sharedSpriteFrameMgr)
-			sharedSpriteFrameMgr = [[CCSpriteFrameMgr alloc] init];
+		if (!sharedSpriteFrameMgr_)
+			sharedSpriteFrameMgr_ = [[CCSpriteFrameMgr alloc] init];
 		
 	}
-	return sharedSpriteFrameMgr;
+	return sharedSpriteFrameMgr_;
 }
 
 +(id)alloc
 {
 	@synchronized([CCSpriteFrameMgr class])
 	{
-		NSAssert(sharedSpriteFrameMgr == nil, @"Attempted to allocate a second instance of a singleton.");
+		NSAssert(sharedSpriteFrameMgr_ == nil, @"Attempted to allocate a second instance of a singleton.");
 		return [super alloc];
 	}
 	// to avoid compiler warning
@@ -53,7 +58,7 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr;
 +(void)purgeSharedSpriteFrameMgr
 {
 	@synchronized( self ) {
-		[sharedSpriteFrameMgr release];
+		[sharedSpriteFrameMgr_ release];
 	}
 }
 
@@ -64,6 +69,11 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr;
 	}
 	
 	return self;
+}
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | num of sprite frames =  %i>", [self class], self, [spriteFrames count]];
 }
 
 -(void) dealloc
