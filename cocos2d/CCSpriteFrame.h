@@ -59,23 +59,26 @@
 
 @property (nonatomic,readwrite,assign) NSString *name;
 
-/** delay between frames in seconds */
+/** delay between frames in seconds. */
 @property (nonatomic,readwrite,assign) float delay;
 /** array of frames */
 @property (nonatomic,readwrite,retain) NSMutableArray *frames;
 
-/** creates a CCAnimation with a name and delay between frames */
+/** Creates a CCAnimation with a name and delay between frames. */
 +(id) animationWithName:(NSString*)name delay:(float)delay;
 
-/** creates an CCAnimation with a name, delay between frames and the CCSpriteFrames frames */
-+(id) animationWithName:(NSString*)name delay:(float)delay frames:frame1,... NS_REQUIRES_NIL_TERMINATION;
+/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
++(id) animationWithName:(NSString*)name delay:(float)delay array:(NSArray*)array;
 
-/** initializes a CCAnimation with a name and delay between frames */
+/** Initializes a CCAnimation with a name and delay between frames. */
 -(id) initWithName:(NSString*)name delay:(float)delay;
 
-/** initializes a CCAnimation with a name, and the CCSpriteFrames */
--(id) initWithName:(NSString*)name delay:(float)delay firstFrame:(CCSpriteFrame*)frame vaList:(va_list) args;
+/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames. */
+-(id) initWithName:(NSString*)name delay:(float)delay array:(NSArray*)array;
 
-/** adds a frame to a CCAnimation */
--(void) addFrameWithRect:(CGRect)rect;
+/** Adds a frame to a CCAnimation. */
+-(void) addFrame:(CCSpriteFrame*)frame;
+
+/** Adds a frame with an image filename. */
+-(void) addFrameWithFilename:(NSString*)filename;
 @end

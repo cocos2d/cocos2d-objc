@@ -28,6 +28,7 @@
 #import "CCTransition.h"
 #import "CCScene.h"
 #import "CCTouchDispatcher.h"
+#import "CCSpriteFrameMgr.h"
 
 // support imports
 #import "Support/glu.h"
@@ -713,6 +714,7 @@ static CCDirector *_sharedDirector = nil;
 #endif	
 
 	// Purge all managers
+	[CCSpriteFrameMgr purgeSharedSpriteFrameMgr];
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureMgr purgeSharedTextureMgr];
