@@ -13,7 +13,7 @@
  */
 
 #import "ccConfig.h"
-#import "CCSpriteManager.h"
+#import "CCSpriteSheet.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCTextureMgr.h"
@@ -289,7 +289,7 @@
 
 -(void)updatePosition
 {
-	NSAssert( useAtlasRendering_, @"updatePosition is only valid when CCSprite is using a CCSpriteManager as parent");
+	NSAssert( useAtlasRendering_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
 
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
@@ -379,7 +379,7 @@
 
 -(void) draw
 {	
-	NSAssert(!useAtlasRendering_, @"CCSprite can't be dirty when it's parent is not an CCSpriteManager");
+	NSAssert(!useAtlasRendering_, @"CCSprite can't be dirty when it's parent is not an CCSpriteSheet");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -405,7 +405,7 @@
 
 //
 // CCNode property overloads
-// used only when parent is CCSpriteManager
+// used only when parent is CCSpriteSheet
 //
 #pragma mark CCSprite - property overloads
 -(void)setPosition:(CGPoint)pos

@@ -16,7 +16,7 @@
  */
 
 #import "CCAtlasNode.h"
-#import "CCSpriteManager.h"
+#import "CCSpriteSheet.h"
 #import "Support/ccArray.h"
 
 
@@ -62,7 +62,7 @@ enum
  - It only supports the XML format (the JSON format is not supported)
  
  Technical description:
-   Each layer is created using an TMXLayer (subclass of CCSpriteManager). If you have 5 layers, then 5 TMXLayer will be created,
+   Each layer is created using an TMXLayer (subclass of CCSpriteSheet). If you have 5 layers, then 5 TMXLayer will be created,
    unless the layer visibility is off. In that case, the layer won't be created at all.
    You can obtain the layers (TMXLayer objects) at runtime by:
   - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
@@ -97,13 +97,13 @@ enum
 
 /** CCTMXLayer represents the TMX layer.
  
- It is a subclass of CCSpriteManager, so each "tile" is represented by an CCSprite.
+ It is a subclass of CCSpriteSheet, so each "tile" is represented by an CCSprite.
  The benefits of using CCSprite objects as tiles are:
  - tiles (CCSprite) can be rotated/scaled/moved with a nice API
  
  @since v0.8.1
  */
-@interface CCTMXLayer : CCSpriteManager
+@interface CCTMXLayer : CCSpriteSheet
 {
 	CCTMXTilesetInfo	*tileset_;
 	NSString			*layerName_;

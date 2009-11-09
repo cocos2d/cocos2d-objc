@@ -18,12 +18,12 @@
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
 
-#pragma mark CCSpriteManager
+#pragma mark CCSpriteSheet
 
 @class CCSprite;
 
-/** CCSpriteManager is the object that draws all the CCSprite objects
- * that belongs to this Manager. Use 1 CCSpriteManager per TextureAtlas
+/** CCSpriteSheet is the object that draws all the CCSprite objects
+ * that belongs to this Manager. Use 1 CCSpriteSheet per TextureAtlas
 *
  * Limitations:
  *  - The only object that is accepted as child is CCSprite
@@ -31,7 +31,7 @@
  * 
  * @since v0.7.1
  */
-@interface CCSpriteManager : CCNode <CCTextureProtocol>
+@interface CCSpriteSheet : CCNode <CCTextureProtocol>
 {
 	CCTextureAtlas *textureAtlas_;
 	ccBlendFunc	blendFunc_;
@@ -43,22 +43,22 @@
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** creates a CCSpriteManager with a texture2d */
+/** creates a CCSpriteSheet with a texture2d */
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex;
-/** creates a CCSpriteManager with a texture2d and capacity */
+/** creates a CCSpriteSheet with a texture2d and capacity */
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-/** creates a CCSpriteManager with a file image (.png, .jpeg, .pvr, etc).
+/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc).
  The file will be loaded using the TextureMgr.
  */
 +(id)spriteManagerWithFile:(NSString*) fileImage;
-/** creates a CCSpriteManager with a file image (.png, .jpeg, .pvr, etc) and capacity. 
+/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and capacity. 
  The file will be loaded using the TextureMgr.
 */
 +(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
-/** initializes a CCSpriteManager with a texture2d and capacity */
+/** initializes a CCSpriteSheet with a texture2d and capacity */
 -(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-/** initializes a CCSpriteManager with a file image (.png, .jpeg, .pvr, etc).
+/** initializes a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc).
  The file will be loaded using the TextureMgr.
  */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
@@ -70,7 +70,7 @@
  It's the same as:
    - create an standard CCSsprite
    - set the useAtlasRendering = YES
-   - set the textureAtlas to the same texture Atlas as the CCSpriteManager
+   - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  */
 -(CCSprite*) createSpriteWithRect:(CGRect)rect;
 
@@ -78,18 +78,18 @@
  It's the same as:
  - initialize an standard CCSsprite
  - set the useAtlasRendering = YES
- - set the textureAtlas to the same texture Atlas as the CCSpriteManager
+ - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  @since v0.9.0
 */ 
 -(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect;
 
 /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
- @warning Removing a child from a CCSpriteManager is very slow
+ @warning Removing a child from a CCSpriteSheet is very slow
  */
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup;
 
 /** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
- @warning Removing a child from a CCSpriteManager is very slow
+ @warning Removing a child from a CCSpriteSheet is very slow
  */
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 @end

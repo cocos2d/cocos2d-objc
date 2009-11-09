@@ -302,7 +302,7 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
-		for( CCSpriteManager* child in [map children] ) {
+		for( CCSpriteSheet* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		float x, y, z;
@@ -344,7 +344,7 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
-		for( CCSpriteManager* child in [map children] ) {
+		for( CCSpriteSheet* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 
@@ -373,7 +373,7 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
-		for( CCSpriteManager* child in [map children] ) {
+		for( CCSpriteSheet* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		
@@ -402,7 +402,7 @@ Class restartAction()
 		CGSize s1 = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s1.width,s1.height);
 		
-		for( CCSpriteManager* child in [map children] ) {
+		for( CCSpriteSheet* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
 		

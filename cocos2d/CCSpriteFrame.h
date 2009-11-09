@@ -20,7 +20,7 @@
 #pragma mark CCSpriteFrame
 
 /** A CCSpriteFrame is an NSObject that encapsulates a CGRect.
- * And a CGRect represents a frame within the CCSpriteManager
+ * And a CGRect represents a frame within the CCSpriteSheet
  */
 @interface CCSpriteFrame : NSObject
 {

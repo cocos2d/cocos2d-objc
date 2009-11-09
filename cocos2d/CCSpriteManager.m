@@ -15,7 +15,7 @@
 
 #import "ccConfig.h"
 #import "CCSprite.h"
-#import "CCSpriteManager.h"
+#import "CCSpriteSheet.h"
 #import "CCGrid.h"
 #import "CCDrawingPrimitives.h"
 #import "Support/CGPointExtension.h"
@@ -23,13 +23,13 @@
 const int defaultCapacity = 29;
 
 #pragma mark -
-#pragma mark CCSpriteManager
+#pragma mark CCSpriteSheet
 
-@interface CCSpriteManager (private)
+@interface CCSpriteSheet (private)
 -(void) updateBlendFunc;
 @end
 
-@implementation CCSpriteManager
+@implementation CCSpriteSheet
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
@@ -46,12 +46,12 @@ const int defaultCapacity = 29;
  */
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex
 {
-	return [[[CCSpriteManager alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
+	return [[[CCSpriteSheet alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
 
 +(id)spriteManagerWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
-	return [[[CCSpriteManager alloc] initWithTexture:tex capacity:capacity] autorelease];
+	return [[[CCSpriteSheet alloc] initWithTexture:tex capacity:capacity] autorelease];
 }
 
 /*
@@ -59,12 +59,12 @@ const int defaultCapacity = 29;
  */
 +(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[[CCSpriteManager alloc] initWithFile:fileImage capacity:capacity] autorelease];
+	return [[[CCSpriteSheet alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
 
 +(id)spriteManagerWithFile:(NSString*) imageFile
 {
-	return [[[CCSpriteManager alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
+	return [[[CCSpriteSheet alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
 
 
@@ -109,7 +109,7 @@ const int defaultCapacity = 29;
 }
 
 
-#pragma mark CCSpriteManager - composition
+#pragma mark CCSpriteSheet - composition
 
 // override visit.
 // Don't call visit on it's children
@@ -175,7 +175,7 @@ const int defaultCapacity = 29;
 -(id) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteManager only supports CCSprites as children");
+	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 	
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
@@ -193,7 +193,7 @@ const int defaultCapacity = 29;
 	index++;
 	for(; index < count; index++) {
 		CCSprite *sprite = (CCSprite *)[children objectAtIndex:index];
-		NSAssert([sprite atlasIndex] == index - 1, @"CCSpriteManager: index failed");
+		NSAssert([sprite atlasIndex] == index - 1, @"CCSpriteSheet: index failed");
 		[sprite setAtlasIndex:index];		
 	}
 	
@@ -258,7 +258,7 @@ const int defaultCapacity = 29;
 	for(; index < count; index++)
 	{
 		CCSprite *other = (CCSprite *)[children objectAtIndex:index];
-		NSAssert([other atlasIndex] == index + 1, @"CCSpriteManager: index failed");
+		NSAssert([other atlasIndex] == index + 1, @"CCSpriteSheet: index failed");
 		[other setAtlasIndex:index];
 	}	
 }
@@ -281,7 +281,7 @@ const int defaultCapacity = 29;
 	[textureAtlas_ removeAllQuads];
 }
 
-#pragma mark CCSpriteManager - draw
+#pragma mark CCSpriteSheet - draw
 -(void)draw
 {
 	if(textureAtlas_.totalQuads == 0)
@@ -325,7 +325,7 @@ const int defaultCapacity = 29;
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-#pragma mark CCSpriteManager - private
+#pragma mark CCSpriteSheet - private
 -(void) increaseAtlasCapacity
 {
 	// if we're going beyond the current TextureAtlas's capacity,
@@ -343,7 +343,7 @@ const int defaultCapacity = 29;
 	}	
 }
 
-#pragma mark CCSpriteManager - CocosNodeTexture protocol
+#pragma mark CCSpriteSheet - CocosNodeTexture protocol
 
 -(void) updateBlendFunc
 {
