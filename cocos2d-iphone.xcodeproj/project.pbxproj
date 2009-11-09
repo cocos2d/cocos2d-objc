@@ -242,7 +242,7 @@
 		501C7C8B0F91EFFF0024A296 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		501C7C8C0F91EFFF0024A296 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		501C7C8D0F91EFFF0024A296 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		501C7CA80F91F1B20024A296 /* SpriteManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */; };
+		501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 501C7CA70F91F1B20024A296 /* SpriteTest.m */; };
 		501CCFAD0E99657C00B86F68 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA40E99657C00B86F68 /* EAGLView.h */; };
 		501CCFAE0E99657C00B86F68 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFA50E99657C00B86F68 /* EAGLView.m */; };
 		501CCFAF0E99657C00B86F68 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFA60E99657C00B86F68 /* glu.c */; };
@@ -1868,9 +1868,9 @@
 		5019457F0F964CFD0059CE7C /* drawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = drawPrimitivesTest.h; path = tests/drawPrimitivesTest.h; sourceTree = "<group>"; };
 		501945800F964CFD0059CE7C /* drawPrimitivesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = drawPrimitivesTest.m; path = tests/drawPrimitivesTest.m; sourceTree = "<group>"; };
 		501A7CAC0EBC97BA005BC158 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
-		501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		501C7CA60F91F1B20024A296 /* SpriteManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteManagerTest.h; path = tests/SpriteManagerTest.h; sourceTree = "<group>"; };
-		501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteManagerTest.m; path = tests/SpriteManagerTest.m; sourceTree = "<group>"; };
+		501C7C910F91EFFF0024A296 /* SpriteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		501C7CA60F91F1B20024A296 /* SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteTest.h; path = tests/SpriteTest.h; sourceTree = "<group>"; };
+		501C7CA70F91F1B20024A296 /* SpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteTest.m; path = tests/SpriteTest.m; sourceTree = "<group>"; };
 		501CCFA40E99657C00B86F68 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		501CCFA50E99657C00B86F68 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
 		501CCFA60E99657C00B86F68 /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
@@ -3189,7 +3189,7 @@
 				504828800F45AED700A30CEF /* AttachTest.app */,
 				8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */,
 				8E6CBEEF0F7A758000D47B3A /* libvorbis.a */,
-				501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */,
+				501C7C910F91EFFF0024A296 /* SpriteTest.app */,
 				501945740F964C620059CE7C /* drawPrimitivesTest.app */,
 				504225700FC0B39C00B992F7 /* libbox2d.a */,
 				5042262E0FC0B5D500B992F7 /* Box2dTest.app */,
@@ -4169,8 +4169,8 @@
 				502C664E0DFEFD6800E4107D /* RotateWorldTest.m */,
 				506C80110E041CDB00B48100 /* SceneTest.h */,
 				506C80120E041CDB00B48100 /* SceneTest.m */,
-				501C7CA60F91F1B20024A296 /* SpriteManagerTest.h */,
-				501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */,
+				501C7CA60F91F1B20024A296 /* SpriteTest.h */,
+				501C7CA70F91F1B20024A296 /* SpriteTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
 				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
@@ -4867,9 +4867,9 @@
 			productReference = 501945740F964C620059CE7C /* drawPrimitivesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		501C7C6D0F91EFFF0024A296 /* SpriteManagerTest */ = {
+		501C7C6D0F91EFFF0024A296 /* SpriteTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "SpriteManagerTest" */;
+			buildConfigurationList = 501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "SpriteTest" */;
 			buildPhases = (
 				501C7C700F91EFFF0024A296 /* Resources */,
 				501C7C840F91EFFF0024A296 /* Sources */,
@@ -4880,9 +4880,9 @@
 			dependencies = (
 				501C7C6E0F91EFFF0024A296 /* PBXTargetDependency */,
 			);
-			name = SpriteManagerTest;
+			name = SpriteTest;
 			productName = AtlasSpriteTest;
-			productReference = 501C7C910F91EFFF0024A296 /* SpriteManagerTest.app */;
+			productReference = 501C7C910F91EFFF0024A296 /* SpriteTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */ = {
@@ -5711,7 +5711,7 @@
 				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
-				501C7C6D0F91EFFF0024A296 /* SpriteManagerTest */,
+				501C7C6D0F91EFFF0024A296 /* SpriteTest */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
@@ -6808,7 +6808,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
-				501C7CA80F91F1B20024A296 /* SpriteManagerTest.m in Sources */,
+				501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7883,7 +7883,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SpriteManagerTest;
+				PRODUCT_NAME = SpriteTest;
 			};
 			name = Debug;
 		};
@@ -7908,7 +7908,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SpriteManagerTest;
+				PRODUCT_NAME = SpriteTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -10059,7 +10059,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "SpriteManagerTest" */ = {
+		501C7C8E0F91EFFF0024A296 /* Build configuration list for PBXNativeTarget "SpriteTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				501C7C8F0F91EFFF0024A296 /* Debug */,
