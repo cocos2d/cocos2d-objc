@@ -14,15 +14,7 @@
 -(NSString*) title;
 @end
 
-@interface Test1 : TestDemo
-{}
-@end
-
 @interface Test2 : TestDemo
-{}
-@end
-
-@interface Test3 : TestDemo
 {}
 @end
 

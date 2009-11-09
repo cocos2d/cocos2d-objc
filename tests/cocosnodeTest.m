@@ -19,9 +19,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"Test1",
 			@"Test2",
-			@"Test3",
 			@"Test4",
 			@"Test5",
 			@"Test6",
@@ -119,62 +117,6 @@ Class restartAction()
 }
 @end
 
-@implementation Test1
--(void) onEnter
-{
-	[super onEnter];
-	
-	CGSize s = [[CCDirector sharedDirector] winSize];
-
-	CCSprite *sp0 = [CCSprite spriteWithFile:@"grossini.png"];
-	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	CCSprite *point0 = [CCSprite spriteWithFile:@"r1.png"];
-	CCSprite *point1 = [CCSprite spriteWithFile:@"r1.png"];
-	CCSprite *point2 = [CCSprite spriteWithFile:@"r1.png"];
-
-	point0.scale = 0.25f;
-	point1.scale = 0.25f;
-	point2.scale = 0.25f;
-
-	sp0.position = ccp(s.width/2, s.height/2 );
-	point0.position = sp0.position;
-	sp0.anchorPoint = ccp(0.5f, 0.5f);
-	
-	sp1.position = ccp(s.width/2-100, s.height/2 );
-	point1.position = sp1.position;
-	sp1.anchorPoint = ccp(0,0);
-	
-	sp2.position = ccp(s.width/2+100, s.height/2 );
-	point2.position = sp2.position;	
-	sp2.anchorPoint = ccp(1,1);
-
-	[self addChild: sp0];
-	[self addChild: sp1];
-	[self addChild: sp2];
-	[self addChild: point0 z:1];
-	[self addChild: point1 z:1];
-	[self addChild: point2 z:1];
-	
-
-	id a1 = [CCRotateBy actionWithDuration:2 angle:360];
-	id a2 = [CCScaleBy actionWithDuration:2 scale:2];
-
-	id action1 = [CCRepeatForever actionWithAction:
-				  [CCSequence actions: a1, a2, [a2 reverse], nil]
-									];
-	id action2 = [[action1 copy] autorelease];
-	id action0 = [[action1 copy] autorelease];
-
-	[sp0 runAction: action0];
-	[sp1 runAction: action1];
-	[sp2 runAction: action2];
-}
--(NSString *) title
-{
-	return @"anchorPoint";
-}
-@end
 
 @implementation Test2
 -(void) onEnter
@@ -217,54 +159,6 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"anchorPoint and children";
-}
-@end
-
-@implementation Test3
--(void) onEnter
-{
-	[super onEnter];
-
-	
-	CGSize s = [[CCDirector sharedDirector] winSize];
-
-	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	CCSprite *sp3 = [CCSprite spriteWithFile:@"grossini.png"];
-	
-	sp1.position = ccp(20,80);
-	sp2.position = ccp(70,50);
-	sp3.position = ccp(s.width/2, s.height/2);
-	
-	// these tags belong to sp3 (kTagSprite1, kTagSprite2)
-	[sp3 addChild:sp1 z:-1 tag:kTagSprite1];
-	[sp3 addChild:sp2 z:1 tag:kTagSprite2];
-	
-	// this tag belong to Test3 (kTagSprite1)
-	[self addChild:sp3 z:0 tag:kTagSprite1];
-	
-	id a1 = [CCRotateBy actionWithDuration:4 angle:360];
-	id action1 = [CCRepeatForever actionWithAction:a1];
-	[sp3 runAction:action1];	
-	
-	[self schedule:@selector(changeZOrder:) interval:2.0f];
-}
-
--(void) changeZOrder:(ccTime) dt
-{
-	CCNode *grossini = [self getChildByTag:kTagSprite1];
-
-	CCNode *sprite1 = [grossini getChildByTag:kTagSprite1];
-	CCNode *sprite2 = [grossini getChildByTag:kTagSprite2];
-	
-	int zt = sprite1.zOrder;
-	[grossini reorderChild:sprite1 z:sprite2.zOrder];
-	[grossini reorderChild:sprite2 z:zt];
-}
-
--(NSString *) title
-{
-	return @"z order";
 }
 @end
 
