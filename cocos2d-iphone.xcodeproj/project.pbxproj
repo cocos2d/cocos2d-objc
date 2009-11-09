@@ -2327,7 +2327,7 @@
 		50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
 		50E2A25110A46CC600D894CE /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
 		50E2A3F410A4A51C00D894CE /* PerformanceTestSprites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestSprites.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50E2A40010A4A53000D894CE /* PerformanceTest-Particles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PerformanceTest-Particles.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50E2A40010A4A53000D894CE /* PerformanceTestParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E2A40710A4A56900D894CE /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		50E2A40810A4A56900D894CE /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		50E2A40910A4A56900D894CE /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
@@ -3210,7 +3210,7 @@
 				DAABAA9A1059A42E00794EB3 /* FontTest.app */,
 				505461DF10616AE100AB7C52 /* libFontLabel.a */,
 				50E2A3F410A4A51C00D894CE /* PerformanceTestSprites.app */,
-				50E2A40010A4A53000D894CE /* PerformanceTest-Particles.app */,
+				50E2A40010A4A53000D894CE /* PerformanceTestParticles.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5568,9 +5568,9 @@
 			productReference = 50E2A3F410A4A51C00D894CE /* PerformanceTestSprites.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50E2A3FF10A4A53000D894CE /* PerformanceTest-Particles */ = {
+		50E2A3FF10A4A53000D894CE /* PerformanceTestParticles */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50E2A40510A4A53200D894CE /* Build configuration list for PBXNativeTarget "PerformanceTest-Particles" */;
+			buildConfigurationList = 50E2A40510A4A53200D894CE /* Build configuration list for PBXNativeTarget "PerformanceTestParticles" */;
 			buildPhases = (
 				50E2A3FC10A4A53000D894CE /* Resources */,
 				50E2A3FD10A4A53000D894CE /* Sources */,
@@ -5581,9 +5581,9 @@
 			dependencies = (
 				50E2A5EA10A4ABCB00D894CE /* PBXTargetDependency */,
 			);
-			name = "PerformanceTest-Particles";
+			name = PerformanceTestParticles;
 			productName = "PerformanceTest-Particles";
-			productReference = 50E2A40010A4A53000D894CE /* PerformanceTest-Particles.app */;
+			productReference = 50E2A40010A4A53000D894CE /* PerformanceTestParticles.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8E6CBEEE0F7A758000D47B3A /* vorbis */ = {
@@ -5706,7 +5706,7 @@
 				5031679F1028488E003ACFE7 /* ParticleView */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
 				8EDF3EA90F6BDA0000F54643 /* PASoundEngineTest (experimental) */,
-				50E2A3FF10A4A53000D894CE /* PerformanceTest-Particles */,
+				50E2A3FF10A4A53000D894CE /* PerformanceTestParticles */,
 				50E2A3F310A4A51C00D894CE /* PerformanceTestSprites */,
 				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
@@ -9714,7 +9714,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "PerformanceTest-Particles";
+				PRODUCT_NAME = PerformanceTestParticles;
 				SDKROOT = iphoneos3.1.2;
 			};
 			name = Debug;
@@ -9738,7 +9738,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "PerformanceTest-Particles";
+				PRODUCT_NAME = PerformanceTestParticles;
 				SDKROOT = iphoneos3.1.2;
 				ZERO_LINK = NO;
 			};
@@ -10410,7 +10410,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50E2A40510A4A53200D894CE /* Build configuration list for PBXNativeTarget "PerformanceTest-Particles" */ = {
+		50E2A40510A4A53200D894CE /* Build configuration list for PBXNativeTarget "PerformanceTestParticles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50E2A40310A4A53100D894CE /* Debug */,

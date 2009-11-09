@@ -7,7 +7,7 @@
 #import "ChipmunkAccelTouchTest.h"
 
 enum {
-	kTagAtlasSpriteManager = 1,
+	kTagSpriteSheet = 1,
 };
 
 static void
@@ -37,7 +37,7 @@ eachShape(void *ptr, void* unused)
 {
 	int posx, posy;
 
-	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagAtlasSpriteManager];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
 	
 	posx = (CCRANDOM_0_1() * 200);
 	posy = (CCRANDOM_0_1() * 200);
@@ -45,8 +45,8 @@ eachShape(void *ptr, void* unused)
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 	
-	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
-	[mgr addChild: sprite];
+	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(posx, posy, 85, 121)];
+	[sheet addChild: sprite];
 	
 	sprite.position = ccp(x,y);
 	
@@ -112,8 +112,8 @@ eachShape(void *ptr, void* unused)
 		shape->e = 1.0f; shape->u = 1.0f;
 		cpSpaceAddStaticShape(space, shape);
 		
-		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
-		[self addChild:mgr z:0 tag:kTagAtlasSpriteManager];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		[self addNewSpriteX: 200 y:200];
 

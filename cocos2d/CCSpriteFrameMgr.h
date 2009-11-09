@@ -49,13 +49,13 @@
 
 /** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by: a) replacing the .plist suffix with .png
- * If you want to use another texture, you should use the addSpriteFramesWithFilename:texture method.
+ * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
  */
--(void) addSpriteFramesWithFilename:(NSString*)plist;
+-(void) addSpriteFramesWithFile:(NSString*)plist;
 
 /** Adds multiple Sprite Frames from a plist file and a texture
  */
--(void) addSpriteFramesWithFilename:(NSString*)plist texture:(CCTexture2D*)texture;
+-(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture;
 
 
 /** Purges the dictionary of loaded sprite frames.
