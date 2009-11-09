@@ -18,14 +18,14 @@
 #import "CCTMXTiledMap.h"
 #import "CCTMXXMLParser.h"
 #import "CCSprite.h"
-#import "CCSpriteManager.h"
+#import "CCSpriteSheet.h"
 #import "CCTextureMgr.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
-#pragma mark CCSpriteManager extension
+#pragma mark CCSpriteSheet extension
 
-@interface CCSpriteManager (TileMapExtension)
+@interface CCSpriteSheet (TileMapExtension)
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
@@ -37,11 +37,11 @@
 -(id)addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag;
 @end
 
-@implementation CCSpriteManager (TileMapExtension)
+@implementation CCSpriteSheet (TileMapExtension)
 -(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index
 {
 	NSAssert( sprite != nil, @"Argument must be non-nil");
-	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteManager only supports CCSprites as children");
+	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
 	
 	while(index >= textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
@@ -55,7 +55,7 @@
 -(id) addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteManager only supports CCSprites as children");
+	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
 	
 	// quad index is Z
 	[child setAtlasIndex:z];

@@ -11,7 +11,7 @@ Class nextAction();
 @interface SubTest : NSObject
 {
 	int					subtestNumber;
-	CCSpriteManager		*sheet;
+	CCSpriteSheet		*sheet;
 	id					parent;
 }
 -(id) createSpriteWithTag:(int)tag;

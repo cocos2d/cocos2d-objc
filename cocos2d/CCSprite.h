@@ -16,28 +16,28 @@
 #import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 
-@class CCSpriteManager;
+@class CCSpriteSheet;
 @class CCSpriteFrame;
 
 #pragma mark CCSprite
 
 enum {
-	/// CCSprite invalid index on the CCSpriteManager
+	/// CCSprite invalid index on the CCSpriteSheet
 	CCSpriteIndexNotInitialized = 0xffffffff,
 };
 
 /** CCSprite is a CCNode object that implements the CCFrameProtocol and CCRGBAProtocol protocols.
  *
- * If the parent is a CCSpriteManager then the following features/limitations are valid
- *	- Features when the parent is a CCSpriteManager
+ * If the parent is a CCSpriteSheet then the following features/limitations are valid
+ *	- Features when the parent is a CCSpriteSheet
  *		- It is MUCH faster if you render multiptle sprites at the same time (eg: 50 or more CCSprite nodes)
  *
  *	- Limitations
  *		- They can't have children
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
  *		- GridBase actions are not supported (eg: Lens, Ripple, Twirl)
- *		- The Alias/Antialias property belongs to CCSpriteManager, so you can't individually set the aliased property.
- *		- The Blending function property belongs to CCSpriteManager, so you can't individually set the blending function property.
+ *		- The Alias/Antialias property belongs to CCSpriteSheet, so you can't individually set the aliased property.
+ *		- The Blending function property belongs to CCSpriteSheet, so you can't individually set the blending function property.
  *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
  *
  *  If the parent is an standard CCNode, then CCSprite behaves like any other CCTextureNode:
