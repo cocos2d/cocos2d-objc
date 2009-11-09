@@ -1,12 +1,12 @@
 //
-// Sprites Demo
+// Actions Demo
 // a cocos2d example
 // http://www.cocos2d-iphone.org
 //
 
 // local import
 #import "cocos2d.h"
-#import "SpritesTest.h"
+#import "ActionsTest.h"
 
 enum {
 	kTagAnimationDance = 1,
@@ -14,26 +14,26 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-						 @"SpriteManual",
-						 @"SpriteMove",
-						 @"SpriteRotate",
-						 @"SpriteScale",
-						 @"SpriteJump",
-						 @"SpriteBezier",
-						 @"SpriteBlink",
-						 @"SpriteFade",
-						 @"SpriteTint",
-						 @"SpriteAnimate",
-						 @"SpriteSequence",
-						 @"SpriteSequence2",
-						 @"SpriteSpawn",
-						 @"SpriteReverse",
-						 @"SpriteDelayTime",
-						 @"SpriteRepeat",
-						 @"SpriteCallFunc",
-						 @"SpriteReverseSequence",
-						 @"SpriteReverseSequence2",
-						 @"SpriteOrbit" };
+						 @"ActionManual",
+						 @"ActionMove",
+						 @"ActionRotate",
+						 @"ActionScale",
+						 @"ActionJump",
+						 @"ActionBezier",
+						 @"ActionBlink",
+						 @"ActionFade",
+						 @"ActionTint",
+						 @"ActionAnimate",
+						 @"ActionSequence",
+						 @"ActionSequence2",
+						 @"ActionSpawn",
+						 @"ActionReverse",
+						 @"ActionDelayTime",
+						 @"ActionRepeat",
+						 @"ActionCallFunc",
+						 @"ActionReverseSequence",
+						 @"ActionReverseSequence2",
+						 @"ActionOrbit" };
 
 Class nextAction()
 {
@@ -66,7 +66,7 @@ Class restartAction()
 
 
 
-@implementation SpriteDemo
+@implementation ActionDemo
 -(id) init
 {
 	if( (self=[super init])) {
@@ -153,7 +153,7 @@ Class restartAction()
 @end
 
 
-@implementation SpriteManual
+@implementation ActionManual
 -(void) onEnter
 {
 	[super onEnter];
@@ -177,7 +177,7 @@ Class restartAction()
 @end
 
 
-@implementation SpriteMove
+@implementation ActionMove
 -(void) onEnter
 {
 	[super onEnter];
@@ -199,7 +199,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteRotate
+@implementation ActionRotate
 -(void) onEnter
 {
 	[super onEnter];
@@ -228,7 +228,7 @@ Class restartAction()
 
 @end
 
-@implementation SpriteScale
+@implementation ActionScale
 -(void) onEnter
 {
 	[super onEnter];
@@ -256,7 +256,7 @@ Class restartAction()
 
 @end
 
-@implementation SpriteJump
+@implementation ActionJump
 -(void) onEnter
 {
 	[super onEnter];
@@ -274,7 +274,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteBezier
+@implementation ActionBezier
 -(void) onEnter
 {
 	[super onEnter];
@@ -325,7 +325,7 @@ Class restartAction()
 @end
 
 
-@implementation SpriteBlink
+@implementation ActionBlink
 -(void) onEnter
 {
 	[super onEnter];
@@ -344,7 +344,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteFade
+@implementation ActionFade
 -(void) onEnter
 {
 	[super onEnter];
@@ -367,7 +367,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteTint
+@implementation ActionTint
 -(void) onEnter
 {
 	[super onEnter];
@@ -387,7 +387,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteAnimate
+@implementation ActionAnimate
 -(void) onEnter
 {
 	[super onEnter];
@@ -411,7 +411,7 @@ Class restartAction()
 @end
 
 
-@implementation SpriteSequence
+@implementation ActionSequence
 -(void) onEnter
 {
 	[super onEnter];
@@ -431,7 +431,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSequence2
+@implementation ActionSequence2
 -(void) onEnter
 {
 	[super onEnter];
@@ -485,7 +485,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSpawn
+@implementation ActionSpawn
 -(void) onEnter
 {
 	[super onEnter];
@@ -505,7 +505,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteReverse
+@implementation ActionReverse
 -(void) onEnter
 {
 	[super onEnter];
@@ -523,7 +523,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteDelayTime
+@implementation ActionDelayTime
 -(void) onEnter
 {
 	[super onEnter];
@@ -541,7 +541,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteReverseSequence
+@implementation ActionReverseSequence
 -(void) onEnter
 {
 	[super onEnter];
@@ -561,7 +561,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteReverseSequence2
+@implementation ActionReverseSequence2
 -(void) onEnter
 {
 	[super onEnter];
@@ -596,7 +596,7 @@ Class restartAction()
 @end
 
 
-@implementation SpriteRepeat
+@implementation ActionRepeat
 -(void) onEnter
 {
 	[super onEnter];
@@ -618,7 +618,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteCallFunc
+@implementation ActionCallFunc
 -(void) onEnter
 {
 	[super onEnter];
@@ -687,7 +687,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteOrbit
+@implementation ActionOrbit
 -(void) onEnter
 {
 	[super onEnter];
@@ -714,7 +714,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"CCOrbitCamera action";
+	return @"OrbitCamera action";
 }
 @end
 

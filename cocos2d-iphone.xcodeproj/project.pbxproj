@@ -997,7 +997,7 @@
 		50C93AA60E0BF6E000517B01 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C93AA80E0BF6E000517B01 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* SpritesTest.m */; };
+		50C93AC50E0BF8FC00517B01 /* ActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* ActionsTest.m */; };
 		50CB2FF71004C93600B7A750 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF01004C93600B7A750 /* CDAudioManager.h */; };
 		50CB2FF91004C93600B7A750 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */; };
 		50CB2FFA1004C93600B7A750 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF31004C93600B7A750 /* CocosDenshion.h */; };
@@ -2269,9 +2269,9 @@
 		50C938E00E0A9DBB00517B01 /* TransitionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E30E0A9E1100517B01 /* TransitionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsTest.h; path = tests/TransitionsTest.h; sourceTree = "<group>"; };
 		50C938E40E0A9E1100517B01 /* TransitionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionsTest.m; path = tests/TransitionsTest.m; sourceTree = "<group>"; };
-		50C93AAD0E0BF6E000517B01 /* SpritesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C93AC30E0BF8FC00517B01 /* SpritesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpritesTest.h; path = tests/SpritesTest.h; sourceTree = "<group>"; };
-		50C93AC40E0BF8FC00517B01 /* SpritesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritesTest.m; path = tests/SpritesTest.m; sourceTree = "<group>"; };
+		50C93AAD0E0BF6E000517B01 /* ActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50C93AC30E0BF8FC00517B01 /* ActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsTest.h; path = tests/ActionsTest.h; sourceTree = "<group>"; };
+		50C93AC40E0BF8FC00517B01 /* ActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsTest.m; path = tests/ActionsTest.m; sourceTree = "<group>"; };
 		50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB2FF01004C93600B7A750 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
@@ -3168,7 +3168,7 @@
 				506C7A090E01C73A00B48100 /* MenuTest.app */,
 				506C800E0E041C9300B48100 /* SceneTest.app */,
 				50C938E00E0A9DBB00517B01 /* TransitionsTest.app */,
-				50C93AAD0E0BF6E000517B01 /* SpritesTest.app */,
+				50C93AAD0E0BF6E000517B01 /* ActionsTest.app */,
 				50B2C4D10E100AEA00AE9530 /* libChipmunk.a */,
 				50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */,
 				50B2CE460E129FD900AE9530 /* ChipmunkTest.app */,
@@ -4129,6 +4129,8 @@
 				317070350E29409E00DD3360 /* AccelViewportTest.m */,
 				504CC3441035BECA0096894C /* ActionManagerTest.h */,
 				504CC3451035BECA0096894C /* ActionManagerTest.m */,
+				50C93AC30E0BF8FC00517B01 /* ActionsTest.h */,
+				50C93AC40E0BF8FC00517B01 /* ActionsTest.m */,
 				506881E60E9575E100F943E5 /* AtlasTest.h */,
 				506881E70E9575E100F943E5 /* AtlasTest.m */,
 				504227120FC0B96E00B992F7 /* Box2dTest.h */,
@@ -4169,8 +4171,6 @@
 				506C80120E041CDB00B48100 /* SceneTest.m */,
 				501C7CA60F91F1B20024A296 /* SpriteManagerTest.h */,
 				501C7CA70F91F1B20024A296 /* SpriteManagerTest.m */,
-				50C93AC30E0BF8FC00517B01 /* SpritesTest.h */,
-				50C93AC40E0BF8FC00517B01 /* SpritesTest.m */,
 				505B62DE0F2E6A66001B4104 /* Texture2dTest.h */,
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
 				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
@@ -5406,9 +5406,9 @@
 			productReference = 50C938E00E0A9DBB00517B01 /* TransitionsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50C93A930E0BF6E000517B01 /* SpritesTest */ = {
+		50C93A930E0BF6E000517B01 /* ActionsTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "SpritesTest" */;
+			buildConfigurationList = 50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "ActionsTest" */;
 			buildPhases = (
 				50C93A980E0BF6E000517B01 /* Resources */,
 				50C93A9F0E0BF6E000517B01 /* Sources */,
@@ -5419,9 +5419,9 @@
 			dependencies = (
 				50C93A960E0BF6E000517B01 /* PBXTargetDependency */,
 			);
-			name = SpritesTest;
+			name = ActionsTest;
 			productName = SpritesTest;
-			productReference = 50C93AAD0E0BF6E000517B01 /* SpritesTest.app */;
+			productReference = 50C93AAD0E0BF6E000517B01 /* ActionsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50CB2FC91004C8B100B7A750 /* CocosDenshion */ = {
@@ -5682,6 +5682,7 @@
 				8E6CBEEE0F7A758000D47B3A /* vorbis */,
 				317070410E2940C900DD3360 /* AccelViewportTest */,
 				504CC30C1035BDE90096894C /* ActionManagerTest */,
+				50C93A930E0BF6E000517B01 /* ActionsTest */,
 				506881F40E95761200F943E5 /* AtlasTest */,
 				5048287F0F45AED700A30CEF /* AttachTest */,
 				504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */,
@@ -5710,7 +5711,6 @@
 				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
-				50C93A930E0BF6E000517B01 /* SpritesTest */,
 				501C7C6D0F91EFFF0024A296 /* SpriteManagerTest */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
@@ -7159,7 +7159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C93AC50E0BF8FC00517B01 /* SpritesTest.m in Sources */,
+				50C93AC50E0BF8FC00517B01 /* ActionsTest.m in Sources */,
 				50B2CB1A0E10EE0800AE9530 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9279,7 +9279,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SpritesTest;
+				PRODUCT_NAME = ActionsTest;
 			};
 			name = Debug;
 		};
@@ -9304,7 +9304,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SpritesTest;
+				PRODUCT_NAME = ActionsTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -10329,7 +10329,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "SpritesTest" */ = {
+		50C93AAA0E0BF6E000517B01 /* Build configuration list for PBXNativeTarget "ActionsTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50C93AAB0E0BF6E000517B01 /* Debug */,
