@@ -120,7 +120,7 @@ void drawCircleShape(cpShape *shape)
 	cpBody *body = shape->body;
 	cpCircleShape *circle = (cpCircleShape *)shape;
 	cpVect c = cpvadd(body->p, cpvrotate(circle->c, body->rot));
-	drawCircle( ccp(c.x, c.y), circle->r, body->a, 15, YES);
+	ccDrawCircle( ccp(c.x, c.y), circle->r, body->a, 15, YES);
 }
 
 void drawSegmentShape(cpShape *shape)
@@ -130,7 +130,7 @@ void drawSegmentShape(cpShape *shape)
 	cpVect a = cpvadd(body->p, cpvrotate(seg->a, body->rot));
 	cpVect b = cpvadd(body->p, cpvrotate(seg->b, body->rot));
 	
-	drawLine( ccp(a.x, a.y), ccp(b.x, b.y) );
+	ccDrawLine( ccp(a.x, a.y), ccp(b.x, b.y) );
 }
 
 void drawPolyShape(cpShape *shape)
@@ -149,7 +149,7 @@ void drawPolyShape(cpShape *shape)
 		cpVect v = cpvadd(body->p, cpvrotate(verts[i], body->rot));
 		vertices[i] = v;
 	}
-	drawPoly( vertices, poly->numVerts, YES );
+	ccDrawPoly( vertices, poly->numVerts, YES );
 	
 	free(vertices);
 }
@@ -177,7 +177,7 @@ void drawCollisions(void *ptr, void *data)
 	cpArbiter *arb = (cpArbiter *)ptr;
 	for(int i=0; i<arb->numContacts; i++){
 		cpVect v = arb->contacts[i].p;
-		drawPoint( ccp(v.x, v.y) );
+		ccDrawPoint( ccp(v.x, v.y) );
 	}
 }
 
@@ -235,7 +235,7 @@ void drawCollisions(void *ptr, void *data)
 	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 	for(int i=0; i<num; i++){
 		cpBody *body = (cpBody *)bodies->arr[i];
-		drawPoint( ccp(body->p.x, body->p.y) );
+		ccDrawPoint( ccp(body->p.x, body->p.y) );
 	}
 	
 	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);

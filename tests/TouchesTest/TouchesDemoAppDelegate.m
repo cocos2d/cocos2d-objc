@@ -12,7 +12,8 @@
 	[window setUserInteractionEnabled:YES];
 	[window setMultipleTouchEnabled:YES];
 
-	[CCDirector useFastDirector];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
 	
 	[[CCDirector sharedDirector] attachInWindow:window];
 	[CCDirector sharedDirector].displayFPS = YES;

@@ -87,7 +87,7 @@ enum {
 		
 		//Set up sprite
 		
-		CCAtlasSpriteManager *mgr = [CCAtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"blocks.png" capacity:150];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
@@ -123,14 +123,14 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCAtlasSpriteManager *mgr = (CCAtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteManager];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCAtlasSprite *sprite = [CCAtlasSprite spriteWithRect:CGRectMake(32 * idx,32 * idy,32,32) spriteManager:mgr];
-	[mgr addChild:sprite];
+	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(32 * idx,32 * idy,32,32)];
+	[sheet addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -174,7 +174,7 @@ enum {
 	{
 		if (b->GetUserData() != NULL) {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			CCAtlasSprite* myActor = (CCAtlasSprite*)b->GetUserData();
+			CCSprite* myActor = (CCSprite*)b->GetUserData();
 			myActor.position = CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
 			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
 		}	
@@ -230,7 +230,8 @@ enum {
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-//	[CCDirector useFastDirector];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
 
 	// AnimationInterval doesn't work with FastDirector, yet
 //	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
@@ -253,7 +254,6 @@ enum {
 	CCScene *scene = [CCScene node];
 	id box2dLayer = [[Box2DTestLayer alloc] init];
 	[scene addChild:box2dLayer z:0];
-//	glClearColor(1.0f,1.0f,1.0f,1.0f);
 
 	[window makeKeyAndVisible];
 
@@ -280,7 +280,7 @@ enum {
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
 }
 
 // next delta time will be zero

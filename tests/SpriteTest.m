@@ -1218,7 +1218,7 @@ Class restartAction()
 		// IMPORTANT:
 		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
 		//     [[CCSpriteFrameMgr sharedSpriteFrameMgr] removeUnusedSpriteFrames];
-		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithFilename:@"animations/grossini.plist"];
+		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithFile:@"animations/grossini.plist"];
 
 		// Animation using Sprite Manager
 		CCSprite *sprite = [[CCSpriteFrameMgr sharedSpriteFrameMgr] createSpriteWithFrameName:@"grossini_dance_01.png"];

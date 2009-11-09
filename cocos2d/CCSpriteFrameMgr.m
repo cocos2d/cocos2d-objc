@@ -105,11 +105,15 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
 	
 }
 
--(void) addSpriteFramesWithFilename:(NSString*)plist texture:(CCTexture2D*)texture
+-(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture
 {
+	NSString *path = [FileUtils fullPathFromRelativePath:plist];
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+
+	return [self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
--(void) addSpriteFramesWithFilename:(NSString*)plist
+-(void) addSpriteFramesWithFile:(NSString*)plist
 {
 	NSString *path = [FileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
