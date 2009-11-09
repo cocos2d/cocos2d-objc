@@ -23,7 +23,7 @@
 @class CCSprite;
 
 /** CCSpriteSheet is the object that draws all the CCSprite objects
- * that belongs to this Manager. Use 1 CCSpriteSheet per TextureAtlas
+ * that belongs to this object. Use 1 CCSpriteSheet per TextureAtlas
 *
  * Limitations:
  *  - The only object that is accepted as child is CCSprite
@@ -44,17 +44,17 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** creates a CCSpriteSheet with a texture2d */
-+(id)spriteManagerWithTexture:(CCTexture2D *)tex;
++(id)spriteSheetWithTexture:(CCTexture2D *)tex;
 /** creates a CCSpriteSheet with a texture2d and capacity */
-+(id)spriteManagerWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
++(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
 /** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc).
  The file will be loaded using the TextureMgr.
  */
-+(id)spriteManagerWithFile:(NSString*) fileImage;
++(id)spriteSheetWithFile:(NSString*) fileImage;
 /** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and capacity. 
  The file will be loaded using the TextureMgr.
 */
-+(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
++(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 /** initializes a CCSpriteSheet with a texture2d and capacity */
 -(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
@@ -74,7 +74,7 @@
  */
 -(CCSprite*) createSpriteWithRect:(CGRect)rect;
 
-/** initializes a previously created sprite with a rect. This sprite will have the same texture as the SpriteManager
+/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet
  It's the same as:
  - initialize an standard CCSsprite
  - set the useAtlasRendering = YES

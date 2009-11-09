@@ -98,48 +98,48 @@ Class restartAction()
 				///
 			case 2:
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 			case 3:
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"grossinis_sister1.png" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 4:
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"grossinis_sister1.pvr" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 				
 				///
 			case 6:
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 7:
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;								
 			case 8:
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.pvr" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 
 				///
 			case 10:
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"spritesheet1.png" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 			case 11:
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"spritesheet1.png" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 12:
-				sheet = [CCSpriteSheet spriteManagerWithFile:@"spritesheet1.pvr" capacity:100];
+				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.pvr" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 				
