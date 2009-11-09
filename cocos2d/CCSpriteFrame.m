@@ -12,6 +12,7 @@
  *
  */
 
+#import "CCTextureMgr.h"
 #import "CCSpriteFrame.h"
 #import "ccMacros.h"
 
@@ -21,15 +22,9 @@
 @implementation CCAnimation
 @synthesize name, delay, frames;
 
-+(id) animationWithName:(NSString*)aname delay:(float)d frames:rect1,...
++(id) animationWithName:(NSString*)aname delay:(float)d array:(NSArray*)array
 {
-	va_list args;
-	va_start(args,rect1);
-	
-	id s = [[[self alloc] initWithName:aname delay:d firstFrame:rect1 vaList:args] autorelease];
-	
-	va_end(args);
-	return s;
+	return [[[self alloc] initWithName:aname delay:d array:array] autorelease];
 }
 
 +(id) animationWithName:(NSString*)aname delay:(float)d
@@ -39,29 +34,24 @@
 
 -(id) initWithName:(NSString*)t delay:(float)d
 {
-	return [self initWithName:t delay:d firstFrame:nil vaList:nil];
+	return [self initWithName:t delay:d array:nil];
 }
 
-/* initializes a CCAnimation with a name, and the frames from CCSpriteFrames */
--(id) initWithName:(NSString*)t delay:(float)d firstFrame:(CCSpriteFrame*)frame vaList:(va_list)args
+-(id) initWithName:(NSString*)n delay:(float)d array:(NSArray*)array
 {
 	if( (self=[super init]) ) {
 		
-		name = t;
-		frames = [[NSMutableArray array] retain];
+		name = n;
 		delay = d;
-		
-		if( frame ) {
-			[frames addObject:frame];
-			
-			CCSpriteFrame *frame2 = va_arg(args, CCSpriteFrame*);
-			while(frame2) {
-				[frames addObject:frame2];
-				frame2 = va_arg(args, CCSpriteFrame*);
-			}	
-		}
+		self.frames = [NSMutableArray arrayWithArray:array];
 	}
 	return self;
+}
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | frames=%d>", [self class], self,
+			[frames count] ];
 }
 
 -(void) dealloc
@@ -71,9 +61,17 @@
 	[super dealloc];
 }
 
--(void) addFrameWithRect:(CGRect)rect
+-(void) addFrame:(CCSpriteFrame*)frame;
 {
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithRect:rect];
+	[frames addObject:frame];
+}
+
+-(void) addFrameWithFilename:(NSString*)filename
+{
+	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage:filename];
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
 	[frames addObject:frame];
 }
 @end
@@ -105,7 +103,8 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f)>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %08X | TextureName=%d, Rect = (%.2f,%.2f,%.2f,%.2f)>", [self class], self,
+			texture_.name,
 			rect_.origin.x,
 			rect_.origin.y,
 			rect_.size.width,

@@ -713,6 +713,9 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		// IMPORTANT:
+		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
+		//     [[CCSpriteFrameMgr sharedSpriteFrameMgr] removeUnusedSpriteFrames];
 		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithFilename:@"animations/grossini.plist"];
 
 		// Animation using Sprite Manager
@@ -735,8 +738,7 @@ Class restartAction()
 			[animFrames addObject:frame];
 		}
 		
-		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.5f];
-		animation.frames = animFrames;
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f array:animFrames];
 		
 		[sprite runAction:[CCAnimate actionWithAnimation:animation]];
 		[sprite2 runAction:[CCAnimate actionWithAnimation:animation]];
@@ -746,6 +748,7 @@ Class restartAction()
 
 - (void) dealloc
 {
+	[[CCSpriteFrameMgr sharedSpriteFrameMgr] removeUnusedSpriteFrames];
 	[super dealloc];
 }
 

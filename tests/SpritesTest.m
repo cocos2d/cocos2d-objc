@@ -396,13 +396,13 @@ Class restartAction()
 	
 	[tamara setVisible:NO];
 	
-//	CCAnimation* animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
-//	for( int i=1;i<15;i++)
-//		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
-//	
-//	id action = [CCAnimate actionWithAnimation: animation];
-//	
-//	[grossini runAction:action];
+	CCAnimation* animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
+	for( int i=1;i<15;i++)
+		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+	
+	id action = [CCAnimate actionWithAnimation: animation];
+	
+	[grossini runAction:action];
 }
 -(NSString *) title
 {
