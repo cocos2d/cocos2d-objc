@@ -44,7 +44,7 @@
 @synthesize textureRect = rect_;
 @synthesize opacity=opacity_, color=color_;
 @synthesize blendFunc = blendFunc_;
-@synthesize useAtlasRendering = useAtlasRendering_;
+@synthesize parentIsSpriteSheet = parentIsSpriteSheet_;
 @synthesize textureAtlas = textureAtlas_;
 
 
@@ -78,6 +78,11 @@
 	return [[[self alloc] initWithFile:filename rect:rect offset:offset] autorelease];
 }
 
++(id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
+{
+	return [[[self alloc] initWithSpriteFrame:spriteFrame] autorelease];
+}
+
 +(id)spriteWithCGImage:(CGImageRef)image
 {
 	return [[[self alloc] initWithCGImage:image] autorelease];
@@ -101,7 +106,7 @@
 	{
 		
 		// by default sprites are self-rendered
-		useAtlasRendering_ = NO;
+		parentIsSpriteSheet_ = NO;
 
 		// Stuff in case the Sprite is self-rendered
 		selfRenderTextureAtlas_ = [[CCTextureAtlas textureAtlasWithTexture:texture capacity:1] retain];
@@ -180,6 +185,11 @@
 	return self;
 }
 
+- (id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame
+{
+	return [self initWithTexture:spriteFrame.texture rect:spriteFrame.rect offset:spriteFrame.offset];
+}
+
 - (id) initWithCGImage: (CGImageRef)image
 {
 	if( (self = [super init]) ) {
@@ -225,18 +235,18 @@
 
 	[self updateTextureCoords];
 	
-	// rendering using Sprite Manager
-	if( useAtlasRendering_ ) {
+	// rendering using SpriteSheet
+	if( parentIsSpriteSheet_ ) {
 		// Don't update Atlas if index == CCSpriteIndexNotInitialized. issue #283
 		if( atlasIndex_ == CCSpriteIndexNotInitialized)
 			dirty = YES;
+		else
+			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 
 		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
 			[self setContentSize:rect.size];
 			dirty = YES;
-		} else
-			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-
+		}
 	}
 	// self rendering
 	else
@@ -289,7 +299,7 @@
 
 -(void)updatePosition
 {
-	NSAssert( useAtlasRendering_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
+	NSAssert( parentIsSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
 
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
@@ -379,7 +389,7 @@
 
 -(void) draw
 {	
-	NSAssert(!useAtlasRendering_, @"CCSprite can't be dirty when it's parent is not an CCSpriteSheet");
+	NSAssert(!parentIsSpriteSheet_, @"CCSprite can't be dirty when it's parent is not an CCSpriteSheet");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -411,62 +421,62 @@
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void) setVertexZ:(float)z
 {
 	[super setVertexZ:z];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void)setAnchorPoint:(CGPoint)anchor
 {
 	[super setAnchorPoint:anchor];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
 {
-	NSAssert( ! useAtlasRendering_, @"relativeTransformAnchor is invalid in CCSprite");
+	NSAssert( ! parentIsSpriteSheet_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setRelativeAnchorPoint:relative];
 }
 
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	if( useAtlasRendering_ )
+	if( parentIsSpriteSheet_ )
 		dirty = YES;
 }
 
@@ -501,7 +511,7 @@
 -(void) updateColor
 {
 	// renders using Sprite Manager
-	if( useAtlasRendering_ ) {
+	if( parentIsSpriteSheet_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
@@ -621,7 +631,7 @@
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
+	NSAssert( ! parentIsSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	if( ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
@@ -633,7 +643,7 @@
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! useAtlasRendering_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
+	NSAssert( ! parentIsSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	selfRenderTextureAtlas_.texture = texture;
 	[self updateBlendFunc];

@@ -44,12 +44,12 @@ const int defaultCapacity = 29;
 /*
  * creation with CCTexture2D
  */
-+(id)spriteManagerWithTexture:(CCTexture2D *)tex
++(id)spriteSheetWithTexture:(CCTexture2D *)tex
 {
 	return [[[CCSpriteSheet alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
 
-+(id)spriteManagerWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
++(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
 	return [[[CCSpriteSheet alloc] initWithTexture:tex capacity:capacity] autorelease];
 }
@@ -57,12 +57,12 @@ const int defaultCapacity = 29;
 /*
  * creation with File Image
  */
-+(id)spriteManagerWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
++(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
 	return [[[CCSpriteSheet alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
 
-+(id)spriteManagerWithFile:(NSString*) imageFile
++(id)spriteSheetWithFile:(NSString*) imageFile
 {
 	return [[[CCSpriteSheet alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
@@ -158,7 +158,7 @@ const int defaultCapacity = 29;
 -(CCSprite*) createSpriteWithRect:(CGRect)rect
 {
 	CCSprite *sprite = [CCSprite spriteWithTexture:textureAtlas_.texture rect:rect];
-	[sprite setUseAtlasRendering:YES];
+	[sprite setParentIsSpriteSheet:YES];
 	[sprite setTextureAtlas:textureAtlas_];
 	return sprite;
 }
@@ -166,7 +166,7 @@ const int defaultCapacity = 29;
 -(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect
 {
 	[sprite initWithTexture:textureAtlas_.texture rect:rect];
-	[sprite setUseAtlasRendering:YES];
+	[sprite setParentIsSpriteSheet:YES];
 	[sprite setTextureAtlas:textureAtlas_];
 }
 
@@ -185,7 +185,7 @@ const int defaultCapacity = 29;
 	[child setTextureAtlas:textureAtlas_];
 	[child insertInAtlasAtIndex:index];
 	
-	[child setUseAtlasRendering:YES];
+	[child setParentIsSpriteSheet:YES];
 
 	[super addChild:child z:z tag:aTag];
 
@@ -247,7 +247,7 @@ const int defaultCapacity = 29;
 	[sprite setAtlasIndex: CCSpriteIndexNotInitialized];
 
 	// when removed, in case it would be child of a "normal" node, set as "no render using manager"
-	[sprite setUseAtlasRendering:NO];
+	[sprite setParentIsSpriteSheet:NO];
 
 	[super removeChild:sprite cleanup:doCleanup];
 
@@ -273,7 +273,7 @@ const int defaultCapacity = 29;
 	// Invalidate atlas index. issue #569
 	for( CCSprite *sprite in children ) {
 		[sprite setAtlasIndex:CCSpriteIndexNotInitialized];
-		[sprite setUseAtlasRendering:NO];
+		[sprite setParentIsSpriteSheet:NO];
 	}
 	
 	[super removeAllChildrenWithCleanup:doCleanup];

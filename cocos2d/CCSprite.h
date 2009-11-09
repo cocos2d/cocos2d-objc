@@ -51,12 +51,12 @@ enum {
 @interface CCSprite : CCNode <CCFrameProtocol, CCRGBAProtocol, CCTextureProtocol>
 {
 	
-	// whether or not it's parent is an Atlas manager
-	BOOL	useAtlasRendering_;
+	// whether or not it's parent is a CCSpriteSheet
+	BOOL	parentIsSpriteSheet_;
 
-	// Data used when the sprite is rendered using the manager
-	CCTextureAtlas *textureAtlas_;		// Sprite Manager texture atlas (weak reference)
-	NSUInteger atlasIndex_;				// Index on the Sprite Manager
+	// Data used when the sprite is rendered using a CCSpriteSheet
+	CCTextureAtlas *textureAtlas_;		// Sprite Sheet texture atlas (weak reference)
+	NSUInteger atlasIndex_;				// Index on the SpriteSheet
 	BOOL	dirty;						// Sprite needs to be updated
 	
 	// Data used when the sprite is self-rendered
@@ -103,9 +103,9 @@ enum {
 @property (nonatomic,readonly) GLubyte opacity;
 /** RGB colors: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
-/** whether or not the Sprite is rendered using a AtlasSprite manager */
-@property (nonatomic,readwrite) BOOL useAtlasRendering;
-/** weak reference of the TextureAtlas used when the sprite is rendered using an SpriteManager */
+/** whether or not the Sprite is rendered using a CCSpriteSheet */
+@property (nonatomic,readwrite) BOOL parentIsSpriteSheet;
+/** weak reference of the TextureAtlas used when the sprite is rendered using a CCSpriteSheet */
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 
 /** conforms to CCTextureProtocol protocol */
@@ -114,6 +114,8 @@ enum {
 +(id) spriteWithTexture:(CCTexture2D*)texture;
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
+
++(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 +(id) spriteWithFile:(NSString*)filename;
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
@@ -124,6 +126,8 @@ enum {
 -(id) initWithTexture:(CCTexture2D*)texture;
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
+
+-(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 -(id) initWithFile:(NSString*)filename;
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;

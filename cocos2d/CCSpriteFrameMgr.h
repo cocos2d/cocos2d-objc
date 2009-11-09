@@ -19,12 +19,12 @@
 #import "CCSpriteFrame.h"
 #import "Support/CCTexture2D.h"
 
-/** Singleton that handles the loading of the sprite frames.
- @since v0.9
- */
-
 @class CCSprite;
 
+/** Singleton that handles the loading of the sprite frames.
+ It saves in a cache the sprite frames.
+ @since v0.9
+ */
 @interface CCSpriteFrameMgr : NSObject {
 
 	NSMutableDictionary *spriteFrames;

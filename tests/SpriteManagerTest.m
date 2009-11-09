@@ -140,7 +140,7 @@ Class restartAction()
 		
 		self.isTouchEnabled = YES;
 
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -211,7 +211,7 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		CCSprite *sprite1 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
@@ -307,7 +307,7 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -383,7 +383,7 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		for(int i=0;i<5;i++) {
@@ -423,7 +423,7 @@ Class restartAction()
 
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -478,7 +478,7 @@ Class restartAction()
 		
 		// small capacity. Testing resizing
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -529,7 +529,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -571,7 +571,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:10];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -628,7 +628,7 @@ Class restartAction()
 		
 		isTouchEnabled = YES;
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:50];
+		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		texture1 = [[mgr texture] retain];
@@ -722,7 +722,7 @@ Class restartAction()
 		CCSprite *sprite = [[CCSpriteFrameMgr sharedSpriteFrameMgr] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		sprite.position = ccp( s.width/2-80, s.height/2);
 		
-		CCSpriteSheet *spritemgr = [CCSpriteSheet spriteManagerWithFile:@"animations/grossini.png"];
+		CCSpriteSheet *spritemgr = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
 		[spritemgr addChild:sprite];
 		[self addChild:spritemgr];
 

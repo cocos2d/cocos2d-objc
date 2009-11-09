@@ -149,7 +149,6 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr;
 -(CCSprite*) createSpriteWithFrameName:(NSString*)name
 {
 	CCSpriteFrame *frame = [spriteFrames objectForKey:name];
-	CCSprite *sprite = [CCSprite spriteWithTexture:frame.texture rect:frame.rect offset:frame.offset];
-	return sprite;
+	return [CCSprite spriteWithSpriteFrame:frame];
 }
 @end
