@@ -97,15 +97,6 @@ static CCDirector *_sharedDirector = nil;
 	return _sharedDirector;
 }
 
-// This function was created to avoid confussion for the users
-// Calling [FastDirector sharedDirector] is enough, but is somewhat
-// confusing since the user needs to understand what's under the hood
-+ (void) useFastDirector
-{
-	NSAssert(_sharedDirector==nil, @"A Director was alloced. To use Fast Director this must be the first call to Director");
-	[CCFastDirector sharedDirector];
-}
-
 + (BOOL) setDirectorType:(ccDirectorType)type
 {
 	NSAssert(_sharedDirector==nil, @"A Director was alloced. setDirectorType must be the first call to Director");
@@ -285,11 +276,6 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene OpenGL Helper
 
-- (void) setDefaultProjection
-{
-	[self setProjection:CCDirectorProjectionDefault];
-}
-
 -(ccDirectorProjection) projection
 {
 	return projection_;
@@ -329,17 +315,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 	
 	projection_ = projection;
-}
-
--(void)set2Dprojection
-{
-	[self setProjection: CCDirectorProjection2D];
-}
-
-// set a 3d projection matrix
--(void)set3Dprojection
-{
-	[self setProjection: CCDirectorProjection3D];
 }
 
 - (void) setAlphaBlending: (BOOL) on
@@ -507,12 +482,6 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene Landscape
 
-// convert a coordinate from uikit to opengl
--(CGPoint)convertCoordinate:(CGPoint)uiPoint
-{
-	return [self convertToGL:uiPoint];
-}
-
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
 	float newY = openGLView_.frame.size.height - uiPoint.y;
@@ -579,19 +548,6 @@ static CCDirector *_sharedDirector = nil;
 -(CGSize)displaySize
 {
 	return openGLView_.frame.size;
-}
-
-- (BOOL) landscape
-{
-	return deviceOrientation_ == CCDeviceOrientationLandscapeLeft;
-}
-
-- (void) setLandscape: (BOOL) on
-{
-	if( on )
-		[self setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	else
-		[self setDeviceOrientation:CCDeviceOrientationPortrait];
 }
 
 - (void) setDeviceOrientation:(ccDeviceOrientation) orientation

@@ -3,7 +3,6 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2008,2009 Ricardo Quesada
- * Copyright (C) 2009 Valentin Milea
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -15,6 +14,9 @@
 
 #import "ccTypes.h"
 #import "Support/CCTexture2D.h"
+
+#pragma mark -
+#pragma mark CCRGBAProtocol
 
 /// CC RGBA protocol
 @protocol CCRGBAProtocol <NSObject>
@@ -30,7 +32,7 @@
 /// returns the opacity
 -(GLubyte) opacity;
 /** sets the opacity.
- @warning If the the texture has premultiplied alpha then 
+ @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
  */
 -(void) setOpacity: (GLubyte) opacity;
 @optional
@@ -45,26 +47,11 @@
  @since v0.8
  */
  -(BOOL) doesOpacityModifyRGB;
-/** set the color of the node
- * example:  [node setRGB: 255:128:24];  or  [node setRGB:0xff:0x88:0x22];
- @since v0.7.1
- @deprecated Will be removed in v0.9. Use setColor instead.
- */
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b __attribute__((deprecated));
-/** The red component of the node's color
- @deprecated Will be removed in v0.9. Use color instead
- */
--(GLubyte) r __attribute__((deprecated));
-/** The green component of the node's color.
- @deprecated Will be removed in v0.9. Use color instead
- */
--(GLubyte) g __attribute__((deprecated));
-/** The blue component of the node's color.
- @deprecated Will be removed in v0.9. Use color instead
- */
--(GLubyte) b __attribute__((deprecated));
 @end
 
+
+#pragma mark -
+#pragma mark CCTextureProtocol
 
 /** CCNode objects that uses a Texture2D to render the images.
  The texture can have a blending function.
@@ -86,39 +73,47 @@
 -(ccBlendFunc) blendFunc;
 @end
 
+#pragma mark -
+#pragma mark CCLabelProtocol
 /** Common interface for Labels */
 @protocol CCLabelProtocol <NSObject>
 /** sets a new label using an NSString */
 -(void) setString:(NSString*)label;
 @end
 
-
+#pragma mark -
+#pragma mark CCAnimationProtocol
 
 /// Objects that supports the Animation protocol
 /// @since v0.7.1
 @protocol CCAnimationProtocol <NSObject>
-/** reaonly array with the frames */
+/** readonly array with the frames. */
 -(NSArray*) frames;
-/** delay of the animations */
+/** set a array of frames */
+-(void) setFrames:(NSArray*)array;
+/** delay of between frames in seconds. */
 -(float) delay;
-/** name of the animation */
+/** name of the animation. */
 -(NSString*) name;
 @end
+
+#pragma mark -
+#pragma mark CCFrameProtocol
 
 /// Nodes supports frames protocol
 /// @since v0.7.1
 @protocol CCFrameProtocol <NSObject>
-/** sets a new display frame to the node */
+/** sets a new display frame to the node. */
 -(void) setDisplayFrame:(id)newFrame;
-/** changes the display frame based on an animation and an index */
+/** changes the display frame based on an animation and an index. */
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
-/** returns the current displayed frame */
+/** returns the current displayed frame. */
 -(BOOL) isFrameDisplayed:(id)frame;
-/** returns the current displayed frame */
+/** returns the current displayed frame. */
 -(id) displayFrame;
-/** returns an Animation given it's name */
+/** returns an Animation given it's name. */
 -(id<CCAnimationProtocol>)animationByName: (NSString*) animationName;
-/** adds an Animation to the Sprite */
+/** adds an Animation to the Sprite. */
 -(void) addAnimation: (id<CCAnimationProtocol>) animation;
 @end
 

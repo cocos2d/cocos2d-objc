@@ -200,17 +200,6 @@ and when to execute the Scenes.
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;
 
-/** Uses a Director that triggers the main loop as fast as it can.
- * To use it, it must be called before calling any director function
- * Features and Limitations:
- *  - Faster than "normal" director
- *  - Consumes more battery than the "normal" director
- *  - It has some issues while using UIKit objects
- *
- * @deprecated Use [Director setDirectorType:CCDirectorTypeMainLoop] instead. Will be removed in v0.9
- */
-+(void) useFastDirector __attribute__ ((deprecated));
-
 /** There are 4 types of Director.
  - CCDirectorTypeNSTimer (default)
  - CCDirectorTypeMainLoop
@@ -262,21 +251,6 @@ and when to execute the Scenes.
 - (CGSize) winSize;
 /** returns the display size of the OpenGL view */
 -(CGSize) displaySize;
-
-/** returns whether or not the screen is in landscape mode
- @deprecated Use deviceOrientation instead. This method will be removed in v0.9
- */
-- (BOOL) landscape __attribute__((deprecated));
-/** sets lanscape mode
- @deprecated Use setDeviceOrientation: instead. This method will be removedin v0.9
- */
-- (void) setLandscape: (BOOL) on __attribute__((deprecated));
-
-/** converts a UIKit coordinate to an OpenGL coordinate
- Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape).
- @deprecated Use convertToGL: instead. This method will be removed in v0.9
- */
--(CGPoint) convertCoordinate: (CGPoint) p __attribute__((deprecated));
 
 /** converts a UIKit coordinate to an OpenGL coordinate
  Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
@@ -349,18 +323,6 @@ and when to execute the Scenes.
 - (void) setDepthTest: (BOOL) on;
 /** enables/disables OpenGL texture 2D */
 - (void) setTexture2D: (BOOL) on;
-/** sets cocos2d OpenGL default projection
- @deprecated Used Director#setProjection:CCDirectorProjectionDefault instead. This method will be removed in v0.9
- */
-- (void) setDefaultProjection __attribute__ ((deprecated));
-/** sets a 2D projection (orthogonal projection)
- @deprecated Used Director#setProjection:CCDirectorProjection2D instead. This method will be removed in v0.9
- */
--(void) set2Dprojection __attribute__ ((deprecated));
-/** sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
- @deprecated Used Director#setProjection:CCDirectorProjection3D instead. This method will be removed in v0.9
- */
--(void) set3Dprojection __attribute__ ((deprecated));
 @end
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.
