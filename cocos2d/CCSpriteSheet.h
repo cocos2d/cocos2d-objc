@@ -66,18 +66,18 @@
 -(NSUInteger)indexForNewChildAtZ:(int)z;
 -(void) increaseAtlasCapacity;
 
-/** creates an sprite with a rect in the CCSpriteManage.
+/** creates an sprite with a rect in the CCSpriteSheet.
  It's the same as:
    - create an standard CCSsprite
-   - set the useAtlasRendering = YES
+   - set the parentIsSpriteSheet = YES
    - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  */
 -(CCSprite*) createSpriteWithRect:(CGRect)rect;
 
-/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet
+/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet.
  It's the same as:
  - initialize an standard CCSsprite
- - set the useAtlasRendering = YES
+ - set the parentIsSpriteSheet = YES
  - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  @since v0.9.0
 */ 

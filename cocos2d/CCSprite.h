@@ -111,28 +111,81 @@ enum {
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
+/** Creates an sprite with a texture.
+ The rect used will be the size of the texture.
+ The offset will be (0,0).
+ */
 +(id) spriteWithTexture:(CCTexture2D*)texture;
+
+/** Creates an sprite with a texture and a rect.
+ The offset will be (0,0).
+ */
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+
+/** Creates an sprite with a texture, a rect and offset.
+ */
 +(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
 
+/** Creates an sprite with an sprite frame.
+ */
 +(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
+/** Creates an sprite with an image filename.
+ The rect used will be the size of the image.
+ The offset will be (0,0).
+ */
 +(id) spriteWithFile:(NSString*)filename;
+
+/** Creates an sprite with an image filename and a rect.
+ The offset will be (0,0).
+ */
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
+
+/** Creates an sprite with an image filename, a rect and an offset.
+ */
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset;
 
+/** Creates an sprite with a CGImageRef.
+ */
 +(id) spriteWithCGImage: (CGImageRef)image;
 
+
+/** Initializes an sprite with a texture.
+ The rect used will be the size of the texture.
+ The offset will be (0,0).
+ */
 -(id) initWithTexture:(CCTexture2D*)texture;
+
+/** Initializes an sprite with a texture and a rect.
+ The offset will be (0,0).
+ */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+
+/** Initializes an sprite with a texture, a rect and offset.
+ */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
 
+/** Initializes an sprite with a an sprite frame.
+ */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
+/** Initializes an sprite with an image filename.
+ The rect used will be the size of the image.
+ The offset will be (0,0).
+ */
 -(id) initWithFile:(NSString*)filename;
+
+/** Initializes an sprite with an image filename, and a rect.
+ The offset will be (0,0).
+ */
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
+
+/** Initializes an sprite with an image filename, a rect and offset.
+ */
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset;
 
+/** Initializes an sprite with a CGImageRef
+ */
 -(id) initWithCGImage: (CGImageRef)image;
 
 

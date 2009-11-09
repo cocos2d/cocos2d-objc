@@ -20,7 +20,7 @@
 #pragma mark CCAnimation
 
 @implementation CCAnimation
-@synthesize name, delay, frames;
+@synthesize name=name_, delay=delay_, frames=frames_;
 
 +(id) animationWithName:(NSString*)aname delay:(float)d array:(NSArray*)array
 {
@@ -37,12 +37,12 @@
 	return [self initWithName:t delay:d array:nil];
 }
 
--(id) initWithName:(NSString*)n delay:(float)d array:(NSArray*)array
+-(id) initWithName:(NSString*)name delay:(float)delay array:(NSArray*)array
 {
 	if( (self=[super init]) ) {
-		
-		name = n;
-		delay = d;
+
+		delay_ = delay;
+		self.name = name;
 		self.frames = [NSMutableArray arrayWithArray:array];
 	}
 	return self;
@@ -50,20 +50,22 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | frames=%d>", [self class], self,
-			[frames count] ];
+	return [NSString stringWithFormat:@"<%@ = %08X | name=%@, frames=%d>", [self class], self,
+			name_,
+			[frames_ count] ];
 }
 
 -(void) dealloc
 {
 	CCLOG( @"cocos2d: deallocing %@",self);
-	[frames release];
+	[name_ release];
+	[frames_ release];
 	[super dealloc];
 }
 
 -(void) addFrame:(CCSpriteFrame*)frame;
 {
-	[frames addObject:frame];
+	[frames_ addObject:frame];
 }
 
 -(void) addFrameWithFilename:(NSString*)filename
@@ -72,7 +74,7 @@
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
-	[frames addObject:frame];
+	[frames_ addObject:frame];
 }
 @end
 
