@@ -219,7 +219,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 }
 
-- (void) setAutoresizesEAGLSurface:(BOOL)autoresizesEAGLSurface;
+- (void) setAutoresizesEAGLSurface:(BOOL)autoresizesEAGLSurface
 {
 	_autoresize = autoresizesEAGLSurface;
 	if(_autoresize)

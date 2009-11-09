@@ -203,7 +203,7 @@
 	[other startWithTarget:target];
 }
 
--(void) update: (ccTime) time;
+-(void) update: (ccTime) time
 {
 	float f = time*2;
 	
@@ -261,7 +261,7 @@
 	[other startWithTarget:target];
 }
 
--(void) update: (ccTime) time;
+-(void) update: (ccTime) time
 {
 	[other setAmplitudeRate:powf(time, rate)];
 	[other update:time];
@@ -311,7 +311,7 @@
 	[other startWithTarget:target];
 }
 
--(void) update: (ccTime) time;
+-(void) update: (ccTime) time
 {
 	[other setAmplitudeRate:powf((1-time), rate)];
 	[other update:time];

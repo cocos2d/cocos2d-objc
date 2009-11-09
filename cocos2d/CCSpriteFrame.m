@@ -63,7 +63,7 @@
 	[super dealloc];
 }
 
--(void) addFrame:(CCSpriteFrame*)frame;
+-(void) addFrame:(CCSpriteFrame*)frame
 {
 	[frames_ addObject:frame];
 }

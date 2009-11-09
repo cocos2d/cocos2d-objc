@@ -38,7 +38,7 @@
 }
 
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 
@@ -52,7 +52,7 @@
 	return self;
 }
 
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 		

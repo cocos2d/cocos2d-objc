@@ -93,6 +93,11 @@ static CCTextureMgr *sharedTextureMgr;
 	return self;
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | num of textures =  %i>", [self class], self, [textures count]];
+}
+
 -(void) dealloc
 {
 	CCLOG(@"cocos2d: deallocing %@", self);

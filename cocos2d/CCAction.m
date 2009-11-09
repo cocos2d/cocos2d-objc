@@ -25,7 +25,6 @@
 #pragma mark Action
 @implementation CCAction
 
-@synthesize tag, target;
 @synthesize tag, target, originalTarget;
 
 +(id) action
