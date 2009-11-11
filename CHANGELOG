@@ -4,6 +4,7 @@ version 0.9.0 - XX-MMM-2009
  . All: cocos protocols renamed to avoid confusion (part of issue #520)
  . Tests: Performance Tests re-integrated to main XCode project (issue #XXX)
  . BitmapFontAtlas: works with subdirectories (issue #612)
+ . Box2d: updated to r23 (pre 2.1.0) (issue #494)
  . CocosLive: Uses CL namespace (part of issue #520)
  . CocosLive: Uses ASCII encoder (issue #617)
  . Sprite: Sprite and AtlasSprite merged in just one class (issue #620)
