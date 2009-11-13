@@ -210,7 +210,7 @@ Class restartAction()
 	self.emitter = [CCParticleFireworks node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
 	
 	[self setEmitterPosition];
 }
@@ -229,7 +229,7 @@ Class restartAction()
 	self.emitter = [CCParticleFire node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
 	CGPoint p = emitter.position;
 	emitter.position = ccp(p.x, 100);
 	
@@ -250,7 +250,7 @@ Class restartAction()
 	self.emitter = [CCParticleSun node];
 	[background addChild: emitter z:10];
 
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -269,7 +269,7 @@ Class restartAction()
 	self.emitter = [CCParticleGalaxy node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -288,7 +288,7 @@ Class restartAction()
 
 	self.emitter = [CCParticleFlower node];
 	[background addChild: emitter z:10];
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
 	
 	[self setEmitterPosition];
 }
@@ -306,7 +306,7 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:50];
 	[background addChild: emitter z:10];
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
 	
 	// duration
 	emitter.duration = -1;
@@ -385,7 +385,7 @@ Class restartAction()
 	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
 	[emitter release];
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars2.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2.png"];
 	
 	// duration
 	emitter.duration = -1;
@@ -465,7 +465,7 @@ Class restartAction()
 	self.emitter = [CCParticleMeteor node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -484,7 +484,7 @@ Class restartAction()
 	self.emitter = [CCParticleSpiral node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 }
@@ -503,7 +503,7 @@ Class restartAction()
 	self.emitter = [CCParticleExplosion node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
 	
 	emitter.autoRemoveOnFinish = YES;
 	
@@ -569,7 +569,7 @@ Class restartAction()
 	
 	emitter.emissionRate = emitter.totalParticles/emitter.life;
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"snow.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"snow.png"];
 	
 	[self setEmitterPosition];
 
@@ -593,7 +593,7 @@ Class restartAction()
 	emitter.position = ccp( p.x, p.y-100);
 	emitter.life = 4;
 	
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
 	
 	[self setEmitterPosition];
 
@@ -669,7 +669,7 @@ Class restartAction()
 	emitter.endSizeVar = 8.0f;
 	
 	// texture
-//	emitter.texture = [[TextureMgr sharedTextureMgr] addImage:@"fire.png"];
+//	emitter.texture = [[TextureCache sharedTextureCache] addImage:@"fire.png"];
 	
 	// additive
 	emitter.blendAdditive = NO;
@@ -692,7 +692,7 @@ Class restartAction()
 	[background addChild: emitter z:10];
 	[emitter release];
 
-	emitter.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
 	emitter.lifeVar = 0;
 	emitter.life = 10;
 	emitter.speed = 100;
@@ -810,7 +810,7 @@ Class restartAction()
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero

@@ -14,7 +14,7 @@
 
 // cocos2d
 #import "CCTextureAtlas.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "ccMacros.h"
 
 // support
@@ -48,7 +48,7 @@
 -(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
 {
 	// retained in property
-	CCTexture2D *tex = [[CCTextureMgr sharedTextureMgr] addImage:file];	
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:file];	
 	
 	return [self initWithTexture:tex capacity:n];
 }

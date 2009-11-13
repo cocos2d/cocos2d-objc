@@ -186,39 +186,39 @@ Class restartAction()
 
 	[self removeChildByTag:kTagParticleSystem cleanup:YES];
 	
-	// remove the "fire.png" from the TextureMgr cache. 
-	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
-	[[CCTextureMgr sharedTextureMgr] removeTexture:texture];
+	// remove the "fire.png" from the TextureCache cache. 
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
+	[[CCTextureCache sharedTextureCache] removeTexture:texture];
 	
 
 	switch( subtestNumber) {
 		case 1:
 			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 2:
 			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
 		case 3:
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
 		case 4:
 			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 5:
 			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.png"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
 		case 6:
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureMgr sharedTextureMgr] addImage:@"fire.pvr"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
 		default:
 			particleSystem = nil;

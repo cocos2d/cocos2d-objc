@@ -36,7 +36,7 @@
 {
 	[brush release];
 	[target release];
-	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[super dealloc];
 	
 }
@@ -121,7 +121,7 @@
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero

@@ -41,7 +41,7 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 @end

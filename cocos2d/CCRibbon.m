@@ -28,7 +28,7 @@
 
 
 #import "CCRibbon.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
 
@@ -78,7 +78,7 @@
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
 		
-		self.texture = [[CCTextureMgr sharedTextureMgr] addImage:path];
+		self.texture = [[CCTextureCache sharedTextureCache] addImage:path];
 
 		/* default texture parameter */
 		ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };

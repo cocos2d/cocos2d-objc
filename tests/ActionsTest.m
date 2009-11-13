@@ -773,7 +773,7 @@ Class restartAction()
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 - (void) dealloc

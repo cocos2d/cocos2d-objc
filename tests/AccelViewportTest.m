@@ -24,7 +24,7 @@ float randfloat() {
 
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-		CCTexture2D *tex = [[CCTextureMgr sharedTextureMgr] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
+		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
 		clouds = [CCSprite spriteWithTexture:tex];
 		[clouds setScale: CLOUDS_SCALE];
 		
@@ -192,7 +192,7 @@ float randfloat() {
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero

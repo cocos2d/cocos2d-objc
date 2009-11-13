@@ -79,7 +79,7 @@ Class restartAction()
 -(void) dealloc
 {
 	[super dealloc];
-	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 -(void) restartCallback: (id) sender
@@ -241,7 +241,7 @@ Class restartAction()
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero

@@ -17,7 +17,7 @@
 #import <OpenGLES/ES1/glext.h>
 
 #import "ccConfig.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "CCTextureNode.h"
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"

@@ -1043,8 +1043,8 @@ Class restartAction()
 		CCNode *node = [CCNode node];
 		[self addChild:node z:0 tag:kTagSpriteSheet];
 
-		texture1 = [[[CCTextureMgr sharedTextureMgr] addImage:@"grossini_dance_atlas.png"] retain];
-		texture2 = [[[CCTextureMgr sharedTextureMgr] addImage:@"grossini_dance_atlas-mono.png"] retain];
+		texture1 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"] retain];
+		texture2 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas-mono.png"] retain];
 		
 		usingTexture1 = YES;
 	
@@ -1132,7 +1132,7 @@ Class restartAction()
 		[self addChild:mgr z:0 tag:kTagSpriteSheet];
 		
 		texture1 = [[mgr texture] retain];
-		texture2 = [[[CCTextureMgr sharedTextureMgr] addImage:@"grossini_dance_atlas-mono.png"] retain];
+		texture2 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas-mono.png"] retain];
 		
 		for(int i=0;i<30;i++)
 			[self addNewSprite];
@@ -1321,7 +1321,7 @@ Class restartAction()
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero

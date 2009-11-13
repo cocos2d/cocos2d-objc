@@ -280,7 +280,7 @@ enum {
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 // next delta time will be zero
