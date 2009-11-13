@@ -12,7 +12,7 @@
  *
  */
 
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "ccMacros.h"
 
@@ -70,7 +70,7 @@
 
 -(void) addFrameWithFilename:(NSString*)filename
 {
-	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage:filename];
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];

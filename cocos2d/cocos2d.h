@@ -61,7 +61,7 @@
 #import "CCSpriteFrame.h"
 #import "CCSpriteSheet.h"
 #import "CCSpriteFrameMgr.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "CCTextureNode.h"
 #import "CCTransition.h"
 #import "CCTextureAtlas.h"

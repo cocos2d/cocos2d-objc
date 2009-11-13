@@ -96,7 +96,7 @@ Class restartAction()
 -(void) dealloc
 {
 	[super dealloc];
-	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 -(void) restartCallback: (id) sender
@@ -283,7 +283,7 @@ Class restartAction()
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	CCTexture2D *tex = [[CCTextureMgr sharedTextureMgr] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
 	CCSprite *img = [CCSprite spriteWithTexture:tex];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -370,7 +370,7 @@ Class restartAction()
 	[self addChild:sprite1 z:0];
 	
 	// remove texture from texture manager	
-	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite1.texture];
+	[[CCTextureCache sharedTextureCache] removeTexture:sprite1.texture];
 
 	// RGBA 4444 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
@@ -379,7 +379,7 @@ Class restartAction()
 	[self addChild:sprite2 z:0];
 
 	// remove texture from texture manager	
-	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite2.texture];
+	[[CCTextureCache sharedTextureCache] removeTexture:sprite2.texture];
 
 	// RGB5A1 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB5A1];
@@ -388,7 +388,7 @@ Class restartAction()
 	[self addChild:sprite3 z:0];
 
 	// remove texture from texture manager	
-	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite3.texture];
+	[[CCTextureCache sharedTextureCache] removeTexture:sprite3.texture];
 
 	// RGB565 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB565];
@@ -397,7 +397,7 @@ Class restartAction()
 	[self addChild:sprite4 z:0];
 
 	// remove texture from texture manager	
-	[[CCTextureMgr sharedTextureMgr] removeTexture:sprite4.texture];
+	[[CCTextureCache sharedTextureCache] removeTexture:sprite4.texture];
 
 	
 	id fadeout = [CCFadeOut actionWithDuration:2];
@@ -489,7 +489,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 	[super dealloc];
 }
 
@@ -501,15 +501,15 @@ Class restartAction()
 	for( int i=0;i < 8;i++) {
 		for( int j=0;j < 8; j++) {
 			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
-			[[CCTextureMgr sharedTextureMgr] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
+			[[CCTextureCache sharedTextureCache] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
 		}
 	}	
 
-	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
-	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
-	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
-	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
-	[[CCTextureMgr sharedTextureMgr] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"background.png" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"atlastest.png" target:self selector:@selector(imageLoaded:)];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"grossini_dance_atlas.png" target:self selector:@selector(imageLoaded:)];
 }
 
 
@@ -571,7 +571,7 @@ Class restartAction()
 }
 - (void) dealloc
 {
-	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[super dealloc];
 }
 @end
@@ -608,7 +608,7 @@ Class restartAction()
 }
 - (void) dealloc
 {
-	[[CCTextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[super dealloc];
 }
 @end
@@ -912,7 +912,7 @@ Class restartAction()
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero

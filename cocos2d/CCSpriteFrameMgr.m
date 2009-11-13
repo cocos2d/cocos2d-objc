@@ -20,7 +20,7 @@
  */
 
 #import "ccMacros.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "CCSpriteFrameMgr.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
@@ -122,7 +122,7 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
 	texturePath = [texturePath stringByDeletingPathExtension];
 	texturePath = [texturePath stringByAppendingPathExtension:@"png"];
 	
-	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage:texturePath];
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:texturePath];
 	
 	return [self addSpriteFramesWithDictionary:dict texture:texture];
 }

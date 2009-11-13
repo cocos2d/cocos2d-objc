@@ -16,7 +16,7 @@
 #import "CCSpriteSheet.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
 
@@ -164,7 +164,7 @@
 
 -(id) initWithFile:(NSString*)filename
 {
-	CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage: filename];
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
 	return [self initWithTexture:texture rect:rect offset:CGPointZero];
@@ -178,7 +178,7 @@
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset
 {
 	if( (self = [super init]) ) {
-		CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addImage: filename];
+		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 		
 		[self initWithTexture:texture rect:rect offset:offset];
 	}
@@ -195,7 +195,7 @@
 	if( (self = [super init]) ) {
 		// XXX: possible bug. See issue #349. New API should be added
 		NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
-		CCTexture2D *texture = [[CCTextureMgr sharedTextureMgr] addCGImage:image forKey:key];
+		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 		
 		CGSize size = texture.contentSize;
 		CGRect rect = CGRectMake(0, 0, size.width, size.height );

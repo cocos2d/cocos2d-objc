@@ -20,7 +20,7 @@
  * Once the texture is loaded, the next time it will return
  * a reference of the previously loaded texture reducing GPU & CPU memory
  */
-@interface CCTextureMgr : NSObject
+@interface CCTextureCache : NSObject
 {
 	NSMutableDictionary *textures;
 	NSLock				*dictLock;
@@ -28,12 +28,12 @@
 }
 
 /** Retruns ths shared instance of the Texture Manager */
-+ (CCTextureMgr *) sharedTextureMgr;
++ (CCTextureCache *) sharedTextureCache;
 
 /** purges the shared manager. It releases the retained instance.
  @since v0.9.0
  */
-+(void)purgeSharedTextureMgr;
++(void)purgeSharedTextureCache;
 
 
 /** Returns a Texture2D object given an file image

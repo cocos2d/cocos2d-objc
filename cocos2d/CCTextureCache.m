@@ -12,7 +12,7 @@
  *
  */
 
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCDirector.h"
 #import "Support/FileUtils.h"
@@ -47,38 +47,38 @@ static EAGLContext *auxEAGLcontext = nil;
 
 
 
-@implementation CCTextureMgr
+@implementation CCTextureCache
 
-#pragma mark TextureMgr - Alloc, Init & Dealloc
-static CCTextureMgr *sharedTextureMgr;
+#pragma mark TextureCache - Alloc, Init & Dealloc
+static CCTextureCache *sharedTextureCache;
 
-+ (CCTextureMgr *)sharedTextureMgr
++ (CCTextureCache *)sharedTextureCache
 {
-	@synchronized([CCTextureMgr class])
+	@synchronized([CCTextureCache class])
 	{
-		if (!sharedTextureMgr)
-			sharedTextureMgr = [[CCTextureMgr alloc] init];
+		if (!sharedTextureCache)
+			sharedTextureCache = [[CCTextureCache alloc] init];
 		
 	}
 	// to avoid compiler warning
-	return sharedTextureMgr;
+	return sharedTextureCache;
 }
 
 +(id)alloc
 {
-	@synchronized([CCTextureMgr class])
+	@synchronized([CCTextureCache class])
 	{
-		NSAssert(sharedTextureMgr == nil, @"Attempted to allocate a second instance of a singleton.");
+		NSAssert(sharedTextureCache == nil, @"Attempted to allocate a second instance of a singleton.");
 		return [super alloc];
 	}
 	// to avoid compiler warning
 	return nil;
 }
 
-+(void)purgeSharedTextureMgr
++(void)purgeSharedTextureCache
 {
 	@synchronized( self ) {
-		[sharedTextureMgr release];
+		[sharedTextureCache release];
 	}
 }
 
@@ -107,11 +107,11 @@ static CCTextureMgr *sharedTextureMgr;
 	[contextLock release];
 	[auxEAGLcontext release];
 	auxEAGLcontext = nil;
-	sharedTextureMgr = nil;
+	sharedTextureCache = nil;
 	[super dealloc];
 }
 
-#pragma mark TextureMgr - Add Images
+#pragma mark TextureCache - Add Images
 
 -(void) addImageWithAsyncObject:(CCAsyncObject*)async
 {
@@ -127,7 +127,7 @@ static CCTextureMgr *sharedTextureMgr;
 							   sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 		
 		if( ! auxEAGLcontext )
-			CCLOG(@"cocos2d: TextureMgr: Could not create EAGL context");
+			CCLOG(@"cocos2d: TextureCache: Could not create EAGL context");
 	}
 	
 	if( [EAGLContext setCurrentContext:auxEAGLcontext] ) {
@@ -140,7 +140,7 @@ static CCTextureMgr *sharedTextureMgr;
 		
 		[EAGLContext setCurrentContext:nil];
 	} else {
-		CCLOG(@"cocos2d: TetureMgr: EAGLContext error");
+		CCLOG(@"cocos2d: TetureCache: EAGLContext error");
 	}
 	[contextLock unlock];
 	
@@ -149,7 +149,7 @@ static CCTextureMgr *sharedTextureMgr;
 
 -(void) addImageAsync: (NSString*) filename target:(id)target selector:(SEL)selector
 {
-	NSAssert(filename != nil, @"TextureMgr: fileimage MUST not be nill");
+	NSAssert(filename != nil, @"TextureCache: fileimage MUST not be nill");
 
 	// optimization
 	
@@ -173,7 +173,7 @@ static CCTextureMgr *sharedTextureMgr;
 
 -(CCTexture2D*) addImage: (NSString*) path
 {
-	NSAssert(path != nil, @"TextureMgr: fileimage MUST not be nill");
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex = nil;
 
@@ -208,8 +208,8 @@ static CCTextureMgr *sharedTextureMgr;
 
 -(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
 {
-	NSAssert(path != nil, @"TextureMgr: fileimage MUST not be nill");
-	NSAssert( bpp==2 || bpp==4, @"TextureMgr: bpp must be either 2 or 4");
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert( bpp==2 || bpp==4, @"TextureCache: bpp must be either 2 or 4");
 	
 	CCTexture2D * tex;
 	
@@ -230,7 +230,7 @@ static CCTextureMgr *sharedTextureMgr;
 
 -(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
 {
-	NSAssert(fileimage != nil, @"TextureMgr: fileimage MUST not be nill");
+	NSAssert(fileimage != nil, @"TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex;
 	
@@ -247,7 +247,7 @@ static CCTextureMgr *sharedTextureMgr;
 
 -(CCTexture2D*) addCGImage: (CGImageRef) image forKey: (NSString *)key
 {
-	NSAssert(image != nil, @"TextureMgr: image MUST not be nill");
+	NSAssert(image != nil, @"TextureCache: image MUST not be nill");
 	
 	CCTexture2D * tex;
 	
@@ -261,7 +261,7 @@ static CCTextureMgr *sharedTextureMgr;
 	return [tex autorelease];
 }
 
-#pragma mark TextureMgr - Cache
+#pragma mark TextureCache - Cache
 
 -(void) removeAllTextures
 {

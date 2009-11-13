@@ -15,7 +15,7 @@
 
 // cocos2d
 #import "CCParticleExamples.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 
@@ -85,7 +85,7 @@
 	startSizeVar = 2.0f;
 	endSize = kParticleStartSizeEqualToEndSize;
 
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = NO;
@@ -161,7 +161,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = YES;
@@ -240,7 +240,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	
 	return self;
 }
@@ -317,7 +317,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = YES;
@@ -397,7 +397,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = YES;
@@ -477,7 +477,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = YES;
@@ -557,7 +557,7 @@
 	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = NO;
@@ -637,7 +637,7 @@
 	endColorVar.b = 0.5f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 	// additive
 	blendAdditive = NO;
@@ -713,7 +713,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = NO;
@@ -793,7 +793,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = NO;
@@ -873,7 +873,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	
 	// additive
 	blendAdditive = NO;

@@ -19,7 +19,7 @@
 #import "CCTMXXMLParser.h"
 #import "CCSprite.h"
 #import "CCSpriteSheet.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
@@ -101,7 +101,7 @@
 	
 	CCTexture2D *tex = nil;
 	if( tilesetInfo )
-		tex = [[CCTextureMgr sharedTextureMgr] addImage:tilesetInfo.sourceImage];
+		tex = [[CCTextureCache sharedTextureCache] addImage:tilesetInfo.sourceImage];
 	
 	if((self=[super initWithTexture:tex capacity:capacity])) {		
 		self.layerName = layerInfo.name;

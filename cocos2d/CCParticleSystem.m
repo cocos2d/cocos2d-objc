@@ -25,7 +25,7 @@
 
 // cocos2d
 #import "CCParticleSystem.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "ccMacros.h"
 
 // support

@@ -21,7 +21,7 @@
 #import "CCCamera.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
-#import "CCTextureMgr.h"
+#import "CCTextureCache.h"
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
 #import "ccExceptions.h"
@@ -673,7 +673,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCSpriteFrameMgr purgeSharedSpriteFrameMgr];
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
-	[CCTextureMgr purgeSharedTextureMgr];
+	[CCTextureCache purgeSharedTextureCache];
 	
 	
 	// OpenGL view
