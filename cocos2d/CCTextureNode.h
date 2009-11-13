@@ -14,7 +14,7 @@
 
 
 #import "CCProtocols.h"
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 
 #import "CCNode.h"
 

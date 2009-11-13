@@ -15,8 +15,8 @@
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCDirector.h"
+#import "CCTexture2D.h"
 #import "Support/FileUtils.h"
-#import "Support/CCTexture2D.h"
 
 static EAGLContext *auxEAGLcontext = nil;
 

@@ -21,44 +21,44 @@
 
 #import "ccMacros.h"
 #import "CCTextureCache.h"
-#import "CCSpriteFrameMgr.h"
+#import "CCSpriteFrameCache.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
 #import "Support/FileUtils.h"
 
 
-@implementation CCSpriteFrameMgr
+@implementation CCSpriteFrameCache
 
-#pragma mark CCSpriteFrameMgr - Alloc, Init & Dealloc
+#pragma mark CCSpriteFrameCache - Alloc, Init & Dealloc
 
-static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
+static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
-+ (CCSpriteFrameMgr *)sharedSpriteFrameMgr
++ (CCSpriteFrameCache *)sharedSpriteFrameCache
 {
-	@synchronized([CCSpriteFrameMgr class])
+	@synchronized([CCSpriteFrameCache class])
 	{
-		if (!sharedSpriteFrameMgr_)
-			sharedSpriteFrameMgr_ = [[CCSpriteFrameMgr alloc] init];
+		if (!sharedSpriteFrameCache_)
+			sharedSpriteFrameCache_ = [[CCSpriteFrameCache alloc] init];
 		
 	}
-	return sharedSpriteFrameMgr_;
+	return sharedSpriteFrameCache_;
 }
 
 +(id)alloc
 {
-	@synchronized([CCSpriteFrameMgr class])
+	@synchronized([CCSpriteFrameCache class])
 	{
-		NSAssert(sharedSpriteFrameMgr_ == nil, @"Attempted to allocate a second instance of a singleton.");
+		NSAssert(sharedSpriteFrameCache_ == nil, @"Attempted to allocate a second instance of a singleton.");
 		return [super alloc];
 	}
 	// to avoid compiler warning
 	return nil;
 }
 
-+(void)purgeSharedSpriteFrameMgr
++(void)purgeSharedSpriteFrameCache
 {
 	@synchronized( self ) {
-		[sharedSpriteFrameMgr_ release];
+		[sharedSpriteFrameCache_ release];
 	}
 }
 
@@ -84,7 +84,7 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
 	[super dealloc];
 }
 
-#pragma mark CCSpriteFrameMgr - loading sprite frames
+#pragma mark CCSpriteFrameCache - loading sprite frames
 
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture
 {
@@ -127,7 +127,7 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
 	return [self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
-#pragma mark CCSpriteFrameMgr - removing
+#pragma mark CCSpriteFrameCache - removing
 
 -(void) removeSpriteFrames
 {
@@ -151,14 +151,14 @@ static CCSpriteFrameMgr *sharedSpriteFrameMgr_=nil;
 	[spriteFrames removeObjectForKey:name];
 }
 
-#pragma mark CCSpriteFrameMgr - getting
+#pragma mark CCSpriteFrameCache - getting
 
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name
 {
 	return [spriteFrames objectForKey:name];
 }
 
-#pragma mark CCSpriteFrameMgr - sprite creation
+#pragma mark CCSpriteFrameCache - sprite creation
 
 -(CCSprite*) createSpriteWithFrameName:(NSString*)name
 {

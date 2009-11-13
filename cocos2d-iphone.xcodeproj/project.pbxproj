@@ -38,8 +38,6 @@
 		495E74F5104B75390012BB52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		495E74F8104B756D0012BB52 /* RenderTextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 495E74F7104B756D0012BB52 /* RenderTextureTest.m */; };
 		495E74F9104B75CC0012BB52 /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 50405A130E3296AC00213FEF /* stars.png */; };
-		500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 500043210F3C9FBA00A5FBF4 /* PVRTexture.h */; };
-		500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 500043220F3C9FBA00A5FBF4 /* PVRTexture.m */; };
 		500043750F3CB58600A5FBF4 /* test_image.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 500043710F3CB58600A5FBF4 /* test_image.bmp */; };
 		500043760F3CB58600A5FBF4 /* test_image.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 500043720F3CB58600A5FBF4 /* test_image.jpeg */; };
 		500043770F3CB58600A5FBF4 /* test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 500043730F3CB58600A5FBF4 /* test_image.png */; };
@@ -248,8 +246,6 @@
 		501CCFAF0E99657C00B86F68 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFA60E99657C00B86F68 /* glu.c */; };
 		501CCFB00E99657C00B86F68 /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA70E99657C00B86F68 /* glu.h */; };
 		501CCFB10E99657C00B86F68 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */; };
-		501CCFB20E99657C00B86F68 /* CCTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA90E99657C00B86F68 /* CCTexture2D.h */; };
-		501CCFB30E99657C00B86F68 /* CCTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAA0E99657C00B86F68 /* CCTexture2D.m */; };
 		501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAB0E99657C00B86F68 /* TGAlib.m */; };
 		501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFAC0E99657C00B86F68 /* TGAlib.h */; };
 		502AACF30F79715E001E3F87 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
@@ -281,8 +277,8 @@
 		502C67070DFEFE1000E4107D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		502C6C6C0FB87970002BF3C2 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */; };
 		502C6C6D0FB87970002BF3C2 /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */; };
-		502C8BE010A661E200D137BA /* CCSpriteFrameMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C8BDE10A661E200D137BA /* CCSpriteFrameMgr.h */; };
-		502C8BE110A661E200D137BA /* CCSpriteFrameMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C8BDF10A661E200D137BA /* CCSpriteFrameMgr.m */; };
+		502C8BE010A661E200D137BA /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */; };
+		502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */; };
 		502C8CA510A701D300D137BA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
 		5030927310446E0B005F7AFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -1112,6 +1108,10 @@
 		50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DFC29B0FF627B6007E7827 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
+		50E1357510ADEB1B00C9E7FA /* CCTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357110ADEB1B00C9E7FA /* CCTexture2D.h */; };
+		50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */; };
+		50E1357710ADEB1B00C9E7FA /* PVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357310ADEB1B00C9E7FA /* PVRTexture.h */; };
+		50E1357810ADEB1B00C9E7FA /* PVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E1357410ADEB1B00C9E7FA /* PVRTexture.m */; };
 		50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */; };
 		50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */; };
 		50E2A25210A46CC600D894CE /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A25110A46CC600D894CE /* CCProtocols.h */; };
@@ -1743,8 +1743,6 @@
 		495E73F7104B74E20012BB52 /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		495E74F6104B756D0012BB52 /* RenderTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTextureTest.h; path = tests/RenderTextureTest.h; sourceTree = "<group>"; };
 		495E74F7104B756D0012BB52 /* RenderTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderTextureTest.m; path = tests/RenderTextureTest.m; sourceTree = "<group>"; };
-		500043210F3C9FBA00A5FBF4 /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
-		500043220F3C9FBA00A5FBF4 /* PVRTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVRTexture.m; sourceTree = "<group>"; };
 		500043710F3CB58600A5FBF4 /* test_image.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = test_image.bmp; sourceTree = "<group>"; };
 		500043720F3CB58600A5FBF4 /* test_image.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_image.jpeg; sourceTree = "<group>"; };
 		500043730F3CB58600A5FBF4 /* test_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image.png; sourceTree = "<group>"; };
@@ -1876,8 +1874,6 @@
 		501CCFA60E99657C00B86F68 /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
 		501CCFA70E99657C00B86F68 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
-		501CCFA90E99657C00B86F68 /* CCTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2D.h; sourceTree = "<group>"; };
-		501CCFAA0E99657C00B86F68 /* CCTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexture2D.m; sourceTree = "<group>"; };
 		501CCFAB0E99657C00B86F68 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		501CCFAC0E99657C00B86F68 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
 		502AACF20F79715D001E3F87 /* fire.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.pvr; sourceTree = "<group>"; };
@@ -1891,8 +1887,8 @@
 		502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
 		502C8BCC10A65D0F00D137BA /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocos2d; sourceTree = "<group>"; };
 		502C8BCD10A65D0F00D137BA /* LICENSE.cocosdenshion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocosdenshion; sourceTree = "<group>"; };
-		502C8BDE10A661E200D137BA /* CCSpriteFrameMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameMgr.h; sourceTree = "<group>"; };
-		502C8BDF10A661E200D137BA /* CCSpriteFrameMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameMgr.m; sourceTree = "<group>"; };
+		502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
+		502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
 		502C8C9810A701D300D137BA /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Resources/animations; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		503092B210447296005F7AFC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -2323,6 +2319,10 @@
 		50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorldSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DFC2C90FF62843007E7827 /* HelloWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorld.h; path = tests/samples/HelloWorld.h; sourceTree = "<group>"; };
 		50DFC2CA0FF62843007E7827 /* HelloWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloWorld.m; path = tests/samples/HelloWorld.m; sourceTree = "<group>"; };
+		50E1357110ADEB1B00C9E7FA /* CCTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2D.h; sourceTree = "<group>"; };
+		50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexture2D.m; sourceTree = "<group>"; };
+		50E1357310ADEB1B00C9E7FA /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
+		50E1357410ADEB1B00C9E7FA /* PVRTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVRTexture.m; sourceTree = "<group>"; };
 		50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
 		50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
 		50E2A25110A46CC600D894CE /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
@@ -3454,6 +3454,7 @@
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
 				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
+				50E1355310ADEA9400C9E7FA /* Textures */,
 				501CCFA30E99657C00B86F68 /* Support */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
@@ -3472,10 +3473,6 @@
 				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
 				506602100E38A70D000B500E /* CCScheduler.m */,
-				50637A150E95397A000C9182 /* CCTextureAtlas.h */,
-				50637A160E95397A000C9182 /* CCTextureAtlas.m */,
-				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
-				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -3511,8 +3508,6 @@
 				501CCFA60E99657C00B86F68 /* glu.c */,
 				501CCFA70E99657C00B86F68 /* glu.h */,
 				501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */,
-				501CCFA90E99657C00B86F68 /* CCTexture2D.h */,
-				501CCFAA0E99657C00B86F68 /* CCTexture2D.m */,
 			);
 			name = OpenGLSupport;
 			sourceTree = "<group>";
@@ -3520,8 +3515,6 @@
 		501CCFB70E99659400B86F68 /* ImageSupport */ = {
 			isa = PBXGroup;
 			children = (
-				500043210F3C9FBA00A5FBF4 /* PVRTexture.h */,
-				500043220F3C9FBA00A5FBF4 /* PVRTexture.m */,
 				501CCFAB0E99657C00B86F68 /* TGAlib.m */,
 				501CCFAC0E99657C00B86F68 /* TGAlib.h */,
 			);
@@ -3791,8 +3784,8 @@
 				509A79960F6188420032F449 /* CCSprite.m */,
 				50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */,
 				50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */,
-				502C8BDE10A661E200D137BA /* CCSpriteFrameMgr.h */,
-				502C8BDF10A661E200D137BA /* CCSpriteFrameMgr.m */,
+				502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */,
+				502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */,
 			);
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
@@ -4307,6 +4300,21 @@
 			name = Samples;
 			sourceTree = "<group>";
 		};
+		50E1355310ADEA9400C9E7FA /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				50E1357110ADEB1B00C9E7FA /* CCTexture2D.h */,
+				50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */,
+				50E1357310ADEB1B00C9E7FA /* PVRTexture.h */,
+				50E1357410ADEB1B00C9E7FA /* PVRTexture.m */,
+				50637A150E95397A000C9182 /* CCTextureAtlas.h */,
+				50637A160E95397A000C9182 /* CCTextureAtlas.m */,
+				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
+				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
+			);
+			name = Textures;
+			sourceTree = "<group>";
+		};
 		50E2A40610A4A56900D894CE /* PerformanceSpriteTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4554,7 +4562,6 @@
 				501CCFAD0E99657C00B86F68 /* EAGLView.h in Headers */,
 				501CCFB00E99657C00B86F68 /* glu.h in Headers */,
 				501CCFB10E99657C00B86F68 /* OpenGL_Internal.h in Headers */,
-				501CCFB20E99657C00B86F68 /* CCTexture2D.h in Headers */,
 				501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */,
 				50F7B2780F28DE7C00057537 /* CCEaseAction.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
@@ -4564,7 +4571,6 @@
 				50A24E150F377E8E007CAEB0 /* CCGrid3DAction.h in Headers */,
 				50A24E170F377E8E007CAEB0 /* CCGridAction.h in Headers */,
 				50A24E740F378087007CAEB0 /* CCTiledGridAction.h in Headers */,
-				500043230F3C9FBA00A5FBF4 /* PVRTexture.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
 				509A799B0F6188500032F449 /* CCSpriteSheet.h in Headers */,
 				50C508C60F7C194400799124 /* FileUtils.h in Headers */,
@@ -4594,7 +4600,9 @@
 				50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */,
 				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
 				50E2A25210A46CC600D894CE /* CCProtocols.h in Headers */,
-				502C8BE010A661E200D137BA /* CCSpriteFrameMgr.h in Headers */,
+				502C8BE010A661E200D137BA /* CCSpriteFrameCache.h in Headers */,
+				50E1357510ADEB1B00C9E7FA /* CCTexture2D.h in Headers */,
+				50E1357710ADEB1B00C9E7FA /* PVRTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6757,7 +6765,6 @@
 				50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */,
 				501CCFAE0E99657C00B86F68 /* EAGLView.m in Sources */,
 				501CCFAF0E99657C00B86F68 /* glu.c in Sources */,
-				501CCFB30E99657C00B86F68 /* CCTexture2D.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
 				50F7B2790F28DE7C00057537 /* CCEaseAction.m in Sources */,
 				50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */,
@@ -6765,7 +6772,6 @@
 				50A24E160F377E8E007CAEB0 /* CCGrid3DAction.m in Sources */,
 				50A24E180F377E8E007CAEB0 /* CCGridAction.m in Sources */,
 				50A24E750F378087007CAEB0 /* CCTiledGridAction.m in Sources */,
-				500043240F3C9FBA00A5FBF4 /* PVRTexture.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				509A799C0F6188500032F449 /* CCSpriteSheet.m in Sources */,
 				50C508C70F7C194400799124 /* FileUtils.m in Sources */,
@@ -6790,7 +6796,9 @@
 				50545C0B105E8E7200AB7C52 /* CCPageTurnTransition.m in Sources */,
 				50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */,
 				50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */,
-				502C8BE110A661E200D137BA /* CCSpriteFrameMgr.m in Sources */,
+				502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */,
+				50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */,
+				50E1357810ADEB1B00C9E7FA /* PVRTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

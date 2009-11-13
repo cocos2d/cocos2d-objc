@@ -13,9 +13,7 @@
  */
 
 
-#import <UIKit/UIKit.h>
-
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 
 #import "CCTextureNode.h"
 

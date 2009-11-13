@@ -1217,14 +1217,14 @@ Class restartAction()
 
 		// IMPORTANT:
 		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-		//     [[CCSpriteFrameMgr sharedSpriteFrameMgr] removeUnusedSpriteFrames];
-		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithFile:@"animations/grossini.plist"];
-		[[CCSpriteFrameMgr sharedSpriteFrameMgr] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+		//     [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
 
 		//
 		// Animation using Sprite Sheet
 		//
-		CCSprite *sprite = [[CCSpriteFrameMgr sharedSpriteFrameMgr] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		sprite.position = ccp( s.width/2-80, s.height/2);
 		
 		CCSpriteSheet *spritemgr = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
@@ -1234,7 +1234,7 @@ Class restartAction()
 		NSMutableArray *animFrames = [NSMutableArray array];
 		for(int i = 0; i < 14; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameMgr sharedSpriteFrameMgr] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 			[animFrames addObject:frame];
 		}
 
@@ -1244,7 +1244,7 @@ Class restartAction()
 		//
 		// Animation using standard Sprite
 		//
-		CCSprite *sprite2 = [[CCSpriteFrameMgr sharedSpriteFrameMgr] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		sprite2.position = ccp( s.width/2 + 80, s.height/2);
 		[self addChild:sprite2];
 		
@@ -1252,7 +1252,7 @@ Class restartAction()
 		NSMutableArray *animFramesGray = [NSMutableArray array];
 		for(int i = 0; i < 14; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameMgr sharedSpriteFrameMgr] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_gray_%02d.png",(i+1)]];
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_gray_%02d.png",(i+1)]];
 			[animFramesGray addObject:frame];
 		}
 		
@@ -1267,7 +1267,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[[CCSpriteFrameMgr sharedSpriteFrameMgr] removeUnusedSpriteFrames];
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
 	[super dealloc];
 }
 
