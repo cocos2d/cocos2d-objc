@@ -14,8 +14,7 @@
 
 #import "CCGrabber.h"
 #import "ccMacros.h"
-
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 #import "Support/OpenGL_Internal.h"
 
 @implementation CCGrabber

@@ -45,7 +45,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import "PVRTexture.h"
+#import "CCPVRTexture.h"
 #import "ccMacros.h"
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
@@ -76,7 +76,7 @@ typedef struct _PVRTexHeader
 } PVRTexHeader;
 
 
-@implementation PVRTexture
+@implementation CCPVRTexture
 
 @synthesize name = _name;
 @synthesize width = _width;
@@ -263,7 +263,7 @@ typedef struct _PVRTexHeader
 	if (![url isFileURL])
 		return nil;
 	
-	return [PVRTexture pvrTextureWithContentsOfFile:[url path]];
+	return [CCPVRTexture pvrTextureWithContentsOfFile:[url path]];
 }
 
 
