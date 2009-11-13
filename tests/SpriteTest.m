@@ -215,8 +215,8 @@ Class restartAction()
 		
 		self.isTouchEnabled = YES;
 
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
@@ -227,15 +227,15 @@ Class restartAction()
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
-	CCSpriteSheet *mgr = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 
-	CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(x,y,85,121)];
-	[mgr addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(x,y,85,121)];
+	[sheet addChild:sprite];
 
 	sprite.position = ccp( p.x, p.y);
 
@@ -372,18 +372,18 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];		
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
 		
-		CCSprite *sprite1 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
-		CCSprite *sprite3 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
-		CCSprite *sprite4 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
+		CCSprite *sprite1 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+		CCSprite *sprite2 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite3 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
+		CCSprite *sprite4 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
 		
-		CCSprite *sprite5 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
-		CCSprite *sprite6 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
-		CCSprite *sprite7 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
-		CCSprite *sprite8 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
+		CCSprite *sprite5 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+		CCSprite *sprite6 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite7 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
+		CCSprite *sprite8 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
 		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -419,14 +419,14 @@ Class restartAction()
 		[sprite8 runAction:fade];
 		
 		// late add: test dirtyColor and dirtyPosition
-		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
-		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
-		[mgr addChild:sprite3 z:0 tag:kTagSprite3];
-		[mgr addChild:sprite4 z:0 tag:kTagSprite4];
-		[mgr addChild:sprite5 z:0 tag:kTagSprite5];
-		[mgr addChild:sprite6 z:0 tag:kTagSprite6];
-		[mgr addChild:sprite7 z:0 tag:kTagSprite7];
-		[mgr addChild:sprite8 z:0 tag:kTagSprite8];
+		[sheet addChild:sprite1 z:0 tag:kTagSprite1];
+		[sheet addChild:sprite2 z:0 tag:kTagSprite2];
+		[sheet addChild:sprite3 z:0 tag:kTagSprite3];
+		[sheet addChild:sprite4 z:0 tag:kTagSprite4];
+		[sheet addChild:sprite5 z:0 tag:kTagSprite5];
+		[sheet addChild:sprite6 z:0 tag:kTagSprite6];
+		[sheet addChild:sprite7 z:0 tag:kTagSprite7];
+		[sheet addChild:sprite8 z:0 tag:kTagSprite8];
 		
 		
 		[self schedule:@selector(removeAndAddSprite:) interval:2];
@@ -439,13 +439,13 @@ Class restartAction()
 //   color array and vertex array should be reindexed
 -(void) removeAndAddSprite:(ccTime) dt
 {
-	id mgr = [self getChildByTag:kTagSpriteSheet];
-	id sprite = [mgr getChildByTag:kTagSprite5];
+	id sheet = [self getChildByTag:kTagSpriteSheet];
+	id sprite = [sheet getChildByTag:kTagSprite5];
 	
 	[sprite retain];
 
-	[mgr removeChild:sprite cleanup:NO];
-	[mgr addChild:sprite z:0 tag:kTagSprite5];
+	[sheet removeChild:sprite cleanup:NO];
+	[sheet addChild:sprite z:0 tag:kTagSprite5];
 	
 	[sprite release];
 }
@@ -525,25 +525,25 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];		
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		for(int i=0;i<5;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
-			[mgr addChild:sprite z:i];
+			[sheet addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
-			[mgr addChild:sprite z:14-i];
+			[sheet addChild:sprite z:14-i];
 		}
 		
-		CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*3, 121*0, 85, 121)];
-		[mgr addChild:sprite z:-1 tag:kTagSprite1];
+		CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*3, 121*0, 85, 121)];
+		[sheet addChild:sprite z:-1 tag:kTagSprite1];
 		sprite.position = ccp(s.width/2, s.height/2 - 20);
 		sprite.scaleX = 6;
 		[sprite setColor:ccRED];
@@ -555,8 +555,8 @@ Class restartAction()
 
 -(void) reorderSprite:(ccTime) dt
 {
-	id mgr = [self getChildByTag:kTagSpriteSheet];
-	id sprite = [mgr getChildByTag:kTagSprite1];
+	id sheet = [self getChildByTag:kTagSpriteSheet];
+	id sprite = [sheet getChildByTag:kTagSprite1];
 	
 	int z = [sprite zOrder];
 	
@@ -567,7 +567,7 @@ Class restartAction()
 	
 	z += dir * 3;
 
-	[mgr reorderChild:sprite z:z];
+	[sheet reorderChild:sprite z:z];
 	
 }
 
@@ -651,25 +651,25 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];		
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
 		
 		for(int i=0;i<5;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			sprite.vertexZ = 10 + i*40;
-			[mgr addChild:sprite z:0];
+			[sheet addChild:sprite z:0];
 			
 		}
 		
 		for(int i=5;i<11;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( 50 + i*40, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
-			[mgr addChild:sprite z:0];
+			[sheet addChild:sprite z:0];
 		}
 		
-		[mgr runAction:[CCOrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
+		[sheet runAction:[CCOrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
 	}	
 	return self;
 }
@@ -740,8 +740,8 @@ Class restartAction()
 
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];		
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
@@ -749,7 +749,7 @@ Class restartAction()
 		id rotate = [CCRotateBy actionWithDuration:10 angle:360];
 		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
 			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			
@@ -774,7 +774,7 @@ Class restartAction()
 			
 			id copy = [[action copy] autorelease];
 			[sprite runAction:copy];
-			[mgr addChild:sprite z:i];
+			[sheet addChild:sprite z:i];
 		}		
 	}	
 	return self;
@@ -796,14 +796,14 @@ Class restartAction()
 		
 		// small capacity. Testing resizing
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		mgr.relativeAnchorPoint = NO;
-		mgr.anchorPoint = ccp(0.5f, 0.5f);
-		mgr.contentSize = CGSizeMake(s.width, s.height);
+		sheet.relativeAnchorPoint = NO;
+		sheet.anchorPoint = ccp(0.5f, 0.5f);
+		sheet.contentSize = CGSizeMake(s.width, s.height);
 		
 		
 		// SpriteSheet actions
@@ -822,15 +822,15 @@ Class restartAction()
 
 
 		for(int i=0;i<3;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
 			sprite.position = ccp( 90 + i*150, s.height/2);
 
 			[sprite runAction: [[action copy] autorelease]];
-			[mgr addChild:sprite z:i];
+			[sheet addChild:sprite z:i];
 		}
 		
-		[mgr runAction: scale_forever];
-		[mgr runAction: rotate_forever];
+		[sheet runAction: scale_forever];
+		[sheet runAction: rotate_forever];
 	}	
 	return self;
 }
@@ -884,18 +884,18 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		CCSprite *sprite1 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite1 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
-		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
+		[sheet addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite2 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
-		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
+		[sheet addChild:sprite2 z:0 tag:kTagSprite2];
 		
 		[self schedule:@selector(flipSprites:) interval:1];
 	}	
@@ -903,9 +903,9 @@ Class restartAction()
 }
 -(void) flipSprites:(ccTime)dt
 {
-	id mgr = [self getChildByTag:kTagSpriteSheet];
-	id sprite1 = [mgr getChildByTag:kTagSprite1];
-	id sprite2 = [mgr getChildByTag:kTagSprite2];
+	id sheet = [self getChildByTag:kTagSpriteSheet];
+	id sprite1 = [sheet getChildByTag:kTagSprite1];
+	id sprite2 = [sheet getChildByTag:kTagSprite2];
 	
 	BOOL x = [sprite1 flipX];
 	BOOL y = [sprite2 flipY];
@@ -982,18 +982,18 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		CCSprite *sprite1 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite1 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
-		[mgr addChild:sprite1 z:0 tag:kTagSprite1];
+		[sheet addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite2 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
-		[mgr addChild:sprite2 z:0 tag:kTagSprite2];
+		[sheet addChild:sprite2 z:0 tag:kTagSprite2];
 		
 		id scale = [CCScaleBy actionWithDuration:2 scale:5];
 		id scale_back = [scale reverse];
@@ -1011,15 +1011,15 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CCSpriteSheet *mgr = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
-	[mgr.texture setAliasTexParameters];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	[sheet.texture setAliasTexParameters];
 }
 
 -(void) onExit
 {
 	// restore the tex parameter to AntiAliased.
-	CCSpriteSheet *mgr = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
-	[mgr.texture setAntiAliasTexParameters];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	[sheet.texture setAntiAliasTexParameters];
 	[super onExit];
 }
 
@@ -1128,10 +1128,10 @@ Class restartAction()
 		
 		isTouchEnabled = YES;
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self addChild:mgr z:0 tag:kTagSpriteSheet];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
-		texture1 = [[mgr texture] retain];
+		texture1 = [[sheet texture] retain];
 		texture2 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas-mono.png"] retain];
 		
 		for(int i=0;i<30;i++)
@@ -1154,15 +1154,15 @@ Class restartAction()
 	
 	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 	
-	CCSpriteSheet *mgr = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 	
-	CCSprite *sprite = [CCSprite spriteWithTexture:mgr.texture rect:CGRectMake(x,y,85,121)];
-	[mgr addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(x,y,85,121)];
+	[sheet addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -1187,12 +1187,12 @@ Class restartAction()
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	CCSpriteSheet *mgr = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
 	
-	if( [mgr texture] == texture1 )
-		[mgr setTexture:texture2];
+	if( [sheet texture] == texture1 )
+		[sheet setTexture:texture2];
 	else
-		[mgr setTexture:texture1];
+		[sheet setTexture:texture1];
 	
 	return kEventHandled;
 }
@@ -1227,9 +1227,9 @@ Class restartAction()
 		CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		sprite.position = ccp( s.width/2-80, s.height/2);
 		
-		CCSpriteSheet *spritemgr = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
-		[spritemgr addChild:sprite];
-		[self addChild:spritemgr];
+		CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
+		[spritesheet addChild:sprite];
+		[self addChild:spritesheet];
 
 		NSMutableArray *animFrames = [NSMutableArray array];
 		for(int i = 0; i < 14; i++) {
