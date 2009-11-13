@@ -342,10 +342,13 @@ typedef struct _ccBezierConfig {
 /** Animates a sprite given the name of an Animation */
 @interface CCAnimate : CCIntervalAction <NSCopying>
 {
-	CCAnimation *animation;
+	CCAnimation *animation_;
 	id origFrame;
 	BOOL restoreOriginalFrame;
 }
+/** animation used for the animage */
+@property (readwrite,nonatomic,retain) CCAnimation * animation;
+
 /** creates the action with an Animation and will restore the original frame when the animation is over */
 +(id) actionWithAnimation:(id<CCAnimationProtocol>) a;
 /** initializes the action with an Animation and will restore the original frame when the animtion is over */
