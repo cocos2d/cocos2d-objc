@@ -1087,6 +1087,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark Animate
 @implementation CCAnimate
 
+@synthesize animation = animation_;
+
 +(id) actionWithAnimation: (id<CCAnimationProtocol>)anim
 {
 	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:YES] autorelease];
@@ -1110,7 +1112,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	if( (self=[super initWithDuration: [[anim frames] count] * [anim delay]]) ) {
 
 		restoreOriginalFrame = b;
-		animation = [anim retain];
+		self.animation = anim;
 		origFrame = nil;
 	}
 	return self;
@@ -1118,12 +1120,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAnimation: animation restoreOriginalFrame: restoreOriginalFrame];
+	return [[[self class] allocWithZone: zone] initWithAnimation:animation_ restoreOriginalFrame: restoreOriginalFrame];
 }
 
 -(void) dealloc
 {
-	[animation release];
+	[animation_ release];
 	[origFrame release];
 	[super dealloc];
 }
@@ -1135,7 +1137,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 	[origFrame release];
 
-	origFrame = [[sprite displayFrame] retain];
+	if( restoreOriginalFrame )
+		origFrame = [[sprite displayFrame] retain];
 }
 
 -(void) stop
@@ -1152,17 +1155,19 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	NSUInteger idx=0;
 	
-	ccTime slice = 1.0f / [[animation frames] count];
+	NSArray *frames = [animation_ frames];
+	NSUInteger numberOfFrames = [frames count];
+	ccTime slice = 1.0f / numberOfFrames;
 	
 	if(t !=0 )
 		idx = t/ slice;
 
-	if( idx >= [[animation frames] count] ) {
-		idx = [[animation frames] count] -1;
+	if( idx >= numberOfFrames ) {
+		idx = numberOfFrames -1;
 	}
 	id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
-	if (! [sprite isFrameDisplayed: [[animation frames] objectAtIndex: idx]] ) {
-		[sprite setDisplayFrame: [[animation frames] objectAtIndex:idx]];
+	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] ) {
+		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
 	}
 }
 @end
