@@ -17,7 +17,7 @@
 
 #import "CCAction.h"
 #import "ccTypes.h"
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 
 enum {
 	kCCNodeTagInvalid = -1,

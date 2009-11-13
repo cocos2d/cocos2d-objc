@@ -13,7 +13,7 @@
  */
 
 #import "ccTypes.h"
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 
 #pragma mark -
 #pragma mark CCRGBAProtocol

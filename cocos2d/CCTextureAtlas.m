@@ -18,7 +18,7 @@
 #import "ccMacros.h"
 
 // support
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 
 @interface CCTextureAtlas (Private)
 -(void) initIndices;

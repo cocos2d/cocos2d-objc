@@ -60,7 +60,7 @@
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteSheet.h"
-#import "CCSpriteFrameMgr.h"
+#import "CCSpriteFrameCache.h"
 #import "CCTextureCache.h"
 #import "CCTextureNode.h"
 #import "CCTransition.h"
@@ -82,6 +82,7 @@
 #import "CCMotionStreak.h"
 #import "CCPageTurn3DAction.h"
 #import "CCPageTurnTransition.h"
+#import "CCTexture2D.h"
 
 //
 // cocos2d macros
@@ -93,7 +94,6 @@
 // cocos2d helper files
 //
 #import "Support/OpenGL_Internal.h"
-#import "Support/CCTexture2D.h"
 #import "Support/EAGLView.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"

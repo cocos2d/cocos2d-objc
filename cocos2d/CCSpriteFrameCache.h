@@ -22,7 +22,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CCSpriteFrame.h"
-#import "Support/CCTexture2D.h"
+#import "CCTexture2D.h"
 
 @class CCSprite;
 
@@ -30,17 +30,17 @@
  It saves in a cache the sprite frames.
  @since v0.9
  */
-@interface CCSpriteFrameMgr : NSObject {
+@interface CCSpriteFrameCache : NSObject {
 
 	NSMutableDictionary *spriteFrames;
 }
 
 /** Retruns ths shared instance of the Sprite Frame Manager */
-+ (CCSpriteFrameMgr *) sharedSpriteFrameMgr;
++ (CCSpriteFrameCache *) sharedSpriteFrameCache;
 
 /** Purges the shared manager. It releases all the Sprite Frames and the retained instance.
  */
-+(void)purgeSharedSpriteFrameMgr;
++(void)purgeSharedSpriteFrameCache;
 
 
 /** Adds multiple Sprite Frames with a dictionary.
