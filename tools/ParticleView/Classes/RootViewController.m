@@ -208,67 +208,67 @@
 	switch (textureNum)
 	{
 		case 1 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"1.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"1.png"];
 			[smoke.texture retain];								
 			break;
 		case 2 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"2.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"2.png"];
 			[smoke.texture retain];								
 			break;
 		case 3 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"3.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"3.png"];
 			[smoke.texture retain];								
 			break;
 		case 4 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"4.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"4.png"];
 			[smoke.texture retain];								
 			break;
 		case 5 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"5.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"5.png"];
 			[smoke.texture retain];								
 			break;
 		case 6 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"6.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"6.png"];
 			[smoke.texture retain];								
 			break;
 		case 7 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"7.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"7.png"];
 			[smoke.texture retain];								
 			break;
 		case 8 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"8.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"8.png"];
 			[smoke.texture retain];								
 			break;
 		case 9 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"9.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"9.png"];
 			[smoke.texture retain];								
 			break;
 		case 10 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"10.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"10.png"];
 			[smoke.texture retain];								
 			break;
 		case 11 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"11.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"11.png"];
 			[smoke.texture retain];								
 			break;
 		case 12 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"12.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"12.png"];
 			[smoke.texture retain];								
 			break;
 		case 13 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"13.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"13.png"];
 			[smoke.texture retain];								
 			break;
 		case 14 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"14.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"14.png"];
 			[smoke.texture retain];								
 			break;
 		case 15 :
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"15.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"15.png"];
 			[smoke.texture retain];								
 			break;
 		default:
-			smoke.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+			smoke.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 			[smoke.texture retain];				
 	}
 	

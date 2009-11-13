@@ -35,10 +35,10 @@
 	NSMutableDictionary *spriteFrames;
 }
 
-/** Retruns ths shared instance of the Sprite Frame Manager */
+/** Retruns ths shared instance of the Sprite Frame cache */
 + (CCSpriteFrameCache *) sharedSpriteFrameCache;
 
-/** Purges the shared manager. It releases all the Sprite Frames and the retained instance.
+/** Purges the cache. It releases all the Sprite Frames and the retained instance.
  */
 +(void)purgeSharedSpriteFrameCache;
 
@@ -72,7 +72,7 @@
  */
 -(void) removeUnusedSpriteFrames;
 
-/** Deletes an sprite frame from the sprite frame manager.
+/** Deletes an sprite frame from the sprite frame cache.
  */
 -(void) removeSpriteFrameByName:(NSString*)name;
 

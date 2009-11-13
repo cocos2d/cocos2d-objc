@@ -27,10 +27,10 @@
 	NSLock				*contextLock;
 }
 
-/** Retruns ths shared instance of the Texture Manager */
+/** Retruns ths shared instance of the cache */
 + (CCTextureCache *) sharedTextureCache;
 
-/** purges the shared manager. It releases the retained instance.
+/** purges the cache. It releases the retained instance.
  @since v0.9.0
  */
 +(void)purgeSharedTextureCache;
@@ -92,7 +92,7 @@
  */
 -(void) removeUnusedTextures;
 
-/** Deletes a texture from the Texture Manager
+/** Deletes a texture from the cache
  */
 -(void) removeTexture: (CCTexture2D*) tex;
 @end

@@ -75,7 +75,7 @@
 	endColorVar.b = 0.0f;
 	endColorVar.a = 0.0f;
 	
-	self.texture = [[CCTextureMgr sharedTextureMgr] addImage: @"fire.png"];
+	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	[self.texture retain];
 	
 	// additive
