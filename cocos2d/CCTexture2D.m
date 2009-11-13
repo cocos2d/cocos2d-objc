@@ -70,7 +70,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCTexture2D.h"
-#import "PVRTexture.h"
+#import "CCPVRTexture.h"
 
 
 #if CC_FONT_LABEL_SUPPORT
@@ -492,7 +492,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 {
 
 	if( (self = [super init]) ) {
-		PVRTexture *pvr = [[PVRTexture alloc] initWithContentsOfFile:file];
+		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
 		pvr.retainName = YES;	// don't dealloc texture on release
 		
 		_name = pvr.name;	// texture id

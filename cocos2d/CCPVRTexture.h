@@ -49,7 +49,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-@interface PVRTexture : NSObject
+@interface CCPVRTexture : NSObject
 {
 	NSMutableArray *_imageData;
 	
