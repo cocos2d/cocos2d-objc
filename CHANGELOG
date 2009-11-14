@@ -9,6 +9,7 @@ version 0.9.0 - XX-MMM-2009
  . CocosLive: Uses ASCII encoder (issue #617)
  . Sprite: Sprite and AtlasSprite merged in just one class (issue #620)
  . Sprite: AtlasSpriteManager renamed to SpriteSheet (issue #620)
+ . Sprite: Sprite Frames and animations supports flipx / flipy (issue #620)
  . SpriteFrameCache: added an easier way to create animations and sprites (issue #620)
  . TextureMgr: renamed to TextureCache (part of issue #620)
  . XCode: textures files in 1 xcode group (Texture2d, PVRTexture, TextureAltas, TextureCache)
