@@ -127,6 +127,11 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	return [self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
+-(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
+{
+	[spriteFrames setObject:frame forKey:frameName];
+}
+
 #pragma mark CCSpriteFrameCache - removing
 
 -(void) removeSpriteFrames
