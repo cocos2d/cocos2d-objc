@@ -27,6 +27,8 @@
 	CGRect			rect_;
 	CGPoint			offset_;
 	CCTexture2D		*texture_;
+	BOOL			flipX_;
+	BOOL			flipY_;
 }
 /** rect of the frame */
 @property (nonatomic,readwrite) CGRect rect;
@@ -37,13 +39,29 @@
 /** texture of the frame */
 @property (nonatomic, retain, readwrite) CCTexture2D *texture;
 
-/** create a CCSpriteFrame with a texture, rect and offset */
+/** whether or not the frame is flipped horizontally */
+@property (nonatomic,readwrite)	BOOL flipX;
+
+/** whether or not the frame is flipped vertically */
+@property (nonatomic,readwrite)	BOOL flipY;
+
+/** Create a CCSpriteFrame with a texture, rect and offset.
+ The frame won't be flipped by default.
+ */
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
 
-/** initializes a CCSpriteFrame with a texture, rect and offset */
+/** Create a CCSpriteFrame with a texture, rect and offset, flipX and flipY.
+ */
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY;
+
+/** Initializes a CCSpriteFrame with a texture, rect and offset.
+ The frame won't be flipped by default
+ */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
 
-+(id) frameWithRect:(CGRect)rect;
+/** Initializes a CCSpriteFrame with a texture, rect and offset, flipX and flipY. */
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY;
+
 @end
 
 #pragma mark -

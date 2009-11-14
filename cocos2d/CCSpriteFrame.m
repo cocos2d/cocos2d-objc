@@ -82,23 +82,31 @@
 #pragma mark CCSpriteFrame
 @implementation CCSpriteFrame
 @synthesize rect = rect_, offset = offset_, texture = texture_;
+@synthesize flipX=flipX_, flipY=flipY_;
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
-	return [[[self alloc] initWithTexture:texture rect:rect offset:offset] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset flipX:NO flipY:NO] autorelease];
 }
 
-+(id) frameWithRect:(CGRect)rect
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY
 {
-	return [[[self alloc] initWithTexture:nil rect:rect offset:CGPointZero] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset flipX:flipX flipY:flipY] autorelease];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
+{
+	return [self initWithTexture:texture rect:rect offset:offset flipX:NO flipY:NO];
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY
 {
 	if( (self=[super init]) ) {
 		self.texture = texture;
 		offset_ = offset;
 		rect_ = rect;
+		flipX_ = flipX;
+		flipY_ = flipY;
 	}
 	return self;
 }

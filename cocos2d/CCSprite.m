@@ -579,7 +579,10 @@
 	
 	// update rect
 	CGRect rect = [frame rect];
-	[self setTextureRect: rect];	
+	[self setTextureRect: rect];
+	
+	[self setFlipX: [frame flipX]];
+	[self setFlipY: [frame flipY]];
 
 	// update texture
 	if ( frame.texture.name != self.texture.name )
