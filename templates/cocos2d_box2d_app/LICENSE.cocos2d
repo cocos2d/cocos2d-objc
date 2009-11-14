@@ -1,0 +1,21 @@
+cocos2d for iPhone license:
+---------------------------
+
+cocos2d for iPhone was originally licensed under the GNU LGPL v3 license.
+But since it is impossible to distribute 3rd party dynamic libraries
+for the iPhone, this license extends the GNU LGPL v3 license by allowing you: 
+  a) to use cocos2d for iPhone as a static library
+  b) to include all or part of the cocos2d for iPhone sources inside your project
+
+This means that if you do a) and/or b) you are NOT forced to release your 
+source code under the GNU LGPL v3 license.
+
+What is an improvement to the library and what's part of your game is
+decided by the your own good faith.
+
+Remember that cocos2d for iPhone follows the copyleft idea. So if you think that
+you're improving the library, share your changes with the community with this same
+license.
+
+
+If you have any doubt regarding the license, please contact Ricardo Quesada.

@@ -29,7 +29,7 @@ enum {
 +(id) scene
 {
 	// 'scene' is an autorelease object.
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
 	HelloWorld *layer = [HelloWorld node];
@@ -52,7 +52,7 @@ enum {
 		// enable accelerometer
 		self.isAccelerometerEnabled = YES;
 		
-		CGSize screenSize = [Director sharedDirector].winSize;
+		CGSize screenSize = [CCDirector sharedDirector].winSize;
 		CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 		
 		// Define the gravity vector.
@@ -74,10 +74,10 @@ enum {
 		
 		uint32 flags = 0;
 		flags += b2DebugDraw::e_shapeBit;
-		flags += b2DebugDraw::e_jointBit;
-		flags += b2DebugDraw::e_aabbBit;
-		flags += b2DebugDraw::e_pairBit;
-		flags += b2DebugDraw::e_centerOfMassBit;
+//		flags += b2DebugDraw::e_jointBit;
+//		flags += b2DebugDraw::e_aabbBit;
+//		flags += b2DebugDraw::e_pairBit;
+//		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
 		
 		
@@ -112,12 +112,12 @@ enum {
 		
 		//Set up sprite
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"blocks.png" capacity:150];
-		[self addChild:mgr z:0 tag:kTagSpriteManager];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"blocks.png" capacity:150];
+		[self addChild:sheet z:0 tag:kTagSpriteManager];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
 		
-		Label *label = [Label labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
+		CCLabel *label = [CCLabel labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
@@ -138,14 +138,14 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagSpriteManager];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteManager];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(32 * idx,32 * idy,32,32) spriteManager:mgr];
-	[mgr addChild:sprite];
+	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(32 * idx,32 * idy,32,32)];
+	[sheet addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -189,7 +189,7 @@ enum {
 	{
 		if (b->GetUserData() != NULL) {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			AtlasSprite* myActor = (AtlasSprite*)b->GetUserData();
+			CCSprite *myActor = (CCSprite*)b->GetUserData();
 			myActor.position = CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
 			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
 		}	
@@ -202,7 +202,7 @@ enum {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
 		
-		location = [[Director sharedDirector] convertToGL: location];
+		location = [[CCDirector sharedDirector] convertToGL: location];
 		
 		[self addNewSpriteWithCoords: location];
 	}

@@ -6,7 +6,7 @@
 #import "chipmunk.h"
 
 // HelloWorld Layer
-@interface HelloWorld : Layer
+@interface HelloWorld : CCLayer
 {
 	cpSpace *space;
 }
