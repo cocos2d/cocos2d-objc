@@ -24,59 +24,59 @@
 	[window setMultipleTouchEnabled:YES];
 	
 	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [Director setDirectorType:CCDirectorTypeDisplayLink] )
-		[Director setDirectorType:CCDirectorTypeDefault];
+	// if it fails (SDK < 3.1) use the default director
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeDefault];
 	
 	// Use RGBA_8888 buffers
 	// Default is: RGB_565 buffers
-	[[Director sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
 	
 	// Create a depth buffer of 16 bits
 	// Enable it if you are going to use 3D transitions or 3d objects
-//	[[Director sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+//	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[Texture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// before creating any layer, set the landscape mode
-	[[Director sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[Director sharedDirector] setAnimationInterval:1.0/60];
-	[[Director sharedDirector] setDisplayFPS:YES];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	
 	// create an openGL view inside a window
-	[[Director sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];	
 	[window makeKeyAndVisible];		
 		
 		
-	[[Director sharedDirector] runWithScene: [HelloWorld scene]];
+	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];
 }
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-	[[Director sharedDirector] pause];
+	[[CCDirector sharedDirector] pause];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	[[Director sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[TextureMgr sharedTextureMgr] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	[[Director sharedDirector] end];
+	[[CCDirector sharedDirector] end];
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {
-	[[Director sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 - (void)dealloc {
-	[[Director sharedDirector] release];
+	[[CCDirector sharedDirector] release];
 	[window release];
 	[super dealloc];
 }

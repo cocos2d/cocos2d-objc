@@ -14,7 +14,7 @@ static void
 eachShape(void *ptr, void* unused)
 {
 	cpShape *shape = (cpShape*) ptr;
-	Sprite *sprite = shape->data;
+	CCSprite *sprite = shape->data;
 	if( sprite ) {
 		cpBody *body = shape->body;
 		
@@ -33,7 +33,7 @@ eachShape(void *ptr, void* unused)
 +(id) scene
 {
 	// 'scene' is an autorelease object.
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
 	HelloWorld *layer = [HelloWorld node];
@@ -50,7 +50,7 @@ eachShape(void *ptr, void* unused)
 {
 	int posx, posy;
 	
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*) [self getChildByTag:kTagAtlasSpriteManager];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagAtlasSpriteManager];
 	
 	posx = (CCRANDOM_0_1() * 200);
 	posy = (CCRANDOM_0_1() * 200);
@@ -58,8 +58,8 @@ eachShape(void *ptr, void* unused)
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 	
-	AtlasSprite *sprite = [AtlasSprite spriteWithRect:CGRectMake(posx, posy, 85, 121) spriteManager:mgr];
-	[mgr addChild: sprite];
+	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(posx, posy, 85, 121)];
+	[sheet addChild: sprite];
 	
 	sprite.position = ccp(x,y);
 	
@@ -92,7 +92,7 @@ eachShape(void *ptr, void* unused)
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
 		
-		CGSize wins = [[Director sharedDirector] winSize];
+		CGSize wins = [[CCDirector sharedDirector] winSize];
 		cpInitChipmunk();
 		
 		cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
@@ -125,7 +125,7 @@ eachShape(void *ptr, void* unused)
 		shape->e = 1.0f; shape->u = 1.0f;
 		cpSpaceAddStaticShape(space, shape);
 		
-		AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"grossini_dance_atlas.png" capacity:100];
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
 		[self addChild:mgr z:0 tag:kTagAtlasSpriteManager];
 		
 		[self addNewSpriteX: 200 y:200];
@@ -161,7 +161,7 @@ eachShape(void *ptr, void* unused)
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
 		
-		location = [[Director sharedDirector] convertToGL: location];
+		location = [[CCDirector sharedDirector] convertToGL: location];
 		
 		[self addNewSpriteX: location.x y:location.y];
 	}
