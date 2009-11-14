@@ -7,7 +7,7 @@
 #import "HelloWorldScene.h"
 
 enum {
-	kTagAtlasSpriteManager = 1,
+	kTagAtlasSpriteSheet = 1,
 };
 
 static void
@@ -50,7 +50,7 @@ eachShape(void *ptr, void* unused)
 {
 	int posx, posy;
 	
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagAtlasSpriteManager];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagAtlasSpriteSheet];
 	
 	posx = (CCRANDOM_0_1() * 200);
 	posy = (CCRANDOM_0_1() * 200);
@@ -126,7 +126,7 @@ eachShape(void *ptr, void* unused)
 		cpSpaceAddStaticShape(space, shape);
 		
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
-		[self addChild:mgr z:0 tag:kTagAtlasSpriteManager];
+		[self addChild:sheet z:0 tag:kTagAtlasSpriteSheet];
 		
 		[self addNewSpriteX: 200 y:200];
 		

@@ -18,7 +18,7 @@
 // enums that will be used as tags
 enum {
 	kTagTileMap = 1,
-	kTagSpriteManager = 1,
+	kTagSpriteSheet = 1,
 	kTagAnimation1 = 1,
 };
 
@@ -113,7 +113,7 @@ enum {
 		//Set up sprite
 		
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"blocks.png" capacity:150];
-		[self addChild:sheet z:0 tag:kTagSpriteManager];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
 		
@@ -138,7 +138,7 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteManager];
+	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
