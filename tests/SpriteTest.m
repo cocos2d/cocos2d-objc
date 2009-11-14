@@ -12,10 +12,10 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"SpriteAnimationSplit",
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
+			@"SpriteAnimationSplit",
 			@"SpriteColorOpacity",
 			@"SpriteSheetColorOpacity",
 			@"SpriteZOrder",
