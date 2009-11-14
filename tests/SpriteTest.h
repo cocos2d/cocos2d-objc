@@ -106,6 +106,11 @@
 -(void) addNewSprite;
 @end
 
+@interface SpriteAnimationSplit : SpriteDemo
+{}
+@end
+
+
 
 @interface SpriteFrameTest : SpriteDemo
 {

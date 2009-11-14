@@ -12,6 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+			@"SpriteAnimationSplit",
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -1276,6 +1277,76 @@ Class restartAction()
 	return @"Sprite vs. SpriteSheet animation";
 }
 @end
+
+#pragma mark -
+#pragma mark Example Sprite: Animation Split
+
+@implementation SpriteAnimationSplit
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"animations/dragon_animation.png"];
+		
+		// manually add frames to the frame cache
+		CCSpriteFrame *frame0 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*0, 132, 132) offset:CGPointZero];
+		CCSpriteFrame *frame1 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*0, 132, 132) offset:CGPointZero];
+		CCSpriteFrame *frame2 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*2, 132*0, 132, 132) offset:CGPointZero];
+		CCSpriteFrame *frame3 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*3, 132*0, 132, 132) offset:CGPointZero];
+		CCSpriteFrame *frame4 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*1, 132, 132) offset:CGPointZero];
+		CCSpriteFrame *frame5 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*1, 132, 132) offset:CGPointZero];
+
+		CCSpriteFrame *frameFlip0 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
+		CCSpriteFrame *frameFlip1 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
+		CCSpriteFrame *frameFlip2 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*2, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
+		CCSpriteFrame *frameFlip3 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*3, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
+		CCSpriteFrame *frameFlip4 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*1, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
+		CCSpriteFrame *frameFlip5 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*1, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
+		
+		
+		//
+		// Animation using Sprite Sheet
+		//
+		CCSprite *sprite = [CCSprite spriteWithSpriteFrame:frame0];
+		sprite.position = ccp( s.width/2-80, s.height/2);
+		[self addChild:sprite];
+				
+		NSMutableArray *animFrames = [NSMutableArray array];
+		[animFrames addObject:frame0];
+		[animFrames addObject:frame1];
+		[animFrames addObject:frame2];
+		[animFrames addObject:frame3];
+		[animFrames addObject:frame4];
+		[animFrames addObject:frame5];
+		[animFrames addObject:frameFlip0];
+		[animFrames addObject:frameFlip1];
+		[animFrames addObject:frameFlip2];
+		[animFrames addObject:frameFlip3];
+		[animFrames addObject:frameFlip4];
+		[animFrames addObject:frameFlip5];
+		
+		CCAnimation *animation = [CCAnimation animationWithName:@"fly" delay:0.2f array:animFrames];
+		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+		
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite: Animation + flip";
+}
+@end
+
 
 
 #pragma mark -

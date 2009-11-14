@@ -97,8 +97,10 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		float h = [[frameDict objectForKey:@"height"] floatValue];
 		float ox = [[frameDict objectForKey:@"offsetX"] floatValue];
 		float oy = [[frameDict objectForKey:@"offsetY"] floatValue];
+		BOOL fx = [[frameDict objectForKey:@"flipX"] boolValue];
+		BOOL fy = [[frameDict objectForKey:@"flipX"] boolValue];
 		
-		CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x,y,w,h) offset:CGPointMake(ox,oy)];
+		CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x,y,w,h) offset:CGPointMake(ox,oy) flipX:fx flipY:fy];
 		
 		[spriteFrames setObject:frame forKey:frameDictKey];
 	}
