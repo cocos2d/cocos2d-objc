@@ -22,7 +22,7 @@
 /** A CCSpriteFrame is an NSObject that encapsulates a CGRect.
  * And a CGRect represents a frame within the CCSpriteSheet
  */
-@interface CCSpriteFrame : NSObject
+@interface CCSpriteFrame : NSObject <NSCopying>
 {
 	CGRect			rect_;
 	CGPoint			offset_;

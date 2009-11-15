@@ -1083,6 +1083,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // Animate
 //
+
 #pragma mark -
 #pragma mark Animate
 @implementation CCAnimate
@@ -1097,6 +1098,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 +(id) actionWithAnimation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL)b
 {
 	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:b] autorelease];
+}
+
++(id) actionWithDuration:(ccTime)duration animation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL)b
+{
+	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:b] autorelease];
 }
 
 -(id) initWithAnimation: (id<CCAnimationProtocol>)anim
@@ -1118,9 +1124,23 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	return self;
 }
 
+-(id) initWithDuration:(ccTime)aDuration animation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL) b
+{
+	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+	
+	if( (self=[super initWithDuration:aDuration] ) ) {
+		
+		restoreOriginalFrame = b;
+		self.animation = anim;
+		origFrame = nil;
+	}
+	return self;
+}
+
+
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAnimation:animation_ restoreOriginalFrame: restoreOriginalFrame];
+	return [[[self class] allocWithZone: zone] initWithDuration:duration animation:animation_ restoreOriginalFrame:restoreOriginalFrame];
 }
 
 -(void) dealloc
@@ -1170,4 +1190,18 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
 	}
 }
+
+- (CCIntervalAction *) reverse
+{
+	NSArray *oldArray = [animation_ frames];
+	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[oldArray count]];
+    NSEnumerator *enumerator = [oldArray reverseObjectEnumerator];
+    for (id element in enumerator) {
+        [newArray addObject:[[element copy] autorelease]];
+    }
+	
+	CCAnimation *newAnim = [CCAnimation animationWithName:animation_.name delay:animation_.delay array:newArray];
+	return [CCAnimate actionWithDuration:duration animation:newAnim restoreOriginalFrame:restoreOriginalFrame];
+}
+
 @end

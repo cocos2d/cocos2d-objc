@@ -357,6 +357,16 @@ typedef struct _ccBezierConfig {
 +(id) actionWithAnimation:(id<CCAnimationProtocol>) a restoreOriginalFrame:(BOOL)b;
 /** initializes the action with an Animation */
 -(id) initWithAnimation:(id<CCAnimationProtocol>) a restoreOriginalFrame:(BOOL)b;
+/** creates an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
+ The 'delay' parameter of the animation will be overrided by the duration parameter.
+ @since v0.9.0
+ */
++(id) actionWithDuration:(ccTime)duration animation:(id<CCAnimationProtocol>)animation restoreOriginalFrame:(BOOL)b;
+/** initializes an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
+ The 'delay' parameter of the animation will be overrided by the duration parameter.
+ @since v0.9.0
+ */
+-(id) initWithDuration:(ccTime)duration animation:(id<CCAnimationProtocol>)animation restoreOriginalFrame:(BOOL)b;
 @end
 
 

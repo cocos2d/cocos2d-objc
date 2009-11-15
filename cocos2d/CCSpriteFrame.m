@@ -127,4 +127,10 @@
 	[texture_ release];
 	[super dealloc];
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rect:rect_ offset:offset_ flipX:flipX_ flipY:flipY_];
+	return copy;
+}
 @end
