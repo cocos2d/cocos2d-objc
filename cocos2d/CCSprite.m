@@ -649,9 +649,10 @@
 	NSAssert( ! parentIsSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	selfRenderTextureAtlas_.texture = texture;
+	texture_ = texture;
+
 	[self updateBlendFunc];
 	
-	texture_ = texture;
 }
 
 -(CCTexture2D*) texture

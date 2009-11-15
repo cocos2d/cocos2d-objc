@@ -394,15 +394,16 @@ Class restartAction()
 	
 	[self centerSprites];
 	
-	[tamara setVisible:NO];
+	tamara.visible = NO;
 	
 	CCAnimation* animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
-	id action = [CCAnimate actionWithAnimation: animation];
+	id action = [CCAnimate actionWithAnimation: animation restoreOriginalFrame:NO];
+	id action_back = [action reverse];
 	
-	[grossini runAction:action];
+	[grossini runAction: [CCSequence actions: action, action_back, nil]];
 }
 -(NSString *) title
 {
