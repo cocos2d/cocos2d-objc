@@ -99,4 +99,7 @@
 
 /** Adds a frame with an image filename. */
 -(void) addFrameWithFilename:(NSString*)filename;
+
+/** Adds a frame with a texture and a rect */
+-(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 @end

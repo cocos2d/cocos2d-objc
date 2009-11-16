@@ -76,6 +76,13 @@
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
 	[frames_ addObject:frame];
 }
+
+-(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
+	[frames_ addObject:frame];
+}
+
 @end
 
 #pragma mark -
