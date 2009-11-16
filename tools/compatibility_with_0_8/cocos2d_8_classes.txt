@@ -1,0 +1,197 @@
+Action.h:@interface Action : NSObject <NSCopying> {
+Action.h:@interface FiniteTimeAction : Action <NSCopying>
+Action.h:@interface RepeatForever : Action <NSCopying>
+Action.h:@interface Speed : Action <NSCopying>
+ActionManager.h:@interface ActionManager : NSObject {
+AtlasNode.h:@interface AtlasNode : CocosNode <CocosNodeRGBA, CocosNodeTexture> {
+AtlasSprite.h:@interface AtlasSprite : CocosNode <CocosNodeFrames, CocosNodeRGBA>
+AtlasSprite.h:@interface AtlasAnimation : NSObject <CocosAnimation>
+AtlasSprite.h:@interface AtlasSpriteFrame : NSObject
+AtlasSpriteManager.h:@interface AtlasSpriteManager : CocosNode <CocosNodeTexture>
+BitmapFontAtlas.h:@interface BitmapFontConfiguration : NSObject
+BitmapFontAtlas.h:@interface BitmapFontAtlas : AtlasSpriteManager <CocosNodeLabel, CocosNodeRGBA>
+Camera.h:@interface Camera : NSObject {
+CameraAction.h:@interface CameraAction : IntervalAction <NSCopying> {
+CameraAction.h:@interface OrbitCamera : CameraAction <NSCopying> {
+CocosNode.h:@interface CocosNode : NSObject {
+Director.h:@interface Director : NSObject
+Director.h:@interface FastDirector : Director
+Director.h:@interface ThreadedFastDirector : Director
+Director.h:@interface DisplayLinkDirector : Director
+Director.h:@interface TimerDirector : Director
+EaseAction.h:@interface EaseAction : IntervalAction <NSCopying>
+EaseAction.h:@interface EaseRateAction :  EaseAction <NSCopying>
+EaseAction.h:@interface EaseIn : EaseRateAction <NSCopying> {} @end
+EaseAction.h:@interface EaseOut : EaseRateAction <NSCopying> {} @end
+EaseAction.h:@interface EaseInOut : EaseRateAction <NSCopying> {} @end
+EaseAction.h:@interface EaseExponentialIn : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseExponentialOut : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseExponentialInOut : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseSineIn : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseSineOut : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseSineInOut : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseElastic : EaseAction <NSCopying>
+EaseAction.h:@interface EaseElasticIn : EaseElastic <NSCopying> {} @end
+EaseAction.h:@interface EaseElasticOut : EaseElastic <NSCopying> {} @end
+EaseAction.h:@interface EaseElasticInOut : EaseElastic <NSCopying> {} @end
+EaseAction.h:@interface EaseBounce : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseBounceIn : EaseBounce <NSCopying> {} @end
+EaseAction.h:@interface EaseBounceOut : EaseBounce <NSCopying> {} @end
+EaseAction.h:@interface EaseBounceInOut : EaseBounce <NSCopying> {} @end
+EaseAction.h:@interface EaseBackIn : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseBackOut : EaseAction <NSCopying> {} @end
+EaseAction.h:@interface EaseBackInOut : EaseAction <NSCopying> {} @end
+Grabber.h:@interface Grabber : NSObject
+Grid.h:@interface GridBase : NSObject
+Grid.h:@interface Grid3D : GridBase
+Grid.h:@interface TiledGrid3D : GridBase
+Grid3DAction.h:@interface Waves3D : Grid3DAction
+Grid3DAction.h:@interface FlipX3D : Grid3DAction
+Grid3DAction.h:@interface FlipY3D : FlipX3D
+Grid3DAction.h:@interface Lens3D : Grid3DAction
+Grid3DAction.h:@interface Ripple3D : Grid3DAction
+Grid3DAction.h:@interface Shaky3D : Grid3DAction
+Grid3DAction.h:@interface Liquid : Grid3DAction
+Grid3DAction.h:@interface Waves : Grid3DAction
+Grid3DAction.h:@interface Twirl : Grid3DAction
+GridAction.h:@interface GridAction : IntervalAction
+GridAction.h:@interface Grid3DAction : GridAction
+GridAction.h:@interface TiledGrid3DAction : GridAction
+GridAction.h:@interface AccelDeccelAmplitude : IntervalAction
+GridAction.h:@interface AccelAmplitude : IntervalAction
+GridAction.h:@interface DeccelAmplitude : IntervalAction
+GridAction.h:@interface StopGrid : InstantAction
+GridAction.h:@interface ReuseGrid : InstantAction
+InstantAction.h:@interface InstantAction : FiniteTimeAction <NSCopying>
+InstantAction.h: @interface Show : InstantAction
+InstantAction.h:@interface Hide : InstantAction
+InstantAction.h:@interface ToggleVisibility : InstantAction
+InstantAction.h:@interface Place : InstantAction <NSCopying>
+InstantAction.h:@interface CallFunc : InstantAction <NSCopying>
+InstantAction.h:@interface CallFuncN : CallFunc
+InstantAction.h:@interface CallFuncND : CallFuncN
+IntervalAction.h:@interface IntervalAction: FiniteTimeAction <NSCopying>
+IntervalAction.h:@interface Sequence : IntervalAction <NSCopying>
+IntervalAction.h:@interface Repeat : IntervalAction <NSCopying>
+IntervalAction.h:@interface Spawn : IntervalAction <NSCopying>
+IntervalAction.h:@interface RotateTo : IntervalAction <NSCopying>
+IntervalAction.h:@interface RotateBy : IntervalAction <NSCopying>
+IntervalAction.h:@interface MoveTo : IntervalAction <NSCopying>
+IntervalAction.h:@interface MoveBy : MoveTo <NSCopying>
+IntervalAction.h: @interface JumpBy : IntervalAction <NSCopying>
+IntervalAction.h: @interface JumpTo : JumpBy <NSCopying>
+IntervalAction.h:@interface BezierBy : IntervalAction <NSCopying>
+IntervalAction.h:@interface BezierTo : BezierBy
+IntervalAction.h:@interface ScaleTo : IntervalAction <NSCopying>
+IntervalAction.h:@interface ScaleBy : ScaleTo <NSCopying>
+IntervalAction.h:@interface Blink : IntervalAction <NSCopying>
+IntervalAction.h:@interface FadeIn : IntervalAction <NSCopying>
+IntervalAction.h:@interface FadeOut : IntervalAction <NSCopying>
+IntervalAction.h:@interface FadeTo : IntervalAction <NSCopying>
+IntervalAction.h:@interface TintTo : IntervalAction <NSCopying>
+IntervalAction.h:@interface TintBy : IntervalAction <NSCopying>
+IntervalAction.h:@interface DelayTime : IntervalAction <NSCopying>
+IntervalAction.h:@interface ReverseTime : IntervalAction <NSCopying>
+IntervalAction.h:@interface Animate : IntervalAction <NSCopying>
+Label.h:@interface Label : TextureNode <CocosNodeLabel>
+LabelAtlas.h:@interface LabelAtlas : AtlasNode  <CocosNodeLabel> {
+Layer.h:@interface Layer : CocosNode <UIAccelerometerDelegate, StandardTouchDelegate, TargetedTouchDelegate>
+Layer.h:@interface ColorLayer : Layer <CocosNodeRGBA>
+Layer.h:@interface MultiplexLayer : Layer
+Menu.h:@interface Menu : Layer <CocosNodeRGBA>
+MenuItem.h:@interface MenuItem : CocosNode
+MenuItem.h:@interface MenuItemLabel : MenuItem  <CocosNodeRGBA>
+MenuItem.h:@interface MenuItemAtlasFont : MenuItemLabel
+MenuItem.h:@interface MenuItemFont : MenuItemLabel
+MenuItem.h:@interface MenuItemSprite : MenuItem <CocosNodeRGBA>
+MenuItem.h:@interface MenuItemAtlasSprite : MenuItemSprite
+MenuItem.h:@interface MenuItemImage : MenuItemSprite
+MenuItem.h:@interface MenuItemToggle : MenuItem <CocosNodeRGBA>
+MotionStreak.h:@interface MotionStreak : CocosNode <CocosNodeTexture>
+PageTurn3DAction.h:@interface PageTurn3D : Grid3DAction {
+PageTurnTransition.h:@interface PageTurnTransition : TransitionScene {
+ParallaxNode.h:@interface ParallaxNode : CocosNode {
+ParticleExamples.h:@interface ParticleFire: PointParticleSystem
+ParticleExamples.h:@interface ParticleFireworks : PointParticleSystem
+ParticleExamples.h:@interface ParticleSun : PointParticleSystem
+ParticleExamples.h:@interface ParticleGalaxy : PointParticleSystem
+ParticleExamples.h:@interface ParticleFlower : PointParticleSystem
+ParticleExamples.h:@interface ParticleMeteor : PointParticleSystem
+ParticleExamples.h:@interface ParticleSpiral : PointParticleSystem
+ParticleExamples.h:@interface ParticleExplosion : PointParticleSystem
+ParticleExamples.h:@interface ParticleSmoke : PointParticleSystem
+ParticleExamples.h:@interface ParticleSnow : PointParticleSystem
+ParticleExamples.h:@interface ParticleRain : PointParticleSystem
+ParticleSystem.h:@interface ParticleSystem : CocosNode <CocosNodeTexture>
+PointParticleSystem.h:@interface PointParticleSystem : ParticleSystem
+QuadParticleSystem.h:@interface QuadParticleSystem : ParticleSystem
+RenderTexture.h:@interface RenderTexture : CocosNode 
+Ribbon.h:@interface Ribbon : CocosNode <CocosNodeTexture>
+Ribbon.h:@interface RibbonSegment : NSObject
+Scene.h:@interface Scene : CocosNode {
+Scheduler.h:@interface Timer : NSObject
+Scheduler.h:@interface Scheduler : NSObject
+Sprite.h:@interface Sprite : TextureNode <CocosNodeFrames>
+Sprite.h:@interface Animation : NSObject <CocosAnimation>
+TMXTiledMap.h:@interface TMXTiledMap : CocosNode
+TMXTiledMap.h:@interface TMXLayer : AtlasSpriteManager
+TMXXMLParser.h:@interface TMXLayerInfo : NSObject
+TMXXMLParser.h:@interface TMXTilesetInfo : NSObject
+TMXXMLParser.h:@interface TMXMapInfo : NSObject
+TextureAtlas.h:@interface TextureAtlas : NSObject {
+TextureMgr.h:@interface TextureMgr : NSObject
+TextureNode.h:@interface TextureNode : CocosNode <CocosNodeRGBA, CocosNodeTexture> {
+TileMapAtlas.h:@interface TileMapAtlas : AtlasNode {
+TiledGridAction.h:@interface ShakyTiles3D : TiledGrid3DAction
+TiledGridAction.h:@interface ShatteredTiles3D : TiledGrid3DAction
+TiledGridAction.h:@interface ShuffleTiles : TiledGrid3DAction
+TiledGridAction.h:@interface FadeOutTRTiles : TiledGrid3DAction
+TiledGridAction.h:@interface FadeOutBLTiles : FadeOutTRTiles
+TiledGridAction.h:@interface FadeOutUpTiles : FadeOutTRTiles
+TiledGridAction.h:@interface FadeOutDownTiles : FadeOutUpTiles
+TiledGridAction.h:@interface TurnOffTiles : TiledGrid3DAction
+TiledGridAction.h:@interface WavesTiles3D : TiledGrid3DAction
+TiledGridAction.h:@interface JumpTiles3D : TiledGrid3DAction
+TiledGridAction.h:@interface SplitRows : TiledGrid3DAction
+TiledGridAction.h:@interface SplitCols : TiledGrid3DAction
+TouchDispatcher.h:@interface TouchDispatcher : NSObject <EAGLTouchDelegate>
+TouchHandler.h:@interface TouchHandler : NSObject {
+TouchHandler.h:@interface StandardTouchHandler : TouchHandler
+TouchHandler.h:@interface TargetedTouchHandler : TouchHandler {
+Transition.h:@interface TransitionScene : Scene {
+Transition.h:@interface OrientedTransitionScene : TransitionScene
+Transition.h:@interface RotoZoomTransition : TransitionScene
+Transition.h:@interface JumpZoomTransition : TransitionScene
+Transition.h:@interface MoveInLTransition : TransitionScene <TransitionEaseScene>
+Transition.h:@interface MoveInRTransition : MoveInLTransition
+Transition.h:@interface MoveInTTransition : MoveInLTransition 
+Transition.h:@interface MoveInBTransition : MoveInLTransition
+Transition.h:@interface SlideInLTransition : TransitionScene <TransitionEaseScene>
+Transition.h:@interface SlideInRTransition : SlideInLTransition 
+Transition.h:@interface SlideInBTransition : SlideInLTransition
+Transition.h:@interface SlideInTTransition : SlideInLTransition
+Transition.h:@interface ShrinkGrowTransition : TransitionScene <TransitionEaseScene>
+Transition.h:@interface FlipXTransition : OrientedTransitionScene
+Transition.h:@interface FlipYTransition : OrientedTransitionScene
+Transition.h:@interface FlipAngularTransition : OrientedTransitionScene
+Transition.h:@interface ZoomFlipXTransition : OrientedTransitionScene
+Transition.h:@interface ZoomFlipYTransition : OrientedTransitionScene
+Transition.h:@interface ZoomFlipAngularTransition : OrientedTransitionScene
+Transition.h:@interface FadeTransition : TransitionScene
+Transition.h:@interface TurnOffTilesTransition : TransitionScene <TransitionEaseScene>
+Transition.h:@interface SplitColsTransition : TransitionScene <TransitionEaseScene>
+Transition.h:@interface SplitRowsTransition : SplitColsTransition
+Transition.h:@interface FadeTRTransition : TransitionScene <TransitionEaseScene>
+Transition.h:@interface FadeBLTransition : FadeTRTransition
+Transition.h:@interface FadeUpTransition : FadeTRTransition
+Transition.h:@interface FadeDownTransition : FadeTRTransition
+Support/EAGLView.h:@interface EAGLView : UIView
+Support/FileUtils.h:@interface FileUtils : NSObject
+Support/PVRTexture.h:@interface PVRTexture : NSObject
+Support/Texture2D.h:@interface Texture2D : NSObject
+Support/Texture2D.h:@interface Texture2D (Drawing)
+Support/Texture2D.h:@interface Texture2D (Image)
+Support/Texture2D.h:@interface Texture2D (Text)
+Support/Texture2D.h:@interface Texture2D (PVRTC)
+Support/Texture2D.h:@interface Texture2D (GLFilter)
+Support/Texture2D.h:@interface Texture2D (PixelFormat)

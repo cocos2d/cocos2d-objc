@@ -2,6 +2,7 @@ version 0.9.0 - XX-MMM-2009
  . All: using CC namespace (issue #520)
  . All: prevents warnings with Static Analizer (issue #613)
  . All: cocos protocols renamed to avoid confusion (part of issue #520)
+ . All: Added compatibility with v0.8 (part of issue #520)
  . Animation: supports duration and reverse (issue #627)
  . Tests: Performance Tests re-integrated to main XCode project (issue #XXX)
  . BitmapFontAtlas: works with subdirectories (issue #612)
