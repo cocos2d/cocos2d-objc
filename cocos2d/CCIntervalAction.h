@@ -40,6 +40,7 @@ Example:
 	BOOL	firstTick;
 }
 
+/** how many seconds had elapsed since the actions started to run. */
 @property (nonatomic,readonly) ccTime elapsed;
 
 /** creates the action */

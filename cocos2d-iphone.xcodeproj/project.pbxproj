@@ -824,6 +824,8 @@
 		508A33370FBADD5F00D574A2 /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33290FBADD5F00D574A2 /* grossini_dance_12.png */; };
 		508A33380FBADD5F00D574A2 /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
 		508A33390FBADD5F00D574A2 /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */; };
+		508A450610B0E604004B9CC3 /* CCCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 508A450410B0E603004B9CC3 /* CCCompatibility.h */; };
+		508A450710B0E604004B9CC3 /* CCCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 508A450510B0E604004B9CC3 /* CCCompatibility.m */; };
 		509A79970F6188420032F449 /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* CCSprite.h */; };
 		509A79980F6188420032F449 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* CCSprite.m */; };
 		509A799B0F6188500032F449 /* CCSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* CCSpriteSheet.h */; };
@@ -2254,6 +2256,8 @@
 		508A33290FBADD5F00D574A2 /* grossini_dance_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_12.png; sourceTree = "<group>"; };
 		508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_13.png; sourceTree = "<group>"; };
 		508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
+		508A450410B0E603004B9CC3 /* CCCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCompatibility.h; sourceTree = "<group>"; };
+		508A450510B0E604004B9CC3 /* CCCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCompatibility.m; sourceTree = "<group>"; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite.m; sourceTree = "<group>"; };
 		509A79990F6188500032F449 /* CCSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteSheet.h; sourceTree = "<group>"; };
@@ -3537,6 +3541,8 @@
 				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
 				506602100E38A70D000B500E /* CCScheduler.m */,
+				508A450410B0E603004B9CC3 /* CCCompatibility.h */,
+				508A450510B0E604004B9CC3 /* CCCompatibility.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -4667,6 +4673,7 @@
 				502C8BE010A661E200D137BA /* CCSpriteFrameCache.h in Headers */,
 				50E1357510ADEB1B00C9E7FA /* CCTexture2D.h in Headers */,
 				50E1357710ADEB1B00C9E7FA /* CCPVRTexture.h in Headers */,
+				508A450610B0E604004B9CC3 /* CCCompatibility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6927,6 +6934,7 @@
 				502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */,
 				50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */,
 				50E1357810ADEB1B00C9E7FA /* CCPVRTexture.m in Sources */,
+				508A450710B0E604004B9CC3 /* CCCompatibility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

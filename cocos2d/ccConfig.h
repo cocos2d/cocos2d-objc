@@ -80,3 +80,10 @@
  It is recommened to leave it disabled.
  */
 //#define CC_ATLASSPRITE_DEBUG_DRAW 1
+
+/**
+ Enable it if you want to support v0.8 compatbility.
+ Basically, classes without namespaces will work.
+ It is recommended to disable compatibility once you have migrated your game to v0.9 to avoid class name polution
+ */
+#define CC_COMPATIBILITY_WITH_0_8 1

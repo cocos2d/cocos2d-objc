@@ -77,12 +77,16 @@
 #import "CCParallaxNode.h"
 #import "CCActionManager.h"
 #import "CCTMXTiledMap.h"
+#import "CCTMXXMLParser.h"
 #import "CCTileMapAtlas.h"
 #import "CCRenderTexture.h"
 #import "CCMotionStreak.h"
 #import "CCPageTurn3DAction.h"
 #import "CCPageTurnTransition.h"
 #import "CCTexture2D.h"
+#import "CCPVRTexture.h"
+#import "CCTouchHandler.h"
+#import "ccConfig.h"
 
 //
 // cocos2d macros
@@ -97,6 +101,10 @@
 #import "Support/EAGLView.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
+
+
+// compatibility with v0.8
+#import "CCCompatibility.h"
 
 
 // free functions
