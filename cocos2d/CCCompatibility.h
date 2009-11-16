@@ -27,8 +27,10 @@ __attribute__((deprecated)) @interface Action : CCAction {} @end
 __attribute__((deprecated)) @interface ActionManager : CCActionManager {} @end
 __attribute__((deprecated)) @interface Animate : CCAnimate {} @end
 __attribute__((deprecated)) @interface Animation : CCAnimation {} @end
+__attribute__((deprecated)) @interface AtlasAnimation : CCAnimation {} @end
 __attribute__((deprecated)) @interface AtlasNode : CCAtlasNode {} @end
 __attribute__((deprecated)) @interface AtlasSprite : CCSprite {} @end
+__attribute__((deprecated)) @interface AtlasSpriteFrame : CCSpriteFrame {} @end
 __attribute__((deprecated)) @interface AtlasSpriteManager : CCSpriteSheet {} @end
 __attribute__((deprecated)) @interface BezierBy : CCBezierBy {} @end
 __attribute__((deprecated)) @interface BezierTo : CCBezierTo {} @end

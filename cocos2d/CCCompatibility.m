@@ -35,10 +35,16 @@
 @implementation Animation
 @end
 
+@implementation AtlasAnimation
+@end
+
 @implementation AtlasNode
 @end
 
 @implementation AtlasSprite
+@end
+
+@implementation AtlasSpriteFrame
 @end
 
 @implementation AtlasSpriteManager
