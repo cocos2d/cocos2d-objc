@@ -1824,7 +1824,6 @@
 		500111F1103B878B0059EC2E /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		500111F2103B878B0059EC2E /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		500111F3103B878B0059EC2E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		500111F4103B878B0059EC2E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		500111F5103B878B0059EC2E /* iPhoneTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTest.h; sourceTree = "<group>"; };
 		500111F6103B878B0059EC2E /* iPhoneTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iPhoneTest.mm; sourceTree = "<group>"; };
 		500111F7103B878B0059EC2E /* iPhoneTestEntries.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iPhoneTestEntries.mm; sourceTree = "<group>"; };
@@ -3360,7 +3359,6 @@
 				500111F1103B878B0059EC2E /* GLES-Render.h */,
 				500111F2103B878B0059EC2E /* GLES-Render.mm */,
 				500111F3103B878B0059EC2E /* Icon.png */,
-				500111F4103B878B0059EC2E /* Info.plist */,
 				500111F5103B878B0059EC2E /* iPhoneTest.h */,
 				500111F6103B878B0059EC2E /* iPhoneTest.mm */,
 				500111F7103B878B0059EC2E /* iPhoneTestEntries.mm */,
@@ -7809,7 +7807,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				INFOPLIST_FILE = "tests/Box2DTestBed-Cocos2dIntegration/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -7837,7 +7835,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				INFOPLIST_FILE = "tests/Box2DTestBed-Cocos2dIntegration/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",

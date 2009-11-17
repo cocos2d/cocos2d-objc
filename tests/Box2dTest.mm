@@ -49,10 +49,10 @@ enum {
 		
 		uint32 flags = 0;
 		flags += b2DebugDraw::e_shapeBit;
-		flags += b2DebugDraw::e_jointBit;
-		flags += b2DebugDraw::e_aabbBit;
-		flags += b2DebugDraw::e_pairBit;
-		flags += b2DebugDraw::e_centerOfMassBit;
+//		flags += b2DebugDraw::e_jointBit;
+//		flags += b2DebugDraw::e_aabbBit;
+//		flags += b2DebugDraw::e_pairBit;
+//		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
 
 		
@@ -137,6 +137,7 @@ enum {
 	// Define the dynamic body.
 	//Set up a 1m squared box in the physics world
 	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
 	bodyDef.userData = sprite;
 	b2Body *body = world->CreateBody(&bodyDef);

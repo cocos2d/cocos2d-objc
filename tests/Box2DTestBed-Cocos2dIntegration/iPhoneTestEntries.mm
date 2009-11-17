@@ -25,6 +25,8 @@
 //#include "GLES-Render.h"
 
 #include "ApplyForce.h"
+#include "BodyTypes.h"
+
 #include "Breakable.h"
 #include "Bridge.h"
 #include "CCDTest.h"
@@ -59,6 +61,10 @@
 
 TestEntry g_testEntries[] =
 {
+{"Body Types", BodyTypes::Create},
+{"CCD Test", CCDTest::Create},
+{"SphereStack", SphereStack::Create},
+{"Vertical Stack", VerticalStack::Create},
 {"Confined", Confined::Create},
 {"Bridge", Bridge::Create},
 {"Breakable", Breakable::Create},
@@ -68,7 +74,6 @@ TestEntry g_testEntries[] =
 {"PolyCollision", PolyCollision::Create},
 {"One-Sided Platform", OneSidedPlatform::Create},
 {"Apply Force", ApplyForce::Create},
-{"CCD Test", CCDTest::Create},
 {"Chain", Chain::Create},
 {"Collision Filtering", CollisionFiltering::Create},
 {"Collision Processing", CollisionProcessing::Create},
@@ -85,12 +90,12 @@ TestEntry g_testEntries[] =
 {"Sensor Test", SensorTest::Create},
 {"Shape Editing", ShapeEditing::Create},
 {"Slider Crank", SliderCrank::Create},
-{"SphereStack", SphereStack::Create},
 {"Theo Jansen's Walker", TheoJansen::Create},
 {"Time of Impact", TimeOfImpact::Create},
 {"Varying Friction", VaryingFriction::Create},
-{"Vertical Stack", VerticalStack::Create},
 {"Web", Web::Create},
+{NULL, NULL}
+
 };
 
 int g_totalEntries = sizeof(g_testEntries) / sizeof(g_testEntries[0]);

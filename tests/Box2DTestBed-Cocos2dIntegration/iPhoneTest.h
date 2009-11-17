@@ -107,7 +107,6 @@ struct TestEntry
 };
 
 extern TestEntry g_testEntries[];
-extern int		g_totalEntries;
 // This is called when a joint in the world is implicitly destroyed
 // because an attached body is destroyed. This gives us a chance to
 // nullify the mouse joint.
@@ -138,13 +137,14 @@ class Test : public b2ContactListener
 		Test();
 		virtual ~Test();
 		
-		void SetGravity(float x,float y);
+		void SetGravity(float x,float y);	// iPhone specific
+
 		void SetTextLine(int32 line) { m_textLine = line; }
 		void DrawTitle(int x, int y, const char *string);
 		virtual void Step(Settings* settings);
 		virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
 		void ShiftMouseDown(const b2Vec2& p);
-		virtual bool MouseDown(const b2Vec2& p);
+		virtual bool MouseDown(const b2Vec2& p); // cocos2d modifications
 		virtual void MouseUp(const b2Vec2& p);
 		void MouseMove(const b2Vec2& p);
 		void LaunchBomb();
@@ -160,14 +160,13 @@ class Test : public b2ContactListener
 		virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
 		virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
 		virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-		virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
+		virtual void PostSolve(const b2Contact* contact, const b2ContactImpulse* impulse)
 		{
 			B2_NOT_USED(contact);
 			B2_NOT_USED(impulse);
 		}
-		
-		b2World* m_world;
-		b2MouseJoint* m_mouseJoint;
+
+		b2World* m_world;	// cocos2d specific
 
 	protected:
 		friend class DestructionListener;
@@ -182,6 +181,7 @@ class Test : public b2ContactListener
 		GLESDebugDraw m_debugDraw;
 		int32 m_textLine;
 		b2Body* m_bomb;
+		b2MouseJoint* m_mouseJoint;
 		b2Vec2 m_bombSpawnPoint;
 		bool m_bombSpawning;
 		b2Vec2 m_mouseWorld;
