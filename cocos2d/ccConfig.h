@@ -86,4 +86,4 @@
  Basically, classes without namespaces will work.
  It is recommended to disable compatibility once you have migrated your game to v0.9 to avoid class name polution
  */
-#define CC_COMPATIBILITY_WITH_0_8 0
+//#define CC_COMPATIBILITY_WITH_0_8 1

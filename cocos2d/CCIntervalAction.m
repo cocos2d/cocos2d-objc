@@ -1200,7 +1200,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
         [newArray addObject:[[element copy] autorelease]];
     }
 	
-	CCAnimation *newAnim = [CCAnimation animationWithName:animation_.name delay:animation_.delay array:newArray];
+	CCAnimation *newAnim = [CCAnimation animationWithName:animation_.name delay:animation_.delay frames:newArray];
 	return [CCAnimate actionWithDuration:duration animation:newAnim restoreOriginalFrame:restoreOriginalFrame];
 }
 

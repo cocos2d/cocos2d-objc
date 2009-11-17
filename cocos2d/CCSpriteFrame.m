@@ -22,9 +22,9 @@
 @implementation CCAnimation
 @synthesize name=name_, delay=delay_, frames=frames_;
 
-+(id) animationWithName:(NSString*)aname delay:(float)d array:(NSArray*)array
++(id) animationWithName:(NSString*)aname delay:(float)d frames:(NSArray*)array
 {
-	return [[[self alloc] initWithName:aname delay:d array:array] autorelease];
+	return [[[self alloc] initWithName:aname delay:d frames:array] autorelease];
 }
 
 +(id) animationWithName:(NSString*)aname delay:(float)d
@@ -34,10 +34,10 @@
 
 -(id) initWithName:(NSString*)t delay:(float)d
 {
-	return [self initWithName:t delay:d array:nil];
+	return [self initWithName:t delay:d frames:nil];
 }
 
--(id) initWithName:(NSString*)name delay:(float)delay array:(NSArray*)array
+-(id) initWithName:(NSString*)name delay:(float)delay frames:(NSArray*)array
 {
 	if( (self=[super init]) ) {
 

@@ -86,13 +86,13 @@
 +(id) animationWithName:(NSString*)name delay:(float)delay;
 
 /** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-+(id) animationWithName:(NSString*)name delay:(float)delay array:(NSArray*)array;
++(id) animationWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames;
 
 /** Initializes a CCAnimation with a name and delay between frames. */
 -(id) initWithName:(NSString*)name delay:(float)delay;
 
 /** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames. */
--(id) initWithName:(NSString*)name delay:(float)delay array:(NSArray*)array;
+-(id) initWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames;
 
 /** Adds a frame to a CCAnimation. */
 -(void) addFrame:(CCSpriteFrame*)frame;
