@@ -15,6 +15,8 @@
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
 
+extern int g_totalEntries;
+
 Settings settings;
 
 enum {

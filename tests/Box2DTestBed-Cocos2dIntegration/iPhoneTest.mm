@@ -41,7 +41,6 @@ void DestructionListener::SayGoodbye(b2Joint* joint)
 }
 
 Test::Test()
-: m_debugDraw()
 {
 	b2Vec2 gravity;
 	gravity.Set(0.0f, -10.0f);
@@ -57,14 +56,6 @@ Test::Test()
 	m_world->SetContactListener(this);
 	m_world->SetDebugDraw(&m_debugDraw);
 	
-	uint32 flags = 0;
-	flags += b2DebugDraw::e_shapeBit;
-	flags += b2DebugDraw::e_jointBit;
-//	flags += b2DebugDraw::e_aabbBit;
-//	flags += b2DebugDraw::e_pairBit;
-	flags += b2DebugDraw::e_centerOfMassBit;
-	m_debugDraw.SetFlags(flags);
-	
 	m_bombSpawning = false;
 	
 	m_stepCount = 0;
@@ -78,7 +69,6 @@ Test::~Test()
 	// By deleting the world, we delete the bomb, mouse joint, etc.
 	delete m_world;
 	m_world = NULL;
-	
 }
 
 void Test::SetGravity( float x, float y)
@@ -136,7 +126,7 @@ class QueryCallback : public b2QueryCallback
 		bool ReportFixture(b2Fixture* fixture)
 		{
 			b2Body* body = fixture->GetBody();
-			if (body->IsStatic() == false)
+			if (body->GetType() == b2_dynamicBody)
 			{
 				bool inside = fixture->TestPoint(m_point);
 				if (inside)
@@ -158,7 +148,6 @@ class QueryCallback : public b2QueryCallback
 
 bool Test::MouseDown(const b2Vec2& p)
 {
-	bool ret = false;
 	m_mouseWorld = p;
 	
 	if (m_mouseJoint != NULL)
@@ -176,14 +165,13 @@ bool Test::MouseDown(const b2Vec2& p)
 	// Query the world for overlapping shapes.
 	QueryCallback callback(p);
 	m_world->QueryAABB(&callback, aabb);
-
 	
 	if (callback.m_fixture)
 	{
 		b2Body* body = callback.m_fixture->GetBody();
 		b2MouseJointDef md;
-		md.body1 = m_groundBody;
-		md.body2 = body;
+		md.bodyA = m_groundBody;
+		md.bodyB = body;
 		md.target = p;
 #ifdef TARGET_FLOAT32_IS_FIXED
 		md.maxForce = (body->GetMass() < 16.0)? 
@@ -192,12 +180,12 @@ bool Test::MouseDown(const b2Vec2& p)
 		md.maxForce = 1000.0f * body->GetMass();
 #endif
 		m_mouseJoint = (b2MouseJoint*)m_world->CreateJoint(&md);
-		body->WakeUp();
+		body->SetAwake(true);
 		
-		ret = true;
+		return true;
 	}
 	
-	return ret;
+	return false;
 }
 
 void Test::SpawnBomb(const b2Vec2& worldPt)
@@ -272,10 +260,9 @@ void Test::LaunchBomb(const b2Vec2& position, const b2Vec2& velocity)
 	}
 	
 	b2BodyDef bd;
-	bd.allowSleep = true;
+	bd.type = b2_dynamicBody;
 	bd.position = position;
-	
-	bd.isBullet = true;
+	bd.bullet = true;
 	m_bomb = m_world->CreateBody(&bd);
 	m_bomb->SetLinearVelocity(velocity);
 	
@@ -315,14 +302,24 @@ void Test::Step(Settings* settings)
 		m_debugDraw.DrawString(5, m_textLine, "****PAUSED****");
 		m_textLine += 15;
 	}
-		
+	
+	uint32 flags = 0;
+	flags += settings->drawShapes			* b2DebugDraw::e_shapeBit;
+	flags += settings->drawJoints			* b2DebugDraw::e_jointBit;
+	flags += settings->drawAABBs			* b2DebugDraw::e_aabbBit;
+	flags += settings->drawPairs			* b2DebugDraw::e_pairBit;
+	flags += settings->drawCOMs				* b2DebugDraw::e_centerOfMassBit;
+	m_debugDraw.SetFlags(flags);
+	
 	m_world->SetWarmStarting(settings->enableWarmStarting > 0);
 	m_world->SetContinuousPhysics(settings->enableContinuous > 0);
 	
 	m_pointCount = 0;
 	
 	m_world->Step(timeStep, settings->velocityIterations, settings->positionIterations);
-		
+	
+	m_world->DrawDebugData();
+	
 	if (timeStep > 0.0f)
 	{
 		++m_stepCount;
@@ -340,10 +337,10 @@ void Test::Step(Settings* settings)
 	
 	if (m_mouseJoint)
 	{
-		b2Body* body = m_mouseJoint->GetBody2();
-		b2Vec2 p1 = body->GetWorldPoint(m_mouseJoint->m_localAnchor);
-		b2Vec2 p2 = m_mouseJoint->m_target;
-		
+//		b2Body* body = m_mouseJoint->GetBodyB();
+//		b2Vec2 p1 = body->GetWorldPoint(m_mouseJoint->m_localAnchor);
+//		b2Vec2 p2 = m_mouseJoint->m_target;
+//		
 //		glPointSize(4.0f);
 //		glColor3f(0.0f, 1.0f, 0.0f);
 //		glBegin(GL_POINTS);
