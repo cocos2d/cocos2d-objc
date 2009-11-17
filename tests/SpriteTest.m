@@ -1239,7 +1239,7 @@ Class restartAction()
 			[animFrames addObject:frame];
 		}
 
-		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f array:animFrames];
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
 		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
 
 		//
@@ -1259,7 +1259,7 @@ Class restartAction()
 		
 		// append frames from another sheet
 		[animFramesGray addObjectsFromArray:animFrames];
-		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f array:animFramesGray];
+		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFramesGray];
 		
 		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animMixed restoreOriginalFrame:NO]]];
 	}	
@@ -1328,7 +1328,7 @@ Class restartAction()
 		[animFrames addObject:frameFlip4];
 		[animFrames addObject:frameFlip5];
 		
-		CCAnimation *animation = [CCAnimation animationWithName:@"fly" delay:0.2f array:animFrames];
+		CCAnimation *animation = [CCAnimation animationWithName:@"fly" delay:0.2f frames:animFrames];
 		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
 		
 	}	
