@@ -6,7 +6,7 @@ version 0.9.0 - XX-MMM-2009
  . Animation: supports duration and reverse (issue #627)
  . Tests: Performance Tests re-integrated to main XCode project (issue #XXX)
  . BitmapFontAtlas: works with subdirectories (issue #612)
- . Box2d: updated to r25 (pre 2.1.0) (issue #494)
+ . Box2d: updated to r26 (pre 2.1.0) (issue #494)
  . CocosLive: Uses CL namespace (part of issue #520)
  . CocosLive: Uses ASCII encoder (issue #617)
  . Sprite: Sprite and AtlasSprite merged in just one class (issue #620)
