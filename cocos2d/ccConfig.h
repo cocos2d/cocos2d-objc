@@ -47,10 +47,10 @@
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
 
 /**
- If enabled, the AtlasSprites will be able to render in subpixels.
+ If enabled, the Sprites rendered with the SpriteSheet will be able to render in subpixels.
  If disabled, integer pixels will be used.
  */
-#define CC_ATLAS_SPRITE_RENDER_SUBPIXEL	1
+#define CC_SPRITESHEET_RENDER_SUBPIXEL	1
 
 
 /**
@@ -75,11 +75,11 @@
 //#define CC_LABELATLAS_DEBUG_DRAW 1
 
 /**
- If enabled, all subclasses of AtlasSprite will draw a bounding box
+ If enabled, all subclasses of CCSpriteSheet will draw a bounding box
  Useful for debugging purposes only.
  It is recommened to leave it disabled.
  */
-//#define CC_ATLASSPRITE_DEBUG_DRAW 1
+//#define CC_SPRITESHEET_DEBUG_DRAW 1
 
 /**
  Enable it if you want to support v0.8 compatbility.

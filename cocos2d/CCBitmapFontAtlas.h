@@ -79,10 +79,10 @@ enum {
 @end
 
 
-/** CCBitmapFontAtlas is a subclass of CCAtlasSpriteManger.
+/** CCBitmapFontAtlas is a subclass of CCSpriteSheet.
   
  Features:
- - Treats each character like an AtlasSprite. This means that each individual character can be:
+ - Treats each character like a CCSprite. This means that each individual character can be:
    - rotated
    - scaled
    - translated
@@ -97,7 +97,7 @@ enum {
     because it might affect the rendering
  
  CCBitmapFontAtlas implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
- CCBitmapFontAtlas has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCAtlasSprite.
+ CCBitmapFontAtlas has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
  If in doubt, use CCBitmapFontAtlas instead of CCLabelAtlas / CCLabel.
  
  Supported editors:
