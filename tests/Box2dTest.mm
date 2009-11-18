@@ -1,5 +1,5 @@
 //
-// Demo of calling integrating Box2D physics engine with cocos2d AtlasSprites
+// Demo of calling integrating Box2D physics engine with cocos2d sprites
 // a cocos2d example
 // http://code.google.com/p/cocos2d-iphone
 //
@@ -174,7 +174,7 @@ enum {
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
 		if (b->GetUserData() != NULL) {
-			//Synchronize the AtlasSprites position and rotation with the corresponding body
+			//Synchronize the Sprites position and rotation with the corresponding body
 			CCSprite* myActor = (CCSprite*)b->GetUserData();
 			myActor.position = CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
 			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());

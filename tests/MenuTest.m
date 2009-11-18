@@ -24,7 +24,6 @@ enum {
 		[CCMenuItemFont setFontName: @"Courier New"];
 
 		// Font Item
-		// AtlasSprite Item
 		
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
@@ -290,7 +289,7 @@ enum {
 
 -(void) menuCallback2: (id) sender
 {
-	NSLog(@"Label clicked. Toogling AtlasSprite");
+	NSLog(@"Label clicked. Toogling Sprite");
 	disabledItem.isEnabled = ~disabledItem.isEnabled;
 	[disabledItem stopAllActions];
 }
