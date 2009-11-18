@@ -2257,6 +2257,7 @@
 		508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
 		508A450410B0E603004B9CC3 /* CCCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCompatibility.h; sourceTree = "<group>"; };
 		508A450510B0E604004B9CC3 /* CCCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCompatibility.m; sourceTree = "<group>"; };
+		508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite.m; sourceTree = "<group>"; };
 		509A79990F6188500032F449 /* CCSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteSheet.h; sourceTree = "<group>"; };
@@ -3287,6 +3288,7 @@
 			children = (
 				50B2C9C10E109A5900AE9530 /* README */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
+				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
 				502C8BCC10A65D0F00D137BA /* LICENSE.cocos2d */,

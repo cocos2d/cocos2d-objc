@@ -1,4 +1,4 @@
-version 0.9.0 - XX-MMM-2009
+version 0.9.0 - 18-Nov-2009
  . All: using CC namespace (issue #520)
  . All: prevents warnings with Static Analizer (issue #613)
  . All: cocos protocols renamed to avoid confusion (part of issue #520)
