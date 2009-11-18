@@ -23,7 +23,7 @@
 #pragma mark -
 #pragma mark CCSprite
 
-#if CC_ATLAS_SPRITE_RENDER_SUBPIXEL
+#if CC_SPRITESHEET_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))

@@ -292,7 +292,7 @@ const int defaultCapacity = 29;
 		if( child.dirty )
 			[child updatePosition];
 		
-#if CC_ATLASSPRITE_DEBUG_DRAW
+#if CC_SPRITESHEET_DEBUG_DRAW
 		CGRect rect = [child boundingBox]; //Inssue 528
 		CGPoint vertices[4]={
 			ccp(rect.origin.x,rect.origin.y),
@@ -301,7 +301,7 @@ const int defaultCapacity = 29;
 			ccp(rect.origin.x,rect.origin.y+rect.size.height),
 		};
 		ccDrawPoly(vertices, 4, YES);
-#endif // CC_ATLASSPRITE_DEBUG_DRAW
+#endif // CC_SPRITESHEET_DEBUG_DRAW
 	}
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -339,7 +339,7 @@ const int defaultCapacity = 29;
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
-		NSAssert(NO,@"XXX: AltasSpriteManager#increateAtlasCapacity SHALL handle this assert");
+		NSAssert(NO,@"XXX: SpriteSheet#increateAtlasCapacity SHALL handle this assert");
 	}	
 }
 
