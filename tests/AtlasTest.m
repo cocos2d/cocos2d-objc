@@ -356,48 +356,11 @@ Class restartAction()
 		
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
-		
-		
-//		CCAtlasSprite *BChar = (CCAtlasSprite*) [label getChildByTag:0];
-//		CCAtlasSprite *FChar = (CCAtlasSprite*) [label getChildByTag:7];
-//		CCAtlasSprite *AChar = (CCAtlasSprite*) [label getChildByTag:12];
-//		
-//		
-//		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
-//		id rot_4ever = [CCRepeatForever actionWithAction:rotate];
-//		
-//		id scale = [CCScaleBy actionWithDuration:2 scale:1.5f];
-//		id scale_back = [scale reverse];
-//		id scale_seq = [CCSequence actions:scale, scale_back,nil];
-//		id scale_4ever = [CCRepeatForever actionWithAction:scale_seq];
-//		
-//		id jump = [CCJumpBy actionWithDuration:0.5f position:CGPointZero height:60 jumps:1];
-//		id jump_4ever = [CCRepeatForever actionWithAction:jump];
-//		
-//		id fade_out = [CCFadeOut actionWithDuration:1];
-//		id fade_in = [CCFadeIn actionWithDuration:1];
-//		id seq = [CCSequence actions:fade_out, fade_in, nil];
-//		id fade_4ever = [CCRepeatForever actionWithAction:seq];
-//		
-//		[BChar runAction:rot_4ever];
-//		[BChar runAction:scale_4ever];
-//		[FChar runAction:jump_4ever];
-//		[AChar runAction:fade_4ever];
-		
-		
-		// Bottom Label
-//		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
-//		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
-//		label2.position = ccp(s.width/2.0f, 80);
-//		
-//		CCAtlasSprite *lastChar = (CCAtlasSprite*) [label2 getChildByTag:3];
-//		[lastChar runAction: [[rot_4ever copy] autorelease]];
-		
-//		[self schedule:@selector(step:) interval:0.1f];
 	}
 	
 	return self;
 }
+
 -(void) draw
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
