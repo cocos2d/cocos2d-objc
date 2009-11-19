@@ -1,5 +1,6 @@
 version 0.9.0-beta - XX-MMM-2009
  . Templates: using SDK 3.0 as base SDK
+ . Textures: supports mipmap generation (issue #632)
 
 version 0.9.0-alpha - 18-Nov-2009
  . All: using CC namespace (issue #520)

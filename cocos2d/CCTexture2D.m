@@ -515,6 +515,12 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 //
 @implementation CCTexture2D (GLFilter)
 
+-(void) generateMipmap
+{
+	glBindTexture( GL_TEXTURE_2D, self.name );
+	glGenerateMipmapOES(GL_TEXTURE_2D);
+}
+
 -(void) setTexParameters: (ccTexParams*) texParams
 {
 	glBindTexture( GL_TEXTURE_2D, self.name );
