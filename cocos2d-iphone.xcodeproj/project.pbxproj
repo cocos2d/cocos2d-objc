@@ -1002,6 +1002,7 @@
 		50CA8A6010B4B4770072E0D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		50CA8A6E10B4B4880072E0D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50CA8A6F10B4B4890072E0D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50CA8B2310B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CA8B2210B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png */; };
 		50CB2FF71004C93600B7A750 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF01004C93600B7A750 /* CDAudioManager.h */; };
 		50CB2FF91004C93600B7A750 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */; };
 		50CB2FFA1004C93600B7A750 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF31004C93600B7A750 /* CocosDenshion.h */; };
@@ -2335,6 +2336,7 @@
 		50C93AAD0E0BF6E000517B01 /* ActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C93AC30E0BF8FC00517B01 /* ActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsTest.h; path = tests/ActionsTest.h; sourceTree = "<group>"; };
 		50C93AC40E0BF8FC00517B01 /* ActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsTest.m; path = tests/ActionsTest.m; sourceTree = "<group>"; };
+		50CA8B2210B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas_nomipmap.png; sourceTree = "<group>"; };
 		50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB2FF01004C93600B7A750 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
@@ -4018,6 +4020,7 @@
 				5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */,
 				50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */,
 				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
+				50CA8B2210B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png */,
 				5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */,
 				503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */,
 				508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */,
@@ -6158,6 +6161,7 @@
 				5031633B10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng in Resources */,
 				5031698010289F68003ACFE7 /* pattern1.png in Resources */,
 				505464501062886600AB7C52 /* fps_images.png in Resources */,
+				50CA8B2310B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

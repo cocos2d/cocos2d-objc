@@ -197,6 +197,13 @@ typedef struct _ccTexParams {
  */
 - (void) setAliasTexParameters;
 
+
+/** Generates mipmap images for the texture
+ @since v0.9.0
+ */
+-(void) generateMipmap;
+
+
 @end
 
 @interface CCTexture2D (PixelFormat)

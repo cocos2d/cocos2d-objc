@@ -19,6 +19,7 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 						@"TextureAlias",
+						@"TextureMipMap",
 						@"TexturePVRMipMap",
 						@"TexturePVR",
 						@"TexturePVRRaw",
@@ -219,6 +220,47 @@ Class restartAction()
 	return @"GIF Test";
 }
 @end
+
+@implementation TextureMipMap
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCTexture2D *texture0 = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
+	[texture0 generateMipmap];
+	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
+	[texture0 setTexParameters:&texParams];
+
+	CCTexture2D *texture1 = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas_nomipmap.png"];
+
+	CCSprite *img0 = [CCSprite spriteWithTexture:texture0];
+	[img0 setTextureRect:CGRectMake(85, 121, 85, 121)];
+	img0.position = ccp( s.width/3.0f, s.height/2.0f);
+	[self addChild:img0];
+	
+	CCSprite *img1 = [CCSprite spriteWithTexture:texture1];
+	[img1 setTextureRect:CGRectMake(85, 121, 85, 121)];
+	img1.position = ccp( 2*s.width/3.0f, s.height/2.0f);
+	[self addChild:img1];
+	
+	
+	id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
+	id sc_back = [scale1 reverse];
+	
+	id scale2 = [[scale1 copy] autorelease];
+	id sc_back2 = [scale2 reverse];
+	
+	[img0 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
+	[img1 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];	
+}
+
+-(NSString *) title
+{
+	return @"Texture Mipmap";
+}
+@end
+
 
 // To generate PVR images read this article:
 // http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html

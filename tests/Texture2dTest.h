@@ -37,6 +37,10 @@
 {}
 @end
 
+@interface TextureMipMap : TextureDemo
+{}
+@end
+
 @interface TexturePVR : TextureDemo
 {}
 @end
