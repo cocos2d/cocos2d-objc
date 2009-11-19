@@ -996,6 +996,12 @@
 		50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50C93AA80E0BF6E000517B01 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50C93AC50E0BF8FC00517B01 /* ActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C93AC40E0BF8FC00517B01 /* ActionsTest.m */; };
+		50CA8A5D10B4B4590072E0D3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50CA8A5E10B4B45A0072E0D3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50CA8A5F10B4B4760072E0D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50CA8A6010B4B4770072E0D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50CA8A6E10B4B4880072E0D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50CA8A6F10B4B4890072E0D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50CB2FF71004C93600B7A750 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF01004C93600B7A750 /* CDAudioManager.h */; };
 		50CB2FF91004C93600B7A750 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF21004C93600B7A750 /* CDOpenALSupport.h */; };
 		50CB2FFA1004C93600B7A750 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB2FF31004C93600B7A750 /* CocosDenshion.h */; };
@@ -1187,9 +1193,6 @@
 		50E2A41510A4A58700D894CE /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A41210A4A58700D894CE /* AppController.m */; };
 		50E2A41610A4A58700D894CE /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A41410A4A58700D894CE /* MainScene.m */; };
 		50E2A41C10A4A5BA00D894CE /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50E2A42010A4A5DC00D894CE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E2A41F10A4A5DC00D894CE /* CoreGraphics.framework */; };
-		50E2A42210A4A5DC00D894CE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E2A42110A4A5DC00D894CE /* OpenGLES.framework */; };
-		50E2A42410A4A5DC00D894CE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E2A42310A4A5DC00D894CE /* QuartzCore.framework */; };
 		50E2A44410A4A81B00D894CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50E2A44510A4A82500D894CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50E2A4D510A4A92E00D894CE /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
@@ -1286,9 +1289,6 @@
 		50E2A5E110A4AB8A00D894CE /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		50E2A5E210A4AB8A00D894CE /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		50E2A5ED10A4ABE800D894CE /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50E2A5EF10A4ABFE00D894CE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E2A5EE10A4ABFE00D894CE /* CoreGraphics.framework */; };
-		50E2A5F110A4ABFE00D894CE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E2A5F010A4ABFE00D894CE /* OpenGLES.framework */; };
-		50E2A5F310A4ABFE00D894CE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E2A5F210A4ABFE00D894CE /* QuartzCore.framework */; };
 		50E2A5F410A4AC5000D894CE /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		50E2A5F510A4AC5000D894CE /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		50E2A5F610A4AC5000D894CE /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -2072,7 +2072,6 @@
 		50545BFE105E8D6C00AB7C52 /* CCPageTurn3DAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPageTurn3DAction.m; sourceTree = "<group>"; };
 		50545C08105E8E7200AB7C52 /* CCPageTurnTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPageTurnTransition.h; sourceTree = "<group>"; };
 		50545C09105E8E7200AB7C52 /* CCPageTurnTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPageTurnTransition.m; sourceTree = "<group>"; };
-		5054609110613D3200AB7C52 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		505460EA1061413300AB7C52 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		505460EB1061413300AB7C52 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
 		505460EC1061413300AB7C52 /* Abduction.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abduction.ttf; sourceTree = "<group>"; };
@@ -2406,10 +2405,6 @@
 		50E2A41210A4A58700D894CE /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		50E2A41310A4A58700D894CE /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
 		50E2A41410A4A58700D894CE /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
-		50E2A41D10A4A5DC00D894CE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		50E2A41F10A4A5DC00D894CE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		50E2A42110A4A5DC00D894CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		50E2A42310A4A5DC00D894CE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50E2A52610A4AA1700D894CE /* sprite-0-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-0.png"; sourceTree = "<group>"; };
 		50E2A52710A4AA1700D894CE /* sprite-0-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-1.png"; sourceTree = "<group>"; };
 		50E2A52810A4AA1700D894CE /* sprite-0-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-2.png"; sourceTree = "<group>"; };
@@ -2474,9 +2469,6 @@
 		50E2A56310A4AA1700D894CE /* sprite-7-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-7-5.png"; sourceTree = "<group>"; };
 		50E2A56410A4AA1700D894CE /* sprite-7-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-7-6.png"; sourceTree = "<group>"; };
 		50E2A56510A4AA1700D894CE /* sprite-7-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-7-7.png"; sourceTree = "<group>"; };
-		50E2A5EE10A4ABFE00D894CE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		50E2A5F010A4ABFE00D894CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		50E2A5F210A4ABFE00D894CE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50E3876C10446C6E00150883 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50E3876E10446C6E00150883 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50E3877010446C6E00150883 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -3153,9 +3145,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E2A41C10A4A5BA00D894CE /* libcocos2d.a in Frameworks */,
-				50E2A42010A4A5DC00D894CE /* CoreGraphics.framework in Frameworks */,
-				50E2A42210A4A5DC00D894CE /* OpenGLES.framework in Frameworks */,
-				50E2A42410A4A5DC00D894CE /* QuartzCore.framework in Frameworks */,
+				50CA8A5E10B4B45A0072E0D3 /* OpenGLES.framework in Frameworks */,
+				50CA8A6010B4B4770072E0D3 /* CoreGraphics.framework in Frameworks */,
+				50CA8A6E10B4B4880072E0D3 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3164,9 +3156,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E2A5ED10A4ABE800D894CE /* libcocos2d.a in Frameworks */,
-				50E2A5EF10A4ABFE00D894CE /* CoreGraphics.framework in Frameworks */,
-				50E2A5F110A4ABFE00D894CE /* OpenGLES.framework in Frameworks */,
-				50E2A5F310A4ABFE00D894CE /* QuartzCore.framework in Frameworks */,
+				50CA8A5D10B4B4590072E0D3 /* OpenGLES.framework in Frameworks */,
+				50CA8A5F10B4B4760072E0D3 /* CoreGraphics.framework in Frameworks */,
+				50CA8A6F10B4B4890072E0D3 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3303,14 +3295,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				5054609110613D3200AB7C52 /* CoreFoundation.framework */,
-				50E2A41D10A4A5DC00D894CE /* CoreFoundation.framework */,
-				50E2A41F10A4A5DC00D894CE /* CoreGraphics.framework */,
-				50E2A42110A4A5DC00D894CE /* OpenGLES.framework */,
-				50E2A42310A4A5DC00D894CE /* QuartzCore.framework */,
-				50E2A5EE10A4ABFE00D894CE /* CoreGraphics.framework */,
-				50E2A5F010A4ABFE00D894CE /* OpenGLES.framework */,
-				50E2A5F210A4ABFE00D894CE /* QuartzCore.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
