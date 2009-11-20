@@ -127,7 +127,7 @@ Class restartAction()
 	
 
 	// Middle layer: a Tile map atlas
-	CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+	CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 	[tilemap releaseMap];
 	
 	// change the transform anchor to 0,0 (optional)
@@ -205,7 +205,7 @@ Class restartAction()
 		
 		
 		// Middle layer: a Tile map atlas
-		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 		[tilemap releaseMap];
 		
 		// change the transform anchor to 0,0 (optional)
