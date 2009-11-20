@@ -111,6 +111,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of RenderTexture sample
 		author of Joystick / ProximityManager
 		mentor of merging Sprite with AtlasSprite
+		mentor of improving animations with zwoptex
 	* Jason Cecil:
 		Fixed memory leak in Director#FPSLabel
 		patches for CocosDenshion

@@ -35,7 +35,7 @@
 #include "CollisionProcessing.h"
 #include "CompoundShapes.h"
 #include "Confined.h"
-//#include "DistanceTest.h"
+#include "DistanceTest.h"
 #include "Dominos.h"
 #include "DynamicTreeTest.h"
 #include "Gears.h"
@@ -78,7 +78,7 @@ TestEntry g_testEntries[] =
 {"Collision Filtering", CollisionFiltering::Create},
 {"Collision Processing", CollisionProcessing::Create},
 {"Compound Shapes", CompoundShapes::Create},
-//{"Distance Test", DistanceTest::Create},
+{"Distance Test", DistanceTest::Create},
 {"Dominos", Dominos::Create},
 {"Dynamic Tree", DynamicTreeTest::Create},
 {"Gears", Gears::Create},
