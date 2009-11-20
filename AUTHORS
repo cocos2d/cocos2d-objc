@@ -91,6 +91,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added TintTo action
 	* Matthias Hoechsmann:
 		author of tools/mkatlas.pl script
+	* mike AT finklyinteractive:
+		fixed leak in ActionManager
 	* Hans Larsen:
 		Possibility to create empty menus
 		Fixed CLang compiling warnings

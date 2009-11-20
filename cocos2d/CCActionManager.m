@@ -356,5 +356,8 @@ static CCActionManager *_sharedManager = nil;
 				[self deleteHashElement:currentTarget];
 		}
 	}
+	
+	// issue #635
+	currentTarget = nil;
 }
 @end
