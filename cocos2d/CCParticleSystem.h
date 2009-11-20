@@ -260,5 +260,11 @@ typedef struct sParticle
 -(void) resetSystem;
 //! whether or not the system is full
 -(BOOL) isFull;
+
+//! should be overriden by subclasses
+-(void) updateQuadWithParticle:(Particle*)particle position:(CGPoint)position;
+//! should be overriden by subclasses
+-(void) postStep;
+
 @end
 

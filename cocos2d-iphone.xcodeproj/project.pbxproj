@@ -9704,7 +9704,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = PerformanceTestParticles;
-				SDKROOT = iphoneos3.1.2;
+				SDKROOT = iphoneos2.2.1;
 			};
 			name = Debug;
 		};
@@ -9728,7 +9728,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = PerformanceTestParticles;
-				SDKROOT = iphoneos3.1.2;
+				SDKROOT = iphoneos2.2.1;
 				ZERO_LINK = NO;
 			};
 			name = Release;

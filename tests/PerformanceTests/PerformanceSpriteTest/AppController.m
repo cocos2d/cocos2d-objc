@@ -15,9 +15,9 @@
 	[window setUserInteractionEnabled:YES];
 	
 	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
+	// if it fails (SDK < 3.1) use fast director
 	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeThreadMainLoop];
+		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
 	
 //	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
 	
@@ -25,7 +25,6 @@
 	[CCDirector sharedDirector].displayFPS = YES;
 	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 
-	
 	[window makeKeyAndVisible];
 	
 	CCScene *scene = [CCScene node];

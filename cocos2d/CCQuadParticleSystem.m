@@ -3,6 +3,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2009 Leonardo Kasperavičius
+ * Copyright (C) 2009 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -107,153 +108,73 @@
 // XXX
 // XXX: BUT the change shall NOT DROP a single FPS
 // XXX:
--(void) step: (ccTime) dt
+
+-(void) updateQuadWithParticle:(Particle*)p position:(CGPoint)newPos;
+{				
+	// colors
+	quads[particleIdx].bl.colors = p->color;
+	quads[particleIdx].br.colors = p->color;
+	quads[particleIdx].tl.colors = p->color;
+	quads[particleIdx].tr.colors = p->color;
+	
+	// vertices
+	float size_2 = p->size/2;
+	if( p->angle ) {
+		float x1 = -size_2;
+		float y1 = -size_2;
+		
+		float x2 = x1 + p->size;
+		float y2 = y1 + p->size;
+		float x = newPos.x;
+		float y = newPos.y;
+		
+		float r = (float)-CC_DEGREES_TO_RADIANS(p->angle);
+		float cr = cosf(r);
+		float sr = sinf(r);
+		float ax = x1 * cr - y1 * sr + x;
+		float ay = x1 * sr + y1 * cr + y;
+		float bx = x2 * cr - y1 * sr + x;
+		float by = x2 * sr + y1 * cr + y;
+		float cx = x2 * cr - y2 * sr + x;
+		float cy = x2 * sr + y2 * cr + y;
+		float dx = x1 * cr - y2 * sr + x;
+		float dy = x1 * sr + y2 * cr + y;
+		
+		quads[particleIdx].bl.vertices.x = ax;
+		quads[particleIdx].bl.vertices.y = ay;
+		
+		// bottom-left vertex:
+		quads[particleIdx].br.vertices.x = bx;
+		quads[particleIdx].br.vertices.y = by;
+		
+		// top-right vertex:
+		quads[particleIdx].tl.vertices.x = dx;
+		quads[particleIdx].tl.vertices.y = dy;
+		
+		// top-right vertex:
+		quads[particleIdx].tr.vertices.x = cx;
+		quads[particleIdx].tr.vertices.y = cy;
+	} else {
+		// top-left vertex:
+		quads[particleIdx].bl.vertices.x = newPos.x - size_2;
+		quads[particleIdx].bl.vertices.y = newPos.y - size_2;
+		
+		// bottom-left vertex:
+		quads[particleIdx].br.vertices.x = newPos.x + size_2;
+		quads[particleIdx].br.vertices.y = newPos.y - size_2;
+		
+		// top-right vertex:
+		quads[particleIdx].tl.vertices.x = newPos.x - size_2;
+		quads[particleIdx].tl.vertices.y = newPos.y + size_2;
+		
+		// top-right vertex:
+		quads[particleIdx].tr.vertices.x = newPos.x + size_2;
+		quads[particleIdx].tr.vertices.y = newPos.y + size_2;				
+	}
+}
+
+-(void) postStep
 {
-	if( active && emissionRate ) {
-		float rate = 1.0f / emissionRate;
-		emitCounter += dt;
-		while( particleCount < totalParticles && emitCounter > rate ) {
-			[self addParticle];
-			emitCounter -= rate;
-		}
-		
-		elapsed += dt;
-		if(duration != -1 && duration < elapsed)
-			[self stopSystem];
-	}
-	
-	particleIdx = 0;
-	
-	CGPoint	absolutePosition;
-	if( positionType_ == kPositionTypeFree )
-		absolutePosition = [self convertToWorldSpace:CGPointZero];
-
-	
-	while( particleIdx < particleCount )
-	{
-		Particle *p = &particles[particleIdx];
-		
-		if( p->life > 0 ) {
-			
-			CGPoint tmp, radial, tangential;
-			
-			radial = CGPointZero;
-			// radial acceleration
-			if(p->pos.x || p->pos.y)
-				radial = ccpNormalize(p->pos);
-			tangential = radial;
-			radial = ccpMult(radial, p->radialAccel);
-			
-			// tangential acceleration
-			float newy = tangential.x;
-			tangential.x = -tangential.y;
-			tangential.y = newy;
-			tangential = ccpMult(tangential, p->tangentialAccel);
-			
-			// (gravity + radial + tangential) * dt
-			tmp = ccpAdd( ccpAdd( radial, tangential), gravity);
-			tmp = ccpMult( tmp, dt);
-			p->dir = ccpAdd( p->dir, tmp);
-			tmp = ccpMult(p->dir, dt);
-			p->pos = ccpAdd( p->pos, tmp );
-			
-			p->color.r += (p->deltaColor.r * dt);
-			p->color.g += (p->deltaColor.g * dt);
-			p->color.b += (p->deltaColor.b * dt);
-			p->color.a += (p->deltaColor.a * dt);
-			
-			p->size += (p->deltaSize * dt);
-			p->size = MAX( 0, p->size );
-
-			p->life -= dt;
-			
-			//
-			// update values in quad
-			//
-
-			CGPoint	newPos = p->pos;
-			if( positionType_ == kPositionTypeFree ) {
-				newPos = ccpSub(absolutePosition, p->startPos);
-				newPos = ccpSub( p->pos, newPos);
-			}
-			
-			// colors
-			quads[particleIdx].bl.colors = p->color;
-			quads[particleIdx].br.colors = p->color;
-			quads[particleIdx].tl.colors = p->color;
-			quads[particleIdx].tr.colors = p->color;
-			
-			// vertices
-			float size_2 = p->size/2;
-			p->angle += (p->deltaAngle * dt);
-			if( p->angle ) {
-				float x1 = -size_2;
-				float y1 = -size_2;
-				
-				float x2 = x1 + p->size;
-				float y2 = y1 + p->size;
-				float x = newPos.x;
-				float y = newPos.y;
-				
-				float r = (float)-CC_DEGREES_TO_RADIANS(p->angle);
-				float cr = cosf(r);
-				float sr = sinf(r);
-				float ax = x1 * cr - y1 * sr + x;
-				float ay = x1 * sr + y1 * cr + y;
-				float bx = x2 * cr - y1 * sr + x;
-				float by = x2 * sr + y1 * cr + y;
-				float cx = x2 * cr - y2 * sr + x;
-				float cy = x2 * sr + y2 * cr + y;
-				float dx = x1 * cr - y2 * sr + x;
-				float dy = x1 * sr + y2 * cr + y;
-				
-				quads[particleIdx].bl.vertices.x = ax;
-				quads[particleIdx].bl.vertices.y = ay;
-				
-				// bottom-left vertex:
-				quads[particleIdx].br.vertices.x = bx;
-				quads[particleIdx].br.vertices.y = by;
-				
-				// top-right vertex:
-				quads[particleIdx].tl.vertices.x = dx;
-				quads[particleIdx].tl.vertices.y = dy;
-				
-				// top-right vertex:
-				quads[particleIdx].tr.vertices.x = cx;
-				quads[particleIdx].tr.vertices.y = cy;
-			} else {
-				// top-left vertex:
-				quads[particleIdx].bl.vertices.x = newPos.x - size_2;
-				quads[particleIdx].bl.vertices.y = newPos.y - size_2;
-				
-				// bottom-left vertex:
-				quads[particleIdx].br.vertices.x = newPos.x + size_2;
-				quads[particleIdx].br.vertices.y = newPos.y - size_2;
-				
-				// top-right vertex:
-				quads[particleIdx].tl.vertices.x = newPos.x - size_2;
-				quads[particleIdx].tl.vertices.y = newPos.y + size_2;
-				
-				// top-right vertex:
-				quads[particleIdx].tr.vertices.x = newPos.x + size_2;
-				quads[particleIdx].tr.vertices.y = newPos.y + size_2;				
-			}
-			
-			// update particle counter
-			particleIdx++;
-			
-		} else {
-			// life < 0
-			if( particleIdx != particleCount-1 )
-				particles[particleIdx] = particles[particleCount-1];
-			particleCount--;
-
-			if( particleCount == 0 && autoRemoveOnFinish_ ) {
-				[self unschedule:@selector(step:)];
-				[[self parent] removeChild:self cleanup:YES];
-			}
-		}
-	}
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quads[0])*particleCount, quads,GL_DYNAMIC_DRAW);	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -295,7 +216,10 @@
 	else
 		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 #endif
-	
+
+	if( particleIdx != particleCount ) {
+		NSLog(@"pd:%d, pc:%d", particleIdx, particleCount);
+	}
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// restore blend state

@@ -3,6 +3,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2009 Leonardo Kasperavičius
+ * Copyright (C) 2009 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.

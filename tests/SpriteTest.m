@@ -1372,16 +1372,23 @@ Class restartAction()
 		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
 		//     [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
-				
-		for(int i = 0; i < 200; i++) {
+		
+		
+		// create 250 sprites
+		// only show 80% of them
+		for(int i = 0; i < 250; i++) {
 			
 			int spriteIdx = CCRANDOM_0_1() * 14;
 			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(spriteIdx+1)]];
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrame:frame];
 			[parent1 addChild:sprite z:i tag:i];
-				
-			float x = CCRANDOM_0_1() * s.width;
-			float y = CCRANDOM_0_1() * s.height;
+			
+			float x=-1000;
+			float y=-1000;
+			if( CCRANDOM_0_1() < 0.2f ) {
+				x = CCRANDOM_0_1() * s.width;
+				y = CCRANDOM_0_1() * s.height;
+			}
 			sprite.position = ccp(x,y);
 				
 			id action = [CCRotateBy actionWithDuration:4 angle:360];
@@ -1403,13 +1410,12 @@ Class restartAction()
 	
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:30];
 	
-	if( usingSpriteSheet )
-		CCLOG(@"Parent is normal node");
-	else
-		CCLOG(@"Parent is SpriteSheet");
 
 	if( usingSpriteSheet )
 		CC_SWAP(p1,p2);
+
+	NSLog(@"New parent is: %@", p2);
+	
 	
 	for( CCNode *node in p1.children) {
 		[array addObject:node];
