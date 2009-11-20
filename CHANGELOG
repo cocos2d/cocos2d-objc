@@ -1,4 +1,5 @@
 version 0.9.0-beta - XX-MMM-2009
+ . ActionManager: fixed leak (issue #635)
  . Box2d: updated to r27 (pre 2.1.0) (issue #494)
  . Templates: using SDK 3.0 as base SDK
  . Textures: supports mipmap generation (issue #632)
