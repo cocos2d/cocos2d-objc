@@ -31,11 +31,13 @@ static NSString *transitions[] = {
 			@"SpriteSheetAliased",
 			@"SpriteNewTexture",
 			@"SpriteSheetNewTexture",
+			@"SpriteHybrid",
 };
 
 enum {
 	kTagTileMap = 1,
 	kTagSpriteSheet = 1,
+	kTagNode = 2,
 	kTagAnimation1 = 1,
 };
 
@@ -1347,7 +1349,94 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Sprite Hybrid
 
+@implementation SpriteHybrid
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		// parents
+		CCNode *parent1 = [CCNode node];
+		CCSpriteSheet *parent2 = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		
+		[self addChild:parent1 z:0 tag:kTagNode];
+		[self addChild:parent2 z:0 tag:kTagSpriteSheet];
+		
+		
+		// IMPORTANT:
+		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
+		//     [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+				
+		for(int i = 0; i < 200; i++) {
+			
+			int spriteIdx = CCRANDOM_0_1() * 14;
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(spriteIdx+1)]];
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrame:frame];
+			[parent1 addChild:sprite z:i tag:i];
+				
+			float x = CCRANDOM_0_1() * s.width;
+			float y = CCRANDOM_0_1() * s.height;
+			sprite.position = ccp(x,y);
+				
+			id action = [CCRotateBy actionWithDuration:4 angle:360];
+			[sprite runAction: [CCRepeatForever actionWithAction:action]];
+		}
+		
+		usingSpriteSheet = NO;
+		
+		
+		[self schedule:@selector(reparentSprite:) interval:2];
+	}	
+	return self;
+}
+
+-(void) reparentSprite:(ccTime)dt
+{
+	CCNode *p1 = [self getChildByTag:kTagNode];
+	CCNode *p2 = [self getChildByTag:kTagSpriteSheet];
+	
+	NSMutableArray *array = [NSMutableArray arrayWithCapacity:30];
+	
+	if( usingSpriteSheet )
+		CCLOG(@"Parent is normal node");
+	else
+		CCLOG(@"Parent is SpriteSheet");
+
+	if( usingSpriteSheet )
+		CC_SWAP(p1,p2);
+	
+	for( CCNode *node in p1.children) {
+		[array addObject:node];
+	}
+
+	int i=0;
+	[p1 removeAllChildrenWithCleanup:NO];
+	
+	for( CCNode *node in array ) {
+		[p2 addChild:node z:i tag:i];
+		i++;
+	}		
+	
+	usingSpriteSheet = ! usingSpriteSheet;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Hybrid Sprite Test";
+}
+@end
 
 #pragma mark -
 #pragma mark AppDelegate
