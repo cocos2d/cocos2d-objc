@@ -2,11 +2,11 @@ cocos2d for iPhone authors
 --------------------------
 
 Lead Developer:
-	Ricardo Quesada
+	Ricardo Quesada (http://www.sapusmedia.com)
 
 Developers:
 	Valentin Milea
-	Steve Oldmeadow
+	Steve Oldmeadow (http://www.smoco.com/)
 
 cocos2d logos by Michael Heald ( http://www.fullyillustrated.com )
 
@@ -38,7 +38,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Repeat action works OK
 	* Brian Hammond:
 		patches for Demos
-	* Bryan/Acceleroto:
+	* Bryan/Acceleroto (http://www.acceleroto.com):
 		patch for CocosDenshion
 	* CJ Hanson:
 		RenderTexture generates UIImages patch
