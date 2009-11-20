@@ -175,7 +175,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 	
 		
-		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 		// Convert it to "alias" (GL_LINEAR filtering)
 		[map.texture setAliasTexParameters];
 		
@@ -219,7 +219,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		
-		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"tiles.png" mapFile:@"levelmap.tga" tileWidth:16 tileHeight:16];
+		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 
 		// Create an Aliased Atlas
 		[map.texture setAliasTexParameters];
@@ -296,7 +296,7 @@ Class restartAction()
 		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
@@ -338,7 +338,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"orthogonal-test1.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test1.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 
 		CGSize s = map.contentSize;
@@ -367,7 +367,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"orthogonal-test3.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test3.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
@@ -396,7 +396,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"orthogonal-test4.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test4.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s1 = map.contentSize;
@@ -442,7 +442,7 @@ Class restartAction()
 		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"iso-test.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];		
 		
 		// move map to the center of the screen
@@ -470,7 +470,7 @@ Class restartAction()
 		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"iso-test1.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test1.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
@@ -497,7 +497,7 @@ Class restartAction()
 		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"iso-test2.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];	
 		
 		CGSize s = map.contentSize;
@@ -525,7 +525,7 @@ Class restartAction()
 		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"iso-test2-uncompressed.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test2-uncompressed.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];	
 		
 		CGSize s = map.contentSize;
@@ -561,7 +561,7 @@ Class restartAction()
 		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"hexa-test.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/hexa-test.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
@@ -586,7 +586,7 @@ Class restartAction()
 
 		gid = 0;
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"orthogonal-test2.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
@@ -696,7 +696,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 				
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"orthogonal-test5.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test5.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
