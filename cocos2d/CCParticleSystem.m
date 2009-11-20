@@ -216,7 +216,114 @@
 	return (particleCount == totalParticles);
 }
 
-#pragma mark ParticleSystem - CocosNodeTexture protocol
+#pragma mark ParticleSystem - MainLoop
+-(void) step: (ccTime) dt
+{
+	if( active && emissionRate ) {
+		float rate = 1.0f / emissionRate;
+		emitCounter += dt;
+		while( particleCount < totalParticles && emitCounter > rate ) {
+			[self addParticle];
+			emitCounter -= rate;
+		}
+		
+		elapsed += dt;
+		if(duration != -1 && duration < elapsed)
+			[self stopSystem];
+	}
+	
+	particleIdx = 0;
+	
+	CGPoint	absolutePosition;
+	if( positionType_ == kPositionTypeFree )
+		absolutePosition = [self convertToWorldSpace:CGPointZero];
+	
+	
+	while( particleIdx < particleCount )
+	{
+		Particle *p = &particles[particleIdx];
+		
+		if( p->life > 0 ) {
+			
+			CGPoint tmp, radial, tangential;
+			
+			radial = CGPointZero;
+			// radial acceleration
+			if(p->pos.x || p->pos.y)
+				radial = ccpNormalize(p->pos);
+			tangential = radial;
+			radial = ccpMult(radial, p->radialAccel);
+			
+			// tangential acceleration
+			float newy = tangential.x;
+			tangential.x = -tangential.y;
+			tangential.y = newy;
+			tangential = ccpMult(tangential, p->tangentialAccel);
+			
+			// (gravity + radial + tangential) * dt
+			tmp = ccpAdd( ccpAdd( radial, tangential), gravity);
+			tmp = ccpMult( tmp, dt);
+			p->dir = ccpAdd( p->dir, tmp);
+			tmp = ccpMult(p->dir, dt);
+			p->pos = ccpAdd( p->pos, tmp );
+			
+			// color
+			p->color.r += (p->deltaColor.r * dt);
+			p->color.g += (p->deltaColor.g * dt);
+			p->color.b += (p->deltaColor.b * dt);
+			p->color.a += (p->deltaColor.a * dt);
+			
+			// size
+			p->size += (p->deltaSize * dt);
+			p->size = MAX( 0, p->size );
+			
+			// angle
+			p->angle += (p->deltaAngle * dt);
+			
+			// life
+			p->life -= dt;
+			
+			//
+			// update values in quad
+			//
+			
+			CGPoint	newPos = p->pos;
+			if( positionType_ == kPositionTypeFree ) {
+				newPos = ccpSub(absolutePosition, p->startPos);
+				newPos = ccpSub( p->pos, newPos);
+			}
+			
+			[self updateQuadWithParticle:p position:newPos];
+			
+			// update particle counter
+			particleIdx++;
+			
+		} else {
+			// life < 0
+			if( particleIdx != particleCount-1 )
+				particles[particleIdx] = particles[particleCount-1];
+			particleCount--;
+			
+			if( particleCount == 0 && autoRemoveOnFinish_ ) {
+				[self unschedule:@selector(step:)];
+				[[self parent] removeChild:self cleanup:YES];
+			}
+		}
+	}
+	[self postStep];
+}
+
+-(void) updateQuadWithParticle:(Particle*)particle position:(CGPoint)position
+{
+	// should be overriden
+}
+
+-(void) postStep
+{
+	// should be overriden
+}
+
+#pragma mark ParticleSystem - CCTexture protocol
 
 -(void) setTexture:(CCTexture2D*) texture
 {
