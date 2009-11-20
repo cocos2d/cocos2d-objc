@@ -117,4 +117,10 @@
 }
 @end
 
+@interface SpriteHybrid : SpriteDemo
+{
+	BOOL	usingSpriteSheet;
+}
+@end
+
 
