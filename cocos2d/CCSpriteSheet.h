@@ -33,8 +33,14 @@
  */
 @interface CCSpriteSheet : CCNode <CCTextureProtocol>
 {
-	CCTextureAtlas *textureAtlas_;
-	ccBlendFunc	blendFunc_;
+	CCTextureAtlas	*textureAtlas_;
+	ccBlendFunc		blendFunc_;
+	
+	// set of sprites that needs to be udpated before drawing
+	NSMutableSet	*dirtySprites_;
+	
+	// all descendants: chlidren, gran children, etc...
+	NSMutableArray	*descendants_;
 }
 
 /** returns the TextureAtlas that is used */
@@ -42,6 +48,9 @@
 
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
+
+/** set of sprites that needs to be updated before the rendering */
+@property (nonatomic,readonly) NSMutableSet *dirtySprites;
 
 /** creates a CCSpriteSheet with a texture2d */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex;
@@ -63,13 +72,12 @@
  */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
--(NSUInteger)indexForNewChildAtZ:(int)z;
 -(void) increaseAtlasCapacity;
 
 /** creates an sprite with a rect in the CCSpriteSheet.
  It's the same as:
    - create an standard CCSsprite
-   - set the parentIsSpriteSheet = YES
+   - set the usingSpriteSheet = YES
    - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  */
 -(CCSprite*) createSpriteWithRect:(CGRect)rect;
@@ -77,7 +85,7 @@
 /** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet.
  It's the same as:
  - initialize an standard CCSsprite
- - set the parentIsSpriteSheet = YES
+ - set the usingSpriteSheet = YES
  - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  @since v0.9.0
 */ 
@@ -92,4 +100,9 @@
  @warning Removing a child from a CCSpriteSheet is very slow
  */
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
+
+-(void) insertChild:(CCSprite*)child inAtlasAtIndex:(NSUInteger)index;
+-(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
+-(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(int)z;
+
 @end

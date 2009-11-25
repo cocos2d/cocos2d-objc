@@ -46,9 +46,7 @@
 	while(index >= textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
 
-	[sprite setParentIsSpriteSheet:YES];
-	[sprite setTextureAtlas:textureAtlas_];
-	[sprite insertInAtlasAtIndex:index];
+	[self insertChild:sprite inAtlasAtIndex:index];
 	[sprite updatePosition];
 }
 

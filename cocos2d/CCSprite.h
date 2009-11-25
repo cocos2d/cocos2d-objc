@@ -52,12 +52,14 @@ enum {
 {
 	
 	// whether or not it's parent is a CCSpriteSheet
-	BOOL	parentIsSpriteSheet_;
+	BOOL	usesSpriteSheet_;
 
 	// Data used when the sprite is rendered using a CCSpriteSheet
 	CCTextureAtlas *textureAtlas_;		// Sprite Sheet texture atlas (weak reference)
-	NSUInteger atlasIndex_;				// Index on the SpriteSheet
-	BOOL	dirty;						// Sprite needs to be updated
+	NSUInteger atlasIndex_;				// Absolute (real) Index on the SpriteSheet
+	NSUInteger relativeAtlasIndex_;		// Relative to its parent atlas index on the SpriteSheet
+	BOOL	dirty_;						// Sprite needs to be updated
+	CCSpriteSheet	*spriteSheet_;		// Used spritesheet
 	
 	// Data used when the sprite is self-rendered
 	CCTextureAtlas *selfRenderTextureAtlas_;		// Texture Atlas of 1 element (self)
@@ -88,11 +90,13 @@ enum {
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
-@property (nonatomic,readonly) BOOL dirty;
+@property (nonatomic,readwrite) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
+/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
+@property (nonatomic,readwrite) NSUInteger relativeAtlasIndex;
 /** returns the rect of the CCSprite */
 @property (nonatomic,readonly) CGRect textureRect;
 /** whether or not the sprite is flipped horizontally */
@@ -104,9 +108,11 @@ enum {
 /** RGB colors: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
 /** whether or not the Sprite is rendered using a CCSpriteSheet */
-@property (nonatomic,readwrite) BOOL parentIsSpriteSheet;
-/** weak reference of the TextureAtlas used when the sprite is rendered using a CCSpriteSheet */
+@property (nonatomic,readwrite) BOOL usesSpriteSheet;
+/** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteSheet */
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
+/** weak reference to the CCSpriteSheet that renders the CCSprite */
+@property (nonatomic,readwrite,assign) CCSpriteSheet *spriteSheet;
 
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
@@ -189,7 +195,6 @@ enum {
 -(id) initWithCGImage: (CGImageRef)image;
 
 
--(void)insertInAtlasAtIndex:(NSUInteger)index;
 -(void)updatePosition;
 
 /** updates the texture rect of the CCSprite */
