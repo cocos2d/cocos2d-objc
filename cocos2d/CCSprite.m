@@ -210,7 +210,11 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i>", [self class], self, rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
+			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
+			tag,
+			atlasIndex_
+	];
 }
 
 - (void) dealloc
@@ -299,10 +303,6 @@
 -(void)updatePosition
 {
 	NSAssert( usesSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
-
-	// orphan sprite. Don't update it since it will be updated once it is re-parented
-	if( ! parent )
-		return;
 	
 	CGAffineTransform old = CGAffineTransformIdentity;
 	float newScaleX = 1;

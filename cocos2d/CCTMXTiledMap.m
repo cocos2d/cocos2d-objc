@@ -112,6 +112,7 @@
 		atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
 		
 		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
+
 	}
 	return self;
 }
@@ -166,7 +167,6 @@
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-//			tile = [CCSprite spriteWithRect:rect spriteManager:self];
 			tile = [self createSpriteWithRect:rect];
 			[tile setPosition: [self positionAt:pos]];
 			tile.anchorPoint = CGPointZero;
@@ -479,8 +479,8 @@ int compareInts (const void * a, const void * b)
 				[self setContentSize:currentSize];
 	
 				idx++;
-			}
-		}
+			}			
+		}		
 	}
 
 	return self;
@@ -535,6 +535,10 @@ int compareInts (const void * a, const void * b)
 			}
 		}
 	}
+	
+	// HACK:
+	// remove all possible tiles from the dirtySprites set, since they don't need to be updated
+	[[layer dirtySprites] removeAllObjects];
 	
 	NSAssert( layerInfo.maxGID >= tileset.firstGid &&
 			 layerInfo.minGID >= tileset.firstGid, @"TMX: Only 1 tilset per layer is supported");
