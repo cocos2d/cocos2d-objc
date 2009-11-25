@@ -12,6 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+@"TMXOrthoTest4",
+
 			@"TileMapTest",
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
@@ -420,8 +422,22 @@ Class restartAction()
 		[sprite setScale:2];
 		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
 		[sprite setScale:2];
+		
+		[self schedule:@selector(removeSprite:) interval:2];
 	}	
 	return self;
+}
+
+-(void) removeSprite:(ccTime)dt
+{
+	[self unschedule:_cmd];
+
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap];
+	CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
+	CGSize s = [layer layerSize];
+
+	CCSprite *sprite = [layer tileAt:ccp(s.width-1,0)];
+	[layer removeChild:sprite cleanup:YES];
 }
 
 -(NSString *) title

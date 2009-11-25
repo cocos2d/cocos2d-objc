@@ -246,6 +246,7 @@ const int defaultCapacity = 29;
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
 	[descendants_ removeAllObjects];
+	[dirtySprites_ removeAllObjects];
 	[textureAtlas_ removeAllQuads];
 }
 
@@ -403,16 +404,21 @@ const int defaultCapacity = 29;
 	[sprite setTextureAtlas:nil];
 	[sprite setSpriteSheet:nil];
 	
+	// in case it needs to be drawn, delete it
+	[dirtySprites_ removeObject:sprite];
+	
 	NSUInteger index = [descendants_ indexOfObject:sprite];
-	[descendants_ removeObjectAtIndex:index];
-	
-	// update all sprites beyond this one
-	NSUInteger count = [descendants_ count];
-	
-	for(; index < count; index++)
-	{
-		CCSprite *s = [descendants_ objectAtIndex:index];
-		s.atlasIndex = s.atlasIndex - 1;
+	if( index != NSNotFound ) {
+		[descendants_ removeObjectAtIndex:index];
+		
+		// update all sprites beyond this one
+		NSUInteger count = [descendants_ count];
+		
+		for(; index < count; index++)
+		{
+			CCSprite *s = [descendants_ objectAtIndex:index];
+			s.atlasIndex = s.atlasIndex - 1;
+		}
 	}
 	
 	// add children recursively
