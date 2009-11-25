@@ -12,6 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+			@"SpriteSheetChildren",
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -1441,6 +1442,68 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Hybrid Sprite Test";
+}
+@end
+
+#pragma mark -
+#pragma mark SpriteSheet Children
+
+@implementation SpriteSheetChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// parents
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+				
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		
+
+		CCSprite *sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
+
+		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(50,50)];
+
+		CCSprite *sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-50,-50)];
+		
+		[sheet addChild:sprite1];
+		[sprite1 addChild:sprite2];
+		[sprite1 addChild:sprite3];
+		
+		
+		id action = [CCMoveBy actionWithDuration:2 position:ccp(200,0)];
+		id action_back = [action reverse];
+		id action_rot = [CCRotateBy actionWithDuration:2 angle:360];
+		id action_s = [CCScaleBy actionWithDuration:2 scale:2];
+		id action_s_back = [action_s reverse];
+		
+		id seq2 = [action_rot reverse];
+		[sprite2 runAction: [CCRepeatForever actionWithAction:seq2]];
+		
+		[sprite1 runAction: [CCRepeatForever actionWithAction:action_rot]];
+		[sprite1 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action, action_back, nil]]];
+		[sprite1 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action_s, action_s_back, nil]]];
+			
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet Grand Children";
 }
 @end
 

@@ -38,14 +38,16 @@
 
 @implementation CCSprite
 
-@synthesize dirty;
+@synthesize dirty = dirty_;
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
+@synthesize relativeAtlasIndex = relativeAtlasIndex_;
 @synthesize textureRect = rect_;
 @synthesize opacity=opacity_, color=color_;
 @synthesize blendFunc = blendFunc_;
-@synthesize parentIsSpriteSheet = parentIsSpriteSheet_;
+@synthesize usesSpriteSheet = usesSpriteSheet_;
 @synthesize textureAtlas = textureAtlas_;
+@synthesize spriteSheet = spriteSheet_;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -106,15 +108,15 @@
 	{
 		
 		// by default sprites are self-rendered
-		parentIsSpriteSheet_ = NO;
+		usesSpriteSheet_ = NO;
 
 		// Stuff in case the Sprite is self-rendered
 		selfRenderTextureAtlas_ = [[CCTextureAtlas textureAtlasWithTexture:texture capacity:1] retain];
 		
 		// Stuff in case the Sprite is rendered using an Sprite Manager
 		textureAtlas_ = nil;
-		atlasIndex_ = CCSpriteIndexNotInitialized;
-		dirty = YES;
+		atlasIndex_ = relativeAtlasIndex_ = CCSpriteIndexNotInitialized;
+		dirty_ = NO;
 		
 		// update texture
 		[self setTexture:texture];
@@ -236,16 +238,14 @@
 	[self updateTextureCoords];
 	
 	// rendering using SpriteSheet
-	if( parentIsSpriteSheet_ ) {
+	if( usesSpriteSheet_ ) {
 		// Don't update Atlas if index == CCSpriteIndexNotInitialized. issue #283
-		if( atlasIndex_ == CCSpriteIndexNotInitialized)
-			dirty = YES;
-		else
+		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 
 		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
 			[self setContentSize:rect.size];
-			dirty = YES;
+			self.dirty = YES;
 		}
 	}
 	// self rendering
@@ -299,8 +299,34 @@
 
 -(void)updatePosition
 {
-	NSAssert( parentIsSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
+	NSAssert( usesSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
 
+	CGAffineTransform old = CGAffineTransformIdentity;
+	float newScaleX = 1;
+	float newScaleY = 1;
+
+	Class aClass = [CCSpriteSheet class];
+	for (CCNode *p = self ; /* ignore */; p = p.parent) {
+		if( [p isKindOfClass:aClass] )
+			break;
+		
+		CGPoint pos = p.position;
+		float	rot = p.rotation;
+		float	sx = p.scaleX;
+		float	sy = p.scaleY;
+		CGAffineTransform new = CGAffineTransformIdentity;
+		new = CGAffineTransformTranslate(new, pos.x, pos.y);
+		new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
+		new = CGAffineTransformScale(new, sx, sy);
+		
+		old = CGAffineTransformConcat( old, new);
+		newScaleX *= [p scaleX];
+		newScaleY *= [p scaleY];
+	}
+	
+	CGPoint newPosition = ccp( old.tx, old.ty);
+	float newRotation_radians = -atan2f( old.c, old.a );
+		
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
 	// if not visible
@@ -311,16 +337,16 @@
 	}
 	
 	// rotation ? -> update: rotation, scale, position
-	else if( rotation_ ) {
-		float x1 = -transformAnchor_.x * scaleX_;
-		float y1 = -transformAnchor_.y * scaleY_;
+	else if( newRotation_radians ) {
+		float x1 = -transformAnchor_.x * newScaleX;
+		float y1 = -transformAnchor_.y * newScaleY;
 
-		float x2 = x1 + rect_.size.width * scaleX_;
-		float y2 = y1 + rect_.size.height * scaleY_;
-		float x = position_.x;
-		float y = position_.y;
+		float x2 = x1 + rect_.size.width * newScaleX;
+		float y2 = y1 + rect_.size.height * newScaleY;
+		float x = newPosition.x;
+		float y = newPosition.y;
 		
-		float r = -CC_DEGREES_TO_RADIANS(rotation_);
+		float r = newRotation_radians;
 		float cr = cosf(r);
 		float sr = sinf(r);
 		float ax = x1 * cr - y1 * sr + x;
@@ -339,15 +365,15 @@
 	}
 	
 	// scale ? -> update: scale, position
-	else if(scaleX_ != 1 || scaleY_ != 1)
+	else if(newScaleX != 1 || newScaleY != 1)
 	{
-		float x = position_.x;
-		float y = position_.y;
+		float x = newPosition.x;
+		float y = newPosition.y;
 		
-		float x1 = (x- transformAnchor_.x * scaleX_);
-		float y1 = (y- transformAnchor_.y * scaleY_);
-		float x2 = (x1 + rect_.size.width * scaleX_);
-		float y2 = (y1 + rect_.size.height * scaleY_);
+		float x1 = (x- transformAnchor_.x * newScaleX);
+		float y1 = (y- transformAnchor_.y * newScaleY);
+		float x2 = (x1 + rect_.size.width * newScaleX);
+		float y2 = (y1 + rect_.size.height * newScaleY);
 
 		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
 		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
@@ -358,8 +384,8 @@
 	
 	// update position
 	else {
-		float x = position_.x;
-		float y = position_.y;
+		float x = newPosition.x;
+		float y = newPosition.y;
 		
 		float x1 = (x-transformAnchor_.x);
 		float y1 = (y-transformAnchor_.y);
@@ -374,22 +400,15 @@
 	}
 	
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-	dirty = NO;
+	dirty_ = NO;
 	return;
 }
-
--(void)insertInAtlasAtIndex:(NSUInteger)index
-{
-	atlasIndex_ = index;
-	[textureAtlas_ insertQuad:&quad_ atIndex:atlasIndex_];
-}
-
 
 #pragma mark CCSprite - draw
 
 -(void) draw
 {	
-	NSAssert(!parentIsSpriteSheet_, @"CCSprite can't be dirty when it's parent is not an CCSpriteSheet");
+	NSAssert(!usesSpriteSheet_, @"CCSprite can't be dirty when it's parent is not an CCSpriteSheet");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -413,71 +432,126 @@
 	glDisableClientState(GL_VERTEX_ARRAY);	
 }
 
+#pragma mark CCSprite - CCNode overrides
+
+-(id) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	
+	id ret = [super addChild:child z:z tag:aTag];
+	
+	if( usesSpriteSheet_ ) {
+		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using SpriteSheet");
+		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
+		
+		NSUInteger index = [spriteSheet_ atlasIndexForChild:child atZ:z];
+		[spriteSheet_ insertChild:child inAtlasAtIndex:index];
+	}
+
+	return ret;
+}
+
+-(void) reorderChild:(CCSprite*)child z:(int)z
+{
+	if( ! usesSpriteSheet_ )
+		[super reorderChild:child z:z];
+}
+
+-(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
+{
+	if( ! usesSpriteSheet_ )
+		[super removeChild:sprite cleanup:doCleanup];
+}
+
+-(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
+{
+	if( ! usesSpriteSheet_ )
+		[super removeAllChildrenWithCleanup:doCleanup];
+}
+
 //
 // CCNode property overloads
 // used only when parent is CCSpriteSheet
 //
 #pragma mark CCSprite - property overloads
+
+-(void) setDirty:(BOOL)b
+{
+	dirty_ = b;
+	for( CCSprite *sprite in children)
+		sprite.dirty = b;
+	
+	if( b ) {
+		NSMutableSet *set = [spriteSheet_ dirtySprites];
+		[set addObject:self];
+	}
+}
+
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ ) {
+		self.dirty = YES;
+	}
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ ) {
+		self.dirty = YES;
+	}
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ ) {
+		self.dirty = YES;
+	}
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ ) {
+		self.dirty = YES;
+	}
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ ) {
+		self.dirty = YES;
+	}
 }
 
 -(void) setVertexZ:(float)z
 {
 	[super setVertexZ:z];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ )
+		self.dirty = YES;
 }
 
 -(void)setAnchorPoint:(CGPoint)anchor
 {
 	[super setAnchorPoint:anchor];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ )
+		self.dirty = YES;
 }
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
 {
-	NSAssert( ! parentIsSpriteSheet_, @"relativeTransformAnchor is invalid in CCSprite");
+	NSAssert( ! usesSpriteSheet_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setRelativeAnchorPoint:relative];
 }
 
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	if( parentIsSpriteSheet_ )
-		dirty = YES;
+	if( usesSpriteSheet_ )
+		self.dirty = YES;
 }
 
 -(void)setFlipX:(BOOL)b
@@ -511,11 +585,11 @@
 -(void) updateColor
 {
 	// renders using Sprite Manager
-	if( parentIsSpriteSheet_ ) {
+	if( usesSpriteSheet_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
-			dirty = YES;
+			dirty_ = YES;
 	}
 	// self render
 	else
@@ -634,7 +708,7 @@
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! parentIsSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
+	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	if( ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
@@ -646,7 +720,7 @@
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! parentIsSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
+	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
 	selfRenderTextureAtlas_.texture = texture;
 	texture_ = texture;
