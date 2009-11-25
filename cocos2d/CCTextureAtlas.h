@@ -78,7 +78,7 @@
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index;
 
 /** Removes the quad that is located at a certain index and inserts it at a new index
- This operation is faster than remove and insert in 2 different steps.
+ This operation is faster than removing and inserting in a quad in 2 different steps
  @since v0.7.2
 */
 -(void) insertQuadFromIndex:(NSUInteger)fromIndex atIndex:(NSUInteger)newIndex;

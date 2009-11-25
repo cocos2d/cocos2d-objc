@@ -41,7 +41,6 @@
 @synthesize dirty = dirty_;
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
-@synthesize relativeAtlasIndex = relativeAtlasIndex_;
 @synthesize textureRect = rect_;
 @synthesize opacity=opacity_, color=color_;
 @synthesize blendFunc = blendFunc_;
@@ -115,7 +114,7 @@
 		
 		// Stuff in case the Sprite is rendered using an Sprite Manager
 		textureAtlas_ = nil;
-		atlasIndex_ = relativeAtlasIndex_ = CCSpriteIndexNotInitialized;
+		atlasIndex_ = CCSpriteIndexNotInitialized;
 		dirty_ = NO;
 		
 		// update texture
@@ -301,12 +300,16 @@
 {
 	NSAssert( usesSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
 
+	// orphan sprite. Don't update it since it will be updated once it is re-parented
+	if( ! parent )
+		return;
+	
 	CGAffineTransform old = CGAffineTransformIdentity;
 	float newScaleX = 1;
 	float newScaleY = 1;
 
 	Class aClass = [CCSpriteSheet class];
-	for (CCNode *p = self ; /* ignore */; p = p.parent) {
+	for (CCNode *p = self ; p != nil; p = p.parent) {
 		if( [p isKindOfClass:aClass] )
 			break;
 		
@@ -453,20 +456,29 @@
 
 -(void) reorderChild:(CCSprite*)child z:(int)z
 {
-	if( ! usesSpriteSheet_ )
-		[super reorderChild:child z:z];
+	if( usesSpriteSheet_ )
+		// XXX FIXME
+		;
+
+	[super reorderChild:child z:z];
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
-	if( ! usesSpriteSheet_ )
-		[super removeChild:sprite cleanup:doCleanup];
+	if( usesSpriteSheet_ )
+		[spriteSheet_ removeSpriteFromAtlas:sprite];
+
+	[super removeChild:sprite cleanup:doCleanup];
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	if( ! usesSpriteSheet_ )
-		[super removeAllChildrenWithCleanup:doCleanup];
+	if( usesSpriteSheet_ ) {
+		for( CCSprite *child in children )
+			[spriteSheet_ removeSpriteFromAtlas:child];
+	}
+	
+	[super removeAllChildrenWithCleanup:doCleanup];
 }
 
 //

@@ -57,7 +57,6 @@ enum {
 	// Data used when the sprite is rendered using a CCSpriteSheet
 	CCTextureAtlas *textureAtlas_;		// Sprite Sheet texture atlas (weak reference)
 	NSUInteger atlasIndex_;				// Absolute (real) Index on the SpriteSheet
-	NSUInteger relativeAtlasIndex_;		// Relative to its parent atlas index on the SpriteSheet
 	BOOL	dirty_;						// Sprite needs to be updated
 	CCSpriteSheet	*spriteSheet_;		// Used spritesheet
 	
@@ -95,8 +94,6 @@ enum {
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
-/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
-@property (nonatomic,readwrite) NSUInteger relativeAtlasIndex;
 /** returns the rect of the CCSprite */
 @property (nonatomic,readonly) CGRect textureRect;
 /** whether or not the sprite is flipped horizontally */

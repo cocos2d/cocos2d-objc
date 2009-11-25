@@ -102,6 +102,10 @@
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 
 -(void) insertChild:(CCSprite*)child inAtlasAtIndex:(NSUInteger)index;
+-(void) removeSpriteFromAtlas:(CCSprite*)sprite;
+-(void) reorderSpriteInAtlas:(CCSprite*)sprite;
+
+
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
 -(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(int)z;
 
