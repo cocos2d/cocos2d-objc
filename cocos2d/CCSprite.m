@@ -501,9 +501,9 @@
 
 -(void) reorderChild:(CCSprite*)child z:(int)z
 {
-	if( usesSpriteSheet_ )
-		// XXX FIXME
-		;
+	if( usesSpriteSheet_ ) {
+		NSAssert(YES,@"reorderChild not implemented while using Spritesheet. Please open a bug, and if possible attach the patch. Thanks");
+	}
 
 	[super reorderChild:child z:z];
 }

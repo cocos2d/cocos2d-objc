@@ -14,6 +14,8 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"SpriteSheetChildren",
 			@"SpriteSheetChildren2",
+			@"SpriteSheetChildrenZ",
+
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -1529,22 +1531,22 @@ Class restartAction()
 		
 		CCSprite *sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
-		
+
 		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		sprite2.scale = 0.2f;
-		
+
 		CCSprite *sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		sprite3.scale = 0.2f;
-		
+
 		[sheet addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:2];
 
 		// don't rotate with it's parent
 		sprite2.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_ROTATE;
-	
+
 		// don't scale and rotate with it's parent
 		sprite3.honorParentTransform &= ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE);
 		
@@ -1571,6 +1573,54 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Honor Parent Transform";
+}
+@end
+
+
+#pragma mark -
+#pragma mark SpriteSheet ChildrenZ
+
+@implementation SpriteSheetChildrenZ
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// parents
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		
+		
+		CCSprite *sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
+		
+		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		CCSprite *sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		[sheet addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:2];
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet Children Z";
 }
 @end
 
