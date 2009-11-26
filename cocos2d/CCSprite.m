@@ -47,6 +47,7 @@
 @synthesize usesSpriteSheet = usesSpriteSheet_;
 @synthesize textureAtlas = textureAtlas_;
 @synthesize spriteSheet = spriteSheet_;
+@synthesize honorParentTransform = honorParentTransform_;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -129,7 +130,9 @@
 
 		// by default use "Self Render".
 		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
-		[self useSelfRender];		
+		[self useSelfRender];
+		
+		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
 
 		// Atlas: Color
 		opacity_ = 255;
@@ -312,9 +315,9 @@
 	quad_.tr.texCoords.v = top;
 }
 
--(void)updatePosition
+-(void)updateTransform
 {
-	NSAssert( usesSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
+	NSAssert( usesSpriteSheet_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteSheet");
 	
 	float newScaleX = scaleX_;
 	float newScaleY = scaleY_;
@@ -338,9 +341,13 @@
 			float	sx = p.scaleX;
 			float	sy = p.scaleY;
 			CGAffineTransform new = CGAffineTransformIdentity;
-			new = CGAffineTransformTranslate(new, pos.x, pos.y);
-			new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
-			new = CGAffineTransformScale(new, sx, sy);
+			
+			if( honorParentTransform_ & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
+				new = CGAffineTransformTranslate(new, pos.x, pos.y);
+			if( honorParentTransform_ & CC_HONOR_PARENT_TRANSFORM_ROTATE )
+				new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
+			if( honorParentTransform_ & CC_HONOR_PARENT_TRANSFORM_SCALE )
+				new = CGAffineTransformScale(new, sx, sy);
 			
 			old = CGAffineTransformConcat( old, new);
 			newScaleX *= [p scaleX];

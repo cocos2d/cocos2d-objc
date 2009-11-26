@@ -26,6 +26,25 @@ enum {
 	CCSpriteIndexNotInitialized = 0xffffffff,
 };
 
+/**
+ Whether or not an CCSprite will rotate, scale or translate with it's parent.
+ Useful in health bars, when you want that the health bar translates with it's parent but you don't
+ want it to rotate with its parent.
+ @since v0.9.0
+ */
+typedef enum {
+	//! Translate with it's parent
+	CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
+	//! Rotate with it's parent
+	CC_HONOR_PARENT_TRANSFORM_ROTATE	=  1 << 1,
+	//! Scale with it's parent
+	CC_HONOR_PARENT_TRANSFORM_SCALE		=  1 << 2,
+
+	//! All possible transformation enabled. Default value.
+	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE,
+
+} ccHonorParentTransform;
+
 /** CCSprite is a CCNode object that implements the CCFrameProtocol and CCRGBAProtocol protocols.
  *
  * If the parent is a CCSpriteSheet then the following features/limitations are valid
@@ -33,20 +52,17 @@ enum {
  *		- It is MUCH faster if you render multiptle sprites at the same time (eg: 50 or more CCSprite nodes)
  *
  *	- Limitations
- *		- They can't have children
  *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
  *		- GridBase actions are not supported (eg: Lens, Ripple, Twirl)
  *		- The Alias/Antialias property belongs to CCSpriteSheet, so you can't individually set the aliased property.
  *		- The Blending function property belongs to CCSpriteSheet, so you can't individually set the blending function property.
  *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
  *
- *  If the parent is an standard CCNode, then CCSprite behaves like any other CCTextureNode:
- *    - It can have children
+ *  If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
  *    - It supports blending functions
  *    - It supports aliasing / antialiasing
  *    - But the rendering will be slower
  *
- * @since v0.7.1
  */
 @interface CCSprite : CCNode <CCFrameProtocol, CCRGBAProtocol, CCTextureProtocol>
 {
@@ -54,10 +70,11 @@ enum {
 	//
 	// Data used when the sprite is rendered using a CCSpriteSheet
 	//
-	CCTextureAtlas *textureAtlas_;		// Sprite Sheet texture atlas (weak reference)
-	NSUInteger atlasIndex_;				// Absolute (real) Index on the SpriteSheet
-	BOOL	dirty_;						// Sprite needs to be updated
-	CCSpriteSheet	*spriteSheet_;		// Used spritesheet (weak reference)
+	CCTextureAtlas *textureAtlas_;					// Sprite Sheet texture atlas (weak reference)
+	NSUInteger atlasIndex_;							// Absolute (real) Index on the SpriteSheet
+	BOOL	dirty_;									// Sprite needs to be updated
+	CCSpriteSheet	*spriteSheet_;					// Used spritesheet (weak reference)
+	ccHonorParentTransform	honorParentTransform_;	// whether or not to transform according to its parent transformations
 	
 	//
 	// Data used when the sprite is self-rendered
@@ -114,6 +131,13 @@ enum {
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 /** weak reference to the CCSpriteSheet that renders the CCSprite */
 @property (nonatomic,readwrite,assign) CCSpriteSheet *spriteSheet;
+/** whether or not to transform according to its parent transfomrations.
+ Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
+ IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
+ @since v0.9.0
+ */
+@property (nonatomic,readwrite) ccHonorParentTransform honorParentTransform;
+ 
 
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
@@ -197,7 +221,7 @@ enum {
 
 /** updates the quad according the the rotation, position, scale values.
  */
--(void)updatePosition;
+-(void)updateTransform;
 
 /** updates the texture rect of the CCSprite.
  */

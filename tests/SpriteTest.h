@@ -128,4 +128,9 @@
 }
 @end
 
+@interface SpriteSheetChildren2 : SpriteDemo
+{
+}
+@end
+
 
