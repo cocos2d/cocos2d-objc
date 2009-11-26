@@ -316,7 +316,6 @@
 {
 	NSAssert( usesSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
 	
-	CGAffineTransform old = CGAffineTransformIdentity;
 	float newScaleX = scaleX_;
 	float newScaleY = scaleY_;
 	CGPoint newPosition = position_;
@@ -324,6 +323,9 @@
 	
 	// optimization. If parent is spritesheet, no need to do Affine transforms
 	if( parent != spriteSheet_ ) {
+		
+		CGAffineTransform old = CGAffineTransformIdentity;
+
 		Class aClass = [CCSpriteSheet class];
 		
 		newScaleX = newScaleY = 1;
@@ -543,6 +545,7 @@
 	[super setPosition:pos];
 	if( usesSpriteSheet_ ) {
 		self.dirty = YES;
+//		dirty_ = YES;
 	}
 }
 
@@ -551,6 +554,7 @@
 	[super setRotation:rot];
 	if( usesSpriteSheet_ ) {
 		self.dirty = YES;
+//		dirty_ = YES;
 	}
 }
 
@@ -559,6 +563,7 @@
 	[super setScaleX:sx];
 	if( usesSpriteSheet_ ) {
 		self.dirty = YES;
+//		dirty_ = YES;
 	}
 }
 
@@ -567,6 +572,7 @@
 	[super setScaleY:sy];
 	if( usesSpriteSheet_ ) {
 		self.dirty = YES;
+//		dirty_ = YES;
 	}
 }
 
@@ -575,6 +581,7 @@
 	[super setScale:s];
 	if( usesSpriteSheet_ ) {
 		self.dirty = YES;
+//		dirty_ = YES;
 	}
 }
 
@@ -583,6 +590,7 @@
 	[super setVertexZ:z];
 	if( usesSpriteSheet_ )
 		self.dirty = YES;
+//		dirty_ = YES;
 }
 
 -(void)setAnchorPoint:(CGPoint)anchor
@@ -590,6 +598,7 @@
 	[super setAnchorPoint:anchor];
 	if( usesSpriteSheet_ )
 		self.dirty = YES;
+//		dirty_ = YES;
 }
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
@@ -603,6 +612,7 @@
 	[super setVisible:v];
 	if( usesSpriteSheet_ )
 		self.dirty = YES;
+//		dirty_ = YES;
 }
 
 -(void)setFlipX:(BOOL)b

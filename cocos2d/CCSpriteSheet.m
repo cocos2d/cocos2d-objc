@@ -33,7 +33,7 @@ const int defaultCapacity = 29;
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
-@synthesize dirtySprites = dirtySprites_;
+//@synthesize dirtySprites = dirtySprites_;
 
 /*
  * creation with CCTexture2D
@@ -78,7 +78,7 @@ const int defaultCapacity = 29;
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
+//		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 
 	return self;
@@ -98,7 +98,7 @@ const int defaultCapacity = 29;
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
+//		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 		
 		[self updateBlendFunc];
 	}
@@ -114,7 +114,7 @@ const int defaultCapacity = 29;
 -(void)dealloc
 {	
 	[textureAtlas_ release];
-	[dirtySprites_ release];
+//	[dirtySprites_ release];
 	[descendants_ release];
 	
 	[super dealloc];
@@ -240,7 +240,7 @@ const int defaultCapacity = 29;
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
 	[descendants_ removeAllObjects];
-	[dirtySprites_ removeAllObjects];
+//	[dirtySprites_ removeAllObjects];
 	[textureAtlas_ removeAllQuads];
 }
 
@@ -249,27 +249,40 @@ const int defaultCapacity = 29;
 {
 	if(textureAtlas_.totalQuads == 0)
 		return;
+
+	// Optimization: Fast Dispatch
+	typedef BOOL (*DIRTY_IMP)(id, SEL);
+	typedef BOOL (*UPDATE_IMP)(id, SEL);
 	
+	SEL selDirty = @selector(dirty);
+	SEL selUpdate = @selector(updatePosition);
+	
+	CCSprite *sprite = [CCSprite node];
+	DIRTY_IMP dirtyMethod = (DIRTY_IMP) [sprite methodForSelector:selDirty];
+	UPDATE_IMP updateMethod = (UPDATE_IMP) [sprite methodForSelector:selUpdate];
+
 	for( CCSprite *child in descendants_ )
 	{
-		if( child.dirty )
-			[child updatePosition];
+		// fast dispatch
+		if( dirtyMethod(child, selDirty) )
+			updateMethod(child, selUpdate);
+		
+#if CC_SPRITESHEET_DEBUG_DRAW
+		CGRect rect = [child boundingBox]; //Inssue 528
+		CGPoint vertices[4]={
+			ccp(rect.origin.x,rect.origin.y),
+			ccp(rect.origin.x+rect.size.width,rect.origin.y),
+			ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
+			ccp(rect.origin.x,rect.origin.y+rect.size.height),
+		};
+		ccDrawPoly(vertices, 4, YES);
+#endif // CC_SPRITESHEET_DEBUG_DRAW		
 	}
 		
 //	for( CCSprite *child in dirtySprites_ )
 //		[child updatePosition];
 //	[dirtySprites_ removeAllObjects];
 		
-//#if CC_SPRITESHEET_DEBUG_DRAW
-//		CGRect rect = [child boundingBox]; //Inssue 528
-//		CGPoint vertices[4]={
-//			ccp(rect.origin.x,rect.origin.y),
-//			ccp(rect.origin.x+rect.size.width,rect.origin.y),
-//			ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-//			ccp(rect.origin.x,rect.origin.y+rect.size.height),
-//		};
-//		ccDrawPoly(vertices, 4, YES);
-//#endif // CC_SPRITESHEET_DEBUG_DRAW
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -310,10 +323,10 @@ const int defaultCapacity = 29;
 	}	
 }
 
--(void) tagSpriteAsDirty:(CCSprite*)sprite
-{
-	[dirtySprites_ addObject:sprite];
-}
+//-(void) tagSpriteAsDirty:(CCSprite*)sprite
+//{
+//	[dirtySprites_ addObject:sprite];
+//}
 
 #pragma mark CCSpriteSheet - Atlas Index Stuff
 
@@ -405,7 +418,7 @@ const int defaultCapacity = 29;
 	[sprite useSelfRender];
 	
 	// in case it needs to be drawn, delete it
-	[dirtySprites_ removeObject:sprite];
+//	[dirtySprites_ removeObject:sprite];
 	
 	NSUInteger index = [descendants_ indexOfObject:sprite];
 	if( index != NSNotFound ) {
