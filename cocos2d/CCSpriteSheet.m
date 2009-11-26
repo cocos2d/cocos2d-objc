@@ -78,7 +78,7 @@ const int defaultCapacity = 29;
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-		dirtySprites_ = [[NSMutableSet alloc] initWithCapacity:capacity];
+		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 
 	return self;
@@ -98,7 +98,7 @@ const int defaultCapacity = 29;
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-		dirtySprites_ = [[NSMutableSet alloc] initWithCapacity:capacity];
+		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 		
 		[self updateBlendFunc];
 	}
@@ -245,14 +245,20 @@ const int defaultCapacity = 29;
 }
 
 #pragma mark CCSpriteSheet - draw
--(void)draw
+-(void) draw
 {
 	if(textureAtlas_.totalQuads == 0)
 		return;
 	
-	for( CCSprite *child in dirtySprites_ )
-		[child updatePosition];
-	[dirtySprites_ removeAllObjects];
+	for( CCSprite *child in descendants_ )
+	{
+		if( child.dirty )
+			[child updatePosition];
+	}
+		
+//	for( CCSprite *child in dirtySprites_ )
+//		[child updatePosition];
+//	[dirtySprites_ removeAllObjects];
 		
 //#if CC_SPRITESHEET_DEBUG_DRAW
 //		CGRect rect = [child boundingBox]; //Inssue 528
@@ -302,6 +308,11 @@ const int defaultCapacity = 29;
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: SpriteSheet#increateAtlasCapacity SHALL handle this assert");
 	}	
+}
+
+-(void) tagSpriteAsDirty:(CCSprite*)sprite
+{
+	[dirtySprites_ addObject:sprite];
 }
 
 #pragma mark CCSpriteSheet - Atlas Index Stuff
