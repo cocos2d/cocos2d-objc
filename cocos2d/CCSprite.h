@@ -51,25 +51,30 @@ enum {
 @interface CCSprite : CCNode <CCFrameProtocol, CCRGBAProtocol, CCTextureProtocol>
 {
 	
-	// whether or not it's parent is a CCSpriteSheet
-	BOOL	usesSpriteSheet_;
-
+	//
 	// Data used when the sprite is rendered using a CCSpriteSheet
+	//
 	CCTextureAtlas *textureAtlas_;		// Sprite Sheet texture atlas (weak reference)
 	NSUInteger atlasIndex_;				// Absolute (real) Index on the SpriteSheet
 	BOOL	dirty_;						// Sprite needs to be updated
 	CCSpriteSheet	*spriteSheet_;		// Used spritesheet (weak reference)
 	
+	//
 	// Data used when the sprite is self-rendered
+	//
 	ccBlendFunc	blendFunc_;				// Needed for the texture protocol
+	CCTexture2D		*texture_;			// Texture used to render the sprite
+
+	//
+	// Shared data
+	//
+
+	// whether or not it's parent is a CCSpriteSheet
+	BOOL	usesSpriteSheet_;
 
 	// texture pixels
 	CGRect rect_;
 	
-	// texture
-	// used as an optimization
-	CCTexture2D		*texture_;
-
 	// vertex coords, texture coors and color info
 	ccV3F_C4B_T2F_Quad quad_;
 	
@@ -190,10 +195,22 @@ enum {
  */
 -(id) initWithCGImage: (CGImageRef)image;
 
-
+/** updates the quad according the the rotation, position, scale values.
+ */
 -(void)updatePosition;
 
-/** updates the texture rect of the CCSprite */
+/** updates the texture rect of the CCSprite.
+ */
 -(void) setTextureRect:(CGRect) rect;
+
+/** tell the sprite to use self-render.
+ @since v0.9.0
+ */
+-(void) useSelfRender;
+
+/** tell the sprite to use sprite sheet render.
+ @since v0.9.0
+ */
+-(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet;
 
 @end
