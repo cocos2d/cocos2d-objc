@@ -253,16 +253,19 @@ const int defaultCapacity = 29;
 	// Optimization: Fast Dispatch
 	typedef BOOL (*DIRTY_IMP)(id, SEL);
 	typedef BOOL (*UPDATE_IMP)(id, SEL);
-	
 	SEL selDirty = @selector(dirty);
-	SEL selUpdate = @selector(updatePosition);
+	SEL selUpdate = @selector(updateTransform);
+	DIRTY_IMP dirtyMethod = nil;
+	UPDATE_IMP updateMethod = nil;
 	
-	CCSprite *sprite = [CCSprite node];
-	DIRTY_IMP dirtyMethod = (DIRTY_IMP) [sprite methodForSelector:selDirty];
-	UPDATE_IMP updateMethod = (UPDATE_IMP) [sprite methodForSelector:selUpdate];
-
 	for( CCSprite *child in descendants_ )
 	{
+		if( ! dirtyMethod ) {
+			// Optimization: Fast Dispatch
+			dirtyMethod = (DIRTY_IMP) [child methodForSelector:selDirty];
+			updateMethod = (UPDATE_IMP) [child methodForSelector:selUpdate];
+		}
+		
 		// fast dispatch
 		if( dirtyMethod(child, selDirty) )
 			updateMethod(child, selUpdate);

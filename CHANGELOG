@@ -4,6 +4,7 @@ version 0.9.0-beta - XX-MMM-2009
  . Node: vertexZ is translated just once (issue #641)
  . Particles: code easier to mantain, same performance
  . SpriteSheet: supports any level of sub-children (issue #346)
+ . Sprite: supports "honor parent transform" (issue #643)
  . Templates: using SDK 3.0 as base SDK
  . Textures: supports mipmap generation (issue #632)
 

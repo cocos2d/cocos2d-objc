@@ -47,7 +47,7 @@
 		[self increaseAtlasCapacity];
 
 	[self insertChild:sprite inAtlasAtIndex:index];
-	[sprite updatePosition];
+	[sprite updateTransform];
 }
 
 -(id) addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag
@@ -242,7 +242,7 @@
 	unsigned int indexForZ = [self atlasIndexForExistantZ:z];
 
 	[reusedTile setAtlasIndex:indexForZ];
-	[reusedTile updatePosition];
+	[reusedTile updateTransform];
 	tiles_[z] = gid;
 	
 	return reusedTile;
