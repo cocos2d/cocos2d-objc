@@ -362,16 +362,70 @@ const int defaultCapacity = 29;
 		return [self highestAtlasIndexInChild:[sprite.children lastObject]];
 }
 
+-(NSUInteger) lowestAtlasIndexInChild:(CCSprite*)sprite
+{
+	if( [[sprite children] count] == 0 )
+		return sprite.atlasIndex;
+	else
+		return [self lowestAtlasIndexInChild:[sprite.children objectAtIndex:0] ];
+}
+
+
 -(NSUInteger)atlasIndexForChild:(CCSprite*)sprite atZ:(int)z
 {
 	NSArray *brothers = [[sprite parent] children];
-	NSUInteger index = [brothers indexOfObject:sprite];
-	if( index > 0 ) {
-		CCSprite *previous = [brothers objectAtIndex:index-1];
-		index = [self highestAtlasIndexInChild: previous] + 1;
+	NSUInteger childIndex = [brothers indexOfObject:sprite];
+	
+	// ignore parent Z if parent is spriteSheet
+	BOOL ignoreParent = ( sprite.parent == self );
+	CCSprite *previous, *next = nil;
+	if( childIndex > 0 )
+		previous = [brothers objectAtIndex:childIndex-1];
+	if( childIndex < [brothers count] -1 )
+		next = [brothers objectAtIndex:childIndex+1];
+
+	
+//	if( index > 0 ) {
+//		CCSprite *previous = [brothers objectAtIndex:index-1];
+//		index = [self highestAtlasIndexInChild: previous] + 1;
+//	}
+	
+	// first child of the sprite sheet
+	if( ignoreParent ) {
+		if( childIndex == 0 )
+			return 0;
+		// else
+		return [self highestAtlasIndexInChild: previous] + 1;
 	}
 	
-	return index;
+	// parent is a CCSprite, so, it must be taken into account
+	
+	// first child of an CCSprite ?
+	if( childIndex == 0 )
+	{
+		// less than parent and brothers
+		if( z < 0 && [brothers count] > 1 )
+		{	
+			return [self lowestAtlasIndexInChild:next] -1;
+		}
+		// no brothers
+		else
+		{
+			CCSprite *p = (CCSprite*) sprite.parent;
+			return p.atlasIndex;
+		}
+	} else {
+		// previous & sprite belong to the same branch
+		if( ( previous.zOrder < 0 && z < 0 )|| (previous.zOrder >= 0 && z >= 0) ) {
+			return [self highestAtlasIndexInChild:previous] + 1;
+		}
+		// else (previous < 0 and sprite >= 0 )
+		CCSprite *p = (CCSprite*) sprite.parent;
+		return p.atlasIndex + 1;
+	}
+	
+	NSAssert( YES, @"Should not happen. Error calculating Z on SpriteSheet");
+	return 0;
 }
 
 #pragma mark CCSpriteSheet - add / remove / reorder helper methods

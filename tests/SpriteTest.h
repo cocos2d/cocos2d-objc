@@ -133,4 +133,9 @@
 }
 @end
 
+@interface SpriteSheetChildrenZ : SpriteDemo
+{
+}
+@end
+
 
