@@ -409,7 +409,8 @@ Class restartTransition()
 	// Create a depth buffer of 16 bits
 	// Needed for some transitions
 	// These means that openGL z-order will be taken into account
-	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+	// "Flip" transitions doesn't work with DepthBuffer > 0
+//	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
 	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
