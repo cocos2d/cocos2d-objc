@@ -1,6 +1,7 @@
 version 0.9.0-beta - XX-MMM-2009
  . ActionManager: fixed leak (issue #635)
  . Box2d: updated to r27 (pre 2.1.0) (issue #494)
+ . Node: vertexZ is translated just once (issue #641)
  . Particles: code easier to mantain, same performance
  . SpriteSheet: supports any level of sub-children (issue #346)
  . Templates: using SDK 3.0 as base SDK
