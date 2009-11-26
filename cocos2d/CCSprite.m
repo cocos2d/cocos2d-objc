@@ -109,9 +109,6 @@
 		// by default sprites are self-rendered
 		usesSpriteSheet_ = NO;
 
-		// Stuff in case the Sprite is self-rendered
-		selfRenderTextureAtlas_ = [[CCTextureAtlas textureAtlasWithTexture:texture capacity:1] retain];
-		
 		// Stuff in case the Sprite is rendered using an Sprite Manager
 		textureAtlas_ = nil;
 		atlasIndex_ = CCSpriteIndexNotInitialized;
@@ -219,8 +216,8 @@
 
 - (void) dealloc
 {
+	[texture_ release];
 	[animations release];
-	[selfRenderTextureAtlas_ release];
 	[super dealloc];
 }
 
@@ -266,7 +263,6 @@
 			quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };			
 		}
 		
-		[selfRenderTextureAtlas_ updateQuad:&quad_ atIndex:0];
 		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
 			[self setContentSize:rect.size];
 		}		
@@ -423,9 +419,26 @@
 		newBlend = YES;
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
-	
-	[selfRenderTextureAtlas_ drawNumberOfQuads:1];
 
+#define kPointSize sizeof(quad_.bl)
+	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+	
+	int offset = (int)&quad_;
+	
+	// vertex
+	int diff = offsetof( ccV3F_C4B_T2F, vertices);
+	glVertexPointer(3, GL_FLOAT, kPointSize, (void*) (offset + diff) );
+	
+	// color
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (void*)(offset + diff));
+	
+	// tex coords
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glTexCoordPointer(2, GL_FLOAT, kPointSize, (void*)(offset + diff));
+	
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
@@ -604,10 +617,7 @@
 			dirty_ = YES;
 	}
 	// self render
-	else
-	{
-		[selfRenderTextureAtlas_ updateQuad:&quad_ atIndex:0];
-	}
+	// do nothing
 }
 
 -(void) setOpacity:(GLubyte) anOpacity
@@ -734,11 +744,10 @@
 {
 	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
 
-	selfRenderTextureAtlas_.texture = texture;
-	texture_ = texture;
-
-	[self updateBlendFunc];
+	[texture_ release];
+	texture_ = [texture retain];
 	
+	[self updateBlendFunc];
 }
 
 -(CCTexture2D*) texture
