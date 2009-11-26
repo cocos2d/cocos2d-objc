@@ -155,18 +155,15 @@ const int defaultCapacity = 29;
 -(CCSprite*) createSpriteWithRect:(CGRect)rect
 {
 	CCSprite *sprite = [CCSprite spriteWithTexture:textureAtlas_.texture rect:rect];
-	[sprite setUsesSpriteSheet:YES];
-	[sprite setTextureAtlas:textureAtlas_];
-	[sprite setSpriteSheet:self];
+	[sprite useSpriteSheetRender:self];
+
 	return sprite;
 }
 
 -(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect
 {
 	[sprite initWithTexture:textureAtlas_.texture rect:rect];
-	[sprite setUsesSpriteSheet:YES];
-	[sprite setTextureAtlas:textureAtlas_];
-	[sprite setSpriteSheet:self];
+	[sprite useSpriteSheetRender:self];
 }
 
 // override addChild:
@@ -237,10 +234,7 @@ const int defaultCapacity = 29;
 {
 	// Invalidate atlas index. issue #569
 	for( CCSprite *sprite in children ) {
-		[sprite setAtlasIndex:CCSpriteIndexNotInitialized];
-		[sprite setUsesSpriteSheet:NO];
-		[sprite setTextureAtlas:nil];
-		[sprite setSpriteSheet:nil];
+		[sprite useSelfRender];
 	}
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
@@ -357,9 +351,7 @@ const int defaultCapacity = 29;
 // add child helper
 -(void) insertChild:(CCSprite*)sprite inAtlasAtIndex:(NSUInteger)index
 {
-	[sprite setSpriteSheet:self];
-	[sprite setTextureAtlas:textureAtlas_];
-	[sprite setUsesSpriteSheet:YES];	
+	[sprite useSpriteSheetRender:self];
 	[sprite setAtlasIndex:index];
 	[sprite setDirty: YES];
 	
@@ -399,10 +391,7 @@ const int defaultCapacity = 29;
 	[textureAtlas_ removeQuadAtIndex:sprite.atlasIndex];
 	
 	// Cleanup sprite. It might be reused (issue #569)
-	[sprite setAtlasIndex: CCSpriteIndexNotInitialized];	
-	[sprite setUsesSpriteSheet:NO];
-	[sprite setTextureAtlas:nil];
-	[sprite setSpriteSheet:nil];
+	[sprite useSelfRender];
 	
 	// in case it needs to be drawn, delete it
 	[dirtySprites_ removeObject:sprite];

@@ -105,13 +105,8 @@
 {
 	if( (self = [super init]) )
 	{
-		
-		// by default sprites are self-rendered
-		usesSpriteSheet_ = NO;
+		[self useSelfRender];
 
-		// Stuff in case the Sprite is rendered using an Sprite Manager
-		textureAtlas_ = nil;
-		atlasIndex_ = CCSpriteIndexNotInitialized;
 		dirty_ = NO;
 		
 		// update texture
@@ -145,14 +140,8 @@
 		quad_.tr.colors = tmpColor;	
 		
 		// Atlas: Vertex
-		float x1 = 0;
-		float y1 = 0;
-		float x2 = x1 + rect.size.width;
-		float y2 = y1 + rect.size.height;		
-		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
-		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
-		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
+		
+		// updated in "useSelfRender"
 		
 		// Atlas: TexCoords
 		[self setTextureRect:rect];		
@@ -220,6 +209,31 @@
 	[animations release];
 	[super dealloc];
 }
+
+-(void) useSelfRender
+{
+	atlasIndex_ = CCSpriteIndexNotInitialized;
+	usesSpriteSheet_ = NO;
+	textureAtlas_ = nil;
+	spriteSheet_ = nil;
+	
+	float x1 = 0;
+	float y1 = 0;
+	float x2 = x1 + rect_.size.width;
+	float y2 = y1 + rect_.size.height;		
+	quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+	quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
+	quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+	quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
+}
+
+-(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet
+{
+	usesSpriteSheet_ = YES;
+	textureAtlas_ = [spriteSheet textureAtlas]; // weak ref
+	spriteSheet_ = spriteSheet; // weak ref
+}
+
 
 -(void) initAnimationDictionary
 {
