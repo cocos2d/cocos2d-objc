@@ -468,11 +468,11 @@
 	// 
 	// translate
 	if ( relativeAnchorPoint_ && (transformAnchor_.x != 0 || transformAnchor_.y != 0 ) )
-		glTranslatef( RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), vertexZ_);
+		glTranslatef( RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), 0);
 	
-	if (transformAnchor_.x != 0 || transformAnchor_.y != 0 )
+	if (transformAnchor_.x != 0 || transformAnchor_.y != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + transformAnchor_.x), RENDER_IN_SUBPIXEL(position_.y + transformAnchor_.y), vertexZ_);
-	else if ( position_.x !=0 || position_.y !=0)
+	else if ( position_.x !=0 || position_.y !=0 || vertexZ_ != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(position_.x), RENDER_IN_SUBPIXEL(position_.y), vertexZ_ );
 	
 	// rotate
@@ -485,7 +485,7 @@
 	
 	// restore and re-position point
 	if (transformAnchor_.x != 0.0f || transformAnchor_.y != 0.0f)
-		glTranslatef(RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), vertexZ_);
+		glTranslatef(RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), 0);
 	//
 	// END original implementation
 	
