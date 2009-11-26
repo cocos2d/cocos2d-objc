@@ -105,8 +105,6 @@
 {
 	if( (self = [super init]) )
 	{
-		[self useSelfRender];
-
 		dirty_ = NO;
 		
 		// update texture
@@ -128,8 +126,11 @@
 		anchorPoint_ = ccp( (-offset.x / rect.size.width) + 0.5f,
 						   (-offset.y / rect.size.height) + 0.5f );
 
-//		anchorPoint_ = ccp(0.5f, 0.5f);
-		
+
+		// by default use "Self Render".
+		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
+		[self useSelfRender];		
+
 		// Atlas: Color
 		opacity_ = 255;
 		color_ = ccWHITE;
@@ -216,6 +217,7 @@
 	usesSpriteSheet_ = NO;
 	textureAtlas_ = nil;
 	spriteSheet_ = nil;
+	dirty_ = NO;
 	
 	float x1 = 0;
 	float y1 = 0;
@@ -315,30 +317,38 @@
 	NSAssert( usesSpriteSheet_, @"updatePosition is only valid when CCSprite is using a CCSpriteSheet as parent");
 	
 	CGAffineTransform old = CGAffineTransformIdentity;
-	float newScaleX = 1;
-	float newScaleY = 1;
-
-	Class aClass = [CCSpriteSheet class];
-	for (CCNode *p = self ; p != nil; p = p.parent) {
-		if( [p isKindOfClass:aClass] )
-			break;
+	float newScaleX = scaleX_;
+	float newScaleY = scaleY_;
+	CGPoint newPosition = position_;
+	float newRotation_radians = -CC_DEGREES_TO_RADIANS(rotation_);
+	
+	// optimization. If parent is spritesheet, no need to do Affine transforms
+	if( parent != spriteSheet_ ) {
+		Class aClass = [CCSpriteSheet class];
 		
-		CGPoint pos = p.position;
-		float	rot = p.rotation;
-		float	sx = p.scaleX;
-		float	sy = p.scaleY;
-		CGAffineTransform new = CGAffineTransformIdentity;
-		new = CGAffineTransformTranslate(new, pos.x, pos.y);
-		new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
-		new = CGAffineTransformScale(new, sx, sy);
+		newScaleX = newScaleY = 1;
+		for (CCNode *p = self ; p != nil; p = p.parent) {
+			if( [p isKindOfClass:aClass] )
+				break;
+			
+			CGPoint pos = p.position;
+			float	rot = p.rotation;
+			float	sx = p.scaleX;
+			float	sy = p.scaleY;
+			CGAffineTransform new = CGAffineTransformIdentity;
+			new = CGAffineTransformTranslate(new, pos.x, pos.y);
+			new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
+			new = CGAffineTransformScale(new, sx, sy);
+			
+			old = CGAffineTransformConcat( old, new);
+			newScaleX *= [p scaleX];
+			newScaleY *= [p scaleY];
+		}
 		
-		old = CGAffineTransformConcat( old, new);
-		newScaleX *= [p scaleX];
-		newScaleY *= [p scaleY];
+		newPosition = ccp( old.tx, old.ty);
+		newRotation_radians = -atan2f( old.c, old.a );
 	}
 	
-	CGPoint newPosition = ccp( old.tx, old.ty);
-	float newRotation_radians = -atan2f( old.c, old.a );
 		
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
@@ -414,7 +424,6 @@
 	
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	dirty_ = NO;
-	return;
 }
 
 #pragma mark CCSprite - draw
@@ -514,15 +523,18 @@
 //
 #pragma mark CCSprite - property overloads
 
+// XXX: Should be optmized
 -(void) setDirty:(BOOL)b
 {
-	dirty_ = b;
-	for( CCSprite *sprite in children)
-		sprite.dirty = b;
-	
-	if( b ) {
-		NSMutableSet *set = [spriteSheet_ dirtySprites];
-		[set addObject:self];
+	if( b != dirty_ ) {
+		dirty_ = b;
+		
+		// recursively set dirty
+		for( CCSprite *child in children)
+			child.dirty = b;
+		
+//		if( b )
+//			[spriteSheet_ tagSpriteAsDirty:self];
 	}
 }
 
