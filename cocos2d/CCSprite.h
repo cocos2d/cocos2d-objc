@@ -58,16 +58,15 @@ enum {
 	CCTextureAtlas *textureAtlas_;		// Sprite Sheet texture atlas (weak reference)
 	NSUInteger atlasIndex_;				// Absolute (real) Index on the SpriteSheet
 	BOOL	dirty_;						// Sprite needs to be updated
-	CCSpriteSheet	*spriteSheet_;		// Used spritesheet
+	CCSpriteSheet	*spriteSheet_;		// Used spritesheet (weak reference)
 	
 	// Data used when the sprite is self-rendered
-	CCTextureAtlas *selfRenderTextureAtlas_;		// Texture Atlas of 1 element (self)
-	ccBlendFunc	blendFunc_;							// Needed for the texture protocol
+	ccBlendFunc	blendFunc_;				// Needed for the texture protocol
 
 	// texture pixels
 	CGRect rect_;
 	
-	// texture (weak reference)
+	// texture
 	// used as an optimization
 	CCTexture2D		*texture_;
 
