@@ -37,7 +37,7 @@
 	ccBlendFunc		blendFunc_;
 	
 	// set of sprites that needs to be udpated before drawing
-	NSMutableArray	*dirtySprites_;
+//	NSMutableArray	*dirtySprites_;
 	
 	// all descendants: chlidren, gran children, etc...
 	NSMutableArray	*descendants_;
@@ -50,7 +50,7 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** set of sprites that needs to be updated before the rendering */
-@property (nonatomic,readonly) NSMutableArray *dirtySprites;
+//@property (nonatomic,readonly) NSMutableArray *dirtySprites;
 
 /** creates a CCSpriteSheet with a texture2d */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex;
@@ -105,7 +105,7 @@
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite;
 -(void) reorderSpriteInAtlas:(CCSprite*)sprite;
 
--(void) tagSpriteAsDirty:(CCSprite*)sprite;
+//-(void) tagSpriteAsDirty:(CCSprite*)sprite;
 
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
 -(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(int)z;
