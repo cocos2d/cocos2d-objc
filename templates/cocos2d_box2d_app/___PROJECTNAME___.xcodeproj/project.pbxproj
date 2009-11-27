@@ -156,6 +156,10 @@
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		506EDC31102F528A00A389B3 /* HelloWorldScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506EDC30102F528A00A389B3 /* HelloWorldScene.mm */; };
 		506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
+		50AC652610C048B200C19890 /* b2FrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC652210C048B200C19890 /* b2FrictionJoint.cpp */; };
+		50AC652710C048B200C19890 /* b2FrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC652310C048B200C19890 /* b2FrictionJoint.h */; };
+		50AC652810C048B200C19890 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC652410C048B200C19890 /* b2WeldJoint.cpp */; };
+		50AC652910C048B200C19890 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC652510C048B200C19890 /* b2WeldJoint.h */; };
 		50F412F8106926A5002A0D5E /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F1106926A5002A0D5E /* CDAudioManager.h */; };
 		50F412F9106926A5002A0D5E /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F412F2106926A5002A0D5E /* CDAudioManager.m */; };
 		50F412FA106926A5002A0D5E /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F3106926A5002A0D5E /* CDOpenALSupport.h */; };
@@ -426,6 +430,10 @@
 		506EDC2F102F528A00A389B3 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		506EDC30102F528A00A389B3 /* HelloWorldScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldScene.mm; sourceTree = "<group>"; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50AC652210C048B200C19890 /* b2FrictionJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2FrictionJoint.cpp; sourceTree = "<group>"; };
+		50AC652310C048B200C19890 /* b2FrictionJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2FrictionJoint.h; sourceTree = "<group>"; };
+		50AC652410C048B200C19890 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
+		50AC652510C048B200C19890 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
 		50F412F1106926A5002A0D5E /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		50F412F2106926A5002A0D5E /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		50F412F3106926A5002A0D5E /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
@@ -982,6 +990,10 @@
 		50F413E010692C6D002A0D5E /* Joints */ = {
 			isa = PBXGroup;
 			children = (
+				50AC652210C048B200C19890 /* b2FrictionJoint.cpp */,
+				50AC652310C048B200C19890 /* b2FrictionJoint.h */,
+				50AC652410C048B200C19890 /* b2WeldJoint.cpp */,
+				50AC652510C048B200C19890 /* b2WeldJoint.h */,
 				50F413E110692C6D002A0D5E /* b2DistanceJoint.cpp */,
 				50F413E210692C6D002A0D5E /* b2DistanceJoint.h */,
 				50F413E310692C6D002A0D5E /* b2GearJoint.cpp */,
@@ -1144,6 +1156,8 @@
 				504DFC0610AF1414006D82FE /* CLScoreServerPost.h in Headers */,
 				504DFC0810AF1414006D82FE /* CLScoreServerRequest.h in Headers */,
 				504DFC0A10AF1414006D82FE /* cocoslive.h in Headers */,
+				50AC652710C048B200C19890 /* b2FrictionJoint.h in Headers */,
+				50AC652910C048B200C19890 /* b2WeldJoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1343,6 +1357,8 @@
 				504DFC0710AF1414006D82FE /* CLScoreServerPost.m in Sources */,
 				504DFC0910AF1414006D82FE /* CLScoreServerRequest.m in Sources */,
 				504DFC0B10AF1414006D82FE /* cocoslive.m in Sources */,
+				50AC652610C048B200C19890 /* b2FrictionJoint.cpp in Sources */,
+				50AC652810C048B200C19890 /* b2WeldJoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

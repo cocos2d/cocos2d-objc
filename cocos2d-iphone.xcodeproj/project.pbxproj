@@ -861,6 +861,10 @@
 		50A783DD0F3AFDD700104C45 /* streak.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A783DC0F3AFDD700104C45 /* streak.png */; };
 		50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */; };
 		50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */; };
+		50AC64C910C0468200C19890 /* b2FrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC64C510C0468100C19890 /* b2FrictionJoint.cpp */; };
+		50AC64CA10C0468200C19890 /* b2FrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC64C610C0468200C19890 /* b2FrictionJoint.h */; };
+		50AC64CB10C0468200C19890 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC64C710C0468200C19890 /* b2WeldJoint.cpp */; };
+		50AC64CC10C0468200C19890 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC64C810C0468200C19890 /* b2WeldJoint.h */; };
 		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -2240,6 +2244,10 @@
 		50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
 		50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTileMapAtlas.m; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
+		50AC64C510C0468100C19890 /* b2FrictionJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2FrictionJoint.cpp; sourceTree = "<group>"; };
+		50AC64C610C0468200C19890 /* b2FrictionJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2FrictionJoint.h; sourceTree = "<group>"; };
+		50AC64C710C0468200C19890 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
+		50AC64C810C0468200C19890 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkAccelTouchTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkAccelTouchTest.h; path = tests/ChipmunkAccelTouchTest.h; sourceTree = "<group>"; };
@@ -3883,6 +3891,10 @@
 		506EE3C01030F19600A389B3 /* Joints */ = {
 			isa = PBXGroup;
 			children = (
+				50AC64C510C0468100C19890 /* b2FrictionJoint.cpp */,
+				50AC64C610C0468200C19890 /* b2FrictionJoint.h */,
+				50AC64C710C0468200C19890 /* b2WeldJoint.cpp */,
+				50AC64C810C0468200C19890 /* b2WeldJoint.h */,
 				506EE3C11030F19600A389B3 /* b2DistanceJoint.cpp */,
 				506EE3C21030F19600A389B3 /* b2DistanceJoint.h */,
 				506EE3C31030F19600A389B3 /* b2GearJoint.cpp */,
@@ -4610,6 +4622,8 @@
 				506EE40E1030F19700A389B3 /* b2PrismaticJoint.h in Headers */,
 				506EE4101030F19700A389B3 /* b2PulleyJoint.h in Headers */,
 				506EE4121030F19700A389B3 /* b2RevoluteJoint.h in Headers */,
+				50AC64CA10C0468200C19890 /* b2FrictionJoint.h in Headers */,
+				50AC64CC10C0468200C19890 /* b2WeldJoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6897,6 +6911,8 @@
 				506EE40D1030F19700A389B3 /* b2PrismaticJoint.cpp in Sources */,
 				506EE40F1030F19700A389B3 /* b2PulleyJoint.cpp in Sources */,
 				506EE4111030F19700A389B3 /* b2RevoluteJoint.cpp in Sources */,
+				50AC64C910C0468200C19890 /* b2FrictionJoint.cpp in Sources */,
+				50AC64CB10C0468200C19890 /* b2WeldJoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

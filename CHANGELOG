@@ -1,6 +1,6 @@
 version 0.9.0-beta - XX-MMM-2009
  . ActionManager: fixed leak (issue #635)
- . Box2d: updated to r27 (pre 2.1.0) (issue #494)
+ . Box2d: updated to r28 (pre 2.1.0) (issue #494)
  . Node: vertexZ is translated just once (issue #641)
  . Director: call schedulers at the end of the main loop (part of issue #533)
  . Particles: code easier to mantain, same performance

@@ -2,7 +2,7 @@
 
 echo 'cocos2d-iphone template installer'
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.9.0-alpha Application/'
+DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.9.0-beta Application/'
 LIBS_DIR="$DST_DIR"libs
 
 echo 'Installing cocos2d template'
@@ -46,7 +46,7 @@ echo 'Installing cocos2d + box2d template'
 echo '-----------------------------------'
 echo ''
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.9.0-alpha Box2d Application/'
+DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.9.0-beta Box2d Application/'
 LIBS_DIR="$DST_DIR"libs
 
 if [[ -d $DST_DIR ]];  then
@@ -88,7 +88,7 @@ echo 'Installing cocos2d + chipmunk template'
 echo '--------------------------------------'
 echo ''
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.9.0-alpha Chipmunk Application/'
+DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.9.0-beta Chipmunk Application/'
 LIBS_DIR="$DST_DIR"libs
 
 if [[ -d $DST_DIR ]];  then

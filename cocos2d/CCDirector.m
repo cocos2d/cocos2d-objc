@@ -750,6 +750,8 @@ static CCDirector *_sharedDirector = nil;
 // updates the FPS every frame
 -(void) showFPS
 {
+	static char format[20];
+
 	frames++;
 	accumDt += dt;
 	
@@ -760,8 +762,9 @@ static CCDirector *_sharedDirector = nil;
 	}
 		
 	NSString *str = [NSString stringWithFormat:@"%.1f",frameRate];
-//	glTranslatef(10.0, 10.0, 0);
 	[FPSLabel setString:str];
+//	sprintf(format,"%.1f",frameRate);
+//	[FPSLabel setCString:format];
 	[FPSLabel draw];
 }
 #else
