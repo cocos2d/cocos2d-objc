@@ -539,83 +539,66 @@
 //
 #pragma mark CCSprite - property overloads
 
-// XXX: Should be optmized
--(void) setDirtyRecursive:(BOOL)b
+
+-(void) setDirtyRecursively:(BOOL)b
 {
 	dirty_ = b;
 	// recursively set dirty
-	for( CCSprite *child in children)
-		[child setDirtyRecursive:YES];
+	if( hasChildren_ ) {
+		for( CCSprite *child in children)
+			[child setDirtyRecursively:YES];
+	}
 }
+
+// XXX HACK: optimization
+#define SET_DIRTY_RECURSIVELY() {							\
+					if( usesSpriteSheet_ && ! dirty_ ) {	\
+						dirty_ = YES;						\
+						if( hasChildren_)					\
+							self.dirty = YES;				\
+						}									\
+					}
 
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setScaleX:(float) sx
 {
 	[super setScaleX:sx];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setScaleY:(float) sy
 {
 	[super setScaleY:sy];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setScale:(float) s
 {
 	[super setScale:s];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void) setVertexZ:(float)z
 {
 	[super setVertexZ:z];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setAnchorPoint:(CGPoint)anchor
 {
 	[super setAnchorPoint:anchor];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
@@ -627,11 +610,7 @@
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	if( usesSpriteSheet_ ) {
-		dirty_ = YES;
-		if( hasChildren_ )
-			[self setDirtyRecursive:YES];
-	}
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setFlipX:(BOOL)b
