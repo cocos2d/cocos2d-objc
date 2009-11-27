@@ -133,6 +133,7 @@
 		[self useSelfRender];
 		
 		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
+		hasChildren_ = NO;
 
 		// Atlas: Color
 		opacity_ = 255;
@@ -329,8 +330,7 @@
 		
 		CGAffineTransform old = CGAffineTransformIdentity;
 
-		Class aClass = [CCSpriteSheet class];
-		
+		Class aClass = [CCSpriteSheet class];		
 		newScaleX = newScaleY = 1;
 		for (CCNode *p = self ; p != nil; p = p.parent) {
 			if( [p isKindOfClass:aClass] )
@@ -495,6 +495,8 @@
 		NSUInteger index = [spriteSheet_ atlasIndexForChild:child atZ:z];
 		[spriteSheet_ insertChild:child inAtlasAtIndex:index];
 	}
+	
+	hasChildren_ = ( [children count] > 0 );
 
 	return ret;
 }
@@ -506,6 +508,7 @@
 	}
 
 	[super reorderChild:child z:z];
+	hasChildren_ = ( [children count] > 0 );
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
@@ -514,6 +517,8 @@
 		[spriteSheet_ removeSpriteFromAtlas:sprite];
 
 	[super removeChild:sprite cleanup:doCleanup];
+	
+	hasChildren_ = ( [children count] > 0 );
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
@@ -524,6 +529,8 @@
 	}
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
+	
+	hasChildren_ = ( [children count] > 0 );
 }
 
 //
@@ -533,26 +540,21 @@
 #pragma mark CCSprite - property overloads
 
 // XXX: Should be optmized
--(void) setDirty:(BOOL)b
+-(void) setDirtyRecursive:(BOOL)b
 {
-	if( b != dirty_ ) {
-		dirty_ = b;
-		
-		// recursively set dirty
-		for( CCSprite *child in children)
-			child.dirty = b;
-		
-//		if( b )
-//			[spriteSheet_ tagSpriteAsDirty:self];
-	}
+	dirty_ = b;
+	// recursively set dirty
+	for( CCSprite *child in children)
+		[child setDirtyRecursive:YES];
 }
 
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
 	if( usesSpriteSheet_ ) {
-		self.dirty = YES;
-//		dirty_ = YES;
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
 	}
 }
 
@@ -560,8 +562,9 @@
 {
 	[super setRotation:rot];
 	if( usesSpriteSheet_ ) {
-		self.dirty = YES;
-//		dirty_ = YES;
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
 	}
 }
 
@@ -569,8 +572,9 @@
 {
 	[super setScaleX:sx];
 	if( usesSpriteSheet_ ) {
-		self.dirty = YES;
-//		dirty_ = YES;
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
 	}
 }
 
@@ -578,8 +582,9 @@
 {
 	[super setScaleY:sy];
 	if( usesSpriteSheet_ ) {
-		self.dirty = YES;
-//		dirty_ = YES;
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
 	}
 }
 
@@ -587,25 +592,30 @@
 {
 	[super setScale:s];
 	if( usesSpriteSheet_ ) {
-		self.dirty = YES;
-//		dirty_ = YES;
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
 	}
 }
 
 -(void) setVertexZ:(float)z
 {
 	[super setVertexZ:z];
-	if( usesSpriteSheet_ )
-		self.dirty = YES;
-//		dirty_ = YES;
+	if( usesSpriteSheet_ ) {
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
+	}
 }
 
 -(void)setAnchorPoint:(CGPoint)anchor
 {
 	[super setAnchorPoint:anchor];
-	if( usesSpriteSheet_ )
-		self.dirty = YES;
-//		dirty_ = YES;
+	if( usesSpriteSheet_ ) {
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
+	}
 }
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
@@ -617,9 +627,11 @@
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
-	if( usesSpriteSheet_ )
-		self.dirty = YES;
-//		dirty_ = YES;
+	if( usesSpriteSheet_ ) {
+		dirty_ = YES;
+		if( hasChildren_ )
+			[self setDirtyRecursive:YES];
+	}
 }
 
 -(void)setFlipX:(BOOL)b
@@ -657,6 +669,7 @@
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
+			// no need to set it recursively
 			dirty_ = YES;
 	}
 	// self render

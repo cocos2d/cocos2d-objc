@@ -242,7 +242,6 @@
 		50E2A76410A4B27A00D894CE /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A6E510A4B27A00D894CE /* cocos2d.m */; };
 		50E2A76510A4B27A00D894CE /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A6E810A4B27A00D894CE /* base64.c */; };
 		50E2A76610A4B27A00D894CE /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A6E910A4B27A00D894CE /* base64.h */; };
-		50E2A76710A4B27A00D894CE /* carray.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A6EA10A4B27A00D894CE /* carray.h */; };
 		50E2A76810A4B27A00D894CE /* ccArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A6EB10A4B27A00D894CE /* ccArray.h */; };
 		50E2A76910A4B27A00D894CE /* ccHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A6EC10A4B27A00D894CE /* ccHashSet.h */; };
 		50E2A76A10A4B27A00D894CE /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A6ED10A4B27A00D894CE /* ccHashSet.m */; };
@@ -533,7 +532,6 @@
 		50E2A6E510A4B27A00D894CE /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
 		50E2A6E810A4B27A00D894CE /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		50E2A6E910A4B27A00D894CE /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		50E2A6EA10A4B27A00D894CE /* carray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carray.h; sourceTree = "<group>"; };
 		50E2A6EB10A4B27A00D894CE /* ccArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccArray.h; sourceTree = "<group>"; };
 		50E2A6EC10A4B27A00D894CE /* ccHashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccHashSet.h; sourceTree = "<group>"; };
 		50E2A6ED10A4B27A00D894CE /* ccHashSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccHashSet.m; sourceTree = "<group>"; };
@@ -936,7 +934,6 @@
 			children = (
 				50E2A6E810A4B27A00D894CE /* base64.c */,
 				50E2A6E910A4B27A00D894CE /* base64.h */,
-				50E2A6EA10A4B27A00D894CE /* carray.h */,
 				50E2A6EB10A4B27A00D894CE /* ccArray.h */,
 				50E2A6EC10A4B27A00D894CE /* ccHashSet.h */,
 				50E2A6ED10A4B27A00D894CE /* ccHashSet.m */,
@@ -1037,7 +1034,6 @@
 				50E2A76210A4B27A00D894CE /* ccTypes.h in Headers */,
 				50E2A76310A4B27A00D894CE /* cocos2d.h in Headers */,
 				50E2A76610A4B27A00D894CE /* base64.h in Headers */,
-				50E2A76710A4B27A00D894CE /* carray.h in Headers */,
 				50E2A76810A4B27A00D894CE /* ccArray.h in Headers */,
 				50E2A76910A4B27A00D894CE /* ccHashSet.h in Headers */,
 				50E2A76D10A4B27A00D894CE /* CGPointExtension.h in Headers */,
