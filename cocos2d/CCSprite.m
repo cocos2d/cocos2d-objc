@@ -332,7 +332,9 @@
 
 		Class aClass = [CCSpriteSheet class];		
 		newScaleX = newScaleY = 1;
-		for (CCNode *p = self ; p != nil; p = p.parent) {
+		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
+		
+		for (CCSprite *p = self ; p != nil; p = (CCSprite*)p.parent) {
 			if( [p isKindOfClass:aClass] )
 				break;
 			
@@ -342,16 +344,19 @@
 			float	sy = p.scaleY;
 			CGAffineTransform new = CGAffineTransformIdentity;
 			
-			if( honorParentTransform_ & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
+			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
 				new = CGAffineTransformTranslate(new, pos.x, pos.y);
-			if( honorParentTransform_ & CC_HONOR_PARENT_TRANSFORM_ROTATE )
+			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
 				new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
-			if( honorParentTransform_ & CC_HONOR_PARENT_TRANSFORM_SCALE )
+			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
 				new = CGAffineTransformScale(new, sx, sy);
+				newScaleX *= [p scaleX];
+				newScaleY *= [p scaleY];
+			}
 			
 			old = CGAffineTransformConcat( old, new);
-			newScaleX *= [p scaleX];
-			newScaleY *= [p scaleY];
+			
+			prevHonor = p.honorParentTransform;
 		}
 		
 		newPosition = ccp( old.tx, old.ty);
