@@ -1523,32 +1523,33 @@ Class restartAction()
 		
 		// parents
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		[sheet.texture generateMipmap];
 		
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
 		
-		CCSprite *sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
-		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
+		CCSprite *sprite11 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		[sprite11 setPosition:ccp( s.width/3, s.height/2)];
 
-		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
-		[sprite2 setPosition:ccp(20,30)];
-		sprite2.scale = 0.2f;
+		CCSprite *sprite12 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite12 setPosition:ccp(20,30)];
+		sprite12.scale = 0.2f;
 
-		CCSprite *sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
-		[sprite3 setPosition:ccp(-20,30)];
-		sprite3.scale = 0.2f;
-
-		[sheet addChild:sprite1];
-		[sprite1 addChild:sprite2 z:-2];
-		[sprite1 addChild:sprite3 z:2];
+		CCSprite *sprite13 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite13 setPosition:ccp(-20,30)];
+		sprite13.scale = 0.2f;
+		
+		[sheet addChild:sprite11];
+		[sprite11 addChild:sprite12 z:-2];
+		[sprite11 addChild:sprite13 z:2];
 
 		// don't rotate with it's parent
-		sprite2.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_ROTATE;
+		sprite12.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_ROTATE;
 
 		// don't scale and rotate with it's parent
-		sprite3.honorParentTransform &= ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE);
+		sprite13.honorParentTransform &= ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE);
 		
 		id action = [CCMoveBy actionWithDuration:2 position:ccp(200,0)];
 		id action_back = [action reverse];
@@ -1556,9 +1557,37 @@ Class restartAction()
 		id action_s = [CCScaleBy actionWithDuration:2 scale:2];
 		id action_s_back = [action_s reverse];
 
-		[sprite1 runAction: [CCRepeatForever actionWithAction:action_rot]];
-		[sprite1 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action, action_back, nil]]];
-		[sprite1 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action_s, action_s_back, nil]]];
+		[sprite11 runAction: [CCRepeatForever actionWithAction:action_rot]];
+		[sprite11 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action, action_back, nil]]];
+		[sprite11 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action_s, action_s_back, nil]]];
+		
+		//
+		// another set of parent / children
+		//
+		
+		CCSprite *sprite21 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		[sprite21 setPosition:ccp( 2*s.width/3, s.height/2-50)];
+		
+		CCSprite *sprite22 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite22 setPosition:ccp(20,30)];
+		sprite22.scale = 0.8f;
+		
+		CCSprite *sprite23 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite23 setPosition:ccp(-20,30)];
+		sprite23.scale = 0.8f;
+		
+		[sheet addChild:sprite21];
+		[sprite21 addChild:sprite22 z:-2];
+		[sprite21 addChild:sprite23 z:2];
+		
+		// don't rotate with it's parent
+		sprite22.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE;
+		
+		// don't scale and rotate with it's parent
+		sprite23.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_SCALE;
+		
+		[sprite21 runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:360]]];
+		[sprite21 runAction:[CCRepeatForever actionWithAction:[CCSequence actions:[CCScaleTo actionWithDuration:0.5f scale:5.0f],[CCScaleTo	actionWithDuration:0.5f scale:1],nil]]];
 		
 	}	
 	return self;
