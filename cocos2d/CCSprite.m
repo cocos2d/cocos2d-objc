@@ -439,7 +439,7 @@
 
 -(void) draw
 {	
-	NSAssert(!usesSpriteSheet_, @"CCSprite can't be dirty when it's parent is not an CCSpriteSheet");
+	NSAssert(!usesSpriteSheet_, @"If CCSprite is being rendered by CCSpriteSheet, CCSprite#draw SHOULD NOT be called");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -496,7 +496,7 @@
 		[spriteSheet_ insertChild:child inAtlasAtIndex:index];
 	}
 	
-	hasChildren_ = ( [children count] > 0 );
+	hasChildren_ = YES;
 
 	return ret;
 }
@@ -508,7 +508,6 @@
 	}
 
 	[super reorderChild:child z:z];
-	hasChildren_ = ( [children count] > 0 );
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
@@ -530,7 +529,7 @@
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
-	hasChildren_ = ( [children count] > 0 );
+	hasChildren_ = NO;
 }
 
 //
@@ -555,7 +554,7 @@
 					if( usesSpriteSheet_ && ! dirty_ ) {	\
 						dirty_ = YES;						\
 						if( hasChildren_)					\
-							self.dirty = YES;				\
+							[self setDirtyRecursively:YES];	\
 						}									\
 					}
 
