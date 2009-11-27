@@ -210,13 +210,17 @@ static CCDirector *_sharedDirector = nil;
 //
 - (void) mainLoop
 {    
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
+	
+	/* tick before glClear: issue #533 */
+	if( ! isPaused_ )
+		[[CCScheduler sharedScheduler] tick: dt];	
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
-	 XXX ? Which bug is this one. It seems that it can't be reproduced with v0.9 */
+	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( nextScene )
 		[self setNextScene];
 	
@@ -230,11 +234,7 @@ static CCDirector *_sharedDirector = nil;
 		[self showFPS];
 	
 	glPopMatrix();
-	
-	/* tick after glClear: issue #533 */
-	if( ! isPaused_ )
-		[[CCScheduler sharedScheduler] tick: dt];
-	
+		
 	/* swap buffers */
 	[openGLView_ swapBuffers];	
 }
