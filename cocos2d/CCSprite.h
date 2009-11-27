@@ -75,6 +75,7 @@ typedef enum {
 	BOOL	dirty_;									// Sprite needs to be updated
 	CCSpriteSheet	*spriteSheet_;					// Used spritesheet (weak reference)
 	ccHonorParentTransform	honorParentTransform_;	// whether or not to transform according to its parent transformations
+	BOOL	hasChildren_;							// optimization to check if it contain children
 	
 	//
 	// Data used when the sprite is self-rendered

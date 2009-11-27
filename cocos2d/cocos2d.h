@@ -101,6 +101,7 @@
 #import "Support/EAGLView.h"
 #import "Support/FileUtils.h"
 #import "Support/CGPointExtension.h"
+#import "Support/ccArray.h"
 
 
 // compatibility with v0.8
