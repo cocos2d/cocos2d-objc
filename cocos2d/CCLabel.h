@@ -28,9 +28,7 @@
 	CGSize _dimensions;
 	UITextAlignment _alignment;
 	NSString * _fontName;
-	CGFloat _fontSize;
-	
-	unichar	*
+	CGFloat _fontSize;	
 }
 
 /** creates a CCLabel from a fontname, alignment, dimension and font size */
