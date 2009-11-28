@@ -107,6 +107,10 @@
 	if( (self = [super init]) )
 	{
 		dirty_ = NO;
+
+		// by default use "Self Render".
+		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
+		[self useSelfRender];
 		
 		// update texture
 		[self setTexture:texture];
@@ -128,10 +132,6 @@
 						   (-offset.y / rect.size.height) + 0.5f );
 
 
-		// by default use "Self Render".
-		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
-		[self useSelfRender];
-		
 		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
 		hasChildren_ = NO;
 
@@ -265,7 +265,7 @@
 
 		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
 			[self setContentSize:rect.size];
-			self.dirty = YES;
+			dirty_ = YES;
 		}
 	}
 	// self rendering
@@ -330,12 +330,11 @@
 		
 		CGAffineTransform old = CGAffineTransformIdentity;
 
-		Class aClass = [CCSpriteSheet class];		
 		newScaleX = newScaleY = 1;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
-		for (CCSprite *p = self ; p != nil; p = (CCSprite*)p.parent) {
-			if( [p isKindOfClass:aClass] )
+		for (CCNode *p = self ; p != spriteSheet_; p = p.parent) {
+			if( p == nil )
 				break;
 			
 			CGPoint pos = p.position;
@@ -356,7 +355,7 @@
 			
 			old = CGAffineTransformConcat( old, new);
 			
-			prevHonor = p.honorParentTransform;
+			prevHonor = [(CCSprite*)p honorParentTransform];
 		}
 		
 		newPosition = ccp( old.tx, old.ty);
@@ -769,7 +768,7 @@
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
+	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
 
 	if( ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
@@ -781,7 +780,7 @@
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSprite manager");
+	NSAssert( ! usesSpriteSheet_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet");
 
 	[texture_ release];
 	texture_ = [texture retain];
