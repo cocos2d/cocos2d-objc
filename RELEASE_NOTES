@@ -1,12 +1,12 @@
-===== cocos2d for iPhone v0.9.0 alpha Release Notes =====
+===== cocos2d for iPhone v0.9.0 beta Release Notes =====
 
 
 **WARNING**:
-This is an alpha version. It means:
+This is a beta version. It means:
   * Features might be in an incomplete state
   * It has less testing than final versions (more bugs?)
   * The API in this versions is not final
 
 
 Please, see the online document:
-http://www.cocos2d-iphone.org/wiki/doku.php/release_notes:0_9_0_alpha
+http://www.cocos2d-iphone.org/wiki/doku.php/release_notes:0_9_0_beta
