@@ -333,9 +333,7 @@
 		newScaleX = newScaleY = 1;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
-		for (CCNode *p = self ; p != spriteSheet_; p = p.parent) {
-			if( p == nil )
-				break;
+		for (CCNode *p = self ; p && p != spriteSheet_; p = p.parent) {
 			
 			CGPoint pos = p.position;
 			float	rot = p.rotation;
