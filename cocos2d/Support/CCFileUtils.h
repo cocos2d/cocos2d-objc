@@ -16,7 +16,7 @@
 
 
 /** Helper class to handle file operations */
-@interface FileUtils : NSObject
+@interface CCFileUtils : NSObject
 {
 }
 /** converts a relative path to a full path */

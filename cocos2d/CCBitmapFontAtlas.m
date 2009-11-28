@@ -26,7 +26,7 @@
 #import "CCBitmapFontAtlas.h"
 #import "CCSprite.h"
 #import "CCDrawingPrimitives.h"
-#import "Support/FileUtils.h"
+#import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
@@ -91,7 +91,7 @@ void FNTConfigRemoveCache( void )
 
 - (void)parseConfigFile:(NSString*)fntFile
 {	
-	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
 	
 	
@@ -386,7 +386,7 @@ void FNTConfigRemoveCache( void )
 //
 -(NSString*) atlasNameFromFntFile:(NSString*)fntFile
 {
-	NSString *fullpath = [FileUtils fullPathFromRelativePath:fntFile];
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
 
 	NSArray *lines = [[NSArray alloc] initWithArray:[contents componentsSeparatedByString:@"\n"]];
@@ -424,7 +424,7 @@ void FNTConfigRemoveCache( void )
 	
 	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
 
-	NSString *textureAtlasName = [FileUtils fullPathFromRelativePath:propertyValue];
+	NSString *textureAtlasName = [CCFileUtils fullPathFromRelativePath:propertyValue];
 	NSString *relDirPathOfTextureAtlas = [fntFile stringByDeletingLastPathComponent];
 	return [relDirPathOfTextureAtlas stringByAppendingPathComponent:textureAtlasName];
 }

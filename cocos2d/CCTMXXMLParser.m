@@ -21,7 +21,7 @@
 #import "ccMacros.h"
 #import "CCTMXXMLParser.h"
 #import "CCTMXTiledMap.h"
-#import "Support/FileUtils.h"
+#import "Support/CCFileUtils.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"
 
@@ -95,7 +95,7 @@
 
 @implementation CCTMXMapInfo
 
-@synthesize orientation=orientation_, mapSize=mapSize_, layers=layers_, tilesets=tilesets_, tileSize=tileSize_;
+@synthesize orientation=orientation_, mapSize=mapSize_, layers=layers_, tilesets=tilesets_, tileSize=tileSize_, filename=filename_;
 
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
@@ -108,13 +108,14 @@
 		
 		self.tilesets = [NSMutableArray arrayWithCapacity:4];
 		self.layers = [NSMutableArray arrayWithCapacity:4];
+		self.filename = [CCFileUtils fullPathFromRelativePath:tmxFile];
 	
 		// tmp vars
 		currentString = [[NSMutableString alloc] initWithCapacity:1024];
 		storingCharacters = NO;
 		layerAttribs = TMXLayerAttribNone;
 		
-		NSURL *url = [NSURL fileURLWithPath:[FileUtils fullPathFromRelativePath:tmxFile]];
+		NSURL *url = [NSURL fileURLWithPath:filename_];
 		NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
 		// we'll do the parsing
 		[parser setDelegate:self];
@@ -137,6 +138,7 @@
 	CCLOG(@"cocos2d: deallocing %@", self);
 	[tilesets_ release];
 	[layers_ release];
+	[filename_ release];
 	[currentString release];
 	[super dealloc];
 }
@@ -199,7 +201,11 @@
 	} else if([elementName isEqualToString:@"image"]) {
 
 		CCTMXTilesetInfo *tileset = [tilesets_ lastObject];
-		tileset.sourceImage = [attributeDict valueForKey:@"source"];
+		
+		// build full path
+		NSString *imagename = [attributeDict valueForKey:@"source"];		
+		NSString *path = [filename_ stringByDeletingLastPathComponent];		
+		tileset.sourceImage = [path stringByAppendingPathComponent:imagename];
 
 	} else if([elementName isEqualToString:@"data"]) {
 		NSString *encoding = [attributeDict valueForKey:@"encoding"];
