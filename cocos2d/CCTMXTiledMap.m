@@ -57,7 +57,8 @@
 	
 	// quad index is Z
 	[child setAtlasIndex:z];
-	[super addChild:child z:z tag:aTag];	
+	[descendants_ insertObject:child atIndex:z];
+	[super addChild:child z:z tag:aTag];
 	return self;	
 }
 @end

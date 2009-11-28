@@ -12,10 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"SpriteSheetChildren",
-			@"SpriteSheetChildren2",
-			@"SpriteSheetChildrenZ",
-
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -36,6 +32,9 @@ static NSString *transitions[] = {
 			@"SpriteNewTexture",
 			@"SpriteSheetNewTexture",
 			@"SpriteHybrid",
+			@"SpriteSheetChildren",
+			@"SpriteSheetChildren2",
+			@"SpriteSheetChildrenZ",
 };
 
 enum {
@@ -1601,7 +1600,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Honor Parent Transform";
+	return @"SpriteSheet HonorTransform";
 }
 @end
 
