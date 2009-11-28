@@ -16,7 +16,7 @@
 #import "ccMacros.h"
 #import "CCDirector.h"
 #import "CCTexture2D.h"
-#import "Support/FileUtils.h"
+#import "Support/CCFileUtils.h"
 
 static EAGLContext *auxEAGLcontext = nil;
 
@@ -186,7 +186,7 @@ static CCTextureCache *sharedTextureCache;
 	if( ! tex ) {
 		
 		// Split up directory and filename
-		NSString *fullpath = [FileUtils fullPathFromRelativePath: path ];
+		NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
 
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		if ( [[path lowercaseString] hasSuffix:@".pvr"] )
@@ -218,7 +218,7 @@ static CCTextureCache *sharedTextureCache;
 	}
 	
 	// Split up directory and filename
-	NSString *fullpath = [FileUtils fullPathFromRelativePath:path];
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
 	
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
 	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];

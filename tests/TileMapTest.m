@@ -12,9 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"TMXOrthoTest4",
-
-@"TileMapTest",
+			@"TileMapTest",
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
 			@"TMXOrthoTest2",

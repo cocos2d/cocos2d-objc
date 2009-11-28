@@ -24,7 +24,7 @@
 #import "CCSpriteFrameCache.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
-#import "Support/FileUtils.h"
+#import "Support/CCFileUtils.h"
 
 
 @implementation CCSpriteFrameCache
@@ -109,7 +109,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture
 {
-	NSString *path = [FileUtils fullPathFromRelativePath:plist];
+	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	return [self addSpriteFramesWithDictionary:dict texture:texture];
@@ -117,7 +117,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFramesWithFile:(NSString*)plist
 {
-	NSString *path = [FileUtils fullPathFromRelativePath:plist];
+	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 	
 	NSString *texturePath = [NSString stringWithString:plist];

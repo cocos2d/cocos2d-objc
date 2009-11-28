@@ -12,9 +12,9 @@
  *
  */
 
-#import "FileUtils.h"
+#import "CCFileUtils.h"
 
-@implementation FileUtils
+@implementation CCFileUtils
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
 	// do not convert an absolute path (starting with '/')

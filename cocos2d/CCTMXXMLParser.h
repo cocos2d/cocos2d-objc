@@ -114,6 +114,9 @@ enum {
     BOOL				storingCharacters;	
 	int					layerAttribs;
 	
+	// tmx filename
+	NSString *filename_;
+
 	// map orientation
 	int	orientation_;	
 	
@@ -135,7 +138,7 @@ enum {
 @property (nonatomic,readwrite,assign) CGSize tileSize;
 @property (nonatomic,readwrite,retain) NSMutableArray *layers;
 @property (nonatomic,readwrite,retain) NSMutableArray *tilesets;
-
+@property (nonatomic,readwrite,retain) NSString *filename;
 
 /** creates a TMX Format with a tmx file */
 +(id) formatWithTMXFile:(NSString*)tmxFile;
