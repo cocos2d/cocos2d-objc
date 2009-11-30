@@ -663,7 +663,7 @@ Class restartAction()
 {	
 	png_uint_32 width, height, width2, height2;
 	int bits = 0;
-	NSString *newName = [FileUtils fullPathFromRelativePath:name];
+	NSString *newName = [CCFileUtils fullPathFromRelativePath:name];
 	
 	FILE *png_file = fopen([newName UTF8String], "rb");
 	NSAssert(png_file, @"PNG doesn't exists");

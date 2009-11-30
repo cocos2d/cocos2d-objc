@@ -192,8 +192,12 @@ static CCTextureCache *sharedTextureCache;
 		if ( [[path lowercaseString] hasSuffix:@".pvr"] )
 			tex = [self addPVRTCImage:fullpath];
 		else {
-		
-			tex = [ [CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: fullpath ] ];
+
+			// prevents overloading the autorelease pool
+			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
+			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			[image release];
+			
 
 			[textures setObject: tex forKey:path];
 			
@@ -245,9 +249,9 @@ static CCTextureCache *sharedTextureCache;
 	return [tex autorelease];
 }
 
--(CCTexture2D*) addCGImage: (CGImageRef) image forKey: (NSString *)key
+-(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
 {
-	NSAssert(image != nil, @"TextureCache: image MUST not be nill");
+	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
 	
 	CCTexture2D * tex;
 	
@@ -255,7 +259,11 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 	
-	tex = [[CCTexture2D alloc] initWithImage: [UIImage imageWithCGImage:image]];
+	// prevents overloading the autorelease pool
+	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
+	tex = [[CCTexture2D alloc] initWithImage: image];
+	[image release];
+	
 	[textures setObject: tex forKey:key];
 	
 	return [tex autorelease];
