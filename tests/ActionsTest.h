@@ -101,3 +101,8 @@
 @interface ActionBezier : ActionDemo
 {}
 @end
+
+@interface ActionRepeatForever : ActionDemo
+{}
+@end
+

@@ -14,26 +14,27 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-						 @"ActionManual",
-						 @"ActionMove",
-						 @"ActionRotate",
-						 @"ActionScale",
-						 @"ActionJump",
-						 @"ActionBezier",
-						 @"ActionBlink",
-						 @"ActionFade",
-						 @"ActionTint",
-						 @"ActionAnimate",
-						 @"ActionSequence",
-						 @"ActionSequence2",
-						 @"ActionSpawn",
-						 @"ActionReverse",
-						 @"ActionDelayTime",
-						 @"ActionRepeat",
-						 @"ActionCallFunc",
-						 @"ActionReverseSequence",
-						 @"ActionReverseSequence2",
-						 @"ActionOrbit" };
+					@"ActionManual",
+					@"ActionMove",
+					@"ActionRotate",
+					@"ActionScale",
+					@"ActionJump",
+					@"ActionBezier",
+					@"ActionBlink",
+					@"ActionFade",
+					@"ActionTint",
+					@"ActionAnimate",
+					@"ActionSequence",
+					@"ActionSequence2",
+					@"ActionSpawn",
+					@"ActionReverse",
+					@"ActionDelayTime",
+					@"ActionRepeat",
+					@"ActionRepeatForever",
+					@"ActionCallFunc",
+					@"ActionReverseSequence",
+					@"ActionReverseSequence2",
+					@"ActionOrbit" };
 
 Class nextAction()
 {
@@ -505,6 +506,34 @@ Class restartAction()
 	return @"Spawn: Jump + Rotate";
 }
 @end
+
+@implementation ActionRepeatForever
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[tamara setVisible:NO];
+	
+	id action = [CCSequence actions:
+				 [CCDelayTime actionWithDuration:1],
+				 [CCCallFuncN actionWithTarget:self selector:@selector(repeatForever:)],
+				 nil];
+	
+	[grossini runAction:action];
+}
+
+-(void) repeatForever:(id)sender
+{
+	CCRepeatForever *repeat = [CCRepeatForever actionWithAction: [CCRotateBy actionWithDuration:2 angle:360]];
+	[sender runAction:repeat];
+}
+
+-(NSString *) title
+{
+	return @"RepeatForever + CallFuncN";
+}
+@end
+
 
 @implementation ActionReverse
 -(void) onEnter
