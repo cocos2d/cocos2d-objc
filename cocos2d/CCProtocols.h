@@ -49,6 +49,19 @@
  -(BOOL) doesOpacityModifyRGB;
 @end
 
+#pragma mark -
+#pragma mark CCBlendProtocol
+/**
+ You can specify the blending fuction.
+ @since v0.9.0
+ */
+@protocol CCBlendProtocol <NSObject>
+/** set the source blending function for the texture */
+-(void) setBlendFunc:(ccBlendFunc)blendFunc;
+/** returns the blending function used for the texture */
+-(ccBlendFunc) blendFunc;
+@end
+
 
 #pragma mark -
 #pragma mark CCTextureProtocol
@@ -60,17 +73,13 @@
  else
 	src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  But you can change the blending funtion at any time.
- @since v0.8
+ @since v0.8.0
  */
-@protocol CCTextureProtocol <NSObject>
+@protocol CCTextureProtocol <CCBlendProtocol>
 /** returns the used texture */
 -(CCTexture2D*) texture;
 /** sets a new texture. it will be retained */
 -(void) setTexture:(CCTexture2D*)texture;
-/** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc;
-/** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc;
 @end
 
 #pragma mark -
@@ -83,7 +92,7 @@
 @optional
 /** sets a new label using a CString.
  It is faster than setString since it doesn't require to alloc/retain/release an NString object.
- @since v0.9.0.
+ @since v0.9.0
  */
 -(void) setCString:(char*)label;
 @end

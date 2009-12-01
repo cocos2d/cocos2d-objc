@@ -22,3 +22,8 @@
 {
 }
 @end
+
+@interface LayerTestBlend : LayerTest
+{
+}
+@end

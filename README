@@ -8,7 +8,7 @@ design:
 
 
 Main features
-    * Scene management (workflow)8
+    * Scene management (workflow)
     * Transitions between scenes
     * Sprites and Sprite Sheets
     * Effects: Lens, Ripple, Waves, Liquid, etc.
