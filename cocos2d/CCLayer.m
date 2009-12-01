@@ -130,16 +130,8 @@
 
 // Opacity and RGB color protocol
 @synthesize opacity=opacity_, color=color_;
+@synthesize blendFunc=blendFunc_;
 
-
-- (id) init
-{
-	NSException* myException = [NSException
-								exceptionWithName:@"ColorLayerInit"
-								reason:@"Use ColorLayer initWithColor instead"
-								userInfo:nil];
-	@throw myException;	
-}
 
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
@@ -154,6 +146,10 @@
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
+		
+		// default blend function
+		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+
 		color_.r = color.r;
 		color_.g = color.g;
 		color_.b = color.b;
@@ -224,12 +220,19 @@
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
 	glEnableClientState(GL_COLOR_ARRAY);
 	
-	if( opacity_ != 255 )
+	BOOL newBlend = NO;
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+		newBlend = YES;
+		glBlendFunc(blendFunc_.src, blendFunc_.dst);
+	}
+	else if( opacity_ != 255 ) {
+		newBlend = YES;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
-	if( opacity_ != 255 )
+	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);

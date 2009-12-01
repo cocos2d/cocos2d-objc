@@ -18,6 +18,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"LayerTest1",
 	@"LayerTest2",
+	@"LayerTestBlend",
 };
 
 Class nextAction()
@@ -109,6 +110,7 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark Example LayerTest1
 
 @implementation LayerTest1
@@ -180,6 +182,7 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark Example LayerTest2
 
 @implementation LayerTest2
@@ -223,7 +226,57 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Example LayerTestBlend
 
+@implementation LayerTestBlend
+-(id) init
+{
+	if( (self=[super init] )) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCColorLayer* layer1 = [CCColorLayer layerWithColor: ccc4(255, 255, 255, 80)];
+		
+//		id actionTint = [CCTintBy actionWithDuration:0.5f red:-255 green:-127 blue:0];
+//		id actionTintBack = [actionTint reverse];
+//		id seq1 = [CCSequence actions: actionTint, actionTintBack, nil];
+//		[layer1 runAction: [CCRepeatForever actionWithAction:seq1]];
+		
+		
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		
+		[self addChild:sister1];
+		[self addChild:sister2];
+		[self addChild: layer1 z:100 tag:kTagLayer];
+		
+		sister1.position = ccp( 160, s.height/2);
+		sister2.position = ccp( 320, s.height/2);
+
+		[self schedule:@selector(newBlend:) interval:1];
+	}
+	return self;
+}
+
+-(void) newBlend:(ccTime)dt
+{
+	CCColorLayer *layer = (CCColorLayer*) [self getChildByTag:kTagLayer];
+	if( layer.blendFunc.dst == GL_ZERO )
+		[layer setBlendFunc: (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST } ];
+	else
+		[layer setBlendFunc:(ccBlendFunc){GL_ONE_MINUS_DST_COLOR, GL_ZERO}];
+
+}
+
+-(NSString *) title
+{
+	return @"ColorLayer: blend";
+}
+@end
+
+
+#pragma mark -
+#pragma mark AppController
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController

@@ -69,12 +69,14 @@
  - opacity
  - RGB colors
  */
-@interface CCColorLayer : CCLayer <CCRGBAProtocol>
+@interface CCColorLayer : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
 	GLubyte		opacity_;
 	ccColor3B	color_;	
 	GLfloat squareVertices[4 * 2];
 	GLubyte squareColors[4 * 4];
+	
+	ccBlendFunc	blendFunc_;
 }
 
 /** creates a CCLayer with color, width and height */
@@ -100,7 +102,8 @@
 @property (nonatomic,readonly) GLubyte opacity;
 /** Opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
-
+/** BlendFunction. Conforms to CCBlendProtocol protocol */
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
 
 /** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
