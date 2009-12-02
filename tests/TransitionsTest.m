@@ -407,9 +407,9 @@ Class restartTransition()
 //	[Director useFastDirector];
 	
 	// Create a depth buffer of 16 bits
-	// Needed for some transitions
+	// Needed for the TurnPage transition
 	// These means that openGL z-order will be taken into account
-	// "Flip" transitions doesn't work with DepthBuffer > 0
+	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
 //	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode

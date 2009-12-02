@@ -121,7 +121,7 @@
 	while( action1 ) {
 		now = va_arg(params,CCFiniteTimeAction*);
 		if ( now )
-			prev = [CCSequence actionOne: prev two: now];
+			prev = [self actionOne: prev two: now];
 		else
 			break;
 	}
@@ -209,7 +209,7 @@
 
 - (CCIntervalAction *) reverse
 {
-	return [CCSequence actionOne: [[actions objectAtIndex:1] reverse] two: [[actions objectAtIndex:0] reverse ] ];
+	return [[self class] actionOne: [[actions objectAtIndex:1] reverse] two: [[actions objectAtIndex:0] reverse ] ];
 }
 @end
 
@@ -302,7 +302,7 @@
 
 - (CCIntervalAction *) reverse
 {
-	return [CCRepeat actionWithAction:[other reverse] times: times];
+	return [[self class] actionWithAction:[other reverse] times: times];
 }
 @end
 
@@ -324,7 +324,7 @@
 	while( action1 ) {
 		now = va_arg(params,CCFiniteTimeAction*);
 		if ( now )
-			prev = [CCSpawn actionOne: prev two: now];
+			prev = [self actionOne: prev two: now];
 		else
 			break;
 	}
@@ -395,7 +395,7 @@
 
 - (CCIntervalAction *) reverse
 {
-	return [CCSpawn actionOne: [one reverse] two: [two reverse ] ];
+	return [[self class] actionOne: [one reverse] two: [two reverse ] ];
 }
 @end
 
@@ -489,7 +489,7 @@
 
 -(CCIntervalAction*) reverse
 {
-	return [CCRotateBy actionWithDuration: duration angle: -angle];
+	return [[self class] actionWithDuration: duration angle: -angle];
 }
 
 @end
@@ -570,7 +570,7 @@
 
 -(CCIntervalAction*) reverse
 {
-	return [CCMoveBy actionWithDuration: duration position: ccp( -delta.x, -delta.y)];
+	return [[self class] actionWithDuration: duration position: ccp( -delta.x, -delta.y)];
 }
 @end
 
@@ -628,7 +628,7 @@
 
 -(CCIntervalAction*) reverse
 {
-	return [CCJumpBy actionWithDuration: duration position: ccp(-delta.x,-delta.y) height: height jumps:jumps];
+	return [[self class] actionWithDuration: duration position: ccp(-delta.x,-delta.y) height: height jumps:jumps];
 }
 @end
 
@@ -716,7 +716,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	r.controlPoint_1 = ccpAdd(config.controlPoint_2, ccpNeg(config.endPosition));
 	r.controlPoint_2 = ccpAdd(config.controlPoint_1, ccpNeg(config.endPosition));
 	
-	CCBezierBy *action = [CCBezierBy actionWithDuration:[self duration] bezier:r];
+	CCBezierBy *action = [[self class] actionWithDuration:[self duration] bezier:r];
 	return action;
 }
 @end
@@ -808,7 +808,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(CCIntervalAction*) reverse
 {
-	return [CCScaleBy actionWithDuration: duration scaleX: 1/endScaleX scaleY:1/endScaleY];
+	return [[self class] actionWithDuration: duration scaleX: 1/endScaleX scaleY:1/endScaleY];
 }
 @end
 
@@ -847,7 +847,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(CCIntervalAction*) reverse
 {
 	// return 'self'
-	return [CCBlink actionWithDuration: duration blinks: times];
+	return [[self class] actionWithDuration: duration blinks: times];
 }
 @end
 
@@ -1020,7 +1020,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id)reverse
 {
-	return [CCDelayTime actionWithDuration:duration];
+	return [[self class] actionWithDuration:duration];
 }
 @end
 
@@ -1201,7 +1201,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     }
 	
 	CCAnimation *newAnim = [CCAnimation animationWithName:animation_.name delay:animation_.delay frames:newArray];
-	return [CCAnimate actionWithDuration:duration animation:newAnim restoreOriginalFrame:restoreOriginalFrame];
+	return [[self class] actionWithDuration:duration animation:newAnim restoreOriginalFrame:restoreOriginalFrame];
 }
 
 @end
