@@ -118,9 +118,10 @@
 
 /// Nodes supports frames protocol
 /// @since v0.7.1
+@class CCSpriteFrame;
 @protocol CCFrameProtocol <NSObject>
 /** sets a new display frame to the node. */
--(void) setDisplayFrame:(id)newFrame;
+-(void) setDisplayFrame:(CCSpriteFrame*)newFrame;
 /** changes the display frame based on an animation and an index. */
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
 /** returns the current displayed frame. */

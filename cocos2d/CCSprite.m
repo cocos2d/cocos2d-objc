@@ -48,6 +48,7 @@
 @synthesize textureAtlas = textureAtlas_;
 @synthesize spriteSheet = spriteSheet_;
 @synthesize honorParentTransform = honorParentTransform_;
+@synthesize offsetPosition = offsetPosition_;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -223,10 +224,10 @@
 	spriteSheet_ = nil;
 	dirty_ = NO;
 	
-	float x1 = 0;
-	float y1 = 0;
+	float x1 = 0 + offsetPosition_.x;
+	float y1 = 0 + offsetPosition_.y;
 	float x2 = x1 + rect_.size.width;
-	float y2 = y1 + rect_.size.height;		
+	float y2 = y1 + rect_.size.height;
 	quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
 	quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
 	quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
@@ -248,13 +249,10 @@
 
 -(void)setTextureRect:(CGRect) rect
 {
-	BOOL updateVertex = NO;
-
-	if( (rect.size.width != rect_.size.width) || (rect.size.height != rect_.size.height) )
-		updateVertex = YES;
-		
 	rect_ = rect;
 
+	CGSize newContent = rect_.size;
+	
 	[self updateTextureCoords];
 	
 	// rendering using SpriteSheet
@@ -263,30 +261,30 @@
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 
-		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
-			[self setContentSize:rect.size];
+		if( ! CGSizeEqualToSize(newContent, contentSize_))  {
+			[self setContentSize:newContent];
 			dirty_ = YES;
 		}
 	}
+
 	// self rendering
 	else
 	{
-		if( updateVertex ) {
-			// Atlas: Vertex
-			float x1 = 0;
-			float y1 = 0;
-			float x2 = x1 + rect.size.width;
-			float y2 = y1 + rect.size.height;		
-			quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
-			quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
-			quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-			quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };			
-		}
+		// Atlas: Vertex
+		float x1 = 0 + offsetPosition_.x;
+		float y1 = 0 + offsetPosition_.y;
+		float x2 = x1 + rect.size.width;
+		float y2 = y1 + rect.size.height;
+		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
+		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };			
 		
-		if( ! CGSizeEqualToSize(rect.size, contentSize_))  {
-			[self setContentSize:rect.size];
+		if( ! CGSizeEqualToSize(newContent, contentSize_))  {
+			[self setContentSize:newContent];
 		}		
 	}
+			
 }
 
 -(void)updateTextureCoords
@@ -360,6 +358,8 @@
 		newRotation_radians = -atan2f( old.c, old.a );
 	}
 	
+	// update offset
+	newPosition = ccpAdd(newPosition,offsetPosition_);
 		
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
@@ -701,13 +701,15 @@
 // CCFrameProtocol protocol
 //
 #pragma mark CCSprite - CCFrameProtocol protocol
--(void) setDisplayFrame:(id)newFrame
-{
-	CCSpriteFrame *frame = (CCSpriteFrame*)newFrame;
 
+-(void) setDisplayFrame:(CCSpriteFrame*)frame
+{
 	// update anchor point
-	anchorPoint_ = ccp( (- frame.offset.x / frame.rect.size.width) + 0.5f,
-					   ( - frame.offset.y / frame.rect.size.height) + 0.5f );
+//	anchorPoint_ = ccp( (- frame.offset.x / frame.rect.size.width) + 0.5f,
+//					   ( - frame.offset.y / frame.rect.size.height) + 0.5f );
+
+	offsetPosition_ = frame.offset;
+	
 	
 	// update rect
 	CGRect rect = [frame rect];

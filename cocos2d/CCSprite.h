@@ -70,17 +70,17 @@ typedef enum {
 	//
 	// Data used when the sprite is rendered using a CCSpriteSheet
 	//
-	CCTextureAtlas *textureAtlas_;					// Sprite Sheet texture atlas (weak reference)
-	NSUInteger atlasIndex_;							// Absolute (real) Index on the SpriteSheet
-	BOOL	dirty_;									// Sprite needs to be updated
-	CCSpriteSheet	*spriteSheet_;					// Used spritesheet (weak reference)
+	CCTextureAtlas			*textureAtlas_;			// Sprite Sheet texture atlas (weak reference)
+	NSUInteger				atlasIndex_;			// Absolute (real) Index on the SpriteSheet
+	BOOL					dirty_;					// Sprite needs to be updated
+	CCSpriteSheet			*spriteSheet_;			// Used spritesheet (weak reference)
 	ccHonorParentTransform	honorParentTransform_;	// whether or not to transform according to its parent transformations
-	BOOL	hasChildren_;							// optimization to check if it contain children
+	BOOL					hasChildren_;			// optimization to check if it contain children
 	
 	//
 	// Data used when the sprite is self-rendered
 	//
-	ccBlendFunc	blendFunc_;				// Needed for the texture protocol
+	ccBlendFunc		blendFunc_;			// Needed for the texture protocol
 	CCTexture2D		*texture_;			// Texture used to render the sprite
 
 	//
@@ -92,6 +92,9 @@ typedef enum {
 
 	// texture pixels
 	CGRect rect_;
+	
+	// Offset (used by Zwoptex)
+	CGPoint	offsetPosition_;
 	
 	// vertex coords, texture coors and color info
 	ccV3F_C4B_T2F_Quad quad_;
@@ -138,8 +141,10 @@ typedef enum {
  @since v0.9.0
  */
 @property (nonatomic,readwrite) ccHonorParentTransform honorParentTransform;
- 
-
+/** offset position of the sprite. Calculated automatically by editors like Zwoptex.
+ @since v0.9.0
+ */
+@property (nonatomic,readwrite) CGPoint	offsetPosition;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
