@@ -13,6 +13,7 @@
  */
 
 #import "CCFileUtils.h"
+#import "CCDirector.h"
 
 @implementation CCFileUtils
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
@@ -29,7 +30,7 @@
 	[imagePathComponents removeLastObject];
 	NSString *imageDirectory = [NSString pathWithComponents:imagePathComponents];
 	
-	NSString *fullpath = [[NSBundle mainBundle] pathForResource:file
+	NSString *fullpath = [[CCDirector sharedDirector].loadingBundle pathForResource:file
 														 ofType:nil
 													inDirectory:imageDirectory];
 	if (fullpath == nil)

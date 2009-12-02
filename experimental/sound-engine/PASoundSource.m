@@ -150,7 +150,7 @@ Exit:
 	ALsizei size = 0;
 	ALsizei freq = 0;
 	
-	NSBundle*				bundle = [NSBundle mainBundle];
+	NSBundle*				bundle = [CCDirector sharedDirector].loadingBundle;
 	
 	// get some audio data from a wave file
 	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:self.file ofType:self.extension]] retain];

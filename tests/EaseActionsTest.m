@@ -68,7 +68,7 @@ Class restartAction()
 
 		// Example:
 		// You can create a sprite using a Texture2D
-		CCTexture2D *tex = [[CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"grossini.png" ofType:nil] ] ];
+		CCTexture2D *tex = [[CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[CCDirector sharedDirector].loadingBundle pathForResource:@"grossini.png" ofType:nil] ] ];
 		grossini = [[CCSprite spriteWithTexture:tex] retain];
 		[tex release];
 		

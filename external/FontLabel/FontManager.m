@@ -21,6 +21,7 @@
 
 #import "FontManager.h"
 #import "ZFont.h"
+#import "CCDirector.h"
 
 static FontManager *sharedFontManager = nil;
 
@@ -43,9 +44,9 @@ static FontManager *sharedFontManager = nil;
 }
 
 - (BOOL)loadFont:(NSString *)filename {
-	NSString *fontPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"ttf"];
+	NSString *fontPath = [[CCDirector sharedDirector].loadingBundle pathForResource:filename ofType:@"ttf"];
 	if (fontPath == nil) {
-		fontPath = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
+		fontPath = [[CCDirector sharedDirector].loadingBundle pathForResource:filename ofType:nil];
 	}
 	if (fontPath == nil) return NO;
 	

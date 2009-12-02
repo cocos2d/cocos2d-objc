@@ -93,7 +93,7 @@
 	NSString *path = [CCFileUtils fullPathFromRelativePath:file ];
 
 //	//Find the path of the file
-//	NSBundle *mainBndl = [NSBundle mainBundle];
+//	NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
 //	NSString *resourcePath = [mainBndl resourcePath];
 //	NSString * path = [resourcePath stringByAppendingPathComponent:file];
 	
