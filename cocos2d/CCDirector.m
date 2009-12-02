@@ -72,7 +72,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 @synthesize deviceOrientation=deviceOrientation_;
 @synthesize isPaused=isPaused_;
-
+@synthesize loadingBundle;
 //
 // singleton stuff
 //
@@ -146,7 +146,7 @@ static CCDirector *_sharedDirector = nil;
 	if( (self=[super init]) ) {
 
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
-
+    loadingBundle = [NSBundle mainBundle];
 		// default values
 		pixelFormat_ = kPixelFormatDefault;
 		depthBufferFormat_ = 0;
