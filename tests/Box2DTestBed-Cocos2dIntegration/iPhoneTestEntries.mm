@@ -95,7 +95,7 @@ TestEntry g_testEntries[] =
 {"Time of Impact", TimeOfImpact::Create},
 {"Varying Friction", VaryingFriction::Create},
 {"Web", Web::Create},
-{NULL, NULL}
+//{NULL, NULL}
 
 };
 
