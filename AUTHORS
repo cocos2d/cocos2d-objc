@@ -170,6 +170,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added CocosNode#boundingBox method
 		Added debuging draw method to AtlasSpriteManager 
 		ColorLayer supports blend protocol patch
+		performance improvement on particles
 	* mark at abitofthought:
 		author of the single threaded Fast Director
 	* Michal Szymerski:
