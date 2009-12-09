@@ -69,7 +69,7 @@
 -(void) postStep
 {
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*particleCount, vertices,GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccPointSprite)*particleCount, vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

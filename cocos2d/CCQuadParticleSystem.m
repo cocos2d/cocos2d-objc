@@ -176,7 +176,7 @@
 -(void) postStep
 {
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quads[0])*particleCount, quads,GL_DYNAMIC_DRAW);	
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads[0])*particleCount, quads);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

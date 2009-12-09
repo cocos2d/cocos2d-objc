@@ -7,6 +7,7 @@ version 0.9.0-beta - XX-MMM-2009
  . Director: call schedulers before glClear in mainLoop (part of issue #533)
  . Director: "global" NSBundle to facilitate the integration of more than 1 game (issue #654)
  . Particles: code easier to mantain, same performance
+ . Particles: small performance improvement (issue #661)
  . SpriteSheet: supports any level of sub-children (issue #346)
  . Sprite: supports "honor parent transform" (issue #643)
  . Templates: using SDK 3.0 as base SDK
