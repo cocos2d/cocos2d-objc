@@ -52,6 +52,11 @@
  */
 #define CC_SPRITESHEET_RENDER_SUBPIXEL	1
 
+/** 
+ If enabled, the CCTextureAtlas object will use VBO instead of vertex list (recommended by Apple)
+ @since v0.9.0
+ */
+#define CC_TEXTURE_ATLAS_USES_VBO 1
 
 /**
  If enabled, all subclasses of TextureNode will draw a bounding box

@@ -73,6 +73,11 @@
 				free(indices);
 			return nil;
 		}
+		
+#if CC_TEXTURE_ATLAS_USES_VBO
+		// initial binding
+		glGenBuffers(2, &buffersVBO[0]);		
+#endif // CC_TEXTURE_ATLAS_USES_VBO
 
 		[self initIndices];
 	}
@@ -91,6 +96,11 @@
 
 	free(quads_);
 	free(indices);
+	
+#if CC_TEXTURE_ATLAS_USES_VBO
+	glDeleteBuffers(2, buffersVBO);
+#endif // CC_TEXTURE_ATLAS_USES_VBO
+	
 	
 	[texture_ release];
 
@@ -121,6 +131,15 @@
 //		indices[i*6+5] = i*4+1;	
 #endif	
 	}
+	
+#if CC_TEXTURE_ATLAS_USES_VBO
+	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * capacity_, quads_, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO[1]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * capacity_ * 6, indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif // CC_TEXTURE_ATLAS_USES_VBO
 }
 
 #pragma mark TextureAtlas - Update, Insert, Move & Remove
@@ -131,7 +150,7 @@
 	
 	totalQuads_ =  MAX( n+1, totalQuads_);
 
-	quads_[n] = *quad;
+	quads_[n] = *quad;	
 }
 
 
@@ -245,28 +264,57 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n
 {	
-#define kPointSize sizeof(quads_[0].bl)
+	
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+#define kQuadSize sizeof(quads_[0].bl)
+
+
+#if CC_TEXTURE_ATLAS_USES_VBO
+	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO[0]);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0]) * n, quads_);
+	
+	// vertices
+	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, vertices));
+	
+	// colors
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, colors));
+	
+	// tex coords
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, texCoords));
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO[1]);
+#ifdef USE_TRIANGLE_STRIP
+	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (void*)0);    
+#else
+	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, (void*)0); 
+#endif // USE_TRIANGLE_STRIP
+	
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
+#else // ! CC_TEXTURE_ATLAS_USES_VBO
 	
 	int offset = (int)quads_;
 
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kPointSize, (void*) (offset + diff) );
+	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
 
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (void*)(offset + diff));
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
 	
 	// tex coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kPointSize, (void*)(offset + diff));
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
 	
 #if USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices);	
 #else
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);	
 #endif
+	
+#endif // CC_TEXTURE_ATLAS_USES_VBO
 }
 
 @end

@@ -171,6 +171,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added debuging draw method to AtlasSpriteManager 
 		ColorLayer supports blend protocol patch
 		performance improvement on particles
+		TextureAtlas uses VBO instead of vertex array list patch
 	* mark at abitofthought:
 		author of the single threaded Fast Director
 	* Michal Szymerski:
