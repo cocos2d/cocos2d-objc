@@ -12,6 +12,7 @@ version 0.9.0-beta - XX-MMM-2009
  . Sprite: supports "honor parent transform" (issue #643)
  . Templates: using SDK 3.0 as base SDK
  . Textures: supports mipmap generation (issue #632)
+ . Texture Atlas: uses VBO instead of vertex array list (issue #581)
  . TextureCache: don't use autorelease pool to load images (issue #XXX)
  . Tiles: TMX maps supports sub-directories (issue #539)
 
