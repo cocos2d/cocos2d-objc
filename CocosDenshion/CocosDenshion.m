@@ -319,7 +319,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	}
 
 	CFURLRef fileURL = nil;
-	NSString *path = [FileUtils fullPathFromRelativePath:filePath];
+	NSString *path = [CCFileUtils fullPathFromRelativePath:filePath];
 	if (path) {
 		fileURL = (CFURLRef)[[NSURL fileURLWithPath:path] retain];
 	}

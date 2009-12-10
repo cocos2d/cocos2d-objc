@@ -103,7 +103,7 @@ Requirements:
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "FileUtils.h"
+#import "CCFileUtils.h"
 
 //You may want to edit these. Devices won't support any more than 32 sources though.
 #define CD_MAX_BUFFERS 32 //Total number of sounds that can be loaded
