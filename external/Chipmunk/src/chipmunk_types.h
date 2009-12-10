@@ -1,4 +1,5 @@
-#if 1 // use doubles by default for higher precision
+// in cocos2d use floats instead of doubles
+#if 0 // use doubles by default for higher precision
 
 typedef double cpFloat;
 #define cpfsqrt sqrt
