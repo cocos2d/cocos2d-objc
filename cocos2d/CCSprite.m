@@ -129,8 +129,10 @@
 		animations = nil;
 
 		// default transform anchor: center
-		anchorPoint_ = ccp( (-offset.x / rect.size.width) + 0.5f,
-						   (-offset.y / rect.size.height) + 0.5f );
+		anchorPoint_ =  ccp(0.5f, 0.5f);
+		offsetPosition_ = offset;
+//		anchorPoint_ = ccp( (-offset.x / rect.size.width) + 0.5f,
+//						   (-offset.y / rect.size.height) + 0.5f );
 
 
 		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
@@ -454,22 +456,22 @@
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
 
-#define kPointSize sizeof(quad_.bl)
+#define kQuadSize sizeof(quad_.bl)
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
 	int offset = (int)&quad_;
 	
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kPointSize, (void*) (offset + diff) );
+	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
 	
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (void*)(offset + diff));
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
 	
 	// tex coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kPointSize, (void*)(offset + diff));
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	

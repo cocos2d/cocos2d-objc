@@ -17,6 +17,7 @@ static NSString *transitions[] = {
 			@"Atlas4",
 			@"Atlas5",
 			@"Atlas6",
+			@"AtlasBitmapColor",
 			@"AtlasFastBitmap",
 };
 
@@ -455,6 +456,7 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark Example Atlas6
 
 /*
@@ -498,6 +500,48 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Example AtlasBitmapColor
+
+/*
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
+ */
+
+@implementation AtlasBitmapColor
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCBitmapFontAtlas *label = nil;
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Blue" fntFile:@"bitmapFontTest5.fnt"];
+		label.color = ccBLUE;
+		[self addChild:label];
+		label.position = ccp(s.width/2, s.height/2+50);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Red" fntFile:@"bitmapFontTest5.fnt"];
+		[self addChild:label];
+		label.position = ccp(s.width/2, s.height/2-50);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		label.color = ccRED;
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"BitmapFontAtlas: color";
+}
+@end
+
+#pragma mark -
 #pragma mark Example AtlasFastBitmap
 
 /*
