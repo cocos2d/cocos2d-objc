@@ -2,6 +2,7 @@ version 0.9.0-beta - XX-MMM-2009
  . ActionManager: fixed leak (issue #635)
  . Actions: using [self class]. Easier to subclass (issue #655)
  . Box2d: updated to r31 (pre 2.1.0) (issue #494)
+ . Chipmunk: updated to v5.0 (issue #664)
  . CocosDenshion: doesn't crash when file has no extension (issue #595)
  . ColorLayer: supports Blend Protocol (issue #597)
  . Node: vertexZ is translated just once (issue #641)

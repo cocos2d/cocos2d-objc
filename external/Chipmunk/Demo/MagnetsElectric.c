@@ -81,7 +81,7 @@ cpBody *staticBody;
 // forces between charges
 static void
 CoulombForce(ForceData* data){
-	data->F=cpvmult(cpvnormalize(data->relp),COU_MKS/data->r[1]);
+	data->F=cpvmult(cpvnormalize(data->relp),(cpFloat)COU_MKS/data->r[1]);
 }
 
 // forces between magnets
@@ -99,13 +99,13 @@ MagDipoleForce(ForceData* data){
 	
 	
 	// Components in polar coordinates
-	Fr=(2.0e0*cos(alpha)*cos(beta) - sin(alpha)*sin(beta));
-	Fphi=sin(alpha+beta);
+	Fr=((cpFloat)2.0e0*cpfcos(alpha)*cpfcos(beta) - cpfsin(alpha)*cpfsin(beta));
+	Fphi=cpfsin(alpha+beta);
 //	printf("%g %g %g %g %g\n",phi,alpha,beta,Fphi);
 	
 	// Cartesian coordinates
-	data->F=cpv(Fr*cos(phi)-Fphi*sin(phi),Fr*sin(phi)+Fphi*cos(phi));
-	data->F=cpvmult(data->F,-3.e0*MAG_MKS/(data->r[1]*data->r[1]));
+	data->F=cpv(Fr*cpfcos(phi)-Fphi*cpfsin(phi),Fr*cpfsin(phi)+Fphi*cpfcos(phi));
+	data->F=cpvmult(data->F,(cpFloat)-3.e0*(cpFloat)MAG_MKS/(data->r[1]*data->r[1]));
 }
 
 static void
@@ -121,7 +121,7 @@ MagDipoleTorque(ForceData* data){
 	// Torque. Though we could use a component of F to save some space, 
 	// we use another variables for the sake of clarity.
 	
-	data->T=(MAG_MKS/data->r[2])*(3.0e0*cos(alpha)*sin(beta) + sin(alpha-beta));
+	data->T=((cpFloat)MAG_MKS/data->r[2])*((cpFloat)3.0e0*cpfcos(alpha)*cpfsin(beta) + cpfsin(alpha-beta));
 }
 // ******* // 
 
@@ -214,11 +214,11 @@ ChargedBodyUpdatePositionVerlet(cpBody *body, cpFloat dt)
 	}
 	
 	cpVect dp = cpvmult(cpvadd(body->v, body->v_bias), dt);
-	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), 0.5e0*dt*dt));
+	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), (cpFloat)0.5e0*dt*dt));
 	body->p = cpvadd(body->p, dp);
 
 	cpBodySetAngle(body, body->a + (body->w + body->w_bias)*dt 
-				   + 0.5*body->t*body->i_inv*dt*dt);
+				   + 0.5f*body->t*body->i_inv*dt*dt);
 
 	// Update position of the singularities
 	aux = (Sing*)body->data;
@@ -238,11 +238,11 @@ ChargedBodyUpdatePositionVerlet(cpBody *body, cpFloat dt)
 static void
 ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 {
-	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0*dt));
-	body->w = body->w + body->t*body->i_inv*0.5e0*dt;
+	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), (cpFloat)0.5e0*dt));
+	body->w = body->w + body->t*body->i_inv*(cpFloat)0.5e0*dt;
 	
 	body->f = cpvzero;
-	body->t = 0.0e0;
+	body->t = 0;
 	
 	// Long range interaction
     cpArray *bodies = space->bodies;
@@ -262,15 +262,15 @@ ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, c
         LRangeForceApply(body, B);
 	  }
 	}
-	body->v = cpvadd(cpvmult(body->v,damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0*dt));
-	body->w = body->w*damping + body->t*body->i_inv*0.5e0*dt;
+	body->v = cpvadd(cpvmult(body->v,damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), (cpFloat)0.5e0*dt));
+	body->w = body->w*damping + body->t*body->i_inv*(cpFloat)0.5e0*dt;
 }
 
 static void 
 update(int ticks)
 {
 	int steps = 10;
-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
+	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	cpArray *bodies = space->bodies;
 
@@ -296,11 +296,11 @@ make_mag(cpVect p, cpFloat ang, cpFloat mag)
 		cpv( 10,-10)
 	};
 
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, nverts, verts, cpvzero));
+	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
 	body->p = p;
 	body->v = cpvzero;
 	cpBodySetAngle(body, ang);
-	body->w = 0.0e0;
+	body->w = 0;
 	
     // Load the singularities
     Sing *magnet=(Sing*)cpmalloc(sizeof(Sing));
@@ -324,7 +324,7 @@ make_mag(cpVect p, cpFloat ang, cpFloat mag)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
-	shape->e = 0.0; shape->u = 0.7;
+	shape->e = 0; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 
@@ -339,11 +339,11 @@ make_charged(cpVect p, cpFloat chg)
 		cpv( 10,-10)
 	};
 
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, nverts, verts, cpvzero));
+	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
 	body->p = p;
 	body->v = cpvzero;
 	cpBodySetAngle(body, 0);
-	body->w = 0.0e0;
+	body->w = 0;
 	
     // Load the singularities
     Sing *charge=(Sing*)cpmalloc(sizeof(Sing));;
@@ -366,7 +366,7 @@ make_charged(cpVect p, cpFloat chg)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
-	shape->e = 0.0; shape->u = 0.7;
+	shape->e = 0; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 void 
@@ -381,11 +381,11 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 		cpv( 10,-10)
 	};
 
-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, nverts, verts, cpvzero));
+	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
 	body->p = p;
 	body->v = cpvzero;
 	cpBodySetAngle(body, ang);
-	body->w = 0.0e0;
+	body->w = 0;
 	
     // Load the singularities
     Sing *mix=(Sing*)cpmalloc(sizeof(Sing));;
@@ -415,7 +415,7 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
-	shape->e = 0.0; shape->u = 0.7;
+	shape->e = 0; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 
@@ -431,7 +431,7 @@ init(void)
 	space->iterations = 5;
 	space->gravity = cpvzero; //cpv(0,-100);
 	
-	cpSpaceResizeActiveHash(space, 30.0, 2999);
+	cpSpaceResizeActiveHash(space, 30, 2999);
 	
 	// Screen border
 /*	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
@@ -462,28 +462,28 @@ init(void)
 	// Create magnets
 	for(int i=0; i<NMAG; i++)
 	{
-	  p.x=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*WIDTH/2.0f;
-  	  p.y=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*HEIGHT/2.0f;
-  	  ang=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*3.1415;
-	  make_mag(p, ang,1.0e7);
+	  p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
+  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
+  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)*(cpFloat)3.1415;
+	  make_mag(p, ang,(cpFloat)1.0e7);
 	}
 	
 	// Create charged objects
 	for(int i=0; i<NCHG; i++)
 	{
-	  p.x=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*WIDTH/2.0f;
-  	  p.y=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*HEIGHT/2.0f;
-  	  ang=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*3.1415;
-	  make_charged(p,1.0e-3*pow(-1.0,i%2));
+	  p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
+  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
+  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)* (cpFloat)3.1415;
+	  make_charged(p,(cpFloat)1.0e-3*cpfpow(-1,i%2));
 	}
 		
 	// Create charged magnets objects
 	for(int i=0; i<NMIX; i++)
 	{
-      p.x=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*WIDTH/2.0f;
-  	  p.y=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*HEIGHT/2.0f;
-  	  ang=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*3.1415;
-	  make_mix(p, ang,1.0e7*pow(-1.0,i%2), 1.0e-3*pow(-1.0,i%2));
+      p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
+  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
+  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)*(cpFloat)3.1415;
+	  make_mix(p, ang,(cpFloat)1.0e7*cpfpow(-1,i%2), (cpFloat)1.0e-3*cpfpow(-1,i%2));
 	}
 	
 	return space;

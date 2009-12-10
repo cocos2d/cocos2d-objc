@@ -129,7 +129,7 @@ init(void)
 	// add small gear
 	cpBody *smallGear = cpSpaceAddBody(space, cpBodyNew(10.0f, cpMomentForCircle(10.0f, 80, 0, cpvzero)));
 	smallGear->p = cpv(-160,-160);
-	cpBodySetAngle(smallGear, -M_PI_2);
+	cpBodySetAngle(smallGear, (cpFloat)-M_PI_2);
 
 	shape = cpSpaceAddShape(space, cpCircleShapeNew(smallGear, 80.0f, cpvzero));
 	shape->layers = 0;
@@ -139,7 +139,7 @@ init(void)
 	// add big gear
 	cpBody *bigGear = cpSpaceAddBody(space, cpBodyNew(40.0f, cpMomentForCircle(40.0f, 160, 0, cpvzero)));
 	bigGear->p = cpv(80,-160);
-	cpBodySetAngle(bigGear, M_PI_2);
+	cpBodySetAngle(bigGear, (cpFloat)M_PI_2);
 	
 	shape = cpSpaceAddShape(space, cpCircleShapeNew(bigGear, 160.0f, cpvzero));
 	shape->layers = 0;
@@ -149,7 +149,7 @@ init(void)
 	// connect the plunger to the small gear.
 	cpSpaceAddConstraint(space, cpPinJointNew(smallGear, plunger, cpv(80,0), cpv(0,0)));
 	// connect the gears.
-	cpSpaceAddConstraint(space, cpGearJointNew(smallGear, bigGear, -M_PI_2, -2.0f));
+	cpSpaceAddConstraint(space, cpGearJointNew(smallGear, bigGear, (cpFloat)-M_PI_2, -2.0f));
 	
 	
 	// feeder mechanism

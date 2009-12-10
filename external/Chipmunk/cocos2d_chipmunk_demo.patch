@@ -1,0 +1,654 @@
+Index: TheoJansen.c
+===================================================================
+--- TheoJansen.c	(revision 1600)
++++ TheoJansen.c	(working copy)
+@@ -155,8 +155,8 @@
+ 	
+ 	int num_legs = 2;
+ 	for(int i=0; i<num_legs; i++){
+-		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/(cpFloat)num_legs*M_PI), crank_radius));
+-		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/(cpFloat)num_legs*M_PI), crank_radius));
++		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/(cpFloat)num_legs*(cpFloat)M_PI), crank_radius));
++		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/(cpFloat)num_legs*(cpFloat)M_PI), crank_radius));
+ 	}
+ 	
+ 	motor = cpSimpleMotorNew(chassis, crank, 6.0f);
+Index: Query.c
+===================================================================
+--- Query.c	(revision 1600)
++++ Query.c	(working copy)
+@@ -118,8 +118,8 @@
+ 		
+ 		cpVect verts[NUM_VERTS];
+ 		for(int i=0; i<NUM_VERTS; i++){
+-			cpFloat angle = -2*M_PI*i/((cpFloat) NUM_VERTS);
+-			verts[i] = cpv(30*cos(angle), 30*sin(angle));
++			cpFloat angle = -2*(cpFloat)M_PI*i/((cpFloat) NUM_VERTS);
++			verts[i] = cpv(30*cpfcos(angle), 30*cpfsin(angle));
+ 		}
+ 		
+ 		cpBody *body = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, NUM_VERTS, verts, cpvzero)));
+Index: Joints.c
+===================================================================
+--- Joints.c	(revision 1600)
++++ Joints.c	(working copy)
+@@ -226,7 +226,7 @@
+ 	cpSpaceAddConstraint(space, cpPivotJointNew(body1, staticBody, POS_A));
+ 	cpSpaceAddConstraint(space, cpPivotJointNew(body2, staticBody, POS_B));
+ 	// Hold their rotation within 90 degrees of each other.
+-	cpSpaceAddConstraint(space, cpRotaryLimitJointNew(body1, body2, -M_PI_2, M_PI_2));
++	cpSpaceAddConstraint(space, cpRotaryLimitJointNew(body1, body2, -(cpFloat)M_PI_2, (cpFloat)M_PI_2));
+ 	
+ 	// Ratchet Joint - A rotary ratchet, like a socket wrench
+ 	boxOffset = cpv(160, -120);
+@@ -236,7 +236,7 @@
+ 	cpSpaceAddConstraint(space, cpPivotJointNew(body1, staticBody, POS_A));
+ 	cpSpaceAddConstraint(space, cpPivotJointNew(body2, staticBody, POS_B));
+ 	// Ratchet every 90 degrees
+-	cpSpaceAddConstraint(space, cpRatchetJointNew(body1, body2, 0.0f, M_PI_2));
++	cpSpaceAddConstraint(space, cpRatchetJointNew(body1, body2, 0.0f, (cpFloat)M_PI_2));
+ 	
+ 	// Gear Joint - Maintain a specific angular velocity ratio
+ 	boxOffset = cpv(-320, 0);
+@@ -256,7 +256,7 @@
+ 	cpSpaceAddConstraint(space, cpPivotJointNew(body1, staticBody, POS_A));
+ 	cpSpaceAddConstraint(space, cpPivotJointNew(body2, staticBody, POS_B));
+ 	// Make them spin at 1/2 revolution per second in relation to each other.
+-	cpSpaceAddConstraint(space, cpSimpleMotorNew(body1, body2, M_PI));
++	cpSpaceAddConstraint(space, cpSimpleMotorNew(body1, body2, (cpFloat)M_PI));
+ 	
+ 	// Make a car with some nice soft suspension
+ 	boxOffset = cpv(0, 0);
+Index: MagnetsElectric.c
+===================================================================
+--- MagnetsElectric.c	(revision 1600)
++++ MagnetsElectric.c	(working copy)
+@@ -81,7 +81,7 @@
+ // forces between charges
+ static void
+ CoulombForce(ForceData* data){
+-	data->F=cpvmult(cpvnormalize(data->relp),COU_MKS/data->r[1]);
++	data->F=cpvmult(cpvnormalize(data->relp),(cpFloat)COU_MKS/data->r[1]);
+ }
+ 
+ // forces between magnets
+@@ -99,13 +99,13 @@
+ 	
+ 	
+ 	// Components in polar coordinates
+-	Fr=(2.0e0*cos(alpha)*cos(beta) - sin(alpha)*sin(beta));
+-	Fphi=sin(alpha+beta);
++	Fr=((cpFloat)2.0e0*cpfcos(alpha)*cpfcos(beta) - cpfsin(alpha)*cpfsin(beta));
++	Fphi=cpfsin(alpha+beta);
+ //	printf("%g %g %g %g %g\n",phi,alpha,beta,Fphi);
+ 	
+ 	// Cartesian coordinates
+-	data->F=cpv(Fr*cos(phi)-Fphi*sin(phi),Fr*sin(phi)+Fphi*cos(phi));
+-	data->F=cpvmult(data->F,-3.e0*MAG_MKS/(data->r[1]*data->r[1]));
++	data->F=cpv(Fr*cpfcos(phi)-Fphi*cpfsin(phi),Fr*cpfsin(phi)+Fphi*cpfcos(phi));
++	data->F=cpvmult(data->F,(cpFloat)-3.e0*(cpFloat)MAG_MKS/(data->r[1]*data->r[1]));
+ }
+ 
+ static void
+@@ -121,7 +121,7 @@
+ 	// Torque. Though we could use a component of F to save some space, 
+ 	// we use another variables for the sake of clarity.
+ 	
+-	data->T=(MAG_MKS/data->r[2])*(3.0e0*cos(alpha)*sin(beta) + sin(alpha-beta));
++	data->T=((cpFloat)MAG_MKS/data->r[2])*((cpFloat)3.0e0*cpfcos(alpha)*cpfsin(beta) + cpfsin(alpha-beta));
+ }
+ // ******* // 
+ 
+@@ -214,11 +214,11 @@
+ 	}
+ 	
+ 	cpVect dp = cpvmult(cpvadd(body->v, body->v_bias), dt);
+-	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), 0.5e0*dt*dt));
++	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), (cpFloat)0.5e0*dt*dt));
+ 	body->p = cpvadd(body->p, dp);
+ 
+ 	cpBodySetAngle(body, body->a + (body->w + body->w_bias)*dt 
+-				   + 0.5*body->t*body->i_inv*dt*dt);
++				   + 0.5f*body->t*body->i_inv*dt*dt);
+ 
+ 	// Update position of the singularities
+ 	aux = (Sing*)body->data;
+@@ -238,11 +238,11 @@
+ static void
+ ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
+ {
+-	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0*dt));
+-	body->w = body->w + body->t*body->i_inv*0.5e0*dt;
++	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), (cpFloat)0.5e0*dt));
++	body->w = body->w + body->t*body->i_inv*(cpFloat)0.5e0*dt;
+ 	
+ 	body->f = cpvzero;
+-	body->t = 0.0e0;
++	body->t = 0;
+ 	
+ 	// Long range interaction
+     cpArray *bodies = space->bodies;
+@@ -262,15 +262,15 @@
+         LRangeForceApply(body, B);
+ 	  }
+ 	}
+-	body->v = cpvadd(cpvmult(body->v,damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0*dt));
+-	body->w = body->w*damping + body->t*body->i_inv*0.5e0*dt;
++	body->v = cpvadd(cpvmult(body->v,damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), (cpFloat)0.5e0*dt));
++	body->w = body->w*damping + body->t*body->i_inv*(cpFloat)0.5e0*dt;
+ }
+ 
+ static void 
+ update(int ticks)
+ {
+ 	int steps = 10;
+-	cpFloat dt = 1.0/60.0/(cpFloat)steps;
++	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
+ 	
+ 	cpArray *bodies = space->bodies;
+ 
+@@ -296,11 +296,11 @@
+ 		cpv( 10,-10)
+ 	};
+ 
+-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, nverts, verts, cpvzero));
++	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
+ 	body->p = p;
+ 	body->v = cpvzero;
+ 	cpBodySetAngle(body, ang);
+-	body->w = 0.0e0;
++	body->w = 0;
+ 	
+     // Load the singularities
+     Sing *magnet=(Sing*)cpmalloc(sizeof(Sing));
+@@ -324,7 +324,7 @@
+ 	cpSpaceAddBody(space, body);
+ 	
+ 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
+-	shape->e = 0.0; shape->u = 0.7;
++	shape->e = 0; shape->u = 0.7f;
+ 	cpSpaceAddShape(space, shape);
+ }
+ 
+@@ -339,11 +339,11 @@
+ 		cpv( 10,-10)
+ 	};
+ 
+-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, nverts, verts, cpvzero));
++	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
+ 	body->p = p;
+ 	body->v = cpvzero;
+ 	cpBodySetAngle(body, 0);
+-	body->w = 0.0e0;
++	body->w = 0;
+ 	
+     // Load the singularities
+     Sing *charge=(Sing*)cpmalloc(sizeof(Sing));;
+@@ -366,7 +366,7 @@
+ 	cpSpaceAddBody(space, body);
+ 	
+ 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
+-	shape->e = 0.0; shape->u = 0.7;
++	shape->e = 0; shape->u = 0.7f;
+ 	cpSpaceAddShape(space, shape);
+ }
+ void 
+@@ -381,11 +381,11 @@
+ 		cpv( 10,-10)
+ 	};
+ 
+-	cpBody *body = cpBodyNew(1.0, cpMomentForPoly(1.0, nverts, verts, cpvzero));
++	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
+ 	body->p = p;
+ 	body->v = cpvzero;
+ 	cpBodySetAngle(body, ang);
+-	body->w = 0.0e0;
++	body->w = 0;
+ 	
+     // Load the singularities
+     Sing *mix=(Sing*)cpmalloc(sizeof(Sing));;
+@@ -415,7 +415,7 @@
+ 	cpSpaceAddBody(space, body);
+ 	
+ 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
+-	shape->e = 0.0; shape->u = 0.7;
++	shape->e = 0; shape->u = 0.7f;
+ 	cpSpaceAddShape(space, shape);
+ }
+ 
+@@ -431,7 +431,7 @@
+ 	space->iterations = 5;
+ 	space->gravity = cpvzero; //cpv(0,-100);
+ 	
+-	cpSpaceResizeActiveHash(space, 30.0, 2999);
++	cpSpaceResizeActiveHash(space, 30, 2999);
+ 	
+ 	// Screen border
+ /*	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
+@@ -462,28 +462,28 @@
+ 	// Create magnets
+ 	for(int i=0; i<NMAG; i++)
+ 	{
+-	  p.x=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*WIDTH/2.0f;
+-  	  p.y=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*HEIGHT/2.0f;
+-  	  ang=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*3.1415;
+-	  make_mag(p, ang,1.0e7);
++	  p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
++  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
++  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)*(cpFloat)3.1415;
++	  make_mag(p, ang,(cpFloat)1.0e7);
+ 	}
+ 	
+ 	// Create charged objects
+ 	for(int i=0; i<NCHG; i++)
+ 	{
+-	  p.x=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*WIDTH/2.0f;
+-  	  p.y=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*HEIGHT/2.0f;
+-  	  ang=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*3.1415;
+-	  make_charged(p,1.0e-3*pow(-1.0,i%2));
++	  p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
++  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
++  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)* (cpFloat)3.1415;
++	  make_charged(p,(cpFloat)1.0e-3*cpfpow(-1,i%2));
+ 	}
+ 		
+ 	// Create charged magnets objects
+ 	for(int i=0; i<NMIX; i++)
+ 	{
+-      p.x=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*WIDTH/2.0f;
+-  	  p.y=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*HEIGHT/2.0f;
+-  	  ang=(2.0e0*rand()/((cpFloat)RAND_MAX) - 1.0e0)*3.1415;
+-	  make_mix(p, ang,1.0e7*pow(-1.0,i%2), 1.0e-3*pow(-1.0,i%2));
++      p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
++  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
++  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)*(cpFloat)3.1415;
++	  make_mix(p, ang,(cpFloat)1.0e7*cpfpow(-1,i%2), (cpFloat)1.0e-3*cpfpow(-1,i%2));
+ 	}
+ 	
+ 	return space;
+Index: drawSpace.c
+===================================================================
+--- drawSpace.c	(revision 1600)
++++ drawSpace.c	(working copy)
+@@ -25,19 +25,7 @@
+ #include <limits.h>
+ #include <string.h>
+ 
+-#ifdef __APPLE__
+-	#include "OpenGL/gl.h"
+-	#include "OpenGL/glu.h"
+-	#include <GLUT/glut.h>
+-#else
+-#ifdef WIN32
+-	#include <windows.h>
+-#endif
+-	#include <GL/gl.h>
+-	#include <GL/glext.h>
+-	#include <GL/glu.h>
+-	#include <GL/glut.h>
+-#endif
++#import "cocos2d.h"
+ 
+ #include "chipmunk.h"
+ #include "drawSpace.h"
+@@ -54,8 +42,8 @@
+ 	about Chipmunk which may change with little to no warning.
+ */
+ 
+-#define LINE_COLOR 0.0f, 0.0f, 0.0f
+-#define COLLISION_COLOR 1.0f, 0.0f, 0.0f
++#define LINE_COLOR 0.0f, 0.0f, 0.0f, 1.0f
++#define COLLISION_COLOR 1.0f, 0.0f, 0.0f, 1.0f
+ #define BODY_COLOR 0.0f, 0.0f, 1.0f
+ 
+ static void
+@@ -88,7 +76,7 @@
+ 	g = (g*mult)/max + add;
+ 	b = (b*mult)/max + add;
+ 	
+-	glColor3ub(r, g, b);
++	glColor4ub(r, g, b, 255);
+ }
+ 
+ static const GLfloat circleVAR[] = {
+@@ -126,10 +114,11 @@
+ {
+ 	glVertexPointer(2, GL_FLOAT, 0, circleVAR);
+ 
++	glEnableClientState(GL_VERTEX_ARRAY);
+ 	glPushMatrix(); {
+ 		cpVect center = cpvadd(body->p, cpvrotate(circle->c, body->rot));
+ 		glTranslatef(center.x, center.y, 0.0f);
+-		glRotatef(body->a*180.0f/M_PI, 0.0f, 0.0f, 1.0f);
++		glRotatef(body->a*180.0f/(cpFloat)M_PI, 0.0f, 0.0f, 1.0f);
+ 		glScalef(circle->r, circle->r, 1.0f);
+ 		
+ 		if(!circle->shape.sensor){
+@@ -137,9 +126,11 @@
+ 			glDrawArrays(GL_TRIANGLE_FAN, 0, circleVAR_count - 1);
+ 		}
+ 		
+-		glColor3f(LINE_COLOR);
++		glColor4f(LINE_COLOR);
+ 		glDrawArrays(GL_LINE_STRIP, 0, circleVAR_count);
+ 	} glPopMatrix();
++	glDisableClientState(GL_VERTEX_ARRAY);
++
+ }
+ 
+ static const GLfloat pillVAR[] = {
+@@ -190,6 +181,7 @@
+ 			VAR[i] += len;
+ 			
+ 		glVertexPointer(2, GL_FLOAT, 0, VAR);
++		glEnableClientState(GL_VERTEX_ARRAY);
+ 		glPushMatrix(); {
+ 			GLfloat x = a.x;
+ 			GLfloat y = a.y;
+@@ -210,15 +202,13 @@
+ 				glDrawArrays(GL_TRIANGLE_FAN, 0, pillVAR_count);
+ 			}
+ 			
+-			glColor3f(LINE_COLOR);
++			glColor4f(LINE_COLOR);
+ 			glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
+ 		} glPopMatrix();
++		glDisableClientState(GL_VERTEX_ARRAY);
+ 	} else {
+-		glColor3f(LINE_COLOR);
+-		glBegin(GL_LINES); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		glColor4f(LINE_COLOR);
++		ccDrawLine( a,b);
+ 	}
+ }
+ 
+@@ -227,6 +217,8 @@
+ {
+ 	int count = count=poly->numVerts;
+ 	GLfloat VAR[count*2];
++	
++	glEnableClientState(GL_VERTEX_ARRAY);
+ 	glVertexPointer(2, GL_FLOAT, 0, VAR);
+ 
+ 	cpVect *verts = poly->verts;
+@@ -236,13 +228,16 @@
+ 		VAR[2*i + 1] = v.y;
+ 	}
+ 	
++
+ 	if(!poly->shape.sensor){
+ 		glColor_from_pointer(poly);
+ 		glDrawArrays(GL_TRIANGLE_FAN, 0, count);
+ 	}
+ 	
+-	glColor3f(LINE_COLOR);
++	glColor4f(LINE_COLOR);
+ 	glDrawArrays(GL_LINE_LOOP, 0, count);
++	
++	glDisableClientState(GL_VERTEX_ARRAY);
+ }
+ 
+ static void
+@@ -292,13 +287,12 @@
+ 	cpVect b = cpvadd(body_b->p, cpvrotate(spring->anchr2, body_b->rot));
+ 
+ 	glPointSize(5.0f);
+-	glBegin(GL_POINTS); {
+-		glVertex2f(a.x, a.y);
+-		glVertex2f(b.x, b.y);
+-	} glEnd();
++	ccDrawLine( a,b);
+ 
+ 	cpVect delta = cpvsub(b, a);
+ 
++	glEnableClientState(GL_VERTEX_ARRAY);
++
+ 	glVertexPointer(2, GL_FLOAT, 0, springVAR);
+ 	glPushMatrix(); {
+ 		GLfloat x = a.x;
+@@ -317,6 +311,8 @@
+ 		glMultMatrixf(matrix);
+ 		glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
+ 	} glPopMatrix();
++	glDisableClientState(GL_VERTEX_ARRAY);
++
+ }
+ 
+ static void
+@@ -333,15 +329,10 @@
+ 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+ 
+ 		glPointSize(5.0f);
+-		glBegin(GL_POINTS); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		ccDrawPoint(a);
++		ccDrawPoint(b);
+ 
+-		glBegin(GL_LINES); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		ccDrawLine(a,b);
+ 	} else if(klass == cpSlideJointGetClass()){
+ 		cpSlideJoint *joint = (cpSlideJoint *)constraint;
+ 	
+@@ -349,15 +340,10 @@
+ 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+ 
+ 		glPointSize(5.0f);
+-		glBegin(GL_POINTS); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		ccDrawPoint(a);
++		ccDrawPoint(b);
+ 
+-		glBegin(GL_LINES); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		ccDrawLine(a,b);
+ 	} else if(klass == cpPivotJointGetClass()){
+ 		cpPivotJoint *joint = (cpPivotJoint *)constraint;
+ 	
+@@ -365,10 +351,8 @@
+ 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+ 
+ 		glPointSize(10.0f);
+-		glBegin(GL_POINTS); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		ccDrawPoint(a);
++		ccDrawPoint(b);
+ 	} else if(klass == cpGrooveJointGetClass()){
+ 		cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
+ 	
+@@ -377,14 +361,8 @@
+ 		cpVect c = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
+ 
+ 		glPointSize(5.0f);
+-		glBegin(GL_POINTS); {
+-			glVertex2f(c.x, c.y);
+-		} glEnd();
+-		
+-		glBegin(GL_LINES); {
+-			glVertex2f(a.x, a.y);
+-			glVertex2f(b.x, b.y);
+-		} glEnd();
++		ccDrawPoint(c);
++		ccDrawLine(a,b);
+ 	} else if(klass == cpDampedSpringGetClass()){
+ 		drawSpring((cpDampedSpring *)constraint, body_a, body_b);
+ 	} else {
+@@ -397,12 +375,14 @@
+ {
+ 	cpShape *shape = (cpShape *)ptr;
+ 
+-	glBegin(GL_LINE_LOOP); {
+-		glVertex2f(shape->bb.l, shape->bb.b);
+-		glVertex2f(shape->bb.l, shape->bb.t);
+-		glVertex2f(shape->bb.r, shape->bb.t);
+-		glVertex2f(shape->bb.r, shape->bb.b);
+-	} glEnd();
++	CGPoint vertices[] = {
++		{shape->bb.l, shape->bb.b},
++		{shape->bb.l, shape->bb.t},
++		{shape->bb.r, shape->bb.t},
++		{shape->bb.r, shape->bb.b},
++	};
++
++	ccDrawPoly(vertices, 4, NO);
+ }
+ 
+ static void
+@@ -411,7 +391,7 @@
+ 	cpArbiter *arb = (cpArbiter *)ptr;
+ 	for(int i=0; i<arb->numContacts; i++){
+ 		cpVect v = arb->contacts[i].p;
+-		glVertex2f(v.x, v.y);
++		ccDrawPoint(v);
+ 	}
+ }
+ 
+@@ -444,8 +424,8 @@
+ 				cell_count++;
+ 			
+ 			GLfloat v = 1.0f - (GLfloat)cell_count/10.0f;
+-			glColor3f(v,v,v);
+-			glRectf(i*dim, j*dim, (i + 1)*dim, (j + 1)*dim);
++			glColor4f(v,v,v,1.0f);
++//			glRectf(i*dim, j*dim, (i + 1)*dim, (j + 1)*dim);
+ 		}
+ 	}
+ }
+@@ -458,7 +438,7 @@
+ 	
+ 	glLineWidth(1.0f);
+ 	if(options->drawBBs){
+-		glColor3f(0.3f, 0.5f, 0.3f);
++		glColor4f(0.3f, 0.5f, 0.3f, 1.0f);
+ 		cpSpaceHashEach(space->activeShapes, &drawBB, NULL);
+ 		cpSpaceHashEach(space->staticShapes, &drawBB, NULL);
+ 	}
+@@ -471,7 +451,7 @@
+ 	
+ 	cpArray *constraints = space->constraints;
+ 
+-	glColor3f(0.5f, 1.0f, 0.5f);
++	glColor4f(0.5f, 1.0f, 0.5f, 1.0f);
+ 	for(int i=0, count = constraints->num; i<count; i++){
+ 		drawConstraint(constraints->arr[i]);
+ 	}
+@@ -480,20 +460,16 @@
+ 		cpArray *bodies = space->bodies;
+ 
+ 		glPointSize(options->bodyPointSize);
+-		glBegin(GL_POINTS); {
+-			glColor3f(LINE_COLOR);
+-			for(int i=0, count = bodies->num; i<count; i++){
+-				cpBody *body = (cpBody *)bodies->arr[i];
+-				glVertex2f(body->p.x, body->p.y);
+-			}
+-		} glEnd();
++		glColor4f(LINE_COLOR);
++		for(int i=0, count = bodies->num; i<count; i++){
++			cpBody *body = (cpBody *)bodies->arr[i];
++			ccDrawPoint(body->p);
++		}
+ 	}
+ 
+ 	if(options->collisionPointSize){
+ 		glPointSize(options->collisionPointSize);
+-		glBegin(GL_POINTS); {
+-			glColor3f(COLLISION_COLOR);
+-			cpArrayEach(space->arbiters, &drawCollisions, NULL);
+-		} glEnd();
++		glColor4f(COLLISION_COLOR);
++		cpArrayEach(space->arbiters, &drawCollisions, NULL);
+ 	}
+ }
+Index: Plink.c
+===================================================================
+--- Plink.c	(revision 1600)
++++ Plink.c	(working copy)
+@@ -74,8 +74,8 @@
+ 	// Create vertexes for a pentagon shape.
+ 	cpVect verts[NUM_VERTS];
+ 	for(int i=0; i<NUM_VERTS; i++){
+-		cpFloat angle = -2*M_PI*i/((cpFloat) NUM_VERTS);
+-		verts[i] = cpv(10*cos(angle), 10*sin(angle));
++		cpFloat angle = -2*(cpFloat)M_PI*i/((cpFloat) NUM_VERTS);
++		verts[i] = cpv(10*cpfcos(angle), 10*cpfsin(angle));
+ 	}
+ 	
+ 	// Vertexes for a triangle shape.
+Index: Pump.c
+===================================================================
+--- Pump.c	(revision 1600)
++++ Pump.c	(working copy)
+@@ -129,7 +129,7 @@
+ 	// add small gear
+ 	cpBody *smallGear = cpSpaceAddBody(space, cpBodyNew(10.0f, cpMomentForCircle(10.0f, 80, 0, cpvzero)));
+ 	smallGear->p = cpv(-160,-160);
+-	cpBodySetAngle(smallGear, -M_PI_2);
++	cpBodySetAngle(smallGear, (cpFloat)-M_PI_2);
+ 
+ 	shape = cpSpaceAddShape(space, cpCircleShapeNew(smallGear, 80.0f, cpvzero));
+ 	shape->layers = 0;
+@@ -139,7 +139,7 @@
+ 	// add big gear
+ 	cpBody *bigGear = cpSpaceAddBody(space, cpBodyNew(40.0f, cpMomentForCircle(40.0f, 160, 0, cpvzero)));
+ 	bigGear->p = cpv(80,-160);
+-	cpBodySetAngle(bigGear, M_PI_2);
++	cpBodySetAngle(bigGear, (cpFloat)M_PI_2);
+ 	
+ 	shape = cpSpaceAddShape(space, cpCircleShapeNew(bigGear, 160.0f, cpvzero));
+ 	shape->layers = 0;
+@@ -149,7 +149,7 @@
+ 	// connect the plunger to the small gear.
+ 	cpSpaceAddConstraint(space, cpPinJointNew(smallGear, plunger, cpv(80,0), cpv(0,0)));
+ 	// connect the gears.
+-	cpSpaceAddConstraint(space, cpGearJointNew(smallGear, bigGear, -M_PI_2, -2.0f));
++	cpSpaceAddConstraint(space, cpGearJointNew(smallGear, bigGear, (cpFloat)-M_PI_2, -2.0f));
+ 	
+ 	
+ 	// feeder mechanism
+Index: ChipmunkDemo.h
+===================================================================
+--- ChipmunkDemo.h	(revision 1600)
++++ ChipmunkDemo.h	(working copy)
+@@ -45,4 +45,4 @@
+ extern char messageString[1024];
+ 
+ #define GRABABLE_MASK_BIT (1<<31)
+-#define NOT_GRABABLE_MASK (~GRABABLE_MASK_BIT)
+\ No newline at end of file
++#define NOT_GRABABLE_MASK (~GRABABLE_MASK_BIT)
+Index: PyramidTopple.c
+===================================================================
+--- PyramidTopple.c	(revision 1600)
++++ PyramidTopple.c	(working copy)
+@@ -89,7 +89,7 @@
+ 
+ 			body = cpSpaceAddBody(space, cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero)));
+ 			body->p = cpvadd(cpv(j*60, -197), offset);
+-			cpBodySetAngle(body, M_PI/2.0f);
++			cpBodySetAngle(body, (cpFloat)M_PI/2.0f);
+ 			
+ 			shape = cpSpaceAddShape(space, cpPolyShapeNew(body, num, verts, cpvzero));
+ 			shape->e = 0.0f; shape->u = u;
+@@ -98,7 +98,7 @@
+ 			if(j == (i - 1)) continue;
+ 			body = cpSpaceAddBody(space, cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero)));
+ 			body->p = cpvadd(cpv(j*60 + 30, -191), offset);
+-			cpBodySetAngle(body, M_PI/2.0f);
++			cpBodySetAngle(body, (cpFloat)M_PI/2.0f);
+ 			
+ 			shape = cpSpaceAddShape(space, cpPolyShapeNew(body, num, verts, cpvzero));
+ 			shape->e = 0.0f; shape->u = u;

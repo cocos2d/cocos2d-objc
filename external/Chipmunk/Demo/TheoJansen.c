@@ -155,8 +155,8 @@ init(void)
 	
 	int num_legs = 2;
 	for(int i=0; i<num_legs; i++){
-		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/(cpFloat)num_legs*M_PI), crank_radius));
-		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/(cpFloat)num_legs*M_PI), crank_radius));
+		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/(cpFloat)num_legs*(cpFloat)M_PI), crank_radius));
+		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/(cpFloat)num_legs*(cpFloat)M_PI), crank_radius));
 	}
 	
 	motor = cpSimpleMotorNew(chassis, crank, 6.0f);
