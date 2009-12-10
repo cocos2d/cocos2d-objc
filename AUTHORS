@@ -93,6 +93,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of tools/mkatlas.pl script
 	* mike AT finklyinteractive:
 		fixed leak in ActionManager
+	* hamm.hans:
+		Author of CrossFadeTransition
 	* Hans Larsen:
 		Possibility to create empty menus
 		Fixed CLang compiling warnings
