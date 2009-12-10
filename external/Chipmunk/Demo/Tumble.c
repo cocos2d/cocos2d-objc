@@ -24,13 +24,14 @@
 #include <math.h>
 
 #include "chipmunk.h"
-
-#define SLEEP_TICKS 16
+#include "drawSpace.h"
+#include "ChipmunkDemo.h"
 
 extern cpSpace *space;
 extern cpBody *staticBody;
 
-void demo4_update(int ticks)
+static void
+update(int ticks)
 {
 	int steps = 3;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
@@ -48,15 +49,16 @@ void demo4_update(int ticks)
 	}
 }
 
-void demo4_init(void)
+static cpSpace *
+init(void)
 {
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
-	cpSpaceResizeActiveHash(space, 30.0f, 999);
-	cpSpaceResizeStaticHash(space, 200.0f, 99);
+	cpSpaceResizeActiveHash(space, 40.0f, 999);
+	cpSpaceResizeStaticHash(space, 40.0f, 99);
 	space->gravity = cpv(0, -600);
 	
 	cpBody *body;
@@ -77,21 +79,21 @@ void demo4_init(void)
 	cpVect c = cpv( 200,  200);
 	cpVect d = cpv( 200, -200);
 	
-	shape = cpSegmentShapeNew(staticBody, a, b, 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, a, b, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSegmentShapeNew(staticBody, b, c, 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, b, c, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSegmentShapeNew(staticBody, c, d, 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, c, d, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSegmentShapeNew(staticBody, d, a, 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, d, a, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 	
 	// Give the box a little spin.
 	// Because staticBody is never added to the space, we will need to
@@ -103,12 +105,29 @@ void demo4_init(void)
 	// Add the bricks.
 	for(int i=0; i<3; i++){
 		for(int j=0; j<7; j++){
-			body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
+			body = cpSpaceAddBody(space, cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero)));
 			body->p = cpv(i*60 - 150, j*30 - 150);
-			cpSpaceAddBody(space, body);
-			shape = cpPolyShapeNew(body, num, verts, cpvzero);
+			
+			shape = cpSpaceAddShape(space, cpPolyShapeNew(body, num, verts, cpvzero));
 			shape->e = 0.0f; shape->u = 0.7f;
-			cpSpaceAddShape(space, shape);
 		}
 	}
+	
+	return space;
 }
+
+static void
+destroy(void)
+{
+	cpBodyFree(staticBody);
+	cpSpaceFreeChildren(space);
+	cpSpaceFree(space);
+}
+
+const chipmunkDemo Tumble = {
+	"Tumble",
+	NULL,
+	init,
+	update,
+	destroy,
+};

@@ -24,15 +24,16 @@
 #include <math.h>
 
 #include "chipmunk.h"
+#include "drawSpace.h"
+#include "ChipmunkDemo.h"
 
-#define SLEEP_TICKS 16
+cpSpace *space;
+cpBody *staticBody;
 
-extern cpSpace *space;
-extern cpBody *staticBody;
-
-void demo2_update(int ticks)
+static void
+update(int ticks)
 {
-	int steps = 1;
+	int steps = 3;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++){
@@ -40,7 +41,8 @@ void demo2_update(int ticks)
 	}
 }
 
-void demo2_init(void)
+static cpSpace *
+init(void)
 {
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
@@ -64,17 +66,17 @@ void demo2_init(void)
 	};
 	
 	// Create segments around the edge of the screen.
-	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f);
+	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
-	cpSpaceAddStaticShape(space, shape);
+	shape->layers = NOT_GRABABLE_MASK;
 	
 	// Add lots of boxes.
 	for(int i=0; i<14; i++){
@@ -90,11 +92,27 @@ void demo2_init(void)
 	
 	// Add a ball to make things more interesting
 	cpFloat radius = 15.0f;
-	body = cpBodyNew(10.0f, cpMomentForCircle(10.0f, 0.0f, radius, cpvzero));
-	body->p = cpv(0, -240 + radius);
-//	body->v = cpv(10, 0);
-	cpSpaceAddBody(space, body);
-	shape = cpCircleShapeNew(body, radius, cpvzero);
+	body = cpSpaceAddBody(space, cpBodyNew(10.0f, cpMomentForCircle(10.0f, 0.0f, radius, cpvzero)));
+	body->p = cpv(0, -240 + radius+5);
+
+	shape = cpSpaceAddShape(space, cpCircleShapeNew(body, radius, cpvzero));
 	shape->e = 0.0f; shape->u = 0.9f;
-	cpSpaceAddShape(space, shape);
+	
+	return space;
 }
+
+static void
+destroy(void)
+{
+	cpBodyFree(staticBody);
+	cpSpaceFreeChildren(space);
+	cpSpaceFree(space);
+}
+
+const chipmunkDemo PyramidStack = {
+	"Pyramid Stack",
+	NULL,
+	init,
+	update,
+	destroy,
+};

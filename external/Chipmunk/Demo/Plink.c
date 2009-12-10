@@ -24,8 +24,8 @@
 #include <math.h>
 
 #include "chipmunk.h"
-
-#define SLEEP_TICKS 16
+#include "drawSpace.h"
+#include "ChipmunkDemo.h"
 
 extern cpSpace *space;
 extern cpBody *staticBody;
@@ -40,7 +40,8 @@ eachBody(cpBody *body, void *unused)
 	}
 }
 
-void demo3_update(int ticks)
+static void
+update(int ticks)
 {
 	int steps = 1;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
@@ -53,7 +54,8 @@ void demo3_update(int ticks)
 
 #define NUM_VERTS 5
 
-void demo3_init(void)
+static cpSpace *
+init(void)
 {
 	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
@@ -72,8 +74,8 @@ void demo3_init(void)
 	// Create vertexes for a pentagon shape.
 	cpVect verts[NUM_VERTS];
 	for(int i=0; i<NUM_VERTS; i++){
-		cpFloat angle = (cpFloat) (-2*M_PI*i/((cpFloat) NUM_VERTS));
-		verts[i] = cpv(10*cosf(angle), 10*sinf(angle));
+		cpFloat angle = -2*M_PI*i/((cpFloat) NUM_VERTS);
+		verts[i] = cpv(10*cos(angle), 10*sin(angle));
 	}
 	
 	// Vertexes for a triangle shape.
@@ -88,21 +90,37 @@ void demo3_init(void)
 		for(int j=0; j<6; j++){
 			cpFloat stagger = (j%2)*40;
 			cpVect offset = cpv(i*80 - 320 + stagger, j*70 - 240);
-			shape = cpPolyShapeNew(staticBody, 3, tris, offset);
+			shape = cpSpaceAddStaticShape(space, cpPolyShapeNew(staticBody, 3, tris, offset));
 			shape->e = 1.0f; shape->u = 1.0f;
-			cpSpaceAddStaticShape(space, shape);
+			shape->layers = NOT_GRABABLE_MASK;
 		}
 	}
 	
 	// Add lots of pentagons.
 	for(int i=0; i<300; i++){
-		body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, NUM_VERTS, verts, cpvzero));
+		body = cpSpaceAddBody(space, cpBodyNew(1.0f, cpMomentForPoly(1.0f, NUM_VERTS, verts, cpvzero)));
 		cpFloat x = rand()/(cpFloat)RAND_MAX*640 - 320;
 		body->p = cpv(x, 350);
 		
-		cpSpaceAddBody(space, body);
-		shape = cpPolyShapeNew(body, NUM_VERTS, verts, cpvzero);
+		shape = cpSpaceAddShape(space, cpPolyShapeNew(body, NUM_VERTS, verts, cpvzero));
 		shape->e = 0.0f; shape->u = 0.4f;
-		cpSpaceAddShape(space, shape);
 	}
+	
+	return space;
 }
+
+static void
+destroy(void)
+{
+	cpBodyFree(staticBody);
+	cpSpaceFreeChildren(space);
+	cpSpaceFree(space);
+}
+
+const chipmunkDemo Plink = {
+	"Plink",
+	NULL,
+	init,
+	update,
+	destroy,
+};
