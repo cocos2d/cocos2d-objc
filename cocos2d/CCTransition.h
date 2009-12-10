@@ -220,6 +220,14 @@ typedef enum {
 -(id) initWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3B)color;
 @end
 
+/**
+ CCCrossFadeTransition:
+ Cross fades two scenes using the CCRenderTexture object.
+ */
+@interface CCCrossFadeTransition : CCTransitionScene
+{}
+@end
+
 /** CCTurnOffTilesTransition:
  Turn off the tiles of the outgoing scene in random order
  */
