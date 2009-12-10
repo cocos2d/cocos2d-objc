@@ -17,12 +17,15 @@
 		CCLabel* label = [CCLabel labelWithString:@"Render Texture Test" fontName:@"Arial" fontSize:32];
 		[self addChild:label z:0];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+
 		// create a render texture, this is what we're going to draw into
-		target = [CCRenderTexture renderTextureWithWidth:s.width height:s.height];
+		target = [[CCRenderTexture renderTextureWithWidth:s.width height:s.height] retain];
 		[target setPosition:ccp(s.width/2, s.height/2)];
+
 		// note that the render texture is a cocosnode, and contains a sprite of it's texture for convience,
 		// so we can just parent it to the scene like any other cocos node
 		[self addChild:target z:1];
+
 		// create a brush image to draw into the texture with
 		brush = [[CCSprite spriteWithFile:@"stars.png"] retain];
 		[brush setBlendFunc: (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA }];  

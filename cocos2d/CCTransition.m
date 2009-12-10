@@ -790,22 +790,9 @@ enum {
 //
 @implementation CCCrossFadeTransition
 
-// update render Textures 
 -(void) draw
 {
-	CCLayer * layer = (CCLayer *) [self getChildByTag:kSceneFade];
-	CCRenderTexture * renderTexture1 = (CCRenderTexture *) [layer.children objectAtIndex:0];
-	CCRenderTexture * renderTexture2 = (CCRenderTexture *) [layer.children objectAtIndex:1];
-	
-	// update texture 1 for inScene
-	[renderTexture1 begin];
-	[inScene visit];
-	[renderTexture1 end];
-	
-	// update texture 2 for outScene
-	[renderTexture2 begin];
-	[outScene visit];
-	[renderTexture2 end];
+	// override draw since both scenes (textures) are rendered in 1 scene
 }
 
 -(void) onEnter
@@ -819,26 +806,26 @@ enum {
 	CCColorLayer * layer = [CCColorLayer layerWithColor:color];
 	
 	// create the first render texture for inScene
-	CCRenderTexture * renderTexture1 = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
-	renderTexture1.sprite.anchorPoint= ccp(0.5f,0.5f);
-	renderTexture1.position = ccp(size.width/2, size.height/2);
-	renderTexture1.anchorPoint = ccp(0.5f,0.5f);
+	CCRenderTexture *inTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
+	inTexture.sprite.anchorPoint= ccp(0.5f,0.5f);
+	inTexture.position = ccp(size.width/2, size.height/2);
+	inTexture.anchorPoint = ccp(0.5f,0.5f);
 	
 	// render inScene to its texturebuffer
-	[renderTexture1 begin];
+	[inTexture begin];
 	[inScene visit];
-	[renderTexture1 end];
+	[inTexture end];
 	
 	// create the second render texture for outScene
-	CCRenderTexture * renderTexture2 = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
-	renderTexture2.sprite.anchorPoint= ccp(0.5f,0.5f);
-	renderTexture2.position = ccp(size.width/2, size.height/2);
-	renderTexture2.anchorPoint = ccp(0.5f,0.5f);
+	CCRenderTexture *outTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
+	outTexture.sprite.anchorPoint= ccp(0.5f,0.5f);
+	outTexture.position = ccp(size.width/2, size.height/2);
+	outTexture.anchorPoint = ccp(0.5f,0.5f);
 	
 	// render outScene to its texturebuffer
-	[renderTexture2 begin];
+	[outTexture begin];
 	[outScene visit];
-	[renderTexture2 end];
+	[outTexture end];
 	
 	// create blend functions
 	
@@ -846,16 +833,16 @@ enum {
 	ccBlendFunc blend2 = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}; // we are going to blend outScene via alpha 
 	
 	// set blendfunctions
-	[renderTexture1.sprite setBlendFunc:blend1];
-	[renderTexture2.sprite setBlendFunc:blend2];	
+	[inTexture.sprite setBlendFunc:blend1];
+	[outTexture.sprite setBlendFunc:blend2];	
 	
 	// add render textures to the layer
-	[layer addChild:renderTexture1];
-	[layer addChild:renderTexture2];
+	[layer addChild:inTexture];
+	[layer addChild:outTexture];
 	
 	// initial opacity:
-	[renderTexture1.sprite setOpacity:255];
-	[renderTexture2.sprite setOpacity:255];
+	[inTexture.sprite setOpacity:255];
+	[outTexture.sprite setOpacity:255];
 	
 	// create the blend action
 	CCIntervalAction * layerAction = [CCSequence actions:
@@ -866,7 +853,7 @@ enum {
 	
 	
 	// run the blend action
-	[renderTexture2.sprite runAction: layerAction];
+	[outTexture.sprite runAction: layerAction];
 	
 	// add the layer (which contains our two rendertextures) to the scene
 	[self addChild: layer z:2 tag:kSceneFade];

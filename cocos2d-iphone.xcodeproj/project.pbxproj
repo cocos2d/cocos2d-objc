@@ -1606,6 +1606,13 @@
 			remoteGlobalIDString = 509B3A0C0F31024E00F2FB95;
 			remoteInfo = "cocos Live";
 		};
+		50A04DC010D17FCB00386268 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		50A24E1B0F377FA1007CAEB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -4760,6 +4767,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				50A04DC110D17FCB00386268 /* PBXTargetDependency */,
 			);
 			name = RenderTextureTest;
 			productName = RenderTextureTest;
@@ -7437,6 +7445,11 @@
 			isa = PBXTargetDependency;
 			target = 509B3A0C0F31024E00F2FB95 /* cocosLive */;
 			targetProxy = 509B3A2E0F31030400F2FB95 /* PBXContainerItemProxy */;
+		};
+		50A04DC110D17FCB00386268 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 50A04DC010D17FCB00386268 /* PBXContainerItemProxy */;
 		};
 		50A24E1A0F377FA1007CAEB0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
