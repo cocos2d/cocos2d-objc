@@ -239,8 +239,9 @@ Exit:
 void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate) {
 
 	CFStringRef extension = CFURLCopyPathExtension(inFileURL);
-	CFComparisonResult isWavFile =	CFStringCompare (extension,(CFStringRef)@"wav", kCFCompareCaseInsensitive);
+	CFComparisonResult isWavFile = 0;
 	if (extension != NULL) {
+		isWavFile = CFStringCompare (extension,(CFStringRef)@"wav", kCFCompareCaseInsensitive);
 		CFRelease(extension);
 	}	
 	
