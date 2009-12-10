@@ -42,7 +42,7 @@ preStep(cpSlideJoint *joint, cpFloat dt, cpFloat dt_inv)
 		pdist = joint->min - dist;
 		dist = -dist;
 	}
-	joint->n = cpvmult(delta, 1.0f/(dist ? dist : INFINITY));
+	joint->n = cpvmult(delta, 1.0f/(dist ? dist : (cpFloat)INFINITY));
 	
 	// calculate mass normal
 	joint->nMass = 1.0f/k_scalar(a, b, joint->r1, joint->r2, joint->n);
