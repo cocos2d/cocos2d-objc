@@ -271,6 +271,8 @@
 
 #if CC_TEXTURE_ATLAS_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO[0]);
+	
+	// XXX: update is done in draw... perhaps it should be done in a timer
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0]) * n, quads_);
 	
 	// vertices

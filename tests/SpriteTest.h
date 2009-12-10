@@ -110,11 +110,16 @@
 {}
 @end
 
-
-
 @interface SpriteFrameTest : SpriteDemo
-{
-}
+{}
+@end
+
+@interface SpriteOffsetAnchor : SpriteDemo
+{}
+@end
+
+@interface SpriteSheetOffsetAnchor : SpriteDemo
+{}
 @end
 
 @interface SpriteHybrid : SpriteDemo
@@ -124,18 +129,13 @@
 @end
 
 @interface SpriteSheetChildren : SpriteDemo
-{
-}
+{}
 @end
 
 @interface SpriteSheetChildren2 : SpriteDemo
-{
-}
+{}
 @end
 
 @interface SpriteSheetChildrenZ : SpriteDemo
-{
-}
+{}
 @end
-
-
