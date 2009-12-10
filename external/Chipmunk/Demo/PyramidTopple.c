@@ -89,7 +89,7 @@ init(void)
 
 			body = cpSpaceAddBody(space, cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero)));
 			body->p = cpvadd(cpv(j*60, -197), offset);
-			cpBodySetAngle(body, M_PI/2.0f);
+			cpBodySetAngle(body, (cpFloat)M_PI/2.0f);
 			
 			shape = cpSpaceAddShape(space, cpPolyShapeNew(body, num, verts, cpvzero));
 			shape->e = 0.0f; shape->u = u;
@@ -98,7 +98,7 @@ init(void)
 			if(j == (i - 1)) continue;
 			body = cpSpaceAddBody(space, cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero)));
 			body->p = cpvadd(cpv(j*60 + 30, -191), offset);
-			cpBodySetAngle(body, M_PI/2.0f);
+			cpBodySetAngle(body, (cpFloat)M_PI/2.0f);
 			
 			shape = cpSpaceAddShape(space, cpPolyShapeNew(body, num, verts, cpvzero));
 			shape->e = 0.0f; shape->u = u;
