@@ -257,7 +257,7 @@ static BOOL configured = FALSE;
 		{
 			[self stopBackgroundMusic:TRUE];
 		}
-		NSString *path = [FileUtils fullPathFromRelativePath:filePath];
+		NSString *path = [CCFileUtils fullPathFromRelativePath:filePath];
 		backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
 
 		if (backgroundMusic != nil) {
