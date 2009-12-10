@@ -22,8 +22,7 @@
 
 +(id)renderTextureWithWidth:(int)w height:(int)h
 {
-  self = [[[CCRenderTexture alloc] initWithWidth:w height:h] autorelease];
-  return self;
+	return [[[self alloc] initWithWidth:w height:h] autorelease];
 }
 
 -(id)initWithWidth:(int)w height:(int)h
@@ -53,7 +52,7 @@
 		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
 		if (status != GL_FRAMEBUFFER_COMPLETE_OES)
 		{
-		  [NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
+			[NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
 		}
 		sprite = [CCSprite spriteWithTexture:texture];
 		[sprite setScaleY:-1];
@@ -65,7 +64,7 @@
 
 -(void)dealloc
 {
-	[self removeAllChildrenWithCleanup:YES];
+//	[self removeAllChildrenWithCleanup:YES];
 	glDeleteFramebuffersOES(1, &fbo);
 	[super dealloc];
 }
@@ -76,8 +75,9 @@
 	glPushMatrix();
 
 	// Calculate the adjustment ratios based on the old and new projections
-	float widthRatio = [[CCDirector sharedDirector] openGLView].frame.size.width / texture.contentSize.width;
-	float heightRatio = [[CCDirector sharedDirector] openGLView].frame.size.height / texture.contentSize.height;
+	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
+	float widthRatio = frame.size.width / texture.contentSize.width;
+	float heightRatio = frame.size.height / texture.contentSize.height;
 
 	// Adjust the orthographic propjection and viewport
 	glOrthof((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
@@ -93,7 +93,8 @@
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	glViewport(0, 0, [[CCDirector sharedDirector] openGLView].frame.size.width, [[CCDirector sharedDirector] openGLView].frame.size.height);
+	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
+	glViewport(0, 0, frame.size.width, frame.size.height);
 }
 
 

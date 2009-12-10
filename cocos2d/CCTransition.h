@@ -224,8 +224,10 @@ typedef enum {
  CCCrossFadeTransition:
  Cross fades two scenes using the CCRenderTexture object.
  */
+@class CCRenderTexture;
 @interface CCCrossFadeTransition : CCTransitionScene
-{}
+{
+}
 @end
 
 /** CCTurnOffTilesTransition:
