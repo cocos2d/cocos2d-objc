@@ -31,7 +31,7 @@
 
 
 @interface CCSprite (Private)
--(void)updateTextureCoords;
+-(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 -(void) setTextureRect:(CGRect)rect untrimmedSize:(CGSize)size;
@@ -244,16 +244,12 @@
 -(void)setTextureRect:(CGRect)rect untrimmedSize:(CGSize)untrimmedSize
 {
 	rect_ = rect;
+
 	[self setContentSize:untrimmedSize];
-	
-	[self updateTextureCoords];
+	[self updateTextureCoords:rect];
 	
 	// rendering using SpriteSheet
 	if( usesSpriteSheet_ ) {
-		// Don't update Atlas if index == CCSpriteIndexNotInitialized. issue #283
-		if( atlasIndex_ != CCSpriteIndexNotInitialized)
-			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-
 		dirty_ = YES;
 	}
 
@@ -275,16 +271,16 @@
 			
 }
 
--(void)updateTextureCoords
+-(void)updateTextureCoords:(CGRect)rect
 {
 	
 	float atlasWidth = texture_.pixelsWide;
 	float atlasHeight = texture_.pixelsHigh;
 
-	float left = rect_.origin.x / atlasWidth;
-	float right = (rect_.origin.x + rect_.size.width) / atlasWidth;
-	float top = rect_.origin.y / atlasHeight;
-	float bottom = (rect_.origin.y + rect_.size.height) / atlasHeight;
+	float left = rect.origin.x / atlasWidth;
+	float right = (rect.origin.x + rect.size.width) / atlasWidth;
+	float top = rect.origin.y / atlasHeight;
+	float bottom = (rect.origin.y + rect.size.height) / atlasHeight;
 
 	
 	if( flipX_)
@@ -350,6 +346,7 @@
 	newPosition = ccpAdd(newPosition,offsetPosition_);
 	
 	CGSize size = rect_.size;
+//	CGSize size = contentSize_;
 
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
@@ -732,15 +729,14 @@
 	[self setDisplayFrame:frame];
 }
 
--(BOOL) isFrameDisplayed:(id)frame 
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame 
 {
-	CCSpriteFrame *spr = (CCSpriteFrame*)frame;
-	CGRect r = [spr rect];
+	CGRect r = [frame rect];
 	return ( CGRectEqualToRect(r, rect_) &&
-			spr.texture.name == self.texture.name);
+			frame.texture.name == self.texture.name);
 }
 
--(id) displayFrame
+-(CCSpriteFrame*) displayedFrame
 {
 	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_ offset:CGPointZero];
 }

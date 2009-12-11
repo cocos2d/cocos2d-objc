@@ -1158,7 +1158,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[origFrame release];
 
 	if( restoreOriginalFrame )
-		origFrame = [[sprite displayFrame] retain];
+		origFrame = [[sprite displayedFrame] retain];
 }
 
 -(void) stop

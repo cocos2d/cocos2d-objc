@@ -11,8 +11,9 @@ version 0.9.0-beta - XX-MMM-2009
  . Director: "global" NSBundle to facilitate the integration of more than 1 game (issue #654)
  . Particles: code easier to mantain, same performance
  . Particles: small performance improvement (issue #661)
- . SpriteSheet: supports any level of sub-children (issue #346)
+ . SpriteSheet: supports any level of sub-children (issue #346, issue #665)
  . Sprite: supports "honor parent transform" (issue #643)
+ . Sprite: displayFrame renamed to displayedFrame (issue #XXX)
  . Templates: using SDK 3.0 as base SDK
  . Textures: supports mipmap generation (issue #632)
  . Texture Atlas: uses VBO instead of vertex array list (issue #581)
