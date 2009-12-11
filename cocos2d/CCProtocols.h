@@ -125,9 +125,9 @@
 /** changes the display frame based on an animation and an index. */
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
 /** returns the current displayed frame. */
--(BOOL) isFrameDisplayed:(id)frame;
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame;
 /** returns the current displayed frame. */
--(id) displayFrame;
+-(CCSpriteFrame*) displayedFrame;
 /** returns an Animation given it's name. */
 -(id<CCAnimationProtocol>)animationByName: (NSString*) animationName;
 /** adds an Animation to the Sprite. */
