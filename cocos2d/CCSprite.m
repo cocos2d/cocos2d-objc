@@ -342,11 +342,7 @@
 		newRotation_radians = -atan2f( old.c, old.a );
 	}
 	
-	// update offset
-	newPosition = ccpAdd(newPosition,offsetPosition_);
-	
 	CGSize size = rect_.size;
-//	CGSize size = contentSize_;
 
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
@@ -360,8 +356,8 @@
 	
 	// rotation ? -> update: rotation, scale, position
 	else if( newRotation_radians ) {
-		float x1 = -transformAnchor_.x * newScaleX;
-		float y1 = -transformAnchor_.y * newScaleY;
+		float x1 = (-transformAnchor_.x + offsetPosition_.x) * newScaleX;
+		float y1 = (-transformAnchor_.y + offsetPosition_.y) * newScaleY;
 
 		float x2 = x1 + size.width * newScaleX;
 		float y2 = y1 + size.height * newScaleY;
@@ -379,6 +375,7 @@
 		float cy = x2 * sr + y2 * cr + y;
 		float dx = x1 * cr - y2 * sr + x;
 		float dy = x1 * sr + y2 * cr + y;
+		
 		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
 		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
 		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
@@ -392,8 +389,8 @@
 		float x = newPosition.x;
 		float y = newPosition.y;
 		
-		float x1 = (x- transformAnchor_.x * newScaleX);
-		float y1 = (y- transformAnchor_.y * newScaleY);
+		float x1 = (x- (transformAnchor_.x + offsetPosition_.x) * newScaleX);
+		float y1 = (y- (transformAnchor_.y + offsetPosition_.y) * newScaleY);
 		float x2 = (x1 + size.width * newScaleX);
 		float y2 = (y1 + size.height * newScaleY);
 
@@ -409,8 +406,8 @@
 		float x = newPosition.x;
 		float y = newPosition.y;
 		
-		float x1 = (x-transformAnchor_.x);
-		float y1 = (y-transformAnchor_.y);
+		float x1 = (x-transformAnchor_.x+offsetPosition_.x);
+		float y1 = (y-transformAnchor_.y+offsetPosition_.y);
 		float x2 = (x1 + size.width);
 		float y2 = (y1 + size.height);
 
@@ -698,10 +695,11 @@
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
-	CGRect rect = frame.rect;
-	CGSize origSize = frame.originalSize;
 
 	offsetPosition_ = frame.offset;
+	
+	CGRect rect = frame.rect;
+	CGSize origSize = frame.originalSize;
 	offsetPosition_.x += (origSize.width - rect.size.width) / 2;
 	offsetPosition_.y += (origSize.height - rect.size.height) / 2;
 	
