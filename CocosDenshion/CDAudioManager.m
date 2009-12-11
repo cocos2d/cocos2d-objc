@@ -216,6 +216,40 @@ static BOOL configured = FALSE;
 	}	
 }	
 
+//NB: originally I tried using a route change listener and intended to store the current route,
+//however, on a 3gs running 3.1.2 no route change is generated when the user switches the 
+//ringer mute switch to off (i.e. enables sound) therefore polling is the only reliable way to
+//determine ringer switch state
+-(BOOL) isDeviceMuted {
+
+#if TARGET_IPHONE_SIMULATOR
+	//Calling audio route stuff on the simulator causes problems
+	return NO;
+#else	
+	CFStringRef newAudioRoute;
+	UInt32 propertySize = sizeof (CFStringRef);
+	
+	AudioSessionGetProperty (
+							 kAudioSessionProperty_AudioRoute,
+							 &propertySize,
+							 &newAudioRoute
+							 );
+	
+	if (newAudioRoute == NULL) {
+		//Don't expect this to happen but playing safe otherwise a null in the CFStringCompare will cause a crash
+		return YES;
+	} else {	
+		CFComparisonResult newDeviceIsMuted =	CFStringCompare (
+																 newAudioRoute,
+																 (CFStringRef) @"",
+																 0
+																 );
+		
+		return (newDeviceIsMuted == kCFCompareEqualTo);
+	}	
+#endif
+}	
+
 -(BOOL) mute {
 	return _mute;
 }	
@@ -493,5 +527,7 @@ static BOOL configured = FALSE;
 		CCLOG(@"Denshion: Error processing context%x\n", error);
 	}
 }
+
+
 
 @end
