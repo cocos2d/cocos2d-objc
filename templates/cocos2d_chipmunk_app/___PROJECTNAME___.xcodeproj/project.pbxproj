@@ -123,8 +123,8 @@
 		504DFB9510AF08E4006D82FE /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 504DFB1610AF08E4006D82FE /* CGPointExtension.m */; };
 		504DFB9610AF08E4006D82FE /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 504DFB1710AF08E4006D82FE /* EAGLView.h */; };
 		504DFB9710AF08E4006D82FE /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 504DFB1810AF08E4006D82FE /* EAGLView.m */; };
-		504DFB9810AF08E4006D82FE /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 504DFB1910AF08E4006D82FE /* FileUtils.h */; };
-		504DFB9910AF08E4006D82FE /* FileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 504DFB1A10AF08E4006D82FE /* FileUtils.m */; };
+		504DFB9810AF08E4006D82FE /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 504DFB1910AF08E4006D82FE /* CCFileUtils.h */; };
+		504DFB9910AF08E4006D82FE /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 504DFB1A10AF08E4006D82FE /* CCFileUtils.m */; };
 		504DFB9A10AF08E4006D82FE /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 504DFB1B10AF08E4006D82FE /* glu.c */; };
 		504DFB9B10AF08E4006D82FE /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = 504DFB1C10AF08E4006D82FE /* glu.h */; };
 		504DFB9C10AF08E4006D82FE /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 504DFB1D10AF08E4006D82FE /* OpenGL_Internal.h */; };
@@ -379,8 +379,8 @@
 		504DFB1610AF08E4006D82FE /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
 		504DFB1710AF08E4006D82FE /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		504DFB1810AF08E4006D82FE /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
-		504DFB1910AF08E4006D82FE /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
-		504DFB1A10AF08E4006D82FE /* FileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtils.m; sourceTree = "<group>"; };
+		504DFB1910AF08E4006D82FE /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
+		504DFB1A10AF08E4006D82FE /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
 		504DFB1B10AF08E4006D82FE /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
 		504DFB1C10AF08E4006D82FE /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		504DFB1D10AF08E4006D82FE /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
@@ -724,8 +724,8 @@
 				504DFB1610AF08E4006D82FE /* CGPointExtension.m */,
 				504DFB1710AF08E4006D82FE /* EAGLView.h */,
 				504DFB1810AF08E4006D82FE /* EAGLView.m */,
-				504DFB1910AF08E4006D82FE /* FileUtils.h */,
-				504DFB1A10AF08E4006D82FE /* FileUtils.m */,
+				504DFB1910AF08E4006D82FE /* CCFileUtils.h */,
+				504DFB1A10AF08E4006D82FE /* CCFileUtils.m */,
 				504DFB1B10AF08E4006D82FE /* glu.c */,
 				504DFB1C10AF08E4006D82FE /* glu.h */,
 				504DFB1D10AF08E4006D82FE /* OpenGL_Internal.h */,
@@ -1004,7 +1004,7 @@
 				504DFB9210AF08E4006D82FE /* ccHashSet.h in Headers */,
 				504DFB9410AF08E4006D82FE /* CGPointExtension.h in Headers */,
 				504DFB9610AF08E4006D82FE /* EAGLView.h in Headers */,
-				504DFB9810AF08E4006D82FE /* FileUtils.h in Headers */,
+				504DFB9810AF08E4006D82FE /* CCFileUtils.h in Headers */,
 				504DFB9B10AF08E4006D82FE /* glu.h in Headers */,
 				504DFB9C10AF08E4006D82FE /* OpenGL_Internal.h in Headers */,
 				504DFB9D10AF08E4006D82FE /* TGAlib.h in Headers */,
@@ -1198,7 +1198,7 @@
 				504DFB9310AF08E4006D82FE /* ccHashSet.m in Sources */,
 				504DFB9510AF08E4006D82FE /* CGPointExtension.m in Sources */,
 				504DFB9710AF08E4006D82FE /* EAGLView.m in Sources */,
-				504DFB9910AF08E4006D82FE /* FileUtils.m in Sources */,
+				504DFB9910AF08E4006D82FE /* CCFileUtils.m in Sources */,
 				504DFB9A10AF08E4006D82FE /* glu.c in Sources */,
 				504DFB9E10AF08E4006D82FE /* TGAlib.m in Sources */,
 				504DFBA010AF08E4006D82FE /* TransformUtils.m in Sources */,
