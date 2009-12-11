@@ -601,8 +601,14 @@
 
 -(void)setVisible:(BOOL)v
 {
-	[super setVisible:v];
-	SET_DIRTY_RECURSIVELY();
+	if( v != visible ) {
+		[super setVisible:v];
+		if( usesSpriteSheet_ && ! dirty_ ) {
+			dirty_ = YES;
+			for( id child in children)
+				[child setVisible:v];
+		}
+	}
 }
 
 -(void)setFlipX:(BOOL)b
