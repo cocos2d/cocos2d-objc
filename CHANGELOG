@@ -14,6 +14,7 @@ version 0.9.0-beta - XX-MMM-2009
  . SpriteSheet: supports any level of sub-children (issue #346, issue #665)
  . Sprite: supports "honor parent transform" (issue #643)
  . Sprite: displayFrame renamed to displayedFrame (issue #XXX)
+ . Sprite: fixed zwoptex offset & anchorPoint (issue #653)
  . Templates: using SDK 3.0 as base SDK
  . Textures: supports mipmap generation (issue #632)
  . Texture Atlas: uses VBO instead of vertex array list (issue #581)

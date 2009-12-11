@@ -1847,6 +1847,8 @@ Class restartAction()
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp(0,0)];
 		
+//		sprite1.relativeAnchorPoint = NO;
+		
 		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		

@@ -91,7 +91,6 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
 	for(NSString *frameDictKey in framesDict) {
 		NSDictionary *frameDict = [framesDict objectForKey:frameDictKey];
-		NSLog(@"dictionary: %@", frameDict);
 		float x = [[frameDict objectForKey:@"x"] floatValue];
 		float y = [[frameDict objectForKey:@"y"] floatValue];
 		float w = [[frameDict objectForKey:@"width"] floatValue];
