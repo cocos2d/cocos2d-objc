@@ -93,9 +93,9 @@ typedef enum {
 	// texture pixels
 	CGRect rect_;
 	
-	// Offset (used by Zwoptex)
+	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPosition_;
-	
+
 	// vertex coords, texture coors and color info
 	ccV3F_C4B_T2F_Quad quad_;
 	
@@ -178,10 +178,6 @@ typedef enum {
  */
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
 
-/** Creates an sprite with an image filename, a rect and an offset.
- */
-+(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset;
-
 /** Creates an sprite with a CGImageRef.
  */
 +(id) spriteWithCGImage: (CGImageRef)image;
@@ -198,10 +194,6 @@ typedef enum {
  */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
-/** Initializes an sprite with a texture, a rect and offset.
- */
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
-
 /** Initializes an sprite with a an sprite frame.
  */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
@@ -216,10 +208,6 @@ typedef enum {
  The offset will be (0,0).
  */
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
-
-/** Initializes an sprite with an image filename, a rect and offset.
- */
--(id) initWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset;
 
 /** Initializes an sprite with a CGImageRef
  */
