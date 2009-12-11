@@ -139,3 +139,7 @@
 @interface SpriteSheetChildrenZ : SpriteDemo
 {}
 @end
+
+@interface SpriteChildrenVisibility : SpriteDemo
+{}
+@end

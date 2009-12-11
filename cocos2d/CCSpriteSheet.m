@@ -33,7 +33,6 @@ const int defaultCapacity = 29;
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
-//@synthesize dirtySprites = dirtySprites_;
 
 /*
  * creation with CCTexture2D
@@ -78,7 +77,6 @@ const int defaultCapacity = 29;
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-//		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 
 	return self;
@@ -98,7 +96,6 @@ const int defaultCapacity = 29;
 		// no lazy alloc in this node
 		children = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-//		dirtySprites_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 		
 		[self updateBlendFunc];
 	}
@@ -114,7 +111,6 @@ const int defaultCapacity = 29;
 -(void)dealloc
 {	
 	[textureAtlas_ release];
-//	[dirtySprites_ release];
 	[descendants_ release];
 	
 	[super dealloc];
@@ -240,7 +236,6 @@ const int defaultCapacity = 29;
 	[super removeAllChildrenWithCleanup:doCleanup];
 	
 	[descendants_ removeAllObjects];
-//	[dirtySprites_ removeAllObjects];
 	[textureAtlas_ removeAllQuads];
 }
 
@@ -281,11 +276,7 @@ const int defaultCapacity = 29;
 		ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITESHEET_DEBUG_DRAW		
 	}
-		
-//	for( CCSprite *child in dirtySprites_ )
-//		[child updatePosition];
-//	[dirtySprites_ removeAllObjects];
-		
+
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -326,10 +317,6 @@ const int defaultCapacity = 29;
 	}	
 }
 
-//-(void) tagSpriteAsDirty:(CCSprite*)sprite
-//{
-//	[dirtySprites_ addObject:sprite];
-//}
 
 #pragma mark CCSpriteSheet - Atlas Index Stuff
 
@@ -473,10 +460,7 @@ const int defaultCapacity = 29;
 	
 	// Cleanup sprite. It might be reused (issue #569)
 	[sprite useSelfRender];
-	
-	// in case it needs to be drawn, delete it
-//	[dirtySprites_ removeObject:sprite];
-	
+
 	NSUInteger index = [descendants_ indexOfObject:sprite];
 	if( index != NSNotFound ) {
 		[descendants_ removeObjectAtIndex:index];

@@ -35,10 +35,7 @@
 {
 	CCTextureAtlas	*textureAtlas_;
 	ccBlendFunc		blendFunc_;
-	
-	// set of sprites that needs to be udpated before drawing
-//	NSMutableArray	*dirtySprites_;
-	
+
 	// all descendants: chlidren, gran children, etc...
 	NSMutableArray	*descendants_;
 }
@@ -48,9 +45,6 @@
 
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
-/** set of sprites that needs to be updated before the rendering */
-//@property (nonatomic,readonly) NSMutableArray *dirtySprites;
 
 /** creates a CCSpriteSheet with a texture2d */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex;
