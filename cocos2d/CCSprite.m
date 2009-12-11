@@ -34,6 +34,7 @@
 -(void)updateTextureCoords;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
+-(void) setTextureRect:(CGRect)rect untrimmedSize:(CGSize)size;
 @end
 
 @implementation CCSprite
@@ -76,11 +77,6 @@
 	return [[[self alloc] initWithFile:filename rect:rect] autorelease];
 }
 
-+(id)spriteWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset
-{
-	return [[[self alloc] initWithFile:filename rect:rect offset:offset] autorelease];
-}
-
 +(id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
 	return [[[self alloc] initWithSpriteFrame:spriteFrame] autorelease];
@@ -95,15 +91,10 @@
 {
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
-	return [self initWithTexture:texture rect:rect offset:CGPointZero];
+	return [self initWithTexture:texture rect:rect];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
-{
-	return [self initWithTexture:texture rect:rect offset:CGPointZero];
-}
-
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
 	if( (self = [super init]) )
 	{
@@ -130,10 +121,9 @@
 
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
-		offsetPosition_ = offset;
-//		anchorPoint_ = ccp( (-offset.x / rect.size.width) + 0.5f,
-//						   (-offset.y / rect.size.height) + 0.5f );
 
+		// zwoptex default values
+		offsetPosition_ = CGPointZero;
 
 		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
 		hasChildren_ = NO;
@@ -152,7 +142,7 @@
 		// updated in "useSelfRender"
 		
 		// Atlas: TexCoords
-		[self setTextureRect:rect];		
+		[self setTextureRect:rect];
 	}
 	return self;
 }
@@ -162,27 +152,24 @@
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
-	return [self initWithTexture:texture rect:rect offset:CGPointZero];
+	return [self initWithTexture:texture rect:rect];
 }
 
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect
 {
-	return [self initWithFile:filename rect:rect offset:CGPointZero];
-}
-
--(id) initWithFile:(NSString*)filename rect:(CGRect)rect offset:(CGPoint)offset
-{
 	if( (self = [super init]) ) {
 		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 		
-		[self initWithTexture:texture rect:rect offset:offset];
+		[self initWithTexture:texture rect:rect];
 	}
 	return self;
 }
 
 - (id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
-	return [self initWithTexture:spriteFrame.texture rect:spriteFrame.rect offset:spriteFrame.offset];
+	id ret = [self initWithTexture:spriteFrame.texture rect:spriteFrame.rect];
+	[self setDisplayFrame:spriteFrame];
+	return ret;
 }
 
 - (id) initWithCGImage: (CGImageRef)image
@@ -249,11 +236,15 @@
 	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
 }
 
--(void)setTextureRect:(CGRect) rect
+-(void)setTextureRect:(CGRect)rect
+{
+	[self setTextureRect:rect untrimmedSize:rect.size];
+}
+
+-(void)setTextureRect:(CGRect)rect untrimmedSize:(CGSize)untrimmedSize
 {
 	rect_ = rect;
-
-	CGSize newContent = rect_.size;
+	[self setContentSize:untrimmedSize];
 	
 	[self updateTextureCoords];
 	
@@ -263,10 +254,7 @@
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 
-		if( ! CGSizeEqualToSize(newContent, contentSize_))  {
-			[self setContentSize:newContent];
-			dirty_ = YES;
-		}
+		dirty_ = YES;
 	}
 
 	// self rendering
@@ -277,14 +265,12 @@
 		float y1 = 0 + offsetPosition_.y;
 		float x2 = x1 + rect.size.width;
 		float y2 = y1 + rect.size.height;
+		
+		// Don't update Z.
 		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
 		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
 		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
 		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };			
-		
-		if( ! CGSizeEqualToSize(newContent, contentSize_))  {
-			[self setContentSize:newContent];
-		}		
 	}
 			
 }
@@ -362,7 +348,9 @@
 	
 	// update offset
 	newPosition = ccpAdd(newPosition,offsetPosition_);
-		
+	
+	CGSize size = rect_.size;
+
 	// algorithm from pyglet ( http://www.pyglet.org ) 
 
 	// if not visible
@@ -372,13 +360,14 @@
 
 	}
 	
+	
 	// rotation ? -> update: rotation, scale, position
 	else if( newRotation_radians ) {
 		float x1 = -transformAnchor_.x * newScaleX;
 		float y1 = -transformAnchor_.y * newScaleY;
 
-		float x2 = x1 + rect_.size.width * newScaleX;
-		float y2 = y1 + rect_.size.height * newScaleY;
+		float x2 = x1 + size.width * newScaleX;
+		float y2 = y1 + size.height * newScaleY;
 		float x = newPosition.x;
 		float y = newPosition.y;
 		
@@ -408,8 +397,8 @@
 		
 		float x1 = (x- transformAnchor_.x * newScaleX);
 		float y1 = (y- transformAnchor_.y * newScaleY);
-		float x2 = (x1 + rect_.size.width * newScaleX);
-		float y2 = (y1 + rect_.size.height * newScaleY);
+		float x2 = (x1 + size.width * newScaleX);
+		float y2 = (y1 + size.height * newScaleY);
 
 		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
 		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
@@ -425,8 +414,8 @@
 		
 		float x1 = (x-transformAnchor_.x);
 		float y1 = (y-transformAnchor_.y);
-		float x2 = (x1 + rect_.size.width);
-		float y2 = (y1 + rect_.size.height);
+		float x2 = (x1 + size.width);
+		float y2 = (y1 + size.height);
 
 		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
 		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
@@ -706,16 +695,15 @@
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
-	// update anchor point
-//	anchorPoint_ = ccp( (- frame.offset.x / frame.rect.size.width) + 0.5f,
-//					   ( - frame.offset.y / frame.rect.size.height) + 0.5f );
+	CGRect rect = frame.rect;
+	CGSize origSize = frame.originalSize;
 
 	offsetPosition_ = frame.offset;
-	
+	offsetPosition_.x += (origSize.width - rect.size.width) / 2;
+	offsetPosition_.y += (origSize.height - rect.size.height) / 2;
 	
 	// update rect
-	CGRect rect = [frame rect];
-	[self setTextureRect: rect];
+	[self setTextureRect:frame.rect untrimmedSize:frame.originalSize];
 	
 	[self setFlipX: [frame flipX]];
 	[self setFlipY: [frame flipY]];

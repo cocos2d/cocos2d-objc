@@ -90,23 +90,44 @@
 @implementation CCSpriteFrame
 @synthesize rect = rect_, offset = offset_, texture = texture_;
 @synthesize flipX=flipX_, flipY=flipY_;
+@synthesize originalSize=originalSize_;
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
-	return [[[self alloc] initWithTexture:texture rect:rect offset:offset flipX:NO flipY:NO] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset originalSize:rect.size flipX:NO flipY:NO] autorelease];
+}
+
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize
+{
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset originalSize:originalSize flipX:NO flipY:NO] autorelease];
 }
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY
 {
-	return [[[self alloc] initWithTexture:texture rect:rect offset:offset flipX:flipX flipY:flipY] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset originalSize:rect.size flipX:flipX flipY:flipY] autorelease];
+}
+
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize flipX:(BOOL)flipX flipY:(BOOL)flipY
+{
+	return [[[self alloc] initWithTexture:texture rect:rect offset:offset originalSize:originalSize flipX:flipX flipY:flipY] autorelease];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
-	return [self initWithTexture:texture rect:rect offset:offset flipX:NO flipY:NO];
+	return [self initWithTexture:texture rect:rect offset:offset originalSize:rect.size flipX:NO flipY:NO];
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize
+{
+	return [self initWithTexture:texture rect:rect offset:offset originalSize:originalSize flipX:NO flipY:NO];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY
+{
+	return [self initWithTexture:texture rect:rect offset:offset originalSize:rect.size flipX:flipX flipY:flipY];
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize flipX:(BOOL)flipX flipY:(BOOL)flipY
 {
 	if( (self=[super init]) ) {
 		self.texture = texture;
@@ -114,6 +135,7 @@
 		rect_ = rect;
 		flipX_ = flipX;
 		flipY_ = flipY;
+		originalSize_ = originalSize;
 	}
 	return self;
 }
@@ -137,7 +159,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rect:rect_ offset:offset_ flipX:flipX_ flipY:flipY_];
+	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rect:rect_ offset:offset_ originalSize:originalSize_ flipX:flipX_ flipY:flipY_];
 	return copy;
 }
 @end
