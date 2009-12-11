@@ -25,6 +25,10 @@
 			<real>0</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_02.png</key>
 		<dict>
@@ -40,6 +44,10 @@
 			<real>-6</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_03.png</key>
 		<dict>
@@ -55,6 +63,10 @@
 			<real>-6</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_04.png</key>
 		<dict>
@@ -70,6 +82,10 @@
 			<real>-0.5</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_05.png</key>
 		<dict>
@@ -85,6 +101,10 @@
 			<real>-0.5</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_06.png</key>
 		<dict>
@@ -100,6 +120,10 @@
 			<real>-6</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_07.png</key>
 		<dict>
@@ -115,6 +139,10 @@
 			<real>-6</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_08.png</key>
 		<dict>
@@ -130,6 +158,10 @@
 			<real>0</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_09.png</key>
 		<dict>
@@ -145,6 +177,10 @@
 			<real>0</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_10.png</key>
 		<dict>
@@ -160,6 +196,10 @@
 			<real>5.5</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_11.png</key>
 		<dict>
@@ -175,6 +215,10 @@
 			<real>5.5</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_12.png</key>
 		<dict>
@@ -190,6 +234,10 @@
 			<real>0</real>
 			<key>offsetY</key>
 			<real>-2.5</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_13.png</key>
 		<dict>
@@ -205,6 +253,10 @@
 			<real>0</real>
 			<key>offsetY</key>
 			<real>-1</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 		<key>grossini_dance_14.png</key>
 		<dict>
@@ -220,6 +272,10 @@
 			<real>0</real>
 			<key>offsetY</key>
 			<real>-2.5</real>
+			<key>originalWidth</key>
+			<integer>85</integer>
+			<key>originalHeight</key>
+			<integer>-121</integer>
 		</dict>
 	</dict>
 </dict>
