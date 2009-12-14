@@ -695,23 +695,22 @@
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
-
 	offsetPosition_ = frame.offset;
 	
 	CGRect rect = frame.rect;
 	CGSize origSize = frame.originalSize;
 	offsetPosition_.x += (origSize.width - rect.size.width) / 2;
 	offsetPosition_.y += (origSize.height - rect.size.height) / 2;
+
+	// update texture before updating texture rect
+	if ( frame.texture.name != self.texture.name )
+		[self setTexture: frame.texture];
 	
 	// update rect
 	[self setTextureRect:frame.rect untrimmedSize:frame.originalSize];
 	
 	[self setFlipX: [frame flipX]];
 	[self setFlipY: [frame flipY]];
-
-	// update texture
-	if ( frame.texture.name != self.texture.name )
-		[self setTexture: frame.texture];
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
