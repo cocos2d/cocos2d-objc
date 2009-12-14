@@ -175,7 +175,7 @@
 	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
     
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[[CCDirector sharedDirector] attachInView:window];
 	[window makeKeyAndVisible];		
 	
 	CCScene *scene = [CCScene node];
@@ -198,7 +198,7 @@
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureMgr sharedTextureMgr] removeAllTextures];
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
 // next delta time will be zero
