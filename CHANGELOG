@@ -1,4 +1,4 @@
-version 0.9.0-beta - XX-MMM-2009
+version 0.9.0-beta - 14-Dic-2009
  . ActionManager: fixed leak (issue #635)
  . Actions: using [self class]. Easier to subclass (issue #655)
  . Box2d: updated to r31 (pre 2.1.0) (issue #494)
