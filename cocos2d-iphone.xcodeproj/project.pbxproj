@@ -1822,7 +1822,7 @@
 		500043740F3CB58600A5FBF4 /* test_image.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test_image.tiff; sourceTree = "<group>"; };
 		500044020F3CC15D00A5FBF4 /* test_image.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvr; sourceTree = "<group>"; };
 		500044030F3CC15D00A5FBF4 /* test_image.pvrraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvrraw; sourceTree = "<group>"; };
-		50010ED2103B3DB80059EC2E /* Box2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50010ED2103B3DB80059EC2E /* Box2dTestBed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTestBed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		500111EB103B878B0059EC2E /* Box2D_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D_Prefix.pch; sourceTree = "<group>"; };
 		500111EC103B878B0059EC2E /* Box2DAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DAppDelegate.h; sourceTree = "<group>"; };
 		500111ED103B878B0059EC2E /* Box2DAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DAppDelegate.mm; sourceTree = "<group>"; };
@@ -2076,7 +2076,7 @@
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		50405A1F0E32A15500213FEF /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		504225700FC0B39C00B992F7 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5042262E0FC0B5D500B992F7 /* Box2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5042262E0FC0B5D500B992F7 /* Box2dAccelTouchTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dAccelTouchTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504227120FC0B96E00B992F7 /* Box2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2dTest.h; path = tests/Box2dTest.h; sourceTree = "<group>"; };
 		504227130FC0B96E00B992F7 /* Box2dTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Box2dTest.mm; path = tests/Box2dTest.mm; sourceTree = "<group>"; };
 		504799B1100F6A4200D1C71A /* LayerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3279,7 +3279,7 @@
 				501C7C910F91EFFF0024A296 /* SpriteTest.app */,
 				501945740F964C620059CE7C /* drawPrimitivesTest.app */,
 				504225700FC0B39C00B992F7 /* libbox2d.a */,
-				5042262E0FC0B5D500B992F7 /* Box2dTest.app */,
+				5042262E0FC0B5D500B992F7 /* Box2dAccelTouchTest.app */,
 				5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */,
 				50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */,
 				50D0E05F0FF9232E00098927 /* HelloActionsSample.app */,
@@ -3292,7 +3292,7 @@
 				503164CD10277665003ACFE7 /* liblibpng.a */,
 				503167B41028488E003ACFE7 /* ParticleView.app */,
 				504CC32F1035BDE90096894C /* ActionManagerTest.app */,
-				50010ED2103B3DB80059EC2E /* Box2dTest.app */,
+				50010ED2103B3DB80059EC2E /* Box2dTestBed.app */,
 				495E73F7104B74E20012BB52 /* RenderTextureTest.app */,
 				DAABAA9A1059A42E00794EB3 /* FontTest.app */,
 				505461DF10616AE100AB7C52 /* libFontLabel.a */,
@@ -4918,7 +4918,7 @@
 			);
 			name = Box2dTestBed;
 			productName = ChipmunkDemo;
-			productReference = 50010ED2103B3DB80059EC2E /* Box2dTest.app */;
+			productReference = 50010ED2103B3DB80059EC2E /* Box2dTestBed.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5012DD180FE2994300D6DDD1 /* TouchesTest */ = {
@@ -5115,7 +5115,7 @@
 			);
 			name = Box2dAccelTouchTest;
 			productName = ChipmunkDemo;
-			productReference = 5042262E0FC0B5D500B992F7 /* Box2dTest.app */;
+			productReference = 5042262E0FC0B5D500B992F7 /* Box2dAccelTouchTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50479999100F6A4200D1C71A /* LayerTest */ = {
@@ -7839,7 +7839,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Box2dTest;
+				PRODUCT_NAME = Box2dTestBed;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/** external/Box2d";
 			};
 			name = Debug;
@@ -7867,7 +7867,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Box2dTest;
+				PRODUCT_NAME = Box2dTestBed;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/** external/Box2d";
 				ZERO_LINK = NO;
 			};
@@ -8339,7 +8339,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Box2dTest;
+				PRODUCT_NAME = Box2dAccelTouchTest;
 				USER_HEADER_SEARCH_PATHS = external/Box2d;
 			};
 			name = Debug;
@@ -8367,7 +8367,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Box2dTest;
+				PRODUCT_NAME = Box2dAccelTouchTest;
 				USER_HEADER_SEARCH_PATHS = external/Box2d;
 				ZERO_LINK = NO;
 			};
