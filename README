@@ -60,9 +60,9 @@ Files and Folders
 
   * cocos2d/
      core files and folders of cocos2d
-  * cocoslive
+  * cocoslive/
      high score client library
-  * CocosDenshion
+  * CocosDenshion/
      sound engine library
   * tests/
      tests, demo and template examples     
