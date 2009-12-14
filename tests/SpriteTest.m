@@ -1229,6 +1229,7 @@ Class restartAction()
 		//     [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_blue.plist"];
 
 		//
 		// Animation using Sprite Sheet
@@ -1241,9 +1242,9 @@ Class restartAction()
 		[self addChild:spritesheet];
 
 		NSMutableArray *animFrames = [NSMutableArray array];
-		for(int i = 0; i < 14; i++) {
+		for(int i = 1; i < 15; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",i]];
 			[animFrames addObject:frame];
 		}
 
@@ -1259,16 +1260,20 @@ Class restartAction()
 		[self addChild:sprite2];
 		
 
-		NSMutableArray *animFramesGray = [NSMutableArray array];
-		for(int i = 0; i < 14; i++) {
+		NSMutableArray *moreFrames = [NSMutableArray array];
+		for(int i = 1; i < 15; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_gray_%02d.png",(i+1)]];
-			[animFramesGray addObject:frame];
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_gray_%02d.png",i]];
+			[moreFrames addObject:frame];
+		}
+		for( int i = 1; i < 5; i++) {
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_blue_%02d.png",i]];
+			[moreFrames addObject:frame];
 		}
 		
 		// append frames from another sheet
-		[animFramesGray addObjectsFromArray:animFrames];
-		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFramesGray];
+		[moreFrames addObjectsFromArray:animFrames];
+		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f frames:moreFrames];
 		
 		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animMixed restoreOriginalFrame:NO]]];
 	}	
