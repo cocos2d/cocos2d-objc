@@ -143,3 +143,11 @@
 @interface SpriteChildrenVisibility : SpriteDemo
 {}
 @end
+
+@interface SpriteChildrenAnchorPoint : SpriteDemo
+{}
+@end
+
+@interface SpriteSheetChildrenAnchorPoint : SpriteDemo
+{}
+@end
