@@ -38,6 +38,8 @@ static NSString *transitions[] = {
 			@"SpriteSheetChildren2",
 			@"SpriteSheetChildrenZ",
 			@"SpriteChildrenVisibility",
+			@"SpriteChildrenAnchorPoint",
+			@"SpriteSheetChildrenAnchorPoint",
 };
 
 enum {
@@ -1802,6 +1804,7 @@ Class restartAction()
 	return @"SpriteSheet Children Z";
 }
 @end
+
 #pragma mark -
 #pragma mark SpriteChildrenVisibility
 
@@ -1879,6 +1882,200 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sprite & SpriteSheet Visibility";
+}
+@end
+
+#pragma mark -
+#pragma mark SpriteChildrenAnchorPoint
+
+@implementation SpriteChildrenAnchorPoint
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		
+		CCNode *aParent;
+		CCSprite *sprite1, *sprite2, *sprite3, *sprite4;
+		//
+		// SpriteSheet
+		//
+		// parents
+		
+		aParent = [CCNode node];
+		[self addChild:aParent z:0];
+		
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
+		sprite1.anchorPoint = ccp(0,0);
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+
+		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		[sprite4 setPosition:ccp(0,0)];
+		sprite4.scale = 0.5f;
+
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:-2];
+		[sprite1 addChild:sprite4 z:3];
+		
+		
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
+		sprite1.anchorPoint = ccp(0.5f, 0.5f);
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		[sprite4 setPosition:ccp(0,0)];
+		sprite4.scale = 0.5f;		
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:-2];
+		[sprite1 addChild:sprite4 z:3];
+
+		
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
+		sprite1.anchorPoint = ccp(1,1);
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		[sprite4 setPosition:ccp(0,0)];
+		sprite4.scale = 0.5f;		
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:-2];
+		[sprite1 addChild:sprite4 z:3];
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite: children + anchor";
+}
+@end
+
+#pragma mark -
+#pragma mark SpriteSheetChildrenAnchorPoint
+
+@implementation SpriteSheetChildrenAnchorPoint
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		
+		CCNode *aParent;
+		CCSprite *sprite1, *sprite2, *sprite3, *sprite4;
+		//
+		// SpriteSheet
+		//
+		// parents
+		
+		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		[self addChild:aParent z:0];
+		
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
+		sprite1.anchorPoint = ccp(0,0);
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		[sprite4 setPosition:ccp(0,0)];
+		sprite4.scale = 0.5f;
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:-2];
+		[sprite1 addChild:sprite4 z:3];
+		
+		
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
+		sprite1.anchorPoint = ccp(0.5f, 0.5f);
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		[sprite4 setPosition:ccp(0,0)];
+		sprite4.scale = 0.5f;		
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:-2];
+		[sprite1 addChild:sprite4 z:3];
+		
+		
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
+		sprite1.anchorPoint = ccp(1,1);
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		[sprite4 setPosition:ccp(0,0)];
+		sprite4.scale = 0.5f;		
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:-2];
+		[sprite1 addChild:sprite4 z:3];
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet: children + anchor";
 }
 @end
 
