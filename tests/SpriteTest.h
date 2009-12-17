@@ -114,11 +114,19 @@
 {}
 @end
 
-@interface SpriteOffsetAnchor : SpriteDemo
+@interface SpriteOffsetAnchorRotation : SpriteDemo
 {}
 @end
 
-@interface SpriteSheetOffsetAnchor : SpriteDemo
+@interface SpriteSheetOffsetAnchorRotation : SpriteDemo
+{}
+@end
+
+@interface SpriteOffsetAnchorScale : SpriteDemo
+{}
+@end
+
+@interface SpriteSheetOffsetAnchorScale : SpriteDemo
 {}
 @end
 
