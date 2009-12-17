@@ -17,8 +17,10 @@ static NSString *transitions[] = {
 			@"SpriteFrameTest",
 			@"SpriteAnchorPoint",
 			@"SpriteSheetAnchorPoint",
-			@"SpriteOffsetAnchor",
-			@"SpriteSheetOffsetAnchor",
+			@"SpriteOffsetAnchorRotation",
+			@"SpriteSheetOffsetAnchorRotation",
+			@"SpriteOffsetAnchorScale",
+			@"SpriteSheetOffsetAnchorScale",
 			@"SpriteAnimationSplit",
 			@"SpriteColorOpacity",
 			@"SpriteSheetColorOpacity",
@@ -1295,9 +1297,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Example SpriteOffsetAnchor
+#pragma mark Example SpriteOffsetAnchorRotation
 
-@implementation SpriteOffsetAnchor
+@implementation SpriteOffsetAnchorRotation
 
 -(id) init
 {
@@ -1360,14 +1362,14 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite offset + anchor";
+	return @"Sprite offset + anchor + rot";
 }
 @end
 
 #pragma mark -
-#pragma mark Example SpriteSheetOffsetAnchor
+#pragma mark Example SpriteSheetOffsetAnchorRotation
 
-@implementation SpriteSheetOffsetAnchor
+@implementation SpriteSheetOffsetAnchorRotation
 
 -(id) init
 {
@@ -1432,9 +1434,159 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet offset + anchor";
+	return @"SpriteSheet offset + anchor + rot";
 }
 @end
+
+#pragma mark -
+#pragma mark Example SpriteOffsetAnchorScale
+
+@implementation SpriteOffsetAnchorScale
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		for(int i=0;i<3;i++) {
+			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+			
+			//
+			// Animation using Sprite Sheet
+			//
+			CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( 90 + i*150, s.height/2);			
+			
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:1];
+			
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+			
+			point.position = sprite.position;
+			
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+				
+				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];			
+			
+			id scale = [CCScaleBy actionWithDuration:2 scale:2];
+			id scale_back = [scale reverse];
+			id seq_scale = [CCSequence actions:scale, scale_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_scale]];
+			
+			[self addChild:sprite z:0];
+		}		
+	}	
+	return self;
+}
+
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite offset + anchor + scale";
+}
+@end
+
+#pragma mark -
+#pragma mark Example SpriteSheetOffsetAnchorScale
+
+@implementation SpriteSheetOffsetAnchorScale
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		for(int i=0;i<3;i++) {
+			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+			
+			//
+			// Animation using Sprite Sheet
+			//
+			CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( 90 + i*150, s.height/2);			
+			
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:200];
+			
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+			
+			point.position = sprite.position;
+			
+			CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
+			[self addChild:spritesheet];
+			
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+				
+				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+
+			id scale = [CCScaleBy actionWithDuration:2 scale:2];
+			id scale_back = [scale reverse];
+			id seq_scale = [CCSequence actions:scale, scale_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_scale]];
+			
+			[spritesheet addChild:sprite z:i];
+		}		
+	}	
+	return self;
+}
+
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet offset + anchor + scale";
+}
+@end
+
 
 #pragma mark -
 #pragma mark Example Sprite: Animation Split

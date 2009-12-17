@@ -386,13 +386,12 @@
 	// scale ? -> update: scale, position
 	else if(newScaleX != 1 || newScaleY != 1)
 	{
-		float x = newPosition.x;
-		float y = newPosition.y;
+		float x1 = (-transformAnchor_.x + offsetPosition_.x) * newScaleX + newPosition.x;
+		float y1 = (-transformAnchor_.y + offsetPosition_.y) * newScaleY + newPosition.y;
 		
-		float x1 = (x- (transformAnchor_.x + offsetPosition_.x) * newScaleX);
-		float y1 = (y- (transformAnchor_.y + offsetPosition_.y) * newScaleY);
-		float x2 = (x1 + size.width * newScaleX);
-		float y2 = (y1 + size.height * newScaleY);
+		float x2 = x1 + size.width * newScaleX;
+		float y2 = y1 + size.height * newScaleY;
+		
 
 		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
 		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
@@ -403,11 +402,8 @@
 	
 	// update position
 	else {
-		float x = newPosition.x;
-		float y = newPosition.y;
-		
-		float x1 = (x-transformAnchor_.x+offsetPosition_.x);
-		float y1 = (y-transformAnchor_.y+offsetPosition_.y);
+		float x1 = (-transformAnchor_.x+offsetPosition_.x) + newPosition.x;
+		float y1 = (-transformAnchor_.y+offsetPosition_.y) + newPosition.y;
 		float x2 = (x1 + size.width);
 		float y2 = (y1 + size.height);
 

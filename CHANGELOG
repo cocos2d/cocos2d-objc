@@ -1,3 +1,6 @@
+version 0.9.0-rc0 - XX-Jan-2010
+ . Sprite: anchor + offset + scale works  (issue #671)
+ 
 version 0.9.0-beta - 14-Dic-2009
  . ActionManager: fixed leak (issue #635)
  . Actions: using [self class]. Easier to subclass (issue #655)
