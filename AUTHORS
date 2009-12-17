@@ -40,8 +40,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
 		patch for CocosDenshion
-	* CJ Hanson:
+	* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy):
 		RenderTexture generates UIImages patch
+		correct channel in SimpleAudioEngine patch
+		Added Ease Elastic actions
 	* cjlesh:
 		RotateTo action rotates to shortest angle patch
 	* Clinth Harris:
@@ -188,9 +190,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		fix to set depthbuffer size on Director
 		TextureAtlas supports Texture2D objects
 		author of the original AtlasSprite and AtlasSpriteManager
-	* myBuddyCJ:
-		correct channel in SimpleAudioEngine patch
-		Added Ease Elastic actions
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
 	* psionic81:
