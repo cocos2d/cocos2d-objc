@@ -15,6 +15,7 @@
 
 #import "CCInstantAction.h"
 #import "CCNode.h"
+#import "CCSprite.h"
 
 //
 // InstantAction
@@ -92,6 +93,79 @@
 	((CCNode *)target).visible = !((CCNode *)target).visible;
 }
 @end
+
+//
+// FlipX
+//
+@implementation CCFlipX
++(id) actionWithFlipX:(BOOL)x
+{
+	return [[[self alloc] initWithFlipX:x] autorelease];
+}
+
+-(id) initWithFlipX:(BOOL)x
+{
+	if(( self=[super init])) {
+		flipX = x;
+	}
+	
+	return self;
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:aTarget];
+	[(CCSprite*)aTarget setFlipX:flipX];
+}
+
+-(CCFiniteTimeAction*) reverse
+{
+	return [CCFlipX actionWithFlipX:!flipX];
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithFlipX:flipX];
+	return copy;
+}
+@end
+
+//
+// FlipY
+//
+@implementation CCFlipY
++(id) actionWithFlipY:(BOOL)y
+{
+	return [[[self alloc] initWithFlipY:y] autorelease];
+}
+
+-(id) initWithFlipY:(BOOL)y
+{
+	if(( self=[super init])) {
+		flipY = y;
+	}
+	
+	return self;
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:aTarget];
+	[(CCSprite*)aTarget setFlipY:flipY];
+}
+
+-(CCFiniteTimeAction*) reverse
+{
+	return [CCFlipY actionWithFlipY:!flipY];
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithFlipY:flipY];
+	return copy;
+}
+@end
+
 
 //
 // Place

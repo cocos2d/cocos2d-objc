@@ -1608,13 +1608,6 @@ Class restartAction()
 		CCSpriteFrame *frame3 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*3, 132*0, 132, 132) offset:CGPointZero];
 		CCSpriteFrame *frame4 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*1, 132, 132) offset:CGPointZero];
 		CCSpriteFrame *frame5 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*1, 132, 132) offset:CGPointZero];
-
-		CCSpriteFrame *frameFlip0 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
-		CCSpriteFrame *frameFlip1 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
-		CCSpriteFrame *frameFlip2 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*2, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
-		CCSpriteFrame *frameFlip3 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*3, 132*0, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
-		CCSpriteFrame *frameFlip4 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*1, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
-		CCSpriteFrame *frameFlip5 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*1, 132, 132) offset:CGPointZero flipX:YES flipY:NO];
 		
 		
 		//
@@ -1631,15 +1624,16 @@ Class restartAction()
 		[animFrames addObject:frame3];
 		[animFrames addObject:frame4];
 		[animFrames addObject:frame5];
-		[animFrames addObject:frameFlip0];
-		[animFrames addObject:frameFlip1];
-		[animFrames addObject:frameFlip2];
-		[animFrames addObject:frameFlip3];
-		[animFrames addObject:frameFlip4];
-		[animFrames addObject:frameFlip5];
-		
+				
 		CCAnimation *animation = [CCAnimation animationWithName:@"fly" delay:0.2f frames:animFrames];
-		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+		CCAnimate *animate = [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO];
+		CCSequence *seq = [CCSequence actions: animate,
+						   [CCFlipX actionWithFlipX:YES],
+						   [[animate copy] autorelease],
+						   [CCFlipX actionWithFlipX:NO],
+						   nil];
+		
+		[sprite runAction:[CCRepeatForever actionWithAction: seq ]];
 		
 	}	
 	return self;

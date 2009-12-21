@@ -897,6 +897,13 @@ static CCDirector *_sharedDirector = nil;
 	[invocation setSelector:selector];
 	[invocation performSelectorOnMainThread:@selector(invokeWithTarget:)
 								 withObject:[CCDirector sharedDirector] waitUntilDone:NO];
+	
+//	NSInvocationOperation *loopOperation = [[[NSInvocationOperation alloc]
+//											 initWithTarget:self selector:@selector(preMainLoop) object:nil]
+//											autorelease];
+//	
+//	[loopOperation performSelectorOnMainThread:@selector(start) withObject:nil
+//								 waitUntilDone:NO];
 }
 
 -(void) preMainLoop
