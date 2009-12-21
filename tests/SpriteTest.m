@@ -12,8 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"SpriteSheetChildrenScale",
-
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -2300,16 +2298,60 @@ Class restartAction()
 
 		CCNode *aParent;
 		CCSprite *sprite1, *sprite2;
+		id rot = [CCRotateBy actionWithDuration:10 angle:360];
+		id seq = [CCRepeatForever actionWithAction:rot];
 		
 		//
 		// Children + Scale using Sprite
+		// Test 1
 		//
 		aParent = [CCNode node];
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
-		sprite1.position = ccp( s.width/3, s.height/2);
-		sprite1.scaleX = 1.1f;
-		sprite1.scaleY = -1;
-//		sprite1.rotation = 10;
+		sprite1.position = ccp( s.width/4, s.height/4);
+		sprite1.scaleX = -0.5f;
+		sprite1.scaleY = 2.0f;
+		[sprite1 runAction:seq];
+		
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2.position = ccp( 50,0);
+		
+		[self addChild:aParent];
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2];
+
+		
+		//
+		// Children + Scale using SpriteSheet
+		// Test 2
+		//
+		
+		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1.position = ccp( 3*s.width/4, s.height/4);
+		sprite1.scaleX = -0.5f;
+		sprite1.scaleY = 2.0f;
+		[sprite1 runAction: [[seq copy] autorelease]];
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2.position = ccp( 50,0);
+		
+		[self addChild:aParent];
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2];
+
+		
+		//
+		// Children + Scale using Sprite
+		// Test 3
+		//
+		
+		aParent = [CCNode node];
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1.position = ccp( s.width/4, 2*s.height/3);
+		sprite1.scaleX = 1.5f;
+		sprite1.scaleY = -0.5f;
+		[sprite1 runAction: [[seq copy] autorelease]];
 		
 		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
 		sprite2.position = ccp( 50,0);
@@ -2320,14 +2362,15 @@ Class restartAction()
 		
 		//
 		// Children + Scale using Sprite
+		// Test 4
 		//
 		
 		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
-		sprite1.position = ccp( 2*s.width/3, s.height/2);
-		sprite1.scaleX = 1.1f;
-		sprite1.scaleY = -1;
-//		sprite1.rotation = 10;
+		sprite1.position = ccp( 3*s.width/4, 2*s.height/3);
+		sprite1.scaleX = 1.5f;
+		sprite1.scaleY = -0.5f;
+		[sprite1 runAction: [[seq copy] autorelease]];
 		
 		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
 		sprite2.position = ccp( 50,0);
@@ -2342,7 +2385,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite/Sheet + children + scale";
+	return @"Sprite/Sheet + child + scale + rot";
 }
 @end
 
