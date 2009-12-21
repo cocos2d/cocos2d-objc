@@ -99,8 +99,12 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		float oy = [[frameDict objectForKey:@"offsetY"] floatValue];
 		int ow = [[frameDict objectForKey:@"originalWidth"] intValue];
 		int oh = [[frameDict objectForKey:@"originalHeight"] intValue];
+
+		if( !ow || !oh ) {
+			CCLOG(@"cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+		}
 		
-		// fix
+		// zwoptex fix
 		ow = abs(ow);
 		oh = abs(oh);
 
