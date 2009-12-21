@@ -3,6 +3,7 @@ version 0.9.0-rc0 - XX-Jan-2010
  . Sprite: anchor + offset + scale works  (issue #671)
  . SpriteFrame: removed support for flipX and flipY  (rollback of a part issue #620)
  . SpriteFrameCache: If originalSize is not present, display warning (issue #670)
+ . SpriteSheet: adding grand-children doesn't crash (issue #676)
  . TMXTiledMap: added support for object and objectgroup (issue #636)
  
 version 0.9.0-beta - 14-Dic-2009

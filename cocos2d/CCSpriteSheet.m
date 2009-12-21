@@ -365,7 +365,7 @@ const int defaultCapacity = 29;
 	
 	// ignore parent Z if parent is spriteSheet
 	BOOL ignoreParent = ( sprite.parent == self );
-	CCSprite *previous, *next = nil;
+	CCSprite *previous = nil, *next = nil;
 	if( childIndex > 0 )
 		previous = [brothers objectAtIndex:childIndex-1];
 	if( childIndex < [brothers count] -1 )
@@ -390,17 +390,13 @@ const int defaultCapacity = 29;
 	// first child of an CCSprite ?
 	if( childIndex == 0 )
 	{
+		CCSprite *p = (CCSprite*) sprite.parent;
+
 		// less than parent and brothers
-		if( z < 0 && [brothers count] > 1 )
-		{	
-			return [self lowestAtlasIndexInChild:next] -1;
-		}
-		// no brothers
-		else
-		{
-			CCSprite *p = (CCSprite*) sprite.parent;
+		if( z < 0 )
 			return p.atlasIndex;
-		}
+		else
+			return p.atlasIndex+1;
 	} else {
 		// previous & sprite belong to the same branch
 		if( ( previous.zOrder < 0 && z < 0 )|| (previous.zOrder >= 0 && z >= 0) ) {
