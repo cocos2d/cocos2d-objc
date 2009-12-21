@@ -1933,8 +1933,9 @@ Class restartAction()
 		[sprite3 setPosition:ccp(-20,30)];
 		
 		[sheet addChild:sprite1];
-		[sprite1 addChild:sprite2 z:-2];
-		[sprite1 addChild:sprite3 z:2];
+		[sprite1 addChild:sprite2 z:2];
+		[sprite1 addChild:sprite3 z:-2];
+
 	}	
 	return self;
 }
