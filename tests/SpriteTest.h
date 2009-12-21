@@ -159,3 +159,7 @@
 @interface SpriteSheetChildrenAnchorPoint : SpriteDemo
 {}
 @end
+
+@interface SpriteSheetChildrenScale : SpriteDemo
+{}
+@end

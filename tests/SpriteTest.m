@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"SpriteSheetChildrenZ",
+@"SpriteSheetChildrenScale",
 
 			@"Sprite1",
 			@"SpriteSheet1",
@@ -44,6 +44,7 @@ static NSString *transitions[] = {
 			@"SpriteChildrenVisibility",
 			@"SpriteChildrenAnchorPoint",
 			@"SpriteSheetChildrenAnchorPoint",
+			@"SpriteSheetChildrenScale",
 };
 
 enum {
@@ -2284,6 +2285,66 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark SpriteSheetChildrenScale
+
+@implementation SpriteSheetChildrenScale
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_family.plist"];
+
+		CCNode *aParent;
+		CCSprite *sprite1, *sprite2;
+		
+		//
+		// Children + Scale using Sprite
+		//
+		aParent = [CCNode node];
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1.position = ccp( s.width/3, s.height/2);
+		sprite1.scaleX = 1.1f;
+		sprite1.scaleY = -1;
+//		sprite1.rotation = 10;
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2.position = ccp( 50,0);
+		
+		[self addChild:aParent];
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2];
+		
+		//
+		// Children + Scale using Sprite
+		//
+		
+		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
+		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1.position = ccp( 2*s.width/3, s.height/2);
+		sprite1.scaleX = 1.1f;
+		sprite1.scaleY = -1;
+//		sprite1.rotation = 10;
+		
+		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2.position = ccp( 50,0);
+		
+		[self addChild:aParent];
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Sprite/Sheet + children + scale";
+}
+@end
 
 #pragma mark -
 #pragma mark AppDelegate

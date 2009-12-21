@@ -312,7 +312,8 @@
 		
 		CGAffineTransform old = CGAffineTransformIdentity;
 
-		newScaleX = newScaleY = 1;
+		float signScaleX = 1;	// possitive sign by default
+		float signScaleY = 1;	// possitive sign by default
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
 		for (CCNode *p = self ; p && p != spriteSheet_; p = p.parent) {
@@ -329,8 +330,8 @@
 				new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
 				new = CGAffineTransformScale(new, sx, sy);
-				newScaleX *= [p scaleX];
-				newScaleY *= [p scaleY];
+				signScaleX *= [p scaleX];
+				signScaleY *= [p scaleY];
 			}
 			
 			old = CGAffineTransformConcat( old, new);
@@ -340,6 +341,16 @@
 		
 		newPosition = ccp( old.tx, old.ty);
 		newRotation_radians = -atan2f( old.c, old.a );
+		
+		// Can't use signScaleX and signScaleY as the real scale
+		// And it's difficult (at least I don't know how) to extract the scael the sign from an Affine Matrix
+		// So an hybrid should be impolemented: sign + extract scale (issue #667)
+		newScaleX = sqrtf( old.a * old.a + old.b * old.b );
+		if( signScaleX < 0)
+			newScaleX = -newScaleX;
+		newScaleY = sqrtf( old.c * old.c + old.d * old.d );
+		if( signScaleY < 0)
+			newScaleY = -newScaleY;
 	}
 	
 	CGSize size = rect_.size;
