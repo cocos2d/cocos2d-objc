@@ -17,6 +17,7 @@
 
 #import <UIKit/UIKit.h>
 #include <zlib.h>
+#import <objc/runtime.h>
 
 #import "ccMacros.h"
 #import "CCTMXXMLParser.h"
@@ -31,7 +32,7 @@
 
 @implementation CCTMXLayerInfo
 
-@synthesize name=name_, layerSize=layerSize_, tiles=tiles_, visible=visible_,opacity=opacity_, ownTiles=ownTiles_, minGID=minGID_, maxGID=maxGID_;
+@synthesize name=name_, layerSize=layerSize_, tiles=tiles_, visible=visible_,opacity=opacity_, ownTiles=ownTiles_, minGID=minGID_, maxGID=maxGID_, properties=properties_;
 
 -(id) init
 {
@@ -41,6 +42,7 @@
 		maxGID_ = 0;
 		self.name = nil;
 		tiles_ = NULL;
+		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
 	return self;
 }
@@ -49,6 +51,7 @@
 	CCLOG(@"cocos2d: deallocing %@",self);
 	
 	[name_ release];
+	[properties_ release];
 
 	if( ownTiles_ && tiles_ ) {
 		free( tiles_ );
@@ -95,7 +98,7 @@
 
 @implementation CCTMXMapInfo
 
-@synthesize orientation=orientation_, mapSize=mapSize_, layers=layers_, tilesets=tilesets_, tileSize=tileSize_, filename=filename_;
+@synthesize orientation=orientation_, mapSize=mapSize_, layers=layers_, tilesets=tilesets_, tileSize=tileSize_, filename=filename_, objectGroups=objectGroups_, properties=properties_;
 
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
@@ -109,11 +112,14 @@
 		self.tilesets = [NSMutableArray arrayWithCapacity:4];
 		self.layers = [NSMutableArray arrayWithCapacity:4];
 		self.filename = [CCFileUtils fullPathFromRelativePath:tmxFile];
+		self.objectGroups = [NSMutableArray arrayWithCapacity:4];
+		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	
 		// tmp vars
 		currentString = [[NSMutableString alloc] initWithCapacity:1024];
 		storingCharacters = NO;
 		layerAttribs = TMXLayerAttribNone;
+		parentElement = TMXPropertyNone;
 		
 		NSURL *url = [NSURL fileURLWithPath:filename_];
 		NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
@@ -140,6 +146,8 @@
 	[layers_ release];
 	[filename_ release];
 	[currentString release];
+	[objectGroups_ release];
+	[properties_ release];
 	[super dealloc];
 }
 
@@ -165,6 +173,8 @@
 		tileSize_.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
 		tileSize_.height = [[attributeDict valueForKey:@"tileheight"] intValue];
 
+		// The parent element is now "map"
+		parentElement = TMXPropertyMap;
 	} else if([elementName isEqualToString:@"tileset"]) {
 		CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
 		tileset.name = [attributeDict valueForKey:@"name"];
@@ -198,6 +208,20 @@
 		[layers_ addObject:layer];
 		[layer release];
 		
+		// The parent element is now "layer"
+		parentElement = TMXPropertyLayer;
+	
+	} else if([elementName isEqualToString:@"objectgroup"]) {
+		
+		CCTMXObjectGroup *objectGroup = [[CCTMXObjectGroup alloc] init];
+		objectGroup.groupName = [attributeDict valueForKey:@"name"];
+		
+		[objectGroups_ addObject:objectGroup];
+		[objectGroup release];
+		
+		// The parent element is now "objectgroup"
+		parentElement = TMXPropertyObjectGroup;
+			
 	} else if([elementName isEqualToString:@"image"]) {
 
 		CCTMXTilesetInfo *tileset = [tilesets_ lastObject];
@@ -219,7 +243,156 @@
 				layerAttribs |= TMXLayerAttribGzip;
 		}
 		
-		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip maps are supported");
+		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip maps are supported" );
+		
+	} else if([elementName isEqualToString:@"object"]) {
+	
+		CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+		
+		// Find a class object with the name matching the value for "type", or nil if not found
+		Class classFromString = NSClassFromString([attributeDict valueForKey:@"type"]);
+		
+		NSAssert( classFromString != nil, @"TMX tile map: Value of 'Type' is not a valid class. Using TMXObject." );
+		
+		// If the value of "type" is a valid class, then create an instance of that object
+		if ( classFromString != nil )
+		{
+			id objectInstance = [[classFromString alloc] init];
+			
+			// Does the object have an accessor for the "name" property? If so, set it.
+			if ( [objectInstance respondsToSelector:NSSelectorFromString(@"name")] )
+				[objectInstance setValue:[attributeDict valueForKey:@"name"] forKey:@"name"];
+			else
+				CCLOG( @"TMX tile map: Object '%@' does not recognize the property 'name", objectInstance );
+			
+			// Does the object have an accessor for the "position" property? If so, set it.
+			if ( [objectInstance respondsToSelector:NSSelectorFromString(@"position")] ) {
+				CGPoint objectPosition;
+				objectPosition.x = [[attributeDict valueForKey:@"x"] intValue];
+				objectPosition.y = [[attributeDict valueForKey:@"y"] intValue];
+				[objectInstance setValue:[NSValue valueWithCGPoint:objectPosition] forKey:@"position"];
+			} else
+				CCLOG( @"TMX tile map: Object '%@' does not recognize the property 'position'", objectInstance );
+		
+			// Does the object have an accessor for the "contentSize" property? If so, set it.
+			if ( [objectInstance respondsToSelector:NSSelectorFromString(@"contentSize")] ) {
+				CGSize objectSize;
+				objectSize.width = [[attributeDict valueForKey:@"width"] intValue];
+				objectSize.height = [[attributeDict valueForKey:@"height"] intValue];
+				[objectInstance setValue:[NSValue valueWithCGSize:objectSize] forKey:@"contentSize"];
+			} else
+				CCLOG( @"TMX tile map: Object '%@' does not recognize the property 'contentSize'", objectInstance );
+			
+			// Add the object to the objectGroup
+			[[objectGroup objects] addObject:objectInstance];
+			[objectInstance release];
+			
+		} else {
+			// The value for "type" was blank or not a valid class name
+			// Create an instance of TMXObjectInfo to store the object and its properties
+			CCTMXObject *objectInstance = [[CCTMXObject alloc] init];
+			
+			// Set the name of the object to the value for "name"
+			[objectInstance setValue:[attributeDict valueForKey:@"name"] forKey:@"name"];
+			
+			// Assign all the attributes as key/name pairs in the properties dictionary
+			[[objectInstance properties] setValue:[attributeDict valueForKey:@"type"] forKey:@"type"];
+			[[objectInstance properties] setValue:[attributeDict valueForKey:@"x"] forKey:@"x"];
+			[[objectInstance properties] setValue:[attributeDict valueForKey:@"y"] forKey:@"y"];
+			[[objectInstance properties] setValue:[attributeDict valueForKey:@"width"] forKey:@"width"];
+			[[objectInstance properties] setValue:[attributeDict valueForKey:@"height"] forKey:@"height"];
+			
+			// Add the object to the objectGroup
+			[[objectGroup objects] addObject:objectInstance];
+			[objectInstance release];
+		}
+		
+		// The parent element is now "object"
+		parentElement = TMXPropertyObject;
+		
+	} else if([elementName isEqualToString:@"property"]) {
+	
+		if ( parentElement == TMXPropertyNone ) {
+		
+			CCLOG( @"TMX tile map: Parent element is unsupported. Cannot add property named '%@' with value '%@'",
+			[attributeDict valueForKey:@"name"], [attributeDict valueForKey:@"value"] );
+			
+		} else if ( parentElement == TMXPropertyMap ) {
+		
+			// The parent element is the map
+			[properties_ setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
+			
+		} else if ( parentElement == TMXPropertyLayer ) {
+		
+			// The parent element is the last layer
+			CCTMXLayerInfo *layer = [layers_ lastObject];
+			// Add the property to the layer
+			[[layer properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
+			
+		} else if ( parentElement == TMXPropertyObjectGroup ) {
+			
+			// The parent element is the last object group
+			CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+			[[objectGroup properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
+			
+		} else if ( parentElement == TMXPropertyObject ) {
+			
+			// The parent element is the last object
+			CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+			id objectInstance = [[objectGroup objects] lastObject];
+			
+			NSString *propertyName = [attributeDict valueForKey:@"name"];
+			NSString *propertyValue = [attributeDict valueForKey:@"value"];
+			
+			// If the object has an accessor for the specified propertyName then set its value to propertyValue
+			if ( [objectInstance respondsToSelector:NSSelectorFromString(propertyName)] ) {
+			
+				objc_property_t objectProperty = class_getProperty([objectInstance class], [propertyName UTF8String]);
+				NSString *propertyAttributes = [NSString stringWithUTF8String:property_getAttributes(objectProperty)];
+				
+				NSAssert( propertyAttributes != nil, @"TMX tile map: Unable to retrieve property attributes for object" );
+				
+				if ([propertyAttributes rangeOfString:@"CGRect" options:NSLiteralSearch].location != NSNotFound) {
+				
+					// CGRect: {{x,y},{width,height}}
+					[objectInstance setValue:[NSValue valueWithCGRect:CGRectFromString(propertyValue)] forKey:propertyName];
+					
+				} else if ([propertyAttributes rangeOfString:@"CGPoint" options:NSLiteralSearch].location != NSNotFound) {
+					
+					// CGPoint: {x,y}
+					[objectInstance setValue:[NSValue valueWithCGPoint:CGPointFromString(propertyValue)] forKey:propertyName];
+					
+				} else if ([propertyAttributes rangeOfString:@"CGSize" options:NSLiteralSearch].location != NSNotFound) {
+					
+					// CGSize: {width,height}
+					[objectInstance setValue:[NSValue valueWithCGSize:CGSizeFromString(propertyValue)] forKey:propertyName];
+					
+				} else if ([propertyAttributes rangeOfString:@"NSString" options:NSLiteralSearch].location != NSNotFound) {
+					
+					// NSString
+					[objectInstance setValue:propertyValue forKey:propertyName];
+					
+				} else if ([propertyAttributes rangeOfString:@"float" options:NSLiteralSearch].location != NSNotFound) {
+					
+					// float
+					[objectInstance setValue:[NSNumber numberWithFloat:[propertyValue floatValue]] forKey:propertyName];
+					
+				} else if ([propertyAttributes rangeOfString:@"int" options:NSLiteralSearch].location != NSNotFound) {
+					
+					// int
+					[objectInstance setValue:[NSNumber numberWithInt:[propertyValue intValue]] forKey:propertyName];
+					
+				} // Add additional type conversions should go here as else if statements
+					
+				else {
+					CCLOG( @"TMX tile map: Property named '%@' returned unsupported property type string: %@", propertyName, propertyAttributes );
+				}
+				
+			} else {
+				//CCLOG(@"TMX tile map: Object '%@' does not recognize the property '%@'", [objectInstance valueForKey:@"name"], propertyName);
+				[[objectInstance properties] setValue:propertyValue forKey:propertyName];
+			}
+		}
 	}
 }
 
@@ -254,6 +427,24 @@
 			layer.tiles = (unsigned int*) buffer;
 		
 		[currentString setString:@""];
+			
+	} else if ([elementName isEqualToString:@"map"]) {
+		// The map element has ended
+		parentElement = TMXPropertyNone;
+		
+	}	else if ([elementName isEqualToString:@"layer"]) {
+		// The layer element has ended
+		parentElement = TMXPropertyNone;
+		
+	} else if ([elementName isEqualToString:@"objectgroup"]) {
+		// The objectgroup element has ended
+		parentElement = TMXPropertyNone;
+		
+	} else if ([elementName isEqualToString:@"object"]) {
+		// The object element has ended
+		parentElement = TMXPropertyNone;
+	
+
 	}
 }
 

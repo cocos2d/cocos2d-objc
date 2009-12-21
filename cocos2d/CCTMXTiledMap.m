@@ -85,6 +85,7 @@
 @synthesize tileset=tileset_;
 @synthesize layerOrientation=layerOrientation_;
 @synthesize mapTileSize=mapTileSize_;
+@synthesize properties=properties_;
 
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
 {
@@ -109,6 +110,7 @@
 		self.tileset = tilesetInfo;
 		self.mapTileSize = mapInfo.tileSize;
 		self.layerOrientation = mapInfo.orientation;
+		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
 		
 		atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
 		
@@ -123,6 +125,7 @@
 	[layerName_ release];
 	[tileset_ release];
 	[reusedTile release];
+	[properties_ release];
 	
 	if( atlasIndexArray ) {
 		ccCArrayFree(atlasIndexArray);
@@ -428,6 +431,91 @@ int compareInts (const void * a, const void * b)
 	int y =  (layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY + 0.49f;
 	return ccp(x,y);
 }
+
+-(id) propertyNamed:(NSString *)propertyName 
+{
+	return [properties_ valueForKey:propertyName];
+}
+@end
+
+#pragma mark -
+#pragma mark TMXObjectGroup
+
+@implementation CCTMXObjectGroup
+
+@synthesize groupName=groupName_;
+@synthesize objects=objects_;
+@synthesize properties=properties_;
+
+-(id) init
+{
+	if (( self=[super init] )) {
+		self.groupName = nil;
+		self.objects = [NSMutableArray arrayWithCapacity:10];
+		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
+	}
+	return self;
+}
+
+-(void) dealloc
+{
+	CCLOG( @"cocos2d: deallocing %@", self );
+		
+	[groupName_ release];
+	[objects_ release];
+	[properties_ release];
+	[super dealloc];
+}
+
+-(id) objectNamed:(NSString *)objectName
+{
+	for( id object in objects_ ) {
+		if( [[object valueForKey:@"objectName"] isEqual:objectName] )
+			return object;
+		}
+
+	// object not found
+	return nil;
+}
+
+-(id) propertyNamed:(NSString *)propertyName 
+{
+	return [properties_ valueForKey:propertyName];
+}
+
+@end
+
+#pragma mark -
+#pragma mark TMXObject
+
+@implementation CCTMXObject
+
+@synthesize name=name_;
+@synthesize properties=properties_;
+
+-(id) init
+{
+	if (( self=[super init] )) {
+		self.name = nil;
+		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
+	}
+	return self;
+}
+
+-(void) dealloc
+{
+	CCLOG( @"cocos2d: deallocing %@", self );
+	
+	[name_ release];
+	[properties_ release];
+	[super dealloc];
+}
+
+-(id) propertyNamed:(NSString *)propertyName 
+{
+	return [properties_ valueForKey:propertyName];
+}
+
 @end
 
 #pragma mark -
@@ -442,6 +530,8 @@ int compareInts (const void * a, const void * b)
 @synthesize mapSize=mapSize_;
 @synthesize tileSize=tileSize_;
 @synthesize mapOrientation=mapOrientation_;
+@synthesize objectGroups=objectGroups_;
+@synthesize properties=properties_;
 
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile
 {
@@ -463,6 +553,8 @@ int compareInts (const void * a, const void * b)
 		mapSize_ = mapInfo.mapSize;
 		tileSize_ = mapInfo.tileSize;
 		mapOrientation_ = mapInfo.orientation;
+		objectGroups_ = [mapInfo.objectGroups retain];
+		properties_ = [mapInfo.properties retain];
 				
 		int idx=0;
 
@@ -489,6 +581,8 @@ int compareInts (const void * a, const void * b)
 
 -(void) dealloc
 {
+	[objectGroups_ release];
+	[properties_ release];
 	[super dealloc];
 }
 
@@ -596,6 +690,22 @@ int compareInts (const void * a, const void * b)
 	
 	// layer not found
 	return nil;
+}
+
+-(CCTMXObjectGroup*) groupNamed:(NSString *)groupName 
+{
+	for( CCTMXObjectGroup *objectGroup in objectGroups_ ) {
+		if( [objectGroup.groupName isEqual:groupName] )
+			return objectGroup;
+		}
+	
+	// objectGroup not found
+	return nil;
+}
+
+-(id) propertyNamed:(NSString *)propertyName 
+{
+	return [properties_ valueForKey:propertyName];
 }
 @end
 

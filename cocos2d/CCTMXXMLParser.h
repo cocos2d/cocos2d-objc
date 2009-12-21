@@ -30,6 +30,14 @@ enum {
 	TMXLayerAttribGzip = 1 << 2,
 };
 
+enum {
+	TMXPropertyNone,
+	TMXPropertyMap,
+	TMXPropertyLayer,
+	TMXPropertyObjectGroup,
+	TMXPropertyObject,
+};
+
 /* CCTMXLayerInfo contains the information about the layers like:
  - Layer name
  - Layer size
@@ -40,14 +48,15 @@ enum {
  */
 @interface CCTMXLayerInfo : NSObject
 {
-	NSString		*name_;
-	CGSize			layerSize_;
-	unsigned int	*tiles_;
-	BOOL			visible_;
-	unsigned char	opacity_;
-	BOOL			ownTiles_;
-	unsigned int	minGID_;
-	unsigned int	maxGID_;
+	NSString			*name_;
+	CGSize				layerSize_;
+	unsigned int		*tiles_;
+	BOOL				visible_;
+	unsigned char		opacity_;
+	BOOL				ownTiles_;
+	unsigned int		minGID_;
+	unsigned int		maxGID_;
+	NSMutableDictionary	*properties_;	
 }
 
 @property (nonatomic,readwrite,retain) NSString *name;
@@ -58,6 +67,7 @@ enum {
 @property (nonatomic,readwrite,assign) BOOL ownTiles;
 @property (nonatomic,readwrite,assign) unsigned int minGID;
 @property (nonatomic,readwrite,assign) unsigned int maxGID;
+@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
 
 @end
 
@@ -104,6 +114,7 @@ enum {
  And it also contains:
  - Layers (an array of TMXLayerInfo objects)
  - Tilesets (an array of TMXTilesetInfo objects)
+ - ObjectGroups (an array of TMXObjectGroupInfo objects)
  
  This information is obtained from the TMX file.
  
@@ -113,6 +124,7 @@ enum {
 	NSMutableString		*currentString;
     BOOL				storingCharacters;	
 	int					layerAttribs;
+	int					parentElement;
 	
 	// tmx filename
 	NSString *filename_;
@@ -131,6 +143,12 @@ enum {
 	
 	// tilesets
 	NSMutableArray *tilesets_;
+		
+	// ObjectGroups
+	NSMutableArray *objectGroups_;
+	
+	// properties
+	NSMutableDictionary *properties_;
 }
 
 @property (nonatomic,readwrite,assign) int orientation;
@@ -139,6 +157,8 @@ enum {
 @property (nonatomic,readwrite,retain) NSMutableArray *layers;
 @property (nonatomic,readwrite,retain) NSMutableArray *tilesets;
 @property (nonatomic,readwrite,retain) NSString *filename;
+@property (nonatomic,readwrite,retain) NSMutableArray *objectGroups;
+@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
 
 /** creates a TMX Format with a tmx file */
 +(id) formatWithTMXFile:(NSString*)tmxFile;

@@ -190,6 +190,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		fix to set depthbuffer size on Director
 		TextureAtlas supports Texture2D objects
 		author of the original AtlasSprite and AtlasSpriteManager
+	* Neophit:
+		Added support for object and objectgroup in TMXTiledMaps
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
 	* psionic81:

@@ -24,6 +24,8 @@
 @class CCTMXLayer;
 @class CCTMXLayerInfo;
 @class CCTMXTilesetInfo;
+@class CCTMXObject;
+@class CCTMXObjectGroup;
 
 /** Possible oritentations of the TMX map */
 enum
@@ -42,7 +44,8 @@ enum
  
  It adds support for the TMX tiled map format used by http://www.mapeditor.org
  It supports isometric, hexagonal and orthogonal tiles.
- 
+ It also supports object groups, objects, and properties.
+
  Features:
  - Each tile will be treated as an CCSprite
  - Each tile can be rotated / moved / scaled / tinted / "opacitied"
@@ -55,9 +58,12 @@ enum
  - The tileset image will be loaded using the TextureMgr
  - Each tile will have a unique tag
  - Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
+ - Each object group will be treated as an NSMutableArray
+ - Objects can be created using your own classes or a generic object class which will contain all the properties in a dictionary
+ - Properties can be assigned to the Map, Layer, Object Group, and Object
  
  Limitations:
- - It only supports one tileset.
+ - It only supports one tileset per layer.
  - Embeded images are not supported
  - It only supports the XML format (the JSON format is not supported)
  
@@ -68,14 +74,35 @@ enum
   - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
   - [map layerNamed: name_of_the_layer];
 
+   Each object group is created using a TMXObjectGroup which is a subclass of NSMutableArray.
+   You can obtain the object groups at runtime by:
+   - [map groupNamed: name_of_the_object_group];
+  
+   Each object is created using the "type" property set in Tiled for the class. If "type" is not a valid class or is blank, then
+   the generic TMXObject class will be used. If a valid class is specified, each parsed property value will be assigned to
+   the object's property matching the parsed property name, if it exists.
+   The parser will attempt to convert the property values to the appropriate data types by checking the object's property type
+   encoding string. If you want to use CGPoint, CGSize, or CGRect, you need to enclose your values in braces {} within Tiled.
+   - {3,2} instead of 3,2
+   You can obtain the object at runtime by:
+   - [objectGroup objectNamed: name_of_the_object];
+  
+   Each property is stored as a key-value pair in an NSMutableDictionary.
+   You can obtain the properties at runtime by:
+   - [map propertyNamed: name_of_the_property];
+   - [layer propertyNamed: name_of_the_property];
+   - [objectGroup propertyNamed: name_of_the_property];
+   - [object propertyNamed: name_of_the_property];
+
  @since v0.8.1
  */
 @interface CCTMXTiledMap : CCNode
 {
-	CGSize		mapSize_;
-	CGSize		tileSize_;
-	int			mapOrientation_;	
-}
+	CGSize				mapSize_;
+	CGSize				tileSize_;
+	int					mapOrientation_;
+	NSMutableArray		*objectGroups_;
+	NSMutableDictionary	*properties_;}
 
 /** the map's size property measured in tiles */
 @property (nonatomic,readonly) CGSize mapSize;
@@ -83,6 +110,10 @@ enum
 @property (nonatomic,readonly) CGSize tileSize;
 /** map orientation */
 @property (nonatomic,readonly) int mapOrientation;
+/** object groups */
+@property (nonatomic,readwrite,retain) NSMutableArray *objectGroups;
+/** properties */
+@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
 
 /** creates a TMX Tiled Map with a TMX file.*/
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile;
@@ -92,6 +123,12 @@ enum
 
 /** return the TMXLayer for the specific layer */
 -(CCTMXLayer*) layerNamed:(NSString *)layerName;
+
+/** return the TMXObjectGroup for the secific group */
+-(CCTMXObjectGroup*) groupNamed:(NSString *)groupName;
+
+/** return the value for the specific property name */
+-(id) propertyNamed:(NSString *)propertyName;
 @end
 
 
@@ -111,6 +148,7 @@ enum
 	CGSize				mapTileSize_;
 	unsigned int		*tiles_;
 	int					layerOrientation_;
+	NSMutableArray		*properties_;
 	
 	// used for optimization
 	CCSprite		*reusedTile;
@@ -128,7 +166,8 @@ enum
 @property (nonatomic,readwrite,retain) CCTMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
 @property (nonatomic,readwrite) int layerOrientation;
-
+/** properties */
+@property (nonatomic,readwrite,retain) NSMutableArray *properties;
 
 /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
@@ -161,6 +200,47 @@ enum
 
 /** returns the position in pixels of a given tile coordinate */
 -(CGPoint) positionAt:(CGPoint)tileCoordinate;
+
+/** return the value for the specific property name */
+-(id) propertyNamed:(NSString *)propertyName;
 @end
 
+/** CCTMXObjectGroup represents the TMX object group.
 
+
+*/
+@interface CCTMXObjectGroup : NSObject
+{
+	NSString			*groupName_;
+	NSMutableArray		*objects_;
+	NSMutableDictionary	*properties_;
+}
+
+/** name of the group */
+@property (nonatomic,readwrite,retain) NSString *groupName;
+/** array of the objects */
+@property (nonatomic,readwrite,retain) NSMutableArray *objects;
+/** list of properties stored in a dictionary */
+@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
+
+/** return the value for the specific property name */
+-(id) propertyNamed:(NSString *)propertyName;
+@end
+
+/** CCTMXObjectGroup represents the TMX object group.
+
+*/
+@interface CCTMXObject : NSObject
+{
+	NSString			*name_;
+	NSMutableDictionary	*properties_;
+}
+
+/** name of the group */
+@property (nonatomic,readwrite,retain) NSString *name;
+/** list of properties stored in a dictionary */
+@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
+
+/** return the value for the specific property name */
+-(id) propertyNamed:(NSString *)propertyName;
+@end
