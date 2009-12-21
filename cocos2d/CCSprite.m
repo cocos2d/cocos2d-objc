@@ -301,19 +301,33 @@
 -(void)updateTransform
 {
 	NSAssert( usesSpriteSheet_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteSheet");
-	
-	float newScaleX = scaleX_;
-	float newScaleY = scaleY_;
-	CGPoint newPosition = position_;
-	float newRotation_radians = -CC_DEGREES_TO_RADIANS(rotation_);
-	
-	// optimization. If parent is spritesheet, no need to do Affine transforms
-	if( parent != spriteSheet_ ) {
-		
-		CGAffineTransform old = CGAffineTransformIdentity;
 
-		float signScaleX = 1;	// possitive sign by default
-		float signScaleY = 1;	// possitive sign by default
+	CGAffineTransform matrix;
+	
+	
+	// Optimization: if it is not visible, then do nothing
+	if( ! visible ) {		
+		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
+		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+		dirty_ = NO;
+		return ;
+	}
+	
+
+	// Optimization: If parent is spritesheet, no need to do Affine transforms
+	if( parent == spriteSheet_ ) {
+		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
+		float c = cosf(radians);
+		float s = sinf(radians);
+		
+		// optimization: build the matrix manually
+		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_, -s * scaleY_, c * scaleY_, position_.x, position_.y );		
+	} 
+	
+	// else do affine transformations
+	else if( parent != spriteSheet_ ) {
+
+		matrix = CGAffineTransformIdentity;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
 		for (CCNode *p = self ; p && p != spriteSheet_; p = p.parent) {
@@ -322,109 +336,53 @@
 			float	rot = p.rotation;
 			float	sx = p.scaleX;
 			float	sy = p.scaleY;
-			CGAffineTransform new = CGAffineTransformIdentity;
+			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
-				new = CGAffineTransformTranslate(new, pos.x, pos.y);
+				newMatrix = CGAffineTransformTranslate(newMatrix, pos.x, pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
-				new = CGAffineTransformRotate(new, -CC_DEGREES_TO_RADIANS(rot));
+				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(rot));
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
-				new = CGAffineTransformScale(new, sx, sy);
-				signScaleX *= [p scaleX];
-				signScaleY *= [p scaleY];
+				newMatrix = CGAffineTransformScale(newMatrix, sx, sy);
 			}
 			
-			old = CGAffineTransformConcat( old, new);
+			matrix = CGAffineTransformConcat( matrix, newMatrix);
 			
 			prevHonor = [(CCSprite*)p honorParentTransform];
-		}
-		
-		newPosition = ccp( old.tx, old.ty);
-		newRotation_radians = -atan2f( old.c, old.a );
-		
-		// Can't use signScaleX and signScaleY as the real scale
-		// And it's difficult (at least I don't know how) to extract the scael the sign from an Affine Matrix
-		// So an hybrid should be impolemented: sign + extract scale (issue #667)
-		newScaleX = sqrtf( old.a * old.a + old.b * old.b );
-		if( signScaleX < 0)
-			newScaleX = -newScaleX;
-		newScaleY = sqrtf( old.c * old.c + old.d * old.d );
-		if( signScaleY < 0)
-			newScaleY = -newScaleY;
+		}		
 	}
 	
 	CGSize size = rect_.size;
+		
+	float x1 = -transformAnchor_.x + offsetPosition_.x;
+	float y1 = -transformAnchor_.y + offsetPosition_.y;
 
-	// algorithm from pyglet ( http://www.pyglet.org ) 
-
-	// if not visible
-	// then everything is 0
-	if( ! visible ) {		
-		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-
-	}
+	float x2 = x1 + size.width;
+	float y2 = y1 + size.height;
+	float x = matrix.tx;
+	float y = matrix.ty;
 	
+	float cr = matrix.a;
+	float sr = matrix.b;
+	float cr2 = matrix.d;
+	float sr2 = -matrix.c;
+	float ax = x1 * cr - y1 * sr2 + x;
+	float ay = x1 * sr + y1 * cr2 + y;
 	
-	// rotation ? -> update: rotation, scale, position
-	else if( newRotation_radians ) {
-		float x1 = (-transformAnchor_.x + offsetPosition_.x) * newScaleX;
-		float y1 = (-transformAnchor_.y + offsetPosition_.y) * newScaleY;
-
-		float x2 = x1 + size.width * newScaleX;
-		float y2 = y1 + size.height * newScaleY;
-		float x = newPosition.x;
-		float y = newPosition.y;
-		
-		float r = newRotation_radians;
-		float cr = cosf(r);
-		float sr = sinf(r);
-		float ax = x1 * cr - y1 * sr + x;
-		float ay = x1 * sr + y1 * cr + y;
-		float bx = x2 * cr - y1 * sr + x;
-		float by = x2 * sr + y1 * cr + y;
-		float cx = x2 * cr - y2 * sr + x;
-		float cy = x2 * sr + y2 * cr + y;
-		float dx = x1 * cr - y2 * sr + x;
-		float dy = x1 * sr + y2 * cr + y;
-		
-		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
-		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
-		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
-		quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
-		
-	}
+	float bx = x2 * cr - y1 * sr2 + x;
+	float by = x2 * sr + y1 * cr2 + y;
 	
-	// scale ? -> update: scale, position
-	else if(newScaleX != 1 || newScaleY != 1)
-	{
-		float x1 = (-transformAnchor_.x + offsetPosition_.x) * newScaleX + newPosition.x;
-		float y1 = (-transformAnchor_.y + offsetPosition_.y) * newScaleY + newPosition.y;
-		
-		float x2 = x1 + size.width * newScaleX;
-		float y2 = y1 + size.height * newScaleY;
-		
-
-		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
-		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
-		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
-		quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
-		
-	}
+	float cx = x2 * cr - y2 * sr2 + x;
+	float cy = x2 * sr + y2 * cr2 + y;
 	
-	// update position
-	else {
-		float x1 = (-transformAnchor_.x+offsetPosition_.x) + newPosition.x;
-		float y1 = (-transformAnchor_.y+offsetPosition_.y) + newPosition.y;
-		float x2 = (x1 + size.width);
-		float y2 = (y1 + size.height);
-
-		quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
-		quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y1), vertexZ_ };
-		quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x1), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
-		quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(x2), RENDER_IN_SUBPIXEL(y2), vertexZ_ };
-		
-	}
+	float dx = x1 * cr - y2 * sr2 + x;
+	float dy = x1 * sr + y2 * cr2 + y;
 	
+	quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
+	quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
+	quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
+	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
+		
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	dirty_ = NO;
 }
