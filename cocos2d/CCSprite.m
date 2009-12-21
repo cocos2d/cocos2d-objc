@@ -705,8 +705,6 @@
 	// update rect
 	[self setTextureRect:frame.rect untrimmedSize:frame.originalSize];
 	
-	[self setFlipX: [frame flipX]];
-	[self setFlipY: [frame flipY]];
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex

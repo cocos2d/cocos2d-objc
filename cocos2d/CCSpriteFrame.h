@@ -28,8 +28,6 @@
 	CGPoint			offset_;
 	CGSize			originalSize_;
 	CCTexture2D		*texture_;
-	BOOL			flipX_;
-	BOOL			flipY_;
 }
 /** rect of the frame */
 @property (nonatomic,readwrite) CGRect rect;
@@ -43,57 +41,25 @@
 /** texture of the frame */
 @property (nonatomic, retain, readwrite) CCTexture2D *texture;
 
-/** whether or not the frame is flipped horizontally */
-@property (nonatomic,readwrite)	BOOL flipX;
-
-/** whether or not the frame is flipped vertically */
-@property (nonatomic,readwrite)	BOOL flipY;
-
 /** Create a CCSpriteFrame with a texture, rect and offset.
  It is assumed that the frame was not trimmed.
- The frame won't be flipped by default.
  */
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
 
 /** Create a CCSpriteFrame with a texture, rect, offset and originalSize.
  The originalSize is the size in pixels of the frame before being trimmed.
- The frame won't be flipped by default.
  */
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
-/** Create a CCSpriteFrame with a texture, rect, offset, flipX and flipY.
- It is assumed that the frame was not trimmed.
- */
-+(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY;
-
-/** Create a CCSpriteFrame with a texture, rect, offset, originalSize, flipX and flipY.
- The originalSize is the size in pixels of the frame before being trimmed.
- */
-+(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize flipX:(BOOL)flipX flipY:(BOOL)flipY;
-
-
 /** Initializes a CCSpriteFrame with a texture, rect and offset.
  It is assumed that the frame was not trimmed.
- The frame won't be flipped by default
  */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset;
 
 /** Initializes a CCSpriteFrame with a texture, rect, offset and originalSize.
  The originalSize is the size in pixels of the frame before being trimmed.
- The frame won't be flipped by default.
  */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-/** Initializes a CCSpriteFrame with a texture, rect, offset, originalSize, flipX and flipY.
- It is assumed that the frame was not trimmed.
- */
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset flipX:(BOOL)flipX flipY:(BOOL)flipY;
-
-/** Initializes a CCSpriteFrame with a texture, rect, offset, originalSize, flipX and flipY.
- The originalSize is the size in pixels of the frame before being trimmed.
- */
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize flipX:(BOOL)flipX flipY:(BOOL)flipY;
-
 @end
 
 #pragma mark -

@@ -97,8 +97,6 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		float h = [[frameDict objectForKey:@"height"] floatValue];
 		float ox = [[frameDict objectForKey:@"offsetX"] floatValue];
 		float oy = [[frameDict objectForKey:@"offsetY"] floatValue];
-		BOOL fx = [[frameDict objectForKey:@"flipX"] boolValue];
-		BOOL fy = [[frameDict objectForKey:@"flipX"] boolValue];
 		int ow = [[frameDict objectForKey:@"originalWidth"] intValue];
 		int oh = [[frameDict objectForKey:@"originalHeight"] intValue];
 		
@@ -106,7 +104,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		ow = abs(ow);
 		oh = abs(oh);
 
-		CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x,y,w,h) offset:CGPointMake(ox,oy) originalSize:CGSizeMake(ow,oh) flipX:fx flipY:fy];
+		CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x,y,w,h) offset:CGPointMake(ox,oy) originalSize:CGSizeMake(ow,oh)];
 		
 		[spriteFrames setObject:frame forKey:frameDictKey];
 	}

@@ -45,6 +45,28 @@
 }
 @end
 
+/** Flips the sprite horizontally
+ @since v0.9.0
+ */
+@interface CCFlipX : CCInstantAction
+{
+	BOOL	flipX;
+}
++(id) actionWithFlipX:(BOOL)x;
+-(id) initWithFlipX:(BOOL)x;
+@end
+
+/** Flips the sprite vertically
+ @since v0.9.0
+ */
+@interface CCFlipY : CCInstantAction
+{
+	BOOL	flipY;
+}
++(id) actionWithFlipY:(BOOL)y;
+-(id) initWithFlipY:(BOOL)y;
+@end
+
 /** Places the node in a certain position
  */
 @interface CCPlace : CCInstantAction <NSCopying>
