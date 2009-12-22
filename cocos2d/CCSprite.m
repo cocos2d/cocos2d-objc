@@ -314,17 +314,16 @@
 	}
 	
 
-	// Optimization: If parent is spritesheet, no need to do Affine transforms
+	// Optimization: If parent is spritesheet, build Affine transform manually
 	if( parent == spriteSheet_ ) {
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
 		float s = sinf(radians);
 		
-		// optimization: build the matrix manually
 		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_, -s * scaleY_, c * scaleY_, position_.x, position_.y );		
 	} 
 	
-	// else do affine transformations
+	// else do affine transformation according to the HonorParentTransform
 	else if( parent != spriteSheet_ ) {
 
 		matrix = CGAffineTransformIdentity;
@@ -352,6 +351,7 @@
 		}		
 	}
 	
+	// calculate the Quad based on the Affine Matrix
 	CGSize size = rect_.size;
 		
 	float x1 = -transformAnchor_.x + offsetPosition_.x;
