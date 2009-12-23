@@ -375,6 +375,7 @@ and when to execute the Scenes.
 {
 	id displayLink;
 }
+-(void) preMainLoop:(id)sender;
 @end
 
 /** TimerDirector is a Director that calls the main loop from an NSTimer object
