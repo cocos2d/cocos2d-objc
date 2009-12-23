@@ -120,6 +120,7 @@
 	NSError *error = nil;
 	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:receivedData error:&error];
 	
+//	NSLog(@"r: %@", dictionary);
 	if( ! error ) {
 		array = [dictionary objectForKey:@"scores"];
 	} else {

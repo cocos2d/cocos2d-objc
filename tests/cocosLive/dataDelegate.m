@@ -128,13 +128,27 @@ enum {
 	AppController *appDelegate = [[UIApplication sharedApplication] delegate];
 
 	NSDictionary	*s = [[appDelegate globalScores] objectAtIndex:i];
+//	NSLog(@"d: %@", s);
 
 	idx.text = [[s objectForKey:@"position"] stringValue];
 	name.text = [s objectForKey:@"cc_playername"];
 	// this is an NSNumber... convert it to string
 	score.text = [[s objectForKey:@"cc_score"] stringValue];
-	speed.text = [[s objectForKey:@"usr_speed"] stringValue];
-	angle.text = [[s objectForKey:@"usr_angle"] stringValue];
+	
+	// sanity check in case usr_speed doesn't is invalid
+	id obSpeed = [s objectForKey:@"usr_speed"];
+	if( [obSpeed respondsToSelector:@selector(stringValue)] )
+		speed.text = [obSpeed stringValue];
+	else
+		speed.text = obSpeed;
+
+	// sanity check in case usr_angle doesn't is invalid
+	id obAngle = [s objectForKey:@"usr_angle"];
+	if( [obAngle respondsToSelector:@selector(stringValue)] )
+		angle.text = [obAngle stringValue];
+	else
+		angle.text = obAngle;
+	
 	country.text = [s objectForKey:@"cc_country"];
 		
 
