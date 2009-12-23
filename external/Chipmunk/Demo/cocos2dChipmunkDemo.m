@@ -420,7 +420,7 @@ glutStuff(int argc, const char *argv[])
 
 		runDemo(demos[firstDemoIndex]);
 		
-		label = [CCLabel labelWithString:[NSString stringWithCString:demos[firstDemoIndex]->name ] fontName:@"Marker Felt" fontSize:32];
+		label = [CCLabel labelWithString:[NSString stringWithUTF8String:demos[firstDemoIndex]->name ] fontName:@"Marker Felt" fontSize:32];
 		label.position = ccp(0,-300);
 		label.color = ccBLACK;
 		[self addChild:label];
@@ -473,7 +473,7 @@ glutStuff(int argc, const char *argv[])
 	
 	runDemo(demos[demoIndex]);
 	
-	[label setString: [NSString stringWithCString:demos[demoIndex]->name ] ];
+	[label setString: [NSString stringWithUTF8String:demos[demoIndex]->name ] ];
 
 	
 	return kEventHandled;
