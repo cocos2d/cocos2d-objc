@@ -1,5 +1,6 @@
 version 0.9.0-rc0 - XX-Jan-2010
  . Actions: added 2 new instant actions: FlipX and FlipY (counter-rollback of part issue #620)
+ . BitmapFontAtlas: doesn't override color when using setString (issue #610)
  . Chipmunk: removed compiler warning on chipmunk demo (issue #680)
  . CocosLive: added sanity checks on demo (issue #681)
  . Director: removed compile warning on DisplayLink director (issue #682)
