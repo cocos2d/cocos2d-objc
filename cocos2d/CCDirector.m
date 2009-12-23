@@ -1002,12 +1002,10 @@ static CCDirector *_sharedDirector = nil;
 // Allows building DisplayLinkDirector for pre-3.1 SDKS
 // without getting compiler warnings.
 @interface NSObject(CADisplayLink)
-
 + (id) displayLinkWithTarget:(id)arg1 selector:(SEL)arg2;
 - (void) addToRunLoop:(id)arg1 forMode:(id)arg2;
 - (void) setFrameInterval:(int)interval;
 - (void) invalidate;
-
 @end
 
 @implementation CCDisplayLinkDirector
