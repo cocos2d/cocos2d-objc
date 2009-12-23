@@ -521,14 +521,21 @@ Class restartAction()
 		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Blue" fntFile:@"bitmapFontTest5.fnt"];
 		label.color = ccBLUE;
 		[self addChild:label];
-		label.position = ccp(s.width/2, s.height/2+50);
+		label.position = ccp(s.width/2, s.height/4);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 
 		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Red" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
-		label.position = ccp(s.width/2, s.height/2-50);
+		label.position = ccp(s.width/2, 2*s.height/4);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 		label.color = ccRED;
+
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"G" fntFile:@"bitmapFontTest5.fnt"];
+		[self addChild:label];
+		label.position = ccp(s.width/2, 3*s.height/4);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		label.color = ccGREEN;
+		[label setString: @"Green"];
 		
 	}
 	

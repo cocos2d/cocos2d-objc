@@ -468,10 +468,14 @@ void FNTConfigRemoveCache( void )
 			fontChar = [self createSpriteWithRect:rect];
 			[self addChild:fontChar z:0 tag:i];
 		}
-		else
+		else {
+			// reusing fonts
 			[fontChar setTextureRect:rect];
-
-		fontChar.visible = YES;
+			
+			// restore to default in case they were modified
+			fontChar.visible = YES;
+			fontChar.opacity = 255;
+		}
 
 		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f ,
 								(configuration->commonHeight - fontDef.yOffset) - rect.size.height/2.0f );		
@@ -490,7 +494,11 @@ void FNTConfigRemoveCache( void )
 		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
 		[fontChar setColor:color_];
-		[fontChar setOpacity: opacity_];
+
+		// only apply opaccity if it is different than 255 )
+		// to prevent modifying the color too (issue #610)
+		if( opacity_ != 255 )
+			[fontChar setOpacity: opacity_];
 	}
 	
 	[self setContentSize:tmpSize];
