@@ -39,12 +39,12 @@ const int defaultCapacity = 29;
  */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex
 {
-	return [[[CCSpriteSheet alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
+	return [[[self alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
 
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
-	return [[[CCSpriteSheet alloc] initWithTexture:tex capacity:capacity] autorelease];
+	return [[[self alloc] initWithTexture:tex capacity:capacity] autorelease];
 }
 
 /*
@@ -52,12 +52,12 @@ const int defaultCapacity = 29;
  */
 +(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[[CCSpriteSheet alloc] initWithFile:fileImage capacity:capacity] autorelease];
+	return [[[self alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
 
 +(id)spriteSheetWithFile:(NSString*) imageFile
 {
-	return [[[CCSpriteSheet alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
+	return [[[self alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
 
 
