@@ -2103,7 +2103,7 @@ Class restartAction()
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
 		CCNode *aParent;
-		CCSprite *sprite1, *sprite2, *sprite3, *sprite4;
+		CCSprite *sprite1, *sprite2, *sprite3, *sprite4, *point;
 		//
 		// SpriteSheet
 		//
@@ -2112,6 +2112,7 @@ Class restartAction()
 		aParent = [CCNode node];
 		[self addChild:aParent z:0];
 		
+		// anchor (0,0)
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
@@ -2121,17 +2122,23 @@ Class restartAction()
 		
 		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
-
+		
 		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;
-
+		
 		[aParent addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:-2];
 		[sprite1 addChild:sprite4 z:3];
 		
+		point = [CCSprite spriteWithFile:@"r1.png"];
+		point.scale = 0.25f;
+		point.position = sprite1.position;
+		[self addChild:point z:10];
 		
+		
+		// anchor (0.5, 0.5)
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
@@ -2150,8 +2157,14 @@ Class restartAction()
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:-2];
 		[sprite1 addChild:sprite4 z:3];
-
 		
+		point = [CCSprite spriteWithFile:@"r1.png"];
+		point.scale = 0.25f;
+		point.position = sprite1.position;
+		[self addChild:point z:10];		
+		
+		
+		// anchor (1,1)
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
@@ -2170,6 +2183,11 @@ Class restartAction()
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:-2];
 		[sprite1 addChild:sprite4 z:3];
+		
+		point = [CCSprite spriteWithFile:@"r1.png"];
+		point.scale = 0.25f;
+		point.position = sprite1.position;
+		[self addChild:point z:10];		
 	}	
 	return self;
 }
@@ -2200,7 +2218,7 @@ Class restartAction()
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
 		CCNode *aParent;
-		CCSprite *sprite1, *sprite2, *sprite3, *sprite4;
+		CCSprite *sprite1, *sprite2, *sprite3, *sprite4, *point;
 		//
 		// SpriteSheet
 		//
@@ -2209,6 +2227,7 @@ Class restartAction()
 		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
 		[self addChild:aParent z:0];
 		
+		// anchor (0,0)
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
@@ -2228,7 +2247,13 @@ Class restartAction()
 		[sprite1 addChild:sprite3 z:-2];
 		[sprite1 addChild:sprite4 z:3];
 		
+		point = [CCSprite spriteWithFile:@"r1.png"];
+		point.scale = 0.25f;
+		point.position = sprite1.position;
+		[self addChild:point z:10];
 		
+		
+		// anchor (0.5, 0.5)
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
@@ -2248,7 +2273,13 @@ Class restartAction()
 		[sprite1 addChild:sprite3 z:-2];
 		[sprite1 addChild:sprite4 z:3];
 		
+		point = [CCSprite spriteWithFile:@"r1.png"];
+		point.scale = 0.25f;
+		point.position = sprite1.position;
+		[self addChild:point z:10];		
 		
+		
+		// anchor (1,1)
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
@@ -2267,6 +2298,11 @@ Class restartAction()
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:-2];
 		[sprite1 addChild:sprite4 z:3];
+		
+		point = [CCSprite spriteWithFile:@"r1.png"];
+		point.scale = 0.25f;
+		point.position = sprite1.position;
+		[self addChild:point z:10];		
 	}	
 	return self;
 }
