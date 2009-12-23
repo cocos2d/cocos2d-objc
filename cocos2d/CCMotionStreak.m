@@ -30,7 +30,7 @@
 
 +(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
 {
-	return [[[CCMotionStreak alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
+	return [[[self alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
 }
 
 -(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color

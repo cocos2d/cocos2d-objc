@@ -192,7 +192,7 @@
 
 +(id)gridWithSize:(ccGridSize)gridSize
 {
-	return [[[CCGrid3D alloc] initWithSize:gridSize] autorelease];
+	return [[[self alloc] initWithSize:gridSize] autorelease];
 }
 
 -(id)initWithSize:(ccGridSize)gSize
@@ -351,7 +351,7 @@
 
 +(id)gridWithSize:(ccGridSize)gridSize
 {
-	return [[[CCTiledGrid3D alloc] initWithSize:gridSize] autorelease];
+	return [[[self alloc] initWithSize:gridSize] autorelease];
 }
 
 -(id)initWithSize:(ccGridSize)gSize
