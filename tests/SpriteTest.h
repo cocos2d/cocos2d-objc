@@ -163,3 +163,7 @@
 @interface SpriteSheetChildrenScale : SpriteDemo
 {}
 @end
+
+@interface SpriteSheetChildrenChildren: SpriteDemo
+{}
+@end

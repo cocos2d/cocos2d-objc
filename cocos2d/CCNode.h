@@ -72,11 +72,16 @@ enum {
 	// Scenes, Layers and other "whole screen" object don't use it.
 	BOOL relativeAnchorPoint_;
 	
-	// transformation anchor point
-	CGPoint transformAnchor_;
-	
-	// anchor point
+	// anchor point in pixels
+	CGPoint anchorPointInPixels_;	
+	// anchor point normalized
 	CGPoint anchorPoint_;
+
+	// anchor point in pixels
+	CGPoint childrenAnchorPointInPixels_;	
+	// anchor point normalized
+	CGPoint childrenAnchorPoint_;
+	
 	// untransformed size of the node
 	CGSize	contentSize_;
 	
@@ -148,7 +153,7 @@ enum {
 /** The transformation anchor point in absolute pixels.
  since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
-@property(nonatomic,readonly) CGPoint transformAnchor;
+@property(nonatomic,readonly) CGPoint anchorPointInPixels;
 /** The normalized coordinates of the anchor point.
  A (0,0) value means bottom-left corner. (1,1) means top-right corner, (0.5, 0.5) means the center.
  Sprites and other "textured" Nodes have a default anchorPoint of (0.5f, 0.5f).
@@ -156,6 +161,11 @@ enum {
  @since v0.8
  */
 @property(nonatomic,readwrite) CGPoint anchorPoint;
+
+@property(nonatomic,readwrite) CGPoint childrenAnchorPoint;
+@property(nonatomic,readonly) CGPoint childrenAnchorPointInPixels;
+
+
 /** The untransformed size of the node.
  The contentSize remains the same no matter the node is scaled or rotated.
  All nodes has a size. Layer and Scene has the same size of the screen.

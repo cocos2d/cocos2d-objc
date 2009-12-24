@@ -43,6 +43,7 @@ static NSString *transitions[] = {
 			@"SpriteChildrenAnchorPoint",
 			@"SpriteSheetChildrenAnchorPoint",
 			@"SpriteSheetChildrenScale",
+			@"SpriteSheetChildrenChildren",
 };
 
 enum {
@@ -812,10 +813,10 @@ Class restartAction()
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		sheet.relativeAnchorPoint = NO;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		sheet.relativeAnchorPoint = NO;
 		sheet.anchorPoint = ccp(0.5f, 0.5f);
 		sheet.contentSize = CGSizeMake(s.width, s.height);
 		
@@ -2058,9 +2059,7 @@ Class restartAction()
 
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp(0,0)];
-		
-//		sprite1.relativeAnchorPoint = NO;
-		
+				
 		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
@@ -2126,6 +2125,7 @@ Class restartAction()
 		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;
+
 		
 		[aParent addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
@@ -2145,14 +2145,14 @@ Class restartAction()
 		
 		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
-		
+
 		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
-		
+
 		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;		
-		
+
 		[aParent addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:-2];
@@ -2168,6 +2168,7 @@ Class restartAction()
 		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
+
 		
 		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2422,6 +2423,89 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sprite/Sheet + child + scale + rot";
+}
+@end
+
+#pragma mark -
+#pragma mark SpriteSheetChildrenChildren
+
+@implementation SpriteSheetChildrenChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_family.plist"];
+		
+		CCNode *aParent;
+		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
+		id rot = [CCRotateBy actionWithDuration:10 angle:360];
+		id seq = [CCRepeatForever actionWithAction:rot];
+		
+		id rot_back = [rot reverse];
+		id rot_back_fe = [CCRepeatForever actionWithAction:rot_back];
+		
+		//
+		// SpriteSheet: 3 levels of children
+		//
+		
+		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
+		[self addChild:aParent];
+		
+		// parent
+		l1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
+		l1.position = ccp( s.width/2, s.height/2);
+		[l1 runAction: [[seq copy] autorelease]];
+		[aParent addChild:l1];
+		
+		// child left
+		l2a = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		l2a.position = ccp( -50,0);
+		[l2a runAction: [[rot_back_fe copy] autorelease]];
+		[l1 addChild:l2a];
+
+
+		// child right
+		l2b = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		l2b.position = ccp( 50,0);
+		[l2b runAction: [[rot_back_fe copy] autorelease]];
+		[l1 addChild:l2b];
+		
+		// child left bottom
+		l3a1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
+		l3a1.scale = 0.25f;
+		l3a1.position = ccp(0,-100);
+		[l2a addChild:l3a1];
+		
+		// child left top
+		l3a2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
+		l3a2.scale = 0.25f;
+		l3a2.position = ccp(0,100);
+		[l2a addChild:l3a2];
+		
+		// child right bottom
+		l3b1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
+		l3b1.scale = 0.25f;
+		l3b1.flipY = YES;
+		l3b1.position = ccp(0,-100);
+		[l2b addChild:l3b1];
+
+		// child right top
+		l3b2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
+		l3b2.scale = 0.25f;
+		l3b2.flipY = YES;
+		l3b2.position = ccp(0,100);
+		[l2b addChild:l3b2];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet multiple levels of children";
 }
 @end
 

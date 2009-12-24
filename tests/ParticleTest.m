@@ -104,6 +104,7 @@ Class restartAction()
 		
 		// moving background
 		background = [CCSprite spriteWithFile:@"background3.png"];
+		background.childrenAnchorPoint = CGPointZero;
 		[self addChild:background z:5];
 		[background setPosition:ccp(s.width/2, s.height-180)];
 
@@ -720,8 +721,11 @@ Class restartAction()
 	[self addChild:p z:5];
 
 	CCSprite *p1 = [CCSprite spriteWithFile:@"background3.png"];
-	CCSprite *p2 = [CCSprite spriteWithFile:@"background3.png"];
+	[p1 setChildrenAnchorPoint:CGPointZero];
 	
+	CCSprite *p2 = [CCSprite spriteWithFile:@"background3.png"];
+	[p2 setChildrenAnchorPoint:CGPointZero];
+
 	[p addChild:p1 z:1 parallaxRatio:ccp(0.5f,1) positionOffset:ccp(0,250)];
 	[p addChild:p2 z:2 parallaxRatio:ccp(1.5f,1) positionOffset:ccp(0,50)];
 

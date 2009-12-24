@@ -36,6 +36,7 @@
 		opacity_ = 255;
 		color_ = ccWHITE;
 		anchorPoint_ = ccp(0.5f, 0.5f);
+		childrenAnchorPoint_ = ccp(0.5f, 0.5f);
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 	}

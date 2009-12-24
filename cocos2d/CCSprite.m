@@ -121,6 +121,7 @@
 
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
+		childrenAnchorPoint_ = ccp(0.5f, 0.5f);
 
 		// zwoptex default values
 		offsetPosition_ = CGPointZero;
@@ -316,11 +317,16 @@
 
 	// Optimization: If parent is spritesheet, build Affine transform manually
 	if( parent == spriteSheet_ ) {
+		
+		CGPoint pcap = [parent childrenAnchorPointInPixels];
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
 		float s = sinf(radians);
 		
-		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_, -s * scaleY_, c * scaleY_, position_.x, position_.y );		
+		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
+									   -s * scaleY_, c * scaleY_,
+									   position_.x + pcap.x, position_.y + pcap.y);
+		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
 	} 
 	
 	// else do affine transformation according to the HonorParentTransform
@@ -331,12 +337,20 @@
 		
 		for (CCNode *p = self ; p && p != spriteSheet_; p = p.parent) {
 			
-			CGPoint pos = p.position;
-			float	rot = p.rotation;
-			float	sx = p.scaleX;
-			float	sy = p.scaleY;
-			CGAffineTransform newMatrix = CGAffineTransformIdentity;
+			// XXX: expensive calls. Should be optimized
+			CGPoint pos = [p position];
+			float	rot = [p rotation];
+			float	sx = [p scaleX];
+			float	sy = [p scaleY];
+			CGPoint	ap = [p anchorPointInPixels];
+			CGPoint pcap = [[p parent] childrenAnchorPointInPixels];
 			
+			CGAffineTransform newMatrix = CGAffineTransformIdentity;
+
+			// 1st: translate parent children anchor point
+			newMatrix = CGAffineTransformTranslate(newMatrix, pcap.x, pcap.y);
+			
+			// 2nd: Translate, Rotate, Scale
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
 				newMatrix = CGAffineTransformTranslate(newMatrix, pos.x, pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
@@ -345,18 +359,25 @@
 				newMatrix = CGAffineTransformScale(newMatrix, sx, sy);
 			}
 			
+			// 3rd: Translate anchor point
+			newMatrix = CGAffineTransformTranslate(newMatrix, -ap.x, -ap.y);
+
+			// 4th: Matrix multiplication
 			matrix = CGAffineTransformConcat( matrix, newMatrix);
 			
 			prevHonor = [(CCSprite*)p honorParentTransform];
 		}		
 	}
 	
+	//
 	// calculate the Quad based on the Affine Matrix
+	//
+	
 	CGSize size = rect_.size;
-		
-	float x1 = -transformAnchor_.x + offsetPosition_.x;
-	float y1 = -transformAnchor_.y + offsetPosition_.y;
 
+	float x1 = offsetPosition_.x;
+	float y1 = offsetPosition_.y;
+	
 	float x2 = x1 + size.width;
 	float y2 = y1 + size.height;
 	float x = matrix.tx;
