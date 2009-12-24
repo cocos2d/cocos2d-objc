@@ -15,7 +15,8 @@
 #import <Foundation/Foundation.h>
 #import "CCNode.h"
 #import "CCSprite.h"
-#import "OpenGL_Internal.h"
+#import "Support/OpenGL_Internal.h"
+
 
 enum  
 {
