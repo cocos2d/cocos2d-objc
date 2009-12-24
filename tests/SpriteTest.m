@@ -43,6 +43,7 @@ static NSString *transitions[] = {
 			@"SpriteChildrenAnchorPoint",
 			@"SpriteSheetChildrenAnchorPoint",
 			@"SpriteSheetChildrenScale",
+			@"SpriteChildrenChildren",
 			@"SpriteSheetChildrenChildren",
 };
 
@@ -2427,9 +2428,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark SpriteSheetChildrenChildren
+#pragma mark SpriteChildrenChildren
 
-@implementation SpriteSheetChildrenChildren
+@implementation SpriteChildrenChildren
 
 -(id) init
 {
@@ -2437,7 +2438,7 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];		
 		
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_family.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
 		
 		CCNode *aParent;
 		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
@@ -2451,50 +2452,134 @@ Class restartAction()
 		// SpriteSheet: 3 levels of children
 		//
 		
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
+		aParent = [CCNode node];
 		[self addChild:aParent];
 		
 		// parent
-		l1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
+		l1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
 		[aParent addChild:l1];
 		
 		// child left
-		l2a = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		l2a = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister1.gif"];
+		l2a.position = ccp( -50,0);
+		[l2a runAction: [[rot_back_fe copy] autorelease]];
+		[l1 addChild:l2a];
+		
+		
+		// child right
+		l2b = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister2.gif"];
+		l2b.position = ccp( 50,0);
+		[l2b runAction: [[rot_back_fe copy] autorelease]];
+		[l1 addChild:l2b];
+		
+		// child left bottom
+		l3a1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a1.scale = 0.45f;
+		l3a1.position = ccp(0,-100);
+		[l2a addChild:l3a1];
+		
+		// child left top
+		l3a2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a2.scale = 0.45f;
+		l3a2.position = ccp(0,100);
+		[l2a addChild:l3a2];
+		
+		// child right bottom
+		l3b1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b1.scale = 0.45f;
+		l3b1.flipY = YES;
+		l3b1.position = ccp(0,-100);
+		[l2b addChild:l3b1];
+		
+		// child right top
+		l3b2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b2.scale = 0.45f;
+		l3b2.flipY = YES;
+		l3b2.position = ccp(0,100);
+		[l2b addChild:l3b2];
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Sprite multiple levels of children";
+}
+@end
+
+#pragma mark -
+#pragma mark SpriteSheetChildrenChildren
+
+@implementation SpriteSheetChildrenChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
+		
+		CCSpriteSheet *aParent;
+		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
+		id rot = [CCRotateBy actionWithDuration:10 angle:360];
+		id seq = [CCRepeatForever actionWithAction:rot];
+		
+		id rot_back = [rot reverse];
+		id rot_back_fe = [CCRepeatForever actionWithAction:rot_back];
+		
+		//
+		// SpriteSheet: 3 levels of children
+		//
+		
+		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		[[aParent texture] generateMipmap];
+		[self addChild:aParent];
+		
+		// parent
+		l1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"father.gif"];
+		l1.position = ccp( s.width/2, s.height/2);
+		[l1 runAction: [[seq copy] autorelease]];
+		[aParent addChild:l1];
+		
+		// child left
+		l2a = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister1.gif"];
 		l2a.position = ccp( -50,0);
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
 
 
 		// child right
-		l2b = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		l2b = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister2.gif"];
 		l2b.position = ccp( 50,0);
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
 		
 		// child left bottom
-		l3a1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
-		l3a1.scale = 0.25f;
+		l3a1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a1.scale = 0.45f;
 		l3a1.position = ccp(0,-100);
 		[l2a addChild:l3a1];
 		
 		// child left top
-		l3a2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
-		l3a2.scale = 0.25f;
+		l3a2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a2.scale = 0.45f;
 		l3a2.position = ccp(0,100);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
-		l3b1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
-		l3b1.scale = 0.25f;
+		l3b1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b1.scale = 0.45f;
 		l3b1.flipY = YES;
 		l3b1.position = ccp(0,-100);
 		[l2b addChild:l3b1];
 
 		// child right top
-		l3b2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini.png"];
-		l3b2.scale = 0.25f;
+		l3b2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
 		l3b2.position = ccp(0,100);
 		[l2b addChild:l3b2];
