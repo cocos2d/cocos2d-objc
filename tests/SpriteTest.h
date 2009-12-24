@@ -164,6 +164,10 @@
 {}
 @end
 
+@interface SpriteChildrenChildren: SpriteDemo
+{}
+@end
+
 @interface SpriteSheetChildrenChildren: SpriteDemo
 {}
 @end
