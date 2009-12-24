@@ -58,7 +58,8 @@
 #pragma mark CCNode - Transform related properties
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
-@synthesize transformAnchor=transformAnchor_, relativeAnchorPoint=relativeAnchorPoint_;
+@synthesize anchorPointInPixels=anchorPointInPixels_, relativeAnchorPoint=relativeAnchorPoint_;
+@synthesize childrenAnchorPointInPixels=childrenAnchorPointInPixels_;
 @synthesize userData;
 
 // getters synthesized, setters explicit
@@ -86,12 +87,6 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) setTransformAnchor: (CGPoint)newTransformAnchor
-{
-	transformAnchor_ = newTransformAnchor;
-	isTransformDirty_ = isInverseDirty_ = YES;
-}
-
 -(void) setRelativeAnchorPoint: (BOOL)newValue
 {
 	relativeAnchorPoint_ = newValue;
@@ -102,18 +97,36 @@
 {
 	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
 		anchorPoint_ = point;
-		self.transformAnchor = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
 -(CGPoint) anchorPoint
 {
 	return anchorPoint_;
 }
+
+-(void) setChildrenAnchorPoint:(CGPoint)point
+{
+	if( ! CGPointEqualToPoint(point, childrenAnchorPoint_) ) {
+		childrenAnchorPoint_ = point;
+		childrenAnchorPointInPixels_ = ccp( contentSize_.width * childrenAnchorPoint_.x, contentSize_.height * childrenAnchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
+	}
+}
+
+-(CGPoint) childrenAnchorPoint
+{
+	return childrenAnchorPoint_;
+}
+
 -(void) setContentSize:(CGSize)size
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
-		self.transformAnchor = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+		childrenAnchorPointInPixels_ = ccp( contentSize_.width * childrenAnchorPoint_.x, contentSize_.height * childrenAnchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
 -(CGSize) contentSize
@@ -155,7 +168,7 @@
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
 		position_ = CGPointZero;
-		transformAnchor_ = CGPointZero;
+		anchorPointInPixels_ = CGPointZero;
 		anchorPoint_ = CGPointZero;
 		contentSize_ = CGSizeZero;
 
@@ -467,11 +480,17 @@
 	// BEGIN original implementation
 	// 
 	// translate
-	if ( relativeAnchorPoint_ && (transformAnchor_.x != 0 || transformAnchor_.y != 0 ) )
-		glTranslatef( RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), 0);
-	
-	if (transformAnchor_.x != 0 || transformAnchor_.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + transformAnchor_.x), RENDER_IN_SUBPIXEL(position_.y + transformAnchor_.y), vertexZ_);
+
+	if ( relativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
+		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+
+	if( parent ) {
+		CGPoint parentChildrenPoint = [parent childrenAnchorPointInPixels];
+		glTranslatef( RENDER_IN_SUBPIXEL(parentChildrenPoint.x), RENDER_IN_SUBPIXEL(parentChildrenPoint.y), 0);
+	}
+
+	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(position_.y + anchorPointInPixels_.y), vertexZ_);
 	else if ( position_.x !=0 || position_.y !=0 || vertexZ_ != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(position_.x), RENDER_IN_SUBPIXEL(position_.y), vertexZ_ );
 	
@@ -484,8 +503,8 @@
 		glScalef( scaleX_, scaleY_, 1.0f );
 	
 	// restore and re-position point
-	if (transformAnchor_.x != 0.0f || transformAnchor_.y != 0.0f)
-		glTranslatef(RENDER_IN_SUBPIXEL(-transformAnchor_.x), RENDER_IN_SUBPIXEL(-transformAnchor_.y), 0);
+	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
+		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	//
 	// END original implementation
 	
@@ -649,14 +668,14 @@
 		transform_ = CGAffineTransformIdentity;
 		
 		if ( !relativeAnchorPoint_ ) {
-			transform_ = CGAffineTransformTranslate(transform_, (int)transformAnchor_.x, (int)transformAnchor_.y);
+			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 		}
 		
-		transform_ = CGAffineTransformTranslate(transform_, (int)position_.x, (int)position_.y);
+		transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
 		transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
-		transform_ = CGAffineTransformTranslate(transform_, -(int)transformAnchor_.x, -(int)transformAnchor_.y);
+		transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
 		
 		isTransformDirty_ = NO;
 	}
@@ -702,12 +721,12 @@
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
 {
 	CGPoint nodePoint = [self convertToNodeSpace:worldPoint];
-	return ccpSub(nodePoint, transformAnchor_);
+	return ccpSub(nodePoint, anchorPointInPixels_);
 }
 
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint
 {
-	nodePoint = ccpAdd(nodePoint, transformAnchor_);
+	nodePoint = ccpAdd(nodePoint, anchorPointInPixels_);
 	return [self convertToWorldSpace:nodePoint];
 }
 
