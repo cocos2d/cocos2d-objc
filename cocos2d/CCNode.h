@@ -339,6 +339,15 @@ enum {
  If time is 0 it will be ticked every frame.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
+/** schedules a selector.
+ The scheduled selector will be ticked every frame, repeating a limited number of times
+ */
+-(void) schedule: (SEL) s repeat:(int)times;
+/** schedules a selector with an interval time in seconds.
+ If time is 0 it will be ticked every frame.
+ In either case, repeating a limited number of times
+ */
+-(void) schedule: (SEL) s interval:(ccTime)seconds repeat:(int)times;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
 /** activate all scheduled timers.

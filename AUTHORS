@@ -53,8 +53,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemFont
 	* Corey.B.Painter:
 		Speed action calls other#stop patch
-	* magicyu (crmagicxxx):
-		CocosLive client supports ranking request patch
+	* David Whatley ( http://criticalthoughtgames.com/ )
+		Scheduler supports the repeat parameter. patch.
 	* Dominique Bongard:
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
@@ -89,6 +89,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
+	* magicyu (crmagicxxx):
+		CocosLive client supports ranking request patch
 	* Mark Cooke:
 		Added TintTo action
 	* Matthias Hoechsmann:

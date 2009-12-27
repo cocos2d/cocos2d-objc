@@ -94,6 +94,8 @@ Class restartAction()
 	return c;
 }
 
+#pragma mark -
+#pragma mark SpriteDemo
 
 @implementation SpriteDemo
 -(id) init

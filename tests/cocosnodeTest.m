@@ -26,6 +26,7 @@ static NSString *transitions[] = {
 			@"StressTest1",
 			@"StressTest2",
 			@"SchedulerTest1",
+			@"SchedulerTest2",
 };
 
 Class nextAction()
@@ -465,6 +466,49 @@ Class restartAction()
 @end
 
 
+@implementation SchedulerTest2
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	
+	sp1.position = ccp(100,160);
+	sp2.position = ccp(380,160);
+	
+	[self addChild:sp1 z:0 tag:2];
+	[self addChild:sp2 z:0 tag:3];
+	
+	[self schedule:@selector(doRotate:) interval:2.0f repeat:4];  // sister1 should rotate 4 times only
+	[self schedule:@selector(doRotate2:) interval:2.0f];					// sister2 should keep rotating
+
+	return self;
+}
+
+-(void) doRotate:(ccTime) dt
+{
+	id node = [self getChildByTag:2];
+	id action1 = [CCRotateBy actionWithDuration:1 angle:360];
+	[node runAction:action1];
+}
+
+
+-(void) doRotate2:(ccTime) dt
+{
+	id node = [self getChildByTag:3];
+	id action1 = [CCRotateBy actionWithDuration:1 angle:360];
+	[node runAction:action1];
+}
+
+
+
+-(NSString *) title
+{
+	return @"schedule repeat limit";
+}
+@end
 
 
 #pragma mark AppController

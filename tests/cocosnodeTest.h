@@ -41,3 +41,7 @@
 @interface SchedulerTest1 : TestDemo
 {}
 @end
+
+@interface SchedulerTest2 : TestDemo
+{}
+@end
