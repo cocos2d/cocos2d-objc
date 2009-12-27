@@ -5,6 +5,7 @@ version 0.9.0-rc0 - XX-Jan-2010
  . CocosLive: added sanity checks on demo (issue #681)
  . CocosNode: added support for childrenAnchorPoint (issue #667)
  . Director: removed compile warning on DisplayLink director (issue #682)
+ . Scheduler: Supports repeat-number-of-times in scheduled selectors (issue #630)
  . Sprite: anchor + offset + scale works  (issue #671)
  . SpriteFrame: removed support for flipX and flipY  (rollback of a part issue #620)
  . SpriteFrameCache: If originalSize is not present, display warning (issue #670)

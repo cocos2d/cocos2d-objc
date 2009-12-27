@@ -486,7 +486,8 @@
 
 	if( parent ) {
 		CGPoint parentChildrenPoint = [parent childrenAnchorPointInPixels];
-		glTranslatef( RENDER_IN_SUBPIXEL(parentChildrenPoint.x), RENDER_IN_SUBPIXEL(parentChildrenPoint.y), 0);
+		if( parentChildrenPoint.x != 0 || parentChildrenPoint.y != 0 )
+			glTranslatef( RENDER_IN_SUBPIXEL(parentChildrenPoint.x), RENDER_IN_SUBPIXEL(parentChildrenPoint.y), 0);
 	}
 
 	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
@@ -594,13 +595,25 @@
 	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
 }
 
--(void) schedule: (SEL) selector
+
+-(void) schedule: (SEL) selector repeat:(int)times
 {
 	[self schedule:selector interval:0];
 }
 
--(void) schedule: (SEL) selector interval:(ccTime)interval
+-(void) schedule: (SEL) selector
 {
+	[self schedule:selector interval:0 repeat:CCTIMER_REPEAT_FOREVER];
+}
+
+
+-(void) schedule: (SEL) selector interval:(ccTime)interval {
+	[self schedule:selector interval:interval repeat:CCTIMER_REPEAT_FOREVER];
+}
+
+-(void) schedule: (SEL) selector interval:(ccTime)interval repeat:(int)times
+{
+	NSAssert( times >= CCTIMER_REPEAT_FOREVER, @"Repeat argument invalid");
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
@@ -613,7 +626,7 @@
 		return;
 	}
 	
-	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval];
+	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval repeat:times];
 	
 	if( isRunning )
 		[[CCScheduler sharedScheduler] scheduleTimer:timer];
@@ -641,6 +654,7 @@
 	if( isRunning )
 		[[CCScheduler sharedScheduler] unscheduleTimer:timer];
 }
+
 
 - (void) activateTimers
 {
