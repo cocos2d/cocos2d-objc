@@ -16,6 +16,7 @@
 #import "CCSpriteSheet.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
+#import "CCSpriteFrameCache.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
@@ -80,6 +81,12 @@
 +(id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
 	return [[[self alloc] initWithSpriteFrame:spriteFrame] autorelease];
+}
+
++(id)spriteWithSpriteFrameName:(NSString*)spriteFrameName
+{
+	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+	return [self spriteWithSpriteFrame:frame];
 }
 
 +(id)spriteWithCGImage:(CGImageRef)image
@@ -172,6 +179,13 @@
 	[self setDisplayFrame:spriteFrame];
 	return ret;
 }
+
+-(id)initWithSpriteFrameName:(NSString*)spriteFrameName
+{
+	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+	return [self initWithSpriteFrame:frame];
+}
+
 
 - (id) initWithCGImage: (CGImageRef)image
 {

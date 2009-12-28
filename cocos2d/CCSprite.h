@@ -167,6 +167,13 @@ typedef enum {
  */
 +(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
+/** Creates an sprite with an sprite frame name.
+ An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
+ If the CCSpriteFrame doesn't exist it will raise an exception.
+ @since v0.9
+ */
++(id) spriteWithSpriteFrameName:(NSString*)spriteFrameName;
+
 /** Creates an sprite with an image filename.
  The rect used will be the size of the image.
  The offset will be (0,0).
@@ -194,9 +201,16 @@ typedef enum {
  */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
-/** Initializes an sprite with a an sprite frame.
+/** Initializes an sprite with an sprite frame.
  */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+
+/** Initializes an sprite with an sprite frame name.
+ An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
+ If the CCSpriteFrame doesn't exist it will raise an exception.
+ @since v0.9
+ */
+-(id) initWithSpriteFrameName:(NSString*)spriteFrameName;
 
 /** Initializes an sprite with an image filename.
  The rect used will be the size of the image.
