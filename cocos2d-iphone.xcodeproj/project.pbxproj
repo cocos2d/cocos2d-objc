@@ -1063,6 +1063,10 @@
 		50D0E0D90FF930BA00098927 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50D0E0DA0FF930BA00098927 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50D0E0F10FF9316900098927 /* HelloEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D0E0F00FF9316900098927 /* HelloEvents.m */; };
+		50D2AC9510E90DFA0068ECEB /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AC9110E90DFA0068ECEB /* CCTMXLayer.h */; };
+		50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9210E90DFA0068ECEB /* CCTMXLayer.m */; };
+		50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AC9310E90DFA0068ECEB /* CCTMXObjectGroup.h */; };
+		50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9410E90DFA0068ECEB /* CCTMXObjectGroup.m */; };
 		50D413260F9A3FE00040C3C8 /* CCQuadParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D413240F9A3FE00040C3C8 /* CCQuadParticleSystem.h */; };
 		50D413270F9A3FE00040C3C8 /* CCQuadParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D413250F9A3FE00040C3C8 /* CCQuadParticleSystem.m */; };
 		50D438DF101160B200895754 /* ccHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D438DD101160B200895754 /* ccHashSet.h */; };
@@ -2399,6 +2403,10 @@
 		50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloEventsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D0E0EF0FF9316900098927 /* HelloEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloEvents.h; path = tests/samples/HelloEvents.h; sourceTree = "<group>"; };
 		50D0E0F00FF9316900098927 /* HelloEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloEvents.m; path = tests/samples/HelloEvents.m; sourceTree = "<group>"; };
+		50D2AC9110E90DFA0068ECEB /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		50D2AC9210E90DFA0068ECEB /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
+		50D2AC9310E90DFA0068ECEB /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		50D2AC9410E90DFA0068ECEB /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
 		50D413240F9A3FE00040C3C8 /* CCQuadParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCQuadParticleSystem.h; sourceTree = "<group>"; };
 		50D413250F9A3FE00040C3C8 /* CCQuadParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCQuadParticleSystem.m; sourceTree = "<group>"; };
 		50D438DD101160B200895754 /* ccHashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccHashSet.h; sourceTree = "<group>"; };
@@ -4363,6 +4371,10 @@
 				50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */,
 				502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */,
 				502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */,
+				50D2AC9110E90DFA0068ECEB /* CCTMXLayer.h */,
+				50D2AC9210E90DFA0068ECEB /* CCTMXLayer.m */,
+				50D2AC9310E90DFA0068ECEB /* CCTMXObjectGroup.h */,
+				50D2AC9410E90DFA0068ECEB /* CCTMXObjectGroup.m */,
 				509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */,
 				509D0817101E4FCE007E1749 /* CCTMXTiledMap.m */,
 				50CFAC371023660000175934 /* CCTMXXMLParser.h */,
@@ -4687,6 +4699,8 @@
 				50E1357510ADEB1B00C9E7FA /* CCTexture2D.h in Headers */,
 				50E1357710ADEB1B00C9E7FA /* CCPVRTexture.h in Headers */,
 				508A450610B0E604004B9CC3 /* CCCompatibility.h in Headers */,
+				50D2AC9510E90DFA0068ECEB /* CCTMXLayer.h in Headers */,
+				50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6926,6 +6940,8 @@
 				50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */,
 				50E1357810ADEB1B00C9E7FA /* CCPVRTexture.m in Sources */,
 				508A450710B0E604004B9CC3 /* CCCompatibility.m in Sources */,
+				50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */,
+				50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
