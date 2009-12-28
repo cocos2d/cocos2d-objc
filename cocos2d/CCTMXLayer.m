@@ -24,21 +24,17 @@
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
-#pragma mark CCSpriteSheet extension
+#pragma mark CCSpriteSheet Extension
 
-@interface CCSpriteSheet (TileMapExtension)
+/* IMPORTANT XXX IMPORTNAT:
+ * These 2 methods can't be part of CCTMXLayer since they call [super add...], and CCSpriteSheet#add SHALL not be called
+ */
+@implementation CCSpriteSheet (TMXTiledMapExtension)
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
  For example: a tile map (CCTMXMap) or a label with lots of characgers (BitmapFontAtlas)
- @since v0.8.2
  */
--(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index;
-
--(id)addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag;
-@end
-
-@implementation CCSpriteSheet (TileMapExtension)
 -(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index
 {
 	NSAssert( sprite != nil, @"Argument must be non-nil");
@@ -46,7 +42,7 @@
 	
 	while(index >= textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
-
+	
 	[self insertChild:sprite inAtlasAtIndex:index];
 	[sprite updateTransform];
 }
@@ -73,7 +69,13 @@
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
 -(CGPoint) positionForHexAt:(CGPoint)pos;
 
-// optimizations
+// adding quad from sprite
+-(void)addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index;
+
+// adds an sprite without the quad
+-(id)addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag;
+
+// index
 -(unsigned int) atlasIndexForExistantZ:(unsigned int)z;
 -(unsigned int) atlasIndexForNewZ:(int)z;
 @end
@@ -84,6 +86,8 @@
 @synthesize layerOrientation=layerOrientation_;
 @synthesize mapTileSize=mapTileSize_;
 @synthesize properties=properties_;
+
+#pragma mark CCTMXLayer - init & alloc & dealloc
 
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
 {

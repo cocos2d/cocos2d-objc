@@ -408,18 +408,18 @@ Class restartAction()
 		
 		[map setAnchorPoint:ccp(0, 0)];
 
-		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
-		CGSize s = [layer layerSize];
+//		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
+//		CGSize s = [layer layerSize];
 		
-		CCSprite *sprite;
-		sprite = [layer tileAt:ccp(0,0)];
-		[sprite setScale:2];
-		sprite = [layer tileAt:ccp(s.width-1,0)];
-		[sprite setScale:2];
-		sprite = [layer tileAt:ccp(0,s.height-1)];
-		[sprite setScale:2];
-		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
-		[sprite setScale:2];
+//		CCSprite *sprite;
+//		sprite = [layer tileAt:ccp(0,0)];
+//		[sprite setScale:2];
+//		sprite = [layer tileAt:ccp(s.width-1,0)];
+//		[sprite setScale:2];
+//		sprite = [layer tileAt:ccp(0,s.height-1)];
+//		[sprite setScale:2];
+//		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
+//		[sprite setScale:2];
 		
 		[self schedule:@selector(removeSprite:) interval:2];
 	}	
