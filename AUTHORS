@@ -36,6 +36,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemToggle that supports selectedIndex
 	* Aymeric Bard:
 		Repeat action works OK
+	* Barney Mattox:
+		templates use rfc1034identifier patch.
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
