@@ -12,6 +12,7 @@ version 0.9.0-rc0 - XX-Jan-2010
  . SpriteSheet: adding grand-children doesn't crash (issue #676)
  . SpriteSheet: child and children works OK with negative scales (issue #677)
  . SpriteSheet: can be overriden (issue #397)
+ . Templates: uses rfc1034identifier (issue #685)
  . TMXTiledMap: added support for object and objectgroup (issue #636)
  
 version 0.9.0-beta - 14-Dic-2009
