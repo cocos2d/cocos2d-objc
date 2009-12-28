@@ -15,13 +15,14 @@
  *
  */
 
-#import <UIKit/UIKit.h>
 #include <zlib.h>
+#import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
 #import "ccMacros.h"
 #import "CCTMXXMLParser.h"
 #import "CCTMXTiledMap.h"
+#import "CCTMXObjectGroup.h"
 #import "Support/CCFileUtils.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"

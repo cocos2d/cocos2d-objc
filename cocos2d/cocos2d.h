@@ -77,6 +77,8 @@
 #import "CCParallaxNode.h"
 #import "CCActionManager.h"
 #import "CCTMXTiledMap.h"
+#import "CCTMXLayer.h"
+#import "CCTMXObjectGroup.h"
 #import "CCTMXXMLParser.h"
 #import "CCTileMapAtlas.h"
 #import "CCRenderTexture.h"

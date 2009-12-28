@@ -14,6 +14,7 @@ version 0.9.0-rc0 - XX-Jan-2010
  . SpriteSheet: can be overriden (issue #397)
  . Templates: uses rfc1034identifier (issue #685)
  . TMXTiledMap: added support for object and objectgroup (issue #636)
+ . TMXTiledMap: TMXLayer and TMXObjectGroup on it's own files (part of issue #636)
  
 version 0.9.0-beta - 14-Dic-2009
  . ActionManager: fixed leak (issue #635)
