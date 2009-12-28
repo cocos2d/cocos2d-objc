@@ -17,6 +17,7 @@
 #import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
+#import "Support/ccArray.h"
 
 #pragma mark CCSpriteSheet
 
@@ -38,6 +39,7 @@
 
 	// all descendants: chlidren, gran children, etc...
 	NSMutableArray	*descendants_;
+//	ccArray			*descendants_;
 }
 
 /** returns the TextureAtlas that is used */
