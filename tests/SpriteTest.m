@@ -1243,7 +1243,7 @@ Class restartAction()
 		//
 		// Animation using Sprite Sheet
 		//
-		CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite.position = ccp( s.width/2-80, s.height/2);
 		
 		CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
@@ -1264,7 +1264,7 @@ Class restartAction()
 		//
 		// Animation using standard Sprite
 		//
-		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite2.position = ccp( s.width/2 + 80, s.height/2);
 		[self addChild:sprite2];
 		
@@ -1319,7 +1319,7 @@ Class restartAction()
 			//
 			// Animation using Sprite Sheet
 			//
-			CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( 90 + i*150, s.height/2);			
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
@@ -1389,7 +1389,7 @@ Class restartAction()
 			//
 			// Animation using Sprite Sheet
 			//
-			CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( 90 + i*150, s.height/2);			
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
@@ -1461,7 +1461,7 @@ Class restartAction()
 			//
 			// Animation using Sprite Sheet
 			//
-			CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( 90 + i*150, s.height/2);			
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
@@ -1534,7 +1534,7 @@ Class restartAction()
 			//
 			// Animation using Sprite Sheet
 			//
-			CCSprite *sprite = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( 90 + i*150, s.height/2);			
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
@@ -1770,13 +1770,13 @@ Class restartAction()
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
 
-		CCSprite *sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
 
-		CCSprite *sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		CCSprite *sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(50,50)];
 
-		CCSprite *sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		CCSprite *sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-50,-50)];
 		
 		[sheet addChild:sprite1];
@@ -1833,14 +1833,14 @@ Class restartAction()
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
 		
-		CCSprite *sprite11 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite11 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite11 setPosition:ccp( s.width/3, s.height/2)];
 
-		CCSprite *sprite12 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		CCSprite *sprite12 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite12 setPosition:ccp(20,30)];
 		sprite12.scale = 0.2f;
 
-		CCSprite *sprite13 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		CCSprite *sprite13 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite13 setPosition:ccp(-20,30)];
 		sprite13.scale = 0.2f;
 		
@@ -1868,14 +1868,14 @@ Class restartAction()
 		// another set of parent / children
 		//
 		
-		CCSprite *sprite21 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		CCSprite *sprite21 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite21 setPosition:ccp( 2*s.width/3, s.height/2-50)];
 		
-		CCSprite *sprite22 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		CCSprite *sprite22 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite22 setPosition:ccp(20,30)];
 		sprite22.scale = 0.8f;
 		
-		CCSprite *sprite23 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		CCSprite *sprite23 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite23 setPosition:ccp(-20,30)];
 		sprite23.scale = 0.8f;
 		
@@ -1932,13 +1932,13 @@ Class restartAction()
 		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
 		[sheet addChild:sprite1];
@@ -1949,13 +1949,13 @@ Class restartAction()
 		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( 2*s.width/3, s.height/2)];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
 		[sheet addChild:sprite1];
@@ -1966,13 +1966,13 @@ Class restartAction()
 		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( 100, s.height/4)];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp( 130,s.height/4)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp( 160, s.height/4)];
 		
 		[sheet addChild:sprite1 z:10];
@@ -1983,13 +1983,13 @@ Class restartAction()
 		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( 250, s.height/4)];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp( 280,s.height/4)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp( 310, s.height/4)];
 		
 		[sheet addChild:sprite1 z:-10];
@@ -2038,13 +2038,13 @@ Class restartAction()
 		
 		
 		
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp(0,0)];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
 		[aParent addChild:sprite1];
@@ -2060,13 +2060,13 @@ Class restartAction()
 		aParent.position = ccp(2*s.width/3, s.height/2);
 		[self addChild:aParent z:0];
 
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_01.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp(0,0)];
 				
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
 		[aParent addChild:sprite1];
@@ -2115,17 +2115,17 @@ Class restartAction()
 		[self addChild:aParent z:0];
 		
 		// anchor (0,0)
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		sprite4 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;
 
@@ -2142,17 +2142,17 @@ Class restartAction()
 		
 		
 		// anchor (0.5, 0.5)
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 
-		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		sprite4 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;		
 
@@ -2168,18 +2168,18 @@ Class restartAction()
 		
 		
 		// anchor (1,1)
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
 
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		sprite4 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;		
 		
@@ -2232,17 +2232,17 @@ Class restartAction()
 		[self addChild:aParent z:0];
 		
 		// anchor (0,0)
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		sprite4 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;
 		
@@ -2258,17 +2258,17 @@ Class restartAction()
 		
 		
 		// anchor (0.5, 0.5)
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		sprite4 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;		
 		
@@ -2284,17 +2284,17 @@ Class restartAction()
 		
 		
 		// anchor (1,1)
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_08.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_02.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
 		
-		sprite3 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_03.png"];
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		sprite4 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossini_dance_04.png"];
+		sprite4 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_04.png"];
 		[sprite4 setPosition:ccp(0,0)];
 		sprite4.scale = 0.5f;		
 		
@@ -2346,14 +2346,14 @@ Class restartAction()
 		// Test 1
 		//
 		aParent = [CCNode node];
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister1.png"];
 		sprite1.position = ccp( s.width/4, s.height/4);
 		sprite1.scaleX = -0.5f;
 		sprite1.scaleY = 2.0f;
 		[sprite1 runAction:seq];
 		
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister2.png"];
 		sprite2.position = ccp( 50,0);
 		
 		[self addChild:aParent];
@@ -2367,13 +2367,13 @@ Class restartAction()
 		//
 		
 		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister1.png"];
 		sprite1.position = ccp( 3*s.width/4, s.height/4);
 		sprite1.scaleX = -0.5f;
 		sprite1.scaleY = 2.0f;
 		[sprite1 runAction: [[seq copy] autorelease]];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister2.png"];
 		sprite2.position = ccp( 50,0);
 		
 		[self addChild:aParent];
@@ -2387,13 +2387,13 @@ Class restartAction()
 		//
 		
 		aParent = [CCNode node];
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister1.png"];
 		sprite1.position = ccp( s.width/4, 2*s.height/3);
 		sprite1.scaleX = 1.5f;
 		sprite1.scaleY = -0.5f;
 		[sprite1 runAction: [[seq copy] autorelease]];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister2.png"];
 		sprite2.position = ccp( 50,0);
 		
 		[self addChild:aParent];
@@ -2406,13 +2406,13 @@ Class restartAction()
 		//
 		
 		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
-		sprite1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister1.png"];
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister1.png"];
 		sprite1.position = ccp( 3*s.width/4, 2*s.height/3);
 		sprite1.scaleX = 1.5f;
 		sprite1.scaleY = -0.5f;
 		[sprite1 runAction: [[seq copy] autorelease]];
 		
-		sprite2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"grossinis_sister2.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister2.png"];
 		sprite2.position = ccp( 50,0);
 		
 		[self addChild:aParent];
@@ -2458,45 +2458,45 @@ Class restartAction()
 		[self addChild:aParent];
 		
 		// parent
-		l1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"father.gif"];
+		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
 		[aParent addChild:l1];
 		
 		// child left
-		l2a = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister1.gif"];
+		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
 		l2a.position = ccp( -50,0);
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
 		
 		
 		// child right
-		l2b = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister2.gif"];
+		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
 		l2b.position = ccp( 50,0);
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
 		
 		// child left bottom
-		l3a1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a1.scale = 0.45f;
 		l3a1.position = ccp(0,-100);
 		[l2a addChild:l3a1];
 		
 		// child left top
-		l3a2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a2.scale = 0.45f;
 		l3a2.position = ccp(0,100);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
-		l3b1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b1.scale = 0.45f;
 		l3b1.flipY = YES;
 		l3b1.position = ccp(0,-100);
 		[l2b addChild:l3b1];
 		
 		// child right top
-		l3b2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
 		l3b2.position = ccp(0,100);
@@ -2542,45 +2542,45 @@ Class restartAction()
 		[self addChild:aParent];
 		
 		// parent
-		l1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"father.gif"];
+		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
 		[aParent addChild:l1];
 		
 		// child left
-		l2a = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister1.gif"];
+		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
 		l2a.position = ccp( -50,0);
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
 
 
 		// child right
-		l2b = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"sister2.gif"];
+		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
 		l2b.position = ccp( 50,0);
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
 		
 		// child left bottom
-		l3a1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a1.scale = 0.45f;
 		l3a1.position = ccp(0,-100);
 		[l2a addChild:l3a1];
 		
 		// child left top
-		l3a2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a2.scale = 0.45f;
 		l3a2.position = ccp(0,100);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
-		l3b1 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b1.scale = 0.45f;
 		l3b1.flipY = YES;
 		l3b1.position = ccp(0,-100);
 		[l2b addChild:l3b1];
 
 		// child right top
-		l3b2 = [[CCSpriteFrameCache sharedSpriteFrameCache] createSpriteWithFrameName:@"child1.gif"];
+		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
 		l3b2.position = ccp(0,100);

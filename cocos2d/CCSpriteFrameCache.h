@@ -91,6 +91,6 @@
  The created sprite will contain the texture, rect and offset of the sprite frame.
  It returns an autorelease object.
  */
--(CCSprite*) createSpriteWithFrameName:(NSString*)name;
+//-(CCSprite*) createSpriteWithFrameName:(NSString*)name;
 
 @end
