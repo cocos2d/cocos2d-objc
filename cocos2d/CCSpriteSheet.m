@@ -18,6 +18,7 @@
 #import "CCSpriteSheet.h"
 #import "CCGrid.h"
 #import "CCDrawingPrimitives.h"
+#import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
 const int defaultCapacity = 29;
@@ -87,20 +88,8 @@ const int defaultCapacity = 29;
  */
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
-	if( (self=[super init]) ) {
-		
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
-		textureAtlas_ = [[CCTextureAtlas alloc] initWithFile:fileImage capacity:capacity];
-		
-		// no lazy alloc in this node
-		children = [[NSMutableArray alloc] initWithCapacity:capacity];
-		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
-		
-		[self updateBlendFunc];
-	}
-	
-	return self;
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
+	return [self initWithTexture:tex capacity:capacity];
 }
 
 - (NSString*) description

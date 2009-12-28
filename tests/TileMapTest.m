@@ -408,18 +408,18 @@ Class restartAction()
 		
 		[map setAnchorPoint:ccp(0, 0)];
 
-//		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
-//		CGSize s = [layer layerSize];
+		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
+		CGSize s = [layer layerSize];
 		
-//		CCSprite *sprite;
-//		sprite = [layer tileAt:ccp(0,0)];
-//		[sprite setScale:2];
-//		sprite = [layer tileAt:ccp(s.width-1,0)];
-//		[sprite setScale:2];
-//		sprite = [layer tileAt:ccp(0,s.height-1)];
-//		[sprite setScale:2];
-//		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
-//		[sprite setScale:2];
+		CCSprite *sprite;
+		sprite = [layer tileAt:ccp(0,0)];
+		[sprite setScale:2];
+		sprite = [layer tileAt:ccp(s.width-1,0)];
+		[sprite setScale:2];
+		sprite = [layer tileAt:ccp(0,s.height-1)];
+		[sprite setScale:2];
+		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
+		[sprite setScale:2];
 		
 		[self schedule:@selector(removeSprite:) interval:2];
 	}	
@@ -609,6 +609,8 @@ Class restartAction()
 		
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
 		[layer.texture setAntiAliasTexParameters];
+		
+		map.scale = 1;
 
 		CCSprite *tile0 = [layer tileAt:ccp(1,63)];
 		CCSprite *tile1 = [layer tileAt:ccp(2,63)];
@@ -619,7 +621,7 @@ Class restartAction()
 		tile2.anchorPoint = ccp(0.5f, 0.5f);
 		tile3.anchorPoint = ccp(0.5f, 0.5f);
 
-		id move = [CCMoveBy actionWithDuration:5 position:ccp(240,160)];
+		id move = [CCMoveBy actionWithDuration:5 position:ccp(0,160)];
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id scale = [CCScaleBy actionWithDuration:2 scale:5];
 		id opacity = [CCFadeOut actionWithDuration:2];
@@ -640,9 +642,13 @@ Class restartAction()
 		gid = [layer tileGIDAt:ccp(0,63)];
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
 
-		[self schedule:@selector(updateCol:) interval:0.5f];
+		[self schedule:@selector(updateCol:) interval:1.0f];
 		[self schedule:@selector(repaintWithGID:) interval:2];
 		[self schedule:@selector(removeTiles:) interval:1];
+		
+		
+		NSLog(@"++++atlas quantity: %d", [[layer textureAtlas] totalQuads]);
+		NSLog(@"++++children: %d", [[layer children] count]);
 		
 		gid2 = 0;
 		
@@ -663,6 +669,10 @@ Class restartAction()
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
 		
+	NSLog(@"++++atlas quantity: %d", [[layer textureAtlas] totalQuads]);
+	NSLog(@"++++children: %d", [[layer children] count]);
+
+
 	CGSize s = [layer layerSize];
 	for( int y=0; y< s.height; y++ ) {
 		[layer setTileGID:gid2 at:ccp(3,y)];

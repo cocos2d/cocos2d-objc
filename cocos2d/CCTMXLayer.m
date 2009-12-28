@@ -42,19 +42,42 @@
 	
 	while(index >= textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
-	
-	[self insertChild:sprite inAtlasAtIndex:index];
+
+	//
+	// update the quad directly. Don't add the sprite to the scene graph
+	//
+
+	[sprite useSpriteSheetRender:self];
+	[sprite setAtlasIndex:index];
+	[sprite setDirty: YES];
+
+	ccV3F_C4B_T2F_Quad quad = [sprite quad];
+	[textureAtlas_ insertQuad:&quad atIndex:index];
 	[sprite updateTransform];
 }
 
--(id) addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag
+/* This is the opposite of "addQuadFromSprite.
+ It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
+ */
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(unsigned int)z tag:(int)aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
 	
 	// quad index is Z
 	[child setAtlasIndex:z];
-	[descendants_ insertObject:child atIndex:z];
+	
+	// XXX: optimize with a binary search
+	int i=0;
+	for( CCSprite *c in descendants_ ) {
+		if( c.atlasIndex >= z )
+			break;
+		i++;
+	}
+	[descendants_ insertObject:child atIndex:i];
+	
+	
+	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
 	[super addChild:child z:z tag:aTag];
 	return self;	
 }
@@ -159,7 +182,7 @@
 
 -(CCSprite*) tileAt:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 	
 	CCSprite *tile = nil;
@@ -186,7 +209,7 @@
 
 -(unsigned int) tileGIDAt:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 	
 	int idx = pos.x + pos.y * layerSize_.width;
@@ -279,7 +302,7 @@
 	// don't add it using the "standard" way.
 	[self addQuadFromSprite:reusedTile quadIndex:indexForZ];
 	
-	// append should after addQuadFromSprite since it modifies the quantity values
+	// append should be after addQuadFromSprite since it modifies the quantity values
 	ccCArrayInsertValueAtIndex(atlasIndexArray, (void*)z, indexForZ);
 	
 	return reusedTile;
@@ -322,7 +345,7 @@ int compareInts (const void * a, const void * b)
 
 -(void) setTileGID:(unsigned int)gid at:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 		
 	unsigned int currentGID = [self tileGIDAt:pos];
@@ -353,7 +376,7 @@ int compareInts (const void * a, const void * b)
 
 -(void) removeTileAt:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y <= layerSize_.height, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray, @"TMXLayer: the tiles map has been released");
 
 	unsigned int gid = [self tileGIDAt:pos];
