@@ -327,8 +327,9 @@
 	}
 	
 
-	// Optimization: If parent is spritesheet, build Affine transform manually
-	if( parent == spriteSheet_ ) {
+	// Optimization: If parent is spritesheet, or parent is nil
+	// build Affine transform manually
+	if( ! parent || parent == spriteSheet_ ) {
 		
 		CGPoint pcap = [parent childrenAnchorPointInPixels];
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
