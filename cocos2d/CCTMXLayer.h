@@ -72,7 +72,13 @@
  */
 -(void) releaseMap;
 
-/** returns the tile (CCSprite) at a given a tile coordinate */
+/** returns the tile (CCSprite) at a given a tile coordinate.
+ The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.
+ The CCSprite can be treated like any other CCSprite: rotated, scaled, translated, opacity, color, etc.
+ You can remove either by calling:
+	- [layer removeChild:sprite cleanup:cleanup];
+	- or [layer removeTileAt:ccp(x,y)];
+ */
 -(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
 /** returns the tile gid at a given tile coordinate.
@@ -96,7 +102,10 @@
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;
 
+/* optimization methos */
 -(CCSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
+/* optimization methos */
 -(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
+/* optimization methos */
 -(CCSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos;
 @end

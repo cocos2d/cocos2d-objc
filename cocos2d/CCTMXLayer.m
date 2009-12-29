@@ -374,6 +374,21 @@ int compareInts (const void * a, const void * b)
 	}
 }
 
+-(void) removeChild:(CCSprite*)sprite cleanup:(BOOL)cleanup
+{
+	// allows removing nil objects
+	if( ! sprite )
+		return;
+
+	NSAssert( [children containsObject:sprite], @"Tile does not belong to TMXLayer");
+	
+	unsigned int atlasIndex = [sprite atlasIndex];
+	unsigned int zz = (unsigned int) atlasIndexArray->arr[atlasIndex];
+	tiles_[zz] = 0;
+	ccCArrayRemoveValueAtIndex(atlasIndexArray, atlasIndex);
+	[super removeChild:sprite cleanup:cleanup];
+}
+
 -(void) removeTileAt:(CGPoint)pos
 {
 	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
@@ -395,7 +410,7 @@ int compareInts (const void * a, const void * b)
 		// remove it from sprites and/or texture atlas
 		id sprite = [self getChildByTag:z];
 		if( sprite )
-			[self removeChild:sprite cleanup:YES];
+			[super removeChild:sprite cleanup:YES];
 		else {
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
 

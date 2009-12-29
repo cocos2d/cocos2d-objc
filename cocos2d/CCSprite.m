@@ -186,7 +186,6 @@
 	return [self initWithSpriteFrame:frame];
 }
 
-
 - (id) initWithCGImage: (CGImageRef)image
 {
 	if( (self = [super init]) ) {
@@ -198,7 +197,6 @@
 		CGRect rect = CGRectMake(0, 0, size.width, size.height );
 		
 		[self initWithTexture:texture rect:rect];
-		 
 	}
 	
 	return self;

@@ -621,7 +621,7 @@ Class restartAction()
 		tile2.anchorPoint = ccp(0.5f, 0.5f);
 		tile3.anchorPoint = ccp(0.5f, 0.5f);
 
-		id move = [CCMoveBy actionWithDuration:5 position:ccp(0,160)];
+		id move = [CCMoveBy actionWithDuration:0.5f position:ccp(0,160)];
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id scale = [CCScaleBy actionWithDuration:2 scale:5];
 		id opacity = [CCFadeOut actionWithDuration:2];
@@ -642,9 +642,9 @@ Class restartAction()
 		gid = [layer tileGIDAt:ccp(0,63)];
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
 
-		[self schedule:@selector(updateCol:) interval:1.0f];
+		[self schedule:@selector(updateCol:) interval:2.0f repeat:15];
 		[self schedule:@selector(repaintWithGID:) interval:2];
-		[self schedule:@selector(removeTiles:) interval:1];
+		[self schedule:@selector(removeTiles:) interval:1 repeat:15];
 		
 		
 		NSLog(@"++++atlas quantity: %d", [[layer textureAtlas] totalQuads]);
@@ -704,6 +704,7 @@ Class restartAction()
 	for( int y=0; y< s.height; y++ ) {
 		[layer removeTileAt:ccp(5,y)];
 	}
+		
 }
 
 -(NSString *) title
