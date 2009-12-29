@@ -360,12 +360,6 @@ const int defaultCapacity = 29;
 	if( childIndex < [brothers count] -1 )
 		next = [brothers objectAtIndex:childIndex+1];
 
-	
-//	if( index > 0 ) {
-//		CCSprite *previous = [brothers objectAtIndex:index-1];
-//		index = [self highestAtlasIndexInChild: previous] + 1;
-//	}
-	
 	// first child of the sprite sheet
 	if( ignoreParent ) {
 		if( childIndex == 0 )
@@ -432,11 +426,6 @@ const int defaultCapacity = 29;
 	}
 }
 
-/// reorder helper
--(void) reorderSpriteInAtlas:(CCSprite*)sprite
-{
-}
-
 // remove child helper
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite
 {
@@ -460,7 +449,7 @@ const int defaultCapacity = 29;
 		}
 	}
 	
-	// add children recursively
+	// remove children recursively
 	for( CCSprite *child in sprite.children ) {
 		[self removeSpriteFromAtlas:child];
 	}	
