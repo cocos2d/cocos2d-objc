@@ -206,6 +206,10 @@
 		507022A4107672FA00393637 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 507022A2107672FA00393637 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
 		507022A5107672FA00393637 /* HelloWorldScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 507022A3107672FA00393637 /* HelloWorldScene.m */; };
 		507023151076758E00393637 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 507023141076758E00393637 /* grossini_dance_atlas.png */; };
+		50D2AFA210E971700068ECEB /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AF9C10E971700068ECEB /* CCTMXLayer.h */; };
+		50D2AFA310E971700068ECEB /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AF9D10E971700068ECEB /* CCTMXLayer.m */; };
+		50D2AFA410E971700068ECEB /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AF9E10E971700068ECEB /* CCTMXObjectGroup.h */; };
+		50D2AFA510E971700068ECEB /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AF9F10E971700068ECEB /* CCTMXObjectGroup.m */; };
 		50F412F8106926A5002A0D5E /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F1106926A5002A0D5E /* CDAudioManager.h */; };
 		50F412F9106926A5002A0D5E /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F412F2106926A5002A0D5E /* CDAudioManager.m */; };
 		50F412FA106926A5002A0D5E /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F3106926A5002A0D5E /* CDOpenALSupport.h */; };
@@ -458,6 +462,10 @@
 		507022A2107672FA00393637 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.m"; sourceTree = "<group>"; };
 		507022A3107672FA00393637 /* HelloWorldScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldScene.m; sourceTree = "<group>"; };
 		507023141076758E00393637 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
+		50D2AF9C10E971700068ECEB /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		50D2AF9D10E971700068ECEB /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
+		50D2AF9E10E971700068ECEB /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		50D2AF9F10E971700068ECEB /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
 		50F412F1106926A5002A0D5E /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		50F412F2106926A5002A0D5E /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		50F412F3106926A5002A0D5E /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
@@ -600,6 +608,10 @@
 		504DFAA210AF08E4006D82FE /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50D2AF9C10E971700068ECEB /* CCTMXLayer.h */,
+				50D2AF9D10E971700068ECEB /* CCTMXLayer.m */,
+				50D2AF9E10E971700068ECEB /* CCTMXObjectGroup.h */,
+				50D2AF9F10E971700068ECEB /* CCTMXObjectGroup.m */,
 				504DFAA310AF08E4006D82FE /* CCAction.h */,
 				504DFAA410AF08E4006D82FE /* CCAction.m */,
 				504DFAA510AF08E4006D82FE /* CCActionManager.h */,
@@ -1040,6 +1052,8 @@
 				506D891510D1B92E008964A3 /* cpSpaceHash.h in Headers */,
 				506D891710D1B92E008964A3 /* cpVect.h in Headers */,
 				506D891810D1B92E008964A3 /* prime.h in Headers */,
+				50D2AFA210E971700068ECEB /* CCTMXLayer.h in Headers */,
+				50D2AFA410E971700068ECEB /* CCTMXObjectGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,6 +1243,8 @@
 				506D891210D1B92E008964A3 /* cpSpace.c in Sources */,
 				506D891410D1B92E008964A3 /* cpSpaceHash.c in Sources */,
 				506D891610D1B92E008964A3 /* cpVect.c in Sources */,
+				50D2AFA310E971700068ECEB /* CCTMXLayer.m in Sources */,
+				50D2AFA510E971700068ECEB /* CCTMXObjectGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

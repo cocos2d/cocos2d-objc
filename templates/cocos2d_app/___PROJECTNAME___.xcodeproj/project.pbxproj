@@ -155,6 +155,10 @@
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		506EDC31102F528A00A389B3 /* HelloWorldScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 506EDC30102F528A00A389B3 /* HelloWorldScene.m */; };
 		506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
+		50D2AFD510E971E50068ECEB /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AFD110E971E50068ECEB /* CCTMXLayer.h */; };
+		50D2AFD610E971E50068ECEB /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AFD210E971E50068ECEB /* CCTMXLayer.m */; };
+		50D2AFD710E971E50068ECEB /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AFD310E971E50068ECEB /* CCTMXObjectGroup.h */; };
+		50D2AFD810E971E50068ECEB /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AFD410E971E50068ECEB /* CCTMXObjectGroup.m */; };
 		50F412F8106926A5002A0D5E /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F1106926A5002A0D5E /* CDAudioManager.h */; };
 		50F412F9106926A5002A0D5E /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F412F2106926A5002A0D5E /* CDAudioManager.m */; };
 		50F412FA106926A5002A0D5E /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F3106926A5002A0D5E /* CDOpenALSupport.h */; };
@@ -356,6 +360,10 @@
 		506EDC2F102F528A00A389B3 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		506EDC30102F528A00A389B3 /* HelloWorldScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldScene.m; sourceTree = "<group>"; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D2AFD110E971E50068ECEB /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		50D2AFD210E971E50068ECEB /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
+		50D2AFD310E971E50068ECEB /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		50D2AFD410E971E50068ECEB /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
 		50F412F1106926A5002A0D5E /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		50F412F2106926A5002A0D5E /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		50F412F3106926A5002A0D5E /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
@@ -498,6 +506,10 @@
 		504DF87010AF06FA006D82FE /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50D2AFD110E971E50068ECEB /* CCTMXLayer.h */,
+				50D2AFD210E971E50068ECEB /* CCTMXLayer.m */,
+				50D2AFD310E971E50068ECEB /* CCTMXObjectGroup.h */,
+				50D2AFD410E971E50068ECEB /* CCTMXObjectGroup.m */,
 				504DF87110AF06FA006D82FE /* CCAction.h */,
 				504DF87210AF06FA006D82FE /* CCAction.m */,
 				504DF87310AF06FA006D82FE /* CCActionManager.h */,
@@ -843,6 +855,8 @@
 				504DFBCE10AF12E9006D82FE /* CLScoreServerPost.h in Headers */,
 				504DFBD010AF12E9006D82FE /* CLScoreServerRequest.h in Headers */,
 				504DFBD210AF12E9006D82FE /* cocoslive.h in Headers */,
+				50D2AFD510E971E50068ECEB /* CCTMXLayer.h in Headers */,
+				50D2AFD710E971E50068ECEB /* CCTMXObjectGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1008,6 +1022,8 @@
 				504DFBCF10AF12E9006D82FE /* CLScoreServerPost.m in Sources */,
 				504DFBD110AF12E9006D82FE /* CLScoreServerRequest.m in Sources */,
 				504DFBD310AF12E9006D82FE /* cocoslive.m in Sources */,
+				50D2AFD610E971E50068ECEB /* CCTMXLayer.m in Sources */,
+				50D2AFD810E971E50068ECEB /* CCTMXObjectGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

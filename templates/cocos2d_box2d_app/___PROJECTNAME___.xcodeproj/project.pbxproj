@@ -159,6 +159,10 @@
 		50AC652710C048B200C19890 /* b2FrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC652310C048B200C19890 /* b2FrictionJoint.h */; };
 		50AC652810C048B200C19890 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC652410C048B200C19890 /* b2WeldJoint.cpp */; };
 		50AC652910C048B200C19890 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC652510C048B200C19890 /* b2WeldJoint.h */; };
+		50D2AFC110E971B80068ECEB /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AFBD10E971B80068ECEB /* CCTMXLayer.h */; };
+		50D2AFC210E971B80068ECEB /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AFBE10E971B80068ECEB /* CCTMXLayer.m */; };
+		50D2AFC310E971B80068ECEB /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AFBF10E971B80068ECEB /* CCTMXObjectGroup.h */; };
+		50D2AFC410E971B80068ECEB /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AFC010E971B80068ECEB /* CCTMXObjectGroup.m */; };
 		50F412F8106926A5002A0D5E /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F1106926A5002A0D5E /* CDAudioManager.h */; };
 		50F412F9106926A5002A0D5E /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F412F2106926A5002A0D5E /* CDAudioManager.m */; };
 		50F412FA106926A5002A0D5E /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F412F3106926A5002A0D5E /* CDOpenALSupport.h */; };
@@ -432,6 +436,10 @@
 		50AC652310C048B200C19890 /* b2FrictionJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2FrictionJoint.h; sourceTree = "<group>"; };
 		50AC652410C048B200C19890 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		50AC652510C048B200C19890 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
+		50D2AFBD10E971B80068ECEB /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		50D2AFBE10E971B80068ECEB /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
+		50D2AFBF10E971B80068ECEB /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		50D2AFC010E971B80068ECEB /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
 		50F412F1106926A5002A0D5E /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		50F412F2106926A5002A0D5E /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		50F412F3106926A5002A0D5E /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
@@ -645,6 +653,10 @@
 		504DF97C10AF07FC006D82FE /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50D2AFBD10E971B80068ECEB /* CCTMXLayer.h */,
+				50D2AFBE10E971B80068ECEB /* CCTMXLayer.m */,
+				50D2AFBF10E971B80068ECEB /* CCTMXObjectGroup.h */,
+				50D2AFC010E971B80068ECEB /* CCTMXObjectGroup.m */,
 				504DF97D10AF07FC006D82FE /* CCAction.h */,
 				504DF97E10AF07FC006D82FE /* CCAction.m */,
 				504DF97F10AF07FC006D82FE /* CCActionManager.h */,
@@ -1154,6 +1166,8 @@
 				504DFC0A10AF1414006D82FE /* cocoslive.h in Headers */,
 				50AC652710C048B200C19890 /* b2FrictionJoint.h in Headers */,
 				50AC652910C048B200C19890 /* b2WeldJoint.h in Headers */,
+				50D2AFC110E971B80068ECEB /* CCTMXLayer.h in Headers */,
+				50D2AFC310E971B80068ECEB /* CCTMXObjectGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1355,6 +1369,8 @@
 				504DFC0B10AF1414006D82FE /* cocoslive.m in Sources */,
 				50AC652610C048B200C19890 /* b2FrictionJoint.cpp in Sources */,
 				50AC652810C048B200C19890 /* b2WeldJoint.cpp in Sources */,
+				50D2AFC210E971B80068ECEB /* CCTMXLayer.m in Sources */,
+				50D2AFC410E971B80068ECEB /* CCTMXObjectGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
