@@ -99,6 +99,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of tools/mkatlas.pl script
 	* mike AT finklyinteractive:
 		fixed leak in ActionManager
+	* morten795 (http://aptocore.com):
+		Device and Simulator behaves identically with premultiplied images. patch.
 	* hamm.hans:
 		Author of CrossFadeTransition
 	* Hans Larsen:

@@ -11,6 +11,7 @@
 //
 
 #import "Box2DView.h"
+#import "iPhoneTest.h"
 
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
@@ -151,7 +152,14 @@ enum {
 		[self schedule:@selector(tick:)];
 
 		entry = g_testEntries + entryId;
-		test = entry->createFcn();		
+		test = entry->createFcn();
+		
+		// init settings
+//		settings.drawAABBs = 1;
+//		settings.drawPairs = 1;
+//		settings.drawContactPoints = 1;
+//		settings.drawCOMs = 1;
+		
     }
 		
     return self;

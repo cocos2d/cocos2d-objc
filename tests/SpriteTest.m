@@ -1260,6 +1260,7 @@ Class restartAction()
 		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
 		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
 
+		sprite.flipX = YES;
 
 		//
 		// Animation using standard Sprite
@@ -1285,6 +1286,9 @@ Class restartAction()
 		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f frames:moreFrames];
 		
 		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animMixed restoreOriginalFrame:NO]]];
+		
+		sprite2.flipX = YES;
+
 	}	
 	return self;
 }
