@@ -296,10 +296,10 @@
 	float bottom = (rect.origin.y + rect.size.height) / atlasHeight;
 
 	
-	if( flipX_)
-		CC_SWAP(left,right);
-	if( flipY_)
-		CC_SWAP(top,bottom);
+//	if( flipX_)
+//		CC_SWAP(left,right);
+//	if( flipY_)
+//		CC_SWAP(top,bottom);
 	
 	quad_.bl.texCoords.u = left;
 	quad_.bl.texCoords.v = bottom;
@@ -608,7 +608,9 @@
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRect:rect_];
+//		[self setTextureRect:rect_];
+		scaleX_ *= -1;
+		dirty_ = YES;
 	}
 }
 -(BOOL) flipX
@@ -620,7 +622,9 @@
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		[self setTextureRect:rect_];
+//		[self setTextureRect:rect_];
+		scaleY_ *= -1;
+		dirty_ = YES;
 	}	
 }
 -(BOOL) flipY

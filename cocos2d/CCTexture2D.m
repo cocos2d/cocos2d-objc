@@ -241,18 +241,21 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		case kTexture2DPixelFormat_RGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(height * width * 4);
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+			info = kCGImageAlphaPremultipliedLast; 
+			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
 		case kTexture2DPixelFormat_RGB565:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(height * width * 4);
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, kCGImageAlphaNoneSkipLast | kCGBitmapByteOrder32Big);
+			info = kCGImageAlphaNoneSkipLast;
+			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
 		case kTexture2DPixelFormat_A8:
 			data = malloc(height * width);
-			context = CGBitmapContextCreate(data, width, height, 8, width, NULL, kCGImageAlphaOnly);
+			info = kCGImageAlphaOnly; 
+			context = CGBitmapContextCreate(data, width, height, 8, width, NULL, info);
 			break;                    
 		default:
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
