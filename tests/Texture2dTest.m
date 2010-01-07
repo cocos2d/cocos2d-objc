@@ -797,7 +797,7 @@ Class restartAction()
 		[self transformSprite:png1];
 		
 		// PNG uncompressed sprite has pre multiplied alpha
-		//   Same rule as compressed sprites. why ???
+		//   Same rule as compressed sprites.
 		CCSprite *uncPNG = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
 		[self addChild:uncPNG z:0];
 		uncPNG.position = ccp(size.width/5*2, size.height/2);
