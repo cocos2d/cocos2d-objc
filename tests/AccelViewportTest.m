@@ -83,24 +83,32 @@ float randfloat() {
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
 }
 
+- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	return [self ccTouchesMoved:touches withEvent:event];
+}
+
 - (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];	
-	CGPoint touchLocation = [touch locationInView: [touch view]];
+	for( UITouch *touch in touches) {
+		
+		NSLog(@"%x", touch);
+		CGPoint touchLocation = [touch locationInView: [touch view]];
 
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	CGPoint location = ccp(touchLocation.x, touchLocation.y);
-	location = ccpSub(location, cloudsPos);
-	location = ccpMult(location, 1.0f/CLOUDS_SCALE);
-	location = ccpAdd(location, ccpMult(cloudsSize, 0.5f));
+		touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+		CGPoint location = ccp(touchLocation.x, touchLocation.y);
+		location = ccpSub(location, cloudsPos);
+		location = ccpMult(location, 1.0f/CLOUDS_SCALE);
+		location = ccpAdd(location, ccpMult(cloudsSize, 0.5f));
 
-	NSString *info = [ NSString stringWithFormat: @"(%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f)", 
-					   touchLocation.x, touchLocation.y, cloudsSize.x, cloudsSize.y,
-					   cloudsPos.x, cloudsPos.y, location.x, location.y ];
-	
-	[label setString: info];
-	
-	[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
+		NSString *info = [ NSString stringWithFormat: @"(%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f) (%.1f,%.1f)", 
+						   touchLocation.x, touchLocation.y, cloudsSize.x, cloudsSize.y,
+						   cloudsPos.x, cloudsPos.y, location.x, location.y ];
+		
+		[label setString: info];
+		
+		[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
+	}
 	
 	return kEventHandled;
 }
@@ -123,11 +131,6 @@ float randfloat() {
 	CGPoint newPos = ccpAdd(cloudsPos, ccpMult(ccpSub(dest, cloudsPos), 0.1f) );
 	[clouds setPosition:newPos];
 	cloudsPos = newPos;
-}
-
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	return [self ccTouchesMoved:touches withEvent:event];
 }
 
 -(NSString *) title
