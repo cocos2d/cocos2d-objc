@@ -52,7 +52,7 @@
 		// This comparison could be in step:, but it might decrease the performance
 		// by 3% in heavy based action games.
 		if( duration == 0 )
-			duration = 0.00000001f;
+			duration = FLT_EPSILON;
 		elapsed = 0;
 		firstTick = YES;
 	}
