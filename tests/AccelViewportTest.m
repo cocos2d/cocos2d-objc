@@ -27,6 +27,7 @@ float randfloat() {
 		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addPVRTCImage:@"clouds.pvrtc" bpp:4 hasAlpha:NO width:1024];
 		clouds = [CCSprite spriteWithTexture:tex];
 		[clouds setScale: CLOUDS_SCALE];
+		clouds.childrenAnchorPoint = ccp(0,0);
 		
 		CGSize cs = clouds.texture.contentSize;
 		cloudsSize = ccp(cs.width, cs.height);
