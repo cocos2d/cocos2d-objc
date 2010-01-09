@@ -307,6 +307,7 @@
 			if( particleCount == 0 && autoRemoveOnFinish_ ) {
 				[self unschedule:@selector(step:)];
 				[[self parent] removeChild:self cleanup:YES];
+				return;
 			}
 		}
 	}
