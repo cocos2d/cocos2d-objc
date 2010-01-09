@@ -2122,6 +2122,8 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
+		[sprite1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
+
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2149,6 +2151,7 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
+		[sprite1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2175,6 +2178,7 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
+		[sprite1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
@@ -2239,6 +2243,7 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
+		[sprite1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2265,6 +2270,7 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
+		[sprite1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2291,6 +2297,7 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
+		[sprite1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2460,16 +2467,19 @@ Class restartAction()
 		
 		aParent = [CCNode node];
 		[self addChild:aParent];
+
 		
 		// parent
 		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
+		[l1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		[aParent addChild:l1];
 		
 		// child left
 		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
 		l2a.position = ccp( -50,0);
+		[l2a setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
 		
@@ -2477,6 +2487,7 @@ Class restartAction()
 		// child right
 		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
 		l2b.position = ccp( 50,0);
+		[l2b setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
 		
@@ -2549,11 +2560,13 @@ Class restartAction()
 		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
+		[l1 setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		[aParent addChild:l1];
 		
 		// child left
 		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
 		l2a.position = ccp( -50,0);
+		[l2a setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
 
@@ -2561,6 +2574,7 @@ Class restartAction()
 		// child right
 		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
 		l2b.position = ccp( 50,0);
+		[l2b setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
 		
