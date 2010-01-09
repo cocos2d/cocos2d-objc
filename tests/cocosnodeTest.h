@@ -45,3 +45,7 @@
 @interface SchedulerTest2 : TestDemo
 {}
 @end
+
+@interface NodeToWorld : TestDemo
+{}
+@end

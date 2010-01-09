@@ -1317,6 +1317,9 @@
 		50E3AF35102A248800A6634B /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
 		50E3AF36102A248800A6634B /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
 		50E3AF37102A248800A6634B /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		50E51D7210F8B366003DFBA3 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
+		50E51D7310F8B385003DFBA3 /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
+		50E51D7410F8B385003DFBA3 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
 		50EC53F21014DEEB00489A93 /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EC53F11014DEEB00489A93 /* ccHashSet.m */; };
 		50EC54CD101519E400489A93 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		50F29F5610204FD60046CA73 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F29F5510204FD60046CA73 /* base64.c */; };
@@ -6240,6 +6243,9 @@
 				506143FA0E589A2E003CCDB7 /* fire.png in Resources */,
 				502AACF90F79715E001E3F87 /* fire.pvr in Resources */,
 				5054643F1062886600AB7C52 /* fps_images.png in Resources */,
+				50E51D7210F8B366003DFBA3 /* background3.png in Resources */,
+				50E51D7310F8B385003DFBA3 /* btn-play-normal.png in Resources */,
+				50E51D7410F8B385003DFBA3 /* btn-play-selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

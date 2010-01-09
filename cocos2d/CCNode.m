@@ -681,11 +681,15 @@
 		
 		transform_ = CGAffineTransformIdentity;
 		
-		if ( !relativeAnchorPoint_ ) {
-			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
-		}
+		CGPoint childrenAP = CGPointZero;
 		
-		transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
+		if( parent )
+			childrenAP = [parent childrenAnchorPointInPixels];
+		
+		if ( !relativeAnchorPoint_ )
+			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
+		
+		transform_ = CGAffineTransformTranslate(transform_, position_.x + childrenAP.x, position_.y + childrenAP.y);
 		transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
