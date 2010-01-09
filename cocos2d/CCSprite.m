@@ -128,7 +128,6 @@
 
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
-		childrenAnchorPoint_ = ccp(0.5f, 0.5f);
 
 		// zwoptex default values
 		offsetPosition_ = CGPointZero;
