@@ -241,8 +241,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		case kTexture2DPixelFormat_RGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(height * width * 4);
-			info = kCGImageAlphaPremultipliedLast; 
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);
+			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
+			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);				
 			CGColorSpaceRelease(colorSpace);
 			break;
 		case kTexture2DPixelFormat_RGB565:
