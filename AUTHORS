@@ -55,6 +55,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemFont
 	* Corey.B.Painter:
 		Speed action calls other#stop patch
+	* Daniele Benegiamo:
+		Prevent possible memory corruption with particles when autoRemove is On. patch.
 	* David Whatley ( http://criticalthoughtgames.com/ )
 		Scheduler supports the repeat parameter. patch.
 	* Dominique Bongard:

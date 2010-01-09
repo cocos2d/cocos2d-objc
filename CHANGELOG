@@ -6,6 +6,7 @@ version 0.9.0-beta2 - XX-Jan-2010
  . CocosLive: added sanity checks on demo (issue #681)
  . CocosNode: added support for childrenAnchorPoint (issue #667)
  . Director: removed compile warning on DisplayLink director (issue #682)
+ . Particles: prevent possible memory corruption when autoRemove is ON (issue #703)
  . Scheduler: Supports repeat-number-of-times in scheduled selectors (issue #630)
  . Sprite: anchor + offset + scale works  (issue #671)
  . Sprite: can create subclasses with an SpriteFrameName (issue #XXX)
