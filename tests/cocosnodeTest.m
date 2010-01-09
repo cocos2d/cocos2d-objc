@@ -27,6 +27,7 @@ static NSString *transitions[] = {
 			@"StressTest2",
 			@"SchedulerTest1",
 			@"SchedulerTest2",
+			@"NodeToWorld",
 };
 
 Class nextAction()
@@ -58,6 +59,9 @@ Class restartAction()
 	return c;
 }
 
+
+#pragma mark -
+#pragma mark TestDemo
 
 @implementation TestDemo
 -(id) init
@@ -118,6 +122,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Test2
 
 @implementation Test2
 -(void) onEnter
@@ -163,6 +169,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Test4
+
 @implementation Test4
 -(id) init
 {
@@ -203,6 +212,9 @@ Class restartAction()
 	return @"tags";
 }
 @end
+
+#pragma mark -
+#pragma mark Test5
 
 @implementation Test5
 -(id) init
@@ -260,6 +272,9 @@ Class restartAction()
 	return @"remove and cleanup";
 }
 @end
+
+#pragma mark -
+#pragma mark Test6
 
 @implementation Test6
 -(id) init
@@ -326,6 +341,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark StressTest1
 
 @implementation StressTest1
 -(id) init
@@ -381,6 +398,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark StressTest2
+
 @implementation StressTest2
 -(id) init
 {
@@ -432,6 +452,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark SchedulerTest1
+
 @implementation SchedulerTest1
 -(id) init
 {
@@ -465,6 +488,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark SchedulerTest2
 
 @implementation SchedulerTest2
 -(id) init
@@ -494,7 +519,6 @@ Class restartAction()
 	[node runAction:action1];
 }
 
-
 -(void) doRotate2:(ccTime) dt
 {
 	id node = [self getChildByTag:3];
@@ -502,13 +526,56 @@ Class restartAction()
 	[node runAction:action1];
 }
 
-
-
 -(NSString *) title
 {
 	return @"schedule repeat limit";
 }
 @end
+
+#pragma mark -
+#pragma mark NodeToWorld
+
+@implementation NodeToWorld
+-(id) init
+{
+	if( ( self=[super init]) ) {
+
+		//
+		// This code tests that nodeToParent works OK:
+		//  - It tests different anchor Points
+		//  - It tests different children anchor points
+
+		CCSprite *back = [CCSprite spriteWithFile:@"background3.png"];
+		[self addChild:back z:-10];
+		[back setAnchorPoint:ccp(0,0)];
+		[back setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
+		
+		CCMenuItem *item = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png"];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[menu alignItemsVertically];
+		[menu setPosition:ccp(0,0)];
+		[back addChild:menu];
+		
+		id rot = [CCRotateBy actionWithDuration:5 angle:360];
+		id fe = [CCRepeatForever actionWithAction:rot];
+		[item runAction: fe];
+		
+		id move = [CCMoveBy actionWithDuration:3 position:ccp(200,0)];
+		id move_back = [move reverse];
+		id seq = [CCSequence actions:move, move_back, nil];
+		id fe2 = [CCRepeatForever actionWithAction:seq];
+		[back runAction:fe2];
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"nodeToParent transform";
+}
+@end
+
 
 
 #pragma mark AppController
