@@ -14,8 +14,6 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"ActionRepeatForever",
-
 					@"ActionManual",
 					@"ActionMove",
 					@"ActionRotate",
@@ -33,6 +31,7 @@ static NSString *transitions[] = {
 					@"ActionDelayTime",
 					@"ActionRepeat",
 					@"ActionRepeatForever",
+					@"ActionRotateToRepeat",
 					@"ActionCallFunc",
 					@"ActionReverseSequence",
 					@"ActionReverseSequence2",
@@ -535,6 +534,27 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"CallFuncN + RepeatForever";
+}
+@end
+
+@implementation ActionRotateToRepeat
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[tamara setVisible:NO];
+	
+	id act1 = [CCRotateTo actionWithDuration:1 angle:90];
+	id act2 = [CCRotateTo actionWithDuration:1 angle:0];
+	id rfe = [CCRepeatForever actionWithAction:[CCSequence actions:act1, act2,
+												 nil]];
+	
+	[grossini runAction:rfe];
+}
+
+-(NSString *) title
+{
+	return @"RepeatForever + RotateTo";
 }
 @end
 

@@ -106,8 +106,9 @@ Example:
 */ 
 @interface CCRotateTo : CCIntervalAction <NSCopying>
 {
-	float angle;
+	float dstAngle;
 	float startAngle;
+	float diffAngle;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)angle;

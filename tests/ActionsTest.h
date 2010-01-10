@@ -106,3 +106,8 @@
 {}
 @end
 
+@interface ActionRotateToRepeat : ActionDemo
+{}
+@end
+
+

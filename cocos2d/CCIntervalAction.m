@@ -416,14 +416,14 @@
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
 	if( (self=[super initWithDuration: t]) ) {	
-		angle = a;
+		dstAngle = a;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle: angle];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle: dstAngle];
 	return copy;
 }
 
@@ -437,15 +437,15 @@
 	else
 		startAngle = fmodf(startAngle, -360.0f);
 	
-	angle -= startAngle;
-	if (angle > 180)
-		angle = -360 + angle;
-	if (angle < -180)
-		angle = 360 + angle;
+	diffAngle = dstAngle - startAngle;
+	if (diffAngle > 180)
+		diffAngle -= 360;
+	if (diffAngle < -180)
+		diffAngle += 360;
 }
 -(void) update: (ccTime) t
 {
-	[target setRotation: startAngle + angle * t];
+	[target setRotation: startAngle + diffAngle * t];
 }
 @end
 
