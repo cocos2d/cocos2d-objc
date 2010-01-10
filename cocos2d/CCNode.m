@@ -168,9 +168,10 @@
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
 		position_ = CGPointZero;
-		anchorPointInPixels_ = CGPointZero;
-		anchorPoint_ = CGPointZero;
+		anchorPointInPixels_ = anchorPoint_ = CGPointZero;
+		childrenBornPointInPixels_ = childrenBornPoint_ = CGPointZero;
 		contentSize_ = CGSizeZero;
+		
 
 		// "whole screen" objects. like Scenes and Layers, should set relativeAnchorPoint to NO
 		relativeAnchorPoint_ = YES; 
