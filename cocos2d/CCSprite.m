@@ -330,14 +330,16 @@
 	// build Affine transform manually
 	if( ! parent || parent == spriteSheet_ ) {
 		
-		CGPoint pcap = [parent childrenBornPointInPixels];
+		CGPoint pcbp = CGPointZero;
+		if( parent )
+			pcbp = [parent childrenBornPointInPixels];
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
 		float s = sinf(radians);
 		
 		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
 									   -s * scaleY_, c * scaleY_,
-									   position_.x + pcap.x, position_.y + pcap.y);
+									   position_.x + pcbp.x, position_.y + pcbp.y);
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
 	} 
 	
@@ -355,12 +357,12 @@
 			float	sx = [p scaleX];
 			float	sy = [p scaleY];
 			CGPoint	ap = [p anchorPointInPixels];
-			CGPoint pcap = [[p parent] childrenBornPointInPixels];
+			CGPoint pcbp = [[p parent] childrenBornPointInPixels];
 			
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 
 			// 1st: translate parent children anchor point
-			newMatrix = CGAffineTransformTranslate(newMatrix, pcap.x, pcap.y);
+			newMatrix = CGAffineTransformTranslate(newMatrix, pcbp.x, pcbp.y);
 			
 			// 2nd: Translate, Rotate, Scale
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
