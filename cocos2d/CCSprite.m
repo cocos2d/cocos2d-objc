@@ -330,7 +330,7 @@
 	// build Affine transform manually
 	if( ! parent || parent == spriteSheet_ ) {
 		
-		CGPoint pcap = [parent childrenAnchorPointInPixels];
+		CGPoint pcap = [parent childrenBornPointInPixels];
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
 		float s = sinf(radians);
@@ -355,7 +355,7 @@
 			float	sx = [p scaleX];
 			float	sy = [p scaleY];
 			CGPoint	ap = [p anchorPointInPixels];
-			CGPoint pcap = [[p parent] childrenAnchorPointInPixels];
+			CGPoint pcap = [[p parent] childrenBornPointInPixels];
 			
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 

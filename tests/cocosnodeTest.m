@@ -548,7 +548,7 @@ Class restartAction()
 		CCSprite *back = [CCSprite spriteWithFile:@"background3.png"];
 		[self addChild:back z:-10];
 		[back setAnchorPoint:ccp(0,0)];
-		[back setChildrenAnchorPoint:ccp(0.5f, 0.5f)];
+		[back setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		
 		CCMenuItem *item = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png"];
 		CCMenu *menu = [CCMenu menuWithItems:item, nil];

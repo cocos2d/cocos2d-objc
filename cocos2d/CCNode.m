@@ -59,7 +59,7 @@
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
 @synthesize anchorPointInPixels=anchorPointInPixels_, relativeAnchorPoint=relativeAnchorPoint_;
-@synthesize childrenAnchorPointInPixels=childrenAnchorPointInPixels_;
+@synthesize childrenBornPointInPixels=childrenBornPointInPixels_;
 @synthesize userData;
 
 // getters synthesized, setters explicit
@@ -106,18 +106,18 @@
 	return anchorPoint_;
 }
 
--(void) setChildrenAnchorPoint:(CGPoint)point
+-(void) setChildrenBornPoint:(CGPoint)point
 {
-	if( ! CGPointEqualToPoint(point, childrenAnchorPoint_) ) {
-		childrenAnchorPoint_ = point;
-		childrenAnchorPointInPixels_ = ccp( contentSize_.width * childrenAnchorPoint_.x, contentSize_.height * childrenAnchorPoint_.y );
+	if( ! CGPointEqualToPoint(point, childrenBornPoint_) ) {
+		childrenBornPoint_ = point;
+		childrenBornPointInPixels_ = ccp( contentSize_.width * childrenBornPoint_.x, contentSize_.height * childrenBornPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
 
--(CGPoint) childrenAnchorPoint
+-(CGPoint) childrenBornPoint
 {
-	return childrenAnchorPoint_;
+	return childrenBornPoint_;
 }
 
 -(void) setContentSize:(CGSize)size
@@ -125,7 +125,7 @@
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
 		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
-		childrenAnchorPointInPixels_ = ccp( contentSize_.width * childrenAnchorPoint_.x, contentSize_.height * childrenAnchorPoint_.y );
+		childrenBornPointInPixels_ = ccp( contentSize_.width * childrenBornPoint_.x, contentSize_.height * childrenBornPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
@@ -485,7 +485,7 @@
 		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 
 	if( parent ) {
-		CGPoint parentChildrenPoint = [parent childrenAnchorPointInPixels];
+		CGPoint parentChildrenPoint = [parent childrenBornPointInPixels];
 		if( parentChildrenPoint.x != 0 || parentChildrenPoint.y != 0 )
 			glTranslatef( RENDER_IN_SUBPIXEL(parentChildrenPoint.x), RENDER_IN_SUBPIXEL(parentChildrenPoint.y), 0);
 	}
@@ -684,7 +684,7 @@
 		CGPoint childrenAP = CGPointZero;
 		
 		if( parent )
-			childrenAP = [parent childrenAnchorPointInPixels];
+			childrenAP = [parent childrenBornPointInPixels];
 		
 		if ( !relativeAnchorPoint_ )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);

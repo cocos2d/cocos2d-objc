@@ -78,9 +78,9 @@ enum {
 	CGPoint anchorPoint_;
 
 	// anchor point in pixels
-	CGPoint childrenAnchorPointInPixels_;	
+	CGPoint childrenBornPointInPixels_;	
 	// anchor point normalized
-	CGPoint childrenAnchorPoint_;
+	CGPoint childrenBornPoint_;
 	
 	// untransformed size of the node
 	CGSize	contentSize_;
@@ -153,7 +153,7 @@ enum {
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
- You can use values higher than (1,1) and lower than (0,0) too.
+ But you can use values higher than (1,1) and lower than (0,0) too.
  The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
  @since v0.8
  */
@@ -162,18 +162,18 @@ enum {
  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
 @property(nonatomic,readonly) CGPoint anchorPointInPixels;
-/** childrenAnchorPoint is the point from where the children is "born", the children will be added relative to this point.
- The childrenAnchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
- You can use values higher than (1,1) and lower than (0,0) too.
- The default childrenAnchorPoint is (0,0), so by default the node's children will be added relative to the bottom-left corner.
+/** childrenBornPoint is the point from where the children is "born". The children will be added relative to this point.
+ The childrenBornPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
+ But you can use values higher than (1,1) and lower than (0,0) too.
+ The default childrenBornPoint is (0,0), so by default the node's children will be added relative to the bottom-left corner.
  @since v0.9
  */
-@property(nonatomic,readwrite) CGPoint childrenAnchorPoint;
-/** The childrenAnchorPoint in pixels.
- You can only read it. If you want to modify it, use childrenAnchorPoint.
+@property(nonatomic,readwrite) CGPoint childrenBornPoint;
+/** The childrenBornPoint in pixels.
+ You can only read it. If you want to modify it, use childrenBornPoint.
  @since v0.9
  */
-@property(nonatomic,readonly) CGPoint childrenAnchorPointInPixels;
+@property(nonatomic,readonly) CGPoint childrenBornPointInPixels;
 
 /** The untransformed size of the node.
  The contentSize remains the same no matter the node is scaled or rotated.
