@@ -1320,6 +1320,10 @@
 		50E51D7210F8B366003DFBA3 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		50E51D7310F8B385003DFBA3 /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
 		50E51D7410F8B385003DFBA3 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
+		50E51F3310FA5A08003DFBA3 /* arial16.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 50E51F3110FA5A08003DFBA3 /* arial16.fnt */; };
+		50E51F3410FA5A08003DFBA3 /* arial16.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E51F3210FA5A08003DFBA3 /* arial16.png */; };
+		50E51F9610FA6623003DFBA3 /* bitmapFontTest4.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 5054639D1062867800AB7C52 /* bitmapFontTest4.fnt */; };
+		50E51F9710FA6623003DFBA3 /* bitmapFontTest4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5054639E1062867800AB7C52 /* bitmapFontTest4.png */; };
 		50EC53F21014DEEB00489A93 /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EC53F11014DEEB00489A93 /* ccHashSet.m */; };
 		50EC54CD101519E400489A93 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		50F29F5610204FD60046CA73 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F29F5510204FD60046CA73 /* base64.c */; };
@@ -2510,6 +2514,8 @@
 		50E3876C10446C6E00150883 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50E3876E10446C6E00150883 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50E3877010446C6E00150883 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		50E51F3110FA5A08003DFBA3 /* arial16.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arial16.fnt; sourceTree = "<group>"; };
+		50E51F3210FA5A08003DFBA3 /* arial16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arial16.png; sourceTree = "<group>"; };
 		50E675060F65628C003DAA90 /* spritesheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet1.png; sourceTree = "<group>"; };
 		50E676960F6587FD003DAA90 /* spritesheet1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = spritesheet1.pvr; sourceTree = "<group>"; };
 		50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossinis_sister1.pvr; sourceTree = "<group>"; };
@@ -3827,6 +3833,8 @@
 		505463B81062868100AB7C52 /* BitmapFontAtlas fonts */ = {
 			isa = PBXGroup;
 			children = (
+				50E51F3110FA5A08003DFBA3 /* arial16.fnt */,
+				50E51F3210FA5A08003DFBA3 /* arial16.png */,
 				505463971062867800AB7C52 /* bitmapFontTest.fnt */,
 				505463981062867800AB7C52 /* bitmapFontTest.png */,
 				505463991062867800AB7C52 /* bitmapFontTest2.bmp */,
@@ -5862,6 +5870,8 @@
 				50C723DD0EC062680046C5DB /* clouds.pvrtc in Resources */,
 				502AACF40F79715E001E3F87 /* fire.pvr in Resources */,
 				505464331062886600AB7C52 /* fps_images.png in Resources */,
+				50E51F3310FA5A08003DFBA3 /* arial16.fnt in Resources */,
+				50E51F3410FA5A08003DFBA3 /* arial16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6357,6 +6367,8 @@
 				5078B5210E3E43540004233A /* fire.png in Resources */,
 				502AACFD0F79715E001E3F87 /* fire.pvr in Resources */,
 				505464451062886600AB7C52 /* fps_images.png in Resources */,
+				50E51F9610FA6623003DFBA3 /* bitmapFontTest4.fnt in Resources */,
+				50E51F9710FA6623003DFBA3 /* bitmapFontTest4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
