@@ -14,6 +14,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+@"ActionRepeatForever",
+
 					@"ActionManual",
 					@"ActionMove",
 					@"ActionRotate",
@@ -524,13 +526,15 @@ Class restartAction()
 
 -(void) repeatForever:(id)sender
 {
-	CCRepeatForever *repeat = [CCRepeatForever actionWithAction: [CCRotateBy actionWithDuration:2 angle:360]];
+	CCRepeatForever *repeat = [CCRepeatForever actionWithAction: [CCRotateBy actionWithDuration:1.0f angle:360]];
+//	id repeat = [CCRepeat actionWithAction: [CCRotateBy actionWithDuration:1.0f angle:360] times:10];
+
 	[sender runAction:repeat];
 }
 
 -(NSString *) title
 {
-	return @"RepeatForever + CallFuncN";
+	return @"CallFuncN + RepeatForever";
 }
 @end
 
