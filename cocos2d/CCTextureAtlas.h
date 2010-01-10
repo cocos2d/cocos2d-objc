@@ -26,7 +26,7 @@
    * The TextureAtlas capacity can be increased or decreased in runtime
    * OpenGL component: V3F, C4B, T2F.
  The quads are rendered using an OpenGL ES VBO.
- To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file
+ To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
  */
 @interface CCTextureAtlas : NSObject {
 	NSUInteger			totalQuads_;
@@ -55,6 +55,8 @@
 
 /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
  * The TextureAtlas capacity can be increased in runtime.
+ *
+ * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
  */
 -(id) initWithFile: (NSString*) file capacity:(NSUInteger)capacity;
 
@@ -67,6 +69,8 @@
 /** initializes a TextureAtlas with a previously initialized Texture2D object, and
  * with an initial capacity for Quads. 
  * The TextureAtlas capacity can be increased in runtime.
+ *
+ * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
  */
 -(id) initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
 

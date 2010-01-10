@@ -53,6 +53,14 @@ enum {
  - z-order
  - openGL z position
  
+ Default values:
+  - rotation: 0
+  - position: (x=0,y=0)
+  - scale: (x=1,y=1)
+  - contentSize: (x=0,y=0)
+  - anchorPoint: (x=0,y=0)
+  - childrenBornPoint: (x=0,y=0)
+ 
  Limitations:
  - A CCNode is a "void" object. It doesn't have a texture
  */ 
