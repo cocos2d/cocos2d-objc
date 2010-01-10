@@ -260,6 +260,10 @@
 		50E2A77B10A4B27A00D894CE /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A6FE10A4B27A00D894CE /* TransformUtils.m */; };
 		50E2A77C10A4B27A00D894CE /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A6FF10A4B27A00D894CE /* ZipUtils.h */; };
 		50E2A77D10A4B27A00D894CE /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E2A70010A4B27A00D894CE /* ZipUtils.m */; };
+		50E5201510FA7548003DFBA3 /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E5201110FA7548003DFBA3 /* CCTMXLayer.h */; };
+		50E5201610FA7548003DFBA3 /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E5201210FA7548003DFBA3 /* CCTMXLayer.m */; };
+		50E5201710FA7548003DFBA3 /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E5201310FA7548003DFBA3 /* CCTMXObjectGroup.h */; };
+		50E5201810FA7548003DFBA3 /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E5201410FA7548003DFBA3 /* CCTMXObjectGroup.m */; };
 		50F4118E1068D443002A0D5E /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F411841068D443002A0D5E /* FontLabel.h */; };
 		50F4118F1068D443002A0D5E /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F411851068D443002A0D5E /* FontLabel.m */; };
 		50F411901068D443002A0D5E /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F411861068D443002A0D5E /* FontLabelStringDrawing.h */; };
@@ -550,6 +554,10 @@
 		50E2A6FE10A4B27A00D894CE /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		50E2A6FF10A4B27A00D894CE /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		50E2A70010A4B27A00D894CE /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
+		50E5201110FA7548003DFBA3 /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		50E5201210FA7548003DFBA3 /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
+		50E5201310FA7548003DFBA3 /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		50E5201410FA7548003DFBA3 /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
 		50F411741068D3F0002A0D5E /* libFontLabel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFontLabel.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F411841068D443002A0D5E /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
 		50F411851068D443002A0D5E /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
@@ -815,6 +823,10 @@
 		50E2A68110A4B27A00D894CE /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				50E5201110FA7548003DFBA3 /* CCTMXLayer.h */,
+				50E5201210FA7548003DFBA3 /* CCTMXLayer.m */,
+				50E5201310FA7548003DFBA3 /* CCTMXObjectGroup.h */,
+				50E5201410FA7548003DFBA3 /* CCTMXObjectGroup.m */,
 				50CA8D8810B751C50072E0D3 /* CCCompatibility.h */,
 				50CA8D8910B751C50072E0D3 /* CCCompatibility.m */,
 				50CA8D8A10B751C50072E0D3 /* CCPVRTexture.h */,
@@ -1050,6 +1062,8 @@
 				50CA8D9C10B751C50072E0D3 /* CCTexture2D.h in Headers */,
 				50CA8D9E10B751C50072E0D3 /* CCTextureCache.h in Headers */,
 				506C4BEE10D6A3BB0086C6FC /* CCFileUtils.h in Headers */,
+				50E5201510FA7548003DFBA3 /* CCTMXLayer.h in Headers */,
+				50E5201710FA7548003DFBA3 /* CCTMXObjectGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1370,6 +1384,8 @@
 				50CA8D9D10B751C50072E0D3 /* CCTexture2D.m in Sources */,
 				50CA8D9F10B751C50072E0D3 /* CCTextureCache.m in Sources */,
 				506C4BEF10D6A3BB0086C6FC /* CCFileUtils.m in Sources */,
+				50E5201610FA7548003DFBA3 /* CCTMXLayer.m in Sources */,
+				50E5201810FA7548003DFBA3 /* CCTMXObjectGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
