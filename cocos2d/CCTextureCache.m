@@ -42,7 +42,6 @@ static EAGLContext *auxEAGLcontext = nil;
 	[data_ release];
 	[super dealloc];
 }
-
 @end
 
 
@@ -199,7 +198,11 @@ static CCTextureCache *sharedTextureCache;
 			[image release];
 			
 
-			[textures setObject: tex forKey:path];
+			if( tex )
+				[textures setObject: tex forKey:path];
+			else
+				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+
 			
 			[tex release];
 		}
@@ -226,7 +229,11 @@ static CCTextureCache *sharedTextureCache;
 	
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
 	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
-	[textures setObject: tex forKey:path];
+	if( tex )
+		[textures setObject: tex forKey:path];
+	else
+		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
+
 	[nsdata release];
 
 	return [tex autorelease];
@@ -264,7 +271,10 @@ static CCTextureCache *sharedTextureCache;
 	tex = [[CCTexture2D alloc] initWithImage: image];
 	[image release];
 	
-	[textures setObject: tex forKey:key];
+	if(tex)
+		[textures setObject: tex forKey:key];
+	else
+		CCLOG(@"cocos2d: Couldn't add CGImage in CCTextureCache");
 	
 	return [tex autorelease];
 }

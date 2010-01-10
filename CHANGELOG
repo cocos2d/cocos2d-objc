@@ -19,6 +19,7 @@ version 0.9.0-beta2 - XX-Jan-2010
  . SpriteSheet: can be overriden (issue #397)
  . Templates: uses rfc1034identifier (issue #685)
  . Texture2D: simulator treats pre-multiplied alpha images correctly (issue #697)
+ . TextureCache: doesn't crash when file not found. log error insted (issue #695)
  . TMXTiledMap: added support for object and objectgroup (issue #636)
  . TMXTiledMap: TMXLayer and TMXObjectGroup on it's own files (part of issue #636)
  . TMXTiledMap: doesn't generate descendants when not necessary (works as fast as in v0.8.2)
