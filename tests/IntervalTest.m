@@ -22,9 +22,9 @@
 	[self addChild:sun];
 
 	// timers
-	label1 = [CCLabel labelWithString:@"0" fontName:@"Courier" fontSize:32];
-	label2 = [CCLabel labelWithString:@"0" fontName:@"Courier" fontSize:32];
-	label3 = [CCLabel labelWithString:@"0" fontName:@"Courier" fontSize:32];
+	label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+	label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+	label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 	
 	[self schedule: @selector(step1:) interval: 0.5f];
 	[self schedule: @selector(step2:) interval:1.0f];

@@ -55,7 +55,7 @@ float randfloat() {
 	//	NSString *info = [NSString stringWithFormat:@"(%.1f,%.1f) (%.1f,%.1f)", tl.x, tl.y, br.x, br.y];
 		NSString *info = @"Grossini's iPhone";
 		
-		label = [CCLabel labelWithString:info fontName:@"Arial" fontSize:16];
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:info fntFile:@"arial16.fnt"];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 	}
@@ -92,7 +92,6 @@ float randfloat() {
 {
 	for( UITouch *touch in touches) {
 		
-		NSLog(@"%x", touch);
 		CGPoint touchLocation = [touch locationInView: [touch view]];
 
 		touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
