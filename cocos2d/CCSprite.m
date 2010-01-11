@@ -727,8 +727,10 @@
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame 
 {
 	CGRect r = [frame rect];
+	CGPoint p = [frame offset];
 	return ( CGRectEqualToRect(r, rect_) &&
-			frame.texture.name == self.texture.name);
+			frame.texture.name == self.texture.name &&
+			CGPointEqualToPoint(p, offsetPosition_));
 }
 
 -(CCSpriteFrame*) displayedFrame

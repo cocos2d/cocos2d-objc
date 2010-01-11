@@ -95,16 +95,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
-	* magicyu (crmagicxxx):
-		CocosLive client supports ranking request patch
-	* Mark Cooke:
-		Added TintTo action
-	* Matthias Hoechsmann:
-		author of tools/mkatlas.pl script
-	* mike AT finklyinteractive:
-		fixed leak in ActionManager
-	* morten795 (http://aptocore.com):
-		Device and Simulator behaves identically with premultiplied images. patch.
 	* hamm.hans:
 		Author of CrossFadeTransition
 	* Hans Larsen:
@@ -154,6 +144,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of the original Bezier action
 	* lukeman:
 		patches for MenuItem
+			* magicyu (crmagicxxx):
+		CocosLive client supports ranking request patch
 	* Maarten Billemont (lhunath) (http://www.lhunath.com/myst/):
 		author of ParticleRain
 		added suport for particles' source
@@ -186,13 +178,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		ColorLayer supports blend protocol patch
 		performance improvement on particles
 		TextureAtlas uses VBO instead of vertex array list patch
+	* Mark Cooke:
+		Added TintTo action
 	* mark at abitofthought:
 		author of the single threaded Fast Director
-	* Michal Szymerski:
-		Added support for AtlasSprite as MenuItems
-	* Mitch:
-		patches for Menu
-		 author of MenuItemToggle
 	* Math Sephton:
 		patches for Demos
 		patches for License
@@ -200,6 +189,19 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		fix to set depthbuffer size on Director
 		TextureAtlas supports Texture2D objects
 		author of the original AtlasSprite and AtlasSpriteManager
+	* Matthias Hoechsmann:
+		author of tools/mkatlas.pl script
+	* Michal Szymerski:
+		Added support for AtlasSprite as MenuItems
+	* mike AT finklyinteractive:
+		fixed leak in ActionManager
+	* Mitch:
+		patches for Menu
+		 author of MenuItemToggle
+	* morten795 (http://aptocore.com):
+		Device and Simulator behaves identically with premultiplied images. patch.
+	* nash8114:
+		Sprite#isFrameDisplayed works ok with offsets. patch.
 	* Neophit:
 		Added support for object and objectgroup in TMXTiledMaps
 	* Nerezus:

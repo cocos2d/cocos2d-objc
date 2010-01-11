@@ -13,6 +13,7 @@ version 0.9.0-beta2 - XX-Jan-2010
  . Sprite: can create subclasses with an SpriteFrameName (issue #XXX)
  . Sprite: flip works as scale * -1 (issue #690)
  . Sprite: easier to subclass. [self init] is called (issue #485)
+ . Sprite: isFrameDisplayed works OK with offsets (issue #707)
  . SpriteFrame: removed support for flipX and flipY  (rollback of a part issue #620)
  . SpriteFrameCache: If originalSize is not present, display warning (issue #670)
  . SpriteSheet: adding grand-children doesn't crash (issue #676)
