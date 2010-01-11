@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2009 Ricardo Quesada
+ * Copyright (C) 2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -94,26 +94,18 @@
 	return [[[self alloc] initWithCGImage:image] autorelease];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture
+-(id) init
 {
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	return [self initWithTexture:texture rect:rect];
-}
-
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
-{
-	if( (self = [super init]) )
-	{
+	if( (self=[super init]) ) {
 		dirty_ = NO;
-
+		
 		// by default use "Self Render".
 		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
 		[self useSelfRender];
 		
 		// update texture
-		[self setTexture:texture];
-				
+		[self setTexture:nil];
+		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 		[self updateBlendFunc];
@@ -122,19 +114,19 @@
 		bzero(&quad_, sizeof(quad_));
 		
 		flipY_ = flipX_ = NO;
-
+		
 		// lazy alloc
 		animations = nil;
-
+		
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
-
+		
 		// zwoptex default values
 		offsetPosition_ = CGPointZero;
-
+		
 		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
 		hasChildren_ = NO;
-
+		
 		// Atlas: Color
 		opacity_ = 255;
 		color_ = ccWHITE;
@@ -149,6 +141,25 @@
 		// updated in "useSelfRender"
 		
 		// Atlas: TexCoords
+		[self setTextureRect:CGRectZero];
+	}
+	
+	return self;
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture
+{
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
+	return [self initWithTexture:texture rect:rect];
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	// IMPORTANT: [self init] and not [super init];
+	if( (self = [self init]) )
+	{
+		[self setTexture:texture];
 		[self setTextureRect:rect];
 	}
 	return self;
@@ -164,12 +175,8 @@
 
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect
 {
-	if( (self = [super init]) ) {
-		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
-		
-		[self initWithTexture:texture rect:rect];
-	}
-	return self;
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
+	return [self initWithTexture:texture rect:rect];
 }
 
 - (id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame
@@ -187,18 +194,14 @@
 
 - (id) initWithCGImage: (CGImageRef)image
 {
-	if( (self = [super init]) ) {
-		// XXX: possible bug. See issue #349. New API should be added
-		NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
-		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
-		
-		CGSize size = texture.contentSize;
-		CGRect rect = CGRectMake(0, 0, size.width, size.height );
-		
-		[self initWithTexture:texture rect:rect];
-	}
+	// XXX: possible bug. See issue #349. New API should be added
+	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	return self;
+	CGSize size = texture.contentSize;
+	CGRect rect = CGRectMake(0, 0, size.width, size.height );
+	
+	return [self initWithTexture:texture rect:rect];
 }
 
 - (NSString*) description
@@ -491,7 +494,7 @@
 -(void) reorderChild:(CCSprite*)child z:(int)z
 {
 	if( usesSpriteSheet_ ) {
-		NSAssert(YES,@"reorderChild not implemented while using Spritesheet. Please open a bug, and if possible attach the patch. Thanks");
+		NSAssert(NO,@"reorderChild not implemented while using Spritesheet. Please open a bug, and if possible attach the patch. Thanks");
 	}
 
 	[super reorderChild:child z:z];
