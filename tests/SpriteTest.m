@@ -2122,7 +2122,6 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
-		[sprite1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
@@ -2151,7 +2150,6 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
-		[sprite1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2178,7 +2176,6 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
-		[sprite1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
@@ -2243,7 +2240,6 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(0,0);
-		[sprite1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2270,7 +2266,6 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2,s.height/2)];
 		sprite1.anchorPoint = ccp(0.5f, 0.5f);
-		[sprite1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2297,7 +2292,6 @@ Class restartAction()
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_08.png"];
 		[sprite1 setPosition:ccp(s.width/2+s.width/4,s.height/2)];
 		sprite1.anchorPoint = ccp(1,1);
-		[sprite1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(20,30)];
@@ -2473,48 +2467,49 @@ Class restartAction()
 		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
-		[l1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		[aParent addChild:l1];
+		CGSize l1Size = [l1 contentSize];
 		
 		// child left
 		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
-		l2a.position = ccp( -50,0);
-		[l2a setChildrenBornPoint:ccp(0.5f, 0.5f)];
+		l2a.position = ccp( -50 + l1Size.width/2, 0 + l1Size.height/2);
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
+		CGSize l2aSize = [l2a contentSize];		
 		
 		
 		// child right
 		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
-		l2b.position = ccp( 50,0);
-		[l2b setChildrenBornPoint:ccp(0.5f, 0.5f)];
+		l2b.position = ccp( +50 + l1Size.width/2, 0 + l1Size.height/2);
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
+		CGSize l2bSize = [l2a contentSize];		
+		
 		
 		// child left bottom
 		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a1.scale = 0.45f;
-		l3a1.position = ccp(0,-100);
+		l3a1.position = ccp(0+l2aSize.width/2,-100+l2aSize.height/2);
 		[l2a addChild:l3a1];
 		
 		// child left top
 		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a2.scale = 0.45f;
-		l3a2.position = ccp(0,100);
+		l3a1.position = ccp(0+l2aSize.width/2,+100+l2aSize.height/2);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
 		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b1.scale = 0.45f;
 		l3b1.flipY = YES;
-		l3b1.position = ccp(0,-100);
+		l3b1.position = ccp(0+l2bSize.width/2,-100+l2bSize.height/2);
 		[l2b addChild:l3b1];
 		
 		// child right top
 		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
-		l3b2.position = ccp(0,100);
+		l3b1.position = ccp(0+l2bSize.width/2,+100+l2bSize.height/2);
 		[l2b addChild:l3b2];
 		
 	}	
@@ -2560,48 +2555,49 @@ Class restartAction()
 		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
 		l1.position = ccp( s.width/2, s.height/2);
 		[l1 runAction: [[seq copy] autorelease]];
-		[l1 setChildrenBornPoint:ccp(0.5f, 0.5f)];
 		[aParent addChild:l1];
-		
+		CGSize l1Size = [l1 contentSize];
+
 		// child left
 		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
-		l2a.position = ccp( -50,0);
-		[l2a setChildrenBornPoint:ccp(0.5f, 0.5f)];
+		l2a.position = ccp( -50 + l1Size.width/2, 0 + l1Size.height/2);
 		[l2a runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2a];
+		CGSize l2aSize = [l2a contentSize];		
 
 
 		// child right
 		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
-		l2b.position = ccp( 50,0);
-		[l2b setChildrenBornPoint:ccp(0.5f, 0.5f)];
+		l2b.position = ccp( +50 + l1Size.width/2, 0 + l1Size.height/2);
 		[l2b runAction: [[rot_back_fe copy] autorelease]];
 		[l1 addChild:l2b];
+		CGSize l2bSize = [l2a contentSize];		
+
 		
 		// child left bottom
 		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a1.scale = 0.45f;
-		l3a1.position = ccp(0,-100);
+		l3a1.position = ccp(0+l2aSize.width/2,-100+l2aSize.height/2);
 		[l2a addChild:l3a1];
 		
 		// child left top
 		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a2.scale = 0.45f;
-		l3a2.position = ccp(0,100);
+		l3a1.position = ccp(0+l2aSize.width/2,+100+l2aSize.height/2);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
 		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b1.scale = 0.45f;
 		l3b1.flipY = YES;
-		l3b1.position = ccp(0,-100);
+		l3b1.position = ccp(0+l2bSize.width/2,-100+l2bSize.height/2);
 		[l2b addChild:l3b1];
 
 		// child right top
 		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
-		l3b2.position = ccp(0,100);
+		l3b1.position = ccp(0+l2bSize.width/2,+100+l2bSize.height/2);
 		[l2b addChild:l3b2];
 		
 	}	

@@ -24,7 +24,6 @@
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		self.relativeAnchorPoint = NO;
 		anchorPoint_ = ccp(0.5f, 0.5f);
-		childrenBornPoint_ = CGPointZero;
 		[self setContentSize:s];	
 	}
 	
