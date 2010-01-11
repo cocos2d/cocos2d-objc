@@ -144,8 +144,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of the original Bezier action
 	* lukeman:
 		patches for MenuItem
-			* magicyu (crmagicxxx):
-		CocosLive client supports ranking request patch
 	* Maarten Billemont (lhunath) (http://www.lhunath.com/myst/):
 		author of ParticleRain
 		added suport for particles' source
@@ -168,6 +166,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of FontTest
 		PointParticleSystem doesn't draw if there are no particles patch
 		Actions: cleaner way to start/stop actions patches
+	* magicyu (crmagicxxx):
+		CocosLive client supports ranking request patch
 	* manucorporat (manu.valladolid) (http://manucorporat.blogspot.com/):
 		added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
@@ -197,7 +197,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		fixed leak in ActionManager
 	* Mitch:
 		patches for Menu
-		 author of MenuItemToggle
+		author of MenuItemToggle
 	* morten795 (http://aptocore.com):
 		Device and Simulator behaves identically with premultiplied images. patch.
 	* nash8114:
