@@ -249,7 +249,7 @@ static CCScheduler *sharedScheduler;
 	
 	for( CCTimer *t in scheduledMethods ) {
 		[t fire: dt];
-		if (t.ticksUntilAutoExpire == 0) {
+		if (t->ticksUntilAutoExpire == 0) {
 			// Time to automatically remove this timer
 			if([t.target isKindOfClass:[CCNode class]] == YES) {
 				// A CCNode has it's own housekeeping to cleanup and
