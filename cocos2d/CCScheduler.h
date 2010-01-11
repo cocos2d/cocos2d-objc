@@ -35,6 +35,9 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	ccTime interval;
 	ccTime elapsed;
 	
+	// XXX: optimization. Don't use as a property
+	// XXX: performance is improved in about 10%
+@public
 	int		 ticksUntilAutoExpire; // -1 = infinite
 	
 }
