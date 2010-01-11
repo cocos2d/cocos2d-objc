@@ -1,4 +1,4 @@
-version 0.9.0-beta2 - XX-Jan-2010
+version 0.9.0-beta2 - 11-Jan-2010
  . Actions: added 2 new instant actions: FlipX and FlipY (counter-rollback of part issue #620)
  . Actions: uses FLT_EPSILON constant (issue #701)
  . Actions: prevent jerk in Repeat and RepeatForEver (issue #390)
@@ -18,7 +18,7 @@ version 0.9.0-beta2 - XX-Jan-2010
  . SpriteFrameCache: If originalSize is not present, display warning (issue #670)
  . SpriteSheet: adding grand-children doesn't crash (issue #676)
  . SpriteSheet: child and children works OK with negative scales (issue #677)
- . SpriteSheet: can be overriden (issue #397)
+ . SpriteSheet: It is easier to subclass (issue #397)
  . Templates: uses rfc1034identifier (issue #685)
  . Texture2D: simulator treats pre-multiplied alpha images correctly (issue #697)
  . TextureCache: doesn't crash when file not found. log error insted (issue #695)
