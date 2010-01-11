@@ -59,7 +59,6 @@ enum {
   - scale: (x=1,y=1)
   - contentSize: (x=0,y=0)
   - anchorPoint: (x=0,y=0)
-  - childrenBornPoint: (x=0,y=0)
  
  Limitations:
  - A CCNode is a "void" object. It doesn't have a texture
@@ -84,11 +83,6 @@ enum {
 	CGPoint anchorPointInPixels_;	
 	// anchor point normalized
 	CGPoint anchorPoint_;
-
-	// anchor point in pixels
-	CGPoint childrenBornPointInPixels_;	
-	// anchor point normalized
-	CGPoint childrenBornPoint_;
 	
 	// untransformed size of the node
 	CGSize	contentSize_;
@@ -170,18 +164,6 @@ enum {
  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
 @property(nonatomic,readonly) CGPoint anchorPointInPixels;
-/** childrenBornPoint is the point from where the children is "born". The children will be added relative to this point.
- The childrenBornPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
- But you can use values higher than (1,1) and lower than (0,0) too.
- The default childrenBornPoint is (0,0), so by default the node's children will be added relative to the bottom-left corner.
- @since v0.9
- */
-@property(nonatomic,readwrite) CGPoint childrenBornPoint;
-/** The childrenBornPoint in pixels.
- You can only read it. If you want to modify it, use childrenBornPoint.
- @since v0.9
- */
-@property(nonatomic,readonly) CGPoint childrenBornPointInPixels;
 
 /** The untransformed size of the node.
  The contentSize remains the same no matter the node is scaled or rotated.

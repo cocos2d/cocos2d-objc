@@ -548,12 +548,12 @@ Class restartAction()
 		CCSprite *back = [CCSprite spriteWithFile:@"background3.png"];
 		[self addChild:back z:-10];
 		[back setAnchorPoint:ccp(0,0)];
-		[back setChildrenBornPoint:ccp(0.5f, 0.5f)];
+		CGSize backSize = [back contentSize];
 		
 		CCMenuItem *item = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png"];
 		CCMenu *menu = [CCMenu menuWithItems:item, nil];
 		[menu alignItemsVertically];
-		[menu setPosition:ccp(0,0)];
+		[menu setPosition:ccp(backSize.width/2, backSize.height/2)];
 		[back addChild:menu];
 		
 		id rot = [CCRotateBy actionWithDuration:5 angle:360];

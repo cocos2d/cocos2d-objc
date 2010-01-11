@@ -59,7 +59,6 @@
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
 @synthesize anchorPointInPixels=anchorPointInPixels_, relativeAnchorPoint=relativeAnchorPoint_;
-@synthesize childrenBornPointInPixels=childrenBornPointInPixels_;
 @synthesize userData;
 
 // getters synthesized, setters explicit
@@ -106,26 +105,11 @@
 	return anchorPoint_;
 }
 
--(void) setChildrenBornPoint:(CGPoint)point
-{
-	if( ! CGPointEqualToPoint(point, childrenBornPoint_) ) {
-		childrenBornPoint_ = point;
-		childrenBornPointInPixels_ = ccp( contentSize_.width * childrenBornPoint_.x, contentSize_.height * childrenBornPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
-	}
-}
-
--(CGPoint) childrenBornPoint
-{
-	return childrenBornPoint_;
-}
-
 -(void) setContentSize:(CGSize)size
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
 		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
-		childrenBornPointInPixels_ = ccp( contentSize_.width * childrenBornPoint_.x, contentSize_.height * childrenBornPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
@@ -169,7 +153,6 @@
 		scaleX_ = scaleY_ = 1.0f;
 		position_ = CGPointZero;
 		anchorPointInPixels_ = anchorPoint_ = CGPointZero;
-		childrenBornPointInPixels_ = childrenBornPoint_ = CGPointZero;
 		contentSize_ = CGSizeZero;
 		
 
@@ -485,12 +468,6 @@
 	if ( relativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
 		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 
-	if( parent ) {
-		CGPoint parentChildrenPoint = [parent childrenBornPointInPixels];
-		if( parentChildrenPoint.x != 0 || parentChildrenPoint.y != 0 )
-			glTranslatef( RENDER_IN_SUBPIXEL(parentChildrenPoint.x), RENDER_IN_SUBPIXEL(parentChildrenPoint.y), 0);
-	}
-
 	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(position_.y + anchorPointInPixels_.y), vertexZ_);
 	else if ( position_.x !=0 || position_.y !=0 || vertexZ_ != 0)
@@ -682,15 +659,10 @@
 		
 		transform_ = CGAffineTransformIdentity;
 		
-		CGPoint childrenAP = CGPointZero;
-		
-		if( parent )
-			childrenAP = [parent childrenBornPointInPixels];
-		
 		if ( !relativeAnchorPoint_ )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 		
-		transform_ = CGAffineTransformTranslate(transform_, position_.x + childrenAP.x, position_.y + childrenAP.y);
+		transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
 		transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
