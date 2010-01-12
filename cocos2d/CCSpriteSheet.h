@@ -48,6 +48,9 @@
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
+/** descendants (children, gran children, etc) */
+@property (nonatomic,readonly) NSMutableArray *descendants;
+
 /** creates a CCSpriteSheet with a texture2d */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex;
 /** creates a CCSpriteSheet with a texture2d and capacity */

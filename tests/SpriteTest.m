@@ -12,6 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+@"SpriteSheetReorder",
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -45,6 +46,7 @@ static NSString *transitions[] = {
 			@"SpriteSheetChildrenScale",
 			@"SpriteChildrenChildren",
 			@"SpriteSheetChildrenChildren",
+			@"SpriteSheetReorder",
 };
 
 enum {
@@ -2609,6 +2611,60 @@ Class restartAction()
 	return @"SpriteSheet multiple levels of children";
 }
 @end
+
+
+#pragma mark -
+#pragma mark SpriteSheetReorder
+
+@implementation SpriteSheetReorder
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		NSMutableArray* a = [NSMutableArray arrayWithCapacity:10];
+		CCSpriteSheet* asmtest = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+
+		for(int i=0; i<10; i++)
+		{
+			CCSprite* s1 = [asmtest createSpriteWithRect:CGRectMake(0, 0, 50, 50)];
+			[a addObject:s1];
+			[asmtest addChild:s1 z:10];
+		}
+		
+		for(int i=0; i<10; i++)
+		{
+			if(i!=5)
+				[asmtest reorderChild:[a objectAtIndex:i] z:9];
+		}
+
+		int prev = -1;
+		for(id child in asmtest.children)
+		{
+			int currentIndex = [child atlasIndex];
+			NSAssert( prev == currentIndex-1, @"Child order failed");
+			NSLog(@"children %x - atlasIndex:%d", child, currentIndex);
+			prev = currentIndex;
+		}
+		
+		prev = -1;
+		for(id child in asmtest.descendants)
+		{
+			int currentIndex = [child atlasIndex];
+			NSAssert( prev == currentIndex-1, @"Child order failed");
+			NSLog(@"descendant %x - atlasIndex:%d", child, currentIndex);
+			prev = currentIndex;
+		}		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet multiple levels of children";
+}
+@end
+
 
 #pragma mark -
 #pragma mark AppDelegate
