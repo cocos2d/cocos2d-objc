@@ -172,3 +172,7 @@
 {}
 @end
 
+@interface SpriteSheetReorder : SpriteDemo
+{}
+@end
+

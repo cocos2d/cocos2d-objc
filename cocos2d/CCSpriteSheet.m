@@ -34,6 +34,7 @@ const int defaultCapacity = 29;
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
+@synthesize descendants = descendants_;
 
 /*
  * creation with CCTexture2D
@@ -184,6 +185,12 @@ const int defaultCapacity = 29;
 	if( newAtlasIndex != child.atlasIndex ) {
 		
 		[textureAtlas_ insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
+		
+		// update descendats (issue #708)
+		[child retain];
+		[descendants_ removeObjectAtIndex: child.atlasIndex];
+		[descendants_ insertObject:child atIndex:newAtlasIndex];
+		[child release];
 		
 		// update atlas index
 		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
