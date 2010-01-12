@@ -46,6 +46,10 @@
 {}
 @end
 
+@interface SchedulerTest3 : TestDemo
+{}
+@end
+
 @interface NodeToWorld : TestDemo
 {}
 @end

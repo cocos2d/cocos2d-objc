@@ -12,6 +12,13 @@
  *
  */
 
+/*
+ * This file contains the delegates of the touches
+ * There are 2 possible delegates:
+ *   - CCStandardTouchHandler: propagates all the events at once
+ *   - CCTargetedTouchHandler: propagates 1 event at the time
+ */
+
 #import "CCTouchHandler.h"
 #import "ccMacros.h"
 

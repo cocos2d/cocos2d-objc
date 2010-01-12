@@ -19,6 +19,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+			@"SchedulerTest3",
+
 			@"Test2",
 			@"Test4",
 			@"Test5",
@@ -27,6 +29,7 @@ static NSString *transitions[] = {
 			@"StressTest2",
 			@"SchedulerTest1",
 			@"SchedulerTest2",
+			@"SchedulerTest3",
 			@"NodeToWorld",
 };
 
@@ -531,6 +534,48 @@ Class restartAction()
 	return @"schedule repeat limit";
 }
 @end
+
+#pragma mark -
+#pragma mark SchedulerTest3
+
+@implementation SchedulerTest3
+//
+// This class tests that the scheduled methods are correctly dealloced
+// Otherwise the whole scene will be leaked.
+//
+- (id) init
+{
+	if( (self=[super init])) {
+		[self schedule: @selector(slowStep:) interval:0.5f];
+		[self schedule: @selector(test:) interval:2 repeat:1];
+	}
+	return self;
+}
+
+- (void) test:(ccTime)d
+{
+	// will replace the current scene
+	[self nextCallback:self];
+}
+
+- (void) slowStep:(ccTime)dt
+{
+	NSLog(@"slowStep: %f", dt);
+}
+
+- (void) dealloc
+{
+	NSLog(@"SchedulerTest3: Test passed");
+	[super dealloc];
+}
+		
+-(NSString *) title
+{
+	return @"schedule auto dealloc";
+}
+		
+@end
+
 
 #pragma mark -
 #pragma mark NodeToWorld
