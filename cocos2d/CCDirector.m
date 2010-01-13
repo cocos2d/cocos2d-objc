@@ -691,13 +691,14 @@ static CCDirector *_sharedDirector = nil;
 	BOOL runningIsTransition = [runningScene_ isKindOfClass:transClass];
 	BOOL newIsTransition = [nextScene isKindOfClass:transClass];
 
-	// If it is not a transition, call onExit
-	if( ! newIsTransition )
+	// If it is not a transition, call onExit/cleanup
+	if( ! newIsTransition ) {
 		[runningScene_ onExit];
 
-	// issue #709. the root node (scene) should receive the cleanup message too
-	// otherwise it might be leaked.
-	[runningScene_ cleanup];
+		// issue #709. the root node (scene) should receive the cleanup message too
+		// otherwise it might be leaked.
+		[runningScene_ cleanup];		
+	}
 
 	[runningScene_ release];
 	
