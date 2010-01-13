@@ -95,23 +95,29 @@
 // This routine can be merged with Director
 -(void)applyLandscape
 {
-	ccDeviceOrientation orientation  = [[CCDirector sharedDirector] deviceOrientation];
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	CGSize winSize = [director displaySize];
+	float w = winSize.width / 2;
+	float h = winSize.height / 2;
+
+	ccDeviceOrientation orientation  = [director deviceOrientation];
 
 	switch (orientation) {
 		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(160,240,0);
+			glTranslatef(w,h,0);
 			glRotatef(-90,0,0,1);
-			glTranslatef(-240,-160,0);
+			glTranslatef(-h,-w,0);
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(160,240,0);
+			glTranslatef(w,h,0);
 			glRotatef(90,0,0,1);
-			glTranslatef(-240,-160,0);
+			glTranslatef(-h,-w,0);
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
-			glTranslatef(160,240,0);
+			glTranslatef(w,h,0);
 			glRotatef(180,0,0,1);
-			glTranslatef(-160,-240,0);
+			glTranslatef(-w,-h,0);
 			break;
 		default:
 			break;

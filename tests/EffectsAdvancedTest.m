@@ -336,7 +336,7 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
 	
 	// Use this pixel format to have transparent buffers
 	// BUG: glClearColor() in FBO needs to be converted to RGB565

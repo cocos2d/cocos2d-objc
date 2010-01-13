@@ -53,7 +53,8 @@
 	speedVar = 50;
 	
 	// emitter position
-	self.position = ccp(160, 160);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	
 	// life of particles
 	life = 3.5f;
@@ -124,7 +125,8 @@
 	radialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 60);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, 60);
 	posVar = ccp(40, 20);
 	
 	// life of particles
@@ -203,7 +205,8 @@
 	radialAccelVar = 0;	
 	
 	// emitter position
-	self.position = ccp(160, 240);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	posVar = CGPointZero;
 	
 	// life of particles
@@ -284,7 +287,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 240);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	posVar = CGPointZero;
 	
 	// life of particles
@@ -364,7 +368,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 240);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	posVar = CGPointZero;
 	
 	// life of particles
@@ -444,7 +449,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 240);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	posVar = CGPointZero;
 	
 	// life of particles
@@ -524,7 +530,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 240);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	posVar = CGPointZero;
 	
 	// life of particles
@@ -604,7 +611,8 @@
 	tangentialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 240);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, winSize.height/2);
 	posVar = CGPointZero;
 	
 	// life of particles
@@ -676,7 +684,8 @@
 	radialAccelVar = 0;
 	
 	// emitter position
-	self.position = ccp(160, 0);
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(winSize.width/2, 0);
 	posVar = ccp(20, 0);
 	
 	// life of particles

@@ -354,6 +354,8 @@ Class restartAction()
 		y = size.height;
 		
 		CCNode *node = [CCNode node];
+		Class effectClass = restartAction();
+		[node runAction:[effectClass actionWithDuration:3]];
 		[self addChild: node z:0 tag:kTagBackground];
 		
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
@@ -393,8 +395,6 @@ Class restartAction()
 		item3.position = ccp(size.width/2+100,30);
 		[self addChild: menu z:1];
 		
-		[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
-		
 		[self schedule:@selector(checkAnim:)];
 	}
 	
@@ -403,43 +403,56 @@ Class restartAction()
 
 -(void)checkAnim:(ccTime)t
 {
-//	Scene *s2 = [Director sharedDirector].runningScene;
 	CCNode *s2 = [self getChildByTag:kTagBackground];
 	if ( [s2 numberOfRunningActions] == 0 && s2.grid != nil )
 		s2.grid = nil;
 }
 
+-(void) newOrientation
+{
+	ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
+	switch (orientation) {
+		case CCDeviceOrientationLandscapeLeft:
+			orientation = CCDeviceOrientationPortrait;
+			break;
+		case CCDeviceOrientationPortrait:
+			orientation = CCDeviceOrientationLandscapeRight;
+			break;						
+		case CCDeviceOrientationLandscapeRight:
+			orientation = CCDeviceOrientationPortraitUpsideDown;
+			break;
+		case CCDeviceOrientationPortraitUpsideDown:
+			orientation = CCDeviceOrientationLandscapeLeft;
+			break;
+	}
+	[[CCDirector sharedDirector] setDeviceOrientation:orientation];
+}
+
+-(void) newScene
+{
+	CCScene *s = [CCScene node];
+	id child = [TextLayer node];
+	[s addChild:child];
+	[[CCDirector sharedDirector] replaceScene:s];
+}
 -(void) nextCallback:(id) sender
 {
-//	Scene *s = [Director sharedDirector].runningScene;
-	id s2 = [self getChildByTag:kTagBackground];
-	[s2 stopAllActions];
-	Class effect = nextAction();
-	CCLabel *label = (CCLabel *)[self getChildByTag:kTagLabel];
-	[label setString:effectsList[actionIdx]];
-	[s2 runAction:[effect actionWithDuration:3]];
+	[self newOrientation];
+	nextAction();
+	[self newScene];
 }	
 
 -(void) backCallback:(id) sender
 {
-//	Scene *s = [Director sharedDirector].runningScene;
-	id s2 = [self getChildByTag:kTagBackground];
-	[s2 stopAllActions];
-	Class effect = backAction();
-	CCLabel *label = (CCLabel *)[self getChildByTag:kTagLabel];
-	[label setString:effectsList[actionIdx]];
-	[s2 runAction:[effect actionWithDuration:3]];
+	[self newOrientation];
+	backAction();
+	[self newScene];
 }	
 
 -(void) restartCallback:(id) sender
 {
-//	Scene *s = [Director sharedDirector].runningScene;
-	id s2 = [self getChildByTag:kTagBackground];
-	[s2 stopAllActions];
-	Class effect = restartAction();
-	CCLabel *label = (CCLabel *)[self getChildByTag:kTagLabel];
-	[label setString:effectsList[actionIdx]];
-	[s2 runAction:[effect actionWithDuration:3]];
+	[self newOrientation];
+	[self newScene];
 }	
 @end
 
@@ -456,7 +469,9 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+
 	
 	// before creating any layer, set the landscape mode
 	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeRight];
