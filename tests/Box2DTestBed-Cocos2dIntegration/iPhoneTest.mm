@@ -73,7 +73,7 @@ Test::~Test()
 
 void Test::SetGravity( float x, float y)
 {
-	float tVectorLength=sqrt(x*x+y*y);
+	float tVectorLength=sqrtf(x*x+y*y);
 	float newGravityX=9.81f*x/tVectorLength;
 	float newGravityY=9.81f*y/tVectorLength;
 	m_world->SetGravity(b2Vec2(newGravityX,newGravityY));	

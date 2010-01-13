@@ -45,7 +45,7 @@
 }
 
 
--(BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
 	CGPoint start = [touch locationInView: [touch view]];	
@@ -77,8 +77,6 @@
 	}
 	// finish drawing and return context back to the screen
 	[target end];
-
-	return YES;
 }
 @end
 

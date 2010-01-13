@@ -86,7 +86,7 @@ enum {
 //   * ccTouchesMoved
 //   * ccTouchesEnded
 //   * cctouchesCancelled
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
 	
@@ -105,12 +105,7 @@ enum {
 		// and we run a new action
 		[sprite runAction: [CCMoveTo actionWithDuration:1 position:convertedPoint]];
 		
-		// no other handlers will receive this event
-		return kEventHandled;
-	}
-	
-	// we ignore the event. Other receivers will receive this event.
-	return kEventIgnored;
+	}	
 }
 
 // This callback will be called because 'isAccelerometerEnabled' is YES.

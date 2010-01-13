@@ -135,13 +135,12 @@
     [bgTrack playAtListenerPosition];
 }
 
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];	
 	CGPoint point = [touch locationInView: [touch view]];
     point = [[CCDirector sharedDirector] convertToGL: point];
     listenerSprite.position = ccp(point.x, point.y);
-    return kEventHandled;
 }    
 
 - (void)dealloc {

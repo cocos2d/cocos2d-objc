@@ -19,8 +19,6 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"SchedulerTest3",
-
 			@"Test2",
 			@"Test4",
 			@"Test5",

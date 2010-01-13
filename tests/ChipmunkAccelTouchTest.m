@@ -143,7 +143,7 @@ eachShape(void *ptr, void* unused)
 }
 
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
@@ -152,7 +152,6 @@ eachShape(void *ptr, void* unused)
 		
 		[self addNewSpriteX: location.x y:location.y];
 	}
-	return kEventHandled;
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration

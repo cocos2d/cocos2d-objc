@@ -141,10 +141,9 @@
 -(void) testDealloc:(ccTime)dt
 {
 }
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[[CCDirector sharedDirector] popScene];
-	return kEventHandled;
 }
 @end
 

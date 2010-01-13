@@ -43,23 +43,14 @@
 
 /**
  CCStandardTouchDelegate.
- Each event that is received will be propagated to the delegate,
- unless a previous delegate consumes the event.
- To consume the event (prevent propagation) the delegate should return kEventHandled.
- To ignore the event (the event will be forwarded to the next delegate in the chain) the delegate should return kEventIgnored.
+ 
+ This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
  @since v0.8
 */
 @protocol CCStandardTouchDelegate <NSObject>
 @optional
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 @end
-
-enum {
-	/// return kEventHandled if the event should NOT be forwarded to the next handler in the chain
-	kEventHandled = YES,
-	/// return kEventIgnored if the event should be forwarded to the next handler in the chain
-	kEventIgnored = NO,
-};

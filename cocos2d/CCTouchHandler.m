@@ -27,6 +27,7 @@
 @implementation CCTouchHandler
 
 @synthesize delegate, priority;
+@synthesize enabledSelectors=enabledSelectors_;
 
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)aPriority
 {
@@ -40,6 +41,7 @@
 	if ((self = [super init])) {
 		self.delegate = aDelegate;
 		priority = aPriority;
+		enabledSelectors_ = 0;
 	}
 	
 	return self;
@@ -50,55 +52,24 @@
 	[delegate release];
 	[super dealloc];
 }
-
-- (BOOL)ccTouchesBegan:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	NSAssert(NO, @"override");
-	return YES;
-}
-- (BOOL)ccTouchesMoved:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	NSAssert(NO, @"override");
-	return YES;
-}
-- (BOOL)ccTouchesEnded:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	NSAssert(NO, @"override");
-	return YES;
-}
-- (BOOL)ccTouchesCancelled:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	NSAssert(NO, @"override");
-	return YES;
-}
 @end
 
 #pragma mark -
 #pragma mark StandardTouchHandler
 @implementation CCStandardTouchHandler
-- (BOOL)ccTouchesBegan:(NSMutableSet *)touches withEvent:(UIEvent *)event
+-(id) initWithDelegate:(id)del priority:(int)pri
 {
-	if( [delegate respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
-		return [delegate ccTouchesBegan:touches withEvent:event];
-	return kEventIgnored;
-}
-- (BOOL)ccTouchesMoved:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	if( [delegate respondsToSelector:@selector(ccTouchesMoved:withEvent:)] )
-		return [delegate ccTouchesMoved:touches withEvent:event];
-	return kEventIgnored;
-}
-- (BOOL)ccTouchesEnded:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	if( [delegate respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
-		return [delegate ccTouchesEnded:touches withEvent:event];
-	return kEventIgnored;
-}
-- (BOOL)ccTouchesCancelled:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	if( [delegate respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
-		return [delegate ccTouchesCancelled:touches withEvent:event];
-	return kEventIgnored;
+	if( (self=[super initWithDelegate:del priority:pri]) ) {
+		if( [del respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorBeganBit;
+		if( [del respondsToSelector:@selector(ccTouchesMoved:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorMovedBit;
+		if( [del respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorEndedBit;
+		if( [del respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorCancelledBit;
+	}
+	return self;
 }
 @end
 
@@ -123,6 +94,15 @@
 	if ((self = [super initWithDelegate:aDelegate priority:aPriority])) {	
 		claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
 		swallowsTouches = swallow;
+		
+		if( [aDelegate respondsToSelector:@selector(ccTouchBegan:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorBeganBit;
+		if( [aDelegate respondsToSelector:@selector(ccTouchMoved:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorMovedBit;
+		if( [aDelegate respondsToSelector:@selector(ccTouchEnded:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorEndedBit;
+		if( [aDelegate respondsToSelector:@selector(ccTouchCancelled:withEvent:)] )
+			enabledSelectors_ |= ccTouchSelectorCancelledBit;
 	}
 	
 	return self;
@@ -131,58 +111,5 @@
 - (void)dealloc {
 	[claimedTouches release];
 	[super dealloc];
-}
-
-- (BOOL)ccTouchesBegan:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	NSMutableSet *copyTouches = [touches copy];
-	for( UITouch *touch in copyTouches) {
-		BOOL touchWasClaimed = [delegate ccTouchBegan:touch withEvent:event];
-		
-		if( touchWasClaimed ) {
-			[claimedTouches addObject:touch];
-			
-			if( swallowsTouches )
-				[touches removeObject:touch];
-		}
-	}
-	[copyTouches release];
-	return kEventIgnored;
-}
-- (BOOL)ccTouchesMoved:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchMoved:withEvent:) unclaim:NO];
-	return kEventIgnored;
-
-}
-- (BOOL)ccTouchesEnded:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchEnded:withEvent:) unclaim:YES];
-	return kEventIgnored;
-
-}
-- (BOOL)ccTouchesCancelled:(NSMutableSet *)touches withEvent:(UIEvent *)event
-{
-	[self updateKnownTouches:touches withEvent:event selector:@selector(ccTouchCancelled:withEvent:) unclaim:YES];
-	return kEventIgnored;
-}
-
--(void) updateKnownTouches:(NSMutableSet *)touches withEvent:(UIEvent *)event selector:(SEL)selector unclaim:(BOOL)doUnclaim
-{	
-	NSMutableSet *copyTouches = [touches copy];
-	for( UITouch *touch in copyTouches) {
-		if( [claimedTouches containsObject:touch] ) {
-			
-			if( [delegate respondsToSelector:selector] )
-				[delegate performSelector:selector withObject:touch withObject:event];
-			
-			if( doUnclaim )
-				[claimedTouches removeObject:touch];
-			
-			if( swallowsTouches )
-				[touches removeObject:touch];
-		}
-	}
-	[copyTouches release];
 }
 @end

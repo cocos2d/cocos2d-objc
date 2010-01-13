@@ -187,15 +187,13 @@ Class restartAction()
 	streak.position = ccp(s.width/2, s.height/2);
 }
 
--(BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];	
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	[streak setPosition:touchLocation];
-	
-	return YES;
 }
 @end
 
