@@ -321,7 +321,7 @@ CDSourceWrapper *toneSource;
 	CCLOG(@"Denshion: backgroundMusicFinished selector called");
 }	
 
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	
 	NSArray *allTouches = [touches allObjects]; 
@@ -344,12 +344,10 @@ CDSourceWrapper *toneSource;
 			touchedPads = touchedPads | (1 << ((row * 3) + col));
 			//CCLOG(@"Pad touched %i %i %x", col,row,touchedPads);
 		}	
-	}
-	
-	return kEventHandled; 
+	}	
 }
 
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	
 	//We are only interested in the slider for moving touches
@@ -365,7 +363,6 @@ CDSourceWrapper *toneSource;
 			[slider setPosition:CGPointMake(SLIDER_POS_X, location.x)];
 		}	
 	}
-	return kEventHandled; 
 }
 
 

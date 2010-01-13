@@ -82,12 +82,12 @@ float randfloat() {
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 100)];
 }
 
-- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	return [self ccTouchesMoved:touches withEvent:event];
+	[self ccTouchesMoved:touches withEvent:event];
 }
 
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches) {
 		
@@ -106,9 +106,7 @@ float randfloat() {
 		[label setString: info];
 		
 		[grossini[num_g++%NUM_GROSSINIS] setPosition:location ];
-	}
-	
-	return kEventHandled;
+	}	
 }
 
 // Implement this method to get the lastest data from the accelerometer 
@@ -147,7 +145,7 @@ float randfloat() {
 	
 	// cocos2d will inherit these values
 	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
 //	[Director useFastDirector];

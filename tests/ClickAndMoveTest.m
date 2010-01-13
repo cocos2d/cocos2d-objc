@@ -43,7 +43,7 @@ enum
 	[super dealloc];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
 	
@@ -64,9 +64,7 @@ enum
 			at = 180 - abs(at);	
 	}
 	
-	[s runAction: [CCRotateTo actionWithDuration:1 angle: at]];
-	
-	return kEventHandled;
+	[s runAction: [CCRotateTo actionWithDuration:1 angle: at]];	
 }
 @end
 

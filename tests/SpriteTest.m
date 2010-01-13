@@ -12,7 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-@"SpriteSheetReorder",
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -209,7 +208,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
@@ -218,7 +217,6 @@ Class restartAction()
 		
 		[self addNewSpriteWithCoords: location];
 	}
-	return kEventHandled;
 }
 
 -(NSString *) title
@@ -278,7 +276,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
@@ -287,7 +285,6 @@ Class restartAction()
 		
 		[self addNewSpriteWithCoords: location];
 	}
-	return kEventHandled;
 }
 
 -(NSString *) title
@@ -1118,7 +1115,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 
 	CCNode *node = [self getChildByTag:kTagSpriteSheet];
@@ -1131,8 +1128,6 @@ Class restartAction()
 			[sprite setTexture:texture1];
 		usingTexture1 = YES;
 	}
-
-	return kEventHandled;
 }
 
 -(NSString *) title
@@ -1205,16 +1200,14 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
 	
 	if( [sheet texture] == texture1 )
 		[sheet setTexture:texture2];
 	else
-		[sheet setTexture:texture1];
-	
-	return kEventHandled;
+		[sheet setTexture:texture1];	
 }
 
 -(NSString *) title

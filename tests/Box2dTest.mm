@@ -183,7 +183,7 @@ enum {
 	}
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	//Add a new body/atlas sprite at the touched location
 	for( UITouch *touch in touches ) {
@@ -193,7 +193,6 @@ enum {
 		
 		[self addNewSpriteWithCoords: location];
 	}
-	return kEventHandled;
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration

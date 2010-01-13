@@ -13,34 +13,33 @@
  */
 
 #import "CCTouchDelegateProtocol.h"
+#import "CCTouchDispatcher.h"
 
 /**
  CCTouchHandler
  Object than contains the delegate and priority of the event handler.
 */
 @interface CCTouchHandler : NSObject {
-	id delegate;
-	int priority;
+	id				delegate;
+	int				priority;
+	ccTouchSelectorFlag		enabledSelectors_;
 }
 
 /** delegate */
 @property(nonatomic, readwrite, retain) id delegate;
 /** priority */
 @property(nonatomic, readwrite) int priority; // default 0
+/** enabled selectors */
+@property(nonatomic,readwrite) ccTouchSelectorFlag enabledSelectors;
 
 /** allocates a TouchHandler with a delegate and a priority */
 + (id)handlerWithDelegate:(id)aDelegate priority:(int)priority;
 /** initializes a TouchHandler with a delegate and a priority */
 - (id)initWithDelegate:(id)aDelegate priority:(int)priority;
-
-- (BOOL)ccTouchesBegan:(NSMutableSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesMoved:(NSMutableSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesEnded:(NSMutableSet *)touches withEvent:(UIEvent *)event;
-- (BOOL)ccTouchesCancelled:(NSMutableSet *)touches withEvent:(UIEvent *)event;
 @end
 
 /** CCStandardTouchHandler
- It forwardes each event to the delegate until one delegate returns kEventHandled.
+ It forwardes each event to the delegate.
  */
 @interface CCStandardTouchHandler : CCTouchHandler
 {

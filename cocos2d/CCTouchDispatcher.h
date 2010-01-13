@@ -16,15 +16,63 @@
 #import "Support/EAGLView.h"
 
 
+typedef enum
+{
+	ccTouchSelectorBeganBit = 1 << 0,
+	ccTouchSelectorMovedBit = 1 << 1,
+	ccTouchSelectorEndedBit = 1 << 2,
+	ccTouchSelectorCancelledBit = 1 << 3,
+	ccTouchSelectorAllBits = ( ccTouchSelectorBeganBit | ccTouchSelectorMovedBit | ccTouchSelectorEndedBit | ccTouchSelectorCancelledBit),
+} ccTouchSelectorFlag;
+
+
+enum {
+	ccTouchBegan,
+	ccTouchMoved,
+	ccTouchEnded,
+	ccTouchCancelled,
+	
+	ccTouchMax,
+};
+
+struct ccTouchHandlerHelperData {
+	SEL				touchesSel;
+	SEL				touchSel;
+	ccTouchSelectorFlag  type;
+};
+
 /** CCTouchDispatcher.
  Singleton that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
+ There are 2 different type of touch handlers:
+   - Standard Touch Handlers
+   - Targeted Touch Handlers
+ 
+ The Standard Touch Handlers work like the CocoaTouch touch handler: a set of touches is passed to the delegate.
+ On the other hand, the Targeted Touch Handlers only receive 1 touch at the time, and they can "swallow" touches (avoid the propagation of the event).
+ 
+ Firstly, the dispatcher sends the received touches to the targeted touches.
+ These touches can be swallowed by the Targeted Touch Handlers. If there are still remaining touches, then the remaining touches will be sent
+ to the Standard Touch Handlers.
+
  @since v0.8.0
  */
 @interface CCTouchDispatcher : NSObject <EAGLTouchDelegate>
 {
-	NSMutableArray *touchHandlers;
-	BOOL dispatchEvents;
+	NSMutableArray	*targetedHandlers;
+	NSMutableArray	*standardHandlers;
+
+	BOOL			locked;
+	BOOL			toAdd;
+	BOOL			toRemove;
+	NSMutableArray	*handlersToAdd;
+	NSMutableArray	*handlersToRemove;
+	BOOL			toQuit;
+
+	BOOL	dispatchEvents;
+	
+	// 4, 1 for each type of event
+	struct ccTouchHandlerHelperData handlerHelperData[ccTouchMax];
 }
 
 /** singleton of the CCTouchDispatcher */

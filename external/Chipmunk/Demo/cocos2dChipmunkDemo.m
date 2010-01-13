@@ -464,7 +464,7 @@ glutStuff(int argc, const char *argv[])
 	drawSpace(space, currDemo->drawOptions ? currDemo->drawOptions : &options);
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	
 	demoIndex++;
@@ -473,10 +473,7 @@ glutStuff(int argc, const char *argv[])
 	
 	runDemo(demos[demoIndex]);
 	
-	[label setString: [NSString stringWithUTF8String:demos[demoIndex]->name ] ];
-
-	
-	return kEventHandled;
+	[label setString: [NSString stringWithUTF8String:demos[demoIndex]->name ] ];	
 }
 @end
 
