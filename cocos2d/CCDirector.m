@@ -577,6 +577,9 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) applyLandscape
 {	
+	float w = openGLView_.frame.size.width / 2;
+	float h = openGLView_.frame.size.height / 2;
+
 	// XXX it's using hardcoded values.
 	// What if the the screen size changes in the future?
 	switch ( deviceOrientation_ ) {
@@ -585,19 +588,19 @@ static CCDirector *_sharedDirector = nil;
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
 			// upside down
-			glTranslatef(160,240,0);
+			glTranslatef(w,h,0);
 			glRotatef(180,0,0,1);
-			glTranslatef(-160,-240,0);
+			glTranslatef(-w,-h,0);
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(160,240,0);
+			glTranslatef(w,h,0);
 			glRotatef(90,0,0,1);
-			glTranslatef(-240,-160,0);
+			glTranslatef(-h,-w,0);
 			break;
 		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(160,240,0);
+			glTranslatef(w,h,0);
 			glRotatef(-90,0,0,1);
-			glTranslatef(-240,-160,0);
+			glTranslatef(-h,-w,0);
 			break;
 	}	
 }
@@ -684,12 +687,17 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setNextScene
 {
-	BOOL runningIsTransition = [runningScene_ isKindOfClass:[CCTransitionScene class]];
-	BOOL newIsTransition = [nextScene isKindOfClass:[CCTransitionScene class]];
+	Class transClass = [CCTransitionScene class];
+	BOOL runningIsTransition = [runningScene_ isKindOfClass:transClass];
+	BOOL newIsTransition = [nextScene isKindOfClass:transClass];
 
 	// If it is not a transition, call onExit
 	if( ! newIsTransition )
 		[runningScene_ onExit];
+
+	// issue #709. the root node (scene) should receive the cleanup message too
+	// otherwise it might be leaked.
+	[runningScene_ cleanup];
 
 	[runningScene_ release];
 	

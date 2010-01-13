@@ -1,4 +1,5 @@
 version 0.99.0-rc - XX-mmm-2010
+ . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . TouchDispatcher: StandardTouchHandler returns void (not BOOL) and they are executed before the TargetedHandlers (issue #710)
 
