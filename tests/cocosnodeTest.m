@@ -98,22 +98,22 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	// Don't create void root scene. Testing issue #709
+	CCScene *s = [restartAction() node];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
-	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	// Don't create void root scene. Testing issue #709
+	CCScene *s = [nextAction() node];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	// Don't create void root scene. Testing issue #709
+	CCScene *s = [backAction() node];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
