@@ -256,6 +256,12 @@ Class restartTransition()
 	return self;
 }
 
+- (void) dealloc
+{
+	NSLog(@"------> Scene#1 dealloc!");
+	[super dealloc];
+}
+
 -(void) step:(ccTime)dt
 {
 	NSLog(@"Scene1#step called");
@@ -263,8 +269,9 @@ Class restartTransition()
 -(void) nextCallback:(id) sender
 {
 	Class transition = nextTransition();
-	CCScene *s2 = [CCScene node];
-	[s2 addChild: [TextLayer2 node]];
+//	CCScene *s2 = [CCScene node];
+//	[s2 addChild: [TextLayer2 node]];
+	CCScene *s2 = [TextLayer2 node];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 
 }	
@@ -272,16 +279,18 @@ Class restartTransition()
 -(void) backCallback:(id) sender
 {
 	Class transition = backTransition();
-	CCScene *s2 = [CCScene node];
-	[s2 addChild: [TextLayer2 node]];
+//	CCScene *s2 = [CCScene node];
+//	[s2 addChild: [TextLayer2 node]];
+	CCScene *s2 = [TextLayer2 node];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }	
 
 -(void) restartCallback:(id) sender
 {
 	Class transition = restartTransition();
-	CCScene *s2 = [CCScene node];
-	[s2 addChild: [TextLayer2 node]];
+//	CCScene *s2 = [CCScene node];
+//	[s2 addChild: [TextLayer2 node]];
+	CCScene *s2 = [TextLayer2 node];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }	
 -(void) onEnter
@@ -344,6 +353,13 @@ Class restartTransition()
 	
 	return self;
 }
+
+- (void) dealloc
+{
+	NSLog(@"------> Scene#2 dealloc!");
+	[super dealloc];
+}
+
 
 -(void) nextCallback:(id) sender
 {

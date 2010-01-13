@@ -135,16 +135,18 @@ enum {
 -(void) onExit
 {
 	[super onExit];
-	[outScene onExit];	
+	[outScene onExit];
 
 	// inScene should not receive the onExit callback
 	// only the onEnterTransitionDidFinish
 	[inScene onEnterTransitionDidFinish];
 }
 
--(void) onEnterTransitionDidFinish
+// custom cleanup
+-(void) cleanup
 {
-	[super onEnterTransitionDidFinish];
+	[super cleanup];
+	[outScene cleanup];
 }
 
 -(void) dealloc
