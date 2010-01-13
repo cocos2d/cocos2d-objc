@@ -12,6 +12,5 @@
 @interface TextLayer: CCColorLayer
 {
 }
-
 @end
 

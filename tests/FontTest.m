@@ -140,8 +140,8 @@ NSString* restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-    //	[Director useFastDirector];
-	
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+
 	// before creating any layer, set the landscape mode
 	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeRight];
 	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
