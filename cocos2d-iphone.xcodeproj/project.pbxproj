@@ -2116,7 +2116,7 @@
 		503F5CBE101FE930002A37E5 /* TileMapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TileMapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		503F5CCF101FE9A9002A37E5 /* TileMapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TileMapTest.m; path = tests/TileMapTest.m; sourceTree = "<group>"; };
 		503F5CD0101FE9A9002A37E5 /* TileMapTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileMapTest.h; path = tests/TileMapTest.h; sourceTree = "<group>"; };
-		504018FB10FE800D0017842A /* PerformanceTestParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		504018FB10FE800D0017842A /* PerformanceTestTouches.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestTouches.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504018FD10FE800D0017842A /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		5040190110FE80650017842A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5040190210FE80650017842A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -3366,7 +3366,7 @@
 				505461DF10616AE100AB7C52 /* libFontLabel.a */,
 				50E2A3F410A4A51C00D894CE /* PerformanceTestSprites.app */,
 				50E2A40010A4A53000D894CE /* PerformanceTestParticles.app */,
-				504018FB10FE800D0017842A /* PerformanceTestParticles.app */,
+				504018FB10FE800D0017842A /* PerformanceTestTouches.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5188,7 +5188,7 @@
 			);
 			name = PerformanceTestTouches;
 			productName = "PerformanceTest-Particles";
-			productReference = 504018FB10FE800D0017842A /* PerformanceTestParticles.app */;
+			productReference = 504018FB10FE800D0017842A /* PerformanceTestTouches.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5042256F0FC0B39C00B992F7 /* box2d */ = {
@@ -8461,7 +8461,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = PerformanceTestParticles;
+				PRODUCT_NAME = PerformanceTestTouches;
 				SDKROOT = iphoneos2.2.1;
 			};
 			name = Debug;
@@ -8485,7 +8485,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = PerformanceTestParticles;
+				PRODUCT_NAME = PerformanceTestTouches;
 				SDKROOT = iphoneos2.2.1;
 				ZERO_LINK = NO;
 			};

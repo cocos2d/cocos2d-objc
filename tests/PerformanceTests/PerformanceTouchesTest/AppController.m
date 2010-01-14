@@ -23,7 +23,7 @@
 
 	[[CCDirector sharedDirector] attachInWindow:window];
 	[CCDirector sharedDirector].displayFPS = YES;
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
+	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	
 	[window makeKeyAndVisible];
 	

@@ -14,6 +14,7 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 		@"PerformanceTest1",
+		@"PerformanceTest2",
 };
 
 Class nextAction()
@@ -56,9 +57,9 @@ Class restartAction()
 	
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label z:1];
-		[label setPosition: ccp(s.width/2, s.height-50)];
+		CCLabel* title = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: title z:1];
+		[title setPosition: ccp(s.width/2, s.height-50)];
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -71,6 +72,15 @@ Class restartAction()
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];
+		
+		[self schedule:@selector(update:)];
+		
+		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"arial16.fnt"];
+		label.position = ccp(s.width/2, s.height/2);
+		[self addChild:label];
+				
+		elapsedTime = 0;
+		numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;		
 	}
 	
 	return self;
@@ -79,6 +89,24 @@ Class restartAction()
 -(void) dealloc
 {
 	[super dealloc];
+}
+
+-(void) update:(ccTime)dt
+{
+	elapsedTime += dt;
+	
+	if ( elapsedTime > 1.0f)  {
+		float frameRateB = numberOfTouchesB / elapsedTime;
+		float frameRateM = numberOfTouchesM / elapsedTime;
+		float frameRateE = numberOfTouchesE / elapsedTime;
+		float frameRateC = numberOfTouchesC / elapsedTime;
+		elapsedTime = 0;
+		numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;
+		
+		NSString *str = [[NSString alloc] initWithFormat:@"%.1f %.1f %.1f %.1f", frameRateB, frameRateM, frameRateE, frameRateC];
+		[label setString:str];
+		[str release];
+	}
 }
 
 -(void) restartCallback: (id) sender
@@ -108,6 +136,7 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark Example PerformanceTest1
 
 @implementation PerformanceTest1
@@ -116,45 +145,21 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 	
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		
 		self.isTouchEnabled = YES;
 		
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"arial16.fnt"];
-		label.position = ccp(s.width/2, s.height/2);
-		[self addChild:label];
-		
-		[self schedule:@selector(update:)];
-		
-		elapsedTime = 0;
-		numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;
 	}
 	
 	return self;
 }
 
+-(NSString *) title
+{
+	return @"Targeted touches";
+}
+
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
-}
-
--(void) update:(ccTime)dt
-{
-	elapsedTime += dt;
-	
-	if ( elapsedTime > 1.0f)  {
-		float frameRateB = numberOfTouchesB / elapsedTime;
-		float frameRateM = numberOfTouchesM / elapsedTime;
-		float frameRateE = numberOfTouchesE / elapsedTime;
-		float frameRateC = numberOfTouchesC / elapsedTime;
-		elapsedTime = 0;
-		numberOfTouchesB = numberOfTouchesM = numberOfTouchesE = numberOfTouchesC = 0;
-		
-		NSString *str = [[NSString alloc] initWithFormat:@"%.1f %.1f %.1f %.1f", frameRateB, frameRateM, frameRateE, frameRateC];
-		[label setString:str];
-		[str release];
-	}
 }
 
 -(void) dealloc
@@ -180,9 +185,54 @@ Class restartAction()
 	numberOfTouchesC++;
 }
 
+@end
+
+#pragma mark -
+#pragma mark Example PerformanceTest2
+
+@implementation PerformanceTest2
+
+-(id) init
+{
+	if( (self=[super init] )) {
+		
+		self.isTouchEnabled = YES;
+		
+	}
+	
+	return self;
+}
+
 -(NSString *) title
 {
-	return @"Touches per second.";
+	return @"Standard touches";
+}
+
+-(void) registerWithTouchDispatcher
+{
+	[[CCTouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
+}
+
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+-(void) ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	numberOfTouchesB += [touches count];
+}
+-(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	numberOfTouchesM += [touches count];
+}
+-(void) ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	numberOfTouchesE += [touches count];
+}
+-(void) ccTouchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	numberOfTouchesC += [touches count];
 }
 @end
 
