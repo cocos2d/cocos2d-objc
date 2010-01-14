@@ -762,14 +762,16 @@ static CCDirector *_sharedDirector = nil;
 	frames++;
 	accumDt += dt;
 	
-	if ( accumDt > 0.1)  {
+	if ( accumDt > 0.1f)  {
 		frameRate = frames/accumDt;
 		frames = 0;
 		accumDt = 0;
+		
+		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate];
+		[FPSLabel setString:str];
+		[str release];
 	}
 		
-	NSString *str = [NSString stringWithFormat:@"%.1f",frameRate];
-	[FPSLabel setString:str];
 //	sprintf(format,"%.1f",frameRate);
 //	[FPSLabel setCString:format];
 	[FPSLabel draw];
@@ -782,7 +784,7 @@ static CCDirector *_sharedDirector = nil;
 	frames++;
 	accumDt += dt;
 	
-	if ( accumDt > 0.3)  {
+	if ( accumDt > 0.3f)  {
 		frameRate = frames/accumDt;
 		frames = 0;
 		accumDt = 0;
