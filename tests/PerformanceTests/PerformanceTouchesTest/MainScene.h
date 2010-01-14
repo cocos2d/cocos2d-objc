@@ -7,6 +7,12 @@
 Class nextAction();
 
 @interface MainScene : CCLayer {
+	CCBitmapFontAtlas *label;
+	int			numberOfTouchesB;
+	int			numberOfTouchesM;
+	int			numberOfTouchesE;
+	int			numberOfTouchesC;
+	ccTime		elapsedTime;	
 }
 
 -(NSString*) title;
@@ -14,13 +20,10 @@ Class nextAction();
 
 
 @interface PerformanceTest1 : MainScene
-{
-	CCBitmapFontAtlas *label;
-	int			numberOfTouchesB;
-	int			numberOfTouchesM;
-	int			numberOfTouchesE;
-	int			numberOfTouchesC;
-	ccTime		elapsedTime;
-}
+{}
+@end
+
+@interface PerformanceTest2 : MainScene
+{}
 @end
 
