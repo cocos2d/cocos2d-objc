@@ -27,12 +27,14 @@
 
 @synthesize groupName=groupName_;
 @synthesize objects=objects_;
+@synthesize positionOffset=positionOffset_;
 @synthesize properties=properties_;
 
 -(id) init
 {
 	if (( self=[super init] )) {
 		self.groupName = nil;
+		self.positionOffset = CGPointZero;
 		self.objects = [NSMutableArray arrayWithCapacity:10];
 		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
@@ -82,6 +84,11 @@
 		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
 	return self;
+}
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %@, Properties = %@", [self class], self, name_, properties_];
 }
 
 -(void) dealloc

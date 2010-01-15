@@ -2,6 +2,9 @@ version 0.99.0-rc - XX-mmm-2010
  . Director/Particles/Grid: removed hardcoded display size values. Using variable (issue #XXX)
  . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
+ . TMXMaps: objectGroup support offsets (issue #689)
+ . TMXMaps: Using correct type for ints and float objects (issue #711)
+ . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)
  . TouchDispatcher: StandardTouchHandler returns void (not BOOL) and they are executed before the TargetedHandlers (issue #710)
 
 version 0.9.0-beta2 - 11-Jan-2010

@@ -199,7 +199,7 @@
 	return nil;
 }
 
--(CCTMXObjectGroup*) groupNamed:(NSString *)groupName 
+-(CCTMXObjectGroup*) objectGroupNamed:(NSString *)groupName 
 {
 	for( CCTMXObjectGroup *objectGroup in objectGroups_ ) {
 		if( [objectGroup.groupName isEqual:groupName] )

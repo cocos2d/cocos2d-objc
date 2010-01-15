@@ -84,3 +84,8 @@
 }
 @end
 
+@interface TMXObjectsTest : TileDemo
+{
+}
+@end
+

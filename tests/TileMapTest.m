@@ -25,6 +25,7 @@ static NSString *transitions[] = {
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
 			@"TMXTilesetTest",
+			@"TMXObjectsTest",
 };
 
 enum {
@@ -747,6 +748,37 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXObjectsTest
+
+@implementation TMXObjectsTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-objects.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		CCTMXLayer *layer;
+		layer = [map layerNamed:@"Layer 0"];
+		[layer.texture setAntiAliasTexParameters];		
+		
+		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
+		for( CCTMXObject *object in group.objects) {
+			NSLog(@"object: %@", object);
+		}
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Tileset test";
+}
+@end
 
 
 #pragma mark -
