@@ -71,6 +71,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccMacros.h"
 #import "CCTexture2D.h"
 #import "CCPVRTexture.h"
+#import "CCConfiguration.h"
 
 
 #if CC_FONT_LABEL_SUPPORT
@@ -79,11 +80,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "FontLabelStringDrawing.h"
 #endif// CC_FONT_LABEL_SUPPORT
 
-
-//CONSTANTS:
-
-#define kMaxTextureSize	 1024
-//#define kMaxTextureSize		2048
 
 //CLASS IMPLEMENTATIONS:
 
@@ -222,8 +218,12 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		height = i;
 	}
 	
-	// iPhone 3GS supports 2048 textures, so the maxtexturesize should be a variable, not a hardcoded value
-	NSAssert2( (width <= kMaxTextureSize) && (height <= kMaxTextureSize), @"Image is bigger than the supported %d x %d", kMaxTextureSize, kMaxTextureSize);
+	
+	unsigned maxTextureSize = [[CCConfiguration sharedConfiguration] maxTextureSize];
+	if( width > maxTextureSize || height > maxTextureSize ) {
+		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", width, height, maxTextureSize, maxTextureSize);
+		return nil;
+	}
 
 //	while((width > kMaxTextureSize) || (height > kMaxTextureSize)) {
 //		width /= 2;
@@ -461,6 +461,11 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 {
 //	GLint					saveName;
 
+	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		return nil;
+	}
+
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
 //		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
@@ -493,6 +498,10 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 -(id) initWithPVRTCFile: (NSString*) file
 {
+	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		return nil;
+	}	
 
 	if( (self = [super init]) ) {
 		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];

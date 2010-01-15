@@ -156,6 +156,7 @@
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
+	NSAssert(texture!=nil, @"Invalid texture for sprite");
 	// IMPORTANT: [self init] and not [super init];
 	if( (self = [self init]) )
 	{
@@ -168,15 +169,20 @@
 -(id) initWithFile:(NSString*)filename
 {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	return [self initWithTexture:texture rect:rect];
+	if( texture ) {
+		CGRect rect = CGRectZero;
+		rect.size = texture.contentSize;
+		return [self initWithTexture:texture rect:rect];
+	}
+	return nil;
 }
 
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect
 {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
-	return [self initWithTexture:texture rect:rect];
+	if( texture )
+		return [self initWithTexture:texture rect:rect];
+	return nil;
 }
 
 - (id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame
