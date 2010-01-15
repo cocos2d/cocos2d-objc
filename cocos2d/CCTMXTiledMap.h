@@ -72,17 +72,10 @@ enum
 
    Each object group is created using a TMXObjectGroup which is a subclass of NSMutableArray.
    You can obtain the object groups at runtime by:
-   - [map groupNamed: name_of_the_object_group];
+   - [map objectGroupNamed: name_of_the_object_group];
   
-   Each object is created using the "type" property set in Tiled for the class. If "type" is not a valid class or is blank, then
-   the generic TMXObject class will be used. If a valid class is specified, each parsed property value will be assigned to
-   the object's property matching the parsed property name, if it exists.
-   The parser will attempt to convert the property values to the appropriate data types by checking the object's property type
-   encoding string. If you want to use CGPoint, CGSize, or CGRect, you need to enclose your values in braces {} within Tiled.
-   - {3,2} instead of 3,2
-   You can obtain the object at runtime by:
-   - [objectGroup objectNamed: name_of_the_object];
-  
+   Each object is a TMXObject.
+
    Each property is stored as a key-value pair in an NSMutableDictionary.
    You can obtain the properties at runtime by:
    - [map propertyNamed: name_of_the_property];
