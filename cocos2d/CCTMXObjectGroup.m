@@ -2,7 +2,8 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2009 Ricardo Quesada
+ * Copyright (C) 2010 Neophit
+ * Copyright (C) 2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -51,53 +52,15 @@
 	[super dealloc];
 }
 
--(id) objectNamed:(NSString *)objectName
+-(NSMutableDictionary*) objectNamed:(NSString *)objectName
 {
 	for( id object in objects_ ) {
-		if( [[object valueForKey:@"objectName"] isEqual:objectName] )
+		if( [[object valueForKey:@"name"] isEqual:objectName] )
 			return object;
 		}
 
 	// object not found
 	return nil;
-}
-
--(id) propertyNamed:(NSString *)propertyName 
-{
-	return [properties_ valueForKey:propertyName];
-}
-
-@end
-
-#pragma mark -
-#pragma mark TMXObject
-
-@implementation CCTMXObject
-
-@synthesize name=name_;
-@synthesize properties=properties_;
-
--(id) init
-{
-	if (( self=[super init] )) {
-		self.name = nil;
-		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
-	}
-	return self;
-}
-
-- (NSString*) description
-{
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %@, Properties = %@", [self class], self, name_, properties_];
-}
-
--(void) dealloc
-{
-	CCLOG( @"cocos2d: deallocing %@", self );
-	
-	[name_ release];
-	[properties_ release];
-	[super dealloc];
 }
 
 -(id) propertyNamed:(NSString *)propertyName 

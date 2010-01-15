@@ -767,9 +767,12 @@ Class restartAction()
 		[layer.texture setAntiAliasTexParameters];		
 		
 		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
-		for( CCTMXObject *object in group.objects) {
-			NSLog(@"object: %@", object);
+		for( NSDictionary *dict in group.objects) {
+			NSLog(@"object: %@", dict);
 		}
+		
+		NSDictionary *platform = [group objectNamed:@"platform"];
+		NSLog(@"platform: %@", platform);
 	}	
 	return self;
 }
