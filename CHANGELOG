@@ -1,4 +1,5 @@
 version 0.99.0-rc - XX-mmm-2010
+ . Configuration: and objects that knows GL capabilities and other misc stuff (issue #712)
  . Director/Particles/Grid: removed hardcoded display size values. Using variable (issue #XXX)
  . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)

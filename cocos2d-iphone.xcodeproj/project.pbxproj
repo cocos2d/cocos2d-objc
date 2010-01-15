@@ -409,6 +409,13 @@
 		5037AF1E0F49B980004DCA1F /* logo-mipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */; };
 		5037AF1F0F49B980004DCA1F /* logo-nomipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */; };
 		503841940FA4E66B008411FB /* stars2.png in Resources */ = {isa = PBXBuildFile; fileRef = 503841930FA4E66B008411FB /* stars2.png */; };
+		503862DA11007181005D2C92 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 503862D911007181005D2C92 /* CCConfiguration.m */; };
+		503862E5110072BC005D2C92 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 503862D811007181005D2C92 /* CCConfiguration.h */; };
+		503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 503862D911007181005D2C92 /* CCConfiguration.m */; };
+		503863D9110082B1005D2C92 /* texture512x512.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 503863D5110082B1005D2C92 /* texture512x512.jpeg */; };
+		503863DA110082B1005D2C92 /* texture1024x1024.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 503863D6110082B1005D2C92 /* texture1024x1024.jpeg */; };
+		503863DB110082B1005D2C92 /* texture2048x2048.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 503863D7110082B1005D2C92 /* texture2048x2048.jpeg */; };
+		503863DC110082B1005D2C92 /* texture4096x4096.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 503863D8110082B1005D2C92 /* texture4096x4096.jpeg */; };
 		5038B6B20E196CD8009A621E /* CCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038B6B00E196CD8009A621E /* CCParticleSystem.h */; };
 		5038B6B30E196CD8009A621E /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* CCParticleSystem.m */; };
 		503909FB0FDFDC0B009F63EE /* menuitemsprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 503909FA0FDFDC0B009F63EE /* menuitemsprite.png */; };
@@ -2109,6 +2116,12 @@
 		5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "logo-mipmap.pvr"; sourceTree = "<group>"; };
 		5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "logo-nomipmap.pvr"; sourceTree = "<group>"; };
 		503841930FA4E66B008411FB /* stars2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars2.png; sourceTree = "<group>"; };
+		503862D811007181005D2C92 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
+		503862D911007181005D2C92 /* CCConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCConfiguration.m; sourceTree = "<group>"; };
+		503863D5110082B1005D2C92 /* texture512x512.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture512x512.jpeg; sourceTree = "<group>"; };
+		503863D6110082B1005D2C92 /* texture1024x1024.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture1024x1024.jpeg; sourceTree = "<group>"; };
+		503863D7110082B1005D2C92 /* texture2048x2048.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture2048x2048.jpeg; sourceTree = "<group>"; };
+		503863D8110082B1005D2C92 /* texture4096x4096.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture4096x4096.jpeg; sourceTree = "<group>"; };
 		5038B6B00E196CD8009A621E /* CCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem.h; sourceTree = "<group>"; };
 		5038B6B10E196CD8009A621E /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
 		503909FA0FDFDC0B009F63EE /* menuitemsprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuitemsprite.png; sourceTree = "<group>"; };
@@ -3638,6 +3651,8 @@
 				506602100E38A70D000B500E /* CCScheduler.m */,
 				508A450410B0E603004B9CC3 /* CCCompatibility.h */,
 				508A450510B0E604004B9CC3 /* CCCompatibility.m */,
+				503862D811007181005D2C92 /* CCConfiguration.h */,
+				503862D911007181005D2C92 /* CCConfiguration.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -4352,6 +4367,10 @@
 				508A333A0FBADD6A00D574A2 /* grossini images */,
 				508A333D0FBADE2D00D574A2 /* menu related images */,
 				508A333C0FBADDA700D574A2 /* particles images */,
+				503863D5110082B1005D2C92 /* texture512x512.jpeg */,
+				503863D6110082B1005D2C92 /* texture1024x1024.jpeg */,
+				503863D7110082B1005D2C92 /* texture2048x2048.jpeg */,
+				503863D8110082B1005D2C92 /* texture4096x4096.jpeg */,
 				AAEA834A0FD5704400F08728 /* blocks.png */,
 				506E1AD50FB34E8E00AAA494 /* test-rgba1.png */,
 				8EDF3FD90F6BE3F400F54643 /* listener-marker.png */,
@@ -4778,6 +4797,7 @@
 				508A450610B0E604004B9CC3 /* CCCompatibility.h in Headers */,
 				50D2AC9510E90DFA0068ECEB /* CCTMXLayer.h in Headers */,
 				50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */,
+				503862E5110072BC005D2C92 /* CCConfiguration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6317,6 +6337,10 @@
 				5031698010289F68003ACFE7 /* pattern1.png in Resources */,
 				505464501062886600AB7C52 /* fps_images.png in Resources */,
 				50CA8B2310B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png in Resources */,
+				503863D9110082B1005D2C92 /* texture512x512.jpeg in Resources */,
+				503863DA110082B1005D2C92 /* texture1024x1024.jpeg in Resources */,
+				503863DB110082B1005D2C92 /* texture2048x2048.jpeg in Resources */,
+				503863DC110082B1005D2C92 /* texture4096x4096.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7066,6 +7090,7 @@
 				508A450710B0E604004B9CC3 /* CCCompatibility.m in Sources */,
 				50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */,
 				50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */,
+				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7158,6 +7183,7 @@
 				504018F010FE800C0017842A /* main.m in Sources */,
 				5040190510FE80650017842A /* AppController.m in Sources */,
 				5040190610FE80650017842A /* MainScene.m in Sources */,
+				503862DA11007181005D2C92 /* CCConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8452,7 +8478,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -8476,7 +8502,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "/Users/riq/progs/cocos2d-iphone/trunk/Resources/Info copy.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",

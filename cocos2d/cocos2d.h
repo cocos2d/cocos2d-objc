@@ -89,6 +89,7 @@
 #import "CCPVRTexture.h"
 #import "CCTouchHandler.h"
 #import "ccConfig.h"
+#import "CCConfiguration.h"
 
 //
 // cocos2d macros

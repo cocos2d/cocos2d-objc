@@ -177,8 +177,6 @@ and when to execute the Scenes.
 	ccDirectorProjection projection_;
 }
 
-/** the bundle we load everything from */
-@property (nonatomic, readwrite, assign) NSBundle* loadingBundle;
 /** The current running Scene. Director can only run one Scene at the time */
 @property (nonatomic,readonly) CCScene* runningScene;
 /** The FPS value */

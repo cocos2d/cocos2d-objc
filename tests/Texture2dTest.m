@@ -36,6 +36,7 @@ static NSString *transitions[] = {
 						@"TextureLibPNGTest3",
 						@"TextureGlClamp",
 						@"TextureGlRepeat",
+						@"TextureSizeTest",
 };
 
 #pragma mark Callbacks
@@ -894,6 +895,51 @@ Class restartAction()
 	return @"iPhone PNG vs libpng #3";
 }
 @end
+
+@implementation TextureSizeTest
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		CCSprite *sprite = nil;
+		
+		printf("Loading 512x512 image...");
+		sprite = [CCSprite spriteWithFile:@"texture512x512.jpeg"];
+		if( sprite )
+			printf("OK\n");
+		else
+			printf("Error\n");
+
+		printf("Loading 1024x1024 image...");
+		sprite = [CCSprite spriteWithFile:@"texture1024x1024.jpeg"];
+		if( sprite )
+			printf("OK\n");
+		else
+			printf("Error\n");
+		
+		printf("Loading 2048x2048 image...");
+		sprite = [CCSprite spriteWithFile:@"texture2048x2048.jpeg"];
+		if( sprite )
+			printf("OK\n");
+		else
+			printf("Error\n");
+		
+		printf("Loading 4096x4096 image...");
+		sprite = [CCSprite spriteWithFile:@"texture4096x4096.jpeg"];
+		if( sprite )
+			printf("OK\n");
+		else
+			printf("Error\n");
+		
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Different Texture Sizes";
+}
+@end
+
 
 
 #pragma mark -

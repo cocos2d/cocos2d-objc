@@ -252,6 +252,8 @@ static CCTextureCache *sharedTextureCache;
 	tex = [[CCTexture2D alloc] initWithPVRTCFile: fileimage];
 	if( tex )
 		[textures setObject: tex forKey:fileimage];
+	else
+		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
 	
 	return [tex autorelease];
 }
