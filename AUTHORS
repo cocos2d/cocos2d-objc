@@ -55,6 +55,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemFont
 	* Corey.B.Painter:
 		Speed action calls other#stop patch
+	* craigching:
+		Correct type for objects in TMX maps. patch
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
 	* David Whatley ( http://criticalthoughtgames.com/ )
@@ -204,6 +206,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Sprite#isFrameDisplayed works ok with offsets. patch.
 	* Neophit:
 		Added support for object and objectgroup in TMXTiledMaps
+		TMXTiledMaps: objects supports offsets. patch.
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
 	* psionic81:

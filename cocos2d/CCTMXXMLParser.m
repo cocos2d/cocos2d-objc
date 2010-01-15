@@ -216,6 +216,10 @@
 		
 		CCTMXObjectGroup *objectGroup = [[CCTMXObjectGroup alloc] init];
 		objectGroup.groupName = [attributeDict valueForKey:@"name"];
+		CGPoint positionOffset;
+		positionOffset.x = [[attributeDict valueForKey:@"x"] intValue] * tileSize_.width;
+		positionOffset.y = [[attributeDict valueForKey:@"y"] intValue] * tileSize_.height;
+		objectGroup.positionOffset = positionOffset;
 		
 		[objectGroups_ addObject:objectGroup];
 		[objectGroup release];
@@ -252,9 +256,7 @@
 		
 		// Find a class object with the name matching the value for "type", or nil if not found
 		Class classFromString = NSClassFromString([attributeDict valueForKey:@"type"]);
-		
-		NSAssert( classFromString != nil, @"TMX tile map: Value of 'Type' is not a valid class. Using TMXObject." );
-		
+				
 		// If the value of "type" is a valid class, then create an instance of that object
 		if ( classFromString != nil )
 		{
@@ -269,8 +271,10 @@
 			// Does the object have an accessor for the "position" property? If so, set it.
 			if ( [objectInstance respondsToSelector:NSSelectorFromString(@"position")] ) {
 				CGPoint objectPosition;
-				objectPosition.x = [[attributeDict valueForKey:@"x"] intValue];
-				objectPosition.y = [[attributeDict valueForKey:@"y"] intValue];
+				objectPosition.x = [[attributeDict valueForKey:@"x"] intValue] + objectGroup.positionOffset.x;
+				objectPosition.y = [[attributeDict valueForKey:@"y"] intValue] + objectGroup.positionOffset.y;
+				// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
+				objectPosition.y = (mapSize_.height * tileSize_.height) - objectPosition.y - [[attributeDict valueForKey:@"height"] intValue];
 				[objectInstance setValue:[NSValue valueWithCGPoint:objectPosition] forKey:@"position"];
 			} else
 				CCLOG( @"TMX tile map: Object '%@' does not recognize the property 'position'", objectInstance );
@@ -298,8 +302,12 @@
 			
 			// Assign all the attributes as key/name pairs in the properties dictionary
 			[[objectInstance properties] setValue:[attributeDict valueForKey:@"type"] forKey:@"type"];
-			[[objectInstance properties] setValue:[attributeDict valueForKey:@"x"] forKey:@"x"];
-			[[objectInstance properties] setValue:[attributeDict valueForKey:@"y"] forKey:@"y"];
+			int x = [[attributeDict valueForKey:@"x"] intValue] + objectGroup.positionOffset.x;
+			[[objectInstance properties] setValue:[NSNumber numberWithInt:x] forKey:@"x"];
+			int y = [[attributeDict valueForKey:@"y"] intValue] + objectGroup.positionOffset.y;
+			// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
+			y = (mapSize_.height * tileSize_.height) - y - [[attributeDict valueForKey:@"height"] intValue];
+			[[objectInstance properties] setValue:[NSNumber numberWithInt:y] forKey:@"y"];
 			[[objectInstance properties] setValue:[attributeDict valueForKey:@"width"] forKey:@"width"];
 			[[objectInstance properties] setValue:[attributeDict valueForKey:@"height"] forKey:@"height"];
 			
@@ -373,12 +381,12 @@
 					// NSString
 					[objectInstance setValue:propertyValue forKey:propertyName];
 					
-				} else if ([propertyAttributes rangeOfString:@"float" options:NSLiteralSearch].location != NSNotFound) {
+				} else if ([propertyAttributes rangeOfString:@"Tf" options:NSLiteralSearch].location != NSNotFound) {
 					
 					// float
 					[objectInstance setValue:[NSNumber numberWithFloat:[propertyValue floatValue]] forKey:propertyName];
 					
-				} else if ([propertyAttributes rangeOfString:@"int" options:NSLiteralSearch].location != NSNotFound) {
+				} else if ([propertyAttributes rangeOfString:@"Ti" options:NSLiteralSearch].location != NSNotFound) {
 					
 					// int
 					[objectInstance setValue:[NSNumber numberWithInt:[propertyValue intValue]] forKey:propertyName];

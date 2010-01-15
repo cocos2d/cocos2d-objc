@@ -121,7 +121,7 @@ enum
 -(CCTMXLayer*) layerNamed:(NSString *)layerName;
 
 /** return the TMXObjectGroup for the secific group */
--(CCTMXObjectGroup*) groupNamed:(NSString *)groupName;
+-(CCTMXObjectGroup*) objectGroupNamed:(NSString *)groupName;
 
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;
