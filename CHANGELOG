@@ -3,6 +3,7 @@ version 0.99.0-rc - XX-mmm-2010
  . Director/Particles/Grid: removed hardcoded display size values. Using variable (issue #XXX)
  . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
+ . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . TMXMaps: objectGroup support offsets (issue #689)
  . TMXMaps: objectGroup: Simplified object creation. All objects are NSDictionaries. For custom objects, subclass TMXTiledMap (issue #636)
  . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)

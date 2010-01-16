@@ -189,6 +189,10 @@ typedef enum {
  */
 +(id) spriteWithCGImage: (CGImageRef)image;
 
+/** Creates an sprite with an CCSpriteSheet and a rect
+ */
++(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect;
+
 
 /** Initializes an sprite with a texture.
  The rect used will be the size of the texture.
@@ -226,6 +230,10 @@ typedef enum {
 /** Initializes an sprite with a CGImageRef
  */
 -(id) initWithCGImage: (CGImageRef)image;
+
+/** Initializes an sprite with an CCSpriteSheet and a rect
+ */
+-(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect;
 
 /** updates the quad according the the rotation, position, scale values.
  */
