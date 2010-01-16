@@ -465,8 +465,9 @@ void FNTConfigRemoveCache( void )
 		
 		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [self createSpriteWithRect:rect];
+			fontChar = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
 			[self addChild:fontChar z:0 tag:i];
+			[fontChar release];
 		}
 		else {
 			// reusing fonts

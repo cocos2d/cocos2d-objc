@@ -138,6 +138,7 @@ const int defaultCapacity = 29;
 	glPopMatrix();
 }
 
+// XXX deprecated
 -(CCSprite*) createSpriteWithRect:(CGRect)rect
 {
 	CCSprite *sprite = [CCSprite spriteWithTexture:textureAtlas_.texture rect:rect];
@@ -146,6 +147,7 @@ const int defaultCapacity = 29;
 	return sprite;
 }
 
+// XXX deprecated
 -(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect
 {
 	[sprite initWithTexture:textureAtlas_.texture rect:rect];

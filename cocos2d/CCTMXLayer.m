@@ -196,12 +196,13 @@
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-			tile = [self createSpriteWithRect:rect];
+			tile = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
 			[tile setPosition: [self positionAt:pos]];
 			tile.anchorPoint = CGPointZero;
 			
 			unsigned int indexForZ = [self atlasIndexForExistantZ:z];
 			[self addSpriteWithoutQuad:tile z:indexForZ tag:z];
+			[tile release];
 		}
 	}
 	return tile;
@@ -225,9 +226,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		reusedTile = [[self createSpriteWithRect:rect] retain];
+		reusedTile = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
 	else
-		[self initSprite:reusedTile rect:rect];
+		[reusedTile initWithSpriteSheet:self rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
@@ -260,9 +261,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		reusedTile = [[self createSpriteWithRect:rect] retain];
+		reusedTile = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
 	else
-		[self initSprite:reusedTile rect:rect];
+		[reusedTile initWithSpriteSheet:self rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;
@@ -287,9 +288,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile )
-		reusedTile = [[self createSpriteWithRect:rect] retain];
+		reusedTile = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
 	else
-		[self initSprite:reusedTile rect:rect];
+		[reusedTile initWithSpriteSheet:self rect:rect];
 	
 	[reusedTile setPosition: [self positionAt:pos]];
 	reusedTile.anchorPoint = CGPointZero;

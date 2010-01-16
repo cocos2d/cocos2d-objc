@@ -108,7 +108,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of SimpleAudioEngine
 	* Jacob Eiting:
 		patches for Primitives
-	* Jason Booth (slipster216) (http://jbooth.blogspot.com/):
+	* Jason Booth (slipster216) (http://www.stuffedturkeyapps.com/):
 		author of the EaseAction actions
 		author of EaseAction demos
 		author of StreakDemo, MotionStreak and Ribbon
@@ -117,10 +117,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		added WorldSpace coordinates to ParticleSystem
 		author of RenderTexture class
 		author of RenderTexture sample
-		author of Joystick / ProximityManager
-		mentor of merging Sprite with AtlasSprite
-		mentor of improving animations with zwoptex
-		Director supports global NSBundle
+		author of Joystick
+		author of ProximityManager
+		mentor of merging Sprite with AtlasSprite, and Zwoptex supports and improvements
+		added support for global NSBundle
 	* Jason Cecil:
 		Fixed memory leak in Director#FPSLabel
 		patches for CocosDenshion

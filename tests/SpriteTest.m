@@ -2620,7 +2620,7 @@ Class restartAction()
 
 		for(int i=0; i<10; i++)
 		{
-			CCSprite* s1 = [asmtest createSpriteWithRect:CGRectMake(0, 0, 50, 50)];
+			CCSprite* s1 = [CCSprite spriteWithSpriteSheet:asmtest rect:CGRectMake(0, 0, 50, 50)];
 			[a addObject:s1];
 			[asmtest addChild:s1 z:10];
 		}
@@ -2654,7 +2654,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet multiple levels of children";
+	return @"SpriteSheet reorder #2";
 }
 @end
 

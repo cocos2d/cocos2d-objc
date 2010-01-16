@@ -94,6 +94,11 @@
 	return [[[self alloc] initWithCGImage:image] autorelease];
 }
 
++(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect
+{
+	return [[[self alloc] initWithSpriteSheet:spritesheet rect:rect] autorelease];
+}
+
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -147,13 +152,6 @@
 	return self;
 }
 
--(id) initWithTexture:(CCTexture2D*)texture
-{
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	return [self initWithTexture:texture rect:rect];
-}
-
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
 	NSAssert(texture!=nil, @"Invalid texture for sprite");
@@ -166,8 +164,19 @@
 	return self;
 }
 
+-(id) initWithTexture:(CCTexture2D*)texture
+{
+	NSAssert(texture!=nil, @"Invalid texture for sprite");
+
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
+	return [self initWithTexture:texture rect:rect];
+}
+
 -(id) initWithFile:(NSString*)filename
 {
+	NSAssert(filename!=nil, @"Invalid filename for sprite");
+
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture ) {
 		CGRect rect = CGRectZero;
@@ -179,6 +188,8 @@
 
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect
 {
+	NSAssert(filename!=nil, @"Invalid filename for sprite");
+
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture )
 		return [self initWithTexture:texture rect:rect];
@@ -187,6 +198,8 @@
 
 - (id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
+	NSAssert(spriteFrame!=nil, @"Invalid spriteFrame for sprite");
+
 	id ret = [self initWithTexture:spriteFrame.texture rect:spriteFrame.rect];
 	[self setDisplayFrame:spriteFrame];
 	return ret;
@@ -194,12 +207,16 @@
 
 -(id)initWithSpriteFrameName:(NSString*)spriteFrameName
 {
+	NSAssert(spriteFrameName!=nil, @"Invalid spriteFrameName for sprite");
+
 	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
 	return [self initWithSpriteFrame:frame];
 }
 
 - (id) initWithCGImage: (CGImageRef)image
 {
+	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
+
 	// XXX: possible bug. See issue #349. New API should be added
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
@@ -208,6 +225,13 @@
 	CGRect rect = CGRectMake(0, 0, size.width, size.height );
 	
 	return [self initWithTexture:texture rect:rect];
+}
+
+-(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect
+{
+	id ret = [self initWithTexture:spritesheet.texture rect:rect];
+	[self useSpriteSheetRender:spritesheet];
+	return ret;
 }
 
 - (NSString*) description

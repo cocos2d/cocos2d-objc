@@ -24,7 +24,7 @@ Main features
 		* Fast font rendering using Fixed and Variable width fonts
 		* Support for .ttf fonts
     * Texture Atlas support
-    * Tile Map support
+    * Tile Map support: Orthogonal, Isometric and Hexagonal
     * Parallax scrolling
     * Motion Streak
     * High Score server (cocosLive library)
