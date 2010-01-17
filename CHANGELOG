@@ -7,6 +7,7 @@ version 0.99.0-rc - XX-mmm-2010
  . TMXMaps: objectGroup support offsets (issue #689)
  . TMXMaps: objectGroup: Simplified object creation. All objects are NSDictionaries. For custom objects, subclass TMXTiledMap (issue #636)
  . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)
+ . TextureNode: Removed Node. Superseded by Sprite
  . TouchDispatcher: StandardTouchHandler returns void (not BOOL) and they are executed before the TargetedHandlers (issue #710)
 
 version 0.9.0-beta2 - 11-Jan-2010
