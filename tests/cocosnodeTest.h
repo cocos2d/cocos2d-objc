@@ -53,3 +53,7 @@
 @interface NodeToWorld : TestDemo
 {}
 @end
+
+@interface CameraTest : TestDemo
+{}
+@end

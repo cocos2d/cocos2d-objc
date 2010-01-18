@@ -167,10 +167,8 @@
 	[self set3DProjection];
 	[self applyLandscape];
 
-	BOOL cDirty = camera.dirty;
-	camera.dirty = YES;
-	[camera locate];
-	camera.dirty = cDirty;
+	if( camera.dirty )
+		[camera locate];
 		
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, self.texture.name);
