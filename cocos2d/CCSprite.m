@@ -817,6 +817,9 @@ struct transformValues_ {
 -(void) setTexture:(CCTexture2D*)texture
 {
 	NSAssert( ! usesSpriteSheet_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet");
+	
+	// accept texture==nil as argument
+	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
 	[texture_ release];
 	texture_ = [texture retain];
