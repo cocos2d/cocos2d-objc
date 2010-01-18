@@ -30,12 +30,20 @@
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
+// XXX: Optmization
+struct transformValues_ {
+	CGPoint pos;		// position x and y
+	CGPoint	scale;		// scale x and y
+	float	rotation;
+	CGPoint ap;			// anchor point in pixels
+};
 
 @interface CCSprite (Private)
 -(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 -(void) setTextureRect:(CGRect)rect untrimmedSize:(CGSize)size;
+-(struct transformValues_) getTransformValues;	// optimization
 @end
 
 @implementation CCSprite
@@ -381,26 +389,21 @@
 		
 		for (CCNode *p = self ; p && p != spriteSheet_; p = p.parent) {
 			
-			// XXX: expensive calls. Should be optimized
-			CGPoint pos = [p position];
-			float	rot = [p rotation];
-			float	sx = [p scaleX];
-			float	sy = [p scaleY];
-			CGPoint	ap = [p anchorPointInPixels];
+			struct transformValues_ tv = [(CCSprite*)p getTransformValues];
 			
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
 			// 2nd: Translate, Rotate, Scale
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
-				newMatrix = CGAffineTransformTranslate(newMatrix, pos.x, pos.y);
+				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
-				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(rot));
+				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
-				newMatrix = CGAffineTransformScale(newMatrix, sx, sy);
+				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
 			}
 			
 			// 3rd: Translate anchor point
-			newMatrix = CGAffineTransformTranslate(newMatrix, -ap.x, -ap.y);
+			newMatrix = CGAffineTransformTranslate(newMatrix, -tv.ap.x, -tv.ap.y);
 
 			// 4th: Matrix multiplication
 			matrix = CGAffineTransformConcat( matrix, newMatrix);
@@ -446,6 +449,20 @@
 		
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	dirty_ = NO;
+}
+
+// XXX: Optimization: instead of calling 5 times the parent sprite to obtain: position, scale.x, scale.y, anchorpoint and rotation,
+// this fuction return the 5 values in 1 single call
+-(struct transformValues_) getTransformValues
+{
+	struct transformValues_ tv;
+	tv.pos = position_;
+	tv.scale.x = scaleX_;
+	tv.scale.y = scaleY_;
+	tv.rotation = rotation_;
+	tv.ap = anchorPointInPixels_;
+	
+	return tv;
 }
 
 #pragma mark CCSprite - draw
