@@ -29,6 +29,7 @@ static NSString *transitions[] = {
 			@"SchedulerTest2",
 			@"SchedulerTest3",
 			@"NodeToWorld",
+			@"CameraTest",
 };
 
 Class nextAction()
@@ -620,7 +621,45 @@ Class restartAction()
 @end
 
 
+#pragma mark -
+#pragma mark NodeToWorld
 
+@implementation CameraTest
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCSprite *sprite;
+
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[self addChild:sprite z:0];		
+		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
+		
+		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite z:0];		
+		[sprite setPosition:ccp(s.width/4*2, s.height/2)];		
+		[[sprite camera] setCenterX:s.width/2 centerY:s.height/2 centerZ:0];
+		
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		[self addChild:sprite z:0];		
+		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
+				
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Camera test";
+}
+@end
+
+#pragma mark -
 #pragma mark AppController
 
 // CLASS IMPLEMENTATIONS
