@@ -652,8 +652,9 @@ struct transformValues_ {
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-//		[self setTextureRect:rect_];
 		scaleX_ *= -1;
+		isTransformDirty_ = isInverseDirty_ = YES;
+		
 		dirty_ = YES;
 	}
 }
@@ -666,8 +667,9 @@ struct transformValues_ {
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-//		[self setTextureRect:rect_];
 		scaleY_ *= -1;
+		isTransformDirty_ = isInverseDirty_ = YES;
+		
 		dirty_ = YES;
 	}	
 }

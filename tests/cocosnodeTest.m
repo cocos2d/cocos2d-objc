@@ -627,6 +627,18 @@ Class restartAction()
 #pragma mark CameraTest
 
 @implementation CameraTest
+-(void) onEnter
+{
+	[super onEnter];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+}
+
+-(void) onExit
+{
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	[super onExit];
+}
+
 -(id) init
 {
 	if( ( self=[super init]) ) {
@@ -644,10 +656,10 @@ Class restartAction()
 		
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite z:0];		
-//		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
+		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
 		CCCamera *cam = [sprite camera];
-		[cam setCenterX:0 centerY:0 centerZ:0];
-//		[cam setEyeX:0 eyeY:0 eyeZ:200];
+		[cam setCenterX:-100 centerY:0 centerZ:0];
+		[cam setEyeX:-100 eyeY:0 eyeZ:200];
 		
 		
 		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
