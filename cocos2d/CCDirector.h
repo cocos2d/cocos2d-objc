@@ -262,6 +262,9 @@ and when to execute the Scenes.
  */
 -(CGPoint) convertToUI:(CGPoint)p;
 
+// rotates the screen if Landscape mode is activated
+-(void) applyLandscape;
+
 // Scene Management
 
 /**Enters the Director's main loop with the given Scene. 

@@ -439,7 +439,7 @@
 	}
 	
 	if ( grid && grid.active)
-		[grid afterDraw:self.camera];
+		[grid afterDraw:camera];
 	
 	glPopMatrix();
 }

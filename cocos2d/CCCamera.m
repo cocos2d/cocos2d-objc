@@ -19,6 +19,8 @@
 
 #import "Support/glu.h"
 
+#import "CCDrawingPrimitives.h"
+
 @implementation CCCamera
 
 @synthesize dirty;
@@ -65,9 +67,10 @@
 -(void) locate
 {
 	if( dirty ) {
-		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 
 		glLoadIdentity();
+		
+		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 
 		switch( orientation ) {
 			case CCDeviceOrientationPortrait:
@@ -87,7 +90,7 @@
 				centerX, centerY, centerZ,
 				upX, upY, upZ
 				);
-		
+
 		switch( orientation ) {
 			case CCDeviceOrientationPortrait:
 			case CCDeviceOrientationPortraitUpsideDown:
