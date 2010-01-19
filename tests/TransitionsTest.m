@@ -142,6 +142,8 @@
 static int sceneIdx=0;
 static NSString *transitions[] = {
 						@"CCJumpZoomTransition",
+@"FlipXLeftOver",
+
 						@"CCCrossFadeTransition",
 						@"PageTransitionForward",
 						@"PageTransitionBackward",

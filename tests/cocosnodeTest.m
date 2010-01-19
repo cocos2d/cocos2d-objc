@@ -19,6 +19,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+@"CameraTest",
+
 			@"Test2",
 			@"Test4",
 			@"Test5",
@@ -622,7 +624,7 @@ Class restartAction()
 
 
 #pragma mark -
-#pragma mark NodeToWorld
+#pragma mark CameraTest
 
 @implementation CameraTest
 -(id) init
@@ -637,10 +639,15 @@ Class restartAction()
 		[self addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
 		
+		CCOrbitCamera *orbit = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+		[sprite runAction:orbit];
+		
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite z:0];		
-		[sprite setPosition:ccp(s.width/4*2, s.height/2)];		
-		[[sprite camera] setCenterX:s.width/2 centerY:s.height/2 centerZ:0];
+//		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
+		CCCamera *cam = [sprite camera];
+		[cam setCenterX:0 centerY:0 centerZ:0];
+//		[cam setEyeX:0 eyeY:0 eyeZ:200];
 		
 		
 		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
@@ -648,6 +655,7 @@ Class restartAction()
 		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
 				
 		
+		self.scale = 1;
 	}
 	
 	return self;

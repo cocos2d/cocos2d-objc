@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -112,9 +112,9 @@
 	r = sqrtf( powf(x,2) + powf(y,2) + powf(z,2));
 	s = sqrtf( powf(x,2) + powf(y,2));
 	if(s==0.0f)
-		s=0.00000001f;
+		s=FLT_EPSILON;
 	if(r==0.0f)
-		r=0.00000001f;
+		r=FLT_EPSILON;
 
 	*zenith = acosf( z/r);
 	if( x < 0 )

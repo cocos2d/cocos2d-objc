@@ -52,8 +52,6 @@ extern NSString * cocos2dVersion(void);
 -(void) preMainLoop;
 -(void) mainLoop;
 -(void) setNextScene;
-// rotates the screen if Landscape mode is activated
--(void) applyLandscape;
 // shows the FPS in the screen
 -(void) showFPS;
 // calculates delta time since last time it was called
@@ -283,25 +281,26 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
+	CGSize size = openGLView_.frame.size;
 	switch (projection) {
 		case CCDirectorProjection2D:
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrthof(0, openGLView_.frame.size.width, 0, openGLView_.frame.size.height, -1, 1);
+			glOrthof(0, size.width, 0, size.height, -1, 1);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;
 
 		case CCDirectorProjection3D:
-			glViewport(0, 0, openGLView_.frame.size.width, openGLView_.frame.size.height);
+			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			gluPerspective(60, (GLfloat)openGLView_.frame.size.width/openGLView_.frame.size.height, 0.5f, 1500.0f);
+			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
 			
 			glMatrixMode(GL_MODELVIEW);	
 			glLoadIdentity();
-			gluLookAt( openGLView_.frame.size.width/2, openGLView_.frame.size.height/2, [CCCamera getZEye],
-					  openGLView_.frame.size.width/2, openGLView_.frame.size.height/2, 0,
+			gluLookAt( size.width/2, size.height/2, [CCCamera getZEye],
+					  size.width/2, size.height/2, 0,
 					  0.0f, 1.0f, 0.0f);			
 			break;
 			
