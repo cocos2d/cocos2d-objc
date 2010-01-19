@@ -456,15 +456,26 @@
 
 -(void) transform
 {
-	if ( !(grid && grid.active) )
+	if ( camera && !(grid && grid.active) )
 		[camera locate];
 	
 	// transformations
 	
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	// BEGIN alternative -- using cached transform
+	//
+	static GLfloat m[16];
+	CGAffineTransform t = [self nodeToParentTransform];
+	CGAffineToGL(&t, m);
+	glMultMatrixf(m);
+	glTranslatef(0, 0, vertexZ_);
+	//
+	// END alternative
+
+#else
 	// BEGIN original implementation
 	// 
 	// translate
-
 	if ( relativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
 		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 
@@ -484,20 +495,10 @@
 	// restore and re-position point
 	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
 		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+
 	//
 	// END original implementation
-	
-	/*
-	// BEGIN alternative -- using cached transform
-	//
-	static GLfloat m[16];
-	CGAffineTransform t = [self nodeToParentTransform];
-	CGAffineToGL(&t, m);
-	glMultMatrixf(m);
-	glTranslatef(0, 0, vertexZ_);
-	//
-	// END alternative
-	*/
+#endif
 }
 
 #pragma mark CCNode SceneManagement

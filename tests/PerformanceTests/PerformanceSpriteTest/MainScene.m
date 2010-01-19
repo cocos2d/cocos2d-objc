@@ -177,7 +177,7 @@ Class restartAction()
 		case 2:
 		case 3: 
 		case 4: {
-			sprite = [sheet createSpriteWithRect:CGRectMake(0, 0, 52, 139)];
+			sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(0, 0, 52, 139)];
 			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -201,7 +201,7 @@ Class restartAction()
 
 			x *= 85;
 			y *= 121;
-			sprite = [sheet createSpriteWithRect:CGRectMake(x,y,85,121)];
+			sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(x,y,85,121)];
 			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -231,7 +231,7 @@ Class restartAction()
 			
 			x *= 32;
 			y *= 32;
-			sprite = [sheet createSpriteWithRect:CGRectMake(x,y,32,32)];
+			sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(x,y,32,32)];
 			[sheet addChild:sprite z:0 tag:tag+100];
 			break;
 		}
