@@ -25,16 +25,10 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	camera = [target camera];
+	CCCamera *camera = [target camera];
 	[camera centerX:&centerXOrig centerY:&centerYOrig centerZ: &centerZOrig];
 	[camera eyeX:&eyeXOrig eyeY:&eyeYOrig eyeZ: &eyeZOrig];
 	[camera upX:&upXOrig upY:&upYOrig upZ: &upZOrig];
-}
-
--(void) stop
-{
-	camera = nil;
-	[super stop];
 }
 
 -(id) reverse
@@ -100,7 +94,7 @@
 	float j = sinf(za) * sinf(xa) * r + centerYOrig;
 	float k = cosf(za) * r + centerZOrig;
 
-	[camera setEyeX:i eyeY:j eyeZ:k];
+	[[target camera] setEyeX:i eyeY:j eyeZ:k];
 	
 }
 
@@ -110,6 +104,7 @@
 	float r; // radius
 	float s;
 	
+	CCCamera *camera = [target camera];
 	[camera eyeX:&ex eyeY:&ey eyeZ:&ez];
 	[camera centerX:&cx centerY:&cy centerZ:&cz];
 	

@@ -20,7 +20,6 @@
  */
 @interface CCCameraAction : CCIntervalAction <NSCopying> {
 	
-	CCCamera *camera;
 	float centerXOrig;
 	float centerYOrig;
 	float centerZOrig;
