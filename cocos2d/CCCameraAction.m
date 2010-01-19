@@ -25,9 +25,16 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[[target camera] centerX:&centerXOrig centerY:&centerYOrig centerZ: &centerZOrig];
-	[[target camera] eyeX:&eyeXOrig eyeY:&eyeYOrig eyeZ: &eyeZOrig];
-	[[target camera] upX:&upXOrig upY:&upYOrig upZ: &upZOrig];
+	camera = [target camera];
+	[camera centerX:&centerXOrig centerY:&centerYOrig centerZ: &centerZOrig];
+	[camera eyeX:&eyeXOrig eyeY:&eyeYOrig eyeZ: &eyeZOrig];
+	[camera upX:&upXOrig upY:&upYOrig upZ: &upZOrig];
+}
+
+-(void) stop
+{
+	camera = nil;
+	[super stop];
 }
 
 -(id) reverse
@@ -50,18 +57,18 @@
 
 -(id) initWithDuration:(float)t radius:(float)r deltaRadius:(float) dr angleZ:(float)z deltaAngleZ:(float)dz angleX:(float)x deltaAngleX:(float)dx
 {
-	if(!(self=[super initWithDuration:t]) )
-		return nil;
+	if((self=[super initWithDuration:t]) ) {
 	
-	radius = r;
-	deltaRadius = dr;
-	angleZ = z;
-	deltaAngleZ = dz;
-	angleX = x;
-	deltaAngleX = dx;
+		radius = r;
+		deltaRadius = dr;
+		angleZ = z;
+		deltaAngleZ = dz;
+		angleX = x;
+		deltaAngleX = dx;
 
-	radDeltaZ = (CGFloat)CC_DEGREES_TO_RADIANS(dz);
-	radDeltaX = (CGFloat)CC_DEGREES_TO_RADIANS(dx);
+		radDeltaZ = (CGFloat)CC_DEGREES_TO_RADIANS(dz);
+		radDeltaX = (CGFloat)CC_DEGREES_TO_RADIANS(dx);
+	}
 	
 	return self;
 }
@@ -83,17 +90,18 @@
 	radX = (CGFloat)CC_DEGREES_TO_RADIANS(angleX);
 }
 
--(void) update: (ccTime) t
+-(void) update: (ccTime) dt
 {
-	float r = (radius + deltaRadius * t) *[CCCamera getZEye];
-	float za = radZ + radDeltaZ * t;
-	float xa = radX + radDeltaX * t;
+	float r = (radius + deltaRadius * dt) *[CCCamera getZEye];
+	float za = radZ + radDeltaZ * dt;
+	float xa = radX + radDeltaX * dt;
 
 	float i = sinf(za) * cosf(xa) * r + centerXOrig;
 	float j = sinf(za) * sinf(xa) * r + centerYOrig;
 	float k = cosf(za) * r + centerZOrig;
 
-	[[target camera] setEyeX:i eyeY:j eyeZ:k];
+	[camera setEyeX:i eyeY:j eyeZ:k];
+	
 }
 
 -(void) sphericalRadius:(float*) newRadius zenith:(float*) zenith azimuth:(float*) azimuth
@@ -102,8 +110,8 @@
 	float r; // radius
 	float s;
 	
-	[[target camera] eyeX:&ex eyeY:&ey eyeZ:&ez];
-	[[target camera] centerX:&cx centerY:&cy centerZ:&cz];
+	[camera eyeX:&ex eyeY:&ey eyeZ:&ez];
+	[camera centerX:&cx centerY:&cy centerZ:&cz];
 	
 	x = ex-cx;
 	y = ey-cy;
@@ -118,7 +126,7 @@
 
 	*zenith = acosf( z/r);
 	if( x < 0 )
-		*azimuth= (CGFloat)M_PI - asinf(y/s);
+		*azimuth= (float)M_PI - asinf(y/s);
 	else
 		*azimuth = asinf(y/s);
 					

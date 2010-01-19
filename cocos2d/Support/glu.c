@@ -97,13 +97,6 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
     M(3, 2) = 0.0f;
     M(3, 3) = 1.0f;
 #undef M
-//    {
-//        int a;
-//        GLfloat fixedM[16];
-//        for (a = 0; a < 16; ++a)
-//            fixedM[a] = m[a];
-//        glMultMatrixf(fixedM);
-//    }
 	
 	glMultMatrixf(m);
 

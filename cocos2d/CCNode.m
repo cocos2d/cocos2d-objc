@@ -50,7 +50,7 @@
 
 @synthesize visible;
 @synthesize parent;
-@synthesize grid;
+@synthesize grid=grid_;
 @synthesize zOrder;
 @synthesize tag;
 @synthesize vertexZ = vertexZ_;
@@ -164,7 +164,7 @@
 		
 		vertexZ_ = 0;
 
-		grid = nil;
+		grid_ = nil;
 		
 		visible = YES;
 
@@ -173,7 +173,7 @@
 		zOrder = 0;
 
 		// lazy alloc
-		camera = nil;
+		camera_ = nil;
 
 		// children (lazy allocs)
 		children = nil;
@@ -210,9 +210,9 @@
 	CCLOG( @"cocos2d: deallocing %@", self);
 	
 	// attributes
-	[camera release];
+	[camera_ release];
 
-	[grid release];
+	[grid_ release];
 	
 	// children
 	
@@ -239,10 +239,19 @@
 // camera: lazy alloc
 -(CCCamera*) camera
 {
-	if( ! camera )
-		camera = [[CCCamera alloc] init];
+	if( ! camera_ ) {
+		camera_ = [[CCCamera alloc] init];
+		
+		// by default, center camera at the Sprite's anchor point
+//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
+//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
 
-	return camera;
+//		[camera_ setCenterX:0 centerY:0 centerZ:0];
+//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
+
+	}
+
+	return camera_;
 }
 
 -(CCNode*) getChildByTag:(int) aTag
@@ -417,8 +426,8 @@
 	
 	glPushMatrix();
 	
-	if ( grid && grid.active) {
-		[grid beforeDraw];
+	if ( grid_ && grid_.active) {
+		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
 	
@@ -438,8 +447,8 @@
 			[child visit];
 	}
 	
-	if ( grid && grid.active)
-		[grid afterDraw:camera];
+	if ( grid_ && grid_.active)
+		[grid_ afterDraw:self];
 	
 	glPopMatrix();
 }
@@ -448,16 +457,16 @@
 
 -(void) transformAncestors
 {
-	if( self.parent ) {
-		[self.parent transformAncestors];
-		[self.parent transform];
+	if( parent ) {
+		[parent transformAncestors];
+		[parent transform];
 	}
 }
 
 -(void) transform
 {
-	if ( camera && !(grid && grid.active) )
-		[camera locate];
+//	if ( camera_ && !(grid && grid.active) )
+//		[camera_ locate];
 	
 	// transformations
 	
@@ -468,7 +477,8 @@
 	CGAffineTransform t = [self nodeToParentTransform];
 	CGAffineToGL(&t, m);
 	glMultMatrixf(m);
-	glTranslatef(0, 0, vertexZ_);
+	if( vertexZ_ )
+		glTranslatef(0, 0, vertexZ_);
 	//
 	// END alternative
 
@@ -492,6 +502,9 @@
 	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
 		glScalef( scaleX_, scaleY_, 1.0f );
 	
+	if ( camera_ && !(grid_ && grid_.active) )
+		[camera_ locate];
+	
 	// restore and re-position point
 	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
 		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
@@ -499,6 +512,10 @@
 	//
 	// END original implementation
 #endif
+	
+//	if ( camera_ && !(grid && grid.active) )
+//		[camera_ locate];
+
 }
 
 #pragma mark CCNode SceneManagement

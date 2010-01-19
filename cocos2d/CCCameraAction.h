@@ -14,9 +14,13 @@
 
 #import "CCIntervalAction.h"
 
+@class CCCamera;
+
 /** Base class for CCCamera actions
  */
 @interface CCCameraAction : CCIntervalAction <NSCopying> {
+	
+	CCCamera *camera;
 	float centerXOrig;
 	float centerYOrig;
 	float centerZOrig;
