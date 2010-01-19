@@ -52,7 +52,7 @@
 		}
 		
 		grabber_ = [[CCGrabber alloc] init];
-		[grabber_ grab:self.texture];
+		[grabber_ grab:texture_];
 
 		step_.x = win.width / gridSize_.x;
 		step_.y = win.height / gridSize_.y;
@@ -148,7 +148,7 @@
 	
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
-	gluLookAt( winSize.width/2, winSize.height/2, [CCCamera getZEye],
+	gluLookAt( winSize.width/2, winSize.height/2, [[CCDirector sharedDirector] getZEye],
 			  winSize.width/2, winSize.height/2, 0,
 			  0.0f, 1.0f, 0.0f
 			  );
@@ -157,24 +157,33 @@
 -(void)beforeDraw
 {
 	[self set2DProjection];
-	[grabber_ beforeRender:self.texture];
+	[grabber_ beforeRender:texture_];
 }
 
--(void)afterDraw:(CCCamera *)camera
+-(void)afterDraw:(CCNode *)target
 {
-	[grabber_ afterRender:self.texture];
+	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
 	[self applyLandscape];
 
-	if( camera.dirty )
-		[camera locate];
+	if( target.camera.dirty ) {
+
+		CGPoint offset = [target anchorPointInPixels];
+
+		//
+		// XXX: Camera should be applied in the AnchorPoint
+		//
+		glTranslatef(offset.x, offset.y, 0);
+		[target.camera locate];
+		glTranslatef(-offset.x, -offset.y, 0);
+	}
 		
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, self.texture.name);
+	glBindTexture(GL_TEXTURE_2D, texture_.name);
 	
 	[self blit];
-	
+
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -235,8 +244,8 @@
 
 -(void)calculateVertexPoints
 {
-	float width = (float)self.texture.pixelsWide;
-	float height = (float)self.texture.pixelsHigh;
+	float width = (float)texture_.pixelsWide;
+	float height = (float)texture_.pixelsHigh;
 	
 	int x, y, i;
 	
@@ -394,8 +403,8 @@
 
 -(void)calculateVertexPoints
 {
-	float width = (float)self.texture.pixelsWide;
-	float height = (float)self.texture.pixelsHigh;
+	float width = (float)texture_.pixelsWide;
+	float height = (float)texture_.pixelsHigh;
 	
 	int numQuads = gridSize_.x * gridSize_.y;
 	

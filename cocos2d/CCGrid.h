@@ -48,7 +48,7 @@
 
 -(id)initWithSize:(ccGridSize)gridSize;
 -(void)beforeDraw;
--(void)afterDraw:(CCCamera*)camera;
+-(void)afterDraw:(CCNode*)target;
 -(void)blit;
 -(void)reuse;
 

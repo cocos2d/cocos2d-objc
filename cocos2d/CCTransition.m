@@ -479,6 +479,7 @@ enum {
 		outDeltaZ = -90;
 		outAngleZ = 0;
 	}
+		
 	inA = [CCSequence actions:
 		   [CCDelayTime actionWithDuration:duration/2],
 		   [CCShow action],

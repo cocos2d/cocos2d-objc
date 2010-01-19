@@ -279,6 +279,11 @@ static CCDirector *_sharedDirector = nil;
 	return projection_;
 }
 
+-(float) getZEye
+{
+	return ( openGLView_.frame.size.height / 1.1566f );
+}
+
 -(void) setProjection:(ccDirectorProjection)projection
 {
 	CGSize size = openGLView_.frame.size;
@@ -299,7 +304,7 @@ static CCDirector *_sharedDirector = nil;
 			
 			glMatrixMode(GL_MODELVIEW);	
 			glLoadIdentity();
-			gluLookAt( size.width/2, size.height/2, [CCCamera getZEye],
+			gluLookAt( size.width/2, size.height/2, [self getZEye],
 					  size.width/2, size.height/2, 0,
 					  0.0f, 1.0f, 0.0f);			
 			break;

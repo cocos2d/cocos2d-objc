@@ -249,8 +249,8 @@ Class restartAction()
 		
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
 		[self addChild: bg z:0 tag:kTagBackground];
-		bg.anchorPoint = CGPointZero;
-//		bg.position = ccp(x/2,y/2);
+//		bg.anchorPoint = CGPointZero;
+		bg.position = ccp(x/2,y/2);
 		
 		CCSprite *grossini = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[bg addChild:grossini z:1 tag:kTagSprite1];

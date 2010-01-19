@@ -265,6 +265,9 @@ and when to execute the Scenes.
 // rotates the screen if Landscape mode is activated
 -(void) applyLandscape;
 
+/// XXX: missing description
+-(float) getZEye;
+
 // Scene Management
 
 /**Enters the Director's main loop with the given Scene. 

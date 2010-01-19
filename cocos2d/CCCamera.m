@@ -47,15 +47,10 @@
 
 -(void) restore
 {
-	CGSize s = [[CCDirector sharedDirector] displaySize];
-
-	eyeX = s.width/2;
-	eyeY = s.height/2;
+	eyeX = eyeY = 0;
 	eyeZ = [CCCamera getZEye];
 	
-	centerX = s.width/2;
-	centerY = s.height/2;
-	centerZ = 0.0f;
+	centerX = centerY = centerZ = 0;
 	
 	upX = 0.0f;
 	upY = 1.0f;
@@ -66,50 +61,18 @@
 
 -(void) locate
 {
-	if( dirty ) {
-
-		glLoadIdentity();
-		
-		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
-
-		switch( orientation ) {
-			case CCDeviceOrientationPortrait:
-				break;
-			case CCDeviceOrientationPortraitUpsideDown:
-				glRotatef(-180,0,0,1);
-				break;
-			case CCDeviceOrientationLandscapeLeft:
-				glRotatef(-90,0,0,1);
-				break;
-			case CCDeviceOrientationLandscapeRight:
-				glRotatef(90,0,0,1);
-				break;	
-		}
-		
+	if( dirty )
 		gluLookAt( eyeX, eyeY, eyeZ,
 				centerX, centerY, centerZ,
 				upX, upY, upZ
 				);
-
-		switch( orientation ) {
-			case CCDeviceOrientationPortrait:
-			case CCDeviceOrientationPortraitUpsideDown:
-				// none
-				break;
-			case CCDeviceOrientationLandscapeLeft:
-				glTranslatef(-80,80,0);
-				break;
-			case CCDeviceOrientationLandscapeRight:
-				glTranslatef(-80,80,0);
-				break;	
-		}
-	}
 }
 
 +(float) getZEye
 {
-	CGSize s = [[CCDirector sharedDirector] displaySize];
-	return ( s.height / 1.1566f );
+	return FLT_EPSILON;
+//	CGSize s = [[CCDirector sharedDirector] displaySize];
+//	return ( s.height / 1.1566f );
 }
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z

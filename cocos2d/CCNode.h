@@ -97,10 +97,10 @@ enum {
 	BOOL visible;
 	
 	// a Camera
-	CCCamera *camera;
+	CCCamera *camera_;
 	
 	// a Grid
-	CCGridBase *grid;
+	CCGridBase *grid_;
 	
 	// z-order value
 	int zOrder;

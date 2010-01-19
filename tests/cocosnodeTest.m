@@ -645,27 +645,45 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSprite *p = [CCSprite spriteWithFile:@"background3.png"];
+		[self addChild:p z:0];
+		p.position = ccp(s.width/2, s.height/2);
+		p.opacity = 128;
+		
 		CCSprite *sprite;
+		CCOrbitCamera *orbit;
+		CCCamera *cam;
+		CGSize ss;
 
-		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-		[self addChild:sprite z:0];		
-		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
-		
-		CCOrbitCamera *orbit = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
-		[sprite runAction:orbit];
-		
+		// LEFT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
-		[self addChild:sprite z:0];		
+		[p addChild:sprite z:0];		
+		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
+		cam = [sprite camera];
+		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
+		
+		// CENTER
+		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[p addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
-		CCCamera *cam = [sprite camera];
-		[cam setCenterX:-100 centerY:0 centerZ:0];
-		[cam setEyeX:-100 eyeY:0 eyeZ:200];
+		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:45 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 		
 		
-		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-		[self addChild:sprite z:0];		
+		// RIGHT
+		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[p addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
+		ss = [sprite contentSize];		
+		orbit = [CCOrbitCamera actionWithDuration:2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:90 deltaAngleX:0],
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 				
+		
+		// PARENT
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+		[p runAction: [CCRepeatForever actionWithAction:orbit]];
+
 		
 		self.scale = 1;
 	}

@@ -125,15 +125,15 @@ const int defaultCapacity = 29;
 	
 	glPushMatrix();
 	
-	if ( grid && grid.active)
-		[grid beforeDraw];
+	if ( grid_ && grid_.active)
+		[grid_ beforeDraw];
 	
 	[self transform];
 	
 	[self draw];
 	
-	if ( grid && grid.active)
-		[grid afterDraw:self.camera];
+	if ( grid_ && grid_.active)
+		[grid_ afterDraw:self];
 	
 	glPopMatrix();
 }
