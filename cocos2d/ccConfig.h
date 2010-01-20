@@ -95,7 +95,7 @@
  But according to performance tests, Affine matrix performs better.
  This parameter doesn't affect SpriteSheet nodes.
  */
-//#define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
+#define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
 
 /**
  Enable it if you want to support v0.8 compatbility.

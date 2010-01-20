@@ -62,6 +62,23 @@ enum {
  
  Limitations:
  - A CCNode is a "void" object. It doesn't have a texture
+ 
+ Order in transformations with grid disabled
+ - 1) The node will be translated (position)
+ - 2) The node will be rotated (rotation)
+ - 3) The node will be scaled (scale)
+ - 4) The node will be moved according to the camera values (camera)
+ 
+ Order in transformations with grid enabled
+ - 1) The node will be translated (position)
+ - 2) The node will be rotated (rotation)
+ - 3) The node will be scaled (scale)
+ - 4) The grid will capture the screen
+ - 5) The node will be moved according to the camera values (camera)
+ - 6) The grid will render the captured screen
+ 
+ Camera:
+ - Each node has a camera. By default it points to the center of the CCNode.
  */ 
 @interface CCNode : NSObject {
 	
