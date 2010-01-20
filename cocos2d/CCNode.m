@@ -465,8 +465,6 @@
 
 -(void) transform
 {
-//	if ( camera_ && !(grid && grid.active) )
-//		[camera_ locate];
 	
 	// transformations
 	
@@ -479,7 +477,21 @@
 	glMultMatrixf(m);
 	if( vertexZ_ )
 		glTranslatef(0, 0, vertexZ_);
-	//
+
+	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
+	if ( camera_ && !(grid_ && grid_.active) ) {
+		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
+		
+		if( translate )
+			glTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
+
+		[camera_ locate];
+		
+		if( translate )
+			glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+	}
+
+
 	// END alternative
 
 #else
@@ -512,9 +524,6 @@
 	//
 	// END original implementation
 #endif
-	
-//	if ( camera_ && !(grid && grid.active) )
-//		[camera_ locate];
 
 }
 
