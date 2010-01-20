@@ -618,6 +618,11 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		CCNode *node = [CCNode node];
+		// camera uses the center of the image as the pivoting point
+		[node setContentSize:CGSizeMake(s.width,s.height)];
+		[node setAnchorPoint:ccp(0.5f, 0.5f)];
+		[node setPosition:ccp(s.width/2, s.height/2)];
+
 		[self addChild:node z:0];
 
 		for(int i=0;i<5;i++) {
@@ -669,6 +674,12 @@ Class restartAction()
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		// camera uses the center of the image as the pivoting point
+		[sheet setContentSize:CGSizeMake(s.width,s.height)];
+		[sheet setAnchorPoint:ccp(0.5f, 0.5f)];
+		[sheet setPosition:ccp(s.width/2, s.height/2)];
+		
+
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
 		
 		for(int i=0;i<5;i++) {
