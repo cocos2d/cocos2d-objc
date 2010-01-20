@@ -54,6 +54,12 @@ cpContact* cpContactInit(cpContact *con, cpVect p, cpVect n, cpFloat dist, cpHas
 cpVect cpContactsSumImpulses(cpContact *contacts, int numContacts);
 cpVect cpContactsSumImpulsesWithFriction(cpContact *contacts, int numContacts);
 
+typedef enum cpArbiterState {
+	cpArbiterStateNormal,
+	cpArbiterStateFirstColl,
+	cpArbiterStateIgnore,
+} cpArbiterState;
+
 // Data structure for tracking collisions between shapes.
 typedef struct cpArbiter {
 	// Information on the contact points between the objects.
@@ -77,7 +83,7 @@ typedef struct cpArbiter {
 	
 	// Are the shapes swapped in relation to the collision handler?
 	char swappedColl;
-	char firstColl;
+	char state;
 } cpArbiter;
 
 // Basic allocation/destruction functions.
@@ -97,9 +103,10 @@ void cpArbiterApplyCachedImpulse(cpArbiter *arb);
 // Run an iteration of the solver on the arbiter.
 void cpArbiterApplyImpulse(cpArbiter *arb, cpFloat eCoef);
 
-// Collision Helper Functions
+// Arbiter Helper Functions
 cpVect cpArbiterTotalImpulse(cpArbiter *arb);
 cpVect cpArbiterTotalImpulseWithFriction(cpArbiter *arb);
+void cpArbiterIgnore(cpArbiter *arb);
 
 
 static inline void
@@ -116,7 +123,7 @@ cpArbiterGetShapes(cpArbiter *arb, cpShape **a, cpShape **b)
 static inline int
 cpArbiterIsFirstContact(cpArbiter *arb)
 {
-	return arb->firstColl;
+	return arb->state == cpArbiterStateFirstColl;
 }
 
 static inline cpVect

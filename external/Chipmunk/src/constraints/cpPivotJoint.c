@@ -21,8 +21,8 @@
 
 #include <stdlib.h>
 
-#include "../chipmunk.h"
-#include "util.h"
+#include "chipmunk.h"
+#include "constraints/util.h"
 
 static void
 preStep(cpPivotJoint *joint, cpFloat dt, cpFloat dt_inv)
@@ -93,8 +93,6 @@ cpPivotJointInit(cpPivotJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVec
 {
 	cpConstraintInit((cpConstraint *)joint, &klass, a, b);
 	
-//	joint->anchr1 = cpvunrotate(cpvsub(pivot, a->p), a->rot);
-//	joint->anchr2 = cpvunrotate(cpvsub(pivot, b->p), b->rot);
 	joint->anchr1 = anchr1;
 	joint->anchr2 = anchr2;
 	

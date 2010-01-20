@@ -19,15 +19,6 @@
  * SOFTWARE.
  */
 
-#ifdef __IPHONE_2_0
-#import <CoreGraphics/CGGeometry.h>
-#define cpVect CGPoint
-#else
-typedef struct cpVect{
-	cpFloat x,y;
-} cpVect;
-#endif
-
 static const cpVect cpvzero={0.0f,0.0f};
 
 static inline cpVect

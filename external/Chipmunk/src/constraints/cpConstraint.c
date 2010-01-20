@@ -22,8 +22,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "../chipmunk.h"
-#include "util.h"
+#include "chipmunk.h"
+#include "constraints/util.h"
 
 // TODO: Comment me!
 

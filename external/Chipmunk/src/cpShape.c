@@ -57,8 +57,8 @@ cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body)
 	shape->surface_v = cpvzero;
 	
 	shape->collision_type = 0;
-	shape->group = 0;
-	shape->layers = -1;
+	shape->group = CP_NO_GROUP;
+	shape->layers = CP_ALL_LAYERS;
 	
 	shape->data = NULL;
 	

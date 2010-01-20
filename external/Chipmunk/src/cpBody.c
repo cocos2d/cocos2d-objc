@@ -54,6 +54,8 @@ cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 	body->w_bias = 0.0f;
 	
 	body->data = NULL;
+	body->v_limit = (cpFloat)INFINITY;
+	body->w_limit = (cpFloat)INFINITY;
 //	body->active = 1;
 
 	return body;
@@ -107,8 +109,10 @@ cpBodySlew(cpBody *body, cpVect pos, cpFloat dt)
 void
 cpBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 {
-	body->v = cpvadd(cpvmult(body->v, damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), dt));
-	body->w = body->w*damping + body->t*body->i_inv*dt;
+	body->v = cpvclamp(cpvadd(cpvmult(body->v, damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), dt)), body->v_limit);
+	
+	cpFloat w_limit = body->w_limit;
+	body->w = cpfclamp(body->w*damping + body->t*body->i_inv*dt, -w_limit, w_limit);
 }
 
 void

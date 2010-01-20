@@ -62,7 +62,7 @@ cpArrayDestroy(cpArray *arr)
 void
 cpArrayFree(cpArray *arr)
 {
-	if(!arr){
+	if(arr){
 		cpArrayDestroy(arr);
 		cpfree(arr);
 	}

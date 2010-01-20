@@ -19,50 +19,56 @@
  * SOFTWARE.
  */
  
-// Used for resizing hash tables.
-// Values approximately double.
-// http://planetmath.org/encyclopedia/GoodHashTablePrimes.html
-static int primes[] = {
-	5,
-	13,
-	23,
-	47,
-	97,
-	193,
-	389,
-	769,
-	1543,
-	3079,
-	6151,
-	12289,
-	24593,
-	49157,
-	98317,
-	196613,
-	393241,
-	786433,
-	1572869,
-	3145739,
-	6291469,
-	12582917,
-	25165843,
-	50331653,
-	100663319,
-	201326611,
-	402653189,
-	805306457,
-	1610612741,
-	0,
-};
+typedef struct cpBB{
+	cpFloat l, b, r ,t;
+} cpBB;
+
+static inline cpBB
+cpBBNew(const cpFloat l, const cpFloat b,
+		const cpFloat r, const cpFloat t)
+{
+	cpBB bb = {l, b, r, t};
+	return bb;
+}
 
 static inline int
-next_prime(int n)
+cpBBintersects(const cpBB a, const cpBB b)
 {
-	int i = 0;
-	while(n > primes[i]){
-		i++;
-		assert(primes[i]); // realistically this should never happen
-	}
-	
-	return primes[i];
+	return (a.l<=b.r && b.l<=a.r && a.b<=b.t && b.b<=a.t);
 }
+
+static inline int
+cpBBcontainsBB(const cpBB bb, const cpBB other)
+{
+	return (bb.l < other.l && bb.r > other.r && bb.b < other.b && bb.t > other.t);
+}
+
+static inline int
+cpBBcontainsVect(const cpBB bb, const cpVect v)
+{
+	return (bb.l < v.x && bb.r > v.x && bb.b < v.y && bb.t > v.y);
+}
+
+static inline cpBB
+cpBBmerge(const cpBB a, const cpBB b){
+	return cpBBNew(
+		cpfmin(a.l, b.l),
+		cpfmin(a.b, b.b),
+		cpfmax(a.r, b.r),
+		cpfmax(a.t, b.t)
+	);
+}
+
+static inline cpBB
+cpBBexpand(const cpBB bb, const cpVect v){
+	return cpBBNew(
+		cpfmin(bb.l, v.x),
+		cpfmin(bb.b, v.y),
+		cpfmax(bb.r, v.x),
+		cpfmax(bb.t, v.y)
+	);
+}
+
+cpVect cpBBClampVect(const cpBB bb, const cpVect v); // clamps the vector to lie within the bbox
+// TODO edge case issue
+cpVect cpBBWrapVect(const cpBB bb, const cpVect v); // wrap a vector to a bbox
