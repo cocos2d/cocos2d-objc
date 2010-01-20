@@ -11,10 +11,11 @@ version 0.99.0-rc - XX-mmm-2010
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)
+ . Templates: Updated to support v0.99 and Chipmunk v5.1
+ . TextureNode: Removed Node. Superseded by Sprite
  . TMXMaps: objectGroup support offsets (issue #689)
  . TMXMaps: objectGroup: Simplified object creation. All objects are NSDictionaries. For custom objects, subclass TMXTiledMap (issue #636)
  . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)
- . TextureNode: Removed Node. Superseded by Sprite
  . TouchDispatcher: StandardTouchHandler returns void (not BOOL) and they are executed before the TargetedHandlers (issue #710)
  . XCode: doxygen scripts runs with spaces in subdirectories (issue #684)
 

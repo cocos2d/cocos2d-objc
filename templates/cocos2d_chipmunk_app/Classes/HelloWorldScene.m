@@ -58,7 +58,7 @@ eachShape(void *ptr, void* unused)
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 	
-	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(posx, posy, 85, 121)];
+	CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(posx, posy, 85, 121)];
 	[sheet addChild: sprite];
 	
 	sprite.position = ccp(x,y);
@@ -156,7 +156,7 @@ eachShape(void *ptr, void* unused)
 }
 
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
@@ -165,7 +165,6 @@ eachShape(void *ptr, void* unused)
 		
 		[self addNewSpriteX: location.x y:location.y];
 	}
-	return kEventHandled;
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
