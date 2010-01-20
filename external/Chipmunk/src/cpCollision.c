@@ -269,9 +269,9 @@ seg2poly(cpShape *shape1, cpShape *shape2, cpContact **arr)
 	cpVect va = cpvadd(seg->ta, cpvmult(poly_n, seg->r));
 	cpVect vb = cpvadd(seg->tb, cpvmult(poly_n, seg->r));
 	if(cpPolyShapeContainsVert(poly, va))
-		cpContactInit(addContactPoint(arr, &max, &num), va, poly_n, poly_min, CP_HASH_PAIR(seg, 0));
+		cpContactInit(addContactPoint(arr, &max, &num), va, poly_n, poly_min, CP_HASH_PAIR(seg->shape.hashid, 0));
 	if(cpPolyShapeContainsVert(poly, vb))
-		cpContactInit(addContactPoint(arr, &max, &num), vb, poly_n, poly_min, CP_HASH_PAIR(seg, 1));
+		cpContactInit(addContactPoint(arr, &max, &num), vb, poly_n, poly_min, CP_HASH_PAIR(seg->shape.hashid, 1));
 
 	// Floating point precision problems here.
 	// This will have to do for now.

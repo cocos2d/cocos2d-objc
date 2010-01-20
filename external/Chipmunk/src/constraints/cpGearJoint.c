@@ -21,8 +21,8 @@
 
 #include <stdlib.h>
 
-#include "../chipmunk.h"
-#include "util.h"
+#include "chipmunk.h"
+#include "constraints/util.h"
 
 static void
 preStep(cpGearJoint *joint, cpFloat dt, cpFloat dt_inv)

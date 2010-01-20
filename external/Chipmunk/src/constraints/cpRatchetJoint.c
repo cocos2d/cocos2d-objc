@@ -23,8 +23,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../chipmunk.h"
-#include "util.h"
+#include "chipmunk.h"
+#include "constraints/util.h"
 
 static void
 preStep(cpRatchetJoint *joint, cpFloat dt, cpFloat dt_inv)

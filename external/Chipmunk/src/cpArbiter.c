@@ -89,6 +89,12 @@ cpContactsEstimateCrushingImpulse(cpContact *contacts, int numContacts)
 	return (1.0f - vmag/fsum);
 }
 
+void
+cpArbiterIgnore(cpArbiter *arb)
+{
+	arb->state = cpArbiterStateIgnore;
+}
+
 cpArbiter*
 cpArbiterAlloc(void)
 {
@@ -105,7 +111,7 @@ cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
 	arb->b = b;
 	
 	arb->stamp = -1;
-	arb->firstColl = 1;
+	arb->state = cpArbiterStateFirstColl;
 	
 	return arb;
 }

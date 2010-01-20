@@ -19,6 +19,8 @@
  * SOFTWARE.
  */
 
+#include "assert.h"
+
 #define CP_DefineClassGetter(t) const cpConstraintClass * t##GetClass(){return (cpConstraintClass *)&klass;}
 
 void cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBody *a, cpBody *b);
@@ -67,12 +69,10 @@ k_scalar(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect n)
 	cpFloat r2cn = cpvcross(r2, n);
 	
 	cpFloat value = mass_sum + a->i_inv*r1cn*r1cn + b->i_inv*r2cn*r2cn;
-//	assert(value); // die on unsolvable collisions in debug mode
+	assert(value); // die on unsolvable collisions in debug mode
 	
 	return value;
 }
-
-#include <stdio.h>
 
 static inline void
 k_tensor(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect *k1, cpVect *k2)
@@ -104,7 +104,7 @@ k_tensor(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect *k1, cpVect *k2)
 	
 	// invert
 	cpFloat determinant = k11*k22 - k12*k21;
-//	asssert(determinant); // die on unsolvable collisions in debug mode
+	assert(determinant); // die on unsolvable collisions in debug mode
 	
 	cpFloat det_inv = 1.0f/determinant;
 	*k1 = cpv( k22*det_inv, -k12*det_inv);

@@ -92,8 +92,8 @@ postStepFuncSetTrans(postStepCallback *callback, void *ignored)
 #pragma mark Misc Helper Funcs
 
 // Default collision functions.
-static int alwaysCollide(cpArbiter *arb, cpSpace *space, cpDataPointer data){return 1;}
-static void nothing(cpArbiter *arb, cpSpace *space, cpDataPointer data){}
+static int alwaysCollide(cpArbiter *arb, cpSpace *space, void *data){return 1;}
+static void nothing(cpArbiter *arb, cpSpace *space, void *data){}
 
 // BBfunc callback for the spatial hash.
 static cpBB shapeBBFunc(cpShape *shape){return shape->bb;}
@@ -172,6 +172,10 @@ cpSpaceDestroy(cpSpace *space)
 	cpHashSetFree(space->contactSet);
 	cpArrayFree(space->arbiters);
 	
+	if(space->postStepCallbacks)
+		cpHashSetEach(space->postStepCallbacks, &freeWrap, NULL);
+	cpHashSetFree(space->postStepCallbacks);
+	
 	if(space->collFuncSet)
 		cpHashSetEach(space->collFuncSet, &freeWrap, NULL);
 	cpHashSetFree(space->collFuncSet);
@@ -233,7 +237,6 @@ cpSpaceRemoveCollisionHandler(cpSpace *space, cpCollisionType a, cpCollisionType
 void
 cpSpaceSetDefaultCollisionHandler(
 	cpSpace *space,
-	cpCollisionType a, cpCollisionType b,
 	cpCollisionBeginFunc begin,
 	cpCollisionPreSolveFunc preSolve,
 	cpCollisionPostSolveFunc postSolve,
@@ -241,7 +244,7 @@ cpSpaceSetDefaultCollisionHandler(
 	void *data
 ){
 	cpCollisionHandler handler = {
-		a, b,
+		0, 0,
 		begin ? begin : alwaysCollide,
 		preSolve ? preSolve : alwaysCollide,
 		postSolve ? postSolve : nothing,
@@ -334,7 +337,7 @@ void
 cpSpaceAddPostStepCallback(cpSpace *space, cpPostStepFunc func, void *obj, void *data)
 {
 	postStepCallback callback = {func, obj, data};
-	cpHashSetInsert(space->postStepCallbacks, (cpHashValue)obj, &callback, NULL);
+	cpHashSetInsert(space->postStepCallbacks, (cpHashValue)(size_t)obj, &callback, NULL);
 }
 
 static void
@@ -496,6 +499,34 @@ cpSpaceSegmentQueryFirst(cpSpace *space, cpVect start, cpVect end, cpLayers laye
 	return out->shape;
 }
 
+#pragma mark BB Query functions
+
+typedef struct bbQueryContext {
+	cpLayers layers;
+	cpGroup group;
+	cpSpaceBBQueryFunc func;
+	void *data;
+} bbQueryContext;
+
+static void 
+bbQueryHelper(cpBB *bb, cpShape *shape, bbQueryContext *context)
+{
+	if(
+		!(shape->group && context->group == shape->group) && (context->layers&shape->layers) &&
+		cpBBintersects(*bb, shape->bb)
+	){
+		context->func(shape, context->data);
+	}
+}
+
+void
+cpSpaceBBQuery(cpSpace *space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryFunc func, void *data)
+{
+	bbQueryContext context = {layers, group, func, data};
+	cpSpaceHashQuery(space->activeShapes, &bb, bb, (cpSpaceHashQueryFunc)bbQueryHelper, &context);
+	cpSpaceHashQuery(space->staticShapes, &bb, bb, (cpSpaceHashQueryFunc)bbQueryHelper, &context);
+}
+
 #pragma mark Spatial Hash Management
 
 // Iterator function used for updating shape BBoxes.
@@ -571,17 +602,28 @@ queryFunc(cpShape *a, cpShape *b, cpSpace *space)
 	// Get an arbiter from space->contactSet for the two shapes.
 	// This is where the persistant contact magic comes from.
 	cpShape *shape_pair[] = {a, b};
-	cpHashValue arbHashID = CP_HASH_PAIR(a, b);
+	cpHashValue arbHashID = CP_HASH_PAIR((size_t)a, (size_t)b);
 	cpArbiter *arb = (cpArbiter *)cpHashSetInsert(space->contactSet, arbHashID, shape_pair, NULL);
 	cpArbiterUpdate(arb, contacts, numContacts, handler, a, b); // retains the contacts array
 	
-	// Call the begin function first if we need to
-	int beginPass = (arb->stamp >= 0) || (handler->begin(arb, space, handler->data));
-	if(beginPass && handler->preSolve(arb, space, handler->data) && !sensor){
+	// Call the begin function first if it's the first step
+	if(arb->stamp == -1 && !handler->begin(arb, space, handler->data)){
+		cpArbiterIgnore(arb); // permanently ignore the collision until separation
+	}
+	
+	if(
+		// Ignore the arbiter if it has been flagged
+		(arb->state != cpArbiterStateIgnore) && 
+		// Call preSolve
+		handler->preSolve(arb, space, handler->data) &&
+		// Process, but don't add collisions for sensors.
+		!sensor
+	){
 		cpArrayPush(space->arbiters, arb);
 	} else {
 		cpfree(arb->contacts);
 		arb->contacts = NULL;
+		arb->numContacts = 0;
 	}
 	
 	// Time stamp the arbiter so we know it was used recently.
@@ -592,7 +634,7 @@ queryFunc(cpShape *a, cpShape *b, cpSpace *space)
 static void
 active2staticIter(cpShape *shape, cpSpace *space)
 {
-	cpSpaceHashQuery(space->staticShapes, shape, shape->bb, (cpSpaceHashQueryFunc)&queryFunc, space);
+	cpSpaceHashQuery(space->staticShapes, shape, shape->bb, (cpSpaceHashQueryFunc)queryFunc, space);
 }
 
 // Hashset filter func to throw away old arbiters.
@@ -647,11 +689,11 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	}
 	
 	// Pre-cache BBoxes and shape data.
-	cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)&updateBBCache, NULL);
+	cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)updateBBCache, NULL);
 	
 	// Collide!
-	cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)&active2staticIter, space);
-	cpSpaceHashQueryRehash(space->activeShapes, (cpSpaceHashQueryFunc)&queryFunc, space);
+	cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)active2staticIter, space);
+	cpSpaceHashQueryRehash(space->activeShapes, (cpSpaceHashQueryFunc)queryFunc, space);
 	
 	// Clear out old cached arbiters and dispatch untouch functions
 	cpHashSetFilter(space->contactSet, (cpHashSetFilterFunc)contactSetFilter, space);
@@ -708,7 +750,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		cpCollisionHandler *handler = arb->handler;
 		handler->postSolve(arb, space, handler->data);
 		
-		arb->firstColl = 0;
+		arb->state = cpArbiterStateNormal;
 	}
 	
 	// Run the post step callbacks
