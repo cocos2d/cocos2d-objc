@@ -193,6 +193,12 @@ static CCDirector *_sharedDirector = nil;
 	[self setDepthTest: YES];
 	[self setProjection: CCDirectorProjectionDefault];
 	
+	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
@@ -328,14 +334,6 @@ static CCDirector *_sharedDirector = nil;
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	} else
 		glDisable(GL_BLEND);
-}
-
-- (void) setTexture2D: (BOOL) on
-{
-	if (on)
-		glEnable(GL_TEXTURE_2D);
-	else
-		glDisable(GL_TEXTURE_2D);
 }
 
 - (void) setDepthTest: (BOOL) on
@@ -769,14 +767,15 @@ static CCDirector *_sharedDirector = nil;
 		frameRate = frames/accumDt;
 		frames = 0;
 		accumDt = 0;
-		
+
+//		sprintf(format,"%.1f",frameRate);
+//		[FPSLabel setCString:format];
+
 		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate];
 		[FPSLabel setString:str];
 		[str release];
 	}
 		
-//	sprintf(format,"%.1f",frameRate);
-//	[FPSLabel setCString:format];
 	[FPSLabel draw];
 }
 #else
@@ -794,10 +793,13 @@ static CCDirector *_sharedDirector = nil;
 	}
 	
 	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
-	Texture2D *texture = [[Texture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:24];
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	CCTexture2D *texture = [[CCTexture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:24];
+
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+	
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glColor4ub(224,224,244,200);
@@ -805,9 +807,9 @@ static CCDirector *_sharedDirector = nil;
 	[texture release];
 	
 	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+	// restore default GL state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 #endif
 

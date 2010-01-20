@@ -93,10 +93,12 @@
 #pragma mark CCAtlasNode - draw
 - (void) draw
 {
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	
-	glEnable( GL_TEXTURE_2D);
+	// Default client GL state:
+	// GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// GL_TEXTURE_2D	
+
+	// disable unused state
+	glDisableClientState(GL_COLOR_ARRAY);
 
 	glColor4ub( color_.r, color_.g, color_.b, opacity_);
 
@@ -114,10 +116,9 @@
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
 
-	glDisable( GL_TEXTURE_2D);
-	
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	// restore default GL state
+	glEnableClientState(GL_COLOR_ARRAY);
+
 }
 
 #pragma mark CCAtlasNode - RGBA protocol

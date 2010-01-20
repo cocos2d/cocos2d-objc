@@ -83,12 +83,12 @@
 #pragma mark -
 #pragma mark Touch Events
 
-- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	return [self ccTouchesEnded:touches withEvent:event];
+	[self ccTouchesEnded:touches withEvent:event];
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 /**
 	UITouch *touch = [touches anyObject];
@@ -106,7 +106,6 @@
 		return kEventHandled;
 	}
 /**/	
-	return kEventIgnored;
 }
 
 @end

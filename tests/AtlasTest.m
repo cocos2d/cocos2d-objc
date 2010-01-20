@@ -189,21 +189,14 @@ Class restartAction()
 
 -(void) draw
 {
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	glEnableClientState( GL_COLOR_ARRAY);
-	
-	glEnable( GL_TEXTURE_2D);
+	// Default client GL state:
+	// GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// GL_TEXTURE_2D
 
 	[textureAtlas drawQuads];
 
 //	[textureAtlas drawNumberOfQuads:3];
 		
-	glDisable( GL_TEXTURE_2D);
-	
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 }
 					
 -(NSString *) title
@@ -217,22 +210,21 @@ Class restartAction()
 @implementation Atlas2
 -(id) init
 {
-	if( ![super init] )
-		return nil;
+	if( (self=[super init] )) {
 	
-	CCLabelAtlas *label1 = [CCLabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
-	[self addChild:label1 z:0 tag:kTagSprite1];
-	label1.position = ccp(10,100);
-	label1.opacity = 200;
+		CCLabelAtlas *label1 = [CCLabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		[self addChild:label1 z:0 tag:kTagSprite1];
+		label1.position = ccp(10,100);
+		label1.opacity = 200;
 
-	CCLabelAtlas *label2 = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
-	[self addChild:label2 z:0 tag:kTagSprite2];
-	label2.position = ccp(10,200);
-	label2.opacity = 32;
+		CCLabelAtlas *label2 = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		[self addChild:label2 z:0 tag:kTagSprite2];
+		label2.position = ccp(10,200);
+		label2.opacity = 32;
 
-	[self schedule:@selector(step:)];
+		[self schedule:@selector(step:)];
+	}
 	return self;
-	
 }
 
 -(void) step:(ccTime) dt

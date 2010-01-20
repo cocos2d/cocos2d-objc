@@ -240,7 +240,7 @@ const int defaultCapacity = 29;
 #pragma mark CCSpriteSheet - draw
 -(void) draw
 {
-	if(textureAtlas_.totalQuads == 0)
+	if( textureAtlas_.totalQuads == 0 )
 		return;
 
 	// Optimization: Fast Dispatch
@@ -276,10 +276,9 @@ const int defaultCapacity = 29;
 	}
 
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: -
 	
 	BOOL newBlend = NO;
 	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
@@ -289,12 +288,7 @@ const int defaultCapacity = 29;
 	
 	[textureAtlas_ drawQuads];
 	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-		
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);		
 }
 
 #pragma mark CCSpriteSheet - private

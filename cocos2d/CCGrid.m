@@ -179,12 +179,9 @@
 		glTranslatef(-offset.x, -offset.y, 0);
 	}
 		
-	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
-	
-	[self blit];
 
-	glDisable(GL_TEXTURE_2D);
+	[self blit];
 }
 
 -(void)blit
@@ -231,15 +228,17 @@
 {
 	int n = gridSize_.x * gridSize_.y;
 	
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);	
 	
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
 	
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	// restore GL default state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 -(void)calculateVertexPoints
@@ -390,15 +389,17 @@
 {
 	int n = gridSize_.x * gridSize_.y;
 	
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);	
 	
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
-	
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+
+	// restore default GL state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 -(void)calculateVertexPoints
