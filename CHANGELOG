@@ -2,6 +2,7 @@ version 0.99.0-rc - XX-mmm-2010
  . Camera: Offset correctly in landscape mode (issue #378)
  . Camera: It's possible to orbit around any point (issue #438)
  . Camera: Doesn't reset affine matrix (issue #XXX)
+ . Chipmunk: Using Chipmunk v5.1.0 (issue #664)
  . Configuration: and objects that knows GL capabilities and other misc stuff (issue #712)
  . Director/Particles/Grid: removed hardcoded display size values. Using variable (issue #XXX)
  . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
