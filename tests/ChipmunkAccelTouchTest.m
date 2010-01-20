@@ -45,7 +45,7 @@ eachShape(void *ptr, void* unused)
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 	
-	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(posx, posy, 85, 121)];
+	CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(posx, posy, 85, 121)];
 	[sheet addChild: sprite];
 	
 	sprite.position = ccp(x,y);
