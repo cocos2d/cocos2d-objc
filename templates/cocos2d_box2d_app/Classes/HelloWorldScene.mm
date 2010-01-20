@@ -144,7 +144,7 @@ enum {
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(32 * idx,32 * idy,32,32)];
+	CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(32 * idx,32 * idy,32,32)];
 	[sheet addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
@@ -200,7 +200,7 @@ enum {
 	}
 }
 
-- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	//Add a new body/atlas sprite at the touched location
 	for( UITouch *touch in touches ) {
@@ -210,7 +210,6 @@ enum {
 		
 		[self addNewSpriteWithCoords: location];
 	}
-	return kEventHandled;
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
