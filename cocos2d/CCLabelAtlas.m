@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -111,11 +111,11 @@
 // XXX: overriding draw from AtlasNode
 - (void) draw
 {
-	glEnableClientState( GL_VERTEX_ARRAY);
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	
-	glEnable( GL_TEXTURE_2D);
-	
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+
 	glColor4ub( color_.r, color_.g, color_.b, opacity_);
 	
 	BOOL newBlend = NO;
@@ -131,11 +131,9 @@
 	
 	// is this chepear than saving/restoring color state ?
 	glColor4ub( 255, 255, 255, 255);
-	
-	glDisable( GL_TEXTURE_2D);
-	
-	glDisableClientState(GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+
+	// Restore Default GL state. Enable GL_COLOR_ARRAY
+	glEnableClientState(GL_COLOR_ARRAY);
 	
 #if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];
@@ -143,7 +141,7 @@
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
-	drawPoly(vertices, 4, YES);
+	ccDrawPoly(vertices, 4, YES);
 #endif // CC_LABELATLAS_DEBUG_DRAW
 
 }

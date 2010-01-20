@@ -563,7 +563,7 @@ void FNTConfigRemoveCache( void )
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
-	drawPoly(vertices, 4, YES);
+	ccDrawPoly(vertices, 4, YES);
 }
 #endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
 @end

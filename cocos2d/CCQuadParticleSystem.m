@@ -183,20 +183,20 @@
 // overriding draw method
 -(void) draw
 {	
-	glEnable(GL_TEXTURE_2D);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: -
+	
 	
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 
 #define kPointSize sizeof(quads[0].bl)
-	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2,GL_FLOAT, kPointSize, 0);
 
-	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
 	
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
 	
 	
@@ -233,10 +233,8 @@
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisable(GL_TEXTURE_2D);
+	// restore GL default state
+	// -
 }
 
 @end

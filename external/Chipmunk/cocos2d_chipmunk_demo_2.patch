@@ -1,0 +1,118 @@
+Index: Demo/drawSpace.c
+===================================================================
+--- Demo/drawSpace.c	(revision 1703)
++++ Demo/drawSpace.c	(working copy)
+@@ -114,7 +114,13 @@
+ {
+ 	glVertexPointer(2, GL_FLOAT, 0, circleVAR);
+ 
+-	glEnableClientState(GL_VERTEX_ARRAY);
++	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	// Needed states:  GL_VERTEX_ARRAY, 
++	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	glDisable(GL_TEXTURE_2D);
++	glDisableClientState(GL_COLOR_ARRAY);
++	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
++	
+ 	glPushMatrix(); {
+ 		cpVect center = cpvadd(body->p, cpvrotate(circle->c, body->rot));
+ 		glTranslatef(center.x, center.y, 0.0f);
+@@ -129,8 +135,11 @@
+ 		glColor4f(LINE_COLOR);
+ 		glDrawArrays(GL_LINE_STRIP, 0, circleVAR_count);
+ 	} glPopMatrix();
+-	glDisableClientState(GL_VERTEX_ARRAY);
+-
++	
++	// restore default GL state
++	glEnable(GL_TEXTURE_2D);
++	glEnableClientState(GL_COLOR_ARRAY);
++	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+ }
+ 
+ static const GLfloat pillVAR[] = {
+@@ -181,7 +190,13 @@
+ 			VAR[i] += len;
+ 			
+ 		glVertexPointer(2, GL_FLOAT, 0, VAR);
+-		glEnableClientState(GL_VERTEX_ARRAY);
++		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++		// Needed states:  GL_VERTEX_ARRAY, 
++		// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++		glDisable(GL_TEXTURE_2D);
++		glDisableClientState(GL_COLOR_ARRAY);
++		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
++		
+ 		glPushMatrix(); {
+ 			GLfloat x = a.x;
+ 			GLfloat y = a.y;
+@@ -205,7 +220,11 @@
+ 			glColor4f(LINE_COLOR);
+ 			glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
+ 		} glPopMatrix();
+-		glDisableClientState(GL_VERTEX_ARRAY);
++
++		// Restore Default GL states
++		glEnable(GL_TEXTURE_2D);
++		glEnableClientState(GL_COLOR_ARRAY);
++		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+ 	} else {
+ 		glColor4f(LINE_COLOR);
+ 		ccDrawLine( a,b);
+@@ -218,7 +237,13 @@
+ 	int count = count=poly->numVerts;
+ 	GLfloat VAR[count*2];
+ 	
+-	glEnableClientState(GL_VERTEX_ARRAY);
++	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	// Needed states:  GL_VERTEX_ARRAY, 
++	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	glDisable(GL_TEXTURE_2D);
++	glDisableClientState(GL_COLOR_ARRAY);
++	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
++	
+ 	glVertexPointer(2, GL_FLOAT, 0, VAR);
+ 
+ 	cpVect *verts = poly->verts;
+@@ -237,7 +262,10 @@
+ 	glColor4f(LINE_COLOR);
+ 	glDrawArrays(GL_LINE_LOOP, 0, count);
+ 	
+-	glDisableClientState(GL_VERTEX_ARRAY);
++	// Restore Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	glEnable(GL_TEXTURE_2D);
++	glEnableClientState(GL_COLOR_ARRAY);
++	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+ }
+ 
+ static void
+@@ -291,8 +319,13 @@
+ 
+ 	cpVect delta = cpvsub(b, a);
+ 
+-	glEnableClientState(GL_VERTEX_ARRAY);
+-
++	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	// Needed states:  GL_VERTEX_ARRAY, 
++	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
++	glDisable(GL_TEXTURE_2D);
++	glDisableClientState(GL_COLOR_ARRAY);
++	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
++	
+ 	glVertexPointer(2, GL_FLOAT, 0, springVAR);
+ 	glPushMatrix(); {
+ 		GLfloat x = a.x;
+@@ -311,8 +344,11 @@
+ 		glMultMatrixf(matrix);
+ 		glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
+ 	} glPopMatrix();
+-	glDisableClientState(GL_VERTEX_ARRAY);
+-
++	
++	// Restore Default GL states
++	glEnable(GL_TEXTURE_2D);
++	glEnableClientState(GL_COLOR_ARRAY);
++	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+ }
+ 
+ static void

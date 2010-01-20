@@ -81,18 +81,20 @@
     if (!particleIdx)
         return;
 	
-	glEnable(GL_TEXTURE_2D);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY
+	// Unneeded states: GL_TEXTURE_COORD_ARRAY
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 	
 	glEnable(GL_POINT_SPRITE_OES);
-	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );
+	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );	
 	
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 
-	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2,GL_FLOAT,sizeof(vertices[0]),0);
 
-	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_FLOAT, sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,colors) );
 
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
@@ -131,10 +133,10 @@
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_POINT_SPRITE_OES);
+
+	// restore GL default state
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 #pragma mark Non supported properties

@@ -125,6 +125,22 @@ typedef enum {
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
+ 
+ The CCDirector is also resposible for:
+  - initializing the OpenGL ES context
+  - setting the OpenGL ES pixel format (default on is RGB565)
+  - setting the OpenGL ES buffer depth (default one is 0-bit)
+  - setting the projection (default one is 2D)
+  - setting the orientation (default one is Protrait)
+ 
+ Since the CCDirector is a singleton, the standard way to use it is by calling:
+  - [[CCDirector sharedDirector] xxxx];
+ 
+ The CCDirector also sets the default OpenGL ES context:
+  - GL_TEXTURE_2D is enabled
+  - GL_VERTEX_ARRAY is enabled
+  - GL_COLOR_ARRAY is enabled
+  - GL_TEXTURE_COORD_ARRAY is enabled
 */
 @interface CCDirector : NSObject
 {
@@ -328,8 +344,7 @@ and when to execute the Scenes.
 - (void) setAlphaBlending: (BOOL) on;
 /** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
-/** enables/disables OpenGL texture 2D */
-- (void) setTexture2D: (BOOL) on;
+
 @end
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.

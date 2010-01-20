@@ -56,8 +56,9 @@
 		dSegments = [[NSMutableArray alloc] init];
 
 		/* 1 initial segment */
-		CCRibbonSegment* seg = [[[CCRibbonSegment alloc] init] autorelease];
+		CCRibbonSegment* seg = [[CCRibbonSegment alloc] init];
 		[mSegments addObject:seg];
+		[seg release];
 		
 		textureLength_ = l;
 		
@@ -235,9 +236,11 @@
 {
 	if ([mSegments count] > 0)
 	{
-		glEnableClientState( GL_VERTEX_ARRAY);
-		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-		glEnable( GL_TEXTURE_2D);
+		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+		// Unneeded states: GL_COLOR_ARRAY
+		glDisableClientState(GL_COLOR_ARRAY);
+		
 		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 
 		BOOL newBlend = NO;
@@ -251,11 +254,9 @@
 
 		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	  
-		glDisable( GL_TEXTURE_2D);
-		glDisableClientState( GL_VERTEX_ARRAY );
-		glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-		glDisableClientState( GL_COLOR_ARRAY );
+		
+		// restore default GL state
+		glEnableClientState( GL_COLOR_ARRAY );
 	}
 }
 

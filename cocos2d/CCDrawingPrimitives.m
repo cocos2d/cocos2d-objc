@@ -21,22 +21,38 @@
 
 void ccDrawPoint( CGPoint point )
 {
-	glVertexPointer(2, GL_FLOAT, 0, &point);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
+	glVertexPointer(2, GL_FLOAT, 0, &point);	
 	glDrawArrays(GL_POINTS, 0, 1);
-	
-	glDisableClientState(GL_VERTEX_ARRAY);	
+
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 }
 
 void ccDrawPoints( CGPoint *points, unsigned int numberOfPoints )
 {
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+
 	glVertexPointer(2, GL_FLOAT, 0, points);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	
 	glDrawArrays(GL_POINTS, 0, numberOfPoints);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);	
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 }
 
 
@@ -46,27 +62,43 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	
 	vertices[0] = origin;
 	vertices[1] = destination;
+
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	
+	glVertexPointer(2, GL_FLOAT, 0, vertices);	
 	glDrawArrays(GL_LINES, 0, 2);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 }
 
 
 void ccDrawPoly( CGPoint *poli, int points, BOOL closePolygon )
 {
-	glVertexPointer(2, GL_FLOAT, 0, poli);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
+	glVertexPointer(2, GL_FLOAT, 0, poli);
 	if( closePolygon )
 		glDrawArrays(GL_LINE_LOOP, 0, points);
 	else
 		glDrawArrays(GL_LINE_STRIP, 0, points);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 }
 
 void ccDrawCircle( CGPoint center, float r, float a, int segs, BOOL drawLineToCenter)
@@ -95,12 +127,20 @@ void ccDrawCircle( CGPoint center, float r, float a, int segs, BOOL drawLineToCe
 	vertices[(segs+1)*2] = center.x;
 	vertices[(segs+1)*2+1] = center.y;
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
+	glVertexPointer(2, GL_FLOAT, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, segs+additionalSegment);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 	
 	free( vertices );
 }
@@ -119,12 +159,20 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int 
 	}
 	vertices[segments] = destination;
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
+	glVertexPointer(2, GL_FLOAT, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 }
 
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments)
@@ -141,10 +189,18 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	}
 	vertices[segments] = destination;
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
+	glVertexPointer(2, GL_FLOAT, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
 	
-	glDisableClientState(GL_VERTEX_ARRAY);  
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
 }
