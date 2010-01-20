@@ -652,10 +652,7 @@ struct transformValues_ {
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		scaleX_ *= -1;
-		isTransformDirty_ = isInverseDirty_ = YES;
-		
-		dirty_ = YES;
+		[self setScaleX: -scaleX_];
 	}
 }
 -(BOOL) flipX
@@ -667,10 +664,7 @@ struct transformValues_ {
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		scaleY_ *= -1;
-		isTransformDirty_ = isInverseDirty_ = YES;
-		
-		dirty_ = YES;
+		[self setScaleY: -scaleY_];
 	}	
 }
 -(BOOL) flipY
