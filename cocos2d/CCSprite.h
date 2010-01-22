@@ -96,7 +96,7 @@ typedef enum {
 	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPosition_;
 
-	// vertex coords, texture coors and color info
+	// vertex coords, texture coords and color info
 	ccV3F_C4B_T2F_Quad quad_;
 	
 	// opacity and RGB protocol

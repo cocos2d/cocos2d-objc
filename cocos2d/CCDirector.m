@@ -77,20 +77,17 @@ static CCDirector *_sharedDirector = nil;
 
 + (CCDirector *)sharedDirector
 {
-	@synchronized([CCDirector class])
-	{
-		if (!_sharedDirector) {
+	if (!_sharedDirector) {
 
-			//
-			// Default Director is TimerDirector
-			// 
-			if( [ [CCDirector class] isEqual:[self class]] )
-				_sharedDirector = [[CCTimerDirector alloc] init];
-			else
-				_sharedDirector = [[self alloc] init];
-		}
-		
+		//
+		// Default Director is TimerDirector
+		// 
+		if( [ [CCDirector class] isEqual:[self class]] )
+			_sharedDirector = [[CCTimerDirector alloc] init];
+		else
+			_sharedDirector = [[self alloc] init];
 	}
+		
 	return _sharedDirector;
 }
 
@@ -127,13 +124,8 @@ static CCDirector *_sharedDirector = nil;
 
 +(id)alloc
 {
-	@synchronized([CCDirector class])
-	{
-		NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super alloc];
-	}
-	// to avoid compiler warning
-	return nil;
+	NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
+	return [super alloc];
 }
 
 - (id) init
@@ -578,8 +570,9 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) applyLandscape
 {	
-	float w = openGLView_.frame.size.width / 2;
-	float h = openGLView_.frame.size.height / 2;
+	CGSize s = [openGLView_ frame].size;
+	float w = s.width / 2;
+	float h = s.height / 2;
 
 	// XXX it's using hardcoded values.
 	// What if the the screen size changes in the future?
