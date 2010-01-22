@@ -54,6 +54,10 @@
 {}
 @end
 
-@interface CameraTest : TestDemo
+@interface CameraOrbitTest : TestDemo
+{}
+@end
+
+@interface CameraZoomTest : TestDemo
 {}
 @end

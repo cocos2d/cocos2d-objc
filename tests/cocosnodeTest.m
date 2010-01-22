@@ -19,6 +19,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+@"CameraZoomTest",
+
 			@"Test2",
 			@"Test4",
 			@"Test5",
@@ -29,7 +31,8 @@ static NSString *transitions[] = {
 			@"SchedulerTest2",
 			@"SchedulerTest3",
 			@"NodeToWorld",
-			@"CameraTest",
+			@"CameraOrbitTest",
+			@"CameraZoomTest",
 };
 
 Class nextAction()
@@ -622,9 +625,9 @@ Class restartAction()
 
 
 #pragma mark -
-#pragma mark CameraTest
+#pragma mark CameraOrbitTest
 
-@implementation CameraTest
+@implementation CameraOrbitTest
 -(void) onEnter
 {
 	[super onEnter];
@@ -633,7 +636,7 @@ Class restartAction()
 
 -(void) onExit
 {
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
 	[super onExit];
 }
 
@@ -655,31 +658,34 @@ Class restartAction()
 
 		// LEFT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		sprite.scale = 0.5f;
 		[p addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
 		cam = [sprite camera];
-		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 		
 		// CENTER
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		sprite.scale = 1.0f;
 		[p addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
-		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:45 deltaAngleX:0];
+		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:45 deltaAngleX:0];
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 		
 		
 		// RIGHT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		sprite.scale = 2.0f;
 		[p addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
 		ss = [sprite contentSize];		
-		orbit = [CCOrbitCamera actionWithDuration:2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:90 deltaAngleX:0],
+		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:90 deltaAngleX:-45],
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 				
 		
 		// PARENT
-		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:90];
 		[p runAction: [CCRepeatForever actionWithAction:orbit]];
 
 		
@@ -691,9 +697,89 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Camera test";
+	return @"Camera Orbit test";
 }
 @end
+
+#pragma mark -
+#pragma mark CameraZoomTest
+
+@implementation CameraZoomTest
+-(void) onEnter
+{
+	[super onEnter];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+}
+
+-(void) onExit
+{
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+	[super onExit];
+}
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		
+		CCSprite *sprite;
+		CCCamera *cam;
+		
+		// LEFT
+		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite z:0];		
+		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
+		cam = [sprite camera];
+		[cam setEyeX:0 eyeY:0 eyeZ:415];
+		
+		// CENTER
+		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite z:0 tag:40];
+		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
+//		cam = [sprite camera];
+//		[cam setEyeX:0 eyeY:0 eyeZ:415/2];
+		
+		// RIGHT
+		sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite z:0 tag:20];
+		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
+//		cam = [sprite camera];
+//		[cam setEyeX:0 eyeY:0 eyeZ:-485];
+//		[cam setCenterX:0 centerY:0 centerZ:0];
+	
+
+		[self schedule:@selector(updateEye:)];
+	}
+	
+	return self;
+}
+
+-(void) updateEye:(ccTime)dt
+{
+	static float z = 0;
+
+	CCNode *sprite;
+	CCCamera *cam;
+	
+	z += dt * 100;
+	
+	sprite = [self getChildByTag:20];
+	cam = [sprite camera];
+	[cam setEyeX:0 eyeY:0 eyeZ:z];
+	
+	sprite = [self getChildByTag:40];
+	cam = [sprite camera];
+	[cam setEyeX:0 eyeY:0 eyeZ:z];	
+}
+
+-(NSString *) title
+{
+	return @"Camera Zoom test";
+}
+@end
+
 
 #pragma mark -
 #pragma mark AppController
@@ -711,15 +797,24 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
 	
+	
+	CCDirector *director = [CCDirector sharedDirector];
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDeviceOrientation: CCDeviceOrientationLandscapeLeft];
+	[director setAnimationInterval:1.0/60];
+	[director setDisplayFPS:YES];
 
+	// Create a depth buffer of 16 bits
+	// Needed for the orbit + lens + waves examples
+	// These means that openGL z-order will be taken into account
+//	[director setDepthBufferFormat:kDepthBuffer16];
+//	[director setPixelFormat:kPixelFormatRGBA8888];
+	
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director attachInView:window];	
 	[window makeKeyAndVisible];		
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
@@ -730,7 +825,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game
