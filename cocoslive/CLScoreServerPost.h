@@ -81,11 +81,17 @@ enum {
 	
 	/// mdt context
 	CC_MD5_CTX		md5Ctx;
+	
+	/// the connection
+	NSURLConnection	*connection_;
 }
 
 /** status from the score post */ 
 @property (nonatomic,readonly) tPostStatus postStatus;
  
+/** connection to the server */
+@property (nonatomic, retain) NSURLConnection *connection;
+
 /** ranking of your score
  @since v0.7.3
  */

@@ -125,8 +125,10 @@ const int defaultCapacity = 29;
 	
 	glPushMatrix();
 	
-	if ( grid_ && grid_.active)
+	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
+		[self transformAncestors];
+	}
 	
 	[self transform];
 	

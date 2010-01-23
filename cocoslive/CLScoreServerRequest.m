@@ -21,6 +21,9 @@
 #import "ccMacros.h"
 
 @implementation CLScoreServerRequest
+
+@synthesize connection=connection_;
+
 +(id) serverWithGameName:(NSString*) name delegate:(id)delegate
 {
 	return [[[self alloc] initWithGameName:name delegate:delegate] autorelease];
@@ -44,6 +47,7 @@
 	[delegate release];
 	[gameName release];
 	[receivedData release];
+	[connection_ release];
 	[super dealloc];
 }
 
@@ -88,13 +92,10 @@
 	
 	// create the connection with the request
 	// and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-	if (! theConnection)
+	self.connection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+	if (! connection_)
 		return NO;
-	
-	// XXX: Don't release 'theConnection' here
-	// XXX: It will be released by the delegate
-	
+		
 	return YES;
 }
 
@@ -153,13 +154,10 @@
 	
 	// create the connection with the request
 	// and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-	if (! theConnection)
+	self.connection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+	if (! connection_)
 		return NO;
-	
-	// XXX: Don't release 'theConnection' here
-	// XXX: It will be released by the delegate
-	
+
 	return YES;
 }
 
@@ -200,7 +198,8 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	// release the connection, and the data object
-    [connection release];
+	self.connection = nil;
+
 	
 	CCLOG(@"Error getting scores: %@", error);
 	
@@ -212,7 +211,8 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	// release the connection, and the data object
-    [connection release];
+	self.connection = nil;
+
 	
 	if(reqRankOnly) {		
 		// because it's request for rank, different delegate method is called scoreRequestRankOk:
