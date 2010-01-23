@@ -357,11 +357,12 @@ const int defaultCapacity = 29;
 	
 	// ignore parent Z if parent is spriteSheet
 	BOOL ignoreParent = ( sprite.parent == self );
-	CCSprite *previous = nil, *next = nil;
+	CCSprite *previous = nil;
 	if( childIndex > 0 )
 		previous = [brothers objectAtIndex:childIndex-1];
-	if( childIndex < [brothers count] -1 )
-		next = [brothers objectAtIndex:childIndex+1];
+	
+//	if( childIndex < [brothers count] -1 )
+//		next = [brothers objectAtIndex:childIndex+1];
 
 	// first child of the sprite sheet
 	if( ignoreParent ) {

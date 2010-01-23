@@ -67,15 +67,15 @@
 
 - (void) setString:(NSString*)string
 {
+	CCTexture2D *tex;
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
-		// WARNING: double retain
-		self.texture = [[CCTexture2D alloc] initWithString:string fontName:fontName_ fontSize:fontSize_];
+		tex = [[CCTexture2D alloc] initWithString:string fontName:fontName_ fontSize:fontSize_];
 	else
-		// WARNING: double retain
-		self.texture = [[CCTexture2D alloc] initWithString:string dimensions:dimensions_ alignment:alignment_ fontName:fontName_ fontSize:fontSize_];
+		tex = [[CCTexture2D alloc] initWithString:string dimensions:dimensions_ alignment:alignment_ fontName:fontName_ fontSize:fontSize_];
 
-	// end of warning. 1 retain only
-	[self.texture release];
+
+	[self setTexture:tex];
+	[tex release];
 
 	CGSize size = [texture_ contentSize];
 	[self setTextureRect: CGRectMake(0, 0, size.width, size.height)];
