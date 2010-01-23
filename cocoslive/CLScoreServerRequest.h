@@ -60,7 +60,13 @@ typedef enum {
 	// To determine which delegate method will be called in connectionDidFinishLoading: of NSURLConnection Delegate
 	BOOL reqRankOnly;
 	
+	/// the connection
+	NSURLConnection	*connection_;
 }
+
+/** connection to the server */
+@property (nonatomic, retain) NSURLConnection *connection;
+
 
 /** creates a ScoreServerRequest server with a game name*/
 +(id) serverWithGameName:(NSString*) name delegate:(id)delegate;

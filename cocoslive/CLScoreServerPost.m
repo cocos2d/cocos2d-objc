@@ -40,6 +40,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 @synthesize postStatus = postStatus_;
 @synthesize ranking = ranking_;
 @synthesize scoreDidUpdate = scoreDidUpdate_;
+@synthesize connection = connection_;
 
 +(id) serverWithGameName:(NSString*) name gameKey:(NSString*) key delegate:(id) delegate
 {
@@ -70,6 +71,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	[gameName release];
 	[bodyValues release];
 	[receivedData release];
+	[connection_ release];
 	[super dealloc];
 }
 
@@ -121,14 +123,11 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	
 	// create the connection with the request
 	// and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:post delegate:self];
+	self.connection=[[NSURLConnection alloc] initWithRequest:post delegate:self];
 	
-	if ( ! theConnection)
+	if ( ! connection_)
 		return NO;
 	
-	// XXX: Don't release 'theConnection' here
-	// XXX: It will be released by the delegate
-
 	return YES;
 }
 
@@ -247,8 +246,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	// wifi problems ?
 	postStatus_ = kPostStatusConnectionFailed;
 
-    // release the connection, and the data object
-    [connection release];
+    // release the connection
+	self.connection = nil;
 	
 	if( [delegate respondsToSelector:@selector(scorePostFail:) ] )
 		[delegate scorePostFail:self];
@@ -256,7 +255,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {	
-    [connection release];
+	// release the connection
+	self.connection = nil;
 	
 //	NSString *dataString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
 	NSString *dataString = [NSString stringWithCString:[receivedData bytes] encoding: NSASCIIStringEncoding];
