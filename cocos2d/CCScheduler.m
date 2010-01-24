@@ -25,6 +25,8 @@
 @synthesize ticksUntilAutoExpire;
 @synthesize target;
 @synthesize selector;
+@synthesize paused;
+@synthesize timeScale;
 
 -(id) init
 {
@@ -88,13 +90,14 @@
 		elapsed = -1;
 		interval = seconds;
 		ticksUntilAutoExpire = times;
+		timeScale = 1.0f;
 	}
 	return self;
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
+	return [NSString stringWithFormat:@"<%@ = %08X | target:%@ selector:(%@) paused:%d>", [self class], self, [target class], NSStringFromSelector(selector),paused];
 }
 
 -(void) dealloc
@@ -106,10 +109,11 @@
 
 -(void) fire: (ccTime) dt
 {
+	
 	if( elapsed == - 1)
 		elapsed = 0;
 	else
-		elapsed += dt;
+		elapsed += (dt * timeScale);
 	if( elapsed >= interval ) {
 		impMethod(target, selector, elapsed);
 		elapsed = 0;
@@ -121,6 +125,19 @@
 }
 @end
 
+
+#pragma mark -
+#pragma mark CCScheduler
+
+// Uncomment to add debug logging for the scheduler
+// #define DEBUG_SCHEDULER	
+
+
+@interface CCScheduler (Private)
+-(void) trackerTimerByTarget:(CCTimer*) t;
+-(void) untrackTimer:(CCTimer*) t;
+@end
+
 //
 // Scheduler
 //
@@ -128,7 +145,7 @@
 
 static CCScheduler *sharedScheduler;
 
-@synthesize timeScale = timeScale_;
+@synthesize timeScale;
 
 + (CCScheduler *)sharedScheduler
 {
@@ -163,11 +180,14 @@ static CCScheduler *sharedScheduler;
 - (id) init
 {
 	if( (self=[super init]) ) {
-		scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];
-		methodsToRemove = [[NSMutableArray arrayWithCapacity:20] retain];
-		methodsToAdd = [[NSMutableArray arrayWithCapacity:20] retain];
+		scheduledMethods = [[NSMutableSet setWithCapacity:50] retain];
+		methodsToRemove = [[NSMutableSet setWithCapacity:20] retain];
+		methodsToAdd = [[NSMutableSet setWithCapacity:20] retain];
 		
-		timeScale_ = 1.0f;
+		
+		targets = [[NSMutableDictionary dictionaryWithCapacity:128] retain];
+		
+		timeScale = 1.0f;
 	}
 
 	return self;
@@ -179,13 +199,17 @@ static CCScheduler *sharedScheduler;
 	[scheduledMethods release];
 	[methodsToRemove release];
 	[methodsToAdd release];
+	[targets release];
+ 	
 	sharedScheduler = nil;
 	
 	[super dealloc];
 }
 
--(void) scheduleTimer: (CCTimer*) t
+-(void) addTimer: (CCTimer*)t paused:(BOOL) paused;
 {
+	t.paused = paused;
+	
 	// it is possible that sometimes (in transitions in particular) an scene unschedule a timer
 	// and before the timer is deleted, it is re-scheduled
 	if( [methodsToRemove containsObject:t] )
@@ -206,7 +230,7 @@ static CCScheduler *sharedScheduler;
 	[methodsToAdd addObject: t];
 }
 
--(void) unscheduleTimer: (CCTimer*) t
+-(void) removeTimer:(CCTimer*)t;
 {
 	// someone wants to remove it before it was added
 	if( [methodsToAdd containsObject:t] ) {
@@ -223,6 +247,9 @@ static CCScheduler *sharedScheduler;
 		@throw myException;		
 	}
 	
+#ifdef DEBUG_SCHEDULER	
+	NSLog(@"%s: remembering to remove timer: %@",__PRETTY_FUNCTION__,t);	
+#endif	
 	[methodsToRemove addObject:t];
 }
 
@@ -231,36 +258,164 @@ static CCScheduler *sharedScheduler;
 	[methodsToAdd removeAllObjects];
 	[methodsToRemove removeAllObjects];
 	[scheduledMethods removeAllObjects];
+	[targets removeAllObjects];
 }
 
 -(void) tick: (ccTime) dt
 {
-	if( timeScale_ != 1.0f )
-		dt *= timeScale_;
+	if( timeScale != 1.0f )
+		dt *= timeScale;
 
-	for( id k in methodsToRemove )
+	for( id k in methodsToRemove ) {
 		[scheduledMethods removeObject:k];
-
+		[self untrackTimer:k];
+	}
 	[methodsToRemove removeAllObjects];
 
-	for( id k in methodsToAdd )
+	for( id k in methodsToAdd ) {
 		[scheduledMethods addObject:k];
+		[self trackerTimerByTarget:k];
+	}
 	[methodsToAdd removeAllObjects];
 	
 	for( CCTimer *t in scheduledMethods ) {
 		[t fire: dt];
 		if (t->ticksUntilAutoExpire == 0) {
-			// Time to automatically remove this timer
-			if([t.target isKindOfClass:[CCNode class]] == YES) {
-				// A CCNode has it's own housekeeping to cleanup and
-				// will then, ultimately, unschedule us.
-				[(CCNode*)t.target unschedule:t.selector];
-			}
-			else {
-				[self unscheduleTimer:t];
-			}
+			[self removeTimer:t];
 		}
 	}
 }
+
+
+
+-(void) removeAllTimersFromTarget:(id)target {
+	
+#ifdef DEBUG_SCHEDULER	
+	NSLog(@"%s: [%@|%@]",__PRETTY_FUNCTION__,target,[target class]);
+#endif	
+	
+	NSArray* timers = [targets objectForKey:[NSNumber numberWithInteger:(NSInteger)target]];
+	for(CCTimer* t in timers) {
+		[self removeTimer:t];
+	}
+	// Check any we were going to add
+	for(CCTimer* t in methodsToAdd) {
+		if(t.target == target) {
+			[methodsToAdd removeObject:t];
+			break;
+		}
+	}
+}
+
+
+
+
+-(void) setTarget:(id) target paused:(BOOL) paused {
+	NSArray* timers = [targets objectForKey:[NSNumber numberWithInteger:(NSInteger)target]];
+	for(CCTimer* t in timers) {
+		t.paused = paused;
+	}
+	// Check any we were going to add
+	for(CCTimer* t in methodsToAdd) {
+		if(t.target == target ) {
+			t.paused = paused;
+			break;
+		}
+	}	
+}
+
+-(void) pauseAllTimersForTarget:(id)target {
+	[self setTarget:target paused:YES];
+}
+
+-(void) resumeAllTimersForTarget:(id)target {
+	[self setTarget:target paused:NO];
+}
+
+
+-(void) unscheduleAllTimersOfSelector:(SEL)selector Target:(id)target {
+	
+#ifdef DEBUG_SCHEDULER	
+	NSLog(@"%s: [%@|%@] sel:%@",__PRETTY_FUNCTION__,target,[target class],NSStringFromSelector(selector));
+#endif	
+	
+	
+	NSArray* timers = [targets objectForKey:[NSNumber numberWithInteger:(NSInteger)target]];
+	for(CCTimer* t in timers) {
+		if (t.selector == selector) {
+			[self removeTimer:t];
+		}
+	}
+	// Check any we were going to add
+	for(CCTimer* t in methodsToAdd) {
+		if(t.target == target && t.selector == selector) {
+			[methodsToAdd removeObject:t];
+			break;
+		}
+	}
+	
+}
+
+
+
+
+-(void) scaleAllTimersForTarget:(id)target ScaleFactor:(float)scaleFactor {
+#ifdef DEBUG_SCHEDULER		
+	NSLog(@"%s targets: %@",__PRETTY_FUNCTION__,targets);
+#endif		
+	NSArray* timers = [targets objectForKey:[NSNumber numberWithInteger:(NSInteger)target]];
+	for(CCTimer* t in timers) {
+		t.timeScale = scaleFactor;
+	}
+	// Check any we were going to add
+	for(CCTimer* t in methodsToAdd) {
+		if(t.target == target ) {
+			t.timeScale = scaleFactor;
+			break;
+		}
+	}	
+}
+
+
+
+-(void) trackerTimerByTarget:(CCTimer*) t
+{
+	
+#ifdef DEBUG_SCHEDULER	
+	NSLog(@"%s: %@",__PRETTY_FUNCTION__,t);
+#endif	
+
+	NSNumber* key = [NSNumber numberWithInteger:(NSInteger)t.target];
+	NSMutableArray* timers = [targets objectForKey:key];
+	if (timers == nil) {
+		timers = [NSMutableArray arrayWithCapacity:1]; // Usually only 1 timer per target
+		[targets setObject:timers forKey:key];
+	}
+	[timers addObject:t];
+#ifdef DEBUG_SCHEDULER		
+	NSLog(@"%s targets: %@",__PRETTY_FUNCTION__,targets);
+#endif	
+}
+
+-(NSArray*) getTimersForTarget:(id) target {
+	return [targets objectForKey:[NSNumber numberWithInteger:(NSInteger)target]];
+}
+
+-(void) untrackTimer:(CCTimer*) t {
+
+#ifdef DEBUG_SCHEDULER	
+	NSLog(@"%s: %@",__PRETTY_FUNCTION__,t);
+	NSLog(@"%s targets: %@",__PRETTY_FUNCTION__,targets);
+#endif
+	
+	NSNumber* key = [NSNumber numberWithInteger:(NSInteger)t.target];
+
+	NSMutableArray* timers = [targets objectForKey:key];
+	NSAssert2(timers != nil,@"%s: did not have any timers tracked for target:%@",__PRETTY_FUNCTION__,[t.target class]);
+	[timers removeObject:t];
+	if([timers count] == 0)
+		[targets removeObjectForKey:key];
+}
+
 
 @end

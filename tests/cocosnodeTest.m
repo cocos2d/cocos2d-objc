@@ -31,6 +31,8 @@ static NSString *transitions[] = {
 			@"NodeToWorld",
 			@"CameraOrbitTest",
 			@"CameraZoomTest",
+			@"TimerScaleTest",
+			@"TimerScaleWithChildrenTest",
 };
 
 Class nextAction()
@@ -702,6 +704,8 @@ Class restartAction()
 #pragma mark -
 #pragma mark CameraZoomTest
 
+
+
 @implementation CameraZoomTest
 -(void) onEnter
 {
@@ -777,6 +781,155 @@ Class restartAction()
 	return @"Camera Zoom test";
 }
 @end
+
+
+#pragma mark -
+#pragma mark TimerScaleTest
+
+@interface TimeScaleSprite : CCSprite {
+	
+	BOOL flip;
+	
+}
+
+
+@end
+
+@implementation TimeScaleSprite 
+
+-(id)initTSS {
+	self = [super initWithFile:@"grossini.png"];
+	flip = NO;
+	[self schedule:@selector(updateTSSprite:) interval:1];
+	return self;
+}
+
+-(void) updateTSSprite:(ccTime)dt {
+	self.position = ccp(self.position.x,(flip) ? 100 : 200);
+	flip = !flip;
+}
+
+
+@end
+
+@implementation TimerScaleTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		
+		CCLabel* l = [CCLabel labelWithString:@"Right is double speed of left" fontName:@"Thonburi" fontSize:16];
+		[self addChild:l];
+		[l setPosition:ccp(s.width/2, 245)];
+		
+		CCSprite *sprite;
+		
+		// LEFT
+		sprite = [[TimeScaleSprite alloc] initTSS];
+		[self addChild:sprite z:0 tag:10];		
+		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
+		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+		
+		// RIGHT
+		sprite = [[TimeScaleSprite alloc] initTSS];
+		[self addChild:sprite z:0 tag:20];
+		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
+		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+
+		[sprite scaleAllTimers:2.0f];
+		
+		[self schedule:@selector(switchToHalfSpeed:) interval:5.0f repeat:1];
+		
+	}
+	
+	return self;
+}
+
+
+-(void) switchToHalfSpeed:(ccTime) dt {
+	CCSprite* sprite = (CCSprite*)[self getChildByTag:10];	
+	[sprite scaleAllTimers:0.25f];
+	sprite = (CCSprite*)[self getChildByTag:20];	
+	[sprite scaleAllTimers:0.5f];
+	
+	CCLabel* l = [CCLabel labelWithString:@"Slower than Normal" fontName:@"Thonburi" fontSize:16];
+	[self addChild:l];
+	[l setPosition:ccp(480/2, 230)];	
+	
+}
+
+
+
+
+-(NSString *) title
+{
+	return @"Timer Scale Test";
+}
+@end
+
+
+@implementation TimerScaleWithChildrenTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		
+		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[sp1 runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];		
+		CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];		
+		[sp2 runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+		
+		CCLabel* l = [CCLabel labelWithString:@"Left sister is not time scales, right sister is" fontName:@"Thonburi" fontSize:16];
+		[self addChild:l];
+		[l setPosition:ccp(s.width/2, 245)];
+		
+		CCSprite *sprite;
+		
+		// LEFT
+		sprite = [[TimeScaleSprite alloc] initTSS];
+		[self addChild:sprite z:0];		
+		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
+		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+		[sprite addChild:sp1];
+		[sp1 setPosition:ccp(0,0)];
+		[sp1 setScale:0.5f];
+		
+		[sprite scaleAllTimers:0.5f withChildren:NO];
+		
+		
+		// RIGHT
+		sprite = [[TimeScaleSprite alloc] initTSS];
+		[self addChild:sprite z:0 tag:20];
+		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
+		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+		[sprite addChild:sp2];
+		[sp2 setPosition:ccp(0,0)];
+		[sp2 setScale:0.5f];
+		
+		[sprite scaleAllTimers:0.5f withChildren:YES];
+		
+	}
+	
+	return self;
+}
+
+
+
+
+-(NSString *) title
+{
+	return @"Timer Scale w/Children Test";
+}
+@end
+
+
+
 
 
 #pragma mark -

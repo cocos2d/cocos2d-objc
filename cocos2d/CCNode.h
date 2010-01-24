@@ -133,9 +133,6 @@ enum {
 	
 	// a tag. any number you want to assign to the node
 	int tag;
-
-	// scheduled selectors
-	NSMutableDictionary *scheduledSelectors;
     
 	// user data field
 	void *userData;
@@ -370,10 +367,21 @@ enum {
  Called internally by onEnter
  */
 -(void) activateTimers;
+-(void) activateTimersWithChildren:(bool) affectChildren;
 /** deactivate all scheduled timers.
  Called internally by onExit
  */
 -(void) deactivateTimers;
+-(void) deactivateTimersWithChildren:(bool) affectChildren;
+/** scale the timers on the CCNode
+		1.0 = normal speed, 0.5 would be half speed, 2.0 would be double, etc.
+ */
+-(void) scaleAllTimers:(float) scale;
+-(void) scaleAllTimers:(float) scale withChildren:(bool) affectChildren;
+
+/** Removes all schedule timers.
+ */
+-(void) stopAllTimers;
 
 // transformation methods
 

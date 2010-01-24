@@ -61,3 +61,12 @@
 @interface CameraZoomTest : TestDemo
 {}
 @end
+
+@interface TimerScaleTest : TestDemo
+{}
+@end
+
+@interface TimerScaleWithChildrenTest : TestDemo
+{}
+@end
+

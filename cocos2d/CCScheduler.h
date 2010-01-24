@@ -17,6 +17,11 @@
 #import <UIKit/UIKit.h>
 
 #import "ccTypes.h"
+#import "Support/ccArray.h"
+#import "Support/ccHashSet.h"
+
+
+
 
 typedef void (*TICK_IMP)(id, SEL, ccTime);
 
@@ -39,6 +44,8 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	// XXX: performance is improved in about 10%
 @public
 	int		 ticksUntilAutoExpire; // -1 = infinite
+	float	 timeScale; // defaults to 1.0.  0.5 would be running half as fast, 2.0 would be running twice as fast
+	BOOL	 paused;
 	
 }
 
@@ -47,6 +54,8 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 @property (nonatomic,readonly) int ticksUntilAutoExpire;
 @property (nonatomic,readonly) id target;
 @property (nonatomic,readonly) SEL selector;
+@property (nonatomic,readwrite) float timeScale;
+@property (nonatomic,readwrite) BOOL paused;
 
 /** Allocates a timer with a target and a selector.
 */
@@ -89,6 +98,8 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 -(void) fire: (ccTime) dt;
 @end
 
+
+
 //
 // Scheduler
 //
@@ -97,11 +108,15 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 */
 @interface CCScheduler : NSObject
 {
-	NSMutableArray	*scheduledMethods;
-	NSMutableArray	*methodsToRemove;
-	NSMutableArray	*methodsToAdd;
+	NSMutableSet					*scheduledMethods;
+	NSMutableSet					*methodsToRemove;
+	NSMutableSet					*methodsToAdd;
+
+	NSMutableDictionary		*targets;
 	
-	ccTime			timeScale_;
+	
+	float									timeScale;
+	
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -109,9 +124,9 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
  To create a 'fast fordward' effect, use values higher than 1.0.
  @since v0.8
- @warning It will affect EVERY scheduled selector / action.
+ @warning It will affect EVERY scheduled selector / action. 
  */
-@property (nonatomic,readwrite) ccTime	timeScale;
+@property (nonatomic,readwrite) float	timeScale;
 
 /** returns a shared instance of the Scheduler */
 +(CCScheduler *)sharedScheduler;
@@ -129,14 +144,36 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** schedules a Timer.
  It will be fired in every frame.
  */
--(void) scheduleTimer: (CCTimer*) t;
+-(void) addTimer: (CCTimer*)t paused:(BOOL) paused;
 
 /** unschedules an already scheduled Timer */
--(void) unscheduleTimer: (CCTimer*) t;
+-(void) removeTimer:(CCTimer*)t;
 
 /** unschedule all timers.
  You should NEVER call this method, unless you know what you are doing.
  @since v0.8
  */
 -(void) unscheduleAllTimers;
+
+/** Unscheduels all timers that represents a specific selector of a target
+ */
+-(void) unscheduleAllTimersOfSelector:(SEL)selector Target:(id)target;
+
+/** removes all timers from a given target
+ */
+-(void) removeAllTimersFromTarget:(id)target;
+
+/** pauses all timers for a given target
+ */
+-(void) pauseAllTimersForTarget:(id)target;
+
+/** unpauses all timers for a given target
+ */
+-(void) resumeAllTimersForTarget:(id)target;
+
+/** scales the timefactor for all timers of a given target
+ */
+-(void) scaleAllTimersForTarget:(id)target ScaleFactor:(float)scaleFactor;
+
+
 @end
