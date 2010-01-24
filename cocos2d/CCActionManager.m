@@ -80,7 +80,7 @@ static CCActionManager *_sharedManager = nil;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[CCScheduler sharedScheduler] scheduleTimer: [CCTimer timerWithTarget:self selector:@selector(tick:)]];
+		[[CCScheduler sharedScheduler] addTimer:[CCTimer timerWithTarget:self selector:@selector(tick:)] paused:NO];
 		targets = ccHashSetNew(131, targetSetEql);
 	}
 	
@@ -158,6 +158,20 @@ static CCActionManager *_sharedManager = nil;
 //		CCLOG(@"cocos2d: resumeAllActions: Target not found");
 }
 
+#pragma mark ActionManager - Time Scale
+
+
+-(void) timeScaleAllActionsForTarget:(id) target scale:(float) scale {
+	tHashElement elementTmp;
+	elementTmp.target = target;
+	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	if( element )
+		element->timeScale = scale;
+	//	else
+	//		CCLOG(@"cocos2d: pauseAllActions: Target not found");
+}
+
+
 #pragma mark ActionManager - run
 
 -(void) addAction:(CCAction*)action target:(id)target paused:(BOOL)paused
@@ -173,6 +187,7 @@ static CCActionManager *_sharedManager = nil;
 		bzero(element, sizeof(*element));
 		element->paused = paused;
 		element->target = [target retain];
+		element->timeScale = 1.0f;
 		ccHashSetInsert(targets, CC_HASH_INT(target), element, nil);
 //		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 
@@ -322,12 +337,14 @@ static CCActionManager *_sharedManager = nil;
 			
 			if( ! currentTarget->paused ) {
 				
+				float scaledDT = dt * currentTarget->timeScale;
+				
 				// The 'actions' ccArray may change while inside this loop.
 				for( currentTarget->actionIndex = 0; currentTarget->actionIndex <  currentTarget->actions->num; currentTarget->actionIndex++) {
 					currentTarget->currentAction = currentTarget->actions->arr[currentTarget->actionIndex];
 					currentTarget->currentActionSalvaged = NO;
 					
-					[currentTarget->currentAction step: dt];
+					[currentTarget->currentAction step: scaledDT];
 
 					if( currentTarget->currentActionSalvaged ) {
 						// The currentAction told the node to remove it. To prevent the action from
