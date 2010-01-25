@@ -1,5 +1,6 @@
 version 0.99.0-rc - XX-mmm-2010
  . All: Default OpenGL state is: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY (fixed issue #718)
+ . Box2d: updated to r33 (issue #494)
  . Camera: Offset correctly in landscape mode (issue #378)
  . Camera: It's possible to orbit around any point (issue #438)
  . Camera: Doesn't reset affine matrix (issue #XXX)

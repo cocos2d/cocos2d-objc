@@ -616,6 +616,8 @@
 		5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */; };
 		5062D235110E0F8500D9E347 /* CCUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C17231FF110CFD180084A30B /* CCUpdateManager.m */; };
 		5062D236110E0F8500D9E347 /* CCUpdateManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C17231FE110CFD180084A30B /* CCUpdateManager.h */; };
+		5062D256110E205A00D9E347 /* b2TOISolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5062D254110E205A00D9E347 /* b2TOISolver.cpp */; };
+		5062D257110E205A00D9E347 /* b2TOISolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 5062D255110E205A00D9E347 /* b2TOISolver.h */; };
 		506414ED0F9C7021007A7B24 /* CCBitmapFontAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 506414EB0F9C7021007A7B24 /* CCBitmapFontAtlas.h */; };
 		506414EE0F9C7021007A7B24 /* CCBitmapFontAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506414EC0F9C7021007A7B24 /* CCBitmapFontAtlas.m */; };
 		506602110E38A70D000B500E /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* CCScheduler.h */; };
@@ -2149,6 +2151,8 @@
 		506144080E589A2E003CCDB7 /* cocosnodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosnodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocosnodeTest.h; path = tests/cocosnodeTest.h; sourceTree = "<group>"; };
 		5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocosnodeTest.m; path = tests/cocosnodeTest.m; sourceTree = "<group>"; };
+		5062D254110E205A00D9E347 /* b2TOISolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2TOISolver.cpp; sourceTree = "<group>"; };
+		5062D255110E205A00D9E347 /* b2TOISolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2TOISolver.h; sourceTree = "<group>"; };
 		50637A150E95397A000C9182 /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
 		50637A160E95397A000C9182 /* CCTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureAtlas.m; sourceTree = "<group>"; };
 		506414EB0F9C7021007A7B24 /* CCBitmapFontAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBitmapFontAtlas.h; sourceTree = "<group>"; };
@@ -4010,6 +4014,8 @@
 		506EE3A61030F19600A389B3 /* Dynamics */ = {
 			isa = PBXGroup;
 			children = (
+				506EE3B41030F19600A389B3 /* Contacts */,
+				506EE3C01030F19600A389B3 /* Joints */,
 				506EE3A71030F19600A389B3 /* b2Body.cpp */,
 				506EE3A81030F19600A389B3 /* b2Body.h */,
 				506EE3A91030F19600A389B3 /* b2ContactManager.cpp */,
@@ -4023,8 +4029,6 @@
 				506EE3B11030F19600A389B3 /* b2World.h */,
 				506EE3B21030F19600A389B3 /* b2WorldCallbacks.cpp */,
 				506EE3B31030F19600A389B3 /* b2WorldCallbacks.h */,
-				506EE3B41030F19600A389B3 /* Contacts */,
-				506EE3C01030F19600A389B3 /* Joints */,
 			);
 			path = Dynamics;
 			sourceTree = "<group>";
@@ -4032,6 +4036,8 @@
 		506EE3B41030F19600A389B3 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				5062D254110E205A00D9E347 /* b2TOISolver.cpp */,
+				5062D255110E205A00D9E347 /* b2TOISolver.h */,
 				506EE3B51030F19600A389B3 /* b2CircleContact.cpp */,
 				506EE3B61030F19600A389B3 /* b2CircleContact.h */,
 				506EE3B71030F19600A389B3 /* b2Contact.cpp */,
@@ -4894,6 +4900,7 @@
 				506EE4121030F19700A389B3 /* b2RevoluteJoint.h in Headers */,
 				50AC64CA10C0468200C19890 /* b2FrictionJoint.h in Headers */,
 				50AC64CC10C0468200C19890 /* b2WeldJoint.h in Headers */,
+				5062D257110E205A00D9E347 /* b2TOISolver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7263,6 +7270,7 @@
 				506EE4111030F19700A389B3 /* b2RevoluteJoint.cpp in Sources */,
 				50AC64C910C0468200C19890 /* b2FrictionJoint.cpp in Sources */,
 				50AC64CB10C0468200C19890 /* b2WeldJoint.cpp in Sources */,
+				5062D256110E205A00D9E347 /* b2TOISolver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

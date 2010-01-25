@@ -83,7 +83,7 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
 	const b2Manifold* manifold = contact->GetManifold();
 	
-	if (manifold->m_pointCount == 0)
+	if (manifold->pointCount == 0)
 	{
 		return;
 	}
@@ -97,13 +97,13 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	b2WorldManifold worldManifold;
 	contact->GetWorldManifold(&worldManifold);
 	
-	for (int32 i = 0; i < manifold->m_pointCount && m_pointCount < k_maxContactPoints; ++i)
+	for (int32 i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
 	{
 		ContactPoint* cp = m_points + m_pointCount;
 		cp->fixtureA = fixtureA;
 		cp->fixtureB = fixtureB;
-		cp->position = worldManifold.m_points[i];
-		cp->normal = worldManifold.m_normal;
+		cp->position = worldManifold.points[i];
+		cp->normal = worldManifold.normal;
 		cp->state = state2[i];
 		++m_pointCount;
 	}
@@ -268,7 +268,8 @@ void Test::LaunchBomb(const b2Vec2& position, const b2Vec2& velocity)
 	b2FixtureDef fd;
 	fd.shape = &circle;
 	fd.density = 20.0f;
-	fd.restitution = 0.1f;
+	fd.restitution = 0.0f;
+	
 	
 	b2Vec2 minV = position - b2Vec2(0.3f,0.3f);
 	b2Vec2 maxV = position + b2Vec2(0.3f,0.3f);
@@ -315,7 +316,7 @@ void Test::Step(Settings* settings)
 	m_world->Step(timeStep, settings->velocityIterations, settings->positionIterations);
 	m_world->ClearForces();
 	
-	m_world->DrawDebugData();
+//	m_world->DrawDebugData();
 	
 	if (timeStep > 0.0f)
 	{
@@ -326,10 +327,7 @@ void Test::Step(Settings* settings)
 	{
 		m_debugDraw.DrawString(5, m_textLine, "bodies/contacts/joints/proxies = %d/%d/%d",
 							   m_world->GetBodyCount(), m_world->GetContactCount(), m_world->GetJointCount(), m_world->GetProxyCount());
-		m_textLine += 15;
-		
-		m_debugDraw.DrawString(5, m_textLine, "heap bytes = %d", b2_byteCount);
-		m_textLine += 15;
+		m_textLine += 15;		
 	}
 	
 	if (m_mouseJoint)

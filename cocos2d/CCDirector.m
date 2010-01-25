@@ -189,6 +189,14 @@ static CCDirector *_sharedDirector = nil;
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
+	
+	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	
 #if CC_DIRECTOR_FAST_FPS
     if (!FPSLabel)
         FPSLabel = [[CCLabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
@@ -221,22 +229,9 @@ static CCDirector *_sharedDirector = nil;
 	[self applyLandscape];
 	
 	/* draw the scene */
-
-	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
 	[runningScene_ visit];
-
 	if( displayFPS )
 		[self showFPS];
-	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	glPopMatrix();
 		
