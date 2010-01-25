@@ -959,7 +959,7 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
 
 	//
 	[[CCDirector sharedDirector] setPixelFormat:kRGB565];

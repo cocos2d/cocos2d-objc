@@ -234,6 +234,9 @@ static CCDirector *_sharedDirector = nil;
 		[self showFPS];
 	
 	glPopMatrix();
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 		
 	/* swap buffers */
 	[openGLView_ swapBuffers];	
