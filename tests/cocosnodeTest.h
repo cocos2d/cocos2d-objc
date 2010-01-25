@@ -70,3 +70,7 @@
 {}
 @end
 
+
+@interface PerFrameUpdateTest : TestDemo
+{}
+@end
