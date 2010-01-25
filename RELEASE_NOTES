@@ -1,12 +1,5 @@
 ===== cocos2d for iPhone v0.99rc Release Notes =====
 
 
-**WARNING**:
-This is a beta version. It means:
-  * Features might be in an incomplete state
-  * It has less testing than final versions (more bugs?)
-  * The API in this versions is not final
-
-
 Please, see the online document:
 http://www.cocos2d-iphone.org/wiki/doku.php/release_notes:0_99_rc
