@@ -90,12 +90,7 @@ enum {
 	
 	// position of the node
 	CGPoint position_;
-	
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL relativeAnchorPoint_;
-	
+		
 	// anchor point in pixels
 	CGPoint anchorPointInPixels_;	
 	// anchor point normalized
@@ -105,13 +100,9 @@ enum {
 	CGSize	contentSize_;
 	
 	CGAffineTransform transform_, inverse_;
-	BOOL isTransformDirty_, isInverseDirty_;
 	
 	// openGL real Z vertex
 	float vertexZ_;
-	
-	// is visible
-	BOOL visible;
 	
 	// a Camera
 	CCCamera *camera_;
@@ -125,8 +116,6 @@ enum {
 	// array of children
 	NSMutableArray *children;
 	
-	// is running
-	BOOL isRunning;
 	
 	// weakref to parent
 	CCNode *parent;
@@ -136,6 +125,29 @@ enum {
     
 	// user data field
 	void *userData;
+	
+
+	// All BOOls moved packed together as 1 bit each
+	
+	// is visible
+	BOOL visible:1;
+	
+	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// Sprites, Labels and any other "small" object uses it.
+	// Scenes, Layers and other "whole screen" object don't use it.
+	BOOL relativeAnchorPoint_:1;	
+	
+	
+	// Transformations dirty
+	BOOL isTransformDirty_:1;
+	BOOL isInverseDirty_:1;
+	
+	// Is running
+	BOOL isRunning:1;
+	
+	// If we are scheduled for per-frame updates
+	BOOL perFrameUpdates:1;
+	
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
@@ -186,6 +198,8 @@ enum {
  */
 @property (nonatomic,readwrite) CGSize contentSize;
 /** A weak reference to the parent */
+// is running
+@property(nonatomic,readwrite) BOOL isRunning;
 @property(nonatomic,readwrite,assign) CCNode* parent;
 /** If YES the transformtions will be relative to it's anchor point.
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
@@ -289,6 +303,21 @@ enum {
 /** recursive method that visit its children and draw them */
 -(void) visit;
 
+// Update
+
+/** override this method for your own update logic, default does nothing 
+  You must call scheduleForPerFrameUpdates: to use
+ */
+-(void) perFrameUpdate:(ccTime) dt;
+
+/* Schedule for per frame updates with priority bucket of 0 */
+-(void) scheduleForPerFrameUpdates;
+
+/* Schedule for per frame udpates with a given priority bucket (higher priority buckets happen first, negative values ok) */
+-(void) scheduleForPerFrameUpdatesWithPriority:(NSInteger) aPriority;
+
+/* Cancel per frame updates */
+-(void) cancelPerFrameUpdates;
 
 // transformations
 

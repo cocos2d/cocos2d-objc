@@ -10,6 +10,7 @@
 // local import
 #import "cocosnodeTest.h"
 
+
 enum {
 	kTagSprite1 = 1,
 	kTagSprite2 = 2,
@@ -33,6 +34,7 @@ static NSString *transitions[] = {
 			@"CameraZoomTest",
 			@"TimerScaleTest",
 			@"TimerScaleWithChildrenTest",
+			@"PerFrameUpdateTest",
 };
 
 Class nextAction()
@@ -928,6 +930,122 @@ Class restartAction()
 }
 @end
 
+
+
+
+#pragma mark -
+#pragma mark PerFrameUpdateTest
+
+@interface PFSprite : CCSprite {
+	
+	int c;
+	int totalFrames;
+	PFSprite* slave;
+}
+
+@property (readonly) int totalFrames;
+
+@end
+
+@implementation PFSprite 
+@synthesize totalFrames;
+
+-(id)initWithUpdatePriority:(NSInteger) aPriority File:(NSString*)aFile Slave:(PFSprite*) anotehrSprite {
+	self = [super initWithFile:aFile];
+	c = 0;
+	totalFrames = 0;
+	slave = anotehrSprite;
+	[self scheduleForPerFrameUpdatesWithPriority:aPriority];
+	return self;
+}
+
+-(void) perFrameUpdate:(ccTime)dt {
+	++totalFrames;
+	if(slave == nil) {
+		c = ++c % 200;
+		self.position = ccp(self.position.x,50+c);
+	}
+	else {
+		if(slave.totalFrames == totalFrames)
+			self.position = slave.position;
+		else {
+			self.position = ccp(slave.position.x,320-slave.position.y);
+		}
+
+	}
+}
+
+
+@end
+
+@implementation PerFrameUpdateTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		
+		//		CCLabel* l = [CCLabel labelWithString:@"Right is double speed of left" fontName:@"Thonburi" fontSize:16];
+		//		[self addChild:l];
+		//		[l setPosition:ccp(s.width/2, 245)];
+		
+		PFSprite *sprite;
+		PFSprite* slave;
+		
+		// LEFT
+		sprite = [[PFSprite alloc] initWithUpdatePriority:0 File:@"grossini.png" Slave:nil];
+		[self addChild:sprite z:0 tag:10];		
+		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
+		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+
+		slave = [[PFSprite alloc] initWithUpdatePriority:0 File:@"grossinis_sister1.png" Slave:sprite];
+		[self addChild:slave z:0 tag:15];
+		
+		// RIGHT
+		sprite = [[PFSprite alloc] initWithUpdatePriority:0 File:@"grossini.png" Slave:nil];
+		[self addChild:sprite z:0 tag:20];
+		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
+		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
+		
+		[sprite scaleAllTimers:2.0f];
+		
+		slave = [[PFSprite alloc] initWithUpdatePriority:10 File:@"grossinis_sister1.png" Slave:sprite];
+		[self addChild:slave z:0 tag:30];		
+		
+		[self schedule:@selector(removeOne:) interval:5.0f repeat:1];
+		
+		NSAssert([CCUpdateManager sharedUpdateManager].count == 4,@"PerFrameUpdate count wrong");
+	}
+	
+	return self;
+}
+
+
+-(void) removeOne:(ccTime) dt {
+	// Should not crash
+	[self removeChildByTag:20 cleanup:YES];
+	[self removeChildByTag:30 cleanup:YES];
+	CCLabel* l = [CCLabel labelWithString:@"Removed Sprite / canceled updates for 1 other" fontName:@"Thonburi" fontSize:16];
+	[self addChild:l];
+	[l setPosition:ccp(480/2, 230)];
+	
+	CCSprite* sprite = (CCSprite*)[self getChildByTag:15];	
+	[sprite cancelPerFrameUpdates];
+	
+	NSAssert([CCUpdateManager sharedUpdateManager].count == 1,@"PerFrameUpdate count wrong");
+	
+}
+
+
+
+
+-(NSString *) title
+{
+	return @"Per Frame Update Test";
+}
+@end
 
 
 

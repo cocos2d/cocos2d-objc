@@ -21,8 +21,9 @@ version 0.99.0-rc - XX-mmm-2010
  . XCode: doxygen scripts runs with spaces in subdirectories (issue #684)
  . Scheduler: Manages all CCTimers through updated API (part of issue #439)
  . Scheduler: Able to pause and timescale individual timers, also through CCNode API (part of issue #439)
- . Node: Scaling timers will scale time for both selector callbacks and actions 
-
+ . Node: Scaling timers will scale time for both selector callbacks and actions (issue #720)
+ . Node: Can now schedule for perFrameUpdate: method calls (efficient alternative to scheduling selectors for simple once-a-frame update calls) (issue #721)
+ 
 version 0.9.0-beta2 - 11-Jan-2010
  . Actions: added 2 new instant actions: FlipX and FlipY (counter-rollback of part issue #620)
  . Actions: uses FLT_EPSILON constant (issue #701)

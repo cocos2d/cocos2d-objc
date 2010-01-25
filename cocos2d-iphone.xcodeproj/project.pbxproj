@@ -1445,6 +1445,7 @@
 		AAC2C3941005ED8E005B9B2C /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */; };
 		AAC2C3951005ED8E005B9B2C /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC2C3931005ED8E005B9B2C /* CocosDenshion.m */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		C1723200110CFD180084A30B /* CCUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C17231FF110CFD180084A30B /* CCUpdateManager.m */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -2661,6 +2662,8 @@
 		AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		AAC2C3931005ED8E005B9B2C /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
+		C17231FE110CFD180084A30B /* CCUpdateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUpdateManager.h; sourceTree = "<group>"; };
+		C17231FF110CFD180084A30B /* CCUpdateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCUpdateManager.m; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3614,6 +3617,8 @@
 				508A450510B0E604004B9CC3 /* CCCompatibility.m */,
 				503862D811007181005D2C92 /* CCConfiguration.h */,
 				503862D911007181005D2C92 /* CCConfiguration.m */,
+				C17231FE110CFD180084A30B /* CCUpdateManager.h */,
+				C17231FF110CFD180084A30B /* CCUpdateManager.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -7330,6 +7335,7 @@
 			files = (
 				506143FD0E589A2E003CCDB7 /* main.m in Sources */,
 				5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */,
+				C1723200110CFD180084A30B /* CCUpdateManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

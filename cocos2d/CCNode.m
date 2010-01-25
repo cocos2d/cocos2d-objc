@@ -25,7 +25,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/ccArray.h"
 #import "Support/TransformUtils.h"
-
+#import "CCUpdateManager.h"
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -53,6 +53,7 @@
 @synthesize zOrder;
 @synthesize tag;
 @synthesize vertexZ = vertexZ_;
+@synthesize isRunning;
 
 #pragma mark CCNode - Transform related properties
 
@@ -166,6 +167,7 @@
 		grid_ = nil;
 		
 		visible = YES;
+		perFrameUpdates = NO;
 
 		tag = kCCNodeTagInvalid;
 		
@@ -191,6 +193,9 @@
 	
 	// Selectors
 	[self stopAllTimers];
+	
+	// Per Frame Updates
+	[self cancelPerFrameUpdates];
 	
 	[children makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -444,6 +449,34 @@
 	
 	glPopMatrix();
 }
+
+
+#pragma mark CCNode - Per Frame Updates
+
+-(void) perFrameUpdate:(ccTime) dt {
+	// override me
+}
+
+-(void) scheduleForPerFrameUpdates {
+	[self scheduleForPerFrameUpdatesWithPriority:0];
+}
+
+-(void) scheduleForPerFrameUpdatesWithPriority:(NSInteger) aPriority {
+	if(perFrameUpdates) {
+		[self cancelPerFrameUpdates];
+	}
+	[[CCUpdateManager sharedUpdateManager] requestUpdatesFor:self Priority:aPriority];
+	perFrameUpdates = YES;
+}
+
+-(void) cancelPerFrameUpdates {
+	if(perFrameUpdates) {
+		[[CCUpdateManager sharedUpdateManager] cancelUpdatesFor:self];
+		perFrameUpdates = NO;
+	}
+}
+
+
 
 #pragma mark CCNode - Transformations
 

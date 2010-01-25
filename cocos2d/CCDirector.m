@@ -30,6 +30,7 @@
 #import "CCTouchDispatcher.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
+#import "CCUpdateManager.h"
 
 // support imports
 #import "Support/glu.h"
@@ -209,8 +210,10 @@ static CCDirector *_sharedDirector = nil;
 	[self calculateDeltaTime];
 	
 	/* tick before glClear: issue #533 */
-	if( ! isPaused_ )
+	if( ! isPaused_ ) {
 		[[CCScheduler sharedScheduler] tick: dt];	
+		[[CCUpdateManager sharedUpdateManager] tick: dt];
+	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -672,6 +675,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];
+	[CCUpdateManager purgeSharedUpdateManager];
 	
 	
 	// OpenGL view

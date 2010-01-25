@@ -89,6 +89,7 @@
 #import "CCTouchHandler.h"
 #import "ccConfig.h"
 #import "CCConfiguration.h"
+#import "CCUpdateManager.h"
 
 //
 // cocos2d macros
