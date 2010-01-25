@@ -29,6 +29,7 @@ static NSString *transitions[] = {
 			@"SchedulerTest1",
 			@"SchedulerTest2",
 			@"SchedulerTest3",
+			@"SchedulerTest4",
 			@"NodeToWorld",
 			@"CameraOrbitTest",
 			@"CameraZoomTest",
@@ -579,6 +580,53 @@ Class restartAction()
 }
 		
 @end
+
+
+#pragma mark -
+#pragma mark SchedulerTest4
+
+
+// Issue 714
+@implementation SchedulerTest4
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	
+	sp1.position = ccp(320,160);
+	
+	[self addChild:sp1 z:0 tag:2];
+	
+	CCLabel* l = [CCLabel labelWithString:@"Sister should rotate after random interval (and repeat)" fontName:@"Thonburi" fontSize:16];
+	[self addChild:l];
+	[l setPosition:ccp(480/2, 245)];	
+	
+	ccTime t = 1 + CCRANDOM_0_1() * 3;
+	[self schedule:@selector(doRotate:) interval:t repeat:1];
+	
+	return self;
+}
+
+-(void) doRotate:(ccTime) dt
+{
+	id node = [self getChildByTag:2];
+	id action1 = [CCRotateBy actionWithDuration:0.25f angle:360];
+	[node runAction:action1];
+	ccTime t = 1 + CCRANDOM_0_1() * 3;
+	[self schedule:@selector(doRotate:) interval:t repeat:1];
+	
+}
+
+
+
+-(NSString *) title
+{
+	return @"schedule repeat limit restart";
+}
+@end
+
 
 
 #pragma mark -
