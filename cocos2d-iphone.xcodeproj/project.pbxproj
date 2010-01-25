@@ -614,6 +614,8 @@
 		506144030E589A2E003CCDB7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		506144040E589A2E003CCDB7 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */; };
+		5062D235110E0F8500D9E347 /* CCUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C17231FF110CFD180084A30B /* CCUpdateManager.m */; };
+		5062D236110E0F8500D9E347 /* CCUpdateManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C17231FE110CFD180084A30B /* CCUpdateManager.h */; };
 		506414ED0F9C7021007A7B24 /* CCBitmapFontAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 506414EB0F9C7021007A7B24 /* CCBitmapFontAtlas.h */; };
 		506414EE0F9C7021007A7B24 /* CCBitmapFontAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506414EC0F9C7021007A7B24 /* CCBitmapFontAtlas.m */; };
 		506602110E38A70D000B500E /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* CCScheduler.h */; };
@@ -4832,6 +4834,7 @@
 				50D2AC9510E90DFA0068ECEB /* CCTMXLayer.h in Headers */,
 				50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */,
 				503862E5110072BC005D2C92 /* CCConfiguration.h in Headers */,
+				5062D236110E0F8500D9E347 /* CCUpdateManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7125,6 +7128,7 @@
 				50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */,
 				50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */,
 				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
+				5062D235110E0F8500D9E347 /* CCUpdateManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
