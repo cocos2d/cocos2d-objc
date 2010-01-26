@@ -112,10 +112,10 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	NSMutableSet					*methodsToRemove;
 	NSMutableSet					*methodsToAdd;
 
-	NSMutableDictionary		*targets;
+	NSMutableDictionary				*targets;
 	
 	
-	float									timeScale;
+	float							timeScale;
 	
 }
 
@@ -155,9 +155,9 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  */
 -(void) unscheduleAllTimers;
 
-/** Unscheduels all timers that represents a specific selector of a target
+/** Unschedule a selector for a given target
  */
--(void) unscheduleAllTimersOfSelector:(SEL)selector Target:(id)target;
+-(void) unscheduleSelector:(SEL)selector target:(id)target;
 
 /** removes all timers from a given target
  */
@@ -173,7 +173,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 
 /** scales the timefactor for all timers of a given target
  */
--(void) scaleAllTimersForTarget:(id)target ScaleFactor:(float)scaleFactor;
+-(void) scaleAllTimersForTarget:(id)target scaleFactor:(float)scaleFactor;
 
 
 @end
