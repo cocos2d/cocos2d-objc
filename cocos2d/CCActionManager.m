@@ -167,8 +167,8 @@ static CCActionManager *_sharedManager = nil;
 	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
 	if( element )
 		element->timeScale = scale;
-	//	else
-	//		CCLOG(@"cocos2d: pauseAllActions: Target not found");
+//	else
+//		CCLOG(@"cocos2d: timeScaleAllActions: Target not found");
 }
 
 
