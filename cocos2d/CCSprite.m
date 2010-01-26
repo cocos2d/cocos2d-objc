@@ -474,7 +474,7 @@ struct transformValues_ {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
-	
+
 	BOOL newBlend = NO;
 	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
 		newBlend = YES;
@@ -501,7 +501,7 @@ struct transformValues_ {
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
 	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);	
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 }
 
 #pragma mark CCSprite - CCNode overrides
