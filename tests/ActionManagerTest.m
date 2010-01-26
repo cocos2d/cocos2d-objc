@@ -17,8 +17,11 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"Test1",
-			@"Test2",
+	@"PauseTest",
+
+			@"CrashTest",
+			@"LogicTest",
+			@"PauseTest",
 };
 
 Class nextAction()
@@ -110,9 +113,10 @@ Class restartAction()
 }
 @end
 
-#pragma mark Test1
+#pragma mark -
+#pragma mark CrashTest
 
-@implementation Test1
+@implementation CrashTest
 -(id) init
 {
 	if( (self=[super init] )) {
@@ -155,9 +159,10 @@ Class restartAction()
 }
 @end
 
-#pragma mark Test2
+#pragma mark -
+#pragma mark LogicTest
 
-@implementation Test2
+@implementation LogicTest
 -(id) init
 {
 	if( (self=[super init] )) {
@@ -186,10 +191,50 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Test 2. Logic test";
+	return @"Logic test";
 }
 @end
 
+#pragma mark -
+#pragma mark PauseTest
+
+@implementation PauseTest
+-(void) onEnter
+{
+	//
+	// This test MUST be done in 'onEnter' and not on 'init'
+	// otherwise the paused action will be resumed at 'onEnter' time
+	//
+	[super onEnter];
+	
+	//
+	// Also, this test MUST be done, after [super onEnter]
+	//
+	CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
+	[self addChild:grossini z:0 tag:kTagGrossini];
+	[grossini setPosition:ccp(200,200)];
+	
+	CCAction *action = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
+	
+	[[CCActionManager sharedManager] addAction:action target:grossini paused:YES];
+
+	[self schedule:@selector(unpause:) interval:3 repeat:1];
+}
+
+-(void) unpause:(ccTime)dt
+{
+	CCNode *node = [self getChildByTag:kTagGrossini];
+	[[CCActionManager sharedManager] resumeAllActionsForTarget:node];
+}
+
+-(NSString *) title
+{
+	return @"Pause Test";
+}
+@end
+
+#pragma mark -
+#pragma mark Delegate
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
@@ -204,12 +249,13 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
 	
+	CCDirector *director = [CCDirector sharedDirector];
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[director setAnimationInterval:1.0/60];
+	[director setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -217,13 +263,13 @@ Class restartAction()
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director attachInView:window];	
 	[window makeKeyAndVisible];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

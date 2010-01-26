@@ -14,12 +14,18 @@
 -(NSString*) title;
 @end
 
-@interface Test1 : ActionManagerTest
+@interface CrashTest : ActionManagerTest
 {
 }
 @end
 
-@interface Test2 : ActionManagerTest
+@interface LogicTest : ActionManagerTest
+{
+}
+@end
+
+
+@interface PauseTest : ActionManagerTest
 {
 }
 @end
