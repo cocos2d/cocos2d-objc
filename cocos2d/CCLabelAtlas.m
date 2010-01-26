@@ -130,10 +130,13 @@
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	// is this chepear than saving/restoring color state ?
-	glColor4ub( 255, 255, 255, 255);
+	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
+	// XXX: that they need
+//	glColor4ub( 255, 255, 255, 255);
 
 	// Restore Default GL state. Enable GL_COLOR_ARRAY
 	glEnableClientState(GL_COLOR_ARRAY);
+	
 	
 #if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];

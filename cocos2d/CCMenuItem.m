@@ -401,10 +401,7 @@ enum {
 	[selectedImage_ setColor:color];
 	[disabledImage_ setColor:color];	
 }
-- (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
-{
-	[self setColor:ccc3(r,g,b)];
-}
+
 -(GLubyte) opacity
 {
 	return [normalImage_ opacity];
@@ -575,8 +572,4 @@ enum {
 		[item setColor:color];
 }
 
-- (void) setRGB:(GLubyte)r:(GLubyte)g:(GLubyte)b
-{
-	[self setColor:ccc3(r,g,b)];
-}
 @end

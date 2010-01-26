@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -81,8 +81,9 @@
 
 -(void) calculateTexCoordsSteps
 {
-	texStepX = itemWidth / (float) [[textureAtlas_ texture] pixelsWide];
-	texStepY = itemHeight / (float) [[textureAtlas_ texture] pixelsHigh]; 	
+	CCTexture2D *tex = [textureAtlas_ texture];
+	texStepX = itemWidth / (float) [tex pixelsWide];
+	texStepY = itemHeight / (float) [tex pixelsHigh]; 	
 }
 
 -(void) updateAtlasValues
@@ -93,11 +94,9 @@
 #pragma mark CCAtlasNode - draw
 - (void) draw
 {
-	// Default client GL state:
-	// GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// GL_TEXTURE_2D	
-
-	// disable unused state
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
 
 	glColor4ub( color_.r, color_.g, color_.b, opacity_);
@@ -114,7 +113,9 @@
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	// is this chepear than saving/restoring color state ?
-	glColor4ub( 255, 255, 255, 255);
+	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
+	// XXX: that they need
+//	glColor4ub( 255, 255, 255, 255);
 
 	// restore default GL state
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -122,11 +123,6 @@
 }
 
 #pragma mark CCAtlasNode - RGBA protocol
-
--(void) setRGB: (GLubyte)r :(GLubyte)g :(GLubyte)b
-{
-	[self setColor:ccc3(r,g,b)];
-}
 
 -(void) setOpacity:(GLubyte)opacity
 {
