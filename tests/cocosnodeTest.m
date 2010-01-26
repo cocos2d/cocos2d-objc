@@ -15,27 +15,27 @@ enum {
 	kTagSprite1 = 1,
 	kTagSprite2 = 2,
 	kTagSprite3 = 3,
+	kTagSlider,
 };
 
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	@"SchedulerTest5",
-
 			@"Test2",
 			@"Test4",
 			@"Test5",
 			@"Test6",
 			@"StressTest1",
 			@"StressTest2",
+			@"NodeToWorld",
+			@"CameraOrbitTest",
+			@"CameraZoomTest",	
 			@"SchedulerTest1",
 			@"SchedulerTest2",
 			@"SchedulerTest3",
 			@"SchedulerTest4",
 			@"SchedulerTest5",
-			@"NodeToWorld",
-			@"CameraOrbitTest",
-			@"CameraZoomTest",
+			@"SchedulerScaleTest",
 			@"TimerScaleTest",
 			@"TimerScaleWithChildrenTest",
 			@"PerFrameUpdateTest",
@@ -678,6 +678,136 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark SchedulerScaleTest
+
+@implementation SchedulerScaleTest
+- (UISlider *)sliderCtl
+{
+    if (sliderCtl == nil) 
+    {
+        CGRect frame = CGRectMake(174.0f, 12.0f, 120.0f, 7.0f);
+        sliderCtl = [[UISlider alloc] initWithFrame:frame];
+        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+        
+        // in case the parent view draws with a custom color or gradient, use a transparent color
+        sliderCtl.backgroundColor = [UIColor clearColor];
+        
+        sliderCtl.minimumValue = 0.0f;
+        sliderCtl.maximumValue = 2.0f;
+        sliderCtl.continuous = YES;
+        sliderCtl.value = 1.0f;
+		
+		sliderCtl.tag = kTagSlider;	// tag this view for later so we can remove it from recycled table cells
+    }
+    return [sliderCtl autorelease];
+}
+
+-(void) sliderAction:(id) sender
+{
+
+	[self scaleAllTimers:sliderCtl.value withChildren:YES];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCLabel* l = [CCLabel labelWithString:@"Move the slider" fontName:@"Thonburi" fontSize:16];
+	[self addChild:l];
+	[l setPosition:ccp(s.width/2, 245)];
+
+
+	// timers
+	label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+	label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+	label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+	
+	[self schedule: @selector(step1:) interval: 0.25f];
+	[self schedule: @selector(step2:) interval: 0.5f];
+	[self schedule: @selector(step3:) interval: 1.0f];
+	
+	label1.position = ccp(80,s.height/2);
+	label2.position = ccp(240,s.height/2);
+	label3.position = ccp(400,s.height/2);
+	
+	[self addChild:label1];
+	[self addChild:label2];
+	[self addChild:label3];	
+	
+	// actions
+	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+	[self addChild:sprite z:0];
+	[sprite setPosition:ccp(100,100)];
+	
+	// particle (uses timer)
+	id particle = [CCParticleFlower node];
+	[self addChild:particle];
+	[particle setPosition:ccp(s.width-80,80)];
+	
+	// Action 1
+	CCIntervalAction *action1 = [CCMoveBy actionWithDuration:2 position:ccp(300,0)];
+	CCAction *back1 = [action1 reverse];
+	CCSequence *seq1 = [CCSequence actions:action1, back1, nil];
+	CCAction *rep1 = [CCRepeatForever actionWithAction:seq1];
+	[sprite runAction:rep1];
+	
+	
+	// Action 2
+	CCIntervalAction *action2 = [CCRotateBy actionWithDuration:2 angle:180];
+	CCAction *back2 = [action2 reverse];
+	CCSequence *seq2 = [CCSequence actions:action2, back2, nil];
+	CCAction *rep2 = [CCRepeatForever actionWithAction:seq2];
+	[sprite runAction:rep2];
+	
+	CCSprite *child = [CCSprite spriteWithFile:@"grossini.png"];
+	[sprite addChild:child z:0];
+	[child setScale:0.5f];
+	
+	// Action 2
+	id rot = [CCRotateBy actionWithDuration:2 angle:180];
+	id rep = [CCRepeatForever actionWithAction:rot];
+	[child runAction:rep];	
+	
+
+	sliderCtl = [self sliderCtl];
+	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
+}
+
+-(void) onExit
+{
+	[sliderCtl removeFromSuperview];
+	[super onExit];
+}
+
+-(void) step1: (ccTime) delta
+{
+	//	time1 +=delta;
+	time1 +=1;
+	[label1 setString: [NSString stringWithFormat:@"%2.1f", time1] ];
+}
+
+-(void) step2: (ccTime) delta
+{
+	//	time2 +=delta;
+	time2 +=1;
+	[label2 setString: [NSString stringWithFormat:@"%2.1f", time2] ];
+}
+
+-(void) step3: (ccTime) delta
+{
+	//	time3 +=delta;
+	time3 +=1;
+	[label3 setString: [NSString stringWithFormat:@"%2.1f", time3] ];
+}
+
+-(NSString*) title
+{
+	return @"Actions & Timer with Slider";
+}
+@end
 
 
 #pragma mark -
@@ -940,7 +1070,7 @@ Class restartAction()
 		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
 		[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:4 angle:360]]];
 
-		[sprite scaleAllTimers:2.0f];
+		[sprite scaleAllTimers:2.0f withChildren:NO];
 		
 		[self schedule:@selector(switchToHalfSpeed:) interval:5.0f repeat:1];
 		

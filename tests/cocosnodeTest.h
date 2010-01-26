@@ -58,6 +58,17 @@
 {}
 @end
 
+@interface SchedulerScaleTest : TestDemo
+{
+	UISlider	*sliderCtl;
+	CCLabel *label1;
+	CCLabel *label2;
+	CCLabel *label3;
+	
+	ccTime time1, time2, time3;	
+}
+@end
+
 
 @interface NodeToWorld : TestDemo
 {}
