@@ -20,9 +20,9 @@ Main features
     * Basic menus and buttons
     * Integrated with physics engines: Box2d and Chipmunk
     * Particle system
-	* Fonts:
-		* Fast font rendering using Fixed and Variable width fonts
-		* Support for .ttf fonts
+    * Fonts:
+        * Fast font rendering using Fixed and Variable width fonts
+        * Support for .ttf fonts
     * Texture Atlas support
     * Tile Map support: Orthogonal, Isometric and Hexagonal
     * Parallax scrolling

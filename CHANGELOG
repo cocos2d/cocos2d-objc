@@ -10,6 +10,8 @@ version 0.99.0-rc - XX-mmm-2010
  . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
  . Grid: optimized code. Only call camera.locate if it is dirty (issue #XXX)
  . Node: Uses cached Affine matrix to transform the nodes (2 GL calls vs. 5 GL calls) (issue #XXX)
+ . Node: Scaling timers will scale time for both selector callbacks and actions (issue #720)
+ . Node: Can now schedule for perFrameUpdate: method calls (efficient alternative to scheduling selectors for simple once-a-frame update calls) (issue #721)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)
@@ -22,8 +24,6 @@ version 0.99.0-rc - XX-mmm-2010
  . XCode: doxygen scripts runs with spaces in subdirectories (issue #684)
  . Scheduler: Manages all CCTimers through updated API (part of issue #439)
  . Scheduler: Able to pause and timescale individual timers, also through CCNode API (part of issue #439)
- . Node: Scaling timers will scale time for both selector callbacks and actions (issue #720)
- . Node: Can now schedule for perFrameUpdate: method calls (efficient alternative to scheduling selectors for simple once-a-frame update calls) (issue #721)
  
 version 0.9.0-beta2 - 11-Jan-2010
  . Actions: added 2 new instant actions: FlipX and FlipY (counter-rollback of part issue #620)

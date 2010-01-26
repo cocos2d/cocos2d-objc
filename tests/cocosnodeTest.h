@@ -54,6 +54,10 @@
 {}
 @end
 
+@interface SchedulerTest5 : TestDemo
+{}
+@end
+
 
 @interface NodeToWorld : TestDemo
 {}
@@ -74,7 +78,6 @@
 @interface TimerScaleWithChildrenTest : TestDemo
 {}
 @end
-
 
 @interface PerFrameUpdateTest : TestDemo
 {}
