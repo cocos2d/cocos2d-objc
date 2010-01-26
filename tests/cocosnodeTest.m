@@ -463,6 +463,18 @@ Class restartAction()
 #pragma mark -
 #pragma mark SchedulerTest1
 
+@interface CustomNode : CCNode
+{
+}
+@end
+@implementation CustomNode
+-(void) doSomething:(ccTime)dt
+{
+	NSLog(@"do something...");
+}
+@end
+
+
 @implementation SchedulerTest1
 -(id) init
 {
@@ -472,7 +484,7 @@ Class restartAction()
 	//
 	
 	if( ( self=[super init]) ) {
-		CCLayer *layer = [CCLayer node];
+		CCLayer *layer = [CustomNode node];
 		NSLog(@"retain count after init is %d", [layer retainCount]);                // 1
 		
 		[self addChild:layer z:0];
@@ -487,9 +499,7 @@ Class restartAction()
 	
 	return self;
 }
--(void) doSomething:(ccTime)dt
-{
-}
+
 -(NSString *) title
 {
 	return @"cocosnode scheduler test #1";

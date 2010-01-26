@@ -77,7 +77,7 @@
 -(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds repeat:(int)times
 {
 	if( (self=[super init]) ) {
-#ifdef DEBUG
+#if	COCOS2D_DEBUG
 		NSMethodSignature *sig = [t methodSignatureForSelector:s];
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
 		NSAssert( times >= CCTIMER_REPEAT_FOREVER, @"Repeat argument invalid");
