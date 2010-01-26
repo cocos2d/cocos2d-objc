@@ -622,7 +622,7 @@
 
 -(void) schedule: (SEL) selector repeat:(int)times
 {
-	[self schedule:selector interval:0];
+	[self schedule:selector interval:0 repeat:times];
 }
 
 -(void) schedule: (SEL) selector

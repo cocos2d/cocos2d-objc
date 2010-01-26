@@ -62,6 +62,10 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
 	* David Whatley ( http://criticalthoughtgames.com/ )
 		Scheduler supports the repeat parameter. patch.
+		Author of perFrameUpdate in Scheduler
+		Scheduler supports scaleTime per node
+		ActionManager supports scaleTime per node
+		Author of tests for: Scheduler:repeat, Scheduler:perFrameUpdate, Scheduler:scaleTime
 	* Dominique Bongard:
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0

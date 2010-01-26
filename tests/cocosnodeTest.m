@@ -20,6 +20,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"SchedulerTest5",
+
 			@"Test2",
 			@"Test4",
 			@"Test5",
@@ -30,6 +32,7 @@ static NSString *transitions[] = {
 			@"SchedulerTest2",
 			@"SchedulerTest3",
 			@"SchedulerTest4",
+			@"SchedulerTest5",
 			@"NodeToWorld",
 			@"CameraOrbitTest",
 			@"CameraZoomTest",
@@ -629,11 +632,49 @@ Class restartAction()
 	
 }
 
-
-
 -(NSString *) title
 {
 	return @"schedule repeat limit restart";
+}
+@end
+
+
+#pragma mark -
+#pragma mark SchedulerTest5
+
+@implementation SchedulerTest5
+-(id) init
+{
+	if( ( self=[super init]) ) {
+
+		// testing delta time.
+		// 1st delta time should be 0
+//		[self schedule:@selector(test1:) repeat:5];
+//		[self schedule:@selector(test2:) interval:1 repeat:5];
+		[self schedule:@selector(test3:) interval:5 repeat:2];
+	}
+	
+	return self;
+}
+
+-(void) test1:(ccTime)dt
+{
+	NSLog(@"test1: dt=%f",dt);
+}
+
+-(void) test2:(ccTime)dt
+{
+	NSLog(@"test2: dt=%f",dt);
+}
+
+-(void) test3:(ccTime)dt
+{
+	NSLog(@"test3: dt=%f",dt);
+}
+
+-(NSString *) title
+{
+	return @"schedule: testing delta times";
 }
 @end
 
