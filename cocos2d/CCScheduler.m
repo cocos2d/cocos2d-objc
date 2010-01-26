@@ -298,12 +298,10 @@ static CCScheduler *sharedScheduler;
 	for(CCTimer* t in timers) {
 		[self removeTimer:t];
 	}
-	// Check any we were going to add
+	// XXX: danger, can we remove an object from an array while we are iterating it ?
 	for(CCTimer* t in methodsToAdd) {
-		if(t.target == target) {
+		if(t.target == target)
 			[methodsToAdd removeObject:t];
-			break;
-		}
 	}
 }
 
@@ -315,12 +313,10 @@ static CCScheduler *sharedScheduler;
 	for(CCTimer* t in timers) {
 		t.paused = paused;
 	}
-	// Check any we were going to add
+	// pause/resume possible timers in methodsToAdd
 	for(CCTimer* t in methodsToAdd) {
-		if(t.target == target ) {
+		if(t.target == target )
 			t.paused = paused;
-			break;
-		}
 	}	
 }
 
@@ -333,7 +329,7 @@ static CCScheduler *sharedScheduler;
 }
 
 
--(void) unscheduleAllTimersOfSelector:(SEL)selector Target:(id)target {
+-(void) unscheduleSelector:(SEL)selector target:(id)target {
 	
 #ifdef DEBUG_SCHEDULER	
 	NSLog(@"%s: [%@|%@] sel:%@",__PRETTY_FUNCTION__,target,[target class],NSStringFromSelector(selector));
@@ -344,22 +340,23 @@ static CCScheduler *sharedScheduler;
 	for(CCTimer* t in timers) {
 		if (t.selector == selector) {
 			[self removeTimer:t];
+			break; // break, since it is impossible that to have duplicate selectors in 1 target
 		}
 	}
 	// Check any we were going to add
 	for(CCTimer* t in methodsToAdd) {
+		// XXX: can we remove an object from the Array while we are iterating it ?
 		if(t.target == target && t.selector == selector) {
 			[methodsToAdd removeObject:t];
-			break;
+			break; // break, since it is impossible that to have duplicate selectors in 1 target
 		}
-	}
-	
+	}	
 }
 
 
 
 
--(void) scaleAllTimersForTarget:(id)target ScaleFactor:(float)scaleFactor {
+-(void) scaleAllTimersForTarget:(id)target scaleFactor:(float)scaleFactor {
 #ifdef DEBUG_SCHEDULER		
 	NSLog(@"%s targets: %@",__PRETTY_FUNCTION__,targets);
 #endif		

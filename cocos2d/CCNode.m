@@ -616,8 +616,8 @@
 	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
 
-#pragma mark CCNode Timers 
 
+#pragma mark CCNode Timers 
 
 
 -(void) schedule: (SEL) selector repeat:(int)times
@@ -652,10 +652,9 @@
 	if (selector == nil)
 		return;
 
-	[[CCScheduler sharedScheduler] unscheduleAllTimersOfSelector:selector Target:self];
+	[[CCScheduler sharedScheduler] unscheduleSelector:selector target:self];
 
 }
-
 
 - (void) activateTimers
 {
@@ -675,13 +674,10 @@
 	}
 }
 
-
-
 - (void) deactivateTimers
 {
 	[self deactivateTimersWithChildren:NO];
 }
-
 
 -(void) deactivateTimersWithChildren:(bool) affectChildren
 {
@@ -696,13 +692,9 @@
 	}
 }
 
-
-
-
 -(void) stopAllTimers {
 	[[CCScheduler sharedScheduler] removeAllTimersFromTarget:self];
 }
-
 
 -(void) scaleAllTimers:(float) scale
 {
@@ -711,7 +703,7 @@
 
 -(void) scaleAllTimers:(float) scale withChildren:(bool) affectChildren;
 {
-	[[CCScheduler sharedScheduler] scaleAllTimersForTarget:self ScaleFactor:scale];
+	[[CCScheduler sharedScheduler] scaleAllTimersForTarget:self scaleFactor:scale];
 	[[CCActionManager sharedManager] timeScaleAllActionsForTarget:self scale:scale];
 	if(affectChildren) {
 		for(CCNode* n in children) {
