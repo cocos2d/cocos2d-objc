@@ -648,9 +648,9 @@ Class restartAction()
 	if( ( self=[super init]) ) {
 
 		// testing delta time.
-		// 1st delta time should be 0
-//		[self schedule:@selector(test1:) repeat:5];
-//		[self schedule:@selector(test2:) interval:1 repeat:5];
+		// 1st delta time should be 0, right ???
+		[self schedule:@selector(test1:) repeat:5];
+		[self schedule:@selector(test2:) interval:1 repeat:5];
 		[self schedule:@selector(test3:) interval:5 repeat:2];
 	}
 	
