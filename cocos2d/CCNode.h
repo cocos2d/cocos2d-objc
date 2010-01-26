@@ -197,9 +197,9 @@ enum {
  @since v0.8
  */
 @property (nonatomic,readwrite) CGSize contentSize;
+/** whether or not the node is running */
+@property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
-// is running
-@property(nonatomic,readwrite) BOOL isRunning;
 @property(nonatomic,readwrite,assign) CCNode* parent;
 /** If YES the transformtions will be relative to it's anchor point.
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
