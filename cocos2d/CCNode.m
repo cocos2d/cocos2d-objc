@@ -25,7 +25,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/ccArray.h"
 #import "Support/TransformUtils.h"
-#import "CCUpdateManager.h"
+
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -463,13 +463,13 @@
 	if(perFrameUpdates) {
 		[self cancelPerFrameUpdates];
 	}
-	[[CCUpdateManager sharedUpdateManager] requestUpdatesFor:self Priority:aPriority];
+	[[CCScheduler sharedScheduler] requestPerFrameUpdatesFor:self Priority:aPriority];
 	perFrameUpdates = YES;
 }
 
 -(void) cancelPerFrameUpdates {
 	if(perFrameUpdates) {
-		[[CCUpdateManager sharedUpdateManager] cancelUpdatesFor:self];
+		[[CCScheduler sharedScheduler] cancelPerFrameUpdatesFor:self];
 		perFrameUpdates = NO;
 	}
 }

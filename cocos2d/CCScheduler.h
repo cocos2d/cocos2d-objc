@@ -20,6 +20,7 @@
 #import "Support/ccArray.h"
 #import "Support/ccHashSet.h"
 
+@protocol CCPerFrameUpdate;
 
 
 
@@ -99,6 +100,24 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 @end
 
 
+//
+// CCUpdateBucket
+//
+/** Maintains a list of CCNodes that have requested update
+ */
+@interface CCUpdateBucket : NSObject {
+	NSInteger					priority;
+	NSMutableArray*		updateRequests;
+}
+
+@property (nonatomic,readwrite) NSInteger priority;
+
+-(id) initWithPriority:(NSInteger) aPriority;
+-(void) requestUpdatesFor:(id <CCPerFrameUpdate>) aNode;
+-(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdate>) aNode;
+-(void) update:(ccTime) dt;
+
+@end
 
 //
 // Scheduler
@@ -117,7 +136,14 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	
 	float							timeScale;
 	
+	// PerFrame Update
+	
+	NSMutableArray*	buckets;	
+	NSUInteger	perFrameCount;
+	
 }
+
+@property (readonly) NSUInteger perFrameCount;
 
 /** Modifies the time of all scheduled callbacks.
  You can use this property to create a 'slow motion' or 'fast fordward' effect.
@@ -174,6 +200,24 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** scales the timefactor for all timers of a given target
  */
 -(void) scaleAllTimersForTarget:(id)target scaleFactor:(float)scaleFactor;
+
+
+
+/** Schedules a CCNode to get per-frame updates with a given priority.  It is not legal
+ to add the same node twice.  Remove it first (cancelUpdateFor:).  This method does
+ not check for performance reasons.
+ 
+ Higher Priority buckets are processed first.  Data structures performance assumes
+ a modest number priority buckets at most, though there is no hard limit.  This is
+ the expected and general use-case.
+ */
+-(void) requestPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode Priority:(NSInteger) aPriority;
+
+/** Removes a CCNode from having per-frame udpates
+ */
+-(void) cancelPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode;
+
+
 
 
 @end

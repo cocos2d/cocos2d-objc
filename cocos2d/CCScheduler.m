@@ -15,7 +15,8 @@
 // cocos2d imports
 #import "CCScheduler.h"
 #import "ccMacros.h"
-#import "CCNode.h"
+#import "CCProtocols.h"
+
 //
 // Timer
 //
@@ -127,6 +128,57 @@
 
 
 #pragma mark -
+#pragma mark CCUpdateBucket
+
+@implementation CCUpdateBucket
+@synthesize priority;
+
+
+-(id) initWithPriority:(NSInteger) aPriority {
+	
+	self = [super init];
+	
+	priority = aPriority;
+	updateRequests = [[NSMutableArray arrayWithCapacity:64] retain];
+	
+	
+	return self;
+	
+}
+
+- (void) dealloc {
+	[updateRequests release];
+	[super dealloc];
+}
+
+-(void) requestUpdatesFor:(id <CCPerFrameUpdate>) aNode {
+	[updateRequests addObject:aNode];
+}
+
+-(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdate>) aNode {
+	NSUInteger index = [updateRequests indexOfObject:aNode];
+	if(index == NSNotFound)
+		return NO;
+	[updateRequests removeObjectAtIndex:index];
+	return YES;
+}
+
+-(void) update:(ccTime) dt {
+	
+	[updateRequests makeObjectsPerformSelector:@selector(perFrameUpdate:)];
+	
+	for(id <CCPerFrameUpdate> n in updateRequests) {
+		//		if(n.isRunning)
+			[n perFrameUpdate:dt];
+	}
+	
+}
+
+@end
+
+
+
+#pragma mark -
 #pragma mark CCScheduler
 
 // Uncomment to add debug logging for the scheduler
@@ -146,6 +198,7 @@
 static CCScheduler *sharedScheduler;
 
 @synthesize timeScale;
+@synthesize perFrameCount;
 
 + (CCScheduler *)sharedScheduler
 {
@@ -187,6 +240,9 @@ static CCScheduler *sharedScheduler;
 		
 		targets = [[NSMutableDictionary dictionaryWithCapacity:128] retain];
 		
+		buckets = [[NSMutableArray arrayWithCapacity:128] retain];
+		perFrameCount = 0;
+		
 		timeScale = 1.0f;
 	}
 
@@ -199,6 +255,7 @@ static CCScheduler *sharedScheduler;
 	[scheduledMethods release];
 	[methodsToRemove release];
 	[methodsToAdd release];
+	[buckets release];
 	[targets release];
  	
 	sharedScheduler = nil;
@@ -284,6 +341,15 @@ static CCScheduler *sharedScheduler;
 			[self removeTimer:t];
 		}
 	}
+	
+	
+	// Per Frame Updates
+	if(perFrameCount > 0) {
+		for(CCUpdateBucket* b in buckets) {
+			[b update:dt];
+		}
+	}
+	
 }
 
 
@@ -413,6 +479,55 @@ static CCScheduler *sharedScheduler;
 	if([timers count] == 0)
 		[targets removeObjectForKey:key];
 }
+
+
+
+-(void) requestPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode Priority:(NSInteger) aPriority {
+	
+	// The number of buckets will likely be small, so a linear scan is fine
+	
+	CCUpdateBucket* updateBucket = nil;
+	for(CCUpdateBucket* b in buckets) {
+		if(b.priority == aPriority) {
+			updateBucket = b;
+			break;
+		}
+	}
+	
+	if(updateBucket == nil) {
+		updateBucket = [[[CCUpdateBucket alloc] initWithPriority:aPriority] autorelease];
+		
+		// Insertion sort
+		NSUInteger insertAt = 0;
+		for(CCUpdateBucket* b in buckets) {
+			if(b.priority < aPriority)  // Higher priority buckets happen first
+				break;
+			++insertAt;
+		}
+		if(insertAt >= [buckets count]) {
+			[buckets addObject:updateBucket];
+		}
+		else {
+			[buckets insertObject:updateBucket atIndex:insertAt];
+		}
+	}
+	
+	[updateBucket requestUpdatesFor:aNode];
+	++perFrameCount;
+	
+	
+}
+
+
+-(void) cancelPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode {
+	for(CCUpdateBucket* b in buckets) {
+		if([b cancelUpdatesFor:aNode]) {
+			--perFrameCount;
+			break;
+		}
+	}
+}
+
 
 
 @end
