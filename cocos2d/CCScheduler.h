@@ -20,7 +20,7 @@
 #import "Support/ccArray.h"
 #import "Support/ccHashSet.h"
 
-@protocol CCPerFrameUpdate;
+@protocol CCPerFrameUpdateProtocol;
 
 
 
@@ -113,8 +113,8 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 @property (nonatomic,readwrite) NSInteger priority;
 
 -(id) initWithPriority:(NSInteger) aPriority;
--(void) requestUpdatesFor:(id <CCPerFrameUpdate>) aNode;
--(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdate>) aNode;
+-(void) requestUpdatesFor:(id <CCPerFrameUpdateProtocol>) aNode;
+-(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdateProtocol>) aNode;
 -(void) update:(ccTime) dt;
 
 @end
@@ -203,19 +203,19 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 
 
 
-/** Schedules a CCNode to get per-frame updates with a given priority.  It is not legal
- to add the same node twice.  Remove it first (cancelUpdateFor:).  This method does
+/** Schedules a target to get per-frame updates with a given priority.  It is not legal
+ to add the same node twice.  Remove it first (cancelUpdateForTarget:).  This method does
  not check for performance reasons.
  
  Higher Priority buckets are processed first.  Data structures performance assumes
  a modest number priority buckets at most, though there is no hard limit.  This is
  the expected and general use-case.
  */
--(void) requestPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode Priority:(NSInteger) aPriority;
+-(void) requestPerFrameUpdatesForTarget:(id <CCPerFrameUpdateProtocol>)target priority:(NSInteger)priority;
 
-/** Removes a CCNode from having per-frame udpates
+/** Removes a target from having per-frame udpates
  */
--(void) cancelPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode;
+-(void) cancelPerFrameUpdatesForTarget:(id <CCPerFrameUpdateProtocol>)target;
 
 
 

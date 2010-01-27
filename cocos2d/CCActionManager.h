@@ -14,6 +14,7 @@
  */
 
 #import "CCAction.h"
+#import "CCProtocols.h"
 #import "Support/ccArray.h"
 #import "Support/ccHashSet.h"
 
@@ -39,7 +40,7 @@ typedef struct _hashElement
  
  @since v0.8
  */
-@interface CCActionManager : NSObject {
+@interface CCActionManager : NSObject <CCPerFrameUpdateProtocol> {
 
 	ccHashSet		* targets;
 	tHashElement	* currentTarget;

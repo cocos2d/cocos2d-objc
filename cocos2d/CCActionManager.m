@@ -80,7 +80,7 @@ static CCActionManager *_sharedManager = nil;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[CCScheduler sharedScheduler] addTimer:[CCTimer timerWithTarget:self selector:@selector(tick:)] paused:NO];
+		[[CCScheduler sharedScheduler] requestPerFrameUpdatesForTarget:self priority:0];
 		targets = ccHashSetNew(131, targetSetEql);
 	}
 	
@@ -327,7 +327,7 @@ static CCActionManager *_sharedManager = nil;
 
 #pragma mark ActionManager - main loop
 
--(void) tick: (ccTime) dt
+-(void) perFrameUpdate: (ccTime) dt
 {
 	for(int i=0; i< targets->size; i++) {
 		ccHashSetBin *bin;

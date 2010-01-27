@@ -136,11 +136,11 @@
 
 
 #pragma mark -
-#pragma mark CCPerFrameUpdate
+#pragma mark CCPerFrameUpdateProtocol
 
-@protocol CCPerFrameUpdate <NSObject>
-/* Called per frame when target is registered for per-frame udpates in CCScheduler */
+@protocol CCPerFrameUpdateProtocol <NSObject>
+/** Called per frame when target is registered for per-frame udpates in CCScheduler
+ @since v0.9
+ */
 -(void) perFrameUpdate:(ccTime) dt;
 @end
-
-

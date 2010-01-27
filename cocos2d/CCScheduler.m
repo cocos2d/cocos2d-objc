@@ -110,7 +110,6 @@
 
 -(void) fire: (ccTime) dt
 {
-	
 	if( elapsed == - 1)
 		elapsed = 0;
 	else
@@ -120,8 +119,7 @@
 		elapsed = 0;
 		
 		if(ticksUntilAutoExpire > 0)
-			--ticksUntilAutoExpire;
-		
+			--ticksUntilAutoExpire;		
 	}
 }
 @end
@@ -134,16 +132,15 @@
 @synthesize priority;
 
 
--(id) initWithPriority:(NSInteger) aPriority {
+-(id) initWithPriority:(NSInteger) aPriority
+{	
+	if( (self = [super init])) {
 	
-	self = [super init];
+		priority = aPriority;
+		updateRequests = [[NSMutableArray arrayWithCapacity:64] retain];
+	}
 	
-	priority = aPriority;
-	updateRequests = [[NSMutableArray arrayWithCapacity:64] retain];
-	
-	
-	return self;
-	
+	return self;	
 }
 
 - (void) dealloc {
@@ -151,11 +148,11 @@
 	[super dealloc];
 }
 
--(void) requestUpdatesFor:(id <CCPerFrameUpdate>) aNode {
+-(void) requestUpdatesFor:(id <CCPerFrameUpdateProtocol>) aNode {
 	[updateRequests addObject:aNode];
 }
 
--(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdate>) aNode {
+-(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdateProtocol>) aNode {
 	NSUInteger index = [updateRequests indexOfObject:aNode];
 	if(index == NSNotFound)
 		return NO;
@@ -167,7 +164,7 @@
 	
 	[updateRequests makeObjectsPerformSelector:@selector(perFrameUpdate:)];
 	
-	for(id <CCPerFrameUpdate> n in updateRequests) {
+	for(id <CCPerFrameUpdateProtocol> n in updateRequests) {
 		//		if(n.isRunning)
 			[n perFrameUpdate:dt];
 	}
@@ -320,9 +317,15 @@ static CCScheduler *sharedScheduler;
 
 -(void) tick: (ccTime) dt
 {
+	//
+	// New dt
+	//
 	if( timeScale != 1.0f )
 		dt *= timeScale;
 
+	//
+	// Timers
+	//
 	for( id k in methodsToRemove ) {
 		[scheduledMethods removeObject:k];
 		[self untrackTimer:k];
@@ -342,14 +345,12 @@ static CCScheduler *sharedScheduler;
 		}
 	}
 	
-	
-	// Per Frame Updates
-	if(perFrameCount > 0) {
-		for(CCUpdateBucket* b in buckets) {
-			[b update:dt];
-		}
-	}
-	
+	//
+	// PerFrameUpdates
+	//
+	for(CCUpdateBucket* b in buckets) {
+		[b update:dt];
+	}	
 }
 
 
@@ -489,7 +490,7 @@ static CCScheduler *sharedScheduler;
 
 
 
--(void) requestPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode Priority:(NSInteger) aPriority {
+-(void) requestPerFrameUpdatesForTarget:(id <CCPerFrameUpdateProtocol>) aNode priority:(NSInteger) aPriority {
 	
 	// The number of buckets will likely be small, so a linear scan is fine
 	
@@ -526,7 +527,7 @@ static CCScheduler *sharedScheduler;
 }
 
 
--(void) cancelPerFrameUpdatesFor:(id <CCPerFrameUpdate>) aNode {
+-(void) cancelPerFrameUpdatesForTarget:(id <CCPerFrameUpdateProtocol>) aNode {
 	for(CCUpdateBucket* b in buckets) {
 		if([b cancelUpdatesFor:aNode]) {
 			--perFrameCount;
