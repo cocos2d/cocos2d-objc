@@ -1243,9 +1243,7 @@ Class restartAction()
 		slave = [[PFSprite alloc] initWithUpdatePriority:10 File:@"grossinis_sister1.png" Slave:sprite];
 		[self addChild:slave z:0 tag:30];		
 		
-		[self schedule:@selector(removeOne:) interval:5.0f repeat:1];
-		
-		NSAssert([CCScheduler sharedScheduler].perFrameCount == 4,@"PerFrameUpdate count wrong");
+		[self schedule:@selector(removeOne:) interval:5.0f repeat:1];		
 	}
 	
 	return self;
@@ -1262,9 +1260,7 @@ Class restartAction()
 	
 	CCSprite* sprite = (CCSprite*)[self getChildByTag:15];	
 	[sprite cancelPerFrameUpdates];
-	
-	NSAssert([CCScheduler sharedScheduler].perFrameCount == 1,@"PerFrameUpdate count wrong");
-	
+		
 }
 
 

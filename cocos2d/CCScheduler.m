@@ -2,7 +2,8 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
+ * Copyright (C) 2010 David Whatley
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -29,53 +30,13 @@
 @synthesize paused;
 @synthesize timeScale;
 
--(id) init
+
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i repeat:(int)times paused:(BOOL)paused
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"TimerInvalid"
-								reason:@"Invalid init for Timer. Use initWithTarget:sel:"
-								userInfo:nil];
-	@throw myException;
+	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:times paused:paused] autorelease];
 }
 
-+(id) timerWithTarget:(id) t selector:(SEL)s
-{
-	return [[[self alloc] initWithTarget:t selector:s] autorelease];
-}
-
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i
-{
-	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
-}
-
-
-+(id) timerWithTarget:(id) t selector:(SEL)s repeat:(int)times
-{
-	return [[[self alloc] initWithTarget:t selector:s repeat:times] autorelease];
-}
-
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i repeat:(int)times
-{
-	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:times] autorelease];
-}
-
-
-
--(id) initWithTarget:(id) t selector:(SEL)s
-{
-	return [self initWithTarget:t selector:s interval:0];
-}
-
--(id) initWithTarget:(id) t selector:(SEL)s repeat:(int)times
-{
-	return [self initWithTarget:t selector:s interval:0 repeat:times];
-}
-
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds {
-	return [self initWithTarget:t selector:s interval:seconds repeat:CCTIMER_REPEAT_FOREVER];
-}
-
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds repeat:(int)times
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds repeat:(int)times paused:(BOOL)isPaused
 {
 	if( (self=[super init]) ) {
 #if	COCOS2D_DEBUG
@@ -92,6 +53,7 @@
 		interval = seconds;
 		ticksUntilAutoExpire = times;
 		timeScale = 1.0f;
+		paused = isPaused;
 	}
 	return self;
 }
@@ -164,11 +126,8 @@
 	
 	[updateRequests makeObjectsPerformSelector:@selector(perFrameUpdate:)];
 	
-	for(id <CCPerFrameUpdateProtocol> n in updateRequests) {
-		//		if(n.isRunning)
-			[n perFrameUpdate:dt];
-	}
-	
+	for(id <CCPerFrameUpdateProtocol> n in updateRequests)
+			[n perFrameUpdate:dt];	
 }
 
 @end
@@ -260,10 +219,8 @@ static CCScheduler *sharedScheduler;
 	[super dealloc];
 }
 
--(void) addTimer: (CCTimer*)t paused:(BOOL) paused;
+-(void) addTimer: (CCTimer*)t
 {
-	t.paused = paused;
-	
 	// it is possible that sometimes (in transitions in particular) an scene unschedule a timer
 	// and before the timer is deleted, it is re-scheduled
 	if( [methodsToRemove containsObject:t] )
@@ -272,14 +229,7 @@ static CCScheduler *sharedScheduler;
 		return;
 	}
 	
-	if( [scheduledMethods containsObject:t] || [methodsToAdd containsObject:t]) {
-		NSLog(@"Scheduler.schedulerTimer: timer %@ already scheduled", t);
-		NSException* myException = [NSException
-									exceptionWithName:@"SchedulerTimerAlreadyScheduled"
-									reason:@"Scheduler.scheduleTimer already scheduled"
-									userInfo:nil];
-		@throw myException;		
-	}
+	NSAssert( ! ([scheduledMethods containsObject:t] || [methodsToAdd containsObject:t]), @"Scheduler.addTimer: timer already scheduled");
 
 	[methodsToAdd addObject: t];
 }
@@ -292,14 +242,7 @@ static CCScheduler *sharedScheduler;
 		return;
 	}
 	
-	if( ![scheduledMethods containsObject:t] ) {
-		NSLog(@"Scheduler.unscheduleTimer: timer not scheduled");
-		NSException* myException = [NSException
-									exceptionWithName:@"SchedulerTimerNotFound"
-									reason:@"Scheduler.unscheduleTimer not found"
-									userInfo:nil];
-		@throw myException;		
-	}
+	NSAssert( [scheduledMethods containsObject:t], @"Scheduler.removeTimer: timer not scheduled");
 	
 #ifdef DEBUG_SCHEDULER	
 	NSLog(@"%s: remembering to remove timer: %@",__PRETTY_FUNCTION__,t);	
@@ -339,9 +282,11 @@ static CCScheduler *sharedScheduler;
 	[methodsToAdd removeAllObjects];
 	
 	for( CCTimer *t in scheduledMethods ) {
-		[t fire: dt];
-		if (t->ticksUntilAutoExpire == 0) {
-			[self removeTimer:t];
+		if( ! t->paused ) {
+			[t fire: dt];
+			if (t->ticksUntilAutoExpire == 0) {
+				[self removeTimer:t];
+			}
 		}
 	}
 	
@@ -352,8 +297,6 @@ static CCScheduler *sharedScheduler;
 		[b update:dt];
 	}	
 }
-
-
 
 -(void) removeAllTimersFromTarget:(id)target {
 	
@@ -378,9 +321,6 @@ static CCScheduler *sharedScheduler;
 		[methodsToAdd minusSet:toRemove];
 	
 }
-
-
-
 
 -(void) setTarget:(id) target paused:(BOOL) paused {
 	NSArray* timers = [targets objectForKey:[NSNumber numberWithInteger:(NSInteger)target]];

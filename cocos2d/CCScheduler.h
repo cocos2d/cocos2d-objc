@@ -58,40 +58,14 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 @property (nonatomic,readwrite) float timeScale;
 @property (nonatomic,readwrite) BOOL paused;
 
-/** Allocates a timer with a target and a selector.
-*/
-+(id) timerWithTarget:(id) t selector:(SEL)s;
 
-/** Allocates a timer with a target, a selector and an interval in seconds.
-*/
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
-
-
-/** Allocates a timer with a target and a selector.
+/** Allocates a timer with a target, a selector, an interval in seconds, number of repetitions, and a pause condition.
  */
-+(id) timerWithTarget:(id) t selector:(SEL)s repeat:(int)times;
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times paused:(BOOL)paused;
 
-/** Allocates a timer with a target, a selector and an interval in seconds.
+/** Initializes a timer with a target, a selector, an interval in seconds, number of repetitions and a pause condition.
  */
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times;
-
-
-/** Initializes a timer with a target and a selector.
-*/
- -(id) initWithTarget:(id) t selector:(SEL)s;
-
-/** Initializes a timer with a target, a selector and an interval in seconds.
-*/
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
-
-
-/** Initializes a timer with a target and a selector.
- */
--(id) initWithTarget:(id) t selector:(SEL)s repeat:(int)times;
-
-/** Initializes a timer with a target, a selector and an interval in seconds.
- */
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times;
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times paused:(BOOL)paused;
 
 
 
@@ -167,12 +141,12 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  */
 -(void) tick:(ccTime)dt;
 
-/** schedules a Timer.
- It will be fired in every frame.
+/** schedules a CCTimer.
+ It will be fired in every frame, but the CCTimer will fire the target/selector according to its interval,repeats and pause state; 
  */
--(void) addTimer: (CCTimer*)t paused:(BOOL) paused;
+-(void) addTimer:(CCTimer*)t;
 
-/** unschedules an already scheduled Timer */
+/** unschedules an already scheduled CCTimer */
 -(void) removeTimer:(CCTimer*)t;
 
 /** unschedule all timers.
