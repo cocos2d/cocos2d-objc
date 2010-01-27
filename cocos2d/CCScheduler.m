@@ -364,11 +364,18 @@ static CCScheduler *sharedScheduler;
 	for(CCTimer* t in timers) {
 		[self removeTimer:t];
 	}
-	// XXX: danger, can we remove an object from an array while we are iterating it ?
+	// Remove any timers we were scheduled to add (using set logic since we're iterating the set)
+	NSMutableSet* toRemove = nil;
 	for(CCTimer* t in methodsToAdd) {
-		if(t.target == target)
-			[methodsToAdd removeObject:t];
+		if(t.target == target) {
+			if(toRemove == nil)
+				toRemove = [NSMutableSet setWithCapacity:10];
+			[toRemove addObject:t];
+		}
 	}
+	if(toRemove)
+		[methodsToAdd minusSet:toRemove];
+	
 }
 
 
@@ -411,7 +418,7 @@ static CCScheduler *sharedScheduler;
 	}
 	// Check any we were going to add
 	for(CCTimer* t in methodsToAdd) {
-		// XXX: can we remove an object from the Array while we are iterating it ?
+		// We can remove an object from an array we are iterating in this case because we break immediately after
 		if(t.target == target && t.selector == selector) {
 			[methodsToAdd removeObject:t];
 			break; // break, since it is impossible that to have duplicate selectors in 1 target
