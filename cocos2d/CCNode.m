@@ -463,13 +463,13 @@
 	if(perFrameUpdates) {
 		[self cancelPerFrameUpdates];
 	}
-	[[CCScheduler sharedScheduler] requestPerFrameUpdatesFor:self Priority:aPriority];
+	[[CCScheduler sharedScheduler] requestPerFrameUpdatesForTarget:self priority:aPriority];
 	perFrameUpdates = YES;
 }
 
 -(void) cancelPerFrameUpdates {
 	if(perFrameUpdates) {
-		[[CCScheduler sharedScheduler] cancelPerFrameUpdatesFor:self];
+		[[CCScheduler sharedScheduler] cancelPerFrameUpdatesForTarget:self];
 		perFrameUpdates = NO;
 	}
 }
