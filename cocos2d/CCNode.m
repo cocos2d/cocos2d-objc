@@ -41,6 +41,8 @@
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(int) z;
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
+-(void) activateTimersWithChildren:(bool) affectChildren;
+-(void) deactivateTimersWithChildren:(bool) affectChildren;
 @end
 
 @implementation CCNode
@@ -193,7 +195,7 @@
 	[self stopAllTimers];
 	
 	// Per Frame Updates
-	[self cancelPerFrameUpdates];
+	[self unschedulePerFrameUpdate];
 	
 	[children makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -455,19 +457,19 @@
 	// override me
 }
 
--(void) scheduleForPerFrameUpdates {
-	[self scheduleForPerFrameUpdatesWithPriority:0];
+-(void) schedulePerFrameUpdate {
+	[self schedulePerFrameUpdateWithPriority:0];
 }
 
--(void) scheduleForPerFrameUpdatesWithPriority:(NSInteger) aPriority {
-	if(perFrameUpdates) {
-		[self cancelPerFrameUpdates];
-	}
+-(void) schedulePerFrameUpdateWithPriority:(NSInteger) aPriority {
+	if(perFrameUpdates)
+		[self unschedulePerFrameUpdate];
+
 	[[CCScheduler sharedScheduler] requestPerFrameUpdatesForTarget:self priority:aPriority];
 	perFrameUpdates = YES;
 }
 
--(void) cancelPerFrameUpdates {
+-(void) unschedulePerFrameUpdate {
 	if(perFrameUpdates) {
 		[[CCScheduler sharedScheduler] cancelPerFrameUpdatesForTarget:self];
 		perFrameUpdates = NO;
@@ -557,7 +559,7 @@
 	for( id child in children )
 		[child onEnter];
 	
-	[self activateTimers];
+	[self activateTimersWithChildren:NO];
 
 	isRunning = YES;
 }
@@ -570,7 +572,7 @@
 
 -(void) onExit
 {
-	[self deactivateTimers];
+	[self deactivateTimersWithChildren:NO];
 
 	isRunning = NO;	
 	
@@ -652,7 +654,7 @@
 	if (selector == nil)
 		return;
 
-	[[CCScheduler sharedScheduler] unscheduleSelector:selector target:self];
+	[[CCScheduler sharedScheduler] removeSelector:selector target:self];
 
 }
 

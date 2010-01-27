@@ -2,7 +2,8 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
+ * Copyright (C) 2010 David Whatley
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -149,15 +150,15 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** unschedules an already scheduled CCTimer */
 -(void) removeTimer:(CCTimer*)t;
 
-/** unschedule all timers.
+/** removes all timers.
  You should NEVER call this method, unless you know what you are doing.
  @since v0.8
  */
--(void) unscheduleAllTimers;
+-(void) removeAllTimers;
 
-/** Unschedule a selector for a given target
+/** Remove a selector for a given target
  */
--(void) unscheduleSelector:(SEL)selector target:(id)target;
+-(void) removeSelector:(SEL)selector target:(id)target;
 
 /** removes all timers from a given target
  */

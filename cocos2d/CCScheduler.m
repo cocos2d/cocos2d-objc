@@ -250,7 +250,7 @@ static CCScheduler *sharedScheduler;
 	[methodsToRemove addObject:t];
 }
 
--(void) unscheduleAllTimers
+-(void) removeAllTimers
 {
 	[methodsToAdd removeAllObjects];
 	[methodsToRemove removeAllObjects];
@@ -343,7 +343,7 @@ static CCScheduler *sharedScheduler;
 }
 
 
--(void) unscheduleSelector:(SEL)selector target:(id)target {
+-(void) removeSelector:(SEL)selector target:(id)target {
 	
 #ifdef DEBUG_SCHEDULER	
 	NSLog(@"%s: [%@|%@] sel:%@",__PRETTY_FUNCTION__,target,[target class],NSStringFromSelector(selector));

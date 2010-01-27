@@ -1184,7 +1184,7 @@ Class restartAction()
 	c = 0;
 	totalFrames = 0;
 	slave = anotehrSprite;
-	[self scheduleForPerFrameUpdatesWithPriority:aPriority];
+	[self schedulePerFrameUpdateWithPriority:aPriority];
 	return self;
 }
 
@@ -1259,7 +1259,7 @@ Class restartAction()
 	[l setPosition:ccp(480/2, 230)];
 	
 	CCSprite* sprite = (CCSprite*)[self getChildByTag:15];	
-	[sprite cancelPerFrameUpdates];
+	[sprite unschedulePerFrameUpdate];
 		
 }
 

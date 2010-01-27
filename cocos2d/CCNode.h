@@ -305,22 +305,6 @@ enum {
 /** recursive method that visit its children and draw them */
 -(void) visit;
 
-// Update
-
-/** override this method for your own update logic, default does nothing 
-  You must call scheduleForPerFrameUpdates: to use
- */
--(void) perFrameUpdate:(ccTime) dt;
-
-/* Schedule for per frame updates with priority bucket of 0 */
--(void) scheduleForPerFrameUpdates;
-
-/* Schedule for per frame udpates with a given priority bucket (higher priority buckets happen first, negative values ok) */
--(void) scheduleForPerFrameUpdatesWithPriority:(NSInteger) aPriority;
-
-/* Cancel per frame updates */
--(void) cancelPerFrameUpdates;
-
 // transformations
 
 /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
@@ -372,9 +356,6 @@ enum {
 
 // timers
 
-/** check whether a selector is scheduled. */
-//-(BOOL) isScheduled: (SEL) selector;
-
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
@@ -394,16 +375,7 @@ enum {
 -(void) schedule: (SEL) s interval:(ccTime)seconds repeat:(int)times;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
-/** activate all scheduled timers.
- Called internally by onEnter
- */
--(void) activateTimers;
--(void) activateTimersWithChildren:(bool) affectChildren;
-/** deactivate all scheduled timers.
- Called internally by onExit
- */
--(void) deactivateTimers;
--(void) deactivateTimersWithChildren:(bool) affectChildren;
+
 /** scale the timers on the CCNode
 		1.0 = normal speed, 0.5 would be half speed, 2.0 would be double, etc.
  */
@@ -413,6 +385,29 @@ enum {
 /** Removes all schedule timers.
  */
 -(void) stopAllTimers;
+
+// Update
+
+/** override this method for your own update logic, default does nothing 
+ You must call schedulePerFrameUpdate: to use it
+ @since v0.9
+ */
+-(void) perFrameUpdate:(ccTime) dt;
+
+/** Schedule for per frame updates with priority bucket of 0.
+ @since v0.9
+ */
+-(void) schedulePerFrameUpdate;
+
+/** Schedule for per frame udpates with a given priority bucket (higher priority buckets happen first, negative values ok).
+ @since v0.9
+ */
+-(void) schedulePerFrameUpdateWithPriority:(NSInteger) aPriority;
+
+/** Unschedule per frame updates.
+ @since v0.9
+ */
+-(void) unschedulePerFrameUpdate;
 
 // transformation methods
 
