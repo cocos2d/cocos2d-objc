@@ -18,6 +18,8 @@
 #import "CCAction.h"
 #import "ccTypes.h"
 #import "CCTexture2D.h"
+#import "CCProtocols.h"
+
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -80,7 +82,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */ 
-@interface CCNode : NSObject {
+@interface CCNode : NSObject <CCPerFrameUpdate> {
 	
 	// rotation angle
 	float rotation_;	

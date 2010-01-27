@@ -1191,8 +1191,8 @@ Class restartAction()
 -(void) perFrameUpdate:(ccTime)dt {
 	++totalFrames;
 	if(slave == nil) {
-		c = ++c % 200;
-		self.position = ccp(self.position.x,50+c);
+		c = ++c % (200*8);
+		self.position = ccp(self.position.x,50+(c/8));
 	}
 	else {
 		if(slave.totalFrames == totalFrames)
@@ -1245,7 +1245,7 @@ Class restartAction()
 		
 		[self schedule:@selector(removeOne:) interval:5.0f repeat:1];
 		
-		NSAssert([CCUpdateManager sharedUpdateManager].count == 4,@"PerFrameUpdate count wrong");
+		NSAssert([CCScheduler sharedScheduler].perFrameCount == 4,@"PerFrameUpdate count wrong");
 	}
 	
 	return self;
@@ -1263,7 +1263,7 @@ Class restartAction()
 	CCSprite* sprite = (CCSprite*)[self getChildByTag:15];	
 	[sprite cancelPerFrameUpdates];
 	
-	NSAssert([CCUpdateManager sharedUpdateManager].count == 1,@"PerFrameUpdate count wrong");
+	NSAssert([CCScheduler sharedScheduler].perFrameCount == 1,@"PerFrameUpdate count wrong");
 	
 }
 
