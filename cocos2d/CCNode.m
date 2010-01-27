@@ -641,8 +641,8 @@
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval repeat:times];
-	[[CCScheduler sharedScheduler] addTimer:timer paused:!isRunning];
+	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval repeat:times paused:!isRunning];
+	[[CCScheduler sharedScheduler] addTimer:timer];
 	
 }
 
