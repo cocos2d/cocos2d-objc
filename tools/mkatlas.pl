@@ -1,5 +1,6 @@
 #!/usr/bin/perl -W
 
+#
 # Author: Matthias Hoechsmann, gamedrs.com
 # This source code an be used freely and is provided "AS IS" without any warrenties.
 # Go and visit www.zombiesmash.gamedrs.com. Thank you :)
