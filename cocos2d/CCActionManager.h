@@ -14,7 +14,6 @@
  */
 
 #import "CCAction.h"
-#import "CCProtocols.h"
 #import "Support/ccArray.h"
 #import "Support/ccHashSet.h"
 
@@ -26,7 +25,6 @@ typedef struct _hashElement
 	CCAction			*currentAction;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;	
-	float			timeScale;
 } tHashElement;
 
 
@@ -40,7 +38,7 @@ typedef struct _hashElement
  
  @since v0.8
  */
-@interface CCActionManager : NSObject <CCPerFrameUpdateProtocol> {
+@interface CCActionManager : NSObject {
 
 	ccHashSet		* targets;
 	tHashElement	* currentTarget;
@@ -94,10 +92,6 @@ typedef struct _hashElement
  Once the actions are resumed, they will be "ticked" in every frame.
  */
 -(void) resumeAllActionsForTarget:(id)target;
-
-/** Scales the time for all actions
- */
--(void) timeScaleAllActionsForTarget:(id) target scale:(float) scale;
 
 @end
 
