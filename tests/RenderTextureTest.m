@@ -93,19 +93,23 @@
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
   
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[director setAnimationInterval:1.0/60];
+	[director setDisplayFPS:YES];
   
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director attachInView:window];	
 	[window makeKeyAndVisible];		
   
 	CCScene *scene = [CCScene node];
 	[scene addChild: [RenderTextureTest node]];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

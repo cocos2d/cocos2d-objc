@@ -40,20 +40,6 @@
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
-#define CC_ENABLE_DEFAULT_GL_STATES() {				\
-	glEnableClientState(GL_VERTEX_ARRAY);			\
-	glEnableClientState(GL_COLOR_ARRAY);			\
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	\
-	glEnable(GL_TEXTURE_2D);						\
-}
-
-#define CC_DISABLE_DEFAULT_GL_STATES() {			\
-	glDisable(GL_TEXTURE_2D);						\
-	glDisableClientState(GL_COLOR_ARRAY);			\
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
-	glDisableClientState(GL_VERTEX_ARRAY);			\
-}
-
 extern NSString * cocos2dVersion(void);
 
 
