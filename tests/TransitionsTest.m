@@ -226,7 +226,7 @@ Class restartTransition()
 		y = size.height;
 
 		CCSprite *bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
-		bg1.anchorPoint = CGPointZero;
+		bg1.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg1 z:-1];
 
 		CCLabel* title = [CCLabel labelWithString:transitions[sceneIdx] fontName:@"Thonburi" fontSize:40];
@@ -245,9 +245,9 @@ Class restartTransition()
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
+		item1.position = ccp( size.width/2 - 100,30);
+		item2.position = ccp( size.width/2, 30);
+		item3.position = ccp( size.width/2 + 100,30);
 		[self addChild: menu z:1];
 		
 		[self schedule:@selector(step:) interval:1.0f];
@@ -324,7 +324,7 @@ Class restartTransition()
 		y = size.height;
 		
 		CCSprite *bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
-		bg2.anchorPoint = CGPointZero;
+		bg2.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg2 z:-1];
 		
 		CCLabel* title = [CCLabel labelWithString:transitions[sceneIdx] fontName:@"Thonburi" fontSize:40];
@@ -343,9 +343,9 @@ Class restartTransition()
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
+		item1.position = ccp( size.width/2 - 100,30);
+		item2.position = ccp( size.width/2, 30);
+		item3.position = ccp( size.width/2 + 100,30);
 		[self addChild: menu z:1];
 		
 		[self schedule:@selector(step:) interval:1.0f];

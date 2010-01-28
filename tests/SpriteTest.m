@@ -486,15 +486,16 @@ Class restartAction()
 				
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
+		float step = s.width/11;
 		for(int i=0;i<5;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*0, 121*1, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			[self addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*1, 121*0, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			[self addChild:sprite z:14-i];
 		}
 		
@@ -547,15 +548,16 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		float step = s.width/11;
 		for(int i=0;i<5;i++) {
 			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			[sheet addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
 			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			[sheet addChild:sprite z:14-i];
 		}
 		
@@ -599,13 +601,25 @@ Class restartAction()
 
 @implementation SpriteZVertex
 
+-(void) onEnter
+{
+	[super onEnter];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+}
+
+-(void) onExit
+{
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+	[super onExit];
+}
+
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
 		//
 		// This test tests z-order
-		// If you are going to use it is better to use a 2D projection
+		// If you are going to use it is better to use a 3D projection
 		//
 		// WARNING:
 		// The developer is resposible for ordering it's sprites according to it's Z if the sprite has
@@ -616,6 +630,7 @@ Class restartAction()
 		time = 0;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
+		float step = s.width/12;
 		
 		CCNode *node = [CCNode node];
 		// camera uses the center of the image as the pivoting point
@@ -627,7 +642,7 @@ Class restartAction()
 
 		for(int i=0;i<5;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*0, 121*1, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp((i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + i*40;
 			[node addChild:sprite z:0];
 			
@@ -635,7 +650,7 @@ Class restartAction()
 		
 		for(int i=5;i<11;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*1, 121*0, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
 			[node addChild:sprite z:0];
 		}
@@ -653,23 +668,34 @@ Class restartAction()
 
 @implementation SpriteSheetZVertex
 
+-(void) onEnter
+{
+	[super onEnter];
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+}
+
+-(void) onExit
+{
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+	[super onExit];
+}
+
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
 		//
 		// This test tests z-order
-		// If you are going to use it is better to use a 2D projection
+		// If you are going to use it is better to use a 3D projection
 		//
 		// WARNING:
 		// The developer is resposible for ordering it's sprites according to it's Z if the sprite has
 		// transparent parts.
 		//
 		
-		dir = 1;
-		time = 0;
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
+		float step = s.width/12;
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
@@ -684,7 +710,7 @@ Class restartAction()
 		
 		for(int i=0;i<5;i++) {
 			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + i*40;
 			[sheet addChild:sprite z:0];
 			
@@ -692,7 +718,7 @@ Class restartAction()
 		
 		for(int i=5;i<11;i++) {
 			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
-			sprite.position = ccp( 50 + i*40, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
 			[sheet addChild:sprite z:0];
 		}
@@ -846,10 +872,11 @@ Class restartAction()
 		id scale_seq = [CCSequence actions: scale, scale_back, nil];
 		id scale_forever = [CCRepeatForever actionWithAction:scale_seq];
 
+		float step = s.width/4;
 
 		for(int i=0;i<3;i++) {
 			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
-			sprite.position = ccp( 90 + i*150, s.height/2);
+			sprite.position = ccp( (i+1)*step, s.height/2);
 
 			[sprite runAction: [[action copy] autorelease]];
 			[sheet addChild:sprite z:i];
@@ -1975,13 +2002,13 @@ Class restartAction()
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		[sprite1 setPosition:ccp( 100, s.height/4)];
+		[sprite1 setPosition:ccp( s.width/2 - 90, s.height/4)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
-		[sprite2 setPosition:ccp( 130,s.height/4)];
+		[sprite2 setPosition:ccp( s.width/2 - 60,s.height/4)];
 		
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
-		[sprite3 setPosition:ccp( 160, s.height/4)];
+		[sprite3 setPosition:ccp( s.width/2 - 30, s.height/4)];
 		
 		[sheet addChild:sprite1 z:10];
 		[sheet addChild:sprite2 z:-10];
@@ -1992,13 +2019,13 @@ Class restartAction()
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		[sprite1 setPosition:ccp( 250, s.height/4)];
+		[sprite1 setPosition:ccp( s.width/2 +30, s.height/4)];
 		
 		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
-		[sprite2 setPosition:ccp( 280,s.height/4)];
+		[sprite2 setPosition:ccp( s.width/2 +60,s.height/4)];
 		
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
-		[sprite3 setPosition:ccp( 310, s.height/4)];
+		[sprite3 setPosition:ccp( s.width/2 +90, s.height/4)];
 		
 		[sheet addChild:sprite1 z:-10];
 		[sheet addChild:sprite2 z:-5];
