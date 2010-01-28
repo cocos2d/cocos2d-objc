@@ -22,7 +22,7 @@ typedef struct _hashElement
 	struct ccArray	*actions;
 	id				target;
 	unsigned int	actionIndex;
-	CCAction			*currentAction;
+	CCAction		*currentAction;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;	
 } tHashElement;
