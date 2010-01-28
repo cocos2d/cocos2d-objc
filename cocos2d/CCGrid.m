@@ -29,7 +29,6 @@
 @synthesize gridSize=gridSize_;
 @synthesize step=step_;
 
-#define kTextureSize 512
 -(id)initWithSize:(ccGridSize)gSize
 {
 	if ( (self = [super init] ) )
@@ -42,12 +41,18 @@
 	
 		if ( texture_ == nil )
 		{
-			Texture2DPixelFormat format = [CCDirector sharedDirector].pixelFormat == kPixelFormatRGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
+			CCDirector *director = [CCDirector sharedDirector];
+			CGSize s = [director winSize];
+			int textureSize = 8;
+			while (textureSize < s.width || textureSize < s.height)
+				textureSize *= 2;
+
+			Texture2DPixelFormat format = [director pixelFormat] == kPixelFormatRGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
 			
-			void *data = malloc((int)(kTextureSize * kTextureSize * 4));
-			memset(data, 0, (int)(kTextureSize * kTextureSize * 4));
+			void *data = malloc((int)(textureSize * textureSize * 4));
+			memset(data, 0, (int)(textureSize * textureSize * 4));
 			
-			texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:kTextureSize pixelsHigh:kTextureSize contentSize:win];
+			texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:win];
 			free( data );
 		}
 		

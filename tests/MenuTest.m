@@ -235,44 +235,46 @@ enum {
 @implementation Layer3
 -(id) init
 {
-	[super init];
-	[CCMenuItemFont setFontName: @"Marker Felt"];
-	[CCMenuItemFont setFontSize:28];
+	if( (self=[super init]) ) {
+		[CCMenuItemFont setFontName: @"Marker Felt"];
+		[CCMenuItemFont setFontSize:28];
 
-	CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
-	CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
-	CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
-	
-	CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
-	CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
-	CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
-	
-	CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
-	disabledItem = item3;
-	disabledItem.isEnabled = NO;
-	
-	CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];	
-	menu.position = ccp(0,0);
-	
-	item1.position = ccp(100,100);
-	item2.position = ccp(100,200);
-	item3.position = ccp(350,100);
-	
-	id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
-	[item2 runAction: [CCRepeatForever actionWithAction:
-				 [CCSequence actions: jump, [jump reverse], nil]
-								   ]
-	 ];
-	id spin1 = [CCRotateBy actionWithDuration:3 angle:360];
-	id spin2 = [[spin1 copy] autorelease];
-	id spin3 = [[spin1 copy] autorelease];
-	
-	[item1 runAction: [CCRepeatForever actionWithAction:spin1]];
-	[item2 runAction: [CCRepeatForever actionWithAction:spin2]];
-	[item3 runAction: [CCRepeatForever actionWithAction:spin3]];
-	
-	[self addChild: menu];
-	
+		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
+		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
+		
+		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
+		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
+		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
+		
+		CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
+		disabledItem = item3;
+		disabledItem.isEnabled = NO;
+		
+		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];	
+		menu.position = ccp(0,0);
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		item1.position = ccp(s.width/2 - 150, s.height/2);
+		item2.position = ccp(s.width/2 - 200, s.height/2);
+		item3.position = ccp(s.width/2, s.height/2 - 100);
+		
+		id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
+		[item2 runAction: [CCRepeatForever actionWithAction:
+					 [CCSequence actions: jump, [jump reverse], nil]
+									   ]
+		 ];
+		id spin1 = [CCRotateBy actionWithDuration:3 angle:360];
+		id spin2 = [[spin1 copy] autorelease];
+		id spin3 = [[spin1 copy] autorelease];
+		
+		[item1 runAction: [CCRepeatForever actionWithAction:spin1]];
+		[item2 runAction: [CCRepeatForever actionWithAction:spin2]];
+		[item3 runAction: [CCRepeatForever actionWithAction:spin3]];
+		
+		[self addChild: menu];
+	}
 	
 	return self;
 }

@@ -360,8 +360,8 @@ Class restartAction()
 		
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
 		[node addChild: bg z:0];
-		bg.anchorPoint = CGPointZero;
-	//	bg.position = ccp(-100,-100);
+//		bg.anchorPoint = CGPointZero;
+		bg.position = ccp(size.width/2, size.height/2);
 		
 		CCSprite *grossini = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[node addChild:grossini z:1];
