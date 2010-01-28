@@ -57,7 +57,7 @@ Example:
  */
 @interface CCSequence : CCIntervalAction <NSCopying>
 {
-	NSArray *actions;
+	CCFiniteTimeAction *actions[2];
 	ccTime split;
 	int last;
 }
