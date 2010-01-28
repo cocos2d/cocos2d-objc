@@ -725,8 +725,7 @@ Class restartAction()
 		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*i, 121*1, 85, 121)];
-			sprite.position = ccp( 90 + i*150, s.height/2);
-			
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
@@ -778,8 +777,7 @@ Class restartAction()
 		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
 			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
-			sprite.position = ccp( 90 + i*150, s.height/2);
-
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
@@ -1330,7 +1328,7 @@ Class restartAction()
 			// Animation using Sprite Sheet
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-			sprite.position = ccp( 90 + i*150, s.height/2);			
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
@@ -1400,7 +1398,7 @@ Class restartAction()
 			// Animation using Sprite Sheet
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-			sprite.position = ccp( 90 + i*150, s.height/2);			
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
@@ -1472,7 +1470,7 @@ Class restartAction()
 			// Animation using Sprite Sheet
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-			sprite.position = ccp( 90 + i*150, s.height/2);			
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
@@ -1545,7 +1543,7 @@ Class restartAction()
 			// Animation using Sprite Sheet
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-			sprite.position = ccp( 90 + i*150, s.height/2);			
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
@@ -2686,19 +2684,20 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	CCDirector *director = [CCDirector sharedDirector];
+	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[director setAnimationInterval:1.0/60];
+	[director setDisplayFPS:YES];
 
 	// Use this pixel format to have transparent buffers
-	[[CCDirector sharedDirector] setPixelFormat:kRGBA8];
+	[director setPixelFormat:kRGBA8];
 	
 	// Create a depth buffer of 24 bits
 	// These means that openGL z-order will be taken into account
-	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer24];
+	[director setDepthBufferFormat:kDepthBuffer24];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -2706,13 +2705,13 @@ Class restartAction()
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director attachInView:window];	
 	[window makeKeyAndVisible];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

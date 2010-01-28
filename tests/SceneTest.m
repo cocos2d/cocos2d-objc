@@ -160,19 +160,20 @@
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
 	
+	CCDirector *director = [CCDirector sharedDirector];
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
+	[director setDeviceOrientation: CCDeviceOrientationLandscapeRight];
 
 	// attach the OpenGL view to a window
-	[[CCDirector sharedDirector] attachInView:window];
+	[director attachInView:window];
 	
 	// show FPS
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDisplayFPS:YES];
 	
 	// frames per second
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
+	[director setAnimationInterval:1.0/60];	
 	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
@@ -186,7 +187,7 @@
 	
 	[window makeKeyAndVisible];
 
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game
