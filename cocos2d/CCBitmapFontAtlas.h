@@ -18,6 +18,7 @@
 
 #import "CCAtlasNode.h"
 #import "CCSpriteSheet.h"
+#import "Support/ccHashSet.h"
 
 /** bitmap font definition */
 typedef struct _bitmapFontDef {
@@ -69,7 +70,7 @@ enum {
 	ccBitmapFontPadding	padding;
 
 	// values for kerning
-	NSMutableDictionary	*kerningDictionary;
+	ccHashSet	*kerningDictionary;
 }
 
 /** allocates a CCBitmapFontConfiguration with a FNT file */

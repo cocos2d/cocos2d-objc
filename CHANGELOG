@@ -1,6 +1,7 @@
 version 0.99.0-rc - XX-mmm-2010
  . All: Default OpenGL state is: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY (fixed issue #718)
  . Action: Improved CCSequence performance (issue #XXX)
+ . BitmapFontAtlas: huge boost in update/create time (issue #730)
  . Box2d: updated to r36 (issue #494)
  . Camera: Offset correctly in landscape mode (issue #378)
  . Camera: It's possible to orbit around any point (issue #438)

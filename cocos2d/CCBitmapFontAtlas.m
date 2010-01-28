@@ -28,6 +28,7 @@
 #import "CCDrawingPrimitives.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
+#import "Support/ccHashSet.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -52,6 +53,24 @@ CCBitmapFontConfiguration* FNTConfigLoadFile( NSString *fntFile)
 void FNTConfigRemoveCache( void )
 {
 	[configurations removeAllObjects];
+}
+
+#pragma mark - Hash Element
+
+// Equal function for targetSet.
+typedef struct _KerningHashElement
+{
+	unichar			first;
+	unichar			second;
+	int				amount;
+} tKerningHashElement;
+
+static int
+targetSetEql(void *ptr, void *elt)
+{
+	tKerningHashElement *one = (tKerningHashElement*) ptr;
+	tKerningHashElement *two = (tKerningHashElement*) elt;
+	return ( (one->first == two->first) && (one->second == two->second));
 }
 
 #pragma mark -
@@ -85,7 +104,8 @@ void FNTConfigRemoveCache( void )
 - (void) dealloc
 {
 	CCLOG( @"cocos2d: deallocing %@", self);
-	[kerningDictionary release];
+	if(kerningDictionary)
+		ccHashSetFree(kerningDictionary);
 	[super dealloc];
 }
 
@@ -298,7 +318,7 @@ void FNTConfigRemoveCache( void )
 	int capacity = [propertyValue intValue];
 	
 	if( capacity != -1 )
-		kerningDictionary = [[NSMutableDictionary dictionaryWithCapacity: [propertyValue intValue]] retain];
+		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
 }
 
 -(void) parseKerningEntry:(NSString*) line
@@ -321,11 +341,13 @@ void FNTConfigRemoveCache( void )
 	// second
 	propertyValue = [nse nextObject];
 	int amount = [propertyValue intValue];
-	
-	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
-	NSNumber *value = [NSNumber numberWithInt:amount];
-	
-	[kerningDictionary setObject:value forKey:key];
+
+	tKerningHashElement *element = malloc( sizeof( *element ) );
+	element->first = first;
+	element->second = second;
+	element->amount = amount;
+	unsigned int key = (first<<16) | (second&0xffff);
+	ccHashSetInsert(kerningDictionary, CC_HASH_INT(key), element, nil);	
 }
 
 @end
@@ -417,7 +439,7 @@ void FNTConfigRemoveCache( void )
 			NSArray *array = [propertyValue componentsSeparatedByString:@"\""];
 			propertyValue = [array objectAtIndex:1];
 			break;
-		}		
+		}
 	}
 	// Finished with lines so release it
 	[lines release];	
@@ -434,10 +456,17 @@ void FNTConfigRemoveCache( void )
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second
 {
 	int ret = 0;
-	NSString *key = [NSString stringWithFormat:@"%d,%d", first, second];
-	NSNumber *value = [configuration->kerningDictionary objectForKey:key];
-	if(value)
-		ret = [value intValue];
+	tKerningHashElement elementTmp;
+	elementTmp.first = first;
+	elementTmp.second = second;
+	unsigned int key = (first<<16) | (second & 0xffff);
+	
+	if( configuration->kerningDictionary ) {
+		tKerningHashElement *element = ccHashSetFind(configuration->kerningDictionary, CC_HASH_INT(key), &elementTmp);
+		
+		if(element)
+			ret = element->amount;
+	}
 		
 	return ret;
 }
