@@ -140,34 +140,36 @@
 	ccTime d = [one duration] + [two duration];
 	[super initWithDuration: d];
 	
-	actions = [[NSArray arrayWithObjects: one, two, nil] retain];
+	actions[0] = [one retain];
+	actions[1] = [two retain];
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initOne:[[[actions objectAtIndex:0] copy] autorelease] two:[[[actions objectAtIndex:1] copy] autorelease] ];
+	CCAction *copy = [[[self class] allocWithZone:zone] initOne:[[actions[0] copy] autorelease] two:[[actions[1] copy] autorelease] ];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[actions release];
+	[actions[0] release];
+	[actions[1] release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];	
-	split = [[actions objectAtIndex:0] duration] / duration;
+	split = [actions[0] duration] / duration;
 	last = -1;
 }
 
 -(void) stop
 {
-	for( CCAction *action in actions )
-		[action stop];
+	[actions[0] stop];
+	[actions[1] stop];
 	[super stop];
 }
 
@@ -191,25 +193,25 @@
 	}
 	
 	if (last == -1 && found==1)	{
-		[(CCAction *) [actions objectAtIndex:0] startWithTarget:target];
-		[(CCAction *) [actions objectAtIndex:0] update:1.0f];
-		[(CCAction *) [actions objectAtIndex:0] stop];
+		[actions[0] startWithTarget:target];
+		[actions[0] update:1.0f];
+		[actions[0] stop];
 	}
 
 	if (last != found ) {
 		if( last != -1 ) {
-			[(CCAction *) [actions objectAtIndex: last] update: 1.0f];
-			[(CCAction *) [actions objectAtIndex: last] stop];
+			[actions[last] update: 1.0f];
+			[actions[last] stop];
 		}
-		[(CCAction *) [actions objectAtIndex: found] startWithTarget:target];
+		[actions[found] startWithTarget:target];
 	}
-	[(CCAction *) [actions objectAtIndex:found] update: new_t];
+	[actions[found] update: new_t];
 	last = found;
 }
 
 - (CCIntervalAction *) reverse
 {
-	return [[self class] actionOne: [[actions objectAtIndex:1] reverse] two: [[actions objectAtIndex:0] reverse ] ];
+	return [[self class] actionOne: [actions[1] reverse] two: [actions[0] reverse ] ];
 }
 @end
 
