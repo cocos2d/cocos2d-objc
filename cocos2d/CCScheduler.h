@@ -2,8 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009,2010 Ricardo Quesada
- * Copyright (C) 2010 David Whatley
+ * Copyright (C) 2008,2009 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -18,12 +17,6 @@
 #import <UIKit/UIKit.h>
 
 #import "ccTypes.h"
-#import "Support/ccArray.h"
-#import "Support/ccHashSet.h"
-
-@protocol CCPerFrameUpdateProtocol;
-
-
 
 typedef void (*TICK_IMP)(id, SEL, ccTime);
 
@@ -46,8 +39,6 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	// XXX: performance is improved in about 10%
 @public
 	int		 ticksUntilAutoExpire; // -1 = infinite
-	float	 timeScale; // defaults to 1.0.  0.5 would be running half as fast, 2.0 would be running twice as fast
-	BOOL	 paused;
 	
 }
 
@@ -56,42 +47,46 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 @property (nonatomic,readonly) int ticksUntilAutoExpire;
 @property (nonatomic,readonly) id target;
 @property (nonatomic,readonly) SEL selector;
-@property (nonatomic,readwrite) float timeScale;
-@property (nonatomic,readwrite) BOOL paused;
+
+/** Allocates a timer with a target and a selector.
+*/
++(id) timerWithTarget:(id) t selector:(SEL)s;
+
+/** Allocates a timer with a target, a selector and an interval in seconds.
+*/
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
 
 
-/** Allocates a timer with a target, a selector, an interval in seconds, number of repetitions, and a pause condition.
+/** Allocates a timer with a target and a selector.
  */
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times paused:(BOOL)paused;
++(id) timerWithTarget:(id) t selector:(SEL)s repeat:(int)times;
 
-/** Initializes a timer with a target, a selector, an interval in seconds, number of repetitions and a pause condition.
+/** Allocates a timer with a target, a selector and an interval in seconds.
  */
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times paused:(BOOL)paused;
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times;
+
+
+/** Initializes a timer with a target and a selector.
+*/
+ -(id) initWithTarget:(id) t selector:(SEL)s;
+
+/** Initializes a timer with a target, a selector and an interval in seconds.
+*/
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
+
+
+/** Initializes a timer with a target and a selector.
+ */
+-(id) initWithTarget:(id) t selector:(SEL)s repeat:(int)times;
+
+/** Initializes a timer with a target, a selector and an interval in seconds.
+ */
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times;
 
 
 
 /** triggers the timer */
 -(void) fire: (ccTime) dt;
-@end
-
-
-//
-// CCUpdateBucket
-//
-/** Maintains a list of CCNodes that have requested update
- */
-@interface CCUpdateBucket : NSObject {
-	NSInteger					priority;
-	NSMutableArray*		updateRequests;
-}
-
-@property (nonatomic,readwrite) NSInteger priority;
-
--(id) initWithPriority:(NSInteger) aPriority;
--(void) requestUpdatesFor:(id <CCPerFrameUpdateProtocol>) aNode;
--(BOOL) cancelUpdatesFor:(id <CCPerFrameUpdateProtocol>) aNode;
--(void) update:(ccTime) dt;
-
 @end
 
 //
@@ -102,32 +97,21 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 */
 @interface CCScheduler : NSObject
 {
-	NSMutableSet					*scheduledMethods;
-	NSMutableSet					*methodsToRemove;
-	NSMutableSet					*methodsToAdd;
-
-	NSMutableDictionary				*targets;
+	NSMutableArray	*scheduledMethods;
+	NSMutableArray	*methodsToRemove;
+	NSMutableArray	*methodsToAdd;
 	
-	
-	float							timeScale;
-	
-	// PerFrame Update
-	
-	NSMutableArray*	buckets;	
-	NSUInteger	perFrameCount;
-	
+	ccTime			timeScale_;
 }
-
-@property (readonly) NSUInteger perFrameCount;
 
 /** Modifies the time of all scheduled callbacks.
  You can use this property to create a 'slow motion' or 'fast fordward' effect.
  Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
  To create a 'fast fordward' effect, use values higher than 1.0.
  @since v0.8
- @warning It will affect EVERY scheduled selector / action. 
+ @warning It will affect EVERY scheduled selector / action.
  */
-@property (nonatomic,readwrite) float	timeScale;
+@property (nonatomic,readwrite) ccTime	timeScale;
 
 /** returns a shared instance of the Scheduler */
 +(CCScheduler *)sharedScheduler;
@@ -142,57 +126,17 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  */
 -(void) tick:(ccTime)dt;
 
-/** schedules a CCTimer.
- It will be fired in every frame, but the CCTimer will fire the target/selector according to its interval,repeats and pause state; 
+/** schedules a Timer.
+ It will be fired in every frame.
  */
--(void) addTimer:(CCTimer*)t;
+-(void) scheduleTimer: (CCTimer*) t;
 
-/** unschedules an already scheduled CCTimer */
--(void) removeTimer:(CCTimer*)t;
+/** unschedules an already scheduled Timer */
+-(void) unscheduleTimer: (CCTimer*) t;
 
-/** removes all timers.
+/** unschedule all timers.
  You should NEVER call this method, unless you know what you are doing.
  @since v0.8
  */
--(void) removeAllTimers;
-
-/** Remove a selector for a given target
- */
--(void) removeSelector:(SEL)selector target:(id)target;
-
-/** removes all timers from a given target
- */
--(void) removeAllTimersFromTarget:(id)target;
-
-/** pauses all timers for a given target
- */
--(void) pauseAllTimersForTarget:(id)target;
-
-/** unpauses all timers for a given target
- */
--(void) resumeAllTimersForTarget:(id)target;
-
-/** scales the timefactor for all timers of a given target
- */
--(void) scaleAllTimersForTarget:(id)target scaleFactor:(float)scaleFactor;
-
-
-
-/** Schedules a target to get per-frame updates with a given priority.  It is not legal
- to add the same node twice.  Remove it first (cancelUpdateForTarget:).  This method does
- not check for performance reasons.
- 
- Higher Priority buckets are processed first.  Data structures performance assumes
- a modest number priority buckets at most, though there is no hard limit.  This is
- the expected and general use-case.
- */
--(void) requestPerFrameUpdatesForTarget:(id <CCPerFrameUpdateProtocol>)target priority:(NSInteger)priority;
-
-/** Removes a target from having per-frame udpates
- */
--(void) cancelPerFrameUpdatesForTarget:(id <CCPerFrameUpdateProtocol>)target;
-
-
-
-
+-(void) unscheduleAllTimers;
 @end
