@@ -49,32 +49,21 @@ static CCActionManager *_sharedManager = nil;
 #pragma mark ActionManager - init
 + (CCActionManager *)sharedManager
 {
-	@synchronized([CCActionManager class])
-	{
-		if (!_sharedManager)
-			_sharedManager = [[self alloc] init];
+	if (!_sharedManager)
+		_sharedManager = [[self alloc] init];
 		
-	}
-	// to avoid compiler warning
 	return _sharedManager;
 }
 
 +(id)alloc
 {
-	@synchronized([CCActionManager class])
-	{
-		NSAssert(_sharedManager == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super alloc];
-	}
-	// to avoid compiler warning
-	return nil;
+	NSAssert(_sharedManager == nil, @"Attempted to allocate a second instance of a singleton.");
+	return [super alloc];
 }
 
 +(void)purgeSharedManager
 {
-	@synchronized( self ) {
-		[_sharedManager release];
-	}
+	[_sharedManager release];
 }
 
 -(id) init

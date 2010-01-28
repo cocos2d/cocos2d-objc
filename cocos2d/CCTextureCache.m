@@ -53,32 +53,21 @@ static CCTextureCache *sharedTextureCache;
 
 + (CCTextureCache *)sharedTextureCache
 {
-	@synchronized([CCTextureCache class])
-	{
-		if (!sharedTextureCache)
-			sharedTextureCache = [[CCTextureCache alloc] init];
+	if (!sharedTextureCache)
+		sharedTextureCache = [[CCTextureCache alloc] init];
 		
-	}
-	// to avoid compiler warning
 	return sharedTextureCache;
 }
 
 +(id)alloc
 {
-	@synchronized([CCTextureCache class])
-	{
-		NSAssert(sharedTextureCache == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super alloc];
-	}
-	// to avoid compiler warning
-	return nil;
+	NSAssert(sharedTextureCache == nil, @"Attempted to allocate a second instance of a singleton.");
+	return [super alloc];
 }
 
 +(void)purgeSharedTextureCache
 {
-	@synchronized( self ) {
-		[sharedTextureCache release];
-	}
+	[sharedTextureCache release];
 }
 
 -(id) init

@@ -132,32 +132,20 @@ static CCScheduler *sharedScheduler;
 
 + (CCScheduler *)sharedScheduler
 {
-	@synchronized([CCScheduler class])
-	{
-		if (!sharedScheduler)
-			sharedScheduler = [[CCScheduler alloc] init];
-		
-	}
-	// to avoid compiler warning
+	if (!sharedScheduler)
+		sharedScheduler = [[CCScheduler alloc] init];
 	return sharedScheduler;
 }
 
 +(id)alloc
 {
-	@synchronized([CCScheduler class])
-	{
-		NSAssert(sharedScheduler == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super alloc];
-	}
-	// to avoid compiler warning
-	return nil;
+	NSAssert(sharedScheduler == nil, @"Attempted to allocate a second instance of a singleton.");
+	return [super alloc];
 }
 
 +(void)purgeSharedScheduler
 {
-	@synchronized( self ) {
-		[sharedScheduler release];
-	}
+	[sharedScheduler release];
 }
 
 - (id) init
