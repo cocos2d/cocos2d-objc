@@ -15,7 +15,6 @@
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
-#include "glu.h"
 
 @implementation CCRenderTexture
 

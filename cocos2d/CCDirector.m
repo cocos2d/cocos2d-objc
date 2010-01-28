@@ -1001,7 +1001,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	NSLog(@"FastDirectory doesn't support setAnimationInterval, yet");
+	NSLog(@"FastDirector doesn't support setAnimationInterval, yet");
 }
 @end
 
