@@ -22,7 +22,6 @@ static NSString *transitions[] = {
 			@"CrashTest",
 			@"LogicTest",
 			@"PauseTest",
-			@"ScaleTest",
 };
 
 Class nextAction()
@@ -228,11 +227,12 @@ Class restartAction()
 	
 	[[CCActionManager sharedManager] addAction:action target:grossini paused:YES];
 
-	[self schedule:@selector(unpause:) interval:3 repeat:1];
+	[self schedule:@selector(unpause:) interval:3];
 }
 
 -(void) unpause:(ccTime)dt
 {
+	[self unschedule:_cmd];
 	CCNode *node = [self getChildByTag:kTagGrossini];
 	[[CCActionManager sharedManager] resumeAllActionsForTarget:node];
 }
@@ -240,97 +240,6 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Pause Test";
-}
-@end
-
-#pragma mark -
-#pragma mark ScaleTest
-
-@implementation ScaleTest
-- (UISlider *)sliderCtl
-{
-    if (sliderCtl == nil) 
-    {
-        CGRect frame = CGRectMake(174.0f, 12.0f, 120.0f, 7.0f);
-        sliderCtl = [[UISlider alloc] initWithFrame:frame];
-        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-        
-        // in case the parent view draws with a custom color or gradient, use a transparent color
-        sliderCtl.backgroundColor = [UIColor clearColor];
-        
-        sliderCtl.minimumValue = 0.0f;
-        sliderCtl.maximumValue = 2.0f;
-        sliderCtl.continuous = YES;
-        sliderCtl.value = 1.0f;
-		
-		sliderCtl.tag = kTagSlider;	// tag this view for later so we can remove it from recycled table cells
-    }
-    return [sliderCtl autorelease];
-}
-
--(void) sliderAction:(id) sender
-{
-	CCNode *node = [self getChildByTag:kTagGrossini];
-	[[CCActionManager sharedManager] timeScaleAllActionsForTarget:node scale:sliderCtl.value];
-}
-
--(void) onEnter
-{
-	[super onEnter];
-	
-	CGSize s = [[CCDirector sharedDirector] winSize];
-		
-	CCLabel* l = [CCLabel labelWithString:@"Slider should only alter Grossini." fontName:@"Thonburi" fontSize:16];
-	[self addChild:l];
-	[l setPosition:ccp(s.width/2, 245)];
-	
-	// SISTER SHOULD NOT SCALE
-	CCSprite *sister = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-	[self addChild:sister z:0 tag:kTagSister];
-	[sister setPosition:ccp(200,200)];
-	
-	CCRotateBy *rotate = [CCRotateBy actionWithDuration:2 angle:360];
-	CCRepeatForever *repeat = [CCRepeatForever actionWithAction:rotate];
-	[sister runAction:repeat];
-							
-	
-	
-	//
-	// GROSSINI SHOULD SCALE
-	//
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
-	[self addChild:sprite z:0 tag:kTagGrossini];
-	[sprite setPosition:ccp(100,100)];
-	
-	
-	// Action 1
-	CCIntervalAction *action1 = [CCMoveBy actionWithDuration:2 position:ccp(300,0)];
-	CCAction *back1 = [action1 reverse];
-	CCSequence *seq1 = [CCSequence actions:action1, back1, nil];
-	CCAction *rep1 = [CCRepeatForever actionWithAction:seq1];
-	[sprite runAction:rep1];
-	
-	
-	// Action 2
-	CCIntervalAction *action2 = [CCRotateBy actionWithDuration:2 angle:180];
-	CCAction *back2 = [action2 reverse];
-	CCSequence *seq2 = [CCSequence actions:action2, back2, nil];
-	CCAction *rep2 = [CCRepeatForever actionWithAction:seq2];
-	[sprite runAction:rep2];
-	
-	sliderCtl = [self sliderCtl];
-	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
-}
-
--(void) onExit
-{
-	[sliderCtl removeFromSuperview];
-	[super onExit];
-}
-
--(NSString *) title
-{
-	return @"Scale Test";
 }
 @end
 

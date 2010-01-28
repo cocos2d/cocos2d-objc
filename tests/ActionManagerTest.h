@@ -30,9 +30,3 @@
 }
 @end
 
-
-@interface ScaleTest : ActionManagerTest
-{
-	UISlider	*sliderCtl;
-}
-@end

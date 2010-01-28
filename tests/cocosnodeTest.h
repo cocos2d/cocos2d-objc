@@ -42,34 +42,6 @@
 {}
 @end
 
-@interface SchedulerTest2 : TestDemo
-{}
-@end
-
-@interface SchedulerTest3 : TestDemo
-{}
-@end
-
-@interface SchedulerTest4 : TestDemo
-{}
-@end
-
-@interface SchedulerTest5 : TestDemo
-{}
-@end
-
-@interface SchedulerScaleTest : TestDemo
-{
-	UISlider	*sliderCtl;
-	CCLabel *label1;
-	CCLabel *label2;
-	CCLabel *label3;
-	
-	ccTime time1, time2, time3;	
-}
-@end
-
-
 @interface NodeToWorld : TestDemo
 {}
 @end
@@ -79,17 +51,5 @@
 @end
 
 @interface CameraZoomTest : TestDemo
-{}
-@end
-
-@interface TimerScaleTest : TestDemo
-{}
-@end
-
-@interface TimerScaleWithChildrenTest : TestDemo
-{}
-@end
-
-@interface PerFrameUpdateTest : TestDemo
 {}
 @end

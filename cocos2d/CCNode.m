@@ -41,8 +41,6 @@
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(int) z;
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
--(void) activateTimersWithChildren:(bool) affectChildren;
--(void) deactivateTimersWithChildren:(bool) affectChildren;
 @end
 
 @implementation CCNode
@@ -179,6 +177,9 @@
 		// children (lazy allocs)
 		children = nil;
 		
+		// scheduled selectors (lazy allocs)
+		scheduledSelectors = nil;
+		
 		// userData is always inited as nil
 		userData = nil;
 	}
@@ -191,11 +192,9 @@
 	// actions
 	[self stopAllActions];
 	
-	// Selectors
-	[self stopAllTimers];
-	
-	// Per Frame Updates
-	[self unschedulePerFrameUpdate];
+	// timers
+	[scheduledSelectors release];
+	scheduledSelectors = nil;
 	
 	[children makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -450,34 +449,6 @@
 	glPopMatrix();
 }
 
-
-#pragma mark CCNode - Per Frame Updates
-
--(void) perFrameUpdate:(ccTime) dt {
-	// override me
-}
-
--(void) schedulePerFrameUpdate {
-	[self schedulePerFrameUpdateWithPriority:0];
-}
-
--(void) schedulePerFrameUpdateWithPriority:(NSInteger) aPriority {
-	if(perFrameUpdates)
-		[self unschedulePerFrameUpdate];
-
-	[[CCScheduler sharedScheduler] requestPerFrameUpdatesForTarget:self priority:aPriority];
-	perFrameUpdates = YES;
-}
-
--(void) unschedulePerFrameUpdate {
-	if(perFrameUpdates) {
-		[[CCScheduler sharedScheduler] cancelPerFrameUpdatesForTarget:self];
-		perFrameUpdates = NO;
-	}
-}
-
-
-
 #pragma mark CCNode - Transformations
 
 -(void) transformAncestors
@@ -559,7 +530,7 @@
 	for( id child in children )
 		[child onEnter];
 	
-	[self activateTimersWithChildren:NO];
+	[self activateTimers];
 
 	isRunning = YES;
 }
@@ -572,7 +543,7 @@
 
 -(void) onExit
 {
-	[self deactivateTimersWithChildren:NO];
+	[self deactivateTimers];
 
 	isRunning = NO;	
 	
@@ -621,31 +592,38 @@
 
 #pragma mark CCNode Timers 
 
+#pragma mark CCNode Timers 
 
--(void) schedule: (SEL) selector repeat:(int)times
+-(void) timerAlloc
 {
-	[self schedule:selector interval:0 repeat:times];
+	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
 }
 
 -(void) schedule: (SEL) selector
 {
-	[self schedule:selector interval:0 repeat:CCTIMER_REPEAT_FOREVER];
+	[self schedule:selector interval:0];
 }
 
-
--(void) schedule: (SEL) selector interval:(ccTime)interval {
-	[self schedule:selector interval:interval repeat:CCTIMER_REPEAT_FOREVER];
-}
-
--(void) schedule: (SEL) selector interval:(ccTime)interval repeat:(int)times
+-(void) schedule: (SEL) selector interval:(ccTime)interval
 {
-	NSAssert( times >= CCTIMER_REPEAT_FOREVER, @"Repeat argument invalid");
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval repeat:times paused:!isRunning];
-	[[CCScheduler sharedScheduler] addTimer:timer];
+	if( !scheduledSelectors )
+		[self timerAlloc];
 	
+	NSString *key = NSStringFromSelector(selector);
+	// already scheduled ?
+	if( [scheduledSelectors objectForKey:key  ] ) {
+		return;
+	}
+	
+	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval];
+	
+	if( isRunning )
+		[[CCScheduler sharedScheduler] scheduleTimer:timer];
+	
+	[scheduledSelectors setObject:timer forKey:key ];
 }
 
 -(void) unschedule: (SEL) selector
@@ -653,67 +631,37 @@
 	// explicit nil handling
 	if (selector == nil)
 		return;
-
-	[[CCScheduler sharedScheduler] removeSelector:selector target:self];
-
+	
+	CCTimer *timer = nil;
+	NSString *key = NSStringFromSelector(selector);
+	
+	if( ! (timer = [scheduledSelectors objectForKey:key] ) )
+	{
+		CCLOG(@"cocos2d: CCNode.unschedule: Selector not scheduled: %@",key );
+		return;
+	}
+	
+	[scheduledSelectors removeObjectForKey: key];
+	
+	if( isRunning )
+		[[CCScheduler sharedScheduler] unscheduleTimer:timer];
 }
 
 - (void) activateTimers
 {
-	[self activateTimersWithChildren:NO];
-}
-
--(void) activateTimersWithChildren:(bool) affectChildren;
-{
-	[[CCScheduler sharedScheduler] resumeAllTimersForTarget:self];
+	for( id key in scheduledSelectors )
+		[[CCScheduler sharedScheduler] scheduleTimer: [scheduledSelectors objectForKey:key]];
+	
 	[[CCActionManager sharedManager] resumeAllActionsForTarget:self];
-	if(children) {
-		if(affectChildren) {
-			for(CCNode* n in children) {
-				[n activateTimersWithChildren:YES];
-			}
-		}
-	}
 }
 
 - (void) deactivateTimers
 {
-	[self deactivateTimersWithChildren:NO];
-}
-
--(void) deactivateTimersWithChildren:(bool) affectChildren
-{
-	[[CCScheduler sharedScheduler] pauseAllTimersForTarget:self];
+	for( id key in scheduledSelectors )
+		[[CCScheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
+	
 	[[CCActionManager sharedManager] pauseAllActionsForTarget:self];
-	if(children) {
-		if(affectChildren) {
-			for(CCNode* n in children) {
-				[n deactivateTimersWithChildren:YES];
-			}
-		}
-	}
 }
-
--(void) stopAllTimers {
-	[[CCScheduler sharedScheduler] removeAllTimersFromTarget:self];
-}
-
--(void) scaleAllTimers:(float) scale
-{
-	[self scaleAllTimers:scale withChildren:NO];
-}
-
--(void) scaleAllTimers:(float) scale withChildren:(bool) affectChildren;
-{
-	[[CCScheduler sharedScheduler] scaleAllTimersForTarget:self scaleFactor:scale];
-	[[CCActionManager sharedManager] timeScaleAllActionsForTarget:self scale:scale];
-	if(affectChildren) {
-		for(CCNode* n in children) {
-			[n scaleAllTimers:scale withChildren:YES];
-		}
-	}
-}
-
 
 #pragma mark CCNode Transform
 

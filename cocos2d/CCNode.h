@@ -82,7 +82,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */ 
-@interface CCNode : NSObject <CCPerFrameUpdateProtocol> {
+@interface CCNode : NSObject {
 	
 	// rotation angle
 	float rotation_;	
@@ -128,6 +128,8 @@ enum {
 	// user data field
 	void *userData;
 	
+	// scheduled selectors
+	NSMutableDictionary *scheduledSelectors;
 
 	// All BOOls moved packed together as 1 bit each
 	
@@ -356,6 +358,9 @@ enum {
 
 // timers
 
+/** check whether a selector is scheduled. */
+//-(BOOL) isScheduled: (SEL) selector;
+
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
@@ -364,50 +369,16 @@ enum {
  If time is 0 it will be ticked every frame.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
-/** schedules a selector.
- The scheduled selector will be ticked every frame, repeating a limited number of times
- */
--(void) schedule: (SEL) s repeat:(int)times;
-/** schedules a selector with an interval time in seconds.
- If time is 0 it will be ticked every frame.
- In either case, repeating a limited number of times
- */
--(void) schedule: (SEL) s interval:(ccTime)seconds repeat:(int)times;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
-
-/** scale the timers on the CCNode
-		1.0 = normal speed, 0.5 would be half speed, 2.0 would be double, etc.
+/** activate all scheduled timers.
+ Called internally by onEnter
  */
--(void) scaleAllTimers:(float) scale;
--(void) scaleAllTimers:(float) scale withChildren:(bool) affectChildren;
-
-/** Removes all schedule timers.
+-(void) activateTimers;
+/** deactivate all scheduled timers.
+ Called internally by onExit
  */
--(void) stopAllTimers;
-
-// Update
-
-/** override this method for your own update logic, default does nothing 
- You must call schedulePerFrameUpdate: to use it
- @since v0.9
- */
--(void) perFrameUpdate:(ccTime) dt;
-
-/** Schedule for per frame updates with priority bucket of 0.
- @since v0.9
- */
--(void) schedulePerFrameUpdate;
-
-/** Schedule for per frame udpates with a given priority bucket (higher priority buckets happen first, negative values ok).
- @since v0.9
- */
--(void) schedulePerFrameUpdateWithPriority:(NSInteger) aPriority;
-
-/** Unschedule per frame updates.
- @since v0.9
- */
--(void) unschedulePerFrameUpdate;
+-(void) deactivateTimers;
 
 // transformation methods
 
