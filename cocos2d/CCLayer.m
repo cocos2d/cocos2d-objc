@@ -60,7 +60,7 @@
 {
 	if( enabled != isAccelerometerEnabled ) {
 		isAccelerometerEnabled = enabled;
-		if( isRunning ) {
+		if( isRunning_ ) {
 			if( enabled )
 				[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 			else
@@ -78,7 +78,7 @@
 {
 	if( isTouchEnabled != enabled ) {
 		isTouchEnabled = enabled;
-		if( isRunning ) {
+		if( isRunning_ ) {
 			if( enabled )
 				[self registerWithTouchDispatcher];
 			else

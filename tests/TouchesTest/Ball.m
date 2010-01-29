@@ -17,22 +17,6 @@
 	return [[[self alloc] initWithTexture:aTexture] autorelease];
 }
 
-- (id)initWithTexture:(CCTexture2D *)aTexture
-{
-	if ((self = [super init]) == nil) return nil;
-	
-	self.texture = aTexture;
-	
-	return self;
-}
-
-- (void)setTexture:(CCTexture2D *)newTexture
-{
-	super.texture = newTexture;
-
-	self.anchorPoint = ccp(0.5f, 0.5f);
-}
-
 - (void)move:(ccTime)delta
 {
 	self.position = ccpAdd(self.position, ccpMult(velocity, delta));

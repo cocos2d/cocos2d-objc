@@ -13,12 +13,13 @@ version 0.99.0-rc - XX-mmm-2010
  . Effects: works with independently of the display resolution (issue #XXX)
  . Grid: optimized code. Only call camera.locate if it is dirty (issue #XXX)
  . Node: Uses cached Affine matrix to transform the nodes (2 GL calls vs. 5 GL calls) (issue #XXX)
+ . Node: uses bits instead of bools when compiled with SDK >= 3_0 (issue #726)
  . Singletons: removed @syncronized() since cocos2d is not thread safe (issue #663)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)
  . Sprite: flip only flipx the texture (not the anchor point and children) (issue #725)
- . Templates: Updated to support v0.99, Chipmunk v5.1 and Box2D r36
+ . Templates: Updated to support v0.99, Chipmunk v5.1 and Box2D r39
  . Tests: Works independently of the display resolution
  . TextureNode: Removed Node. Superseded by Sprite
  . TMXMaps: objectGroup support offsets (issue #689)

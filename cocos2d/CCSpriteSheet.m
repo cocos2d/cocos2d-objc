@@ -95,7 +95,7 @@ const int defaultCapacity = 29;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag ];
+	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_ ];
 }
 
 -(void)dealloc
@@ -120,7 +120,7 @@ const int defaultCapacity = 29;
 	// The alternative is to have a void CCSprite#visit, but
 	// although this is less mantainable, is faster
 	//
-	if (!visible)
+	if (!visible_)
 		return;
 	
 	glPushMatrix();

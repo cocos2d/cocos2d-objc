@@ -18,10 +18,10 @@
 
 - (id)initWithTexture:(CCTexture2D *)aTexture
 {
-	if ((self = [super init]) == nil) return nil;
+	if ((self = [super initWithTexture:aTexture]) ) {
 	
-	self.texture = aTexture;
-	state = kPaddleStateUngrabbed;
+		state = kPaddleStateUngrabbed;
+	}
 	
 	return self;
 }

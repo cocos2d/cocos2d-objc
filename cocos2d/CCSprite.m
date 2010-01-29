@@ -246,7 +246,7 @@ struct transformValues_ {
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
 			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
-			tag,
+			tag_,
 			atlasIndex_
 	];
 }
@@ -359,7 +359,7 @@ struct transformValues_ {
 	
 	
 	// Optimization: if it is not visible, then do nothing
-	if( ! visible ) {		
+	if( ! visible_ ) {		
 		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		dirty_ = NO;
@@ -369,7 +369,7 @@ struct transformValues_ {
 
 	// Optimization: If parent is spritesheet, or parent is nil
 	// build Affine transform manually
-	if( ! parent || parent == spriteSheet_ ) {
+	if( ! parent_ || parent_ == spriteSheet_ ) {
 		
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
@@ -382,7 +382,7 @@ struct transformValues_ {
 	} 
 	
 	// else do affine transformation according to the HonorParentTransform
-	else if( parent != spriteSheet_ ) {
+	else if( parent_ != spriteSheet_ ) {
 
 		matrix = CGAffineTransformIdentity;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
@@ -632,7 +632,7 @@ struct transformValues_ {
 
 -(void)setVisible:(BOOL)v
 {
-	if( v != visible ) {
+	if( v != visible_ ) {
 		[super setVisible:v];
 		if( usesSpriteSheet_ && ! dirty_ ) {
 			dirty_ = YES;
