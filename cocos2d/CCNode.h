@@ -20,6 +20,11 @@
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
 
+#ifdef __IPHONE_3_0
+#define CC_BOOL_IS_BIT(x) x:1
+#else 
+#define CC_BOOL_IS_BIT(x) x
+#endif
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -113,17 +118,17 @@ enum {
 	CCGridBase *grid_;
 	
 	// z-order value
-	int zOrder;
+	int zOrder_;
 	
 	// array of children
 	NSMutableArray *children;
 	
 	
 	// weakref to parent
-	CCNode *parent;
+	CCNode *parent_;
 	
 	// a tag. any number you want to assign to the node
-	int tag;
+	int tag_;
     
 	// user data field
 	void *userData;
@@ -134,24 +139,20 @@ enum {
 	// All BOOls moved packed together as 1 bit each
 	
 	// is visible
-	BOOL visible:1;
+	BOOL CC_BOOL_IS_BIT(visible_);
 	
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL relativeAnchorPoint_:1;	
+	BOOL CC_BOOL_IS_BIT(relativeAnchorPoint_);
 	
 	
 	// Transformations dirty
-	BOOL isTransformDirty_:1;
-	BOOL isInverseDirty_:1;
+	BOOL CC_BOOL_IS_BIT(isTransformDirty_);
+	BOOL CC_BOOL_IS_BIT(isInverseDirty_);
 	
 	// Is running
-	BOOL isRunning:1;
-	
-	// If we are scheduled for per-frame updates
-	BOOL perFrameUpdates:1;
-	
+	BOOL CC_BOOL_IS_BIT(isRunning_);
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
