@@ -1,7 +1,7 @@
 version 0.99.0-rc - XX-mmm-2010
  . All: Default OpenGL state is: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY (fixed issue #718)
  . Action: Improved CCSequence performance (issue #XXX)
- . BitmapFontAtlas: huge boost in update/create time (issue #730)
+ . BitmapFontAtlas: huge performance boost in update/create time (issue #730)
  . Box2d: updated to r36 (issue #494)
  . Camera: Offset correctly in landscape mode (issue #378)
  . Camera: It's possible to orbit around any point (issue #438)
@@ -13,6 +13,7 @@ version 0.99.0-rc - XX-mmm-2010
  . Effects: works with independently of the display resolution (issue #XXX)
  . Grid: optimized code. Only call camera.locate if it is dirty (issue #XXX)
  . Node: Uses cached Affine matrix to transform the nodes (2 GL calls vs. 5 GL calls) (issue #XXX)
+ . Singletons: removed @syncronized() since cocos2d is not thread safe (issue #663)
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)

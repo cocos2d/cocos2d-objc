@@ -44,12 +44,13 @@
 	CCGridBase *newgrid = [self grid];
 	
 	CCNode *t = (CCNode*) target;
+	CCGridBase *targetGrid = [t grid];
 	
-	if ( t.grid && t.grid.reuseGrid > 0 )
+	if ( targetGrid && targetGrid.reuseGrid > 0 )
 	{
-		if ( t.grid.active && t.grid.gridSize.x == gridSize.x && t.grid.gridSize.y == gridSize.y && [t.grid isKindOfClass:[newgrid class]] )
+		if ( targetGrid.active && targetGrid.gridSize.x == gridSize.x && targetGrid.gridSize.y == gridSize.y && [targetGrid isKindOfClass:[newgrid class]] )
 		{
-			[t.grid reuse];
+			[targetGrid reuse];
 		}
 		else
 		{
@@ -58,8 +59,8 @@
 	}
 	else
 	{
-		if ( t.grid && t.grid.active )
-			t.grid.active = NO;
+		if ( targetGrid && targetGrid.active )
+			targetGrid.active = NO;
 		t.grid = newgrid;
 		t.grid.active = YES;
 	}	
@@ -219,7 +220,7 @@
 
 - (CCIntervalAction*) reverse
 {
-	return [CCAccelDeccelAmplitude actionWithAction:[other reverse] duration:self.duration];
+	return [CCAccelDeccelAmplitude actionWithAction:[other reverse] duration:duration];
 }
 
 @end
