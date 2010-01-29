@@ -213,7 +213,7 @@ const int defaultCapacity = 29;
 	if (sprite == nil)
 		return;
 
-	NSAssert([children containsObject:sprite], @"CCSpriteSheet doesn't contain the sprite. Can't remove it");
+	NSAssert([children_ containsObject:sprite], @"CCSpriteSheet doesn't contain the sprite. Can't remove it");
 
 	// cleanup before removing
 	[self removeSpriteFromAtlas:sprite];

@@ -381,7 +381,7 @@ int compareInts (const void * a, const void * b)
 	if( ! sprite )
 		return;
 
-	NSAssert( [children containsObject:sprite], @"Tile does not belong to TMXLayer");
+	NSAssert( [children_ containsObject:sprite], @"Tile does not belong to TMXLayer");
 	
 	unsigned int atlasIndex = [sprite atlasIndex];
 	unsigned int zz = (unsigned int) atlasIndexArray->arr[atlasIndex];
