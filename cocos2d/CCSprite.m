@@ -336,10 +336,10 @@ struct transformValues_ {
 	float bottom = (rect.origin.y + rect.size.height) / atlasHeight;
 
 	
-//	if( flipX_)
-//		CC_SWAP(left,right);
-//	if( flipY_)
-//		CC_SWAP(top,bottom);
+	if( flipX_)
+		CC_SWAP(left,right);
+	if( flipY_)
+		CC_SWAP(top,bottom);
 	
 	quad_.bl.texCoords.u = left;
 	quad_.bl.texCoords.v = bottom;
@@ -646,7 +646,7 @@ struct transformValues_ {
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setScaleX: -scaleX_];
+		[self setTextureRect:rect_];	
 	}
 }
 -(BOOL) flipX
@@ -658,7 +658,7 @@ struct transformValues_ {
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		[self setScaleY: -scaleY_];
+		[self setTextureRect:rect_];	
 	}	
 }
 -(BOOL) flipY

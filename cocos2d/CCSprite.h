@@ -122,15 +122,19 @@ typedef enum {
 /** returns the rect of the CCSprite */
 @property (nonatomic,readonly) CGRect textureRect;
 /** whether or not the sprite is flipped horizontally. 
- Flipping an sprite horizontally has the same result as scaling X by -1.
+ It only flips the texture of the sprite, and not the texture of the sprite's children.
+ Also, flipping the texture doesn't alter the anchorPoint.
+ If you want to flip the anchorPoint too, and/or to flip the children too use:
  
-	sprite.flipX = YES is equal to:  sprite.scaleX *= -1;
+	sprite.scaleX *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipX;
 /** whether or not the sprite is flipped vertically\ 
- Flipping an sprite vertically has the same result as scaling Y by -1.
+ It only flips the texture of the sprite, and not the texture of the sprite's children.
+ Also, flipping the texture doesn't alter the anchorPoint.
+ If you want to flip the anchorPoint too, and/or to flip the children too use:
  
-	sprite.flipY = YES is equal to:  sprite.scaleY *= -1;
+	sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
 /** opacity: conforms to CCRGBAProtocol protocol */

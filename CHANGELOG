@@ -17,6 +17,7 @@ version 0.99.0-rc - XX-mmm-2010
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)
+ . Sprite: flip only flipx the texture (not the anchor point and children) (issue #725)
  . Templates: Updated to support v0.99, Chipmunk v5.1 and Box2D r36
  . Tests: Works independently of the display resolution
  . TextureNode: Removed Node. Superseded by Sprite
