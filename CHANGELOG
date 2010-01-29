@@ -3,14 +3,14 @@ version 0.99.0-rc - XX-mmm-2010
  . Action: Improved CCSequence performance (issue #XXX)
  . BitmapFontAtlas: huge performance boost in update/create time (issue #730)
  . Box2d: updated to r39 (issue #494)
- . Camera: Offset correctly in landscape mode (issue #378)
+ . Camera: Offset fixed in landscape mode (issue #378)
  . Camera: It's possible to orbit around any point (issue #438)
  . Camera: Doesn't reset affine matrix (issue #XXX)
  . Chipmunk: Using Chipmunk v5.1.0 (issue #664)
- . Configuration: and objects that knows GL capabilities and other misc stuff (issue #712)
+ . Configuration: added object that knows GL capabilities and other misc stuff (issue #712)
  . Director/Particles/Grid: removed hardcoded display size values. Using variable (issue #XXX)
  . Director: send "cleanup" message to root scene when it is being replaced (issue #709)
- . Effects: works with independently of the display resolution (issue #XXX)
+ . Effects: works independently of the display resolution (issue #XXX)
  . Grid: optimized code. Only call camera.locate if it is dirty (issue #XXX)
  . Node: Uses cached Affine matrix to transform the nodes (2 GL calls vs. 5 GL calls) (issue #XXX)
  . Node: uses bits instead of bools when compiled with SDK >= 3_0 (issue #726)
@@ -19,14 +19,14 @@ version 0.99.0-rc - XX-mmm-2010
  . SpriteSheet: reorder updates descendants. Added test for this case (issue #708)
  . Sprite: can create sprite from SpriteSheet. deprecated creation method from SpriteSheet (issue #657)
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)
- . Sprite: flip only flipx the texture (not the anchor point and children) (issue #725)
+ . Sprite: flip only flips the texture (not the anchor point and children) (issue #725)
  . Templates: Updated to support v0.99, Chipmunk v5.1 and Box2D r39
  . Tests: Works independently of the display resolution
  . TextureNode: Removed Node. Superseded by Sprite
  . TMXMaps: objectGroup support offsets (issue #689)
  . TMXMaps: objectGroup: Simplified object creation. All objects are NSDictionaries. For custom objects, subclass TMXTiledMap (issue #636)
  . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)
- . TouchDispatcher: StandardTouchHandler returns void (not BOOL) and they are executed before the TargetedHandlers (issue #710)
+ . TouchDispatcher: StandardTouchHandler returns void (not BOOL). They are executed after the TargetedHandlers (issue #710)
  . XCode: doxygen scripts runs with spaces in subdirectories (issue #684)
  
 version 0.9.0-beta2 - 11-Jan-2010
