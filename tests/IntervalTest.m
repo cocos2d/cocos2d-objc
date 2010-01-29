@@ -11,7 +11,7 @@
 @implementation Layer1
 -(id) init
 {
-	if( (self=[super init]) {
+	if( (self=[super init])) {
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		// sun

@@ -174,7 +174,7 @@
 		camera_ = nil;
 
 		// children (lazy allocs)
-		children = nil;
+		children_ = nil;
 		
 		// scheduled selectors (lazy allocs)
 		scheduledSelectors = nil;
@@ -195,7 +195,7 @@
 	[scheduledSelectors release];
 	scheduledSelectors = nil;
 	
-	[children makeObjectsPerformSelector:@selector(cleanup)];
+	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
 
 - (NSString*) description
@@ -214,11 +214,11 @@
 	
 	// children
 	
-	for (CCNode *child in children) {
+	for (CCNode *child in children_) {
 		child.parent = nil;
 	}
 	
-	[children release];
+	[children_ release];
 	
 		
 	[super dealloc];
@@ -228,7 +228,7 @@
 
 -(void) childrenAlloc
 {
-	children = [[NSMutableArray arrayWithCapacity:4] retain];
+	children_ = [[NSMutableArray arrayWithCapacity:4] retain];
 }
 
 // camera: lazy alloc
@@ -253,7 +253,7 @@
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
-	for( CCNode *node in children ) {
+	for( CCNode *node in children_ ) {
 		if( node.tag == aTag )
 			return node;
 	}
@@ -263,7 +263,7 @@
 
 - (NSArray *)children
 {
-	return (NSArray *) children;
+	return (NSArray *) children_;
 }
 
 /* "add" logic MUST only be on this selector
@@ -275,7 +275,7 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 	
-	if( ! children )
+	if( ! children_ )
 		[self childrenAlloc];
 	
 	[self insertChild:child z:z];
@@ -311,7 +311,7 @@
 	if (child == nil)
 		return;
 	
-	if ( [children containsObject:child] )
+	if ( [children_ containsObject:child] )
 		[self detachChild:child cleanup:cleanup];
 }
 
@@ -330,7 +330,7 @@
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
 	// not using detachChild improves speed here
-	for (CCNode *c in children)
+	for (CCNode *c in children_)
 	{
 		// IMPORTANT:
 		//  -1st do onExit
@@ -345,7 +345,7 @@
 		[c setParent:nil];
 	}
 
-	[children removeAllObjects];
+	[children_ removeAllObjects];
 }
 
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup
@@ -364,7 +364,7 @@
 	// set parent nil at the end (issue #476)
 	[child setParent:nil];
 
-	[children removeObject:child];
+	[children_ removeObject:child];
 }
 
 // used internally to alter the zOrder variable. DON'T call this method manually
@@ -378,17 +378,17 @@
 {
 	int index=0;
 	BOOL added = NO;
-	for( CCNode *a in children ) {
+	for( CCNode *a in children_ ) {
 		if ( a.zOrder > z ) {
 			added = YES;
-			[ children insertObject:child atIndex:index];
+			[ children_ insertObject:child atIndex:index];
 			break;
 		}
 		index++;
 	}
 	
 	if( ! added )
-		[children addObject:child];
+		[children_ addObject:child];
 	
 	[child _setZOrder:z];
 }
@@ -398,7 +398,7 @@
 	NSAssert( child != nil, @"Child must be non-nil");
 	
 	[child retain];
-	[children removeObject:child];
+	[children_ removeObject:child];
 	
 	[self insertChild:child z:z];
 	
@@ -428,7 +428,7 @@
 	
 	[self transform];
 	
-	for (CCNode * child in children) {
+	for (CCNode * child in children_) {
 		if ( child.zOrder < 0 )
 			[child visit];
 		else
@@ -437,7 +437,7 @@
 	
 	[self draw];
 
-	for (CCNode * child in children) {		
+	for (CCNode * child in children_) {		
 		if ( child.zOrder >= 0 )
 			[child visit];
 	}
@@ -526,8 +526,7 @@
 
 -(void) onEnter
 {
-	for( id child in children )
-		[child onEnter];
+	[children_ makeObjectsPerformSelector:@selector(onEnter)];
 	
 	[self activateTimers];
 
@@ -536,8 +535,7 @@
 
 -(void) onEnterTransitionDidFinish
 {
-	for( id child in children )
-		[child onEnterTransitionDidFinish];
+	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
 }
 
 -(void) onExit
@@ -546,8 +544,7 @@
 
 	isRunning_ = NO;	
 	
-	for( id child in children )
-		[child onExit];
+	[children_ makeObjectsPerformSelector:@selector(onExit)];
 }
 
 #pragma mark CCNode Actions

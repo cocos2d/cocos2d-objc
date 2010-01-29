@@ -541,13 +541,13 @@ struct transformValues_ {
 
 	[super removeChild:sprite cleanup:doCleanup];
 	
-	hasChildren_ = ( [children count] > 0 );
+	hasChildren_ = ( [children_ count] > 0 );
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	if( usesSpriteSheet_ ) {
-		for( CCSprite *child in children )
+		for( CCSprite *child in children_ )
 			[spriteSheet_ removeSpriteFromAtlas:child];
 	}
 	
@@ -568,7 +568,7 @@ struct transformValues_ {
 	dirty_ = b;
 	// recursively set dirty
 	if( hasChildren_ ) {
-		for( CCSprite *child in children)
+		for( CCSprite *child in children_)
 			[child setDirtyRecursively:YES];
 	}
 }
@@ -636,7 +636,7 @@ struct transformValues_ {
 		[super setVisible:v];
 		if( usesSpriteSheet_ && ! dirty_ ) {
 			dirty_ = YES;
-			for( id child in children)
+			for( id child in children_)
 				[child setVisible:v];
 		}
 	}

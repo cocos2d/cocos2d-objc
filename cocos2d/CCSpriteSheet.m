@@ -77,7 +77,7 @@ const int defaultCapacity = 29;
 		[self updateBlendFunc];
 
 		// no lazy alloc in this node
-		children = [[NSMutableArray alloc] initWithCapacity:capacity];
+		children_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 		descendants_ = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 
@@ -180,7 +180,7 @@ const int defaultCapacity = 29;
 	
 	// What's the new atlas index ?
 	NSUInteger newAtlasIndex = 0;
-	for( CCSprite *sprite in children) {
+	for( CCSprite *sprite in children_) {
 		if( [sprite isEqual:child] )
 			break;
 		newAtlasIndex++;
@@ -200,7 +200,7 @@ const int defaultCapacity = 29;
 		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
 		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
 		for( ; index < count+1 ; index++ ) {
-			CCSprite *sprite = (CCSprite *)[children objectAtIndex:index];
+			CCSprite *sprite = (CCSprite *)[children_ objectAtIndex:index];
 			[sprite setAtlasIndex: index];
 		}
 	}
@@ -223,15 +223,13 @@ const int defaultCapacity = 29;
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
 {
-	[self removeChild:(CCSprite *)[children objectAtIndex:index] cleanup:doCleanup];
+	[self removeChild:(CCSprite *)[children_ objectAtIndex:index] cleanup:doCleanup];
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	// Invalidate atlas index. issue #569
-	for( CCSprite *sprite in children ) {
-		[sprite useSelfRender];
-	}
+	[children_ makeObjectsPerformSelector:@selector(useSelfRender)];
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
 	

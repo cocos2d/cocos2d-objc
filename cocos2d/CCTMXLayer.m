@@ -243,7 +243,7 @@
 	ccCArrayInsertValueAtIndex(atlasIndexArray, (void*)z, indexForZ);
 	
 	// update possible children
-	for( CCSprite *sprite in children) {
+	for( CCSprite *sprite in children_) {
 		unsigned int ai = [sprite atlasIndex];
 		if( ai >= indexForZ)
 			[sprite setAtlasIndex: ai+1];
@@ -416,7 +416,7 @@ int compareInts (const void * a, const void * b)
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			for( CCSprite *sprite in children) {
+			for( CCSprite *sprite in children_) {
 				unsigned int ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {
 					[sprite setAtlasIndex: ai-1];

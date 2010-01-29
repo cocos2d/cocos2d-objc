@@ -230,11 +230,11 @@ enum {
 -(void) alignItemsVerticallyWithPadding:(float)padding
 {
 	float height = -padding;
-	for(CCMenuItem *item in children)
+	for(CCMenuItem *item in children_)
 	    height += [item contentSize].height * item.scaleY + padding;
 
 	float y = height / 2.0f;
-	for(CCMenuItem *item in children) {
+	for(CCMenuItem *item in children_) {
 	    [item setPosition:ccp(0, y - [item contentSize].height * item.scaleY / 2.0f)];
 	    y -= [item contentSize].height * item.scaleY + padding;
 	}
@@ -249,11 +249,11 @@ enum {
 {
 	
 	float width = -padding;
-	for(CCMenuItem* item in children)
+	for(CCMenuItem* item in children_)
 	    width += [item contentSize].width * item.scaleX + padding;
 
 	float x = -width / 2.0f;
-	for(CCMenuItem* item in children) {
+	for(CCMenuItem* item in children_) {
 		[item setPosition:ccp(x + [item contentSize].width * item.scaleX / 2.0f, 0)];
 		x += [item contentSize].width * item.scaleX + padding;
 	}
@@ -280,7 +280,7 @@ enum {
     
 	int height = -5;
     NSUInteger row = 0, rowHeight = 0, columnsOccupied = 0, rowColumns;
-	for(CCMenuItem *item in children) {
+	for(CCMenuItem *item in children_) {
 		NSAssert( row < [rows count], @"Too many menu items for the amount of rows/columns.");
         
         rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
@@ -303,7 +303,7 @@ enum {
     
     row = 0; rowHeight = 0; rowColumns = 0;
 	float w, x, y = height / 2;
-	for(CCMenuItem *item in children) {
+	for(CCMenuItem *item in children_) {
         if(rowColumns == 0) {
             rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
             w = winSize.width / (1 + rowColumns);
@@ -354,7 +354,7 @@ enum {
     
 	int width = -10, columnHeight = -5;
     NSUInteger column = 0, columnWidth = 0, rowsOccupied = 0, columnRows;
-	for(CCMenuItem *item in children) {
+	for(CCMenuItem *item in children_) {
 		NSAssert( column < [columns count], @"Too many menu items for the amount of rows/columns.");
         
         columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
@@ -381,7 +381,7 @@ enum {
     
     column = 0; columnWidth = 0; columnRows = 0;
 	float x = -width / 2, y;
-	for(CCMenuItem *item in children) {
+	for(CCMenuItem *item in children_) {
         if(columnRows == 0) {
             columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
             y = ([(NSNumber *) [columnHeights objectAtIndex:column] intValue] + winSize.height) / 2;
@@ -415,14 +415,14 @@ enum {
 - (void) setOpacity:(GLubyte)newOpacity
 {
 	opacity_ = newOpacity;
-	for(id<CCRGBAProtocol> item in children)
+	for(id<CCRGBAProtocol> item in children_)
 		[item setOpacity:opacity_];
 }
 
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
-	for(id<CCRGBAProtocol> item in children)
+	for(id<CCRGBAProtocol> item in children_)
 		[item setColor:color_];
 }
 
@@ -433,7 +433,7 @@ enum {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
-	for( CCMenuItem* item in children ) {
+	for( CCMenuItem* item in children_ ) {
 		CGPoint local = [item convertToNodeSpace:touchLocation];
 
 		CGRect r = [item rect];
