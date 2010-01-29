@@ -13,8 +13,9 @@
 {
 	CCSprite * grossini;
 	CCSprite *tamara;
+	CCSprite *kathia;
 }
--(void) centerSprites;
+-(void) centerSprites:(unsigned int)numberOfSprites;
 -(NSString*) title;
 
 -(void) backCallback:(id) sender;

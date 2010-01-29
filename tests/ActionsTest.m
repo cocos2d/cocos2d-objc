@@ -84,13 +84,17 @@ Class restartAction()
 		// Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
 		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
 		
-		[self addChild: grossini z:1];
-		[self addChild: tamara z:2];
+		kathia = [[CCSprite spriteWithFile:@"grossinis_sister2.png"] retain];
+		
+		[self addChild:grossini z:1];
+		[self addChild:tamara z:2];
+		[self addChild:kathia z:3];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		[grossini setPosition: ccp(60, s.height/3)];
-		[tamara setPosition: ccp(60, 2*s.height/3)];
+		[grossini setPosition: ccp(s.width/2, s.height/3)];
+		[tamara setPosition: ccp(s.width/2, 2*s.height/3)];
+		[kathia setPosition: ccp(s.width/2, s.height/2)];
 		
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
@@ -102,9 +106,9 @@ Class restartAction()
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];
 	}
 
@@ -115,6 +119,7 @@ Class restartAction()
 {
 	[grossini release];
 	[tamara release];
+	[kathia release];
 	[super dealloc];
 }
 
@@ -141,12 +146,48 @@ Class restartAction()
 }
 
 
--(void) centerSprites
+-(void) alignSpritesLeft:(unsigned int)numberOfSprites
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	[grossini setPosition: ccp(s.width/3, s.height/2)];
-	[tamara setPosition: ccp(2*s.width/3, s.height/2)];
+	if( numberOfSprites == 1 ) {
+		tamara.visible = NO;
+		kathia.visible = NO;
+		[grossini setPosition:ccp(60, s.height/2)];
+	} else if( numberOfSprites == 2 ) {		
+		[kathia setPosition: ccp(60, s.height/3)];
+		[tamara setPosition: ccp(60, 2*s.height/3)];
+		grossini.visible = NO;
+	} else if( numberOfSprites == 3 ) {
+		[grossini setPosition: ccp(60, s.height/2)];
+		[tamara setPosition: ccp(60, 2*s.height/3)];
+		[kathia setPosition: ccp(60, s.height/3)];
+	}
+	else {
+		CCLOG(@"ActionsTests: Invalid number of Sprites");
+	}	
+}
+
+-(void) centerSprites:(unsigned int)numberOfSprites
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	if( numberOfSprites == 1 ) {
+		tamara.visible = NO;
+		kathia.visible = NO;
+		[grossini setPosition:ccp(s.width/2, s.height/2)];
+	} else if( numberOfSprites == 2 ) {		
+		[kathia setPosition: ccp(s.width/3, s.height/2)];
+		[tamara setPosition: ccp(2*s.width/3, s.height/2)];
+		grossini.visible = NO;
+	} else if( numberOfSprites == 3 ) {
+		[grossini setPosition: ccp(s.width/2, s.height/2)];
+		[tamara setPosition: ccp(2*s.width/3, s.height/2)];
+		[kathia setPosition: ccp(s.width/3, s.height/2)];
+	}
+	else {
+		CCLOG(@"ActionsTests: Invalid number of Sprites");
+	}
 }
 -(NSString*) title
 {
@@ -161,15 +202,20 @@ Class restartAction()
 	[super onEnter];
 
 	
+	CGSize s = [CCDirector sharedDirector].winSize;
+
 	tamara.scaleX = 2.5f;
 	tamara.scaleY = -1.0f;
 	tamara.position = ccp(100,70);
 	tamara.opacity = 128;
 	
 	grossini.rotation = 120;
-	grossini.opacity = 128;
-	grossini.position = ccp(240,160);
+	grossini.position = ccp(s.width/2, s.height/2);
 	grossini.color = ccc3( 255,0,0);
+	
+	
+	kathia.position = ccp(s.width-100, s.height/2);
+	kathia.color = ccBLUE;
 }
 
 -(NSString *) title
@@ -184,6 +230,8 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	[self centerSprites:3];
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	
@@ -194,6 +242,7 @@ Class restartAction()
 	
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+	[kathia runAction:[ CCMoveTo actionWithDuration:1 position:ccp(40,40)]];
 }
 -(NSString *) title
 {
@@ -206,7 +255,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites];
+	[self centerSprites:3];
 		
 	id actionTo = [CCRotateTo actionWithDuration: 2 angle:45];
 	id actionTo2 = [CCRotateTo actionWithDuration: 2 angle:-45];
@@ -217,9 +266,6 @@ Class restartAction()
 	id actionByBack = [actionBy reverse];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 
-	CCNode *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	[self addChild:kathia];
-	[kathia setPosition:ccp(240,160)];
 	[kathia runAction: [CCSequence actions:actionTo2, [[actionTo0 copy] autorelease], nil]];
 	
 }
@@ -235,7 +281,7 @@ Class restartAction()
 {
 	[super onEnter];
 
-	[self centerSprites];
+	[self centerSprites:3];
 	
 	id actionTo = [CCScaleTo actionWithDuration: 2 scale:0.5f];
 	id actionBy = [CCScaleBy actionWithDuration:2  scale: 2];
@@ -245,9 +291,6 @@ Class restartAction()
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	
-	CCNode *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	[self addChild:kathia];
-	[kathia setPosition:ccp(240,160)];
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];
 	
 }
@@ -262,13 +305,15 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-		
+			
 	id actionTo = [CCJumpTo actionWithDuration:2 position:ccp(300,300) height:50 jumps:4];
 	id actionBy = [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
+	id actionUp = [CCJumpBy actionWithDuration:2 position:ccp(0,0) height:80 jumps:4];
 	id actionByBack = [actionBy reverse];
 	
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+	[kathia runAction: [CCRepeatForever actionWithAction:actionUp]];
 }
 -(NSString *) title
 {
@@ -310,8 +355,6 @@ Class restartAction()
 	id bezierTo1 = [CCBezierTo actionWithDuration:2 bezier:bezier2];	
 	
 	// sprite 3
-	CCNode *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	[self addChild:kathia];
 	[kathia setPosition:ccp(400,160)];
 	id bezierTo2 = [CCBezierTo actionWithDuration:2 bezier:bezier2];
 	
@@ -332,13 +375,13 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites];
+	[self centerSprites:2];
 	
 	id action1 = [CCBlink actionWithDuration:2 blinks:10];
 	id action2 = [CCBlink actionWithDuration:2 blinks:5];
 	
 	[tamara runAction: action1];
-	[grossini runAction:action2];
+	[kathia runAction:action2];
 }
 -(NSString *) title
 {
@@ -351,7 +394,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites];
+	[self centerSprites:2];
 	
 	tamara.opacity = 0;
 	id action1 = [CCFadeIn actionWithDuration:1.0f];
@@ -361,7 +404,7 @@ Class restartAction()
 	id action2Back = [action2 reverse];
 	
 	[tamara runAction: [CCSequence actions: action1, action1Back, nil]];
-	[grossini runAction: [CCSequence actions: action2, action2Back, nil]];
+	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
 }
 -(NSString *) title
 {
@@ -374,14 +417,14 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites];
+	[self centerSprites:2];
 	
 	id action1 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:255];
 	id action2 = [CCTintBy actionWithDuration:2 red:-127 green:-255 blue:-127];
 	id action2Back = [action2 reverse];
 	
 	[tamara runAction: action1];
-	[grossini runAction: [CCSequence actions: action2, action2Back, nil]];
+	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
 }
 -(NSString *) title
 {
@@ -394,9 +437,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites];
-	
-	tamara.visible = NO;
+	[self centerSprites:1];
 	
 	CCAnimation* animation = [CCAnimation animationWithName:@"dance" delay:0.2f];
 	for( int i=1;i<15;i++)
@@ -419,7 +460,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self alignSpritesLeft:1];
 
 	id action = [CCSequence actions:
 				 [CCMoveBy actionWithDuration: 2 position:ccp(240,0)],
@@ -439,7 +480,8 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self alignSpritesLeft:1];
+
 	[grossini setVisible:NO];
 	
 	id action = [CCSequence actions:
@@ -493,7 +535,8 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self alignSpritesLeft:1];
+
 	
 	id action = [CCSpawn actions:
 				 [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4],
@@ -513,7 +556,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self centerSprites:1];
 	
 	id action = [CCSequence actions:
 				 [CCDelayTime actionWithDuration:1],
@@ -542,7 +585,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self centerSprites:1];
 	
 	id act1 = [CCRotateTo actionWithDuration:1 angle:90];
 	id act2 = [CCRotateTo actionWithDuration:1 angle:0];
@@ -564,7 +607,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self alignSpritesLeft:1];
 	
 	id jump = [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
 	id action = [CCSequence actions: jump, [jump reverse], nil];
@@ -582,7 +625,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self alignSpritesLeft:1];
 	
 	id move = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
 	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], move, nil];
@@ -600,7 +643,7 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[tamara setVisible:NO];
+	[self alignSpritesLeft:1];
 
 	id move1 = [CCMoveBy actionWithDuration:1 position:ccp(250,0)];
 	id move2 = [CCMoveBy actionWithDuration:1 position:ccp(0,50)];
@@ -620,6 +663,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	[self alignSpritesLeft:2];
+
+
 	// Test:
 	//   Sequence should work both with IntervalAction and InstantActions
 	
@@ -634,7 +680,7 @@ Class restartAction()
 
 	// Test:
 	//   Also test that the reverse of Hide is Show, and vice-versa
-	[grossini runAction:action];
+	[kathia runAction:action];
 
 	id move_tamara = [CCMoveBy actionWithDuration:1 position:ccp(100,0)];
 	id move_tamara2 = [CCMoveBy actionWithDuration:1 position:ccp(50,0)];
@@ -654,6 +700,9 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
+	
+	[self alignSpritesLeft:2];
+
 		
 	id a1 = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
 	id action1 = [CCRepeat actionWithAction:
@@ -663,7 +712,7 @@ Class restartAction()
 						[CCSequence actions: [[a1 copy] autorelease], [a1 reverse], nil]
 					];
 	
-	[grossini runAction:action1];
+	[kathia runAction:action1];
 	[tamara runAction:action2];
 }
 -(NSString *) title
@@ -677,11 +726,8 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCNode *sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	[self addChild:sprite];
-	[sprite setPosition:ccp(s.width-100, s.height/2)];
-	
+	[self centerSprites:3];
+		
 		
 	id action = [CCSequence actions:
 				 [CCMoveBy actionWithDuration:2 position:ccp(200,0)],
@@ -702,7 +748,7 @@ Class restartAction()
 	
 	[grossini runAction:action];
 	[tamara runAction:action2];
-	[sprite runAction:action3];
+	[kathia runAction:action3];
 }
 
 -(void) callback1
@@ -746,7 +792,7 @@ Class restartAction()
 {
 	[super onEnter];
 
-	[self centerSprites];
+	[self centerSprites:2];
 	
 	id orbit1 = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
 	id action1 = [CCSequence actions:
@@ -761,7 +807,7 @@ Class restartAction()
 				  nil ];
 	
 	
-	[grossini runAction:action1];
+	[kathia runAction:action1];
 	[tamara runAction:action2];
 }
 
