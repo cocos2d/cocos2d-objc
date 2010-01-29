@@ -2,8 +2,8 @@ cocos2d for iPhone
 ------------------
 
 cocos2d for iPhone[1] is a framework for building 2D games, demos, and other
-graphical/interactive applications. It is based on the cocos2d [2] (python)
-design:
+graphical/interactive applications for iPod Touch, iPhone and iPad.
+It is based on the cocos2d [2] (python) design:
   it uses the same API and design, but instead of using python it uses objective-c.
 
 
