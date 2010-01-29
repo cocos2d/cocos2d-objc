@@ -437,7 +437,7 @@
 	}
 	
 	[self draw];
-	
+
 	for (CCNode * child in children) {		
 		if ( child.zOrder >= 0 )
 			[child visit];

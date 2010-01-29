@@ -188,14 +188,12 @@
 
 -(void) changeWidth: (GLfloat) w
 {
-	CGSize s = self.contentSize;
-	[self setContentSize:CGSizeMake(w,s.height)];
+	[self setContentSize:CGSizeMake(w,contentSize_.height)];
 }
 
 -(void) changeHeight: (GLfloat) h
 {
-	CGSize s = self.contentSize;
-	[self setContentSize:CGSizeMake(s.width,h)];
+	[self setContentSize:CGSizeMake(contentSize_.width,h)];
 }
 
 - (void) updateColor

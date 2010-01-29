@@ -50,6 +50,10 @@
 			Texture2DPixelFormat format = [director pixelFormat] == kPixelFormatRGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
 			
 			void *data = malloc((int)(textureSize * textureSize * 4));
+			if( ! data ) {
+				CCLOG(@"cocos2d: CCGrid: not enough memory");
+				return nil;
+			}
 			memset(data, 0, (int)(textureSize * textureSize * 4));
 			
 			texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:win];
