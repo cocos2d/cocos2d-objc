@@ -93,12 +93,12 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent switchTo:1];
+	[(CCMultiplexLayer*)parent_ switchTo:1];
 }
 
 -(void) menuCallbackConfig:(id) sender
 {
-	[(CCMultiplexLayer*)parent switchTo:3];
+	[(CCMultiplexLayer*)parent_ switchTo:3];
 }
 
 -(void) menuCallbackDisabled:(id) sender {
@@ -110,7 +110,7 @@ enum {
 
 -(void) menuCallback2: (id) sender
 {
-	[(CCMultiplexLayer*)parent switchTo:2];
+	[(CCMultiplexLayer*)parent_ switchTo:2];
 }
 
 -(void) onQuit: (id) sender
@@ -205,7 +205,7 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	[(CCMultiplexLayer*)parent switchTo:0];
+	[(CCMultiplexLayer*)parent_ switchTo:0];
 }
 
 -(void) menuCallbackOpacity: (id) sender
@@ -286,7 +286,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent switchTo:0];
+	[(CCMultiplexLayer*)parent_ switchTo:0];
 }
 
 -(void) menuCallback2: (id) sender
@@ -399,7 +399,7 @@ enum {
 
 -(void) backCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent switchTo:0];
+	[(CCMultiplexLayer*)parent_ switchTo:0];
 }
 
 @end

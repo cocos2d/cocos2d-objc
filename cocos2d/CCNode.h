@@ -121,7 +121,7 @@ enum {
 	int zOrder_;
 	
 	// array of children
-	NSMutableArray *children;
+	NSMutableArray *children_;
 	
 	
 	// weakref to parent

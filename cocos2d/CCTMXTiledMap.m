@@ -190,7 +190,7 @@
 
 -(CCTMXLayer*) layerNamed:(NSString *)layerName 
 {
-	for( CCTMXLayer *layer in children ) {
+	for( CCTMXLayer *layer in children_ ) {
 		if( [layer.layerName isEqual:layerName] )
 			return layer;
 	}

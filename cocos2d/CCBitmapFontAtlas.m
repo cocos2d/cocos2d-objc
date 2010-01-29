@@ -540,7 +540,7 @@ targetSetEql(void *ptr, void *elt)
 	[string_ release];
 	string_ = [newString retain];
 
-	for( CCNode *child in children )
+	for( CCNode *child in children_ )
 		child.visible = NO;
 
 	[self createFontChars];
@@ -551,7 +551,7 @@ targetSetEql(void *ptr, void *elt)
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
-	for( CCSprite* child in children )
+	for( CCSprite* child in children_ )
 		[child setColor:color_];
 }
 
@@ -559,13 +559,13 @@ targetSetEql(void *ptr, void *elt)
 {
 	opacity_ = opacity;
 
- 	for( id<CCRGBAProtocol> child in children )
+ 	for( id<CCRGBAProtocol> child in children_ )
 		[child setOpacity:opacity_];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;
- 	for( id<CCRGBAProtocol> child in children )
+ 	for( id<CCRGBAProtocol> child in children_ )
 		[child setOpacityModifyRGB:modify];
 }
 -(BOOL) doesOpacityModifyRGB
