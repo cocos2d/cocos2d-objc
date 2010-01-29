@@ -643,9 +643,9 @@ Class restartAction()
 		gid = [layer tileGIDAt:ccp(0,63)];
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
 
-		[self schedule:@selector(updateCol:) interval:2.0f repeat:15];
+		[self schedule:@selector(updateCol:) interval:2.0f];
 		[self schedule:@selector(repaintWithGID:) interval:2];
-		[self schedule:@selector(removeTiles:) interval:1 repeat:15];
+		[self schedule:@selector(removeTiles:) interval:1];
 		
 		
 		NSLog(@"++++atlas quantity: %d", [[layer textureAtlas] totalQuads]);

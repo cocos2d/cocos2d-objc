@@ -390,7 +390,7 @@ Class restartAction()
 // remove
 - (void) removeMe: (id)node
 {	
-	[parent removeChild:node cleanup:YES];
+	[parent_ removeChild:node cleanup:YES];
 	[self nextCallback:self];
 }
 

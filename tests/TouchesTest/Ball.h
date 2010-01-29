@@ -4,7 +4,7 @@
 
 @class Paddle;
 
-@interface Ball : CCTextureNode {
+@interface Ball : CCSprite {
 @private
 	CGPoint velocity;
 }
@@ -13,7 +13,6 @@
 @property(nonatomic, readonly) float radius;
 
 + (id)ballWithTexture:(CCTexture2D *)texture;
-- (id)initWithTexture:(CCTexture2D *)texture;
 
 - (void)move:(ccTime)delta;
 - (void)collideWithPaddle:(Paddle *)paddle;

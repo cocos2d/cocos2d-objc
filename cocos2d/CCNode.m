@@ -45,13 +45,13 @@
 
 @implementation CCNode
 
-@synthesize visible;
-@synthesize parent;
+@synthesize visible=visible_;
+@synthesize parent=parent_;
 @synthesize grid=grid_;
-@synthesize zOrder;
-@synthesize tag;
+@synthesize zOrder=zOrder_;
+@synthesize tag=tag_;
 @synthesize vertexZ = vertexZ_;
-@synthesize isRunning;
+@synthesize isRunning=isRunning_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -145,7 +145,7 @@
 {
 	if ((self=[super init]) ) {
 
-		isRunning = NO;
+		isRunning_ = NO;
 	
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
@@ -164,12 +164,11 @@
 
 		grid_ = nil;
 		
-		visible = YES;
-		perFrameUpdates = NO;
+		visible_ = YES;
 
-		tag = kCCNodeTagInvalid;
+		tag_ = kCCNodeTagInvalid;
 		
-		zOrder = 0;
+		zOrder_ = 0;
 
 		// lazy alloc
 		camera_ = nil;
@@ -201,7 +200,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
 }
 
 - (void) dealloc
@@ -285,7 +284,7 @@
 	
 	[child setParent: self];
 	
-	if( isRunning )
+	if( isRunning_ )
 		[child onEnter];
 	return self;
 }
@@ -336,7 +335,7 @@
 		// IMPORTANT:
 		//  -1st do onExit
 		//  -2nd cleanup
-		if (isRunning)
+		if (isRunning_)
 			[c onExit];
 
 		if (cleanup)
@@ -354,7 +353,7 @@
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
-	if (isRunning)
+	if (isRunning_)
 		[child onExit];
 
 	// If you don't do cleanup, the child's actions will not get removed and the
@@ -371,7 +370,7 @@
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(int) z
 {
-	zOrder = z;
+	zOrder_ = z;
 }
 
 // helper used by reorderChild & add
@@ -417,7 +416,7 @@
 
 -(void) visit
 {
-	if (!visible)
+	if (!visible_)
 		return;
 	
 	glPushMatrix();
@@ -453,9 +452,9 @@
 
 -(void) transformAncestors
 {
-	if( parent ) {
-		[parent transformAncestors];
-		[parent transform];
+	if( parent_ ) {
+		[parent_ transformAncestors];
+		[parent_ transform];
 	}
 }
 
@@ -532,7 +531,7 @@
 	
 	[self activateTimers];
 
-	isRunning = YES;
+	isRunning_ = YES;
 }
 
 -(void) onEnterTransitionDidFinish
@@ -545,7 +544,7 @@
 {
 	[self deactivateTimers];
 
-	isRunning = NO;	
+	isRunning_ = NO;	
 	
 	for( id child in children )
 		[child onExit];
@@ -557,7 +556,7 @@
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	[[CCActionManager sharedManager] addAction:action target:self paused:!isRunning];
+	[[CCActionManager sharedManager] addAction:action target:self paused:!isRunning_];
 	return action;
 }
 
@@ -620,7 +619,7 @@
 	
 	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval];
 	
-	if( isRunning )
+	if( isRunning_ )
 		[[CCScheduler sharedScheduler] scheduleTimer:timer];
 	
 	[scheduledSelectors setObject:timer forKey:key ];
@@ -643,7 +642,7 @@
 	
 	[scheduledSelectors removeObjectForKey: key];
 	
-	if( isRunning )
+	if( isRunning_ )
 		[[CCScheduler sharedScheduler] unscheduleTimer:timer];
 }
 
@@ -700,7 +699,7 @@
 {
 	CGAffineTransform t = [self nodeToParentTransform];
 	
-	for (CCNode *p = parent; p != nil; p = p.parent)
+	for (CCNode *p = parent_; p != nil; p = p.parent)
 		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
 	
 	return t;
