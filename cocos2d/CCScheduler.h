@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -20,8 +20,6 @@
 
 typedef void (*TICK_IMP)(id, SEL, ccTime);
 
-#define CCTIMER_REPEAT_FOREVER -1
-
 //
 // Timer
 //
@@ -34,19 +32,10 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	
 	ccTime interval;
 	ccTime elapsed;
-	
-	// XXX: optimization. Don't use as a property
-	// XXX: performance is improved in about 10%
-@public
-	int		 ticksUntilAutoExpire; // -1 = infinite
-	
 }
 
 /** interval in seconds */
 @property (nonatomic,readwrite,assign) ccTime interval;
-@property (nonatomic,readonly) int ticksUntilAutoExpire;
-@property (nonatomic,readonly) id target;
-@property (nonatomic,readonly) SEL selector;
 
 /** Allocates a timer with a target and a selector.
 */
@@ -56,16 +45,6 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 */
 +(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
 
-
-/** Allocates a timer with a target and a selector.
- */
-+(id) timerWithTarget:(id) t selector:(SEL)s repeat:(int)times;
-
-/** Allocates a timer with a target, a selector and an interval in seconds.
- */
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times;
-
-
 /** Initializes a timer with a target and a selector.
 */
  -(id) initWithTarget:(id) t selector:(SEL)s;
@@ -73,16 +52,6 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** Initializes a timer with a target, a selector and an interval in seconds.
 */
 -(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
-
-
-/** Initializes a timer with a target and a selector.
- */
--(id) initWithTarget:(id) t selector:(SEL)s repeat:(int)times;
-
-/** Initializes a timer with a target, a selector and an interval in seconds.
- */
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds repeat:(int)times;
-
 
 
 /** triggers the timer */
@@ -102,6 +71,10 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	NSMutableArray	*methodsToAdd;
 	
 	ccTime			timeScale_;
+	
+	// Optimization
+	TICK_IMP		impMethod;
+	SEL				fireSelector;
 }
 
 /** Modifies the time of all scheduled callbacks.
