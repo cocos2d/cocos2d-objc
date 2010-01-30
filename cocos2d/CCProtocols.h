@@ -134,13 +134,3 @@
 -(void) addAnimation: (id<CCAnimationProtocol>) animation;
 @end
 
-
-#pragma mark -
-#pragma mark CCPerFrameUpdateProtocol
-
-@protocol CCPerFrameUpdateProtocol <NSObject>
-/** Called per frame when target is registered for per-frame udpates in CCScheduler
- @since v0.9
- */
--(void) perFrameUpdate:(ccTime) dt;
-@end
