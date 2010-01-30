@@ -129,7 +129,7 @@ struct transformValues_ {
 		flipY_ = flipX_ = NO;
 		
 		// lazy alloc
-		animations = nil;
+		animations_ = nil;
 		
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
@@ -254,7 +254,7 @@ struct transformValues_ {
 - (void) dealloc
 {
 	[texture_ release];
-	[animations release];
+	[animations_ release];
 	[super dealloc];
 }
 
@@ -286,7 +286,7 @@ struct transformValues_ {
 
 -(void) initAnimationDictionary
 {
-	animations = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+	animations_ = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
 }
 
 -(void)setTextureRect:(CGRect)rect
@@ -750,10 +750,10 @@ struct transformValues_ {
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
 {
-	if( ! animations )
+	if( ! animations_ )
 		[self initAnimationDictionary];
 	
-	CCAnimation *a = [animations objectForKey: animationName];
+	CCAnimation *a = [animations_ objectForKey: animationName];
 	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	
 	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
@@ -778,16 +778,16 @@ struct transformValues_ {
 -(void) addAnimation: (id<CCAnimationProtocol>) anim
 {
 	// lazy alloc
-	if( ! animations )
+	if( ! animations_ )
 		[self initAnimationDictionary];
 	
-	[animations setObject:anim forKey:[anim name]];
+	[animations_ setObject:anim forKey:[anim name]];
 }
 
 -(id<CCAnimationProtocol>)animationByName: (NSString*) animationName
 {
 	NSAssert( animationName != nil, @"animationName parameter must be non nil");
-    return [animations objectForKey:animationName];
+    return [animations_ objectForKey:animationName];
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol
