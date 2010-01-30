@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008,2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -15,16 +15,13 @@
 // cocos2d imports
 #import "CCScheduler.h"
 #import "ccMacros.h"
-#import "CCNode.h"
+
 //
 // Timer
 //
 @implementation CCTimer
 
 @synthesize interval;
-@synthesize ticksUntilAutoExpire;
-@synthesize target;
-@synthesize selector;
 
 -(id) init
 {
@@ -45,40 +42,17 @@
 	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
 }
 
-
-+(id) timerWithTarget:(id) t selector:(SEL)s repeat:(int)times
-{
-	return [[[self alloc] initWithTarget:t selector:s repeat:times] autorelease];
-}
-
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i repeat:(int)times
-{
-	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:times] autorelease];
-}
-
-
-
 -(id) initWithTarget:(id) t selector:(SEL)s
 {
 	return [self initWithTarget:t selector:s interval:0];
 }
 
--(id) initWithTarget:(id) t selector:(SEL)s repeat:(int)times
-{
-	return [self initWithTarget:t selector:s interval:0 repeat:times];
-}
-
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds {
-	return [self initWithTarget:t selector:s interval:seconds repeat:CCTIMER_REPEAT_FOREVER];
-}
-
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds repeat:(int)times
+-(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds
 {
 	if( (self=[super init]) ) {
-#ifdef DEBUG
+#ifdef COCOS2D_DEBUG
 		NSMethodSignature *sig = [t methodSignatureForSelector:s];
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
-		NSAssert( times >= CCTIMER_REPEAT_FOREVER, @"Repeat argument invalid");
 #endif
 		
 		// target is being retained. Be careful with ciruclar references
@@ -87,7 +61,6 @@
 		impMethod = (TICK_IMP) [t methodForSelector:s];
 		elapsed = -1;
 		interval = seconds;
-		ticksUntilAutoExpire = times;
 	}
 	return self;
 }
@@ -113,10 +86,6 @@
 	if( elapsed >= interval ) {
 		impMethod(target, selector, elapsed);
 		elapsed = 0;
-		
-		if(ticksUntilAutoExpire > 0)
-			--ticksUntilAutoExpire;
-		
 	}
 }
 @end
@@ -134,6 +103,7 @@ static CCScheduler *sharedScheduler;
 {
 	if (!sharedScheduler)
 		sharedScheduler = [[CCScheduler alloc] init];
+
 	return sharedScheduler;
 }
 
@@ -156,6 +126,9 @@ static CCScheduler *sharedScheduler;
 		methodsToAdd = [[NSMutableArray arrayWithCapacity:20] retain];
 		
 		timeScale_ = 1.0f;
+
+		fireSelector = @selector(fire:);
+		impMethod = (TICK_IMP) [CCTimer instanceMethodForSelector:fireSelector];
 	}
 
 	return self;
@@ -235,20 +208,7 @@ static CCScheduler *sharedScheduler;
 		[scheduledMethods addObject:k];
 	[methodsToAdd removeAllObjects];
 	
-	for( CCTimer *t in scheduledMethods ) {
-		[t fire: dt];
-		if (t->ticksUntilAutoExpire == 0) {
-			// Time to automatically remove this timer
-			if([t.target isKindOfClass:[CCNode class]] == YES) {
-				// A CCNode has it's own housekeeping to cleanup and
-				// will then, ultimately, unschedule us.
-				[(CCNode*)t.target unschedule:t.selector];
-			}
-			else {
-				[self unscheduleTimer:t];
-			}
-		}
-	}
+	for( CCTimer *t in scheduledMethods )
+		impMethod(t, fireSelector, dt);
 }
-
 @end
