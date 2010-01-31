@@ -756,7 +756,7 @@ static CCDirector *_sharedDirector = nil;
 	frames++;
 	accumDt += dt;
 	
-	if ( accumDt > 0.1f)  {
+	if ( accumDt > CC_DIRECTOR_FPS_INTERVAL)  {
 		frameRate = frames/accumDt;
 		frames = 0;
 		accumDt = 0;
@@ -779,7 +779,7 @@ static CCDirector *_sharedDirector = nil;
 	frames++;
 	accumDt += dt;
 	
-	if ( accumDt > 0.3f)  {
+	if ( accumDt > CC_DIRECTOR_FPS_INTERVAL)  {
 		frameRate = frames/accumDt;
 		frames = 0;
 		accumDt = 0;
