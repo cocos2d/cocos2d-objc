@@ -691,7 +691,7 @@ static CCDirector *_sharedDirector = nil;
 
 		// issue #709. the root node (scene) should receive the cleanup message too
 		// otherwise it might be leaked.
-		[runningScene_ cleanup];		
+		[runningScene_ cleanup];
 	}
 
 	[runningScene_ release];
