@@ -50,7 +50,7 @@
 -(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds
 {
 	if( (self=[super init]) ) {
-#ifdef COCOS2D_DEBUG
+#if COCOS2D_DEBUG
 		NSMethodSignature *sig = [t methodSignatureForSelector:s];
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
 #endif

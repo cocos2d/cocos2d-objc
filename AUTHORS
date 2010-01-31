@@ -230,6 +230,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
 		migrated all cocos2d code and all test to using the CC namespace
+	* samkass:
+		install_template.sh suports custom directory. patch.
 	* Scott Iisystems:
 		TextureAtlas signed math error patch
 		BezierBy#reverse patch
