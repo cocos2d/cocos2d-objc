@@ -22,6 +22,7 @@ version 0.99.0-rc - XX-mmm-2010
  . Sprite: optimized rendering when using spriteSheet and subchildren (issue #XXX)
  . Sprite: flip only flips the texture (not the anchor point and children) (issue #725)
  . Templates: Updated to support v0.99, Chipmunk v5.1 and Box2D r39
+ . Templates: install_template.sh supports custom directory (issue #736)
  . Tests: Works independently of the display resolution
  . TextureNode: Removed Node. Superseded by Sprite
  . TMXMaps: objectGroup support offsets (issue #689)

@@ -1,12 +1,30 @@
 #!/bin/sh
 
+#
+# How to use it:
+#
+# To install the templates in the default Xcode directory (/Developer/)
+#   ./install_tempalte.sh
+#
+#
+# to install the templates in the a custom Xcode directory. eg: /DeveloperBeta
+#  ./install_tempalte.sh /DeveloperBeta
+#
+#
 echo 'cocos2d-iphone template installer'
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.99-rc Application/'
+if [[ $# == 1 ]]; then
+    TPL_DIR=$1'/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/'
+else
+    TPL_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/'
+fi
+
+DST_DIR="$TPL_DIR"'cocos2d-0.99-rc Application/'
 LIBS_DIR="$DST_DIR"libs
 
 echo 'Installing cocos2d template'
 echo '---------------------------'
+echo 'Template dir: '$TPL_DIR
 echo ''
 
 #rm -rf $DST_DIR
@@ -46,7 +64,7 @@ echo 'Installing cocos2d + box2d template'
 echo '-----------------------------------'
 echo ''
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.99-rc Box2d Application/'
+DST_DIR="$TPL_DIR"'cocos2d-0.99-rc Box2d Application/'
 LIBS_DIR="$DST_DIR"libs
 
 if [[ -d $DST_DIR ]];  then
@@ -88,7 +106,7 @@ echo 'Installing cocos2d + chipmunk template'
 echo '--------------------------------------'
 echo ''
 
-DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/cocos2d-0.99-rc Chipmunk Application/'
+DST_DIR="$TPL_DIR"'cocos2d-0.99-rc Chipmunk Application/'
 LIBS_DIR="$DST_DIR"libs
 
 if [[ -d $DST_DIR ]];  then
