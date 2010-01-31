@@ -32,6 +32,13 @@
 #define CC_DIRECTOR_FAST_FPS	1
 
 /**
+ Senconds between FPS updates.
+ 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
+ Having a bigger number means a more reliable FPS
+ */
+#define CC_DIRECTOR_FPS_INTERVAL (0.1f)
+
+/**
  If enabled, and only when it is used with FastDirector, the main loop will wait 0.04 seconds to
  dispatch all the events, even if there are not events to dispatch.
  If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
