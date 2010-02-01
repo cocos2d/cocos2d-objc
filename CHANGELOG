@@ -1,3 +1,6 @@
+version 0.99.0 - XX-MMM-2010
+ . Sprite: use correct blending functions (issue #728)
+ 
 version 0.99.0-rc - 31-Jan-2010
  . All: Default OpenGL state is: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY (issue #718)
  . Action: Improved CCSequence performance (issue #XXX)

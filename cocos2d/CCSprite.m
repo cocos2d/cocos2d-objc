@@ -116,13 +116,10 @@ struct transformValues_ {
 		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
 		[self useSelfRender];
 		
-		// update texture
+		// update texture and blend functions
 		[self setTexture:nil];
 		
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
-		[self updateBlendFunc];
-		
+
 		// clean the Quad
 		bzero(&quad_, sizeof(quad_));
 		
@@ -806,12 +803,15 @@ struct transformValues_ {
 {
 	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
 
-	if( ! [texture_ hasPremultipliedAlpha] ) {
+	if( texture_ && ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+		opacityModifyRGB_ = NO;
+	} else {
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
+		opacityModifyRGB_ = YES;
 	}
-	
-	opacityModifyRGB_ = [texture_ hasPremultipliedAlpha];
 }
 
 -(void) setTexture:(CCTexture2D*)texture
