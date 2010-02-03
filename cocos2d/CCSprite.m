@@ -97,9 +97,15 @@ struct transformValues_ {
 	return [self spriteWithSpriteFrame:frame];
 }
 
+// XXX: deprecated
 +(id)spriteWithCGImage:(CGImageRef)image
 {
 	return [[[self alloc] initWithCGImage:image] autorelease];
+}
+
++(id)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
+{
+	return [[[self alloc] initWithCGImage:image key:key] autorelease];
 }
 
 +(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect
@@ -218,12 +224,26 @@ struct transformValues_ {
 	return [self initWithSpriteFrame:frame];
 }
 
+// XXX: deprecated
 - (id) initWithCGImage: (CGImageRef)image
 {
 	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
 
 	// XXX: possible bug. See issue #349. New API should be added
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
+	
+	CGSize size = texture.contentSize;
+	CGRect rect = CGRectMake(0, 0, size.width, size.height );
+	
+	return [self initWithTexture:texture rect:rect];
+}
+
+- (id) initWithCGImage:(CGImageRef)image key:(NSString*)key
+{
+	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
+	
+	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
 	CGSize size = texture.contentSize;

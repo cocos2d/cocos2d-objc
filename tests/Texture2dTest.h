@@ -53,6 +53,10 @@
 {}
 @end
 
+@interface TextureCGImage : TextureDemo
+{}
+@end
+
 @interface TextureAlias : TextureDemo
 {}
 @end

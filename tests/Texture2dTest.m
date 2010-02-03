@@ -18,25 +18,26 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-						@"TextureAlias",
-						@"TextureMipMap",
-						@"TexturePVRMipMap",
-						@"TexturePVR",
-						@"TexturePVRRaw",
-						@"TexturePNG",
-						@"TextureBMP",
-						@"TextureJPEG",
-						@"TextureTIFF",
-						@"TextureGIF",
-						@"TexturePixelFormat",
-						@"TextureBlend",
-						@"TextureAsync",
-						@"TextureLibPNGTest1",
-						@"TextureLibPNGTest2",
-						@"TextureLibPNGTest3",
-						@"TextureGlClamp",
-						@"TextureGlRepeat",
-						@"TextureSizeTest",
+			@"TextureAlias",
+			@"TextureMipMap",
+			@"TexturePVRMipMap",
+			@"TexturePVR",
+			@"TexturePVRRaw",
+			@"TexturePNG",
+			@"TextureBMP",
+			@"TextureJPEG",
+			@"TextureTIFF",
+			@"TextureGIF",
+			@"TextureCGImage",
+			@"TexturePixelFormat",
+			@"TextureBlend",
+			@"TextureAsync",
+			@"TextureLibPNGTest1",
+			@"TextureLibPNGTest2",
+			@"TextureLibPNGTest3",
+			@"TextureGlClamp",
+			@"TextureGlRepeat",
+			@"TextureSizeTest",
 };
 
 #pragma mark Callbacks
@@ -68,7 +69,8 @@ Class restartAction()
 	return c;
 }
 
-#pragma mark Demo examples start here
+#pragma mark -
+#pragma mark TextureDemo
 
 @implementation TextureDemo
 -(id) init
@@ -129,7 +131,7 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Examples
+#pragma mark TexturePNG
 
 @implementation TexturePNG
 -(void) onEnter
@@ -150,6 +152,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TextureJPEG
+
 @implementation TextureJPEG
 -(void) onEnter
 {
@@ -167,6 +172,9 @@ Class restartAction()
 	return @"JPEG Test";
 }
 @end
+
+#pragma mark -
+#pragma mark TextureBMP
 
 @implementation TextureBMP
 -(void) onEnter
@@ -186,6 +194,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TextureTIFF
+
 @implementation TextureTIFF
 -(void) onEnter
 {
@@ -204,6 +215,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TextureGIF
+
 @implementation TextureGIF
 -(void) onEnter
 {
@@ -221,6 +235,41 @@ Class restartAction()
 	return @"GIF Test";
 }
 @end
+
+#pragma mark -
+#pragma mark TextureCGImage
+
+@implementation TextureCGImage
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
+	CGImageRef imageref = [image CGImage];
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addCGImage:imageref forKey:@"test_image.png"];
+	CCSprite *img = [CCSprite spriteWithTexture:tex];
+	img.position = ccp( 3*s.width/4.0f, s.height/2.0f);
+	[self addChild:img];
+	
+	// It shall reuse the texture
+	CCSprite *sprite = [CCSprite spriteWithCGImage:imageref key:@"test_image.png"];
+	sprite.position = ccp(s.width/4, s.height/2);
+	[self addChild:sprite];
+	
+	NSAssert( img.texture.name == sprite.texture.name, @"Error: CCTextureCache is not reusing the texture");
+
+	[image release];
+}
+
+-(NSString *) title
+{
+	return @"CGImage Test";
+}
+@end
+
+#pragma mark -
+#pragma mark TextureMipMap
 
 @implementation TextureMipMap
 -(void) onEnter
@@ -262,6 +311,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TexturePVRMipMap
 
 // To generate PVR images read this article:
 // http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
@@ -298,6 +349,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TexturePVR
+
 // To generate PVR images read this article:
 // http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
 @implementation TexturePVR
@@ -317,6 +371,9 @@ Class restartAction()
 	return @"PVR Test";
 }
 @end
+
+#pragma mark -
+#pragma mark TexturePVRRaw
 
 // To generate PVR images read this article:
 // http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
@@ -338,6 +395,9 @@ Class restartAction()
 	return @"PVR Raw Test";
 }
 @end
+
+#pragma mark -
+#pragma mark TextureAlias
 
 @implementation TextureAlias
 -(void) onEnter
@@ -384,7 +444,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark TexturePixelFormat
+
 @implementation TexturePixelFormat
 -(void) onEnter
 {
@@ -463,8 +525,9 @@ Class restartAction()
 }
 @end
 
-
+#pragma mark -
 #pragma mark TextureBlend
+
 @implementation TextureBlend
 -(id) init
 {
@@ -505,7 +568,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark TextureAsync
+
 @implementation TextureAsync
 -(id) init
 {
@@ -580,8 +645,9 @@ Class restartAction()
 }
 @end
 
-
+#pragma mark -
 #pragma mark TextureGlClamp
+
 @implementation TextureGlClamp
 -(id) init
 {
@@ -619,7 +685,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark TextureGlRepeat
+
 @implementation TextureGlRepeat
 -(id) init
 {
@@ -656,7 +724,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
 #pragma mark TextureLibPNG
+
 @implementation TextureLibPNG
 
 #define PNG_SIG_BYTES 8
@@ -840,6 +910,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TextureLibPNGTest1
+
 @implementation TextureLibPNGTest1
 -(void) transformSprite:(CCSprite*)sprite
 {
@@ -856,6 +929,9 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TextureLibPNGTest2
+
 @implementation TextureLibPNGTest2
 -(void) transformSprite:(CCSprite*)sprite
 {
@@ -871,6 +947,9 @@ Class restartAction()
 	return @"iPhone PNG vs libpng #2";
 }
 @end
+
+#pragma mark -
+#pragma mark TextureLibPNGTest3
 
 @implementation TextureLibPNGTest3
 -(void) transformSprite:(CCSprite*)sprite
@@ -895,6 +974,9 @@ Class restartAction()
 	return @"iPhone PNG vs libpng #3";
 }
 @end
+
+#pragma mark -
+#pragma mark TextureSizeTest
 
 @implementation TextureSizeTest
 -(id) init
@@ -939,7 +1021,6 @@ Class restartAction()
 	return @"Different Texture Sizes";
 }
 @end
-
 
 
 #pragma mark -
