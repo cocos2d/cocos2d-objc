@@ -18,7 +18,7 @@
 
 #include "../Framework/Test.h"
 #include "../Framework/Render.h"
-#include "../Framework/freeglut/GL/glut.h"
+#include "../../freeglut/GL/glut.h"
 #include <cstring>
 
 #include "ApplyForce.h"
@@ -35,6 +35,7 @@
 #include "DistanceTest.h"
 #include "Dominos.h"
 #include "DynamicTreeTest.h"
+#include "EdgeShapes.h"
 #include "Gears.h"
 #include "LineJoint.h"
 #include "OneSidedPlatform.h"
@@ -58,6 +59,8 @@
 
 TestEntry g_testEntries[] =
 {
+	{"Prismatic", Prismatic::Create},
+	{"Edge Shapes", EdgeShapes::Create},
 	{"Continuous Test", ContinuousTest::Create},
 	{"Time of Impact", TimeOfImpact::Create},
 	{"Vertical Stack", VerticalStack::Create},
@@ -83,7 +86,6 @@ TestEntry g_testEntries[] =
 	{"Dynamic Tree", DynamicTreeTest::Create},
 	{"Gears", Gears::Create},
 	{"Line Joint", LineJoint::Create},
-	{"Prismatic", Prismatic::Create},
 	{"Pulleys", Pulleys::Create},
 	{"Revolute", Revolute::Create},
 	{"Sensor Test", SensorTest::Create},
