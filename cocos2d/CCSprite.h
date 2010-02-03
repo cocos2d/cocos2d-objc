@@ -198,8 +198,18 @@ typedef enum {
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
 
 /** Creates an sprite with a CGImageRef.
+ @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
  */
-+(id) spriteWithCGImage: (CGImageRef)image;
++(id) spriteWithCGImage: (CGImageRef)image __attribute__((deprecated));
+
+/** Creates an sprite with a CGImageRef and a key.
+ The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
+ For example, a valid key is: @"sprite_frame_01".
+ If key is nil, then a new texture will be created each time by the CCTextureCache. 
+ @since v0.99.0
+ */
++(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
+
 
 /** Creates an sprite with an CCSpriteSheet and a rect
  */
@@ -240,8 +250,17 @@ typedef enum {
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
 
 /** Initializes an sprite with a CGImageRef
+ @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
  */
--(id) initWithCGImage: (CGImageRef)image;
+-(id) initWithCGImage: (CGImageRef)image __attribute__((deprecated));
+
+/** Initializes an sprite with a CGImageRef and a key
+ The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
+ For example, a valid key is: @"sprite_frame_01".
+ If key is nil, then a new texture will be created each time by the CCTextureCache. 
+ @since v0.99.0
+ */
+-(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
 /** Initializes an sprite with an CCSpriteSheet and a rect
  */

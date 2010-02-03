@@ -73,6 +73,7 @@
  * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
  * Otherwise it will return a reference of a previously loaded image
  * The "key" parameter will be used as the "key" for the cache.
+ * If "key" is nil, then a new texture will be created each time.
  * @since v0.8
  */
 -(CCTexture2D*) addCGImage: (CGImageRef) image forKey: (NSString *)key;
