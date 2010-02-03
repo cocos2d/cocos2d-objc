@@ -2,7 +2,7 @@ version 0.99.0 - XX-MMM-2010
  . Box2d: updated to r54 (issue #494)
  . Sprite: use correct blending functions (issue #728)
  . Sprite: supports CGImageRef with key (issue #349)
-
+ . Sprite: when texture is nil, supports opacity & color (issue #741)
  
 version 0.99.0-rc - 31-Jan-2010
  . All: Default OpenGL state is: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY (issue #718)

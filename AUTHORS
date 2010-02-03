@@ -243,6 +243,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Sindesso Pty Ltd & David Durbin (http://www.sindesso.com/):
 		author of PageTurn3D action
 		author of PageTurn3DTransition
+	* slypete:
+		patch for FastDirector to run in the main thread
 	* SmallMike (http://www.smallrocksoftware.com/)
 		author of DisplayLink Director
 	* spoon.reloaded:
@@ -251,8 +253,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Scheduler
 		pactches for Actions
 		patches for Transitions
-	* slypete:
-		patch for FastDirector to run in the main thread
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
 	* Steve Oldmeadow (http://www.smoco.com/):
@@ -260,6 +260,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of CocosDenshion Sound Engine
 		Integrated Box2d physics engine
 		Created Box2d + cocos2d demo example
+	* Stuart Carnie (http://www.manomio.com/):
+		Sprite with nil textures supports opacity & color. patch.
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
