@@ -38,6 +38,7 @@
 #include "DistanceTest.h"
 #include "Dominos.h"
 #include "DynamicTreeTest.h"
+#include "EdgeShapes.h"
 #include "Gears.h"
 #include "LineJoint.h"
 #include "OneSidedPlatform.h"
@@ -61,41 +62,41 @@
 
 TestEntry g_testEntries[] =
 {
-{"Continuous Test", ContinuousTest::Create},
-{"Time of Impact", TimeOfImpact::Create},
-{"Vertical Stack", VerticalStack::Create},
-{"PolyCollision", PolyCollision::Create},
-{"Apply Force", ApplyForce::Create},
-{"Cantilever", Cantilever::Create},
-{"Body Types", BodyTypes::Create},
-{"SphereStack", SphereStack::Create},
-{"Confined", Confined::Create},
-{"Bridge", Bridge::Create},
-{"Breakable", Breakable::Create},
-{"Varying Restitution", VaryingRestitution::Create},
-{"Ray-Cast", RayCast::Create},
-{"Pyramid", Pyramid::Create},
-{"One-Sided Platform", OneSidedPlatform::Create},
-{"Chain", Chain::Create},
-{"Collision Filtering", CollisionFiltering::Create},
-{"Collision Processing", CollisionProcessing::Create},
-{"Compound Shapes", CompoundShapes::Create},
-{"Distance Test", DistanceTest::Create},
-{"Dominos", Dominos::Create},
-{"Dynamic Tree", DynamicTreeTest::Create},
-{"Gears", Gears::Create},
-{"Line Joint", LineJoint::Create},
-{"Prismatic", Prismatic::Create},
-{"Pulleys", Pulleys::Create},
-{"Revolute", Revolute::Create},
-{"Sensor Test", SensorTest::Create},
-{"Shape Editing", ShapeEditing::Create},
-{"Slider Crank", SliderCrank::Create},
-{"Theo Jansen's Walker", TheoJansen::Create},
-{"Varying Friction", VaryingFriction::Create},
-{"Web", Web::Create},
-//{NULL, NULL}
-
+	{"Prismatic", Prismatic::Create},
+	{"Edge Shapes", EdgeShapes::Create},
+	{"Continuous Test", ContinuousTest::Create},
+	{"Time of Impact", TimeOfImpact::Create},
+	{"Vertical Stack", VerticalStack::Create},
+	{"PolyCollision", PolyCollision::Create},
+	{"Apply Force", ApplyForce::Create},
+	{"Cantilever", Cantilever::Create},
+	{"Body Types", BodyTypes::Create},
+	{"SphereStack", SphereStack::Create},
+	{"Confined", Confined::Create},
+	{"Bridge", Bridge::Create},
+	{"Breakable", Breakable::Create},
+	{"Varying Restitution", VaryingRestitution::Create},
+	{"Ray-Cast", RayCast::Create},
+	{"Pyramid", Pyramid::Create},
+	{"One-Sided Platform", OneSidedPlatform::Create},
+	{"Chain", Chain::Create},
+	{"Collision Filtering", CollisionFiltering::Create},
+	{"Collision Processing", CollisionProcessing::Create},
+	{"Compound Shapes", CompoundShapes::Create},
+	{"Distance Test", DistanceTest::Create},
+	{"Dominos", Dominos::Create},
+	{"Dynamic Tree", DynamicTreeTest::Create},
+	{"Gears", Gears::Create},
+	{"Line Joint", LineJoint::Create},
+	{"Pulleys", Pulleys::Create},
+	{"Revolute", Revolute::Create},
+	{"Sensor Test", SensorTest::Create},
+	{"Shape Editing", ShapeEditing::Create},
+	{"Slider Crank", SliderCrank::Create},
+	{"Theo Jansen's Walker", TheoJansen::Create},
+	{"Varying Friction", VaryingFriction::Create},
+	{"Web", Web::Create},
+	//{NULL, NULL}
 };
 
 int g_totalEntries = sizeof(g_testEntries) / sizeof(g_testEntries[0]);
