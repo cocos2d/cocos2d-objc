@@ -12,6 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"SpriteNilTexture",
+
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -46,6 +48,7 @@ static NSString *transitions[] = {
 			@"SpriteChildrenChildren",
 			@"SpriteSheetChildrenChildren",
 			@"SpriteSheetReorder",
+			@"SpriteNilTexture",
 };
 
 enum {
@@ -2693,6 +2696,44 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"SpriteSheet reorder #2";
+}
+@end
+
+#pragma mark -
+#pragma mark SpriteNilTexture
+
+@implementation SpriteNilTexture
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+	
+		CCSprite *sprite = nil;
+		
+		// TEST: If no texture is given, then Opacity + Color should work.
+
+		sprite = [CCSprite node];
+		[sprite setTextureRect:CGRectMake(0, 0, 300,300)];
+		[sprite setColor:ccRED];
+		[sprite setOpacity:128];
+		[sprite setPosition:ccp(3*s.width/4, s.height/2)];
+		[self addChild:sprite z:100];
+
+		sprite = [CCSprite node];
+		[sprite setTextureRect:CGRectMake(0, 0, 300,300)];
+		[sprite setColor:ccBLUE];
+		[sprite setOpacity:128];
+		[sprite setPosition:ccp(1*s.width/4, s.height/2)];
+		[self addChild:sprite z:100];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Sprite without texture";
 }
 @end
 

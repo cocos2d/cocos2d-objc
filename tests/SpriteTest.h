@@ -176,3 +176,8 @@
 {}
 @end
 
+@interface SpriteNilTexture : SpriteDemo
+{}
+@end
+
+

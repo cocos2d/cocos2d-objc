@@ -823,7 +823,8 @@ struct transformValues_ {
 {
 	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
 
-	if( texture_ && ! [texture_ hasPremultipliedAlpha] ) {
+	// it's possible to have an untextured sprite
+	if( !texture_ || ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
 		opacityModifyRGB_ = NO;
