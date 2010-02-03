@@ -270,7 +270,7 @@ static CCTextureCache *sharedTextureCache;
 	return [tex autorelease];
 }
 
-#pragma mark TextureCache - Cache
+#pragma mark TextureCache - Remove
 
 -(void) removeAllTextures
 {
