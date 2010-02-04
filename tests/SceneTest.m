@@ -6,11 +6,15 @@
 
 #import "SceneTest.h"
 
+#pragma mark -
+#pragma mark Layer1
+
 @implementation Layer1
 -(id) init
 {
 	if((self=[super init])) {
 	
+		
 		CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
 		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
 		CCMenuItemFont *item3 = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
@@ -19,6 +23,15 @@
 		[menu alignItemsVertically];
 		
 		[self addChild: menu];
+
+		CGSize s = [CCDirector sharedDirector].winSize;
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite];
+		sprite.position = ccp(s.width-40, s.height/2);
+		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
+		id repeat = [CCRepeatForever actionWithAction:rotate];
+		[sprite runAction:repeat];
+		
 		
 		[self schedule:@selector(testDealloc:)];
 	}
@@ -26,9 +39,15 @@
 	return self;
 }
 
+-(void) cleanup
+{
+	NSLog(@"Layer1#cleanup");
+	[super cleanup];
+}
+
 -(void) testDealloc:(ccTime) dt
 {
-//	[self unschedule:_cmd];
+	NSLog(@"Layer1:testDealloc");
 }
 
 -(void) dealloc
@@ -66,6 +85,9 @@
 }
 @end
 
+#pragma mark -
+#pragma mark Layer2
+
 @implementation Layer2
 -(id) init
 {
@@ -83,6 +105,14 @@
 		[self addChild: menu];
 		
 		[self schedule:@selector(testDealloc:)];
+		
+		CGSize s = [CCDirector sharedDirector].winSize;
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite];
+		sprite.position = ccp(40, s.height/2);
+		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
+		id repeat = [CCRepeatForever actionWithAction:rotate];
+		[sprite runAction:repeat];		
 	}
 
 	return self;
@@ -96,6 +126,8 @@
 
 -(void) testDealloc:(ccTime) dt
 {
+	NSLog(@"Layer2:testDealloc");
+
 	timeCounter += dt;
 	if( timeCounter > 10 )
 		[self onReplaceScene:self];
@@ -117,6 +149,9 @@
 }
 @end
 
+#pragma mark -
+#pragma mark Layer3
+
 @implementation Layer3
 -(id) init
 {
@@ -128,6 +163,14 @@
 		[label setPosition:ccp(s.width/2, s.height/2)];
 		
 		[self schedule:@selector(testDealloc:)];
+		
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite];
+		sprite.position = ccp(s.width/2, 40);
+		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
+		id repeat = [CCRepeatForever actionWithAction:rotate];
+		[sprite runAction:repeat];		
+		
 	}
 	return self;
 }
@@ -140,6 +183,7 @@
 
 -(void) testDealloc:(ccTime)dt
 {
+	NSLog(@"Layer3:testDealloc");
 }
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -148,6 +192,8 @@
 @end
 
 
+#pragma mark -
+#pragma mark AppController
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController

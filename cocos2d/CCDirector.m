@@ -70,6 +70,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 @synthesize deviceOrientation=deviceOrientation_;
 @synthesize isPaused=isPaused_;
+@synthesize sendCleanupToScene=sendCleanupToScene_;
 //
 // singleton stuff
 //
@@ -142,7 +143,7 @@ static CCDirector *_sharedDirector = nil;
 
 		// scenes
 		runningScene_ = nil;
-		nextScene = nil;
+		nextScene_ = nil;
 		
 		oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
 		scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
@@ -211,7 +212,7 @@ static CCDirector *_sharedDirector = nil;
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( nextScene )
+	if( nextScene_ )
 		[self setNextScene];
 	
 	glPushMatrix();
@@ -615,17 +616,20 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
 	NSUInteger index = [scenesStack_ count];
-
+	
+	sendCleanupToScene_ = YES;
 	[scenesStack_ replaceObjectAtIndex:index-1 withObject:scene];
-	nextScene = scene;	// nextScene is a weak ref
+	nextScene_ = scene;	// nextScene_ is a weak ref
 }
 
 - (void) pushScene: (CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
+	sendCleanupToScene_ = NO;
+
 	[scenesStack_ addObject: scene];
-	nextScene = scene;	// nextScene is a weak ref
+	nextScene_ = scene;	// nextScene_ is a weak ref
 }
 
 -(void) popScene
@@ -638,7 +642,7 @@ static CCDirector *_sharedDirector = nil;
 	if( c == 0 ) {
 		[self end];
 	} else {
-		nextScene = [scenesStack_ objectAtIndex:c-1];
+		nextScene_ = [scenesStack_ objectAtIndex:c-1];
 	}
 }
 
@@ -649,7 +653,7 @@ static CCDirector *_sharedDirector = nil;
 	[runningScene_ release];
 
 	runningScene_ = nil;
-	nextScene = nil;
+	nextScene_ = nil;
 	
 	// remove all objects, but don't release it.
 	// runWithScene might be executed after 'end'.
@@ -683,7 +687,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	Class transClass = [CCTransitionScene class];
 	BOOL runningIsTransition = [runningScene_ isKindOfClass:transClass];
-	BOOL newIsTransition = [nextScene isKindOfClass:transClass];
+	BOOL newIsTransition = [nextScene_ isKindOfClass:transClass];
 
 	// If it is not a transition, call onExit/cleanup
 	if( ! newIsTransition ) {
@@ -691,13 +695,14 @@ static CCDirector *_sharedDirector = nil;
 
 		// issue #709. the root node (scene) should receive the cleanup message too
 		// otherwise it might be leaked.
-		[runningScene_ cleanup];
+		if( sendCleanupToScene_)
+			[runningScene_ cleanup];
 	}
 
 	[runningScene_ release];
 	
-	runningScene_ = [nextScene retain];
-	nextScene = nil;
+	runningScene_ = [nextScene_ retain];
+	nextScene_ = nil;
 
 	if( ! runningIsTransition ) {
 		[runningScene_ onEnter];
