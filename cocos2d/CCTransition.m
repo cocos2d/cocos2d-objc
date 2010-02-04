@@ -55,13 +55,7 @@ enum {
 		outScene = [[CCDirector sharedDirector] runningScene];
 		[outScene retain];
 		
-		if( inScene == outScene ) {
-			NSException* myException = [NSException
-										exceptionWithName:@"TransitionWithInvalidScene"
-										reason:@"Incoming scene must be different from the outgoing scene"
-										userInfo:nil];
-			@throw myException;		
-		}
+		NSAssert( inScene != outScene, @"Incoming scene must be different from the outgoing scene" );
 		
 		// disable events while transitions
 		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
@@ -108,7 +102,12 @@ enum {
 {	
 	[self unschedule:_cmd];
 	
-	[[CCDirector sharedDirector] replaceScene: inScene];
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// Before replacing, save the "send cleanup to scene"
+	sendCleanupToScene = [director sendCleanupToScene];
+	
+	[director replaceScene: inScene];
 	
 	// enable events while transitions
 	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
@@ -146,7 +145,9 @@ enum {
 -(void) cleanup
 {
 	[super cleanup];
-	[outScene cleanup];
+	
+	if( sendCleanupToScene )
+	   [outScene cleanup];
 }
 
 -(void) dealloc

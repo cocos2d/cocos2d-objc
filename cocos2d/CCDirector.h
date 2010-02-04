@@ -177,7 +177,10 @@ and when to execute the Scenes.
 	
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
-	CCScene *nextScene;
+	CCScene *nextScene_;
+	
+	/* If YES, then "old" scene will receive the cleanup message */
+	BOOL	sendCleanupToScene_;
 
 	/* scheduled scenes */
 	NSMutableArray *scenesStack_;
@@ -213,6 +216,13 @@ and when to execute the Scenes.
  @since v0.8.2
  */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
+
+/** Whether or not the replaced scene will receive the cleanup message.
+ If the new scene is pushed, then the old scene won't receive the "cleanup" message.
+ If the new scene replaces the old one, the it will receive the "cleanup" message.
+ @since v0.9.0
+ */
+@property (nonatomic, readonly) BOOL	sendCleanupToScene;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;

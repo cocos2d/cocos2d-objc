@@ -1,5 +1,6 @@
 version 0.99.0 - XX-MMM-2010
  . Box2d: updated to r54 (issue #494)
+ . Director: Only send "cleanup" when the scene is replaced (re fixed issue #709)
  . Sprite: use correct blending functions (issue #728)
  . Sprite: supports CGImageRef with key (issue #349)
  . Sprite: when texture is nil, supports opacity & color (issue #741)
