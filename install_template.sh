@@ -19,7 +19,7 @@ else
     TPL_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application/'
 fi
 
-DST_DIR="$TPL_DIR"'cocos2d-0.99-rc Application/'
+DST_DIR="$TPL_DIR"'cocos2d-0.99.0 Application/'
 LIBS_DIR="$DST_DIR"libs
 
 echo 'Installing cocos2d template'
@@ -64,7 +64,7 @@ echo 'Installing cocos2d + box2d template'
 echo '-----------------------------------'
 echo ''
 
-DST_DIR="$TPL_DIR"'cocos2d-0.99-rc Box2d Application/'
+DST_DIR="$TPL_DIR"'cocos2d-0.99.0 Box2d Application/'
 LIBS_DIR="$DST_DIR"libs
 
 if [[ -d $DST_DIR ]];  then
@@ -106,7 +106,7 @@ echo 'Installing cocos2d + chipmunk template'
 echo '--------------------------------------'
 echo ''
 
-DST_DIR="$TPL_DIR"'cocos2d-0.99-rc Chipmunk Application/'
+DST_DIR="$TPL_DIR"'cocos2d-0.99.0 Chipmunk Application/'
 LIBS_DIR="$DST_DIR"libs
 
 if [[ -d $DST_DIR ]];  then
