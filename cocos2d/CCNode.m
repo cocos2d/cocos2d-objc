@@ -56,7 +56,7 @@
 #pragma mark CCNode - Transform related properties
 
 @synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
-@synthesize anchorPointInPixels=anchorPointInPixels_, relativeAnchorPoint=relativeAnchorPoint_;
+@synthesize anchorPointInPixels=anchorPointInPixels_, isRelativeAnchorPoint=isRelativeAnchorPoint_;
 @synthesize userData;
 
 // getters synthesized, setters explicit
@@ -84,9 +84,9 @@
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) setRelativeAnchorPoint: (BOOL)newValue
+-(void) setIsRelativeAnchorPoint: (BOOL)newValue
 {
-	relativeAnchorPoint_ = newValue;
+	isRelativeAnchorPoint_ = newValue;
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
@@ -154,8 +154,8 @@
 		contentSize_ = CGSizeZero;
 		
 
-		// "whole screen" objects. like Scenes and Layers, should set relativeAnchorPoint to NO
-		relativeAnchorPoint_ = YES; 
+		// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to NO
+		isRelativeAnchorPoint_ = YES; 
 		
 		isTransformDirty_ = isInverseDirty_ = YES;
 		
@@ -177,7 +177,7 @@
 		children_ = nil;
 		
 		// scheduled selectors (lazy allocs)
-		scheduledSelectors = nil;
+		scheduledSelectors_ = nil;
 		
 		// userData is always inited as nil
 		userData = nil;
@@ -192,8 +192,8 @@
 	[self stopAllActions];
 	
 	// timers
-	[scheduledSelectors release];
-	scheduledSelectors = nil;
+	[scheduledSelectors_ release];
+	scheduledSelectors_ = nil;
 	
 	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -357,7 +357,7 @@
 		[child onExit];
 
 	// If you don't do cleanup, the child's actions will not get removed and the
-	// its scheduledSelectors dict will not get released!
+	// its scheduledSelectors_ dict will not get released!
 	if (doCleanup)
 		[child cleanup];
 
@@ -493,7 +493,7 @@
 	// BEGIN original implementation
 	// 
 	// translate
-	if ( relativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
+	if ( isRelativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
 		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 
 	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
@@ -592,7 +592,7 @@
 
 -(void) timerAlloc
 {
-	scheduledSelectors = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
+	scheduledSelectors_ = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
 }
 
 -(void) schedule: (SEL) selector
@@ -605,12 +605,12 @@
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	if( !scheduledSelectors )
+	if( !scheduledSelectors_ )
 		[self timerAlloc];
 	
 	NSString *key = NSStringFromSelector(selector);
 	// already scheduled ?
-	if( [scheduledSelectors objectForKey:key  ] ) {
+	if( [scheduledSelectors_ objectForKey:key  ] ) {
 		return;
 	}
 	
@@ -619,7 +619,7 @@
 	if( isRunning_ )
 		[[CCScheduler sharedScheduler] scheduleTimer:timer];
 	
-	[scheduledSelectors setObject:timer forKey:key ];
+	[scheduledSelectors_ setObject:timer forKey:key ];
 }
 
 -(void) unschedule: (SEL) selector
@@ -631,13 +631,13 @@
 	CCTimer *timer = nil;
 	NSString *key = NSStringFromSelector(selector);
 	
-	if( ! (timer = [scheduledSelectors objectForKey:key] ) )
+	if( ! (timer = [scheduledSelectors_ objectForKey:key] ) )
 	{
 		CCLOG(@"cocos2d: CCNode.unschedule: Selector not scheduled: %@",key );
 		return;
 	}
 	
-	[scheduledSelectors removeObjectForKey: key];
+	[scheduledSelectors_ removeObjectForKey: key];
 	
 	if( isRunning_ )
 		[[CCScheduler sharedScheduler] unscheduleTimer:timer];
@@ -645,16 +645,16 @@
 
 - (void) activateTimers
 {
-	for( id key in scheduledSelectors )
-		[[CCScheduler sharedScheduler] scheduleTimer: [scheduledSelectors objectForKey:key]];
+	for( id key in scheduledSelectors_ )
+		[[CCScheduler sharedScheduler] scheduleTimer: [scheduledSelectors_ objectForKey:key]];
 	
 	[[CCActionManager sharedManager] resumeAllActionsForTarget:self];
 }
 
 - (void) deactivateTimers
 {
-	for( id key in scheduledSelectors )
-		[[CCScheduler sharedScheduler] unscheduleTimer: [scheduledSelectors objectForKey:key]];
+	for( id key in scheduledSelectors_ )
+		[[CCScheduler sharedScheduler] unscheduleTimer: [scheduledSelectors_ objectForKey:key]];
 	
 	[[CCActionManager sharedManager] pauseAllActionsForTarget:self];
 }
@@ -667,7 +667,7 @@
 		
 		transform_ = CGAffineTransformIdentity;
 		
-		if ( !relativeAnchorPoint_ )
+		if ( !isRelativeAnchorPoint_ )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 		
 		transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);

@@ -853,7 +853,7 @@ Class restartAction()
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
-		sheet.relativeAnchorPoint = NO;
+		sheet.isRelativeAnchorPoint = NO;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
