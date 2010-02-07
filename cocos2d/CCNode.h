@@ -20,11 +20,7 @@
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
 
-#ifdef __IPHONE_3_0
 #define CC_BOOL_IS_BIT(x) x:1
-#else 
-#define CC_BOOL_IS_BIT(x) x
-#endif
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -97,17 +93,25 @@ enum {
 	
 	// position of the node
 	CGPoint position_;
-		
+
+	// is visible
+	BOOL visible_;
+	
 	// anchor point in pixels
 	CGPoint anchorPointInPixels_;	
 	// anchor point normalized
-	CGPoint anchorPoint_;
+	CGPoint anchorPoint_;	
+	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// Sprites, Labels and any other "small" object uses it.
+	// Scenes, Layers and other "whole screen" object don't use it.
+	BOOL isRelativeAnchorPoint_;
 	
 	// untransformed size of the node
 	CGSize	contentSize_;
 	
+	// transform
 	CGAffineTransform transform_, inverse_;
-	
+
 	// openGL real Z vertex
 	float vertexZ_;
 	
@@ -123,7 +127,6 @@ enum {
 	// array of children
 	NSMutableArray *children_;
 	
-	
 	// weakref to parent
 	CCNode *parent_;
 	
@@ -134,25 +137,14 @@ enum {
 	void *userData;
 	
 	// scheduled selectors
-	NSMutableDictionary *scheduledSelectors;
+	NSMutableDictionary *scheduledSelectors_;
 
-	// All BOOls moved packed together as 1 bit each
-	
-	// is visible
-	BOOL CC_BOOL_IS_BIT(visible_);
-	
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL CC_BOOL_IS_BIT(relativeAnchorPoint_);
-	
-	
-	// Transformations dirty
-	BOOL CC_BOOL_IS_BIT(isTransformDirty_);
-	BOOL CC_BOOL_IS_BIT(isInverseDirty_);
-	
 	// Is running
-	BOOL CC_BOOL_IS_BIT(isRunning_);
+	BOOL isRunning_;
+
+	// To reduce memory, place BOOLs that are not properties here:
+	BOOL isTransformDirty_:1;
+	BOOL isInverseDirty_:1;
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
@@ -210,7 +202,7 @@ enum {
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
  * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
  */
-@property(nonatomic,readwrite,assign) BOOL relativeAnchorPoint;
+@property(nonatomic,readwrite,assign) BOOL isRelativeAnchorPoint;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) int tag;
 /** A custom user data pointer */

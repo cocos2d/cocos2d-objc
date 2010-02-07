@@ -654,7 +654,7 @@ struct transformValues_ {
 -(void)setRelativeAnchorPoint:(BOOL)relative
 {
 	NSAssert( ! usesSpriteSheet_, @"relativeTransformAnchor is invalid in CCSprite");
-	[super setRelativeAnchorPoint:relative];
+	[super setIsRelativeAnchorPoint:relative];
 }
 
 -(void)setVisible:(BOOL)v
