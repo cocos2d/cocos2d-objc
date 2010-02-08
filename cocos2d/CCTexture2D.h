@@ -199,7 +199,7 @@ typedef struct _ccTexParams {
 
 
 /** Generates mipmap images for the texture
- @since v0.9.0
+ @since v0.99.0
  */
 -(void) generateMipmap;
 

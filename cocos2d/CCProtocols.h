@@ -53,7 +53,7 @@
 #pragma mark CCBlendProtocol
 /**
  You can specify the blending fuction.
- @since v0.9.0
+ @since v0.99.0
  */
 @protocol CCBlendProtocol <NSObject>
 /** set the source blending function for the texture */
@@ -92,7 +92,7 @@
 @optional
 /** sets a new label using a CString.
  It is faster than setString since it doesn't require to alloc/retain/release an NString object.
- @since v0.9.0
+ @since v0.99.0
  */
 -(void) setCString:(char*)label;
 @end

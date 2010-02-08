@@ -49,7 +49,7 @@ typedef struct _hashElement
 + (CCActionManager *)sharedManager;
 
 /** purges the shared action manager. It releases the retained instance.
- @since v0.9.0
+ @since v0.99.0
  */
 +(void)purgeSharedManager;
 

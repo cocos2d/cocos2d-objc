@@ -90,7 +90,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 +(CCScheduler *)sharedScheduler;
 
 /** purges the shared scheduler. It releases the retained instance.
- @since v0.9.0
+ @since v0.99.0
  */
 +(void)purgeSharedScheduler;
 
