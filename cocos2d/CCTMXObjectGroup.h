@@ -25,7 +25,7 @@
 
 
 /** CCTMXObjectGroup represents the TMX object group.
-@since v0.9.0
+@since v0.99.0
 */
 @interface CCTMXObjectGroup : NSObject
 {

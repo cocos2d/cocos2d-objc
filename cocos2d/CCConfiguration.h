@@ -11,7 +11,7 @@
 
 /**
  CCConfiguration contains some openGL variables
- @since v0.99
+ @since v0.99.0
  */
 
 @interface CCConfiguration : NSObject {

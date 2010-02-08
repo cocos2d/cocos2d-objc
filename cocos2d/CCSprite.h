@@ -30,7 +30,7 @@ enum {
  Whether or not an CCSprite will rotate, scale or translate with it's parent.
  Useful in health bars, when you want that the health bar translates with it's parent but you don't
  want it to rotate with its parent.
- @since v0.9.0
+ @since v0.99.0
  */
 typedef enum {
 	//! Translate with it's parent
@@ -150,11 +150,11 @@ typedef enum {
 /** whether or not to transform according to its parent transfomrations.
  Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
  IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
- @since v0.9.0
+ @since v0.99.0
  */
 @property (nonatomic,readwrite) ccHonorParentTransform honorParentTransform;
 /** offset position of the sprite. Calculated automatically by editors like Zwoptex.
- @since v0.9.0
+ @since v0.99.0
  */
 @property (nonatomic,readwrite) CGPoint	offsetPosition;
 /** conforms to CCTextureProtocol protocol */
@@ -275,12 +275,12 @@ typedef enum {
 -(void) setTextureRect:(CGRect) rect;
 
 /** tell the sprite to use self-render.
- @since v0.9.0
+ @since v0.99.0
  */
 -(void) useSelfRender;
 
 /** tell the sprite to use sprite sheet render.
- @since v0.9.0
+ @since v0.99.0
  */
 -(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet;
 

@@ -87,7 +87,7 @@
  - initialize an standard CCSsprite
  - set the usingSpriteSheet = YES
  - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
- @since v0.9.0
+ @since v0.99.0
  @deprecated Use [CCSprite initWithSpriteSheet:rect] instead;
 */ 
 -(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect __attribute__((deprecated));

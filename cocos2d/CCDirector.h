@@ -220,7 +220,7 @@ and when to execute the Scenes.
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
  If the new scene replaces the old one, the it will receive the "cleanup" message.
- @since v0.9.0
+ @since v0.99.0
  */
 @property (nonatomic, readonly) BOOL	sendCleanupToScene;
 

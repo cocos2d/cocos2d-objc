@@ -46,7 +46,7 @@
 @end
 
 /** Flips the sprite horizontally
- @since v0.9.0
+ @since v0.99.0
  */
 @interface CCFlipX : CCInstantAction
 {
@@ -57,7 +57,7 @@
 @end
 
 /** Flips the sprite vertically
- @since v0.9.0
+ @since v0.99.0
  */
 @interface CCFlipY : CCInstantAction
 {
