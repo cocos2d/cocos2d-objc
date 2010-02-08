@@ -38,7 +38,15 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 
 @implementation CDSoundEngine
 
+static Float32 _mixerSampleRate;
+static BOOL _mixerRateSet = NO;
+
 @synthesize lastErrorCode, functioning, asynchLoadProgress;
+
++ (void) setMixerSampleRate:(Float32) sampleRate {
+	_mixerRateSet = YES;
+	_mixerSampleRate = sampleRate;
+}	
 
 /**
  * Internal method called during init
@@ -62,6 +70,13 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		CCLOG(@"Denshion: source memory allocation failed");
 		return FALSE;
 	}
+	
+	//Set the mixer rate for the audio mixer
+	if (!_mixerRateSet) {
+		_mixerSampleRate = CD_SAMPLE_RATE_DEFAULT;
+	}
+	alcMacOSXMixerOutputRateProc(_mixerSampleRate);
+	CCLOG(@"Denshion: mixer output rate set to %0.2f",_mixerSampleRate);
 	
 	// Create a new OpenAL Device
 	// Pass NULL to specify the system's default output device
@@ -306,7 +321,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	
 	CCLOG(@"Denshion: Loading openAL buffer %i %@", soundId, filePath);
 	
-#ifdef DEBUG
+#ifdef CD_DEBUG
 	//Sanity check parameters - only in DEBUG
 	NSAssert(soundId >= 0, @"soundId can not be negative");
 	NSAssert(soundId < CD_MAX_BUFFERS, @"soundId exceeds limit set by CD_MAX_BUFFERS");	
@@ -337,6 +352,12 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 		
 		data = MyGetOpenALAudioData(fileURL, &size, &format, &freq);
 		CCLOG(@"Denshion: size %i frequency %i format %i %i", size, freq, format, data);
+#ifdef CD_DEBUG
+		//Check that sample rate matches mixer rate and warn if they do not
+		if (freq != (int)_mixerSampleRate) {
+			CCLOG(@"Denshion: WARNING sample rate does not match mixer sample rate performance will not be optimal.");
+		}	
+#endif		
 		CFRelease(fileURL);
 		
 		if(data == NULL || (lastErrorCode = alGetError()) != AL_NO_ERROR) {
@@ -410,7 +431,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
  */
 - (ALuint)playSound:(int) soundId channelGroupId:(int)channelGroupId pitch:(float) pitch pan:(float) pan gain:(float) gain loop:(BOOL) loop {
 
-#ifdef DEBUG
+#ifdef CD_DEBUG
 	//Sanity check parameters - only in DEBUG
 	NSAssert(soundId >= 0, @"soundId can not be negative");
 	NSAssert(soundId < CD_MAX_BUFFERS, @"soundId exceeds limit");
@@ -423,7 +444,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 	
 	//If mute or initialisation has failed or buffer is not loaded then do nothing
 	if (_mute || !functioning || _bufferStates[soundId] != CD_BS_LOADED || _channelGroups[channelGroupId].mute) {
-#ifdef DEBUG
+#ifdef CD_DEBUG
 		if (!functioning) {
 			CCLOG(@"Denshion: sound playback aborted because sound engine is not functioning");
 		} else if (_bufferStates[soundId] != CD_BS_LOADED) {
