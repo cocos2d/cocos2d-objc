@@ -54,7 +54,8 @@ static CDAudioManager *am = nil;
 		channelGroups[0] = CD_MAX_SOURCES - 1;
 		//Setting up the audio manager with this mode means that if the user is playing music when the app starts then 
 		//background music will not be played.
-		am = [[CDAudioManager alloc] init:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:1];
+		[CDAudioManager configure:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:1];
+		am = [CDAudioManager sharedManager];//Issue #748
 		soundEngine = am.soundEngine;
 		loadedEffects = [[NSMutableDictionary alloc] initWithCapacity:CD_MAX_BUFFERS];
 		
