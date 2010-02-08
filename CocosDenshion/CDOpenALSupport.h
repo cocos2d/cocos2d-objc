@@ -250,5 +250,38 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 	} else {
 		return loadCafAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);		
 	}
-}	
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
+ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
+{
+	static	alBufferDataStaticProcPtr	proc = NULL;
+    
+    if (proc == NULL) {
+        proc = (alBufferDataStaticProcPtr) alcGetProcAddress(NULL, (const ALCchar*) "alBufferDataStatic");
+    }
+    
+    if (proc)
+        proc(bid, format, data, size, freq);
+	
+    return;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+typedef ALvoid	AL_APIENTRY	(*alcMacOSXMixerOutputRateProcPtr) (const ALdouble value);
+ALvoid  alcMacOSXMixerOutputRateProc(const ALdouble value)
+{
+	static	alcMacOSXMixerOutputRateProcPtr	proc = NULL;
+    
+    if (proc == NULL) {
+        proc = (alcMacOSXMixerOutputRateProcPtr) alcGetProcAddress(NULL, (const ALCchar*) "alcMacOSXMixerOutputRate");
+    }
+    
+    if (proc)
+        proc(value);
+	
+    return;
+}
+
 

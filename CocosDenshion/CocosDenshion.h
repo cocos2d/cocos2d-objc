@@ -104,15 +104,21 @@ Requirements:
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "CCFileUtils.h"
+#import "CDConfig.h"
 
 //You may want to edit these. Devices won't support any more than 32 sources though.
-#define CD_MAX_BUFFERS 32 //Total number of sounds that can be loaded
 #define CD_MAX_SOURCES 32 //Total number of playback channels that can be created (32 is the limit)
 
 #define CD_NO_SOURCE 0xFEEDFAC //Return value indicating playback failed i.e. no source
 #define CD_IGNORE_AUDIO_SESSION 0xBEEFBEE //Used internally to indicate audio session will not be handled
 #define CD_CHANNEL_GROUP_NON_INTERRUPTIBLE 0xFEDEEFF //User internally to indicate channel group is not interruptible
 #define CD_MUTE      0xFEEDBAB //Return value indicating sound engine is muted or non functioning
+
+#define CD_SAMPLE_RATE_HIGH 44100
+#define CD_SAMPLE_RATE_MID  22050
+#define CD_SAMPLE_RATE_LOW  16000
+#define CD_SAMPLE_RATE_BASIC 8000
+#define CD_SAMPLE_RATE_DEFAULT 44100
 
 enum bufferState {
 	CD_BS_EMPTY = 0,
@@ -157,11 +163,11 @@ typedef struct _channelGroup {
 	UInt32			_audioSessionCategory;
 	BOOL			_handleAudioSession;
 	BOOL			_mute;
-	
+
 	ALenum			lastErrorCode;
 	BOOL			functioning;
 	float			asynchLoadProgress;
-	
+		
 }
 
 @property (readwrite, nonatomic) ALfloat masterGain;
@@ -169,6 +175,9 @@ typedef struct _channelGroup {
 @property (readonly)  ALenum lastErrorCode;//Last OpenAL error code that was generated
 @property (readonly)  BOOL functioning;//Is the sound engine functioning
 @property (readwrite) float asynchLoadProgress;
+
+/** Sets the sample rate for the audio mixer. For best performance this should match the sample rate of your audio content */
++ (void) setMixerSampleRate:(Float32) sampleRate;
 
 /** Initializes the engine with a group definition and a total number of groups */
 - (id)init:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal;
