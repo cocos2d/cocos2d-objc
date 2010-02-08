@@ -1,6 +1,10 @@
 version 0.99.0 - XX-MMM-2010
  . Box2d: updated to r54 (issue #494)
  . Director: Only send "cleanup" when the scene is replaced (re fixed issue #709)
+ . CocosDenshion: SimpleAudioEngine incorrectly accessing CDAudioManager (issue #748)
+ . CocosDenshion: added support for 22Khz OpenAL (issue #594)
+ . CocosDenshion: fixed wrong error check in CocosDenshion (issue #678)
+ . CocosDenshion: added shutdown method (issue #688)
  . Node: only uses bits as bools, when they are not properties (fixed issue #743)
  . Node: relativeAnchorPoint renamed to isRelativeAnchorPoint (issue #XXX)
  . Sprite: use correct blending functions (issue #728)
