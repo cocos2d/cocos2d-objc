@@ -360,12 +360,9 @@ static BOOL _mixerRateSet = NO;
 #endif		
 		CFRelease(fileURL);
 		
-		if(data == NULL || (lastErrorCode = alGetError()) != AL_NO_ERROR) {
-			CCLOG(@"Denshion: error loading sound: %x\n", lastErrorCode);
+		if(data == NULL) {
+			CCLOG(@"Denshion: error loading sound data is null");
 			_bufferStates[soundId] = CD_BS_FAILED;
-			if (data != NULL) {
-				free(data);//Free memory, it was an OpenAL error so there is data to free
-			}	
 			return FALSE;
 		}
 		
