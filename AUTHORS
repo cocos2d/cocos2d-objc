@@ -257,7 +257,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of ParticleView, the particle editor
 	* Steve Oldmeadow (http://www.smoco.com/):
 		patches for Texture2D
-		Author of CocosDenshion Sound Engine
+		Author and maintainer of CocosDenshion Sound Engine
 		Integrated Box2d physics engine
 		Created Box2d + cocos2d demo example
 	* Stuart Carnie (http://www.manomio.com/):
