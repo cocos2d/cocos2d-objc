@@ -35,31 +35,21 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 + (CCSpriteFrameCache *)sharedSpriteFrameCache
 {
-	@synchronized([CCSpriteFrameCache class])
-	{
-		if (!sharedSpriteFrameCache_)
-			sharedSpriteFrameCache_ = [[CCSpriteFrameCache alloc] init];
+	if (!sharedSpriteFrameCache_)
+		sharedSpriteFrameCache_ = [[CCSpriteFrameCache alloc] init];
 		
-	}
 	return sharedSpriteFrameCache_;
 }
 
 +(id)alloc
 {
-	@synchronized([CCSpriteFrameCache class])
-	{
-		NSAssert(sharedSpriteFrameCache_ == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super alloc];
-	}
-	// to avoid compiler warning
-	return nil;
+	NSAssert(sharedSpriteFrameCache_ == nil, @"Attempted to allocate a second instance of a singleton.");
+	return [super alloc];
 }
 
 +(void)purgeSharedSpriteFrameCache
 {
-	@synchronized( self ) {
-		[sharedSpriteFrameCache_ release];
-	}
+	[sharedSpriteFrameCache_ release];
 }
 
 -(id) init
