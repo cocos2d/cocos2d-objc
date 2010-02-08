@@ -69,4 +69,7 @@
 /** unloads an audio effect from memory */
 -(void) unloadEffect:(NSString*) filePath;
 
+/** Shuts down the shared audio engine instance so that it can be reinitialised */
++(void) end;
+
 @end

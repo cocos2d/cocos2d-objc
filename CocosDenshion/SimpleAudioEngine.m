@@ -67,16 +67,19 @@ static CDAudioManager *am = nil;
 // Memory
 - (void) dealloc
 {
-	[am release];
 	am = nil;
-	
 	soundEngine = nil;
-	
 	[loadedEffects autorelease];
 	loadedEffects = nil;
-	
 	[super dealloc];
 }
+
++(void) end 
+{
+	am = nil;
+	[CDAudioManager end];
+	[sharedEngine release];
+}	
 
 #pragma mark SimpleAudioEngine - background music
 
