@@ -204,6 +204,10 @@ static BOOL configured = FALSE;
 	[soundEngine release];
 	if (_isObservingAppEvents) {
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
+	}
+	AudioSessionSetActive(FALSE);
+	if (configuredChannelGroupDefinitions) {
+		free(configuredChannelGroupDefinitions);
 	}	
 	[super dealloc];
 }	
@@ -528,6 +532,8 @@ static BOOL configured = FALSE;
 	}
 }
 
-
++(void) end {
+	[sharedManager release];
+}	
 
 @end
