@@ -157,9 +157,6 @@
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
 {
 	NSAssert( index >= 0 && index < capacity_, @"insertQuadWithTexture: Invalid index");
-
-	NSLog(@"%@ (insertQuad)", self);
-
 	
 	totalQuads_++;
 	NSAssert( totalQuads_ <= capacity_, @"invalid totalQuads");

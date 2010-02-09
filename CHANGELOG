@@ -6,6 +6,7 @@ version 0.99.0 - XX-MMM-2010
  . CocosDenshion: fixed wrong error check in CocosDenshion (issue #678)
  . CocosDenshion: added shutdown method (issue #688)
  . CocosDenshion: allow usage of alBufferDataStatic (issue #753)
+ . Compatiblity: TextureNode is subclass of CCSprite (issue #755)
  . Node: only uses bits as bools, when they are not properties (fixed issue #743)
  . Node: relativeAnchorPoint renamed to isRelativeAnchorPoint (issue #749)
  . Sprite: use correct blending functions (issue #728)

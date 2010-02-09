@@ -187,7 +187,7 @@ __attribute__((deprecated)) @interface TargetedTouchHandler : CCTargetedTouchHan
 __attribute__((deprecated)) @interface Texture2D : CCTexture2D {} @end
 __attribute__((deprecated)) @interface TextureAtlas : CCTextureAtlas {} @end
 __attribute__((deprecated)) @interface TextureMgr : CCTextureCache {} @end
-__attribute__((deprecated)) @interface TextureNode : CCTextureNode {} @end
+__attribute__((deprecated)) @interface TextureNode : CCSprite {} @end
 __attribute__((deprecated)) @interface ThreadedFastDirector : CCThreadedFastDirector {} @end
 __attribute__((deprecated)) @interface TileMapAtlas : CCTileMapAtlas {} @end
 __attribute__((deprecated)) @interface TiledGrid3D : CCTiledGrid3D {} @end
