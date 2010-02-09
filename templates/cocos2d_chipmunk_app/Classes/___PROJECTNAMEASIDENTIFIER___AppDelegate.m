@@ -42,7 +42,7 @@
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+//	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
 	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	

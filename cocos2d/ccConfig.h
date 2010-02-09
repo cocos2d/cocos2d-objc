@@ -66,6 +66,17 @@
 #define CC_TEXTURE_ATLAS_USES_VBO 1
 
 /**
+ If enabled, CCNode will transform the nodes using a cached Affine matrix.
+ If disabled, the node will be transformed using glTranslate,glRotate,glScale.
+ Using the affine matrix only requires 2 GL calls.
+ Using the translate/rotate/scale requires 5 GL calls.
+ But computing the Affine matrix is relative expensive.
+ But according to performance tests, Affine matrix performs better.
+ This parameter doesn't affect SpriteSheet nodes.
+ */
+#define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
+
+/**
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only.
  It is recommened to leave it disabled.
@@ -92,18 +103,6 @@
  It is recommened to leave it disabled.
  */
 //#define CC_LABELATLAS_DEBUG_DRAW 1
-
-
-/**
- If enabled, CCNode will transform the nodes using a cached Affine matrix.
- If disabled, the node will be transformed using glTranslate,glRotate,glScale.
- Using the affine matrix only requires 2 GL calls.
- Using the translate/rotate/scale requires 5 GL calls.
- But computing the Affine matrix is relative expensive.
- But according to performance tests, Affine matrix performs better.
- This parameter doesn't affect SpriteSheet nodes.
- */
-#define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
 
 /**
  Enable it if you want to support v0.8 compatbility.
