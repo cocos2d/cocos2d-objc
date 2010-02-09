@@ -53,6 +53,7 @@ def purge_dict( d ):
     d['AtlasSpriteFrame'] = 'CCSpriteFrame'
     d['CocosNode'] = 'CCNode'
     d['TextureMgr'] = 'CCTextureCache'
+    d['TextureNode'] = 'CCSprite'
 
     # deleted classes
     classes_to_delete = ['MenuItemAtlasSprite', 'FileUtils', 'EAGLView' ]
