@@ -133,7 +133,7 @@
 	[going viewDidDisappear:YES];
 	[coming viewDidAppear:YES];
 	
-	[UIView commitAnimations];
+	[UIView commitAnimations];	
 }
 
 - (IBAction) valueChanged: (id)sender

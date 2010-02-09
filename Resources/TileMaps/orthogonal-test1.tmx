@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
- <tileset name="Untitled" firstgid="1" tilewidth="101" tileheight="171" spacing="2" margin="2">
+ <tileset firstgid="1" name="Untitled" tilewidth="101" tileheight="171" spacing="2" margin="2">
   <image source="ortho-test1.png"/>
  </tileset>
  <layer name="Layer 0" width="12" height="12">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAX4AB8Q8wOxAJSvREC9OhJmBmImIGYBYlYgZsOiXg2INaDqkYEQEAtD5VSBWAUqroqEBYFYG4glgFgEiEWh6rlIVE+J+QDGS+hZQAIAAA==
+   H4sIAAAAAAAAA9XMzQpAQBhG4cnfwsK/sJVBuf/7c9Sn3o0aWXnrSTNz4ty/N4iQTSJkBUpUdp4futa+m4gRIUGKTNq7X7Fbr2usud48Frv3osaBER166/OX/Zf/n+tha6FAAgAA
   </data>
  </layer>
 </map>

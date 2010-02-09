@@ -245,6 +245,8 @@
 			
 			if( [compression isEqualToString:@"gzip"] )
 				layerAttribs |= TMXLayerAttribGzip;
+			
+			NSAssert( !compression || [compression isEqualToString:@"gzip"], @"TMX: unsupported compression method" );
 		}
 		
 		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip maps are supported" );
