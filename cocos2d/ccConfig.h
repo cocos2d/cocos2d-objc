@@ -77,6 +77,12 @@
 #define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
 
 /**
+ Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
+ It seems it is the recommend way, but it is much slower, so, enable it at your own risk
+ */
+//#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 1
+
+/**
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only.
  It is recommened to leave it disabled.

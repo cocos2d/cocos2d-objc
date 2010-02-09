@@ -89,3 +89,7 @@
 }
 @end
 
+@interface TMXResizeTest : TileDemo
+{
+}
+@end

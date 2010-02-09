@@ -12,6 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+//	@"TMXResizeTest",
 			@"TileMapTest",
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
@@ -26,6 +27,7 @@ static NSString *transitions[] = {
 			@"TMXReadWriteTest",
 			@"TMXTilesetTest",
 			@"TMXObjectsTest",
+			@"TMXResizeTest",
 };
 
 enum {
@@ -76,10 +78,13 @@ Class restartAction()
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		CCLabel* subtitle = [CCLabel labelWithString:[self subtitle] fontName:@"Arial" fontSize:20];
-		[self addChild: subtitle z:1];
-		[subtitle setPosition: ccp(s.width/2, s.height-85)];
 		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -779,7 +784,50 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"TMX Tileset test";
+	return @"TMX object test";
+}
+
+-(NSString*) subtitle
+{
+	return @"In the console you should see 4 groups";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXResizeTest
+
+@implementation TMXResizeTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test5.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+
+		CCTMXLayer *layer;
+		layer = [map layerNamed:@"Layer 0"];
+
+		CGSize ls = [layer layerSize];
+		for (NSUInteger y = 0; y < ls.height; y++) {
+			for (NSUInteger x = 0; x < ls.width; x++) {
+				[layer setTileGID:1  at:ccp( x, y )];
+			}
+		}		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX resize test";
+}
+
+-(NSString *) subtitle
+{
+	return @"Should not crash. Testing issue #740";
 }
 @end
 

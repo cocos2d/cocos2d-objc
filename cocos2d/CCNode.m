@@ -266,9 +266,9 @@
 	return (NSArray *) children_;
 }
 
-/* "add" logic MUST only be on this selector
+/* "add" logic MUST only be on this method
  * If a class want's to extend the 'addChild' behaviour it only needs
- * to override this selector
+ * to override this method
  */
 -(id) addChild: (CCNode*) child z:(int)z tag:(int) aTag
 {	
