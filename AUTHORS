@@ -71,7 +71,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Scheduler fires Timer the 1st time with dt=0
 		Prevent crash with BitmapFontAtlas patch
 		Template: uses removeUnusedTextures patch
-	* donmorrison:
+	* Donald Alan Morrison:
 		actions uses FLT_EPSILON macro. patch.
 	* effervens:
 		patches for Director
