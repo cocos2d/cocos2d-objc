@@ -12,6 +12,7 @@
     CCTextureAtlas	*atlas;
 }
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
 
@@ -45,6 +46,13 @@
 }
 @end
 
+@interface SpriteSheetReorder : SpriteDemo
+{}
+@end
+
+@interface SpriteSheetReorderIssue744 : SpriteDemo
+{}
+@end
 
 @interface SpriteZVertex : SpriteDemo
 {
@@ -169,10 +177,6 @@
 @end
 
 @interface SpriteSheetChildrenChildren: SpriteDemo
-{}
-@end
-
-@interface SpriteSheetReorder : SpriteDemo
 {}
 @end
 

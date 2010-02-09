@@ -12,6 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"SpriteSheetReorderIssue744",
+
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -26,6 +28,8 @@ static NSString *transitions[] = {
 			@"SpriteSheetColorOpacity",
 			@"SpriteZOrder",
 			@"SpriteSheetZOrder",
+			@"SpriteSheetReorder",
+			@"SpriteSheetReorderIssue744",
 			@"SpriteZVertex",
 			@"SpriteSheetZVertex",
 			@"Sprite6",
@@ -45,7 +49,6 @@ static NSString *transitions[] = {
 			@"SpriteSheetChildrenScale",
 			@"SpriteChildrenChildren",
 			@"SpriteSheetChildrenChildren",
-			@"SpriteSheetReorder",
 			@"SpriteNilTexture",
 };
 
@@ -110,6 +113,14 @@ Class restartAction()
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
+		
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -155,6 +166,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 @end
 
@@ -475,7 +491,7 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Example Sprite Z Order
+#pragma mark Example Sprite Z Order and Reorder
 
 @implementation SpriteZOrder
 
@@ -594,6 +610,92 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"SpriteSheet: Z order";
+}
+@end
+
+@implementation SpriteSheetReorder
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		NSMutableArray* a = [NSMutableArray arrayWithCapacity:10];
+		CCSpriteSheet* asmtest = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		
+		for(int i=0; i<10; i++)
+		{
+			CCSprite* s1 = [CCSprite spriteWithSpriteSheet:asmtest rect:CGRectMake(0, 0, 50, 50)];
+			[a addObject:s1];
+			[asmtest addChild:s1 z:10];
+		}
+		
+		for(int i=0; i<10; i++)
+		{
+			if(i!=5)
+				[asmtest reorderChild:[a objectAtIndex:i] z:9];
+		}
+		
+		int prev = -1;
+		for(id child in asmtest.children)
+		{
+			int currentIndex = [child atlasIndex];
+			NSAssert( prev == currentIndex-1, @"Child order failed");
+			NSLog(@"children %x - atlasIndex:%d", child, currentIndex);
+			prev = currentIndex;
+		}
+		
+		prev = -1;
+		for(id child in asmtest.descendants)
+		{
+			int currentIndex = [child atlasIndex];
+			NSAssert( prev == currentIndex-1, @"Child order failed");
+			NSLog(@"descendant %x - atlasIndex:%d", child, currentIndex);
+			prev = currentIndex;
+		}		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet: reorder #1";
+}
+-(NSString *) subtitle
+{
+	return @"Should not crash";
+}
+@end
+
+@implementation SpriteSheetReorderIssue744
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+
+		// Testing issue #744
+		// http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
+		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:15];
+		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
+
+		CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(0, 0, 85, 121)];
+		sprite.position = ccp(s.width/2, s.height/2);
+		[sheet addChild:sprite z:3];
+		[sheet reorderChild:sprite z:1];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet: reorder issue #744";
+}
+
+-(NSString *) subtitle
+{
+	return @"Should not crash";
 }
 @end
 
@@ -2644,59 +2746,6 @@ Class restartAction()
 }
 @end
 
-
-#pragma mark -
-#pragma mark SpriteSheetReorder
-
-@implementation SpriteSheetReorder
-
--(id) init
-{
-	if( (self=[super init]) ) {
-		
-		NSMutableArray* a = [NSMutableArray arrayWithCapacity:10];
-		CCSpriteSheet* asmtest = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
-
-		for(int i=0; i<10; i++)
-		{
-			CCSprite* s1 = [CCSprite spriteWithSpriteSheet:asmtest rect:CGRectMake(0, 0, 50, 50)];
-			[a addObject:s1];
-			[asmtest addChild:s1 z:10];
-		}
-		
-		for(int i=0; i<10; i++)
-		{
-			if(i!=5)
-				[asmtest reorderChild:[a objectAtIndex:i] z:9];
-		}
-
-		int prev = -1;
-		for(id child in asmtest.children)
-		{
-			int currentIndex = [child atlasIndex];
-			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"children %x - atlasIndex:%d", child, currentIndex);
-			prev = currentIndex;
-		}
-		
-		prev = -1;
-		for(id child in asmtest.descendants)
-		{
-			int currentIndex = [child atlasIndex];
-			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"descendant %x - atlasIndex:%d", child, currentIndex);
-			prev = currentIndex;
-		}		
-	}	
-	return self;
-}
-
--(NSString *) title
-{
-	return @"SpriteSheet reorder #2";
-}
-@end
-
 #pragma mark -
 #pragma mark SpriteNilTexture
 
@@ -2732,6 +2781,11 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sprite without texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"opacity and color should work";
 }
 @end
 
