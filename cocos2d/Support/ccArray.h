@@ -278,6 +278,8 @@ static inline BOOL ccCArrayContainsValue(ccCArray *arr, void* value)
 /** Inserts a value at a certain position. Behaviour undefined if aray doesn't have enough capacity */
 static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUInteger index)
 {
+	assert( index < arr->max );
+			 
 	int remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved
