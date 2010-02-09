@@ -53,8 +53,6 @@
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
-#import "ccMacros.h"
-
 
 //Taken from oalTouch MyOpenALSupport 1.1
 void* loadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate)
@@ -68,28 +66,28 @@ void* loadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDat
 	
 	// Open a file with ExtAudioFileOpen()
 	err = AudioFileOpenURL(inFileURL, kAudioFileReadPermission, 0, &afid);
-	if(err) { CCLOG(@"MyGetOpenALAudioData: AudioFileOpenURL FAILED, Error = %ld\n", err); goto Exit; }
+	if(err) { CDLOG(@"MyGetOpenALAudioData: AudioFileOpenURL FAILED, Error = %ld\n", err); goto Exit; }
 	
 	// Get the audio data format
 	err = AudioFileGetProperty(afid, kAudioFilePropertyDataFormat, &thePropertySize, &theFileFormat);
-	if(err) { CCLOG(@"MyGetOpenALAudioData: AudioFileGetProperty(kAudioFileProperty_DataFormat) FAILED, Error = %ld\n", err); goto Exit; }
+	if(err) { CDLOG(@"MyGetOpenALAudioData: AudioFileGetProperty(kAudioFileProperty_DataFormat) FAILED, Error = %ld\n", err); goto Exit; }
 	
 	if (theFileFormat.mChannelsPerFrame > 2)  { 
-		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n"); goto Exit;
+		CDLOG(@"MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n"); goto Exit;
 	}
 	
 	if ((theFileFormat.mFormatID != kAudioFormatLinearPCM) || (!TestAudioFormatNativeEndian(theFileFormat))) { 
-		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, must be little-endian PCM\n"); goto Exit;
+		CDLOG(@"MyGetOpenALAudioData - Unsupported Format, must be little-endian PCM\n"); goto Exit;
 	}
 	
 	if ((theFileFormat.mBitsPerChannel != 8) && (theFileFormat.mBitsPerChannel != 16)) { 
-		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, must be 8 or 16 bit PCM\n"); goto Exit;
+		CDLOG(@"MyGetOpenALAudioData - Unsupported Format, must be 8 or 16 bit PCM\n"); goto Exit;
 	}
 	
 	
 	thePropertySize = sizeof(fileDataSize);
 	err = AudioFileGetProperty(afid, kAudioFilePropertyAudioDataByteCount, &thePropertySize, &fileDataSize);
-	if(err) { CCLOG(@"MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld\n", err); goto Exit; }
+	if(err) { CDLOG(@"MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld\n", err); goto Exit; }
 	
 	// Read all the data into memory
 	UInt32		dataSize = (UInt32)fileDataSize;
@@ -114,7 +112,7 @@ void* loadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDat
 			// failure
 			free (theData);
 			theData = NULL; // make sure to return NULL
-			CCLOG(@"MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld\n", err); goto Exit;
+			CDLOG(@"MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld\n", err); goto Exit;
 		}	
 	}
 	
@@ -141,7 +139,7 @@ void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outData
 	status = ExtAudioFileOpenURL(inFileURL, &extRef);
 	if (status != noErr)
 	{
-		CCLOG(@"MyGetOpenALAudioData: ExtAudioFileOpenURL FAILED, Error = %ld\n", status);
+		CDLOG(@"MyGetOpenALAudioData: ExtAudioFileOpenURL FAILED, Error = %ld\n", status);
 		abort = YES;
 	}
 	if (abort)
@@ -151,7 +149,7 @@ void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outData
 	status = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileDataFormat, &thePropertySize, &theFileFormat);
 	if (status != noErr)
 	{
-		CCLOG(@"MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %ld\n", status);
+		CDLOG(@"MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %ld\n", status);
 		abort = YES;
 	}
 	if (abort)
@@ -159,7 +157,7 @@ void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outData
 
 	if (theFileFormat.mChannelsPerFrame > 2)
 	{
-		CCLOG(@"MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n");
+		CDLOG(@"MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n");
 		abort = YES;
 	}
 	if (abort)
@@ -181,7 +179,7 @@ void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outData
 	status = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(theOutputFormat), &theOutputFormat);
 	if (status != noErr)
 	{
-		CCLOG(@"MyGetOpenALAudioData: ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat) FAILED, Error = %ld\n", status);
+		CDLOG(@"MyGetOpenALAudioData: ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat) FAILED, Error = %ld\n", status);
 		abort = YES;
 	}
 	if (abort)
@@ -192,7 +190,7 @@ void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outData
 	status = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileLengthFrames, &thePropertySize, &theFileLengthInFrames);
 	if (status != noErr)
 	{
-		CCLOG(@"MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld\n", status);
+		CDLOG(@"MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld\n", status);
 		abort = YES;
 	}
 	if (abort)
@@ -223,7 +221,7 @@ void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outData
 			// failure
 			free (theData);
 			theData = NULL; // make sure to return NULL
-			CCLOG(@"MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld\n", status);
+			CDLOG(@"MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld\n", status);
 			abort = YES;
 		}
 	}

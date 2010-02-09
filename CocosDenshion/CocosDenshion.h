@@ -106,9 +106,15 @@ Requirements:
 #import "CCFileUtils.h"
 #import "CDConfig.h"
 
-//You may want to edit these. Devices won't support any more than 32 sources though.
-#define CD_MAX_SOURCES 32 //Total number of playback channels that can be created (32 is the limit)
+#if CD_DEBUG
+//#define CCLOG(s, …) NSLog((@”%s %s:%d ” s), __func__, basename(__FILE__), __LINE__, ## __VA_ARGS__);
+#define CDLOG(...) NSLog(__VA_ARGS__)
+#else
+#define CDLOG(...) do {} while (0)
+#endif
 
+
+#define CD_MAX_SOURCES 32 //Total number of playback channels that can be created (32 is the limit)
 #define CD_NO_SOURCE 0xFEEDFAC //Return value indicating playback failed i.e. no source
 #define CD_IGNORE_AUDIO_SESSION 0xBEEFBEE //Used internally to indicate audio session will not be handled
 #define CD_CHANNEL_GROUP_NON_INTERRUPTIBLE 0xFEDEEFF //User internally to indicate channel group is not interruptible
@@ -156,6 +162,9 @@ typedef struct _channelGroup {
 	ALuint			*_buffers;
 	int				*_bufferStates;
 	ALuint			*_sourceBufferAttachments;
+#ifdef CD_USE_STATIC_BUFFERS	
+	ALvoid          **_bufferData;
+#endif	
 	channelGroup	*_channelGroups;
 	ALCcontext		*context;
 	int				_channelGroupTotal;
