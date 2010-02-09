@@ -1389,7 +1389,7 @@
 					libs/Chipmunk/include/chipmunk,
 					libs,
 				);
-				OTHER_CFLAGS = "-ffast-math";
+				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				ZERO_LINK = NO;

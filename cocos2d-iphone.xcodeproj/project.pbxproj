@@ -8583,7 +8583,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = external/Box2d;
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
-				OTHER_CFLAGS = "-ffast-math";
+				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
 				ZERO_LINK = NO;
@@ -9476,7 +9476,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					NS_BLOCK_ASSERTIONS,
@@ -9487,7 +9486,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
 				);
-				OTHER_CFLAGS = "-ffast-math";
+				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = Chipmunk;
 				ZERO_LINK = NO;
