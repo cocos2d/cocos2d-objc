@@ -86,10 +86,10 @@ Class restartAction()
 		
 		// purge textures
 		CCTextureCache *mgr = [CCTextureCache sharedTextureCache];
-		[mgr removeAllTextures];
-//		[mgr removeTexture: [mgr addImage:@"grossinis_sister1.png"]];
-//		[mgr removeTexture: [mgr addImage:@"grossini_dance_atlas.png"]];
-//		[mgr removeTexture: [mgr addImage:@"spritesheet1.png"]];
+//		[mgr removeAllTextures];
+		[mgr removeTexture: [mgr addImage:@"grossinis_sister1.png"]];
+		[mgr removeTexture: [mgr addImage:@"grossini_dance_atlas.png"]];
+		[mgr removeTexture: [mgr addImage:@"spritesheet1.png"]];
 		
 		switch( subtestNumber) {
 			case 1:
