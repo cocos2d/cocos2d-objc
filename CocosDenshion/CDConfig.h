@@ -25,7 +25,7 @@
  If enabled code useful for debugging such as parameter check assertions will be performed.
  If you experience any problems you should enable this and test your code with a debug build.
  */
-//#define CD_DEBUG 1
+#define CD_DEBUG 1
 
 /**
  The total number of sounds/buffers that can be loaded assuming memory is sufficient
@@ -39,17 +39,17 @@
  
  However, the downside is that when the audio data is freed you must
  be certain that it is no longer being accessed otherwise your app will crash. Testing on OS 2.2.1
- and 3.2.1 has shown that this may occur if a buffer is being used by a source with state = AL_PLAYING
+ and 3.1.2 has shown that this may occur if a buffer is being used by a source with state = AL_PLAYING
  when the buffer is deleted. If the data is freed too quickly after the source is stopped then
  a crash will occur. The implemented workaround is that when static buffers are used the unloadBuffer code will wait for
  any playing sources to finish playing before the associated buffer and data are deleted, however, this delay may negate any 
  performance gains that are achieved during loading.
  
- Performance tests on a 1st gen iPod loading the CocosDenshionDemo sounds were ~0.14 seconds without static buffers
- and ~0.12 seconds when using static buffers.
+ Performance tests on a 1st gen iPod running OS 2.2.1 loading the CocosDenshionDemo sounds were ~0.14 seconds without
+ static buffers and ~0.12 seconds when using static buffers.
 
  */
-//#define CD_USE_STATIC_BUFFERS 1
+#define CD_USE_STATIC_BUFFERS 1
 
 /**
  If enabled, it indicates your application is not intended to run on a pre 3.0 OS version

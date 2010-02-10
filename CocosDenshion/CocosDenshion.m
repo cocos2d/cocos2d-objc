@@ -274,23 +274,23 @@ static BOOL _mixerRateSet = NO;
 		if (_buffers[soundId] == _sourceBufferAttachments[i]) {
 			
 			CDLOG(@"Denshion: Found attached source %i %i %i",i,_buffers[soundId],_sourceBufferAttachments[i]);
-#ifdef CD_USE_STATIC_BUFFERS			
-			//Check if source is playing EXPERIMENTAL
+#ifdef CD_USE_STATIC_BUFFERS
+			//When using static buffers a crash may occur if a source is playing with a buffer that is about
+			//to be deleted even though we stop the source and successfully delete the buffer. Crash is confirmed
+			//on 2.2.1 and 3.1.2, however, it will only occur if a source is used rapidly after having its prior
+			//data deleted. To avoid any possibility of the crash we wait for the source to finish playing.
 			ALint state;
 			
 			alGetSourcei(_sources[i], AL_SOURCE_STATE, &state);
-			//NSLog(@"State check %i", state);
 			
 			if (state == AL_PLAYING) {
-				//NSLog(@"WARNING!!!!!! unloading a playing source"); 
+				CDLOG(@"Denshion: waiting for source to complete playing before removing buffer data"); 
 				alSourcei(_sources[i], AL_LOOPING, FALSE);//Turn off looping otherwise loops will never end
 				while (state == AL_PLAYING) {
 					alGetSourcei(_sources[i], AL_SOURCE_STATE, &state);
 					usleep(10000);
 				}
-				//NSLog(@"Source has stopped playing");
-			}	
-			// ---- end experimental for static buffers
+			}
 #endif			
 			//Stop source and detach
 			alSourceStop(_sources[i]);	

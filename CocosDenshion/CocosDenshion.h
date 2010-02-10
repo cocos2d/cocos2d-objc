@@ -64,41 +64,6 @@ Requirements:
  
 */ 
 
-/* Changelog
-2.0 (2009.07.09) * Change all file names to file paths to support loading sounds from locations other than root.
-                   (Thanks to Jason Cecil)
-                 * Take out C++ dependencies to make it easy to include CocosDenshion in static libraries. 
-1.6 (2009.07.02) * Added looping property to CDSourceWrapper so that looping flag can be toggled during playback
-                   (Thanks to Pablo Ruiz)
-                 * Added fix to ensure mp3 files are not decoded in software on 3.0 (Thanks to Bryan Accleroto) 
-                 * Added mute to CDAudioManager
-                 * Added handlers for resign active and become active to CDAudioManager (Thanks to Dominique Bongard)
-			     * Added stopBackgroundMusic method with flag to indicate whether resources should be released
-				   (Thanks to Dominique Bongard) 
-				 * Added functionality to mute channel groups
-1.5 (2009.06.13) * Added preLoadBackgroundMusic method to CDAudioManager to allow background music to be preloaded
-                 * Fixed bug with sound engine locking up when trying to load non existent file asynchronously 
-                   (Thanks to Edison's Labs for reporting)
-1.4 (2009.06.10) * Implemented asynchronous initialisation of audio manager
-                 * Implemented asynchronous loading of sound buffers
-                 * Fixed problem with mute button being ignored if game played background music (Thanks to Sebastien Flory for reporting)
-1.3 (2009.06.02) * Added non interruptible option for channel group
-                 * Added loop parameter for playing background music
-                 * Added isPlaying property to CDSourceWrapper
-                 * Modified CDSourceWrapper to return last set values of pitch, pan and gain
-                 * Added option of specifying callback selector for background music completion to CDAudioManager
-                 * Workaround for issue in 2.2 & 2.2.1 simulator whereby OpenAL playback would be killed after 
-                   an AVAudioPlayer (backgroundMusic) stops.
-1.2 (2009.05.27) * Changes for integration with cocos2d svn repository.
-				 * Renamed myOpenALSupport.h to CDOpenALSupport.h to distinguish it from the
-				   version included with the Aeterius sound engine.
-				 * Added unloadBuffer method.
-				 * Updated myOpenALSupport.h to latest version with support for IMA4 compressed files
-1.1 (2009.05.26) * Added code for handling audio session interruption. Thanks to Andy Fitter and
-                   Ben Britten for the code.
-1.0 (2009.05.01) * Initial release
-*/
-
 #import <UIKit/UIKit.h>
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
