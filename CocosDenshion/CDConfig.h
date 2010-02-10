@@ -25,7 +25,7 @@
  If enabled code useful for debugging such as parameter check assertions will be performed.
  If you experience any problems you should enable this and test your code with a debug build.
  */
-#define CD_DEBUG 1
+//#define CD_DEBUG 1
 
 /**
  The total number of sounds/buffers that can be loaded assuming memory is sufficient
@@ -49,7 +49,7 @@
  static buffers and ~0.12 seconds when using static buffers.
 
  */
-#define CD_USE_STATIC_BUFFERS 1
+//#define CD_USE_STATIC_BUFFERS 1
 
 /**
  If enabled, it indicates your application is not intended to run on a pre 3.0 OS version
