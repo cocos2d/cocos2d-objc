@@ -91,7 +91,8 @@ enum
 	CGSize				tileSize_;
 	int					mapOrientation_;
 	NSMutableArray		*objectGroups_;
-	NSMutableDictionary	*properties_;}
+	NSMutableDictionary	*properties_;
+}
 
 /** the map's size property measured in tiles */
 @property (nonatomic,readonly) CGSize mapSize;
