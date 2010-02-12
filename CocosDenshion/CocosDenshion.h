@@ -72,7 +72,6 @@ Requirements:
 #import "CDConfig.h"
 
 #if CD_DEBUG
-//#define CCLOG(s, …) NSLog((@”%s %s:%d ” s), __func__, basename(__FILE__), __LINE__, ## __VA_ARGS__);
 #define CDLOG(...) NSLog(__VA_ARGS__)
 #else
 #define CDLOG(...) do {} while (0)
@@ -137,6 +136,7 @@ typedef struct _channelGroup {
 	UInt32			_audioSessionCategory;
 	BOOL			_handleAudioSession;
 	BOOL			_mute;
+	ALfloat			_preMuteGain;
 
 	ALenum			lastErrorCode;
 	BOOL			functioning;
@@ -165,6 +165,8 @@ typedef struct _channelGroup {
 - (void) stopSound:(ALuint) sourceId;
 /** Stops playing a channel group */
 - (void) stopChannelGroup:(int) channelGroupId;
+/** Stops all playing sounds */
+-(void) stopAllSounds;
 - (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible;
 - (void) setChannelGroupMute:(int) channelGroupId mute:(BOOL) mute;
 - (BOOL) channelGroupMute:(int) channelGroupId;
@@ -174,10 +176,6 @@ typedef struct _channelGroup {
 - (ALCcontext *) openALContext;
 - (void) audioSessionInterrupted;
 - (void) audioSessionResumed;
-
-- (BOOL) _initOpenAL;
-- (ALuint) _startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping checkState:(BOOL) checkState
-;
 
 @end
 

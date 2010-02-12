@@ -55,7 +55,7 @@
 #import <AudioToolbox/ExtendedAudioFile.h>
 
 //Taken from oalTouch MyOpenALSupport 1.1
-void* loadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate)
+void* CDloadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate)
 {
 	OSStatus						err = noErr;	
 	UInt64							fileDataSize = 0;
@@ -123,7 +123,7 @@ Exit:
 }
 
 //Taken from oalTouch MyOpenALSupport 1.4
-void* loadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate)
+void* CDloadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate)
 {
 	OSStatus						status = noErr;
 	BOOL							abort = NO;
@@ -234,7 +234,7 @@ Exit:
 	return theData;
 }
 
-void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate) {
+void* CDGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate) {
 
 	CFStringRef extension = CFURLCopyPathExtension(inFileURL);
 	CFComparisonResult isWavFile = 0;
@@ -244,9 +244,9 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 	}	
 	
 	if (isWavFile == kCFCompareEqualTo) {
-		return loadWaveAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);	
+		return CDloadWaveAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);	
 	} else {
-		return loadCafAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);		
+		return CDloadCafAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);		
 	}
 }
 
