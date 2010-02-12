@@ -20,7 +20,6 @@
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
 
-#define CC_BOOL_IS_BIT(x) x:1
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -158,15 +157,15 @@ enum {
  @since v0.8
  */
 @property (nonatomic,readwrite) float vertexZ;
-/** The rotation (angle) of the node in degrees. 0 is the default rotation angle */
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
-/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time */
+/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
 @property(nonatomic,readwrite,assign) float scaleX;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
-/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner */
+/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** A Camera object that lets you move the node using camera coordinates.
  * If you use the Camera then position, scale & rotation won't be used */
