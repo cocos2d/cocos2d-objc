@@ -72,16 +72,17 @@ typedef enum {
 	//
 	CCTextureAtlas			*textureAtlas_;			// Sprite Sheet texture atlas (weak reference)
 	NSUInteger				atlasIndex_;			// Absolute (real) Index on the SpriteSheet
-	BOOL					dirty_;					// Sprite needs to be updated
 	CCSpriteSheet			*spriteSheet_;			// Used spritesheet (weak reference)
 	ccHonorParentTransform	honorParentTransform_;	// whether or not to transform according to its parent transformations
+	BOOL					dirty_;					// Sprite needs to be updated
+	BOOL					recursiveDirty_;		// Subchildren needs to be updated
 	BOOL					hasChildren_;			// optimization to check if it contain children
 	
 	//
 	// Data used when the sprite is self-rendered
 	//
-	ccBlendFunc		blendFunc_;			// Needed for the texture protocol
-	CCTexture2D		*texture_;			// Texture used to render the sprite
+	ccBlendFunc				blendFunc_;				// Needed for the texture protocol
+	CCTexture2D				*texture_;				// Texture used to render the sprite
 
 	//
 	// Shared data

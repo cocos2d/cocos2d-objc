@@ -12,6 +12,7 @@ version 0.99.0 - XX-MMM-2010
  . Sprite: use correct blending functions (issue #728)
  . Sprite: supports CGImageRef with key (issue #349)
  . Sprite: when texture is nil, supports opacity & color (issue #741)
+ . Sprite: setTextureRect() and setColor() works OK with subchildren (issue #763)
  . SpriteFrameCache: removed @syncronized() (issue #663)
  . Template: box2d template treats warnings as erros, uses unroll loops for performance (issue #750)
  . TMX: filling empty tiles doesn't crash (issue #740)
