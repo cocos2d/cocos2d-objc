@@ -116,7 +116,7 @@ struct transformValues_ {
 -(id) init
 {
 	if( (self=[super init]) ) {
-		dirty_ = NO;
+		dirty_ = recursiveDirty_ = NO;
 		
 		// by default use "Self Render".
 		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
@@ -281,7 +281,7 @@ struct transformValues_ {
 	usesSpriteSheet_ = NO;
 	textureAtlas_ = nil;
 	spriteSheet_ = nil;
-	dirty_ = NO;
+	dirty_ = recursiveDirty_ = NO;
 	
 	float x1 = 0 + offsetPosition_.x;
 	float y1 = 0 + offsetPosition_.y;
@@ -320,6 +320,7 @@ struct transformValues_ {
 	
 	// rendering using SpriteSheet
 	if( usesSpriteSheet_ ) {
+		// update dirty_, don't update recursiveDirty_
 		dirty_ = YES;
 	}
 
@@ -379,7 +380,7 @@ struct transformValues_ {
 	if( ! visible_ ) {		
 		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-		dirty_ = NO;
+		dirty_ = recursiveDirty_ = NO;
 		return ;
 	}
 	
@@ -465,7 +466,7 @@ struct transformValues_ {
 	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
 		
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-	dirty_ = NO;
+	dirty_ = recursiveDirty_ = NO;
 }
 
 // XXX: Optimization: instead of calling 5 times the parent sprite to obtain: position, scale.x, scale.y, anchorpoint and rotation,
@@ -592,7 +593,7 @@ struct transformValues_ {
 
 -(void) setDirtyRecursively:(BOOL)b
 {
-	dirty_ = b;
+	dirty_ = recursiveDirty_ = b;
 	// recursively set dirty
 	if( hasChildren_ ) {
 		for( CCSprite *child in children_)
@@ -601,12 +602,12 @@ struct transformValues_ {
 }
 
 // XXX HACK: optimization
-#define SET_DIRTY_RECURSIVELY() {							\
-					if( usesSpriteSheet_ && ! dirty_ ) {	\
-						dirty_ = YES;						\
-						if( hasChildren_)					\
-							[self setDirtyRecursively:YES];	\
-						}									\
+#define SET_DIRTY_RECURSIVELY() {									\
+					if( usesSpriteSheet_ && ! recursiveDirty_ ) {	\
+						dirty_ = recursiveDirty_ = YES;				\
+						if( hasChildren_)							\
+							[self setDirtyRecursively:YES];			\
+						}											\
 					}
 
 -(void)setPosition:(CGPoint)pos
@@ -661,8 +662,8 @@ struct transformValues_ {
 {
 	if( v != visible_ ) {
 		[super setVisible:v];
-		if( usesSpriteSheet_ && ! dirty_ ) {
-			dirty_ = YES;
+		if( usesSpriteSheet_ && ! recursiveDirty_ ) {
+			dirty_ = recursiveDirty_ = YES;
 			for( id child in children_)
 				[child setVisible:v];
 		}
@@ -705,6 +706,7 @@ struct transformValues_ {
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
 			// no need to set it recursively
+			// update dirty_, don't update recursiveDirty_
 			dirty_ = YES;
 	}
 	// self render

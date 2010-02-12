@@ -11,7 +11,7 @@
 #import "SpriteTest.h"
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {
+static NSString *transitions[] = {	
 			@"Sprite1",
 			@"SpriteSheet1",
 			@"SpriteFrameTest",
@@ -1904,16 +1904,15 @@ Class restartAction()
 		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
 		
 		[self addChild:sheet z:0 tag:kTagSpriteSheet];
-				
+		
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
-
 		CCSprite *sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
-
+		
 		CCSprite *sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
 		[sprite2 setPosition:ccp(50,50)];
-
+		
 		CCSprite *sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-50,-50)];
 		
@@ -1921,6 +1920,17 @@ Class restartAction()
 		[sprite1 addChild:sprite2];
 		[sprite1 addChild:sprite3];
 		
+		// BEGIN NEW CODE
+		NSMutableArray *animFrames = [NSMutableArray array];
+		for(int i = 1; i < 15; i++) {
+			
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",i]];
+			[animFrames addObject:frame];
+		}
+		
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
+		[sprite1 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+		// END NEW CODE
 		
 		id action = [CCMoveBy actionWithDuration:2 position:ccp(200,0)];
 		id action_back = [action reverse];
@@ -1934,8 +1944,8 @@ Class restartAction()
 		[sprite1 runAction: [CCRepeatForever actionWithAction:action_rot]];
 		[sprite1 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action, action_back, nil]]];
 		[sprite1 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action_s, action_s_back, nil]]];
-			
-	}	
+		
+	}
 	return self;
 }
 

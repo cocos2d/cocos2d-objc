@@ -264,7 +264,7 @@ const int defaultCapacity = 29;
 			updateMethod(child, selUpdate);
 		
 #if CC_SPRITESHEET_DEBUG_DRAW
-		CGRect rect = [child boundingBox]; //Inssue 528
+		CGRect rect = [child boundingBox]; //Issue #528
 		CGPoint vertices[4]={
 			ccp(rect.origin.x,rect.origin.y),
 			ccp(rect.origin.x+rect.size.width,rect.origin.y),
