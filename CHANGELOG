@@ -19,6 +19,7 @@ version 0.99.0 - XX-MMM-2010
  . Sprite: setTextureRect() and setColor() works OK with subchildren (issue #763)
  . SpriteFrameCache: removed @syncronized() (issue #663)
  . Template: box2d template treats warnings as erros, uses unroll loops for performance (issue #750)
+ . Template: Info.plist uses UIRequiredDeviceCapabilities (issue #769)
  . TMX: filling empty tiles doesn't crash (issue #740)
  . TMX: if compression is not "gzip", abort (tiled 0.4 feature) (issue #XXX)
  

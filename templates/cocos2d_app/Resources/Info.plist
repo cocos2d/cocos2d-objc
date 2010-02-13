@@ -22,5 +22,40 @@
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<dict>
+		<key>telephony</key>
+		<false/>
+		<key>sms</key>
+		<false/>
+		<key>still-camera</key>
+		<false/>
+		<key>auto-focus-camera</key>
+		<false/>
+		<key>video-camera</key>
+		<false/>
+		<key>wifi</key>
+		<true/>
+		<key>accelerometer</key>
+		<true/>
+		<key>location-services</key>
+		<false/>
+		<key>gps</key>
+		<false/>
+		<key>magnetometer</key>
+		<false/>
+		<key>microphone</key>
+		<false/>
+		<key>opengles-1</key>
+		<true/>
+		<key>opengles-2</key>
+		<false/>
+		<key>armv6</key>
+		<false/>
+		<key>armv7</key>
+		<false/>
+		<key>peer-peer</key>
+		<false/>
+	</dict>
 </dict>
 </plist>
