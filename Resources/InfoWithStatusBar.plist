@@ -8,17 +8,54 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.sapusmedia.${PRODUCT_NAME:identifier}</string>
+	<string>com.yourcompany.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.4</string>
+	<string>2.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<dict>
+		<key>telephony</key>
+		<false/>
+		<key>sms</key>
+		<false/>
+		<key>still-camera</key>
+		<false/>
+		<key>auto-focus-camera</key>
+		<false/>
+		<key>video-camera</key>
+		<false/>
+		<key>wifi</key>
+		<true/>
+		<key>accelerometer</key>
+		<true/>
+		<key>location-services</key>
+		<false/>
+		<key>gps</key>
+		<false/>
+		<key>magnetometer</key>
+		<false/>
+		<key>microphone</key>
+		<false/>
+		<key>opengles-1</key>
+		<true/>
+		<key>opengles-2</key>
+		<false/>
+		<key>armv6</key>
+		<false/>
+		<key>armv7</key>
+		<false/>
+		<key>peer-peer</key>
+		<false/>
+	</dict>
 </dict>
 </plist>
