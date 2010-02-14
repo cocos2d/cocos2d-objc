@@ -35,7 +35,7 @@
 		<key>video-camera</key>
 		<false/>
 		<key>wifi</key>
-		<true/>
+		<false/>
 		<key>accelerometer</key>
 		<true/>
 		<key>location-services</key>
