@@ -20,6 +20,7 @@ version 0.99.0 - XX-MMM-2010
  . SpriteFrameCache: removed @syncronized() (issue #663)
  . Template: box2d template treats warnings as erros, uses unroll loops for performance (issue #750)
  . Template: Info.plist uses UIRequiredDeviceCapabilities (issue #769)
+ . Tests: SpriteTest uses GL_ALPHA_TEST is zVertex test (issue #XXX)
  . TMX: filling empty tiles doesn't crash (issue #740)
  . TMX: if compression is not "gzip", abort (tiled 0.4 feature) (issue #XXX)
  
