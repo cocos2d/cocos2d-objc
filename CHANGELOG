@@ -1,5 +1,5 @@
-version 0.99.0 - XX-MMM-2010
- . Box2d: updated to r57 (issue #494)
+version 0.99.0-final - 15-Feb-2010
+ . Box2d: updated to r58 (issue #494)
  . Director: Only send "cleanup" when the scene is replaced (re fixed issue #709)
  . CocosDenshion: SimpleAudioEngine incorrectly accessing CDAudioManager (issue #748)
  . CocosDenshion: added support for 22Khz OpenAL (issue #594)
