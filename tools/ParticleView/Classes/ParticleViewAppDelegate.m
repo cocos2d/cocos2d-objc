@@ -28,7 +28,7 @@
 	NSString *filePath3 = [documentDirectory stringByAppendingPathComponent:kFileName3];
 	NSString *filePath4 = [documentDirectory stringByAppendingPathComponent:kFileName4];
 	NSString *filePath5 = [documentDirectory stringByAppendingPathComponent:kFileName5];
-	NSLog(filePath1);
+	NSLog(@"%@",filePath1);
 	
 	// Load saved settings
 	settings1 = [[NSMutableArray alloc] initWithContentsOfFile:filePath1];

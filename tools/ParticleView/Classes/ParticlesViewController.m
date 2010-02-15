@@ -38,7 +38,6 @@
 @synthesize startG;
 @synthesize startB;
 @synthesize startA;
-@synthesize startA;
 @synthesize startRVar;
 @synthesize startGVar;
 @synthesize startBVar;

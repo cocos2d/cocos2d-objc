@@ -31,6 +31,7 @@
 #include "Cantilever.h"
 #include "ContinuousTest.h"
 #include "Chain.h"
+#include "CharacterCollision.h"
 #include "CollisionFiltering.h"
 #include "CollisionProcessing.h"
 #include "CompoundShapes.h"
@@ -62,6 +63,7 @@
 
 TestEntry g_testEntries[] =
 {
+	{"Character Collision", CharacterCollision::Create},
 	{"Prismatic", Prismatic::Create},
 	{"Edge Shapes", EdgeShapes::Create},
 	{"Continuous Test", ContinuousTest::Create},
