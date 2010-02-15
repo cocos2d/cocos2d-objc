@@ -705,11 +705,16 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
+	
+	// TIP: don't forget to enable Alpha test
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0f);
 	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 }
 
 -(void) onExit
 {
+	glDisable(GL_ALPHA_TEST);
 	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
 	[super onExit];
 }
@@ -772,11 +777,17 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
+
+	// TIP: don't forget to enable Alpha test
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0f);
+	
 	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 }
 
 -(void) onExit
 {
+	glDisable(GL_ALPHA_TEST);
 	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
 	[super onExit];
 }
