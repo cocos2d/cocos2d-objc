@@ -26,9 +26,11 @@
 
 /** Different modes of the engine */
 typedef enum {
-	kAudioManagerFxOnly,					//!Other apps will be able to play audio
-	kAudioManagerFxPlusMusic,				//!Only this app will play audio
-	kAudioManagerFxPlusMusicIfNoOtherAudio	//!If another app is playing audio at start up then allow it to continue and don't play music
+	kAMM_FxOnly,					//!Other apps will be able to play audio
+	kAMM_FxPlusMusic,				//!Only this app will play audio
+	kAMM_FxPlusMusicIfNoOtherAudio,	//!If another app is playing audio at start up then allow it to continue and don't play music
+	kAMM_MediaPlayback,				//!This app takes over audio e.g music player app
+	kAMM_PlayAndRecord				//!App takes over audio and has input and output
 } tAudioManagerMode;
 
 /** Possible states of the engine */
@@ -148,7 +150,6 @@ typedef enum {
 	
 	//For handling resign/become active
 	BOOL _isObservingAppEvents;
-	BOOL _systemPausedMusic;
 	tAudioManagerResignBehavior _resignBehavior;
 }
 
@@ -171,6 +172,10 @@ typedef enum {
 -(void) setResignBehavior:(tAudioManagerResignBehavior) resignBehavior autoHandle:(BOOL) autoHandle;
 /** Returns true is audio is muted at a hardware level e.g user has ringer switch set to off */
 -(BOOL) isDeviceMuted;
+/** Returns true if another app is playing audio such as the iPod music player */
+-(BOOL) isOtherAudioPlaying;
+/** Sets the way the audio manager interacts with the operating system such as whether it shares output with other apps or obeys the mute switch */
+-(void) setMode:(tAudioManagerMode) mode;
 /** Shuts down the shared audio manager instance so that it can be reinitialised */
 +(void) end;
 

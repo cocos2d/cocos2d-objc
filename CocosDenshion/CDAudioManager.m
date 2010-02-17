@@ -34,13 +34,6 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
     } 
 } 
 
-#if TARGET_IPHONE_SIMULATOR	
-//Workaround for issue in simulator.
-//See: audioPlayerDidFinishPlaying
-float realBackgroundMusicVolume = -1.0f;
-#endif
-
-
 //NSOperation object used to asynchronously initialise 
 @implementation CDAsynchInitialiser
 
@@ -53,7 +46,7 @@ float realBackgroundMusicVolume = -1.0f;
 
 @implementation CDLongAudioSource
 
-@synthesize audioSourcePlayer, audioSourceFilePath, numberOfLoops, delegate;
+@synthesize audioSourcePlayer, audioSourceFilePath, delegate;
 
 -(id) init {
 	if ((self = [super init])) {
@@ -163,6 +156,16 @@ float realBackgroundMusicVolume = -1.0f;
 	}	
 }	
 
+-(NSInteger) numberOfLoops {
+	return numberOfLoops;
+}	
+
+-(void) setNumberOfLoops:(NSInteger) loopCount
+{
+	audioSourcePlayer.numberOfLoops = loopCount;
+	numberOfLoops = loopCount;
+}	
+
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
 	CDLOG(@"Denshion::CDLongAudioSource - audio player finished");
 #if TARGET_IPHONE_SIMULATOR	
@@ -216,7 +219,7 @@ static BOOL configured = FALSE;
 		if (!sharedManager) {
 			if (!configured) {
 				//Set defaults here
-				configuredMode = kAudioManagerFxPlusMusicIfNoOtherAudio;
+				configuredMode = kAMM_FxPlusMusicIfNoOtherAudio;
 				//Just create one channel group with all the sources
 				//configuredChannelGroupDefinitions = new int[1];
 				configuredChannelGroupDefinitions = (int *)malloc( sizeof(configuredChannelGroupDefinitions[0]) * 1);
@@ -281,66 +284,97 @@ static BOOL configured = FALSE;
 	configured = TRUE;
 }	
 
+//Experimental TODO: review this
+/*
+- (void) determineCapabilities {
+	Class audioSessionClass = NSClassFromString(@"AVAudioSession");
+	if (audioSessionClass != nil) {
+		CDLOG(@"Denshion::CDAudioManager - AVAudioSession exists");
+	}	
+}
+*/ 
+
+-(BOOL) isOtherAudioPlaying {
+	UInt32 isPlaying;
+	UInt32 varSize = sizeof(isPlaying);
+	AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
+	return (isPlaying != 0);
+}
+
+-(void) setMode:(tAudioManagerMode) mode {
+
+	AudioSessionSetActive(NO);
+	_mode = mode;
+	switch (_mode) {
+			
+		case kAMM_FxOnly:
+			//Share audio with other app
+			CDLOG(@"Denshion::CDAudioManager - Audio will be shared");
+			_audioSessionCategory = kAudioSessionCategory_AmbientSound;
+			willPlayBackgroundMusic = NO;
+			break;
+			
+		case kAMM_FxPlusMusic:
+			//Use audio exclusively - if other audio is playing it will be stopped
+			CDLOG(@"Denshion::CDAudioManager -  Audio will be exclusive");
+			_audioSessionCategory = kAudioSessionCategory_SoloAmbientSound;
+			willPlayBackgroundMusic = YES;
+			break;
+			
+		case kAMM_MediaPlayback:
+			//Use audio exclusively, ignore mute switch and sleep
+			CDLOG(@"Denshion::CDAudioManager -  Media playback mode, audio will be exclusive");
+			_audioSessionCategory = kAudioSessionCategory_MediaPlayback;
+			willPlayBackgroundMusic = YES;
+			break;
+			
+		case kAMM_PlayAndRecord:
+			//Use audio exclusively, ignore mute switch and sleep, has inputs and outputs
+			CDLOG(@"Denshion::CDAudioManager -  Play and record mode, audio will be exclusive");
+			_audioSessionCategory = kAudioSessionCategory_PlayAndRecord;
+			willPlayBackgroundMusic = YES;
+			break;
+			
+		default:
+			//kAudioManagerFxPlusMusicIfNoOtherAudio
+			if ([self isOtherAudioPlaying]) {
+				CDLOG(@"Denshion::CDAudioManager - Other audio is playing audio will be shared");
+				_audioSessionCategory = kAudioSessionCategory_AmbientSound;
+				willPlayBackgroundMusic = NO;
+			} else {
+				CDLOG(@"Denshion::CDAudioManager - Other audio is not playing audio will be exclusive");
+				_audioSessionCategory = kAudioSessionCategory_SoloAmbientSound;
+				willPlayBackgroundMusic = YES;
+			}	
+			
+			break;
+	}
+	
+	//Set audio session category
+	if (willPlayBackgroundMusic) {
+		//Work around to ensure background music is not decoded in software
+		//on OS 3.0. Thanks to Bryan Acceleroto (SO 2009.07.02)
+		UInt32 fakeCategory = kAudioSessionCategory_MediaPlayback;
+		AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(fakeCategory), &fakeCategory);
+		AudioSessionSetActive(YES);
+		AudioSessionSetActive(NO);
+	}	
+	AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory);
+	AudioSessionSetActive(YES);
+	
+}	
 
 - (id) init: (tAudioManagerMode) mode channelGroupDefinitions:(int[]) channelGroupDefinitions channelGroupTotal:(int) channelGroupTotal {
 	if ((self = [super init])) {
+		
 		//Initialise the audio session 
 		AudioSessionInitialize(NULL, NULL,managerInterruptionCallback, self); 
 	
 		_mode = mode;
 		backgroundMusicCompletionSelector = nil;
 		_isObservingAppEvents = FALSE;
-		_systemPausedMusic = FALSE;
 		_muteStoppedMusic = FALSE;
-		
-		switch (_mode) {
-				
-			case kAudioManagerFxOnly:
-				//Share audio with other app
-				CDLOG(@"Denshion::CDAudioManager - Audio will be shared");
-				_audioSessionCategory = kAudioSessionCategory_AmbientSound;
-				willPlayBackgroundMusic = FALSE;
-				break;
-				
-			case kAudioManagerFxPlusMusic:
-				//Use audio exclusively - if other audio is playing it will be stopped
-				CDLOG(@"Denshion::CDAudioManager -  Audio will be exclusive");
-				_audioSessionCategory = kAudioSessionCategory_SoloAmbientSound;
-				willPlayBackgroundMusic = TRUE;
-				break;
-				
-			default:
-				//kAudioManagerFxPlusMusicIfNoOtherAudio
-				CDLOG(@"Denshion::CDAudioManager - Checking for other audio");
-				UInt32 isPlaying;
-				UInt32 varSize = sizeof(isPlaying);
-				AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
-				if (isPlaying != 0) {
-					CDLOG(@"Denshion::CDAudioManager - Other audio is playing audio will be shared");
-					_audioSessionCategory = kAudioSessionCategory_AmbientSound;
-					willPlayBackgroundMusic = FALSE;
-					_audioWasPlayingAtStartup = TRUE;
-				} else {
-					CDLOG(@"Denshion::CDAudioManager - Other audio is not playing audio will be exclusive");
-					_audioSessionCategory = kAudioSessionCategory_SoloAmbientSound;
-					willPlayBackgroundMusic = TRUE;
-					_audioWasPlayingAtStartup = FALSE;
-				}	
-				
-				break;
-		}
-		
-		//Set audio session category
-		if (willPlayBackgroundMusic) {
-			//Work around to ensure background music is not decoded in software
-			//on OS 3.0. Thanks to Bryan Acceleroto (SO 2009.07.02)
-			UInt32 fakeCategory = kAudioSessionCategory_MediaPlayback;
-			AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(fakeCategory), &fakeCategory);
-			AudioSessionSetActive(TRUE);
-			AudioSessionSetActive(FALSE);
-		}	
-		AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory);
-		AudioSessionSetActive(TRUE);
+		[self setMode:mode];
 		soundEngine = [[CDSoundEngine alloc] init:channelGroupDefinitions channelGroupTotal:channelGroupTotal];
 		
 		//Set up audioSource channels
