@@ -68,7 +68,6 @@ Requirements:
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "CCFileUtils.h"
 #import "CDConfig.h"
 
 #if CD_DEBUG
@@ -102,6 +101,18 @@ typedef struct _channelGroup {
 	int currentIndex;
 	bool mute;
 } channelGroup;
+
+/**
+ Collectin of utilities required by CocosDenshion
+ */
+@interface CDUtilities : NSObject
+{
+}	
+
+/** Fundamentally the same as the corresponding method is CCFileUtils but added to break binding to cocos2d */
++(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+
+@end
 
 
 ////////////////////////////////////////////////////////////////////////////
