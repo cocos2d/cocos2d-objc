@@ -74,7 +74,7 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 		}
 		audioSourceFilePath = [filePath copy];
 		NSError *error;
-		NSString *path = [CCFileUtils fullPathFromRelativePath:audioSourceFilePath];
+		NSString *path = [CDUtilities fullPathFromRelativePath:audioSourceFilePath];
 		audioSourcePlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:&error];
 		if (error == nil) {
 			[audioSourcePlayer prepareToPlay];
