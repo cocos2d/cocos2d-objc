@@ -408,7 +408,7 @@ CDSourceWrapper *toneSource;
 	channelGroups[CGROUP_NON_INTERRUPTIBLE] = 2;//2 voices that can't be interrupted
 	
 	//Initialise audio manager asynchronously as it can take a few seconds
-	[CDAudioManager initAsynchronously:kAudioManagerFxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
+	[CDAudioManager initAsynchronously:kAMM_FxPlusMusicIfNoOtherAudio channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
 	//[CDAudioManager initAsynchronously:kAudioManagerFxPlusMusic channelGroupDefinitions:channelGroups channelGroupTotal:channelGroupCount];
 }
 
