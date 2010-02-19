@@ -290,7 +290,7 @@ static CCDirector *_sharedDirector = nil;
 		case CCDirectorProjection2D:
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrthof(0, size.width, 0, size.height, -1, 1);
+			glOrthof(0, size.width, 0, size.height, -1000, 1000);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;

@@ -12,7 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-//	@"TMXResizeTest",
 			@"TileMapTest",
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
@@ -28,6 +27,7 @@ static NSString *transitions[] = {
 			@"TMXTilesetTest",
 			@"TMXObjectsTest",
 			@"TMXResizeTest",
+			@"TMXIsoZorder",
 };
 
 enum {
@@ -311,9 +311,11 @@ Class restartAction()
 		for( CCSpriteSheet* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		float x, y, z;
-		[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
-		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
+		
+		// TIP: To enable the camera, disable the depth buffer
+//		float x, y, z;
+//		[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
+//		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
 	}	
 	return self;
 }
@@ -831,6 +833,79 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXIsoZorder
+
+@implementation TMXIsoZorder
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-zorder.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		[map setPosition:ccp(-700,-50)];
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		CCTMXLayer *layer = [map layerNamed:@"Trees"];
+		tamara = [layer tileAt:ccp(29,29)];
+		[tamara retain];
+		
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(300,250)];
+		id back = [move reverse];
+		id seq = [CCSequence actions:move, back, nil];
+		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(repositionSprite:)];
+				
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[tamara release];
+	[super dealloc];
+}
+
+-(void) repositionSprite:(ccTime)dt
+{
+	// tile height is 64x32
+	// map size: 30x30
+	// map height: 960 pixels.
+	// z height: (30-1) * 32 = 928
+	CGPoint p = [tamara position];
+	[tamara setVertexZ: (928 - p.y) /16 ];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	// TIP: 2d projection should be used
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+}
+
+-(void) onExit
+{
+	// At exit use any other projection. 
+//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	[super onExit];
+}
+
+-(NSString *) title
+{
+	return @"TMX Iso Zorder";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite should hide behind the trees";
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark Application Delegate
@@ -850,10 +925,15 @@ Class restartAction()
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
 	
+	CCDirector *director = [CCDirector sharedDirector];
+	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[director setAnimationInterval:1.0/60];
+	[director setDisplayFPS:YES];
+	
+	// depth buffer
+	[director setDepthBufferFormat:kDepthBuffer16];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -861,7 +941,7 @@ Class restartAction()
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
 	
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director attachInView:window];	
 	[window makeKeyAndVisible];		
 	
 	CCScene *scene = [CCScene node];
@@ -870,11 +950,13 @@ Class restartAction()
 	//
 	// Run all the test with 2d projection
 	//
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+	[director setProjection:CCDirectorProjection2D];
 
 	
-
-	[[CCDirector sharedDirector] runWithScene: scene];
+	//
+	// Finally, run the scene
+	//
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

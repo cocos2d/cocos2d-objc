@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -26,9 +26,13 @@
 
 /** CCTMXLayer represents the TMX layer.
  
- It is a subclass of CCSpriteSheet, so each "tile" is represented by an CCSprite.
+ It is a subclass of CCSpriteSheet. By default the tiles are rendered using a CCTextureAtlas.
+ If you mofify a tile on runtime, then, that tile will become a CCSprite.
  The benefits of using CCSprite objects as tiles are:
  - tiles (CCSprite) can be rotated/scaled/moved with a nice API
+ 
+ If the layer contains a property named "cc_vertexz" with a value of "1", then the tiles will use the
+ OpenGL vertex Z for the depth.
  
  @since v0.8.1
  */
@@ -42,9 +46,13 @@
 	int					layerOrientation_;
 	NSMutableArray		*properties_;
 	
+	BOOL				useVertexZ_;
+	
 	// used for optimization
 	CCSprite		*reusedTile_;
 	ccCArray		*atlasIndexArray_;
+	
+	
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;
@@ -58,7 +66,7 @@
 @property (nonatomic,readwrite,retain) CCTMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
 @property (nonatomic,readwrite) int layerOrientation;
-/** properties */
+/** properties from the layer. They can be added using Tiled */
 @property (nonatomic,readwrite,retain) NSMutableArray *properties;
 
 /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
@@ -108,4 +116,8 @@
 -(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
 /* optimization methos */
 -(CCSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos;
+
+/** The layer recognizes some special properties, like cc_vertez */
+-(void) parseInternalProperties;
+
 @end
