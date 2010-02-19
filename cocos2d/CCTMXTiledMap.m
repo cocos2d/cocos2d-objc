@@ -116,6 +116,9 @@
 	
 	CGSize s = layerInfo.layerSize;
 	
+	// Parse cocos2d properties
+	[layer parseInternalProperties];
+	
 	for( unsigned int y=0; y < s.height; y++ ) {
 		for( unsigned int x=0; x < s.width; x++ ) {
 
@@ -137,11 +140,7 @@
 			}
 		}
 	}
-	
-	// HACK:
-	// remove all possible tiles from the dirtySprites set, since they don't need to be updated
-//	ccCArrayRemoveAllValues(layer->dirtySprites_);
-	
+
 	NSAssert( layerInfo.maxGID >= tileset.firstGid &&
 			 layerInfo.minGID >= tileset.firstGid, @"TMX: Only 1 tilset per layer is supported");
 	

@@ -93,3 +93,9 @@
 {
 }
 @end
+
+@interface TMXIsoZorder : TileDemo
+{
+	CCSprite *tamara;
+}
+@end

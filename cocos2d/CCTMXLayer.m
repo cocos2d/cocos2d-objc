@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2009 Ricardo Quesada
+ * Copyright (C) 2009,2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -95,6 +95,8 @@
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
 -(CGPoint) positionForHexAt:(CGPoint)pos;
 
+-(int) vertexZForPos:(CGPoint)pos;
+
 // adding quad from sprite
 -(void)addQuadFromSprite:(CCSprite*)sprite quadIndex:(unsigned int)index;
 
@@ -143,6 +145,8 @@
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
 		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
+		
+		useVertexZ_= NO;
 
 	}
 	return self;
@@ -181,6 +185,20 @@
 	}
 }
 
+#pragma mark CCTMXLayer - Properties
+
+-(id) propertyNamed:(NSString *)propertyName 
+{
+	return [properties_ valueForKey:propertyName];
+}
+
+-(void) parseInternalProperties
+{
+	// if cc_vertex=1, then tiles will be rendered using vertexz
+	NSString *vertexz = [self propertyNamed:@"cc_vertexz"];
+	useVertexZ_ = [vertexz isEqualToString:@"1"];
+}
+
 #pragma mark CCTMXLayer - obtaining tiles/gids
 
 -(CCSprite*) tileAt:(CGPoint)pos
@@ -201,6 +219,7 @@
 			CGRect rect = [tileset_ rectForGID:gid];			
 			tile = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
 			[tile setPosition: [self positionAt:pos]];
+			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
 			
 			unsigned int indexForZ = [self atlasIndexForExistantZ:z];
@@ -234,6 +253,7 @@
 		[reusedTile_ initWithSpriteSheet:self rect:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	
 	// get atlas index
@@ -269,6 +289,7 @@
 		[reusedTile_ initWithSpriteSheet:self rect:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	
 	// get atlas index
@@ -296,15 +317,18 @@
 		[reusedTile_ initWithSpriteSheet:self rect:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since
 	// it appends the tile at the end of the texture atlas
 	unsigned int indexForZ = atlasIndexArray_->num;
-	
+
+
 	// don't add it using the "standard" way.
 	[self addQuadFromSprite:reusedTile_ quadIndex:indexForZ];
+	
 	
 	// append should be after addQuadFromSprite since it modifies the quantity values
 	ccCArrayInsertValueAtIndex(atlasIndexArray_, (void*)z, indexForZ);
@@ -475,9 +499,36 @@ int compareInts (const void * a, const void * b)
 	return ccp(x,y);
 }
 
--(id) propertyNamed:(NSString *)propertyName 
+-(int) vertexZForPos:(CGPoint)pos
 {
-	return [properties_ valueForKey:propertyName];
+	int ret = 0;
+	if( useVertexZ_ ) {
+		switch( layerOrientation_ ) {
+			case CCTMXOrientationIso:
+				ret = pos.x + pos.y;
+				break;
+			default:
+				ret = pos.y;
+				break;
+		}
+	}
+	
+	return ret;
+}
+
+#pragma mark CCTMXLayer - draw
+
+-(void) draw
+{
+	if( useVertexZ_ ) {
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.0f);
+	}
+	
+	[super draw];
+	
+	if( useVertexZ_ )
+		glDisable(GL_ALPHA_TEST);
 }
 @end
 
