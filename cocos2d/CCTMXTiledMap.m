@@ -102,47 +102,7 @@
 	// tell the layerinfo to release the ownership of the tiles map.
 	layerInfo.ownTiles = NO;
 
-	// Optimization: quick hack that sets the image size on the tileset
-	tileset.imageSize = [[layer texture] contentSize];
-		
-	// By default all the tiles are aliased
-	// pros:
-	//  - easier to render
-	// cons:
-	//  - difficult to scale / rotate / etc.
-	[[layer texture] setAliasTexParameters];
-
-	CFByteOrder o = CFByteOrderGetCurrent();
-	
-	CGSize s = layerInfo.layerSize;
-	
-	// Parse cocos2d properties
-	[layer parseInternalProperties];
-	
-	for( unsigned int y=0; y < s.height; y++ ) {
-		for( unsigned int x=0; x < s.width; x++ ) {
-
-			unsigned int pos = x + s.width * y;
-			unsigned int gid = layerInfo.tiles[ pos ];
-
-			// gid are stored in little endian.
-			// if host is big endian, then swap
-			if( o == CFByteOrderBigEndian )
-				gid = CFSwapInt32( gid );
-			
-			// XXX: gid == 0 --> empty tile
-			if( gid != 0 ) {
-				[layer appendTileForGID:gid at:ccp(x,y)];
-				
-				// Optimization: update min and max GID rendered by the layer
-				layerInfo.minGID = MIN(gid, layerInfo.minGID);
-				layerInfo.maxGID = MAX(gid, layerInfo.maxGID);
-			}
-		}
-	}
-
-	NSAssert( layerInfo.maxGID >= tileset.firstGid &&
-			 layerInfo.minGID >= tileset.firstGid, @"TMX: Only 1 tilset per layer is supported");
+	[layer setupTiles];
 	
 	return layer;
 }

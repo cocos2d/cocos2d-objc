@@ -31,7 +31,7 @@
  The benefits of using CCSprite objects as tiles are:
  - tiles (CCSprite) can be rotated/scaled/moved with a nice API
  
- If the layer contains a property named "cc_vertexz" with a value of "1", then the tiles will use the
+ If the layer contains a property named "cc_vertexz" with a value of "automatic", then the tiles will use the
  OpenGL vertex Z for the depth.
  
  @since v0.8.1
@@ -46,7 +46,11 @@
 	int					layerOrientation_;
 	NSMutableArray		*properties_;
 	
-	BOOL				useVertexZ_;
+	unsigned int		minGID_;
+	unsigned int		maxGID_;
+	
+	BOOL				useAutomaticVertexZ_;
+	int					vertexZvalue_;
 	
 	// used for optimization
 	CCSprite		*reusedTile_;
@@ -110,14 +114,7 @@
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;
 
-/* optimization methos */
--(CCSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
-/* optimization methos */
--(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
-/* optimization methos */
--(CCSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos;
-
-/** The layer recognizes some special properties, like cc_vertez */
--(void) parseInternalProperties;
+/** Creates the tiles */
+-(void) setupTiles;
 
 @end

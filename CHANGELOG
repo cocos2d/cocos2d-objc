@@ -63,7 +63,7 @@ version 0.99.0-rc - 31-Jan-2010
  . TMXMaps: objectGroup: Simplified object creation. All objects are NSDictionaries. For custom objects, subclass TMXTiledMap (issue #636)
  . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)
  . TouchDispatcher: StandardTouchHandler returns void (not BOOL). They are executed after the TargetedHandlers (issue #710)
- . XCode: doxygen scripts runs with spaces in subdirectories (issue #684)
+ . Xcode: doxygen scripts runs with spaces in subdirectories (issue #684)
  
 version 0.9.0-beta2 - 11-Jan-2010
  . Actions: added 2 new instant actions: FlipX and FlipY (counter-rollback of part issue #620)
@@ -125,7 +125,7 @@ version 0.9.0-alpha - 18-Nov-2009
  . All: cocos protocols renamed to avoid confusion (part of issue #520)
  . All: Added compatibility with v0.8 (part of issue #520)
  . Animation: supports duration and reverse (issue #627)
- . Tests: Performance Tests re-integrated to main XCode project (issue #XXX)
+ . Tests: Performance Tests re-integrated to main Xcode project (issue #XXX)
  . BitmapFontAtlas: works with subdirectories (issue #612)
  . Box2d: updated to r26 (pre 2.1.0) (issue #494)
  . CocosLive: Uses CL namespace (part of issue #520)
@@ -137,7 +137,7 @@ version 0.9.0-alpha - 18-Nov-2009
  . Templates: updated (part of issue #520 and issue #620)
  . Templates: includes cocos2d and CocosDenshion licences files
  . TextureMgr: renamed to TextureCache (part of issue #620)
- . XCode: textures files in 1 xcode group (Texture2d, PVRTexture, TextureAltas, TextureCache)
+ . Xcode: textures files in 1 Xcode group (Texture2d, PVRTexture, TextureAltas, TextureCache)
 
 version 0.8.2 - 19-Oct-2009
  . Actions: Animate copy restoreOriginalFrame parameter (issue #602)
@@ -228,7 +228,7 @@ version 0.8.1-rc - 19-Ago-2009
  . TileMap: TMX maps starts at 0,0 position (part of issue #462)
  . TileMap: TMX getter/setters works OK with async maps (issue #506)
  . TileMap: anchorPoint works OK (issue #508)
- . XCode: COCOS2D_DEBUG used instead of DEBUG (issue #507)
+ . Xcode: COCOS2D_DEBUG used instead of DEBUG (issue #507)
  
 version 0.8.1-beta - 10-Ago-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)
@@ -242,7 +242,7 @@ version 0.8.1-beta - 10-Ago-2009
  . ParticleView: integrated Particle visual editor (issue #480)
  . Parallax: more precise absolute coords (issue #471)
  . RenderTexture: let's you render CocosNode objects into a texture (issue #XXX)
- . Template: added XCode cocos2d Template (issue #469)
+ . Template: added Xcode cocos2d Template (issue #469)
  . TextureMgr: Async reuses EAGL context (issue #472)
  . tools: added mkatlas.pl script (issue #483)
  . TiledMap: Added support for the TMX format: iso, ortho and hex maps (issue #462)
@@ -335,7 +335,7 @@ version 0.8-beta - 17-Jun-2009
  . Touch Events: support for Targeted touches (issue #211)
  . Touch Events: menu uses new touch dispatcher (issue #362)
  . Touch Events: supports priority (issue #307)
- . XCode: fixed compile error when keyboard registry is enabled (issue #387)
+ . Xcode: fixed compile error when keyboard registry is enabled (issue #387)
 
  version 0.7.3 - 18-May-2009
  . Actions: Sequence works when 1st action is an InstantAction. InstantActions are reversible (issue #348)
@@ -391,7 +391,7 @@ version 0.7.2 - 23-Apr-2009
  . TextureNode: texture is "retain" not "assign" (issue #230 and issue #274)
  . TileMapAtlas: supports fullpath (issue #220)
  . TileMapAtlas: don't render in subpixels (issue #135)
- . XCode project: added class model (issue #312)
+ . Xcode project: added class model (issue #312)
  
 version 0.7.1 - 20-Mar-2009
  . Actions: added tags to actions (issue #222)
@@ -509,7 +509,7 @@ version 0.6.2 - 24-Dec-2008
 version 0.6.1 - 08-Dec-2008
  . Documentation: Generation of doc fixes (issue #105)
  . Primitives: drawLine prototype fixed (issue #103)
- . XCode: all projects have "thumb compilation" turned off (issue #104)
+ . Xcode: all projects have "thumb compilation" turned off (issue #104)
  
 version 0.6.0 - 05-Dec-2008
  . Actions: Sequences of Repeats fixes (issue #80)
