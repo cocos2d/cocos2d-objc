@@ -1,5 +1,6 @@
 version 0.99.1 - XX-MMM-2010
- . TMX: if layer contains cc_vertezx=1, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
+ . TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
+ . TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #765)
  
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)

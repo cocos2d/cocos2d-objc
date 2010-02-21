@@ -150,8 +150,10 @@
 -(CCTMXLayer*) layerNamed:(NSString *)layerName 
 {
 	for( CCTMXLayer *layer in children_ ) {
-		if( [layer.layerName isEqual:layerName] )
-			return layer;
+		if([layer isKindOfClass:[CCTMXLayer class]]){
+			if( [layer.layerName isEqual:layerName] )
+				return layer;
+		}
 	}
 	
 	// layer not found
