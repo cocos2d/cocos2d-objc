@@ -105,3 +105,15 @@
 	CCSprite *tamara;
 }
 @end
+
+@interface TMXIsoVertexZ : TileDemo
+{
+	CCSprite *tamara;
+}
+@end
+
+@interface TMXOrthoVertexZ : TileDemo
+{
+	CCSprite *tamara;
+}
+@end

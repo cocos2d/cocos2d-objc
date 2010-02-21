@@ -12,6 +12,9 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
+	@"TMXIsoZorder",
+	@"TMXOrthoZorder",
 			@"TileMapTest",
 			@"TileMapEditTest",
 			@"TMXOrthoTest",
@@ -29,6 +32,8 @@ static NSString *transitions[] = {
 			@"TMXResizeTest",
 			@"TMXIsoZorder",
 			@"TMXOrthoZorder",
+			@"TMXIsoVertexZ",
+			@"TMXOrthoVertexZ",
 
 };
 
@@ -847,6 +852,140 @@ Class restartAction()
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
+		tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[map addChild:tamara z: [[map children] count]];
+		[tamara retain];
+		int mapWidth = map.mapSize.width * map.tileSize.width;
+		[tamara setPosition:ccp( mapWidth/2,0)];
+		[tamara setAnchorPoint:ccp(0.5f,0)];
+
+		
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(300,250)];
+		id back = [move reverse];
+		id seq = [CCSequence actions:move, back, nil];
+		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(repositionSprite:)];
+				
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[tamara release];
+	[super dealloc];
+}
+
+-(void) repositionSprite:(ccTime)dt
+{
+	CGPoint p = [tamara position];
+	CCNode *map = [self getChildByTag:kTagTileMap];
+	
+	// there are only 4 layers. (grass and 3 trees layers)
+	// if tamara < 48, z=4
+	// if tamara < 96, z=3
+	// if tamara < 144,z=2
+	
+	int newZ = 4 - (p.y / 48);
+	newZ = MAX(newZ,0);
+	
+	[map reorderChild:tamara z:newZ];	
+}
+
+-(NSString *) title
+{
+	return @"TMX Iso Zorder";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite should hide behind the trees";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXOrthoZorder
+
+@implementation TMXOrthoZorder
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-zorder.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[map addChild:tamara z: [[map children] count]];
+		[tamara retain];
+		[tamara setAnchorPoint:ccp(0.5f,0)];
+
+		
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(400,450)];
+		id back = [move reverse];
+		id seq = [CCSequence actions:move, back, nil];
+		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(repositionSprite:)];
+		
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[tamara release];
+	[super dealloc];
+}
+
+-(void) repositionSprite:(ccTime)dt
+{
+	CGPoint p = [tamara position];
+	CCNode *map = [self getChildByTag:kTagTileMap];
+	
+	// there are only 4 layers. (grass and 3 trees layers)
+	// if tamara < 81, z=4
+	// if tamara < 162, z=3
+	// if tamara < 243,z=2
+
+	// 60: offset of all the tiles in this particular map
+	int newZ = 4 - ( (p.y+60) / 81);
+	newZ = MAX(newZ,0);
+
+	[map reorderChild:tamara z:newZ];
+}
+
+-(NSString *) title
+{
+	return @"TMX Ortho Zorder";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite should hide behind the trees";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXIsoVertexZ
+
+@implementation TMXIsoVertexZ
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-vertexz.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		[map setPosition:ccp(-700,-50)];
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
+		// can use any CCSprite and it will work OK.
 		CCTMXLayer *layer = [map layerNamed:@"Trees"];
 		tamara = [layer tileAt:ccp(29,29)];
 		[tamara retain];
@@ -857,7 +996,7 @@ Class restartAction()
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
 		
 		[self schedule:@selector(repositionSprite:)];
-				
+		
 	}	
 	return self;
 }
@@ -887,13 +1026,13 @@ Class restartAction()
 -(void) onExit
 {
 	// At exit use any other projection. 
-//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 	[super onExit];
 }
 
 -(NSString *) title
 {
-	return @"TMX Iso Zorder";
+	return @"TMX Iso VertexZ";
 }
 
 -(NSString *) subtitle
@@ -903,19 +1042,21 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark TMXOrthoZorder
+#pragma mark TMXOrthoVertexZ
 
-@implementation TMXOrthoZorder
+@implementation TMXOrthoVertexZ
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
-		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-zorder.tmx"];
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-vertexz.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
+		// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
+		// can use any CCSprite and it will work OK.
 		CCTMXLayer *layer = [map layerNamed:@"trees"];
 		tamara = [layer tileAt:ccp(0,11)];
 		[tamara retain];
@@ -962,7 +1103,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"TMX Ortho Zorder";
+	return @"TMX Ortho vertexZ";
 }
 
 -(NSString *) subtitle
@@ -970,6 +1111,7 @@ Class restartAction()
 	return @"Sprite should hide behind the trees";
 }
 @end
+
 
 
 #pragma mark -
