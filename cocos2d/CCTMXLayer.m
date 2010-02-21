@@ -95,6 +95,14 @@
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
 -(CGPoint) positionForHexAt:(CGPoint)pos;
 
+/* optimization methos */
+-(CCSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
+-(CCSprite*) updateTileForGID:(unsigned int)gid at:(CGPoint)pos;
+
+/* The layer recognizes some special properties, like cc_vertez */
+-(void) parseInternalProperties;
+
 -(int) vertexZForPos:(CGPoint)pos;
 
 // adding quad from sprite
@@ -134,19 +142,29 @@
 		tex = [[CCTextureCache sharedTextureCache] addImage:tilesetInfo.sourceImage];
 	
 	if((self=[super initWithTexture:tex capacity:capacity])) {		
+
+		// layerInfo
 		self.layerName = layerInfo.name;
 		self.layerSize = layerInfo.layerSize;
 		self.tiles = layerInfo.tiles;
+		minGID_ = layerInfo.minGID;
+		maxGID_ = layerInfo.maxGID;
+		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
+
+		// tilesetInfo
 		self.tileset = tilesetInfo;
+		
+		// mapInfo
 		self.mapTileSize = mapInfo.tileSize;
 		self.layerOrientation = mapInfo.orientation;
-		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
+		
 		
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
 		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
 		
-		useVertexZ_= NO;
+		useAutomaticVertexZ_= NO;
+		vertexZvalue_ = 0;
 
 	}
 	return self;
@@ -185,6 +203,51 @@
 	}
 }
 
+#pragma mark CCTMXLayer - setup Tiles
+
+-(void) setupTiles
+{	
+	// Optimization: quick hack that sets the image size on the tileset
+	tileset_.imageSize = [textureAtlas_.texture contentSize];
+	
+	// By default all the tiles are aliased
+	// pros:
+	//  - easier to render
+	// cons:
+	//  - difficult to scale / rotate / etc.
+	[textureAtlas_.texture setAliasTexParameters];
+	
+	CFByteOrder o = CFByteOrderGetCurrent();
+		
+	// Parse cocos2d properties
+	[self parseInternalProperties];
+	
+	for( unsigned int y=0; y < layerSize_.height; y++ ) {
+		for( unsigned int x=0; x < layerSize_.width; x++ ) {
+			
+			unsigned int pos = x + layerSize_.width * y;
+			unsigned int gid = tiles_[ pos ];
+			
+			// gid are stored in little endian.
+			// if host is big endian, then swap
+			if( o == CFByteOrderBigEndian )
+				gid = CFSwapInt32( gid );
+			
+			// XXX: gid == 0 --> empty tile
+			if( gid != 0 ) {
+				[self appendTileForGID:gid at:ccp(x,y)];
+				
+				// Optimization: update min and max GID rendered by the layer
+				minGID_ = MIN(gid, minGID_);
+				maxGID_ = MAX(gid, maxGID_);
+			}
+		}
+	}
+	
+	NSAssert( maxGID_ >= tileset_.firstGid &&
+			 minGID_ >= tileset_.firstGid, @"TMX: Only 1 tilset per layer is supported");	
+}
+
 #pragma mark CCTMXLayer - Properties
 
 -(id) propertyNamed:(NSString *)propertyName 
@@ -194,9 +257,15 @@
 
 -(void) parseInternalProperties
 {
-	// if cc_vertex=1, then tiles will be rendered using vertexz
+	// if cc_vertex=automatic, then tiles will be rendered using vertexz
+
 	NSString *vertexz = [self propertyNamed:@"cc_vertexz"];
-	useVertexZ_ = [vertexz isEqualToString:@"1"];
+	if( vertexz ) {
+		if( [vertexz isEqualToString:@"automatic"] )
+			useAutomaticVertexZ_ = YES;
+		else
+			vertexZvalue_ = [vertexz intValue];
+	}
 }
 
 #pragma mark CCTMXLayer - obtaining tiles/gids
@@ -502,16 +571,26 @@ int compareInts (const void * a, const void * b)
 -(int) vertexZForPos:(CGPoint)pos
 {
 	int ret = 0;
-	if( useVertexZ_ ) {
+	unsigned int maxVal = 0;
+	if( useAutomaticVertexZ_ ) {
 		switch( layerOrientation_ ) {
 			case CCTMXOrientationIso:
-				ret = pos.x + pos.y;
+				maxVal = layerSize_.width + layerSize_.height;
+				ret = -(maxVal - (pos.x + pos.y));
+//				ret = pos.x + pos.y;
+				break;
+			case CCTMXOrientationOrtho:
+				ret = -(layerSize_.height-pos.y);
+				break;
+			case CCTMXOrientationHex:
+				NSAssert(NO,@"TMX Hexa zOrder not supported");
 				break;
 			default:
-				ret = pos.y;
+				NSAssert(NO,@"TMX invalid value");
 				break;
 		}
-	}
+	} else
+		ret = vertexZvalue_;
 	
 	return ret;
 }
@@ -520,14 +599,14 @@ int compareInts (const void * a, const void * b)
 
 -(void) draw
 {
-	if( useVertexZ_ ) {
+	if( useAutomaticVertexZ_ ) {
 		glEnable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER, 0.0f);
 	}
 	
 	[super draw];
 	
-	if( useVertexZ_ )
+	if( useAutomaticVertexZ_ )
 		glDisable(GL_ALPHA_TEST);
 }
 @end

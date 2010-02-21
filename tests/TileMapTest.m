@@ -28,6 +28,8 @@ static NSString *transitions[] = {
 			@"TMXObjectsTest",
 			@"TMXResizeTest",
 			@"TMXIsoZorder",
+			@"TMXOrthoZorder",
+
 };
 
 enum {
@@ -299,8 +301,6 @@ Class restartAction()
 		//
 		// it should not flicker. No artifacts should appear
 		//
-		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
-		[self addChild:color z:-1];
 
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
@@ -312,10 +312,9 @@ Class restartAction()
 			[[child texture] setAntiAliasTexParameters];
 		}
 		
-		// TIP: To enable the camera, disable the depth buffer
-//		float x, y, z;
-//		[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
-//		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
+		float x, y, z;
+		[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
+		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
 	}	
 	return self;
 }
@@ -873,10 +872,8 @@ Class restartAction()
 {
 	// tile height is 64x32
 	// map size: 30x30
-	// map height: 960 pixels.
-	// z height: (30-1) * 32 = 928
 	CGPoint p = [tamara position];
-	[tamara setVertexZ: (928 - p.y) /16 ];
+	[tamara setVertexZ: -( (p.y+32) /16) ];
 }
 
 -(void) onEnter
@@ -905,6 +902,74 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXOrthoZorder
+
+@implementation TMXOrthoZorder
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-zorder.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		CCTMXLayer *layer = [map layerNamed:@"trees"];
+		tamara = [layer tileAt:ccp(0,11)];
+		[tamara retain];
+		
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(400,450)];
+		id back = [move reverse];
+		id seq = [CCSequence actions:move, back, nil];
+		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(repositionSprite:)];
+		
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[tamara release];
+	[super dealloc];
+}
+
+-(void) repositionSprite:(ccTime)dt
+{
+	// tile height is 101x81
+	// map size: 12x12
+	CGPoint p = [tamara position];
+	[tamara setVertexZ: -( (p.y+81) /81) ];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	// TIP: 2d projection should be used
+	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+}
+
+-(void) onExit
+{
+	// At exit use any other projection. 
+	//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	[super onExit];
+}
+
+-(NSString *) title
+{
+	return @"TMX Ortho Zorder";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite should hide behind the trees";
+}
+@end
 
 
 #pragma mark -

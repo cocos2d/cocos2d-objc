@@ -99,3 +99,9 @@
 	CCSprite *tamara;
 }
 @end
+
+@interface TMXOrthoZorder : TileDemo
+{
+	CCSprite *tamara;
+}
+@end
