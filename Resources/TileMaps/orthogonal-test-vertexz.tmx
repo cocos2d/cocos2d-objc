@@ -5,23 +5,19 @@
   <image source="ortho-test1.png"/>
  </tileset>
  <layer name="grass" width="12" height="12">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NgGFlAlQg82NQPZgwAVOGiDUACAAA=
   </data>
  </layer>
- <layer name="trees4" width="12" height="12">
+ <layer name="trees" width="12" height="12">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAXUAMJk6lMjAg9mAAA8pVQ0QAIAAA==
-  </data>
- </layer>
- <layer name="trees3" width="12" height="12">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAVDCWgQgekJANerQhxAAgAA
-  </data>
- </layer>
- <layer name="trees2" width="12" height="12">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAXDGagTgSkBAFOI2dZAAgAA
+   H4sIAAAAAAAAA2NgGFlAEgkTA/iAmB+IBaB8JRzqhKG0OhJmBmImIGYBYlYgZsOiTw2INaDqYQDEFkIyE5seZAyzDxeAqdMgQj0zVE4DyV341AMAIPnTMUACAAA=
   </data>
  </layer>
 </map>
