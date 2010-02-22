@@ -1,4 +1,5 @@
 version 0.99.1 - XX-MMM-2010
+ . RenderTexture: removed limit when saving images (issue #782)
  . TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
  . TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
  

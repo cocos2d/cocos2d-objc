@@ -30,9 +30,27 @@
 		brush = [[CCSprite spriteWithFile:@"stars.png"] retain];
 		[brush setBlendFunc: (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA }];  
 		[brush setOpacity:20];
-		isTouchEnabled = YES;		
+		self.isTouchEnabled = YES;
+		
+		// Save Image menu
+		[CCMenuItemFont setFontSize:16];
+		CCMenuItem *item = [CCMenuItemFont itemFromString:@"Save Image" target:self selector:@selector(saveImage:)];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		[menu setPosition:ccp(s.width-80, s.height-80)];
 	}
 	return self;
+}
+
+-(void) saveImage:(id)sender
+{
+	static int counter=0;
+
+	NSString *str = [NSString stringWithFormat:@"image-%d.png", counter];
+	[target saveBuffer:str format:kImageFormatPNG];
+	NSLog(@"Image saved: %@", str);
+	
+	counter++;
 }
 
 -(void) dealloc

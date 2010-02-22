@@ -149,10 +149,18 @@
 	int bytesPerRow					= bytesPerPixel * tx;
 	NSInteger myDataLength			= bytesPerRow * ty;
   
-	unsigned char buffer[myDataLength];
-  
+	NSMutableData *buffer	= [[NSMutableData alloc] initWithCapacity:myDataLength];
+	NSMutableData *pixels	= [[NSMutableData alloc] initWithCapacity:myDataLength];
+
+	if( ! (buffer && pixels) ) {
+		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
+		[buffer release];
+		[pixels release];
+		return nil;
+	}
+
 	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, &buffer);
+	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, [buffer mutableBytes]);
 	[self end];
 	/*
 	 CGImageCreate(size_t width, size_t height,
@@ -164,7 +172,7 @@
 	// make data provider with data.
   
 	CGBitmapInfo bitmapInfo			= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
+	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, [buffer mutableBytes], myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
 	CGImageRef iref					= CGImageCreate(tx, ty,
                                           bitsPerComponent, bitsPerPixel, bytesPerRow,
@@ -189,8 +197,7 @@
 	 size_t height, size_t bitsPerComponent, size_t bytesPerRow,
 	 CGColorSpaceRef colorspace, CGBitmapInfo bitmapInfo)
 	 */
-	uint32_t* pixels				= (uint32_t *)malloc(myDataLength);
-	CGContextRef context			= CGBitmapContextCreate(pixels, tx,
+	CGContextRef context			= CGBitmapContextCreate([pixels mutableBytes], tx,
                                                     ty, CGImageGetBitsPerComponent(iref), CGImageGetBytesPerRow(iref),
                                                     CGImageGetColorSpace(iref), bitmapInfo);
 	CGContextTranslateCTM(context, 0.0f, ty);
@@ -199,12 +206,14 @@
 	CGImageRef outputRef			= CGBitmapContextCreateImage(context);
 	UIImage* image					= [[UIImage alloc] initWithCGImage:outputRef];
   
-	free(pixels);
 	CGImageRelease(iref);
 	CGContextRelease(context);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
 	CGImageRelease(outputRef);
+	
+	[pixels release];
+	[buffer release];
   
 	return [image autorelease];
 }
