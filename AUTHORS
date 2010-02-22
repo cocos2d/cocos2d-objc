@@ -146,6 +146,13 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Labels in Texture2D
 	* Keith Peters:
 		author of Bezier drawing primitives
+	* Lam Pham (http://www.fancyratstudios.com/)
+		Author of CCProgressTimer node
+		Author of CCProgressTo and CCProgressFromTo actions
+		Author of CCRadialCCWTransition and CCRadialCWTransition transitions
+		Added several functions to CGPointExtension like: clampf, ccpClamp, ccpFromSize,
+			ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
+			ccpRotateByAngle, ccpLineIntersect
 	* Leonardo Kasperavičius (http://www.instantgames.com.br/):
 		original author of QuadParticleSystem class
 		Author of the original Bezier action

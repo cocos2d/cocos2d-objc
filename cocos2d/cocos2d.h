@@ -89,6 +89,8 @@
 #import "CCTouchHandler.h"
 #import "ccConfig.h"
 #import "CCConfiguration.h"
+#import "CCRadialTransition.h"
+#import "CCProgressTimerActions.h"
 
 //
 // cocos2d macros

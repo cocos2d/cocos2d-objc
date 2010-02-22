@@ -17,6 +17,7 @@
  cocos2d (cc) types
 */
 
+#import <objc/objc.h>				// BOOL
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
 #import <OpenGLES/ES1/gl.h>			// GLenum, GLubyte
 
@@ -85,6 +86,30 @@ typedef struct _ccColor4F {
 	float b;
 	float a;
 } ccColor4F;
+
+/** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
+ @since v0.99.1
+ */
+static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
+{
+	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
+}
+
+/** Returns a ccColor4F from a ccColor4B.
+ @since v0.99.1
+ */
+static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
+{
+	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
+}
+
+/** returns YES if both ccColor4F are equal. Otherwise it returns NO.
+ @since v0.99.1
+ */
+static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
+{
+	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
 
 /** A vertex composed of 2 floats: x, y
  @since v0.8

@@ -2,6 +2,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2007 Scott Lembcke
+ * Copyright (c) 2010 Lam Pham
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +24,7 @@
  */
 
 /*
- * Code based on Chipmunk's cpVect.h file
+ * Some of the functions were based on Chipmunk's cpVect.h.
  */
 
 /**
@@ -45,6 +46,7 @@
 
 #import <CoreGraphics/CGGeometry.h>
 #import <math.h>
+#import <objc/objc.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -216,6 +218,97 @@ CGPoint ccpForAngle(const CGFloat a);
  @since v0.7.2
  */
 CGFloat ccpToAngle(const CGPoint v);
+
+
+/** Clamp a value between from and to.
+ @since v0.99.1
+ */
+float clampf(float value, float min_inclusive, float max_inclusive);
+
+/** Clamp a point between from and to.
+ @since v0.99.1
+ */
+CGPoint ccpClamp(CGPoint p, CGPoint from, CGPoint to);
+
+/** Quickly convert CGSize to a CGPoint
+ @since v0.99.1
+ */
+CGPoint ccpFromSize(CGSize s);
+
+/** Run a math operation function on each point component
+ * absf, fllorf, ceilf, roundf
+ * any function that has the signature: float func(float);
+ * For example: let's try to take the floor of x,y
+ * ccpCompOp(p,floorf);
+ @since v0.99.1
+ */
+CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float));
+
+/** Linear Interpolation between two points a and b
+ @returns
+	alpha == 0 ? a
+	alpha == 1 ? b
+	otherwise a value between a..b
+ @since v0.99.1
+ */
+CGPoint ccpLerp(CGPoint a, CGPoint b, float alpha);
+
+
+/** @returns if points have fuzzy equality which means equal with some degree of variance.
+ @since v0.99.1
+ */
+BOOL ccpFuzzyEqual(CGPoint a, CGPoint b, float variance);
+
+
+/** Multiplies a nd b components, a.x*b.x, a.y*b.y
+ @returns a component-wise multiplication
+ @since v0.99.1
+ */
+CGPoint ccpCompMult(CGPoint a, CGPoint b);
+
+/** @returns the signed angle in radians between two vector directions
+ @since v0.99.1
+ */
+float ccpAngleSigned(CGPoint a, CGPoint b);
+
+/** @returns the angle in radians between two vector directions
+ @since v0.99.1
+*/
+float ccpAngle(CGPoint a, CGPoint b);
+
+/** Rotates a point counter clockwise by the angle around a pivot
+ @param v is the point to rotate
+ @param pivot is the pivot, naturally
+ @param angle is the angle of rotation cw in radians
+ @returns the rotated point
+ @since v0.99.1
+ */
+CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
+
+/** A general line-line intersection test
+ @params p1 
+	is the startpoint for the first line P1 = (p1 - p2)
+ @params p2 
+	is the endpoint for the first line P1 = (p1 - p2)
+ @params p3 
+	is the startpoint for the second line P2 = (p3 - p4)
+ @params p4 
+	is the endpoint for the second line P2 = (p3 - p4)
+ @params s 
+	is the range for a hitpoint in P1 (pa = p1 + s*(p2 - p1))
+ @params t
+	is the range for a hitpoint in P3 (pa = p2 + t*(p4 - p3))
+ @return bool 
+	indicating successful intersection of a line
+	note that to truly test intersection for segments we have to make 
+	sure that s & t lie within [0..1] and for rays, make sure s & t > 0
+	the hit point is		p3 + t * (p4 - p3);
+	the hit point also is	p1 + s * (p2 - p1);
+ @since v0.99.1
+ */
+BOOL ccpLineIntersect(CGPoint p1, CGPoint p2, 
+					  CGPoint p3, CGPoint p4,
+					  float *s, float *t);
 
 #ifdef __cplusplus
 }
