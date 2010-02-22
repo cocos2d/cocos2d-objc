@@ -20,27 +20,19 @@
 	<string>2.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIStatusBarHidden</key>
-	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<dict>
-		<key>telephony</key>
+		<key>accelerometer</key>
+		<true/>
+		<key>armv6</key>
 		<false/>
-		<key>sms</key>
-		<false/>
-		<key>still-camera</key>
+		<key>armv7</key>
 		<false/>
 		<key>auto-focus-camera</key>
 		<false/>
-		<key>video-camera</key>
-		<false/>
-		<key>wifi</key>
-		<false/>
-		<key>accelerometer</key>
-		<true/>
-		<key>location-services</key>
-		<false/>
 		<key>gps</key>
+		<false/>
+		<key>location-services</key>
 		<false/>
 		<key>magnetometer</key>
 		<false/>
@@ -50,12 +42,20 @@
 		<true/>
 		<key>opengles-2</key>
 		<false/>
-		<key>armv6</key>
-		<false/>
-		<key>armv7</key>
-		<false/>
 		<key>peer-peer</key>
 		<false/>
+		<key>sms</key>
+		<false/>
+		<key>still-camera</key>
+		<false/>
+		<key>telephony</key>
+		<false/>
+		<key>video-camera</key>
+		<false/>
+		<key>wifi</key>
+		<false/>
 	</dict>
+	<key>UIStatusBarHidden</key>
+	<true/>
 </dict>
 </plist>
