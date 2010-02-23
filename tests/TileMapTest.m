@@ -11,12 +11,13 @@
 #import "TileMapTest.h"
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {
+static NSString *transitions[] = {	
 	
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
-			@"TileMapTest",
-			@"TileMapEditTest",
+	@"TMXIsoVertexZ",
+	@"TMXOrthoVertexZ",
+	
 			@"TMXOrthoTest",
 			@"TMXOrthoTest2",
 			@"TMXOrthoTest3",
@@ -34,6 +35,9 @@ static NSString *transitions[] = {
 			@"TMXOrthoZorder",
 			@"TMXIsoVertexZ",
 			@"TMXOrthoVertexZ",
+			@"TileMapTest",
+			@"TileMapEditTest",
+
 
 };
 
@@ -951,8 +955,8 @@ Class restartAction()
 	// if tamara < 162, z=3
 	// if tamara < 243,z=2
 
-	// 60: offset of all the tiles in this particular map
-	int newZ = 4 - ( (p.y+60) / 81);
+	// -10: customization for this particular sample
+	int newZ = 4 - ( (p.y-10) / 81);
 	newZ = MAX(newZ,0);
 
 	[map reorderChild:tamara z:newZ];

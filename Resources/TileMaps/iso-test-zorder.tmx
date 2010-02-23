@@ -5,9 +5,6 @@
   <image source="iso-test.png"/>
  </tileset>
  <layer name="grass" width="30" height="30">
-  <properties>
-   <property name="cc_vertexz" value="-1000"/>
-  </properties>
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3VwQkAAAgCQNt/6ZaIgjjBr/e0ktRRt8PlcrlcLnduZ/v3uVwu97t70QaXptU4EA4AAA==
   </data>
