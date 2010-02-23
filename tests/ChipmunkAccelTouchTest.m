@@ -190,7 +190,7 @@ eachShape(void *ptr, void* unused)
 	
 	
 	// AnimationInterval doesn't work with FastDirector, yet
-//	[[Director sharedDirector] setAnimationInterval:1.0/60];
+//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
 	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// create an openGL view inside a window
