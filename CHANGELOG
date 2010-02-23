@@ -11,6 +11,7 @@ version 0.99.1 - XX-MMM-2010
  
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)
+ . CocosDenshion: allow audio session category to be changed (issue #775)
  . CocosDenshion: can be initialized before cocos2d (issue #777, #773)
 
 version 0.99.0-final - 15-Feb-2010

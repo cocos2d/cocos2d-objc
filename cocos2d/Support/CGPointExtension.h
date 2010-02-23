@@ -286,17 +286,17 @@ float ccpAngle(CGPoint a, CGPoint b);
 CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
 
 /** A general line-line intersection test
- @params p1 
+ @param p1 
 	is the startpoint for the first line P1 = (p1 - p2)
- @params p2 
+ @param p2 
 	is the endpoint for the first line P1 = (p1 - p2)
- @params p3 
+ @param p3 
 	is the startpoint for the second line P2 = (p3 - p4)
- @params p4 
+ @param p4 
 	is the endpoint for the second line P2 = (p3 - p4)
- @params s 
+ @param s 
 	is the range for a hitpoint in P1 (pa = p1 + s*(p2 - p1))
- @params t
+ @param t
 	is the range for a hitpoint in P3 (pa = p2 + t*(p4 - p3))
  @return bool 
 	indicating successful intersection of a line
