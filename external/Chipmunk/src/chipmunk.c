@@ -32,14 +32,25 @@ extern "C" {
 }
 #endif
 
-char *cpVersionString = "5.1.0";
+void
+cpMessage(char *message, char *condition, char *file, int line, int isError)
+{
+	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
+	fprintf(stderr, "\tFailed condition: %s\n", condition);
+	fprintf(stderr, "\tSource:%s:%d\n", file, line);
+	
+	if(isError) abort();
+}
+
+
+char *cpVersionString = "5.x.x";
 
 void
 cpInitChipmunk(void)
 {
-#ifndef NDEBUG	
+#ifndef NDEBUG
 	printf("Initializing Chipmunk v%s (Debug Enabled)\n", cpVersionString);
-	printf("Compile with NDEBUG defined to disable debug mode and assert() checks\n");
+	printf("Compile with -DNDEBUG defined to disable debug mode and runtime assertion checks\n");
 #endif
 	
 	cpInitCollisionFuncs();
@@ -83,5 +94,12 @@ cpMomentForPoly(cpFloat m, const int numVerts, cpVect *verts, cpVect offset)
 	cpfree(tVerts);
 	return (m*sum1)/(6.0f*sum2);
 }
+
+cpFloat
+cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
+{
+	return m*(width*width + height*height)/12.0;
+}
+
 
 #include "chipmunk_ffi.h"

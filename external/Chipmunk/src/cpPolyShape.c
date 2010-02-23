@@ -21,7 +21,6 @@
  
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 
 #include "chipmunk.h"
 #include "chipmunk_unsafe.h"
@@ -156,15 +155,15 @@ cpPolyValidate(cpVect *verts, int numVerts)
 int
 cpPolyShapeGetNumVerts(cpShape *shape)
 {
-	assert(shape->klass == &polyClass);
+	cpAssert(shape->klass == &polyClass, "Shape is not a poly shape.");
 	return ((cpPolyShape *)shape)->numVerts;
 }
 
 cpVect
 cpPolyShapeGetVert(cpShape *shape, int idx)
 {
-	assert(shape->klass == &polyClass);
-	assert(idx < cpPolyShapeGetNumVerts(shape));
+	cpAssert(shape->klass == &polyClass, "Shape is not a poly shape.");
+	cpAssert(0 <= idx && idx < cpPolyShapeGetNumVerts(shape), "Index out of range.");
 	
 	return ((cpPolyShape *)shape)->verts[idx];
 }
@@ -195,7 +194,7 @@ cpPolyShape *
 cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 {
 	// Fail if the user attempts to pass a concave poly, or a bad winding.
-	assert(cpPolyValidate(verts, numVerts));
+	cpAssert(cpPolyValidate(verts, numVerts), "Polygon is concave or has a reversed winding.");
 	
 	setUpVerts(poly, numVerts, verts, offset);
 	cpShapeInit((cpShape *)poly, &polyClass, body);
@@ -209,12 +208,34 @@ cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 	return (cpShape *)cpPolyShapeInit(cpPolyShapeAlloc(), body, numVerts, verts, offset);
 }
 
+cpPolyShape *
+cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
+{
+	cpFloat hw = width/2.0;
+	cpFloat hh = height/2.0;
+	
+	cpVect verts[] = {
+		cpv(-hw,-hh),
+		cpv(-hw, hh),
+		cpv( hw, hh),
+		cpv( hw,-hh),
+	};
+	
+	return cpPolyShapeInit(poly, body, 4, verts, cpvzero);
+}
+
+cpShape *
+cpBoxShapeNew(cpBody *body, cpFloat width, cpFloat height)
+{
+	return (cpShape *)cpBoxShapeInit(cpPolyShapeAlloc(), body, width, height);
+}
+
 // Unsafe API (chipmunk_unsafe.h)
 
 void
 cpPolyShapeSetVerts(cpShape *shape, int numVerts, cpVect *verts, cpVect offset)
 {
-	assert(shape->klass == &polyClass);
+	cpAssert(shape->klass == &polyClass, "Shape is not a poly shape.");
 	cpPolyShapeDestroy(shape);
 	setUpVerts((cpPolyShape *)shape, numVerts, verts, offset);
 }

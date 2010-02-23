@@ -23,7 +23,7 @@
 struct cpShape;
 struct cpShapeClass;
 
-typedef struct cpSegmentQueryInfo{
+typedef struct cpSegmentQueryInfo {
 	struct cpShape *shape; // shape that was hit, NULL if no collision
 	cpFloat t; // Distance along query segment, will always be in the range [0, 1].
 	cpVect n; // normal of hit surface
