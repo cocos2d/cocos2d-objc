@@ -13,11 +13,10 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 	
-	@"TMXIsoZorder",
-	@"TMXOrthoZorder",
-	@"TMXIsoVertexZ",
-	@"TMXOrthoVertexZ",
-	
+			@"TMXIsoZorder",
+			@"TMXOrthoZorder",
+			@"TMXIsoVertexZ",
+			@"TMXOrthoVertexZ",	
 			@"TMXOrthoTest",
 			@"TMXOrthoTest2",
 			@"TMXOrthoTest3",
@@ -31,14 +30,8 @@ static NSString *transitions[] = {
 			@"TMXTilesetTest",
 			@"TMXObjectsTest",
 			@"TMXResizeTest",
-			@"TMXIsoZorder",
-			@"TMXOrthoZorder",
-			@"TMXIsoVertexZ",
-			@"TMXOrthoVertexZ",
 			@"TileMapTest",
 			@"TileMapEditTest",
-
-
 };
 
 enum {
