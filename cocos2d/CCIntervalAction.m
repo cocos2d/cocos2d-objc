@@ -219,48 +219,48 @@
 // Repeat
 //
 #pragma mark -
-#pragma mark Repeat
+#pragma mark CCRepeat
 @implementation CCRepeat
-+(id) actionWithAction: (CCFiniteTimeAction*) action times: (unsigned int) t
++(id) actionWithAction:(CCFiniteTimeAction*)action times:(unsigned int)times
 {
-	return [[[self alloc] initWithAction: action times: t] autorelease];
+	return [[[self alloc] initWithAction:action times:times] autorelease];
 }
 
--(id) initWithAction: (CCFiniteTimeAction*) action times: (unsigned int) t
+-(id) initWithAction:(CCFiniteTimeAction*)action times:(unsigned int)times
 {
-	ccTime d = [action duration] * t;
+	ccTime d = [action duration] * times;
 
 	if( (self=[super initWithDuration: d ]) ) {
-		times = t;
-		other = [action retain];
+		times_ = times;
+		other_ = [action retain];
 
-		total = 0;
+		total_ = 0;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] times:times];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[other_ copy] autorelease] times:times_];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[other release];
+	[other_ release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
-	total = 0;
+	total_ = 0;
 	[super startWithTarget:aTarget];
-	[other startWithTarget:aTarget];
+	[other_ startWithTarget:aTarget];
 }
 
--(void) stop {
-    
-    [other stop];
+-(void) stop
+{    
+    [other_ stop];
 	[super stop];
 }
 
@@ -269,21 +269,22 @@
 // container action like Repeat, Sequence, AccelDeccel, etc..
 -(void) update:(ccTime) dt
 {
-	ccTime t = dt * times;
-	if( t > total+1 ) {
-		[other update:1.0f];
-		total++;
-		[other stop];
-		[other startWithTarget:target];
+	ccTime t = dt * times_;
+	if( t > total_+1 ) {
+		[other_ update:1.0f];
+		total_++;
+		[other_ stop];
+		[other_ startWithTarget:target];
 		
 		// repeat is over ?
-		if( total== times )
+		if( total_== times_ )
 			// so, set it in the original position
-			[other update:0];
-		else
+			[other_ update:0];
+		else {
 			// no ? start next repeat with the right update
 			// to prevent jerk (issue #390)
-			[other update: t-(total+1)];
+			[other_ update: t-total_];
+		}
 
 	} else {
 		
@@ -293,20 +294,20 @@
 		// else it could be 0.
 		if( dt== 1.0f) {
 			r=1.0f;
-			total++; // this is the added line
+			total_++; // this is the added line
 		}
-		[other update: MIN(r,1)];
+		[other_ update: MIN(r,1)];
 	}
 }
 
 -(BOOL) isDone
 {
-	return ( total == times );
+	return ( total_ == times_ );
 }
 
 - (CCIntervalAction *) reverse
 {
-	return [[self class] actionWithAction:[other reverse] times: times];
+	return [[self class] actionWithAction:[other_ reverse] times:times_];
 }
 @end
 

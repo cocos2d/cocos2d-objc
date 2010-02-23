@@ -17,6 +17,7 @@
 }
 -(void) centerSprites:(unsigned int)numberOfSprites;
 -(NSString*) title;
+-(NSString*) subtitle;
 
 -(void) backCallback:(id) sender;
 -(void) nextCallback:(id) sender;
@@ -108,6 +109,10 @@
 @end
 
 @interface ActionRotateToRepeat : ActionDemo
+{}
+@end
+
+@interface ActionRotateJerk : ActionDemo
 {}
 @end
 

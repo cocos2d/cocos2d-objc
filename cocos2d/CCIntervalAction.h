@@ -75,9 +75,9 @@ Example:
  */
 @interface CCRepeat : CCIntervalAction <NSCopying>
 {
-	unsigned int times;
-	unsigned int total;
-	CCFiniteTimeAction *other;
+	unsigned int times_;
+	unsigned int total_;
+	CCFiniteTimeAction *other_;
 }
 /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 +(id) actionWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
