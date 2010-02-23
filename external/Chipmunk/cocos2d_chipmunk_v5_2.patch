@@ -1,0 +1,28 @@
+Index: chipmunk.c
+===================================================================
+--- chipmunk.c	(revision 1811)
++++ chipmunk.c	(working copy)
+@@ -98,7 +98,7 @@
+ cpFloat
+ cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
+ {
+-	return m*(width*width + height*height)/12.0;
++	return m*(width*width + height*height)/12;
+ }
+ 
+ 
+Index: cpPolyShape.c
+===================================================================
+--- cpPolyShape.c	(revision 1811)
++++ cpPolyShape.c	(working copy)
+@@ -211,8 +211,8 @@
+ cpPolyShape *
+ cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
+ {
+-	cpFloat hw = width/2.0;
+-	cpFloat hh = height/2.0;
++	cpFloat hw = width/2;
++	cpFloat hh = height/2;
+ 	
+ 	cpVect verts[] = {
+ 		cpv(-hw,-hh),
