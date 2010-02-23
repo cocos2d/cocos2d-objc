@@ -80,11 +80,24 @@ cpArrayPush(cpArray *arr, void *object)
 	arr->num++;
 }
 
+void *
+cpArrayPop(cpArray *arr)
+{
+	arr->num--;
+	
+	void *value = arr->arr[arr->num];
+	arr->arr[arr->num] = NULL;
+	
+	return value;
+}
+
 void
 cpArrayDeleteIndex(cpArray *arr, int idx)
 {
-	int last = --arr->num;
-	arr->arr[idx] = arr->arr[last];
+	arr->num--;
+	
+	arr->arr[idx] = arr->arr[arr->num];
+	arr->arr[arr->num] = NULL;
 }
 
 void

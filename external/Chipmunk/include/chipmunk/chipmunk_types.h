@@ -3,7 +3,7 @@
 #endif
 
 // Use single precision floats on the iPhone.
-#ifdef TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE==1
 	#define CP_USE_DOUBLES 0
 #else
 	// use doubles by default for higher precision
@@ -46,10 +46,35 @@
 #endif
 
 typedef unsigned int cpHashValue;
-typedef void * cpDataPointer;
-typedef unsigned int cpCollisionType;
-typedef unsigned int cpLayers;
-typedef unsigned int cpGroup;
 
-#define CP_NO_GROUP ((cpGroup)0)
-#define CP_ALL_LAYERS (~(cpLayers)0)
+#ifdef CP_DATA_POINTER_TYPE
+	typedef CP_DATA_POINTER_TYPE cpDataPointer;
+#else
+	typedef void * cpDataPointer;
+#endif
+
+#ifdef CP_COLLISION_TYPE_TYPE
+	typedef CP_COLLISION_TYPE_TYPE cpCollisionType;
+#else
+	typedef unsigned int cpCollisionType;
+#endif
+
+#ifdef CP_GROUP_TYPE
+	typedef CP_GROUP_TYPE cpGroup;
+#else
+	typedef unsigned int cpGroup;
+#endif
+
+#ifdef CP_LAYERS_TYPE
+	typedef CP_GROUP_TYPE cpLayers;
+#else
+	typedef unsigned int cpLayers;
+#endif
+
+#ifndef CP_NO_GROUP
+	#define CP_NO_GROUP ((cpGroup)0)
+#endif
+
+#ifndef CP_ALL_LAYERS
+	#define CP_ALL_LAYERS (~(cpLayers)0)
+#endif

@@ -20,7 +20,6 @@
  */
  
 #include <stdlib.h>
-#include <assert.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -29,7 +28,7 @@
 
 #define CP_DefineShapeGetter(struct, type, member, name) \
 CP_DeclareShapeGetter(struct, type, name){ \
-	assert(shape->klass == &struct##Class); \
+	cpAssert(shape->klass == &struct##Class, "shape is not a "#struct); \
 	return ((struct *)shape)->member; \
 }
 cpHashValue SHAPE_ID_COUNTER = 0;
@@ -365,7 +364,7 @@ CP_DefineShapeGetter(cpSegmentShape, cpFloat, r, Radius)
 void
 cpCircleShapeSetRadius(cpShape *shape, cpFloat radius)
 {
-	assert(shape->klass == &cpCircleShapeClass);
+	cpAssert(shape->klass == &cpCircleShapeClass, "Shape is not a circle shape.");
 	cpCircleShape *circle = (cpCircleShape *)shape;
 	
 	circle->r = radius;
@@ -374,7 +373,7 @@ cpCircleShapeSetRadius(cpShape *shape, cpFloat radius)
 void
 cpCircleShapeSetOffset(cpShape *shape, cpVect offset)
 {
-	assert(shape->klass == &cpCircleShapeClass);
+	cpAssert(shape->klass == &cpCircleShapeClass, "Shape is not a circle shape.");
 	cpCircleShape *circle = (cpCircleShape *)shape;
 	
 	circle->c = offset;
@@ -383,7 +382,7 @@ cpCircleShapeSetOffset(cpShape *shape, cpVect offset)
 void
 cpSegmentShapeSetEndpoints(cpShape *shape, cpVect a, cpVect b)
 {
-	assert(shape->klass == &cpSegmentShapeClass);
+	cpAssert(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
 	
 	seg->a = a;
@@ -394,7 +393,7 @@ cpSegmentShapeSetEndpoints(cpShape *shape, cpVect a, cpVect b)
 void
 cpSegmentShapeSetRadius(cpShape *shape, cpFloat radius)
 {
-	assert(shape->klass == &cpSegmentShapeClass);
+	cpAssert(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
 	
 	seg->r = radius;

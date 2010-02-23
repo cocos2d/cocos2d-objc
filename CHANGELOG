@@ -3,11 +3,11 @@ version 0.99.1 - XX-MMM-2010
  . CGPointExtensions: new add functions:  CGPointExtension like: clampf, ccpClamp, ccpFromSize,
 	ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 	ccpRotateByAngle, ccpLineIntersect (issue #783)
+ . Chipmunk: updated to v5.2 (issue #784)
  . RenderTexture: removed limit when saving images (issue #782)
  . TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
  . TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
  . Transition: new added transitions: CCRadialCCWTransition, CCRadialCWTransition (issue #783)
-
  
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)

@@ -26,6 +26,19 @@
 extern "C" {
 #endif
 
+void cpMessage(char *message, char *condition, char *file, int line, int isError);
+#ifdef NDEBUG
+	#define	cpAssertWarn(condition, message)
+#else
+	#define cpAssertWarn(condition, message) if(!(condition)) cpMessage(message, #condition, __FILE__, __LINE__, 0)
+#endif
+
+#ifdef NDEBUG
+	#define	cpAssert(condition, message)
+#else
+	#define cpAssert(condition, message) if(!(condition)) cpMessage(message, #condition, __FILE__, __LINE__, 1)
+#endif
+
 #include "chipmunk_types.h"
 	
 static inline cpFloat
@@ -84,6 +97,9 @@ cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 	#endif
 #endif
 
+// Maximum allocated size for various Chipmunk buffer sizes
+#define CP_BUFFER_BYTES (32*1024)
+
 #define cpmalloc malloc
 #define cpcalloc calloc
 #define cprealloc realloc
@@ -121,6 +137,9 @@ cpFloat cpMomentForSegment(cpFloat m, cpVect a, cpVect b);
 
 // Calculate the moment of inertia for a solid polygon shape.
 cpFloat cpMomentForPoly(cpFloat m, int numVerts, cpVect *verts, cpVect offset);
+
+// Calculate the moment of inertia for a solid box.
+cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
 
 #ifdef __cplusplus
 }

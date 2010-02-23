@@ -57,19 +57,21 @@ void cpConstraintDestroy(cpConstraint *constraint);
 void cpConstraintFree(cpConstraint *constraint);
 
 
-void cpConstraintCheckCast(cpConstraint *constraint, const cpConstraintClass *klass);
+#define cpConstraintCheckCast(constraint, struct) \
+	cpAssert(constraint->klass == struct##GetClass(), "Constraint is not a "#struct);
+
 
 #define CP_DefineConstraintGetter(struct, type, member, name) \
 static inline type \
 struct##Get##name(cpConstraint *constraint){ \
-	cpConstraintCheckCast(constraint, struct##GetClass()); \
+	cpConstraintCheckCast(constraint, struct); \
 	return ((struct *)constraint)->member; \
 } \
 
 #define CP_DefineConstraintSetter(struct, type, member, name) \
 static inline void \
 struct##Set##name(cpConstraint *constraint, type value){ \
-	cpConstraintCheckCast(constraint, struct##GetClass()); \
+	cpConstraintCheckCast(constraint, struct); \
 	((struct *)constraint)->member = value; \
 } \
 

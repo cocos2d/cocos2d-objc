@@ -46,6 +46,9 @@ cpPolyShape *cpPolyShapeAlloc(void);
 cpPolyShape *cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int numVerts, cpVect *verts, cpVect offset);
 cpShape *cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset);
 
+cpPolyShape *cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height);
+cpShape *cpBoxShapeNew(cpBody *body, cpFloat width, cpFloat height);
+
 // Check that a set of vertexes has a correct winding and that they are convex
 int cpPolyValidate(cpVect *verts, int numVerts);
 

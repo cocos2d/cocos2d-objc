@@ -20,7 +20,6 @@
  */
 
 #include <stdlib.h>
-#include <assert.h>
 
 #include "chipmunk.h"
 #include "constraints/util.h"
@@ -39,13 +38,6 @@ cpConstraintFree(cpConstraint *constraint)
 		cpfree(constraint);
 	}
 }
-
-void
-cpConstraintCheckCast(cpConstraint *constraint, const cpConstraintClass *klass)
-{
-	assert(constraint->klass == klass); // Bad cpConstraint type in cast
-}
-
 
 // *** defined in util.h
 

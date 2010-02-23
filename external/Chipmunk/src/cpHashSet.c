@@ -25,22 +25,16 @@
 #include "chipmunk.h"
 #include "prime.h"
 
+static void freeWrap(void *ptr, void *unused){cpfree(ptr);}
+
 void
 cpHashSetDestroy(cpHashSet *set)
 {
-	// Free the chains.
-	for(int i=0; i<set->size; i++){
-		// Free the bins in the chain.
-		cpHashSetBin *bin = set->table[i];
-		while(bin){
-			cpHashSetBin *next = bin->next;
-			cpfree(bin);
-			bin = next;
-		}
-	}
-	
 	// Free the table.
 	cpfree(set->table);
+	
+	cpArrayEach(set->allocatedBuffers, freeWrap, NULL);
+	cpArrayFree(set->allocatedBuffers);
 }
 
 void
@@ -70,6 +64,9 @@ cpHashSetInit(cpHashSet *set, int size, cpHashSetEqlFunc eqlFunc, cpHashSetTrans
 	set->default_value = NULL;
 	
 	set->table = (cpHashSetBin **)cpcalloc(set->size, sizeof(cpHashSetBin *));
+	set->pooledBins = NULL;
+	
+	set->allocatedBuffers = cpArrayNew(0);
 	
 	return set;
 }
@@ -115,6 +112,36 @@ cpHashSetResize(cpHashSet *set)
 	set->size = newSize;
 }
 
+static inline void
+recycleBin(cpHashSet *set, cpHashSetBin *bin)
+{
+	bin->next = set->pooledBins;
+	set->pooledBins = bin;
+	bin->elt = NULL;
+}
+
+static cpHashSetBin *
+getUnusedBin(cpHashSet *set)
+{
+	cpHashSetBin *bin = set->pooledBins;
+	
+	if(bin){
+		set->pooledBins = bin->next;
+		return bin;
+	} else {
+		// Pool is exhausted, make more
+		int count = CP_BUFFER_BYTES/sizeof(cpHashSetBin);
+		cpAssert(count, "Buffer size is too small.");
+		
+		cpHashSetBin *buffer = (cpHashSetBin *)cpmalloc(CP_BUFFER_BYTES);
+		cpArrayPush(set->allocatedBuffers, buffer);
+		
+		// push all but the first one, return the first instead
+		for(int i=1; i<count; i++) recycleBin(set, buffer + i);
+		return buffer;
+	}
+}
+
 void *
 cpHashSetInsert(cpHashSet *set, cpHashValue hash, void *ptr, void *data)
 {
@@ -127,7 +154,7 @@ cpHashSetInsert(cpHashSet *set, cpHashValue hash, void *ptr, void *data)
 	
 	// Create it necessary.
 	if(!bin){
-		bin = (cpHashSetBin *)cpmalloc(sizeof(cpHashSetBin));
+		bin = getUnusedBin(set);
 		bin->hash = hash;
 		bin->elt = set->trans(ptr, data); // Transform the pointer.
 		
@@ -168,8 +195,7 @@ cpHashSetRemove(cpHashSet *set, cpHashValue hash, void *ptr)
 		
 		void *return_value = bin->elt;
 		
-//		*bin = (cpHashSetBin){};
-		cpfree(bin);
+		recycleBin(set, bin);
 		
 		return return_value;
 	}
@@ -218,7 +244,7 @@ cpHashSetFilter(cpHashSet *set, cpHashSetFilterFunc func, void *data)
 				(*prev_ptr) = next;
 
 				set->entries--;
-				cpfree(bin);
+				recycleBin(set, bin);
 			}
 			
 			bin = next;

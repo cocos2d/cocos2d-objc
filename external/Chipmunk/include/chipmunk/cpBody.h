@@ -42,7 +42,7 @@ typedef struct cpBody{
 	cpFloat m, m_inv;
 	
 	// Moment of inertia and it's inverse.
-	// Always use cpBodySetMass() whenever changing the mass as these values must agree.
+	// Always use cpBodySetMoment() whenever changing the moment as these values must agree.
 	cpFloat i, i_inv;
 	
 	// *** Positional Properties
