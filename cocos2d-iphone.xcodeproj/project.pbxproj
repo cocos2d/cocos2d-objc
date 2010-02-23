@@ -5721,9 +5721,9 @@
 			productReference = 50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50B2CE450E129FD900AE9530 /* ChipmunkTest */ = {
+		50B2CE450E129FD900AE9530 /* ChipmunkTestBed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkTest" */;
+			buildConfigurationList = 50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkTestBed" */;
 			buildPhases = (
 				50B2CE420E129FD900AE9530 /* Resources */,
 				50B2CE430E129FD900AE9530 /* Sources */,
@@ -5735,7 +5735,7 @@
 				50B2CE4D0E12A01400AE9530 /* PBXTargetDependency */,
 				50B2CE4F0E12A01700AE9530 /* PBXTargetDependency */,
 			);
-			name = ChipmunkTest;
+			name = ChipmunkTestBed;
 			productName = ChipmunkDemo;
 			productReference = 50B2CE460E129FD900AE9530 /* ChipmunkTest.app */;
 			productType = "com.apple.product-type.application";
@@ -6060,7 +6060,7 @@
 				504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */,
 				50010EBA103B3DB80059EC2E /* Box2dTestBed */,
 				50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */,
-				50B2CE450E129FD900AE9530 /* ChipmunkTest */,
+				50B2CE450E129FD900AE9530 /* ChipmunkTestBed */,
 				506C77CB0E01520900B48100 /* ClickAndMoveTest */,
 				50CB30171004C9D300B7A750 /* CocosDenshionDemo (soundengine) */,
 				509B3A270F3102FD00F2FB95 /* cocosLiveTest */,
@@ -10957,7 +10957,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkTest" */ = {
+		50B2CE4B0E129FDA00AE9530 /* Build configuration list for PBXNativeTarget "ChipmunkTestBed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50B2CE490E129FDA00AE9530 /* Debug */,

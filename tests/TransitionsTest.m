@@ -423,7 +423,8 @@ Class restartTransition()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-//	[Director useFastDirector];
+	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
 	
 	// Create a depth buffer of 16 bits
 	// Needed for the TurnPage transition
