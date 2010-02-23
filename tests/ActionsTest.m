@@ -14,6 +14,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"ActionRotateJerk",
 					@"ActionManual",
 					@"ActionMove",
 					@"ActionRotate",
@@ -32,10 +33,12 @@ static NSString *transitions[] = {
 					@"ActionRepeat",
 					@"ActionRepeatForever",
 					@"ActionRotateToRepeat",
+					@"ActionRotateJerk",
 					@"ActionCallFunc",
 					@"ActionReverseSequence",
 					@"ActionReverseSequence2",
-					@"ActionOrbit" };
+					@"ActionOrbit",
+};
 
 Class nextAction()
 {
@@ -99,6 +102,14 @@ Class restartAction()
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
+		
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -192,6 +203,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 @end
 
@@ -585,19 +601,56 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites:1];
+	[self centerSprites:2];
 	
 	id act1 = [CCRotateTo actionWithDuration:1 angle:90];
 	id act2 = [CCRotateTo actionWithDuration:1 angle:0];
-	id rfe = [CCRepeatForever actionWithAction:[CCSequence actions:act1, act2,
-												 nil]];
+	id seq = [CCSequence actions:act1, act2, nil];
+	id rep1 = [CCRepeatForever actionWithAction:seq];
+	id rep2 = [CCRepeat actionWithAction:[[seq copy] autorelease] times:10];
 	
-	[grossini runAction:rfe];
+	[tamara runAction:rep1];
+	[kathia runAction:rep2];
+
 }
 
 -(NSString *) title
 {
-	return @"RepeatForever + RotateTo";
+	return @"Repeat/RepeatForever + RotateTo";
+}
+-(NSString *) subtitle
+{
+	return @"You should see smooth movements (no jerks). issue #390";
+}
+
+@end
+
+@implementation ActionRotateJerk
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	id seq = [CCSequence actions:
+				  [CCRotateTo actionWithDuration:0.5f angle:-20],
+				  [CCRotateTo actionWithDuration:0.5f angle:20],
+			  nil];
+	
+	id rep1 = [CCRepeat actionWithAction:seq times:10];
+	id rep2 = [CCRepeatForever actionWithAction: [[seq copy] autorelease] ];
+	
+	[tamara runAction:rep1];
+	[kathia runAction:rep2];
+}
+
+-(NSString *) title
+{
+	return @"RepeatForever / Repeat + Rotate";
+}
+-(NSString *) subtitle
+{
+	return @"You should see smooth movements (no jerks). issue #390";
 }
 @end
 
