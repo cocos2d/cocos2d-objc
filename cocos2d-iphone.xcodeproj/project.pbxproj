@@ -3658,7 +3658,7 @@
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
-				50EA8DA011354A6000746D2A /* Util Nodes */,
+				50EA8DA011354A6000746D2A /* Misc Nodes */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
 				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
@@ -4458,10 +4458,10 @@
 		50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */,
-				50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */,
 				502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */,
 				502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */,
+				50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */,
+				50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */,
 				50D2AC9110E90DFA0068ECEB /* CCTMXLayer.h */,
 				50D2AC9210E90DFA0068ECEB /* CCTMXLayer.m */,
 				50D2AC9310E90DFA0068ECEB /* CCTMXObjectGroup.h */,
@@ -4700,7 +4700,7 @@
 			name = Chipmunk;
 			sourceTree = "<group>";
 		};
-		50EA8DA011354A6000746D2A /* Util Nodes */ = {
+		50EA8DA011354A6000746D2A /* Misc Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				50316AD61029A137003ACFE7 /* CCRibbon.h */,
@@ -4712,7 +4712,7 @@
 				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
 				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
 			);
-			name = "Util Nodes";
+			name = "Misc Nodes";
 			sourceTree = "<group>";
 		};
 		50F489BB10458B6300755CFB /* cocos2d-artwork */ = {

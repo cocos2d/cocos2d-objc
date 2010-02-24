@@ -46,6 +46,8 @@
 	int					layerOrientation_;
 	NSMutableArray		*properties_;
 	
+	unsigned char		opacity_; // TMX Layer supports opacity
+	
 	unsigned int		minGID_;
 	unsigned int		maxGID_;
 	
