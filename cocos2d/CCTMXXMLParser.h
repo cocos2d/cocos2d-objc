@@ -56,19 +56,20 @@ enum {
 	BOOL				ownTiles_;
 	unsigned int		minGID_;
 	unsigned int		maxGID_;
-	NSMutableDictionary	*properties_;	
+	NSMutableDictionary	*properties_;
+	CGPoint				offset_;
 }
 
-@property (nonatomic,readwrite,retain) NSString *name;
-@property (nonatomic,readwrite,assign) CGSize layerSize;
-@property (nonatomic,readwrite,assign) unsigned int *tiles;
-@property (nonatomic,readwrite,assign) BOOL visible;
-@property (nonatomic,readwrite,assign) unsigned char opacity;
-@property (nonatomic,readwrite,assign) BOOL ownTiles;
-@property (nonatomic,readwrite,assign) unsigned int minGID;
-@property (nonatomic,readwrite,assign) unsigned int maxGID;
+@property (nonatomic,readwrite,retain)	NSString *name;
+@property (nonatomic,readwrite)			CGSize layerSize;
+@property (nonatomic,readwrite)			unsigned int *tiles;
+@property (nonatomic,readwrite)			BOOL visible;
+@property (nonatomic,readwrite)			unsigned char opacity;
+@property (nonatomic,readwrite)			BOOL ownTiles;
+@property (nonatomic,readwrite)			unsigned int minGID;
+@property (nonatomic,readwrite)			unsigned int maxGID;
 @property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
-
+@property (nonatomic,readwrite)			CGPoint offset;
 @end
 
 /* CCTMXTilesetInfo contains the information about the tilesets like:

@@ -95,6 +95,8 @@
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
 -(CGPoint) positionForHexAt:(CGPoint)pos;
 
+-(CGPoint) calculateLayerOffset:(CGPoint)offset;
+
 /* optimization methos */
 -(CCSprite*) appendTileForGID:(unsigned int)gid at:(CGPoint)pos;
 -(CCSprite*) insertTileForGID:(unsigned int)gid at:(CGPoint)pos;
@@ -145,8 +147,8 @@
 
 		// layerInfo
 		self.layerName = layerInfo.name;
-		self.layerSize = layerInfo.layerSize;
-		self.tiles = layerInfo.tiles;
+		layerSize_ = layerInfo.layerSize;
+		tiles_ = layerInfo.tiles;
 		minGID_ = layerInfo.minGID;
 		maxGID_ = layerInfo.maxGID;
 		opacity_ = layerInfo.opacity;
@@ -156,9 +158,12 @@
 		self.tileset = tilesetInfo;
 		
 		// mapInfo
-		self.mapTileSize = mapInfo.tileSize;
-		self.layerOrientation = mapInfo.orientation;
+		mapTileSize_ = mapInfo.tileSize;
+		layerOrientation_ = mapInfo.orientation;
 		
+		// offset (after layer orientation is set);
+		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
+		[self setPosition:offset];
 		
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
@@ -526,7 +531,25 @@ int compareInts (const void * a, const void * b)
 	}
 }
 
-#pragma mark CCTMXLayer - obtaining positions
+#pragma mark CCTMXLayer - obtaining positions, offset
+
+-(CGPoint) calculateLayerOffset:(CGPoint)pos
+{
+	CGPoint ret = CGPointZero;
+	switch( layerOrientation_ ) {
+		case CCTMXOrientationOrtho:
+			ret = ccp( pos.x * mapTileSize_.width, -pos.y *mapTileSize_.height);
+			break;
+		case CCTMXOrientationIso:
+			ret = ccp( (mapTileSize_.width /2) * (pos.x - pos.y),
+					  (mapTileSize_.height /2 ) * (-pos.x - pos.y) );
+			break;
+		case CCTMXOrientationHex:
+			NSAssert(CGPointEqualToPoint(pos, CGPointZero), @"offset for hexagonal map not implemented yet");
+			break;
+	}
+	return ret;	
+}
 
 -(CGPoint) positionAt:(CGPoint)pos
 {
@@ -555,10 +578,7 @@ int compareInts (const void * a, const void * b)
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
 	int x = mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1) + 0.49f;
-	int y = mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2) + 0.49f;
-	
-	//	int x = mapTileSize_.width /2  *(pos.x - pos.y) + 0.49f;
-	//	int y = (layerSize_.height - (pos.x + pos.y) - 1) * mapTileSize_.height/2 + 0.49f;
+	int y = mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2) + 0.49f;	
 	return ccp(x, y);
 }
 
@@ -582,7 +602,6 @@ int compareInts (const void * a, const void * b)
 			case CCTMXOrientationIso:
 				maxVal = layerSize_.width + layerSize_.height;
 				ret = -(maxVal - (pos.x + pos.y));
-//				ret = pos.x + pos.y;
 				break;
 			case CCTMXOrientationOrtho:
 				ret = -(layerSize_.height-pos.y);

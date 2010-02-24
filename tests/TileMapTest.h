@@ -117,3 +117,12 @@
 	CCSprite *tamara;
 }
 @end
+
+@interface TMXIsoMoveLayer : TileDemo
+{}
+@end
+
+@interface TMXOrthoMoveLayer : TileDemo
+{}
+@end
+

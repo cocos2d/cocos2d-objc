@@ -12,7 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-	
 			@"TMXIsoZorder",
 			@"TMXOrthoZorder",
 			@"TMXIsoVertexZ",
@@ -30,6 +29,8 @@ static NSString *transitions[] = {
 			@"TMXTilesetTest",
 			@"TMXObjectsTest",
 			@"TMXResizeTest",
+			@"TMXIsoMoveLayer",
+			@"TMXOrthoMoveLayer",
 			@"TileMapTest",
 			@"TileMapEditTest",
 };
@@ -1109,6 +1110,65 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXIsoMoveLayer
+
+@implementation TMXIsoMoveLayer
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-movelayer.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		[map setPosition:ccp(-700,-50)];
+
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Iso Move Layer";
+}
+
+-(NSString *) subtitle
+{
+	return @"Trees should be horizontally aligned";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXOrthoMoveLayer
+
+@implementation TMXOrthoMoveLayer
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-movelayer.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Ortho Move Layer";
+}
+
+-(NSString *) subtitle
+{
+	return @"Trees should be horizontally aligned";
+}
+@end
 
 
 #pragma mark -
