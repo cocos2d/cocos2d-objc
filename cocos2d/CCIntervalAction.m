@@ -1178,14 +1178,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	NSUInteger idx=0;
-	
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
-	ccTime slice = 1.0f / numberOfFrames;
 	
-	if(t !=0 )
-		idx = ceilf(t/ slice);
+	NSUInteger idx = t * numberOfFrames;
 
 	if( idx >= numberOfFrames ) {
 		idx = numberOfFrames -1;
