@@ -149,6 +149,7 @@
 		self.tiles = layerInfo.tiles;
 		minGID_ = layerInfo.minGID;
 		maxGID_ = layerInfo.maxGID;
+		opacity_ = layerInfo.opacity;
 		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
 
 		// tilesetInfo
@@ -290,6 +291,7 @@
 			[tile setPosition: [self positionAt:pos]];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
+			[tile setOpacity:opacity_];
 			
 			unsigned int indexForZ = [self atlasIndexForExistantZ:z];
 			[self addSpriteWithoutQuad:tile z:indexForZ tag:z];
@@ -324,6 +326,7 @@
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
+	[reusedTile_ setOpacity:opacity_];
 	
 	// get atlas index
 	unsigned int indexForZ = [self atlasIndexForNewZ:z];
@@ -360,6 +363,7 @@
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
+	[reusedTile_ setOpacity:opacity_];
 	
 	// get atlas index
 	unsigned int indexForZ = [self atlasIndexForExistantZ:z];
@@ -388,6 +392,7 @@
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
+	[reusedTile_ setOpacity:opacity_];
 	
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since
