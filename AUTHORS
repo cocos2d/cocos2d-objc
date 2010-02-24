@@ -43,8 +43,6 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
 		patch for CocosDenshion
-	* ciukes:
-		CCAnimate uses ceilf() to calculate frame. patch.
 	* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy):
 		RenderTexture generates UIImages patch
 		correct channel in SimpleAudioEngine patch
