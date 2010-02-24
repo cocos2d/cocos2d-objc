@@ -1,6 +1,7 @@
 version 0.99.1 - XX-MMM-2010
  . Actions: new added actions: CCProgressTo, CCProgressFromTo (issue #783)
  . Actions: CCRepeat works smoothly, without jerks (re-fixed issue #390)
+ . Actions: CCAnimate uses ceilf() to calculate the correct frame (issue #758)
  . CGPointExtensions: new add functions:  CGPointExtension like: clampf, ccpClamp, ccpFromSize,
 	ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 	ccpRotateByAngle, ccpLineIntersect (issue #783)

@@ -1185,7 +1185,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	ccTime slice = 1.0f / numberOfFrames;
 	
 	if(t !=0 )
-		idx = t/ slice;
+		idx = ceilf(t/ slice);
 
 	if( idx >= numberOfFrames ) {
 		idx = numberOfFrames -1;
