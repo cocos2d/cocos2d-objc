@@ -19,6 +19,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ccMacros.h"
+#import "Support/CGPointExtension.h"
 #import "CCTMXXMLParser.h"
 #import "CCTMXTiledMap.h"
 #import "CCTMXObjectGroup.h"
@@ -33,7 +34,7 @@
 @implementation CCTMXLayerInfo
 
 @synthesize name=name_, layerSize=layerSize_, tiles=tiles_, visible=visible_,opacity=opacity_, ownTiles=ownTiles_, minGID=minGID_, maxGID=maxGID_, properties=properties_;
-
+@synthesize offset=offset_;
 -(id) init
 {
 	if( (self=[super init])) {
@@ -42,6 +43,7 @@
 		maxGID_ = 0;
 		self.name = nil;
 		tiles_ = NULL;
+		offset_ = CGPointZero;
 		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
 	return self;
@@ -199,11 +201,15 @@
 		layer.layerSize = s;
 		
 		layer.visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
-		if( [attributeDict valueForKey:@"opacity"] ){
+		
+		if( [attributeDict valueForKey:@"opacity"] )
 			layer.opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
-		}else{
+		else
 			layer.opacity = 255;
-		}
+		
+		int x = [[attributeDict valueForKey:@"x"] intValue];
+		int y = [[attributeDict valueForKey:@"y"] intValue];
+		layer.offset = ccp(x,y);
 		
 		[layers_ addObject:layer];
 		[layer release];
