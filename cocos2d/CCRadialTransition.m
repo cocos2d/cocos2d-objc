@@ -33,7 +33,7 @@ enum {
 }
 -(CCProgressTimerType) radialType
 {
-	return CCProgressTimerTypeRadialCCW;
+	return kCCProgressTimerTypeRadialCCW;
 }
 -(void) onEnter
 {
@@ -91,6 +91,6 @@ enum {
 @implementation CCRadialCWTransition
 -(CCProgressTimerType) radialType
 {
-	return CCProgressTimerTypeRadialCW;
+	return kCCProgressTimerTypeRadialCW;
 }
 @end
