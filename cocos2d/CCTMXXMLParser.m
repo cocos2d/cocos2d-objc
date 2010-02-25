@@ -96,7 +96,13 @@
 @end
 
 #pragma mark -
-#pragma mark TMXMapInfo
+#pragma mark CCTMXMapInfo
+
+@interface CCTMXMapInfo (Private)
+/* initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
+-(void) parseXMLFile:(NSString *)xmlFilename;
+@end
+
 
 @implementation CCTMXMapInfo
 
@@ -123,21 +129,7 @@
 		layerAttribs = TMXLayerAttribNone;
 		parentElement = TMXPropertyNone;
 		
-		NSURL *url = [NSURL fileURLWithPath:filename_];
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-		// we'll do the parsing
-		[parser setDelegate:self];
-		[parser setShouldProcessNamespaces:NO];
-		[parser setShouldReportNamespacePrefixes:NO];
-		[parser setShouldResolveExternalEntities:NO];
-		[parser parse];
-		
-		NSError *parseError = [parser parserError];
-		if(parseError) {
-			CCLOG(@"cocos2d: TMXTiledMap: Error parsing TMX file: %@", parseError);
-		}
-		
-		[parser release];
+		[self parseXMLFile:filename_];		
 	}
 	return self;
 }
@@ -151,6 +143,25 @@
 	[objectGroups_ release];
 	[properties_ release];
 	[super dealloc];
+}
+
+- (void) parseXMLFile:(NSString *)xmlFilename
+{
+	NSURL *url = [NSURL fileURLWithPath:xmlFilename];
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+
+	// we'll do the parsing
+	[parser setDelegate:self];
+	[parser setShouldProcessNamespaces:NO];
+	[parser setShouldReportNamespacePrefixes:NO];
+	[parser setShouldResolveExternalEntities:NO];
+	[parser parse];
+
+	NSError *parseError = [parser parserError];
+
+	NSAssert2( ! parseError, @"Error parsing file: %@. Error: %@", xmlFilename, parseError);
+
+	[parser release];
 }
 
 // the XML parser calls here with all the elements
@@ -178,18 +189,30 @@
 		// The parent element is now "map"
 		parentElement = TMXPropertyMap;
 	} else if([elementName isEqualToString:@"tileset"]) {
-		CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
-		tileset.name = [attributeDict valueForKey:@"name"];
-		tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
-		tileset.spacing = [[attributeDict valueForKey:@"spacing"] intValue];
-		tileset.margin = [[attributeDict valueForKey:@"margin"] intValue];
-		CGSize s;
-		s.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-		s.height = [[attributeDict valueForKey:@"tileheight"] intValue];
-		tileset.tileSize = s;
 		
-		[tilesets_ addObject:tileset];
-		[tileset release];
+		// If this is an external tileset then start parsing that
+		NSString *externalTilesetFilename = [attributeDict valueForKey:@"source"];
+		if (externalTilesetFilename) {
+				// Tileset file will be relative to the map file. So we need to convert it to an absolute path
+				NSString *dir = [filename_ stringByDeletingLastPathComponent];	// Directory of map file
+				externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
+				
+				[self parseXMLFile:externalTilesetFilename];
+		} else {
+				
+			CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
+			tileset.name = [attributeDict valueForKey:@"name"];
+			tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
+			tileset.spacing = [[attributeDict valueForKey:@"spacing"] intValue];
+			tileset.margin = [[attributeDict valueForKey:@"margin"] intValue];
+			CGSize s;
+			s.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
+			s.height = [[attributeDict valueForKey:@"tileheight"] intValue];
+			tileset.tileSize = s;
+			
+			[tilesets_ addObject:tileset];
+			[tileset release];
+		}
 
 	} else if([elementName isEqualToString:@"layer"]) {
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
