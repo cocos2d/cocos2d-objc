@@ -396,7 +396,7 @@ const int defaultCapacity = 29;
 		return p.atlasIndex + 1;
 	}
 	
-	NSAssert( YES, @"Should not happen. Error calculating Z on SpriteSheet");
+	NSAssert( NO, @"Should not happen. Error calculating Z on SpriteSheet");
 	return 0;
 }
 

@@ -15,7 +15,7 @@ Main features
     * Actions (behaviours): 
         * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
         * Composable actions: Sequence, Spawn, Repeat, Reverse
-        * Ease Actions: Exp, Sin, Cubic, etc.
+        * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
         * Misc actions: CallFunc, OrbitCamera
     * Basic menus and buttons
     * Integrated with physics engines: Box2d and Chipmunk
