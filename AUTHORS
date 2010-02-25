@@ -230,6 +230,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* ratman:
 		patch for TileMapAtlas: it works with 255 tiles
 		patch for TextureMgr: supports directory within image names
+		patch: Added support for tsx tilesets in TMX tiled maps
 	* Rolandas Razma (gamebit):
 		added support for auto-remove-on-finish in particles
 		TMX maps support visibility and opacity patch
