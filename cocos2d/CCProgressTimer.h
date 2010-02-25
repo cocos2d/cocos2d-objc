@@ -20,17 +20,17 @@
  */
 typedef enum {
 	/// Radial Counter-Clockwise 
-	CCProgressTimerTypeRadialCCW,
+	kCCProgressTimerTypeRadialCCW,
 	/// Radial ClockWise
-	CCProgressTimerTypeRadialCW,
+	kCCProgressTimerTypeRadialCW,
 	/// Horizontal Left-Right
-	CCProgressTimerTypeHorizontalBarLR,
+	kCCProgressTimerTypeHorizontalBarLR,
 	/// Horizontal Right-Left
-	CCProgressTimerTypeHorizontalBarRL,
+	kCCProgressTimerTypeHorizontalBarRL,
 	/// Vertical Bottom-top
-	CCProgressTimerTypeVerticalBarBT,
+	kCCProgressTimerTypeVerticalBarBT,
 	/// Vertical Top-Bottom
-	CCProgressTimerTypeVerticalBarTB,
+	kCCProgressTimerTypeVerticalBarTB,
 } CCProgressTimerType;
 
 /**

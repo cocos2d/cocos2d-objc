@@ -61,7 +61,7 @@ const char kProgressTextureCoords = 0x1e;
 		vertexDataCount_ = 0;
 		self.anchorPoint = ccp(.5f,.5f);
 		self.contentSize = sprite_.contentSize;
-		self.type = CCProgressTimerTypeRadialCCW;
+		self.type = kCCProgressTimerTypeRadialCCW;
 	}
 	return self;
 }
@@ -152,14 +152,14 @@ const char kProgressTextureCoords = 0x1e;
 -(void)updateProgress
 {
 	switch (type_) {
-		case CCProgressTimerTypeRadialCW:
-		case CCProgressTimerTypeRadialCCW:
+		case kCCProgressTimerTypeRadialCW:
+		case kCCProgressTimerTypeRadialCCW:
 			[self updateRadial];
 			break;
-		case CCProgressTimerTypeHorizontalBarLR:
-		case CCProgressTimerTypeHorizontalBarRL:
-		case CCProgressTimerTypeVerticalBarBT:
-		case CCProgressTimerTypeVerticalBarTB:
+		case kCCProgressTimerTypeHorizontalBarLR:
+		case kCCProgressTimerTypeHorizontalBarRL:
+		case kCCProgressTimerTypeVerticalBarBT:
+		case kCCProgressTimerTypeVerticalBarTB:
 			[self updateBar];
 			break;
 		default:
@@ -187,7 +187,7 @@ const char kProgressTextureCoords = 0x1e;
 	float alpha = percentage_ / 100.f;
 	
 	//	Otherwise we can get the angle from the alpha
-	float angle = 2.f*((float)M_PI) * ( type_ == CCProgressTimerTypeRadialCW? alpha : 1.f - alpha);
+	float angle = 2.f*((float)M_PI) * ( type_ == kCCProgressTimerTypeRadialCW? alpha : 1.f - alpha);
 	
 	//	We find the vector to do a hit detection based on the percentage
 	//	We know the first vector is the one @ 12 o'clock (top,mid) so we rotate 
@@ -336,16 +336,16 @@ const char kProgressTextureCoords = 0x1e;
 		vertexDataCount_ = kProgressTextureCoordsCount;
 		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4F_T2F));
 		
-		if(type_ == CCProgressTimerTypeHorizontalBarLR){
+		if(type_ == kCCProgressTimerTypeHorizontalBarLR){
 			vertexData_[vIndexes[0] = 0].texCoords = (ccTex2F){0,0};
 			vertexData_[vIndexes[1] = 1].texCoords = (ccTex2F){0, tMax.y};
-		}else if (type_ == CCProgressTimerTypeHorizontalBarRL) {
+		}else if (type_ == kCCProgressTimerTypeHorizontalBarRL) {
 			vertexData_[vIndexes[0] = 2].texCoords = (ccTex2F){tMax.x, tMax.y};
 			vertexData_[vIndexes[1] = 3].texCoords = (ccTex2F){tMax.x, 0.f};
-		}else if (type_ == CCProgressTimerTypeVerticalBarBT) {
+		}else if (type_ == kCCProgressTimerTypeVerticalBarBT) {
 			vertexData_[vIndexes[0] = 1].texCoords = (ccTex2F){0, tMax.y};
 			vertexData_[vIndexes[1] = 3].texCoords = (ccTex2F){tMax.x, tMax.y};
-		}else if (type_ == CCProgressTimerTypeVerticalBarTB) {
+		}else if (type_ == kCCProgressTimerTypeVerticalBarTB) {
 			vertexData_[vIndexes[0] = 0].texCoords = (ccTex2F){0, 0};
 			vertexData_[vIndexes[1] = 2].texCoords = (ccTex2F){tMax.x, 0};
 		}
@@ -374,16 +374,16 @@ const char kProgressTextureCoords = 0x1e;
 		[self updateColor];
 	}
 	
-	if(type_ == CCProgressTimerTypeHorizontalBarLR){
+	if(type_ == kCCProgressTimerTypeHorizontalBarLR){
 		vertexData_[vIndexes[0] = 3].texCoords = (ccTex2F){tMax.x*alpha, tMax.y};
 		vertexData_[vIndexes[1] = 2].texCoords = (ccTex2F){tMax.x*alpha, 0};
-	}else if (type_ == CCProgressTimerTypeHorizontalBarRL) {
+	}else if (type_ == kCCProgressTimerTypeHorizontalBarRL) {
 		vertexData_[vIndexes[0] = 1].texCoords = (ccTex2F){tMax.x*(1.f - alpha), 0};
 		vertexData_[vIndexes[1] = 0].texCoords = (ccTex2F){tMax.x*(1.f - alpha), tMax.y};
-	}else if (type_ == CCProgressTimerTypeVerticalBarBT) {
+	}else if (type_ == kCCProgressTimerTypeVerticalBarBT) {
 		vertexData_[vIndexes[0] = 0].texCoords = (ccTex2F){0, tMax.y*(1.f - alpha)};
 		vertexData_[vIndexes[1] = 2].texCoords = (ccTex2F){tMax.x, tMax.y*(1.f - alpha)};
-	}else if (type_ == CCProgressTimerTypeVerticalBarTB) {
+	}else if (type_ == kCCProgressTimerTypeVerticalBarTB) {
 		vertexData_[vIndexes[0] = 1].texCoords = (ccTex2F){0, tMax.y*alpha};
 		vertexData_[vIndexes[1] = 3].texCoords = (ccTex2F){tMax.x, tMax.y*alpha};
 	}
@@ -414,9 +414,9 @@ const char kProgressTextureCoords = 0x1e;
 {
 	if (index < kProgressTextureCoordsCount) {
 		switch (type_) {
-			case CCProgressTimerTypeRadialCW:
+			case kCCProgressTimerTypeRadialCW:
 				return ccp((kProgressTextureCoords>>((index<<1)+1))&1,(kProgressTextureCoords>>(index<<1))&1);
-			case CCProgressTimerTypeRadialCCW:
+			case kCCProgressTimerTypeRadialCCW:
 				return ccp((kProgressTextureCoords>>(7-(index<<1)))&1,(kProgressTextureCoords>>(7-((index<<1)+1)))&1);
 			default:
 				break;
@@ -441,12 +441,12 @@ const char kProgressTextureCoords = 0x1e;
 	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &vertexData_[0].vertices);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &vertexData_[0].texCoords);
 	glColorPointer(4, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &vertexData_[0].colors);
-	if(type_ == CCProgressTimerTypeRadialCCW || type_ == CCProgressTimerTypeRadialCW){
+	if(type_ == kCCProgressTimerTypeRadialCCW || type_ == kCCProgressTimerTypeRadialCW){
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexDataCount_);
-	} else if (type_ == CCProgressTimerTypeHorizontalBarLR ||
-			   type_ == CCProgressTimerTypeHorizontalBarRL ||
-			   type_ == CCProgressTimerTypeVerticalBarBT ||
-			   type_ == CCProgressTimerTypeVerticalBarTB) {
+	} else if (type_ == kCCProgressTimerTypeHorizontalBarLR ||
+			   type_ == kCCProgressTimerTypeHorizontalBarRL ||
+			   type_ == kCCProgressTimerTypeVerticalBarBT ||
+			   type_ == kCCProgressTimerTypeVerticalBarTB) {
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexDataCount_);
 	}
 	//glDrawElements(GL_TRIANGLES, indicesCount_, GL_UNSIGNED_BYTE, indices_);
