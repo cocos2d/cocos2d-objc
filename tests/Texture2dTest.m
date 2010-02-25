@@ -804,7 +804,7 @@ Class restartAction()
 			break;
 	}
 
-	// wdith2 and height2 are the power of 2 versions of width and height
+	// width2 and height2 are the power of 2 versions of width and height
 	height2 = height;
 	width2 = width;
 
