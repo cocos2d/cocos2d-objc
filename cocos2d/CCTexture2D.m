@@ -88,6 +88,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Default is: RGBA4444 (16-bit textures)
 static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Default;
 
+@interface CCTexture2D (Private)
+-(id) initUsingCGWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
+-(id) initManuallyWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
+@end
+
 @implementation CCTexture2D
 
 @synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
@@ -163,6 +168,60 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	NSUInteger				width,
 							height,
 							i;
+	BOOL					hasAlpha;
+	CGImageAlphaInfo		info;
+	CGSize					imageSize;
+	CGImageRef				image;	
+	
+	image = [uiImage CGImage];
+	
+	if(image == NULL) {
+		[self release];	// XXX: wtf ?!?
+		NSLog(@"Image is Null");
+		return nil;
+	}
+	
+	info = CGImageGetAlphaInfo(image);
+	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
+	
+	size_t bpc = CGImageGetBitsPerComponent(image);
+	size_t bpp = CGImageGetBitsPerPixel(image);
+	CGColorSpaceRef colorRef = CGImageGetColorSpace(image);
+
+	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
+
+	width = imageSize.width;
+	
+	if((width != 1) && (width & (width - 1))) {
+		i = 1;
+		while(i < width)
+			i *= 2;
+		width = i;
+	}
+	height = imageSize.height;
+	if((height != 1) && (height & (height - 1))) {
+		i = 1;
+		while(i < height)
+			i *= 2;
+		height = i;
+	}
+		
+	unsigned maxTextureSize = [[CCConfiguration sharedConfiguration] maxTextureSize];
+	if( width > maxTextureSize || height > maxTextureSize ) {
+		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", width, height, maxTextureSize, maxTextureSize);
+		return nil;
+	}
+	
+	if( hasAlpha && bpc >=8 && colorRef && bpp == 32 )
+		return [self initManuallyWithImage:image pixelsWide:width pixelsHigh:height];
+	else
+		// fallback
+		return [self initUsingCGWithImage:image pixelsWide:width pixelsHigh:height];
+}
+
+-(id) initUsingCGWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height
+{
+	NSUInteger				i;
 	CGContextRef			context = nil;
 	void*					data = nil;;
 	CGColorSpaceRef			colorSpace;
@@ -174,19 +233,9 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGAffineTransform		transform;
 	CGSize					imageSize;
 	Texture2DPixelFormat    pixelFormat;
-	CGImageRef				image;
-	BOOL					sizeToFit = NO;
 	
 	
-	image = [uiImage CGImage];
-	
-	if(image == NULL) {
-		[self release];
-		NSLog(@"Image is Null");
-		return nil;
-	}
-	
-
+	CCLOG(@"-----------------------> TEXTURE USING CG");
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
@@ -201,38 +250,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	
 	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
 	transform = CGAffineTransformIdentity;
+	
 
-	width = imageSize.width;
-	
-	if((width != 1) && (width & (width - 1))) {
-		i = 1;
-		while((sizeToFit ? 2 * i : i) < width)
-			i *= 2;
-		width = i;
-	}
-	height = imageSize.height;
-	if((height != 1) && (height & (height - 1))) {
-		i = 1;
-		while((sizeToFit ? 2 * i : i) < height)
-			i *= 2;
-		height = i;
-	}
-	
-	
-	unsigned maxTextureSize = [[CCConfiguration sharedConfiguration] maxTextureSize];
-	if( width > maxTextureSize || height > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", width, height, maxTextureSize, maxTextureSize);
-		return nil;
-	}
-
-//	while((width > kMaxTextureSize) || (height > kMaxTextureSize)) {
-//		width /= 2;
-//		height /= 2;
-//		transform = CGAffineTransformScale(transform, 0.5f, 0.5f);
-//		imageSize.width *= 0.5f;
-//		imageSize.height *= 0.5f;
-//	}
-	
 	// Create the bitmap graphics context
 	
 	switch(pixelFormat) {          
@@ -261,14 +280,14 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
 	}
 	
-
+	
 	CGContextClearRect(context, CGRectMake(0, 0, width, height));
 	CGContextTranslateCTM(context, 0, height - imageSize.height);
 	
 	if(!CGAffineTransformIsIdentity(transform))
 		CGContextConcatCTM(context, transform);
 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
-
+	
 	// Repack the pixel data into the right format
 	
 	if(pixelFormat == kTexture2DPixelFormat_RGB565) {
@@ -316,7 +335,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		data = tempData;
 	}
 	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:width pixelsHigh:height contentSize:imageSize];
-
+	
 	// should be after calling super init
 	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 	
@@ -326,6 +345,46 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	return self;
 }
 
+-(id) initManuallyWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height
+{
+	UInt8	*data;
+	BOOL releaseData = NO;
+
+	CCLOG(@"-----------------------> TEXTURE USING MANUAL");
+
+	CFDataRef cfData = CGDataProviderCopyData(CGImageGetDataProvider(image));
+	const UInt8* pixels = CFDataGetBytePtr(cfData);
+	size_t bytesPerRow = CGImageGetBytesPerRow(image);
+	CGSize imageSize = CGSizeMake( CGImageGetWidth(image), CGImageGetHeight(image) );
+
+	if( width != imageSize.width && height != imageSize.height ) {
+		
+		releaseData = YES;
+		// image is not power of 2.
+		data = calloc( width * height, 4 );  //4 = RGBA
+
+		for( int i=0; i < imageSize.height; i++ ) {
+			memcpy( &data[width*i*4], &pixels[bytesPerRow*i], bytesPerRow );
+		}
+	} else {
+		data = (UInt8*) pixels;
+	}
+
+	if( defaultAlphaPixelFormat != kTexture2DPixelFormat_RGBA8888 )
+		CCLOG(@"Unsupported default pixel format. Using RGBA8888");
+	
+	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_RGBA8888 pixelsWide:width pixelsHigh:height contentSize:imageSize];
+	
+	CFRelease(cfData);
+
+	// should be after calling super init
+	_hasPremultipliedAlpha = NO;
+	
+	if( releaseData )
+		free(data);
+	
+	return self;
+}
 @end
 
 @implementation CCTexture2D (Text)
