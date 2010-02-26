@@ -878,7 +878,7 @@ Class restartAction()
 		// PNG compressed sprite has pre multiplied alpha channel
 		//  - with opacity doesn't modify color
 		//  - blend func: GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
-		CCSprite *png3 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		CCSprite *png3 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
 		[self addChild:png3 z:0];
 		png3.position = ccp(size.width/5*3, size.height/2);
 		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
