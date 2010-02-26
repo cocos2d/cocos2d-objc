@@ -81,16 +81,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif// CC_FONT_LABEL_SUPPORT
 
 
+static unsigned int nextPOT(unsigned int x)
+{
+    x = x - 1;
+    x = x | (x >> 1);
+    x = x | (x >> 2);
+    x = x | (x >> 4);
+    x = x | (x >> 8);
+    x = x | (x >>16);
+    return x + 1;
+}
+
 //CLASS IMPLEMENTATIONS:
 
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
-// Default is: RGBA4444 (16-bit textures)
+// Default is: RGBA8888 (32-bit textures)
 static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Default;
 
 @interface CCTexture2D (Private)
--(id) initUsingCGWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
--(id) initManuallyWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
+-(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
+-(id) initRGBATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
 @end
 
 @implementation CCTexture2D
@@ -99,10 +110,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 @synthesize hasPremultipliedAlpha=_hasPremultipliedAlpha;
 - (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
-//	GLint					saveName;
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
-//		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 
 		[self setAntiAliasTexParameters];
@@ -130,9 +139,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 				[NSException raise:NSInternalInconsistencyException format:@""];
 				
 		}
-				
-//		glBindTexture(GL_TEXTURE_2D, saveName);
-	
+
 		_size = size;
 		_width = width;
 		_height = height;
@@ -165,61 +172,48 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	
 - (id) initWithImage:(UIImage *)uiImage
 {
-	NSUInteger				width,
-							height,
-							i;
+	NSUInteger				POTWide, POTHigh;
 	BOOL					hasAlpha;
-	CGImageAlphaInfo		info;
+	CGImageAlphaInfo		alphainfo;
 	CGSize					imageSize;
-	CGImageRef				image;	
+	CGImageRef				CGImage;	
+	CGColorSpaceModel		colormodel; // CGImage colormodel (RGB, CMYK, paletted, etc)
 	
-	image = [uiImage CGImage];
+	CGImage = [uiImage CGImage];
 	
-	if(image == NULL) {
-		[self release];	// XXX: wtf ?!?
+	if(CGImage == NULL) {
 		NSLog(@"Image is Null");
 		return nil;
 	}
 	
-	info = CGImageGetAlphaInfo(image);
-	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
+	alphainfo = CGImageGetAlphaInfo(CGImage);
+	hasAlpha = ((alphainfo == kCGImageAlphaPremultipliedLast) || (alphainfo == kCGImageAlphaPremultipliedFirst) || (alphainfo == kCGImageAlphaLast) || (alphainfo == kCGImageAlphaFirst) ? YES : NO);
 	
-	size_t bpc = CGImageGetBitsPerComponent(image);
-	size_t bpp = CGImageGetBitsPerPixel(image);
-	CGColorSpaceRef colorRef = CGImageGetColorSpace(image);
+	size_t bpc = CGImageGetBitsPerComponent(CGImage);
+	size_t bpp = CGImageGetBitsPerPixel(CGImage);
+	colormodel = CGColorSpaceGetModel(CGImageGetColorSpace(CGImage));
 
-	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
+	imageSize = CGSizeMake(CGImageGetWidth(CGImage), CGImageGetHeight(CGImage));
 
-	width = imageSize.width;
-	
-	if((width != 1) && (width & (width - 1))) {
-		i = 1;
-		while(i < width)
-			i *= 2;
-		width = i;
-	}
-	height = imageSize.height;
-	if((height != 1) && (height & (height - 1))) {
-		i = 1;
-		while(i < height)
-			i *= 2;
-		height = i;
-	}
+	POTWide = nextPOT(imageSize.width);
+	POTHigh = nextPOT(imageSize.height);
 		
 	unsigned maxTextureSize = [[CCConfiguration sharedConfiguration] maxTextureSize];
-	if( width > maxTextureSize || height > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", width, height, maxTextureSize, maxTextureSize);
+	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
+		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", POTWide, POTHigh, maxTextureSize, maxTextureSize);
 		return nil;
 	}
 	
-	if( hasAlpha && bpc >=8 && colorRef && bpp == 32 )
-		return [self initManuallyWithImage:image pixelsWide:width pixelsHigh:height];
+	if( hasAlpha && bpc==8 && colormodel==kCGColorSpaceModelRGB && bpp==32 )
+		self = [self initRGBATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
 	else
 		// fallback
-		return [self initUsingCGWithImage:image pixelsWide:width pixelsHigh:height];
+		self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
+		
+	return self;
 }
 
--(id) initUsingCGWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height
+-(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height
 {
 	NSUInteger				i;
 	CGContextRef			context = nil;
@@ -235,7 +229,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	Texture2DPixelFormat    pixelFormat;
 	
 	
-	CCLOG(@"-----------------------> TEXTURE USING CG");
+	NSLog(@"-----------------------> TEXTURE WITH PRE MULTIPLIED ALPHA");
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
@@ -345,43 +339,169 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	return self;
 }
 
--(id) initManuallyWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height
+-(id) initRGBATextureWithImage:(CGImageRef)CGImage pixelsWide:(NSUInteger)POTWide pixelsHigh:(NSUInteger)POTHigh
 {
-	UInt8	*data;
-	BOOL releaseData = NO;
-
-	CCLOG(@"-----------------------> TEXTURE USING MANUAL");
-
-	CFDataRef cfData = CGDataProviderCopyData(CGImageGetDataProvider(image));
-	const UInt8* pixels = CFDataGetBytePtr(cfData);
-	size_t bytesPerRow = CGImageGetBytesPerRow(image);
-	CGSize imageSize = CGSizeMake( CGImageGetWidth(image), CGImageGetHeight(image) );
-
-	if( width != imageSize.width && height != imageSize.height ) {
-		
-		releaseData = YES;
-		// image is not power of 2.
-		data = calloc( width * height, 4 );  //4 = RGBA
-
-		for( int i=0; i < imageSize.height; i++ ) {
-			memcpy( &data[width*i*4], &pixels[bytesPerRow*i], bytesPerRow );
-		}
-	} else {
-		data = (UInt8*) pixels;
+    GLuint components, y;
+    GLuint imgWide, imgHigh;		// Real image size
+    GLuint rowBytes;				// Image size padded by CGImage
+    CGBitmapInfo info;				// CGImage component layout info
+    CGColorSpaceModel colormodel;	// CGImage colormodel (RGB, CMYK, paletted, etc)
+    GLenum internal, format;
+	unsigned int		*inPixel32;
+	unsigned short		*outPixel16;
+    GLubyte *pixels, *temp = NULL;
+    
+    // Parse CGImage info
+    info       = CGImageGetBitmapInfo(CGImage);        // CGImage may return pixels in RGBA, BGRA, or ARGB order
+    colormodel = CGColorSpaceGetModel(CGImageGetColorSpace(CGImage));
+    size_t bpp = CGImageGetBitsPerPixel(CGImage);
+	
+	components = bpp>>3;
+    rowBytes   = CGImageGetBytesPerRow(CGImage);    // CGImage may pad rows
+	imgWide = CGImageGetWidth(CGImage);
+	imgHigh = CGImageGetHeight(CGImage);
+	
+	
+	NSLog(@"-----------------------> TEXTURE RGBA");
+	
+	// Choose OpenGL format
+	internal = GL_RGBA;
+	switch(info & kCGBitmapAlphaInfoMask)
+	{
+		case kCGImageAlphaPremultipliedFirst:
+		case kCGImageAlphaFirst:
+		case kCGImageAlphaNoneSkipFirst:
+			format = GL_BGRA;
+			break;
+		default:
+			format = GL_RGBA;
 	}
-
-	if( defaultAlphaPixelFormat != kTexture2DPixelFormat_RGBA8888 )
-		CCLOG(@"Unsupported default pixel format. Using RGBA8888");
 	
-	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_RGBA8888 pixelsWide:width pixelsHigh:height contentSize:imageSize];
+	// Get a pointer to the uncompressed image data.
+    //
+    // This allows access to the original (possibly unpremultiplied) data, but any manipulation
+    // (such as scaling) has to be done manually. Contrast this with drawing the image
+    // into a CGBitmapContext, which allows scaling, but always forces premultiplication.
+    CFDataRef data = CGDataProviderCopyData(CGImageGetDataProvider(CGImage));
+    pixels = (GLubyte *)CFDataGetBytePtr(data);
 	
-	CFRelease(cfData);
+    // If the CGImage component layout isn't compatible with OpenGL, fix it.
+    // On the device, CGImage will generally return BGRA or RGBA.
+    // On the simulator, CGImage may return ARGB, depending on the file format.
+    if (format == GL_BGRA)
+    {
+        uint32_t *p = (uint32_t *)pixels;
+        int i, num = imgWide * imgHigh;
+        
+        if ((info & kCGBitmapByteOrderMask) != kCGBitmapByteOrder32Host)
+        {
+            // Convert from ARGB to BGRA
+            for (i = 0; i < num; i++)
+                p[i] = (p[i] << 24) | ((p[i] & 0xFF00) << 8) | ((p[i] >> 8) & 0xFF00) | (p[i] >> 24);
+        }
+        
+        // All current iPhoneOS devices support BGRA via an extension, but it should check it
+//        if (!renderer->extension[IMG_texture_format_BGRA8888])
+        {
+            format = GL_RGBA;
+			
+            // Convert from BGRA to RGBA
+            for (i = 0; i < num; i++) {
+#if __LITTLE_ENDIAN__
+                p[i] = ((p[i] >> 16) & 0xFF) | (p[i] & 0xFF00FF00) | ((p[i] & 0xFF) << 16);
+#else
+				p[i] = ((p[i] & 0xFF00) << 16) | (p[i] & 0xFF00FF) | ((p[i] >> 16) & 0xFF00);
+#endif
+			}
+        }
+    }
+		
+	
+	// Determine if we need to pad this image to a power of two.
+    // There are multiple ways to deal with NPOT images on renderers that only support POT:
+    // 1) scale down the image to POT size. Loses quality.
+    // 2) pad up the image to POT size. Wastes memory.
+    // 3) slice the image into multiple POT textures. Requires more rendering logic.
+    //
+    // We are only dealing with a single image here, and pick 2) for simplicity.
+    //
+    // If you prefer 1), you can use CoreGraphics to scale the image into a CGBitmapContext.
+	
+	// XXX: Should check GL extentions. Perhaps device supports NPOT textures
+    if (imgWide != POTWide || imgHigh != POTHigh)
+    {
+        GLuint dstBytes = POTWide * components;
+        GLubyte *temp = (GLubyte *)malloc(dstBytes * POTHigh);
+        
+        for (y = 0; y < imgHigh; y++)
+            memcpy(&temp[y*dstBytes], &pixels[y*rowBytes], rowBytes);
+        
+        pixels = temp;
+        rowBytes = dstBytes;
+    }
 
+	// Repack the pixel data into the right format
+	
+	if(defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB565) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
+		void *tempData = malloc(imgHigh * imgWide * 2);
+		inPixel32 = (unsigned int*)data;
+		outPixel16 = (unsigned short*)tempData;
+		for(UInt32 i = 0; i < imgWide * imgHigh; ++i, ++inPixel32)
+			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) |	// R
+			((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) |					// G
+			((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);					// B
+		
+		if( temp )
+			free(temp);
+		pixels = temp = tempData;		
+	}
+	else if (defaultAlphaPixelFormat == kTexture2DPixelFormat_RGBA4444) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
+		void *tempData = malloc(imgHigh * imgWide * 2);
+		inPixel32 = (unsigned int*)data;
+		outPixel16 = (unsigned short*)tempData;
+		for(UInt32 i = 0; i < imgWide * imgHigh; ++i, ++inPixel32)
+			*outPixel16++ = 
+			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) |		// R
+			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) |		// G
+			((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) |		// B
+			((((*inPixel32 >> 24) & 0xFF) >> 4) << 0);		// A
+
+		if( temp )
+			free(temp);
+		pixels = temp = tempData;
+		
+	}
+	else if (defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB5A1) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
+		void *tempData = malloc(imgHigh * imgWide * 2);
+		inPixel32 = (unsigned int*)data;
+		outPixel16 = (unsigned short*)tempData;
+		for(UInt32 i = 0; i < imgWide * imgHigh; ++i, ++inPixel32)
+			*outPixel16++ = 
+			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) |		// R
+			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) |		// G
+			((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) |		// B
+			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0);		// A
+		
+		if( temp )
+			free(temp);
+		pixels = temp = tempData;		
+	}	
+	
+	self = [self initWithData:pixels pixelFormat:defaultAlphaPixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:CGSizeMake(imgWide,imgHigh)];
+	
+    if (temp)
+		free(temp);
+    CFRelease(data);
+	
 	// should be after calling super init
-	_hasPremultipliedAlpha = NO;
-	
-	if( releaseData )
-		free(data);
+	CGImageAlphaInfo alphainfo = CGImageGetAlphaInfo(CGImage);
+
+	// It seems that images are already premultiplied on the device!!! WTF!!! WHY ?!?
+	_hasPremultipliedAlpha = (alphainfo == kCGImageAlphaPremultipliedLast || alphainfo == kCGImageAlphaPremultipliedFirst);
+	NSLog(@"--------------------> Contains PREMULTI: %i", _hasPremultipliedAlpha);
 	
 	return self;
 }

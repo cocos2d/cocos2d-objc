@@ -157,9 +157,7 @@
 	[parser setShouldResolveExternalEntities:NO];
 	[parser parse];
 
-	NSError *parseError = [parser parserError];
-
-	NSAssert2( ! parseError, @"Error parsing file: %@. Error: %@", xmlFilename, parseError);
+	NSAssert1( ! [parser parserError], @"Error parsing file: %@.", xmlFilename );
 
 	[parser release];
 }
