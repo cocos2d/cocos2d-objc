@@ -31,8 +31,21 @@
  The benefits of using CCSprite objects as tiles are:
  - tiles (CCSprite) can be rotated/scaled/moved with a nice API
  
- If the layer contains a property named "cc_vertexz" with a value of "automatic", then the tiles will use the
- OpenGL vertex Z for the depth.
+ If the layer contains a property named "cc_vertexz" with an integer (in can be positive or negative),
+ then all the tiles belonging to the layer will use that value as their OpenGL vertex Z for depth.
+
+ On the other hand, if the "cc_vertexz" property has the "automatic" value, then the tiles will use an automatic vertex Z value.
+ Also before drawing the tiles, GL_ALPHA_TEST will be enabled, and disabled after drawin them. The used alpha func will be:
+
+    glAlphaFunc( GL_GREATER, value )
+ 
+ "value" by default is 0, but you can change it from Tiled by adding the "cc_alpha_func" property to the layer.
+ The value 0 should work for most cases, but if you have tiles that are semi-transparent, then you might want to use a differnt
+ value, like 0.5.
+ 
+ For further information, please see the programming guide:
+ 
+	http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  
  @since v0.8.1
  */
