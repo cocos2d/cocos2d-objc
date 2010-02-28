@@ -51,8 +51,10 @@
 	unsigned int		minGID_;
 	unsigned int		maxGID_;
 	
-	BOOL				useAutomaticVertexZ_;
+	// Only used when vertexZ is used
 	int					vertexZvalue_;
+	BOOL				useAutomaticVertexZ_;
+	float				alphaFuncValue_;
 	
 	// used for optimization
 	CCSprite		*reusedTile_;
