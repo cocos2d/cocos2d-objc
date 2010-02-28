@@ -77,10 +77,7 @@ typedef enum {
 	//! 16-bit textures: RGBA4444
 	kTexture2DPixelFormat_RGBA4444,
 	//! 16-bit textures: RGB5A1
-	kTexture2DPixelFormat_RGB5A1,
-	
-	// You should never use this value. Used internally
-	kTexture2DPixelFormat_BGRA8888, 
+	kTexture2DPixelFormat_RGB5A1,	
 } Texture2DPixelFormat;
 
 /// Default pixel format: RGBA8888
