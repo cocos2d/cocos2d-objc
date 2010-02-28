@@ -18,6 +18,10 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"TextureLibPNGTest1",
+	@"TextureLibPNGTest2",
+	@"TextureLibPNGTest3",
+	
 			@"TextureAlias",
 			@"TextureMipMap",
 			@"TexturePVRMipMap",
@@ -81,6 +85,13 @@ Class restartAction()
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:0 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}		
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -127,6 +138,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 @end
 
@@ -859,25 +875,24 @@ Class restartAction()
 		[self addChild:background z:-1];
 		
 		
-		// PNG compressed sprite has pre multiplied alpha channel
-		//   you CAN have opacity + tint at the same time
-		//   but opacity SHOULD be before COLOR
+		// PNG sprite. Loaded using UIImage
+		//   - Probably it will be premultiplied image
 		CCSprite *png1 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png1 z:0];
 		png1.position = ccp(size.width/5, size.height/2);
 		[self transformSprite:png1];
 		
-		// PNG uncompressed sprite has pre multiplied alpha
-		//   Same rule as compressed sprites.
-		CCSprite *uncPNG = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
+		// BMP image. Loaded using UIImage
+		//   - Probably it will be premultiplied image
+		CCSprite *uncPNG = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.bmp"];
 		[self addChild:uncPNG z:0];
 		uncPNG.position = ccp(size.width/5*2, size.height/2);
 		[self transformSprite:uncPNG];
 
 		
-		// PNG compressed sprite has pre multiplied alpha channel
-		//  - with opacity doesn't modify color
-		//  - blend func: GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+		// PNG sprite. Loaded using UIImage
+		//  - Probably it will be a premultiplied image
+		//  - We are forcing a new blend function just to see if it uses premultiplied or not
 		CCSprite *png3 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.ppng"];
 		[self addChild:png3 z:0];
 		png3.position = ccp(size.width/5*3, size.height/2);
@@ -886,6 +901,7 @@ Class restartAction()
 		[self transformSprite:png3];
 		
 		// PNG 32-bit RGBA
+		//  - This is a non-premultiplied image. It is loaded using libpng
 		CCTexture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.ppng"];
 		CCSprite *rgba =[CCSprite spriteWithTexture:tex2d];
 		[self addChild:rgba z:0];
@@ -925,7 +941,11 @@ Class restartAction()
 }
 -(NSString*) title
 {
-	return @"iPhone PNG vs libpng #1";
+	return @"iPhone PNG/BMP vs libpng #1";
+}
+-(NSString*) subtitle
+{
+	return @"Testing Fade. You shoudn't see a black border in the blue rectangle";
 }
 @end
 
@@ -935,7 +955,7 @@ Class restartAction()
 @implementation TextureLibPNGTest2
 -(void) transformSprite:(CCSprite*)sprite
 {
-	id tint = [CCTintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
+	id tint = [CCTintBy actionWithDuration:2 red:-64 green:-224 blue:-255];
 	id dl = [CCDelayTime actionWithDuration:2];
 	id tintback = [tint reverse];
 	id seq = [CCSequence actions: tint, dl, tintback, nil];
@@ -944,7 +964,11 @@ Class restartAction()
 }
 -(NSString*) title
 {
-	return @"iPhone PNG vs libpng #2";
+	return @"iPhone PNG/BMP vs libpng #2";
+}
+-(NSString*) subtitle
+{
+	return @"Testing Tint. You shoudn't see a black border in the blue rectangle";
 }
 @end
 
@@ -961,7 +985,7 @@ Class restartAction()
 	id repeat = [CCRepeatForever actionWithAction:seq];
 	[sprite runAction:repeat];
 	
-	id tint = [CCTintBy actionWithDuration:2 red:-128 green:-128 blue:-255];
+	id tint = [CCTintBy actionWithDuration:2 red:-64 green:-224 blue:-255];
 	id dl2 = [CCDelayTime actionWithDuration:2];
 	id tintback = [tint reverse];
 	id seq2 = [CCSequence actions: tint, dl2, tintback, nil];
@@ -971,7 +995,11 @@ Class restartAction()
 }
 -(NSString*) title
 {
-	return @"iPhone PNG vs libpng #3";
+	return @"iPhone PNG/BMP vs libpng #3";
+}
+-(NSString*) subtitle
+{
+	return @"Testing Tint+Fade. You shoudn't see a black border in the blue rectangle";
 }
 @end
 

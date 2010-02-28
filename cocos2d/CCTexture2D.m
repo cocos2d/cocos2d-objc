@@ -101,7 +101,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @interface CCTexture2D (Private)
 -(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
--(id) initRGBATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
+-(id) initNonPremultipliedTextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
 @end
 
 @implementation CCTexture2D
@@ -179,10 +179,10 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGImageRef				CGImage;	
 	CGColorSpaceModel		colormodel; // CGImage colormodel (RGB, CMYK, paletted, etc)
 	
-	CGImage = [uiImage CGImage];
+	CGImage = uiImage.CGImage;
 	
 	if(CGImage == NULL) {
-		NSLog(@"Image is Null");
+		NSLog(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
 		return nil;
 	}
 	
@@ -205,7 +205,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	}
 	
 	if( hasAlpha && bpc==8 && colormodel==kCGColorSpaceModelRGB && bpp==32 )
-		self = [self initRGBATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
+		self = [self initNonPremultipliedTextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
 	else
 		// fallback
 		self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
@@ -227,9 +227,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGAffineTransform		transform;
 	CGSize					imageSize;
 	Texture2DPixelFormat    pixelFormat;
-	
-	
-	NSLog(@"-----------------------> TEXTURE WITH PRE MULTIPLIED ALPHA");
+		
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
@@ -339,14 +337,14 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	return self;
 }
 
--(id) initRGBATextureWithImage:(CGImageRef)CGImage pixelsWide:(NSUInteger)POTWide pixelsHigh:(NSUInteger)POTHigh
+-(id) initNonPremultipliedTextureWithImage:(CGImageRef)CGImage pixelsWide:(NSUInteger)POTWide pixelsHigh:(NSUInteger)POTHigh
 {
     GLuint components, y;
     GLuint imgWide, imgHigh;		// Real image size
     GLuint rowBytes;				// Image size padded by CGImage
     CGBitmapInfo info;				// CGImage component layout info
     CGColorSpaceModel colormodel;	// CGImage colormodel (RGB, CMYK, paletted, etc)
-    GLenum internal, format;
+    GLenum	format;
 	unsigned int		*inPixel32;
 	unsigned short		*outPixel16;
     GLubyte *pixels, *temp = NULL;
@@ -362,10 +360,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	imgHigh = CGImageGetHeight(CGImage);
 	
 	
-	NSLog(@"-----------------------> TEXTURE RGBA");
-	
 	// Choose OpenGL format
-	internal = GL_RGBA;
 	switch(info & kCGBitmapAlphaInfoMask)
 	{
 		case kCGImageAlphaPremultipliedFirst:
@@ -442,6 +437,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 	// Repack the pixel data into the right format
 	
+	defaultAlphaPixelFormat = kTexture2DPixelFormat_RGBA8888;
+
 	if(defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		void *tempData = malloc(imgHigh * imgWide * 2);
@@ -501,7 +498,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 	// It seems that images are already premultiplied on the device!!! WTF!!! WHY ?!?
 	_hasPremultipliedAlpha = (alphainfo == kCGImageAlphaPremultipliedLast || alphainfo == kCGImageAlphaPremultipliedFirst);
-	NSLog(@"--------------------> Contains PREMULTI: %i", _hasPremultipliedAlpha);
+//	NSLog(@"--------------------> Contains PREMULTI: %i", _hasPremultipliedAlpha);
 	
 	return self;
 }
