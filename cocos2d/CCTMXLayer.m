@@ -171,6 +171,7 @@
 		
 		useAutomaticVertexZ_= NO;
 		vertexZvalue_ = 0;
+		alphaFuncValue_ = 0;
 
 	}
 	return self;
@@ -272,6 +273,9 @@
 		else
 			vertexZvalue_ = [vertexz intValue];
 	}
+	
+	NSString *alphaFuncVal = [self propertyNamed:@"cc_alpha_func"];
+	alphaFuncValue_ = [alphaFuncVal floatValue];
 }
 
 #pragma mark CCTMXLayer - obtaining tiles/gids
@@ -625,7 +629,7 @@ int compareInts (const void * a, const void * b)
 {
 	if( useAutomaticVertexZ_ ) {
 		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.0f);
+		glAlphaFunc(GL_GREATER, alphaFuncValue_);
 	}
 	
 	[super draw];

@@ -325,6 +325,7 @@ static CCDirector *_sharedDirector = nil;
 	if (on) {
 		glEnable(GL_BLEND);
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		
 	} else
 		glDisable(GL_BLEND);
 }

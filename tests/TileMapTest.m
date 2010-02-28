@@ -1058,7 +1058,7 @@ Class restartAction()
 		CCTMXLayer *layer = [map layerNamed:@"trees"];
 		tamara = [layer tileAt:ccp(0,11)];
 		[tamara retain];
-		
+
 		id move = [CCMoveBy actionWithDuration:10 position:ccp(400,450)];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
@@ -1198,6 +1198,9 @@ Class restartAction()
 	
 	// depth buffer
 	[director setDepthBufferFormat:kDepthBuffer16];
+	
+	// pixel format
+	[director setPixelFormat:kPixelFormatRGBA8888];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
