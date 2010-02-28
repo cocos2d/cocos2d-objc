@@ -1389,6 +1389,7 @@
 		50F29F6F102053370046CA73 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F29F6E102053370046CA73 /* base64.h */; };
 		50F2A104102094550046CA73 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
 		50F2A105102094550046CA73 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F2A103102094550046CA73 /* ZipUtils.h */; };
+		50F3B4A6113ABA83006BCDF1 /* grossinis_sister1-testalpha.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 50F3B4A5113ABA83006BCDF1 /* grossinis_sister1-testalpha.bmp */; };
 		50F48A531045943000755CFB /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500111F2103B878B0059EC2E /* GLES-Render.mm */; };
 		50F7B2780F28DE7C00057537 /* CCEaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* CCEaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* CCEaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* CCEaseAction.m */; };
@@ -2632,6 +2633,7 @@
 		50F29F6E102053370046CA73 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		50F2A102102094550046CA73 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
 		50F2A103102094550046CA73 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
+		50F3B4A5113ABA83006BCDF1 /* grossinis_sister1-testalpha.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "grossinis_sister1-testalpha.bmp"; sourceTree = "<group>"; };
 		50F489BC10458B6300755CFB /* 320x480-Splash-angry-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-angry-01.png"; sourceTree = "<group>"; };
 		50F489BD10458B6300755CFB /* 320x480-Splash-angry-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-angry-02.png"; sourceTree = "<group>"; };
 		50F489BE10458B6300755CFB /* 320x480-Splash-happy-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "320x480-Splash-happy-01.png"; sourceTree = "<group>"; };
@@ -4132,6 +4134,7 @@
 		508A333A0FBADD6A00D574A2 /* grossini images */ = {
 			isa = PBXGroup;
 			children = (
+				50F3B4A5113ABA83006BCDF1 /* grossinis_sister1-testalpha.bmp */,
 				50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */,
 				50B2CB280E10EE4A00AE9530 /* grossini.png */,
 				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
@@ -6497,6 +6500,7 @@
 				503863DA110082B1005D2C92 /* texture1024x1024.jpeg in Resources */,
 				503863DB110082B1005D2C92 /* texture2048x2048.jpeg in Resources */,
 				503863DC110082B1005D2C92 /* texture4096x4096.jpeg in Resources */,
+				50F3B4A6113ABA83006BCDF1 /* grossinis_sister1-testalpha.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9032,7 +9036,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				IPHONE_OPTIMIZE_OPTIONS = "-skip-PNGs";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -9059,7 +9062,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				IPHONE_OPTIMIZE_OPTIONS = "-skip-PNGs";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
