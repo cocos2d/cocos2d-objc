@@ -210,7 +210,6 @@ static BOOL _mixerRateSet = NO;
 {	
 	if ((self = [super init])) {
 		
-		_mute = NO;
 		asynchLoadProgress = 0.0f;
 		_audioSessionCategory = audioSessionCategory;
 		_handleAudioSession = (_audioSessionCategory != CD_IGNORE_AUDIO_SESSION);
@@ -270,6 +269,9 @@ static BOOL _mixerRateSet = NO;
 		// Initialize our OpenAL environment
 		if ([self _initOpenAL]) {
 			functioning = TRUE;
+			//Synchronize premute gain
+			_preMuteGain = self.masterGain;
+			_mute = NO;
 		} else {
 			//Something went wrong with OpenAL
 			functioning = FALSE;
@@ -488,6 +490,11 @@ static BOOL _mixerRateSet = NO;
  * Setting mute silences all sounds but playing sounds continue to advance playback
  */
 - (void) setMute:(BOOL) newMuteValue {
+	
+	if (newMuteValue == _mute) {
+		return;
+	}
+	
 	_mute = newMuteValue;
 	if (_mute) {
 		//Remember what the gain was
@@ -495,6 +502,7 @@ static BOOL _mixerRateSet = NO;
 		//Set gain to 0
 		self.masterGain = 0.0f;
 	} else {
+		//Restore gain to what it was before being muted
 		self.masterGain = _preMuteGain;
 	}	
 }
