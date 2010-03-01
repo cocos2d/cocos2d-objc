@@ -173,11 +173,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 - (id) initWithImage:(UIImage *)uiImage
 {
 	NSUInteger				POTWide, POTHigh;
-	BOOL					hasAlpha;
-	CGImageAlphaInfo		alphainfo;
-	CGSize					imageSize;
 	CGImageRef				CGImage;	
-	CGColorSpaceModel		colormodel; // CGImage colormodel (RGB, CMYK, paletted, etc)
 	
 	CGImage = uiImage.CGImage;
 	
@@ -186,17 +182,15 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		return nil;
 	}
 	
-	alphainfo = CGImageGetAlphaInfo(CGImage);
-	hasAlpha = ((alphainfo == kCGImageAlphaPremultipliedLast) || (alphainfo == kCGImageAlphaPremultipliedFirst) || (alphainfo == kCGImageAlphaLast) || (alphainfo == kCGImageAlphaFirst) ? YES : NO);
+//	CGImageAlphaInfo alphainfo = CGImageGetAlphaInfo(CGImage);
+//	BOOL hasAlpha = ((alphainfo == kCGImageAlphaPremultipliedLast) || (alphainfo == kCGImageAlphaPremultipliedFirst) || (alphainfo == kCGImageAlphaLast) || (alphainfo == kCGImageAlphaFirst) ? YES : NO);
 	
-	size_t bpc = CGImageGetBitsPerComponent(CGImage);
-	size_t bpp = CGImageGetBitsPerPixel(CGImage);
-	colormodel = CGColorSpaceGetModel(CGImageGetColorSpace(CGImage));
+//	size_t bpc = CGImageGetBitsPerComponent(CGImage);
+//	size_t bpp = CGImageGetBitsPerPixel(CGImage);
+//	CGColorSpaceModel colormodel = CGColorSpaceGetModel(CGImageGetColorSpace(CGImage));
 
-	imageSize = CGSizeMake(CGImageGetWidth(CGImage), CGImageGetHeight(CGImage));
-
-	POTWide = nextPOT(imageSize.width);
-	POTHigh = nextPOT(imageSize.height);
+	POTWide = nextPOT(CGImageGetWidth(CGImage));
+	POTHigh = nextPOT(CGImageGetHeight(CGImage));
 		
 	unsigned maxTextureSize = [[CCConfiguration sharedConfiguration] maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
@@ -204,12 +198,16 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		return nil;
 	}
 	
-	if( hasAlpha && bpc==8 && colormodel==kCGColorSpaceModelRGB && bpp==32 )
-		self = [self initNonPremultipliedTextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
-	else
-		// fallback
-		self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
-		
+//	if( hasAlpha && bpc==8 && colormodel==kCGColorSpaceModelRGB && bpp==32 )
+//		self = [self initNonPremultipliedTextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
+//	else
+//		// fallback
+//		self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
+
+
+	// always load premultiplied images
+	self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
+
 	return self;
 }
 

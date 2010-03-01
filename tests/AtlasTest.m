@@ -12,7 +12,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Atlas1",
-			@"Atlas2",
+			@"LabelAtlasTest",
+			@"LabelAtlasColorTest",
 			@"Atlas3",
 			@"Atlas4",
 			@"Atlas5",
@@ -83,6 +84,13 @@ Class restartAction()
 	[self addChild: label z:1];
 	[label setPosition: ccp(s.width/2, s.height-50)];
 	
+	NSString *subtitle = [self subtitle];
+	if( subtitle ) {
+		CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+		[self addChild:l z:1];
+		[l setPosition:ccp(s.width/2, s.height-80)];
+	}	
+	
 	CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 	CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
@@ -127,6 +135,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 @end
 
@@ -201,13 +214,19 @@ Class restartAction()
 					
 -(NSString *) title
 {
-	return @"Atlas: TextureAtlas";
+	return @"CCTextureAtlas";
 }
+
+-(NSString *) subtitle
+{
+	return @"Manual creation of CCTextureAtlas";
+}
+
 @end
 
-#pragma mark Example Atlas 2
+#pragma mark Example LabelAtlasTest
 
-@implementation Atlas2
+@implementation LabelAtlasTest
 -(id) init
 {
 	if( (self=[super init] )) {
@@ -243,11 +262,73 @@ Class restartAction()
 	[super dealloc];
 }
 
--(NSString *) title
+-(NSString*) title
 {
-	return @"Atlas: LabelAtlas";
+	return @"CCLabelAtlas";
+}
+
+-(NSString *) subtitle
+{
+	return @"Updating label should be fast";
 }
 @end
+
+#pragma mark Example LabelAtlasColorTest
+
+@implementation LabelAtlasColorTest
+-(id) init
+{
+	if( (self=[super init] )) {
+		
+		CCLabelAtlas *label1 = [CCLabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		[self addChild:label1 z:0 tag:kTagSprite1];
+		label1.position = ccp(10,100);
+		label1.opacity = 200;
+		
+		CCLabelAtlas *label2 = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		[self addChild:label2 z:0 tag:kTagSprite2];
+		label2.position = ccp(10,200);
+		label2.color = ccRED;
+
+		id fade = [CCFadeOut actionWithDuration:1.0f];
+		id fade_in = [fade reverse];
+		id seq = [CCSequence actions:fade, fade_in, nil];
+		id repeat = [CCRepeatForever actionWithAction:seq];
+		[label2 runAction:repeat];	
+		
+		
+		[self schedule:@selector(step:)];
+	}
+	return self;
+}
+
+-(void) step:(ccTime) dt
+{
+	time += dt;
+	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
+	CCLabelAtlas *label1 = (CCLabelAtlas*) [self getChildByTag:kTagSprite1];
+	[label1 setString:string];
+	
+	CCLabelAtlas *label2 = (CCLabelAtlas*) [self getChildByTag:kTagSprite2];
+	[label2 setString: [NSString stringWithFormat:@"%d", (int)time]];	
+}
+
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+-(NSString*) title
+{
+	return @"CCLabelAtlas";
+}
+
+-(NSString *) subtitle
+{
+	return @"Opacity + Color should work at the same time";
+}
+@end
+
 
 
 #pragma mark Example Atlas3
@@ -323,8 +404,14 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas: alignment";
+	return @"CCBitmapFontAtlas";
 }
+
+-(NSString *) subtitle
+{
+	return @"Testing alignment. Testing opacity + tint";
+}
+
 @end
 
 #pragma mark Example Atlas4
@@ -400,10 +487,6 @@ Class restartAction()
 
 }
 
--(NSString*) title
-{
-	return @"BitmapFontAtlas: animation";
-}
 -(void) step:(ccTime) dt
 {
 	time += dt;
@@ -413,6 +496,15 @@ Class restartAction()
 	[label1 setString:string];	
 }
 
+-(NSString*) title
+{
+	return @"CCBitmapFontAtlas";
+}
+
+-(NSString *) subtitle
+{
+	return @"Using fonts as CCSprite objects. Some characters should rotate.";
+}
 @end
 
 
@@ -444,8 +536,14 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas: padding";
+	return @"CCBitmapFontAtlas";
 }
+
+-(NSString *) subtitle
+{
+	return @"Testing padding";
+}
+
 @end
 
 #pragma mark -
@@ -488,8 +586,14 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas: offset";
+	return @"CCBitmapFontAtlas";
 }
+
+-(NSString *) subtitle
+{
+	return @"Rendering should be OK. Testing offset";
+}
+
 @end
 
 #pragma mark -
@@ -536,8 +640,14 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas: color";
+	return @"CCBitmapFontAtlas";
 }
+
+-(NSString *) subtitle
+{
+	return @"Testing color";
+}
+
 @end
 
 #pragma mark -
@@ -573,8 +683,14 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"BitmapFontAtlas FastCache";
+	return @"CCBitmapFontAtlas";
 }
+
+-(NSString *) subtitle
+{
+	return @"Creating several CCBitmapFontAtlas with the same .fnt file should be fast";
+}
+
 @end
 
 #pragma mark -

@@ -9,9 +9,9 @@
 
 @interface AtlasDemo: CCLayer
 {
-    CCTextureAtlas *atlas;
 }
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
 @interface Atlas1 : AtlasDemo
@@ -20,11 +20,18 @@
 }
 @end
 
-@interface Atlas2 : AtlasDemo
+@interface LabelAtlasTest : AtlasDemo
 {
 	ccTime		time;
 }
 @end
+
+@interface LabelAtlasColorTest : AtlasDemo
+{
+	ccTime		time;
+}
+@end
+
 
 @interface Atlas3 : AtlasDemo
 {

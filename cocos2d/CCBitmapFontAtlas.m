@@ -26,6 +26,7 @@
 #import "CCBitmapFontAtlas.h"
 #import "CCSprite.h"
 #import "CCDrawingPrimitives.h"
+#import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccHashSet.h"
@@ -248,17 +249,18 @@ targetSetEql(void *ptr, void *elt)
 	// base (ignore)
 	[nse nextObject];
 	
+	
 	// scaleW. sanity check
-	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= 1024, @"BitmapFontAtlas: page can't be larger than 1024x1024");
+	propertyValue = [nse nextObject];	
+	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCBitmapFontAtlas: page can't be larger than supported");
 	
 	// scaleH. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= 1024, @"BitmapFontAtlas: page can't be larger than 1024x1024");
+	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCBitmapFontAtlas: page can't be larger than supported");
 	
 	// pages. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] == 1, @"BitfontAtlas: only supports 1 page");
+	NSAssert( [propertyValue intValue] == 1, @"CCBitfontAtlas: only supports 1 page");
 	
 	// packed (ignore) What does this mean ??
 }
@@ -568,6 +570,7 @@ targetSetEql(void *ptr, void *elt)
  	for( id<CCRGBAProtocol> child in children_ )
 		[child setOpacityModifyRGB:modify];
 }
+
 -(BOOL) doesOpacityModifyRGB
 {
 	return opacityModifyRGB_;

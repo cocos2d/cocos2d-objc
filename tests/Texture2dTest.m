@@ -18,10 +18,6 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	@"TextureLibPNGTest1",
-	@"TextureLibPNGTest2",
-	@"TextureLibPNGTest3",
-	
 			@"TextureAlias",
 			@"TextureMipMap",
 			@"TexturePVRMipMap",
@@ -325,6 +321,11 @@ Class restartAction()
 {
 	return @"Texture Mipmap";
 }
+
+-(NSString *) subtitle
+{
+	return @"Left image uses mipmap. Right image doesn't";
+}
 @end
 
 #pragma mark -
@@ -362,6 +363,10 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PVR MipMap Test";
+}
+-(NSString *) subtitle
+{
+	return @"Left image uses mipmap. Right image doesn't";
 }
 @end
 
@@ -458,6 +463,11 @@ Class restartAction()
 {
 	return @"AntiAlias / Alias textures";
 }
+
+-(NSString *) subtitle
+{
+	return @"Left image is antialiased. Right image is aliases";
+}
 @end
 
 #pragma mark -
@@ -539,6 +549,11 @@ Class restartAction()
 {
 	return @"Texture Pixel Formats";
 }
+
+-(NSString *) subtitle
+{
+	return @"From left to right: RGBA8888, RGBA4444, RGB5A1, RGB565";
+}
 @end
 
 #pragma mark -
@@ -556,20 +571,19 @@ Class restartAction()
 			CCSprite *cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:100+i];
 			cloud.position = ccp(50+25*i, 80);
-			if( ! cloud.texture.hasPremultipliedAlpha )
-				NSLog(@"Texture Blend failed. Test it on the device, not simulator");
+			cloud.blendFunc = (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 
-			// CENTER sprites don't have alpha pre-multiplied
+			// CENTER sprites have also alpha pre-multiplied
 			// they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
-			cloud = [CCSprite spriteWithFile:@"test_blend.bmp"];
+			cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:200+i];
 			cloud.position = ccp(50+25*i, 160);
-			if( cloud.texture.hasPremultipliedAlpha )
-				NSLog(@"Texture Blend failed. Test it on the device, not simulator");
+			[cloud setBlendFunc:(ccBlendFunc){GL_ONE_MINUS_DST_COLOR, GL_ZERO}];
+
 			
 			// UPPER sprites are using custom blending function
 			// You can set any blend function to your sprites
-			cloud = [CCSprite spriteWithFile:@"test_blend.bmp"];
+			cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:200+i];
 			cloud.position = ccp(50+25*i, 320-80);
 			cloud.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
@@ -581,6 +595,11 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Texture Blending";
+}
+
+-(NSString *) subtitle
+{
+	return @"Testing 3 different blending modes";
 }
 @end
 
@@ -658,6 +677,11 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Texture Async Load";
+}
+
+-(NSString *) subtitle
+{
+	return @"Textures should load while an animation is being run";
 }
 @end
 
@@ -1048,6 +1072,11 @@ Class restartAction()
 {
 	return @"Different Texture Sizes";
 }
+-(NSString *) subtitle
+{
+	return @"512x512, 1024x1024, 2048x2048 and 4096x4096. See the console.";
+}
+
 @end
 
 

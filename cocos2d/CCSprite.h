@@ -103,6 +103,7 @@ typedef enum {
 	// opacity and RGB protocol
 	GLubyte		opacity_;
 	ccColor3B	color_;
+	ccColor3B	colorUnmodified_;
 	BOOL		opacityModifyRGB_;
 	
 	// image is flipped

@@ -52,7 +52,6 @@ struct transformValues_ {
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
-@synthesize opacity=opacity_, color=color_;
 @synthesize blendFunc = blendFunc_;
 @synthesize usesSpriteSheet = usesSpriteSheet_;
 @synthesize textureAtlas = textureAtlas_;
@@ -122,10 +121,16 @@ struct transformValues_ {
 		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
 		[self useSelfRender];
 		
-		// update texture and blend functions
+		opacityModifyRGB_			= YES;
+		opacity_					= 255;
+		color_ = colorUnmodified_	= ccWHITE;
+		
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
+		
+		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
 		
-
 		// clean the Quad
 		bzero(&quad_, sizeof(quad_));
 		
@@ -144,8 +149,6 @@ struct transformValues_ {
 		hasChildren_ = NO;
 		
 		// Atlas: Color
-		opacity_ = 255;
-		color_ = ccWHITE;
 		ccColor4B tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
@@ -700,6 +703,13 @@ struct transformValues_ {
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
+	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
+	
+	quad_.bl.colors = color4;
+	quad_.br.colors = color4;
+	quad_.tl.colors = color4;
+	quad_.tr.colors = color4;
+	
 	// renders using Sprite Manager
 	if( usesSpriteSheet_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
@@ -713,40 +723,48 @@ struct transformValues_ {
 	// do nothing
 }
 
+-(GLubyte) opacity
+{
+	return opacity_;
+}
+
 -(void) setOpacity:(GLubyte) anOpacity
 {
-	opacity_ = anOpacity;
-	
+	opacity_			= anOpacity;
+
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		color_.r = color_.g = color_.b = opacity_;
-
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
-
-	quad_.bl.colors = color4;
-	quad_.br.colors = color4;
-	quad_.tl.colors = color4;
-	quad_.tr.colors = color4;
-
+		[self setColor: (opacityModifyRGB_ ? colorUnmodified_ : color_ )];
+	
 	[self updateColor];
+}
+
+- (ccColor3B) color
+{
+	if(opacityModifyRGB_){
+		return colorUnmodified_;
+	}
+	return color_;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
-	color_ = color3;
+	color_ = colorUnmodified_ = color3;
 	
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
-	quad_.bl.colors = color4;
-	quad_.br.colors = color4;
-	quad_.tl.colors = color4;
-	quad_.tr.colors = color4;
+	if( opacityModifyRGB_ ){
+		color_.r = color3.r * opacity_/255;
+		color_.g = color3.g * opacity_/255;
+		color_.b = color3.b * opacity_/255;
+	}
 	
 	[self updateColor];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	opacityModifyRGB_ = modify;
+	ccColor3B oldColor	= self.color;
+	opacityModifyRGB_	= modify;
+	self.color			= oldColor;
 }
 
 -(BOOL) doesOpacityModifyRGB
@@ -829,11 +847,11 @@ struct transformValues_ {
 	if( !texture_ || ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
-		opacityModifyRGB_ = NO;
+		[self setOpacityModifyRGB:NO];
 	} else {
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-		opacityModifyRGB_ = YES;
+		[self setOpacityModifyRGB:YES];
 	}
 }
 

@@ -47,6 +47,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		RenderTexture generates UIImages patch
 		correct channel in SimpleAudioEngine patch
 		Added Ease Elastic actions
+		oapcity + color works with premultiplied textures. patch.
 	* cjlesh:
 		RotateTo action rotates to shortest angle patch
 	* Clinth Harris:

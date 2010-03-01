@@ -6,15 +6,16 @@ version 0.99.1 - XX-MMM-2010
 	ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 	ccpRotateByAngle, ccpLineIntersect (issue #783)
  . Chipmunk: updated to v5.2 (issue #784)
+ . CocosDenshion: Fixed mute (issue #789)
  . RenderTexture: removed limit when saving images (issue #782)
- . Texture2D: PNG (and other images) are loaded without premultipling alpha (issue #697)
+ . Sprite, LabelAtlas, TiledMap: opactiy + color works even when the texture is premultiplied (issue #668)
  . TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
  . TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
  . TMX: TMXLayer uses the opacity defined for the layer (issue #785)
  . TMX: TMXLayer supports Tiled offset property (issue #616)
  . TMX: Added support for .tsx tilesets (issue #619)
  . Transition: new added transitions: CCRadialCCWTransition, CCRadialCWTransition (issue #783)
- . Xcode: hardware reques in .plist: doesn't contain disabled features. Seems to be a bun in Xcode 3.2.2 (issue #769)
+ . Xcode: hardware requirements in .plist: doesn't contain disabled features. Seems to be a bun in Xcode 3.2.2 (issue #769)
  
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)
