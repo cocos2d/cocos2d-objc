@@ -70,19 +70,19 @@ enum {
 		
 		// bottom
 		groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox);
+		groundBody->CreateFixture(&groundBox,0);
 		
 		// top
 		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
-		groundBody->CreateFixture(&groundBox);
+		groundBody->CreateFixture(&groundBox,0);
 		
 		// left
 		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
-		groundBody->CreateFixture(&groundBox);
+		groundBody->CreateFixture(&groundBox,0);
 		
 		// right
 		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox);
+		groundBody->CreateFixture(&groundBox,0);
 
 		
 		//Set up sprite

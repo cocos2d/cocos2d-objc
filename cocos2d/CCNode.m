@@ -228,7 +228,7 @@
 
 -(void) childrenAlloc
 {
-	children_ = [[NSMutableArray arrayWithCapacity:4] retain];
+	children_ = [[NSMutableArray alloc] initWithCapacity:4];
 }
 
 // camera: lazy alloc
@@ -592,7 +592,7 @@
 
 -(void) timerAlloc
 {
-	scheduledSelectors_ = [[NSMutableDictionary dictionaryWithCapacity: 2] retain];
+	scheduledSelectors_ = [[NSMutableDictionary alloc] initWithCapacity: 2];
 }
 
 -(void) schedule: (SEL) selector

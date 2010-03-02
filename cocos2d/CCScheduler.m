@@ -121,9 +121,9 @@ static CCScheduler *sharedScheduler;
 - (id) init
 {
 	if( (self=[super init]) ) {
-		scheduledMethods = [[NSMutableArray arrayWithCapacity:50] retain];
-		methodsToRemove = [[NSMutableArray arrayWithCapacity:20] retain];
-		methodsToAdd = [[NSMutableArray arrayWithCapacity:20] retain];
+		scheduledMethods = [[NSMutableArray alloc] initWithCapacity:50];
+		methodsToRemove = [[NSMutableArray alloc] initWithCapacity:20];
+		methodsToAdd = [[NSMutableArray alloc] initWithCapacity:20];
 		
 		timeScale_ = 1.0f;
 

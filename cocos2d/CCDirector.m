@@ -146,7 +146,7 @@ static CCDirector *_sharedDirector = nil;
 		nextScene_ = nil;
 		
 		oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
-		scenesStack_ = [[NSMutableArray arrayWithCapacity:10] retain];
+		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
 		
 		// landscape
 		deviceOrientation_ = CCDeviceOrientationPortrait;
@@ -191,7 +191,7 @@ static CCDirector *_sharedDirector = nil;
 	
 #if CC_DIRECTOR_FAST_FPS
     if (!FPSLabel)
-        FPSLabel = [[CCLabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
+        FPSLabel = [[CCLabelAtlas alloc] initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 #endif	
 }
 
@@ -424,9 +424,12 @@ static CCDirector *_sharedDirector = nil;
 		
 		// alloc and init the opengl view
 		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
-
+		
 		// check if the view was alloced and initialized
 		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
+
+		// opaque by default (faster)
+		openGLView_.opaque = YES;		
 		
 		// set autoresizing enabled when attaching the glview to another view
 		[openGLView_ setAutoresizesEAGLSurface:YES];		
