@@ -39,6 +39,7 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 @interface CDSoundEngine (PrivateMethods)
 -(ALuint) _startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping checkState:(BOOL) checkState;
 - (BOOL) _initOpenAL;
+- (void) _testGetGain;
 @end
 
 @implementation CDUtilities
@@ -72,11 +73,22 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 static Float32 _mixerSampleRate;
 static BOOL _mixerRateSet = NO;
 
-@synthesize lastErrorCode, functioning, asynchLoadProgress;
+@synthesize lastErrorCode, functioning, asynchLoadProgress, getGainWorks;
 
 + (void) setMixerSampleRate:(Float32) sampleRate {
 	_mixerRateSet = YES;
 	_mixerSampleRate = sampleRate;
+}	
+
+- (void) _testGetGain {
+	float testValue = 0.7f;
+	ALuint testSourceId = _sources[0];
+	alSourcef(testSourceId, AL_GAIN, 0.0f);//Start from know value
+	alSourcef(testSourceId, AL_GAIN, testValue);
+	ALfloat gainVal;
+	alGetSourcef(testSourceId, AL_GAIN, &gainVal);
+	getGainWorks = (gainVal == testValue);
+	CDLOG(@"Denshion::CDSoundEngine - testing get gain for source %i",getGainWorks);
 }	
 
 /**
@@ -272,6 +284,8 @@ static BOOL _mixerRateSet = NO;
 			//Synchronize premute gain
 			_preMuteGain = self.masterGain;
 			_mute = NO;
+			//Test whether get gain works for sources
+			[self _testGetGain];
 		} else {
 			//Something went wrong with OpenAL
 			functioning = FALSE;
@@ -740,7 +754,7 @@ static BOOL _mixerRateSet = NO;
 ///////////////////////////////////////////////////////////////////////////////////////
 
 @implementation CDSourceWrapper
-
+//TODO: better error handling, currently ignoring AL error
 -(void) setSourceId:(ALuint) newSourceId {
 	if ((newSourceId != CD_NO_SOURCE) && (newSourceId != CD_MUTE)) {
 		sourceId = newSourceId;
@@ -754,23 +768,19 @@ static BOOL _mixerRateSet = NO;
 }	
 
 - (void) setPitch:(float) newPitchValue {
-	lastPitch = newPitchValue;
 	alSourcef(sourceId, AL_PITCH, newPitchValue);	
 }	
 
 - (void) setGain:(float) newGainValue {
-	lastGain = newGainValue;
 	alSourcef(sourceId, AL_GAIN, newGainValue);	
 }
 
 - (void) setPan:(float) newPanValue {
-	lastPan = newPanValue;
 	float sourcePosAL[] = {newPanValue, 0.0f, 0.0f};//Set position - just using left and right panning
 	alSourcefv(sourceId, AL_POSITION, sourcePosAL);
 }
 
 - (void) setLooping:(BOOL) newLoopingValue {
-	lastLooping = newLoopingValue;
 	alSourcei(sourceId, AL_LOOPING, newLoopingValue);
 }
 
@@ -781,28 +791,33 @@ static BOOL _mixerRateSet = NO;
 	return (state == AL_PLAYING);
 }	
 
-//alGetSource does not appear to work for pitch, pan and gain values
-//So we just remember the last value set
 - (float) pitch {
-	/*
-	//This does not work on simulator or device 
 	ALfloat pitchVal;
 	alGetSourcef(sourceId, AL_PITCH, &pitchVal);
 	return pitchVal;
-	*/ 
-	return lastPitch;
 }
 
 - (float) pan {
-	return lastPan;
+	ALfloat sourcePosAL[] = {0.0f,0.0f,0.0f};
+	alGetSourcefv(sourceId, AL_POSITION, sourcePosAL);
+	return sourcePosAL[0];
 }
 
 - (float) gain {
-	return lastGain;
+	ALfloat val;
+	alGetSourcef(sourceId, AL_GAIN, &val);
+	return val;
 }	
 
 - (BOOL) looping {
-	return lastLooping;
+	ALfloat val;
+	alGetSourcef(sourceId, AL_LOOPING, &val);
+	return val;
+}
+
+-(void) dealloc {
+	CDLOG(@"CocosDenshion::CDSourceWrapper deallocated %@",self);
+	[super dealloc];
 }	
 
 @end
