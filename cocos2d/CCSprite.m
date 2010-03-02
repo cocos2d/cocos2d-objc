@@ -306,7 +306,7 @@ struct transformValues_ {
 
 -(void) initAnimationDictionary
 {
-	animations_ = [[NSMutableDictionary dictionaryWithCapacity:2] retain];
+	animations_ = [[NSMutableDictionary alloc] initWithCapacity:2];
 }
 
 -(void)setTextureRect:(CGRect)rect

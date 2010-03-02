@@ -55,7 +55,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 -(id) init
 {
 	if( (self=[super init]) ) {
-		spriteFrames = [[NSMutableDictionary dictionaryWithCapacity: 100] retain];
+		spriteFrames = [[NSMutableDictionary alloc] initWithCapacity:100];
 	}
 	
 	return self;
