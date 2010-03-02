@@ -152,7 +152,7 @@ typedef struct _channelGroup {
 	ALenum			lastErrorCode;
 	BOOL			functioning;
 	float			asynchLoadProgress;
-		
+	BOOL			getGainWorks;
 }
 
 @property (readwrite, nonatomic) ALfloat masterGain;
@@ -160,6 +160,7 @@ typedef struct _channelGroup {
 @property (readonly)  ALenum lastErrorCode;//Last OpenAL error code that was generated
 @property (readonly)  BOOL functioning;//Is the sound engine functioning
 @property (readwrite) float asynchLoadProgress;
+@property (readonly)  BOOL getGainWorks;//Does getting the gain for a source work
 
 /** Sets the sample rate for the audio mixer. For best performance this should match the sample rate of your audio content */
 + (void) setMixerSampleRate:(Float32) sampleRate;
@@ -193,10 +194,6 @@ typedef struct _channelGroup {
 ////////////////////////////////////////////////////////////////////////////
 @interface CDSourceWrapper : NSObject {
 	ALuint sourceId;
-	float lastPitch;
-	float lastPan;
-	float lastGain;
-	BOOL lastLooping;
 }
 @property (readwrite, nonatomic) ALuint sourceId;
 @property (readwrite, nonatomic) float pitch;

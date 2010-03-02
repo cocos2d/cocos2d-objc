@@ -25,16 +25,21 @@
 #import "SimpleAudioEngine.h"
 
 typedef enum {
-	kFC_LinearFade,		//!Straigh linear interpolation fade
+	kFC_LinearFade,		//!Straight linear interpolation fade
 	kFC_SCurveFade,		//!S curved fade
 	kFC_ExponentialFade	//!Exponential curve fade
 } tFaderCurve;
 
-/** Base class for actions that fade out audio
+/** Base class for actions that fade out audio.
+ Audio fading actions based on CDXFaderAction monitor the volume level of the audio source they are adjusting.
+ If it is detected the volume has been set by something other than the fader action then the fader action will
+ abort.  This means you can directly adjust volumes without having to worry if a fader action is in effect.
+ @since v 0.99.1
  */
 @interface CDXFaderAction : CCIntervalAction {
 	float startVolume;
 	float finalVolume;
+	float lastSetVolume;
 	tFaderCurve faderCurve;
 }
 /** creates the action */
@@ -42,7 +47,7 @@ typedef enum {
 /** initializes the action */
 -(id) initWithDuration:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve;
 /** Override in base class to work with specific audio targets */
--(float) getInitialTargetVolume;
+-(float) getTargetVolume;
 /** Override in base class to work with specific audio targets */
 -(void) setTargetVolume:(float)volume;
 
@@ -52,6 +57,7 @@ typedef enum {
 /** Convenience method to fade CDAudioManager's background music
  Works with CDAudioManager and SimpleAudioEngine*/
 +(void) fadeBackgroundMusic:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve;
++(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve sourceId:(ALuint) source;
 
 @end
 
@@ -68,5 +74,16 @@ typedef enum {
 @interface CDXFadeLongAudioSource : CDXFaderAction
 {}
 @end
+
+/**
+ * Class for fading out CDSourceWrapper objects
+ */
+@interface CDXFadeSourceWrapper : CDXFaderAction
+{
+@public	
+	CDSourceWrapper *_wrapper;//do not use this
+}
+@end
+
 
 

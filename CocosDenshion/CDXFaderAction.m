@@ -41,7 +41,7 @@
 	
 }	
 
--(float) getInitialTargetVolume
+-(float) getTargetVolume
 {
 	//This is used for testing purposes only, this method should always be overriden
 	if (finalVolume == 0.0f) {
@@ -53,8 +53,9 @@
 
 -(void) setTargetVolume: (float) volume
 {
-	//This is used for testing purposes only, this method should always be overriden
-	CDLOG(@"CDXFaderAction::setTargeVolume %0.2f", volume);
+	//Remember what we set the volume to
+	CDLOG(@"CocosDenshion::CDXFaderAction - volume %0.4f",volume);
+	lastSetVolume = volume;
 }	
 
 -(id) copyWithZone: (NSZone*) zone
@@ -66,14 +67,23 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	self->startVolume = [self getInitialTargetVolume];
+	startVolume = [self getTargetVolume];
+	lastSetVolume = startVolume;
 }
 
 -(void) update: (ccTime) t
 {
+	if ([self getTargetVolume] != lastSetVolume) {
+		CDLOG(@"CocosDenshion::CDXFaderAction - aborting fade, volume adjusted by other source");
+		//The volume has been modifed by something other than the fade action, therefore abort
+		[[CCActionManager sharedManager] removeAction:self];
+		return;
+	}	
+	
 	//t is equal to fraction of time that has elapsed e.g .25 means we are quarter of the way through
 	if (t < 1.0f) {
 		switch (faderCurve) {
+				
 			case kFC_LinearFade:
 				//Linear interpolation
 				[self setTargetVolume: ((finalVolume - startVolume) * t) + startVolume];
@@ -115,20 +125,35 @@
 +(void) fadeSoundEffects:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve
 {
 	CDXFadeSoundEffects *action = [CDXFadeSoundEffects actionWithDuration:t finalVolume:endVol faderCurve:curve];
-	//Background music is mapped to the left channel long audio source
 	[[CCActionManager sharedManager] addAction:action target:[CDAudioManager sharedManager].soundEngine paused:NO];
+}
+
++(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve sourceId:(ALuint) source {
+	//Check if getting gain for sources works, if not abort (Known to work on 2.2.1 and 3.x i.e supported platforms)
+	CDSoundEngine *se = [CDAudioManager sharedManager].soundEngine;
+	if (!se.functioning || !se.getGainWorks) {
+		CDLOG(@"CocosDenshion::CDXFaderAction fadeSoundEffect aborted, either sound engine isn't functioning or get gain does not work");
+	}
+	
+	//Create wrapper for source
+	CDSourceWrapper *newWrapper = [[CDSourceWrapper alloc] init];
+	newWrapper.sourceId = source;
+	CDXFadeSourceWrapper *action = [CDXFadeSourceWrapper actionWithDuration:t finalVolume:endVol faderCurve:curve];
+	action->_wrapper = newWrapper;//This is only intended to be used here, the action will deallocate this wrapper when it finishes
+	[[CCActionManager sharedManager] addAction:action target:newWrapper paused:NO];
 }	
 
 @end
 
 @implementation CDXFadeSoundEffects
--(float) getInitialTargetVolume
+-(float) getTargetVolume
 {
 	return ((CDSoundEngine*)target).masterGain;
 }	
 
 -(void) setTargetVolume: (float) volume
 {
+	[super setTargetVolume:volume];
 	((CDSoundEngine*)target).masterGain = volume;
 }
 
@@ -142,13 +167,14 @@
 @end
 
 @implementation CDXFadeLongAudioSource
--(float) getInitialTargetVolume
+-(float) getTargetVolume
 {
 	return ((CDLongAudioSource*)target).volume;
 }	
 
 -(void) setTargetVolume: (float) volume
 {
+	[super setTargetVolume:volume];
 	((CDLongAudioSource*)target).volume = volume;
 }
 
@@ -160,4 +186,35 @@
 }
 
 @end
+
+@implementation CDXFadeSourceWrapper
+-(float) getTargetVolume
+{
+	return ((CDSourceWrapper*)target).gain;
+}	
+
+-(void) setTargetVolume: (float) volume
+{
+	[super setTargetVolume:volume];
+	((CDSourceWrapper*)target).gain = volume;
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+	NSObject* theTarget = (NSObject*)aTarget;
+	NSAssert([theTarget isKindOfClass:[CDSourceWrapper class]], @"CDXFadeSourceWrapper requires CDSourceWrapper as target");
+	[super startWithTarget:aTarget];
+}
+
+-(void) dealloc 
+{
+	//Wrapper is used by the convenience method fadeSoundEffect to save users from having to create the wrapper object themselves
+	if (_wrapper) {
+		[_wrapper release];
+	}	
+	[super dealloc];
+}	
+
+@end
+
 
