@@ -30,18 +30,23 @@
 	return [[[self alloc] initWithDuration:t finalVolume:endVol faderCurve:curve ] autorelease];
 }	
 
-/** initializes the action */
 -(id) initWithDuration:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve;
 {
 	if( (self=[super initWithDuration: t]) ) {	
-		self->finalVolume = endVol;
-		self->faderCurve = curve;
+		finalVolume = endVol;
+		faderCurve = curve;
+		stopTargetWhenComplete = NO;
 	}
 	return self;
 	
 }	
 
--(float) getTargetVolume
+-(void) setStopTargetWhenComplete:(BOOL) shouldStop
+{
+	stopTargetWhenComplete = shouldStop;
+}	
+
+-(float) _getTargetVolume
 {
 	//This is used for testing purposes only, this method should always be overriden
 	if (finalVolume == 0.0f) {
@@ -51,12 +56,14 @@
 	}	
 }	
 
--(void) setTargetVolume: (float) volume
+-(void) _setTargetVolume: (float) volume
 {
 	//Remember what we set the volume to
 	CDLOG(@"CocosDenshion::CDXFaderAction - volume %0.4f",volume);
 	lastSetVolume = volume;
 }	
+
+-(void) _stopTarget{}
 
 -(id) copyWithZone: (NSZone*) zone
 {
@@ -67,13 +74,13 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	startVolume = [self getTargetVolume];
+	startVolume = [self _getTargetVolume];
 	lastSetVolume = startVolume;
 }
 
 -(void) update: (ccTime) t
 {
-	if ([self getTargetVolume] != lastSetVolume) {
+	if ([self _getTargetVolume] != lastSetVolume) {
 		CDLOG(@"CocosDenshion::CDXFaderAction - aborting fade, volume adjusted by other source");
 		//The volume has been modifed by something other than the fade action, therefore abort
 		[[CCActionManager sharedManager] removeAction:self];
@@ -86,12 +93,12 @@
 				
 			case kFC_LinearFade:
 				//Linear interpolation
-				[self setTargetVolume: ((finalVolume - startVolume) * t) + startVolume];
+				[self _setTargetVolume: ((finalVolume - startVolume) * t) + startVolume];
 				break;
 				
 			case kFC_SCurveFade:
 				//Cubic s curve t^2 * (3 - 2t)
-				[self setTargetVolume: ((float)(t * t * (3.0 - (2.0 * t))) * (finalVolume - startVolume)) + startVolume];
+				[self _setTargetVolume: ((float)(t * t * (3.0 - (2.0 * t))) * (finalVolume - startVolume)) + startVolume];
 				break;
 			
 			case kFC_ExponentialFade:	
@@ -99,63 +106,74 @@
 				if (finalVolume > startVolume) {
 					//Fade in
 					float logDelta = (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f;
-					[self setTargetVolume: ((finalVolume - startVolume) * logDelta) + startVolume];
+					[self _setTargetVolume: ((finalVolume - startVolume) * logDelta) + startVolume];
 				} else {
 					//Fade Out
 					float logDelta = (-powf(2, -10 * t/1) + 1);
-					[self setTargetVolume: ((finalVolume - startVolume) * logDelta) + startVolume];
+					[self _setTargetVolume: ((finalVolume - startVolume) * logDelta) + startVolume];
 				}
 			
 				break;
 		}
 	} else {	
-		[self setTargetVolume: finalVolume];
+		[self _setTargetVolume: finalVolume];
+		if (stopTargetWhenComplete) {
+			[self _stopTarget];
+		}	
 	} 
 }
 
 
 
-+(void) fadeBackgroundMusic:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve
++(void) fadeBackgroundMusic:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve shouldStop:(BOOL) stop
 {
 	CDXFadeLongAudioSource *action = [CDXFadeLongAudioSource actionWithDuration:t finalVolume:endVol faderCurve:curve];
+	[action setStopTargetWhenComplete:stop];
 	//Background music is mapped to the left channel long audio source
 	[[CCActionManager sharedManager] addAction:action target:[[CDAudioManager sharedManager] audioSourceForChannel:kASC_Left] paused:NO];
 }	
 
-+(void) fadeSoundEffects:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve
++(void) fadeSoundEffects:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve shouldStop:(BOOL) stop
 {
 	CDXFadeSoundEffects *action = [CDXFadeSoundEffects actionWithDuration:t finalVolume:endVol faderCurve:curve];
+	[action setStopTargetWhenComplete:stop];
 	[[CCActionManager sharedManager] addAction:action target:[CDAudioManager sharedManager].soundEngine paused:NO];
 }
 
-+(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve sourceId:(ALuint) source {
++(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol faderCurve:(tFaderCurve) curve sourceId:(ALuint) source shouldStop:(BOOL) stop{
 	//Check if getting gain for sources works, if not abort (Known to work on 2.2.1 and 3.x i.e supported platforms)
 	CDSoundEngine *se = [CDAudioManager sharedManager].soundEngine;
 	if (!se.functioning || !se.getGainWorks) {
 		CDLOG(@"CocosDenshion::CDXFaderAction fadeSoundEffect aborted, either sound engine isn't functioning or get gain does not work");
+		return;
 	}
 	
 	//Create wrapper for source
-	CDSourceWrapper *newWrapper = [[CDSourceWrapper alloc] init];
+	CDSoundSource *newWrapper = [[CDSoundSource alloc] init];
 	newWrapper.sourceId = source;
-	CDXFadeSourceWrapper *action = [CDXFadeSourceWrapper actionWithDuration:t finalVolume:endVol faderCurve:curve];
+	CDXFadeSoundSource *action = [CDXFadeSoundSource actionWithDuration:t finalVolume:endVol faderCurve:curve];
 	action->_wrapper = newWrapper;//This is only intended to be used here, the action will deallocate this wrapper when it finishes
+	[action setStopTargetWhenComplete:stop];
 	[[CCActionManager sharedManager] addAction:action target:newWrapper paused:NO];
 }	
 
 @end
 
 @implementation CDXFadeSoundEffects
--(float) getTargetVolume
+-(float) _getTargetVolume
 {
 	return ((CDSoundEngine*)target).masterGain;
 }	
 
--(void) setTargetVolume: (float) volume
+-(void) _setTargetVolume: (float) volume
 {
-	[super setTargetVolume:volume];
+	[super _setTargetVolume:volume];
 	((CDSoundEngine*)target).masterGain = volume;
 }
+
+-(void) _stopTarget {
+	((CDSoundEngine*)target).stopAllSounds;
+}	
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -167,16 +185,21 @@
 @end
 
 @implementation CDXFadeLongAudioSource
--(float) getTargetVolume
+-(float) _getTargetVolume
 {
 	return ((CDLongAudioSource*)target).volume;
 }	
 
--(void) setTargetVolume: (float) volume
+-(void) _setTargetVolume: (float) volume
 {
-	[super setTargetVolume:volume];
+	[super _setTargetVolume:volume];
 	((CDLongAudioSource*)target).volume = volume;
 }
+
+-(void) _stopTarget {
+	//We pause rather than stop because stopping release audio resources and causes problems on the simulator
+	((CDLongAudioSource*)target).pause;
+}	
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -187,22 +210,26 @@
 
 @end
 
-@implementation CDXFadeSourceWrapper
--(float) getTargetVolume
+@implementation CDXFadeSoundSource
+-(float) _getTargetVolume
 {
-	return ((CDSourceWrapper*)target).gain;
+	return ((CDSoundSource*)target).gain;
 }	
 
--(void) setTargetVolume: (float) volume
+-(void) _setTargetVolume: (float) volume
 {
-	[super setTargetVolume:volume];
-	((CDSourceWrapper*)target).gain = volume;
+	[super _setTargetVolume:volume];
+	((CDSoundSource*)target).gain = volume;
 }
+
+-(void) _stopTarget {
+	[((CDSoundSource*)target) stop];
+}	
 
 -(void) startWithTarget:(id)aTarget
 {
 	NSObject* theTarget = (NSObject*)aTarget;
-	NSAssert([theTarget isKindOfClass:[CDSourceWrapper class]], @"CDXFadeSourceWrapper requires CDSourceWrapper as target");
+	NSAssert([theTarget isKindOfClass:[CDSoundSource class]], @"CDXFadeSourceWrapper requires CDSourceWrapper as target");
 	[super startWithTarget:aTarget];
 }
 

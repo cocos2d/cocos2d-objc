@@ -97,9 +97,12 @@ enum bufferState {
 
 typedef struct _channelGroup {
 	int startIndex;
-	int endIndex;
+	//int endIndex;
 	int currentIndex;
+	int totalSources;
 	bool mute;
+	bool nonInterruptible;
+	int *sourceStatuses;//pointer into array of source status information
 } channelGroup;
 
 /**
@@ -191,8 +194,15 @@ typedef struct _channelGroup {
 
 @end
 
-////////////////////////////////////////////////////////////////////////////
-@interface CDSourceWrapper : NSObject {
+/** CDSoundSource is a wrapper around an OpenAL sound source.
+ It allows you to manipulate properties such as pitch, gain, pan and looping while the 
+ sound is playing. CDSoundSource is based on the old CDSourceWrapper class but with much
+ added functionality.
+ 
+ @since v1.0
+ */
+
+@interface CDSoundSource : NSObject {
 	ALuint sourceId;
 }
 @property (readwrite, nonatomic) ALuint sourceId;
@@ -202,6 +212,15 @@ typedef struct _channelGroup {
 @property (readwrite, nonatomic) BOOL looping;
 @property (readonly)  BOOL isPlaying;
 
+-(void) stop;
+-(void) play;
+-(void) pause;
+-(void) rewind;
+
+@end
+
+/** Kept for compatibility with pre 1.0.  Use CDSoundSource instead. */
+@interface CDSourceWrapper : CDSoundSource
 @end
 
 ////////////////////////////////////////////////////////////////////////////
