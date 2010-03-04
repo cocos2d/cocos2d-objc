@@ -4,7 +4,6 @@
  *
  *  Created by João Caxaria on 5/24/09.
  *  Copyright 2009 Cocos2d-iPhone - If you find this useful, please give something back.
- *
  */
 
 #import "SimpleAudioEngine.h"

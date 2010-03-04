@@ -19,6 +19,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *
  */
 
 #import "CocosDenshion.h"
@@ -37,10 +38,8 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 } 
 
 @interface CDSoundEngine (PrivateMethods)
-- (ALuint) _startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping checkState:(BOOL) checkState;
+-(ALuint) _startSound:(int) soundId channelId:(int) channelId pitchVal:(float) pitchVal panVal:(float) panVal gainVal:(float) gainVal looping:(BOOL) looping checkState:(BOOL) checkState;
 - (BOOL) _initOpenAL;
-- (void) _testGetGain;
-- (void) _dumpChannelGroupsInfo;
 @end
 
 @implementation CDUtilities
@@ -74,22 +73,11 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 static Float32 _mixerSampleRate;
 static BOOL _mixerRateSet = NO;
 
-@synthesize lastErrorCode, functioning, asynchLoadProgress, getGainWorks;
+@synthesize lastErrorCode, functioning, asynchLoadProgress;
 
 + (void) setMixerSampleRate:(Float32) sampleRate {
 	_mixerRateSet = YES;
 	_mixerSampleRate = sampleRate;
-}	
-
-- (void) _testGetGain {
-	float testValue = 0.7f;
-	ALuint testSourceId = _sources[0];
-	alSourcef(testSourceId, AL_GAIN, 0.0f);//Start from know value
-	alSourcef(testSourceId, AL_GAIN, testValue);
-	ALfloat gainVal;
-	alGetSourcef(testSourceId, AL_GAIN, &gainVal);
-	getGainWorks = (gainVal == testValue);
-	CDLOG(@"Denshion::CDSoundEngine - testing get gain for source %i",getGainWorks);
 }	
 
 /**
@@ -168,12 +156,6 @@ static BOOL _mixerRateSet = NO;
 
 	CDLOG(@"Denshion::CDSoundEngine - Deallocing sound engine.");
 	free(_bufferStates);
-	//Release source status arrays stored in channel group structs
-	for (int i=0; i < _channelGroupTotal; i++) {
-		if (_channelGroups[i].sourceStatuses) {
-			free(_channelGroups[i].sourceStatuses);
-		}	
-	}
 	free(_channelGroups);
 	free(_sourceBufferAttachments);
 	
@@ -251,22 +233,13 @@ static BOOL _mixerRateSet = NO;
 		int channelCount = 0;
 		for (int i=0; i < channelGroupTotal; i++) {
 			
-			_channelGroups[i].startIndex = 0;
+			_channelGroups[i].startIndex = channelCount;
+			_channelGroups[i].endIndex = _channelGroups[i].startIndex + channelGroupDefinitions[i] - 1;
 			_channelGroups[i].currentIndex = _channelGroups[i].startIndex;
 			_channelGroups[i].mute = false;
-			_channelGroups[i].nonInterruptible = false;
-			_channelGroups[i].totalSources = channelGroupDefinitions[i];
-			_channelGroups[i].sourceStatuses = malloc(sizeof(_channelGroups[i].sourceStatuses[0]) * _channelGroups[i].totalSources);
-			if (_channelGroups[i].sourceStatuses) {
-				for (int j=0; j < _channelGroups[i].totalSources; j++) {
-					//First bit is used to indicate whether source is locked, index is shifted back 1 bit
-					_channelGroups[i].sourceStatuses[j] = (channelCount + j) << 1;	
-				}	
-			}	
 			channelCount += channelGroupDefinitions[i];
-			CDLOG(@"Denshion::CDSoundEngine - channel def %i %i %i",i,_channelGroups[i].startIndex,  _channelGroups[i].currentIndex);
+			CDLOG(@"Denshion::CDSoundEngine - channel def %i %i %i %i",i,_channelGroups[i].startIndex, _channelGroups[i].endIndex, _channelGroups[i].currentIndex);
 		}
-		[self _dumpChannelGroupsInfo];
 		
 		NSAssert(channelCount <= CD_MAX_SOURCES,@"requested total channels exceeds CD_MAX_SOURCES");
 		_channelTotal = channelCount;
@@ -300,8 +273,6 @@ static BOOL _mixerRateSet = NO;
 			//Synchronize premute gain
 			_preMuteGain = self.masterGain;
 			_mute = NO;
-			//Test whether get gain works for sources
-			[self _testGetGain];
 		} else {
 			//Something went wrong with OpenAL
 			functioning = FALSE;
@@ -573,49 +544,37 @@ static BOOL _mixerRateSet = NO;
 		return CD_MUTE;
 	}	
 	
-	int sourceIndex = -1;//Using -1 to indicate no source found
-	BOOL complete = NO;
-	ALint sourceState = 0;
-	channelGroup *thisChannelGroup = &_channelGroups[channelGroupId];
-	thisChannelGroup->currentIndex = thisChannelGroup->startIndex;
-	while (!complete) {
-		//Iterate over sources looking for one that is not locked, first bit indicates if source is locked
-		if ((thisChannelGroup->sourceStatuses[thisChannelGroup->currentIndex] & 1) == 0) {
-			//This source is not locked
-			sourceIndex = thisChannelGroup->sourceStatuses[thisChannelGroup->currentIndex] >> 1;//shift back to get the index
-			if (thisChannelGroup->nonInterruptible) {
-				//Check if this source is playing, if so it can't be interrupted
-				alGetSourcei(_sources[sourceIndex], AL_SOURCE_STATE, &sourceState);
-				if (sourceState != AL_PLAYING) {
-					complete = YES;
-				} else {
-					sourceIndex = -1;//The source index was no good because the source was playing
-				}	
-			} else {	
-				complete = YES;
-			}	
-		}
-		thisChannelGroup->currentIndex++;
-		if (thisChannelGroup->currentIndex >= thisChannelGroup->totalSources) {
-			//Reset to the beginning
-			thisChannelGroup->currentIndex = 0;	
-		}	
-		if (thisChannelGroup->currentIndex == thisChannelGroup->startIndex) {
-			//We have looped around and got back to the start
-			complete = YES;
-		}	
-	}
-	//Increment start index so next search starts in a different spot
-	thisChannelGroup->startIndex++;
-	if (thisChannelGroup->startIndex >= thisChannelGroup->totalSources) {
-		thisChannelGroup->startIndex = 0;	
-	}	
 	
-	CDLOG(@"Play sound >> %i %i",sourceIndex, thisChannelGroup->startIndex);
-	if (sourceIndex >= 0) {
-		return [self _startSound:soundId channelId:sourceIndex pitchVal:pitch panVal:pan gainVal:gain looping:loop checkState:YES];
-	} else {	
-		return CD_NO_SOURCE;
+	//Work out which channel we can use
+	int channel = _channelGroups[channelGroupId].currentIndex;
+	if (channel != CD_CHANNEL_GROUP_NON_INTERRUPTIBLE) {
+		if (_channelGroups[channelGroupId].startIndex != _channelGroups[channelGroupId].endIndex) {
+			_channelGroups[channelGroupId].currentIndex++;
+			if(_channelGroups[channelGroupId].currentIndex > _channelGroups[channelGroupId].endIndex) {
+				_channelGroups[channelGroupId].currentIndex = _channelGroups[channelGroupId].startIndex; 
+			}	
+		}	
+		return [self _startSound:soundId channelId:channel pitchVal:pitch panVal:pan gainVal:gain looping:loop checkState:TRUE];
+	} else {
+		//Channel group is non interruptible therefore we must search for the first non playing channel/source if there are any
+		int checkingIndex = _channelGroups[channelGroupId].startIndex;
+		ALint state = 0;
+		while ((checkingIndex <= _channelGroups[channelGroupId].endIndex) && (channel == CD_CHANNEL_GROUP_NON_INTERRUPTIBLE)) {
+			//Check if source is playing
+			alGetSourcei(_sources[checkingIndex], AL_SOURCE_STATE, &state);
+			if (state != AL_PLAYING) {
+				channel = checkingIndex;
+			}	
+			checkingIndex++;
+		}
+		
+		if (channel != CD_CHANNEL_GROUP_NON_INTERRUPTIBLE) {
+			//Found a free channel
+			return [self _startSound:soundId channelId:channel pitchVal:pitch panVal:pan gainVal:gain looping:loop checkState:FALSE];
+		} else {
+			//Didn't find a free channel
+			return CD_NO_SOURCE;
+		}	
 	}	
 }	
 
@@ -663,11 +622,9 @@ static BOOL _mixerRateSet = NO;
 	if (!functioning) {
 		return;
 	}	
-	/* TODO
 	for (int i=_channelGroups[channelGroupId].startIndex; i <= _channelGroups[channelGroupId].endIndex; i++) {
 		alSourceStop(_sources[i]);
 	}
-	*/ 
 	alGetError();//Clear error in case we stopped any sounds that couldn't be stopped
 }	
 
@@ -697,9 +654,9 @@ static BOOL _mixerRateSet = NO;
  */
 - (void) setChannelGroupNonInterruptible:(int) channelGroupId isNonInterruptible:(BOOL) isNonInterruptible {
 	if (isNonInterruptible) {
-		_channelGroups[channelGroupId].nonInterruptible = true;
+		_channelGroups[channelGroupId].currentIndex = CD_CHANNEL_GROUP_NON_INTERRUPTIBLE;
 	} else {
-		_channelGroups[channelGroupId].nonInterruptible = false;
+		_channelGroups[channelGroupId].currentIndex = _channelGroups[channelGroupId].startIndex;
 	}	
 }
 
@@ -779,26 +736,12 @@ static BOOL _mixerRateSet = NO;
 	#pragma unused(error)
 } 
 
-- (void) _dumpChannelGroupsInfo {
-#ifdef CD_DEBUG	
-	CDLOG(@"-------------- Channel Group Info --------------");
-	for (int i=0; i < _channelGroupTotal; i++) {
-		CDLOG(@"Group: %i start:%i total:%i",i,_channelGroups[i].startIndex, _channelGroups[i].totalSources);
-		CDLOG(@"----- mute:%i nonInterruptible:%i",_channelGroups[i].mute, _channelGroups[i].nonInterruptible);
-		CDLOG(@"----- Source statuses ----");
-		for (int j=0; j < _channelGroups[i].totalSources; j++) {
-			CDLOG(@"Source status:%i index=%i locked=%i",j,_channelGroups[i].sourceStatuses[j] >> 1, _channelGroups[i].sourceStatuses[j] & 1);
-		}	
-	}	
-#endif	
-}	
-
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-@implementation CDSoundSource
-//TODO: better error handling, currently ignoring AL error
+@implementation CDSourceWrapper
+
 -(void) setSourceId:(ALuint) newSourceId {
 	if ((newSourceId != CD_NO_SOURCE) && (newSourceId != CD_MUTE)) {
 		sourceId = newSourceId;
@@ -812,19 +755,23 @@ static BOOL _mixerRateSet = NO;
 }	
 
 - (void) setPitch:(float) newPitchValue {
+	lastPitch = newPitchValue;
 	alSourcef(sourceId, AL_PITCH, newPitchValue);	
 }	
 
 - (void) setGain:(float) newGainValue {
+	lastGain = newGainValue;
 	alSourcef(sourceId, AL_GAIN, newGainValue);	
 }
 
 - (void) setPan:(float) newPanValue {
+	lastPan = newPanValue;
 	float sourcePosAL[] = {newPanValue, 0.0f, 0.0f};//Set position - just using left and right panning
 	alSourcefv(sourceId, AL_POSITION, sourcePosAL);
 }
 
 - (void) setLooping:(BOOL) newLoopingValue {
+	lastLooping = newLoopingValue;
 	alSourcei(sourceId, AL_LOOPING, newLoopingValue);
 }
 
@@ -835,49 +782,28 @@ static BOOL _mixerRateSet = NO;
 	return (state == AL_PLAYING);
 }	
 
+//alGetSource does not appear to work for pitch, pan and gain values
+//So we just remember the last value set
 - (float) pitch {
+	/*
+	//This does not work on simulator or device 
 	ALfloat pitchVal;
 	alGetSourcef(sourceId, AL_PITCH, &pitchVal);
 	return pitchVal;
+	*/ 
+	return lastPitch;
 }
 
 - (float) pan {
-	ALfloat sourcePosAL[] = {0.0f,0.0f,0.0f};
-	alGetSourcefv(sourceId, AL_POSITION, sourcePosAL);
-	return sourcePosAL[0];
+	return lastPan;
 }
 
 - (float) gain {
-	ALfloat val;
-	alGetSourcef(sourceId, AL_GAIN, &val);
-	return val;
+	return lastGain;
 }	
 
 - (BOOL) looping {
-	ALfloat val;
-	alGetSourcef(sourceId, AL_LOOPING, &val);
-	return val;
-}
-
--(void) stop {
-	alSourceStop(sourceId);
-}	
-
--(void) play {
-	alSourcePlay(sourceId);
-}	
-
--(void) pause {
-	alSourcePause(sourceId);
-}
-
--(void) rewind {
-	alSourceRewind(sourceId);
-}	
-
--(void) dealloc {
-	CDLOG(@"CocosDenshion::CDSourceWrapper deallocated %@",self);
-	[super dealloc];
+	return lastLooping;
 }	
 
 @end

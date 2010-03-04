@@ -51,11 +51,6 @@
  */
 //#define CD_USE_STATIC_BUFFERS 1
 
-/**
- If enabled, it indicates your application is not intended to run on a pre 3.0 OS version
- */
-//#define CD_OS_3_PLUS 1
-
 
 
 
