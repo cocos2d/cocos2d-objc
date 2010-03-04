@@ -21,6 +21,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"CameraCenterTest",
 			@"Test2",
 			@"Test4",
 			@"Test5",
@@ -28,9 +29,10 @@ static NSString *transitions[] = {
 			@"StressTest1",
 			@"StressTest2",
 			@"NodeToWorld",
+			@"SchedulerTest1",
 			@"CameraOrbitTest",
 			@"CameraZoomTest",	
-			@"SchedulerTest1",
+			@"CameraCenterTest",
 };
 
 Class nextAction()
@@ -77,6 +79,13 @@ Class restartAction()
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}		
+		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
@@ -122,6 +131,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 @end
 
@@ -702,6 +716,102 @@ Class restartAction()
 	return @"Camera Zoom test";
 }
 @end
+
+#pragma mark -
+#pragma mark CameraCenterTest
+
+@implementation CameraCenterTest
+//-(void) onEnter
+//{
+//	[super onEnter];
+//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+//}
+//
+//-(void) onExit
+//{
+//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+//	[super onExit];
+//}
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+				
+		CCSprite *sprite;
+		CCOrbitCamera *orbit;
+		
+		// LEFT-TOP
+		sprite = [CCSprite node];
+		[self addChild:sprite z:0];	
+		[sprite setPosition:ccp(s.width/5*1, s.height/5*1)];
+		[sprite setColor:ccRED];
+		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
+//		[sprite setAnchorPoint: ccp(0,1)];
+
+		
+		
+		// LEFT-BOTTOM
+		sprite = [CCSprite node];
+		[self addChild:sprite z:0 tag:40];
+		[sprite setPosition:ccp(s.width/5*1, s.height/5*4)];
+		[sprite setColor:ccBLUE];
+		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
+//		[sprite setAnchorPoint: ccp(0,0)];
+
+
+		// RIGHT-TOP
+		sprite = [CCSprite node];
+		[self addChild:sprite z:0];	
+		[sprite setPosition:ccp(s.width/5*4, s.height/5*1)];
+		[sprite setColor:ccYELLOW];
+		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
+//		[sprite setAnchorPoint: ccp(1,1)];
+
+		
+		// RIGHT-BOTTOM
+		sprite = [CCSprite node];
+		[self addChild:sprite z:0 tag:40];
+		[sprite setPosition:ccp(s.width/5*4, s.height/5*4)];
+		[sprite setColor:ccGREEN];
+		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
+//		[sprite setAnchorPoint: ccp(1,0)];
+
+		// CENTER
+		sprite = [CCSprite node];
+		[self addChild:sprite z:0 tag:40];
+		[sprite setPosition:ccp(s.width/2, s.height/2)];
+		[sprite setColor:ccWHITE];
+		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
+		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
+		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
+//		[sprite setAnchorPoint: ccp(0.5f, 0.5f)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Camera Center test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprites should rotate at the same speed";
+}
+@end
+
 
 #pragma mark -
 #pragma mark AppController

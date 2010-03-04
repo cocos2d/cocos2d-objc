@@ -844,23 +844,37 @@ Class restartAction()
 {
 	[super onEnter];
 
-	[self centerSprites:2];
+	[self centerSprites:3];
 	
-	id orbit1 = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
+	id orbit1 = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:0 deltaAngleX:0];
 	id action1 = [CCSequence actions:
 					orbit1,
 					[orbit1 reverse],
 					nil ];
 
-	id orbit2 = [CCOrbitCamera actionWithDuration: 2 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:-45 deltaAngleX:0];
+	id orbit2 = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:-45 deltaAngleX:0];
 	id action2 = [CCSequence actions:
 				  orbit2,
 				  [orbit2 reverse],
 				  nil ];
+
+	id orbit3 = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:180 angleX:90 deltaAngleX:0];
+	id action3 = [CCSequence actions:
+				  orbit3,
+				  [orbit3 reverse],
+				  nil ];
+
+	[kathia runAction:[CCRepeatForever actionWithAction:action1]];
+	[tamara runAction:[CCRepeatForever actionWithAction:action2]];
+	[grossini runAction:[CCRepeatForever actionWithAction:action3]];
 	
-	
-	[kathia runAction:action1];
-	[tamara runAction:action2];
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(100,-100)];
+	id move_back = [move reverse];
+	id seq = [CCSequence actions:move, move_back, nil];
+	id rfe = [CCRepeatForever actionWithAction:seq];
+	[kathia runAction:rfe];
+	[tamara runAction:[[rfe copy] autorelease]];
+	[grossini runAction:[[rfe copy] autorelease]];
 }
 
 
