@@ -178,7 +178,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGImage = uiImage.CGImage;
 	
 	if(CGImage == NULL) {
-		NSLog(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
+		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
 		return nil;
 	}
 	
@@ -496,7 +496,6 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 	// It seems that images are already premultiplied on the device!!! WTF!!! WHY ?!?
 	_hasPremultipliedAlpha = (alphainfo == kCGImageAlphaPremultipliedLast || alphainfo == kCGImageAlphaPremultipliedFirst);
-//	NSLog(@"--------------------> Contains PREMULTI: %i", _hasPremultipliedAlpha);
 	
 	return self;
 }
