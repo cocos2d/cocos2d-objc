@@ -9,9 +9,9 @@
 @end
 
 @interface TestDemo : CCLayer
-{
-}
+{}
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
 @interface Test2 : TestDemo
@@ -51,5 +51,9 @@
 @end
 
 @interface CameraZoomTest : TestDemo
+{}
+@end
+
+@interface CameraCenterTest : TestDemo
 {}
 @end
