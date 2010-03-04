@@ -19,6 +19,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *
  */
 
 /** 
@@ -97,12 +98,9 @@ enum bufferState {
 
 typedef struct _channelGroup {
 	int startIndex;
-	//int endIndex;
+	int endIndex;
 	int currentIndex;
-	int totalSources;
 	bool mute;
-	bool nonInterruptible;
-	int *sourceStatuses;//pointer into array of source status information
 } channelGroup;
 
 /**
@@ -155,7 +153,7 @@ typedef struct _channelGroup {
 	ALenum			lastErrorCode;
 	BOOL			functioning;
 	float			asynchLoadProgress;
-	BOOL			getGainWorks;
+		
 }
 
 @property (readwrite, nonatomic) ALfloat masterGain;
@@ -163,7 +161,6 @@ typedef struct _channelGroup {
 @property (readonly)  ALenum lastErrorCode;//Last OpenAL error code that was generated
 @property (readonly)  BOOL functioning;//Is the sound engine functioning
 @property (readwrite) float asynchLoadProgress;
-@property (readonly)  BOOL getGainWorks;//Does getting the gain for a source work
 
 /** Sets the sample rate for the audio mixer. For best performance this should match the sample rate of your audio content */
 + (void) setMixerSampleRate:(Float32) sampleRate;
@@ -194,16 +191,13 @@ typedef struct _channelGroup {
 
 @end
 
-/** CDSoundSource is a wrapper around an OpenAL sound source.
- It allows you to manipulate properties such as pitch, gain, pan and looping while the 
- sound is playing. CDSoundSource is based on the old CDSourceWrapper class but with much
- added functionality.
- 
- @since v1.0
- */
-
-@interface CDSoundSource : NSObject {
+////////////////////////////////////////////////////////////////////////////
+@interface CDSourceWrapper : NSObject {
 	ALuint sourceId;
+	float lastPitch;
+	float lastPan;
+	float lastGain;
+	BOOL lastLooping;
 }
 @property (readwrite, nonatomic) ALuint sourceId;
 @property (readwrite, nonatomic) float pitch;
@@ -212,15 +206,6 @@ typedef struct _channelGroup {
 @property (readwrite, nonatomic) BOOL looping;
 @property (readonly)  BOOL isPlaying;
 
--(void) stop;
--(void) play;
--(void) pause;
--(void) rewind;
-
-@end
-
-/** Kept for compatibility with pre 1.0.  Use CDSoundSource instead. */
-@interface CDSourceWrapper : CDSoundSource
 @end
 
 ////////////////////////////////////////////////////////////////////////////
