@@ -76,7 +76,7 @@ float clampf(float value, float min_inclusive, float max_inclusive)
 
 CGPoint ccpClamp(CGPoint p, CGPoint min_inclusive, CGPoint max_inclusive)
 {
-	return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.x));
+	return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
 }
 
 CGPoint ccpFromSize(CGSize s)

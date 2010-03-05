@@ -20,6 +20,8 @@
 		317070560E2940C900DD3360 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		317070570E2940C900DD3360 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		3170705E0E29410900DD3360 /* AccelViewportTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 317070350E29409E00DD3360 /* AccelViewportTest.m */; };
+		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		495E73FD104B75090012BB52 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		495E73FE104B75090012BB52 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		495E73FF104B75090012BB52 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
@@ -6182,6 +6184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */,
 				501504D111330E1700A9CA65 /* r1.png in Resources */,
 				501504D211330E1700A9CA65 /* r2.png in Resources */,
 				501504D311330E1700A9CA65 /* Default.png in Resources */,
@@ -6764,6 +6767,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BB5C8E911410A4000DD65EF /* blocks.png in Resources */,
 				500166030E72E1DB0085673F /* r1.png in Resources */,
 				500166040E72E1DB0085673F /* r2.png in Resources */,
 				50B2CB470E10EE4A00AE9530 /* Default.png in Resources */,

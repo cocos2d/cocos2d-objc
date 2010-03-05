@@ -195,11 +195,8 @@ const char kProgressTextureCoords = 0x1e;
 	CGPoint topMid = ccp(midpoint.x, 0.f);
 	CGPoint percentagePt = ccpRotateByAngle(topMid, midpoint, angle);
 	
-	CGPoint hit = topMid;
 	
-	//	If we've previosly had vertexData then we can help find the intersection faster
-	//	with this hint.
-	int index = vertexDataCount_ > 3? vertexDataCount_ - 3 : 0;
+	int index = 0;
 	float min_t = FLT_MAX;
 	
 	if (alpha == 0.f) {
@@ -220,6 +217,8 @@ const char kProgressTextureCoords = 0x1e;
 			CGPoint edgePtA = ccpCompMult([self boundaryTexCoord:i % kProgressTextureCoordsCount],tMax);
 			CGPoint edgePtB = ccpCompMult([self boundaryTexCoord:pIndex],tMax);
 			
+			//	Remember that the top edge is split in half for the 12 o'clock position
+			//	Let's deal with that here by finding the correct endpoints
 			if(i == 0){
 				edgePtB = ccpLerp(edgePtA,edgePtB,.5f);
 			} else if(i == 4){
@@ -228,14 +227,20 @@ const char kProgressTextureCoords = 0x1e;
 			
 			//	s and t are returned by ccpLineIntersect
 			float s = 0, t = 0;
-			if(ccpLineIntersect(edgePtA, edgePtB, midpoint, percentagePt, &s, &t)
-			   && ((i > 0 && i < 4) || (0.f <= s && s <= 1.f)))
+			if(ccpLineIntersect(edgePtA, edgePtB, midpoint, percentagePt, &s, &t))
 			{
+				
+				//	Since our hit test is on rays we have to deal with the top edge
+				//	being in split in half so we have to test as a segment
+				if ((i == 0 || i == 4)) {
+					//	s represents the point between edgePtA--edgePtB
+					if (!(0.f <= s && s <= 1.f)) {
+						continue;
+					}
+				}
 				//	As long as our t isn't negative we are at least finding a 
-				//	correct hitpoint
-				if (-FLT_EPSILON <= t) {
-					hit = ccpAdd(midpoint, ccpMult(ccpSub(percentagePt, midpoint),t));
-					
+				//	correct hitpoint from midpoint to percentagePt.
+				if (t >= 0.f) {
 					//	Because the percentage line and all the texture edges are
 					//	rays we should only account for the shortest intersection
 					if (t < min_t) {
@@ -246,6 +251,9 @@ const char kProgressTextureCoords = 0x1e;
 			}
 		}
 	}
+	
+	//	Now that we have the minimum magnitude we can use that to find our intersection
+	CGPoint hit = ccpAdd(midpoint, ccpMult(ccpSub(percentagePt, midpoint),min_t));
 	
 	//	The size of the vertex data is the index from the hitpoint
 	//	the 3 is for the midpoint, 12 o'clock point and hitpoint position.
