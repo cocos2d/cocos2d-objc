@@ -125,13 +125,13 @@ Class restartAction()
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
 
 	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-	left.type = CCProgressTimerTypeRadialCW;
+	left.type = kCCProgressTimerTypeRadialCW;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
 	
-	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
-	right.type = CCProgressTimerTypeRadialCCW;
+	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"blocks.png"];
+	right.type = kCCProgressTimerTypeRadialCCW;
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];
@@ -157,13 +157,13 @@ Class restartAction()
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
 	
 	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-	left.type = CCProgressTimerTypeHorizontalBarLR;
+	left.type = kCCProgressTimerTypeHorizontalBarLR;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
 	
 	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
-	right.type = CCProgressTimerTypeHorizontalBarRL;
+	right.type = kCCProgressTimerTypeHorizontalBarRL;
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];
@@ -189,13 +189,13 @@ Class restartAction()
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
 	
 	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-	left.type = CCProgressTimerTypeVerticalBarBT;
+	left.type = kCCProgressTimerTypeVerticalBarBT;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
 	
 	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
-	right.type = CCProgressTimerTypeVerticalBarTB;
+	right.type = kCCProgressTimerTypeVerticalBarTB;
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];

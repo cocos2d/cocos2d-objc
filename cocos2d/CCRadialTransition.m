@@ -19,8 +19,6 @@
 #import "CCLayer.h"
 #import "CCInstantAction.h"
 #import "Support/CGPointExtension.h"
-#import "CCProgressTimer.h"
-#import "CCProgressTimerActions.h"
 
 enum {
 	kSceneRadial = 0xc001,

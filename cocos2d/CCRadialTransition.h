@@ -13,6 +13,8 @@
  */
 
 #import "CCTransition.h"
+#import "CCProgressTimer.h"
+#import "CCProgressTimerActions.h"
 
 ///
 //	A counter colock-wise radial transition to the next scene
