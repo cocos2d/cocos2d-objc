@@ -37,7 +37,7 @@ static EAGLContext *auxEAGLcontext = nil;
 @synthesize data = data_;
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	[target_ release];
 	[data_ release];
 	[super dealloc];

@@ -1,23 +1,24 @@
 version 0.99.1 - XX-MMM-2010
- . Actions: new added actions: CCProgressTo, CCProgressFromTo (issue #783)
- . Actions: CCRepeat works smoothly, without jerks (re-fixed issue #390)
- . Actions: CCAnimate uses ceilf() to calculate the correct frame (issue #758)
- . Box2d: udpated to r61 (issue #795)
- . CGPointExtensions: new add functions:  CGPointExtension like: clampf, ccpClamp, ccpFromSize,
-	ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
-	ccpRotateByAngle, ccpLineIntersect (issue #783)
- . Chipmunk: updated to v5.2 (issue #784)
- . CocosDenshion: Fixed mute (issue #789)
- . RenderTexture: removed limit when saving images (issue #782)
- . Sprite, LabelAtlas, TiledMap: opactiy + color works even when the texture is premultiplied (issue #668)
- . TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
- . TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
- . TMX: TMXLayer uses the opacity defined for the layer (issue #785)
- . TMX: TMXLayer supports Tiled offset property (issue #616)
- . TMX: Added support for .tsx tilesets (issue #619)
- . Texture2D: removed NSLog when image was NULL (issue #802)
- . Transition: new added transitions: CCRadialCCWTransition, CCRadialCWTransition (issue #783)
- . Xcode: hardware requirements in .plist: doesn't contain disabled features. Seems to be a bun in Xcode 3.2.2 (issue #769)
+ . [NEW] Actions: new added actions: CCProgressTo, CCProgressFromTo (issue #783)
+ . [NEW] Box2d: udpated to r61 (issue #795)
+ . [NEW] CGPointExtensions: new add functions:  CGPointExtension like: clampf, ccpClamp, ccpFromSize,
+			ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
+			ccpRotateByAngle, ccpLineIntersect (issue #783)
+ . [NEW] Chipmunk: updated to v5.2 (issue #784)
+ . [NEW] Macros: added CCLOGINFO() and CCLOGERROR(). CCLOGINFO() disabled by default (issue #799)
+ . [NEW] TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
+ . [NEW] TMX: TMXLayer supports Tiled offset property (issue #616)
+ . [NEW] TMX: Added support for .tsx tilesets (issue #619)
+ . [NEW] Transition: new added transitions: CCRadialCCWTransition, CCRadialCWTransition (issue #783)
+ . [FIX] Actions: CCRepeat works smoothly, without jerks (re-fixed issue #390)
+ . [FIX] Actions: CCAnimate frame calculation is more precise (issue #758)
+ . [FIX] CocosDenshion: Fixed mute (issue #789)
+ . [FIX] RenderTexture: removed limit when saving images (issue #782)
+ . [FIX] Sprite, LabelAtlas, TiledMap: opactiy + color works even when the texture is premultiplied (issue #668)
+ . [FIX] TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
+ . [FIX] TMX: TMXLayer uses the opacity defined for the layer (issue #785)
+ . [FIX] Texture2D: removed NSLog when image was NULL (issue #802)
+ . [FIX] Xcode: hardware requirements in .plist: doesn't contain disabled features. Seems to be a bun in Xcode 3.2.2 (issue #769)
  
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)

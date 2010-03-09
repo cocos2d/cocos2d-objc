@@ -50,7 +50,7 @@
 }
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@",self);
+	CCLOGINFO(@"cocos2d: deallocing %@",self);
 	
 	[name_ release];
 	[properties_ release];
@@ -72,7 +72,7 @@
 
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	[sourceImage_ release];
 	[name_ release];
 	[super dealloc];
@@ -135,7 +135,7 @@
 }
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	[tilesets_ release];
 	[layers_ release];
 	[filename_ release];

@@ -164,7 +164,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 #if CC_DIRECTOR_FAST_FPS
 	[FPSLabel release];

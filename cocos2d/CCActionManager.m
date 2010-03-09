@@ -78,7 +78,7 @@ static CCActionManager *_sharedManager = nil;
 
 - (void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@", self);
+	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
 	ccHashSetFree(targets);

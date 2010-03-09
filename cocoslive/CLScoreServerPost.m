@@ -65,7 +65,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 -(void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOGINFO(@"deallocing %@", self);
 	[delegate release];
 	[gameKey release];
 	[gameName release];
