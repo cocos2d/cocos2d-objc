@@ -47,7 +47,7 @@
 			while (textureSize < s.width || textureSize < s.height)
 				textureSize *= 2;
 
-			Texture2DPixelFormat format = [director pixelFormat] == kPixelFormatRGB565 ? kTexture2DPixelFormat_RGB565 : kTexture2DPixelFormat_RGBA8888;
+			CCTexture2DPixelFormat format = [director pixelFormat] == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
 			
 			void *data = malloc((int)(textureSize * textureSize * 4));
 			if( ! data ) {

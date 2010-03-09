@@ -138,7 +138,7 @@ static CCDirector *_sharedDirector = nil;
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 		
 		// default values
-		pixelFormat_ = kPixelFormatDefault;
+		pixelFormat_ = kCCPixelFormatDefault;
 		depthBufferFormat_ = 0;
 
 		// scenes
@@ -184,7 +184,7 @@ static CCDirector *_sharedDirector = nil;
 
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
-	[self setProjection: CCDirectorProjectionDefault];
+	[self setProjection: kCCDirectorProjectionDefault];
 	
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -287,7 +287,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	CGSize size = openGLView_.frame.size;
 	switch (projection) {
-		case CCDirectorProjection2D:
+		case kCCDirectorProjection2D:
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			glOrthof(0, size.width, 0, size.height, -1000, 1000);
@@ -295,7 +295,7 @@ static CCDirector *_sharedDirector = nil;
 			glLoadIdentity();			
 			break;
 
-		case CCDirectorProjection3D:
+		case kCCDirectorProjection3D:
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
@@ -308,7 +308,7 @@ static CCDirector *_sharedDirector = nil;
 					  0.0f, 1.0f, 0.0f);			
 			break;
 			
-		case CCDirectorProjectionCustom:
+		case kCCDirectorProjectionCustom:
 			// if custom, ignore it. The user is resposible for setting the correct projection
 			break;
 			
@@ -412,11 +412,11 @@ static CCDirector *_sharedDirector = nil;
 			CCLOG(@"cocos2d: Director: Unknown pixel format.");
 		}
 		
-		if(depthBufferFormat_ == kDepthBuffer16)
+		if(depthBufferFormat_ == kCCDepthBuffer16)
 			depthFormat = GL_DEPTH_COMPONENT16_OES;
-		else if(depthBufferFormat_ == kDepthBuffer24)
+		else if(depthBufferFormat_ == kCCDepthBuffer24)
 			depthFormat = GL_DEPTH_COMPONENT24_OES;
-		else if(depthBufferFormat_ == kDepthBufferNone)
+		else if(depthBufferFormat_ == kCCDepthBufferNone)
 			depthFormat = 0;
 		else {
 			CCLOG(@"cocos2d: Director: Unknown buffer depth.");

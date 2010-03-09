@@ -10,6 +10,7 @@ version 0.99.1 - XX-MMM-2010
  . [NEW] TMX: TMXLayer supports Tiled offset property (issue #616)
  . [NEW] TMX: Added support for .tsx tilesets (issue #619)
  . [NEW] Transition: new added transitions: CCRadialCCWTransition, CCRadialCWTransition (issue #783)
+ . [FIX] All: cocos2d constants start with kCC. Change is backward compatible (issue #809)
  . [FIX] Actions: CCRepeat works smoothly, without jerks (re-fixed issue #390)
  . [FIX] Actions: CCAnimate frame calculation is more precise (issue #758)
  . [FIX] CocosDenshion: Fixed mute (issue #789)
