@@ -68,7 +68,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	
 	[spriteFrames release];
 	[super dealloc];

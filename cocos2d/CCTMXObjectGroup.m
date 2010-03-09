@@ -44,7 +44,7 @@
 
 -(void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@", self );
+	CCLOGINFO( @"cocos2d: deallocing %@", self );
 		
 	[groupName_ release];
 	[objects_ release];

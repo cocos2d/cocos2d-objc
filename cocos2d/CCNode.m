@@ -205,7 +205,7 @@
 
 - (void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@", self);
+	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	
 	// attributes
 	[camera_ release];

@@ -57,7 +57,7 @@
 
 -(void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@",self);
+	CCLOGINFO( @"cocos2d: deallocing %@",self);
 	[name_ release];
 	[frames_ release];
 	[super dealloc];
@@ -129,7 +129,7 @@
 
 - (void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@",self);
+	CCLOGINFO( @"cocos2d: deallocing %@",self);
 	[texture_ release];
 	[super dealloc];
 }

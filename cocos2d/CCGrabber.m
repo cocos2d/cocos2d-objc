@@ -65,7 +65,7 @@
 
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	glDeleteFramebuffersOES(1, &fbo);
 	[super dealloc];
 }

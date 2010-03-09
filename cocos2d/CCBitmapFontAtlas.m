@@ -104,7 +104,7 @@ targetSetEql(void *ptr, void *elt)
 
 - (void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@", self);
+	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	if(kerningDictionary)
 		ccHashSetFree(kerningDictionary);
 	[super dealloc];

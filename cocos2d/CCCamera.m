@@ -41,7 +41,7 @@
 
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	[super dealloc];
 }
 
@@ -80,7 +80,7 @@
 	eyeX = x;
 	eyeY = y;
 	eyeZ = z;
-	dirty = YES;
+	dirty = YES;	
 }
 
 -(void) setCenterX: (float)x centerY:(float)y centerZ:(float)z

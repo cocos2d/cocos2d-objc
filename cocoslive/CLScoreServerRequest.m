@@ -42,7 +42,7 @@
 
 -(void) dealloc
 {
-	CCLOG( @"deallocing %@", self);
+	CCLOGINFO(@"deallocing %@", self);
 	
 	[delegate release];
 	[gameName release];
