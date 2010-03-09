@@ -97,7 +97,7 @@ static unsigned int nextPOT(unsigned int x)
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Default;
+static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_Default;
 
 @interface CCTexture2D (Private)
 -(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
@@ -108,7 +108,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
 @synthesize hasPremultipliedAlpha=_hasPremultipliedAlpha;
-- (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
+- (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
@@ -120,19 +120,19 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		
 		switch(pixelFormat)
 		{
-			case kTexture2DPixelFormat_RGBA8888:
+			case kCCTexture2DPixelFormat_RGBA8888:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 				break;
-			case kTexture2DPixelFormat_RGBA4444:
+			case kCCTexture2DPixelFormat_RGBA4444:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 				break;
-			case kTexture2DPixelFormat_RGB5A1:
+			case kCCTexture2DPixelFormat_RGB5A1:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
 				break;
-			case kTexture2DPixelFormat_RGB565:
+			case kCCTexture2DPixelFormat_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
-			case kTexture2DPixelFormat_A8:
+			case kCCTexture2DPixelFormat_A8:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			default:
@@ -224,7 +224,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGImageAlphaInfo		info;
 	CGAffineTransform		transform;
 	CGSize					imageSize;
-	Texture2DPixelFormat    pixelFormat;
+	CCTexture2DPixelFormat	pixelFormat;
 		
 	info = CGImageGetAlphaInfo(image);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
@@ -245,23 +245,23 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	// Create the bitmap graphics context
 	
 	switch(pixelFormat) {          
-		case kTexture2DPixelFormat_RGBA8888:
-		case kTexture2DPixelFormat_RGBA4444:
-		case kTexture2DPixelFormat_RGB5A1:
+		case kCCTexture2DPixelFormat_RGBA8888:
+		case kCCTexture2DPixelFormat_RGBA4444:
+		case kCCTexture2DPixelFormat_RGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(height * width * 4);
 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
 			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);				
 			CGColorSpaceRelease(colorSpace);
 			break;
-		case kTexture2DPixelFormat_RGB565:
+		case kCCTexture2DPixelFormat_RGB565:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(height * width * 4);
 			info = kCGImageAlphaNoneSkipLast;
 			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
-		case kTexture2DPixelFormat_A8:
+		case kCCTexture2DPixelFormat_A8:
 			data = malloc(height * width);
 			info = kCGImageAlphaOnly; 
 			context = CGBitmapContextCreate(data, width, height, 8, width, NULL, info);
@@ -280,7 +280,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	
 	// Repack the pixel data into the right format
 	
-	if(pixelFormat == kTexture2DPixelFormat_RGB565) {
+	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		tempData = malloc(height * width * 2);
 		inPixel32 = (unsigned int*)data;
@@ -291,7 +291,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		data = tempData;
 		
 	}
-	else if (pixelFormat == kTexture2DPixelFormat_RGBA4444) {
+	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = malloc(height * width * 2);
 		inPixel32 = (unsigned int*)data;
@@ -308,7 +308,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		data = tempData;
 		
 	}
-	else if (pixelFormat == kTexture2DPixelFormat_RGB5A1) {
+	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		tempData = malloc(height * width * 2);
 		inPixel32 = (unsigned int*)data;
@@ -435,7 +435,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 	// Repack the pixel data into the right format
 	
-	defaultAlphaPixelFormat = kTexture2DPixelFormat_RGBA8888;
+	defaultAlphaPixelFormat = kCCTexture2DPixelFormat_RGBA8888;
 
 	if(defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
@@ -451,7 +451,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 			free(temp);
 		pixels = temp = tempData;		
 	}
-	else if (defaultAlphaPixelFormat == kTexture2DPixelFormat_RGBA4444) {
+	else if (defaultAlphaPixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		void *tempData = malloc(imgHigh * imgWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -468,7 +468,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		pixels = temp = tempData;
 		
 	}
-	else if (defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB5A1) {
+	else if (defaultAlphaPixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		void *tempData = malloc(imgHigh * imgWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -569,7 +569,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
 	UIGraphicsPopContext();
 	
-	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
 	
 	CGContextRelease(context);
 	free(data);
@@ -732,12 +732,12 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 // Texture options for images that contains alpha
 //
 @implementation CCTexture2D (PixelFormat)
-+(void) setDefaultAlphaPixelFormat:(Texture2DPixelFormat)format
++(void) setDefaultAlphaPixelFormat:(CCTexture2DPixelFormat)format
 {
 	defaultAlphaPixelFormat = format;
 }
 
-+(Texture2DPixelFormat) defaultAlphaPixelFormat
++(CCTexture2DPixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixelFormat;
 }

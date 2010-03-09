@@ -31,7 +31,7 @@
 	if (self)
 	{
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
-		Texture2DPixelFormat format = kTexture2DPixelFormat_RGBA8888;  
+		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;  
 		// textures must be power of two squared
 		int pow = 8;
 		while (pow < w || pow < h) pow*=2;
