@@ -197,20 +197,25 @@ const char kProgressTextureCoords = 0x1e;
 	
 	
 	int index = 0;
-	float min_t = FLT_MAX;
+	CGPoint hit = CGPointZero;
 	
 	if (alpha == 0.f) {
 		//	More efficient since we don't always need to check intersection
 		//	If the alpha is zero then the hit point is top mid and the index is 0.
+		hit = topMid;
 		index = 0;
 	} else if (alpha == 1.f) {
 		//	More efficient since we don't always need to check intersection
 		//	If the alpha is one then the hit point is top mid and the index is 4.
+		hit = topMid;
 		index = 4;
 	} else {
 		//	We run a for loop checking the edges of the texture to find the
 		//	intersection point
 		//	We loop through five points since the top is split in half
+		
+		float min_t = FLT_MAX;
+		
 		for (int i = 0; i <= kProgressTextureCoordsCount; ++i) {
 			int pIndex = (i + (kProgressTextureCoordsCount - 1))%kProgressTextureCoordsCount;
 			
@@ -250,10 +255,12 @@ const char kProgressTextureCoords = 0x1e;
 				}
 			}
 		}
+		
+		//	Now that we have the minimum magnitude we can use that to find our intersection
+		hit = ccpAdd(midpoint, ccpMult(ccpSub(percentagePt, midpoint),min_t));
+		
 	}
 	
-	//	Now that we have the minimum magnitude we can use that to find our intersection
-	CGPoint hit = ccpAdd(midpoint, ccpMult(ccpSub(percentagePt, midpoint),min_t));
 	
 	//	The size of the vertex data is the index from the hitpoint
 	//	the 3 is for the midpoint, 12 o'clock point and hitpoint position.
