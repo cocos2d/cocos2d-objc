@@ -18,8 +18,9 @@ version 0.99.1 - XX-MMM-2010
  . [FIX] Sprite, LabelAtlas, TiledMap: opactiy + color works even when the texture is premultiplied (issue #668)
  . [FIX] TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
  . [FIX] TMX: TMXLayer uses the opacity defined for the layer (issue #785)
+ . [FIX] TMX: TMXLayer raises exception if it receives the addChild message (issue #808)
  . [FIX] Texture2D: removed NSLog when image was NULL (issue #802)
- . [FIX] Xcode: hardware requirements in .plist: doesn't contain disabled features. Seems to be a bun in Xcode 3.2.2 (issue #769)
+ . [FIX] Xcode: hardware requirements in .plist: doesn't contain disabled features (issue #769)
  
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)

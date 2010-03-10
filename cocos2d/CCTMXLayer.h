@@ -134,4 +134,8 @@
 /** Creates the tiles */
 -(void) setupTiles;
 
+/** CCTMXLayer doesn't support adding a CCSprite manually.
+ @warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:
+ */
+-(id) addChild: (CCNode*)node z:(int)z tag:(int)tag;
 @end
