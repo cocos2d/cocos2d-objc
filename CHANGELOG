@@ -15,6 +15,7 @@ version 0.99.1 - XX-MMM-2010
  . [FIX] Actions: CCAnimate frame calculation is more precise (issue #758)
  . [FIX] CocosDenshion: Fixed mute (issue #789)
  . [FIX] RenderTexture: removed limit when saving images (issue #782)
+ . [FIX] RenderTexture: doesn't use GL_DITHER and restores glColorMask() (issue #796)
  . [FIX] Sprite, LabelAtlas, TiledMap: opactiy + color works even when the texture is premultiplied (issue #668)
  . [FIX] TMX: TMXTileMap supports any kind of objects, like CCSprite (issue #700, #765)
  . [FIX] TMX: TMXLayer uses the opacity defined for the layer (issue #785)

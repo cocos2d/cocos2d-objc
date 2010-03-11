@@ -22,10 +22,6 @@ enum {
 
 #pragma mark - Classes
 
-@interface Effect1 : TextLayer
-{}
-@end
-
 @implementation Effect1
 -(void) onEnter
 {
@@ -55,10 +51,6 @@ enum {
 {
 	return @"Lens + Waves3d and CCOrbitCamera";
 }
-@end
-
-@interface Effect2 : TextLayer
-{}
 @end
 
 @implementation Effect2
@@ -98,10 +90,6 @@ enum {
 }
 @end
 
-@interface Effect3 : TextLayer
-{}
-@end
-
 @implementation Effect3
 -(void) onEnter
 {
@@ -127,10 +115,6 @@ enum {
 }
 @end
 
-@interface Effect4 : TextLayer
-{}
-@end
-
 @implementation Effect4
 -(void) onEnter
 {
@@ -154,16 +138,10 @@ enum {
 #pragma mark -
 #pragma mark Effect5
 
-@interface Effect5 : TextLayer
-{}
-@end
-
 @implementation Effect5
 -(void) onEnter
 {
 	[super onEnter];
-	
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
 	
 	id effect = [CCLiquid actionWithWaves:1 amplitude:20 grid:ccg(32,24) duration:2];	
 
@@ -171,30 +149,64 @@ enum {
 					 effect,
 					 [CCDelayTime actionWithDuration:2],
 					 [CCStopGrid action],
-//					 [CCDelayTime actionWithDuration:2],
-//					 [[effect copy] autorelease],
+					 [CCDelayTime actionWithDuration:2],
+					 [[effect copy] autorelease],
 					 nil];
 	
 	id bg = [self getChildByTag:kTagBackground];
 	[bg runAction:stopEffect];
-	
-}
--(void) onExit
-{
-	[super onExit];
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 }
 
 -(NSString*) title
 {
 	return @"Test Stop-Copy-Restart";
 }
+@end
 
--(void) draw
+#pragma mark -
+#pragma mark Issue631
+
+@implementation Issue631
+-(void) onEnter
 {
-	[super draw];
+	[super onEnter];
+		
+//	id effect = [CCLiquid actionWithWaves:1 amplitude:20 grid:ccg(32,24) duration:2];
+//	id effect = [CCShaky3D actionWithRange:16 shakeZ:NO grid:ccg(5, 5) duration:5.0f];
+	id effect = [CCSequence actions:[CCDelayTime actionWithDuration:2.0f], [CCShaky3D actionWithRange:16 shakeZ:NO grid:ccg(5, 5) duration:5.0f], nil];
+
+	// cleanup
+	id bg = [self getChildByTag:kTagBackground];
+	[self removeChild:bg cleanup:YES];
+
+	// background
+	CCColorLayer *layer = [CCColorLayer layerWithColor:(ccColor4B){255,0,0,255}];
+	[self addChild:layer z:-10];
+	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+	[sprite setPosition:ccp(50,80)];
+	[layer addChild:sprite z:10];
+	
+	// foreground
+	CCColorLayer *layer2 = [CCColorLayer layerWithColor:(ccColor4B){0, 255,0,255}];
+	CCSprite *fog = [CCSprite spriteWithFile:@"Fog.png"];
+	[fog setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
+	[layer2 addChild:fog z:1];
+	[self addChild:layer2 z:1];
+	
+	[layer2 runAction:[CCRepeatForever actionWithAction:effect]];
+}
+
+-(NSString*) title
+{
+	return @"Testing Opacity";
+}
+
+-(NSString*) subtitle
+{
+	return @"Effect image should be 100% opaque. Testing issue #631";
 }
 @end
+
 
 
 #pragma mark Demo - order
@@ -207,6 +219,7 @@ static NSString *actionList[] =
 	@"Effect2",
 	@"Effect4",
 	@"Effect5",
+	@"Issue631",
 };
 
 Class nextAction()
@@ -270,9 +283,16 @@ Class restartAction()
 		
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
 		
-		[label setPosition: ccp(x/2,y-80)];
-		[self addChild: label];
+		[label setPosition: ccp(x/2,y-40)];
+		[self addChild: label z:100];
 		label.tag = kTagLabel;
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:101];
+			[l setPosition:ccp(size.width/2, size.height-80)];
+		}		
 		
 		// menu
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
@@ -283,7 +303,7 @@ Class restartAction()
 		item1.position = ccp(480/2-100,30);
 		item2.position = ccp(480/2, 30);
 		item3.position = ccp(480/2+100,30);
-		[self addChild: menu z:1];
+		[self addChild: menu z:101];
 
 	}
 	
@@ -293,6 +313,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 
 -(void) restartCallback: (id) sender
@@ -336,36 +361,35 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 	
+	CCDirector *director = [CCDirector sharedDirector];
 	// Use this pixel format to have transparent buffers
 	// BUG: glClearColor() in FBO needs to be converted to RGB565
-	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+	[director setPixelFormat:kCCPixelFormatRGBA8888];
 
 	// Create a depth buffer of 16 bits
 	// Needed for the orbit + lens + waves examples
 	// These means that openGL z-order will be taken into account
-	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+	[director setDepthBufferFormat:kCCDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDeviceOrientation: kCCDeviceOrientationLandscapeRight];
+	[director setDisplayFPS:YES];
 	
 	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director attachInView:window];	
 	[window makeKeyAndVisible];	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
-//	[[Director sharedDirector] setProjection:CCDirectorProjection2D];
-	
-	[[CCDirector sharedDirector] runWithScene: scene];
+
+	[director runWithScene: scene];
 }
 
 - (void) dealloc

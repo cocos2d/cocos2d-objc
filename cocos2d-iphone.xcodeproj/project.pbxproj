@@ -989,6 +989,7 @@
 		50C508C60F7C194400799124 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C508C40F7C194400799124 /* CCFileUtils.h */; };
 		50C508C70F7C194400799124 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C508C50F7C194400799124 /* CCFileUtils.m */; };
 		50C723DD0EC062680046C5DB /* clouds.pvrtc in Resources */ = {isa = PBXBuildFile; fileRef = 50C723DB0EC062680046C5DB /* clouds.pvrtc */; };
+		50C78DDA114833EE00D133A1 /* Fog.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C78DD9114833EE00D133A1 /* Fog.png */; };
 		50C938D60E0A9DBB00517B01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50C938D70E0A9DBB00517B01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50C938D80E0A9DBB00517B01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -2424,6 +2425,7 @@
 		50C508C40F7C194400799124 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		50C508C50F7C194400799124 /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
 		50C723DB0EC062680046C5DB /* clouds.pvrtc */ = {isa = PBXFileReference; lastKnownFileType = text; path = clouds.pvrtc; sourceTree = "<group>"; };
+		50C78DD9114833EE00D133A1 /* Fog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fog.png; sourceTree = "<group>"; };
 		50C7D4950E5C2ED80035ACA2 /* IntervalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntervalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E00E0A9DBB00517B01 /* TransitionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C938E30E0A9E1100517B01 /* TransitionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionsTest.h; path = tests/TransitionsTest.h; sourceTree = "<group>"; };
@@ -4371,6 +4373,7 @@
 				503863D6110082B1005D2C92 /* texture1024x1024.jpeg */,
 				503863D7110082B1005D2C92 /* texture2048x2048.jpeg */,
 				503863D8110082B1005D2C92 /* texture4096x4096.jpeg */,
+				50C78DD9114833EE00D133A1 /* Fog.png */,
 				AAEA834A0FD5704400F08728 /* blocks.png */,
 				506E1AD50FB34E8E00AAA494 /* test-rgba1.png */,
 				8EDF3FD90F6BE3F400F54643 /* listener-marker.png */,
@@ -6892,6 +6895,7 @@
 				502AACFC0F79715E001E3F87 /* fire.pvr in Resources */,
 				50479B01100F80B000D1C71A /* background3.png in Resources */,
 				505464431062886600AB7C52 /* fps_images.png in Resources */,
+				50C78DDA114833EE00D133A1 /* Fog.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
