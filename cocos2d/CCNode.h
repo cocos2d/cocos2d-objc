@@ -294,7 +294,17 @@ enum {
 
 // draw
 
-/** override this method to draw your own node. */
+/** Override this method to draw your own node.
+ The following GL states will be enabled by default:
+	- glEnableClientState(GL_VERTEX_ARRAY);
+	- glEnableClientState(GL_COLOR_ARRAY);
+	- glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	- glEnable(GL_TEXTURE_2D);
+ 
+   AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
+ 
+ But if you enable any other GL state, you should disable it after drawing your node.
+ */
 -(void) draw;
 /** recursive method that visit its children and draw them */
 -(void) visit;
@@ -311,8 +321,8 @@ enum {
  */
 -(void) transformAncestors;
 
-/** returns an axis aligned bounding box of the node.
- It takes into account any kind of transformation.
+/** returns a "local" axis aligned bounding box of the node.
+ The returned box is relative only to its parent.
  
  @since v0.8.2
  */
