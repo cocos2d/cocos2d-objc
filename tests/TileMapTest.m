@@ -27,7 +27,8 @@ static NSString *transitions[] = {
 			@"TMXHexTest",
 			@"TMXReadWriteTest",
 			@"TMXTilesetTest",
-			@"TMXObjectsTest",
+			@"TMXOrthoObjectsTest",
+			@"TMXIsoObjectsTest",
 			@"TMXResizeTest",
 			@"TMXIsoMoveLayer",
 			@"TMXOrthoMoveLayer",
@@ -758,42 +759,117 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark TMXObjectsTest
+#pragma mark TMXOrthoObjectsTest
 
-@implementation TMXObjectsTest
+@implementation TMXOrthoObjectsTest
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-objects.tmx"];
-		[self addChild:map z:0 tag:kTagTileMap];
+		[self addChild:map z:-1 tag:kTagTileMap];
 		
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 		
-		CCTMXLayer *layer;
-		layer = [map layerNamed:@"Layer 0"];
-		[layer.texture setAntiAliasTexParameters];		
-		
+		NSLog(@"----> Iterating over all the group objets");
 		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
 		for( NSDictionary *dict in group.objects) {
 			NSLog(@"object: %@", dict);
 		}
 		
+		NSLog(@"----> Fetching 1 object by name");
 		NSDictionary *platform = [group objectNamed:@"platform"];
 		NSLog(@"platform: %@", platform);
 	}	
 	return self;
 }
 
+-(void) draw
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap];
+	CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
+	for( NSDictionary *dict in group.objects) {
+		int x = [[dict objectForKey:@"x"] intValue];
+		int y = [[dict objectForKey:@"y"] intValue];
+		int width = [[dict objectForKey:@"width"] intValue];
+		int height = [[dict objectForKey:@"height"] intValue];
+		
+		glLineWidth(3);
+		
+		ccDrawLine( ccp(x,y), ccp(x+width,y) );
+		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
+		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
+		ccDrawLine( ccp(x,y+height), ccp(x,y) );
+
+		
+		glLineWidth(1);
+	}
+}
+
 -(NSString *) title
 {
-	return @"TMX object test";
+	return @"TMX Ortho object test";
 }
 
 -(NSString*) subtitle
 {
-	return @"In the console you should see 4 groups";
+	return @"You should see a white box around the 3 platforms";
+}
+@end
+
+#pragma mark -
+#pragma mark TMXIsoObjectsTest
+
+@implementation TMXIsoObjectsTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-objectgroup.tmx"];
+		[self addChild:map z:-1 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+
+		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
+		for( NSDictionary *dict in group.objects) {
+			NSLog(@"object: %@", dict);
+		}		
+	}	
+	return self;
+}
+
+-(void) draw
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap];
+	CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
+	for( NSDictionary *dict in group.objects) {
+		int x = [[dict objectForKey:@"x"] intValue];
+		int y = [[dict objectForKey:@"y"] intValue];
+		int width = [[dict objectForKey:@"width"] intValue];
+		int height = [[dict objectForKey:@"height"] intValue];
+		
+		glLineWidth(3);
+		
+		ccDrawLine( ccp(x,y), ccp(x+width,y) );
+		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
+		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
+		ccDrawLine( ccp(x,y+height), ccp(x,y) );
+		
+		
+		glLineWidth(1);
+	}
+}
+
+-(NSString *) title
+{
+	return @"TMX Iso object test";
+}
+
+-(NSString*) subtitle
+{
+	return @"You need to parse them manually. See bug #810";
 }
 @end
 

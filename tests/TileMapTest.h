@@ -16,34 +16,28 @@
 @end
 
 @interface TileMapTest : TileDemo
-{
-}
+{}
 @end
 
 @interface TileMapEditTest : TileDemo
-{
-}
+{}
 @end
 
 
 @interface TMXOrthoTest : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXOrthoTest2 : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXOrthoTest3 : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXOrthoTest4 : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXReadWriteTest : TileDemo
@@ -54,44 +48,39 @@
 @end
 
 @interface TMXHexTest : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXIsoTest : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXIsoTest1 : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXIsoTest2 : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXUncompressedTest : TileDemo
-{
-}
+{}
 @end
-
 
 @interface TMXTilesetTest : TileDemo
-{
-}
+{}
 @end
 
-@interface TMXObjectsTest : TileDemo
-{
-}
+@interface TMXOrthoObjectsTest : TileDemo
+{}
+@end
+
+@interface TMXIsoObjectsTest : TileDemo
+{}
 @end
 
 @interface TMXResizeTest : TileDemo
-{
-}
+{}
 @end
 
 @interface TMXIsoZorder : TileDemo
