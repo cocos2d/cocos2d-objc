@@ -60,6 +60,8 @@
 
 TestEntry g_testEntries[] =
 {
+	{"Body Types", BodyTypes::Create},
+	{"Ray-Cast", RayCast::Create},
 	{"Character Collision", CharacterCollision::Create},
 	{"Prismatic", Prismatic::Create},
 	{"Edge Shapes", EdgeShapes::Create},
@@ -70,13 +72,11 @@ TestEntry g_testEntries[] =
 	{"Polygon Shapes", PolyShapes::Create},
 	{"Apply Force", ApplyForce::Create},
 	{"Cantilever", Cantilever::Create},
-	{"Body Types", BodyTypes::Create},
 	{"SphereStack", SphereStack::Create},
 	{"Confined", Confined::Create},
 	{"Bridge", Bridge::Create},
 	{"Breakable", Breakable::Create},
 	{"Varying Restitution", VaryingRestitution::Create},
-	{"Ray-Cast", RayCast::Create},
 	{"Pyramid", Pyramid::Create},
 	{"One-Sided Platform", OneSidedPlatform::Create},
 	{"Chain", Chain::Create},
