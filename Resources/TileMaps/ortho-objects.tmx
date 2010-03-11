@@ -9,10 +9,10 @@
    H4sIAAAAAAAAA+3DsQkAIAwAsAriY/7/k6NQXBx00AQSAQAA8Iea3tZTprb4mrLxhAFhdCAKABAAAA==
   </data>
  </layer>
- <objectgroup name="Object Group 1" width="0" height="0">
+ <objectgroup color="#ffffff" name="Object Group 1" width="0" height="0">
   <object name="Object" x="0" y="992" width="352" height="32"/>
   <object name="Object" x="224" y="928" width="160" height="32"/>
-  <object name="platform" type="platform" x="-9" y="833" width="135" height="61">
+  <object name="platform" type="platform" x="2" y="833" width="125" height="60">
    <properties>
     <property name="friction" value="1.0"/>
    </properties>
