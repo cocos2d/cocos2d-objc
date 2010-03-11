@@ -1,6 +1,6 @@
 version 0.99.1 - XX-MMM-2010
  . [NEW] Actions: new added actions: CCProgressTo, CCProgressFromTo (issue #783)
- . [NEW] Box2d: udpated to r61 (issue #795)
+ . [NEW] Box2d: udpated to r66 (issue #795)
  . [NEW] CGPointExtensions: new add functions:  CGPointExtension like: clampf, ccpClamp, ccpFromSize,
 			ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 			ccpRotateByAngle, ccpLineIntersect (issue #783)
