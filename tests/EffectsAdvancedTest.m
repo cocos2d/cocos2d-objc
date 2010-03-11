@@ -365,7 +365,7 @@ Class restartAction()
 	
 	CCDirector *director = [CCDirector sharedDirector];
 	// Use this pixel format to have transparent buffers
-	// BUG: glClearColor() in FBO needs to be converted to RGB565
+	// BUG: glClearColor() in FBO needs to be converted to RGBA8888
 	[director setPixelFormat:kCCPixelFormatRGBA8888];
 
 	// Create a depth buffer of 16 bits

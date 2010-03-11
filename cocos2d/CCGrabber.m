@@ -51,16 +51,26 @@
 {
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
-	
-	// BUG XXX: doesn't work with RGB565.
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
-	glClear(GL_COLOR_BUFFER_BIT);
+	// BUG XXX: doesn't work with RGB565.
+
+
+	glClearColor(0,0,0,0);
+	
+	// BUG #631: To fix #631, uncomment the lines with #631
+	// Warning: But it CCGrabber won't work with 2 effects at the same time
+//	glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+	
+//	glColorMask(TRUE, TRUE, TRUE, FALSE);	// #631
+
 }
 
 -(void)afterRender:(CCTexture2D*)texture
 {
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+ 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+//	glColorMask(TRUE, TRUE, TRUE, TRUE);	// #631
 }
 
 - (void) dealloc

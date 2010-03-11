@@ -123,6 +123,8 @@ typedef enum {
 	CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
 	CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
 	CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
+	CCDirectorTypeDefault =kCCDirectorTypeDefault,
+
 
 } ccDirectorType;
 
