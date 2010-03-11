@@ -89,7 +89,6 @@
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);//Will direct drawing to the frame buffer created above
-	glDisable(GL_DITHER);
 	
 	CC_ENABLE_DEFAULT_GL_STATES();	
 }
@@ -101,13 +100,14 @@
 	glPopMatrix();
 	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
 	glViewport(0, 0, frame.size.width, frame.size.height);
+
+	glColorMask(TRUE, TRUE, TRUE, TRUE);
 }
 
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self begin];
-	glColorMask(TRUE, TRUE, TRUE, TRUE);
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColorMask(TRUE, TRUE, TRUE, FALSE);
