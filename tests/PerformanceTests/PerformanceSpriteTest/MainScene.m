@@ -106,7 +106,7 @@ Class restartAction()
 				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
-				break;				
+				break;
 			case 4:
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p addChild:sheet z:0];
