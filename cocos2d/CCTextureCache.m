@@ -284,7 +284,7 @@ static CCTextureCache *sharedTextureCache;
 	for( id key in keys ) {
 		id value = [textures objectForKey:key];		
 		if( [value retainCount] == 1 ) {
-			CCLOG(@"cocos2d: removing texture: %@", key);
+			CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
 			[textures removeObjectForKey:key];
 		}
 	}
