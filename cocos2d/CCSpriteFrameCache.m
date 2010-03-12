@@ -55,7 +55,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 -(id) init
 {
 	if( (self=[super init]) ) {
-		spriteFrames = [[NSMutableDictionary alloc] initWithCapacity:100];
+		spriteFrames = [[NSMutableDictionary alloc] initWithCapacity: 100];
 	}
 	
 	return self;
@@ -78,29 +78,65 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture
 {
+	/*
+	Supported Zwoptex Formats:
+		enum {
+			ZWTCoordinatesListXMLFormat_Legacy = 0
+			ZWTCoordinatesListXMLFormat_v1_0,
+		};
+	*/
+	NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
 	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
+	int format = 0;
+	
+	// get the format
+	if(metadataDict != nil) {
+		format = [[metadataDict objectForKey:@"format"] intValue];
+	}
+	
+	// check the format
+	if(format < 0 || format > 1) {
+		NSAssert(NO,@"cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
+		return;
+	}
+	
 	for(NSString *frameDictKey in framesDict) {
 		NSDictionary *frameDict = [framesDict objectForKey:frameDictKey];
-		float x = [[frameDict objectForKey:@"x"] floatValue];
-		float y = [[frameDict objectForKey:@"y"] floatValue];
-		float w = [[frameDict objectForKey:@"width"] floatValue];
-		float h = [[frameDict objectForKey:@"height"] floatValue];
-		float ox = [[frameDict objectForKey:@"offsetX"] floatValue];
-		float oy = [[frameDict objectForKey:@"offsetY"] floatValue];
-		int ow = [[frameDict objectForKey:@"originalWidth"] intValue];
-		int oh = [[frameDict objectForKey:@"originalHeight"] intValue];
-
-		if( !ow || !oh ) {
-			CCLOG(@"cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+		CCSpriteFrame *spriteFrame;
+		if(format == 0) {
+			float x = [[frameDict objectForKey:@"x"] floatValue];
+			float y = [[frameDict objectForKey:@"y"] floatValue];
+			float w = [[frameDict objectForKey:@"width"] floatValue];
+			float h = [[frameDict objectForKey:@"height"] floatValue];
+			float ox = [[frameDict objectForKey:@"offsetX"] floatValue];
+			float oy = [[frameDict objectForKey:@"offsetY"] floatValue];
+			int ow = [[frameDict objectForKey:@"originalWidth"] intValue];
+			int oh = [[frameDict objectForKey:@"originalHeight"] intValue];
+			// check ow/oh
+			if(!ow || !oh) {
+				CCLOG(@"cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+			}
+			// abs ow/oh
+			ow = abs(ow);
+			oh = abs(oh);
+			// create frame
+			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x, y, w, h) offset:CGPointMake(ox, oy) originalSize:CGSizeMake(ow, oh)];
+		} else if(format == 1) {
+			CGRect frame = CGRectFromString([frameDict objectForKey:@"frame"]);
+			CGPoint offset = CGPointFromString([frameDict objectForKey:@"offset"]);
+			CGSize sourceSize = CGSizeFromString([frameDict objectForKey:@"sourceSize"]);
+			/*
+			CGRect sourceColorRect = CGRectFromString([frameDict objectForKey:@"sourceColorRect"]);
+			int leftTrim = sourceColorRect.origin.x;
+			int topTrim = sourceColorRect.origin.y;
+			int rightTrim = sourceColorRect.size.width + leftTrim;
+			int bottomTrim = sourceColorRect.size.height + topTrim;
+			*/
+			// create frame
+			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame offset:offset originalSize:sourceSize];
 		}
-		
-		// zwoptex fix
-		ow = abs(ow);
-		oh = abs(oh);
-
-		CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x,y,w,h) offset:CGPointMake(ox,oy) originalSize:CGSizeMake(ow,oh)];
-		
-		[spriteFrames setObject:frame forKey:frameDictKey];
+		// add sprite frame
+		[spriteFrames setObject:spriteFrame forKey:frameDictKey];
 	}
 	
 }
