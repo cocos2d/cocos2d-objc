@@ -6,6 +6,7 @@ version 0.99.1 - XX-MMM-2010
 			ccpRotateByAngle, ccpLineIntersect (issue #783)
  . [NEW] Chipmunk: updated to v5.2 (issue #784)
  . [NEW] Macros: added CCLOGINFO() and CCLOGERROR(). CCLOGINFO() disabled by default (issue #799)
+ . [NEW] SpriteFrameCache: added support for Zwoptex Desktop version (issue #812)
  . [NEW] TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
  . [NEW] TMX: TMXLayer supports Tiled offset property (issue #616)
  . [NEW] TMX: Added support for .tsx tilesets (issue #619)
