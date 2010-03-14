@@ -969,7 +969,7 @@ Class restartAction()
 }
 -(NSString*) subtitle
 {
-	return @"Testing Fade. You shoudn't see a black border in the blue rectangle";
+	return @"Testing Fade. You should only see a black border in the 3rd image";
 }
 @end
 
@@ -992,7 +992,7 @@ Class restartAction()
 }
 -(NSString*) subtitle
 {
-	return @"Testing Tint. You shoudn't see a black border in the blue rectangle";
+	return @"Testing Tint. You should only see a black border in the 3rd image";
 }
 @end
 
@@ -1023,7 +1023,7 @@ Class restartAction()
 }
 -(NSString*) subtitle
 {
-	return @"Testing Tint+Fade. You shoudn't see a black border in the blue rectangle";
+	return @"Testing Tint+Fade. You should only see a black border in the 3rd image";
 }
 @end
 

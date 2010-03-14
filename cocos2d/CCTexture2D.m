@@ -211,7 +211,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	return self;
 }
 
--(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height
+-(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)POTWide pixelsHigh:(NSUInteger)POTHigh
 {
 	NSUInteger				i;
 	CGContextRef			context = nil;
@@ -249,30 +249,30 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		case kCCTexture2DPixelFormat_RGBA4444:
 		case kCCTexture2DPixelFormat_RGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(height * width * 4);
+			data = malloc(POTHigh * POTWide * 4);
 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);				
+			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);				
 			CGColorSpaceRelease(colorSpace);
 			break;
 		case kCCTexture2DPixelFormat_RGB565:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(height * width * 4);
+			data = malloc(POTHigh * POTWide * 4);
 			info = kCGImageAlphaNoneSkipLast;
-			context = CGBitmapContextCreate(data, width, height, 8, 4 * width, colorSpace, info | kCGBitmapByteOrder32Big);
+			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
 		case kCCTexture2DPixelFormat_A8:
-			data = malloc(height * width);
+			data = malloc(POTHigh * POTWide);
 			info = kCGImageAlphaOnly; 
-			context = CGBitmapContextCreate(data, width, height, 8, width, NULL, info);
+			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 			break;                    
 		default:
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
 	}
 	
 	
-	CGContextClearRect(context, CGRectMake(0, 0, width, height));
-	CGContextTranslateCTM(context, 0, height - imageSize.height);
+	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
+	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
 	
 	if(!CGAffineTransformIsIdentity(transform))
 		CGContextConcatCTM(context, transform);
@@ -282,10 +282,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-		tempData = malloc(height * width * 2);
+		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(i = 0; i < width * height; ++i, ++inPixel32)
+		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
 		free(data);
 		data = tempData;
@@ -293,10 +293,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-		tempData = malloc(height * width * 2);
+		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(i = 0; i < width * height; ++i, ++inPixel32)
+		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
@@ -310,10 +310,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-		tempData = malloc(height * width * 2);
+		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(i = 0; i < width * height; ++i, ++inPixel32)
+		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
@@ -324,7 +324,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		free(data);
 		data = tempData;
 	}
-	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:width pixelsHigh:height contentSize:imageSize];
+	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:imageSize];
 	
 	// should be after calling super init
 	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
@@ -439,10 +439,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 
 	if(defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-		void *tempData = malloc(imgHigh * imgWide * 2);
-		inPixel32 = (unsigned int*)data;
+		void *tempData = malloc(POTHigh * POTWide * 2);
+		inPixel32 = (unsigned int*)pixels;
 		outPixel16 = (unsigned short*)tempData;
-		for(UInt32 i = 0; i < imgWide * imgHigh; ++i, ++inPixel32)
+		for(UInt32 i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) |	// R
 			((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) |					// G
 			((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);					// B
@@ -453,10 +453,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	}
 	else if (defaultAlphaPixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-		void *tempData = malloc(imgHigh * imgWide * 2);
-		inPixel32 = (unsigned int*)data;
+		void *tempData = malloc(POTHigh * POTWide * 2);
+		inPixel32 = (unsigned int*)pixels;
 		outPixel16 = (unsigned short*)tempData;
-		for(UInt32 i = 0; i < imgWide * imgHigh; ++i, ++inPixel32)
+		for(UInt32 i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) |		// R
 			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) |		// G
@@ -470,10 +470,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	}
 	else if (defaultAlphaPixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-		void *tempData = malloc(imgHigh * imgWide * 2);
-		inPixel32 = (unsigned int*)data;
+		void *tempData = malloc(POTHigh * POTWide * 2);
+		inPixel32 = (unsigned int*)pixels;
 		outPixel16 = (unsigned short*)tempData;
-		for(UInt32 i = 0; i < imgWide * imgHigh; ++i, ++inPixel32)
+		for(UInt32 i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) |		// R
 			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) |		// G

@@ -1,3 +1,6 @@
+version 0.99.1 - XX-Mar-2010
+ . [FIX] Texture2D allocs the right texturememory when using the non-premultiplied alg.(issue #813)
+
 version 0.99.1-rc - 12-Mar-2010
  . [NEW] Actions: new added actions: CCProgressTo, CCProgressFromTo (issue #783)
  . [NEW] Box2d: udpated to r66 (issue #795)
