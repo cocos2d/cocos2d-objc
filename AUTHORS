@@ -108,6 +108,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Hans Larsen:
 		Possibility to create empty menus
 		Fixed CLang compiling warnings
+	* InsertWittyName (http://www.didev-studios.com/):
+		Texture2D allocs the right memory (patch)
 	* Ishaq Malik:
 		patches for CocosNode
 	* Joao Caxaria:
