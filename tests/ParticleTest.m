@@ -765,11 +765,11 @@ Class restartAction()
 	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
+	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationPortrait];
 	[[CCDirector sharedDirector] setDisplayFPS: YES];
 
 	// AnimationInterval doesn't work with FastDirector, yet
@@ -781,7 +781,7 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

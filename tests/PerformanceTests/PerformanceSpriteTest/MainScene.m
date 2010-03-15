@@ -98,12 +98,12 @@ Class restartAction()
 				break;
 				///
 			case 2:
-				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 			case 3:
-				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
@@ -114,12 +114,12 @@ Class restartAction()
 				
 				///
 			case 6:
-				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
 			case 7:
-				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;								
@@ -130,12 +130,12 @@ Class restartAction()
 
 				///
 			case 10:
-				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;
 			case 11:
-				[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:sheet z:0];
 				break;				
@@ -150,7 +150,7 @@ Class restartAction()
 		
 		[sheet retain];
 
-		[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
 
 	}
 	
@@ -166,7 +166,7 @@ Class restartAction()
 -(id) createSpriteWithTag:(int)tag
 {
 	// create 
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
 	id sprite = nil;
 	switch (subtestNumber) {
@@ -241,7 +241,7 @@ Class restartAction()
 			break;
 	}
 		
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
 
 	return sprite;
 }

@@ -193,12 +193,12 @@ Class restartAction()
 
 	switch( subtestNumber) {
 		case 1:
-			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 2:
-			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
@@ -207,12 +207,12 @@ Class restartAction()
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
 		case 4:
-			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 5:
-			[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			

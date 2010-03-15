@@ -211,7 +211,7 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
 	[[CCDirector sharedDirector] setDisplayFPS:YES];
 

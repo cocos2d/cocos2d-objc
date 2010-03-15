@@ -16,14 +16,14 @@
 	
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use fast director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
-//	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+//	[[CCDirector sharedDirector] setPixelFormat:kCCPixelFormatRGBA8888];
 	
 	[[CCDirector sharedDirector] attachInWindow:window];
 	[CCDirector sharedDirector].displayFPS = YES;
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 
 	[window makeKeyAndVisible];
 	

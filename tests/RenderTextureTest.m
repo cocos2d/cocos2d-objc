@@ -111,12 +111,12 @@
 	[window setUserInteractionEnabled:YES];	
 	[window setMultipleTouchEnabled:NO];
   
-	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 	
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
   
