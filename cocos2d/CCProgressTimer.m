@@ -279,6 +279,8 @@ const char kProgressTextureCoords = 0x1e;
 	if(!vertexData_) {
 		vertexDataCount_ = index + 3;
 		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4F_T2F));
+		NSAssert( vertexData_, @"CCProgressTimer. Not enough memory");
+		
 		[self updateColor];
 	}
 	
@@ -350,6 +352,7 @@ const char kProgressTextureCoords = 0x1e;
 	if (!vertexData_) {
 		vertexDataCount_ = kProgressTextureCoordsCount;
 		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4F_T2F));
+		NSAssert( vertexData_, @"CCProgressTimer. Not enough memory");
 		
 		if(type_ == kCCProgressTimerTypeHorizontalBarLR){
 			vertexData_[vIndexes[0] = 0].texCoords = (ccTex2F){0,0};
