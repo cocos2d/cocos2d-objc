@@ -190,8 +190,8 @@ enum {
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeThreadMainLoop];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
 
 	[[CCDirector sharedDirector] setDisplayFPS:YES];
 	[[CCDirector sharedDirector] setAnimationInterval:1/240.0f];

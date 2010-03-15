@@ -1,14 +1,13 @@
 version 0.99.1 - XX-Mar-2010
- . [FIX] MenuItemLabel: item scale is honored (issue #500)
+ . [FIX] Menu: MenuItemLabel restores the scale property (issue #500)
+ . [FIX] SpriteFrameCache: set singleton to nil when it is purged (issue #814)
  . [FIX] Texture2D allocs the right texturememory when using the non-premultiplied alg.(issue #813)
 
 version 0.99.1-rc - 12-Mar-2010
  . [NEW] Actions: new added actions: CCProgressTo, CCProgressFromTo (issue #783)
- . [NEW] Box2d: udpated to r66 (issue #795)
  . [NEW] CGPointExtensions: new add functions:  CGPointExtension like: clampf, ccpClamp, ccpFromSize,
 			ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 			ccpRotateByAngle, ccpLineIntersect (issue #783)
- . [NEW] Chipmunk: updated to v5.2 (issue #784)
  . [NEW] Macros: added CCLOGINFO() and CCLOGERROR(). CCLOGINFO() disabled by default (issue #799)
  . [NEW] SpriteFrameCache: added support for Zwoptex Desktop version (issue #812)
  . [NEW] TMX: if layer contains cc_vertezx=automatic, tiles will use vertexZ and GL_ALPHA_TEST (issue #780)
@@ -27,7 +26,9 @@ version 0.99.1-rc - 12-Mar-2010
  . [FIX] TMX: TMXLayer raises exception if it receives the addChild message (issue #808)
  . [FIX] Texture2D: removed NSLog when image was NULL (issue #802)
  . [FIX] Xcode: hardware requirements in .plist: doesn't contain disabled features (issue #769)
- 
+ . [3RD] Box2d: udpated to r66 (issue #795)
+ . [3RD] Chipmunk: updated to v5.2 (issue #784)
+
 version 0.99.0 - 18-Feb-2010
  . CocosDenshion: background music can loop (issue #774)
  . CocosDenshion: allow audio session category to be changed (issue #775)

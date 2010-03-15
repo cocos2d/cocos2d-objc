@@ -122,11 +122,11 @@
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
 	// frames per second
@@ -135,7 +135,7 @@
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 
 	// create an openGL view inside a window
 	[[CCDirector sharedDirector] attachInView:window];	

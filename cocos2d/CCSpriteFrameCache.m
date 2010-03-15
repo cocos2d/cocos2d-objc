@@ -50,6 +50,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 +(void)purgeSharedSpriteFrameCache
 {
 	[sharedSpriteFrameCache_ release];
+	sharedSpriteFrameCache_ = nil;
 }
 
 -(id) init

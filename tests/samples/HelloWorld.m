@@ -66,8 +66,8 @@
 {
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeDefault];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeDefault];
 	
 	// create an initilize the main UIWindow
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -76,7 +76,7 @@
 	[[CCDirector sharedDirector] attachInWindow:window];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 
 	// Make the window visible
 	[window makeKeyAndVisible];

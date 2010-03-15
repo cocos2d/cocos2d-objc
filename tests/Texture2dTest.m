@@ -495,7 +495,7 @@ Class restartAction()
 	[self addChild:background z:-1];
 	
 	// RGBA 8888 image (32-bit)
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	CCSprite *sprite1 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite1.position = ccp(64, s.height/2);
 	[self addChild:sprite1 z:0];
@@ -504,7 +504,7 @@ Class restartAction()
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite1.texture];
 
 	// RGBA 4444 image (16-bit)
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA4444];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 	CCSprite *sprite2 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite2.position = ccp(64+128, s.height/2);
 	[self addChild:sprite2 z:0];
@@ -513,7 +513,7 @@ Class restartAction()
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite2.texture];
 
 	// RGB5A1 image (16-bit)
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB5A1];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB5A1];
 	CCSprite *sprite3 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite3.position = ccp(64+128*2, s.height/2);
 	[self addChild:sprite3 z:0];
@@ -522,7 +522,7 @@ Class restartAction()
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite3.texture];
 
 	// RGB565 image (16-bit)
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGB565];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
 	CCSprite *sprite4 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite4.position = ccp(64+128*3, s.height/2);
 	[self addChild:sprite4 z:0];
@@ -542,7 +542,7 @@ Class restartAction()
 	[sprite4 runAction: [[seq_4ever copy] autorelease]];
 
 	// restore default
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_Default];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
 }
 
 -(NSString *) title
@@ -880,7 +880,7 @@ Class restartAction()
 	CGSize size = CGSizeMake(width,height);
 	
 	CCTexture2D *tex2d = [[CCTexture2D alloc] initWithData:pixels
-										 pixelFormat:kTexture2DPixelFormat_RGBA8888
+										 pixelFormat:kCCTexture2DPixelFormat_RGBA8888
 										  pixelsWide:width2
 										  pixelsHigh:height2
 										 contentSize:size];
@@ -1097,13 +1097,13 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 
 	//
-	[[CCDirector sharedDirector] setPixelFormat:kRGB565];
+	[[CCDirector sharedDirector] setPixelFormat:kCCPixelFormatRGB565];
 
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
 	[[CCDirector sharedDirector] setDisplayFPS:YES];
 
@@ -1114,7 +1114,7 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change it at anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

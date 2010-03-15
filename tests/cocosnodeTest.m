@@ -568,12 +568,12 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 	[super onExit];
 }
 
@@ -645,12 +645,12 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 	[super onExit];
 }
 
@@ -724,12 +724,12 @@ Class restartAction()
 //-(void) onEnter
 //{
 //	[super onEnter];
-//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection2D];
+//	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 //}
 //
 //-(void) onExit
 //{
-//	[[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
+//	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 //	[super onExit];
 //}
 
@@ -829,8 +829,8 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
 	
 	CCDirector *director = [CCDirector sharedDirector];
@@ -843,7 +843,7 @@ Class restartAction()
 	// Needed for the orbit + lens + waves examples
 	// These means that openGL z-order will be taken into account
 //	[director setDepthBufferFormat:kDepthBuffer16];
-//	[director setPixelFormat:kPixelFormatRGBA8888];
+//	[director setPixelFormat:kCCPixelFormatRGBA8888];
 	
 	// create an openGL view inside a window
 	[director attachInView:window];	
@@ -852,7 +852,7 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

@@ -2825,11 +2825,11 @@ Class restartAction()
 	[window setMultipleTouchEnabled:NO];
 
 	// must be called before any othe call to the director
-	[CCDirector setDirectorType:CCDirectorTypeDisplayLink];
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
 
@@ -2843,7 +2843,7 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
 	// create an openGL view inside a window
 	[director attachInView:window];	
