@@ -1,4 +1,5 @@
 version 0.99.1 - XX-Mar-2010
+ . [FIX] MenuItemLabel: item scale is honored (issue #500)
  . [FIX] Texture2D allocs the right texturememory when using the non-premultiplied alg.(issue #813)
 
 version 0.99.1-rc - 12-Mar-2010

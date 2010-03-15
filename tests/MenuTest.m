@@ -47,6 +47,9 @@ enum {
 		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
 		
+		// Testing issue #500
+		item5.scale = 0.8f;
+		
 		// Font Item
 		CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
 		

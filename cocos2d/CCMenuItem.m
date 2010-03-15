@@ -134,9 +134,10 @@ enum {
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
-		self.label = label;
+		originalScale_ = 1;
 		colorBackup = ccWHITE;
 		disabledColor_ = ccc3( 126,126,126);
+		self.label = label;
 	}
 	return self;
 }
@@ -168,7 +169,7 @@ enum {
 	if(isEnabled_) {
 		[self stopAllActions];
         
-		self.scale = 1.0f;
+		self.scale = originalScale_;
         
 		[super activate];
 	}
@@ -180,7 +181,8 @@ enum {
 	if(isEnabled_) {	
 		[super selected];
 		[self stopActionByTag:kZoomActionTag];
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:1.2f];
+		originalScale_ = self.scale;
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_ * 1.2f];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
@@ -192,7 +194,7 @@ enum {
 	if(isEnabled_) {
 		[super unselected];
 		[self stopActionByTag:kZoomActionTag];
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:1.0f];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
