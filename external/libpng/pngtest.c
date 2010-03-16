@@ -1,8 +1,8 @@
 
 /* pngtest.c - a simple test program to test libpng
  *
- * Last changed in libpng 1.2.37 [June 4, 2009]
- * Copyright (c) 1998-2009 Glenn Randers-Pehrson
+ * Last changed in libpng 1.4.1 [February 25, 2010]
+ * Copyright (c) 1998-2010 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -32,34 +32,14 @@
  */
 
 #include "png.h"
+#include "pngpriv.h"
 
-#if defined(_WIN32_WCE)
-#  if _WIN32_WCE < 211
-     __error__ (f|w)printf functions are not supported on old WindowsCE.;
-#  endif
-#  include <windows.h>
-#  include <stdlib.h>
-#  define READFILE(file, data, length, check) \
-     if (ReadFile(file, data, length, &check, NULL)) check = 0
-#  define WRITEFILE(file, data, length, check)) \
-     if (WriteFile(file, data, length, &check, NULL)) check = 0
-#  define FCLOSE(file) CloseHandle(file)
-#else
 #  include <stdio.h>
 #  include <stdlib.h>
-#  define READFILE(file, data, length, check) \
-     check=(png_size_t)fread(data, (png_size_t)1, length, file)
-#  define WRITEFILE(file, data, length, check) \
-     check=(png_size_t)fwrite(data, (png_size_t)1, length, file)
 #  define FCLOSE(file) fclose(file)
-#endif
 
-#if defined(PNG_NO_STDIO)
-#  if defined(_WIN32_WCE)
-     typedef HANDLE                png_FILE_p;
-#  else
+#ifndef PNG_STDIO_SUPPORTED
      typedef FILE                * png_FILE_p;
-#  endif
 #endif
 
 /* Makes pngtest verbose so we can find problems (needs to be before png.h) */
@@ -75,7 +55,7 @@
 #define PNGTEST_TIMING
 */
 
-#ifdef PNG_NO_FLOATING_POINT_SUPPORTED
+#ifndef PNG_FLOATING_POINT_SUPPORTED
 #undef PNGTEST_TIMING
 #endif
 
@@ -84,7 +64,7 @@ static float t_start, t_stop, t_decode, t_encode, t_misc;
 #include <time.h>
 #endif
 
-#if defined(PNG_TIME_RFC1123_SUPPORTED)
+#ifdef PNG_TIME_RFC1123_SUPPORTED
 #define PNG_tIME_STRING_LENGTH 29
 static int tIME_chunk_present = 0;
 static char tIME_string[PNG_tIME_STRING_LENGTH] = "tIME chunk is not present";
@@ -118,14 +98,8 @@ static int status_dots_requested = 0;
 static int status_dots = 1;
 
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 read_row_callback(png_structp png_ptr, png_uint_32 row_number, int pass);
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 read_row_callback(png_structp png_ptr, png_uint_32 row_number, int pass)
 {
    if (png_ptr == NULL || row_number > PNG_UINT_31_MAX)
@@ -146,14 +120,8 @@ read_row_callback(png_structp png_ptr, png_uint_32 row_number, int pass)
 }
 
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 write_row_callback(png_structp png_ptr, png_uint_32 row_number, int pass);
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 write_row_callback(png_structp png_ptr, png_uint_32 row_number, int pass)
 {
    if (png_ptr == NULL || row_number > PNG_UINT_31_MAX || pass > 7)
@@ -162,21 +130,15 @@ write_row_callback(png_structp png_ptr, png_uint_32 row_number, int pass)
 }
 
 
-#if defined(PNG_READ_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_READ_USER_TRANSFORM_SUPPORTED
 /* Example of using user transform callback (we don't transform anything,
  * but merely examine the row filters.  We set this to 256 rather than
  * 5 in case illegal filter values are present.)
  */
 static png_uint_32 filters_used[256];
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 count_filters(png_structp png_ptr, png_row_infop row_info, png_bytep data);
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 count_filters(png_structp png_ptr, png_row_infop row_info, png_bytep data)
 {
    if (png_ptr != NULL && row_info != NULL)
@@ -184,7 +146,7 @@ count_filters(png_structp png_ptr, png_row_infop row_info, png_bytep data)
 }
 #endif
 
-#if defined(PNG_WRITE_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_WRITE_USER_TRANSFORM_SUPPORTED
 /* Example of using user transform callback (we don't transform anything,
  * but merely count the zero samples)
  */
@@ -192,14 +154,8 @@ count_filters(png_structp png_ptr, png_row_infop row_info, png_bytep data)
 static png_uint_32 zero_samples;
 
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 count_zero_samples(png_structp png_ptr, png_row_infop row_info, png_bytep data);
 void
-#ifdef PNG_1_0_X
-PNGAPI
-#endif
 count_zero_samples(png_structp png_ptr, png_row_infop row_info, png_bytep data)
 {
    png_bytep dp = data;
@@ -297,7 +253,7 @@ count_zero_samples(png_structp png_ptr, png_row_infop row_info, png_bytep data)
 
 static int wrote_question = 0;
 
-#if defined(PNG_NO_STDIO)
+#ifndef PNG_STDIO_SUPPORTED
 /* START of code to validate stdio-free compilation */
 /* These copies of the default read/write functions come from pngrio.c and
  * pngwio.c.  They allow "don't include stdio" testing of the library.
@@ -311,12 +267,17 @@ static int wrote_question = 0;
 static void
 pngtest_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-   png_size_t check;
+   png_size_t check = 0;
+   png_voidp io_ptr;
 
    /* fread() returns 0 on error, so it is OK to store this in a png_size_t
     * instead of an int, which is what fread() actually returns.
     */
-   READFILE((png_FILE_p)png_ptr->io_ptr, data, length, check);
+   io_ptr = png_get_io_ptr(png_ptr);
+   if (io_ptr != NULL)
+   {
+      check = fread(data, 1, length, (png_FILE_p)io_ptr);
+   }
 
    if (check != length)
    {
@@ -335,7 +296,7 @@ pngtest_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
 static void
 pngtest_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-   int check;
+   png_size_t check;
    png_byte *n_data;
    png_FILE_p io_ptr;
 
@@ -344,7 +305,7 @@ pngtest_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
    io_ptr = (png_FILE_p)CVT_PTR(png_ptr->io_ptr);
    if ((png_bytep)n_data == data)
    {
-      READFILE(io_ptr, n_data, length, check);
+      check = fread(n_data, 1, length, io_ptr);
    }
    else
    {
@@ -355,7 +316,7 @@ pngtest_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
       do
       {
          read = MIN(NEAR_BUF_SIZE, remaining);
-         READFILE(io_ptr, buf, 1, err);
+         err = fread(buf, 1, 1, io_ptr);
          png_memcpy(data, buf, read); /* Copy far buffer to near buffer */
          if (err != read)
             break;
@@ -371,7 +332,7 @@ pngtest_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
 }
 #endif /* USE_FAR_KEYWORD */
 
-#if defined(PNG_WRITE_FLUSH_SUPPORTED)
+#ifdef PNG_WRITE_FLUSH_SUPPORTED
 static void
 pngtest_flush(png_structp png_ptr)
 {
@@ -389,9 +350,9 @@ pngtest_flush(png_structp png_ptr)
 static void
 pngtest_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-   png_uint_32 check;
+   png_size_t check;
 
-   WRITEFILE((png_FILE_p)png_ptr->io_ptr,  data, length, check);
+   check = fwrite(data, 1, length, (png_FILE_p)png_ptr->io_ptr);
    if (check != length)
    {
       png_error(png_ptr, "Write Error");
@@ -409,7 +370,7 @@ pngtest_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
 static void
 pngtest_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-   png_uint_32 check;
+   png_size_t check;
    png_byte *near_data;  /* Needs to be "png_byte *" instead of "png_bytep" */
    png_FILE_p io_ptr;
 
@@ -418,7 +379,7 @@ pngtest_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
    io_ptr = (png_FILE_p)CVT_PTR(png_ptr->io_ptr);
    if ((png_bytep)near_data == data)
    {
-      WRITEFILE(io_ptr, near_data, length, check);
+      check = fwrite(near_data, 1, length, io_ptr);
    }
    else
    {
@@ -430,7 +391,7 @@ pngtest_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
       {
          written = MIN(NEAR_BUF_SIZE, remaining);
          png_memcpy(buf, data, written); /* Copy far buffer to near buffer */
-         WRITEFILE(io_ptr, buf, written, err);
+         err = fwrite(buf, 1, written, io_ptr);
          if (err != written)
             break;
          else
@@ -456,9 +417,12 @@ static void
 pngtest_warning(png_structp png_ptr, png_const_charp message)
 {
    PNG_CONST char *name = "UNKNOWN (ERROR!)";
-   if (png_ptr != NULL && png_ptr->error_ptr != NULL)
-      name = png_ptr->error_ptr;
-   fprintf(STDERR, "%s: libpng warning: %s\n", name, message);
+   char *test;
+   test = png_get_error_ptr(png_ptr);
+   if (test == NULL)
+     fprintf(STDERR, "%s: libpng warning: %s\n", name, message);
+   else
+     fprintf(STDERR, "%s: libpng warning: %s\n", test, message);
 }
 
 /* This is the default error handling function.  Note that replacements for
@@ -474,7 +438,7 @@ pngtest_error(png_structp png_ptr, png_const_charp message)
     * actually OK in this case.
     */
 }
-#endif /* PNG_NO_STDIO */
+#endif /* !PNG_STDIO_SUPPORTED */
 /* END of code to validate stdio-free compilation */
 
 /* START of code to validate memory allocation and deallocation */
@@ -491,7 +455,7 @@ pngtest_error(png_structp png_ptr, png_const_charp message)
  */
 typedef struct memory_information
 {
-   png_uint_32               size;
+   png_alloc_size_t          size;
    png_voidp                 pointer;
    struct memory_information FAR *next;
 } memory_information;
@@ -503,11 +467,12 @@ static int maximum_allocation = 0;
 static int total_allocation = 0;
 static int num_allocations = 0;
 
-png_voidp png_debug_malloc PNGARG((png_structp png_ptr, png_uint_32 size));
+png_voidp png_debug_malloc
+   PNGARG((png_structp png_ptr, png_alloc_size_t size));
 void png_debug_free PNGARG((png_structp png_ptr, png_voidp ptr));
 
 png_voidp
-png_debug_malloc(png_structp png_ptr, png_uint_32 size)
+png_debug_malloc(png_structp png_ptr, png_alloc_size_t size)
 {
 
    /* png_malloc has already tested for NULL; png_create_struct calls
@@ -524,24 +489,23 @@ png_debug_malloc(png_structp png_ptr, png_uint_32 size)
       memory_infop pinfo;
       png_set_mem_fn(png_ptr, NULL, NULL, NULL);
       pinfo = (memory_infop)png_malloc(png_ptr,
-         (png_uint_32)png_sizeof(*pinfo));
+         png_sizeof(*pinfo));
       pinfo->size = size;
       current_allocation += size;
       total_allocation += size;
       num_allocations ++;
       if (current_allocation > maximum_allocation)
          maximum_allocation = current_allocation;
-      pinfo->pointer = (png_voidp)png_malloc(png_ptr, size);
+      pinfo->pointer = png_malloc(png_ptr, size);
       /* Restore malloc_fn and free_fn */
       png_set_mem_fn(png_ptr,
-          png_voidp_NULL, (png_malloc_ptr)png_debug_malloc,
-          (png_free_ptr)png_debug_free);
+          NULL, png_debug_malloc, png_debug_free);
       if (size != 0 && pinfo->pointer == NULL)
       {
          current_allocation -= size;
          total_allocation -= size;
          png_error(png_ptr,
-           "out of memory in pngtest->png_debug_malloc.");
+           "out of memory in pngtest->png_debug_malloc");
       }
       pinfo->next = pinformation;
       pinformation = pinfo;
@@ -607,7 +571,7 @@ png_debug_free(png_structp png_ptr, png_voidp ptr)
 
 
 /* Demonstration of user chunk support of the sTER and vpAg chunks */
-#if defined(PNG_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_UNKNOWN_CHUNKS_SUPPORTED
 
 /* (sTER is a public chunk not yet known by libpng.  vpAg is a private
 chunk used in ImageMagick to store "virtual page" size).  */
@@ -701,30 +665,17 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
 #endif
 #endif
 
-#if defined(_WIN32_WCE)
-   TCHAR path[MAX_PATH];
-#endif
    char inbuf[256], outbuf[256];
 
    row_buf = NULL;
 
-#if defined(_WIN32_WCE)
-   MultiByteToWideChar(CP_ACP, 0, inname, -1, path, MAX_PATH);
-   if ((fpin = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL)) == INVALID_HANDLE_VALUE)
-#else
    if ((fpin = fopen(inname, "rb")) == NULL)
-#endif
    {
       fprintf(STDERR, "Could not find input file %s\n", inname);
       return (1);
    }
 
-#if defined(_WIN32_WCE)
-   MultiByteToWideChar(CP_ACP, 0, outname, -1, path, MAX_PATH);
-   if ((fpout = CreateFile(path, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL)) == INVALID_HANDLE_VALUE)
-#else
    if ((fpout = fopen(outname, "wb")) == NULL)
-#endif
    {
       fprintf(STDERR, "Could not open output file %s\n", outname);
       FCLOSE(fpin);
@@ -734,20 +685,19 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    png_debug(0, "Allocating read and write structures");
 #if defined(PNG_USER_MEM_SUPPORTED) && PNG_DEBUG
    read_ptr =
-      png_create_read_struct_2(PNG_LIBPNG_VER_STRING, png_voidp_NULL,
-      png_error_ptr_NULL, png_error_ptr_NULL, png_voidp_NULL,
+      png_create_read_struct_2(PNG_LIBPNG_VER_STRING, NULL,
+      NULL, NULL, NULL,
       (png_malloc_ptr)png_debug_malloc, (png_free_ptr)png_debug_free);
 #else
    read_ptr =
-      png_create_read_struct(PNG_LIBPNG_VER_STRING, png_voidp_NULL,
-      png_error_ptr_NULL, png_error_ptr_NULL);
+      png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 #endif
-#if defined(PNG_NO_STDIO)
+#ifndef PNG_STDIO_SUPPORTED
    png_set_error_fn(read_ptr, (png_voidp)inname, pngtest_error,
        pngtest_warning);
 #endif
 
-#if defined(PNG_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_UNKNOWN_CHUNKS_SUPPORTED
    user_chunk_data[0] = 0;
    user_chunk_data[1] = 0;
    user_chunk_data[2] = 0;
@@ -759,15 +709,13 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
 #ifdef PNG_WRITE_SUPPORTED
 #if defined(PNG_USER_MEM_SUPPORTED) && PNG_DEBUG
    write_ptr =
-      png_create_write_struct_2(PNG_LIBPNG_VER_STRING, png_voidp_NULL,
-      png_error_ptr_NULL, png_error_ptr_NULL, png_voidp_NULL,
-      (png_malloc_ptr)png_debug_malloc, (png_free_ptr)png_debug_free);
+      png_create_write_struct_2(PNG_LIBPNG_VER_STRING, NULL,
+      NULL, NULL, NULL, png_debug_malloc, png_debug_free);
 #else
    write_ptr =
-      png_create_write_struct(PNG_LIBPNG_VER_STRING, png_voidp_NULL,
-      png_error_ptr_NULL, png_error_ptr_NULL);
+      png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 #endif
-#if defined(PNG_NO_STDIO)
+#ifndef PNG_STDIO_SUPPORTED
    png_set_error_fn(write_ptr, (png_voidp)inname, pngtest_error,
        pngtest_warning);
 #endif
@@ -829,7 +777,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
 #endif
 
    png_debug(0, "Initializing input and output streams");
-#if !defined(PNG_NO_STDIO)
+#ifdef PNG_STDIO_SUPPORTED
    png_init_io(read_ptr, fpin);
 #  ifdef PNG_WRITE_SUPPORTED
    png_init_io(write_ptr, fpout);
@@ -838,7 +786,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    png_set_read_fn(read_ptr, (png_voidp)fpin, pngtest_read_data);
 #  ifdef PNG_WRITE_SUPPORTED
    png_set_write_fn(write_ptr, (png_voidp)fpout,  pngtest_write_data,
-#    if defined(PNG_WRITE_FLUSH_SUPPORTED)
+#    ifdef PNG_WRITE_FLUSH_SUPPORTED
       pngtest_flush);
 #    else
       NULL);
@@ -855,12 +803,12 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    else
    {
 #ifdef PNG_WRITE_SUPPORTED
-      png_set_write_status_fn(write_ptr, png_write_status_ptr_NULL);
+      png_set_write_status_fn(write_ptr, NULL);
 #endif
-      png_set_read_status_fn(read_ptr, png_read_status_ptr_NULL);
+      png_set_read_status_fn(read_ptr, NULL);
    }
 
-#if defined(PNG_READ_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_READ_USER_TRANSFORM_SUPPORTED
    {
       int i;
       for (i = 0; i<256; i++)
@@ -868,24 +816,24 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       png_set_read_user_transform_fn(read_ptr, count_filters);
    }
 #endif
-#if defined(PNG_WRITE_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_WRITE_USER_TRANSFORM_SUPPORTED
    zero_samples = 0;
    png_set_write_user_transform_fn(write_ptr, count_zero_samples);
 #endif
 
-#if defined(PNG_READ_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_READ_UNKNOWN_CHUNKS_SUPPORTED
 #  ifndef PNG_HANDLE_CHUNK_ALWAYS
 #    define PNG_HANDLE_CHUNK_ALWAYS       3
 #  endif
    png_set_keep_unknown_chunks(read_ptr, PNG_HANDLE_CHUNK_ALWAYS,
-      png_bytep_NULL, 0);
+      NULL, 0);
 #endif
-#if defined(PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED
 #  ifndef PNG_HANDLE_CHUNK_IF_SAFE
 #    define PNG_HANDLE_CHUNK_IF_SAFE      2
 #  endif
    png_set_keep_unknown_chunks(write_ptr, PNG_HANDLE_CHUNK_IF_SAFE,
-      png_bytep_NULL, 0);
+      NULL, 0);
 #endif
 
    png_debug(0, "Reading info struct");
@@ -899,27 +847,27 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
           &color_type, &interlace_type, &compression_type, &filter_type))
       {
          png_set_IHDR(write_ptr, write_info_ptr, width, height, bit_depth,
-#if defined(PNG_WRITE_INTERLACING_SUPPORTED)
+#ifdef PNG_WRITE_INTERLACING_SUPPORTED
             color_type, interlace_type, compression_type, filter_type);
 #else
             color_type, PNG_INTERLACE_NONE, compression_type, filter_type);
 #endif
       }
    }
-#if defined(PNG_FIXED_POINT_SUPPORTED)
-#if defined(PNG_cHRM_SUPPORTED)
+#ifdef PNG_FIXED_POINT_SUPPORTED
+#ifdef PNG_cHRM_SUPPORTED
    {
       png_fixed_point white_x, white_y, red_x, red_y, green_x, green_y, blue_x,
          blue_y;
-      if (png_get_cHRM_fixed(read_ptr, read_info_ptr, &white_x, &white_y, &red_x,
-         &red_y, &green_x, &green_y, &blue_x, &blue_y))
+      if (png_get_cHRM_fixed(read_ptr, read_info_ptr, &white_x, &white_y,
+         &red_x, &red_y, &green_x, &green_y, &blue_x, &blue_y))
       {
          png_set_cHRM_fixed(write_ptr, write_info_ptr, white_x, white_y, red_x,
             red_y, green_x, green_y, blue_x, blue_y);
       }
    }
 #endif
-#if defined(PNG_gAMA_SUPPORTED)
+#ifdef PNG_gAMA_SUPPORTED
    {
       png_fixed_point gamma;
 
@@ -928,8 +876,8 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    }
 #endif
 #else /* Use floating point versions */
-#if defined(PNG_FLOATING_POINT_SUPPORTED)
-#if defined(PNG_cHRM_SUPPORTED)
+#ifdef PNG_FLOATING_POINT_SUPPORTED
+#ifdef PNG_cHRM_SUPPORTED
    {
       double white_x, white_y, red_x, red_y, green_x, green_y, blue_x,
          blue_y;
@@ -941,7 +889,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_gAMA_SUPPORTED)
+#ifdef PNG_gAMA_SUPPORTED
    {
       double gamma;
 
@@ -951,7 +899,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
 #endif
 #endif /* Floating point */
 #endif /* Fixed point */
-#if defined(PNG_iCCP_SUPPORTED)
+#ifdef PNG_iCCP_SUPPORTED
    {
       png_charp name;
       png_charp profile;
@@ -966,7 +914,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_sRGB_SUPPORTED)
+#ifdef PNG_sRGB_SUPPORTED
    {
       int intent;
 
@@ -981,7 +929,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       if (png_get_PLTE(read_ptr, read_info_ptr, &palette, &num_palette))
          png_set_PLTE(write_ptr, write_info_ptr, palette, num_palette);
    }
-#if defined(PNG_bKGD_SUPPORTED)
+#ifdef PNG_bKGD_SUPPORTED
    {
       png_color_16p background;
 
@@ -991,7 +939,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_hIST_SUPPORTED)
+#ifdef PNG_hIST_SUPPORTED
    {
       png_uint_16p hist;
 
@@ -999,7 +947,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
          png_set_hIST(write_ptr, write_info_ptr, hist);
    }
 #endif
-#if defined(PNG_oFFs_SUPPORTED)
+#ifdef PNG_oFFs_SUPPORTED
    {
       png_int_32 offset_x, offset_y;
       int unit_type;
@@ -1011,7 +959,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_pCAL_SUPPORTED)
+#ifdef PNG_pCAL_SUPPORTED
    {
       png_charp purpose, units;
       png_charpp params;
@@ -1026,7 +974,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_pHYs_SUPPORTED)
+#ifdef PNG_pHYs_SUPPORTED
    {
       png_uint_32 res_x, res_y;
       int unit_type;
@@ -1035,7 +983,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
          png_set_pHYs(write_ptr, write_info_ptr, res_x, res_y, unit_type);
    }
 #endif
-#if defined(PNG_sBIT_SUPPORTED)
+#ifdef PNG_sBIT_SUPPORTED
    {
       png_color_8p sig_bit;
 
@@ -1043,7 +991,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
          png_set_sBIT(write_ptr, write_info_ptr, sig_bit);
    }
 #endif
-#if defined(PNG_sCAL_SUPPORTED)
+#ifdef PNG_sCAL_SUPPORTED
 #ifdef PNG_FLOATING_POINT_SUPPORTED
    {
       int unit;
@@ -1064,13 +1012,14 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       if (png_get_sCAL_s(read_ptr, read_info_ptr, &unit, &scal_width,
           &scal_height))
       {
-         png_set_sCAL_s(write_ptr, write_info_ptr, unit, scal_width, scal_height);
+         png_set_sCAL_s(write_ptr, write_info_ptr, unit, scal_width,
+             scal_height);
       }
    }
 #endif
 #endif
 #endif
-#if defined(PNG_TEXT_SUPPORTED)
+#ifdef PNG_TEXT_SUPPORTED
    {
       png_textp text_ptr;
       int num_text;
@@ -1082,14 +1031,14 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_tIME_SUPPORTED)
+#ifdef PNG_tIME_SUPPORTED
    {
       png_timep mod_time;
 
       if (png_get_tIME(read_ptr, read_info_ptr, &mod_time))
       {
          png_set_tIME(write_ptr, write_info_ptr, mod_time);
-#if defined(PNG_TIME_RFC1123_SUPPORTED)
+#ifdef PNG_TIME_RFC1123_SUPPORTED
          /* We have to use png_memcpy instead of "=" because the string
           * pointed to by png_convert_to_rfc1123() gets free'ed before
           * we use it.
@@ -1103,29 +1052,29 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_tRNS_SUPPORTED)
+#ifdef PNG_tRNS_SUPPORTED
    {
-      png_bytep trans;
+      png_bytep trans_alpha;
       int num_trans;
-      png_color_16p trans_values;
+      png_color_16p trans_color;
 
-      if (png_get_tRNS(read_ptr, read_info_ptr, &trans, &num_trans,
-         &trans_values))
+      if (png_get_tRNS(read_ptr, read_info_ptr, &trans_alpha, &num_trans,
+         &trans_color))
       {
-         int sample_max = (1 << read_info_ptr->bit_depth);
+         int sample_max = (1 << bit_depth);
          /* libpng doesn't reject a tRNS chunk with out-of-range samples */
-         if (!((read_info_ptr->color_type == PNG_COLOR_TYPE_GRAY &&
-             (int)trans_values->gray > sample_max) ||
-             (read_info_ptr->color_type == PNG_COLOR_TYPE_RGB &&
-             ((int)trans_values->red > sample_max ||
-             (int)trans_values->green > sample_max ||
-             (int)trans_values->blue > sample_max))))
-            png_set_tRNS(write_ptr, write_info_ptr, trans, num_trans,
-               trans_values);
+         if (!((color_type == PNG_COLOR_TYPE_GRAY &&
+             (int)trans_color->gray > sample_max) ||
+             (color_type == PNG_COLOR_TYPE_RGB &&
+             ((int)trans_color->red > sample_max ||
+             (int)trans_color->green > sample_max ||
+             (int)trans_color->blue > sample_max))))
+            png_set_tRNS(write_ptr, write_info_ptr, trans_alpha, num_trans,
+               trans_color);
       }
    }
 #endif
-#if defined(PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED
    {
       png_unknown_chunkp unknowns;
       int num_unknowns = (int)png_get_unknown_chunks(read_ptr, read_info_ptr,
@@ -1154,7 +1103,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
  */
    png_write_info(write_ptr, write_info_ptr);
 
-#if defined(PNG_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_UNKNOWN_CHUNKS_SUPPORTED
    if (user_chunk_data[0] != 0)
    {
       png_byte png_sTER[5] = {115,  84,  69,  82, '\0'};
@@ -1224,7 +1173,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
          png_debug2(0, "0x%08lx (%ld bytes)", (unsigned long)row_buf,
             png_get_rowbytes(read_ptr, read_info_ptr));
 #endif /* !SINGLE_ROWBUF_ALLOC */
-         png_read_rows(read_ptr, (png_bytepp)&row_buf, png_bytepp_NULL, 1);
+         png_read_rows(read_ptr, (png_bytepp)&row_buf, NULL, 1);
 
 #ifdef PNG_WRITE_SUPPORTED
 #ifdef PNGTEST_TIMING
@@ -1248,17 +1197,17 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 
-#if defined(PNG_READ_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_READ_UNKNOWN_CHUNKS_SUPPORTED
    png_free_data(read_ptr, read_info_ptr, PNG_FREE_UNKN, -1);
 #endif
-#if defined(PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED
    png_free_data(write_ptr, write_info_ptr, PNG_FREE_UNKN, -1);
 #endif
 
    png_debug(0, "Reading and writing end_info data");
 
    png_read_end(read_ptr, end_info_ptr);
-#if defined(PNG_TEXT_SUPPORTED)
+#ifdef PNG_TEXT_SUPPORTED
    {
       png_textp text_ptr;
       int num_text;
@@ -1270,14 +1219,14 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_tIME_SUPPORTED)
+#ifdef PNG_tIME_SUPPORTED
    {
       png_timep mod_time;
 
       if (png_get_tIME(read_ptr, end_info_ptr, &mod_time))
       {
          png_set_tIME(write_ptr, write_end_info_ptr, mod_time);
-#if defined(PNG_TIME_RFC1123_SUPPORTED)
+#ifdef PNG_TIME_RFC1123_SUPPORTED
          /* We have to use png_memcpy instead of "=" because the string
             pointed to by png_convert_to_rfc1123() gets free'ed before
             we use it */
@@ -1290,7 +1239,7 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       }
    }
 #endif
-#if defined(PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED)
+#ifdef PNG_WRITE_UNKNOWN_CHUNKS_SUPPORTED
    {
       png_unknown_chunkp unknowns;
       int num_unknowns;
@@ -1346,23 +1295,13 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    FCLOSE(fpout);
 
    png_debug(0, "Opening files for comparison");
-#if defined(_WIN32_WCE)
-   MultiByteToWideChar(CP_ACP, 0, inname, -1, path, MAX_PATH);
-   if ((fpin = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL)) == INVALID_HANDLE_VALUE)
-#else
    if ((fpin = fopen(inname, "rb")) == NULL)
-#endif
    {
       fprintf(STDERR, "Could not find file %s\n", inname);
       return (1);
    }
 
-#if defined(_WIN32_WCE)
-   MultiByteToWideChar(CP_ACP, 0, outname, -1, path, MAX_PATH);
-   if ((fpout = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL)) == INVALID_HANDLE_VALUE)
-#else
    if ((fpout = fopen(outname, "rb")) == NULL)
-#endif
    {
       fprintf(STDERR, "Could not find file %s\n", outname);
       FCLOSE(fpin);
@@ -1373,8 +1312,8 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    {
       png_size_t num_in, num_out;
 
-         READFILE(fpin, inbuf, 1, num_in);
-         READFILE(fpout, outbuf, 1, num_out);
+         num_in = fread(inbuf, 1, 1, fpin);
+         num_out = fread(outbuf, 1, 1, fpout);
 
       if (num_in != num_out)
       {
@@ -1527,27 +1466,27 @@ main(int argc, char *argv[])
 #endif
       for (i=2; i<argc; ++i)
       {
-#if defined(PNG_READ_USER_TRANSFORM_SUPPORTED)
-         int k;
-#endif
          int kerror;
          fprintf(STDERR, "\n Testing %s:", argv[i]);
          kerror = test_one_file(argv[i], outname);
          if (kerror == 0)
          {
-#if defined(PNG_WRITE_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_READ_USER_TRANSFORM_SUPPORTED
+            int k;
+#endif
+#ifdef PNG_WRITE_USER_TRANSFORM_SUPPORTED
             fprintf(STDERR, "\n PASS (%lu zero samples)\n",
                (unsigned long)zero_samples);
 #else
             fprintf(STDERR, " PASS\n");
 #endif
-#if defined(PNG_READ_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_READ_USER_TRANSFORM_SUPPORTED
             for (k = 0; k<256; k++)
                if (filters_used[k])
                   fprintf(STDERR, " Filter %d was used %lu times\n",
                      k, (unsigned long)filters_used[k]);
 #endif
-#if defined(PNG_TIME_RFC1123_SUPPORTED)
+#ifdef PNG_TIME_RFC1123_SUPPORTED
          if (tIME_chunk_present != 0)
             fprintf(STDERR, " tIME = %s\n", tIME_string);
          tIME_chunk_present = 0;
@@ -1607,23 +1546,22 @@ main(int argc, char *argv[])
          {
             if (verbose == 1 || i == 2)
             {
-#if defined(PNG_READ_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_READ_USER_TRANSFORM_SUPPORTED
                 int k;
 #endif
-#if defined(PNG_WRITE_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_WRITE_USER_TRANSFORM_SUPPORTED
                 fprintf(STDERR, "\n PASS (%lu zero samples)\n",
                    (unsigned long)zero_samples);
 #else
                 fprintf(STDERR, " PASS\n");
 #endif
-#if defined(PNG_READ_USER_TRANSFORM_SUPPORTED)
+#ifdef PNG_READ_USER_TRANSFORM_SUPPORTED
                 for (k = 0; k<256; k++)
                    if (filters_used[k])
                       fprintf(STDERR, " Filter %d was used %lu times\n",
-                         k,
-                         (unsigned long)filters_used[k]);
+                         k, (unsigned long)filters_used[k]);
 #endif
-#if defined(PNG_TIME_RFC1123_SUPPORTED)
+#ifdef PNG_TIME_RFC1123_SUPPORTED
              if (tIME_chunk_present != 0)
                 fprintf(STDERR, " tIME = %s\n", tIME_string);
 #endif /* PNG_TIME_RFC1123_SUPPORTED */
@@ -1689,4 +1627,4 @@ main(int argc, char *argv[])
 }
 
 /* Generate a compiler error if there is an old png.h in the search path. */
-typedef version_1_2_38 your_png_h_is_not_version_1_2_38;
+typedef version_1_4_1 your_png_h_is_not_version_1_4_1;
