@@ -34,6 +34,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		FileUtils doesn't convert full paths
 	* Anton Zemlyanov:
 		patches for MenuItemToggle that supports selectedIndex
+	* asad.rehman:
+		Menu doesn't receive touches when it is invisible (patch)
 	* Aymeric Bard:
 		Repeat action works OK
 	* Barney Mattox:
