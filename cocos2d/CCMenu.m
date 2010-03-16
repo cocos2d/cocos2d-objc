@@ -178,7 +178,8 @@ enum {
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	if( state != kMenuStateWaiting ) return NO;
+	if( state != kMenuStateWaiting || !visible_ )
+		return NO;
 	
 	selectedItem = [self itemForTouch:touch];
 	[selectedItem selected];
