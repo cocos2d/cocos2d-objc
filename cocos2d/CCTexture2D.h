@@ -168,7 +168,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 
 /**
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
- Note that the generated textures are don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
+ Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
 @interface CCTexture2D (PVRTC)
 /** Initializes a texture from a PVRTC buffer */
@@ -223,11 +223,11 @@ typedef struct _ccTexParams {
     - generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
     - generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
     - generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
+	- generate 8-bit textures: kCCTexture2DPixelFormat_A8 (only use it if you use just 1 color)
 
  How does it work ?
-   - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 16-bit or 32-bit texture)
-   - If the image is an RGB (without Alpha) then an RGB565 texture will be used
-   - If the image is a grayscale image, then A8 textures will be used
+   - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
+   - If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
  
  @since v0.8
  */

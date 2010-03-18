@@ -210,8 +210,9 @@ Class restartAction()
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
 		case 3:
+			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire-grayscale.png"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;						
 		case 4:
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
@@ -228,8 +229,9 @@ Class restartAction()
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
 		case 7:
+			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
-			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire-grayscale.png"];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;						
 		case 8:
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];

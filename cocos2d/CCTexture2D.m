@@ -231,9 +231,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	size_t bpp = CGImageGetBitsPerComponent(image);
 	colorSpace = CGImageGetColorSpace(image);
-	int nrComponents = CGColorSpaceGetNumberOfComponents(colorSpace);
+//	int nrComponents = CGColorSpaceGetNumberOfComponents(colorSpace);
 	
-	if(colorSpace && nrComponents > 1 ) {
+	if(colorSpace) {
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixelFormat;
 		else {
@@ -242,8 +242,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		}
 	} else  {
 		// NOTE: No colorspace means a mask image
-		// nrComponents==1 means grayscale images
-		CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is grayscale");
+		CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is a mask");
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 	
