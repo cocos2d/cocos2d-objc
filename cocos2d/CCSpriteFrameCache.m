@@ -182,7 +182,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	for( id key in keys ) {
 		id value = [spriteFrames objectForKey:key];		
 		if( [value retainCount] == 1 ) {
-			CCLOG(@"cocos2d: removing sprite frame: %@", key);
+			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
 			[spriteFrames removeObjectForKey:key];
 		}
 	}	

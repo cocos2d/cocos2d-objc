@@ -66,7 +66,7 @@
 		indices_ = calloc( sizeof(indices_[0]) * capacity_ * 6, 1 );
 		
 		if( ! ( quads_ && indices_) ) {
-			CCLOG(@"cocos2d: TextureAtlas: not enough memory");
+			CCLOG(@"cocos2d: CCTextureAtlas: not enough memory");
 			if( quads_ )
 				free(quads_);
 			if( indices_ )
@@ -234,7 +234,7 @@
 	void * tmpIndices = realloc( indices_, sizeof(indices_[0]) * capacity_ * 6 );
 	
 	if( ! ( tmpQuads && tmpIndices) ) {
-		CCLOG(@"cocos2d: TextureAtlas: not enough memory");
+		CCLOG(@"cocos2d: CCTextureAtlas: not enough memory");
 		if( tmpQuads )
 			free(tmpQuads);
 		else
