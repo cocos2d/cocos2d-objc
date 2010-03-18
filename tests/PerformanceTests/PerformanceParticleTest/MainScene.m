@@ -108,8 +108,11 @@ Class restartAction()
 		CCMenuItemFont  *itemF2 = [CCMenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
 		CCMenuItemFont  *itemF3 = [CCMenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
 		CCMenuItemFont  *itemF4 = [CCMenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
+
 		CCMenuItemFont  *itemF5 = [CCMenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
 		CCMenuItemFont  *itemF6 = [CCMenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF7 = [CCMenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF8 = [CCMenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
@@ -117,14 +120,16 @@ Class restartAction()
 		itemF4.tag = 4;
 		itemF5.tag = 5;
 		itemF6.tag = 6;
+		itemF7.tag = 7;
+		itemF8.tag = 8;
 
-		menu = [CCMenu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, nil];
+		menu = [CCMenu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, nil];
 		
 		int i=0;
 		for( id child in [menu children] ) {
-			if( i<3)
+			if( i<4)
 				[[child label] setColor:ccc3(200,20,20)];
-			else if(i<6)
+			else if(i<8)
 				[[child label] setColor:ccc3(0,200,20)];
 			i++;
 		}
@@ -176,11 +181,13 @@ Class restartAction()
 	 * Tests:
 	 * 1: Point Particle System using 32-bit textures (PNG)
 	 * 2: Point Particle System using 16-bit textures (PNG)
-	 * 3: Point Particle System using 4-bit textures (PVRTC)
+	 * 3: Point Particle System using 8-bit textures (PNG)
+	 * 4: Point Particle System using 4-bit textures (PVRTC)
 	 
-	 * 4: Quad Particle System using 32-bit textures (PNG)
-	 * 5: Quad Particle System using 16-bit textures (PNG)
-	 * 6: Quad Particle System using 4-bit textures (PVRTC)
+	 * 5: Quad Particle System using 32-bit textures (PNG)
+	 * 6: Quad Particle System using 16-bit textures (PNG)
+	 * 7: Quad Particle System using 8-bit textures (PNG)
+	 * 8: Quad Particle System using 4-bit textures (PVRTC)
 	 */
 	
 
@@ -204,19 +211,27 @@ Class restartAction()
 			break;			
 		case 3:
 			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire-grayscale.png"];
+			break;						
+		case 4:
+			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
-		case 4:
+		case 5:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
-		case 5:
+		case 6:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
-		case 6:
+		case 7:
+			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire-grayscale.png"];
+			break;						
+		case 8:
 			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;

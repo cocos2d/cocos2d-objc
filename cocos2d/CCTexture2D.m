@@ -230,13 +230,22 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
 	size_t bpp = CGImageGetBitsPerComponent(image);
-	if(CGImageGetColorSpace(image)) {
+	colorSpace = CGImageGetColorSpace(image);
+	int nrComponents = CGColorSpaceGetNumberOfComponents(colorSpace);
+	
+	if(colorSpace && nrComponents > 1 ) {
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixelFormat;
-		else
-			pixelFormat = kTexture2DPixelFormat_RGB565;
-	} else  //NOTE: No colorspace means a mask image
-		pixelFormat = kTexture2DPixelFormat_A8;
+		else {
+			CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
+			pixelFormat = kCCTexture2DPixelFormat_RGB565;
+		}
+	} else  {
+		// NOTE: No colorspace means a mask image
+		// nrComponents==1 means grayscale images
+		CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is grayscale");
+		pixelFormat = kCCTexture2DPixelFormat_A8;
+	}
 	
 	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
 	transform = CGAffineTransformIdentity;
@@ -437,7 +446,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	defaultAlphaPixelFormat = kCCTexture2DPixelFormat_RGBA8888;
 
-	if(defaultAlphaPixelFormat == kTexture2DPixelFormat_RGB565) {
+	if(defaultAlphaPixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		void *tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)pixels;

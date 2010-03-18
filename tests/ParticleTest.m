@@ -210,7 +210,7 @@ Class restartAction()
 	self.emitter = [CCParticleFireworks node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	[self setEmitterPosition];
 }
@@ -288,7 +288,7 @@ Class restartAction()
 
 	self.emitter = [CCParticleFlower node];
 	[background addChild: emitter z:10];
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	[self setEmitterPosition];
 }
@@ -306,7 +306,7 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:50];
 	[background addChild: emitter z:10];
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	// duration
 	emitter.duration = -1;
@@ -385,7 +385,7 @@ Class restartAction()
 	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
 	[emitter release];
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
 	
 	// duration
 	emitter.duration = -1;
@@ -503,7 +503,7 @@ Class restartAction()
 	self.emitter = [CCParticleExplosion node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	emitter.autoRemoveOnFinish = YES;
 	
@@ -669,7 +669,7 @@ Class restartAction()
 	emitter.endSizeVar = 8.0f;
 	
 	// texture
-//	emitter.texture = [[TextureCache sharedTextureCache] addImage:@"fire.png"];
+//	emitter.texture = [[TextureCache sharedTextureCache] addImage:@"fire-grayscale.png"];
 	
 	// additive
 	emitter.blendAdditive = NO;
@@ -692,7 +692,7 @@ Class restartAction()
 	[background addChild: emitter z:10];
 	[emitter release];
 
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	emitter.lifeVar = 0;
 	emitter.life = 10;
 	emitter.speed = 100;
