@@ -497,7 +497,7 @@ Class restartAction()
 	// RGBA 8888 image (32-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	CCSprite *sprite1 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite1.position = ccp(64, s.height/2);
+	sprite1.position = ccp(1*s.width/6, s.height/2+32);
 	[self addChild:sprite1 z:0];
 	
 	// remove texture from texture manager	
@@ -506,7 +506,7 @@ Class restartAction()
 	// RGBA 4444 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 	CCSprite *sprite2 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite2.position = ccp(64+128, s.height/2);
+	sprite2.position = ccp(2*s.width/6, s.height/2-32);
 	[self addChild:sprite2 z:0];
 
 	// remove texture from texture manager	
@@ -515,7 +515,7 @@ Class restartAction()
 	// RGB5A1 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB5A1];
 	CCSprite *sprite3 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite3.position = ccp(64+128*2, s.height/2);
+	sprite3.position = ccp(3*s.width/6, s.height/2+32);
 	[self addChild:sprite3 z:0];
 
 	// remove texture from texture manager	
@@ -524,12 +524,21 @@ Class restartAction()
 	// RGB565 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
 	CCSprite *sprite4 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite4.position = ccp(64+128*3, s.height/2);
+	sprite4.position = ccp(4*s.width/6, s.height/2-32);
 	[self addChild:sprite4 z:0];
 
 	// remove texture from texture manager	
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite4.texture];
 
+	// A8 image (8-bit)
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
+	CCSprite *sprite5 = [CCSprite spriteWithFile:@"test-rgba1.png"];
+	sprite5.position = ccp(5*s.width/6, s.height/2+32);
+	[self addChild:sprite5 z:0];
+	
+	// remove texture from texture manager	
+	[[CCTextureCache sharedTextureCache] removeTexture:sprite5.texture];
+	
 	
 	id fadeout = [CCFadeOut actionWithDuration:2];
 	id fadein = [CCFadeIn actionWithDuration:2];
@@ -540,6 +549,7 @@ Class restartAction()
 	[sprite2 runAction: [[seq_4ever copy] autorelease]];
 	[sprite3 runAction: [[seq_4ever copy] autorelease]];
 	[sprite4 runAction: [[seq_4ever copy] autorelease]];
+	[sprite5 runAction: [[seq_4ever copy] autorelease]];
 
 	// restore default
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
@@ -552,7 +562,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"From left to right: RGBA8888, RGBA4444, RGB5A1, RGB565";
+	return @"Textures: RGBA8888, RGBA4444, RGB5A1, RGB565, A8";
 }
 @end
 
