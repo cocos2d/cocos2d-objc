@@ -32,7 +32,7 @@ enum {
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
  
  The main features of a CCNode are:
- - They can contain other CCnode nodes (addChild, getChildByTag, removeChild, etc)
+ - They can contain other CCNode nodes (addChild, getChildByTag, removeChild, etc)
  - They can schedule periodic callback (schedule, unschedule, etc)
  - They can execute actions (runAction, stopAction, etc)
  
@@ -46,9 +46,9 @@ enum {
  Features of CCNode:
  - position
  - scale (x, y)
- - rotation (in degrees)
- - Camera ( using spherical coordinates )
- - GridBase (to do mesh transformations)
+ - rotation (in degrees, clockwise)
+ - CCCamera (an interface to gluLookAt )
+ - CCGridBase (to do mesh transformations)
  - anchor point
  - size
  - visible
@@ -167,10 +167,10 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleY;
 /** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
-/** A Camera object that lets you move the node using camera coordinates.
- * If you use the Camera then position, scale & rotation won't be used */
-@property(nonatomic,readonly) CCCamera* camera;
-/** A Grid object that is used when applying Effects */
+/** A CCCamera object that lets you move the node using a gluLookAt
+*/
+ @property(nonatomic,readonly) CCCamera* camera;
+/** A CCGrid object that is used when applying effects */
 @property(nonatomic,readwrite,retain) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */
 @property(nonatomic,readwrite,assign) BOOL visible;
@@ -384,20 +384,19 @@ enum {
 
 // transformation methods
 
-/** actual affine transforms used
- @todo nodeToParentTransform needs documentation
+/** Returns the local affine transform matrix
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToParentTransform;
-/** @todo parentToNodeTransform needs documentation
+/** Returns the inverse local affine transform matrix
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
-/** @todo nodeToWorldTransform needs documentation
+/** Retrusn the world affine transform matrix
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
-/** @todo worldToNodeTransform needs documentation
+/** Returns the inverse world affine transform matrix
  @since v0.7.1
  */
 - (CGAffineTransform)worldToNodeTransform;
@@ -420,11 +419,10 @@ enum {
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 /** convenience methods which take a UITouch instead of CGPoint
- @todo convertTouchToNodeSpace needs documentation
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
-/** @todo convertTouchToNodeSpaceAR needs documentation
+/** converts a UITouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;

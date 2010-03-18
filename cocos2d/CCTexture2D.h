@@ -95,10 +95,10 @@ typedef enum {
 
 //CLASS INTERFACES:
 
-/** CCTexture2D class
+/** CCTexture2D class.
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
- * The created Texture2D object will always have power-of-two dimensions. 
- * Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
+ * The created CCTexture2D object will always have power-of-two dimensions. 
+ * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
  * Be aware that the content of the generated textures will be upside-down!
  */
 @interface CCTexture2D : NSObject
@@ -194,15 +194,15 @@ typedef struct _ccTexParams {
 -(void) setTexParameters: (ccTexParams*) texParams;
 
 /** sets antialias texture parameters:
- TEXTURE_MIN_FILTER = LINEAR
- TEXTURE_MAG_FILTER = LINEAR
+  - GL_TEXTURE_MIN_FILTER = GL_LINEAR
+  - GL_TEXTURE_MAG_FILTER = GL_LINEAR
  @since v0.8
  */
 - (void) setAntiAliasTexParameters;
 
 /** sets alias texture parameters:
- TEXTURE_MIN_FILTER = NEAREST
- TEXTURE_MAG_FILTER = NEAREST
+  - GL_TEXTURE_MIN_FILTER = GL_NEAREST
+  - GL_TEXTURE_MAG_FILTER = GL_NEAREST
  @since v0.8
  */
 - (void) setAliasTexParameters;
@@ -225,9 +225,9 @@ typedef struct _ccTexParams {
     - generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
 
  How does it work ?
-  If the image contains alpha channel then the default pixel format will be used
-  If the image is a grayscale image, then A8 textures will be used, ignoring the default pixel format
-  If the image doesn't contain alpha channel, then RGB565 textures will be used, ignoring the default pixel format.
+   - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 16-bit or 32-bit texture)
+   - If the image is an RGB (without Alpha) then an RGB565 texture will be used
+   - If the image is a grayscale image, then A8 textures will be used
  
  @since v0.8
  */
