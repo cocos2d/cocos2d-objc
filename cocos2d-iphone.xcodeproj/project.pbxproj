@@ -246,6 +246,12 @@
 		501CCFB10E99657C00B86F68 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */; };
 		501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAB0E99657C00B86F68 /* TGAlib.m */; };
 		501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFAC0E99657C00B86F68 /* TGAlib.h */; };
+		501F0D3811527023002BB7F1 /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0D3511527023002BB7F1 /* fire-grayscale.png */; };
+		501F0D3911527023002BB7F1 /* stars-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0D3611527023002BB7F1 /* stars-grayscale.png */; };
+		501F0D3A11527023002BB7F1 /* stars2-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0D3711527023002BB7F1 /* stars2-grayscale.png */; };
+		501F0D3B11527023002BB7F1 /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0D3511527023002BB7F1 /* fire-grayscale.png */; };
+		501F0D3C11527023002BB7F1 /* stars-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0D3611527023002BB7F1 /* stars-grayscale.png */; };
+		501F0D3D11527023002BB7F1 /* stars2-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0D3711527023002BB7F1 /* stars2-grayscale.png */; };
 		502AACF30F79715E001E3F87 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
 		502AACF40F79715E001E3F87 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
 		502AACF50F79715E001E3F87 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
@@ -2025,6 +2031,9 @@
 		501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		501CCFAB0E99657C00B86F68 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		501CCFAC0E99657C00B86F68 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
+		501F0D3511527023002BB7F1 /* fire-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fire-grayscale.png"; sourceTree = "<group>"; };
+		501F0D3611527023002BB7F1 /* stars-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-grayscale.png"; sourceTree = "<group>"; };
+		501F0D3711527023002BB7F1 /* stars2-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars2-grayscale.png"; sourceTree = "<group>"; };
 		502AACF20F79715D001E3F87 /* fire.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.pvr; sourceTree = "<group>"; };
 		502B3E980E09A59500886982 /* CCTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransition.h; sourceTree = "<group>"; };
 		502B3E990E09A59500886982 /* CCTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransition.m; sourceTree = "<group>"; };
@@ -4170,6 +4179,9 @@
 		508A333C0FBADDA700D574A2 /* particles images */ = {
 			isa = PBXGroup;
 			children = (
+				501F0D3511527023002BB7F1 /* fire-grayscale.png */,
+				501F0D3611527023002BB7F1 /* stars-grayscale.png */,
+				501F0D3711527023002BB7F1 /* stars2-grayscale.png */,
 				50405A1F0E32A15500213FEF /* smoke.png */,
 				50405A130E3296AC00213FEF /* stars.png */,
 				503841930FA4E66B008411FB /* stars2.png */,
@@ -6929,6 +6941,9 @@
 				5085BFAE0F7D67FF008DBA21 /* snow.png in Resources */,
 				503841940FA4E66B008411FB /* stars2.png in Resources */,
 				5054644A1062886600AB7C52 /* fps_images.png in Resources */,
+				501F0D3B11527023002BB7F1 /* fire-grayscale.png in Resources */,
+				501F0D3C11527023002BB7F1 /* stars-grayscale.png in Resources */,
+				501F0D3D11527023002BB7F1 /* stars2-grayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7063,6 +7078,9 @@
 				50E2A5F710A4AC5000D894CE /* f2.png in Resources */,
 				50E2A5F810A4AC5000D894CE /* r1.png in Resources */,
 				50E2A5F910A4AC5000D894CE /* r2.png in Resources */,
+				501F0D3811527023002BB7F1 /* fire-grayscale.png in Resources */,
+				501F0D3911527023002BB7F1 /* stars-grayscale.png in Resources */,
+				501F0D3A11527023002BB7F1 /* stars2-grayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

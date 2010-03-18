@@ -219,14 +219,16 @@ typedef struct _ccTexParams {
 @interface CCTexture2D (PixelFormat)
 /** sets the default pixel format for UIImages that contains alpha channel.
  If the UIImage contains alpha channel, then the options are:
-    - generate 32-bit textures: RGBA8 (kCCTexture2DPixelFormat_RGBA8888) (default one)
-    - generate 16-bit textures: RGBA4 (kCCTexture2DPixelFormat_RGBA4444)
-    - generate 16-bit textures: RGB5A1 (kCCTexture2DPixelFormat_RGB5A1)
- You can also use the following option, but you will lose the alpha channel:
-    - generate 16-bit textures: RGB565 (kCCTexture2DPixelFormat_RGB565)
+    - generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
+    - generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
+    - generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
+    - generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
+
+ How does it work ?
+  If the image contains alpha channel then the default pixel format will be used
+  If the image is a grayscale image, then A8 textures will be used, ignoring the default pixel format
+  If the image doesn't contain alpha channel, then RGB565 textures will be used, ignoring the default pixel format.
  
- To use this function you MUST disable the "compres .PNG files" in XCode, otherwise all your .PNG images
- will be pre-multiplied wihtout alpha channel.
  @since v0.8
  */
 +(void) setDefaultAlphaPixelFormat:(CCTexture2DPixelFormat)format;

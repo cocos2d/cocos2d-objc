@@ -4,6 +4,7 @@ version 0.99.1 - 18-Mar-2010
  . [FIX] SpriteFrameCache: set singleton to nil when it is purged (issue #814)
  . [FIX] Templates: thumb-compilation turned off at project settings (already off in target settings) (issue #772)
  . [FIX] Texture2D allocs the right texturememory when using the non-premultiplied alg.(issue #813)
+ . [FIX] Texture2D treats grayscale images as A8 textures ignoring the default pixel format (issue #816)
  . [3RD] Libpng: updated to v1.4.1 (libpng is only used by a cocos2d test)
 
 version 0.99.1-rc - 12-Mar-2010

@@ -147,6 +147,9 @@
 		5015B79D114A87F400248F0A /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015B711114A87F400248F0A /* TransformUtils.m */; };
 		5015B79E114A87F400248F0A /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5015B712114A87F400248F0A /* ZipUtils.h */; };
 		5015B79F114A87F400248F0A /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015B713114A87F400248F0A /* ZipUtils.m */; };
+		501F0DE611527BC6002BB7F1 /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE311527BC6002BB7F1 /* fire-grayscale.png */; };
+		501F0DE711527BC6002BB7F1 /* stars-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE411527BC6002BB7F1 /* stars-grayscale.png */; };
+		501F0DE811527BC6002BB7F1 /* stars2-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE511527BC6002BB7F1 /* stars2-grayscale.png */; };
 		5030943510447C15005F7AFC /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
 		5030944410447C31005F7AFC /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
 		5030944510447C4D005F7AFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -454,6 +457,9 @@
 		5015B711114A87F400248F0A /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		5015B712114A87F400248F0A /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		5015B713114A87F400248F0A /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
+		501F0DE311527BC6002BB7F1 /* fire-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fire-grayscale.png"; path = "../../Resources/Images/fire-grayscale.png"; sourceTree = SOURCE_ROOT; };
+		501F0DE411527BC6002BB7F1 /* stars-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stars-grayscale.png"; path = "../../Resources/Images/stars-grayscale.png"; sourceTree = SOURCE_ROOT; };
+		501F0DE511527BC6002BB7F1 /* stars2-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stars2-grayscale.png"; path = "../../Resources/Images/stars2-grayscale.png"; sourceTree = SOURCE_ROOT; };
 		5030942510447BC7005F7AFC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = SOURCE_ROOT; };
 		5030942D10447C09005F7AFC /* SpritePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpritePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5030943C10447C25005F7AFC /* ParticlePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticlePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -679,6 +685,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				501F0DE311527BC6002BB7F1 /* fire-grayscale.png */,
+				501F0DE411527BC6002BB7F1 /* stars-grayscale.png */,
+				501F0DE511527BC6002BB7F1 /* stars2-grayscale.png */,
 				50F411A81068D563002A0D5E /* fps_images.png */,
 				50F48B0B1045AD2F00755CFB /* Default.png */,
 				50F48B0C1045AD2F00755CFB /* Icon.png */,
@@ -1321,6 +1330,9 @@
 				50F48B0F1045AD2F00755CFB /* Default.png in Resources */,
 				50F48B101045AD2F00755CFB /* Icon.png in Resources */,
 				50F411AA1068D563002A0D5E /* fps_images.png in Resources */,
+				501F0DE611527BC6002BB7F1 /* fire-grayscale.png in Resources */,
+				501F0DE711527BC6002BB7F1 /* stars-grayscale.png in Resources */,
+				501F0DE811527BC6002BB7F1 /* stars2-grayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
