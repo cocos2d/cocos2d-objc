@@ -1,0 +1,15 @@
+<hr size="1"/> 
+<address style="text-align: right;"><small> 
+<a href="http://www.cocos2d-iphone.org">$projectname</a> API Reference - Generated using <a href="http://www.doxygen.org">Doxygen $doxygenversion</a>
+</small></address> 
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-871936-7");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+</BODY> 
+</HTML>
