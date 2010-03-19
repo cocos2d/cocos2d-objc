@@ -1,7 +1,7 @@
 
 /* pngget.c - retrieval of values from info struct
  *
- * Last changed in libpng 1.4.1 [February 25, 2010]
+ * Last changed in libpng 1.2.43 [February 25, 2010]
  * Copyright (c) 1998-2010 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
@@ -12,10 +12,10 @@
  *
  */
 
+#define PNG_INTERNAL
 #define PNG_NO_PEDANTIC_WARNINGS
 #include "png.h"
 #if defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED)
-#include "pngpriv.h"
 
 png_uint_32 PNGAPI
 png_get_valid(png_structp png_ptr, png_infop info_ptr, png_uint_32 flag)
@@ -27,7 +27,7 @@ png_get_valid(png_structp png_ptr, png_infop info_ptr, png_uint_32 flag)
       return(0);
 }
 
-png_size_t PNGAPI
+png_uint_32 PNGAPI
 png_get_rowbytes(png_structp png_ptr, png_infop info_ptr)
 {
    if (png_ptr != NULL && info_ptr != NULL)
@@ -803,7 +803,7 @@ png_get_tIME(png_structp png_ptr, png_infop info_ptr, png_timep *mod_time)
 #ifdef PNG_tRNS_SUPPORTED
 png_uint_32 PNGAPI
 png_get_tRNS(png_structp png_ptr, png_infop info_ptr,
-   png_bytep *trans_alpha, int *num_trans, png_color_16p *trans_color)
+   png_bytep *trans, int *num_trans, png_color_16p *trans_values)
 {
    png_uint_32 retval = 0;
    if (png_ptr != NULL && info_ptr != NULL && (info_ptr->valid & PNG_INFO_tRNS))
@@ -812,25 +812,25 @@ png_get_tRNS(png_structp png_ptr, png_infop info_ptr,
 
       if (info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
       {
-          if (trans_alpha != NULL)
+          if (trans != NULL)
           {
-             *trans_alpha = info_ptr->trans_alpha;
+             *trans = info_ptr->trans;
              retval |= PNG_INFO_tRNS;
           }
 
-          if (trans_color != NULL)
-             *trans_color = &(info_ptr->trans_color);
+          if (trans_values != NULL)
+             *trans_values = &(info_ptr->trans_values);
       }
       else /* if (info_ptr->color_type != PNG_COLOR_TYPE_PALETTE) */
       {
-          if (trans_color != NULL)
+          if (trans_values != NULL)
           {
-             *trans_color = &(info_ptr->trans_color);
+             *trans_values = &(info_ptr->trans_values);
              retval |= PNG_INFO_tRNS;
           }
 
-          if (trans_alpha != NULL)
-             *trans_alpha = NULL;
+          if (trans != NULL)
+             *trans = NULL;
       }
       if (num_trans != NULL)
       {
@@ -872,16 +872,63 @@ png_get_user_chunk_ptr(png_structp png_ptr)
 }
 #endif
 
-png_size_t PNGAPI
+png_uint_32 PNGAPI
 png_get_compression_buffer_size(png_structp png_ptr)
 {
-   return (png_ptr ? png_ptr->zbuf_size : 0L);
+   return (png_uint_32)(png_ptr? png_ptr->zbuf_size : 0L);
 }
 
+#ifdef PNG_ASSEMBLER_CODE_SUPPORTED
+#ifndef PNG_1_0_X
+/* This function was added to libpng 1.2.0 and should exist by default */
+png_uint_32 PNGAPI
+png_get_asm_flags (png_structp png_ptr)
+{
+    /* Obsolete, to be removed from libpng-1.4.0 */
+    return (png_ptr? 0L: 0L);
+}
+
+/* This function was added to libpng 1.2.0 and should exist by default */
+png_uint_32 PNGAPI
+png_get_asm_flagmask (int flag_select)
+{
+    /* Obsolete, to be removed from libpng-1.4.0 */
+    flag_select=flag_select;
+    return 0L;
+}
+
+    /* GRR:  could add this:   && defined(PNG_MMX_CODE_SUPPORTED) */
+/* This function was added to libpng 1.2.0 */
+png_uint_32 PNGAPI
+png_get_mmx_flagmask (int flag_select, int *compilerID)
+{
+    /* Obsolete, to be removed from libpng-1.4.0 */
+    flag_select=flag_select;
+    *compilerID = -1;   /* unknown (i.e., no asm/MMX code compiled) */
+    return 0L;
+}
+
+/* This function was added to libpng 1.2.0 */
+png_byte PNGAPI
+png_get_mmx_bitdepth_threshold (png_structp png_ptr)
+{
+    /* Obsolete, to be removed from libpng-1.4.0 */
+    return (png_ptr? 0: 0);
+}
+
+/* This function was added to libpng 1.2.0 */
+png_uint_32 PNGAPI
+png_get_mmx_rowbytes_threshold (png_structp png_ptr)
+{
+    /* Obsolete, to be removed from libpng-1.4.0 */
+    return (png_ptr? 0L: 0L);
+}
+#endif /* ?PNG_1_0_X */
+#endif /* ?PNG_ASSEMBLER_CODE_SUPPORTED */
 
 #ifdef PNG_SET_USER_LIMITS_SUPPORTED
-/* These functions were added to libpng 1.2.6 and were enabled
- * by default in libpng-1.4.0 */
+/* These functions were added to libpng 1.2.6 but not enabled
+* by default. They will be enabled in libpng-1.4.0 */
 png_uint_32 PNGAPI
 png_get_user_width_max (png_structp png_ptr)
 {
@@ -892,34 +939,6 @@ png_get_user_height_max (png_structp png_ptr)
 {
     return (png_ptr? png_ptr->user_height_max : 0);
 }
-/* This function was added to libpng 1.4.0 */
-png_uint_32 PNGAPI
-png_get_chunk_cache_max (png_structp png_ptr)
-{
-    return (png_ptr? png_ptr->user_chunk_cache_max : 0);
-}
-/* This function was added to libpng 1.4.1 */
-png_alloc_size_t PNGAPI
-png_get_chunk_malloc_max (png_structp png_ptr)
-{
-    return (png_ptr?
-       png_ptr->user_chunk_malloc_max : 0);
-}
 #endif /* ?PNG_SET_USER_LIMITS_SUPPORTED */
-
-/* These functions were added to libpng 1.4.0 */
-#ifdef PNG_IO_STATE_SUPPORTED
-png_uint_32 PNGAPI
-png_get_io_state (png_structp png_ptr)
-{
-    return png_ptr->io_state;
-}
-
-png_bytep PNGAPI
-png_get_io_chunk_name (png_structp png_ptr)
-{
-   return png_ptr->chunk_name;
-}
-#endif /* ?PNG_IO_STATE_SUPPORTED */
 
 #endif /* PNG_READ_SUPPORTED || PNG_WRITE_SUPPORTED */
