@@ -115,7 +115,7 @@ typedef enum {
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
-/** pixelFormat */
+/** pixel format of the texture */
 @property(nonatomic,readonly) CCTexture2DPixelFormat pixelFormat;
 /** width in pixels */
 @property(nonatomic,readonly) NSUInteger pixelsWide;
@@ -196,6 +196,7 @@ typedef struct _ccTexParams {
 /** sets antialias texture parameters:
   - GL_TEXTURE_MIN_FILTER = GL_LINEAR
   - GL_TEXTURE_MAG_FILTER = GL_LINEAR
+
  @since v0.8
  */
 - (void) setAntiAliasTexParameters;
@@ -203,6 +204,7 @@ typedef struct _ccTexParams {
 /** sets alias texture parameters:
   - GL_TEXTURE_MIN_FILTER = GL_NEAREST
   - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+ 
  @since v0.8
  */
 - (void) setAliasTexParameters;
@@ -219,10 +221,10 @@ typedef struct _ccTexParams {
 @interface CCTexture2D (PixelFormat)
 /** sets the default pixel format for UIImages that contains alpha channel.
  If the UIImage contains alpha channel, then the options are:
-    - generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
-    - generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
-    - generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
-    - generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
+	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
+	- generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
+	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
+	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
 	- generate 8-bit textures: kCCTexture2DPixelFormat_A8 (only use it if you use just 1 color)
 
  How does it work ?
