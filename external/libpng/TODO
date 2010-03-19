@@ -1,4 +1,3 @@
-/*
 TODO - list of things to do for libpng:
 
 Final bug fixes.
@@ -18,14 +17,9 @@ Better filter selection
    (counting huffman bits/precompression?  filter inertia?  filter costs?).
 Histogram creation.
 Text conversion between different code pages (Latin-1 -> Mac and DOS).
+Should we always malloc 2^bit_depth PLTE/tRNS/hIST entries for safety?
 Build gamma tables using fixed point (and do away with floating point entirely).
-Avoid building gamma tables whenever possible.
 Use greater precision when changing to linear gamma for compositing against
   background and doing rgb-to-gray transformation.
 Investigate pre-incremented loop counters and other loop constructions.
 Add interpolated method of handling interlacing.
-Provide for conditional compilation of 16-bit support (except for the
-  initial stripping down to 8-bits when reading a 16-bit PNG datastream).
-Switch to the simpler zlib (zlib/libpng) license if legally possible.
-
-*/

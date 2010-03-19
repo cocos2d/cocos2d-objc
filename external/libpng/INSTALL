@@ -1,5 +1,5 @@
 
-Installing libpng version 1.4.1 - February 25, 2010
+Installing libpng version 1.2.43 - February 25, 2010
 
 On Unix/Linux and similar systems, you can simply type
 
@@ -46,7 +46,7 @@ to have access to the zlib.h and zconf.h include files that
 correspond to the version of zlib that's installed.
 
 You can rename the directories that you downloaded (they
-might be called "libpng-1.4.1" or "libpng14" and "zlib-1.2.3"
+might be called "libpng-1.2.43" or "libpng12" and "zlib-1.2.3"
 or "zlib123") so that you have directories called "zlib" and "libpng".
 
 Your directory structure should look like this:

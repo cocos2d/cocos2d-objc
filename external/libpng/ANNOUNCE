@@ -1,5 +1,5 @@
 
-Libpng 1.4.1 - February 25, 2010
+Libpng 1.2.43 - February 25, 2010
 
 This is a public release of libpng, intended for use in production codes.
 
@@ -8,56 +8,60 @@ Files available for download:
 Source files with LF line endings (for Unix/Linux) and with a
 "configure" script
 
-   libpng-1.4.1.tar.xz (LZMA-compressed, recommended)
-   libpng-1.4.1.tar.gz
-   libpng-1.4.1.tar.bz2
+   libpng-1.2.43.tar.xz (LZMA-compressed, recommended)
+   libpng-1.2.43.tar.gz
+   libpng-1.2.43.tar.bz2
+
+Source files with LF line endings (for Unix/Linux) without the
+"configure" script
+
+   libpng-1.2.43-no-config.tar.xz (LZMA-compressed, recommended)
+   libpng-1.2.43-no-config.tar.gz
+   libpng-1.2.43-no-config.tar.bz2
 
 Source files with CRLF line endings (for Windows), without the
 "configure" script
 
-   lpng141.zip
-   lpng141.7z
+   lpng1243.zip
+   lpng1243.7z
+   lpng1243.tar.bz2
+
+Project files
+
+   libpng-1.2.43-project-netware.zip
+   libpng-1.2.43-project-wince.zip
 
 Other information:
 
-   libpng-1.4.1-README.txt
-   libpng-1.4.1-LICENSE.txt
+   libpng-1.2.43-README.txt
+   libpng-1.2.43-KNOWNBUGS.txt
+   libpng-1.2.43-LICENSE.txt
+   libpng-1.2.43-Y2K-compliance.txt
+   libpng-1.2.43-[previous version]-diff.txt
 
-Changes since the last public release (1.4.0):
+Changes since the last public release (1.2.42):
 
-version 1.4.1 [February 25, 2010]
+version 1.2.43 [February 25, 2010]
 
   Updated CMakeLists.txt for consistent indentation and to avoid an
     unclosed if-statement warning (Philip Lowman).
-  Revised Makefile.am and Makefile.in to remove references to Y2KINFO,
-    KNOWNBUG, and libpng.la (Robert Schwebel).
-  Revised the makefiles to install the same files and symbolic
-    except for libpng.la and libpng14.la.
-  Make png_set|get_compression_buffer_size() available even when
-    PNG_WRITE_SUPPORTED is not enabled.
-  Revised Makefile.am and Makefile.in to simplify their maintenance.
-  Revised the makefiles to install a link to libpng14.so.14.1
-  Removed png_set_premultiply_alpha() from scripts/*.def
-  Revised png_decompress_chunk() to improve speed and memory usage when
-    decoding large chunks, using a two-pass method suggested by John Bowler.
-  Added png_set|get_chunk_malloc_max() functions.
-  Relocated "int k" declaration in pngtest.c to minimize its scope.
-  Folded some long lines in the source files.
-  Added defineable PNG_USER_CHUNK_CACHE_MAX and PNG_USER_CHUNK_MALLOC_MAX
-  Eliminated use of png_ptr->irowbytes and reused the slot in png_ptr as
-    png_ptr->png_user_chunk_malloc_max.
-  Return allocated "old_buffer" in png_push_save_buffer() before calling
-    png_error(), to avoid a potential memory leak.
-  Removed the cbuilder5 project, which has not been updated to 1.4.0.
-  Complete rewrite of two-pass png_decompress_chunk() by John Bowler.
-  Removed obsolete unused MMX-querying support from contrib/gregbook
-  Removed the AIX redefinition of jmpbuf in png.h
+  Removed "#ifdef PNG_1_0_X / #endif" surrounding
+    PNG_READ_16_TO_8_SUPPORTED and PNG_READ_GRAY_TO_RGB_SUPPORTED
+    in pngconf.h.  These were added in libpng-1.2.41beta08 and libpng-1.0.51,
+    which introduced a binary incompatibility with libpng-1.0.50.
+  Backported two-pass png_decompress_chunk() algorithm from libpng-1.4.1
+  Removed PNGAPI declaration of png_calloc() and png_write_sig() in
+    1ibpng-1.2.X, introduced by mistake in libpng-1.2.41.
+  Return allocated "old_buffer" in png_push_save_buffer() before png_error(),
+    to avoid a potential memory leak.
+  Ported rewritten png_decompress_chunk() by John Bowler from libpng-1.4.1.
   Define _ALL_SOURCE in configure.ac, makefile.aix, and CMakeLists.txt
     when using AIX compiler.
   Removed unused gzio.c from contrib/pngminim gather and makefile scripts
 
 Send comments/corrections/commendations to png-mng-implement at lists.sf.net
-(subscription required; visit 
+
+(subscription required; visit
 https://lists.sourceforge.net/lists/listinfo/png-mng-implement
 to subscribe) or to glennrp at users.sourceforge.net
 

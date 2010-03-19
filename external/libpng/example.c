@@ -2,7 +2,7 @@
 #if 0 /* in case someone actually tries to compile this */
 
 /* example.c - an example of using libpng
- * Last changed in libpng 1.4.0 [January 3, 2010]
+ * Last changed in libpng 1.2.37 [June 4, 2009]
  * This file has been placed in the public domain by the authors.
  * Maintained 1998-2010 Glenn Randers-Pehrson
  * Maintained 1996, 1997 Andreas Dilger)
@@ -121,7 +121,7 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
    if (info_ptr == NULL)
    {
       fclose(fp);
-      png_destroy_read_struct(&png_ptr, NULL, NULL);
+      png_destroy_read_struct(&png_ptr, png_infopp_NULL, png_infopp_NULL);
       return (ERROR);
    }
 
@@ -133,7 +133,7 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
    if (setjmp(png_jmpbuf(png_ptr)))
    {
       /* Free all of the memory associated with the png_ptr and info_ptr */
-      png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+      png_destroy_read_struct(&png_ptr, &info_ptr, png_infopp_NULL);
       fclose(fp);
       /* If we get here, we had a problem reading the file */
       return (ERROR);
@@ -164,7 +164,7 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
     * adjustment), then you can read the entire image (including
     * pixels) into the info structure with this call:
     */
-   png_read_png(png_ptr, info_ptr, png_transforms, NULL);
+   png_read_png(png_ptr, info_ptr, png_transforms, png_voidp_NULL);
 
 #else
    /* OK, you're doing it the hard way, with the lower-level functions */
@@ -175,7 +175,7 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
    png_read_info(png_ptr, info_ptr);
 
    png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type,
-       &interlace_type, NULL, NULL);
+       &interlace_type, int_p_NULL, int_p_NULL);
 
    /* Set up the data transformations you want.  Note that these are all
     * optional.  Only call them if you want/need them.  Many of the
@@ -286,7 +286,7 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
          png_color std_color_cube[MAX_SCREEN_COLORS];
 
          png_set_dither(png_ptr, std_color_cube, MAX_SCREEN_COLORS,
-            MAX_SCREEN_COLORS, NULL, 0);
+            MAX_SCREEN_COLORS, png_uint_16p_NULL, 0);
       }
       /* This reduces the image to the palette supplied in the file */
       else if (png_get_PLTE(png_ptr, info_ptr, &palette, &num_palette))
@@ -365,17 +365,17 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
 #ifdef single /* Read the image a single row at a time */
       for (y = 0; y < height; y++)
       {
-         png_read_rows(png_ptr, &row_pointers[y], NULL, 1);
+         png_read_rows(png_ptr, &row_pointers[y], png_bytepp_NULL, 1);
       }
 
 #else no_single /* Read the image several rows at a time */
       for (y = 0; y < height; y += number_of_rows)
       {
 #ifdef sparkle /* Read the image using the "sparkle" effect. */
-         png_read_rows(png_ptr, &row_pointers[y], NULL,
+         png_read_rows(png_ptr, &row_pointers[y], png_bytepp_NULL,
             number_of_rows);
 #else no_sparkle /* Read the image using the "rectangle" effect */
-         png_read_rows(png_ptr, NULL, &row_pointers[y],
+         png_read_rows(png_ptr, png_bytepp_NULL, &row_pointers[y],
             number_of_rows);
 #endif no_sparkle /* Use only one of these two methods */
       }
@@ -392,7 +392,7 @@ void read_png(FILE *fp, unsigned int sig_read)  /* File is already open */
    /* At this point you have read the entire image */
 
    /* Clean up after the read, and free any memory allocated - REQUIRED */
-   png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+   png_destroy_read_struct(&png_ptr, &info_ptr, png_infopp_NULL);
 
    /* Close the file */
    fclose(fp);
@@ -425,13 +425,13 @@ initialize_png_reader(png_structp *png_ptr, png_infop *info_ptr)
 
    if (*info_ptr == NULL)
    {
-      png_destroy_read_struct(png_ptr, info_ptr, NULL);
+      png_destroy_read_struct(png_ptr, info_ptr, png_infopp_NULL);
       return (ERROR);
    }
 
    if (setjmp(png_jmpbuf((*png_ptr))))
    {
-      png_destroy_read_struct(png_ptr, info_ptr, NULL);
+      png_destroy_read_struct(png_ptr, info_ptr, png_infopp_NULL);
       return (ERROR);
    }
 
@@ -460,7 +460,7 @@ process_data(png_structp *png_ptr, png_infop *info_ptr,
    if (setjmp(png_jmpbuf((*png_ptr))))
    {
       /* Free the png_ptr and info_ptr memory on error */
-      png_destroy_read_struct(png_ptr, info_ptr, NULL);
+      png_destroy_read_struct(png_ptr, info_ptr, png_infopp_NULL);
       return (ERROR);
    }
 
@@ -593,7 +593,7 @@ void write_png(char *file_name /* , ... other image information ... */)
    if (info_ptr == NULL)
    {
       fclose(fp);
-      png_destroy_write_struct(&png_ptr,  NULL);
+      png_destroy_write_struct(&png_ptr,  png_infopp_NULL);
       return (ERROR);
    }
 
@@ -628,7 +628,7 @@ void write_png(char *file_name /* , ... other image information ... */)
     * image info living in the structure.  You could "|" many
     * PNG_TRANSFORM flags into the png_transforms integer here.
     */
-   png_write_png(png_ptr, info_ptr, png_transforms, NULL);
+   png_write_png(png_ptr, info_ptr, png_transforms, png_voidp_NULL);
 
 #else
    /* This is the hard way */

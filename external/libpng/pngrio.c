@@ -1,7 +1,7 @@
 
 /* pngrio.c - functions for data input
  *
- * Last changed in libpng 1.4.1 [February 25, 2010]
+ * Last changed in libpng 1.2.43 [February 25, 2010]
  * Copyright (c) 1998-2010 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
@@ -18,10 +18,10 @@
  * libpng use it at run time with png_set_read_fn(...).
  */
 
+#define PNG_INTERNAL
 #define PNG_NO_PEDANTIC_WARNINGS
 #include "png.h"
 #ifdef PNG_READ_SUPPORTED
-#include "pngpriv.h"
 
 /* Read the data from whatever input you are using.  The default routine
  * reads from a file pointer.  Note that this routine sometimes gets called
@@ -57,7 +57,13 @@ png_default_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
    /* fread() returns 0 on error, so it is OK to store this in a png_size_t
     * instead of an int, which is what fread() actually returns.
     */
-   check = fread(data, 1, length, (png_FILE_p)png_ptr->io_ptr);
+#ifdef _WIN32_WCE
+   if ( !ReadFile((HANDLE)(png_ptr->io_ptr), data, length, &check, NULL) )
+      check = 0;
+#else
+   check = (png_size_t)fread(data, (png_size_t)1, length,
+      (png_FILE_p)png_ptr->io_ptr);
+#endif
 
    if (check != length)
       png_error(png_ptr, "Read Error");
@@ -74,7 +80,7 @@ png_default_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
 static void PNGAPI
 png_default_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-   png_size_t check;
+   int check;
    png_byte *n_data;
    png_FILE_p io_ptr;
 
@@ -85,7 +91,13 @@ png_default_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
    io_ptr = (png_FILE_p)CVT_PTR(png_ptr->io_ptr);
    if ((png_bytep)n_data == data)
    {
+#ifdef _WIN32_WCE
+      if ( !ReadFile((HANDLE)(png_ptr->io_ptr), data, length, &check,
+          NULL) )
+         check = 0;
+#else
       check = fread(n_data, 1, length, io_ptr);
+#endif
    }
    else
    {
@@ -96,7 +108,12 @@ png_default_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
       do
       {
          read = MIN(NEAR_BUF_SIZE, remaining);
-         err = fread(buf, 1, read, io_ptr);
+#ifdef _WIN32_WCE
+         if ( !ReadFile((HANDLE)(io_ptr), buf, read, &err, NULL) )
+            err = 0;
+#else
+         err = fread(buf, (png_size_t)1, read, io_ptr);
+#endif
          png_memcpy(data, buf, read); /* copy far buffer to near buffer */
          if (err != read)
             break;
@@ -153,7 +170,7 @@ png_set_read_fn(png_structp png_ptr, png_voidp io_ptr,
       png_warning(png_ptr,
          "It's an error to set both read_data_fn and write_data_fn in the ");
       png_warning(png_ptr,
-         "same structure.  Resetting write_data_fn to NULL");
+         "same structure.  Resetting write_data_fn to NULL.");
    }
 
 #ifdef PNG_WRITE_FLUSH_SUPPORTED
