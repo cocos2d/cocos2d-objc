@@ -1,3 +1,6 @@
+version 0.99.2 - XX-MMM-2010
+ . [FIX] SpriteFrameCache: logs warning if frame is not found
+ 
 version 0.99.1 - 19-Mar-2010
  . [FIX] Menu: If menu is not visible it doesn't receive touches (issue #88)
  . [FIX] Menu: MenuItemLabel restores the scale property (issue #500)

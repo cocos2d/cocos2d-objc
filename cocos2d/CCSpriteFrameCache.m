@@ -197,7 +197,11 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name
 {
-	return [spriteFrames objectForKey:name];
+	CCSpriteFrame *frame = [spriteFrames objectForKey:name];
+	if( ! frame )
+		CCLOG(@"cocos2d: CCSpriteFrameCache: Frame '%@' not found");
+	
+	return frame;
 }
 
 #pragma mark CCSpriteFrameCache - sprite creation
