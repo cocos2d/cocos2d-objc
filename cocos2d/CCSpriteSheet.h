@@ -51,22 +51,31 @@
 /** descendants (children, gran children, etc) */
 @property (nonatomic,readonly) NSMutableArray *descendants;
 
-/** creates a CCSpriteSheet with a texture2d */
+/** creates a CCSpriteSheet with a texture2d and a default capacity of 29 children.
+ The capacity will be increased in 33% in runtime if it run out of space.
+ */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex;
-/** creates a CCSpriteSheet with a texture2d and capacity */
+/** creates a CCSpriteSheet with a texture2d and capacity of children.
+ The capacity will be increased in 33% in runtime if it run out of space.
+ */
 +(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc).
+/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
+ The capacity will be increased in 33% in runtime if it run out of space.
  The file will be loaded using the TextureMgr.
  */
 +(id)spriteSheetWithFile:(NSString*) fileImage;
-/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and capacity. 
+/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
+ The capacity will be increased in 33% in runtime if it run out of space.
  The file will be loaded using the TextureMgr.
 */
 +(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
-/** initializes a CCSpriteSheet with a texture2d and capacity */
+/** initializes a CCSpriteSheet with a texture2d and capacity of children.
+ The capacity will be increased in 33% in runtime if it run out of space.
+ */
 -(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-/** initializes a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc).
+/** initializes a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
+ The capacity will be increased in 33% in runtime if it run out of space.
  The file will be loaded using the TextureMgr.
  */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
