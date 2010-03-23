@@ -188,7 +188,8 @@ typedef struct _ccTexParams {
 } ccTexParams;
 
 @interface CCTexture2D (GLFilter)
-/** sets the min filter, mag filter, wrap s and wrap t texture parameters
+/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
+ If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
  @since v0.8
  */
 -(void) setTexParameters: (ccTexParams*) texParams;
@@ -210,7 +211,8 @@ typedef struct _ccTexParams {
 - (void) setAliasTexParameters;
 
 
-/** Generates mipmap images for the texture
+/** Generates mipmap images for the texture.
+ It only works if the texture size is POT (power of 2).
  @since v0.99.0
  */
 -(void) generateMipmap;

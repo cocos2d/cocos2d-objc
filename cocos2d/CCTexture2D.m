@@ -536,12 +536,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 
 -(void) generateMipmap
 {
+	NSAssert( _width == nextPOT(_width) && _height == nextPOT(_height), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, self.name );
 	glGenerateMipmapOES(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
+	NSAssert( (_width == nextPOT(_width) && _height == nextPOT(_height)) ||
+			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
+			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, self.name );
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
