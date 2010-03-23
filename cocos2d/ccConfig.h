@@ -83,6 +83,16 @@
 //#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 1
 
 /**
+ Use NPOT textures where available. Only 3rd gen (and newer) devices support NPOT textures.
+ NPOT textures have the following limitations:
+	- They can't have mipmaps
+	- They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
+ 
+ @since v0.99.2
+ */
+//#define CC_TEXTURE_NPOT_SUPPORT 1
+
+/**
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only.
  It is recommened to leave it disabled.

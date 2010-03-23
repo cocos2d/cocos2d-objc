@@ -183,10 +183,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
+#if CC_TEXTURE_NPOT_SUPPORT
 	if( ! [conf supportsNPOT] ) {
 		POTWide = nextPOT(CGImageGetWidth(CGImage));
 		POTHigh = nextPOT(CGImageGetHeight(CGImage));
-	} else {
+	} else 
+#endif
+	{
 		POTWide = CGImageGetWidth(CGImage);
 		POTHigh = CGImageGetHeight(CGImage);
 	}
@@ -475,7 +478,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
-//		glGetIntegerv(GL_TEXTURE_BINDING_2D, &saveName);
 		glBindTexture(GL_TEXTURE_2D, _name);
 
 		[self setAntiAliasTexParameters];
@@ -491,9 +493,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 			size = 32;
 		}
 		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
-		
-//		glBindTexture(GL_TEXTURE_2D, saveName);
-		
+
 		_size = CGSizeMake(length, length);
 		_width = length;
 		_height = length;
