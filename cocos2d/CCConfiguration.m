@@ -24,6 +24,8 @@
 @synthesize maxTextureSize=maxTextureSize_;
 @synthesize supportsPVRTC=supportsPVRTC_;
 @synthesize maxModelviewStackDepth=maxModelviewStackDepth_;
+@synthesize supportsNPOT=supportsNPOT_;
+@synthesize supportsBGRA8888=supportsBGRA8888_;
 
 //
 // singleton stuff
@@ -62,9 +64,13 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
 		
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
-		
+		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
+		supportsBGRA8888_ = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
+						 
 		CCLOG(@"cocos2d: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
 		CCLOG(@"cocos2d: Supports PVRTC: %s", (supportsPVRTC_ ? "YES" : "NO") );
+		CCLOG(@"cocos2d: Supports BGRA8888 textures: %s", (supportsBGRA8888_ ? "YES" : "NO") );
+		CCLOG(@"cocos2d: Supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL_MAX_MODELVIEW_STACK_DEPTH: %d",maxModelviewStackDepth_);
 		
 	}
