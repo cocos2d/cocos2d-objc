@@ -184,14 +184,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
 #if CC_TEXTURE_NPOT_SUPPORT
-	if( ! [conf supportsNPOT] ) {
-		POTWide = nextPOT(CGImageGetWidth(CGImage));
-		POTHigh = nextPOT(CGImageGetHeight(CGImage));
+	if( [conf supportsNPOT] ) {
+		POTWide = CGImageGetWidth(CGImage);
+		POTHigh = CGImageGetHeight(CGImage);
+
 	} else 
 #endif
 	{
-		POTWide = CGImageGetWidth(CGImage);
-		POTHigh = CGImageGetHeight(CGImage);
+		POTWide = nextPOT(CGImageGetWidth(CGImage));
+		POTHigh = nextPOT(CGImageGetHeight(CGImage));
 	}
 		
 	unsigned maxTextureSize = [conf maxTextureSize];
