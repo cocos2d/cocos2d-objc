@@ -35,6 +35,7 @@
 //
 // all cocos2d include files
 //
+#import "CCBlockSupport.h"
 #import "CCAction.h"
 #import "CCCamera.h"
 #import "CCCameraAction.h"

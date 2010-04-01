@@ -38,6 +38,10 @@
 
 #import "CCLayer.h"
 
+#if CC_ENABLE_PROFILERS
+#import "Support/Profiling.h"
+#endif
+
 #define kDefaultFPS		60.0	// 60 frames per second
 
 extern NSString * cocos2dVersion(void);
@@ -57,6 +61,9 @@ extern NSString * cocos2dVersion(void);
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
 
+#if CC_ENABLE_PROFILERS
+- (void) showProfilers;
+#endif
 
 @end
 
@@ -226,6 +233,10 @@ static CCDirector *_sharedDirector = nil;
 	[runningScene_ visit];
 	if( displayFPS )
 		[self showFPS];
+	
+#if CC_ENABLE_PROFILERS
+	[self showProfilers];
+#endif
 	
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
@@ -814,6 +825,17 @@ static CCDirector *_sharedDirector = nil;
 	glEnableClientState(GL_COLOR_ARRAY);
 }
 #endif
+
+#if CC_ENABLE_PROFILERS
+- (void) showProfilers {
+	accumDtForProfiler += dt;
+	if (accumDtForProfiler > 1.0f) {
+		accumDtForProfiler = 0;
+		[[CCProfiler sharedProfiler] displayTimers];
+	}
+}
+#endif
+
 
 @end
 
