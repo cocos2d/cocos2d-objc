@@ -24,6 +24,10 @@
 #import <OpenGLES/ES1/gl.h>
 
 // cocos2d
+#import "ccConfig.h"
+#if CC_ENABLE_PROFILERS
+#import "Support/Profiling.h"
+#endif
 #import "CCParticleSystem.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
@@ -96,7 +100,12 @@
 		
 		autoRemoveOnFinish_ = NO;
 
+		// profiling
+#if CC_ENABLE_PROFILERS
+		_profilingTimer = [[CCProfiler timerWithName:@"particle system" andInstance:self] retain];
+#endif
 		[self schedule:@selector(step:)];
+		
 	}
 
 	return self;
@@ -107,6 +116,10 @@
 	free( particles );
 
 	[texture_ release];
+	// profiling
+#if CC_ENABLE_PROFILERS
+	[CCProfiler releaseTimer:_profilingTimer];
+#endif
 	
 	[super dealloc];
 }
@@ -238,6 +251,9 @@
 	if( positionType_ == kPositionTypeFree )
 		absolutePosition = [self convertToWorldSpace:CGPointZero];
 	
+#if CC_ENABLE_PROFILERS
+	CCProfilingBeginTimingBlock(_profilingTimer);
+#endif
 	
 	while( particleIdx < particleCount )
 	{
@@ -311,6 +327,11 @@
 			}
 		}
 	}
+	
+#if CC_ENABLE_PROFILERS
+	CCProfilingEndTimingBlock(_profilingTimer);
+#endif
+	
 	[self postStep];
 }
 
