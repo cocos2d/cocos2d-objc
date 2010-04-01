@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>OptionsLabel</key>
+	<string>Subclass of</string>
+	<key>PopupMenu</key>
+	<array>
+		<dict>
+			<key>Key</key>
+			<string>Node</string>
+			<key>Title</key>
+			<string>CCNode</string>
+		</dict>
+		<dict>
+			<key>Key</key>
+			<string>Sprite</string>
+			<key>Title</key>
+			<string>CCSprite</string>
+		</dict>
+		<dict>
+			<key>Key</key>
+			<string>Layer</string>
+			<key>Title</key>
+			<string>CCLayer</string>
+		</dict>
+	</array>
+	<key>TemplateSelection</key>
+	<dict>
+		<key></key>
+		<string>CCNode subclass</string>
+		<key>Node</key>
+		<string>CCNode subclass</string>
+		<key>Sprite</key>
+		<string>CCSprite subclass</string>
+		<key>Layer</key>
+		<string>CCLayer subclass</string>
+	</dict>
+</dict>
+</plist>
