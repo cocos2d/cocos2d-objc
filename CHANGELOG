@@ -1,5 +1,7 @@
 version 0.99.2 - XX-MMM-2010
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
+ . [NEW] Templates: file templates for CCLayer, CCNode, CCSprite (issue #XXX)
+ . [FIX] Templates: Improved logic in template installer (issue #XXX)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
  
 version 0.99.1 - 19-Mar-2010
