@@ -44,7 +44,7 @@
  */
 -(CCTexture2D*) addImage: (NSString*) fileimage;
 
-/** Returns a Texture2D object given an file image
+/** Returns a Texture2D object given a file image
  * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
  * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
  * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
@@ -96,4 +96,5 @@
 /** Deletes a texture from the cache
  */
 -(void) removeTexture: (CCTexture2D*) tex;
+
 @end

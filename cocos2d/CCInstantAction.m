@@ -12,7 +12,7 @@
  *
  */
 
-
+#import "CCBlockSupport.h"
 #import "CCInstantAction.h"
 #import "CCNode.h"
 #import "CCSprite.h"
@@ -294,3 +294,76 @@
 	[invocation_ invoke];
 }
 @end
+
+#if NS_BLOCKS_AVAILABLE
+
+@implementation CCCallBlock
+
++(id) actionWithBlock:(void(^)())block {
+	return [[[self alloc] initWithBlock:block] autorelease];
+}
+
+-(id) initWithBlock:(void(^)())block {
+	if (!(self = [super init])) return nil;
+	
+	block_ = [block retain];
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone {
+	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	return copy;
+}
+
+-(void) startWithTarget:(id)aTarget {
+	[super startWithTarget:aTarget];
+	[self execute];
+}
+
+-(void) execute {
+	block_();
+}
+
+-(void) dealloc {
+	[block_ release];
+	[super dealloc];
+}
+
+@end
+
+@implementation CCCallBlockN
+
++(id) actionWithBlock:(void(^)(CCNode *node))block {
+	return [[[self alloc] initWithBlock:block] autorelease];
+}
+
+-(id) initWithBlock:(void(^)(CCNode *node))block {
+	if (!(self = [super init])) return nil;
+	
+	block_ = [block retain];
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone {
+	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	return copy;
+}
+
+-(void) startWithTarget:(id)aTarget {
+	[super startWithTarget:aTarget];
+	[self execute];
+}
+
+-(void) execute {
+	block_(target);
+}
+
+-(void) dealloc {
+	[block_ release];
+	[super dealloc];
+}
+
+@end
+
+
+#endif
