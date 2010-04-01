@@ -119,6 +119,10 @@ Class restartAction()
 	return self;
 }
 
+//- (void)cleanup {
+	
+//}
+
 - (void) dealloc
 {
 	[emitter release];

@@ -220,6 +220,10 @@ and when to execute the Scenes.
 	
 	/* projection used */
 	ccDirectorProjection projection_;
+	
+#if CC_ENABLE_PROFILERS
+	ccTime accumDtForProfiler;
+#endif
 }
 
 /** The current running Scene. Director can only run one Scene at the time */

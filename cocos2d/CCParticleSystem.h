@@ -15,6 +15,11 @@
 #import "CCProtocols.h"
 #import "CCNode.h"
 #import "ccTypes.h"
+#import "ccConfig.h"
+
+#if CC_ENABLE_PROFILERS
+@class CCProfilingTimer;
+#endif
 
 enum {
 	kParticleStartSizeEqualToEndSize = -1,
@@ -170,6 +175,11 @@ typedef struct sParticle
 
 	//  particle idx
 	int particleIdx;
+	
+// profiling
+#if CC_ENABLE_PROFILERS
+	CCProfilingTimer* _profilingTimer;
+#endif
 }
 
 /** Is the emitter active */

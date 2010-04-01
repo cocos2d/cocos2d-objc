@@ -67,7 +67,11 @@ enum {
 			invocation = [NSInvocation invocationWithMethodSignature:sig];
 			[invocation setTarget:rec];
 			[invocation setSelector:cb];
+#if NS_BLOCKS_AVAILABLE
+			if ([sig numberOfArguments] == 3) 
+#endif
 			[invocation setArgument:&self atIndex:2];
+			
 			[invocation retain];
 		}
 		
@@ -78,9 +82,25 @@ enum {
 	return self;
 }
 
+#if NS_BLOCKS_AVAILABLE
+
++(id) itemWithBlock:(void(^)(id sender))block {
+	return [[[self alloc] initWithBlock:block] autorelease];
+}
+
+-(id) initWithBlock:(void(^)(id sender))block {
+	block_ = BLOCK_RETAIN(block);
+	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+
+#endif
+
 -(void) dealloc
 {
 	[invocation release];
+	if (block_) 
+		[block_ release];
+	
 	[super dealloc];
 }
 
@@ -141,6 +161,20 @@ enum {
 	}
 	return self;
 }
+
+#if NS_BLOCKS_AVAILABLE
+
++(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label block:(void(^)(id sender))block {
+	return [[[self alloc] initWithLabel:label block:block] autorelease];
+}
+
+-(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label block:(void(^)(id sender))block {
+	block_ = BLOCK_RETAIN(block);
+	return [self initWithLabel:label target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+
+
+#endif
 
 -(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
@@ -266,6 +300,17 @@ enum {
 	return self;
 }
 
+#if NS_BLOCKS_AVAILABLE
++(id) itemFromString:(NSString*)value charMapFile:(NSString*)charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block {
+	return [[[self alloc] initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap block:block] autorelease];
+}
+
+-(id) initFromString:(NSString*)value charMapFile:(NSString*)charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block {
+	block_ = BLOCK_RETAIN(block);
+	return [self initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+#endif
+
 -(void) dealloc
 {
 	[super dealloc];
@@ -325,6 +370,17 @@ enum {
 	return self;
 }
 
+#if NS_BLOCKS_AVAILABLE
++(id) itemFromString: (NSString*) value block:(void(^)(id sender))block {
+	return [[[self alloc] initFromString:value block:block] autorelease];
+}
+
+-(id) initFromString: (NSString*) value block:(void(^)(id sender))block {
+	block_ = BLOCK_RETAIN(block);
+	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+#endif
+
 -(void) dealloc
 {
 	[super dealloc];
@@ -361,6 +417,22 @@ enum {
 	}
 	return self;	
 }
+
+#if NS_BLOCKS_AVAILABLE
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block {
+	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil block:block];
+}
+
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block {
+	return [[[self alloc] initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite block:block] autorelease];
+}
+
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block {
+	block_ = BLOCK_RETAIN(block);
+	return [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+#endif
+
 
 -(void) dealloc
 {
@@ -450,6 +522,24 @@ enum {
 
 	return [self initFromNormalSprite:normalImage selectedSprite:selectedImage disabledSprite:disabledImage target:t selector:sel];
 }
+
+#if NS_BLOCKS_AVAILABLE
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block {
+	return [self itemFromNormalImage:value selectedImage:value2 disabledImage:nil block:block];
+}
+
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block {
+	return [[[self alloc] initFromNormalImage:value selectedImage:value2 disabledImage:value3 block:block] autorelease];
+}
+
+-(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block {
+	block_ = BLOCK_RETAIN(block);
+	return [self initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+
+#endif
+
 @end
 
 #pragma mark -
@@ -494,6 +584,25 @@ enum {
 	
 	return self;
 }
+
+#if NS_BLOCKS_AVAILABLE
+								  
++(id) itemWithBlock:(void(^)(id sender))block items:(CCMenuItem*)item, ... {
+	va_list args;
+	va_start(args, item);
+	
+	id s = [[[self alloc] initWithBlock:block items:item vaList:args] autorelease];
+	
+	va_end(args);
+	return s;
+}
+
+-(id) initWithBlock:(void (^)(id))block items:(CCMenuItem*)item vaList:(va_list)args {
+	block_ = BLOCK_RETAIN(block);
+	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:) items:item vaList:args];
+}
+
+#endif
 
 -(void) dealloc
 {
