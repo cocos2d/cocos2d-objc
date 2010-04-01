@@ -284,6 +284,11 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Sprite with nil textures supports opacity & color. patch.
         Added file templates: CCNode, CCLayer, CCSprite
         Added git/github improvements: README.mkdown, and .gitingnore files
+		Added support for Blocks using PLBlocks:
+			Actions: Added CCCallBlock and CCCallBlockN
+			MenuItems: supports the "block" parameter
+			Tests: added Actions and Menu tests
+		Added ProfilingTimer: Director and Particles supports it when enabled
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
