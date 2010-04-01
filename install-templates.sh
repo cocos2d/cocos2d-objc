@@ -2,7 +2,7 @@
 
 echo 'cocos2d-iphone template installer'
 
-COCOS2D_VER='Cocos2d 0.99.2'
+COCOS2D_VER='cocos2d 0.99.2'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 
 # Make sure only root can run our script

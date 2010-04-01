@@ -88,9 +88,13 @@ Select the test you want to view in both drop downs and hit Build and Go.
 How to start a new game
 -----------------------
 
-Run the 'install_template.sh' script:  
-`$ ./install_template.sh`  
-And then open XCode -> New Project -> cocos2d iphone Application
+Run the 'install-templates.sh' script as root:  
+`
+$ cd cocos2d-iphone
+$ sudo ./install-templates.sh
+`
+
+And then open XCode -> New Project -> User Templates -> cocos2d
 
 
 [1]: http://www.cocos2d-iphone.org "cocos2d iPhone"
