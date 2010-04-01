@@ -157,7 +157,7 @@ copy_file_templates(){
 	
 	check_dst_dir
 	
-	copy_files "file-templates/CCNode class" "$DST_DIR"
+	copy_files "templates/file-templates/CCNode class" "$DST_DIR"
 	
 	echo done!
 }

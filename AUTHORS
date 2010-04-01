@@ -282,6 +282,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Created Box2d + cocos2d demo example
 	* Stuart Carnie (http://www.manomio.com/):
 		Sprite with nil textures supports opacity & color. patch.
+        Added file templates: CCNode, CCLayer, CCSprite
+        Added git/github improvements: README.mkdown, and .gitingnore files
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
