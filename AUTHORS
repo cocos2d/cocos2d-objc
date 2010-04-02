@@ -223,6 +223,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		SpriteFrameCache sets instance to nil when it is purged (patch)
 	* morten795 (http://aptocore.com):
 		Device and Simulator behaves identically with premultiplied images. patch.
+	* Musical Geometry:
+		Improved SpriteSheet doxygen documentation (patch)
 	* nash8114:
 		Sprite#isFrameDisplayed works ok with offsets. patch.
 	* Neophit:

@@ -18,6 +18,7 @@
 
 @class CCSpriteSheet;
 @class CCSpriteFrame;
+@class CCAnimation;
 
 #pragma mark CCSprite
 
@@ -45,7 +46,9 @@ typedef enum {
 
 } ccHonorParentTransform;
 
-/** CCSprite is a CCNode object that implements the CCFrameProtocol and CCRGBAProtocol protocols.
+/** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+ *
+ * CCSprite can be created with an image, or with a sub-rectangle of an image.
  *
  * If the parent is a CCSpriteSheet then the following features/limitations are valid
  *	- Features when the parent is a CCSpriteSheet
@@ -64,7 +67,7 @@ typedef enum {
  *    - But the rendering will be slower
  *
  */
-@interface CCSprite : CCNode <CCFrameProtocol, CCRGBAProtocol, CCTextureProtocol>
+@interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
 {
 	
 	//
@@ -161,6 +164,8 @@ typedef enum {
 @property (nonatomic,readwrite) CGPoint	offsetPosition;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
+
+#pragma mark CCSprite - Initializers
 
 /** Creates an sprite with a texture.
  The rect used will be the size of the texture.
@@ -268,6 +273,9 @@ typedef enum {
  */
 -(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect;
 
+
+#pragma mark CCSprite - SpriteSheet methods
+
 /** updates the quad according the the rotation, position, scale values.
  */
 -(void)updateTransform;
@@ -285,5 +293,28 @@ typedef enum {
  @since v0.99.0
  */
 -(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet;
+
+
+#pragma mark CCSprite - Frames
+
+/** sets a new display frame to the CCSprite. */
+-(void) setDisplayFrame:(CCSpriteFrame*)newFrame;
+
+/** returns whether or not a CCSpriteFrame is being displayed */
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame;
+
+/** returns the current displayed frame. */
+-(CCSpriteFrame*) displayedFrame;
+
+#pragma mark CCSprite - Animation
+
+/** changes the display frame based on an animation and an index. */
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
+
+/** returns an Animation given it's name. */
+-(CCAnimation*)animationByName: (NSString*) animationName;
+
+/** adds an Animation to the Sprite. */
+-(void) addAnimation: (CCAnimation*) animation;
 
 @end

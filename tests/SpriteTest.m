@@ -1366,7 +1366,7 @@ Class restartAction()
 
 
 #pragma mark -
-#pragma mark Example SpriteSheet - SpriteFrame
+#pragma mark Example Sprite vs SpriteSheet Animation
 
 @implementation SpriteFrameTest
 
@@ -1379,6 +1379,10 @@ Class restartAction()
 		// IMPORTANT:
 		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
 		//     [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+		//
+		// CCSpriteFrameCache is a cache of CCSpriteFrames
+		// CCSpriteFrames each contain a texture id and a rect (frame).
+		
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_blue.plist"];
@@ -1386,6 +1390,17 @@ Class restartAction()
 		//
 		// Animation using Sprite Sheet
 		//
+		// A CCSpriteSheet can reference one and only one texture (one .png file)
+		// Sprites that are contained in that texture can be instantiatied as CCSprites and then added to the CCSpriteSheet
+		// All CCSprites added to a CCSpriteSheet are drawn in one OpenGL ES draw call
+		// If the CCSprites are not added to a CCSpriteSheet then an OpenGL ES draw call will be needed for each one, which is less efficient
+		//
+		// When you animate a sprite, CCAnimation changes the frame of the sprite using setDisplayFrame: (this is why the animation must be in the same texture)
+		// When setDisplayFrame: is used in the CCAnimation it changes the frame to one specified by the CCSpriteFrames that were added to the animation,
+		// but texture id is still the same and so the sprite is still a child of the CCSpriteSheet, 
+		// and therefore all the animation sprites are also drawn as part of the CCSpriteSheet
+		//
+		
 		CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite.position = ccp( s.width/2-80, s.height/2);
 		
@@ -1408,6 +1423,7 @@ Class restartAction()
 
 		//
 		// Animation using standard Sprite
+		//
 		//
 		CCSprite *sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite2.position = ccp( s.width/2 + 80, s.height/2);

@@ -4,7 +4,10 @@ version 0.99.2 - XX-MMM-2010
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
  . [NEW] Templates: file templates for CCLayer, CCNode, CCSprite (issue #XXX)
  . [NEW] ProfilingTimer: new class to test performance (issue #XXX)
+ . [FIX] Protocols: CCAnimationProtocol removed. Merged into CCAnimation (issue #XXX)
+ . [FIX] Protocols: CCFrameProtocol removed. Merged into CCSprite (issue #XXX)
  . [FIX] Templates: Improved logic in template installer (issue #XXX)
+ . [FIX] SpriteSheet: Improved doxygen documentation (issue #827)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
  
 version 0.99.1 - 19-Mar-2010

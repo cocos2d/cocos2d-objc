@@ -1095,28 +1095,28 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 @synthesize animation = animation_;
 
-+(id) actionWithAnimation: (id<CCAnimationProtocol>)anim
++(id) actionWithAnimation: (CCAnimation*)anim
 {
 	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:YES] autorelease];
 }
 
-+(id) actionWithAnimation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)b
 {
 	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:b] autorelease];
 }
 
-+(id) actionWithDuration:(ccTime)duration animation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)b
 {
 	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:b] autorelease];
 }
 
--(id) initWithAnimation: (id<CCAnimationProtocol>)anim
+-(id) initWithAnimation: (CCAnimation*)anim
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 	return [self initWithAnimation:anim restoreOriginalFrame:YES];
 }
 
--(id) initWithAnimation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL) b
+-(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
@@ -1129,7 +1129,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	return self;
 }
 
--(id) initWithDuration:(ccTime)aDuration animation: (id<CCAnimationProtocol>)anim restoreOriginalFrame:(BOOL) b
+-(id) initWithDuration:(ccTime)aDuration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 	
@@ -1158,7 +1158,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
+	CCSprite *sprite = target;
 
 	[origFrame release];
 
@@ -1169,7 +1169,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) stop
 {
 	if( restoreOriginalFrame ) {
-		id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
+		CCSprite *sprite = target;
 		[sprite setDisplayFrame:origFrame];
 	}
 	
@@ -1186,7 +1186,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	if( idx >= numberOfFrames ) {
 		idx = numberOfFrames -1;
 	}
-	id<CCFrameProtocol> sprite = (id<CCFrameProtocol>) target;
+	CCSprite *sprite = target;
 	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] ) {
 		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
 	}
