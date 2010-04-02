@@ -4,7 +4,6 @@
 // http://www.cocos2d-iphone.org
 //
 
-
 // local import
 #import "RotateWorldTest.h"
 
