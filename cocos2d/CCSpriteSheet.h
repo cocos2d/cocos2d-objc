@@ -23,7 +23,8 @@
 
 @class CCSprite;
 
-/** CCSpriteSheet is the object that draws all the CCSprite objects that belongs to this object.
+/** CCSpriteSheet an optimization node: if it contains children, then it will draw in 1 single OpenGL call
+ * (ofter know as a batch draw).
  *
  * A CCSpriteSheet can reference one and only one texture (one image file, one texture atlas).
  * Only the CCSprites that are contained in that texture can be added to the CCSpriteSheet.
