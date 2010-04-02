@@ -822,7 +822,7 @@ struct transformValues_ {
 	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_ offset:CGPointZero];
 }
 
--(void) addAnimation: (id<CCAnimationProtocol>) anim
+-(void) addAnimation: (CCAnimation*) anim
 {
 	// lazy alloc
 	if( ! animations_ )
@@ -831,7 +831,7 @@ struct transformValues_ {
 	[animations_ setObject:anim forKey:[anim name]];
 }
 
--(id<CCAnimationProtocol>)animationByName: (NSString*) animationName
+-(CCAnimation*)animationByName: (NSString*) animationName
 {
 	NSAssert( animationName != nil, @"animationName parameter must be non nil");
     return [animations_ objectForKey:animationName];

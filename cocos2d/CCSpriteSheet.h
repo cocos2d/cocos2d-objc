@@ -23,11 +23,16 @@
 
 @class CCSprite;
 
-/** CCSpriteSheet is the object that draws all the CCSprite objects
- * that belongs to this object. Use 1 CCSpriteSheet per TextureAtlas
-*
+/** CCSpriteSheet is the object that draws all the CCSprite objects that belongs to this object.
+ *
+ * A CCSpriteSheet can reference one and only one texture (one image file, one texture atlas).
+ * Only the CCSprites that are contained in that texture can be added to the CCSpriteSheet.
+ * All CCSprites added to a CCSpriteSheet are drawn in one OpenGL ES draw call.
+ * If the CCSprites are not added to a CCSpriteSheet then an OpenGL ES draw call will be needed for each one, which is less efficient.
+ *
+ *
  * Limitations:
- *  - The only object that is accepted as child is CCSprite
+ *  - The only object that is accepted as child, grandchild, is CCSprite
  *  - It's children are all Aliased or all Antialiased.
  * 
  * @since v0.7.1

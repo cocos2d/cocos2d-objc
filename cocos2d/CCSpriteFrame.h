@@ -66,7 +66,7 @@
 #pragma mark CCAnimation
 
 /** an Animation object used within Sprites to perform animations */
-@interface CCAnimation : NSObject <CCAnimationProtocol>
+@interface CCAnimation : NSObject
 {
 	NSString			*name_;
 	float				delay_;
