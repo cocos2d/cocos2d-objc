@@ -19,8 +19,15 @@
 #pragma mark -
 #pragma mark CCSpriteFrame
 
-/** A CCSpriteFrame is an NSObject that encapsulates a CGRect.
- * And a CGRect represents a frame within the CCSpriteSheet
+/** A CCSpriteFrame has:
+	- texture: A CCTexture2D that will be used by the CCSprite
+	- rectangle: A rectangle of the texture
+
+
+ You can modify the frame of a CCSprite by doing:
+ 
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:offset];
+	[sprite setDisplayFrame:frame];
  */
 @interface CCSpriteFrame : NSObject <NSCopying>
 {

@@ -33,7 +33,7 @@
  *
  *
  * Limitations:
- *  - The only object that is accepted as child (or grandchild) is CCSprite
+ *  - The only object that is accepted as child (or grandchild) is CCSprite or any subclass of CCSprite. eg: particles, labels and layer can't be added to a CCSpriteSheet.
  *  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
  * 
  * @since v0.7.1
