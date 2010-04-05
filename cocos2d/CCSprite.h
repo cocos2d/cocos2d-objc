@@ -50,13 +50,13 @@ typedef enum {
  *
  * CCSprite can be created with an image, or with a sub-rectangle of an image.
  *
- * If the parent is a CCSpriteSheet then the following features/limitations are valid
- *	- Features when the parent is a CCSpriteSheet
- *		- It is MUCH faster if you render multiptle sprites at the same time (eg: 50 or more CCSprite nodes)
+ * If the parent or any of its ancestors is a CCSpriteSheet then the following features/limitations are valid
+ *	- Features when the parent is a CCSpriteSheet:
+ *		- MUCH faster rendering, specially if the CCSpriteSheet has many children. All the children will be drawn in a single batch.
  *
  *	- Limitations
- *		- Camera is not supported yet (eg: OrbitCamera action doesn't work)
- *		- GridBase actions are not supported (eg: Lens, Ripple, Twirl)
+ *		- Camera is not supported yet (eg: CCOrbitCamera action doesn't work)
+ *		- GridBase actions are not supported (eg: CCLens, CCRipple, CCTwirl)
  *		- The Alias/Antialias property belongs to CCSpriteSheet, so you can't individually set the aliased property.
  *		- The Blending function property belongs to CCSpriteSheet, so you can't individually set the blending function property.
  *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
@@ -64,7 +64,7 @@ typedef enum {
  *  If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
  *    - It supports blending functions
  *    - It supports aliasing / antialiasing
- *    - But the rendering will be slower
+ *    - But the rendering will be slower: 1 draw per children.
  *
  */
 @interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
