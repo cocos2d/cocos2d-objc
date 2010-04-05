@@ -9,6 +9,7 @@ version 0.99.2 - XX-MMM-2010
  . [FIX] Templates: Improved logic in template installer (issue #XXX)
  . [FIX] SpriteSheet: Improved doxygen documentation (issue #827)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
+ . [3RD] Box2d: updated to r88 (issue #XXX)
  
 version 0.99.1 - 19-Mar-2010
  . [FIX] Menu: If menu is not visible it doesn't receive touches (issue #88)

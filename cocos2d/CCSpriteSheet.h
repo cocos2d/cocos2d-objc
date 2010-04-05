@@ -23,8 +23,8 @@
 
 @class CCSprite;
 
-/** CCSpriteSheet an optimization node: if it contains children, then it will draw in 1 single OpenGL call
- * (ofter know as a batch draw).
+/** CCSpriteSheet is an optimization node: if it contains children, it will draw them in 1 single OpenGL call
+ * (often known as "batch draw").
  *
  * A CCSpriteSheet can reference one and only one texture (one image file, one texture atlas).
  * Only the CCSprites that are contained in that texture can be added to the CCSpriteSheet.
@@ -33,8 +33,8 @@
  *
  *
  * Limitations:
- *  - The only object that is accepted as child, grandchild, is CCSprite
- *  - It's children are all Aliased or all Antialiased.
+ *  - The only object that is accepted as child (or grandchild) is CCSprite
+ *  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
  * 
  * @since v0.7.1
  */
