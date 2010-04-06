@@ -3,14 +3,6 @@
 // http://www.cocos2d-iphone.org
 //
 
-// IMPORTANT:
-//  This example ONLY shows the basic steps to render a label on the screen.
-//  Some advanced options regarding the initialization were removed to simplify the sample.
-//  Once you understand this example, read "HelloActions" sample.
-
-// Needed for UIWindow, NSAutoReleasePool, and other objects
-#import <UIKit/UIKit.h>
-
 // Import the interfaces
 #import "ActionsWithBlocks.h"
 
