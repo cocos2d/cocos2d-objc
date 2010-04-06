@@ -6,7 +6,6 @@
 
 
 #import "MenuTestWithBlocks.h"
-#import "CCBlockSupport.h"
 
 enum {
 	kTagMenu = 1,
