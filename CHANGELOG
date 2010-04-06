@@ -8,8 +8,10 @@ version 0.99.2 - XX-MMM-2010
  . [FIX] Protocols: CCAnimationProtocol removed. Merged into CCAnimation (issue #XXX)
  . [FIX] Protocols: CCFrameProtocol removed. Merged into CCSprite (issue #XXX)
  . [FIX] Templates: Improved logic in template installer (issue #XXX)
+ . [FIX] Templates: Generates optimized binaries. ARMv7 binaries have thumb-2 enabled (issue #XXX)
  . [FIX] SpriteSheet: Improved doxygen documentation (issue #827)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
+ . [FIX] Xcode: uses optimized binary. ARMv7 binary has thumb-2 enabled (issue #XXX)
  . [3RD] Box2d: updated to r88 (issue #XXX)
  
 version 0.99.1 - 19-Mar-2010
