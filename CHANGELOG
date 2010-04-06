@@ -4,6 +4,7 @@ version 0.99.2 - XX-MMM-2010
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
  . [NEW] Templates: file templates for CCLayer, CCNode, CCSprite (issue #XXX)
  . [NEW] ProfilingTimer: new class to test performance (issue #XXX)
+ . [FIX] EAGLView: swapBuffers doesn't bind the color buffer. It assumes it is already bound (issue #XXX)
  . [FIX] Protocols: CCAnimationProtocol removed. Merged into CCAnimation (issue #XXX)
  . [FIX] Protocols: CCFrameProtocol removed. Merged into CCSprite (issue #XXX)
  . [FIX] Templates: Improved logic in template installer (issue #XXX)
