@@ -120,12 +120,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glViewport(0, 0, newSize.width, newSize.height);
 		glScissor(0, 0, newSize.width, newSize.height);
 		_hasBeenCurrent = YES;
-	}
-	else {
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFramebuffer);
-	}
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, oldRenderbuffer);
+	}	
 
+	// DEFAULTS:
+	// Set the OpenGL context
+	[EAGLContext setCurrentContext:_context];
+
+	// the the color render buffers
+	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _renderbuffer);
 	
 	CHECK_GL_ERROR();
 	
@@ -177,7 +179,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		
 		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
 
-		[eaglLayer setDrawableProperties:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:retained], kEAGLDrawablePropertyRetainedBacking, format, kEAGLDrawablePropertyColorFormat, nil]];
+		[eaglLayer setDrawableProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+										  [NSNumber numberWithBool:retained], kEAGLDrawablePropertyRetainedBacking,
+										  format, kEAGLDrawablePropertyColorFormat, nil]];
 		_format = format;
 		_depthFormat = depth;
 		
@@ -246,25 +250,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) swapBuffers
 {
-	EAGLContext *oldContext = [EAGLContext currentContext];
-	//GLuint oldRenderbuffer;
-	
-	if(oldContext != _context)
-		[EAGLContext setCurrentContext:_context];
-
-#if COCOS2D_DEBUG
-	CHECK_GL_ERROR();
-#endif
-	
-	//glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _renderbuffer);
-	//glBindRenderbufferOES(GL_RENDERBUFFER_OES, _framebuffer);
-	
+	// IMPORTANT:
+	// - preconditions
+	//	-> _context MUST be the OpenGL context
+	//	-> _renderBuffer must be the the RENDER BUFFER
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
-	if(oldContext != _context)
-		[EAGLContext setCurrentContext:oldContext];
+#if COCOS2D_DEBUG
+	CHECK_GL_ERROR();
+#endif	
 }
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point

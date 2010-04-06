@@ -3691,13 +3691,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05246FEE1108108400BEC992 /* SIMD */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SIMD;
-			sourceTree = "<group>";
-		};
 		05AAF16B10EE79B700CACA2B /* Block Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -4022,7 +4015,6 @@
 			children = (
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				501CCFB70E99659400B86F68 /* ImageSupport */,
-				05246FEE1108108400BEC992 /* SIMD */,
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
 				6F8321EE0F8BD08E00CBAD06 /* ccArray.h */,
