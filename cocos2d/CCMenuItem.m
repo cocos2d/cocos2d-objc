@@ -93,13 +93,15 @@ enum {
 	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
 
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 -(void) dealloc
 {
 	[invocation release];
-	if (block_) 
-		[block_ release];
+
+#if NS_BLOCKS_AVAILABLE
+	[block_ release];
+#endif
 	
 	[super dealloc];
 }
@@ -173,8 +175,7 @@ enum {
 	return [self initWithLabel:label target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
 
-
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 -(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
@@ -309,7 +310,7 @@ enum {
 	block_ = BLOCK_RETAIN(block);
 	return [self initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 -(void) dealloc
 {
@@ -379,7 +380,7 @@ enum {
 	block_ = BLOCK_RETAIN(block);
 	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 -(void) dealloc
 {
@@ -431,7 +432,7 @@ enum {
 	block_ = BLOCK_RETAIN(block);
 	return [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 
 -(void) dealloc
@@ -538,7 +539,7 @@ enum {
 	return [self initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
 
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 @end
 
@@ -602,7 +603,7 @@ enum {
 	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:) items:item vaList:args];
 }
 
-#endif
+#endif // NS_BLOCKS_AVAILABLE
 
 -(void) dealloc
 {
