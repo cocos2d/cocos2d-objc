@@ -212,6 +212,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of tools/mkatlas.pl script
 	* Michal Szymerski:
 		Added support for AtlasSprite as MenuItems
+		author of CCFollow action
 	* Michael Thornton:
 		TMXTileMap supports any kind of child. patch.
 	* mike AT finklyinteractive:
@@ -227,6 +228,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Improved SpriteSheet doxygen documentation (patch)
 	* nash8114:
 		Sprite#isFrameDisplayed works ok with offsets. patch.
+		GLES-DebugDraw#drawCircle draws non-solid circles. patch.
 	* Neophit:
 		Added support for object and objectgroup in TMXTiledMaps
 		TMXTiledMaps: objects supports offsets. patch.
