@@ -115,5 +115,8 @@
 @interface ActionRotateJerk : ActionDemo
 {}
 @end
+@interface ActionFollow : ActionDemo
+{}
+@end
 
 

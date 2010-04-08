@@ -124,3 +124,52 @@ enum {
 /** initializes the action */
 -(id) initWithAction: (CCIntervalAction*) action speed:(float)rate;
 @end
+
+@class CCNode;
+/** CCFollow is an action that "follows" a node.
+ 
+ Eg:
+	[layer runAction: [CCFollow actionWithTarget:hero]];
+ 
+ Instead of using CCCamera as a "follower", use this action instead.
+ @since v0.99.2
+ */
+@interface CCFollow : CCAction <NSCopying>
+{
+	/* node to follow */
+	CCNode	*followedNode_;
+	
+	/* whether camera should be limited to certain area */
+	BOOL boundarySet;
+	
+	/* if screensize is bigger than the boundary - update not needed */
+	BOOL boundaryFullyCovered;
+	
+	/* fast access to the screen dimensions */
+	CGPoint halfScreenSize;
+	CGPoint fullScreenSize;
+	
+	/* world boundaries */
+	float leftBoundary;
+	float rightBoundary;
+	float topBoundary;
+	float bottomBoundary;
+}
+
+/** alter behavior - turn on/off boundary */
+@property (nonatomic,readwrite) BOOL boundarySet;
+
+/** creates the action with no boundary set */
++(id) actionWithTarget:(CCNode *)followedNode;
+
+/** creates the action with a set boundary */
++(id) actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
+
+/** initializes the action */
+-(id) initWithTarget:(CCNode *)followedNode;
+
+/** initializes the action with a set boundary */
+-(id) initWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
+
+@end
+

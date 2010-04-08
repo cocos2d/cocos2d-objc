@@ -37,6 +37,7 @@ static NSString *transitions[] = {
 					@"ActionReverseSequence",
 					@"ActionReverseSequence2",
 					@"ActionOrbit",
+					@"ActionFollow",
 };
 
 Class nextAction()
@@ -883,6 +884,54 @@ Class restartAction()
 	return @"OrbitCamera action";
 }
 @end
+
+@implementation ActionFollow
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:1];
+
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	
+	grossini.position = ccp(-200, winSize.height/2);
+	
+	id move = [CCMoveBy actionWithDuration:2 position:ccp(winSize.width*3,0)];
+	id move_back = [move reverse];
+	id seq = [CCSequence actions:move, move_back, nil];
+	id rep = [CCRepeatForever actionWithAction:seq];
+	
+	
+	[grossini runAction:rep];
+	
+	
+	[self runAction:[CCFollow actionWithTarget:grossini worldBoundary:CGRectMake(0, 0, (winSize.width*2)-100, winSize.height)]];
+}
+
+-(void) draw
+{
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+
+	float x = winSize.width*2 - 100;
+	float y = winSize.height;
+	
+	CGPoint vertices[] = { ccp(5,5), ccp(x-5,5), ccp(x-5,y-5), ccp(5,y-5) };
+	ccDrawPoly(vertices, 4, YES);
+
+}
+
+-(NSString *) title
+{
+	return @"Follow action";
+}
+
+-(NSString*) subtitle
+{
+	return @"The sprite should be centered, even though it is being moved";
+}
+
+@end
+
 
 
 // CLASS IMPLEMENTATIONS

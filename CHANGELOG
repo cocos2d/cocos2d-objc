@@ -1,5 +1,5 @@
 version 0.99.2 - XX-MMM-2010
- . [NEW] Actions: Added block actions via PLBlocks: CCCallBlock and CCCallBlockN (issue #699)
+ . [NEW] Actions: Added blocks actions via PLBlocks: CCCallBlock and CCCallBlockN (issue #699)
  . [NEW] Actions: Added CCFollow, and actions that follows a CCNode (issue #738)
  . [NEW] MenuItem: MenuItems supports blocks via PLBlocks (issue #699)
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
