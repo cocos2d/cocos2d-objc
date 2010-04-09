@@ -120,7 +120,11 @@ enum {
  This information is obtained from the TMX file.
  
  */
+#ifdef __IPHONE_4_0
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
+#else
+@interface CCTMXMapInfo : NSObject
+#endif
 {	
 	NSMutableString		*currentString;
     BOOL				storingCharacters;	
