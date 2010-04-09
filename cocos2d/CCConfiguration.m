@@ -14,11 +14,10 @@
 
 #import <OpenGLES/ES1/gl.h>
 
+#import "CCBlockSupport.h"
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ccConfig.h"
-#import "CCBlockSupport.h"
-
 
 @implementation CCConfiguration
 
@@ -98,7 +97,7 @@ static char * glExtensions;
 			  );
 		
 	CCLOG(@"cocos2d: compiled with blocks support : %s",
-#ifdef NS_BLOCKS_AVAILABLE
+#if NS_BLOCKS_AVAILABLE
 		  "YES"
 #else
 		  "NO"
