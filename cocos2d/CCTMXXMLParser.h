@@ -120,7 +120,7 @@ enum {
  This information is obtained from the TMX file.
  
  */
-@interface CCTMXMapInfo : NSObject
+@interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 {	
 	NSMutableString		*currentString;
     BOOL				storingCharacters;	

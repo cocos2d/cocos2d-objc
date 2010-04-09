@@ -12,7 +12,7 @@
  *
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 static NSString *version = @"cocos2d v0.99.2-pre";
 

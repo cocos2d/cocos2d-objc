@@ -6,7 +6,6 @@
 //  Copyright 2010 Sapus Media. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <OpenGLES/ES1/gl.h>
 
 /**

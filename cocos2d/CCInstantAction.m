@@ -17,9 +17,12 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 
+
 //
 // InstantAction
 //
+#pragma mark CCInstantAction
+
 @implementation CCInstantAction
 
 -(id) init
@@ -56,6 +59,8 @@
 //
 // Show
 //
+#pragma mark CCShow
+
 @implementation CCShow
 -(void) startWithTarget:(id)aTarget
 {
@@ -71,6 +76,8 @@
 //
 // Hide
 //
+#pragma mark CCHide
+
 @implementation CCHide
 -(void) startWithTarget:(id)aTarget
 {
@@ -86,6 +93,8 @@
 //
 // ToggleVisibility
 //
+#pragma mark CCToggleVisibility
+
 @implementation CCToggleVisibility
 -(void) startWithTarget:(id)aTarget
 {
@@ -97,6 +106,8 @@
 //
 // FlipX
 //
+#pragma mark CCFlipX
+
 @implementation CCFlipX
 +(id) actionWithFlipX:(BOOL)x
 {
@@ -133,6 +144,8 @@
 //
 // FlipY
 //
+#pragma mark CCFlipY
+
 @implementation CCFlipY
 +(id) actionWithFlipY:(BOOL)y
 {
@@ -170,6 +183,8 @@
 //
 // Place
 //
+#pragma mark CCPlace
+
 @implementation CCPlace
 +(id) actionWithPosition: (CGPoint) pos
 {
@@ -199,6 +214,8 @@
 //
 // CallFunc
 //
+#pragma mark CCCallFunc
+
 @implementation CCCallFunc
 +(id) actionWithTarget: (id) t selector:(SEL) s
 {
@@ -242,6 +259,8 @@
 //
 // CallFuncN
 //
+#pragma mark CCCallBlockN
+
 @implementation CCCallFuncN
 
 -(void) execute
@@ -253,6 +272,8 @@
 //
 // CallFuncND
 //
+#pragma mark CCCallBlockND
+
 @implementation CCCallFuncND
 
 @synthesize invocation = invocation_;
@@ -295,7 +316,12 @@
 }
 @end
 
+#pragma mark -
+#pragma mark Blocks
+
 #if NS_BLOCKS_AVAILABLE
+
+#pragma mark CCCallBlock
 
 @implementation CCCallBlock
 
@@ -330,6 +356,8 @@
 }
 
 @end
+
+#pragma mark CCCallBlockN
 
 @implementation CCCallBlockN
 
@@ -366,4 +394,4 @@
 @end
 
 
-#endif
+#endif // NS_BLOCKS_AVAILABLE
