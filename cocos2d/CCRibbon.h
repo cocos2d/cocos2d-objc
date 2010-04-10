@@ -20,12 +20,12 @@
 
 /**
  * A CCRibbon is a dynamically generated list of polygons drawn as a single or series
- * of triangle strips. The primary use of Ribbon is as the drawing class of Motion Streak,
+ * of triangle strips. The primary use of CCRibbon is as the drawing class of Motion Streak,
  * but it is quite useful on it's own. When manually drawing a ribbon, you can call addPointAt
  * and pass in the parameters for the next location in the ribbon. The system will automatically
  * generate new polygons, texture them accourding to your texture width, etc, etc.
  *
- * Ribbon data is stored in a RibbonSegment class. This class statically allocates enough verticies and
+ * CCRibbon data is stored in a CCRibbonSegment class. This class statically allocates enough verticies and
  * texture coordinates for 50 locations (100 verts or 48 triangles). The ribbon class will allocate
  * new segments when they are needed, and reuse old ones if available. The idea is to avoid constantly
  * allocating new memory and prefer a more static method. However, since there is no way to determine
@@ -35,20 +35,20 @@
  */
 @interface CCRibbon : CCNode <CCTextureProtocol>
 {
-	NSMutableArray* mSegments;
-	NSMutableArray* dSegments;
+	NSMutableArray*	segments_;
+	NSMutableArray*	deletedSegments_;
 
-	CGPoint			mLastPoint1;
-	CGPoint			mLastPoint2;
-	CGPoint			mLastLocation;
-	int				mVertCount;
-	float			mTexVPos;
-	float			mCurTime;
-	float			mFadeTime;
-	float			mDelta;
-	float			mLastWidth;
-	float			mLastSign;
-	BOOL			mPastFirstPoint;
+	CGPoint			lastPoint1_;
+	CGPoint			lastPoint2_;
+	CGPoint			lastLocation_;
+	int					mVertCount;
+	float				mTexVPos;
+	float				mCurTime;
+	float				mFadeTime;
+	float				mDelta;
+	float				mLastWidth;
+	float				mLastSign;
+	BOOL				mPastFirstPoint;
 
 	// Texture used
 	CCTexture2D*		texture_;
@@ -92,13 +92,13 @@
 @interface CCRibbonSegment : NSObject
 {
 @public
-	GLfloat verts[50*6];
-	GLfloat coords[50*4];
-	GLubyte colors[50*8];
-	float creationTime[50];
-	bool finished;
-	uint end;
-	uint begin;
+	GLfloat	verts[50*6];
+	GLfloat	coords[50*4];
+	GLubyte	colors[50*8];
+	float		creationTime[50];
+	BOOL		finished;
+	uint		end;
+	uint		begin;
 }
 -(id)init;
 -(void)reset;
