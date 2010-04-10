@@ -52,19 +52,19 @@
 	if (self)
 	{
 		
-		mSegments = [[NSMutableArray alloc] init];
-		dSegments = [[NSMutableArray alloc] init];
+		segments_ = [[NSMutableArray alloc] init];
+		deletedSegments_ = [[NSMutableArray alloc] init];
 
 		/* 1 initial segment */
 		CCRibbonSegment* seg = [[CCRibbonSegment alloc] init];
-		[mSegments addObject:seg];
+		[segments_ addObject:seg];
 		[seg release];
 		
 		textureLength_ = l;
 		
 		color_ = color;
 		mFadeTime = fade;
-		mLastLocation = CGPointZero;
+		lastLocation_ = CGPointZero;
 		mLastWidth = w/2;
 		mTexVPos = 0.0f;
 		
@@ -90,8 +90,8 @@
 
 -(void)dealloc
 {
-	[mSegments release];
-	[dSegments release];
+	[segments_ release];
+	[deletedSegments_ release];
 	[texture_ release];
 	[super dealloc];
 }
@@ -126,48 +126,49 @@
 	if (!mPastFirstPoint)
 	{
 		mLastWidth = w;
-		mLastLocation = location;
+		lastLocation_ = location;
 		mPastFirstPoint = YES;
 		return;
 	}
 
-	CGPoint sub = ccpSub(mLastLocation, location);
+	CGPoint sub = ccpSub(lastLocation_, location);
 	float r = ccpToAngle(sub) + (float)M_PI_2;
 	CGPoint p1 = ccpAdd([self rotatePoint:ccp(-w, 0) rotation:r], location);
 	CGPoint p2 = ccpAdd([self rotatePoint:ccp(w, 0) rotation:r], location);
-	float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
+	float len = sqrtf(powf(lastLocation_.x - location.x, 2) + powf(lastLocation_.y - location.y, 2));
 	float tend = mTexVPos + len/textureLength_;
 	CCRibbonSegment* seg;
 	// grab last segment
-	seg = [mSegments objectAtIndex:[mSegments count]-1];
+	seg = [segments_ lastObject];
 	// lets kill old segments
-	for (CCRibbonSegment* seg2 in mSegments)
+	for (CCRibbonSegment* seg2 in segments_)
 	{
 		if (seg2 != seg && seg2->finished)
 		{
-			[dSegments addObject:seg2];
+			[deletedSegments_ addObject:seg2];
 		}
 	}
-	[mSegments removeObjectsInArray:dSegments];
+	[segments_ removeObjectsInArray:deletedSegments_];
 	// is the segment full?
 	if (seg->end >= 50)
-		[mSegments removeObjectsInArray:dSegments];
-	// grab last segment and appent to it if it's not full
-	seg = [mSegments objectAtIndex:[mSegments count]-1];
+		[segments_ removeObjectsInArray:deletedSegments_];
+	// grab last segment and append to it if it's not full
+	seg = [segments_ lastObject];
 	// is the segment full?
 	if (seg->end >= 50)
 	{
 		CCRibbonSegment* newSeg;
 		// grab it from the cache if we can
-		if ([dSegments count] > 0)
+		if ([deletedSegments_ count] > 0)
 		{
-			newSeg = [dSegments objectAtIndex:0];
-			[dSegments removeObject:newSeg];
+			newSeg = [deletedSegments_ objectAtIndex:0];
+			[newSeg retain];							// will be released later
+			[deletedSegments_ removeObject:newSeg];
 			[newSeg reset];
 		}
 		else
 		{
-			newSeg = [[[CCRibbonSegment alloc] init] autorelease];
+			newSeg = [[CCRibbonSegment alloc] init]; // will be released later
 		}
 		
 		newSeg->creationTime[0] = seg->creationTime[seg->end - 1];
@@ -186,13 +187,15 @@
 		newSeg->coords[3] = seg->coords[c+3];	  
 		newSeg->end++;
 		seg = newSeg;
-		[mSegments addObject:seg];
+		[segments_ addObject:seg];
+		[newSeg release];	 // it was retained before
+		
 	}  
 	if (seg->end == 0)
 	{
 		// first edge has to get rotation from the first real polygon
-		CGPoint lp1 = ccpAdd([self rotatePoint:ccp(-mLastWidth, 0) rotation:r], mLastLocation);
-		CGPoint lp2 = ccpAdd([self rotatePoint:ccp(+mLastWidth, 0) rotation:r], mLastLocation);
+		CGPoint lp1 = ccpAdd([self rotatePoint:ccp(-mLastWidth, 0) rotation:r], lastLocation_);
+		CGPoint lp2 = ccpAdd([self rotatePoint:ccp(+mLastWidth, 0) rotation:r], lastLocation_);
 		seg->creationTime[0] = mCurTime - mDelta;
 		seg->verts[0] = lp1.x;
 		seg->verts[1] = lp1.y;
@@ -225,16 +228,16 @@
 	seg->coords[c+3] = tend;
 
 	mTexVPos = tend;
-	mLastLocation = location;
-	mLastPoint1 = p1;
-	mLastPoint2 = p2;
+	lastLocation_ = location;
+	lastPoint1_ = p1;
+	lastPoint2_ = p2;
 	mLastWidth = w;
 	seg->end++;
 }
 
 -(void) draw
 {
-	if ([mSegments count] > 0)
+	if ([segments_ count] > 0)
 	{
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -249,7 +252,7 @@
 			glBlendFunc( blendFunc_.src, blendFunc_.dst );
 		}
 
-		for (CCRibbonSegment* seg in mSegments)
+		for (CCRibbonSegment* seg in segments_)
 			[seg draw:mCurTime fadeTime:mFadeTime color:color_];
 
 		if( newBlend )
