@@ -2175,10 +2175,10 @@
 		05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
 		05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		05AAF30710EE7E6700CACA2B /* libcocos2d-blocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-blocks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		05AAF3E410EE85B300CACA2B /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05AAF3E410EE85B300CACA2B /* MenuTestWithBlocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTestWithBlocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05AAF3E710EE85D200CACA2B /* MenuTestWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestWithBlocks.h; sourceTree = "<group>"; };
 		05AAF3E810EE85D200CACA2B /* MenuTestWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTestWithBlocks.m; sourceTree = "<group>"; };
-		05CA7B0410ED674700F12774 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05CA7B0410ED674700F12774 /* ActionsWithBlocksSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsWithBlocksSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CA7B0A10ED67CE00F12774 /* ActionsWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsWithBlocks.h; sourceTree = "<group>"; };
 		05CA7B0B10ED67CE00F12774 /* ActionsWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionsWithBlocks.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -3823,9 +3823,9 @@
 				505461DF10616AE100AB7C52 /* libFontLabel.a */,
 				50E2A3F410A4A51C00D894CE /* PerformanceTestSprites.app */,
 				50E2A40010A4A53000D894CE /* PerformanceTestParticles.app */,
-				05CA7B0410ED674700F12774 /* HelloActionsSample.app */,
+				05CA7B0410ED674700F12774 /* ActionsWithBlocksSample.app */,
 				05AAF30710EE7E6700CACA2B /* libcocos2d-blocks.a */,
-				05AAF3E410EE85B300CACA2B /* MenuTest.app */,
+				05AAF3E410EE85B300CACA2B /* MenuTestWithBlocks.app */,
 				504018FB10FE800D0017842A /* PerformanceTestTouches.app */,
 				501504ED11330E1700A9CA65 /* ProgressActionsTest.app */,
 				507FF8F2116D16F600B6FAB2 /* Bug422.app */,
@@ -5602,7 +5602,7 @@
 			);
 			name = MenuTestWithBlocks;
 			productName = MenuTest;
-			productReference = 05AAF3E410EE85B300CACA2B /* MenuTest.app */;
+			productReference = 05AAF3E410EE85B300CACA2B /* MenuTestWithBlocks.app */;
 			productType = "com.apple.product-type.application";
 		};
 		05CA7AEC10ED674700F12774 /* ActionsWithBlocksSample */ = {
@@ -5620,7 +5620,7 @@
 			);
 			name = ActionsWithBlocksSample;
 			productName = "demo-rotate-world";
-			productReference = 05CA7B0410ED674700F12774 /* HelloActionsSample.app */;
+			productReference = 05CA7B0410ED674700F12774 /* ActionsWithBlocksSample.app */;
 			productType = "com.apple.product-type.application";
 		};
 		317070410E2940C900DD3360 /* AccelViewportTest */ = {
@@ -8915,7 +8915,7 @@
 					"-all_load",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = MenuTest;
+				PRODUCT_NAME = MenuTestWithBlocks;
 			};
 			name = Debug;
 		};
@@ -8945,7 +8945,7 @@
 					"-all_load",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = MenuTest;
+				PRODUCT_NAME = MenuTestWithBlocks;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -8976,7 +8976,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = HelloActionsSample;
+				PRODUCT_NAME = ActionsWithBlocksSample;
 			};
 			name = Debug;
 		};
@@ -9005,7 +9005,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = HelloActionsSample;
+				PRODUCT_NAME = ActionsWithBlocksSample;
 				ZERO_LINK = NO;
 			};
 			name = Release;
