@@ -36,10 +36,10 @@
 -(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
 {
 	if( (self=[super init])) {
-		mSegThreshold = seg;
-		mWidth = width;
-		mLastLocation = CGPointZero;
-		ribbon_ = [CCRibbon ribbonWithWidth: mWidth image:path length:length color:color fade:fade];
+		segThreshold_ = seg;
+		width_ = width;
+		lastLocation_ = CGPointZero;
+		ribbon_ = [CCRibbon ribbonWithWidth: width_ image:path length:length color:color fade:fade];
 		[self addChild:ribbon_];
 
 		// update ribbon position
@@ -52,11 +52,11 @@
 {
 	CGPoint location = [self convertToWorldSpace:CGPointZero];
 	[ribbon_ setPosition:ccp(-1*location.x, -1*location.y)];
-	float len = sqrtf(powf(mLastLocation.x - location.x, 2) + powf(mLastLocation.y - location.y, 2));
-	if (len > mSegThreshold)
+	float len = sqrtf(powf(lastLocation_.x - location.x, 2) + powf(lastLocation_.y - location.y, 2));
+	if (len > segThreshold_)
 	{
-		[ribbon_ addPointAt:location width:mWidth];
-		mLastLocation = location;
+		[ribbon_ addPointAt:location width:width_];
+		lastLocation_ = location;
 	}
 	[ribbon_ update:delta];
 }

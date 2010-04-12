@@ -63,13 +63,13 @@
 		textureLength_ = l;
 		
 		color_ = color;
-		mFadeTime = fade;
+		fadeTime_ = fade;
 		lastLocation_ = CGPointZero;
-		mLastWidth = w/2;
-		mTexVPos = 0.0f;
+		lastWidth_ = w/2;
+		texVPos_ = 0.0f;
 		
-		mCurTime = 0;
-		mPastFirstPoint = NO;
+		curTime_ = 0;
+		pastFirstPoint_ = NO;
 		
 		/* XXX:
 		 Ribbon, by default uses this blend function, which might not be correct
@@ -107,8 +107,8 @@
 
 -(void)update:(ccTime)delta
 {
-	mCurTime+= delta;
-	mDelta = delta;
+	curTime_+= delta;
+	delta_ = delta;
 }
 
 -(float)sideOfLine:(CGPoint)p l1:(CGPoint)l1 l2:(CGPoint)l2
@@ -123,11 +123,11 @@
 {
 	w=w*0.5f;
 	// if this is the first point added, cache it and return
-	if (!mPastFirstPoint)
+	if (!pastFirstPoint_)
 	{
-		mLastWidth = w;
+		lastWidth_ = w;
 		lastLocation_ = location;
-		mPastFirstPoint = YES;
+		pastFirstPoint_ = YES;
 		return;
 	}
 
@@ -136,7 +136,7 @@
 	CGPoint p1 = ccpAdd([self rotatePoint:ccp(-w, 0) rotation:r], location);
 	CGPoint p2 = ccpAdd([self rotatePoint:ccp(w, 0) rotation:r], location);
 	float len = sqrtf(powf(lastLocation_.x - location.x, 2) + powf(lastLocation_.y - location.y, 2));
-	float tend = mTexVPos + len/textureLength_;
+	float tend = texVPos_ + len/textureLength_;
 	CCRibbonSegment* seg;
 	// grab last segment
 	seg = [segments_ lastObject];
@@ -194,9 +194,9 @@
 	if (seg->end == 0)
 	{
 		// first edge has to get rotation from the first real polygon
-		CGPoint lp1 = ccpAdd([self rotatePoint:ccp(-mLastWidth, 0) rotation:r], lastLocation_);
-		CGPoint lp2 = ccpAdd([self rotatePoint:ccp(+mLastWidth, 0) rotation:r], lastLocation_);
-		seg->creationTime[0] = mCurTime - mDelta;
+		CGPoint lp1 = ccpAdd([self rotatePoint:ccp(-lastWidth_, 0) rotation:r], lastLocation_);
+		CGPoint lp2 = ccpAdd([self rotatePoint:ccp(+lastWidth_, 0) rotation:r], lastLocation_);
+		seg->creationTime[0] = curTime_ - delta_;
 		seg->verts[0] = lp1.x;
 		seg->verts[1] = lp1.y;
 		seg->verts[2] = 0.0f;
@@ -204,16 +204,16 @@
 		seg->verts[4] = lp2.y;
 		seg->verts[5] = 0.0f;
 		seg->coords[0] = 0.0f;
-		seg->coords[1] = mTexVPos;
+		seg->coords[1] = texVPos_;
 		seg->coords[2] = 1.0f;
-		seg->coords[3] = mTexVPos;
+		seg->coords[3] = texVPos_;
 		seg->end++;
 	}
 
 	int v = seg->end*6;
 	int c = seg->end*4;
 	// add new vertex
-	seg->creationTime[seg->end] = mCurTime;
+	seg->creationTime[seg->end] = curTime_;
 	seg->verts[v] = p1.x;
 	seg->verts[v+1] = p1.y;
 	seg->verts[v+2] = 0.0f;
@@ -227,11 +227,11 @@
 	seg->coords[c+2] = 1.0f;
 	seg->coords[c+3] = tend;
 
-	mTexVPos = tend;
+	texVPos_ = tend;
 	lastLocation_ = location;
 	lastPoint1_ = p1;
 	lastPoint2_ = p2;
-	mLastWidth = w;
+	lastWidth_ = w;
 	seg->end++;
 }
 
@@ -253,7 +253,7 @@
 		}
 
 		for (CCRibbonSegment* seg in segments_)
-			[seg draw:mCurTime fadeTime:mFadeTime color:color_];
+			[seg draw:curTime_ fadeTime:fadeTime_ color:color_];
 
 		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
@@ -322,7 +322,7 @@
 
 	if (begin < 50)
 	{
-		// the motion streak class will call update and cause time to change, thus, if mCurTime != 0
+		// the motion streak class will call update and cause time to change, thus, if curTime_ != 0
 		// we have to generate alpha for the ribbon each frame.
 		if (curTime == 0)
 		{

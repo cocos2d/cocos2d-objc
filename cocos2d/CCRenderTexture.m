@@ -18,7 +18,7 @@
 
 @implementation CCRenderTexture
 
-@synthesize sprite;
+@synthesize sprite=sprite_;
 
 +(id)renderTextureWithWidth:(int)w height:(int)h
 {
@@ -30,7 +30,7 @@
 	self = [super init];
 	if (self)
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO_);
 		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;  
 		// textures must be power of two squared
 		int pow = 8;
@@ -38,15 +38,15 @@
     
 		void *data = malloc((int)(pow * pow * 4));
 		memset(data, 0, (int)(pow * pow * 4));
-		texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:pow pixelsHigh:pow contentSize:CGSizeMake(w, h)];
+		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:pow pixelsHigh:pow contentSize:CGSizeMake(w, h)];
 		free( data );
     
 		// generate FBO
-		glGenFramebuffersOES(1, &fbo);
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
+		glGenFramebuffersOES(1, &fbo_);
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo_);
     
 		// associate texture with FBO
-		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texture.name, 0);
+		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texture_.name, 0);
     
 		// check if it worked (probably worth doing :) )
 		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
@@ -54,11 +54,11 @@
 		{
 			[NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
 		}
-		sprite = [CCSprite spriteWithTexture:texture];
-		[texture release];
-		[sprite setScaleY:-1];
-		[self addChild:sprite];
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+		sprite_ = [CCSprite spriteWithTexture:texture_];
+		[texture_ release];
+		[sprite_ setScaleY:-1];
+		[self addChild:sprite_];
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO_);
 	}
 	return self;
 }
@@ -66,7 +66,7 @@
 -(void)dealloc
 {
 //	[self removeAllChildrenWithCleanup:YES];
-	glDeleteFramebuffersOES(1, &fbo);
+	glDeleteFramebuffersOES(1, &fbo_);
 	[super dealloc];
 }
 
@@ -76,7 +76,7 @@
 	// Save the current matrix
 	glPushMatrix();
 	
-	CGSize texSize = [texture contentSize];
+	CGSize texSize = [texture_ contentSize];
 
 	// Calculate the adjustment ratios based on the old and new projections
 	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
@@ -87,15 +87,15 @@
 	glOrthof((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
 	glViewport(0, 0, texSize.width, texSize.height);
 
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);//Will direct drawing to the frame buffer created above
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO_);
+	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo_);//Will direct drawing to the frame buffer created above
 	
 	CC_ENABLE_DEFAULT_GL_STATES();	
 }
 
 -(void)end
 {
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO_);
 	// Restore the original matrix and viewport
 	glPopMatrix();
 	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
@@ -140,8 +140,8 @@
 /* get buffer as UIImage */
 -(UIImage *)getUIImageFromBuffer
 {
-	int tx = texture.contentSize.width;
-	int ty = texture.contentSize.height;
+	int tx = texture_.contentSize.width;
+	int ty = texture_.contentSize.height;
   
 	int bitsPerComponent			= 8;
 	int bitsPerPixel				= 32;
