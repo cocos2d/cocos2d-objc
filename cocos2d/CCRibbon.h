@@ -41,14 +41,14 @@
 	CGPoint			lastPoint1_;
 	CGPoint			lastPoint2_;
 	CGPoint			lastLocation_;
-	int					mVertCount;
-	float				mTexVPos;
-	float				mCurTime;
-	float				mFadeTime;
-	float				mDelta;
-	float				mLastWidth;
-	float				mLastSign;
-	BOOL				mPastFirstPoint;
+	int					vertCount_;
+	float				texVPos_;
+	float				curTime_;
+	float				fadeTime_;
+	float				delta_;
+	float				lastWidth_;
+	float				lastSign_;
+	BOOL				pastFirstPoint_;
 
 	// Texture used
 	CCTexture2D*		texture_;

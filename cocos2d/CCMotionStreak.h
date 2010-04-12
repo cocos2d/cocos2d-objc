@@ -36,9 +36,9 @@
 @interface CCMotionStreak : CCNode <CCTextureProtocol>
 {
 	CCRibbon*	ribbon_;
-	float mSegThreshold;
-	float mWidth;
-	CGPoint mLastLocation;
+	float		segThreshold_;
+	float		width_;
+	CGPoint	lastLocation_;
 }
 
 /** Ribbon used by MotionStreak (weak reference) */

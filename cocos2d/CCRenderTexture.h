@@ -37,10 +37,10 @@ enum
  */
 @interface CCRenderTexture : CCNode 
 {
-	GLuint fbo;
-	GLint oldFBO;
-	CCTexture2D* texture;
-	CCSprite* sprite;
+	GLuint				fbo_;
+	GLint				oldFBO_;
+	CCTexture2D*		texture_;
+	CCSprite*			sprite_;
 }
 
 /** sprite being used */
