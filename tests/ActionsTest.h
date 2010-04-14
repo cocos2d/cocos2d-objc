@@ -118,5 +118,8 @@
 @interface ActionFollow : ActionDemo
 {}
 @end
+@interface ActionProperty : ActionDemo
+{}
+@end
 
 

@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 					@"ActionReverseSequence2",
 					@"ActionOrbit",
 					@"ActionFollow",
+					@"ActionProperty",
 };
 
 Class nextAction()
@@ -928,6 +929,42 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"The sprite should be centered, even though it is being moved";
+}
+
+@end
+
+@implementation ActionProperty
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:3];
+
+	id rot = [CCPropertyAction actionWithDuration:2 key:@"rotation" from:0 to:-270];
+	id rot_back = [rot reverse];
+	id rot_seq = [CCSequence actions:rot, rot_back, nil];
+	
+	id scale = [CCPropertyAction actionWithDuration:2 key:@"scale" from:1 to:3];
+	id scale_back = [scale reverse];
+	id scale_seq = [CCSequence actions:scale, scale_back, nil];
+	
+	id opacity = [CCPropertyAction actionWithDuration:2 key:@"opacity" from:255 to:0];
+	id opacity_back = [opacity reverse];
+	id opacity_seq = [CCSequence actions:opacity, opacity_back, nil];
+	
+	[grossini runAction:rot_seq];
+	[tamara runAction:scale_seq];
+	[kathia runAction:opacity_seq];
+}
+
+-(NSString *) title
+{
+	return @"PropertyAction";
+}
+
+-(NSString*) subtitle
+{
+	return @"Simulates Rotation, Scale and Opacity using a generic action";
 }
 
 @end
