@@ -71,16 +71,13 @@
 
 		totalParticles = numberOfParticles;
 		
-		particles = malloc( sizeof(Particle) * totalParticles );
+		particles = calloc( totalParticles, sizeof(Particle) );
 
 		if( ! particles ) {
 			NSLog(@"Particle system: not enough memory");
-			if( particles )
-				free(particles);
+			[self release];
 			return nil;
 		}
-		
-		bzero( particles, sizeof(Particle) * totalParticles );
 		
 		// default, active
 		active = YES;

@@ -34,8 +34,7 @@
 
 		if( ! vertices ) {
 			NSLog(@"Particle system: not enough memory");
-			if( vertices )
-				free(vertices);
+			[self release];
 			return nil;
 		}
 
@@ -170,8 +169,14 @@
 //
 -(void) setStartSize:(float)size
 {
-	NSAssert(size <= 64, @"PointParticleSystem doesn't support size > 64");
+	NSAssert(size <= MAX_PARTICLE_SIZE, @"PointParticleSystem doesn't support size > 64");
 	[super setStartSize:size];
+}
+
+-(void) setEndSize:(float)size
+{
+	NSAssert(size <= MAX_PARTICLE_SIZE, @"PointParticleSystem doesn't support size > 64");
+	[super setEndSize:size];
 }
 @end
 
