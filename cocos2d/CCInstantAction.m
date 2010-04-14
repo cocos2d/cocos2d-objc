@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008-2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -259,7 +259,7 @@
 //
 // CallFuncN
 //
-#pragma mark CCCallBlockN
+#pragma mark CCCallFuncN
 
 @implementation CCCallFuncN
 
@@ -272,7 +272,7 @@
 //
 // CallFuncND
 //
-#pragma mark CCCallBlockND
+#pragma mark CCCallFuncND
 
 @implementation CCCallFuncND
 
@@ -330,9 +330,10 @@
 }
 
 -(id) initWithBlock:(void(^)())block {
-	if (!(self = [super init])) return nil;
+	if ((self = [super init])) {
 	
-	block_ = [block retain];
+		block_ = [block retain];
+	}
 	return self;
 }
 
@@ -366,9 +367,10 @@
 }
 
 -(id) initWithBlock:(void(^)(CCNode *node))block {
-	if (!(self = [super init])) return nil;
+	if ((self = [super init])) {
 	
-	block_ = [block retain];
+		block_ = [block retain];
+	}
 	return self;
 }
 

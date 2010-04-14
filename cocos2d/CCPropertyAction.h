@@ -18,15 +18,13 @@
 @interface CCPropertyAction : CCIntervalAction {
 
 	NSString		*key_;
-	NSNumber		*from_, *to_;
     
-	float			toFloat_;
-	float			fromFloat_;
+	float			from_, to_;
 	float			delta_;
 }
 
-+ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(NSNumber *)aFrom to:(NSNumber *)aTo;
++ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo;
 
-- (id)initWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(NSNumber *)aFrom to:(NSNumber *)aTo;
+- (id)initWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo;
     
 @end

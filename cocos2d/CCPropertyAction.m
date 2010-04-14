@@ -18,41 +18,42 @@
 
 @implementation CCPropertyAction
 
-+ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(NSNumber *)aFrom to:(NSNumber *)aTo {
++ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
 
-    return [[[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo] autorelease];
+	return [[[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo] autorelease];
 }
 
 
-- (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(NSNumber *)from to:(NSNumber *)to {
+- (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
     
-    if ((self = [super initWithDuration:aDuration])) {
+	if ((self = [super initWithDuration:aDuration])) {
     
-		key_     = [key copy];
-		from_    = [from copy];
-		to_      = [to copy];
-		
-		toFloat_ = [to_ floatValue];
-		fromFloat_ = [from_ floatValue];
+		key_	= [key copy];
+		to_		= to;
+		from_	= from;
+
 	}
     
-    return self;
+	return self;
+}
+
+- (void) dealloc
+{
+	[key_ release];
+	[super dealloc];
 }
 
 - (void)startWithTarget:aTarget
 {
     
-    [super startWithTarget:aTarget];
+	[super startWithTarget:aTarget];
     
-    if (from_)
-        [target setValue:from_ forKey:key_];
-	
-    delta_ = toFloat_ - fromFloat_;
+	delta_ = to_ - from_;
 }
 
 - (void) update:(ccTime) dt {
     
-    [target setValue:[NSNumber numberWithFloat:toFloat_  - delta_ * (1 - dt)] forKey:key_];
+	[target setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
 }
 
 - (CCIntervalAction *) reverse
@@ -60,12 +61,5 @@
 	return [[self class] actionWithDuration:duration key:key_ from:to_ to:from_];
 }
 
-- (void) dealloc
-{
-	[key_ release];
-	[from_ release];
-	[to_ release];
-	[super dealloc];
-}
 
 @end
