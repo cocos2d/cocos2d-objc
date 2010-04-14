@@ -22,9 +22,14 @@
 #endif
 
 enum {
-	kParticleStartSizeEqualToEndSize = -1,
-	kParticleDurationInfinity = -1,
+	kCCParticleStartSizeEqualToEndSize = -1,
+	kCCParticleDurationInfinity = -1,
+
+	// backward compatible
+	kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
+	kParticleDurationInfinity = kCCParticleDurationInfinity,
 };
+
 
 /** possible types of particle positions */
 typedef enum {

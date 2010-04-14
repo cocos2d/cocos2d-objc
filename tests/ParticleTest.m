@@ -119,10 +119,6 @@ Class restartAction()
 	return self;
 }
 
-//- (void)cleanup {
-	
-//}
-
 - (void) dealloc
 {
 	[emitter release];
@@ -137,11 +133,14 @@ Class restartAction()
 
 -(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
 {
+	[self ccTouchEnded:touch withEvent:event];
+	
+	// claim the touch
 	return YES;
 }
 - (void)ccTouchMoved:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	return [self ccTouchEnded:touch withEvent:event];
+	[self ccTouchEnded:touch withEvent:event];
 }
 
 - (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
@@ -149,7 +148,7 @@ Class restartAction()
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
 	
-	CGPoint	pos = [background convertToWorldSpace:CGPointZero];
+	CGPoint pos = [background convertToWorldSpace:CGPointZero];
 	emitter.position = ccpSub(convertedLocation, pos);	
 }
 
@@ -364,7 +363,7 @@ Class restartAction()
 	// size, in pixels
 	emitter.startSize = 80.0f;
 	emitter.startSizeVar = 40.0f;
-	emitter.endSize = kParticleStartSizeEqualToEndSize;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
 	
 	// emits per second
 	emitter.emissionRate = emitter.totalParticles/emitter.life;
@@ -443,7 +442,7 @@ Class restartAction()
 	// size, in pixels
 	emitter.startSize = 30.0f;
 	emitter.startSizeVar = 00.0f;
-	emitter.endSize = kParticleStartSizeEqualToEndSize;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
 	
 	// emits per second
 	emitter.emissionRate = emitter.totalParticles/emitter.life;
@@ -732,7 +731,7 @@ Class restartAction()
 
 	
 	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
-	[p1 addChild: emitter z:10];
+	[p1 addChild:emitter z:10];
 	[emitter release];
 	[emitter setPosition:ccp(250,200)];
 	

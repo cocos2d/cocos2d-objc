@@ -38,7 +38,7 @@
 		indices = malloc( sizeof(indices[0]) * totalParticles * 6 );
 		
 		if( !quads || !indices) {
-			NSLog(@"Particle system: not enough memory");
+			NSLog(@"cocos2d: Particle system: not enough memory");
 			if( quads )
 				free( quads );
 			if(indices)

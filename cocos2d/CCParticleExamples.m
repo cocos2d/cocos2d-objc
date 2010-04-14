@@ -84,7 +84,7 @@
 	// size, in pixels
 	startSize = 8.0f;
 	startSizeVar = 2.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -140,7 +140,7 @@
 	// size, in pixels
 	startSize = 54.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per frame
 	emissionRate = totalParticles/life;
@@ -220,7 +220,7 @@
 	// size, in pixels
 	startSize = 30.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per seconds
 	emissionRate = totalParticles/life;
@@ -298,7 +298,7 @@
 	// size, in pixels
 	startSize = 37.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 	
 	// emits per second
 	emissionRate = totalParticles/life;
@@ -379,7 +379,7 @@
 	// size, in pixels
 	startSize = 30.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per second
 	emissionRate = totalParticles/life;
@@ -460,7 +460,7 @@
 	// size, in pixels
 	startSize = 60.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per second
 	emissionRate = totalParticles/life;
@@ -541,7 +541,7 @@
 	// size, in pixels
 	startSize = 20.0f;
 	startSizeVar = 0.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per second
 	emissionRate = totalParticles/life;
@@ -622,7 +622,7 @@
 	// size, in pixels
 	startSize = 15.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per second
 	emissionRate = totalParticles/duration;
@@ -699,7 +699,7 @@
 	// size, in pixels
 	startSize = 60.0f;
 	startSizeVar = 10.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per frame
 	emissionRate = totalParticles/life;
@@ -779,7 +779,7 @@
 	// size, in pixels
 	startSize = 10.0f;
 	startSizeVar = 5.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per second
 	emissionRate = 10;
@@ -859,7 +859,7 @@
 	// size, in pixels
 	startSize = 4.0f;
 	startSizeVar = 2.0f;
-	endSize = kParticleStartSizeEqualToEndSize;
+	endSize = kCCParticleStartSizeEqualToEndSize;
 
 	// emits per second
 	emissionRate = 20;
