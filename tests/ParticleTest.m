@@ -168,10 +168,10 @@ Class restartAction()
 
 -(void) toggleCallback: (id) sender
 {
-	if( emitter.positionType == kPositionTypeGrouped )
-		emitter.positionType = kPositionTypeFree;
+	if( emitter.positionType == kCCPositionTypeGrouped )
+		emitter.positionType = kCCPositionTypeFree;
 	else
-		emitter.positionType = kPositionTypeGrouped;
+		emitter.positionType = kCCPositionTypeGrouped;
 }
 
 -(void) restartCallback: (id) sender
