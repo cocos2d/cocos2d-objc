@@ -33,9 +33,7 @@
 		vertices = malloc( sizeof(ccPointSprite) * totalParticles );
 
 		if( ! vertices ) {
-			NSLog(@"Particle system: not enough memory");
-			if( vertices )
-				free(vertices);
+			NSLog(@"cocos2d: Particle system: not enough memory");
 			return nil;
 		}
 
@@ -170,8 +168,14 @@
 //
 -(void) setStartSize:(float)size
 {
-	NSAssert(size <= 64, @"PointParticleSystem doesn't support size > 64");
+	NSAssert(size <= CC_MAX_PARTICLE_SIZE, @"PointParticleSystem only supports 0 <= size <= 64");
 	[super setStartSize:size];
+}
+
+-(void) setEndSize:(float)size
+{
+	NSAssert(0 && size <= CC_MAX_PARTICLE_SIZE, @"PointParticleSystem only supports 0 <= size <= 64");
+	[super setEndSize:size];
 }
 @end
 

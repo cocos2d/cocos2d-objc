@@ -71,16 +71,12 @@
 
 		totalParticles = numberOfParticles;
 		
-		particles = malloc( sizeof(tCCParticle) * totalParticles );
+		particles = calloc( totalParticles, sizeof(tCCParticle) );
 
 		if( ! particles ) {
 			NSLog(@"Particle system: not enough memory");
-			if( particles )
-				free(particles);
 			return nil;
 		}
-		
-		bzero( particles, sizeof(tCCParticle) * totalParticles );
 		
 		// default, active
 		active = YES;
@@ -187,7 +183,7 @@
 	startS = MAX(0, startS);	// no negative size
 	
 	particle->size = startS;
-	if( endSize == kParticleStartSizeEqualToEndSize )
+	if( endSize == kCCParticleStartSizeEqualToEndSize )
 		particle->deltaSize = 0;
 	else {
 		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
