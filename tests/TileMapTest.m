@@ -29,9 +29,11 @@ static NSString *transitions[] = {
 			@"TMXTilesetTest",
 			@"TMXOrthoObjectsTest",
 			@"TMXIsoObjectsTest",
+			@"TMXTilePropertyTest",
 			@"TMXResizeTest",
 			@"TMXIsoMoveLayer",
 			@"TMXOrthoMoveLayer",
+
 			@"TileMapTest",
 			@"TileMapEditTest",
 };
@@ -870,6 +872,32 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"You need to parse them manually. See bug #810";
+}
+@end
+#pragma mark -
+#pragma mark TMXTilePropertyTest
+
+@implementation TMXTilePropertyTest
+-(id) init
+{
+	if( (self = [super init]) ){
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-tile-property.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		for(int i=1;i<=20;i++){
+			NSLog(@"GID:%i, Properties:%@", i, [map propertiesForGID:i]);
+		}
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Tile Property Test";
+}
+-(NSString*) subtitle
+{
+	return @"In the console you should see tile properties";
 }
 @end
 

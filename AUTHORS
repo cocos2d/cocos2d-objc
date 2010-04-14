@@ -61,6 +61,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Speed action calls other#stop patch
 	* craigching:
 		Correct type for objects in TMX maps. patch
+	* DaemonCollector:
+		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
 	* David Whatley ( http://criticalthoughtgames.com/ )
@@ -202,6 +204,9 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added TintTo action
 	* mark at abitofthought:
 		author of the single threaded Fast Director
+	* master@hpi.cc:
+		updated patch for TMX per-tile properties.
+		Added Test for TMX per-tile properties
 	* Math Sephton:
 		patches for Demos
 		patches for License

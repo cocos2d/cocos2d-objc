@@ -36,6 +36,7 @@ enum {
 	TMXPropertyLayer,
 	TMXPropertyObjectGroup,
 	TMXPropertyObject,
+	TMXPropertyTile
 };
 
 /* CCTMXLayerInfo contains the information about the layers like:
@@ -126,10 +127,12 @@ enum {
 @interface CCTMXMapInfo : NSObject
 #endif
 {	
-	NSMutableString		*currentString;
+	NSMutableString	*currentString;
     BOOL				storingCharacters;	
 	int					layerAttribs;
 	int					parentElement;
+	unsigned int		parentGID_;
+
 	
 	// tmx filename
 	NSString *filename_;
@@ -154,6 +157,9 @@ enum {
 	
 	// properties
 	NSMutableDictionary *properties_;
+	
+	// tile properties
+	NSMutableDictionary *tileProperties_;
 }
 
 @property (nonatomic,readwrite,assign) int orientation;
@@ -164,6 +170,7 @@ enum {
 @property (nonatomic,readwrite,retain) NSString *filename;
 @property (nonatomic,readwrite,retain) NSMutableArray *objectGroups;
 @property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
+@property (nonatomic,readwrite,retain) NSMutableDictionary *tileProperties;
 
 /** creates a TMX Format with a tmx file */
 +(id) formatWithTMXFile:(NSString*)tmxFile;

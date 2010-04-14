@@ -62,6 +62,7 @@
 		mapOrientation_ = mapInfo.orientation;
 		objectGroups_ = [mapInfo.objectGroups retain];
 		properties_ = [mapInfo.properties retain];
+		tileProperties_ = [mapInfo.tileProperties retain];
 				
 		int idx=0;
 
@@ -90,6 +91,7 @@
 {
 	[objectGroups_ release];
 	[properties_ release];
+	[tileProperties_ release];
 	[super dealloc];
 }
 
@@ -180,6 +182,9 @@
 -(id) propertyNamed:(NSString *)propertyName 
 {
 	return [properties_ valueForKey:propertyName];
+}
+-(NSDictionary*)propertiesForGID:(unsigned int)GID{
+	return [tileProperties_ objectForKey:[NSNumber numberWithInt:GID]];
 }
 @end
 

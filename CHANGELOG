@@ -5,6 +5,7 @@ version 0.99.2 - XX-MMM-2010
  . [NEW] MenuItem: MenuItems supports blocks via PLBlocks (issue #699)
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
  . [NEW] Templates: file templates for CCLayer, CCNode, CCSprite (issue #XXX)
+ . [NEW] TMXMaps: added support for per-tile properties (issue #606)
  . [NEW] ProfilingTimer: new class to test performance (issue #XXX)
  . [NEW] Xcode: added "build all tests" target (issue #XXX)
  . [FIX] Box2d: GLES-DebugDraw draws non-solid circles as non-solid circles (issue #831)

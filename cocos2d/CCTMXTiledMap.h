@@ -78,10 +78,11 @@ enum
 
    Each property is stored as a key-value pair in an NSMutableDictionary.
    You can obtain the properties at runtime by:
-   - [map propertyNamed: name_of_the_property];
-   - [layer propertyNamed: name_of_the_property];
-   - [objectGroup propertyNamed: name_of_the_property];
-   - [object propertyNamed: name_of_the_property];
+ 
+		[map propertyNamed: name_of_the_property];
+		[layer propertyNamed: name_of_the_property];
+		[objectGroup propertyNamed: name_of_the_property];
+		[object propertyNamed: name_of_the_property];
 
  @since v0.8.1
  */
@@ -92,6 +93,7 @@ enum
 	int					mapOrientation_;
 	NSMutableArray		*objectGroups_;
 	NSMutableDictionary	*properties_;
+	NSMutableDictionary	*tileProperties_;
 }
 
 /** the map's size property measured in tiles */
@@ -124,5 +126,8 @@ enum
 
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;
+
+/** return properties dictionary for tile GID */
+-(NSDictionary*)propertiesForGID:(unsigned int)GID;
 @end
 
