@@ -1,7 +1,7 @@
 version 0.99.2 - XX-MMM-2010
  . [NEW] Actions: Added blocks actions via PLBlocks: CCCallBlock and CCCallBlockN (issue #699)
  . [NEW] Actions: Added CCFollow, an action that follows a CCNode (issue #738)
- . [NEW] Actions: Added CCPropertyAction, a generic way to updated properties using an action (issue #491)
+ . [NEW] Actions: Added CCPropertyAction, a generic way to update properties using an action (issue #491)
  . [NEW] MenuItem: MenuItems supports blocks via PLBlocks (issue #699)
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
  . [NEW] Templates: file templates for CCLayer, CCNode, CCSprite (issue #XXX)
