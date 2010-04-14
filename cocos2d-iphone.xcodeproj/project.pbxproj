@@ -1659,6 +1659,10 @@
 		50F7B2780F28DE7C00057537 /* CCEaseAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* CCEaseAction.h */; };
 		50F7B2790F28DE7C00057537 /* CCEaseAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* CCEaseAction.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
+		50FBB2DA117613F500150761 /* CCPropertyAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCPropertyAction.h */; };
+		50FBB2DB117613F500150761 /* CCPropertyAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCPropertyAction.m */; };
+		50FBB2DC117613F500150761 /* CCPropertyAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCPropertyAction.h */; };
+		50FBB2DD117613F500150761 /* CCPropertyAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCPropertyAction.m */; };
 		50FD7B170FFAA63C004073B5 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
 		50FD7B3C0FFAA8AC004073B5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		50FD7B3F0FFAA8BC004073B5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
@@ -3292,6 +3296,8 @@
 		50F7B2770F28DE7C00057537 /* CCEaseAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEaseAction.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		50FBB2D8117613F500150761 /* CCPropertyAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPropertyAction.h; sourceTree = "<group>"; };
+		50FBB2D9117613F500150761 /* CCPropertyAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPropertyAction.m; sourceTree = "<group>"; };
 		6F167CB90F9EF1D800843D49 /* CCTouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDispatcher.h; sourceTree = "<group>"; };
 		6F167CBA0F9EF1D800843D49 /* CCTouchDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchDispatcher.m; sourceTree = "<group>"; };
 		6F167CBB0F9EF1D800843D49 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
@@ -4950,6 +4956,8 @@
 				50545BFE105E8D6C00AB7C52 /* CCPageTurn3DAction.m */,
 				50150435113300F900A9CA65 /* CCProgressTimerActions.h */,
 				50150436113300F900A9CA65 /* CCProgressTimerActions.m */,
+				50FBB2D8117613F500150761 /* CCPropertyAction.h */,
+				50FBB2D9117613F500150761 /* CCPropertyAction.m */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -5616,6 +5624,7 @@
 				05AAF2BA10EE7E6700CACA2B /* CCTMXObjectGroup.h in Headers */,
 				05AAF2BB10EE7E6700CACA2B /* CCBlockSupport.h in Headers */,
 				0529445B11098D6F00E500F3 /* Profiling.h in Headers */,
+				50FBB2DC117613F500150761 /* CCPropertyAction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5695,6 +5704,7 @@
 				50150439113300F900A9CA65 /* CCProgressTimer.h in Headers */,
 				5015043B113300F900A9CA65 /* CCProgressTimerActions.h in Headers */,
 				5015043D113300F900A9CA65 /* CCRadialTransition.h in Headers */,
+				50FBB2DA117613F500150761 /* CCPropertyAction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8219,6 +8229,7 @@
 				05AAF2FA10EE7E6700CACA2B /* CCTMXObjectGroup.m in Sources */,
 				05AAF2FB10EE7E6700CACA2B /* CCBlockSupport.m in Sources */,
 				0529445C11098D6F00E500F3 /* Profiling.m in Sources */,
+				50FBB2DD117613F500150761 /* CCPropertyAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8362,6 +8373,7 @@
 				5015043A113300F900A9CA65 /* CCProgressTimer.m in Sources */,
 				5015043C113300F900A9CA65 /* CCProgressTimerActions.m in Sources */,
 				5015043E113300F900A9CA65 /* CCRadialTransition.m in Sources */,
+				50FBB2DB117613F500150761 /* CCPropertyAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

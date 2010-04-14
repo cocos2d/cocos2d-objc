@@ -92,6 +92,7 @@
 #import "CCConfiguration.h"
 #import "CCRadialTransition.h"
 #import "CCProgressTimerActions.h"
+#import "CCPropertyAction.h"
 
 //
 // cocos2d macros

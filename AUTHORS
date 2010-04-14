@@ -185,6 +185,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of FontTest
 		PointParticleSystem doesn't draw if there are no particles patch
 		Actions: cleaner way to start/stop actions patches
+		author of CCPropertyAction
 	* magicyu (crmagicxxx):
 		CocosLive client supports ranking request patch
 	* manucorporat (manu.valladolid) (http://manucorporat.blogspot.com/):
