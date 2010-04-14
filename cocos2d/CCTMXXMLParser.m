@@ -107,6 +107,7 @@
 @implementation CCTMXMapInfo
 
 @synthesize orientation=orientation_, mapSize=mapSize_, layers=layers_, tilesets=tilesets_, tileSize=tileSize_, filename=filename_, objectGroups=objectGroups_, properties=properties_;
+@synthesize tileProperties = tileProperties_;
 
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
@@ -122,6 +123,7 @@
 		self.filename = [CCFileUtils fullPathFromRelativePath:tmxFile];
 		self.objectGroups = [NSMutableArray arrayWithCapacity:4];
 		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
+		self.tileProperties = [NSMutableDictionary dictionaryWithCapacity:5];
 	
 		// tmp vars
 		currentString = [[NSMutableString alloc] initWithCapacity:1024];
@@ -142,6 +144,7 @@
 	[currentString release];
 	[objectGroups_ release];
 	[properties_ release];
+	[tileProperties_ release];
 	[super dealloc];
 }
 
@@ -212,7 +215,15 @@
 			[tileset release];
 		}
 
-	} else if([elementName isEqualToString:@"layer"]) {
+	}else if([elementName isEqualToString:@"tile"]){
+		CCTMXTilesetInfo* info = [tilesets_ lastObject];
+		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
+		parentGID_ =  [info firstGid] + [[attributeDict valueForKey:@"id"] intValue];
+		[tileProperties_ setObject:dict forKey:[NSNumber numberWithInt:parentGID_]];
+		
+		parentElement = TMXPropertyTile;
+		
+	}else if([elementName isEqualToString:@"layer"]) {
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
 		layer.name = [attributeDict valueForKey:@"name"];
 		
@@ -342,6 +353,13 @@
 			NSString *propertyValue = [attributeDict valueForKey:@"value"];
 
 			[dict setValue:propertyValue forKey:propertyName];
+		} else if ( parentElement == TMXPropertyTile ) {
+			
+			NSMutableDictionary* dict = [tileProperties_ objectForKey:[NSNumber numberWithInt:parentGID_]];
+			NSString *propertyName = [attributeDict valueForKey:@"name"];
+			NSString *propertyValue = [attributeDict valueForKey:@"value"];
+			[dict setObject:propertyValue forKey:propertyName];
+			
 		}
 	}
 }

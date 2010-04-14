@@ -115,3 +115,7 @@
 {}
 @end
 
+@interface TMXTilePropertyTest : TileDemo
+{}
+@end
+
