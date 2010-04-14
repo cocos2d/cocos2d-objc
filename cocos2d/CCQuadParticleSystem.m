@@ -109,7 +109,7 @@
 // XXX: BUT the change shall NOT DROP a single FPS
 // XXX:
 
--(void) updateQuadWithParticle:(Particle*)p position:(CGPoint)newPos;
+-(void) updateQuadWithParticle:(tCCParticle*)p position:(CGPoint)newPos;
 {				
 	// colors
 	quads[particleIdx].bl.colors = p->color;

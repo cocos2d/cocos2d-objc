@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
+ * Copyright (C) 2008-2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -28,27 +28,35 @@ enum {
 
 /** possible types of particle positions */
 typedef enum {
-	kPositionTypeFree,
-	kPositionTypeGrouped
-} tPositionType;
+	/** If the emitter is repositioned, the living particles won't be repositioned */
+	kCCPositionTypeFree,
+	/** If the emitter is repositioned, the living particles will be repositioned too */
+	kCCPositionTypeGrouped,
+}tCCPositionType;
+
+// backward compatible
+enum {
+	kPositionTypeFree = kCCPositionTypeFree,
+	kPositionTypeGrouped = kCCPositionTypeGrouped,
+}; 
 
 /** Structure that contains the values of each particle
  */
-typedef struct sParticle
+typedef struct sCCParticle
 {
 	CGPoint	pos;
-	CGPoint startPos;
+	CGPoint	startPos;
 	CGPoint	dir;
-	float	radialAccel;
-	float	tangentialAccel;
+	float		radialAccel;
+	float		tangentialAccel;
 	ccColor4F	color;
 	ccColor4F	deltaColor;
-	float	size;
-	float	deltaSize;
-	float	angle;
-	float	deltaAngle;
-	float	life;
-} Particle;
+	float		size;
+	float		deltaSize;
+	float		angle;
+	float		deltaAngle;
+	float		life;
+} tCCParticle;
 
 @class CCTexture2D;
 
@@ -147,7 +155,7 @@ typedef struct sParticle
 	float endSpinVar;	
 	
 	// Array of particles
-	Particle *particles;
+	tCCParticle *particles;
 	// Maximum particles
 	int totalParticles;
 	// Count of active particles
@@ -168,7 +176,7 @@ typedef struct sParticle
 	ccBlendFunc	blendFunc_;
 
 	// movment type: free or grouped
-	tPositionType	positionType_;
+	tCCPositionType	positionType_;
 
 	// Whether or not the node will be auto-removed when there are not particles
 	BOOL	autoRemoveOnFinish_;
@@ -251,7 +259,7 @@ typedef struct sParticle
 /** particles movement type: Free or Grouped
  @since v0.8
  */
-@property (nonatomic,readwrite) tPositionType positionType;
+@property (nonatomic,readwrite) tCCPositionType positionType;
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
  @since v0.8
@@ -263,7 +271,7 @@ typedef struct sParticle
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Initializes a particle
--(void) initParticle: (Particle*) particle;
+-(void) initParticle: (tCCParticle*) particle;
 //! stop emitting particles. Running particles will continue to run until they die
 -(void) stopSystem;
 //! Kill all living particles.
@@ -272,7 +280,7 @@ typedef struct sParticle
 -(BOOL) isFull;
 
 //! should be overriden by subclasses
--(void) updateQuadWithParticle:(Particle*)particle position:(CGPoint)position;
+-(void) updateQuadWithParticle:(tCCParticle*)particle position:(CGPoint)position;
 //! should be overriden by subclasses
 -(void) postStep;
 

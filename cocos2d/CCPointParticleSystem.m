@@ -58,7 +58,7 @@
 	[super dealloc];
 }
 
--(void) updateQuadWithParticle:(Particle*)p position:(CGPoint)newPos
+-(void) updateQuadWithParticle:(tCCParticle*)p position:(CGPoint)newPos
 {
 	// place vertices and colos in array
 	vertices[particleIdx].pos = newPos;

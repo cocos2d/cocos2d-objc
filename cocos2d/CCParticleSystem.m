@@ -71,7 +71,7 @@
 
 		totalParticles = numberOfParticles;
 		
-		particles = malloc( sizeof(Particle) * totalParticles );
+		particles = malloc( sizeof(tCCParticle) * totalParticles );
 
 		if( ! particles ) {
 			NSLog(@"Particle system: not enough memory");
@@ -80,7 +80,7 @@
 			return nil;
 		}
 		
-		bzero( particles, sizeof(Particle) * totalParticles );
+		bzero( particles, sizeof(tCCParticle) * totalParticles );
 		
 		// default, active
 		active = YES;
@@ -92,7 +92,7 @@
 		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 		
 		// default movement type;
-		positionType_ = kPositionTypeFree;
+		positionType_ = kCCPositionTypeFree;
 		
 		// default: modulate
 		// XXX: not used
@@ -129,7 +129,7 @@
 	if( [self isFull] )
 		return NO;
 	
-	Particle * particle = &particles[ particleCount ];
+	tCCParticle * particle = &particles[ particleCount ];
 		
 	[self initParticle: particle];		
 	particleCount++;
@@ -137,7 +137,7 @@
 	return YES;
 }
 
--(void) initParticle: (Particle*) particle
+-(void) initParticle: (tCCParticle*) particle
 {
 	CGPoint v;
 
@@ -201,7 +201,7 @@
 	particle->deltaAngle = (endA - startA) / particle->life;
 	
 	// position
-	if( positionType_ == kPositionTypeFree )
+	if( positionType_ == kCCPositionTypeFree )
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
 	else
 		particle->startPos = self.position;
@@ -219,7 +219,7 @@
 	active = YES;
 	elapsed = 0;
 	for(particleIdx = 0; particleIdx < particleCount; ++particleIdx) {
-		Particle *p = &particles[particleIdx];
+		tCCParticle *p = &particles[particleIdx];
 		p->life = 0;
 	}
 }
@@ -248,7 +248,7 @@
 	particleIdx = 0;
 	
 	CGPoint	absolutePosition;
-	if( positionType_ == kPositionTypeFree )
+	if( positionType_ == kCCPositionTypeFree )
 		absolutePosition = [self convertToWorldSpace:CGPointZero];
 	
 #if CC_ENABLE_PROFILERS
@@ -257,7 +257,7 @@
 	
 	while( particleIdx < particleCount )
 	{
-		Particle *p = &particles[particleIdx];
+		tCCParticle *p = &particles[particleIdx];
 		
 		if( p->life > 0 ) {
 			
@@ -304,7 +304,7 @@
 			//
 			
 			CGPoint	newPos = p->pos;
-			if( positionType_ == kPositionTypeFree ) {
+			if( positionType_ == kCCPositionTypeFree ) {
 				newPos = ccpSub(absolutePosition, p->startPos);
 				newPos = ccpSub( p->pos, newPos);
 			}
@@ -335,7 +335,7 @@
 	[self postStep];
 }
 
--(void) updateQuadWithParticle:(Particle*)particle position:(CGPoint)position
+-(void) updateQuadWithParticle:(tCCParticle*)particle position:(CGPoint)position
 {
 	// should be overriden
 }

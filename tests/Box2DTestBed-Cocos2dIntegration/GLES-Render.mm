@@ -23,13 +23,13 @@
 // http://www.cocos2d-iphone.org
 //
 
-#include "GLES-Render.h"
-
+#import <OpenGLES/ES1/gl.h>
 
 #include <cstdio>
 #include <cstdarg>
-
 #include <cstring>
+
+#include "GLES-Render.h"
 
 GLESDebugDraw::GLESDebugDraw()
 	: mRatio( 1.0f )
