@@ -21,7 +21,7 @@ version 0.99.2 - XX-MMM-2010
  . [FIX] SpriteSheet: Improved doxygen documentation (issue #827)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
  . [FIX] Xcode: uses optimized binary. ARMv7 binary has thumb-2 enabled (issue #XXX)
- . [3RD] Box2d: updated to r88 (issue #XXX)
+ . [3RD] Box2d: updated to r90 (v2.1.0 + patches) (issue #XXX)
  
 version 0.99.1 - 19-Mar-2010
  . [FIX] Menu: If menu is not visible it doesn't receive touches (issue #88)
