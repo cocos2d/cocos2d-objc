@@ -1,4 +1,4 @@
-version 0.99.2 - XX-MMM-2010
+version 0.99.2-rc - 15-Apr-2010
  . [NEW] Actions: Added blocks actions via PLBlocks: CCCallBlock and CCCallBlockN (issue #699)
  . [NEW] Actions: Added CCFollow, an action that follows a CCNode (issue #738)
  . [NEW] Actions: Added CCPropertyAction, a generic way to update properties using an action (issue #491)
@@ -6,7 +6,7 @@ version 0.99.2 - XX-MMM-2010
  . [NEW] Texture2D: added support for NPOT textures where available (issue #818)
  . [NEW] Templates: file templates for CCLayer, CCNode, CCSprite (issue #XXX)
  . [NEW] TMXMaps: added support for per-tile properties (issue #606)
- . [NEW] ProfilingTimer: new class to test performance (issue #XXX)
+ . [NEW] ProfilingTimer: new class to test performance (issue #724)
  . [NEW] Xcode: added "build all tests" target (issue #XXX)
  . [FIX] Box2d: GLES-DebugDraw draws non-solid circles as non-solid circles (issue #831)
  . [FIX] Director: FPSLabel uses RGBA4444 texture to reduce possible performance impact (issue #658)
