@@ -96,13 +96,6 @@ static char * glExtensions;
 #endif
 			  );
 		
-	CCLOG(@"cocos2d: compiled with blocks support : %s",
-#if NS_BLOCKS_AVAILABLE
-		  "YES"
-#else
-		  "NO"
-#endif
-		  );
 	}
 	
 	return self;

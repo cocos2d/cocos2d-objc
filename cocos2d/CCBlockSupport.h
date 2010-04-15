@@ -44,4 +44,4 @@
 
 @end
 
-#endif
+#endif // NS_BLOCKS_AVAILABLE
