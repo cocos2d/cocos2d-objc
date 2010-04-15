@@ -140,6 +140,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		BitmapFontAtlas supports sub-directories patch
 	* Joe Vennix:
 		patches for CocosNode
+	* Jon Kean:
+		PointParticle asserts if size > 64
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
