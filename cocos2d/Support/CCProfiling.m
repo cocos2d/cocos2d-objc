@@ -10,7 +10,7 @@
 
 #if CC_ENABLE_PROFILERS
 
-#import "Profiling.h"
+#import "CCProfiling.h"
 
 @interface CCProfilingTimer()
 - (id)initWithName:(NSString*)timerName andInstance:(id)instance;

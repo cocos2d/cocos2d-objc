@@ -9,6 +9,7 @@ version 0.99.2 - XX-MMM-2010
  . [NEW] ProfilingTimer: new class to test performance (issue #XXX)
  . [NEW] Xcode: added "build all tests" target (issue #XXX)
  . [FIX] Box2d: GLES-DebugDraw draws non-solid circles as non-solid circles (issue #831)
+ . [FIX] Director: FPSLabel uses RGBA4444 texture to reduce possible performance impact (issue #658)
  . [FIX] EAGLView: swapBuffers doesn't bind the color buffer. It assumes it is already bound (issue #XXX)
  . [FIX] Particles: constants stars with kCC (issue #809)
  . [FIX] Particles: Asserts if start/end size is <0 or >64
