@@ -121,15 +121,15 @@
 //#define CC_LABELATLAS_DEBUG_DRAW 1
 
 /**
+ If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
+ once per second showing average time (in milliseconds) required to execute the specific routine(s)
+ */
+//#define CC_ENABLE_PROFILERS 1
+
+/**
  Enable it if you want to support v0.8 compatbility.
  Basically, classes without namespaces will work.
  It is recommended to disable compatibility once you have migrated your game to v0.9 to avoid class name polution
  */
 //#define CC_COMPATIBILITY_WITH_0_8 1
 
-
-/**
- If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
- once per second showing average time (in milliseconds) required to execute the specific routine(s)
- */
-//#define CC_ENABLE_PROFILERS 1

@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0529445B11098D6F00E500F3 /* Profiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* Profiling.h */; };
-		0529445C11098D6F00E500F3 /* Profiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* Profiling.m */; };
-		0529445D11098D6F00E500F3 /* Profiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* Profiling.h */; };
-		0529445E11098D6F00E500F3 /* Profiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* Profiling.m */; };
+		0529445B11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
+		0529445C11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
+		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
+		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
 		05873259110595EE004B7E89 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 503862D811007181005D2C92 /* CCConfiguration.h */; };
 		0587325A110595FA004B7E89 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 503862D911007181005D2C92 /* CCConfiguration.m */; };
 		05AAF16F10EE79E600CACA2B /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */; };
@@ -2489,8 +2489,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0529445911098D6F00E500F3 /* Profiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profiling.h; sourceTree = "<group>"; };
-		0529445A11098D6F00E500F3 /* Profiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profiling.m; sourceTree = "<group>"; };
+		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
+		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
 		05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
 		05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		05AAF30710EE7E6700CACA2B /* libcocos2d-blocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-blocks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4404,8 +4404,8 @@
 				50F29F5510204FD60046CA73 /* base64.c */,
 				50F2A103102094550046CA73 /* ZipUtils.h */,
 				50F2A102102094550046CA73 /* ZipUtils.m */,
-				0529445911098D6F00E500F3 /* Profiling.h */,
-				0529445A11098D6F00E500F3 /* Profiling.m */,
+				0529445911098D6F00E500F3 /* CCProfiling.h */,
+				0529445A11098D6F00E500F3 /* CCProfiling.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -5623,7 +5623,7 @@
 				05AAF2B910EE7E6700CACA2B /* CCTMXLayer.h in Headers */,
 				05AAF2BA10EE7E6700CACA2B /* CCTMXObjectGroup.h in Headers */,
 				05AAF2BB10EE7E6700CACA2B /* CCBlockSupport.h in Headers */,
-				0529445B11098D6F00E500F3 /* Profiling.h in Headers */,
+				0529445B11098D6F00E500F3 /* CCProfiling.h in Headers */,
 				50FBB2DC117613F500150761 /* CCPropertyAction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5700,7 +5700,7 @@
 				50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */,
 				05AAF16F10EE79E600CACA2B /* CCBlockSupport.h in Headers */,
 				503862E5110072BC005D2C92 /* CCConfiguration.h in Headers */,
-				0529445D11098D6F00E500F3 /* Profiling.h in Headers */,
+				0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */,
 				50150439113300F900A9CA65 /* CCProgressTimer.h in Headers */,
 				5015043B113300F900A9CA65 /* CCProgressTimerActions.h in Headers */,
 				5015043D113300F900A9CA65 /* CCRadialTransition.h in Headers */,
@@ -8228,7 +8228,7 @@
 				05AAF2F910EE7E6700CACA2B /* CCTMXLayer.m in Sources */,
 				05AAF2FA10EE7E6700CACA2B /* CCTMXObjectGroup.m in Sources */,
 				05AAF2FB10EE7E6700CACA2B /* CCBlockSupport.m in Sources */,
-				0529445C11098D6F00E500F3 /* Profiling.m in Sources */,
+				0529445C11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				50FBB2DD117613F500150761 /* CCPropertyAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8369,7 +8369,7 @@
 				50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */,
 				05AAF17010EE79E600CACA2B /* CCBlockSupport.m in Sources */,
 				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
-				0529445E11098D6F00E500F3 /* Profiling.m in Sources */,
+				0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				5015043A113300F900A9CA65 /* CCProgressTimer.m in Sources */,
 				5015043C113300F900A9CA65 /* CCProgressTimerActions.m in Sources */,
 				5015043E113300F900A9CA65 /* CCRadialTransition.m in Sources */,

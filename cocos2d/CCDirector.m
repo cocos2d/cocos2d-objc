@@ -2,7 +2,7 @@
  *
  * http://www.cocos2d-iphone.org
  *
- * Copyright (C) 2008,2009,2010 Ricardo Quesada
+ * Copyright (C) 2008-2010 Ricardo Quesada
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the 'cocos2d for iPhone' license.
@@ -41,7 +41,7 @@
 #import "CCLayer.h"
 
 #if CC_ENABLE_PROFILERS
-#import "Support/Profiling.h"
+#import "Support/CCProfiling.h"
 #endif
 
 #define kDefaultFPS		60.0	// 60 frames per second
@@ -199,9 +199,13 @@ static CCDirector *_sharedDirector = nil;
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
 #if CC_DIRECTOR_FAST_FPS
-    if (!FPSLabel)
-        FPSLabel = [[CCLabelAtlas alloc] initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-#endif	
+    if (!FPSLabel) {
+		CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
+		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+		FPSLabel = [[CCLabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
+		[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
+	}
+#endif	// CC_DIRECTOR_FAST_FPS
 }
 
 //

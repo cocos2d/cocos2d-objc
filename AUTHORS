@@ -202,6 +202,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		ColorLayer supports blend protocol patch
 		performance improvement on particles
 		TextureAtlas uses VBO instead of vertex array list patch
+		Director: FPSLabel uses RGBA4444 texture (patch)
 	* Mark Cooke:
 		Added TintTo action
 	* mark at abitofthought:

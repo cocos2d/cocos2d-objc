@@ -26,7 +26,7 @@
 // cocos2d
 #import "ccConfig.h"
 #if CC_ENABLE_PROFILERS
-#import "Support/Profiling.h"
+#import "Support/CCProfiling.h"
 #endif
 #import "CCParticleSystem.h"
 #import "CCTextureCache.h"
