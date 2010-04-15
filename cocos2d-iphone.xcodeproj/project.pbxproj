@@ -2017,13 +2017,6 @@
 			remoteGlobalIDString = 50C93A930E0BF6E000517B01;
 			remoteInfo = ActionsTest;
 		};
-		509807111175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 05CA7AEC10ED674700F12774;
-			remoteInfo = ActionsWithBlocksSample;
-		};
 		509807131175042A00EA7266 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2149,13 +2142,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 506C79F20E01C73A00B48100;
 			remoteInfo = MenuTest;
-		};
-		509807371175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 05AAF3B710EE85B300CACA2B;
-			remoteInfo = MenuTestWithBlocks;
 		};
 		509807391175042A00EA7266 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6484,7 +6470,6 @@
 				5098070C1175042A00EA7266 /* PBXTargetDependency */,
 				5098070E1175042A00EA7266 /* PBXTargetDependency */,
 				509807101175042A00EA7266 /* PBXTargetDependency */,
-				509807121175042A00EA7266 /* PBXTargetDependency */,
 				509807141175042A00EA7266 /* PBXTargetDependency */,
 				509807161175042A00EA7266 /* PBXTargetDependency */,
 				509807181175042A00EA7266 /* PBXTargetDependency */,
@@ -6503,7 +6488,6 @@
 				509807321175042A00EA7266 /* PBXTargetDependency */,
 				509807341175042A00EA7266 /* PBXTargetDependency */,
 				509807361175042A00EA7266 /* PBXTargetDependency */,
-				509807381175042A00EA7266 /* PBXTargetDependency */,
 				5098073A1175042A00EA7266 /* PBXTargetDependency */,
 				5098073C1175042A00EA7266 /* PBXTargetDependency */,
 				5098073E1175042A00EA7266 /* PBXTargetDependency */,
@@ -9122,11 +9106,6 @@
 			target = 50C93A930E0BF6E000517B01 /* ActionsTest */;
 			targetProxy = 5098070F1175042A00EA7266 /* PBXContainerItemProxy */;
 		};
-		509807121175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 05CA7AEC10ED674700F12774 /* ActionsWithBlocksSample */;
-			targetProxy = 509807111175042A00EA7266 /* PBXContainerItemProxy */;
-		};
 		509807141175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 506881F40E95761200F943E5 /* AtlasTest */;
@@ -9216,11 +9195,6 @@
 			isa = PBXTargetDependency;
 			target = 506C79F20E01C73A00B48100 /* MenuTest */;
 			targetProxy = 509807351175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		509807381175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 05AAF3B710EE85B300CACA2B /* MenuTestWithBlocks */;
-			targetProxy = 509807371175042A00EA7266 /* PBXContainerItemProxy */;
 		};
 		5098073A1175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -66,7 +66,7 @@ public:
 			m_radius = 0.5f;
 			b2CircleShape shape;
 			shape.m_radius = m_radius;
-			m_character = body->CreateFixture(&shape, 1.0f);
+			m_character = body->CreateFixture(&shape, 20.0f);
 
 			body->SetLinearVelocity(b2Vec2(0.0f, -50.0f));
 
@@ -93,7 +93,7 @@ public:
 
 		b2Vec2 position = m_character->GetBody()->GetPosition();
 
-		if (position.y < m_top)
+		if (position.y < m_top + m_radius - 3.0f * b2_linearSlop)
 		{
 			contact->SetEnabled(false);
 		}
