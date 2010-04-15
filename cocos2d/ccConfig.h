@@ -128,8 +128,8 @@
 //#define CC_COMPATIBILITY_WITH_0_8 1
 
 
-/*!
+/**
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s)
  */
-#define CC_ENABLE_PROFILERS 0
+//#define CC_ENABLE_PROFILERS 1

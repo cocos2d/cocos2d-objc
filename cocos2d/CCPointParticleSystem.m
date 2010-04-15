@@ -168,13 +168,13 @@
 //
 -(void) setStartSize:(float)size
 {
-	NSAssert(size <= CC_MAX_PARTICLE_SIZE, @"PointParticleSystem only supports 0 <= size <= 64");
+	NSAssert(size >= 0 && size <= CC_MAX_PARTICLE_SIZE, @"PointParticleSystem only supports 0 <= size <= 64");
 	[super setStartSize:size];
 }
 
 -(void) setEndSize:(float)size
 {
-	NSAssert(0 && size <= CC_MAX_PARTICLE_SIZE, @"PointParticleSystem only supports 0 <= size <= 64");
+	NSAssert(size >= 0 && size <= CC_MAX_PARTICLE_SIZE, @"PointParticleSystem only supports 0 <= size <= 64");
 	[super setEndSize:size];
 }
 @end
