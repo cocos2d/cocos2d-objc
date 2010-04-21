@@ -143,9 +143,9 @@ typedef enum {
  */
 @property (nonatomic,readwrite) BOOL flipY;
 /** opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
+@property (nonatomic,readwrite) GLubyte opacity;
 /** RGB colors: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3B color;
 /** whether or not the Sprite is rendered using a CCSpriteSheet */
 @property (nonatomic,readwrite) BOOL usesSpriteSheet;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteSheet */

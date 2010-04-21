@@ -1,5 +1,6 @@
 version 0.99.2 - XX-Apr-2010
  . [FIX] Grid: simplied code, easier to maintain, added support for flipped textures
+ . [FIX] Xcode: compiles OK with LLVM Compiler SDK 4.0beta2
 
 version 0.99.2-rc - 15-Apr-2010
  . [NEW] Actions: Added blocks actions via PLBlocks: CCCallBlock and CCCallBlockN (issue #699)
