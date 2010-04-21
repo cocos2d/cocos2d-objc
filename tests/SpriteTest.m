@@ -638,7 +638,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"children %x - atlasIndex:%d", child, currentIndex);
+			NSLog(@"children %x - atlasIndex:%d", (int)child, currentIndex);
 			prev = currentIndex;
 		}
 		
@@ -647,7 +647,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"descendant %x - atlasIndex:%d", child, currentIndex);
+			NSLog(@"descendant %x - atlasIndex:%d", (int)child, currentIndex);
 			prev = currentIndex;
 		}		
 	}	

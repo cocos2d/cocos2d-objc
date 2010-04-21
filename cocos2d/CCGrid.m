@@ -21,6 +21,9 @@
 #import "Support/glu.h"
 #import "Support/CGPointExtension.h"
 
+#pragma mark -
+#pragma mark CCGridBase
+
 @implementation CCGridBase
 
 @synthesize reuseGrid=reuseGrid_;
@@ -29,42 +32,62 @@
 @synthesize gridSize=gridSize_;
 @synthesize step=step_;
 
--(id)initWithSize:(ccGridSize)gSize
++(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
-	if ( (self = [super init] ) )
-	{
+	return [[[self alloc] initWithSize:gridSize texture:texture flippedTexture:flipped] autorelease];
+}
+
++(id) gridWithSize:(ccGridSize)gridSize
+{
+	return [[[self alloc] initWithSize:gridSize] autorelease];
+}
+
+-(id) initWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
+{
+	if( (self=[super init]) ) {
+		
 		active_ = NO;
 		reuseGrid_ = 0;
-		gridSize_ = gSize;
-		
-		CGSize	win = [[CCDirector sharedDirector] winSize];
-	
-		if ( texture_ == nil )
-		{
-			CCDirector *director = [CCDirector sharedDirector];
-			CGSize s = [director winSize];
-			int textureSize = 8;
-			while (textureSize < s.width || textureSize < s.height)
-				textureSize *= 2;
+		gridSize_ = gridSize;
 
-			CCTexture2DPixelFormat format = [director pixelFormat] == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
-			
-			void *data = malloc((int)(textureSize * textureSize * 4));
-			if( ! data ) {
-				CCLOG(@"cocos2d: CCGrid: not enough memory");
-				return nil;
-			}
-			memset(data, 0, (int)(textureSize * textureSize * 4));
-			
-			texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:win];
-			free( data );
-		}
+		self.texture = texture;
+		isTextureFlipped_ = flipped;
+		
+		CGSize texSize = [texture_ contentSize];
+		step_.x = texSize.width / gridSize_.x;
+		step_.y = texSize.height / gridSize_.y;
 		
 		grabber_ = [[CCGrabber alloc] init];
 		[grabber_ grab:texture_];
+		
+		[self calculateVertexPoints];
+	}
+	return self;
+}
 
-		step_.x = win.width / gridSize_.x;
-		step_.y = win.height / gridSize_.y;
+-(id)initWithSize:(ccGridSize)gSize
+{
+	CCDirector *director = [CCDirector sharedDirector];
+	CGSize s = [director winSize];
+	int textureSize = 8;
+	while (textureSize < s.width || textureSize < s.height)
+		textureSize *= 2;
+	
+	CCTexture2DPixelFormat format = [director pixelFormat] == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
+	
+	void *data = malloc((int)(textureSize * textureSize * 4));
+	if( ! data ) {
+		CCLOG(@"cocos2d: CCGrid: not enough memory");
+		return nil;
+	}
+	memset(data, 0, (int)(textureSize * textureSize * 4));
+	
+	CCTexture2D *texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:s];
+	free( data );
+	
+	if ( (self = [self initWithSize:gSize texture:texture flippedTexture:NO] ) )
+	{
+		// do something
 	}
 	
 	return self;
@@ -98,6 +121,19 @@
 		CCDirector *director = [CCDirector sharedDirector];
 		ccDirectorProjection proj = [director projection];
 		[director setProjection:proj];
+	}
+}
+
+-(BOOL) isTextureFlipped
+{
+	return isTextureFlipped_;
+}
+
+-(void) setIsTextureFlipped:(BOOL)flipped
+{
+	if( isTextureFlipped_ != flipped ) {
+		isTextureFlipped_ = flipped;
+		[self calculateVertexPoints];
 	}
 }
 
@@ -203,26 +239,18 @@
 	[NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
 }
 
+-(void)calculateVertexPoints
+{
+	[NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
+}
+
 @end
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark CCGrid3D
 @implementation CCGrid3D
-
-+(id)gridWithSize:(ccGridSize)gridSize
-{
-	return [[[self alloc] initWithSize:gridSize] autorelease];
-}
-
--(id)initWithSize:(ccGridSize)gSize
-{
-	if ( (self = [super initWithSize:gSize] ) )
-	{
-		[self calculateVertexPoints];
-	}
-	
-	return self;
-}
 
 -(void)dealloc
 {
@@ -254,6 +282,7 @@
 {
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
+	float imageH = texture_.contentSize.height;
 	
 	int x, y, i;
 	
@@ -265,20 +294,6 @@
 	float *vertArray = (float*)vertices;
 	float *texArray = (float*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
-	
-	for( y = 0; y < (gridSize_.y+1); y++ )
-	{
-		for( x = 0; x < (gridSize_.x+1); x++ )
-		{
-			int idx = (y * (gridSize_.x+1)) + x;
-			
-			vertArray[idx*3] = -1;
-			vertArray[idx*3+1] = -1;
-			vertArray[idx*3+2] = -1;
-			texArray[idx*2] = -1;
-			texArray[idx*2+1] = -1;
-		}
-	}
 	
 	for( x = 0; x < gridSize_.x; x++ )
 	{
@@ -318,7 +333,10 @@
 				vertArray[ l1[i] + 2 ] = l2[i].z;
 				
 				texArray[ tex1[i] ] = tex2[i].x / width;
-				texArray[ tex1[i] + 1 ] = tex2[i].y / height;
+				if( isTextureFlipped_ )
+					texArray[ tex1[i] + 1 ] = (imageH - tex2[i].y) / height;
+				else
+					texArray[ tex1[i] + 1 ] = tex2[i].y / height;
 			}
 		}
 	}
@@ -368,22 +386,10 @@
 
 ////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark CCTiledGrid3D
+
 @implementation CCTiledGrid3D
-
-+(id)gridWithSize:(ccGridSize)gridSize
-{
-	return [[[self alloc] initWithSize:gridSize] autorelease];
-}
-
--(id)initWithSize:(ccGridSize)gSize
-{
-	if ( (self = [super initWithSize:gSize] ) )
-	{
-		[self calculateVertexPoints];
-	}
-	
-	return self;
-}
 
 -(void)dealloc
 {
@@ -415,6 +421,7 @@
 {
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
+	float imageH = texture_.contentSize.height;
 	
 	int numQuads = gridSize_.x * gridSize_.y;
 	
@@ -451,14 +458,22 @@
 			*vertArray++ = y2;
 			*vertArray++ = 0;
 			
+			float newY1 = y1;
+			float newY2 = y2;
+			
+			if( isTextureFlipped_ ) {
+				newY1 = imageH - y1;
+				newY2 = imageH - y2;
+			}
+
 			*texArray++ = x1 / width;
-			*texArray++ = y1 / height;
+			*texArray++ = newY1 / height;
 			*texArray++ = x2 / width;
-			*texArray++ = y1 / height;
+			*texArray++ = newY1 / height;
 			*texArray++ = x1 / width;
-			*texArray++ = y2 / height;
+			*texArray++ = newY2 / height;
 			*texArray++ = x2 / width;
-			*texArray++ = y2 / height;
+			*texArray++ = newY2 / height;
 		}
 	}
 	

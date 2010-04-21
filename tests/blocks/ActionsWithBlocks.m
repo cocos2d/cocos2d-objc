@@ -2,6 +2,7 @@
 // cocos2d Actions with blocks example
 // http://www.cocos2d-iphone.org
 //
+// Example by Stuart Carnie ( http://manomio.com/ )
 
 // Import the interfaces
 #import "ActionsWithBlocks.h"
