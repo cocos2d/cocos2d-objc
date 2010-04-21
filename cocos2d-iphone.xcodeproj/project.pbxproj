@@ -2031,34 +2031,6 @@
 			remoteGlobalIDString = 5048287F0F45AED700A30CEF;
 			remoteInfo = AttachTest;
 		};
-		509807171175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 504226120FC0B5D500B992F7;
-			remoteInfo = Box2dAccelTouchTest;
-		};
-		509807191175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50010EBA103B3DB80059EC2E;
-			remoteInfo = Box2dTestBed;
-		};
-		5098071B1175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50B2C5CE0E100EF000AE9530;
-			remoteInfo = ChipmunkAccelTouchTest;
-		};
-		5098071D1175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50B2CE450E129FD900AE9530;
-			remoteInfo = ChipmunkTestBed;
-		};
 		5098071F1175042A00EA7266 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -6486,10 +6458,6 @@
 				509807101175042A00EA7266 /* PBXTargetDependency */,
 				509807141175042A00EA7266 /* PBXTargetDependency */,
 				509807161175042A00EA7266 /* PBXTargetDependency */,
-				509807181175042A00EA7266 /* PBXTargetDependency */,
-				5098071A1175042A00EA7266 /* PBXTargetDependency */,
-				5098071C1175042A00EA7266 /* PBXTargetDependency */,
-				5098071E1175042A00EA7266 /* PBXTargetDependency */,
 				509807201175042A00EA7266 /* PBXTargetDependency */,
 				509807221175042A00EA7266 /* PBXTargetDependency */,
 				509807241175042A00EA7266 /* PBXTargetDependency */,
@@ -9131,26 +9099,6 @@
 			isa = PBXTargetDependency;
 			target = 5048287F0F45AED700A30CEF /* AttachTest */;
 			targetProxy = 509807151175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		509807181175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */;
-			targetProxy = 509807171175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		5098071A1175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50010EBA103B3DB80059EC2E /* Box2dTestBed */;
-			targetProxy = 509807191175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		5098071C1175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */;
-			targetProxy = 5098071B1175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		5098071E1175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50B2CE450E129FD900AE9530 /* ChipmunkTestBed */;
-			targetProxy = 5098071D1175042A00EA7266 /* PBXContainerItemProxy */;
 		};
 		509807201175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12025,6 +11973,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;

@@ -62,7 +62,7 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
+@property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3B color;
 
