@@ -4351,7 +4351,6 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				05AAF16B10EE79B700CACA2B /* Block Support */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
@@ -4365,6 +4364,7 @@
 				6F167CC20F9EF1DC00843D49 /* Touch Dispatcher */,
 				50E1355310ADEA9400C9E7FA /* Textures */,
 				501CCFA30E99657C00B86F68 /* Support */,
+				05AAF16B10EE79B700CACA2B /* Block Support */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 				505462FB1062768000AB7C52 /* ccConfig.h */,
