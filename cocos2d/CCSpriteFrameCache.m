@@ -199,7 +199,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 {
 	CCSpriteFrame *frame = [spriteFrames objectForKey:name];
 	if( ! frame )
-		CCLOG(@"cocos2d: CCSpriteFrameCache: Frame '%@' not found");
+		CCLOG(@"cocos2d: CCSpriteFrameCache: Frame '%@' not found", name);
 	
 	return frame;
 }

@@ -28,9 +28,10 @@
 	BOOL		active_;
 	int			reuseGrid_;
 	ccGridSize	gridSize_;
-	CCTexture2D *	texture_;
+	CCTexture2D *texture_;
 	CGPoint		step_;
-	CCGrabber *	grabber_;
+	CCGrabber	*grabber_;
+	BOOL		isTextureFlipped_;
 }
 
 /** wheter or not the grid is active */
@@ -45,12 +46,20 @@
 @property (nonatomic, retain) CCTexture2D *texture;
 /** grabber used */
 @property (nonatomic, retain) CCGrabber *grabber;
+/** is texture flipped */
+@property (nonatomic, readwrite) BOOL isTextureFlipped;
 
++(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped;
++(id) gridWithSize:(ccGridSize)gridSize;
+
+-(id) initWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped;
 -(id)initWithSize:(ccGridSize)gridSize;
 -(void)beforeDraw;
 -(void)afterDraw:(CCNode*)target;
 -(void)blit;
 -(void)reuse;
+
+-(void)calculateVertexPoints;
 
 @end
 
@@ -67,19 +76,12 @@
 	GLushort	*indices;
 }
 
-/** creates a Grid3D (non-tiled) grid with a grid size */
-+(id)gridWithSize:(ccGridSize)gridSize;
-/** initizlies a Grid3D (non-tiled) grid with a grid size */
--(id)initWithSize:(ccGridSize)gridSize;
-
 /** returns the vertex at a given position */
 -(ccVertex3F)vertex:(ccGridSize)pos;
 /** returns the original (non-transformed) vertex at a given position */
 -(ccVertex3F)originalVertex:(ccGridSize)pos;
 /** sets a new vertex at a given position */
 -(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex;
-
--(void)calculateVertexPoints;
 
 @end
 
@@ -97,18 +99,11 @@
 	GLushort	*indices;
 }
 
-/** creates a TiledGrid3D with a grid size */
-+(id)gridWithSize:(ccGridSize)gridSize;
-/** initializes a TiledGrid3D with a grid size */
--(id)initWithSize:(ccGridSize)gridSize;
-
 /** returns the tile at the given position */
 -(ccQuad3)tile:(ccGridSize)pos;
 /** returns the original tile (untransformed) at the given position */
 -(ccQuad3)originalTile:(ccGridSize)pos;
 /** sets a new tile */
 -(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords;
-
--(void)calculateVertexPoints;
 
 @end

@@ -49,14 +49,13 @@ typedef enum {
 }
 
 /**	Change the percentage to change progress. */
-@property CCProgressTimerType type;
+@property (nonatomic, readwrite) CCProgressTimerType type;
 
 /** Percentages are from 0 to 100 */
-@property float percentage;
-
+@property (nonatomic, readwrite) float percentage;
 
 /** The image to show the progress percentage */
-@property (retain) CCSprite *sprite;
+@property (nonatomic, readwrite, retain) CCSprite *sprite;
 
 
 /** Creates a progress timer with an image filename as the shape the timer goes through */

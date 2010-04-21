@@ -826,7 +826,7 @@ Class restartAction()
 }
 -(void) callback3:(id)sender data:(void*)data
 {
-	NSLog(@"callback 3 called from:%@ with data:%x",sender,data);
+	NSLog(@"callback 3 called from:%@ with data:%x",sender,(int)data);
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	CCLabel *label = [CCLabel labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*3,s.height/2)];
