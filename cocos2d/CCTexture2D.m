@@ -218,7 +218,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	unsigned short*			outPixel16;
 	BOOL					hasAlpha;
 	CGImageAlphaInfo		info;
-	CGAffineTransform		transform;
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 		
@@ -242,8 +241,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	}
 	
 	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
-	transform = CGAffineTransformIdentity;
-	
 
 	// Create the bitmap graphics context
 	
@@ -276,9 +273,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
 	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
-	
-	if(!CGAffineTransformIsIdentity(transform))
-		CGContextConcatCTM(context, transform);
 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
 	
 	// Repack the pixel data into the right format
