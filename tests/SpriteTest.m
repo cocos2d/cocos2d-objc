@@ -28,6 +28,7 @@ static NSString *transitions[] = {
 			@"SpriteSheetZOrder",
 			@"SpriteSheetReorder",
 			@"SpriteSheetReorderIssue744",
+			@"SpriteSheetReorderIssue767",
 			@"SpriteZVertex",
 			@"SpriteSheetZVertex",
 			@"Sprite6",
@@ -55,6 +56,8 @@ enum {
 	kTagSpriteSheet = 1,
 	kTagNode = 2,
 	kTagAnimation1 = 1,
+	kTagSpriteLeft,
+	kTagSpriteRight,
 };
 
 enum {
@@ -696,6 +699,103 @@ Class restartAction()
 	return @"Should not crash";
 }
 @end
+
+@implementation SpriteSheetReorderIssue767
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
+		
+		CCNode *aParent;
+		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
+		
+		//
+		// SpriteSheet: 3 levels of children
+		//
+		
+		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		[self addChild:aParent z:0 tag:kTagSprite1];
+		
+		// parent
+		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
+		l1.position = ccp( s.width/2, s.height/2);
+		[aParent addChild:l1 z:0 tag:kTagSprite2];
+		CGSize l1Size = [l1 contentSize];
+		
+		// child left
+		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
+		l2a.position = ccp( -25 + l1Size.width/2, 0 + l1Size.height/2);
+		[l1 addChild:l2a z:-1 tag:kTagSpriteLeft];
+		CGSize l2aSize = [l2a contentSize];		
+		
+		
+		// child right
+		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
+		l2b.position = ccp( +25 + l1Size.width/2, 0 + l1Size.height/2);
+		[l1 addChild:l2b z:1 tag:kTagSpriteRight];
+		CGSize l2bSize = [l2a contentSize];		
+		
+		
+		// child left bottom
+		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3a1.scale = 0.65f;
+		l3a1.position = ccp(0+l2aSize.width/2,-50+l2aSize.height/2);
+		[l2a addChild:l3a1 z:-1];
+		
+		// child left top
+		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3a2.scale = 0.65f;
+		l3a2.position = ccp(0+l2aSize.width/2,+50+l2aSize.height/2);
+		[l2a addChild:l3a2 z:1];
+		
+		// child right bottom
+		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3b1.scale = 0.65f;
+		l3b1.position = ccp(0+l2bSize.width/2,-50+l2bSize.height/2);
+		[l2b addChild:l3b1 z:-1];
+		
+		// child right top
+		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3b2.scale = 0.65f;
+		l3b2.position = ccp(0+l2bSize.width/2,+50+l2bSize.height/2);
+		[l2b addChild:l3b2 z:1];
+		
+		[self schedule:@selector(reorderSprites:) interval:1];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteSheet: reorder issue #767";
+}
+
+-(NSString *) subtitle
+{
+	return @"Should not crash";
+}
+
+-(void) reorderSprites:(ccTime)dt
+{
+	id spritesheet = [self getChildByTag:kTagSprite1];
+	CCSprite *father = (CCSprite*)[spritesheet getChildByTag:kTagSprite2];
+	CCSprite *left = (CCSprite*)[father getChildByTag:kTagSpriteLeft];
+	CCSprite *right = (CCSprite*)[father getChildByTag:kTagSpriteRight];
+
+	int newZLeft = 1;
+	
+	if( left.zOrder == 1 )
+		newZLeft = -1;
+	
+	[father reorderChild:left z:newZLeft];
+	[father reorderChild:right z:-newZLeft];
+}
+@end
+
 
 #pragma mark -
 #pragma mark Example SpriteZVertex
@@ -2666,7 +2766,7 @@ Class restartAction()
 		// child left top
 		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a2.scale = 0.45f;
-		l3a1.position = ccp(0+l2aSize.width/2,+100+l2aSize.height/2);
+		l3a2.position = ccp(0+l2aSize.width/2,+100+l2aSize.height/2);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
@@ -2680,7 +2780,7 @@ Class restartAction()
 		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
-		l3b1.position = ccp(0+l2bSize.width/2,+100+l2bSize.height/2);
+		l3b2.position = ccp(0+l2bSize.width/2,+100+l2bSize.height/2);
 		[l2b addChild:l3b2];
 		
 	}	
@@ -2754,7 +2854,7 @@ Class restartAction()
 		// child left top
 		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3a2.scale = 0.45f;
-		l3a1.position = ccp(0+l2aSize.width/2,+100+l2aSize.height/2);
+		l3a2.position = ccp(0+l2aSize.width/2,+100+l2aSize.height/2);
 		[l2a addChild:l3a2];
 		
 		// child right bottom
@@ -2768,7 +2868,7 @@ Class restartAction()
 		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
 		l3b2.scale = 0.45f;
 		l3b2.flipY = YES;
-		l3b1.position = ccp(0+l2bSize.width/2,+100+l2bSize.height/2);
+		l3b2.position = ccp(0+l2bSize.width/2,+100+l2bSize.height/2);
 		[l2b addChild:l3b2];
 		
 	}	
