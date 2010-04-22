@@ -1,6 +1,6 @@
 //
-// Parallax Demo
-// a cocos2d example
+// ActionManager Test
+// a cocos2d test
 // http://www.cocos2d-iphone.org
 //
 
@@ -15,6 +15,7 @@ enum {
 	kTagGrossini,
 	kTagSister,
 	kTagSlider,
+	kTagSequence,
 };
 
 static int sceneIdx=-1;
@@ -22,6 +23,7 @@ static NSString *transitions[] = {
 			@"CrashTest",
 			@"LogicTest",
 			@"PauseTest",
+			@"RemoveTest",
 };
 
 Class nextAction()
@@ -68,6 +70,13 @@ Class restartAction()
 	[self addChild: label z:1];
 	[label setPosition: ccp(s.width/2, s.height-50)];
 	
+	NSString *subtitle = [self subtitle];
+	if( subtitle ) {
+		CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+		[self addChild:l z:1];
+		[l setPosition:ccp(s.width/2, s.height-80)];
+	}	
+	
 	CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 	CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 	CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
@@ -113,6 +122,11 @@ Class restartAction()
 {
 	return @"No title";
 }
+-(NSString*) subtitle
+{
+	return nil;
+}
+
 @end
 
 #pragma mark -
@@ -208,14 +222,7 @@ Class restartAction()
 	// otherwise the paused action will be resumed at 'onEnter' time
 	//
 	[super onEnter];
-	
-	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	CCLabel* l = [CCLabel labelWithString:@"After 5 seconds grossini should move" fontName:@"Thonburi" fontSize:16];
-	[self addChild:l];
-	[l setPosition:ccp(s.width/2, 245)];
-	
-	
 	//
 	// Also, this test MUST be done, after [super onEnter]
 	//
@@ -240,6 +247,55 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Pause Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"After 5 seconds grossini should move";
+}
+@end
+
+#pragma mark -
+#pragma mark RemoveTest
+
+@implementation RemoveTest
+-(id) init
+{
+	if( (self= [super init]) ) {
+	
+		CCMoveBy* move = [CCMoveBy actionWithDuration:2 
+											 position:ccp(200,0)];
+		
+		CCCallFunc* callback = [CCCallFunc actionWithTarget:self 
+												   selector:@selector(stopAction:)];
+		
+		CCSequence* sequence = [CCSequence actions:move, callback, nil];
+		sequence.tag = kTagSequence;
+		
+		CCSprite *child = [CCSprite spriteWithFile:@"grossini.png"];
+		[child setPosition:ccp(200,200)];
+		[self addChild:child z:1 tag:kTagGrossini];
+		
+		[child runAction:sequence];
+	}
+	
+	return self;
+}
+
+-(void) stopAction:(id)sender
+{
+	id sprite = [self getChildByTag:kTagGrossini];
+	[sprite stopActionByTag:kTagSequence];
+}
+
+-(NSString *) title
+{
+	return @"Remove Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Should not crash. Testing issue #841";
 }
 @end
 

@@ -109,9 +109,16 @@ static CCActionManager *_sharedManager = nil;
 }
 
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
-{
+{	
+	id action = element->actions->arr[index];
+
+	if( action == element->currentAction && !element->currentActionSalvaged ) {
+		[element->currentAction retain];
+		element->currentActionSalvaged = YES;
+	}
+	
 	ccArrayRemoveObjectAtIndex(element->actions, index);
-			
+
 	// update actionIndex in case we are in tick:, looping over the actions
 	if( element->actionIndex >= index )
 		element->actionIndex--;
@@ -225,10 +232,6 @@ static CCActionManager *_sharedManager = nil;
 	if( element ) {
 		NSUInteger i = ccArrayGetIndexOfObject(element->actions, action);
 		if( i != NSNotFound ) {
-			if( action == element->currentAction && !element->currentActionSalvaged ) {
-				[element->currentAction retain];
-				element->currentActionSalvaged = YES;
-			}
 			
 			[self removeActionAtIndex:i hashElement:element];
 		}
