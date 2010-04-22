@@ -33,7 +33,7 @@ check_dst_dir(){
 			echo "removing old libraries: ${DST_DIR}"
 			rm -rf $DST_DIR
 		else
-		    echo "template already installed"
+		    echo "templates already installed. To force a re-install use the '-f' parameter"
 		    exit 1
 		fi
 	fi
