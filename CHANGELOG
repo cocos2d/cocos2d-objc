@@ -1,6 +1,7 @@
 version 0.99.2 - XX-Apr-2010
  . [FIX] ActionManager: removeByTag doesn't crash if action is also running (issue #841)
  . [FIX] Grid: simplied code, easier to maintain, added support for flipped textures
+ . [FIX] Sprite/SpriteSheet: reorderChild works as expected when using subchildren (issue #767)
  . [FIX] Xcode: compiles OK with LLVM Compiler SDK 4.0beta2
  . [3RD] Box2d: Updatd to SVN r100 (v2.1.2)
 
