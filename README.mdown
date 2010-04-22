@@ -3,9 +3,7 @@ cocos2d for iPhone
 
 [cocos2d for iPhone][1] is a framework for building 2D games, demos, and other
 graphical/interactive applications for iPod Touch, iPhone and iPad. 
-It is based on the [cocos2d][2] design:
-
-  * it uses the same API and design, but instead of using python it, uses objective-c.
+It is based on the [cocos2d][2] design but instead of using python it, uses objective-c.
 
 
 Main features
@@ -90,9 +88,9 @@ How to start a new game
 
 Run the 'install-templates.sh' script as root:  
     $ cd cocos2d-iphone
-    $ sudo ./install-templates.sh
+    $ sudo ./install-templates.sh -f
 And then open XCode -> New Project -> User Templates -> cocos2d
 
 
-[1]: http://www.cocos2d-iphone.org "cocos2d iPhone"
+[1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"
