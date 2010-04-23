@@ -257,11 +257,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
 	//	-> _renderBuffer must be the the RENDER BUFFER
-	
+
+#ifdef __IPHONE_4_0
 	if( _depthFormat && _discardFramebufferSupported ) {
 		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
 		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 	}
+#endif // __IPHONE_4_0
 	
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
