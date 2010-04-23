@@ -1,5 +1,6 @@
 version 0.99.2 - XX-Apr-2010
  . [FIX] ActionManager: removeByTag doesn't crash if action is also running (issue #841)
+ . [FIX] Director: fixed start-up flicker (issue #350)
  . [FIX] EAGLView: If discard-framebuffer is supported and using depthBuffer, then discard it before swapping (issue #XXX)
  . [FIX] Grid: simplied code, easier to maintain, added support for flipped textures
  . [FIX] Sprite/SpriteSheet: reorderChild works as expected when using subchildren (issue #767)

@@ -42,7 +42,7 @@
 	[director setDisplayFPS:YES];
 	
 	// frames per second
-	[director setAnimationInterval:1.0/60];	
+	[director setAnimationInterval:1.0/60];
 	
 	// attach cocos2d to a window
 	[director attachInView:window];
