@@ -467,10 +467,9 @@
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
-	if( !(self=[super initWithDuration: t]) )
-		return nil;
-
-	angle = a;
+	if( (self=[super initWithDuration: t]) ) {
+		angle = a;
+	}
 	return self;
 }
 
@@ -513,10 +512,9 @@
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
-	if( !(self=[super initWithDuration: t]) )
-		return nil;
-	
-	endPosition = p;
+	if( (self=[super initWithDuration: t]) ) {	
+		endPosition = p;
+	}
 	return self;
 }
 
@@ -553,10 +551,9 @@
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
-	if( !(self=[super initWithDuration: t]) )
-		return nil;
-
-	delta = p;
+	if( (self=[super initWithDuration: t]) ) {
+		delta = p;
+	}
 	return self;
 }
 
@@ -593,12 +590,11 @@
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(int)j
 {
-	if( !(self=[super initWithDuration:t]) )
-		return nil;
-
-	delta = pos;
-	height = h;
-	jumps = j;
+	if( (self=[super initWithDuration:t]) ) {
+		delta = pos;
+		height = h;
+		jumps = j;
+	}
 	return self;
 }
 
@@ -1044,10 +1040,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithAction: (CCFiniteTimeAction*) action
 {
-	if( !(self=[super initWithDuration: [action duration]]) )
-		return nil;
+	if( (self=[super initWithDuration: [action duration]]) ) {
 	
-	other = [action retain];
+		other = [action retain];
+	}
 	return self;
 }
 

@@ -43,6 +43,8 @@
 				free( quads );
 			if(indices)
 				free(indices);
+			
+			[self release];
 			return nil;
 		}
 		
