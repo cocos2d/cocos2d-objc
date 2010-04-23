@@ -50,6 +50,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		correct channel in SimpleAudioEngine patch
 		Added Ease Elastic actions
 		oapcity + color works with premultiplied textures. patch.
+		Director: fixed startup flicker
 	* cjlesh:
 		RotateTo action rotates to shortest angle patch
 	* Clinth Harris:
@@ -259,6 +260,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMX maps support visibility and opacity patch
 		TMX maps possibility to access the layers patch
 		Actions: Animate copy originalFrame patch
+		Director: fixed startup flicker
 	* Rolando Abarca (funkaster) (http://rolando.cl/):
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
