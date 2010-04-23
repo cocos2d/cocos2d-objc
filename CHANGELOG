@@ -1,5 +1,6 @@
 version 0.99.2 - XX-Apr-2010
  . [FIX] ActionManager: removeByTag doesn't crash if action is also running (issue #841)
+ . [FIX] EAGLView: If discard-framebuffer is supported and using depthBuffer, then discard it before swapping (issue #XXX)
  . [FIX] Grid: simplied code, easier to maintain, added support for flipped textures
  . [FIX] Sprite/SpriteSheet: reorderChild works as expected when using subchildren (issue #767)
  . [FIX] Xcode: compiles OK with LLVM Compiler SDK 4.0beta2
@@ -29,7 +30,7 @@ version 0.99.2-rc - 15-Apr-2010
  . [FIX] SpriteSheet: Improved doxygen documentation (issue #827)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
  . [FIX] Xcode: uses optimized binary. ARMv7 binary has thumb-2 enabled (issue #XXX)
- . [3RD] Box2d: updated to SVN r91 (v2.1.1) (issue #XXX)
+ . [3RD] Box2d: updated to SVN r91 (v2.1.1)
  
 version 0.99.1 - 19-Mar-2010
  . [FIX] Menu: If menu is not visible it doesn't receive touches (issue #88)

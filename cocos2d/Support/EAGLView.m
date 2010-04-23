@@ -66,6 +66,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "EAGLView.h"
 #import "OpenGL_Internal.h"
 #import "ccMacros.h"
+#import "CCConfiguration.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -195,6 +196,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[self release];
 			return nil;
 		}
+		
+		_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	}
 
 	return self;
@@ -254,6 +257,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
 	//	-> _renderBuffer must be the the RENDER BUFFER
+	
+	if( _depthFormat && _discardFramebufferSupported ) {
+		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
+		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+	}
+	
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 

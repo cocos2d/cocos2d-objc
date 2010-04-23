@@ -97,12 +97,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	NSString*				_format;
 	GLuint					_depthFormat;
 	BOOL					_autoresize;
-	EAGLContext				*_context;
+	EAGLContext			*_context;
 	GLuint					_framebuffer;
 	GLuint					_renderbuffer;
 	GLuint					_depthBuffer;
 	CGSize					_size;
 	BOOL					_hasBeenCurrent;
+	BOOL					_discardFramebufferSupported;
 	id<EAGLViewDelegate>	_delegate;
 	id<EAGLTouchDelegate>   touchDelegate;
 }

@@ -247,7 +247,7 @@ static CCDirector *_sharedDirector = nil;
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	glPopMatrix();
-
+	
 	/* swap buffers */
 	[openGLView_ swapBuffers];	
 }
@@ -486,10 +486,7 @@ static CCDirector *_sharedDirector = nil;
 	// add the glview to his (new) superview
 	[view addSubview:openGLView_];
 	
-	// set the background color of the glview
-	//	[backgroundColor setOpenGLClearColor];
-	
-	
+		
 	NSAssert( [self isOpenGLAttached], @"FATAL: Director: Could not attach OpenGL view");
 
 	[self initGLDefaultValues];
