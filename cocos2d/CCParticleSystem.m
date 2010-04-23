@@ -75,6 +75,7 @@
 
 		if( ! particles ) {
 			NSLog(@"Particle system: not enough memory");
+			[self release];
 			return nil;
 		}
 		

@@ -197,6 +197,8 @@ struct transformValues_ {
 		rect.size = texture.contentSize;
 		return [self initWithTexture:texture rect:rect];
 	}
+
+	[self release];
 	return nil;
 }
 
@@ -207,6 +209,8 @@ struct transformValues_ {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture )
 		return [self initWithTexture:texture rect:rect];
+
+	[self release];
 	return nil;
 }
 
