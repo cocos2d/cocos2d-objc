@@ -511,18 +511,25 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 
 	if( (self = [super init]) ) {
 		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
-		pvr.retainName = YES;	// don't dealloc texture on release
-		
-		_name = pvr.name;	// texture id
-		_maxS = 1.0f;
-		_maxT = 1.0f;
-		_width = pvr.width;		// width
-		_height = pvr.height;	// height
-		_size = CGSizeMake(_width, _height);
+		if( pvr ) {
+			pvr.retainName = YES;	// don't dealloc texture on release
+			
+			_name = pvr.name;	// texture id
+			_maxS = 1.0f;
+			_maxT = 1.0f;
+			_width = pvr.width;		// width
+			_height = pvr.height;	// height
+			_size = CGSizeMake(_width, _height);
 
-		[pvr release];
+			[pvr release];
 
-		[self setAntiAliasTexParameters];
+			[self setAntiAliasTexParameters];
+		} else {
+
+			CCLOG(@"cocos2d: Couldn't load PVR image");
+			[self release];
+			return nil;
+		}
 	}
 	return self;
 }

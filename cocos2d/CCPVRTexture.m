@@ -244,6 +244,7 @@ typedef struct _PVRTexHeader
 {
 	if (![url isFileURL])
 	{
+		CCLOG(@"cocos2d: CCPVRTexture: Only files are supported");
 		[self release];
 		return nil;
 	}

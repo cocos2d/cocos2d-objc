@@ -244,6 +244,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMXTiledMaps: objects supports offsets. patch.
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
+	* palter AT clozure.com
+		Texture fails gracefully if PVR image can't be loaded (patch)
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
