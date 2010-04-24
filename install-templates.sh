@@ -32,7 +32,7 @@ copy_files(){
 }
 
 check_dst_dir(){
-	if [[ $DST_DIR ]];  then
+	if [[ -d $DST_DIR ]];  then
 		if [[ $force ]]; then
 			echo "removing old libraries: ${DST_DIR}"
 			rm -rf $DST_DIR
