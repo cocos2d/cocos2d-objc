@@ -149,6 +149,9 @@ copy_project_templates(){
 copy_file_templates(){
 	TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/File Templates/${COCOS2D_VER}/"
 	
+	DST_DIR="$TEMPLATE_DIR"
+	check_dst_dir
+
 	if [[ ! -d "$TEMPLATE_DIR" ]]; then
 		echo '...creating cocos2d template directory'
 		echo ''
@@ -156,10 +159,6 @@ copy_file_templates(){
 	fi
 	
 	print_template_banner "Installing CCNode file templates..."
-	
-	DST_DIR="$TEMPLATE_DIR"
-	
-	check_dst_dir
 	
 	copy_files "templates/file-templates/CCNode class" "$DST_DIR"
 	
