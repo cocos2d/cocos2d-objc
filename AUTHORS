@@ -143,6 +143,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
 	* Jon Kean:
 		PointParticle asserts if size > 64
+		Fixed memory leaks when initialization of some nodes failed
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
