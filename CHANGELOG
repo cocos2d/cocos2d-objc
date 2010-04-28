@@ -1,4 +1,4 @@
-version 0.99.2 - XX-Apr-2010
+version 0.99.2 - 28-Apr-2010
  . [FIX] ActionManager: removeByTag doesn't crash if action is also running (issue #841)
  . [FIX] cocos2d/*.m: fixed several memory leaks in cases where initXXX failed (issue #XXX)
  . [FIX] Director: fixed start-up flicker (issue #350)
