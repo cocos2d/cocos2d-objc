@@ -22,6 +22,7 @@
 	BOOL		supportsPVRTC_;
 	BOOL		supportsNPOT_;
 	BOOL		supportsBGRA8888_;
+	BOOL		supportsDiscardFramebuffer_;
 }
 
 /** the bundle we load everything from */
@@ -50,6 +51,12 @@
  @since v0.99.2
  */
 @property (nonatomic, readonly) BOOL supportsBGRA8888;
+
+/** Whether or not glDiscardFramebufferEXT is supported
+ 
+ @since v0.99.2
+ */
+@property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
 
 /** returns a shared instance of the CCConfiguration */
 +(CCConfiguration *) sharedConfiguration;

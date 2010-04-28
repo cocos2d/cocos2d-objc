@@ -41,10 +41,9 @@
 {
 	NSAssert( action!=nil, @"Ease: arguments must be non-nil");
   
-	if( !(self=[super initWithDuration: action.duration]) )
-		return nil;
-	
-	other = [action retain];
+	if( (self=[super initWithDuration: action.duration]) ) {
+		other = [action retain];
+	}
 	return self;
 }
 

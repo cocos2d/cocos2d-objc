@@ -12,6 +12,8 @@
     CCTextureAtlas *atlas;
 }
 -(NSString*) title;
+-(NSString*) subtitle;
+
 @end
 
 @interface CrashTest : ActionManagerTest
@@ -26,6 +28,11 @@
 
 
 @interface PauseTest : ActionManagerTest
+{
+}
+@end
+
+@interface RemoveTest : ActionManagerTest
 {
 }
 @end

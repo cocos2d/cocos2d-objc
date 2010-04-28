@@ -1,6 +1,13 @@
-version 0.99.2 - XX-Apr-2010
- . [FIX] Grid: simplied code, easier to maintain, added support for flipped textures
+version 0.99.2 - 28-Apr-2010
+ . [FIX] ActionManager: removeByTag doesn't crash if action is also running (issue #841)
+ . [FIX] cocos2d/*.m: fixed several memory leaks in cases where initXXX failed (issue #XXX)
+ . [FIX] Director: fixed start-up flicker (issue #350)
+ . [FIX] EAGLView: If discard-framebuffer is supported and using depthBuffer, then discard it before swapping (SDK4.0 only) (issue #XXX)
+ . [FIX] Grid: simplied code, easier to maintain, added support for flipped textures (part of issue #448)
+ . [FIX] Sprite/SpriteSheet: reorderChild works as expected when using subchildren (issue #767)
+ . [FIX] Templates: installer has better error messages and checks the installer conditions in a better way (issue #842)
  . [FIX] Xcode: compiles OK with LLVM Compiler SDK 4.0beta2
+ . [3RD] Box2d: Updatd to SVN r100 (v2.1.2)
 
 version 0.99.2-rc - 15-Apr-2010
  . [NEW] Actions: Added blocks actions via PLBlocks: CCCallBlock and CCCallBlockN (issue #699)
@@ -26,7 +33,7 @@ version 0.99.2-rc - 15-Apr-2010
  . [FIX] SpriteSheet: Improved doxygen documentation (issue #827)
  . [FIX] SpriteFrameCache: logs warning if frame is not found
  . [FIX] Xcode: uses optimized binary. ARMv7 binary has thumb-2 enabled (issue #XXX)
- . [3RD] Box2d: updated to SVN r91 (v2.1.1) (issue #XXX)
+ . [3RD] Box2d: updated to SVN r91 (v2.1.1)
  
 version 0.99.1 - 19-Mar-2010
  . [FIX] Menu: If menu is not visible it doesn't receive touches (issue #88)

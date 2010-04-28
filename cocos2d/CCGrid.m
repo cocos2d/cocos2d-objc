@@ -78,6 +78,7 @@
 	void *data = malloc((int)(textureSize * textureSize * 4));
 	if( ! data ) {
 		CCLOG(@"cocos2d: CCGrid: not enough memory");
+		[self release];
 		return nil;
 	}
 	memset(data, 0, (int)(textureSize * textureSize * 4));

@@ -179,11 +179,10 @@
 
 -(id) initWithAction: (CCIntervalAction*) action speed:(float)r
 {
-	if( !(self=[super init]) )
-		return nil;
-	
-	other = [action retain];
-	speed = r;
+	if( (self=[super init]) ) {
+		other = [action retain];
+		speed = r;
+	}
 	return self;
 }
 

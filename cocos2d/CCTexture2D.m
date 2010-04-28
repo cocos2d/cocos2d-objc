@@ -178,6 +178,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	if(CGImage == NULL) {
 		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
+		[self release];
 		return nil;
 	}
 	
@@ -198,6 +199,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	unsigned maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
 		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", POTWide, POTHigh, maxTextureSize, maxTextureSize);
+		[self release];
 		return nil;
 	}
 	
@@ -468,6 +470,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 
 	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		[self release];
 		return nil;
 	}
 
@@ -502,23 +505,31 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 {
 	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		[self release];
 		return nil;
 	}	
 
 	if( (self = [super init]) ) {
 		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
-		pvr.retainName = YES;	// don't dealloc texture on release
-		
-		_name = pvr.name;	// texture id
-		_maxS = 1.0f;
-		_maxT = 1.0f;
-		_width = pvr.width;		// width
-		_height = pvr.height;	// height
-		_size = CGSizeMake(_width, _height);
+		if( pvr ) {
+			pvr.retainName = YES;	// don't dealloc texture on release
+			
+			_name = pvr.name;	// texture id
+			_maxS = 1.0f;
+			_maxT = 1.0f;
+			_width = pvr.width;		// width
+			_height = pvr.height;	// height
+			_size = CGSizeMake(_width, _height);
 
-		[pvr release];
+			[pvr release];
 
-		[self setAntiAliasTexParameters];
+			[self setAntiAliasTexParameters];
+		} else {
+
+			CCLOG(@"cocos2d: Couldn't load PVR image");
+			[self release];
+			return nil;
+		}
 	}
 	return self;
 }

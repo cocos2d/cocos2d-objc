@@ -54,6 +54,10 @@
 {}
 @end
 
+@interface SpriteSheetReorderIssue767 : SpriteDemo
+{}
+@end
+
 @interface SpriteZVertex : SpriteDemo
 {
 	int dir;

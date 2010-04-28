@@ -174,36 +174,17 @@ const int defaultCapacity = 29;
 // override reorderChild
 -(void) reorderChild:(CCSprite*)child z:(int)z
 {
-	// reorder child in the children array
-	[super reorderChild:child z:z];
+	NSAssert( child != nil, @"Child must be non-nil");
+	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );
 	
+	if( z == child.zOrder )
+		return;
 	
-	// What's the new atlas index ?
-	NSUInteger newAtlasIndex = 0;
-	for( CCSprite *sprite in children_) {
-		if( [sprite isEqual:child] )
-			break;
-		newAtlasIndex++;
-	}
-	
-	if( newAtlasIndex != child.atlasIndex ) {
-		
-		[textureAtlas_ insertQuadFromIndex:child.atlasIndex atIndex:newAtlasIndex];
-		
-		// update descendats (issue #708)
-		[child retain];
-		[descendants_ removeObjectAtIndex: child.atlasIndex];
-		[descendants_ insertObject:child atIndex:newAtlasIndex];
-		[child release];
-		
-		// update atlas index
-		NSUInteger count = MAX( newAtlasIndex, child.atlasIndex);
-		NSUInteger index = MIN( newAtlasIndex, child.atlasIndex);
-		for( ; index < count+1 ; index++ ) {
-			CCSprite *sprite = (CCSprite *)[children_ objectAtIndex:index];
-			[sprite setAtlasIndex: index];
-		}
-	}
+	// XXX: Instead of removing/adding, it is more efficient to reorder manually
+	[child retain];
+	[self removeChild:child cleanup:NO];
+	[self addChild:child z:z];
+	[child release];
 }
 
 // override removeChild:
@@ -363,9 +344,6 @@ const int defaultCapacity = 29;
 	if( childIndex > 0 )
 		previous = [brothers objectAtIndex:childIndex-1];
 	
-//	if( childIndex < [brothers count] -1 )
-//		next = [brothers objectAtIndex:childIndex+1];
-
 	// first child of the sprite sheet
 	if( ignoreParent ) {
 		if( childIndex == 0 )

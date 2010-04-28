@@ -25,9 +25,9 @@
 #define CC_FONT_LABEL_SUPPORT	1
 
 /**
- If enabled, the the FPS will be drawn using CCLabelAtlas (fast rendering).
+ If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
  You will need to add the fps_images.png to your project.
- If disabled, the FPS will be rendered using Label (slow rendering)
+ If disabled, the FPS will be rendered using CCLabel (slow rendering)
  */
 #define CC_DIRECTOR_FAST_FPS	1
 
@@ -39,7 +39,7 @@
 #define CC_DIRECTOR_FPS_INTERVAL (0.1f)
 
 /**
- If enabled, and only when it is used with FastDirector, the main loop will wait 0.04 seconds to
+ If enabled, and only when it is used with CCFastDirector, the main loop will wait 0.04 seconds to
  dispatch all the events, even if there are not events to dispatch.
  If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  Otherwise, it is safe to leave it disabled.
@@ -48,19 +48,19 @@
 // #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 1
 
 /**
- If enabled, the CocosNode objects (Sprite,Label,etc) will be able to render in subpixels.
+ If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  */
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
 
 /**
- If enabled, the Sprites rendered with the SpriteSheet will be able to render in subpixels.
+ If enabled, the CCSprite objects rendered with CCSpriteSheet will be able to render in subpixels.
  If disabled, integer pixels will be used.
  */
 #define CC_SPRITESHEET_RENDER_SUBPIXEL	1
 
 /** 
- If enabled, the CCTextureAtlas object will use VBO instead of vertex list (recommended by Apple)
+ If enabled, the CCTextureAtlas object will use VBO instead of vertex list (VBO is recommended by Apple)
  @since v0.99.0
  */
 #define CC_TEXTURE_ATLAS_USES_VBO 1
@@ -94,35 +94,32 @@
 
 /**
  If enabled, all subclasses of CCSprite will draw a bounding box
- Useful for debugging purposes only.
- It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_SPRITE_DEBUG_DRAW 1
 
 /**
  If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
- Useful for debugging purposes only.
- It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_SPRITESHEET_DEBUG_DRAW 1
 
 /**
  If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
- Useful for debugging purposes only.
- It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_BITMAPFONTATLAS_DEBUG_DRAW 1
 
 /**
  If enabled, all subclasses of LabeltAtlas will draw a bounding box
- Useful for debugging purposes only.
- It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_LABELATLAS_DEBUG_DRAW 1
 
 /**
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
- once per second showing average time (in milliseconds) required to execute the specific routine(s)
+ once per second showing average time (in milliseconds) required to execute the specific routine(s).
+ Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_ENABLE_PROFILERS 1
 
