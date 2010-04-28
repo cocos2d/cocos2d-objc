@@ -1112,40 +1112,6 @@
 		50A29E281153D9CF00D87F08 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A29E101153D9CF00D87F08 /* pngwrite.c */; };
 		50A29E291153D9CF00D87F08 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A29E111153D9CF00D87F08 /* pngwtran.c */; };
 		50A29E2A1153D9CF00D87F08 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A29E121153D9CF00D87F08 /* pngwutil.c */; };
-		50A61CE9114FC32B00A320D4 /* asm_arm.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CC0114FC32B00A320D4 /* asm_arm.h */; };
-		50A61CEA114FC32B00A320D4 /* backends.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CC2114FC32B00A320D4 /* backends.h */; };
-		50A61CEB114FC32B00A320D4 /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CC3114FC32B00A320D4 /* bitwise.c */; };
-		50A61CEC114FC32B00A320D4 /* block.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CC4114FC32B00A320D4 /* block.c */; };
-		50A61CED114FC32B00A320D4 /* block.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CC5114FC32B00A320D4 /* block.h */; };
-		50A61CEE114FC32B00A320D4 /* codebook.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CC7114FC32B00A320D4 /* codebook.c */; };
-		50A61CEF114FC32B00A320D4 /* codebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CC8114FC32B00A320D4 /* codebook.h */; };
-		50A61CF0114FC32B00A320D4 /* codec_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CC9114FC32B00A320D4 /* codec_internal.h */; };
-		50A61CF1114FC32B00A320D4 /* config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CCA114FC32B00A320D4 /* config_types.h */; };
-		50A61CF2114FC32B00A320D4 /* floor0.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CCD114FC32B00A320D4 /* floor0.c */; };
-		50A61CF3114FC32B00A320D4 /* floor1.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CCE114FC32B00A320D4 /* floor1.c */; };
-		50A61CF4114FC32B00A320D4 /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CCF114FC32B00A320D4 /* framing.c */; };
-		50A61CF5114FC32B00A320D4 /* info.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CD0114FC32B00A320D4 /* info.c */; };
-		50A61CF6114FC32B00A320D4 /* ivorbiscodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CD1114FC32B00A320D4 /* ivorbiscodec.h */; };
-		50A61CF7114FC32B00A320D4 /* ivorbisfile_example.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CD2114FC32B00A320D4 /* ivorbisfile_example.c */; };
-		50A61CF8114FC32B00A320D4 /* ivorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CD3114FC32B00A320D4 /* ivorbisfile.h */; };
-		50A61CF9114FC32B00A320D4 /* lsp_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CD4114FC32B00A320D4 /* lsp_lookup.h */; };
-		50A61CFA114FC32B00A320D4 /* mapping0.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CD6114FC32B00A320D4 /* mapping0.c */; };
-		50A61CFB114FC32B00A320D4 /* mdct_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CD7114FC32B00A320D4 /* mdct_lookup.h */; };
-		50A61CFC114FC32B00A320D4 /* mdct.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CD8114FC32B00A320D4 /* mdct.c */; };
-		50A61CFD114FC32B00A320D4 /* mdct.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CD9114FC32B00A320D4 /* mdct.h */; };
-		50A61CFE114FC32B00A320D4 /* misc.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CDA114FC32B00A320D4 /* misc.h */; };
-		50A61CFF114FC32B00A320D4 /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CDB114FC32B00A320D4 /* ogg.h */; };
-		50A61D00114FC32B00A320D4 /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CDC114FC32B00A320D4 /* os_types.h */; };
-		50A61D01114FC32B00A320D4 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CDD114FC32B00A320D4 /* os.h */; };
-		50A61D02114FC32B00A320D4 /* registry.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CDF114FC32B00A320D4 /* registry.c */; };
-		50A61D03114FC32B00A320D4 /* registry.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CE0114FC32B00A320D4 /* registry.h */; };
-		50A61D04114FC32B00A320D4 /* res012.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CE1114FC32B00A320D4 /* res012.c */; };
-		50A61D05114FC32B00A320D4 /* sharedbook.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CE2114FC32B00A320D4 /* sharedbook.c */; };
-		50A61D06114FC32B00A320D4 /* synthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CE3114FC32B00A320D4 /* synthesis.c */; };
-		50A61D07114FC32B00A320D4 /* vorbisfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CE5114FC32B00A320D4 /* vorbisfile.c */; };
-		50A61D08114FC32B00A320D4 /* window_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CE6114FC32B00A320D4 /* window_lookup.h */; };
-		50A61D09114FC32B00A320D4 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 50A61CE7114FC32B00A320D4 /* window.c */; };
-		50A61D0A114FC32B00A320D4 /* window.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A61CE8114FC32B00A320D4 /* window.h */; };
 		50A7839D0F3AFCE500104C45 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		50A7839E0F3AFCE500104C45 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		50A7839F0F3AFCE500104C45 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
@@ -1171,6 +1137,40 @@
 		50AC64CA10C0468200C19890 /* b2FrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC64C610C0468200C19890 /* b2FrictionJoint.h */; };
 		50AC64CB10C0468200C19890 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC64C710C0468200C19890 /* b2WeldJoint.cpp */; };
 		50AC64CC10C0468200C19890 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AC64C810C0468200C19890 /* b2WeldJoint.h */; };
+		50ACD0B5117F8E450085FAE7 /* asm_arm.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD08C117F8E450085FAE7 /* asm_arm.h */; };
+		50ACD0B6117F8E450085FAE7 /* backends.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD08E117F8E450085FAE7 /* backends.h */; };
+		50ACD0B7117F8E450085FAE7 /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD08F117F8E450085FAE7 /* bitwise.c */; };
+		50ACD0B8117F8E450085FAE7 /* block.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD090117F8E450085FAE7 /* block.c */; };
+		50ACD0B9117F8E450085FAE7 /* block.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD091117F8E450085FAE7 /* block.h */; };
+		50ACD0BA117F8E450085FAE7 /* codebook.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD093117F8E450085FAE7 /* codebook.c */; };
+		50ACD0BB117F8E450085FAE7 /* codebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD094117F8E450085FAE7 /* codebook.h */; };
+		50ACD0BC117F8E450085FAE7 /* codec_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD095117F8E450085FAE7 /* codec_internal.h */; };
+		50ACD0BD117F8E450085FAE7 /* config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD096117F8E450085FAE7 /* config_types.h */; };
+		50ACD0BE117F8E450085FAE7 /* floor0.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD099117F8E450085FAE7 /* floor0.c */; };
+		50ACD0BF117F8E450085FAE7 /* floor1.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD09A117F8E450085FAE7 /* floor1.c */; };
+		50ACD0C0117F8E450085FAE7 /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD09B117F8E450085FAE7 /* framing.c */; };
+		50ACD0C1117F8E450085FAE7 /* info.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD09C117F8E450085FAE7 /* info.c */; };
+		50ACD0C2117F8E450085FAE7 /* ivorbiscodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD09D117F8E450085FAE7 /* ivorbiscodec.h */; };
+		50ACD0C3117F8E450085FAE7 /* ivorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD09E117F8E450085FAE7 /* ivorbisfile.h */; };
+		50ACD0C4117F8E450085FAE7 /* ivorbisfile_example.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD09F117F8E450085FAE7 /* ivorbisfile_example.c */; };
+		50ACD0C5117F8E450085FAE7 /* lsp_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A0117F8E450085FAE7 /* lsp_lookup.h */; };
+		50ACD0C6117F8E450085FAE7 /* mapping0.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0A2117F8E450085FAE7 /* mapping0.c */; };
+		50ACD0C7117F8E450085FAE7 /* mdct.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0A3117F8E450085FAE7 /* mdct.c */; };
+		50ACD0C8117F8E450085FAE7 /* mdct.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A4117F8E450085FAE7 /* mdct.h */; };
+		50ACD0C9117F8E450085FAE7 /* mdct_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A5117F8E450085FAE7 /* mdct_lookup.h */; };
+		50ACD0CA117F8E450085FAE7 /* misc.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A6117F8E450085FAE7 /* misc.h */; };
+		50ACD0CB117F8E450085FAE7 /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A7117F8E450085FAE7 /* ogg.h */; };
+		50ACD0CC117F8E450085FAE7 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A8117F8E450085FAE7 /* os.h */; };
+		50ACD0CD117F8E450085FAE7 /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0A9117F8E450085FAE7 /* os_types.h */; };
+		50ACD0CE117F8E450085FAE7 /* registry.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0AB117F8E450085FAE7 /* registry.c */; };
+		50ACD0CF117F8E450085FAE7 /* registry.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0AC117F8E450085FAE7 /* registry.h */; };
+		50ACD0D0117F8E450085FAE7 /* res012.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0AD117F8E450085FAE7 /* res012.c */; };
+		50ACD0D1117F8E450085FAE7 /* sharedbook.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0AE117F8E450085FAE7 /* sharedbook.c */; };
+		50ACD0D2117F8E450085FAE7 /* synthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0AF117F8E450085FAE7 /* synthesis.c */; };
+		50ACD0D3117F8E450085FAE7 /* vorbisfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0B1117F8E450085FAE7 /* vorbisfile.c */; };
+		50ACD0D4117F8E450085FAE7 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD0B2117F8E450085FAE7 /* window.c */; };
+		50ACD0D5117F8E450085FAE7 /* window.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0B3117F8E450085FAE7 /* window.h */; };
+		50ACD0D6117F8E450085FAE7 /* window_lookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ACD0B4117F8E450085FAE7 /* window_lookup.h */; };
 		50B2C5DE0E100EF000AE9530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50B2C5DF0E100EF000AE9530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50B2C5E00E100EF000AE9530 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -1981,6 +1981,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		507D3381117F366A00B6684B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 504226120FC0B5D500B992F7;
+			remoteInfo = Box2dAccelTouchTest;
+		};
+		507D3383117F366A00B6684B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50010EBA103B3DB80059EC2E;
+			remoteInfo = Box2dTestBed;
+		};
+		507D3385117F366A00B6684B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B2C5CE0E100EF000AE9530;
+			remoteInfo = ChipmunkAccelTouchTest;
+		};
+		507D3387117F366A00B6684B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50B2CE450E129FD900AE9530;
+			remoteInfo = ChipmunkTestBed;
 		};
 		507FF8D0116D16F600B6FAB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2962,40 +2990,6 @@
 		50A29E131153D9CF00D87F08 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		50A29E141153D9CF00D87F08 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		50A29E151153D9CF00D87F08 /* Y2KINFO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Y2KINFO; sourceTree = "<group>"; };
-		50A61CC0114FC32B00A320D4 /* asm_arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asm_arm.h; sourceTree = "<group>"; };
-		50A61CC2114FC32B00A320D4 /* backends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backends.h; sourceTree = "<group>"; };
-		50A61CC3114FC32B00A320D4 /* bitwise.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
-		50A61CC4114FC32B00A320D4 /* block.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = block.c; sourceTree = "<group>"; };
-		50A61CC5114FC32B00A320D4 /* block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = block.h; sourceTree = "<group>"; };
-		50A61CC7114FC32B00A320D4 /* codebook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codebook.c; sourceTree = "<group>"; };
-		50A61CC8114FC32B00A320D4 /* codebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codebook.h; sourceTree = "<group>"; };
-		50A61CC9114FC32B00A320D4 /* codec_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codec_internal.h; sourceTree = "<group>"; };
-		50A61CCA114FC32B00A320D4 /* config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config_types.h; sourceTree = "<group>"; };
-		50A61CCD114FC32B00A320D4 /* floor0.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = floor0.c; sourceTree = "<group>"; };
-		50A61CCE114FC32B00A320D4 /* floor1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = floor1.c; sourceTree = "<group>"; };
-		50A61CCF114FC32B00A320D4 /* framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
-		50A61CD0114FC32B00A320D4 /* info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = info.c; sourceTree = "<group>"; };
-		50A61CD1114FC32B00A320D4 /* ivorbiscodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivorbiscodec.h; sourceTree = "<group>"; };
-		50A61CD2114FC32B00A320D4 /* ivorbisfile_example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ivorbisfile_example.c; sourceTree = "<group>"; };
-		50A61CD3114FC32B00A320D4 /* ivorbisfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivorbisfile.h; sourceTree = "<group>"; };
-		50A61CD4114FC32B00A320D4 /* lsp_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lsp_lookup.h; sourceTree = "<group>"; };
-		50A61CD6114FC32B00A320D4 /* mapping0.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapping0.c; sourceTree = "<group>"; };
-		50A61CD7114FC32B00A320D4 /* mdct_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdct_lookup.h; sourceTree = "<group>"; };
-		50A61CD8114FC32B00A320D4 /* mdct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mdct.c; sourceTree = "<group>"; };
-		50A61CD9114FC32B00A320D4 /* mdct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdct.h; sourceTree = "<group>"; };
-		50A61CDA114FC32B00A320D4 /* misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
-		50A61CDB114FC32B00A320D4 /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
-		50A61CDC114FC32B00A320D4 /* os_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
-		50A61CDD114FC32B00A320D4 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
-		50A61CDF114FC32B00A320D4 /* registry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = registry.c; sourceTree = "<group>"; };
-		50A61CE0114FC32B00A320D4 /* registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registry.h; sourceTree = "<group>"; };
-		50A61CE1114FC32B00A320D4 /* res012.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res012.c; sourceTree = "<group>"; };
-		50A61CE2114FC32B00A320D4 /* sharedbook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sharedbook.c; sourceTree = "<group>"; };
-		50A61CE3114FC32B00A320D4 /* synthesis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = synthesis.c; sourceTree = "<group>"; };
-		50A61CE5114FC32B00A320D4 /* vorbisfile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vorbisfile.c; sourceTree = "<group>"; };
-		50A61CE6114FC32B00A320D4 /* window_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window_lookup.h; sourceTree = "<group>"; };
-		50A61CE7114FC32B00A320D4 /* window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = window.c; sourceTree = "<group>"; };
-		50A61CE8114FC32B00A320D4 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		50A783C40F3AFCE500104C45 /* MotionStreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionStreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
 		50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
@@ -3005,6 +2999,43 @@
 		50AC64C610C0468200C19890 /* b2FrictionJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2FrictionJoint.h; sourceTree = "<group>"; };
 		50AC64C710C0468200C19890 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		50AC64C810C0468200C19890 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
+		50ACD08C117F8E450085FAE7 /* asm_arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asm_arm.h; sourceTree = "<group>"; };
+		50ACD08E117F8E450085FAE7 /* backends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backends.h; sourceTree = "<group>"; };
+		50ACD08F117F8E450085FAE7 /* bitwise.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
+		50ACD090117F8E450085FAE7 /* block.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = block.c; sourceTree = "<group>"; };
+		50ACD091117F8E450085FAE7 /* block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = block.h; sourceTree = "<group>"; };
+		50ACD092117F8E450085FAE7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
+		50ACD093117F8E450085FAE7 /* codebook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codebook.c; sourceTree = "<group>"; };
+		50ACD094117F8E450085FAE7 /* codebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codebook.h; sourceTree = "<group>"; };
+		50ACD095117F8E450085FAE7 /* codec_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codec_internal.h; sourceTree = "<group>"; };
+		50ACD096117F8E450085FAE7 /* config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config_types.h; sourceTree = "<group>"; };
+		50ACD098117F8E450085FAE7 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		50ACD099117F8E450085FAE7 /* floor0.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = floor0.c; sourceTree = "<group>"; };
+		50ACD09A117F8E450085FAE7 /* floor1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = floor1.c; sourceTree = "<group>"; };
+		50ACD09B117F8E450085FAE7 /* framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
+		50ACD09C117F8E450085FAE7 /* info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = info.c; sourceTree = "<group>"; };
+		50ACD09D117F8E450085FAE7 /* ivorbiscodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivorbiscodec.h; sourceTree = "<group>"; };
+		50ACD09E117F8E450085FAE7 /* ivorbisfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivorbisfile.h; sourceTree = "<group>"; };
+		50ACD09F117F8E450085FAE7 /* ivorbisfile_example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ivorbisfile_example.c; sourceTree = "<group>"; };
+		50ACD0A0117F8E450085FAE7 /* lsp_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lsp_lookup.h; sourceTree = "<group>"; };
+		50ACD0A2117F8E450085FAE7 /* mapping0.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapping0.c; sourceTree = "<group>"; };
+		50ACD0A3117F8E450085FAE7 /* mdct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mdct.c; sourceTree = "<group>"; };
+		50ACD0A4117F8E450085FAE7 /* mdct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdct.h; sourceTree = "<group>"; };
+		50ACD0A5117F8E450085FAE7 /* mdct_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdct_lookup.h; sourceTree = "<group>"; };
+		50ACD0A6117F8E450085FAE7 /* misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
+		50ACD0A7117F8E450085FAE7 /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
+		50ACD0A8117F8E450085FAE7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
+		50ACD0A9117F8E450085FAE7 /* os_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
+		50ACD0AA117F8E450085FAE7 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		50ACD0AB117F8E450085FAE7 /* registry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = registry.c; sourceTree = "<group>"; };
+		50ACD0AC117F8E450085FAE7 /* registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registry.h; sourceTree = "<group>"; };
+		50ACD0AD117F8E450085FAE7 /* res012.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res012.c; sourceTree = "<group>"; };
+		50ACD0AE117F8E450085FAE7 /* sharedbook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sharedbook.c; sourceTree = "<group>"; };
+		50ACD0AF117F8E450085FAE7 /* synthesis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = synthesis.c; sourceTree = "<group>"; };
+		50ACD0B1117F8E450085FAE7 /* vorbisfile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vorbisfile.c; sourceTree = "<group>"; };
+		50ACD0B2117F8E450085FAE7 /* window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = window.c; sourceTree = "<group>"; };
+		50ACD0B3117F8E450085FAE7 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
+		50ACD0B4117F8E450085FAE7 /* window_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window_lookup.h; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkAccelTouchTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkAccelTouchTest.h; path = tests/ChipmunkAccelTouchTest.h; sourceTree = "<group>"; };
@@ -4266,11 +4297,11 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				50ACD08B117F8E450085FAE7 /* Tremor */,
 				50E5F309110690D300E3FCF5 /* Chipmunk */,
 				505461F510616B0700AB7C52 /* FontLabel */,
 				506EDF01102FBC0C00A389B3 /* Box2d */,
 				5031650810277785003ACFE7 /* libpng */,
-				8E6CBE5F0F7A5A3E00D47B3A /* Tremor */,
 				501755AD0F335CAE00624901 /* TouchJSON */,
 			);
 			name = external;
@@ -4968,6 +4999,51 @@
 			path = experimental;
 			sourceTree = "<group>";
 		};
+		50ACD08B117F8E450085FAE7 /* Tremor */ = {
+			isa = PBXGroup;
+			children = (
+				50ACD0AA117F8E450085FAE7 /* README */,
+				50ACD092117F8E450085FAE7 /* CHANGELOG */,
+				50ACD098117F8E450085FAE7 /* COPYING */,
+				50ACD08C117F8E450085FAE7 /* asm_arm.h */,
+				50ACD08E117F8E450085FAE7 /* backends.h */,
+				50ACD08F117F8E450085FAE7 /* bitwise.c */,
+				50ACD090117F8E450085FAE7 /* block.c */,
+				50ACD091117F8E450085FAE7 /* block.h */,
+				50ACD093117F8E450085FAE7 /* codebook.c */,
+				50ACD094117F8E450085FAE7 /* codebook.h */,
+				50ACD095117F8E450085FAE7 /* codec_internal.h */,
+				50ACD096117F8E450085FAE7 /* config_types.h */,
+				50ACD099117F8E450085FAE7 /* floor0.c */,
+				50ACD09A117F8E450085FAE7 /* floor1.c */,
+				50ACD09B117F8E450085FAE7 /* framing.c */,
+				50ACD09C117F8E450085FAE7 /* info.c */,
+				50ACD09D117F8E450085FAE7 /* ivorbiscodec.h */,
+				50ACD09E117F8E450085FAE7 /* ivorbisfile.h */,
+				50ACD09F117F8E450085FAE7 /* ivorbisfile_example.c */,
+				50ACD0A0117F8E450085FAE7 /* lsp_lookup.h */,
+				50ACD0A2117F8E450085FAE7 /* mapping0.c */,
+				50ACD0A3117F8E450085FAE7 /* mdct.c */,
+				50ACD0A4117F8E450085FAE7 /* mdct.h */,
+				50ACD0A5117F8E450085FAE7 /* mdct_lookup.h */,
+				50ACD0A6117F8E450085FAE7 /* misc.h */,
+				50ACD0A7117F8E450085FAE7 /* ogg.h */,
+				50ACD0A8117F8E450085FAE7 /* os.h */,
+				50ACD0A9117F8E450085FAE7 /* os_types.h */,
+				50ACD0AB117F8E450085FAE7 /* registry.c */,
+				50ACD0AC117F8E450085FAE7 /* registry.h */,
+				50ACD0AD117F8E450085FAE7 /* res012.c */,
+				50ACD0AE117F8E450085FAE7 /* sharedbook.c */,
+				50ACD0AF117F8E450085FAE7 /* synthesis.c */,
+				50ACD0B1117F8E450085FAE7 /* vorbisfile.c */,
+				50ACD0B2117F8E450085FAE7 /* window.c */,
+				50ACD0B3117F8E450085FAE7 /* window.h */,
+				50ACD0B4117F8E450085FAE7 /* window_lookup.h */,
+			);
+			name = Tremor;
+			path = external/Tremor;
+			sourceTree = "<group>";
+		};
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -5440,48 +5516,6 @@
 			name = "Touch Dispatcher";
 			sourceTree = "<group>";
 		};
-		8E6CBE5F0F7A5A3E00D47B3A /* Tremor */ = {
-			isa = PBXGroup;
-			children = (
-				50A61CC0114FC32B00A320D4 /* asm_arm.h */,
-				50A61CC2114FC32B00A320D4 /* backends.h */,
-				50A61CC3114FC32B00A320D4 /* bitwise.c */,
-				50A61CC4114FC32B00A320D4 /* block.c */,
-				50A61CC5114FC32B00A320D4 /* block.h */,
-				50A61CC7114FC32B00A320D4 /* codebook.c */,
-				50A61CC8114FC32B00A320D4 /* codebook.h */,
-				50A61CC9114FC32B00A320D4 /* codec_internal.h */,
-				50A61CCA114FC32B00A320D4 /* config_types.h */,
-				50A61CCD114FC32B00A320D4 /* floor0.c */,
-				50A61CCE114FC32B00A320D4 /* floor1.c */,
-				50A61CCF114FC32B00A320D4 /* framing.c */,
-				50A61CD0114FC32B00A320D4 /* info.c */,
-				50A61CD1114FC32B00A320D4 /* ivorbiscodec.h */,
-				50A61CD2114FC32B00A320D4 /* ivorbisfile_example.c */,
-				50A61CD3114FC32B00A320D4 /* ivorbisfile.h */,
-				50A61CD4114FC32B00A320D4 /* lsp_lookup.h */,
-				50A61CD6114FC32B00A320D4 /* mapping0.c */,
-				50A61CD7114FC32B00A320D4 /* mdct_lookup.h */,
-				50A61CD8114FC32B00A320D4 /* mdct.c */,
-				50A61CD9114FC32B00A320D4 /* mdct.h */,
-				50A61CDA114FC32B00A320D4 /* misc.h */,
-				50A61CDB114FC32B00A320D4 /* ogg.h */,
-				50A61CDC114FC32B00A320D4 /* os_types.h */,
-				50A61CDD114FC32B00A320D4 /* os.h */,
-				50A61CDF114FC32B00A320D4 /* registry.c */,
-				50A61CE0114FC32B00A320D4 /* registry.h */,
-				50A61CE1114FC32B00A320D4 /* res012.c */,
-				50A61CE2114FC32B00A320D4 /* sharedbook.c */,
-				50A61CE3114FC32B00A320D4 /* synthesis.c */,
-				50A61CE5114FC32B00A320D4 /* vorbisfile.c */,
-				50A61CE6114FC32B00A320D4 /* window_lookup.h */,
-				50A61CE7114FC32B00A320D4 /* window.c */,
-				50A61CE8114FC32B00A320D4 /* window.h */,
-			);
-			name = Tremor;
-			path = external/Tremor;
-			sourceTree = "<group>";
-		};
 		8EDF3E8D0F6BD8CD00F54643 /* sfx */ = {
 			isa = PBXGroup;
 			children = (
@@ -5840,24 +5874,24 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50A61CE9114FC32B00A320D4 /* asm_arm.h in Headers */,
-				50A61CEA114FC32B00A320D4 /* backends.h in Headers */,
-				50A61CED114FC32B00A320D4 /* block.h in Headers */,
-				50A61CEF114FC32B00A320D4 /* codebook.h in Headers */,
-				50A61CF0114FC32B00A320D4 /* codec_internal.h in Headers */,
-				50A61CF1114FC32B00A320D4 /* config_types.h in Headers */,
-				50A61CF6114FC32B00A320D4 /* ivorbiscodec.h in Headers */,
-				50A61CF8114FC32B00A320D4 /* ivorbisfile.h in Headers */,
-				50A61CF9114FC32B00A320D4 /* lsp_lookup.h in Headers */,
-				50A61CFB114FC32B00A320D4 /* mdct_lookup.h in Headers */,
-				50A61CFD114FC32B00A320D4 /* mdct.h in Headers */,
-				50A61CFE114FC32B00A320D4 /* misc.h in Headers */,
-				50A61CFF114FC32B00A320D4 /* ogg.h in Headers */,
-				50A61D00114FC32B00A320D4 /* os_types.h in Headers */,
-				50A61D01114FC32B00A320D4 /* os.h in Headers */,
-				50A61D03114FC32B00A320D4 /* registry.h in Headers */,
-				50A61D08114FC32B00A320D4 /* window_lookup.h in Headers */,
-				50A61D0A114FC32B00A320D4 /* window.h in Headers */,
+				50ACD0B5117F8E450085FAE7 /* asm_arm.h in Headers */,
+				50ACD0B6117F8E450085FAE7 /* backends.h in Headers */,
+				50ACD0B9117F8E450085FAE7 /* block.h in Headers */,
+				50ACD0BB117F8E450085FAE7 /* codebook.h in Headers */,
+				50ACD0BC117F8E450085FAE7 /* codec_internal.h in Headers */,
+				50ACD0BD117F8E450085FAE7 /* config_types.h in Headers */,
+				50ACD0C2117F8E450085FAE7 /* ivorbiscodec.h in Headers */,
+				50ACD0C3117F8E450085FAE7 /* ivorbisfile.h in Headers */,
+				50ACD0C5117F8E450085FAE7 /* lsp_lookup.h in Headers */,
+				50ACD0C8117F8E450085FAE7 /* mdct.h in Headers */,
+				50ACD0C9117F8E450085FAE7 /* mdct_lookup.h in Headers */,
+				50ACD0CA117F8E450085FAE7 /* misc.h in Headers */,
+				50ACD0CB117F8E450085FAE7 /* ogg.h in Headers */,
+				50ACD0CC117F8E450085FAE7 /* os.h in Headers */,
+				50ACD0CD117F8E450085FAE7 /* os_types.h in Headers */,
+				50ACD0CF117F8E450085FAE7 /* registry.h in Headers */,
+				50ACD0D5117F8E450085FAE7 /* window.h in Headers */,
+				50ACD0D6117F8E450085FAE7 /* window_lookup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6492,6 +6526,10 @@
 				509807601175042A00EA7266 /* PBXTargetDependency */,
 				509807621175042A00EA7266 /* PBXTargetDependency */,
 				509807641175042A00EA7266 /* PBXTargetDependency */,
+				507D3382117F366A00B6684B /* PBXTargetDependency */,
+				507D3384117F366A00B6684B /* PBXTargetDependency */,
+				507D3386117F366A00B6684B /* PBXTargetDependency */,
+				507D3388117F366A00B6684B /* PBXTargetDependency */,
 				50C4D3A511777B19000D3C1E /* PBXTargetDependency */,
 				50C4D3A711777B19000D3C1E /* PBXTargetDependency */,
 			);
@@ -8853,22 +8891,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50A61CEB114FC32B00A320D4 /* bitwise.c in Sources */,
-				50A61CEC114FC32B00A320D4 /* block.c in Sources */,
-				50A61CEE114FC32B00A320D4 /* codebook.c in Sources */,
-				50A61CF2114FC32B00A320D4 /* floor0.c in Sources */,
-				50A61CF3114FC32B00A320D4 /* floor1.c in Sources */,
-				50A61CF4114FC32B00A320D4 /* framing.c in Sources */,
-				50A61CF5114FC32B00A320D4 /* info.c in Sources */,
-				50A61CF7114FC32B00A320D4 /* ivorbisfile_example.c in Sources */,
-				50A61CFA114FC32B00A320D4 /* mapping0.c in Sources */,
-				50A61CFC114FC32B00A320D4 /* mdct.c in Sources */,
-				50A61D02114FC32B00A320D4 /* registry.c in Sources */,
-				50A61D04114FC32B00A320D4 /* res012.c in Sources */,
-				50A61D05114FC32B00A320D4 /* sharedbook.c in Sources */,
-				50A61D06114FC32B00A320D4 /* synthesis.c in Sources */,
-				50A61D07114FC32B00A320D4 /* vorbisfile.c in Sources */,
-				50A61D09114FC32B00A320D4 /* window.c in Sources */,
+				50ACD0B7117F8E450085FAE7 /* bitwise.c in Sources */,
+				50ACD0B8117F8E450085FAE7 /* block.c in Sources */,
+				50ACD0BA117F8E450085FAE7 /* codebook.c in Sources */,
+				50ACD0BE117F8E450085FAE7 /* floor0.c in Sources */,
+				50ACD0BF117F8E450085FAE7 /* floor1.c in Sources */,
+				50ACD0C0117F8E450085FAE7 /* framing.c in Sources */,
+				50ACD0C1117F8E450085FAE7 /* info.c in Sources */,
+				50ACD0C4117F8E450085FAE7 /* ivorbisfile_example.c in Sources */,
+				50ACD0C6117F8E450085FAE7 /* mapping0.c in Sources */,
+				50ACD0C7117F8E450085FAE7 /* mdct.c in Sources */,
+				50ACD0CE117F8E450085FAE7 /* registry.c in Sources */,
+				50ACD0D0117F8E450085FAE7 /* res012.c in Sources */,
+				50ACD0D1117F8E450085FAE7 /* sharedbook.c in Sources */,
+				50ACD0D2117F8E450085FAE7 /* synthesis.c in Sources */,
+				50ACD0D3117F8E450085FAE7 /* vorbisfile.c in Sources */,
+				50ACD0D4117F8E450085FAE7 /* window.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9064,6 +9102,26 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 5078B5190E3E43540004233A /* PBXContainerItemProxy */;
+		};
+		507D3382117F366A00B6684B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */;
+			targetProxy = 507D3381117F366A00B6684B /* PBXContainerItemProxy */;
+		};
+		507D3384117F366A00B6684B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50010EBA103B3DB80059EC2E /* Box2dTestBed */;
+			targetProxy = 507D3383117F366A00B6684B /* PBXContainerItemProxy */;
+		};
+		507D3386117F366A00B6684B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */;
+			targetProxy = 507D3385117F366A00B6684B /* PBXContainerItemProxy */;
+		};
+		507D3388117F366A00B6684B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50B2CE450E129FD900AE9530 /* ChipmunkTestBed */;
+			targetProxy = 507D3387117F366A00B6684B /* PBXContainerItemProxy */;
 		};
 		507FF8CF116D16F600B6FAB2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9420,7 +9478,6 @@
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9470,7 +9527,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -9532,7 +9588,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -9588,7 +9643,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -9679,14 +9733,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -9709,7 +9761,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -9745,7 +9796,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -9842,7 +9892,6 @@
 				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -9857,7 +9906,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
@@ -9883,7 +9931,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -9933,7 +9980,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10010,7 +10056,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10134,7 +10179,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10265,7 +10309,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -10321,7 +10364,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10420,7 +10462,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10476,7 +10517,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -10596,7 +10636,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10646,7 +10685,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10696,7 +10734,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10746,7 +10783,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10796,7 +10832,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10846,7 +10881,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10896,7 +10930,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -10993,7 +11026,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -11030,7 +11062,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = tests/cocosLive/cocosLiveInfo.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11216,7 +11247,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11266,7 +11296,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = "Resources/ChipmunkDemo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11316,7 +11345,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11366,7 +11394,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11416,7 +11443,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11542,7 +11568,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11592,7 +11617,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11691,7 +11715,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11710,7 +11733,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -11742,7 +11764,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -11883,7 +11904,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = vorbis;
@@ -11914,7 +11934,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -11960,13 +11979,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=2";
 				GCC_STRICT_ALIASING = YES;
 				GCC_THUMB_SUPPORT = YES;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
@@ -11990,7 +12008,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -12025,7 +12042,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -12075,7 +12091,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=1";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (

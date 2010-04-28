@@ -197,6 +197,8 @@ struct transformValues_ {
 		rect.size = texture.contentSize;
 		return [self initWithTexture:texture rect:rect];
 	}
+
+	[self release];
 	return nil;
 }
 
@@ -207,6 +209,8 @@ struct transformValues_ {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture )
 		return [self initWithTexture:texture rect:rect];
+
+	[self release];
 	return nil;
 }
 
@@ -558,11 +562,22 @@ struct transformValues_ {
 
 -(void) reorderChild:(CCSprite*)child z:(int)z
 {
+	NSAssert( child != nil, @"Child must be non-nil");
+	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );
+
+	if( z == child.zOrder )
+		return;
+
 	if( usesSpriteSheet_ ) {
-		NSAssert(NO,@"reorderChild not implemented while using Spritesheet. Please open a bug, and if possible attach the patch. Thanks");
+		// XXX: Instead of removing/adding, it is more efficient to reorder manually
+		[child retain];
+		[self removeChild:child cleanup:NO];
+		[self addChild:child z:z];
+		[child release];
 	}
 
-	[super reorderChild:child z:z];
+	else
+		[super reorderChild:child z:z];
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup

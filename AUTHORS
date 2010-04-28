@@ -16,7 +16,7 @@ cocos2d for iPhone wouldn't be possible without the help of the community who is
 constantly adding new features, sending patches, opening issues:
 	   http://www.cocos2d-iphone.org/forum
 
-Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
+People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
 	* Alejandro Cura (http://www.vortech.com.ar/):
 		author of AccelViewPortDemo
@@ -50,6 +50,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		correct channel in SimpleAudioEngine patch
 		Added Ease Elastic actions
 		oapcity + color works with premultiplied textures. patch.
+		Director: fixed startup flicker
 	* cjlesh:
 		RotateTo action rotates to shortest angle patch
 	* Clinth Harris:
@@ -142,6 +143,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
 	* Jon Kean:
 		PointParticle asserts if size > 64
+		Fixed memory leaks when initialization of some nodes failed
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -243,6 +245,8 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMXTiledMaps: objects supports offsets. patch.
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
+	* palter AT clozure.com
+		Texture fails gracefully if PVR image can't be loaded (patch)
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -259,6 +263,7 @@ Poeple/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMX maps support visibility and opacity patch
 		TMX maps possibility to access the layers patch
 		Actions: Animate copy originalFrame patch
+		Director: fixed startup flicker
 	* Rolando Abarca (funkaster) (http://rolando.cl/):
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode

@@ -152,6 +152,8 @@ Class restartAction()
 #pragma mark -
 #pragma mark Ease Actions
 
+#define CCCA(x) [[x copy] autorelease]
+
 @implementation SpriteEase
 -(void) onEnter
 {
@@ -166,10 +168,11 @@ Class restartAction()
 	id move_ease_out = [CCEaseOut actionWithAction:[[move copy] autorelease] rate:3.0f];
 	id move_ease_out_back = [move_ease_out reverse];
 	
+	id delay = [CCDelayTime actionWithDuration:0.25f];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), nil];
 	
 	
 	CCAction *a2 = [grossini runAction: [CCRepeatForever actionWithAction:seq1]];
@@ -181,7 +184,7 @@ Class restartAction()
 	CCAction *a = [kathia runAction: [CCRepeatForever actionWithAction:seq3]];
 	[a setTag:1];
 	
-	[self schedule:@selector(testStopAction:) interval:6];
+	[self schedule:@selector(testStopAction:) interval:6.25f];
 }
 
 -(void) testStopAction:(ccTime)dt
@@ -214,11 +217,12 @@ Class restartAction()
 
 	id move_ease_inout3 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:4.0f];
 	id move_ease_inout_back3 = [move_ease_inout3 reverse];
-
 	
-	id seq1 = [CCSequence actions: move_ease_inout1, move_ease_inout_back1, nil];
-	id seq2 = [CCSequence actions: move_ease_inout2, move_ease_inout_back2, nil];
-	id seq3 = [CCSequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move_ease_inout1, delay, move_ease_inout_back1, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_inout2, CCCA(delay), move_ease_inout_back2, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_inout3, CCCA(delay), move_ease_inout_back3, CCCA(delay), nil];
 		
 	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
@@ -245,10 +249,12 @@ Class restartAction()
 	id move_ease_out = [CCEaseSineOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), nil];
 	
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
@@ -272,8 +278,10 @@ Class restartAction()
 	id move_ease = [CCEaseSineInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease, CCCA(delay), move_ease_back, CCCA(delay), nil];
 
 	[self positionForTwo];
 
@@ -302,10 +310,11 @@ Class restartAction()
 	id move_ease_out = [CCEaseExponentialOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
+	id delay = [CCDelayTime actionWithDuration:0.25f];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), nil];
 	
 
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
@@ -331,9 +340,12 @@ Class restartAction()
 	id move_ease = [CCEaseExponentialInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease, CCCA(delay), move_ease_back, CCCA(delay), nil];
 	
+
 	[self positionForTwo];
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
@@ -363,10 +375,12 @@ Class restartAction()
 	id move_ease_inout3 = [CCEaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.6f];
 	id move_ease_inout_back3 = [move_ease_inout3 reverse];
 	
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
 	
-	id seq1 = [CCSequence actions: move_ease_inout1, move_ease_inout_back1, nil];
-	id seq2 = [CCSequence actions: move_ease_inout2, move_ease_inout_back2, nil];
-	id seq3 = [CCSequence actions: move_ease_inout3, move_ease_inout_back3, nil];
+	id seq1 = [CCSequence actions: move_ease_inout1, delay, move_ease_inout_back1, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_inout2, CCCA(delay), move_ease_inout_back2, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_inout3, CCCA(delay), move_ease_inout_back3, CCCA(delay), nil];
 	
 	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
@@ -394,9 +408,11 @@ Class restartAction()
 	id move_ease_out = [CCEaseElasticOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), nil];
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
@@ -424,9 +440,11 @@ Class restartAction()
 	id move_ease_out = [CCEaseBounceOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), nil];
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
@@ -449,8 +467,10 @@ Class restartAction()
 	id move_ease = [CCEaseBounceInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease, CCCA(delay), move_ease_back, CCCA(delay), nil];
 	
 	[self positionForTwo];
 	
@@ -479,9 +499,11 @@ Class restartAction()
 	id move_ease_out = [CCEaseBackOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_out_back = [move_ease_out reverse];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease_in, move_ease_in_back, nil];
-	id seq3 = [CCSequence actions: move_ease_out, move_ease_out_back, nil];
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in, CCCA(delay), move_ease_in_back, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_out, CCCA(delay), move_ease_out_back, CCCA(delay), nil];
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
@@ -503,10 +525,13 @@ Class restartAction()
 	
 	id move_ease = [CCEaseBackInOut actionWithAction:[[move copy] autorelease]];
 	id move_ease_back = [move_ease reverse];
+
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease, CCCA(delay), move_ease_back, CCCA(delay), nil];
 	
-	id seq1 = [CCSequence actions: move, move_back, nil];
-	id seq2 = [CCSequence actions: move_ease, move_ease_back, nil];
-	
+
 	[self positionForTwo];
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];

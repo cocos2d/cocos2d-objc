@@ -35,6 +35,8 @@
 //
 // all cocos2d include files
 //
+#import "ccConfig.h"	// should be included first
+
 #import "CCBlockSupport.h"
 #import "CCAction.h"
 #import "CCCamera.h"
@@ -88,7 +90,6 @@
 #import "CCTexture2D.h"
 #import "CCPVRTexture.h"
 #import "CCTouchHandler.h"
-#import "ccConfig.h"
 #import "CCConfiguration.h"
 #import "CCRadialTransition.h"
 #import "CCProgressTimerActions.h"
@@ -108,6 +109,10 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccArray.h"
+
+#if CC_ENABLE_PROFILERS
+#import "Support/CCProfiling.h"
+#endif // CC_ENABLE_PROFILERS
 
 
 // compatibility with v0.8

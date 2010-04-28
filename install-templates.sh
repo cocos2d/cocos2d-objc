@@ -7,7 +7,11 @@ BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 
 # Make sure only root can run our script
 if [ "$(id -u)" != "0" ]; then
-   echo "This script must be run as root in order to copy templates to ${BASE_TEMPLATE_DIR}" 1>&2
+   echo ""
+   echo "Error: This script must be run as root in order to copy templates to ${BASE_TEMPLATE_DIR}" 1>&2
+   echo ""
+   echo "Try running it with 'sudo':" 1>&2
+   echo "   sudo $0" 1>&2
    exit 1
 fi
 
@@ -28,12 +32,12 @@ copy_files(){
 }
 
 check_dst_dir(){
-	if [[ $DST_DIR ]];  then
+	if [[ -d $DST_DIR ]];  then
 		if [[ $force ]]; then
 			echo "removing old libraries: ${DST_DIR}"
 			rm -rf $DST_DIR
 		else
-		    echo "template already installed"
+		    echo "templates already installed. To force a re-install use the '-f' parameter"
 		    exit 1
 		fi
 	fi
@@ -145,6 +149,9 @@ copy_project_templates(){
 copy_file_templates(){
 	TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/File Templates/${COCOS2D_VER}/"
 	
+	DST_DIR="$TEMPLATE_DIR"
+	check_dst_dir
+
 	if [[ ! -d "$TEMPLATE_DIR" ]]; then
 		echo '...creating cocos2d template directory'
 		echo ''
@@ -152,10 +159,6 @@ copy_file_templates(){
 	fi
 	
 	print_template_banner "Installing CCNode file templates..."
-	
-	DST_DIR="$TEMPLATE_DIR"
-	
-	check_dst_dir
 	
 	copy_files "templates/file-templates/CCNode class" "$DST_DIR"
 	
