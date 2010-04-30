@@ -1,5 +1,5 @@
 version 0.99.3 - 00-May-2010
- . [FIX] Grid: Fixed memory leak (issue #XXX)
+ . [FIX] Grid: Fixed memory leak (issue #853)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
  
 version 0.99.2 - 28-Apr-2010
