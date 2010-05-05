@@ -124,39 +124,39 @@
 
 #if NS_BLOCKS_AVAILABLE
 
-/*! Executes a callback using a block
+/** Executes a callback using a block
  */
 @interface CCCallBlock : CCInstantAction<NSCopying>
 {
 	void (^block_)();
 }
 
-/*! creates the action with the specified block, to be used as a callback */
+/** creates the action with the specified block, to be used as a callback */
 +(id) actionWithBlock:(void(^)())block;
 
-/*! initialized the action with the specified block, to be used as a callback */
+/** initialized the action with the specified block, to be used as a callback */
 -(id) initWithBlock:(void(^)())block;
 
-/*! executes the callback */
+/** executes the callback */
 -(void) execute;
 @end
 
 @class CCNode;
 
-/*! Executes a callback using a block with a single CCNode parameter
+/** Executes a callback using a block with a single CCNode parameter
  */
 @interface CCCallBlockN : CCInstantAction<NSCopying>
 {
 	void (^block_)(CCNode *);
 }
 
-/*! creates the action with the specified block, to be used as a callback */
+/** creates the action with the specified block, to be used as a callback */
 +(id) actionWithBlock:(void(^)(CCNode *node))block;
 
-/*! initialized the action with the specified block, to be used as a callback */
+/** initialized the action with the specified block, to be used as a callback */
 -(id) initWithBlock:(void(^)(CCNode *node))block;
 
-/*! executes the callback */
+/** executes the callback */
 -(void) execute;
 @end
 
