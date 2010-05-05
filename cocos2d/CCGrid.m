@@ -83,9 +83,9 @@
 	}
 	memset(data, 0, (int)(textureSize * textureSize * 4));
 	
-	CCTexture2D *texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:s];
+	CCTexture2D *texture = [[[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:s] autorelease];
 	free( data );
-	
+
 	if ( (self = [self initWithSize:gSize texture:texture flippedTexture:NO] ) )
 	{
 		// do something
