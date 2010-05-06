@@ -12,26 +12,29 @@
  *
  */
 
-
-// cocoa related
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "Support/uthash.h"
+#import "Support/ccArray.h"
 
 #import "ccTypes.h"
 
 typedef void (*TICK_IMP)(id, SEL, ccTime);
 
+
 //
-// Timer
+// CCTimer
 //
 /** Light weight timer */
 @interface CCTimer : NSObject
 {
 	id target;
-	SEL selector;
 	TICK_IMP impMethod;
 	
 	ccTime interval;
 	ccTime elapsed;
+
+@public					// optimization
+	SEL selector;
 }
 
 /** interval in seconds */
@@ -58,23 +61,36 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 -(void) fire: (ccTime) dt;
 @end
 
+// Hash Element
+typedef struct _CCSchedHashElement
+{
+	struct ccArray	*timers;
+	id				target;		// hash key
+	unsigned int	timerIndex;
+	CCTimer			*currentTimer;
+	BOOL			currentTimerSalvaged;
+	BOOL			paused;
+	UT_hash_handle  hh;
+} tCCSchedHashElement;
+
+
 //
-// Scheduler
+// CCScheduler
 //
 /** Scheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
 */
 @interface CCScheduler : NSObject
-{
-	NSMutableArray	*scheduledMethods;
-	NSMutableArray	*methodsToRemove;
-	NSMutableArray	*methodsToAdd;
+{	
+	ccTime				timeScale_;
 	
-	ccTime			timeScale_;
+	tCCSchedHashElement	*targets;
+	tCCSchedHashElement	* currentTarget;
+	BOOL				currentTargetSalvaged;
 	
 	// Optimization
-	TICK_IMP		impMethod;
-	SEL				fireSelector;
+	TICK_IMP			impMethod;
+	SEL					fireSelector;
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -99,17 +115,61 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  */
 -(void) tick:(ccTime)dt;
 
+/** The scheduled method will be called every 'interval' seconds. If 'interva' is 0, it will be called every frame.
+ If paused is YES, then it won't be called until it is resumed
+ 
+ @since v0.99.3
+ */
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(float)interval paused:(BOOL)paused;
+
+/** Unshedules a selector for a given target
+ 
+ @since v0.99.3
+ */
+-(void) unscheduleSelector:(SEL)selector forTarget:(id)target;
+
+/** Unschedules all selectors for a given target
+ 
+ @since v0.99.3
+ */
+-(void) unscheduleAllSelectorsForTarget:(id)target;
+
+/** Unschedules all selectors from all targets.
+ You should NEVER call this method, unless you know what you are doing.
+
+ @since v0.99.3
+ */
+-(void) unscheduleAllSelectors;
+
+/** Pause all scheduled selectors for a given target
+ @since v0.99.3
+ */
+-(void) pauseAllSelectorsForTarget:(id)target;
+
+/** Resumes all scheduled selectors for a given target
+ @since v0.99.3
+ */
+-(void) resumeAllSelectorsForTarget:(id)target;
+
+
 /** schedules a Timer.
  It will be fired in every frame.
+ 
+ @deprecated Use scheduleSelector:forTarget:interval:paused instead. Will be removed in 1.0
  */
--(void) scheduleTimer: (CCTimer*) t;
+-(void) scheduleTimer: (CCTimer*) timer __attribute__((deprecated));
 
-/** unschedules an already scheduled Timer */
--(void) unscheduleTimer: (CCTimer*) t;
+/** unschedules an already scheduled Timer
+ 
+ @deprecated Use unscheduleSelector:forTarget. Will be removed in v1.0
+ */
+-(void) unscheduleTimer: (CCTimer*) timer __attribute__((deprecated));
 
 /** unschedule all timers.
  You should NEVER call this method, unless you know what you are doing.
+ 
+ @deprecated Use scheduleAllSelectors instead. Will be removed in 1.0
  @since v0.8
  */
--(void) unscheduleAllTimers;
+-(void) unscheduleAllTimers __attribute__ ((deprecated));
 @end

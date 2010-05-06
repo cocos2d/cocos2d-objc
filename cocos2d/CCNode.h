@@ -134,9 +134,6 @@ enum {
     
 	// user data field
 	void *userData;
-	
-	// scheduled selectors
-	NSMutableDictionary *scheduledSelectors_;
 
 	// Is running
 	BOOL isRunning_;
@@ -363,6 +360,29 @@ enum {
 /** check whether a selector is scheduled. */
 //-(BOOL) isScheduled: (SEL) selector;
 
+/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
+ Scheduled methods with a lower order value will be called before the ones that have a higher order value.
+ Only one "udpate" method could be scheduled per node.
+ 
+ @since v0.99.3
+ */
+-(void) scheduleUpdate;
+
+/** schedules the "update" method with a custom order. This method will be called every frame.
+ Scheduled methods with a lower order value will be called before the ones that have a higher order value.
+ Only one "udpate" method could be scheduled per node.
+
+ @since v0.99.3
+ */
+-(void) scheduleUpdateWithOrder:(int)order;
+
+/* unschedules the "update" method
+ 
+ @since v0.99.3
+ */
+-(void) unscheduleUpdate;
+
+
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
@@ -373,6 +393,11 @@ enum {
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
 /** unschedule a selector */
 -(void) unschedule: (SEL) s;
+/** unschedule all scheduled timers or selectors
+@since v0.99.3
+ */
+-(void) unscheduleAllSelectors;
+
 /** activate all scheduled timers.
  Called internally by onEnter
  */

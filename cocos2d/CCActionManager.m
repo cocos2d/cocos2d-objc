@@ -69,7 +69,7 @@ static CCActionManager *_sharedManager = nil;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[CCScheduler sharedScheduler] scheduleTimer: [CCTimer timerWithTarget:self selector:@selector(tick:)]];
+		[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 paused:NO];
 		targets = ccHashSetNew(131, targetSetEql);
 	}
 	
