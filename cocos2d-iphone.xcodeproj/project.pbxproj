@@ -11520,7 +11520,6 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
-					"-lstdc++",
 					"-ObjC",
 					"-framework",
 					Foundation,
@@ -11545,7 +11544,6 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
-					"-lstdc++",
 					"-ObjC",
 					"-framework",
 					Foundation,
@@ -11991,7 +11989,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
@@ -12000,7 +11998,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphonesimulator4.0;
 			};
 			name = Debug;
 		};
@@ -12021,6 +12019,7 @@
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
@@ -12028,7 +12027,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphonesimulator4.0;
 			};
 			name = Release;
 		};
