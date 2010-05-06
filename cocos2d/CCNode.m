@@ -176,9 +176,6 @@
 		// children (lazy allocs)
 		children_ = nil;
 		
-		// scheduled selectors (lazy allocs)
-		scheduledSelectors_ = nil;
-		
 		// userData is always inited as nil
 		userData = nil;
 	}
@@ -190,10 +187,9 @@
 {
 	// actions
 	[self stopAllActions];
+	[self unscheduleAllSelectors];
 	
 	// timers
-	[scheduledSelectors_ release];
-	scheduledSelectors_ = nil;
 	
 	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -588,74 +584,56 @@
 
 #pragma mark CCNode Timers 
 
-#pragma mark CCNode Timers 
-
--(void) timerAlloc
+-(void) scheduleUpdate
 {
-	scheduledSelectors_ = [[NSMutableDictionary alloc] initWithCapacity: 2];
+	[self scheduleUpdateWithOrder:0];
 }
 
--(void) schedule: (SEL) selector
+-(void) scheduleUpdateWithOrder:(int)order
+{
+//	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self withOrder:order paused:!isRunning_];
+}
+
+-(void) unscheduleUpdate
+{
+//	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
+}
+
+-(void) schedule:(SEL)selector
 {
 	[self schedule:selector interval:0];
 }
 
--(void) schedule: (SEL) selector interval:(ccTime)interval
+-(void) schedule:(SEL)selector interval:(ccTime)interval
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
-	
-	if( !scheduledSelectors_ )
-		[self timerAlloc];
-	
-	NSString *key = NSStringFromSelector(selector);
-	// already scheduled ?
-	if( [scheduledSelectors_ objectForKey:key  ] ) {
-		return;
-	}
-	
-	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval];
-	
-	if( isRunning_ )
-		[[CCScheduler sharedScheduler] scheduleTimer:timer];
-	
-	[scheduledSelectors_ setObject:timer forKey:key ];
+
+	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_];
 }
 
--(void) unschedule: (SEL) selector
+-(void) unschedule:(SEL)selector
 {
 	// explicit nil handling
 	if (selector == nil)
 		return;
-	
-	CCTimer *timer = nil;
-	NSString *key = NSStringFromSelector(selector);
-	
-	if( ! (timer = [scheduledSelectors_ objectForKey:key] ) )
-	{
-		CCLOG(@"cocos2d: CCNode.unschedule: Selector not scheduled: %@",key );
-		return;
-	}
-	
-	[scheduledSelectors_ removeObjectForKey: key];
-	
-	if( isRunning_ )
-		[[CCScheduler sharedScheduler] unscheduleTimer:timer];
+
+	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self];
 }
 
+-(void) unscheduleAllSelectors
+{
+	[[CCScheduler sharedScheduler] unscheduleAllSelectorsForTarget:self];
+}
 - (void) activateTimers
 {
-	for( id key in scheduledSelectors_ )
-		[[CCScheduler sharedScheduler] scheduleTimer: [scheduledSelectors_ objectForKey:key]];
-	
+	[[CCScheduler sharedScheduler] resumeAllSelectorsForTarget:self];
 	[[CCActionManager sharedManager] resumeAllActionsForTarget:self];
 }
 
 - (void) deactivateTimers
 {
-	for( id key in scheduledSelectors_ )
-		[[CCScheduler sharedScheduler] unscheduleTimer: [scheduledSelectors_ objectForKey:key]];
-	
+	[[CCScheduler sharedScheduler] pauseAllSelectorsForTarget:self];
 	[[CCActionManager sharedManager] pauseAllActionsForTarget:self];
 }
 
