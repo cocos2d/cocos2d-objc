@@ -1075,6 +1075,8 @@
 		508CA7D51193270F003AC397 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		508CA7D61193270F003AC397 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		508CA7E611932966003AC397 /* SchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 508CA7E511932966003AC397 /* SchedulerTest.m */; };
+		508EAC301193F8B0007F058D /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAC2F1193F8B0007F058D /* utlist.h */; };
+		508EAC311193F8B0007F058D /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAC2F1193F8B0007F058D /* utlist.h */; };
 		509A79970F6188420032F449 /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* CCSprite.h */; };
 		509A79980F6188420032F449 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* CCSprite.m */; };
 		509A799B0F6188500032F449 /* CCSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79990F6188500032F449 /* CCSpriteSheet.h */; };
@@ -2942,7 +2944,7 @@
 		5078B5320E3E437F0004233A /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntervalTest.h; path = tests/IntervalTest.h; sourceTree = "<group>"; };
 		5078B5330E3E437F0004233A /* IntervalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntervalTest.m; path = tests/IntervalTest.m; sourceTree = "<group>"; };
 		507FF879116BF6B000B6FAB2 /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PLBlocks.framework; sourceTree = "<group>"; };
-		507FF8F2116D16F600B6FAB2 /* Bug422.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug422.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		507FF8F2116D16F600B6FAB2 /* Bug350.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug350.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5084D25C0EE5906100BD237C /* powered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powered.png; sourceTree = "<group>"; };
 		5084D4780EE5C7D100BD237C /* btn-about-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-about-normal.png"; sourceTree = "<group>"; };
 		5084D4790EE5C7D100BD237C /* btn-about-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-about-selected.png"; sourceTree = "<group>"; };
@@ -2973,6 +2975,7 @@
 		508CA7E411932710003AC397 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		508CA7E511932966003AC397 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
 		508CA7E711932A1F003AC397 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
+		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		509807081175041800EA7266 /* libbuild all tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite.m; sourceTree = "<group>"; };
@@ -4215,7 +4218,7 @@
 				05AAF3E410EE85B300CACA2B /* MenuTestWithBlocks.app */,
 				504018FB10FE800D0017842A /* PerformanceTestTouches.app */,
 				501504ED11330E1700A9CA65 /* ProgressActionsTest.app */,
-				507FF8F2116D16F600B6FAB2 /* Bug422.app */,
+				507FF8F2116D16F600B6FAB2 /* Bug350.app */,
 				509807081175041800EA7266 /* libbuild all tests.a */,
 				508CA7DA1193270F003AC397 /* SchedulerTest.app */,
 			);
@@ -5311,6 +5314,7 @@
 				50D438DD101160B200895754 /* ccHashSet.h */,
 				50EC53F11014DEEB00489A93 /* ccHashSet.m */,
 				50D898EF1192CB7500458C29 /* uthash.h */,
+				508EAC2F1193F8B0007F058D /* utlist.h */,
 			);
 			name = "Data Structures";
 			sourceTree = "<group>";
@@ -5709,6 +5713,7 @@
 				0529445B11098D6F00E500F3 /* CCProfiling.h in Headers */,
 				50FBB2DC117613F500150761 /* CCPropertyAction.h in Headers */,
 				50D898F71192CB7500458C29 /* uthash.h in Headers */,
+				508EAC301193F8B0007F058D /* utlist.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5790,6 +5795,7 @@
 				5015043D113300F900A9CA65 /* CCRadialTransition.h in Headers */,
 				50FBB2DA117613F500150761 /* CCPropertyAction.h in Headers */,
 				50D898F31192CB7500458C29 /* uthash.h in Headers */,
+				508EAC311193F8B0007F058D /* utlist.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6552,7 +6558,7 @@
 			);
 			name = Bug350;
 			productName = Bug422;
-			productReference = 507FF8F2116D16F600B6FAB2 /* Bug422.app */;
+			productReference = 507FF8F2116D16F600B6FAB2 /* Bug350.app */;
 			productType = "com.apple.product-type.application";
 		};
 		508CA7AD1193270F003AC397 /* SchedulerTest */ = {
@@ -11086,7 +11092,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Bug422;
+				PRODUCT_NAME = Bug350;
 			};
 			name = Debug;
 		};
@@ -11110,7 +11116,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Bug422;
+				PRODUCT_NAME = Bug350;
 				ZERO_LINK = NO;
 			};
 			name = Release;

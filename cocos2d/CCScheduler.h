@@ -58,20 +58,9 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 
 
 /** triggers the timer */
--(void) fire: (ccTime) dt;
+-(void) update: (ccTime) dt;
 @end
 
-// Hash Element
-typedef struct _CCSchedHashElement
-{
-	struct ccArray	*timers;
-	id				target;		// hash key
-	unsigned int	timerIndex;
-	CCTimer			*currentTimer;
-	BOOL			currentTimerSalvaged;
-	BOOL			paused;
-	UT_hash_handle  hh;
-} tCCSchedHashElement;
 
 
 //
@@ -79,18 +68,40 @@ typedef struct _CCSchedHashElement
 //
 /** Scheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
+ 
+ There are 2 different types of callbacks (selectors):
+
+	- update selector: the 'update' selector will be called every frame. You can customize the priority.
+	- custom selector: A custom selector will be called every frame, or with a custom interval of time
+ 
+ The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
+
 */
+
+struct _listEntry;
+struct _hashSelectorEntry;
+struct _hashUpdateEntry;
+
 @interface CCScheduler : NSObject
 {	
 	ccTime				timeScale_;
 	
-	tCCSchedHashElement	*targets;
-	tCCSchedHashElement	* currentTarget;
-	BOOL				currentTargetSalvaged;
+	//
+	// "updates with priority" stuff
+	//
+	struct _listEntry			*updatesNeg;	// list of priority < 0
+	struct _listEntry			*updates0;		// list priority == 0
+	struct _listEntry			*updatesPos;	// list priority > 0
+	struct _hashUpdateEntry		*hashForUpdates;	// hash used to fetch quickly the list entries for pause,delete,etc.
+		
+	// Used for "selectors with interval"
+	struct _hashSelectorEntry	*hashForSelectors;
+	struct _hashSelectorEntry	*currentTarget;
+	BOOL						currentTargetSalvaged;
 	
 	// Optimization
 	TICK_IMP			impMethod;
-	SEL					fireSelector;
+	SEL					updateSelector;
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -115,21 +126,34 @@ typedef struct _CCSchedHashElement
  */
 -(void) tick:(ccTime)dt;
 
-/** The scheduled method will be called every 'interval' seconds. If 'interva' is 0, it will be called every frame.
- If paused is YES, then it won't be called until it is resumed
- 
+/** The scheduled method will be called every 'interval' seconds.
+ If paused is YES, then it won't be called until it is resumed.
+ If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+
  @since v0.99.3
  */
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(float)interval paused:(BOOL)paused;
 
-/** Unshedules a selector for a given target
- 
+/** Schedules the 'update' selector for a given target with a given priority.
+ The 'update' selector will be called every frame.
+ The lower the priority, the earlier it is called.
+ @since v0.99.3
+ */
+-(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused;
+
+/** Unshedules a selector for a given target.
+ If you want to unschedule the "update", use unscheudleUpdateForTarget.
  @since v0.99.3
  */
 -(void) unscheduleSelector:(SEL)selector forTarget:(id)target;
 
-/** Unschedules all selectors for a given target
- 
+/** Unschedules the update selector for a given target
+ @since v0.99.3
+ */
+-(void) unscheduleUpdateForTarget:(id)target;
+
+/** Unschedules all selectors for a given target.
+ This also includes the "update" selector.
  @since v0.99.3
  */
 -(void) unscheduleAllSelectorsForTarget:(id)target;
@@ -141,12 +165,14 @@ typedef struct _CCSchedHashElement
  */
 -(void) unscheduleAllSelectors;
 
-/** Pause all scheduled selectors for a given target
+/** Pause all scheduled selectors for a given target.
+ This also includes the "update" selector.
  @since v0.99.3
  */
 -(void) pauseAllSelectorsForTarget:(id)target;
 
-/** Resumes all scheduled selectors for a given target
+/** Resumes all scheduled selectors for a given target.
+ This also includes the "update" selector.
  @since v0.99.3
  */
 -(void) resumeAllSelectorsForTarget:(id)target;

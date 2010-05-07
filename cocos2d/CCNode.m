@@ -524,7 +524,7 @@
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnter)];
 	
-	[self activateTimers];
+	[self resumeSchedulerAndActions];
 
 	isRunning_ = YES;
 }
@@ -536,7 +536,7 @@
 
 -(void) onExit
 {
-	[self deactivateTimers];
+	[self pauseSchedulerAndActions];
 
 	isRunning_ = NO;	
 	
@@ -582,21 +582,21 @@
 }
 
 
-#pragma mark CCNode Timers 
+#pragma mark CCNode - Callbacks
 
 -(void) scheduleUpdate
 {
-	[self scheduleUpdateWithOrder:0];
+	[self scheduleUpdateWithPriority:0];
 }
 
--(void) scheduleUpdateWithOrder:(int)order
+-(void) scheduleUpdateWithPriority:(int)priority
 {
-//	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self withOrder:order paused:!isRunning_];
+	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
 }
 
 -(void) unscheduleUpdate
 {
-//	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
+	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
 }
 
 -(void) schedule:(SEL)selector
@@ -625,13 +625,13 @@
 {
 	[[CCScheduler sharedScheduler] unscheduleAllSelectorsForTarget:self];
 }
-- (void) activateTimers
+- (void) resumeSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] resumeAllSelectorsForTarget:self];
 	[[CCActionManager sharedManager] resumeAllActionsForTarget:self];
 }
 
-- (void) deactivateTimers
+- (void) pauseSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] pauseAllSelectorsForTarget:self];
 	[[CCActionManager sharedManager] pauseAllActionsForTarget:self];

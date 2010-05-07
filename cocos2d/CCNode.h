@@ -368,15 +368,15 @@ enum {
  */
 -(void) scheduleUpdate;
 
-/** schedules the "update" method with a custom order. This method will be called every frame.
- Scheduled methods with a lower order value will be called before the ones that have a higher order value.
- Only one "udpate" method could be scheduled per node.
+/** schedules the "update" selector with a custom priority. This selector will be called every frame.
+ Scheduled selectors with a lower priority will be called before the ones that have a higher value.
+ Only one "udpate" selector could be scheduled per node (You can't have 2 'update' selectors).
 
  @since v0.99.3
  */
--(void) scheduleUpdateWithOrder:(int)order;
+-(void) scheduleUpdateWithPriority:(int)priority;
 
-/* unschedules the "update" method
+/* unschedules the "update" method.
  
  @since v0.99.3
  */
@@ -387,25 +387,28 @@ enum {
  The scheduled selector will be ticked every frame
  */
 -(void) schedule: (SEL) s;
-/** schedules a selector with an interval time in seconds.
+/** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
+ If tiem is 0, it is recommended to use 'scheduleUpdate' instead.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
-/** unschedule a selector */
+/** unschedules a custom selector.*/
 -(void) unschedule: (SEL) s;
-/** unschedule all scheduled timers or selectors
+
+/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
+ Actions are not affected by this method.
 @since v0.99.3
  */
 -(void) unscheduleAllSelectors;
 
-/** activate all scheduled timers.
+/** resumes all scheduled selectors and actions.
  Called internally by onEnter
  */
--(void) activateTimers;
-/** deactivate all scheduled timers.
+-(void) resumeSchedulerAndActions;
+/** pauses all scheduled selectors and actions.
  Called internally by onExit
  */
--(void) deactivateTimers;
+-(void) pauseSchedulerAndActions;
 
 // transformation methods
 
