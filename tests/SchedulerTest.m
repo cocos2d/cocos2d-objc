@@ -19,7 +19,8 @@ static NSString *transitions[] = {
 	@"SchedulerUnscheduleAllHard",
 	@"SchedulerSchedulesAndRemove",
 	@"SchedulerUpdate",
-//	@"SchedulerUpdateAndCustom",
+	@"SchedulerUpdateAndCustom",
+	@"SchedulerUpdateFromCustom",
 };
 
 Class nextTest()
@@ -371,6 +372,8 @@ Class restartTest()
 }
 @end
 
+#pragma mark SchedulerUpdate
+
 @implementation TestNode
 -(id) initWithString:(NSString*)string priority:(int)priority
 {
@@ -398,9 +401,6 @@ Class restartTest()
 
 @end
 
-
-
-#pragma mark SchedulerUpdate
 @implementation SchedulerUpdate
 -(id) init
 {
@@ -411,7 +411,7 @@ Class restartTest()
 		[self addChild:d];
 		[d release];
 		
-		TestNode *b = [[TestNode alloc] initWithString:@"2nd" priority:0];
+		TestNode *b = [[TestNode alloc] initWithString:@"3rd" priority:0];
 		[self addChild:b];
 		[b release];
 
@@ -419,13 +419,17 @@ Class restartTest()
 		[self addChild:a];
 		[a release];
 
-		TestNode *c = [[TestNode alloc] initWithString:@"3rd" priority:10];
+		TestNode *c = [[TestNode alloc] initWithString:@"4th" priority:10];
 		[self addChild:c];
 		[c release];
 
-		TestNode *e = [[TestNode alloc] initWithString:@"4rd" priority:20];
+		TestNode *e = [[TestNode alloc] initWithString:@"5th" priority:20];
 		[self addChild:e];
 		[e release];
+
+		TestNode *f = [[TestNode alloc] initWithString:@"2nd" priority:-5];
+		[self addChild:f];
+		[f release];
 		
 		
 		[self schedule:@selector(removeUpdates:) interval:4];
@@ -449,6 +453,91 @@ Class restartTest()
 	for( CCNode *node in children_)
 		[node unscheduleAllSelectors];
 }
+@end
+
+
+#pragma mark SchedulerUpdateAndCustom
+@implementation SchedulerUpdateAndCustom
+-(id) init
+{
+	if( (self=[super init]) ) {
+	
+		[self scheduleUpdate];
+		[self schedule:@selector(tick:)];
+		[self schedule:@selector(stopSelectors:) interval:4];
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Schedule Update + custom selector";
+}
+
+-(NSString *) subtitle
+{
+	return @"Update + custom selector at the same time. Stops in 4s. See console";
+}								 
+
+-(void) update:(ccTime)dt
+{
+	NSLog(@"update called:%f", dt);
+}
+
+-(void) tick:(ccTime)dt
+{
+	NSLog(@"custom selector called:%f",dt);
+}
+
+-(void) stopSelectors:(ccTime)dt
+{
+	[self unscheduleAllSelectors];
+}
+@end
+
+#pragma mark SchedulerUpdateFromCustomcle
+@implementation SchedulerUpdateFromCustom
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		[self schedule:@selector(schedUpdate:) interval:2];
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Schedule Update in 2 sec";
+}
+
+-(NSString *) subtitle
+{
+	return @"Update schedules in 2 secs. Stops 2 sec later. See console";
+}								 
+
+-(void) update:(ccTime)dt
+{
+	NSLog(@"update called:%f", dt);
+}
+
+-(void) stopUpdate:(ccTime)dt
+{
+	[self unscheduleUpdate];
+	[self unschedule:_cmd];
+}
+
+-(void) schedUpdate:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	[self scheduleUpdate];
+	[self schedule:@selector(stopUpdate:) interval:2];
+}
+
 @end
 
 

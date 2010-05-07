@@ -63,13 +63,14 @@ static CCActionManager *_sharedManager = nil;
 
 +(void)purgeSharedManager
 {
+	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
 	[_sharedManager release];
 }
 
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 paused:NO];
+		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
 		targets = ccHashSetNew(131, targetSetEql);
 	}
 	
@@ -304,7 +305,7 @@ static CCActionManager *_sharedManager = nil;
 
 #pragma mark ActionManager - main loop
 
--(void) tick: (ccTime) dt
+-(void) update: (ccTime) dt
 {
 	for(int i=0; i< targets->size; i++) {
 		ccHashSetBin *bin;

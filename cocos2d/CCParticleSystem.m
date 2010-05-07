@@ -101,7 +101,7 @@
 #if CC_ENABLE_PROFILERS
 		_profilingTimer = [[CCProfiler timerWithName:@"particle system" andInstance:self] retain];
 #endif
-		[self schedule:@selector(step:)];
+		[self scheduleUpdate];
 		
 	}
 
@@ -227,7 +227,7 @@
 }
 
 #pragma mark ParticleSystem - MainLoop
--(void) step: (ccTime) dt
+-(void) update: (ccTime) dt
 {
 	if( active && emissionRate ) {
 		float rate = 1.0f / emissionRate;
@@ -318,7 +318,7 @@
 			particleCount--;
 			
 			if( particleCount == 0 && autoRemoveOnFinish_ ) {
-				[self unschedule:@selector(step:)];
+				[self unscheduleUpdate];
 				[[self parent] removeChild:self cleanup:YES];
 				return;
 			}
