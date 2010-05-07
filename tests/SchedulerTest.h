@@ -50,6 +50,11 @@
 @end
 
 
+@interface SchedulerUpdateFromCustom : SchedulerTest
+{}
+@end
+
+
 
 
 
