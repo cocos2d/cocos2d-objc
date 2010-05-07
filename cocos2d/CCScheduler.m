@@ -16,6 +16,46 @@
 #import "CCScheduler.h"
 #import "ccMacros.h"
 #import "Support/uthash.h"
+#import "Support/utlist.h"
+
+//
+// Data structures
+//
+#pragma mark -
+#pragma mark Data Structures
+
+// A list double-linked list used for "updates with priority"
+typedef struct _listEntry
+{
+	struct	_listEntry *prev, *next;
+	TICK_IMP impMethod;
+	id		target;				// not retained (retained by hashUpdateEntry)
+	int		priority;
+	BOOL	paused;
+	
+} tListEntry;
+
+typedef struct _hashUpdateEntry
+{
+	tListEntry		*list;		// Which list does it belong to ?
+	tListEntry		*entry;		// entry in the list
+	id				target;		// hash key (retained)
+	UT_hash_handle  hh;
+} tHashUpdateEntry;
+
+// Hash Element used for "selectors with interval"
+typedef struct _hashSelectorEntry
+{
+	struct ccArray	*timers;
+	id				target;		// hash key (retained)
+	unsigned int	timerIndex;
+	CCTimer			*currentTimer;
+	BOOL			currentTimerSalvaged;
+	BOOL			paused;
+	UT_hash_handle  hh;
+} tHashSelectorEntry;
+
+
 
 //
 // CCTimer
@@ -36,22 +76,22 @@
 	@throw myException;
 }
 
-+(id) timerWithTarget:(id) t selector:(SEL)s
++(id) timerWithTarget:(id)t selector:(SEL)s
 {
 	return [[[self alloc] initWithTarget:t selector:s] autorelease];
 }
 
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime) i
++(id) timerWithTarget:(id)t selector:(SEL)s interval:(ccTime) i
 {
 	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
 }
 
--(id) initWithTarget:(id) t selector:(SEL)s
+-(id) initWithTarget:(id)t selector:(SEL)s
 {
 	return [self initWithTarget:t selector:s interval:0];
 }
 
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime) seconds
+-(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds
 {
 	if( (self=[super init]) ) {
 #if COCOS2D_DEBUG
@@ -80,7 +120,7 @@
 	[super dealloc];
 }
 
--(void) fire: (ccTime) dt
+-(void) update: (ccTime) dt
 {
 	if( elapsed == - 1)
 		elapsed = 0;
@@ -100,7 +140,7 @@
 #pragma mark - CCScheduler
 
 @interface CCScheduler (Private)
--(void) deleteHashElement:(tCCSchedHashElement)element;
+-(void) removeHashElement:(tHashSelectorEntry*)element;
 @end
 
 @implementation CCScheduler
@@ -133,12 +173,20 @@ static CCScheduler *sharedScheduler;
 	if( (self=[super init]) ) {		
 		timeScale_ = 1.0f;
 
-		fireSelector = @selector(fire:);
-		impMethod = (TICK_IMP) [CCTimer instanceMethodForSelector:fireSelector];
+		// used to trigger CCTimer#update
+		updateSelector = @selector(update:);
+		impMethod = (TICK_IMP) [CCTimer instanceMethodForSelector:updateSelector];
 
+		// updates with priority
+		updates0 = NULL;
+		updatesNeg = NULL;
+		updatesPos = NULL;
+		hashForUpdates = NULL;
+		
+		// selectors with interval
 		currentTarget = nil;
 		currentTargetSalvaged = NO;
-		targets = nil;
+		hashForSelectors = nil;
 	}
 
 	return self;
@@ -149,25 +197,24 @@ static CCScheduler *sharedScheduler;
 	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[self unscheduleAllSelectors];
-	uthash_free( targets );
+	uthash_free( hashForSelectors );
+	uthash_free( hashForUpdates );
 
 	sharedScheduler = nil;
 
 	[super dealloc];
 }
 
-#pragma mark CCScheduler - Private
 
--(void) removeHashElement:(tCCSchedHashElement*)element
+#pragma mark CCScheduler - Custom Selectors
+
+-(void) removeHashElement:(tHashSelectorEntry*)element
 {
 	ccArrayFree(element->timers);
 	[element->target release];
-	HASH_DEL(targets, element);
+	HASH_DEL(hashForSelectors, element);
 	free(element);
 }
-
-
-#pragma mark CCScheduler - scheduling / unscheduling
 
 -(void) scheduleTimer: (CCTimer*) t
 {
@@ -184,26 +231,18 @@ static CCScheduler *sharedScheduler;
 	NSAssert(NO, @"Not implemented. Use unscheduleAllSelectors");
 }
 
--(void) unscheduleAllSelectors
-{
-	for(tCCSchedHashElement *element=targets; element != NULL; element=element->hh.next) {	
-		id target = element->target;
-		[self unscheduleAllSelectorsForTarget:target];
-	}
-}
-
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(float)interval paused:(BOOL)paused
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
 	
-	tCCSchedHashElement *element = nil;
-	HASH_FIND_INT(targets, &target, element);
+	tHashSelectorEntry *element = nil;
+	HASH_FIND_INT(hashForSelectors, &target, element);
 	
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
 		element->target = [target retain];
-		HASH_ADD_INT( targets, target, element );
+		HASH_ADD_INT( hashForSelectors, target, element );
 	
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
 		element->paused = paused;
@@ -231,8 +270,8 @@ static CCScheduler *sharedScheduler;
 	NSAssert( target != nil, @"Target MUST not be nil");
 	NSAssert( selector != NULL, @"Selector MUST not be NULL");
 	
-	tCCSchedHashElement *element = nil;
-	HASH_FIND_INT(targets, &target, element);
+	tHashSelectorEntry *element = nil;
+	HASH_FIND_INT(hashForSelectors, &target, element);
 	
 	if( element ) {
 		
@@ -271,15 +310,148 @@ static CCScheduler *sharedScheduler;
 
 }
 
+#pragma mark CCScheduler - Update Specific
+
+-(void) priorityIn:(tListEntry*)list target:(id)target priority:(int)priority paused:(BOOL)paused
+{
+	tListEntry *listElement = malloc( sizeof(*listElement) );
+
+	listElement->target = target;
+	listElement->priority = priority;
+	listElement->paused = paused;
+	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
+	listElement->next = listElement->prev = NULL;
+	
+	
+	// empty list ?
+	if( ! list ) {
+		DL_APPEND( list, listElement );
+
+	} else {
+		BOOL added = NO;		
+		tListEntry *elem;
+	
+		LL_FOREACH( list, elem ) {
+			if( priority < elem->priority ) {
+				
+				// update new entry
+				listElement->prev = elem->prev;
+				listElement->next = elem;
+				
+				// update old entries
+				elem->prev->next = listElement;
+				elem->prev = listElement;
+				
+				added = YES;
+			}
+		}
+		
+		// Not added? priority has the higher value. Append it.
+		if( !added )
+			DL_APPEND(list, listElement);
+	}
+	
+	// update hash entry for quicker access
+	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
+	hashElement->target = [target retain];
+	hashElement->list = list;
+	hashElement->entry = listElement;
+	HASH_ADD_INT(hashForUpdates, target, hashElement );
+}
+
+-(void) appendIn:(tListEntry*)list target:(id)target paused:(BOOL)paused
+{
+	tListEntry *listElement = malloc( sizeof( * listElement ) );
+	
+	listElement->target = target;
+	listElement->paused = paused;
+	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
+	
+	DL_APPEND(list, listElement);
+
+	
+	// update hash entry for quicker access
+	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
+	hashElement->target = [target retain];
+	hashElement->list = list;
+	hashElement->entry = listElement;
+	HASH_ADD_INT(hashForUpdates, target, hashElement );	
+}
+
+-(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused
+{
+#if COCOS2D_DEBUG >= 1
+	tHashUpdateEntry * hashElement;
+	HASH_FIND_INT(hashForUpdates, &target, hashElement);
+	NSAssert( hashElement = NULL, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
+#endif	
+		
+	// most of the updates are going to be 0, that's way there
+	// is an special list for updates with priority 0
+	if( priority == 0 )
+		[self appendIn:updates0 target:target paused:paused];
+
+	else if( priority < 0 )
+		[self priorityIn:updatesNeg target:target priority:priority paused:paused];
+
+	else // priority > 0
+		[self priorityIn:updatesPos target:target priority:priority paused:paused];
+}
+
+-(void) unscheduleUpdateForTarget:(id)target
+{
+	if( target == nil )
+		return;
+	
+	tHashUpdateEntry * element;
+	HASH_FIND_INT(hashForUpdates, &target, element);
+	if( element ) {
+	
+		// list entry
+		DL_DELETE( element->list, element->entry );
+		free( element->entry );
+	
+		// hash entry
+		[element->target release];
+		HASH_DEL( hashForUpdates, element);
+		free(element);
+	}
+}
+
+#pragma mark CCScheduler - Common for Update selector & Custom Selectors
+
+-(void) unscheduleAllSelectors
+{
+	// Custom Selectors
+	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; element=element->hh.next) {	
+		id target = element->target;
+		[self unscheduleAllSelectorsForTarget:target];
+	}
+
+	// Updates selectors
+	tListEntry *entry, *tmp;
+	DL_FOREACH_SAFE( updates0, entry, tmp ) {
+		[self unscheduleUpdateForTarget:entry->target];
+	}
+	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
+		[self unscheduleUpdateForTarget:entry->target];
+	}
+	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
+		[self unscheduleUpdateForTarget:entry->target];
+	}
+	
+}
+
 -(void) unscheduleAllSelectorsForTarget:(id)target
 {
 	// explicit nil handling
 	if( target == nil )
 		return;
 	
-	tCCSchedHashElement *element = nil;
-	HASH_FIND_INT(targets, &target, element);
-
+	// Custom Selectors
+	tHashSelectorEntry *element = nil;
+	HASH_FIND_INT(hashForSelectors, &target, element);
+	
 	if( element ) {
 		if( ccArrayContainsObject(element->timers, element->currentTimer) && !element->currentTimerSalvaged ) {
 			[element->currentTimer retain];
@@ -290,32 +462,49 @@ static CCScheduler *sharedScheduler;
 			currentTargetSalvaged = YES;
 		else
 			[self removeHashElement:element];
-	} else {
-//		NSLog(@"CCSCheduler#unscheduleAllSelectorsForTarget Target not found: %@", target);
 	}
-
+	
+	// Update Selector
+	[self unscheduleUpdateForTarget:target];
 }
 
 -(void) resumeAllSelectorsForTarget:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
-
-	tCCSchedHashElement *element = nil;
-	HASH_FIND_INT(targets, &target, element);
 	
+	// Custom Selectors
+	tHashSelectorEntry *element = NULL;
+	HASH_FIND_INT(hashForSelectors, &target, element);
 	if( element )
 		element->paused = NO;
+	
+	// Update selector
+	tHashUpdateEntry * elementUpdate = NULL;
+	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
+	if( elementUpdate ) {
+		NSAssert( elementUpdate->entry != NULL, @"resumeUpdateForTarget: unknown error");
+		elementUpdate->entry->paused = NO;
+	}	
 }
 
 -(void) pauseAllSelectorsForTarget:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
-			 
-	tCCSchedHashElement *element = nil;
-	HASH_FIND_INT(targets, &target, element);
 	
+	// Custom selectors
+	tHashSelectorEntry *element = NULL;
+	HASH_FIND_INT(hashForSelectors, &target, element);
 	if( element )
 		element->paused = YES;
+	
+	// Update selector
+	tHashUpdateEntry * elementUpdate = NULL;
+	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
+	if( elementUpdate ) {
+		NSAssert( elementUpdate->entry != NULL, @"pauseUpdateForTarget: unknown error");
+		elementUpdate->entry->paused = YES;
+	}
+	
 }
 
 #pragma mark CCScheduler - Main Loop
@@ -325,10 +514,29 @@ static CCScheduler *sharedScheduler;
 	if( timeScale_ != 1.0f )
 		dt *= timeScale_;
 	
-	// Iterate all over the Updates
+	// Iterate all over the Updates selectors
+	tListEntry *elem, *tmp;
+
+	// updates with priority < 0
+	LL_FOREACH_SAFE( updatesNeg, elem, tmp ) {
+		if( ! elem->paused )
+			elem->impMethod( elem->target, updateSelector, dt );
+	}
+
+	// updates with priority == 0
+	LL_FOREACH_SAFE( updates0, elem, tmp ) {
+		if( ! elem->paused )
+			elem->impMethod( elem->target, updateSelector, dt );
+	}
 	
-	// Iterate all over the Timers
-	for(tCCSchedHashElement *element=targets; element != NULL; element=element->hh.next) {	
+	// updates with priority > 0
+	LL_FOREACH_SAFE( updatesPos, elem, tmp ) {
+		if( ! elem->paused )
+			elem->impMethod( elem->target, updateSelector, dt );
+	}
+	
+	// Iterate all over the  custome selectors
+	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; element=element->hh.next) {	
 		
 		currentTarget = element;
 		currentTargetSalvaged = NO;
@@ -340,7 +548,7 @@ static CCScheduler *sharedScheduler;
 				element->currentTimer = element->timers->arr[element->timerIndex];
 				element->currentTimerSalvaged = NO;
 
-				impMethod( element->currentTimer, fireSelector, dt);
+				impMethod( element->currentTimer, updateSelector, dt);
 				
 				if( element->currentTimerSalvaged ) {
 					// The currentTimer told the remove itself. To prevent the timer from

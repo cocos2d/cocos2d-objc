@@ -1,7 +1,8 @@
 version 0.99.3 - 00-May-2010
+ . [NEW] Scheduler: supports pause/resume/'update' with priority (issue #439)
  . [FIX] Grid: Fixed memory leak (issue #853)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
- . [FIX] Scheduler: Supports pause/resume (issue #439)
+ . [FIX] Scheduler: Improved performance (issue #492)
  . [FIX] Templates: templates can be installed in user directory (issue #856)
  
 version 0.99.2 - 28-Apr-2010
