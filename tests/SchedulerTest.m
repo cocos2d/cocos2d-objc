@@ -18,7 +18,8 @@ static NSString *transitions[] = {
 	@"SchedulerUnscheduleAll",
 	@"SchedulerUnscheduleAllHard",
 	@"SchedulerSchedulesAndRemove",
-
+	@"SchedulerUpdate",
+//	@"SchedulerUpdateAndCustom",
 };
 
 Class nextTest()
@@ -360,6 +361,93 @@ Class restartTest()
 	[self unschedule:@selector(tick2:)];
 	[self schedule:@selector(tick3:) interval:1];
 	[self schedule:@selector(tick4:) interval:1];
+}
+@end
+
+
+@interface TestNode : CCNode
+{
+	NSString *string_;
+}
+@end
+
+@implementation TestNode
+-(id) initWithString:(NSString*)string priority:(int)priority
+{
+	if( (self = [super init] ) ) {
+		
+		string_ = [string retain];
+		
+		[self scheduleUpdateWithPriority:priority];
+		
+	}
+	
+	return self;
+}
+
+- (void) dealloc
+{
+	[string_ release];
+	[super dealloc];
+}
+
+-(void) update:(ccTime)dt
+{
+	NSLog(@"%@", string_ );
+}
+
+@end
+
+
+
+#pragma mark SchedulerUpdate
+@implementation SchedulerUpdate
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		// schedule in different order... just another test
+		TestNode *d = [[TestNode alloc] initWithString:@"---" priority:50];
+		[self addChild:d];
+		[d release];
+		
+		TestNode *b = [[TestNode alloc] initWithString:@"2nd" priority:0];
+		[self addChild:b];
+		[b release];
+
+		TestNode *a = [[TestNode alloc] initWithString:@"1st" priority:-10];
+		[self addChild:a];
+		[a release];
+
+		TestNode *c = [[TestNode alloc] initWithString:@"3rd" priority:10];
+		[self addChild:c];
+		[c release];
+
+		TestNode *e = [[TestNode alloc] initWithString:@"4rd" priority:20];
+		[self addChild:e];
+		[e release];
+		
+		
+		[self schedule:@selector(removeUpdates:) interval:4];
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Schedule update with priority";
+}
+
+-(NSString *) subtitle
+{
+	return @"3 scheduled updates. Priority should work. Stops in 4s. See console";
+}								 
+
+-(void) removeUpdates:(ccTime)dt
+{
+	for( CCNode *node in children_)
+		[node unscheduleAllSelectors];
 }
 @end
 

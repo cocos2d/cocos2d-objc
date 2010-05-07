@@ -37,7 +37,7 @@ typedef struct _listEntry
 
 typedef struct _hashUpdateEntry
 {
-	tListEntry		*list;		// Which list does it belong to ?
+	tListEntry		**list;		// Which list does it belong to ?
 	tListEntry		*entry;		// entry in the list
 	id				target;		// hash key (retained)
 	UT_hash_handle  hh;
@@ -236,7 +236,7 @@ static CCScheduler *sharedScheduler;
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
 	
-	tHashSelectorEntry *element = nil;
+	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
 	
 	if( ! element ) {
@@ -270,7 +270,7 @@ static CCScheduler *sharedScheduler;
 	NSAssert( target != nil, @"Target MUST not be nil");
 	NSAssert( selector != NULL, @"Selector MUST not be NULL");
 	
-	tHashSelectorEntry *element = nil;
+	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
 	
 	if( element ) {
@@ -312,7 +312,7 @@ static CCScheduler *sharedScheduler;
 
 #pragma mark CCScheduler - Update Specific
 
--(void) priorityIn:(tListEntry*)list target:(id)target priority:(int)priority paused:(BOOL)paused
+-(void) priorityIn:(tListEntry**)list target:(id)target priority:(int)priority paused:(BOOL)paused
 {
 	tListEntry *listElement = malloc( sizeof(*listElement) );
 
@@ -324,31 +324,33 @@ static CCScheduler *sharedScheduler;
 	
 	
 	// empty list ?
-	if( ! list ) {
-		DL_APPEND( list, listElement );
+	if( ! *list ) {
+		DL_APPEND( *list, listElement );
 
 	} else {
 		BOOL added = NO;		
-		tListEntry *elem;
 	
-		LL_FOREACH( list, elem ) {
+		for( tListEntry *elem = *list; elem ; elem = elem->next ) {
 			if( priority < elem->priority ) {
 				
-				// update new entry
-				listElement->prev = elem->prev;
-				listElement->next = elem;
-				
-				// update old entries
-				elem->prev->next = listElement;
-				elem->prev = listElement;
+				if( elem == *list )
+					DL_PREPEND(*list, listElement);
+				else {
+					listElement->next = elem;
+					listElement->prev = elem->prev;
+
+					elem->prev->next = listElement;
+					elem->prev = listElement;
+				}
 				
 				added = YES;
+				break;
 			}
 		}
 		
 		// Not added? priority has the higher value. Append it.
 		if( !added )
-			DL_APPEND(list, listElement);
+			DL_APPEND(*list, listElement);
 	}
 	
 	// update hash entry for quicker access
@@ -359,7 +361,7 @@ static CCScheduler *sharedScheduler;
 	HASH_ADD_INT(hashForUpdates, target, hashElement );
 }
 
--(void) appendIn:(tListEntry*)list target:(id)target paused:(BOOL)paused
+-(void) appendIn:(tListEntry**)list target:(id)target paused:(BOOL)paused
 {
 	tListEntry *listElement = malloc( sizeof( * listElement ) );
 	
@@ -367,7 +369,7 @@ static CCScheduler *sharedScheduler;
 	listElement->paused = paused;
 	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
 	
-	DL_APPEND(list, listElement);
+	DL_APPEND(*list, listElement);
 
 	
 	// update hash entry for quicker access
@@ -381,21 +383,21 @@ static CCScheduler *sharedScheduler;
 -(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused
 {
 #if COCOS2D_DEBUG >= 1
-	tHashUpdateEntry * hashElement;
+	tHashUpdateEntry * hashElement = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, hashElement);
-	NSAssert( hashElement = NULL, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
+	NSAssert( hashElement == NULL, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
 #endif	
 		
 	// most of the updates are going to be 0, that's way there
 	// is an special list for updates with priority 0
 	if( priority == 0 )
-		[self appendIn:updates0 target:target paused:paused];
+		[self appendIn:&updates0 target:target paused:paused];
 
 	else if( priority < 0 )
-		[self priorityIn:updatesNeg target:target priority:priority paused:paused];
+		[self priorityIn:&updatesNeg target:target priority:priority paused:paused];
 
 	else // priority > 0
-		[self priorityIn:updatesPos target:target priority:priority paused:paused];
+		[self priorityIn:&updatesPos target:target priority:priority paused:paused];
 }
 
 -(void) unscheduleUpdateForTarget:(id)target
@@ -403,12 +405,12 @@ static CCScheduler *sharedScheduler;
 	if( target == nil )
 		return;
 	
-	tHashUpdateEntry * element;
+	tHashUpdateEntry * element = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, element);
 	if( element ) {
 	
 		// list entry
-		DL_DELETE( element->list, element->entry );
+		DL_DELETE( *element->list, element->entry );
 		free( element->entry );
 	
 		// hash entry
@@ -449,7 +451,7 @@ static CCScheduler *sharedScheduler;
 		return;
 	
 	// Custom Selectors
-	tHashSelectorEntry *element = nil;
+	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
 	
 	if( element ) {
@@ -518,19 +520,19 @@ static CCScheduler *sharedScheduler;
 	tListEntry *elem, *tmp;
 
 	// updates with priority < 0
-	LL_FOREACH_SAFE( updatesNeg, elem, tmp ) {
+	DL_FOREACH_SAFE( updatesNeg, elem, tmp ) {
 		if( ! elem->paused )
 			elem->impMethod( elem->target, updateSelector, dt );
 	}
 
 	// updates with priority == 0
-	LL_FOREACH_SAFE( updates0, elem, tmp ) {
+	DL_FOREACH_SAFE( updates0, elem, tmp ) {
 		if( ! elem->paused )
 			elem->impMethod( elem->target, updateSelector, dt );
 	}
 	
 	// updates with priority > 0
-	LL_FOREACH_SAFE( updatesPos, elem, tmp ) {
+	DL_FOREACH_SAFE( updatesPos, elem, tmp ) {
 		if( ! elem->paused )
 			elem->impMethod( elem->target, updateSelector, dt );
 	}

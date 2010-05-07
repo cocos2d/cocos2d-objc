@@ -41,6 +41,15 @@
 {}
 @end
 
+@interface SchedulerUpdate : SchedulerTest
+{}
+@end
+
+@interface SchedulerUpdateAndCustom : SchedulerTest
+{}
+@end
+
+
 
 
 
