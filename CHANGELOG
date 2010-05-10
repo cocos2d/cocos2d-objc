@@ -1,6 +1,8 @@
 version 0.99.3 - 00-May-2010
  . [NEW] Scheduler: supports pause/resume/'update' with priority (issue #439)
  . [NEW] Node: added removeAndCleanupFromParent (issue #566)
+ . [FIX] ActionManager: using uthash instead of ccHashSet (easier to use)
+ . [FIX] BitmapFontAtlas: using uthash instead of ccHashSet (easier to use)
  . [FIX] Grid: Fixed memory leak (issue #853)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
  . [FIX] Scheduler: Improved performance (issue #492)

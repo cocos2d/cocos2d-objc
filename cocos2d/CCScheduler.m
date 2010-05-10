@@ -197,8 +197,6 @@ static CCScheduler *sharedScheduler;
 	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[self unscheduleAllSelectors];
-	uthash_free( hashForSelectors );
-	uthash_free( hashForUpdates );
 
 	sharedScheduler = nil;
 
@@ -425,8 +423,9 @@ static CCScheduler *sharedScheduler;
 -(void) unscheduleAllSelectors
 {
 	// Custom Selectors
-	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; element=element->hh.next) {	
+	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; ) {	
 		id target = element->target;
+		element=element->hh.next;
 		[self unscheduleAllSelectorsForTarget:target];
 	}
 
@@ -517,55 +516,59 @@ static CCScheduler *sharedScheduler;
 		dt *= timeScale_;
 	
 	// Iterate all over the Updates selectors
-	tListEntry *elem, *tmp;
+	tListEntry *entry, *tmp;
 
 	// updates with priority < 0
-	DL_FOREACH_SAFE( updatesNeg, elem, tmp ) {
-		if( ! elem->paused )
-			elem->impMethod( elem->target, updateSelector, dt );
+	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
+		if( ! entry->paused )
+			entry->impMethod( entry->target, updateSelector, dt );
 	}
 
 	// updates with priority == 0
-	DL_FOREACH_SAFE( updates0, elem, tmp ) {
-		if( ! elem->paused )
-			elem->impMethod( elem->target, updateSelector, dt );
+	DL_FOREACH_SAFE( updates0, entry, tmp ) {
+		if( ! entry->paused )
+			entry->impMethod( entry->target, updateSelector, dt );
 	}
 	
 	// updates with priority > 0
-	DL_FOREACH_SAFE( updatesPos, elem, tmp ) {
-		if( ! elem->paused )
-			elem->impMethod( elem->target, updateSelector, dt );
+	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
+		if( ! entry->paused )
+			entry->impMethod( entry->target, updateSelector, dt );
 	}
 	
 	// Iterate all over the  custome selectors
-	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; element=element->hh.next) {	
+	for(tHashSelectorEntry *elt=hashForSelectors; elt != NULL; ) {	
 		
-		currentTarget = element;
+		currentTarget = elt;
 		currentTargetSalvaged = NO;
 
-		if( ! element->paused ) {
-
+		if( ! currentTarget->paused ) {
+			
 			// The 'timers' ccArray may change while inside this loop.
-			for( element->timerIndex = 0; element->timerIndex < element->timers->num; element->timerIndex++) {
-				element->currentTimer = element->timers->arr[element->timerIndex];
-				element->currentTimerSalvaged = NO;
+			for( elt->timerIndex = 0; elt->timerIndex < elt->timers->num; elt->timerIndex++) {
+				elt->currentTimer = elt->timers->arr[elt->timerIndex];
+				elt->currentTimerSalvaged = NO;
 
-				impMethod( element->currentTimer, updateSelector, dt);
+				impMethod( elt->currentTimer, updateSelector, dt);
 				
-				if( element->currentTimerSalvaged ) {
+				if( elt->currentTimerSalvaged ) {
 					// The currentTimer told the remove itself. To prevent the timer from
 					// accidentally deallocating itself before finishing its step, we retained
 					// it. Now that step is done, it's safe to release it.
-					[element->currentTimer release];
+					[elt->currentTimer release];
 				}
-			}
-			
-			// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-			if( currentTargetSalvaged && currentTarget->timers->num == 0 )
-				[self removeHashElement:currentTarget];
+				
+				elt->currentTimer = nil;
+			}			
 		}
 		
-		element->currentTimer = nil;
+		// elt, at this moment, is still valid
+		// so it is safe to ask this here (issue #490)
+		elt=elt->hh.next;
+		
+		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
+		if( currentTargetSalvaged && currentTarget->timers->num == 0 )
+			[self removeHashElement:currentTarget];		
 	}
 	
 	currentTarget = nil;
