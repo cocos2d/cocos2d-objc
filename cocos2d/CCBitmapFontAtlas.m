@@ -77,6 +77,7 @@ typedef struct _KerningHashElement
 -(void) parseCommonArguments:(NSString*)line;
 -(void) parseKerningCapacity:(NSString*)line;
 -(void) parseKerningEntry:(NSString*)line;
+-(void) purgeKerningDictionary;
 @end
 
 @implementation CCBitmapFontConfiguration
@@ -100,9 +101,19 @@ typedef struct _KerningHashElement
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	if(kerningDictionary)
-		uthash_free(kerningDictionary);
+	[self purgeKerningDictionary];
 	[super dealloc];
+}
+
+-(void) purgeKerningDictionary
+{
+	tKerningHashElement *current;
+	
+	while(kerningDictionary) {
+		current = kerningDictionary; 
+		HASH_DEL(kerningDictionary,current);
+		free(current);
+	}
 }
 
 - (void)parseConfigFile:(NSString*)fntFile
@@ -300,6 +311,8 @@ typedef struct _KerningHashElement
 
 -(void) parseKerningCapacity:(NSString*) line
 {
+	// When using uthash there is not need to parse the capacity.
+
 //	NSAssert(!kerningDictionary, @"dictionary already initialized");
 //	
 //	// Break the values for this line up using =
@@ -339,7 +352,7 @@ typedef struct _KerningHashElement
 	propertyValue = [nse nextObject];
 	int amount = [propertyValue intValue];
 
-	tKerningHashElement *element = malloc( sizeof( *element ) );
+	tKerningHashElement *element = calloc( sizeof( *element ), 1 );
 	element->amount = amount;
 	element->key = (first<<16) | (second&0xffff);
 	HASH_ADD_INT(kerningDictionary,key, element);

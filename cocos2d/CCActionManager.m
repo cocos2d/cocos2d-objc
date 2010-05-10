@@ -205,7 +205,7 @@ static CCActionManager *_sharedManager = nil;
 		return;
 	
 	tHashElement *element = NULL;
-	id target = [action target];
+	id target = [action originalTarget];
 	HASH_FIND_INT(targets, &target, element );
 	if( element ) {
 		NSUInteger i = ccArrayGetIndexOfObject(element->actions, action);
@@ -300,6 +300,7 @@ static CCActionManager *_sharedManager = nil;
 					// accidentally deallocating itself before finishing its step, we retained
 					// it. Now that step is done, it's safe to release it.
 					[currentTarget->currentAction release];
+
 				} else if( [currentTarget->currentAction isDone] ) {
 					[currentTarget->currentAction stop];
 					
