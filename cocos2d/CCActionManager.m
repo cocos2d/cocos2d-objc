@@ -17,20 +17,7 @@
 #import "CCActionManager.h"
 #import "CCScheduler.h"
 #import "ccMacros.h"
-#import "Support/ccHashSet.h"
 
-
-//
-// hash
-//
-// Equal function for targetSet.
-static int
-targetSetEql(void *ptr, void *elt)
-{
-	tHashElement *first = (tHashElement*) ptr;
-	tHashElement *second = (tHashElement*) elt;
-	return (first->target == second->target);
-}
 
 //
 // singleton stuff
@@ -71,7 +58,7 @@ static CCActionManager *_sharedManager = nil;
 {
 	if ((self=[super init]) ) {
 		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
-		targets = ccHashSetNew(131, targetSetEql);
+		targets = NULL;
 	}
 	
 	return self;
@@ -82,7 +69,6 @@ static CCActionManager *_sharedManager = nil;
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
-	ccHashSetFree(targets);
 
 	_sharedManager = nil;
 
@@ -94,7 +80,7 @@ static CCActionManager *_sharedManager = nil;
 -(void) deleteHashElement:(tHashElement*)element
 {
 	ccArrayFree(element->actions);
-	ccHashSetRemove(targets, CC_HASH_INT(element->target), element);
+	HASH_DEL(targets, element);
 //	CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 	[element->target release];
 	free(element);
@@ -136,9 +122,8 @@ static CCActionManager *_sharedManager = nil;
 
 -(void) pauseAllActionsForTarget:(id)target
 {
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 	if( element )
 		element->paused = YES;
 //	else
@@ -146,9 +131,8 @@ static CCActionManager *_sharedManager = nil;
 }
 -(void) resumeAllActionsForTarget:(id)target
 {
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 	if( element )
 		element->paused = NO;
 //	else
@@ -162,15 +146,13 @@ static CCActionManager *_sharedManager = nil;
 	NSAssert( action != nil, @"Argument action must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
 	
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 	if( ! element ) {
-		element = malloc( sizeof( *element ) );
-		bzero(element, sizeof(*element));
+		element = calloc( sizeof( *element ), 1 );
 		element->paused = paused;
 		element->target = [target retain];
-		ccHashSetInsert(targets, CC_HASH_INT(target), element, nil);
+		HASH_ADD_INT(targets, target, element);
 //		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 
 	}
@@ -187,14 +169,10 @@ static CCActionManager *_sharedManager = nil;
 
 -(void) removeAllActions
 {
-	for(int i=0; i< targets->size; i++) {
-		ccHashSetBin *bin;
-		for(bin = targets->table[i]; bin; ) {
-			tHashElement *elt = (tHashElement*)bin->elt;
-			id target = elt->target;
-			bin = bin->next;
-			[self removeAllActionsFromTarget:target];
-		}
+	for(tHashElement *element=targets; element != NULL; ) {	
+		id target = element->target;
+		element=element->hh.next;
+		[self removeAllActionsFromTarget:target];
 	}
 }
 -(void) removeAllActionsFromTarget:(id)target
@@ -203,9 +181,8 @@ static CCActionManager *_sharedManager = nil;
 	if( target == nil )
 		return;
 	
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 	if( element ) {
 		if( ccArrayContainsObject(element->actions, element->currentAction) && !element->currentActionSalvaged ) {
 			[element->currentAction retain];
@@ -227,9 +204,9 @@ static CCActionManager *_sharedManager = nil;
 	if (action == nil)
 		return;
 	
-	tHashElement elementTmp;
-	elementTmp.target = [action originalTarget];
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(elementTmp.target), &elementTmp);
+	tHashElement *element = NULL;
+	id target = [action target];
+	HASH_FIND_INT(targets, &target, element );
 	if( element ) {
 		NSUInteger i = ccArrayGetIndexOfObject(element->actions, action);
 		if( i != NSNotFound ) {
@@ -246,9 +223,8 @@ static CCActionManager *_sharedManager = nil;
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
 	
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 	
 	if( element ) {
 		NSUInteger limit = element->actions->num;
@@ -270,9 +246,8 @@ static CCActionManager *_sharedManager = nil;
 {
 	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
 
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 
 	if( element ) {
 		if( element->actions != nil ) {
@@ -293,9 +268,8 @@ static CCActionManager *_sharedManager = nil;
 
 -(int) numberOfRunningActionsInTarget:(id) target
 {
-	tHashElement elementTmp;
-	elementTmp.target = target;
-	tHashElement *element = ccHashSetFind(targets, CC_HASH_INT(target), &elementTmp);
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
 	if( element )
 		return element->actions ? element->actions->num : 0;
 
@@ -307,47 +281,45 @@ static CCActionManager *_sharedManager = nil;
 
 -(void) update: (ccTime) dt
 {
-	for(int i=0; i< targets->size; i++) {
-		ccHashSetBin *bin;
-		for(bin = targets->table[i]; bin; ) {
-			currentTarget = (tHashElement*) bin->elt;
-			currentTargetSalvaged = NO;
+	for(tHashElement *elt=targets; elt != NULL; ) {	
+
+		currentTarget = elt;
+		currentTargetSalvaged = NO;
+		
+		if( ! currentTarget->paused ) {
 			
-			if( ! currentTarget->paused ) {
+			// The 'actions' ccArray may change while inside this loop.
+			for( currentTarget->actionIndex = 0; currentTarget->actionIndex <  currentTarget->actions->num; currentTarget->actionIndex++) {
+				currentTarget->currentAction = currentTarget->actions->arr[currentTarget->actionIndex];
+				currentTarget->currentActionSalvaged = NO;
 				
-				// The 'actions' ccArray may change while inside this loop.
-				for( currentTarget->actionIndex = 0; currentTarget->actionIndex <  currentTarget->actions->num; currentTarget->actionIndex++) {
-					currentTarget->currentAction = currentTarget->actions->arr[currentTarget->actionIndex];
-					currentTarget->currentActionSalvaged = NO;
-					
-					[currentTarget->currentAction step: dt];
+				[currentTarget->currentAction step: dt];
 
-					if( currentTarget->currentActionSalvaged ) {
-						// The currentAction told the node to remove it. To prevent the action from
-						// accidentally deallocating itself before finishing its step, we retained
-						// it. Now that step is done, it's safe to release it.
-						[currentTarget->currentAction release];
-					} else if( [currentTarget->currentAction isDone] ) {
-						[currentTarget->currentAction stop];
-						
-						CCAction *a = currentTarget->currentAction;
-						// Make currentAction nil to prevent removeAction from salvaging it.
-						currentTarget->currentAction = nil;
-						[self removeAction:a];
-					}
+				if( currentTarget->currentActionSalvaged ) {
+					// The currentAction told the node to remove it. To prevent the action from
+					// accidentally deallocating itself before finishing its step, we retained
+					// it. Now that step is done, it's safe to release it.
+					[currentTarget->currentAction release];
+				} else if( [currentTarget->currentAction isDone] ) {
+					[currentTarget->currentAction stop];
 					
+					CCAction *a = currentTarget->currentAction;
+					// Make currentAction nil to prevent removeAction from salvaging it.
 					currentTarget->currentAction = nil;
+					[self removeAction:a];
 				}
+				
+				currentTarget->currentAction = nil;
 			}
-
-			// bin, at this moment, is still valid
-			// so it is safe to ask this here (issue #490)
-			bin = bin->next;
-
-			// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-			if( currentTargetSalvaged && currentTarget->actions->num == 0 )
-				[self deleteHashElement:currentTarget];
 		}
+
+		// elt, at this moment, is still valid
+		// so it is safe to ask this here (issue #490)
+		elt=elt->hh.next;
+	
+		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
+		if( currentTargetSalvaged && currentTarget->actions->num == 0 )
+			[self deleteHashElement:currentTarget];
 	}
 	
 	// issue #635
