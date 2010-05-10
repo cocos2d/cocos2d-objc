@@ -146,6 +146,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Jon Kean:
 		PointParticle asserts if size > 64
 		Fixed memory leaks when initialization of some nodes failed
+		Added removeFromParent method in CCNode
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
