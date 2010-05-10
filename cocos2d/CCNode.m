@@ -297,6 +297,11 @@
 	return [self addChild:child z:child.zOrder tag:child.tag];
 }
 
+-(void) removeSelfAndCleanup
+{
+	[self.parent removeChild:self cleanup:YES];
+}
+
 /* "remove" logic MUST only be on this method
  * If a class want's to extend the 'removeChild' behavior it only needs
  * to override this method
