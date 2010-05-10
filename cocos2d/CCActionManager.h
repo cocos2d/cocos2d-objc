@@ -15,7 +15,7 @@
 
 #import "CCAction.h"
 #import "Support/ccArray.h"
-#import "Support/ccHashSet.h"
+#import "Support/uthash.h"
 
 typedef struct _hashElement
 {
@@ -25,6 +25,7 @@ typedef struct _hashElement
 	CCAction		*currentAction;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;	
+	UT_hash_handle	hh;
 } tHashElement;
 
 
@@ -40,8 +41,8 @@ typedef struct _hashElement
  */
 @interface CCActionManager : NSObject {
 
-	ccHashSet		* targets;
-	tHashElement	* currentTarget;
+	tHashElement	*targets;
+	tHashElement	*currentTarget;
 	BOOL			currentTargetSalvaged;
 }
 

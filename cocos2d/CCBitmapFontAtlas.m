@@ -29,7 +29,7 @@
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccHashSet.h"
+#import "Support/uthash.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -60,19 +60,11 @@ void FNTConfigRemoveCache( void )
 
 // Equal function for targetSet.
 typedef struct _KerningHashElement
-{
-	unichar			first;
-	unichar			second;
+{	
+	int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
 	int				amount;
+	UT_hash_handle	hh;
 } tKerningHashElement;
-
-static int
-targetSetEql(void *ptr, void *elt)
-{
-	tKerningHashElement *one = (tKerningHashElement*) ptr;
-	tKerningHashElement *two = (tKerningHashElement*) elt;
-	return ( (one->first == two->first) && (one->second == two->second));
-}
 
 #pragma mark -
 #pragma mark BitmapFontConfiguration
@@ -97,6 +89,9 @@ targetSetEql(void *ptr, void *elt)
 -(id) initWithFNTfile:(NSString*)fntFile
 {
 	if((self=[super init])) {
+		
+		kerningDictionary = NULL;
+
 		[self parseConfigFile:fntFile];
 	}
 	return self;
@@ -106,7 +101,7 @@ targetSetEql(void *ptr, void *elt)
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	if(kerningDictionary)
-		ccHashSetFree(kerningDictionary);
+		uthash_free(kerningDictionary);
 	[super dealloc];
 }
 
@@ -305,22 +300,22 @@ targetSetEql(void *ptr, void *elt)
 
 -(void) parseKerningCapacity:(NSString*) line
 {
-	NSAssert(!kerningDictionary, @"dictionary already initialized");
-	
-	// Break the values for this line up using =
-	NSArray *values = [line componentsSeparatedByString:@"="];
-	NSEnumerator *nse = [values objectEnumerator];	
-	NSString *propertyValue;
-	
-	// We need to move past the first entry in the array before we start assigning values
-	[nse nextObject];
-	
-	// count
-	propertyValue = [nse nextObject];
-	int capacity = [propertyValue intValue];
-	
-	if( capacity != -1 )
-		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
+//	NSAssert(!kerningDictionary, @"dictionary already initialized");
+//	
+//	// Break the values for this line up using =
+//	NSArray *values = [line componentsSeparatedByString:@"="];
+//	NSEnumerator *nse = [values objectEnumerator];	
+//	NSString *propertyValue;
+//	
+//	// We need to move past the first entry in the array before we start assigning values
+//	[nse nextObject];
+//	
+//	// count
+//	propertyValue = [nse nextObject];
+//	int capacity = [propertyValue intValue];
+//	
+//	if( capacity != -1 )
+//		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
 }
 
 -(void) parseKerningEntry:(NSString*) line
@@ -345,11 +340,9 @@ targetSetEql(void *ptr, void *elt)
 	int amount = [propertyValue intValue];
 
 	tKerningHashElement *element = malloc( sizeof( *element ) );
-	element->first = first;
-	element->second = second;
 	element->amount = amount;
-	unsigned int key = (first<<16) | (second&0xffff);
-	ccHashSetInsert(kerningDictionary, CC_HASH_INT(key), element, nil);	
+	element->key = (first<<16) | (second&0xffff);
+	HASH_ADD_INT(kerningDictionary,key, element);
 }
 
 @end
@@ -458,14 +451,11 @@ targetSetEql(void *ptr, void *elt)
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second
 {
 	int ret = 0;
-	tKerningHashElement elementTmp;
-	elementTmp.first = first;
-	elementTmp.second = second;
 	unsigned int key = (first<<16) | (second & 0xffff);
 	
 	if( configuration->kerningDictionary ) {
-		tKerningHashElement *element = ccHashSetFind(configuration->kerningDictionary, CC_HASH_INT(key), &elementTmp);
-		
+		tKerningHashElement *element = NULL;
+		HASH_FIND_INT(configuration->kerningDictionary, &key, element);		
 		if(element)
 			ret = element->amount;
 	}

@@ -264,8 +264,6 @@
 		508EAF8111947C20007F058D /* ccArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAEED11947C20007F058D /* ccArray.h */; };
 		508EAF8211947C20007F058D /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAEEE11947C20007F058D /* CCFileUtils.h */; };
 		508EAF8311947C20007F058D /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 508EAEEF11947C20007F058D /* CCFileUtils.m */; };
-		508EAF8411947C20007F058D /* ccHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAEF011947C20007F058D /* ccHashSet.h */; };
-		508EAF8511947C20007F058D /* ccHashSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 508EAEF111947C20007F058D /* ccHashSet.m */; };
 		508EAF8611947C20007F058D /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAEF211947C20007F058D /* CCProfiling.h */; };
 		508EAF8711947C20007F058D /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 508EAEF311947C20007F058D /* CCProfiling.m */; };
 		508EAF8811947C20007F058D /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAEF411947C20007F058D /* CGPointExtension.h */; };
@@ -577,8 +575,6 @@
 		508EAEED11947C20007F058D /* ccArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccArray.h; sourceTree = "<group>"; };
 		508EAEEE11947C20007F058D /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		508EAEEF11947C20007F058D /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
-		508EAEF011947C20007F058D /* ccHashSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccHashSet.h; sourceTree = "<group>"; };
-		508EAEF111947C20007F058D /* ccHashSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccHashSet.m; sourceTree = "<group>"; };
 		508EAEF211947C20007F058D /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		508EAEF311947C20007F058D /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
 		508EAEF411947C20007F058D /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -1002,8 +998,6 @@
 				508EAEED11947C20007F058D /* ccArray.h */,
 				508EAEEE11947C20007F058D /* CCFileUtils.h */,
 				508EAEEF11947C20007F058D /* CCFileUtils.m */,
-				508EAEF011947C20007F058D /* ccHashSet.h */,
-				508EAEF111947C20007F058D /* ccHashSet.m */,
 				508EAEF211947C20007F058D /* CCProfiling.h */,
 				508EAEF311947C20007F058D /* CCProfiling.m */,
 				508EAEF411947C20007F058D /* CGPointExtension.h */,
@@ -1119,7 +1113,6 @@
 				508EAF8011947C20007F058D /* base64.h in Headers */,
 				508EAF8111947C20007F058D /* ccArray.h in Headers */,
 				508EAF8211947C20007F058D /* CCFileUtils.h in Headers */,
-				508EAF8411947C20007F058D /* ccHashSet.h in Headers */,
 				508EAF8611947C20007F058D /* CCProfiling.h in Headers */,
 				508EAF8811947C20007F058D /* CGPointExtension.h in Headers */,
 				508EAF8A11947C20007F058D /* EAGLView.h in Headers */,
@@ -1454,7 +1447,6 @@
 				508EAF7E11947C20007F058D /* cocos2d.m in Sources */,
 				508EAF7F11947C20007F058D /* base64.c in Sources */,
 				508EAF8311947C20007F058D /* CCFileUtils.m in Sources */,
-				508EAF8511947C20007F058D /* ccHashSet.m in Sources */,
 				508EAF8711947C20007F058D /* CCProfiling.m in Sources */,
 				508EAF8911947C20007F058D /* CGPointExtension.m in Sources */,
 				508EAF8B11947C20007F058D /* EAGLView.m in Sources */,
