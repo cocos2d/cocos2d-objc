@@ -297,7 +297,7 @@
 	return [self addChild:child z:child.zOrder tag:child.tag];
 }
 
--(void) removeSelfAndCleanup
+-(void) removeAndCleanupFromParent
 {
 	[self.parent removeChild:self cleanup:YES];
 }
