@@ -89,9 +89,9 @@ How to start a new game
 Run the 'install-templates.sh' script as root:
     $ cd cocos2d-iphone
     $ sudo ./install-templates.sh
-or with '-l' to install the templates in your user:
+or with `-l` to install the templates in your user:
     $ cd cocos2d-iphone
-    $ sudo ./install-templates.sh -l
+    $ ./install-templates.sh -l
 And then open XCode -> New Project -> User Templates -> cocos2d
 
 
