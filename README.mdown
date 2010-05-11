@@ -65,7 +65,7 @@ Files and Folders
   * CocosDenshion/  
      sound engine library
   * tests/  
-     tests, demo and template examples     
+     tests, demo and template examples
   * experimental/  
      experimental stuff
   * external/  
@@ -80,15 +80,18 @@ How to run the tests
 --------------------
 
 Xcode -> View -> Customize toolbar  
-Then, drag "Active Target" and "Active Executable" to your top project tool bar.  
+Then, drag "Active Target" and "Active Executable" to your top project tool bar.
 Select the test you want to view in both drop downs and hit Build and Go.
 
 How to start a new game
 -----------------------
 
-Run the 'install-templates.sh' script as root:  
+Run the 'install-templates.sh' script as root:
     $ cd cocos2d-iphone
-    $ sudo ./install-templates.sh -f
+    $ sudo ./install-templates.sh
+or with '-l' to install the templates in your user:
+    $ cd cocos2d-iphone
+    $ sudo ./install-templates.sh -l
 And then open XCode -> New Project -> User Templates -> cocos2d
 
 
