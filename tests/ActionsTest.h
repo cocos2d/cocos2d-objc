@@ -88,6 +88,11 @@
 {}
 @end
 
+@interface ActionCallFuncND : ActionDemo
+{}
+@end
+
+
 @interface ActionFade : ActionDemo
 {}
 @end
@@ -118,6 +123,7 @@
 @interface ActionFollow : ActionDemo
 {}
 @end
+
 @interface ActionProperty : ActionDemo
 {}
 @end

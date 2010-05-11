@@ -276,21 +276,23 @@
 
 @implementation CCCallFuncND
 
-@synthesize invocation = invocation_;
+@synthesize callbackMethod = callbackMethod_;
 
-+(id) actionWithTarget: (id) t selector:(SEL) s data:(void*) d
++(id) actionWithTarget:(id)t selector:(SEL)s data:(void*)d
 {
-	return [[[self alloc] initWithTarget: t selector: s data:d] autorelease];
+	return [[[self alloc] initWithTarget:t selector:s data:d] autorelease];
 }
 
--(id) initWithTarget:(id) t selector:(SEL) s data:(void*) d
+-(id) initWithTarget:(id)t selector:(SEL)s data:(void*)d
 {
 	if( (self=[super initWithTarget:t selector:s]) ) {
-		data = d;	
+		data = d;
+
+#if COCOS2D_DEBUG
 		NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
-		self.invocation = [NSInvocation invocationWithMethodSignature:sig];
-		[invocation_ setTarget:t];
-		[invocation_ setSelector:s];
+		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void)name:(id)sender data:(void*)data");
+#endif
+		callbackMethod_ = (CC_CALLBACK_ND) [t methodForSelector:s];
 	}
 	return self;
 }
@@ -301,18 +303,15 @@
 	return copy;
 }
 
-
 -(void) dealloc
 {
-	[invocation_ release];
+	// nothing to dealloc really. Everything is dealloc on super (CCCallFuncN)
 	[super dealloc];
 }
 
 -(void) execute
 {
-	[invocation_ setArgument:&target atIndex:2];
-	[invocation_ setArgument:&data atIndex:3];
-	[invocation_ invoke];
+	callbackMethod_(targetCallback,selector,target, data);
 }
 @end
 

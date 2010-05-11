@@ -102,17 +102,19 @@
 }
 @end
 
+
+typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 /** Calls a 'callback' with the node as the first argument and the 2nd argument is data
- * ND means: Node Data
+ * ND means: Node and Data. Data is void *, so it could be anything.
  */
 @interface CCCallFuncND : CCCallFuncN
 {
-	void *data;
-	NSInvocation *invocation_;
+	void			*data;
+	CC_CALLBACK_ND	callbackMethod_;
 }
 
 /** Invocation object that has the target#selector and the parameters */
-@property (nonatomic,readwrite,retain) NSInvocation *invocation;
+@property (nonatomic,readwrite) CC_CALLBACK_ND callbackMethod;
 
 /** creates the action with the callback and the data to pass as an argument */
 +(id) actionWithTarget: (id) t selector:(SEL) s data:(void*)d;

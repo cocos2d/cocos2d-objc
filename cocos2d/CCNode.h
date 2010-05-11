@@ -254,11 +254,11 @@ enum {
 
 // composition: REMOVE
 
-/** Remove itself from its parent node doing a cleanup.
+/** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
  If the node orphan, then nothing happens.
  @since v0.99.3
  */
--(void) removeAndCleanupFromParent;
+-(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1

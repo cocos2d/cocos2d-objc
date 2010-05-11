@@ -297,9 +297,9 @@
 	return [self addChild:child z:child.zOrder tag:child.tag];
 }
 
--(void) removeAndCleanupFromParent
+-(void) removeFromParentAndCleanup:(BOOL)cleanup
 {
-	[self.parent removeChild:self cleanup:YES];
+	[self.parent removeChild:self cleanup:cleanup];
 }
 
 /* "remove" logic MUST only be on this method

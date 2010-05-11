@@ -1,7 +1,8 @@
 version 0.99.3 - 00-May-2010
  . [NEW] Scheduler: supports pause/resume/'update' with priority (issue #439)
- . [NEW] Node: added removeAndCleanupFromParent (issue #566)
+ . [NEW] Node: added removeFromParentAndCleanup:(BOOL) (issue #566)
  . [FIX] ActionManager: using uthash instead of ccHashSet (easier to use)
+ . [FIX] Actions: CallFuncND can pass any void ptr, even 0 or 1.
  . [FIX] BitmapFontAtlas: using uthash instead of ccHashSet (easier to use)
  . [FIX] Grid: Fixed memory leak (issue #853)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
