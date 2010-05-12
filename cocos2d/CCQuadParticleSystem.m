@@ -204,9 +204,7 @@
 	
 	
 	BOOL newBlend = NO;
-	if( blendAdditive )
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	else if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
 		newBlend = YES;
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
@@ -226,7 +224,7 @@
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// restore blend state
-	if( blendAdditive || newBlend )
+	if( newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
 	
 #if 0

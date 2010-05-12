@@ -166,8 +166,6 @@ typedef struct sCCParticle
 	// Count of active particles
 	int particleCount;
 	
-	// additive color or blend
-	BOOL blendAdditive;
 	// color modulate
 	BOOL colorModulate;
 	
