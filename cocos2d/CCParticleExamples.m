@@ -87,7 +87,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -164,7 +164,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 		
 	return self;
@@ -185,7 +185,7 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 			
 		// duration
 		duration = -1;
@@ -322,7 +322,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 	
 	return self;
@@ -403,7 +403,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 		
 	return self;
@@ -484,7 +484,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 	
 	return self;
@@ -565,7 +565,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -646,7 +646,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -723,7 +723,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -803,7 +803,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 		
 	return self;
@@ -883,7 +883,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;

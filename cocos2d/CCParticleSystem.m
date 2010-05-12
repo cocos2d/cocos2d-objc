@@ -56,7 +56,6 @@
 @synthesize endSize, endSizeVar;
 @synthesize gravity;
 @synthesize blendFunc = blendFunc_;
-@synthesize blendAdditive;
 @synthesize positionType = positionType_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 
@@ -91,11 +90,15 @@
 		angle = [[dictionary valueForKey:@"angle"] floatValue];
 		angleVar = [[dictionary valueForKey:@"angleVariance"] floatValue];
 		
-		// blend additive
-		blendAdditive = [[dictionary valueForKey:@"blendAdditive"] boolValue];
-		
 		// duration
 		duration = [[dictionary valueForKey:@"duration"] floatValue];
+		
+		// blend additive ?
+		if( [[dictionary valueForKey:@"blendAdditive"] boolValue] ) {
+			// Particle Designer uses a different blendAdditive function than cocos2d.
+			blendFunc_.src = GL_ONE_MINUS_SRC_ALPHA;
+			blendFunc_.dst = GL_ONE;
+		}
 		
 		// color
 		float r,g,b,a;
@@ -189,6 +192,7 @@
 		}
 		
 		NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
+		
 	}
 	
 	return self;
@@ -212,7 +216,7 @@
 		active = YES;
 		
 		// default: additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 		
 		// blend function
 		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
@@ -477,7 +481,11 @@
 {
 	[texture_ release];
 	texture_ = [texture retain];
-	if( ! [texture hasPremultipliedAlpha] ) {
+
+	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
+	if( ! [texture hasPremultipliedAlpha] &&		
+	   ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) ) {
+	
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
@@ -486,6 +494,23 @@
 -(CCTexture2D*) texture
 {
 	return texture_;
+}
+
+#pragma mark ParticleSystem - Additive Blending
+-(void) setBlendAdditive:(BOOL)additive
+{
+	if( additive ) {
+		blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE;
+	} else {
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
+	}
+}
+
+-(BOOL) blendAdditive
+{
+	return( blendFunc_.src == GL_SRC_ALPHA && blendFunc_.dst == GL_ONE);
 }
 @end
 
