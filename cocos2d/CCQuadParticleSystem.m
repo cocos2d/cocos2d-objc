@@ -27,6 +27,7 @@
 
 @implementation CCQuadParticleSystem
 
+
 // overriding the init method
 -(id) initWithTotalParticles:(int) numberOfParticles
 {

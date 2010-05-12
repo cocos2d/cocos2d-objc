@@ -1265,6 +1265,7 @@
 		50B2CE560E12A03B00AE9530 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50B2CE580E12A0B400AE9530 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		50B53B650F3F28DC00E81F83 /* test_image.gif in Resources */ = {isa = PBXBuildFile; fileRef = 50B53B640F3F28DC00E81F83 /* test_image.gif */; };
+		50B77516119AF58200F567F4 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 50B77511119AF58100F567F4 /* Particles */; };
 		50B94B71116D186100425C03 /* Bug-350.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B94B70116D186100425C03 /* Bug-350.m */; };
 		50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 50BAF3970F33CCD8003F654C /* ccMacros.h */; };
 		50C195420EE4B57E00829067 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -2968,7 +2969,6 @@
 		508A450510B0E604004B9CC3 /* CCCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCompatibility.m; sourceTree = "<group>"; };
 		508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		508CA7DA1193270F003AC397 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		508CA7E411932710003AC397 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		508CA7E511932966003AC397 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
 		508CA7E711932A1F003AC397 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
@@ -3102,6 +3102,7 @@
 		50B2CE460E129FD900AE9530 /* ChipmunkTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ChipmunkDemo-Info.plist"; path = "Resources/ChipmunkDemo-Info.plist"; sourceTree = "<group>"; };
 		50B53B640F3F28DC00E81F83 /* test_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test_image.gif; sourceTree = "<group>"; };
+		50B77511119AF58100F567F4 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = "<group>"; };
 		50B94B6F116D186100425C03 /* Bug-350.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-350.h"; sourceTree = "<group>"; };
 		50B94B70116D186100425C03 /* Bug-350.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-350.m"; sourceTree = "<group>"; };
 		50BAF3970F33CCD8003F654C /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
@@ -4246,6 +4247,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50B77511119AF58100F567F4 /* Particles */,
 				50CA8BF810B6AE340072E0D3 /* TileMaps */,
 				502C8C9810A701D300D137BA /* animations */,
 				50F489BB10458B6300755CFB /* cocos2d-artwork */,
@@ -4258,7 +4260,6 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
-				508CA7E411932710003AC397 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -8064,6 +8065,7 @@
 				501F0D3B11527023002BB7F1 /* fire-grayscale.png in Resources */,
 				501F0D3C11527023002BB7F1 /* stars-grayscale.png in Resources */,
 				501F0D3D11527023002BB7F1 /* stars2-grayscale.png in Resources */,
+				50B77516119AF58200F567F4 /* Particles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

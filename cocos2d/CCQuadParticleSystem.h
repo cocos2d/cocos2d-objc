@@ -34,7 +34,6 @@
 	GLuint				quadsID;	// VBO id
 }
 
-
 // initialices the indices for the vertices
 -(void) initIndices;
 // initilizes the text coords
