@@ -49,18 +49,37 @@ enum {
  */
 typedef struct sCCParticle
 {
-	CGPoint	pos;
-	CGPoint	startPos;
-	CGPoint	dir;
-	float		radialAccel;
-	float		tangentialAccel;
+	CGPoint		pos;
+	CGPoint		startPos;
+
 	ccColor4F	color;
 	ccColor4F	deltaColor;
+
 	float		size;
 	float		deltaSize;
-	float		angle;
-	float		deltaAngle;
+
+	float		rotation;
+	float		deltaRotation;
+
 	float		life;
+
+	union {
+		// Mode A: dir, radial accel, tangential accel
+		struct {
+			CGPoint		dir;
+			float		radialAccel;
+			float		tangentialAccel;
+		} A;
+	
+		// Mode B: radius movement
+		struct {
+			float		angle;
+			float		degreesPerSecond;
+			float		radius;
+			float		deltaRadius;
+		} B;
+	} mode;
+
 } tCCParticle;
 
 @class CCTexture2D;
@@ -68,13 +87,19 @@ typedef struct sCCParticle
 /** Particle System base class
  Attributes of a Particle System:
   * duration
-  * gravity
   * emmision rate
   * total max particles
-  * angle +- variance
   * speed +-  variance
-  * tangential acceleration +- variance
-  * radial acceleration +- variance
+  * start spin +- variance
+  * end spin +- variance
+  * Mode A:
+  *   gravity
+  *   tangential acceleration +- variance
+  *   radial acceleration +- variance
+  * Mode B:
+  *    maxRadius +- variance
+  *    minRadius
+  *	   rotate +- variance
   * start size +- variance
   * end size +- variance
   * start color +- variance
@@ -98,9 +123,6 @@ typedef struct sCCParticle
 	// time elapsed since the start of the system (in seconds)
 	float elapsed;
 	
-	/// Gravity of the particles
-	CGPoint gravity;
-
 	// position is from "superclass" CocosNode
 	// Emitter centerOfGravity position
 	CGPoint centerOfGravity;
@@ -117,6 +139,10 @@ typedef struct sCCParticle
 	// The speed variance
 	float speedVar;
 	
+	/// Mode A:Gravity + Tangential Accel + Radial Accel
+	// gravity of the particles
+	CGPoint gravity;
+
 	// Tangential acceleration
 	float tangentialAccel;
 	// Tangential acceleration variance
@@ -126,6 +152,18 @@ typedef struct sCCParticle
 	float radialAccel;
 	// Radial acceleration variance
 	float radialAccelVar;
+	
+	/// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+	// Max radius at which particles are drawn when rotating
+	float maxRadius;
+	// Variance of the maxRadius
+	float maxRadiusVar;
+	// Radius from source below which a particle dies
+	float minRadius;
+	// Numeber of degress to rotate a particle around the source pos per second
+	float rotatePerSecond;
+	// Variance in degrees for rotatePerSecond
+	float rotatePerSecondVar;
 	
 	// start ize of the particles
 	float startSize;
@@ -157,7 +195,8 @@ typedef struct sCCParticle
 	// End angle of the particle
 	float endSpin;
 	// end angle ariance
-	float endSpinVar;	
+	float endSpinVar;
+	
 	
 	// Array of particles
 	tCCParticle *particles;

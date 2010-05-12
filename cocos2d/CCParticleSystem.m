@@ -18,7 +18,9 @@
 //	 . Building an Advanced Particle System [John van der Burg]
 //		http://www.gamasutra.com/features/20000623/vanderburg_01.htm
 //   . LOVE game engine
-//      http://love.sf.net
+//		http://love2d.org/
+//	 . 71 squared
+//		http://www.71squared.com/
 
 // opengl
 #import <OpenGLES/ES1/gl.h>
@@ -133,9 +135,19 @@
 		endSize = [[dictionary valueForKey:@"finishParticleSize"] floatValue];
 		endSizeVar = [[dictionary valueForKey:@"finishParticleSizeVariance"] floatValue];
 		
+		// Mode A: Gravity + tangential accel + radial accel
 		// gravity
 		gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
 		gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
+		
+		
+		// or Mode B: radius movement
+		maxRadius = [[dictionary valueForKey:@"maxRadius"] floatValue];
+		maxRadiusVar = [[dictionary valueForKey:@"maxRadiusVariance"] floatValue];
+		minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
+		rotatePerSecond = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
+		rotatePerSecondVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];		
+		
 		
 		// life span
 		life = [[dictionary valueForKey:@"particleLifespan"] floatValue];
@@ -143,18 +155,14 @@
 		
 		// position
 		float x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
-		float y = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
-		self.position = ccp(x,y);
+		float y = [[dictionary valueForKey:@"sourcePositiony"] floatValue];
+		if( maxRadius > 0 || maxRadiusVar > 0 )
+			centerOfGravity = ccp(x,y);
+		else
+			position_ = ccp(x,y);
+		
 		posVar.x = [[dictionary valueForKey:@"sourcePositionVariancex"] floatValue];
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
-		
-		// rotation angle
-		//		float rotate = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
-		//		float rotateVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];
-		//		startSpin = 0;
-		//		startSpinVar = 0;
-		//		endSpin = rotate * (life + lifeVar);
-		//		endSpinVar = rotateVar * (life + lifeVar);
 		
 		//
 		// speed
@@ -215,14 +223,16 @@
 		// default, active
 		active = YES;
 		
-		// default: additive
-		self.blendAdditive = NO;
-		
-		// blend function
+		// default blend function
 		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 		
 		// default movement type;
 		positionType_ = kCCPositionTypeFree;
+		
+		// By default use Mode A (gravity + radial accel + tangential accel).
+		// Mode B is only activated when maxRadius > 0
+		maxRadius = minRadius = 0;
+		maxRadiusVar = 0;
 		
 		// default: modulate
 		// XXX: not used
@@ -272,7 +282,6 @@
 	CGPoint v;
 
 	// position
-	// XXX: source should be deprecated.
 	particle->pos.x = (int) (centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1());
 	particle->pos.y = (int) (centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1());
 	
@@ -281,13 +290,27 @@
 	v.y = sinf( a );
 	v.x = cosf( a );
 	float s = speed + speedVar * CCRANDOM_MINUS1_1();
-	particle->dir = ccpMult( v, s );
 	
-	// radial accel
-	particle->radialAccel = radialAccel + radialAccelVar * CCRANDOM_MINUS1_1();
+	// Mode A
+	if( maxRadius == 0 && maxRadiusVar == 0 ) {
+		particle->mode.A.dir = ccpMult( v, s );
+		
+		// radial accel
+		particle->mode.A.radialAccel = radialAccel + radialAccelVar * CCRANDOM_MINUS1_1();
+		
+		// tangential accel
+		particle->mode.A.tangentialAccel = tangentialAccel + tangentialAccelVar * CCRANDOM_MINUS1_1();
+	}
 	
-	// tangential accel
-	particle->tangentialAccel = tangentialAccel + tangentialAccelVar * CCRANDOM_MINUS1_1();
+	// Mode B
+	else {
+		// Set the default diameter of the particle from the source position
+		particle->mode.B.radius = maxRadius + maxRadiusVar * CCRANDOM_MINUS1_1();	
+		particle->mode.B.deltaRadius = (maxRadius / life) * (1.0f / 30);
+		particle->mode.B.angle = CC_DEGREES_TO_RADIANS(angle + angleVar * CCRANDOM_MINUS1_1());
+		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(rotatePerSecond + rotatePerSecondVar * CCRANDOM_MINUS1_1());
+		
+	}
 	
 	// life
 	particle->life = life + lifeVar * CCRANDOM_MINUS1_1();
@@ -327,8 +350,8 @@
 	// angle
 	float startA = startSpin + startSpinVar * CCRANDOM_MINUS1_1();
 	float endA = endSpin + endSpinVar * CCRANDOM_MINUS1_1();
-	particle->angle = startA;
-	particle->deltaAngle = (endA - startA) / particle->life;
+	particle->rotation = startA;
+	particle->deltaRotation = (endA - startA) / particle->life;
 	
 	// position
 	if( positionType_ == kCCPositionTypeFree )
@@ -391,27 +414,44 @@
 		
 		if( p->life > 0 ) {
 			
-			CGPoint tmp, radial, tangential;
+			// Mode A: gravity, tangential accel & radial accel
+			if( maxRadius == 0 && maxRadiusVar == 0 ) {
+				CGPoint tmp, radial, tangential;
+				
+				radial = CGPointZero;
+				// radial acceleration
+				if(p->pos.x || p->pos.y)
+					radial = ccpNormalize(p->pos);
+				tangential = radial;
+				radial = ccpMult(radial, p->mode.A.radialAccel);
+				
+				// tangential acceleration
+				float newy = tangential.x;
+				tangential.x = -tangential.y;
+				tangential.y = newy;
+				tangential = ccpMult(tangential, p->mode.A.tangentialAccel);
+				
+				// (gravity + radial + tangential) * dt
+				tmp = ccpAdd( ccpAdd( radial, tangential), gravity);
+				tmp = ccpMult( tmp, dt);
+				p->mode.A.dir = ccpAdd( p->mode.A.dir, tmp);
+				tmp = ccpMult(p->mode.A.dir, dt);
+				p->pos = ccpAdd( p->pos, tmp );
+			}
 			
-			radial = CGPointZero;
-			// radial acceleration
-			if(p->pos.x || p->pos.y)
-				radial = ccpNormalize(p->pos);
-			tangential = radial;
-			radial = ccpMult(radial, p->radialAccel);
-			
-			// tangential acceleration
-			float newy = tangential.x;
-			tangential.x = -tangential.y;
-			tangential.y = newy;
-			tangential = ccpMult(tangential, p->tangentialAccel);
-			
-			// (gravity + radial + tangential) * dt
-			tmp = ccpAdd( ccpAdd( radial, tangential), gravity);
-			tmp = ccpMult( tmp, dt);
-			p->dir = ccpAdd( p->dir, tmp);
-			tmp = ccpMult(p->dir, dt);
-			p->pos = ccpAdd( p->pos, tmp );
+			// Mode B: radius movement
+			else {
+				p->pos.x = centerOfGravity.x - cosf(p->mode.B.angle) * p->mode.B.radius;
+				p->pos.y = centerOfGravity.y - sinf(p->mode.B.angle) * p->mode.B.radius;
+				
+				// Update the angle of the particle from the sourcePosition and the radius.  This is only
+				// done of the particles are rotating
+				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
+				p->mode.B.radius -= p->mode.B.deltaRadius;
+				if (p->mode.B.radius < minRadius)
+					p->life = 0;				
+			}
+
 			
 			// color
 			p->color.r += (p->deltaColor.r * dt);
@@ -424,7 +464,7 @@
 			p->size = MAX( 0, p->size );
 			
 			// angle
-			p->angle += (p->deltaAngle * dt);
+			p->rotation += (p->deltaRotation * dt);
 			
 			// life
 			p->life -= dt;

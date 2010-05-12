@@ -122,7 +122,7 @@
 	
 	// vertices
 	float size_2 = p->size/2;
-	if( p->angle ) {
+	if( p->rotation ) {
 		float x1 = -size_2;
 		float y1 = -size_2;
 		
@@ -131,7 +131,7 @@
 		float x = newPos.x;
 		float y = newPos.y;
 		
-		float r = (float)-CC_DEGREES_TO_RADIANS(p->angle);
+		float r = (float)-CC_DEGREES_TO_RADIANS(p->rotation);
 		float cr = cosf(r);
 		float sr = sinf(r);
 		float ax = x1 * cr - y1 * sr + x;
