@@ -271,6 +271,25 @@ typedef struct sCCParticle
  */
 @property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
 
+/** creates an initializes a CCQuadParticleSystem from a plist file.
+ This plist files can be creted manually or with Particle Designer:
+	http://www.71squared.com/
+ @since v0.99.3
+ */
++(id) particleWithFile:(NSString*)plistFile;
+
+/** initializes a CCQuadParticleSystem from a plist file.
+ This plist files can be creted manually or with Particle Designer:
+	http://www.71squared.com/
+ @since v0.99.3
+ */
+-(id) initWithFile:(NSString*) plistFile;
+
+/** initializes a CCQuadParticleSystem from a NSDictionary.
+ @since v0.99.3
+ */
+-(id) initWithDictionary:(NSDictionary*)dictionary;
+
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;
 //! Add a particle to the emitter

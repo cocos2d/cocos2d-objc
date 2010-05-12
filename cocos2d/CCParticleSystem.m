@@ -57,12 +57,104 @@
 @synthesize positionType = positionType_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 
+
++(id) particleWithFile:(NSString*) plistFile
+{
+	return [[[self alloc] initWithFile:plistFile] autorelease];
+}
+
 -(id) init {
 	NSException* myException = [NSException
 								exceptionWithName:@"Particle.init"
 								reason:@"Particle.init shall not be called. Use initWithTotalParticles instead."
 								userInfo:nil];
 	@throw myException;	
+}
+
+-(id) initWithFile:(NSString *)plistFile
+{
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:plistFile];
+	return [self initWithDictionary:dict];
+}
+
+-(id) initWithDictionary:(NSDictionary *)dictionary
+{
+	int maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
+	// self, not super
+	if ((self=[self initWithTotalParticles:maxParticles] ) ) {
+		
+		// angle
+		angle = [[dictionary valueForKey:@"angle"] floatValue];
+		angleVar = [[dictionary valueForKey:@"angleVariance"] floatValue];
+		
+		// blend additive
+		blendAdditive = [[dictionary valueForKey:@"blendAdditive"] boolValue];
+		
+		// duration
+		duration = [[dictionary valueForKey:@"duration"] floatValue];
+		
+		// color
+		float r,g,b,a;
+		
+		r = [[dictionary valueForKey:@"startColorRed"] floatValue];
+		g = [[dictionary valueForKey:@"startColorGreen"] floatValue];
+		b = [[dictionary valueForKey:@"startColorBlue"] floatValue];
+		a = [[dictionary valueForKey:@"startColorAlpha"] floatValue];
+		startColor = (ccColor4F) {r,g,b,a};
+		
+		r = [[dictionary valueForKey:@"startColorVarianceRed"] floatValue];
+		g = [[dictionary valueForKey:@"startColorVarianceGreen"] floatValue];
+		b = [[dictionary valueForKey:@"startColorVarianceBlue"] floatValue];
+		a = [[dictionary valueForKey:@"startColorVarianceAlpha"] floatValue];
+		startColorVar = (ccColor4F) {r,g,b,a};
+		
+		r = [[dictionary valueForKey:@"finishColorRed"] floatValue];
+		g = [[dictionary valueForKey:@"finishColorGreen"] floatValue];
+		b = [[dictionary valueForKey:@"finishColorBlue"] floatValue];
+		a = [[dictionary valueForKey:@"finishColorAlpha"] floatValue];
+		endColor = (ccColor4F) {r,g,b,a};
+		
+		r = [[dictionary valueForKey:@"finishColorVarianceRed"] floatValue];
+		g = [[dictionary valueForKey:@"finishColorVarianceGreen"] floatValue];
+		b = [[dictionary valueForKey:@"finishColorVarianceBlue"] floatValue];
+		a = [[dictionary valueForKey:@"finishColorVarianceAlpha"] floatValue];
+		endColorVar = (ccColor4F) {r,g,b,a};
+		
+		// particle size
+		startSize = [[dictionary valueForKey:@"startParticleSize"] floatValue];
+		startSizeVar = [[dictionary valueForKey:@"startParticleSizeVariance"] floatValue];
+		endSize = [[dictionary valueForKey:@"finishParticleSize"] floatValue];
+		endSizeVar = [[dictionary valueForKey:@"finishParticleSizeVariance"] floatValue];
+		
+		// gravity
+		gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
+		gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
+		
+		// life span
+		life = [[dictionary valueForKey:@"particleLifespan"] floatValue];
+		lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];
+		
+		// position
+		position_.x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
+		position_.y = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
+		posVar.x = [[dictionary valueForKey:@"sourcePositionVariancex"] floatValue];
+		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
+		
+		// rotation angle
+		//		float rotate = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
+		//		float rotateVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];
+		//		startSpin = 0;
+		//		startSpinVar = 0;
+		//		endSpin = rotate * (life + lifeVar);
+		//		endSpinVar = rotateVar * (life + lifeVar);
+		
+		//
+		// speed
+		speed = [[dictionary valueForKey:@"speed"] floatValue];
+		speedVar = [[dictionary valueForKey:@"speedVariance"] floatValue];
+	}
+	
+	return self;
 }
 
 -(id) initWithTotalParticles:(int) numberOfParticles
