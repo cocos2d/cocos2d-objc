@@ -33,6 +33,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner2",
 		@"ParticleDesigner3",
 		@"ParticleDesigner4",
+		@"ParticleDesigner5",
 };
 
 Class nextAction()
@@ -825,6 +826,24 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PD: Radial Circle";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner5
+-(void) onEnter
+{
+	[super onEnter];
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Smooth.plist"];
+	[background addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Smooth";
 }
 @end
 
