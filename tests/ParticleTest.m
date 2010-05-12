@@ -29,6 +29,10 @@ static NSString *transitions[] = {
 		@"DemoModernArt",
 		@"DemoRing",
 		@"ParallaxParticle",
+		@"ParticleDesigner1",
+		@"ParticleDesigner2",
+		@"ParticleDesigner3",
+		@"ParticleDesigner4",
 };
 
 Class nextAction()
@@ -751,6 +755,79 @@ Class restartAction()
 	return @"Parallax + Particles";
 }
 @end
+
+#pragma mark -
+
+@implementation ParticleDesigner1
+-(void) onEnter
+{
+	[super onEnter];
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/PurpleFlame.plist"];
+	[background addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Purple Flame";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/QuickExplode.plist"];
+	[background addChild: emitter z:10];
+	[self setEmitterPosition];	
+}
+
+-(NSString *) title
+{
+	return @"PD: Quick Explode";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner3
+-(void) onEnter
+{
+	[super onEnter];
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/VeryPretty.plist"];
+	[background addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Very Pretty";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner4
+-(void) onEnter
+{
+	[super onEnter];
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/RadialCircle.plist"];
+	[background addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Radial Circle";
+}
+@end
+
 
 #pragma mark -
 #pragma mark App Delegate

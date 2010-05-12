@@ -35,6 +35,9 @@
 // support
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
+#import "Support/base64.h"
+#import "Support/ZipUtils.h"
+#import "Support/CCFileUtils.h"
 
 @implementation CCParticleSystem
 @synthesize active, duration;
@@ -73,7 +76,8 @@
 
 -(id) initWithFile:(NSString *)plistFile
 {
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:plistFile];
+	NSString *path = [CCFileUtils fullPathFromRelativePath:plistFile];
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 	return [self initWithDictionary:dict];
 }
 
@@ -135,8 +139,9 @@
 		lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];
 		
 		// position
-		position_.x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
-		position_.y = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
+		float x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
+		float y = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
+		self.position = ccp(x,y);
 		posVar.x = [[dictionary valueForKey:@"sourcePositionVariancex"] floatValue];
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
 		
@@ -152,6 +157,38 @@
 		// speed
 		speed = [[dictionary valueForKey:@"speed"] floatValue];
 		speedVar = [[dictionary valueForKey:@"speedVariance"] floatValue];
+		
+		// emission Rate
+		emissionRate = totalParticles/life;
+
+		// texture		
+		// Try to get the texture from the cache
+		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
+		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
+
+		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
+
+		if ( ! self.texture && textureData) {
+			
+			// if it fails, try to get it from the base64-gzipped data			
+			unsigned char *buffer = NULL;
+			int len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
+			NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
+				
+			unsigned char *deflated = NULL;
+			int deflatedLen = inflateMemory(buffer, len, &deflated);
+			free( buffer );
+				
+			NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
+			NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
+			UIImage *image = [[UIImage alloc] initWithData:data];
+			
+			self.texture = [[CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName];
+			[data release];
+			[image release];
+		}
+		
+		NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
 	}
 	
 	return self;
