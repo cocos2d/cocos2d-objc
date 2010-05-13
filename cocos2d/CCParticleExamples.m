@@ -35,16 +35,15 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = -90;
+		self.gravity = ccp(0,-90);
 		
 		// angle
 		angle = 90;
 		angleVar = 20;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 
 		// speed of particles
 		speed = 180;
@@ -111,16 +110,15 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
-		angle = 90;
-		angleVar = 10;
+		self.angle = 90;
+		self.angleVar = 10;
 
 		// radial acceleration
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -191,16 +189,15 @@
 		duration = -1;
 		
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
 		
 		// radial acceleration
-		radialAccel = 0;
-		radialAccelVar = 0;	
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;	
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -265,8 +262,7 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
@@ -277,12 +273,12 @@
 		speedVar = 10;
 			
 		// radial
-		radialAccel = -80;
-		radialAccelVar = 0;
+		self.radialAccel = -80;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 80;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 80;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -346,8 +342,7 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
@@ -358,12 +353,12 @@
 		speedVar = 10;
 		
 		// radial
-		radialAccel = -60;
-		radialAccelVar = 0;
+		self.radialAccel = -60;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 15;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 15;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -427,8 +422,7 @@
 		duration = -1;
 		
 		// gravity
-		gravity.x = -200;
-		gravity.y = 200;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
@@ -439,12 +433,12 @@
 		speedVar = 5;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -508,8 +502,7 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
@@ -520,12 +513,12 @@
 		speedVar = 0;
 		
 		// radial
-		radialAccel = -380;
-		radialAccelVar = 0;
+		self.radialAccel = -380;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 45;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 45;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -589,8 +582,7 @@
 		duration = 0.1f;
 		
 		// gravity
-		gravity.x = 0;
-		gravity.y = -100;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
@@ -601,12 +593,12 @@
 		speedVar = 40;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -669,17 +661,20 @@
 		// duration
 		duration = -1;
 		
+		// Emitter mode: A
+		self.emitterMode = kCCParticleModeA;
+		
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
+
+		// radial acceleration
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// angle
 		angle = 90;
 		angleVar = 5;
 		
-		// radial acceleration
-		radialAccel = 0;
-		radialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -743,9 +738,10 @@
 		// duration
 		duration = -1;
 		
+		self.emitterMode = kCCParticleModeA;
+
 		// gravity
-		gravity.x = 0;
-		gravity.y = -1;
+		self.gravity = ccp(0,-1);
 		
 		// angle
 		angle = -90;
@@ -756,12 +752,12 @@
 		speedVar = 1;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 1;
+		self.radialAccel = 0;
+		self.radialAccelVar = 1;
 		
 		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 1;
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 1;
 		
 		// emitter position
 		self.position = (CGPoint) {
@@ -823,9 +819,18 @@
 		// duration
 		duration = -1;
 		
+		self.emitterMode = kCCParticleModeA;
+
 		// gravity
-		gravity.x = 10;
-		gravity.y = -10;
+		self.gravity = ccp(10,-10);
+		
+		// radial
+		self.radialAccel = 0;
+		self.radialAccelVar = 1;
+		
+		// tagential
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 1;
 		
 		// angle
 		angle = -90;
@@ -834,14 +839,6 @@
 		// speed of particles
 		speed = 130;
 		speedVar = 30;
-		
-		// radial
-		radialAccel = 0;
-		radialAccelVar = 1;
-		
-		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 1;
 		
 		// emitter position
 		self.position = (CGPoint) {

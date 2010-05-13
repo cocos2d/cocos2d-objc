@@ -118,7 +118,7 @@ Class restartAction()
 		[background runAction:[CCRepeatForever actionWithAction:seq]];
 		
 		
-		[self schedule:@selector(step:)];
+		[self scheduleUpdate];
 	}
 
 	return self;
@@ -157,7 +157,7 @@ Class restartAction()
 	emitter.position = ccpSub(convertedLocation, pos);	
 }
 
--(void) step:(ccTime) dt
+-(void) update:(ccTime) dt
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
 
@@ -204,7 +204,8 @@ Class restartAction()
 
 -(void) setEmitterPosition
 {
-	emitter.position = ccp(200, 70);
+	if( CGPointEqualToPoint( emitter.centerOfGravity, CGPointZero ) ) 
+		emitter.position = ccp(200, 70);
 }
 
 @end
@@ -723,6 +724,7 @@ Class restartAction()
 	[super onEnter];
 
 	[[background parent] removeChild:background cleanup:YES];
+	background = nil;
 
 	CCParallaxNode *p = [[CCParallaxNode alloc] init];
 	[self addChild:p z:5];
@@ -764,8 +766,11 @@ Class restartAction()
 {
 	[super onEnter];
 
+	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/PurpleFlame.plist"];
-	[background addChild: emitter z:10];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
 	[self setEmitterPosition];
 }
 
@@ -782,9 +787,12 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/QuickExplode.plist"];
-	[background addChild: emitter z:10];
-	[self setEmitterPosition];	
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -800,8 +808,11 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/VeryPretty.plist"];
-	[background addChild: emitter z:10];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
 	[self setEmitterPosition];
 }
 
@@ -818,8 +829,11 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/RadialCircle.plist"];
-	[background addChild: emitter z:10];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
 	[self setEmitterPosition];
 }
 
@@ -836,8 +850,11 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Smooth.plist"];
-	[background addChild: emitter z:10];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
 	[self setEmitterPosition];
 }
 

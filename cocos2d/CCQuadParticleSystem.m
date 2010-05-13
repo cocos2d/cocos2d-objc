@@ -76,21 +76,31 @@
 
 -(void) initTexCoords
 {
+	float maxS = [texture_ maxS];
+	float maxT = [texture_ maxT];
+
 	for(int i=0; i<totalParticles; i++) {
 		// top-left vertex:
 		quads[i].bl.texCoords.u = 0;
 		quads[i].bl.texCoords.v = 0;
 		// bottom-left vertex:
-		quads[i].br.texCoords.u = 1;
+		quads[i].br.texCoords.u = maxS;
 		quads[i].br.texCoords.v = 0;
 		// top-right vertex:
 		quads[i].tl.texCoords.u = 0;
-		quads[i].tl.texCoords.v = 1;
+		quads[i].tl.texCoords.v = maxT;
 		// top-right vertex:
-		quads[i].tr.texCoords.u = 1;
-		quads[i].tr.texCoords.v = 1;
+		quads[i].tr.texCoords.u = maxS;
+		quads[i].tr.texCoords.v = maxT;
 	}
-}	
+}
+
+-(void) setTexture:(CCTexture2D *)texture
+{
+	[super setTexture:texture];
+	[self initTexCoords];
+}
+
 -(void) initIndices
 {
 	for( int i=0;i< totalParticles;i++) {

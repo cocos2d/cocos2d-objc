@@ -151,6 +151,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for menu align. takes scale into account
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
+	* jszatmary:
+		QuadParticleSystem works with NPOT textures. patch.
 	* jtbowden
 		RotateTo uses min distance patch
 	* kasatani:
