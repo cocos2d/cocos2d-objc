@@ -35,6 +35,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner4",
 		@"ParticleDesigner5",
 		@"ParticleDesigner6",
+		@"ParticleDesigner7",
 };
 
 Class nextAction()
@@ -80,7 +81,7 @@ Class restartAction()
 		[self addChild:label z:100];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		CCLabel *tapScreen = [CCLabel labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
+		CCLabel *tapScreen = [CCLabel labelWithString:@"Tap the Screen" fontName:@"Arial" fontSize:20];
 		[tapScreen setPosition: ccp(s.width/2, s.height-80)];
 		[self addChild:tapScreen z:100];
 		
@@ -153,8 +154,11 @@ Class restartAction()
 {
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+
+	CGPoint pos = CGPointZero;
 	
-	CGPoint pos = [background convertToWorldSpace:CGPointZero];
+	if( background )
+		pos = [background convertToWorldSpace:CGPointZero];
 	emitter.position = ccpSub(convertedLocation, pos);	
 }
 
@@ -731,6 +735,7 @@ Class restartAction()
 	[self addChild:p z:5];
 
 	CCSprite *p1 = [CCSprite spriteWithFile:@"background3.png"];
+	background = p1;
 	
 	CCSprite *p2 = [CCSprite spriteWithFile:@"background3.png"];
 
@@ -852,11 +857,18 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Smooth.plist"];
-	[self addChild: emitter z:10];
 	[self removeChild:background cleanup:YES];
 	background = nil;
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Smooth.plist"];
+	[self addChild: emitter z:10];
 	[self setEmitterPosition];
+	
+	// custom smooth
+	self.emitter.startSpin = 0;
+	self.emitter.startSpin = 360;
+	self.emitter.endSpin = 720;
+	self.emitter.endSpinVar = 360;
 }
 
 -(NSString *) title
@@ -886,6 +898,29 @@ Class restartAction()
 	return @"PD: Shooting Fire Ball";
 }
 @end
+
+#pragma mark -
+
+@implementation ParticleDesigner7
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Swirl.plist"];
+	[self addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Swirl";
+}
+@end
+
 
 
 #pragma mark -
