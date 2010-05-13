@@ -137,6 +137,7 @@
 		// position
 		float x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
 		float y = [[dictionary valueForKey:@"sourcePositiony"] floatValue];
+		position_ = ccp(x,y);
 		posVar.x = [[dictionary valueForKey:@"sourcePositionVariancex"] floatValue];
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
 				
@@ -149,9 +150,6 @@
 			mode.A.gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
 			mode.A.gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
 			
-			// set position, and not centerOfGravit
-			self.position = ccp(x,y);
-
 			// radial & tangential accel should be supported as well by Particle Designer
 		}
 		
@@ -163,9 +161,7 @@
 			mode.B.minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
 			mode.B.rotatePerSecond = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
 			mode.B.rotatePerSecondVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];
-			
-			// set centerOfGravity and not position
-			centerOfGravity = ccp(x,y);
+
 		}
 		
 		// life span
@@ -285,7 +281,6 @@
 
 -(void) initParticle: (tCCParticle*) particle
 {
-	CGPoint v;
 
 	// position
 	particle->pos.x = (int) (centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1());
@@ -293,12 +288,15 @@
 	
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
-	v.y = sinf( a );
-	v.x = cosf( a );
-	float s = speed + speedVar * CCRANDOM_MINUS1_1();
 	
 	// Mode A
 	if( emitterMode_ == kCCParticleModeA ) {
+
+		CGPoint v;
+		v.y = sinf( a );
+		v.x = cosf( a );
+		float s = speed + speedVar * CCRANDOM_MINUS1_1();
+		
 		particle->mode.A.dir = ccpMult( v, s );
 		
 		// radial accel
@@ -312,15 +310,14 @@
 	else {
 		// Set the default diameter of the particle from the source position
 		particle->mode.B.radius = mode.B.maxRadius + mode.B.maxRadiusVar * CCRANDOM_MINUS1_1();	
-		particle->mode.B.deltaRadius = ( mode.B.maxRadius / life) * (1.0f / 30);
-		particle->mode.B.angle = CC_DEGREES_TO_RADIANS(angle + angleVar * CCRANDOM_MINUS1_1());
+		particle->mode.B.deltaRadius = ( mode.B.maxRadius / life) * (1.0f / 30.0f);
+		particle->mode.B.angle = a;
 		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
 		
 	}
 	
-	// life
-	particle->timeToLive = life + lifeVar * CCRANDOM_MINUS1_1();
-	particle->timeToLive = MAX(0, particle->timeToLive);  // no negative life
+	// timeToLive
+	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() ); // no negative life
 	
 	// Color
 	ccColor4F start;
@@ -342,8 +339,7 @@
 	particle->deltaColor.a = (end.a - start.a) / particle->timeToLive;
 
 	// size
-	float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
-	startS = MAX(0, startS);	// no negative size
+	float startS = MAX(0, startSize + startSizeVar * CCRANDOM_MINUS1_1() ); // no negative size
 	
 	particle->size = startS;
 	if( endSize == kCCParticleStartSizeEqualToEndSize )
@@ -353,7 +349,7 @@
 		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}
 	
-	// angle
+	// rotation
 	float startA = startSpin + startSpinVar * CCRANDOM_MINUS1_1();
 	float endA = endSpin + endSpinVar * CCRANDOM_MINUS1_1();
 	particle->rotation = startA;
@@ -363,7 +359,7 @@
 	if( positionType_ == kCCPositionTypeFree )
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
 	else
-		particle->startPos = self.position;
+		particle->startPos = position_;
 }
 
 -(void) stopSystem

@@ -422,8 +422,8 @@
 		duration = -1;
 		
 		// gravity
-		self.gravity = ccp(0,0);
-		
+		self.gravity = ccp(-200,200);
+
 		// angle
 		angle = 90;
 		angleVar = 360;
