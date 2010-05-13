@@ -48,18 +48,16 @@
 @synthesize life, lifeVar;
 @synthesize angle, angleVar;
 @synthesize speed, speedVar;
-@synthesize tangentialAccel, tangentialAccelVar;
-@synthesize radialAccel, radialAccelVar;
 @synthesize startColor, startColorVar, endColor, endColorVar;
 @synthesize startSpin, startSpinVar, endSpin, endSpinVar;
 @synthesize emissionRate;
 @synthesize totalParticles;
 @synthesize startSize, startSizeVar;
 @synthesize endSize, endSizeVar;
-@synthesize gravity;
 @synthesize blendFunc = blendFunc_;
 @synthesize positionType = positionType_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
+@synthesize emitterMode = emitterMode_;
 
 
 +(id) particleWithFile:(NSString*) plistFile
@@ -135,35 +133,45 @@
 		endSize = [[dictionary valueForKey:@"finishParticleSize"] floatValue];
 		endSizeVar = [[dictionary valueForKey:@"finishParticleSizeVariance"] floatValue];
 		
-		// Mode A: Gravity + tangential accel + radial accel
-		// gravity
-		gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
-		gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
-		
-		
-		// or Mode B: radius movement
-		maxRadius = [[dictionary valueForKey:@"maxRadius"] floatValue];
-		maxRadiusVar = [[dictionary valueForKey:@"maxRadiusVariance"] floatValue];
-		minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
-		rotatePerSecond = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
-		rotatePerSecondVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];		
-		
-		
-		// life span
-		life = [[dictionary valueForKey:@"particleLifespan"] floatValue];
-		lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];
 		
 		// position
 		float x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
 		float y = [[dictionary valueForKey:@"sourcePositiony"] floatValue];
-		if( maxRadius > 0 || maxRadiusVar > 0 )
-			centerOfGravity = ccp(x,y);
-		else
-			position_ = ccp(x,y);
-		
 		posVar.x = [[dictionary valueForKey:@"sourcePositionVariancex"] floatValue];
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
+				
 		
+		emitterMode_ = [[dictionary valueForKey:@"particleType"] intValue];
+		
+		if( emitterMode_ == kCCParticleModeA ) {
+			// Mode A: Gravity + tangential accel + radial accel
+			// gravity
+			mode.A.gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
+			mode.A.gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
+			
+			// set position, and not centerOfGravit
+			self.position = ccp(x,y);
+
+			// radial & tangential accel should be supported as well by Particle Designer
+		}
+		
+		
+		// or Mode B: radius movement
+		else if( emitterMode_ == kCCParticleModeB ) {
+			mode.B.maxRadius = [[dictionary valueForKey:@"maxRadius"] floatValue];
+			mode.B.maxRadiusVar = [[dictionary valueForKey:@"maxRadiusVariance"] floatValue];
+			mode.B.minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
+			mode.B.rotatePerSecond = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
+			mode.B.rotatePerSecondVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];
+			
+			// set centerOfGravity and not position
+			centerOfGravity = ccp(x,y);
+		}
+		
+		// life span
+		life = [[dictionary valueForKey:@"particleLifespan"] floatValue];
+		lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];
+				
 		//
 		// speed
 		speed = [[dictionary valueForKey:@"speed"] floatValue];
@@ -229,11 +237,9 @@
 		// default movement type;
 		positionType_ = kCCPositionTypeFree;
 		
-		// By default use Mode A (gravity + radial accel + tangential accel).
-		// Mode B is only activated when maxRadius > 0
-		maxRadius = minRadius = 0;
-		maxRadiusVar = 0;
-		
+		// by default be in mode A:
+		emitterMode_ = kCCParticleModeA;
+				
 		// default: modulate
 		// XXX: not used
 	//	colorModulate = YES;
@@ -292,23 +298,23 @@
 	float s = speed + speedVar * CCRANDOM_MINUS1_1();
 	
 	// Mode A
-	if( maxRadius == 0 && maxRadiusVar == 0 ) {
+	if( emitterMode_ == kCCParticleModeA ) {
 		particle->mode.A.dir = ccpMult( v, s );
 		
 		// radial accel
-		particle->mode.A.radialAccel = radialAccel + radialAccelVar * CCRANDOM_MINUS1_1();
+		particle->mode.A.radialAccel = mode.A.radialAccel + mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
 		
 		// tangential accel
-		particle->mode.A.tangentialAccel = tangentialAccel + tangentialAccelVar * CCRANDOM_MINUS1_1();
+		particle->mode.A.tangentialAccel = mode.A.tangentialAccel + mode.A.tangentialAccelVar * CCRANDOM_MINUS1_1();
 	}
 	
 	// Mode B
 	else {
 		// Set the default diameter of the particle from the source position
-		particle->mode.B.radius = maxRadius + maxRadiusVar * CCRANDOM_MINUS1_1();	
-		particle->mode.B.deltaRadius = (maxRadius / life) * (1.0f / 30);
+		particle->mode.B.radius = mode.B.maxRadius + mode.B.maxRadiusVar * CCRANDOM_MINUS1_1();	
+		particle->mode.B.deltaRadius = ( mode.B.maxRadius / life) * (1.0f / 30);
 		particle->mode.B.angle = CC_DEGREES_TO_RADIANS(angle + angleVar * CCRANDOM_MINUS1_1());
-		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(rotatePerSecond + rotatePerSecondVar * CCRANDOM_MINUS1_1());
+		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
 		
 	}
 	
@@ -415,7 +421,7 @@
 		if( p->life > 0 ) {
 			
 			// Mode A: gravity, tangential accel & radial accel
-			if( maxRadius == 0 && maxRadiusVar == 0 ) {
+			if( emitterMode_ == kCCParticleModeA ) {
 				CGPoint tmp, radial, tangential;
 				
 				radial = CGPointZero;
@@ -432,7 +438,7 @@
 				tangential = ccpMult(tangential, p->mode.A.tangentialAccel);
 				
 				// (gravity + radial + tangential) * dt
-				tmp = ccpAdd( ccpAdd( radial, tangential), gravity);
+				tmp = ccpAdd( ccpAdd( radial, tangential), mode.A.gravity);
 				tmp = ccpMult( tmp, dt);
 				p->mode.A.dir = ccpAdd( p->mode.A.dir, tmp);
 				tmp = ccpMult(p->mode.A.dir, dt);
@@ -448,7 +454,7 @@
 				// done of the particles are rotating
 				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
 				p->mode.B.radius -= p->mode.B.deltaRadius;
-				if (p->mode.B.radius < minRadius)
+				if (p->mode.B.radius < mode.B.minRadius)
 					p->life = 0;				
 			}
 
@@ -551,6 +557,57 @@
 -(BOOL) blendAdditive
 {
 	return( blendFunc_.src == GL_SRC_ALPHA && blendFunc_.dst == GL_ONE);
+}
+
+#pragma mark ParticleSystem - Properties
+-(void) setTangentialAccel:(float)t
+{
+	mode.A.tangentialAccel = t;
+}
+
+-(float) tangentialAccel
+{
+	return mode.A.tangentialAccel;
+}
+
+-(void) setTangentialAccelVar:(float)t
+{
+	mode.A.tangentialAccelVar = t;
+}
+
+-(float) tangentialAccelVar
+{
+	return mode.A.tangentialAccelVar;
+}
+
+-(void) setRadialAccel:(float)t
+{
+	mode.A.radialAccel = t;
+}
+
+-(float) radialAccel
+{
+	return mode.A.radialAccel;
+}
+
+-(void) setRadialAccelVar:(float)t
+{
+	mode.A.radialAccelVar = t;
+}
+
+-(float) radialAccelVar
+{
+	return mode.A.radialAccelVar;
+}
+
+-(void) setGravity:(CGPoint)g
+{
+	mode.A.gravity = g;
+}
+
+-(CGPoint) gravity
+{
+	return mode.A.gravity;
 }
 @end
 

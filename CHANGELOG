@@ -1,12 +1,14 @@
 version 0.99.3 - 00-May-2010
  . [NEW] Scheduler: supports pause/resume/'update' with priority (issue #439)
  . [NEW] Node: added removeFromParentAndCleanup:(BOOL) (issue #566)
- . [NEW] Particle: Added support for Particle Designer (issue #XXX)
+ . [NEW] Particle: Added support for modes: "classic mode" and radial movement mode
+ . [NEW] Particle: Added support Particle Designer (issue #XXX)
  . [FIX] ActionManager: using uthash instead of ccHashSet (easier to use)
  . [FIX] Actions: CallFuncND can pass any void ptr, even 0 or 1.
  . [FIX] BitmapFontAtlas: using uthash instead of ccHashSet (easier to use)
  . [FIX] Grid: Fixed memory leak (issue #853)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
+ . [FIX] Particles: QuadParticle works with NPOT textures (issue #863)
  . [FIX] Scheduler: Improved performance (issue #492)
  . [FIX] Templates: Using uthash instead of ccHashSet (issue #860)
  . [FIX] Templates: templates can be installed in user directory (issue #856)

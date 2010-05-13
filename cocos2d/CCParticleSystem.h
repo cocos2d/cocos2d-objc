@@ -30,6 +30,11 @@ enum {
 	kParticleDurationInfinity = kCCParticleDurationInfinity,
 };
 
+enum {
+	kCCParticleModeA,
+	kCCParticleModeB,	
+};
+
 
 /** possible types of particle positions */
 typedef enum {
@@ -139,31 +144,41 @@ typedef struct sCCParticle
 	// The speed variance
 	float speedVar;
 	
-	/// Mode A:Gravity + Tangential Accel + Radial Accel
-	// gravity of the particles
-	CGPoint gravity;
-
-	// Tangential acceleration
-	float tangentialAccel;
-	// Tangential acceleration variance
-	float tangentialAccelVar;
-
-	// Radial acceleration
-	float radialAccel;
-	// Radial acceleration variance
-	float radialAccelVar;
+	// Different modes
 	
-	/// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
-	// Max radius at which particles are drawn when rotating
-	float maxRadius;
-	// Variance of the maxRadius
-	float maxRadiusVar;
-	// Radius from source below which a particle dies
-	float minRadius;
-	// Numeber of degress to rotate a particle around the source pos per second
-	float rotatePerSecond;
-	// Variance in degrees for rotatePerSecond
-	float rotatePerSecondVar;
+	int emitterMode_;
+	union {
+		// Mode A:Gravity + Tangential Accel + Radial Accel
+		struct {
+			// gravity of the particles
+			CGPoint gravity;
+
+			// Tangential acceleration
+			float tangentialAccel;
+			// Tangential acceleration variance
+			float tangentialAccelVar;
+
+			// Radial acceleration
+			float radialAccel;
+			// Radial acceleration variance
+			float radialAccelVar;
+			} A;
+
+		// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+		struct {
+	
+			// Max radius at which particles are drawn when rotating
+			float maxRadius;
+			// Variance of the maxRadius
+			float maxRadiusVar;
+			// Radius from source below which a particle dies
+			float minRadius;
+			// Numeber of degress to rotate a particle around the source pos per second
+			float rotatePerSecond;
+			// Variance in degrees for rotatePerSecond
+			float rotatePerSecondVar;
+		} B;
+	} mode;
 	
 	// start ize of the particles
 	float startSize;
@@ -307,6 +322,11 @@ typedef struct sCCParticle
  @since v0.8
  */
 @property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
+/** Switch between different kind of emitter modes:
+  A: uses gravity, radial and tangential acceleration
+  B: uses radial movement
+ */
+@property (nonatomic,readwrite) int emitterMode;
 
 /** creates an initializes a CCQuadParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
