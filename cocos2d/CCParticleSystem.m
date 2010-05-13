@@ -319,8 +319,8 @@
 	}
 	
 	// life
-	particle->life = life + lifeVar * CCRANDOM_MINUS1_1();
-	particle->life = MAX(0, particle->life);  // no negative life
+	particle->timeToLive = life + lifeVar * CCRANDOM_MINUS1_1();
+	particle->timeToLive = MAX(0, particle->timeToLive);  // no negative life
 	
 	// Color
 	ccColor4F start;
@@ -336,10 +336,10 @@
 	end.a = endColor.a + endColorVar.a * CCRANDOM_MINUS1_1();
 	
 	particle->color = start;
-	particle->deltaColor.r = (end.r - start.r) / particle->life;
-	particle->deltaColor.g = (end.g - start.g) / particle->life;
-	particle->deltaColor.b = (end.b - start.b) / particle->life;
-	particle->deltaColor.a = (end.a - start.a) / particle->life;
+	particle->deltaColor.r = (end.r - start.r) / particle->timeToLive;
+	particle->deltaColor.g = (end.g - start.g) / particle->timeToLive;
+	particle->deltaColor.b = (end.b - start.b) / particle->timeToLive;
+	particle->deltaColor.a = (end.a - start.a) / particle->timeToLive;
 
 	// size
 	float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
@@ -350,14 +350,14 @@
 		particle->deltaSize = 0;
 	else {
 		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
-		particle->deltaSize = (endS - startS) / particle->life;
+		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}
 	
 	// angle
 	float startA = startSpin + startSpinVar * CCRANDOM_MINUS1_1();
 	float endA = endSpin + endSpinVar * CCRANDOM_MINUS1_1();
 	particle->rotation = startA;
-	particle->deltaRotation = (endA - startA) / particle->life;
+	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 	
 	// position
 	if( positionType_ == kCCPositionTypeFree )
@@ -379,7 +379,7 @@
 	elapsed = 0;
 	for(particleIdx = 0; particleIdx < particleCount; ++particleIdx) {
 		tCCParticle *p = &particles[particleIdx];
-		p->life = 0;
+		p->timeToLive = 0;
 	}
 }
 
@@ -418,7 +418,7 @@
 	{
 		tCCParticle *p = &particles[particleIdx];
 		
-		if( p->life > 0 ) {
+		if( p->timeToLive > 0 ) {
 			
 			// Mode A: gravity, tangential accel & radial accel
 			if( emitterMode_ == kCCParticleModeA ) {
@@ -455,7 +455,7 @@
 				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
 				p->mode.B.radius -= p->mode.B.deltaRadius;
 				if (p->mode.B.radius < mode.B.minRadius)
-					p->life = 0;				
+					p->timeToLive = 0;				
 			}
 
 			
@@ -473,7 +473,7 @@
 			p->rotation += (p->deltaRotation * dt);
 			
 			// life
-			p->life -= dt;
+			p->timeToLive -= dt;
 			
 			//
 			// update values in quad

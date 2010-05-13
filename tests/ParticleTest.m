@@ -34,6 +34,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner3",
 		@"ParticleDesigner4",
 		@"ParticleDesigner5",
+		@"ParticleDesigner6",
 };
 
 Class nextAction()
@@ -861,6 +862,28 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PD: Smooth";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner6
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ShootingFireBall.plist"];
+	[self addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Shooting Fire Ball";
 }
 @end
 
