@@ -66,7 +66,7 @@ typedef struct sCCParticle
 	float		rotation;
 	float		deltaRotation;
 
-	float		life;
+	float		timeToLive;
 
 	union {
 		// Mode A: dir, radial accel, tangential accel

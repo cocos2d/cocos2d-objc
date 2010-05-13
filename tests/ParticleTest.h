@@ -107,4 +107,8 @@
 {}
 @end
 
+@interface ParticleDesigner6 : ParticleDemo
+{}
+@end
+
 
