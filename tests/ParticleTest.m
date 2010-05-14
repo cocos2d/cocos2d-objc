@@ -29,9 +29,9 @@ static NSString *transitions[] = {
 		@"DemoModernArt",
 		@"DemoRing",
 		@"ParallaxParticle",
-		@"ParticleDesigner1",
-		@"ParticleDesigner2",
-		@"ParticleDesigner3",
+//		@"ParticleDesigner1",
+//		@"ParticleDesigner2",
+//		@"ParticleDesigner3",
 		@"ParticleDesigner4",
 		@"ParticleDesigner5",
 		@"ParticleDesigner6",
@@ -836,7 +836,7 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/RadialCircle.plist"];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ExplodingRing.plist"];
 	[self addChild: emitter z:10];
 	[self removeChild:background cleanup:YES];
 	background = nil;
@@ -845,7 +845,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PD: Radial Circle";
+	return @"PD: Exploding Ring";
 }
 @end
 
@@ -860,7 +860,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Smooth.plist"];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Comet.plist"];
 	[self addChild: emitter z:10];
 	[self setEmitterPosition];
 	
@@ -873,7 +873,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PD: Smooth";
+	return @"PD: Comet";
 }
 @end
 
@@ -888,14 +888,14 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ShootingFireBall.plist"];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BurstPipe.plist"];
 	[self addChild: emitter z:10];
 	[self setEmitterPosition];
 }
 
 -(NSString *) title
 {
-	return @"PD: Shooting Fire Ball";
+	return @"PD: Burst Pipe";
 }
 @end
 
@@ -910,14 +910,14 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Swirl.plist"];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BoilingFoam.plist"];
 	[self addChild: emitter z:10];
 	[self setEmitterPosition];
 }
 
 -(NSString *) title
 {
-	return @"PD: Swirl";
+	return @"PD: Boiling Foam";
 }
 @end
 

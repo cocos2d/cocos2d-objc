@@ -93,12 +93,9 @@
 		// duration
 		duration = [[dictionary valueForKey:@"duration"] floatValue];
 		
-		// blend additive ?
-		if( [[dictionary valueForKey:@"blendAdditive"] boolValue] ) {
-			// Particle Designer uses a different blendAdditive function than cocos2d.
-			blendFunc_.src = GL_ONE_MINUS_SRC_ALPHA;
-			blendFunc_.dst = GL_ONE;
-		}
+		// blend function 
+		blendFunc_.src = [[dictionary valueForKey:@"blendFuncSource"] intValue];
+		blendFunc_.dst = [[dictionary valueForKey:@"blendFuncDestination"] intValue];
 		
 		// color
 		float r,g,b,a;
