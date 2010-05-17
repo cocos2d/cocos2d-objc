@@ -47,7 +47,6 @@
 @synthesize particleCount;
 @synthesize life, lifeVar;
 @synthesize angle, angleVar;
-@synthesize speed, speedVar;
 @synthesize startColor, startColorVar, endColor, endColorVar;
 @synthesize startSpin, startSpinVar, endSpin, endSpinVar;
 @synthesize emissionRate;
@@ -147,6 +146,11 @@
 			mode.A.gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
 			mode.A.gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
 			
+			//
+			// speed
+			mode.A.speed = [[dictionary valueForKey:@"speed"] floatValue];
+			mode.A.speedVar = [[dictionary valueForKey:@"speedVariance"] floatValue];
+			
 			// radial & tangential accel should be supported as well by Particle Designer
 		}
 		
@@ -163,12 +167,7 @@
 		
 		// life span
 		life = [[dictionary valueForKey:@"particleLifespan"] floatValue];
-		lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];
-				
-		//
-		// speed
-		speed = [[dictionary valueForKey:@"speed"] floatValue];
-		speedVar = [[dictionary valueForKey:@"speedVariance"] floatValue];
+		lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];				
 		
 		// emission Rate
 		emissionRate = totalParticles/life;
@@ -292,7 +291,7 @@
 		CGPoint v;
 		v.y = sinf( a );
 		v.x = cosf( a );
-		float s = speed + speedVar * CCRANDOM_MINUS1_1();
+		float s = mode.A.speed + mode.A.speedVar * CCRANDOM_MINUS1_1();
 		
 		particle->mode.A.dir = ccpMult( v, s );
 		
@@ -557,7 +556,6 @@
 {
 	mode.A.tangentialAccel = t;
 }
-
 -(float) tangentialAccel
 {
 	return mode.A.tangentialAccel;
@@ -567,7 +565,6 @@
 {
 	mode.A.tangentialAccelVar = t;
 }
-
 -(float) tangentialAccelVar
 {
 	return mode.A.tangentialAccelVar;
@@ -577,7 +574,6 @@
 {
 	mode.A.radialAccel = t;
 }
-
 -(float) radialAccel
 {
 	return mode.A.radialAccel;
@@ -587,7 +583,6 @@
 {
 	mode.A.radialAccelVar = t;
 }
-
 -(float) radialAccelVar
 {
 	return mode.A.radialAccelVar;
@@ -597,10 +592,27 @@
 {
 	mode.A.gravity = g;
 }
-
 -(CGPoint) gravity
 {
 	return mode.A.gravity;
+}
+
+-(void) setSpeed:(float)speed
+{
+	mode.A.speed = speed;
+}
+-(float) speed
+{
+	return mode.A.speed;
+}
+
+-(void) setSpeedVar:(float)speedVar
+{
+	mode.A.speedVar = speedVar;
+}
+-(float) speedVar
+{
+	return mode.A.speedVar;
 }
 @end
 
