@@ -29,6 +29,13 @@ static NSString *transitions[] = {
 		@"DemoModernArt",
 		@"DemoRing",
 		@"ParallaxParticle",
+//		@"ParticleDesigner1",
+//		@"ParticleDesigner2",
+//		@"ParticleDesigner3",
+		@"ParticleDesigner4",
+		@"ParticleDesigner5",
+		@"ParticleDesigner6",
+		@"ParticleDesigner7",
 };
 
 Class nextAction()
@@ -74,7 +81,7 @@ Class restartAction()
 		[self addChild:label z:100];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		CCLabel *tapScreen = [CCLabel labelWithString:@"(Tap the Screen)" fontName:@"Arial" fontSize:20];
+		CCLabel *tapScreen = [CCLabel labelWithString:@"Tap the Screen" fontName:@"Arial" fontSize:20];
 		[tapScreen setPosition: ccp(s.width/2, s.height-80)];
 		[self addChild:tapScreen z:100];
 		
@@ -113,7 +120,7 @@ Class restartAction()
 		[background runAction:[CCRepeatForever actionWithAction:seq]];
 		
 		
-		[self schedule:@selector(step:)];
+		[self scheduleUpdate];
 	}
 
 	return self;
@@ -147,12 +154,15 @@ Class restartAction()
 {
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+
+	CGPoint pos = CGPointZero;
 	
-	CGPoint pos = [background convertToWorldSpace:CGPointZero];
+	if( background )
+		pos = [background convertToWorldSpace:CGPointZero];
 	emitter.position = ccpSub(convertedLocation, pos);	
 }
 
--(void) step:(ccTime) dt
+-(void) update:(ccTime) dt
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
 
@@ -199,7 +209,8 @@ Class restartAction()
 
 -(void) setEmitterPosition
 {
-	emitter.position = ccp(200, 70);
+	if( CGPointEqualToPoint( emitter.centerOfGravity, CGPointZero ) ) 
+		emitter.position = ccp(200, 70);
 }
 
 @end
@@ -718,11 +729,13 @@ Class restartAction()
 	[super onEnter];
 
 	[[background parent] removeChild:background cleanup:YES];
+	background = nil;
 
 	CCParallaxNode *p = [[CCParallaxNode alloc] init];
 	[self addChild:p z:5];
 
 	CCSprite *p1 = [CCSprite spriteWithFile:@"background3.png"];
+	background = p1;
 	
 	CCSprite *p2 = [CCSprite spriteWithFile:@"background3.png"];
 
@@ -751,6 +764,164 @@ Class restartAction()
 	return @"Parallax + Particles";
 }
 @end
+
+#pragma mark -
+
+@implementation ParticleDesigner1
+-(void) onEnter
+{
+	[super onEnter];
+
+	[self setColor:ccBLACK];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/PurpleFlame.plist"];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Purple Flame";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/QuickExplode.plist"];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Quick Explode";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner3
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/VeryPretty.plist"];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Very Pretty";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner4
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ExplodingRing.plist"];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Exploding Ring";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner5
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Comet.plist"];
+	[self addChild: emitter z:10];
+	[self setEmitterPosition];
+	
+	// custom smooth
+	self.emitter.startSpin = 0;
+	self.emitter.startSpin = 360;
+	self.emitter.endSpin = 720;
+	self.emitter.endSpinVar = 360;
+}
+
+-(NSString *) title
+{
+	return @"PD: Comet";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner6
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BurstPipe.plist"];
+	[self addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Burst Pipe";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner7
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BoilingFoam.plist"];
+	[self addChild: emitter z:10];
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Boiling Foam";
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark App Delegate

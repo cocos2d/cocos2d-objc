@@ -87,4 +87,32 @@
 {}
 @end
 
+@interface ParticleDesigner1 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner2 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner3 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner4 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner5 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner6 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner7 : ParticleDemo
+{}
+@end
+
 

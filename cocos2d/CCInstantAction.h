@@ -1,16 +1,28 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
+ * Copyright (c) 2008-2010 Ricardo Quesada
  *
- * Copyright (C) 2008,2009 Ricardo Quesada
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
+
 
 
 #import <UIKit/UIKit.h>
@@ -102,17 +114,19 @@
 }
 @end
 
+
+typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 /** Calls a 'callback' with the node as the first argument and the 2nd argument is data
- * ND means: Node Data
+ * ND means: Node and Data. Data is void *, so it could be anything.
  */
 @interface CCCallFuncND : CCCallFuncN
 {
-	void *data;
-	NSInvocation *invocation_;
+	void			*data;
+	CC_CALLBACK_ND	callbackMethod_;
 }
 
 /** Invocation object that has the target#selector and the parameters */
-@property (nonatomic,readwrite,retain) NSInvocation *invocation;
+@property (nonatomic,readwrite) CC_CALLBACK_ND callbackMethod;
 
 /** creates the action with the callback and the data to pass as an argument */
 +(id) actionWithTarget: (id) t selector:(SEL) s data:(void*)d;

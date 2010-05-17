@@ -1,14 +1,25 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2009 Ricardo Quesada
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  * Portions of this code are based and inspired on:
  *   http://www.71squared.co.uk/2009/04/iphone-game-programming-tutorial-4-bitmap-font-class
@@ -19,7 +30,6 @@
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
- *
  */
 
 #import "ccConfig.h"
@@ -29,7 +39,7 @@
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccHashSet.h"
+#import "Support/uthash.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -60,19 +70,11 @@ void FNTConfigRemoveCache( void )
 
 // Equal function for targetSet.
 typedef struct _KerningHashElement
-{
-	unichar			first;
-	unichar			second;
+{	
+	int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
 	int				amount;
+	UT_hash_handle	hh;
 } tKerningHashElement;
-
-static int
-targetSetEql(void *ptr, void *elt)
-{
-	tKerningHashElement *one = (tKerningHashElement*) ptr;
-	tKerningHashElement *two = (tKerningHashElement*) elt;
-	return ( (one->first == two->first) && (one->second == two->second));
-}
 
 #pragma mark -
 #pragma mark BitmapFontConfiguration
@@ -85,6 +87,7 @@ targetSetEql(void *ptr, void *elt)
 -(void) parseCommonArguments:(NSString*)line;
 -(void) parseKerningCapacity:(NSString*)line;
 -(void) parseKerningEntry:(NSString*)line;
+-(void) purgeKerningDictionary;
 @end
 
 @implementation CCBitmapFontConfiguration
@@ -97,6 +100,9 @@ targetSetEql(void *ptr, void *elt)
 -(id) initWithFNTfile:(NSString*)fntFile
 {
 	if((self=[super init])) {
+		
+		kerningDictionary = NULL;
+
 		[self parseConfigFile:fntFile];
 	}
 	return self;
@@ -105,9 +111,19 @@ targetSetEql(void *ptr, void *elt)
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	if(kerningDictionary)
-		ccHashSetFree(kerningDictionary);
+	[self purgeKerningDictionary];
 	[super dealloc];
+}
+
+-(void) purgeKerningDictionary
+{
+	tKerningHashElement *current;
+	
+	while(kerningDictionary) {
+		current = kerningDictionary; 
+		HASH_DEL(kerningDictionary,current);
+		free(current);
+	}
 }
 
 - (void)parseConfigFile:(NSString*)fntFile
@@ -305,22 +321,24 @@ targetSetEql(void *ptr, void *elt)
 
 -(void) parseKerningCapacity:(NSString*) line
 {
-	NSAssert(!kerningDictionary, @"dictionary already initialized");
-	
-	// Break the values for this line up using =
-	NSArray *values = [line componentsSeparatedByString:@"="];
-	NSEnumerator *nse = [values objectEnumerator];	
-	NSString *propertyValue;
-	
-	// We need to move past the first entry in the array before we start assigning values
-	[nse nextObject];
-	
-	// count
-	propertyValue = [nse nextObject];
-	int capacity = [propertyValue intValue];
-	
-	if( capacity != -1 )
-		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
+	// When using uthash there is not need to parse the capacity.
+
+//	NSAssert(!kerningDictionary, @"dictionary already initialized");
+//	
+//	// Break the values for this line up using =
+//	NSArray *values = [line componentsSeparatedByString:@"="];
+//	NSEnumerator *nse = [values objectEnumerator];	
+//	NSString *propertyValue;
+//	
+//	// We need to move past the first entry in the array before we start assigning values
+//	[nse nextObject];
+//	
+//	// count
+//	propertyValue = [nse nextObject];
+//	int capacity = [propertyValue intValue];
+//	
+//	if( capacity != -1 )
+//		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
 }
 
 -(void) parseKerningEntry:(NSString*) line
@@ -344,12 +362,10 @@ targetSetEql(void *ptr, void *elt)
 	propertyValue = [nse nextObject];
 	int amount = [propertyValue intValue];
 
-	tKerningHashElement *element = malloc( sizeof( *element ) );
-	element->first = first;
-	element->second = second;
+	tKerningHashElement *element = calloc( sizeof( *element ), 1 );
 	element->amount = amount;
-	unsigned int key = (first<<16) | (second&0xffff);
-	ccHashSetInsert(kerningDictionary, CC_HASH_INT(key), element, nil);	
+	element->key = (first<<16) | (second&0xffff);
+	HASH_ADD_INT(kerningDictionary,key, element);
 }
 
 @end
@@ -458,14 +474,11 @@ targetSetEql(void *ptr, void *elt)
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second
 {
 	int ret = 0;
-	tKerningHashElement elementTmp;
-	elementTmp.first = first;
-	elementTmp.second = second;
 	unsigned int key = (first<<16) | (second & 0xffff);
 	
 	if( configuration->kerningDictionary ) {
-		tKerningHashElement *element = ccHashSetFind(configuration->kerningDictionary, CC_HASH_INT(key), &elementTmp);
-		
+		tKerningHashElement *element = NULL;
+		HASH_FIND_INT(configuration->kerningDictionary, &key, element);		
 		if(element)
 			ret = element->amount;
 	}

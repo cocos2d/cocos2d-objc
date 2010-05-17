@@ -1,17 +1,28 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2008,2009,2010 Ricardo Quesada
- * Copyright (C) 2009 Valentin Milea
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
- *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2009 Valentin Milea
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
+
 
 #import <OpenGLES/ES1/gl.h>
 
@@ -134,9 +145,6 @@ enum {
     
 	// user data field
 	void *userData;
-	
-	// scheduled selectors
-	NSMutableDictionary *scheduledSelectors_;
 
 	// Is running
 	BOOL isRunning_;
@@ -257,8 +265,11 @@ enum {
 
 // composition: REMOVE
 
-/** Remove itself from it's parent node. */
--(void) removeSelfAndCleanup;
+/** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
+ If the node orphan, then nothing happens.
+ @since v0.99.3
+ */
+-(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
@@ -366,24 +377,55 @@ enum {
 /** check whether a selector is scheduled. */
 //-(BOOL) isScheduled: (SEL) selector;
 
+/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
+ Scheduled methods with a lower order value will be called before the ones that have a higher order value.
+ Only one "udpate" method could be scheduled per node.
+ 
+ @since v0.99.3
+ */
+-(void) scheduleUpdate;
+
+/** schedules the "update" selector with a custom priority. This selector will be called every frame.
+ Scheduled selectors with a lower priority will be called before the ones that have a higher value.
+ Only one "udpate" selector could be scheduled per node (You can't have 2 'update' selectors).
+
+ @since v0.99.3
+ */
+-(void) scheduleUpdateWithPriority:(int)priority;
+
+/* unschedules the "update" method.
+ 
+ @since v0.99.3
+ */
+-(void) unscheduleUpdate;
+
+
 /** schedules a selector.
  The scheduled selector will be ticked every frame
  */
 -(void) schedule: (SEL) s;
-/** schedules a selector with an interval time in seconds.
+/** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
+ If tiem is 0, it is recommended to use 'scheduleUpdate' instead.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
-/** unschedule a selector */
+/** unschedules a custom selector.*/
 -(void) unschedule: (SEL) s;
-/** activate all scheduled timers.
+
+/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
+ Actions are not affected by this method.
+@since v0.99.3
+ */
+-(void) unscheduleAllSelectors;
+
+/** resumes all scheduled selectors and actions.
  Called internally by onEnter
  */
--(void) activateTimers;
-/** deactivate all scheduled timers.
+-(void) resumeSchedulerAndActions;
+/** pauses all scheduled selectors and actions.
  Called internally by onExit
  */
--(void) deactivateTimers;
+-(void) pauseSchedulerAndActions;
 
 // transformation methods
 

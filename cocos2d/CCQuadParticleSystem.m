@@ -1,17 +1,29 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2009 Leonardo Kasperavičius
- * Copyright (C) 2009 Ricardo Quesada
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2009 Leonardo Kasperavičius
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
+
 
 // opengl
 #import <OpenGLES/ES1/gl.h>
@@ -26,6 +38,7 @@
 #import "Support/CGPointExtension.h"
 
 @implementation CCQuadParticleSystem
+
 
 // overriding the init method
 -(id) initWithTotalParticles:(int) numberOfParticles
@@ -75,21 +88,31 @@
 
 -(void) initTexCoords
 {
+	float maxS = [texture_ maxS];
+	float maxT = [texture_ maxT];
+
 	for(int i=0; i<totalParticles; i++) {
 		// top-left vertex:
 		quads[i].bl.texCoords.u = 0;
 		quads[i].bl.texCoords.v = 0;
 		// bottom-left vertex:
-		quads[i].br.texCoords.u = 1;
+		quads[i].br.texCoords.u = maxS;
 		quads[i].br.texCoords.v = 0;
 		// top-right vertex:
 		quads[i].tl.texCoords.u = 0;
-		quads[i].tl.texCoords.v = 1;
+		quads[i].tl.texCoords.v = maxT;
 		// top-right vertex:
-		quads[i].tr.texCoords.u = 1;
-		quads[i].tr.texCoords.v = 1;
+		quads[i].tr.texCoords.u = maxS;
+		quads[i].tr.texCoords.v = maxT;
 	}
-}	
+}
+
+-(void) setTexture:(CCTexture2D *)texture
+{
+	[super setTexture:texture];
+	[self initTexCoords];
+}
+
 -(void) initIndices
 {
 	for( int i=0;i< totalParticles;i++) {
@@ -121,7 +144,7 @@
 	
 	// vertices
 	float size_2 = p->size/2;
-	if( p->angle ) {
+	if( p->rotation ) {
 		float x1 = -size_2;
 		float y1 = -size_2;
 		
@@ -130,7 +153,7 @@
 		float x = newPos.x;
 		float y = newPos.y;
 		
-		float r = (float)-CC_DEGREES_TO_RADIANS(p->angle);
+		float r = (float)-CC_DEGREES_TO_RADIANS(p->rotation);
 		float cr = cosf(r);
 		float sr = sinf(r);
 		float ax = x1 * cr - y1 * sr + x;
@@ -203,9 +226,7 @@
 	
 	
 	BOOL newBlend = NO;
-	if( blendAdditive )
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	else if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
+	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
 		newBlend = YES;
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
@@ -225,7 +246,7 @@
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// restore blend state
-	if( blendAdditive || newBlend )
+	if( newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
 	
 #if 0

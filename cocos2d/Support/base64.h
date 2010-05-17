@@ -1,8 +1,7 @@
 /* 
  public domain BASE64 code
  
- modified for cocos2d-iphone
- http://www.cocos2d-iphone.org
+ modified for cocos2d-iphone: http://www.cocos2d-iphone.org
  */
 
 #ifndef __CC_BASE64_DECODE_H

@@ -4,16 +4,10 @@ echo 'cocos2d-iphone template installer'
 
 COCOS2D_VER='cocos2d 0.99.3'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
+BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 
-# Make sure only root can run our script
-if [ "$(id -u)" != "0" ]; then
-   echo ""
-   echo "Error: This script must be run as root in order to copy templates to ${BASE_TEMPLATE_DIR}" 1>&2
-   echo ""
-   echo "Try running it with 'sudo':" 1>&2
-   echo "   sudo $0" 1>&2
-   exit 1
-fi
+force=
+user_dir=
 
 usage(){
 cat << EOF
@@ -22,10 +16,39 @@ usage: $0 [options]
 Install / update templates for ${COCOS2D_VER}
  
 OPTIONS:
-   -f      force overwrite if directories exist
-   -h	   this help
+   -f	force overwrite if directories exist
+   -h	this help
+   -u	install in user's Library directory instead of global directory
 EOF
 }
+
+while getopts "fhu" OPTION; do
+	case "$OPTION" in
+		f)
+			force=1
+			;;
+		h)
+			usage
+			exit 0
+			;;
+		u)
+			user_dir=1
+			;;
+	esac
+done
+
+# Make sure only root can run our script
+if [[ ! $user_dir  && "$(id -u)" != "0" ]]; then
+	echo ""
+	echo "Error: This script must be run as root in order to copy templates to ${BASE_TEMPLATE_DIR}" 1>&2
+	echo ""
+	echo "Try running it with 'sudo', or with '-u' to install it only you:" 1>&2
+	echo "   sudo $0" 1>&2
+	echo "or:" 1>&2
+	echo "   $0 -u" 1>&2   
+exit 1
+fi
+
 
 copy_files(){
 	rsync -r --exclude=.svn "$1" "$2"
@@ -37,8 +60,8 @@ check_dst_dir(){
 			echo "removing old libraries: ${DST_DIR}"
 			rm -rf $DST_DIR
 		else
-		    echo "templates already installed. To force a re-install use the '-f' parameter"
-		    exit 1
+			echo "templates already installed. To force a re-install use the '-f' parameter"
+			exit 1
 		fi
 	fi
 	
@@ -72,24 +95,14 @@ print_template_banner(){
 	echo ''
 }
 
-force=
-
-while getopts "fh" OPTION; do
-     case "$OPTION" in
-         f)
-             force=1
-             ;;
-		 h)
-			 usage
-			 exit 0
-			 ;;
-     esac
-done
-
 # copies project-based templates
 copy_project_templates(){
-	TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/Project Templates/${COCOS2D_VER}/"
-	
+		if [[ $user_dir ]]; then
+		TEMPLATE_DIR="${BASE_TEMPLATE_USER_DIR}/Project Templates/${COCOS2D_VER}/"
+	else
+		TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/Project Templates/${COCOS2D_VER}/"
+	fi
+
 	if [[ ! -d "$TEMPLATE_DIR" ]]; then
 		echo '...creating cocos2d template directory'
 		echo ''
@@ -147,7 +160,11 @@ copy_project_templates(){
 }
 
 copy_file_templates(){
-	TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/File Templates/${COCOS2D_VER}/"
+	if [[ $user_dir ]]; then
+		TEMPLATE_DIR="${BASE_TEMPLATE_USER_DIR}/File Templates/${COCOS2D_VER}/"
+	else
+		TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/File Templates/${COCOS2D_VER}/"
+	fi
 	
 	DST_DIR="$TEMPLATE_DIR"
 	check_dst_dir

@@ -146,10 +146,14 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Jon Kean:
 		PointParticle asserts if size > 64
 		Fixed memory leaks when initialization of some nodes failed
+		Added removeFromParent method in CCNode
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
+	* jszatmary:
+		QuadParticleSystem works with NPOT textures. patch.
+		Menu items are not consumed is items are not enabled
 	* jtbowden
 		RotateTo uses min distance patch
 	* kasatani:
@@ -207,6 +211,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		performance improvement on particles
 		TextureAtlas uses VBO instead of vertex array list patch
 		Director: FPSLabel uses RGBA4444 texture (patch)
+	* marcu.catalin:
+		Menu items are not consumed is items are not visible
 	* Mark Cooke:
 		Added TintTo action
 	* mark at abitofthought:
@@ -272,6 +278,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		migrated all cocos2d code and all test to using the CC namespace
 	* samkass:
 		install_template.sh suports custom directory. patch.
+		install-template can be installed in user directory. patch.
 	* Scott Iisystems:
 		TextureAtlas signed math error patch
 		BezierBy#reverse patch

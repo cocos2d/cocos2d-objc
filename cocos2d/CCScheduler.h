@@ -1,37 +1,51 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2008,2009,2010 Ricardo Quesada
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
- *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 
-// cocoa related
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "Support/uthash.h"
+#import "Support/ccArray.h"
 
 #import "ccTypes.h"
 
 typedef void (*TICK_IMP)(id, SEL, ccTime);
 
+
 //
-// Timer
+// CCTimer
 //
 /** Light weight timer */
 @interface CCTimer : NSObject
 {
 	id target;
-	SEL selector;
 	TICK_IMP impMethod;
 	
 	ccTime interval;
 	ccTime elapsed;
+
+@public					// optimization
+	SEL selector;
 }
 
 /** interval in seconds */
@@ -55,26 +69,50 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 
 
 /** triggers the timer */
--(void) fire: (ccTime) dt;
+-(void) update: (ccTime) dt;
 @end
 
+
+
 //
-// Scheduler
+// CCScheduler
 //
 /** Scheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
+ 
+ There are 2 different types of callbacks (selectors):
+
+	- update selector: the 'update' selector will be called every frame. You can customize the priority.
+	- custom selector: A custom selector will be called every frame, or with a custom interval of time
+ 
+ The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
+
 */
+
+struct _listEntry;
+struct _hashSelectorEntry;
+struct _hashUpdateEntry;
+
 @interface CCScheduler : NSObject
-{
-	NSMutableArray	*scheduledMethods;
-	NSMutableArray	*methodsToRemove;
-	NSMutableArray	*methodsToAdd;
+{	
+	ccTime				timeScale_;
 	
-	ccTime			timeScale_;
+	//
+	// "updates with priority" stuff
+	//
+	struct _listEntry			*updatesNeg;	// list of priority < 0
+	struct _listEntry			*updates0;		// list priority == 0
+	struct _listEntry			*updatesPos;	// list priority > 0
+	struct _hashUpdateEntry		*hashForUpdates;	// hash used to fetch quickly the list entries for pause,delete,etc.
+		
+	// Used for "selectors with interval"
+	struct _hashSelectorEntry	*hashForSelectors;
+	struct _hashSelectorEntry	*currentTarget;
+	BOOL						currentTargetSalvaged;
 	
 	// Optimization
-	TICK_IMP		impMethod;
-	SEL				fireSelector;
+	TICK_IMP			impMethod;
+	SEL					updateSelector;
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -99,17 +137,76 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
  */
 -(void) tick:(ccTime)dt;
 
+/** The scheduled method will be called every 'interval' seconds.
+ If paused is YES, then it won't be called until it is resumed.
+ If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+
+ @since v0.99.3
+ */
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(float)interval paused:(BOOL)paused;
+
+/** Schedules the 'update' selector for a given target with a given priority.
+ The 'update' selector will be called every frame.
+ The lower the priority, the earlier it is called.
+ @since v0.99.3
+ */
+-(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused;
+
+/** Unshedules a selector for a given target.
+ If you want to unschedule the "update", use unscheudleUpdateForTarget.
+ @since v0.99.3
+ */
+-(void) unscheduleSelector:(SEL)selector forTarget:(id)target;
+
+/** Unschedules the update selector for a given target
+ @since v0.99.3
+ */
+-(void) unscheduleUpdateForTarget:(id)target;
+
+/** Unschedules all selectors for a given target.
+ This also includes the "update" selector.
+ @since v0.99.3
+ */
+-(void) unscheduleAllSelectorsForTarget:(id)target;
+
+/** Unschedules all selectors from all targets.
+ You should NEVER call this method, unless you know what you are doing.
+
+ @since v0.99.3
+ */
+-(void) unscheduleAllSelectors;
+
+/** Pause all scheduled selectors for a given target.
+ This also includes the "update" selector.
+ @since v0.99.3
+ */
+-(void) pauseAllSelectorsForTarget:(id)target;
+
+/** Resumes all scheduled selectors for a given target.
+ This also includes the "update" selector.
+ @since v0.99.3
+ */
+-(void) resumeAllSelectorsForTarget:(id)target;
+
+
 /** schedules a Timer.
  It will be fired in every frame.
+ 
+ @deprecated Use scheduleSelector:forTarget:interval:paused instead. Will be removed in 1.0
  */
--(void) scheduleTimer: (CCTimer*) t;
+-(void) scheduleTimer: (CCTimer*) timer __attribute__((deprecated));
 
-/** unschedules an already scheduled Timer */
--(void) unscheduleTimer: (CCTimer*) t;
+/** unschedules an already scheduled Timer
+ 
+ @deprecated Use unscheduleSelector:forTarget. Will be removed in v1.0
+ */
+-(void) unscheduleTimer: (CCTimer*) timer __attribute__((deprecated));
 
 /** unschedule all timers.
  You should NEVER call this method, unless you know what you are doing.
+ 
+ @deprecated Use scheduleAllSelectors instead. Will be removed in 1.0
  @since v0.8
  */
--(void) unscheduleAllTimers;
+-(void) unscheduleAllTimers __attribute__ ((deprecated));
 @end
