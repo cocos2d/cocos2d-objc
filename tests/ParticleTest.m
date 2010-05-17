@@ -325,27 +325,30 @@ Class restartAction()
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	// gravity
+	// Gravity Mode: gravity
 	emitter.gravity = CGPointZero;
+
+	// Set "Gravity" mode (default one)
+	emitter.emitterMode = kCCParticleModeGravity;
+	
+	// Gravity Mode: speed of particles
+	emitter.speed = 160;
+	emitter.speedVar = 20;
+		
+	// Gravity Mode: radial
+	emitter.radialAccel = -120;
+	emitter.radialAccelVar = 0;
+	
+	// Gravity Mode: tagential
+	emitter.tangentialAccel = 30;
+	emitter.tangentialAccelVar = 0;
 	
 	// angle
 	emitter.angle = 90;
 	emitter.angleVar = 360;
-	
-	// speed of particles
-	emitter.speed = 160;
-	emitter.speedVar = 20;
-	
-	// radial
-	emitter.radialAccel = -120;
-	emitter.radialAccelVar = 0;
-	
-	// tagential
-	emitter.tangentialAccel = 30;
-	emitter.tangentialAccelVar = 0;
-	
+		
 	// emitter position
 	emitter.position = ccp(160,240);
 	emitter.posVar = CGPointZero;
@@ -403,24 +406,23 @@ Class restartAction()
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	// gravity
+	// Set "Gravity" mode (default one)
+	emitter.emitterMode = kCCParticleModeGravity;
+
+	// Gravity mode: gravity
 	emitter.gravity = CGPointZero;
 	
-	// angle
-	emitter.angle = 90;
-	emitter.angleVar = 360;
-	
-	// speed of particles
+	// Gravity mode: speed of particles
 	emitter.speed = 160;
 	emitter.speedVar = 20;
 	
-	// radial
+	// Gravity mode: radial
 	emitter.radialAccel = -120;
 	emitter.radialAccelVar = 0;
 	
-	// tagential
+	// Gravity mode: tagential
 	emitter.tangentialAccel = 30;
 	emitter.tangentialAccelVar = 0;
 	
@@ -428,6 +430,10 @@ Class restartAction()
 	emitter.position = ccp(160,240);
 	emitter.posVar = CGPointZero;
 	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 360;
+		
 	// life of particles
 	emitter.life = 3;
 	emitter.lifeVar = 1;
@@ -631,26 +637,29 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	// gravity
+	// Gravity mode
+	emitter.emitterMode = kCCParticleModeGravity;
+	
+	// Gravity mode: gravity
 	emitter.gravity = ccp(0,0);
+		
+	// Gravity mode: radial
+	emitter.radialAccel = 70;
+	emitter.radialAccelVar = 10;
+	
+	// Gravity mode: tagential
+	emitter.tangentialAccel = 80;
+	emitter.tangentialAccelVar = 0;
+	
+	// Gravity mode: speed of particles
+	emitter.speed = 50;
+	emitter.speedVar = 10;
 	
 	// angle
 	emitter.angle = 0;
 	emitter.angleVar = 360;
-	
-	// radial
-	emitter.radialAccel = 70;
-	emitter.radialAccelVar = 10;
-	
-	// tagential
-	emitter.tangentialAccel = 80;
-	emitter.tangentialAccelVar = 0;
-	
-	// speed of particles
-	emitter.speed = 50;
-	emitter.speedVar = 10;
 	
 	// emitter position
 	emitter.position = ccp( s.width/2, s.height/2);
@@ -941,7 +950,7 @@ Class restartAction()
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 
 	// radius mode
 	emitter.emitterMode = kCCParticleModeRadius;
@@ -962,7 +971,8 @@ Class restartAction()
 	emitter.angleVar = 0;
 		
 	// emitter position
-	emitter.position = ccp(160,240);
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	emitter.position = ccp( size.width/2, size.height/2);
 	emitter.posVar = CGPointZero;
 	
 	// life of particles
@@ -998,9 +1008,8 @@ Class restartAction()
 	
 	// additive
 	emitter.blendAdditive = NO;
-	
-	[self setEmitterPosition];	
 }
+
 
 -(NSString *) title
 {
@@ -1025,7 +1034,7 @@ Class restartAction()
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
 	// radius mode
 	emitter.emitterMode = kCCParticleModeRadius;
@@ -1047,7 +1056,8 @@ Class restartAction()
 	emitter.angleVar = 0;
 	
 	// emitter position
-	emitter.position = ccp(160,240);
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	emitter.position = ccp( size.width/2, size.height/2);
 	emitter.posVar = CGPointZero;
 	
 	// life of particles
@@ -1084,7 +1094,6 @@ Class restartAction()
 	// additive
 	emitter.blendAdditive = NO;
 	
-	[self setEmitterPosition];	
 }
 
 -(NSString *) title
