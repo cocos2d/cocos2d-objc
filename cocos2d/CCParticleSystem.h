@@ -43,8 +43,8 @@ enum {
 };
 
 enum {
-	kCCParticleModeA,	// Gravity mode
-	kCCParticleModeB,	// Radius mode
+	kCCParticleModeGravity,	// Gravity mode (A mode)
+	kCCParticleModeRadius,	// Radius mode (B mode)
 };
 
 
@@ -81,7 +81,7 @@ typedef struct sCCParticle
 	float		timeToLive;
 
 	union {
-		// Mode A: dir, radial accel, tangential accel
+		// Mode A: gravity, direction, radial accel, tangential accel
 		struct {
 			CGPoint		dir;
 			float		radialAccel;
@@ -103,31 +103,29 @@ typedef struct sCCParticle
 
 /** Particle System base class
  Attributes of a Particle System:
-  * duration
-  * emmision rate
-  * total max particles
-  * speed +-  variance
-  * start spin +- variance
-  * end spin +- variance
-  * Mode A:
-  *   gravity
-  *   tangential acceleration +- variance
-  *   radial acceleration +- variance
-  * Mode B:
-  *    startRadius +- variance
-  *    endRadius +- variance
-  *	   rotate +- variance
-  * start size +- variance
-  * end size +- variance
-  * start color +- variance
-  * end color +- variance
-  * life +- variance
-  * blend additive or not
+  * emmision rate of the particles
+  * Gravity Mode (Mode A):
+  *		gravity
+  *		direction
+  *		speed +-  variance
+  *		tangential acceleration +- variance
+  *		radial acceleration +- variance
+  * Radius Mode (Mode B):
+  *		startRadius +- variance
+  *		endRadius +- variance
+  *		rotate +- variance
+  * Properties common to all modes:
+  *		life +- life variance
+  *		start spin +- variance
+  *		end spin +- variance
+  *		start size +- variance
+  *		end size +- variance
+  *		start color +- variance
+  *		end color +- variance
+  *		life +- variance
+  *		blending function
   * one texture
- 
- Limitations:
-  * size can't be bigger than 64
-  * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
+ *
  */
 @interface CCParticleSystem : CCNode <CCTextureProtocol>
 {
@@ -265,8 +263,6 @@ typedef struct sCCParticle
 @property (nonatomic,readonly) BOOL active;
 /** Quantity of particles that are being simulated at the moment */
 @property (nonatomic,readonly) int	particleCount;
-/** Gravity value */
-@property (nonatomic,readwrite,assign) CGPoint gravity;
 /** How many seconds the emitter wil run. -1 means 'forever' */
 @property (nonatomic,readwrite,assign) float duration;
 /** centerOfGravity of the emitter */
@@ -281,18 +277,35 @@ typedef struct sCCParticle
 @property (nonatomic,readwrite,assign) float angle;
 /** angle variance of each particle */
 @property (nonatomic,readwrite,assign) float angleVar;
-/** speed of each particle */
+
+/** Gravity value. Only available in 'Gravity' mode. */
+@property (nonatomic,readwrite,assign) CGPoint gravity;
+/** speed of each particle. Only available in 'Gravity' mode.  */
 @property (nonatomic,readwrite,assign) float speed;
-/** speed variance of each particle */
+/** speed variance of each particle. Only available in 'Gravity' mode. */
 @property (nonatomic,readwrite,assign) float speedVar;
-/** tangential acceleration of each particle */
+/** tangential acceleration of each particle. Only available in 'Gravity' mode. */
 @property (nonatomic,readwrite,assign) float tangentialAccel;
-/** tangential acceleration variance of each particle */
+/** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
 @property (nonatomic,readwrite,assign) float tangentialAccelVar;
-/** radial acceleration of each particle */
+/** radial acceleration of each particle. Only available in 'Gravity' mode. */
 @property (nonatomic,readwrite,assign) float radialAccel;
-/** radial acceleration variance of each particle */
+/** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
 @property (nonatomic,readwrite,assign) float radialAccelVar;
+
+/** The starting radius of the particles. Only available in 'Radius' mode. */
+@property (nonatomic,readwrite,assign) float startRadius;
+/** The starting radius variance of the particles. Only available in 'Radius' mode. */
+@property (nonatomic,readwrite,assign) float startRadiusVar;
+/** The ending radius of the particles. Only available in 'Radius' mode. */
+@property (nonatomic,readwrite,assign) float endRadius;
+/** The ending radius variance of the particles. Only available in 'Radius' mode. */
+@property (nonatomic,readwrite,assign) float endRadiusVar;			
+/** Numeber of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
+@property (nonatomic,readwrite,assign) float rotatePerSecond;
+/** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
+@property (nonatomic,readwrite,assign) float rotatePerSecondVar;
+
 /** start size in pixels of each particle */
 @property (nonatomic,readwrite,assign) float startSize;
 /** size variance in pixels of each particle */

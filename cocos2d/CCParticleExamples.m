@@ -673,7 +673,7 @@
 		duration = -1;
 		
 		// Emitter mode: A
-		self.emitterMode = kCCParticleModeA;
+		self.emitterMode = kCCParticleModeGravity;
 		
 		// gravity
 		self.gravity = ccp(0,0);
@@ -749,7 +749,7 @@
 		// duration
 		duration = -1;
 		
-		self.emitterMode = kCCParticleModeA;
+		self.emitterMode = kCCParticleModeGravity;
 
 		// gravity
 		self.gravity = ccp(0,-1);
@@ -830,7 +830,7 @@
 		// duration
 		duration = -1;
 		
-		self.emitterMode = kCCParticleModeA;
+		self.emitterMode = kCCParticleModeGravity;
 
 		// gravity
 		self.gravity = ccp(10,-10);

@@ -154,7 +154,7 @@
 		
 		emitterMode_ = [[dictionary valueForKey:@"emitterType"] intValue];
 		
-		if( emitterMode_ == kCCParticleModeA ) {
+		if( emitterMode_ == kCCParticleModeGravity ) {
 			// Mode A: Gravity + tangential accel + radial accel
 			// gravity
 			mode.A.gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
@@ -170,7 +170,7 @@
 		
 		
 		// or Mode B: radius movement
-		else if( emitterMode_ == kCCParticleModeB ) {
+		else if( emitterMode_ == kCCParticleModeRadius ) {
 			float maxRadius = [[dictionary valueForKey:@"maxRadius"] floatValue];
 			float maxRadiusVar = [[dictionary valueForKey:@"maxRadiusVariance"] floatValue];
 			float minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
@@ -182,6 +182,8 @@
 			mode.B.rotatePerSecond = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
 			mode.B.rotatePerSecondVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];
 
+		} else {
+			NSAssert( NO, @"Invalid emitterType in config file");
 		}
 		
 		// life span
@@ -249,7 +251,7 @@
 		positionType_ = kCCPositionTypeFree;
 		
 		// by default be in mode A:
-		emitterMode_ = kCCParticleModeA;
+		emitterMode_ = kCCParticleModeGravity;
 				
 		// default: modulate
 		// XXX: not used
@@ -304,53 +306,13 @@
 	particle->pos.x = (int) (centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1());
 	particle->pos.y = (int) (centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1());
 	
-	// direction
-	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
-	
-	// Mode A
-	if( emitterMode_ == kCCParticleModeA ) {
-
-		CGPoint v;
-		v.y = sinf( a );
-		v.x = cosf( a );
-		float s = mode.A.speed + mode.A.speedVar * CCRANDOM_MINUS1_1();
-		
-		particle->mode.A.dir = ccpMult( v, s );
-		
-		// radial accel
-		particle->mode.A.radialAccel = mode.A.radialAccel + mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
-		
-		// tangential accel
-		particle->mode.A.tangentialAccel = mode.A.tangentialAccel + mode.A.tangentialAccelVar * CCRANDOM_MINUS1_1();
-	}
-	
-	// Mode B
-	else {
-		// Set the default diameter of the particle from the source position
-		float startRadius = mode.B.startRadius + mode.B.startRadiusVar * CCRANDOM_MINUS1_1();
-		float endRadius = mode.B.endRadius + mode.B.endRadiusVar * CCRANDOM_MINUS1_1();
-
-		particle->mode.B.radius = startRadius;
-
-#if CC_PARTICLE_DESIGN_COMPATIBILITY
-		particle->mode.B.deltaRadius = ( mode.B.startRadius / life) * (1.0f / 30.0f);
-#else
-		particle->mode.B.deltaRadius = (endRadius - startRadius) / particle->timeToLive;
-#endif
-
-		particle->mode.B.angle = a;
-		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
-		
-	}
-	
-	
 	// Color
 	ccColor4F start;
 	start.r = startColor.r + startColorVar.r * CCRANDOM_MINUS1_1();
 	start.g = startColor.g + startColorVar.g * CCRANDOM_MINUS1_1();
 	start.b = startColor.b + startColorVar.b * CCRANDOM_MINUS1_1();
 	start.a = startColor.a + startColorVar.a * CCRANDOM_MINUS1_1();
-
+	
 	ccColor4F end;
 	end.r = endColor.r + endColorVar.r * CCRANDOM_MINUS1_1();
 	end.g = endColor.g + endColorVar.g * CCRANDOM_MINUS1_1();
@@ -362,7 +324,7 @@
 	particle->deltaColor.g = (end.g - start.g) / particle->timeToLive;
 	particle->deltaColor.b = (end.b - start.b) / particle->timeToLive;
 	particle->deltaColor.a = (end.a - start.a) / particle->timeToLive;
-
+	
 	// size
 	float startS = MAX(0, startSize + startSizeVar * CCRANDOM_MINUS1_1() ); // no negative size
 	
@@ -385,6 +347,47 @@
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
 	else
 		particle->startPos = position_;
+	
+	// direction
+	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );	
+	
+	// Mode Gravity: A
+	if( emitterMode_ == kCCParticleModeGravity ) {
+
+		
+		CGPoint v;
+		v.y = sinf( a );
+		v.x = cosf( a );
+		float s = mode.A.speed + mode.A.speedVar * CCRANDOM_MINUS1_1();
+		
+		// direction
+		particle->mode.A.dir = ccpMult( v, s );
+		
+		// radial accel
+		particle->mode.A.radialAccel = mode.A.radialAccel + mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
+		
+		// tangential accel
+		particle->mode.A.tangentialAccel = mode.A.tangentialAccel + mode.A.tangentialAccelVar * CCRANDOM_MINUS1_1();
+	}
+	
+	// Mode Radius: B
+	else {
+		// Set the default diameter of the particle from the source position
+		float startRadius = mode.B.startRadius + mode.B.startRadiusVar * CCRANDOM_MINUS1_1();
+		float endRadius = mode.B.endRadius + mode.B.endRadiusVar * CCRANDOM_MINUS1_1();
+
+		particle->mode.B.radius = startRadius;
+
+#if CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY
+		particle->mode.B.deltaRadius = ( mode.B.startRadius / life) * (1.0f / 30.0f);
+#else
+		particle->mode.B.deltaRadius = (endRadius - startRadius) / particle->timeToLive;
+#endif // ! CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY
+	
+		particle->mode.B.angle = a;
+		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
+		
+	}	
 }
 
 -(void) stopSystem
@@ -441,8 +444,8 @@
 		
 		if( p->timeToLive > 0 ) {
 			
-			// Mode A: gravity, tangential accel & radial accel
-			if( emitterMode_ == kCCParticleModeA ) {
+			// Mode A: gravity, direction, tangential accel & radial accel
+			if( emitterMode_ == kCCParticleModeGravity ) {
 				CGPoint tmp, radial, tangential;
 				
 				radial = CGPointZero;
@@ -468,19 +471,19 @@
 			
 			// Mode B: radius movement
 			else {
-				p->pos.x = centerOfGravity.x - cosf(p->mode.B.angle) * p->mode.B.radius;
-				p->pos.y = centerOfGravity.y - sinf(p->mode.B.angle) * p->mode.B.radius;
+				p->pos.x = - cosf(p->mode.B.angle) * p->mode.B.radius;
+				p->pos.y = - sinf(p->mode.B.angle) * p->mode.B.radius;
 				
 				// Update the angle of the particle from the sourcePosition and the radius.  This is only
 				// done of the particles are rotating
 				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
-#if CC_PARTICLE_DESIGN_COMPATIBILITY
+#if CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY
 				p->mode.B.radius += p->mode.B.deltaRadius;
 #else
 				p->mode.B.radius += p->mode.B.deltaRadius * dt;
 #endif
 
-#if CC_PARTICLE_DESIGN_COMPATIBILITY				
+#if CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY				
 				if (p->mode.B.radius < mode.B.endRadius)
 					p->timeToLive = 0;
 #endif
@@ -587,7 +590,7 @@
 	return( blendFunc_.src == GL_SRC_ALPHA && blendFunc_.dst == GL_ONE);
 }
 
-#pragma mark ParticleSystem - Properties
+#pragma mark ParticleSystem - Properties of Gravity Mode 
 -(void) setTangentialAccel:(float)t
 {
 	mode.A.tangentialAccel = t;
@@ -649,6 +652,62 @@
 -(float) speedVar
 {
 	return mode.A.speedVar;
+}
+
+#pragma mark ParticleSystem - Properties of Radius Mode
+
+-(void) setStartRadius:(float)startRadius
+{
+	mode.B.startRadius = startRadius;
+}
+-(float) startRadius
+{
+	return mode.B.startRadius;
+}
+
+-(void) setStartRadiusVar:(float)startRadiusVar
+{
+	mode.B.startRadiusVar = startRadiusVar;
+}
+-(float) startRadiusVar
+{
+	return mode.B.startRadiusVar;
+}
+
+-(void) setEndRadius:(float)endRadius
+{
+	mode.B.endRadius = endRadius;
+}
+-(float) endRadius
+{
+	return mode.B.endRadius;
+}
+
+-(void) setEndRadiusVar:(float)endRadiusVar
+{
+	mode.B.endRadiusVar = endRadiusVar;
+}
+-(float) endRadiusVar
+{
+	return mode.B.endRadiusVar;
+}
+
+-(void) setRotatePerSecond:(float)degrees
+{
+	mode.B.rotatePerSecondVar = degrees;
+}
+-(float) rotatePerSecond
+{
+	return mode.B.rotatePerSecond;
+}
+
+-(void) setRotatePerSecondVar:(float)degrees
+{
+	mode.B.rotatePerSecondVar = degrees;
+}
+-(float) rotatePerSecondVar
+{
+	return mode.B.rotatePerSecondVar;
 }
 @end
 
