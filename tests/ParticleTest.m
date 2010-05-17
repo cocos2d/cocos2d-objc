@@ -31,7 +31,7 @@ static NSString *transitions[] = {
 		@"ParallaxParticle",
 //		@"ParticleDesigner1",
 //		@"ParticleDesigner2",
-//		@"ParticleDesigner3",
+		@"ParticleDesigner3",
 		@"ParticleDesigner4",
 		@"ParticleDesigner5",
 		@"ParticleDesigner6",
@@ -767,55 +767,13 @@ Class restartAction()
 
 #pragma mark -
 
-@implementation ParticleDesigner1
--(void) onEnter
-{
-	[super onEnter];
-
-	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/PurpleFlame.plist"];
-	[self addChild: emitter z:10];
-	[self removeChild:background cleanup:YES];
-	background = nil;
-	[self setEmitterPosition];
-}
-
--(NSString *) title
-{
-	return @"PD: Purple Flame";
-}
-@end
-
-#pragma mark -
-
-@implementation ParticleDesigner2
--(void) onEnter
-{
-	[super onEnter];
-	
-	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/QuickExplode.plist"];
-	[self addChild: emitter z:10];
-	[self removeChild:background cleanup:YES];
-	background = nil;
-	[self setEmitterPosition];
-}
-
--(NSString *) title
-{
-	return @"PD: Quick Explode";
-}
-@end
-
-#pragma mark -
-
 @implementation ParticleDesigner3
 -(void) onEnter
 {
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/VeryPretty.plist"];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/LavaFlow.plist"];
 	[self addChild: emitter z:10];
 	[self removeChild:background cleanup:YES];
 	background = nil;
@@ -824,7 +782,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PD: Very Pretty";
+	return @"PD: Lava Flow";
 }
 @end
 
