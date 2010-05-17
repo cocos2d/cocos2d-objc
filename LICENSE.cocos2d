@@ -1,21 +1,22 @@
-cocos2d for iPhone license:
----------------------------
+cocos2d for iPhone: http://www.cocos2d-iphone.org
 
-cocos2d for iPhone was originally licensed under the GNU LGPL v3 license.
-But since it is impossible to distribute 3rd party dynamic libraries
-for the iPhone, this license extends the GNU LGPL v3 license by allowing you: 
-  a) to use cocos2d for iPhone as a static library
-  b) to include all or part of the cocos2d for iPhone sources inside your project
-
-This means that if you do a) and/or b) you are NOT forced to release your 
-source code under the GNU LGPL v3 license.
-
-What is an improvement to the library and what's part of your game is
-decided by the your own good faith.
-
-Remember that cocos2d for iPhone follows the copyleft idea. So if you think that
-you're improving the library, share your changes with the community with this same
-license.
+Copyright (c) 2008-2010 - (see each file to see the different copyright owners)
 
 
-If you have any doubt regarding the license, please contact Ricardo Quesada.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
