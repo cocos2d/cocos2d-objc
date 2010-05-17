@@ -139,11 +139,6 @@ typedef struct sCCParticle
 	// Angle variance measured in degrees;
 	float angleVar;
 	
-	// The speed the particles will have.
-	float speed;
-	// The speed variance
-	float speedVar;
-	
 	// Different modes
 	
 	int emitterMode_;
@@ -152,6 +147,11 @@ typedef struct sCCParticle
 		struct {
 			// gravity of the particles
 			CGPoint gravity;
+
+			// The speed the particles will have.
+			float speed;
+			// The speed variance
+			float speedVar;
 
 			// Tangential acceleration
 			float tangentialAccel;

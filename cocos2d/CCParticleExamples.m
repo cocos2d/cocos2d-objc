@@ -46,8 +46,8 @@
 		self.radialAccelVar = 0;
 
 		// speed of particles
-		speed = 180;
-		speedVar = 50;
+		self.speed = 180;
+		self.speedVar = 50;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -130,8 +130,8 @@
 		lifeVar = 0.25f;
 		
 		// speed of particles
-		speed = 60;
-		speedVar = 20;
+		self.speed = 60;
+		self.speedVar = 20;
 			
 		// size, in pixels
 		startSize = 54.0f;
@@ -209,8 +209,8 @@
 		lifeVar = 0.5f;
 		
 		// speed of particles
-		speed = 20;
-		speedVar = 5;
+		self.speed = 20;
+		self.speedVar = 5;
 		
 		// size, in pixels
 		startSize = 30.0f;
@@ -269,8 +269,8 @@
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 60;
-		speedVar = 10;
+		self.speed = 60;
+		self.speedVar = 10;
 			
 		// radial
 		self.radialAccel = -80;
@@ -349,8 +349,8 @@
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 80;
-		speedVar = 10;
+		self.speed = 80;
+		self.speedVar = 10;
 		
 		// radial
 		self.radialAccel = -60;
@@ -429,8 +429,8 @@
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 15;
-		speedVar = 5;
+		self.speed = 15;
+		self.speedVar = 5;
 		
 		// radial
 		self.radialAccel = 0;
@@ -509,8 +509,8 @@
 		angleVar = 0;
 		
 		// speed of particles
-		speed = 150;
-		speedVar = 0;
+		self.speed = 150;
+		self.speedVar = 0;
 		
 		// radial
 		self.radialAccel = -380;
@@ -589,8 +589,8 @@
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 70;
-		speedVar = 40;
+		self.speed = 70;
+		self.speedVar = 40;
 		
 		// radial
 		self.radialAccel = 0;
@@ -686,8 +686,8 @@
 		lifeVar = 1;
 		
 		// speed of particles
-		speed = 25;
-		speedVar = 10;
+		self.speed = 25;
+		self.speedVar = 10;
 		
 		// size, in pixels
 		startSize = 60.0f;
@@ -748,8 +748,8 @@
 		angleVar = 5;
 		
 		// speed of particles
-		speed = 5;
-		speedVar = 1;
+		self.speed = 5;
+		self.speedVar = 1;
 		
 		// radial
 		self.radialAccel = 0;
@@ -837,8 +837,8 @@
 		angleVar = 5;
 		
 		// speed of particles
-		speed = 130;
-		speedVar = 30;
+		self.speed = 130;
+		self.speedVar = 30;
 		
 		// emitter position
 		self.position = (CGPoint) {
