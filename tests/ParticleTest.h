@@ -115,4 +115,12 @@
 {}
 @end
 
+@interface RadiusMode1 : ParticleDemo
+{}
+@end
+
+@interface RadiusMode2 : ParticleDemo
+{}
+@end
+
 

@@ -36,6 +36,8 @@ static NSString *transitions[] = {
 		@"ParticleDesigner5",
 		@"ParticleDesigner6",
 		@"ParticleDesigner7",
+		@"RadiusMode1",
+		@"RadiusMode2",
 };
 
 Class nextAction()
@@ -398,7 +400,6 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
-	[emitter release];
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
 	
 	// duration
@@ -626,7 +627,6 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCPointParticleSystem alloc] initWithTotalParticles:1000];
 	[background addChild: emitter z:10];
-	[emitter release];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -704,7 +704,6 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[background addChild: emitter z:10];
-	[emitter release];
 
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	emitter.lifeVar = 0;
@@ -745,7 +744,6 @@ Class restartAction()
 	
 	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[p1 addChild:emitter z:10];
-	[emitter release];
 	[emitter setPosition:ccp(250,200)];
 	
 	id par = [[CCParticleSun alloc] initWithTotalParticles:250];
@@ -775,6 +773,7 @@ Class restartAction()
 	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
 	[self addChild: emitter z:10];
+
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	[self setEmitterPosition];
@@ -796,9 +795,16 @@ Class restartAction()
 	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpinningPeas.plist"];
 	[self addChild: emitter z:10];
+
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	[self setEmitterPosition];
+	
+	// custom spinning
+	self.emitter.startSpin = 0;
+	self.emitter.startSpin = 360;
+	self.emitter.endSpin = 720;
+	self.emitter.endSpinVar = 360;	
 }
 
 -(NSString *) title
@@ -818,6 +824,7 @@ Class restartAction()
 	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/LavaFlow.plist"];
 	[self addChild: emitter z:10];
+
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	[self setEmitterPosition];
@@ -839,6 +846,7 @@ Class restartAction()
 	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ExplodingRing.plist"];
 	[self addChild: emitter z:10];
+
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	[self setEmitterPosition];
@@ -864,12 +872,6 @@ Class restartAction()
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Comet.plist"];
 	[self addChild: emitter z:10];
 	[self setEmitterPosition];
-	
-	// custom smooth
-	self.emitter.startSpin = 0;
-	self.emitter.startSpin = 360;
-	self.emitter.endSpin = 720;
-	self.emitter.endSpinVar = 360;
 }
 
 -(NSString *) title
@@ -919,6 +921,175 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PD: Boiling Foam";
+}
+@end
+
+#pragma mark -
+
+@implementation RadiusMode1
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:200];
+	[self addChild: emitter z:10];
+
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+	
+	// duration
+	emitter.duration = -1;
+
+	// radius mode
+	emitter.emitterMode = kCCParticleModeRadius;
+	
+	// radius mode: start and end radius in pixels
+	emitter.startRadius = 0;
+	emitter.startRadiusVar = 0;
+	emitter.endRadius = 160;
+	emitter.endRadiusVar = 0;
+	
+	// radius mode: degrees per second
+	emitter.rotatePerSecond = 180;
+	emitter.rotatePerSecondVar;
+	
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 0;
+		
+	// emitter position
+	emitter.position = ccp(160,240);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 5;
+	emitter.lifeVar = 0;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 32;
+	emitter.startSizeVar = 0;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+	
+	// additive
+	emitter.blendAdditive = NO;
+	
+	[self setEmitterPosition];	
+}
+
+-(NSString *) title
+{
+	return @"Radius Mode: Spiral";
+}
+@end
+
+#pragma mark -
+
+@implementation RadiusMode2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:200];
+	[self addChild: emitter z:10];
+	
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+	
+	// duration
+	emitter.duration = -1;
+	
+	// radius mode
+	emitter.emitterMode = kCCParticleModeRadius;
+	
+	// radius mode: 100 pixels from center
+	emitter.startRadius = 100;
+	emitter.startRadiusVar = 0;
+	emitter.endRadius = kCCParticleStartRadiusEqualToEndRadius;
+	emitter.endRadiusVar = 0;	// not used when start == end
+	
+	// radius mode: degrees per second
+	// 45 * 4 seconds of life = 180 degrees
+	emitter.rotatePerSecond = 45;
+	emitter.rotatePerSecondVar = 0;
+	
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 0;
+	
+	// emitter position
+	emitter.position = ccp(160,240);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 4;
+	emitter.lifeVar = 0;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 32;
+	emitter.startSizeVar = 0;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+	
+	// additive
+	emitter.blendAdditive = NO;
+	
+	[self setEmitterPosition];	
+}
+
+-(NSString *) title
+{
+	return @"Radius Mode: Semi Circle";
 }
 @end
 
