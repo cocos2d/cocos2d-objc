@@ -141,3 +141,10 @@
  */
 //#define CC_COMPATIBILITY_WITH_0_8 1
 
+/**
+ By default cocos2d supports Particle Designer: http://particledesigner.71squared.com/
+ 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
+ cocos2d uses a another approach, but the results are almost identical. If you enable CC_PARTICLE_DESIGNER, you need
+ set the FPS to 30.
+ */
+//#define CC_PARTICLE_DESIGNER_COMPATIBILITY
