@@ -35,6 +35,11 @@
 //
 // Mode "B" support, from 71 squared
 //		http://particledesigner.71squared.com/
+//
+// IMPORTANT: Particle Designer is supported by cocos2d, but
+// 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
+//  cocos2d uses a another approach, but the results are almost identical. 
+//
 
 // opengl
 #import <OpenGLES/ES1/gl.h>
@@ -378,11 +383,10 @@
 
 		particle->mode.B.radius = startRadius;
 
-#if CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY
-		particle->mode.B.deltaRadius = ( mode.B.startRadius / life) * (1.0f / 30.0f);
-#else
-		particle->mode.B.deltaRadius = (endRadius - startRadius) / particle->timeToLive;
-#endif // ! CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY
+		if( mode.B.endRadius == kCCParticleStartRadiusEqualToEndRadius )
+			particle->mode.B.deltaRadius = 0;
+		else
+			particle->mode.B.deltaRadius = (endRadius - startRadius) / particle->timeToLive;
 	
 		particle->mode.B.angle = a;
 		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
@@ -477,18 +481,8 @@
 				// Update the angle of the particle from the sourcePosition and the radius.  This is only
 				// done of the particles are rotating
 				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
-#if CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY
-				p->mode.B.radius += p->mode.B.deltaRadius;
-#else
 				p->mode.B.radius += p->mode.B.deltaRadius * dt;
-#endif
-
-#if CC_PARTICLE_DESIGNER_FIXED_RATE_COMPATIBILITY				
-				if (p->mode.B.radius < mode.B.endRadius)
-					p->timeToLive = 0;
-#endif
 			}
-
 			
 			// color
 			p->color.r += (p->deltaColor.r * dt);
@@ -694,7 +688,7 @@
 
 -(void) setRotatePerSecond:(float)degrees
 {
-	mode.B.rotatePerSecondVar = degrees;
+	mode.B.rotatePerSecond = degrees;
 }
 -(float) rotatePerSecond
 {
