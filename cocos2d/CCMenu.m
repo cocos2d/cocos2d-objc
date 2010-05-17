@@ -122,67 +122,6 @@ enum {
 	
 #pragma mark Menu - Events
 
-//- (BOOL)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//	UITouch *touch = [touches anyObject];	
-//	MenuItem *item = [self itemForTouch:touch];
-//	
-//	if( item ) {
-//		[item selected];
-//		selectedItem = item;
-//		return kEventHandled;
-//	}
-//	
-//	return kEventIgnored;
-//}
-//
-//- (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//	UITouch *touch = [touches anyObject];	
-//	MenuItem *item = [self itemForTouch:touch];
-//	
-//	if( item ) {
-//		[item unselected];
-//		[item activate];
-//		return kEventHandled;
-//		
-//	} else if( selectedItem ) {
-//		[selectedItem unselected];
-//		selectedItem = nil;
-//		
-//		// don't return kEventHandled here, since we are not handling it!
-//	}
-//	return kEventIgnored;
-//}
-//
-//- (BOOL)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//	UITouch *touch = [touches anyObject];	
-//	MenuItem *item = [self itemForTouch:touch];
-//	
-//	// "mouse" draged inside a button
-//	if( item ) {
-//		if( item != selectedItem ) {
-//			if( selectedItem  )
-//				[selectedItem unselected];
-//			[item selected];
-//			selectedItem = item;
-//			return kEventHandled;
-//		}
-//		
-//		// "mouse" draged outside the selected button
-//	} else {
-//		if( selectedItem ) {
-//			[selectedItem unselected];
-//			selectedItem = nil;
-//			
-//			// don't return kEventHandled here, since we are not handling it!
-//		}
-//	}
-//	
-//	return kEventIgnored;
-//}
-
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
@@ -447,13 +386,18 @@ enum {
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	for( CCMenuItem* item in children_ ) {
-		CGPoint local = [item convertToNodeSpace:touchLocation];
-
-		CGRect r = [item rect];
-		r.origin = CGPointZero;
 		
-		if( CGRectContainsPoint( r, local ) )
-			return item;
+		// ignore invisible and disabled items: issue #779, #866
+		if ( [item visible] && [item isEnabled] ) {
+
+			CGPoint local = [item convertToNodeSpace:touchLocation];
+
+			CGRect r = [item rect];
+			r.origin = CGPointZero;
+			
+			if( CGRectContainsPoint( r, local ) )
+				return item;
+		}
 	}
 	return nil;
 }
