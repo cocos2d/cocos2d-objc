@@ -1,6 +1,9 @@
 //
-// cocos2d Hello World example
-// http://www.cocos2d-iphone.org
+//  HelloWorldLayer.m
+//  ___PROJECTNAME___
+//
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
 // Import the interfaces

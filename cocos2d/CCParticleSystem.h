@@ -1,16 +1,28 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2008-2010 Ricardo Quesada
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
+
 
 #import "CCProtocols.h"
 #import "CCNode.h"
@@ -28,6 +40,11 @@ enum {
 	// backward compatible
 	kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
 	kParticleDurationInfinity = kCCParticleDurationInfinity,
+};
+
+enum {
+	kCCParticleModeA,
+	kCCParticleModeB,	
 };
 
 
@@ -49,18 +66,37 @@ enum {
  */
 typedef struct sCCParticle
 {
-	CGPoint	pos;
-	CGPoint	startPos;
-	CGPoint	dir;
-	float		radialAccel;
-	float		tangentialAccel;
+	CGPoint		pos;
+	CGPoint		startPos;
+
 	ccColor4F	color;
 	ccColor4F	deltaColor;
+
 	float		size;
 	float		deltaSize;
-	float		angle;
-	float		deltaAngle;
-	float		life;
+
+	float		rotation;
+	float		deltaRotation;
+
+	float		timeToLive;
+
+	union {
+		// Mode A: dir, radial accel, tangential accel
+		struct {
+			CGPoint		dir;
+			float		radialAccel;
+			float		tangentialAccel;
+		} A;
+	
+		// Mode B: radius movement
+		struct {
+			float		angle;
+			float		degreesPerSecond;
+			float		radius;
+			float		deltaRadius;
+		} B;
+	} mode;
+
 } tCCParticle;
 
 @class CCTexture2D;
@@ -68,13 +104,19 @@ typedef struct sCCParticle
 /** Particle System base class
  Attributes of a Particle System:
   * duration
-  * gravity
   * emmision rate
   * total max particles
-  * angle +- variance
   * speed +-  variance
-  * tangential acceleration +- variance
-  * radial acceleration +- variance
+  * start spin +- variance
+  * end spin +- variance
+  * Mode A:
+  *   gravity
+  *   tangential acceleration +- variance
+  *   radial acceleration +- variance
+  * Mode B:
+  *    maxRadius +- variance
+  *    minRadius
+  *	   rotate +- variance
   * start size +- variance
   * end size +- variance
   * start color +- variance
@@ -98,9 +140,6 @@ typedef struct sCCParticle
 	// time elapsed since the start of the system (in seconds)
 	float elapsed;
 	
-	/// Gravity of the particles
-	CGPoint gravity;
-
 	// position is from "superclass" CocosNode
 	// Emitter centerOfGravity position
 	CGPoint centerOfGravity;
@@ -112,20 +151,46 @@ typedef struct sCCParticle
 	// Angle variance measured in degrees;
 	float angleVar;
 	
-	// The speed the particles will have.
-	float speed;
-	// The speed variance
-	float speedVar;
+	// Different modes
 	
-	// Tangential acceleration
-	float tangentialAccel;
-	// Tangential acceleration variance
-	float tangentialAccelVar;
+	int emitterMode_;
+	union {
+		// Mode A:Gravity + Tangential Accel + Radial Accel
+		struct {
+			// gravity of the particles
+			CGPoint gravity;
 
-	// Radial acceleration
-	float radialAccel;
-	// Radial acceleration variance
-	float radialAccelVar;
+			// The speed the particles will have.
+			float speed;
+			// The speed variance
+			float speedVar;
+
+			// Tangential acceleration
+			float tangentialAccel;
+			// Tangential acceleration variance
+			float tangentialAccelVar;
+
+			// Radial acceleration
+			float radialAccel;
+			// Radial acceleration variance
+			float radialAccelVar;
+			} A;
+
+		// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+		struct {
+	
+			// Max radius at which particles are drawn when rotating
+			float maxRadius;
+			// Variance of the maxRadius
+			float maxRadiusVar;
+			// Radius from source below which a particle dies
+			float minRadius;
+			// Numeber of degress to rotate a particle around the source pos per second
+			float rotatePerSecond;
+			// Variance in degrees for rotatePerSecond
+			float rotatePerSecondVar;
+		} B;
+	} mode;
 	
 	// start ize of the particles
 	float startSize;
@@ -157,7 +222,8 @@ typedef struct sCCParticle
 	// End angle of the particle
 	float endSpin;
 	// end angle ariance
-	float endSpinVar;	
+	float endSpinVar;
+	
 	
 	// Array of particles
 	tCCParticle *particles;
@@ -166,8 +232,6 @@ typedef struct sCCParticle
 	// Count of active particles
 	int particleCount;
 	
-	// additive color or blend
-	BOOL blendAdditive;
 	// color modulate
 	BOOL colorModulate;
 	
@@ -270,6 +334,30 @@ typedef struct sCCParticle
  @since v0.8
  */
 @property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
+/** Switch between different kind of emitter modes:
+  A: uses gravity, radial and tangential acceleration
+  B: uses radial movement
+ */
+@property (nonatomic,readwrite) int emitterMode;
+
+/** creates an initializes a CCQuadParticleSystem from a plist file.
+ This plist files can be creted manually or with Particle Designer:
+	http://www.71squared.com/
+ @since v0.99.3
+ */
++(id) particleWithFile:(NSString*)plistFile;
+
+/** initializes a CCQuadParticleSystem from a plist file.
+ This plist files can be creted manually or with Particle Designer:
+	http://www.71squared.com/
+ @since v0.99.3
+ */
+-(id) initWithFile:(NSString*) plistFile;
+
+/** initializes a CCQuadParticleSystem from a NSDictionary.
+ @since v0.99.3
+ */
+-(id) initWithDictionary:(NSDictionary*)dictionary;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(int) numberOfParticles;

@@ -1,10 +1,11 @@
 //
-// Demo of calling integrating Box2D physics engine with cocos2d AtlasSprites
-// a cocos2d example
-// http://code.google.com/p/cocos2d-iphone
+//  HelloWorldScene.mm
+//  ___PROJECTNAME___
 //
-// by Steve Oldmeadow
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
+
 
 // Import the interfaces
 #import "HelloWorldScene.h"

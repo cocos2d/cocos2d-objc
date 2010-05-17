@@ -1,17 +1,28 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2008,2009,2010 Ricardo Quesada
- * Copyright (C) 2009 Valentin Milea
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
- *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2009 Valentin Milea
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
+
 
 
 #import "ccConfig.h"
@@ -176,9 +187,6 @@
 		// children (lazy allocs)
 		children_ = nil;
 		
-		// scheduled selectors (lazy allocs)
-		scheduledSelectors_ = nil;
-		
 		// userData is always inited as nil
 		userData = nil;
 	}
@@ -190,10 +198,9 @@
 {
 	// actions
 	[self stopAllActions];
+	[self unscheduleAllSelectors];
 	
 	// timers
-	[scheduledSelectors_ release];
-	scheduledSelectors_ = nil;
 	
 	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -301,9 +308,9 @@
 	return [self addChild:child z:child.zOrder tag:child.tag];
 }
 
--(void) removeSelfAndCleanup
+-(void) removeFromParentAndCleanup:(BOOL)cleanup
 {
-	[self.parent removeChild:self cleanup:YES];
+	[self.parent removeChild:self cleanup:cleanup];
 }
 
 /* "remove" logic MUST only be on this method
@@ -533,7 +540,7 @@
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnter)];
 	
-	[self activateTimers];
+	[self resumeSchedulerAndActions];
 
 	isRunning_ = YES;
 }
@@ -545,7 +552,7 @@
 
 -(void) onExit
 {
-	[self deactivateTimers];
+	[self pauseSchedulerAndActions];
 
 	isRunning_ = NO;	
 	
@@ -591,76 +598,58 @@
 }
 
 
-#pragma mark CCNode Timers 
+#pragma mark CCNode - Callbacks
 
-#pragma mark CCNode Timers 
-
--(void) timerAlloc
+-(void) scheduleUpdate
 {
-	scheduledSelectors_ = [[NSMutableDictionary alloc] initWithCapacity: 2];
+	[self scheduleUpdateWithPriority:0];
 }
 
--(void) schedule: (SEL) selector
+-(void) scheduleUpdateWithPriority:(int)priority
+{
+	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
+}
+
+-(void) unscheduleUpdate
+{
+	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
+}
+
+-(void) schedule:(SEL)selector
 {
 	[self schedule:selector interval:0];
 }
 
--(void) schedule: (SEL) selector interval:(ccTime)interval
+-(void) schedule:(SEL)selector interval:(ccTime)interval
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
-	
-	if( !scheduledSelectors_ )
-		[self timerAlloc];
-	
-	NSString *key = NSStringFromSelector(selector);
-	// already scheduled ?
-	if( [scheduledSelectors_ objectForKey:key  ] ) {
-		return;
-	}
-	
-	CCTimer *timer = [CCTimer timerWithTarget:self selector:selector interval:interval];
-	
-	if( isRunning_ )
-		[[CCScheduler sharedScheduler] scheduleTimer:timer];
-	
-	[scheduledSelectors_ setObject:timer forKey:key ];
+
+	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_];
 }
 
--(void) unschedule: (SEL) selector
+-(void) unschedule:(SEL)selector
 {
 	// explicit nil handling
 	if (selector == nil)
 		return;
-	
-	CCTimer *timer = nil;
-	NSString *key = NSStringFromSelector(selector);
-	
-	if( ! (timer = [scheduledSelectors_ objectForKey:key] ) )
-	{
-		CCLOG(@"cocos2d: CCNode.unschedule: Selector not scheduled: %@",key );
-		return;
-	}
-	
-	[scheduledSelectors_ removeObjectForKey: key];
-	
-	if( isRunning_ )
-		[[CCScheduler sharedScheduler] unscheduleTimer:timer];
+
+	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self];
 }
 
-- (void) activateTimers
+-(void) unscheduleAllSelectors
 {
-	for( id key in scheduledSelectors_ )
-		[[CCScheduler sharedScheduler] scheduleTimer: [scheduledSelectors_ objectForKey:key]];
-	
+	[[CCScheduler sharedScheduler] unscheduleAllSelectorsForTarget:self];
+}
+- (void) resumeSchedulerAndActions
+{
+	[[CCScheduler sharedScheduler] resumeAllSelectorsForTarget:self];
 	[[CCActionManager sharedManager] resumeAllActionsForTarget:self];
 }
 
-- (void) deactivateTimers
+- (void) pauseSchedulerAndActions
 {
-	for( id key in scheduledSelectors_ )
-		[[CCScheduler sharedScheduler] unscheduleTimer: [scheduledSelectors_ objectForKey:key]];
-	
+	[[CCScheduler sharedScheduler] pauseAllSelectorsForTarget:self];
 	[[CCActionManager sharedManager] pauseAllActionsForTarget:self];
 }
 

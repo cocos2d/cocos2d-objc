@@ -1,14 +1,25 @@
-/* cocos2d for iPhone
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * http://www.cocos2d-iphone.org
- *
- * Copyright (C) 2008,2009 Ricardo Quesada
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the 'cocos2d for iPhone' license.
- *
- * You will find a copy of this license within the cocos2d for iPhone
- * distribution inside the "LICENSE" file.
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -35,20 +46,19 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = -90;
+		self.gravity = ccp(0,-90);
 		
 		// angle
 		angle = 90;
 		angleVar = 20;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 
 		// speed of particles
-		speed = 180;
-		speedVar = 50;
+		self.speed = 180;
+		self.speedVar = 50;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -87,7 +97,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -111,16 +121,15 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
-		angle = 90;
-		angleVar = 10;
+		self.angle = 90;
+		self.angleVar = 10;
 
 		// radial acceleration
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -132,8 +141,8 @@
 		lifeVar = 0.25f;
 		
 		// speed of particles
-		speed = 60;
-		speedVar = 20;
+		self.speed = 60;
+		self.speedVar = 20;
 			
 		// size, in pixels
 		startSize = 54.0f;
@@ -164,7 +173,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 		
 	return self;
@@ -185,22 +194,21 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 			
 		// duration
 		duration = -1;
 		
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
 		
 		// radial acceleration
-		radialAccel = 0;
-		radialAccelVar = 0;	
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;	
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -212,8 +220,8 @@
 		lifeVar = 0.5f;
 		
 		// speed of particles
-		speed = 20;
-		speedVar = 5;
+		self.speed = 20;
+		self.speedVar = 5;
 		
 		// size, in pixels
 		startSize = 30.0f;
@@ -265,24 +273,23 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 60;
-		speedVar = 10;
+		self.speed = 60;
+		self.speedVar = 10;
 			
 		// radial
-		radialAccel = -80;
-		radialAccelVar = 0;
+		self.radialAccel = -80;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 80;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 80;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -322,7 +329,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 	
 	return self;
@@ -346,24 +353,23 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 80;
-		speedVar = 10;
+		self.speed = 80;
+		self.speedVar = 10;
 		
 		// radial
-		radialAccel = -60;
-		radialAccelVar = 0;
+		self.radialAccel = -60;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 15;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 15;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -403,7 +409,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 		
 	return self;
@@ -427,24 +433,23 @@
 		duration = -1;
 		
 		// gravity
-		gravity.x = -200;
-		gravity.y = 200;
-		
+		self.gravity = ccp(-200,200);
+
 		// angle
 		angle = 90;
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 15;
-		speedVar = 5;
+		self.speed = 15;
+		self.speedVar = 5;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -484,7 +489,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = YES;
+		self.blendAdditive = YES;
 	}
 	
 	return self;
@@ -508,24 +513,23 @@
 		duration = -1;
 
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
 		angleVar = 0;
 		
 		// speed of particles
-		speed = 150;
-		speedVar = 0;
+		self.speed = 150;
+		self.speedVar = 0;
 		
 		// radial
-		radialAccel = -380;
-		radialAccelVar = 0;
+		self.radialAccel = -380;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 45;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 45;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -565,7 +569,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -589,24 +593,23 @@
 		duration = 0.1f;
 		
 		// gravity
-		gravity.x = 0;
-		gravity.y = -100;
+		self.gravity = ccp(0,0);
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
 		
 		// speed of particles
-		speed = 70;
-		speedVar = 40;
+		self.speed = 70;
+		self.speedVar = 40;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 0;
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 0;
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -646,7 +649,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -669,17 +672,20 @@
 		// duration
 		duration = -1;
 		
+		// Emitter mode: A
+		self.emitterMode = kCCParticleModeA;
+		
 		// gravity
-		gravity.x = 0;
-		gravity.y = 0;
+		self.gravity = ccp(0,0);
+
+		// radial acceleration
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
 		
 		// angle
 		angle = 90;
 		angleVar = 5;
 		
-		// radial acceleration
-		radialAccel = 0;
-		radialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -691,8 +697,8 @@
 		lifeVar = 1;
 		
 		// speed of particles
-		speed = 25;
-		speedVar = 10;
+		self.speed = 25;
+		self.speedVar = 10;
 		
 		// size, in pixels
 		startSize = 60.0f;
@@ -723,7 +729,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;
@@ -743,25 +749,26 @@
 		// duration
 		duration = -1;
 		
+		self.emitterMode = kCCParticleModeA;
+
 		// gravity
-		gravity.x = 0;
-		gravity.y = -1;
+		self.gravity = ccp(0,-1);
 		
 		// angle
 		angle = -90;
 		angleVar = 5;
 		
 		// speed of particles
-		speed = 5;
-		speedVar = 1;
+		self.speed = 5;
+		self.speedVar = 1;
 		
 		// radial
-		radialAccel = 0;
-		radialAccelVar = 1;
+		self.radialAccel = 0;
+		self.radialAccelVar = 1;
 		
 		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 1;
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 1;
 		
 		// emitter position
 		self.position = (CGPoint) {
@@ -803,7 +810,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 		
 	return self;
@@ -823,25 +830,26 @@
 		// duration
 		duration = -1;
 		
+		self.emitterMode = kCCParticleModeA;
+
 		// gravity
-		gravity.x = 10;
-		gravity.y = -10;
+		self.gravity = ccp(10,-10);
+		
+		// radial
+		self.radialAccel = 0;
+		self.radialAccelVar = 1;
+		
+		// tagential
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 1;
 		
 		// angle
 		angle = -90;
 		angleVar = 5;
 		
 		// speed of particles
-		speed = 130;
-		speedVar = 30;
-		
-		// radial
-		radialAccel = 0;
-		radialAccelVar = 1;
-		
-		// tagential
-		tangentialAccel = 0;
-		tangentialAccelVar = 1;
+		self.speed = 130;
+		self.speedVar = 30;
 		
 		// emitter position
 		self.position = (CGPoint) {
@@ -883,7 +891,7 @@
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 		
 		// additive
-		blendAdditive = NO;
+		self.blendAdditive = NO;
 	}
 	
 	return self;

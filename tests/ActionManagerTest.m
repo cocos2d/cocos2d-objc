@@ -251,7 +251,7 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"After 5 seconds grossini should move";
+	return @"After 3 seconds grossini should move";
 }
 @end
 

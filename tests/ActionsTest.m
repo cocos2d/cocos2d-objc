@@ -34,6 +34,7 @@ static NSString *transitions[] = {
 					@"ActionRotateToRepeat",
 					@"ActionRotateJerk",
 					@"ActionCallFunc",
+					@"ActionCallFuncND",
 					@"ActionReverseSequence",
 					@"ActionReverseSequence2",
 					@"ActionOrbit",
@@ -840,6 +841,34 @@ Class restartAction()
 	return @"Callbacks: CallFunc and friends";
 }
 @end
+
+@implementation ActionCallFuncND
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:1];
+	
+	
+	id action = [CCSequence actions:
+				 [CCMoveBy actionWithDuration:2 position:ccp(200,0)],
+				 [CCCallFuncND actionWithTarget:grossini selector:@selector(removeFromParentAndCleanup:) data:(void*)YES],
+				 nil];
+	[grossini runAction:action];
+}
+
+-(NSString *) title
+{
+	return @"CallFuncND + auto remove";
+}
+
+-(NSString *) subtitle
+{
+	return @"CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s";
+}
+
+@end
+
 
 @implementation ActionOrbit
 -(void) onEnter
