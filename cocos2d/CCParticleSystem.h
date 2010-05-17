@@ -43,8 +43,8 @@ enum {
 };
 
 enum {
-	kCCParticleModeA,
-	kCCParticleModeB,	
+	kCCParticleModeA,	// Gravity mode
+	kCCParticleModeB,	// Radius mode
 };
 
 
@@ -114,8 +114,8 @@ typedef struct sCCParticle
   *   tangential acceleration +- variance
   *   radial acceleration +- variance
   * Mode B:
-  *    maxRadius +- variance
-  *    minRadius
+  *    startRadius +- variance
+  *    endRadius +- variance
   *	   rotate +- variance
   * start size +- variance
   * end size +- variance
@@ -179,12 +179,14 @@ typedef struct sCCParticle
 		// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
 		struct {
 	
-			// Max radius at which particles are drawn when rotating
-			float maxRadius;
-			// Variance of the maxRadius
-			float maxRadiusVar;
-			// Radius from source below which a particle dies
-			float minRadius;
+			// The starting radius of the particles
+			float startRadius;
+			// The starting radius variance of the particles
+			float startRadiusVar;
+			// The ending radius of the particles
+			float endRadius;
+			// The ending radius variance of the particles
+			float endRadiusVar;			
 			// Numeber of degress to rotate a particle around the source pos per second
 			float rotatePerSecond;
 			// Variance in degrees for rotatePerSecond

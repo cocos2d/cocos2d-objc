@@ -29,8 +29,8 @@ static NSString *transitions[] = {
 		@"DemoModernArt",
 		@"DemoRing",
 		@"ParallaxParticle",
-//		@"ParticleDesigner1",
-//		@"ParticleDesigner2",
+		@"ParticleDesigner1",
+		@"ParticleDesigner2",
 		@"ParticleDesigner3",
 		@"ParticleDesigner4",
 		@"ParticleDesigner5",
@@ -764,6 +764,49 @@ Class restartAction()
 	return @"Parallax + Particles";
 }
 @end
+
+#pragma mark -
+
+@implementation ParticleDesigner1
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Spooky Peas";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpinningPeas.plist"];
+	[self addChild: emitter z:10];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	[self setEmitterPosition];
+}
+
+-(NSString *) title
+{
+	return @"PD: Spinning Peas";
+}
+@end
+
 
 #pragma mark -
 

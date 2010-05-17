@@ -152,7 +152,7 @@
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
 				
 		
-		emitterMode_ = [[dictionary valueForKey:@"particleType"] intValue];
+		emitterMode_ = [[dictionary valueForKey:@"emitterType"] intValue];
 		
 		if( emitterMode_ == kCCParticleModeA ) {
 			// Mode A: Gravity + tangential accel + radial accel
@@ -171,9 +171,14 @@
 		
 		// or Mode B: radius movement
 		else if( emitterMode_ == kCCParticleModeB ) {
-			mode.B.maxRadius = [[dictionary valueForKey:@"maxRadius"] floatValue];
-			mode.B.maxRadiusVar = [[dictionary valueForKey:@"maxRadiusVariance"] floatValue];
-			mode.B.minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
+			float maxRadius = [[dictionary valueForKey:@"maxRadius"] floatValue];
+			float maxRadiusVar = [[dictionary valueForKey:@"maxRadiusVariance"] floatValue];
+			float minRadius = [[dictionary valueForKey:@"minRadius"] floatValue];
+			
+			mode.B.startRadius = maxRadius;
+			mode.B.startRadiusVar = maxRadiusVar;
+			mode.B.endRadius = minRadius;
+			mode.B.endRadiusVar = 0;
 			mode.B.rotatePerSecond = [[dictionary valueForKey:@"rotatePerSecond"] floatValue];
 			mode.B.rotatePerSecondVar = [[dictionary valueForKey:@"rotatePerSecondVariance"] floatValue];
 
@@ -292,6 +297,9 @@
 -(void) initParticle: (tCCParticle*) particle
 {
 
+	// timeToLive
+	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() ); // no negative life
+
 	// position
 	particle->pos.x = (int) (centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1());
 	particle->pos.y = (int) (centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1());
@@ -319,15 +327,22 @@
 	// Mode B
 	else {
 		// Set the default diameter of the particle from the source position
-		particle->mode.B.radius = mode.B.maxRadius + mode.B.maxRadiusVar * CCRANDOM_MINUS1_1();	
-		particle->mode.B.deltaRadius = ( mode.B.maxRadius / life) * (1.0f / 30.0f);
+		float startRadius = mode.B.startRadius + mode.B.startRadiusVar * CCRANDOM_MINUS1_1();
+		float endRadius = mode.B.endRadius + mode.B.endRadiusVar * CCRANDOM_MINUS1_1();
+
+		particle->mode.B.radius = startRadius;
+
+#if CC_PARTICLE_DESIGN_COMPATIBILITY
+		particle->mode.B.deltaRadius = ( mode.B.startRadius / life) * (1.0f / 30.0f);
+#else
+		particle->mode.B.deltaRadius = (endRadius - startRadius) / particle->timeToLive;
+#endif
+
 		particle->mode.B.angle = a;
 		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
 		
 	}
 	
-	// timeToLive
-	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() ); // no negative life
 	
 	// Color
 	ccColor4F start;
@@ -459,9 +474,16 @@
 				// Update the angle of the particle from the sourcePosition and the radius.  This is only
 				// done of the particles are rotating
 				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
-				p->mode.B.radius -= p->mode.B.deltaRadius;
-				if (p->mode.B.radius < mode.B.minRadius)
-					p->timeToLive = 0;				
+#if CC_PARTICLE_DESIGN_COMPATIBILITY
+				p->mode.B.radius += p->mode.B.deltaRadius;
+#else
+				p->mode.B.radius += p->mode.B.deltaRadius * dt;
+#endif
+
+#if CC_PARTICLE_DESIGN_COMPATIBILITY				
+				if (p->mode.B.radius < mode.B.endRadius)
+					p->timeToLive = 0;
+#endif
 			}
 
 			
