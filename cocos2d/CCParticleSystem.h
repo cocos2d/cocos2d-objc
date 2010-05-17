@@ -340,16 +340,16 @@ typedef struct sCCParticle
  */
 @property (nonatomic,readwrite) int emitterMode;
 
-/** creates an initializes a CCQuadParticleSystem from a plist file.
+/** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
-	http://www.71squared.com/
+	http://particledesigner.71squared.com/
  @since v0.99.3
  */
 +(id) particleWithFile:(NSString*)plistFile;
 
-/** initializes a CCQuadParticleSystem from a plist file.
+/** initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
-	http://www.71squared.com/
+	http://particledesigner.71squared.com/
  @since v0.99.3
  */
 -(id) initWithFile:(NSString*) plistFile;

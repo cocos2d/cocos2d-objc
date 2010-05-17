@@ -31,8 +31,10 @@
 //		http://www.gamasutra.com/features/20000623/vanderburg_01.htm
 //   . LOVE game engine
 //		http://love2d.org/
-//	 . 71 squared
-//		http://www.71squared.com/
+//
+//
+// Mode "B" support, from 71 squared
+//		http://particledesigner.71squared.com/
 
 // opengl
 #import <OpenGLES/ES1/gl.h>
