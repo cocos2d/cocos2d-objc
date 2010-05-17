@@ -23,8 +23,6 @@
  *
  */
 
- */
-
 #import "CCMenuItem.h"
 #import "CCLabel.h"
 #import "CCLabelAtlas.h"
