@@ -25,16 +25,15 @@
 	duration = 0.5f;
 	
 	// gravity
-	gravity.x = 0;
-	gravity.y = 0;
+	self.gravity = CGPointZero;
 	
 	// angle
 	angle = -90;
 	angleVar = 10;
 	
 	// radial acceleration
-	radialAccel = 0;
-	radialAccelVar = 0;
+	self.radialAccel = 0;
+	self.radialAccelVar = 0;
 	
 	// emitter position
 	self.position = CGPointMake(160, 60);
@@ -46,8 +45,8 @@
 	lifeVar = 0.25f;
 	
 	// speed of particles
-	speed = 60;
-	speedVar = 20;
+	self.speed = 60;
+	self.speedVar = 20;
 	
 	// size, in pixels
 	startSize = 50.0f;
@@ -79,7 +78,7 @@
 	[self.texture retain];
 	
 	// additive
-	blendAdditive = YES;
+	self.blendAdditive = YES;
 	
 	return self;
 }

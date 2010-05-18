@@ -1687,6 +1687,9 @@
 		50E5F307110690C600E3FCF5 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 50E5F2D4110690C600E3FCF5 /* cpVect.c */; };
 		50E5F308110690C600E3FCF5 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E5F2D5110690C600E3FCF5 /* prime.h */; };
 		50EC54CD101519E400489A93 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
+		50EE940611A2BF1B006A2662 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		50EE940711A2BF1C006A2662 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		50EE940811A2BF1D006A2662 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		50F29F5610204FD60046CA73 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F29F5510204FD60046CA73 /* base64.c */; };
 		50F29F6F102053370046CA73 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F29F6E102053370046CA73 /* base64.h */; };
 		50F2A104102094550046CA73 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
@@ -3605,6 +3608,7 @@
 				504018F510FE800C0017842A /* OpenGLES.framework in Frameworks */,
 				504018F610FE800C0017842A /* CoreGraphics.framework in Frameworks */,
 				504018F710FE800C0017842A /* QuartzCore.framework in Frameworks */,
+				50EE940611A2BF1B006A2662 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4064,6 +4068,7 @@
 				50CA8A5E10B4B45A0072E0D3 /* OpenGLES.framework in Frameworks */,
 				50CA8A6010B4B4770072E0D3 /* CoreGraphics.framework in Frameworks */,
 				50CA8A6E10B4B4880072E0D3 /* QuartzCore.framework in Frameworks */,
+				50EE940711A2BF1C006A2662 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4075,6 +4080,7 @@
 				50CA8A5D10B4B4590072E0D3 /* OpenGLES.framework in Frameworks */,
 				50CA8A5F10B4B4760072E0D3 /* CoreGraphics.framework in Frameworks */,
 				50CA8A6F10B4B4890072E0D3 /* QuartzCore.framework in Frameworks */,
+				50EE940811A2BF1D006A2662 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

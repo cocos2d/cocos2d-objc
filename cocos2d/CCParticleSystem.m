@@ -573,9 +573,16 @@
 	if( additive ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE;
+
 	} else {
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
+		
+		if( texture_ && ! [texture_ hasPremultipliedAlpha] ) {
+			blendFunc_.src = GL_SRC_ALPHA;
+			blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+		} else {
+			blendFunc_.src = CC_BLEND_SRC;
+			blendFunc_.dst = CC_BLEND_DST;
+		}
 	}
 }
 
