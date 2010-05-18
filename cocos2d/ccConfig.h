@@ -28,28 +28,28 @@
  cocos2d (cc) configuration file
 */
 
-/**
+/** @def CC_FONT_LABEL_SUPPORT
  If enabled, FontLabel will be used to render .ttf files.
  If the .ttf file is not found, then it will use the standard UIFont class
  If disabled, the standard UIFont class will be used.
  */
 #define CC_FONT_LABEL_SUPPORT	1
 
-/**
+/** @def CC_DIRECTOR_FAST_FPS
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
  You will need to add the fps_images.png to your project.
  If disabled, the FPS will be rendered using CCLabel (slow rendering)
  */
 #define CC_DIRECTOR_FAST_FPS	1
 
-/**
+/** @def CC_DIRECTOR_FPS_INTERVAL
  Senconds between FPS updates.
  0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  Having a bigger number means a more reliable FPS
  */
 #define CC_DIRECTOR_FPS_INTERVAL (0.1f)
 
-/**
+/** @def CC_DIRECTOR_DISPATCH_FAST_EVENTS
  If enabled, and only when it is used with CCFastDirector, the main loop will wait 0.04 seconds to
  dispatch all the events, even if there are not events to dispatch.
  If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
@@ -58,25 +58,25 @@
  */
 // #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 1
 
-/**
+/** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  */
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
 
-/**
+/** @def CC_SPRITESHEET_RENDER_SUBPIXEL
  If enabled, the CCSprite objects rendered with CCSpriteSheet will be able to render in subpixels.
  If disabled, integer pixels will be used.
  */
 #define CC_SPRITESHEET_RENDER_SUBPIXEL	1
 
-/** 
+/** @def CC_TEXTURE_ATLAS_USES_VBO
  If enabled, the CCTextureAtlas object will use VBO instead of vertex list (VBO is recommended by Apple)
  @since v0.99.0
  */
 #define CC_TEXTURE_ATLAS_USES_VBO 1
 
-/**
+/** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.
  If disabled, the node will be transformed using glTranslate,glRotate,glScale.
  Using the affine matrix only requires 2 GL calls.
@@ -87,13 +87,13 @@
  */
 #define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
 
-/**
+/** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
  Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
  It seems it is the recommend way, but it is much slower, so, enable it at your own risk
  */
 //#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 1
 
-/**
+/** @def CC_TEXTURE_NPOT_SUPPORT
  Use NPOT textures where available. Only 3rd gen (and newer) devices support NPOT textures.
  NPOT textures have the following limitations:
 	- They can't have mipmaps
@@ -103,38 +103,38 @@
  */
 //#define CC_TEXTURE_NPOT_SUPPORT 1
 
-/**
+/** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_SPRITE_DEBUG_DRAW 1
 
-/**
+/** @def CC_SPRITESHEET_DEBUG_DRAW
  If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
  Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_SPRITESHEET_DEBUG_DRAW 1
 
-/**
+/** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
  If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_BITMAPFONTATLAS_DEBUG_DRAW 1
 
-/**
+/** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of LabeltAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_LABELATLAS_DEBUG_DRAW 1
 
-/**
+/** @def CC_ENABLE_PROFILERS
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s).
  Useful for debugging purposes only. It is recommened to leave it disabled.
  */
 //#define CC_ENABLE_PROFILERS 1
 
-/**
+/** @def CC_COMPATIBILITY_WITH_0_8
  Enable it if you want to support v0.8 compatbility.
  Basically, classes without namespaces will work.
  It is recommended to disable compatibility once you have migrated your game to v0.9 to avoid class name polution

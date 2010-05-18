@@ -33,6 +33,7 @@
 @class CCProfilingTimer;
 #endif
 
+//* @enum
 enum {
 	/** The Particle emitter lives forever */
 	kCCParticleDurationInfinity = -1,
@@ -48,6 +49,7 @@ enum {
 	kParticleDurationInfinity = kCCParticleDurationInfinity,
 };
 
+//* @enum
 enum {
 	/** Gravity mode (A mode) */
 	kCCParticleModeGravity,
@@ -57,7 +59,7 @@ enum {
 };
 
 
-/** possible types of particle positions */
+/** @typedef tCCPositionType possible types of particle positions */
 typedef enum {
 	/** If the emitter is repositioned, the living particles won't be repositioned */
 	kCCPositionTypeFree,
@@ -71,7 +73,7 @@ enum {
 	kPositionTypeGrouped = kCCPositionTypeGrouped,
 }; 
 
-/** Structure that contains the values of each particle
+/** @typedef tCCParticle Structure that contains the values of each particle
  */
 typedef struct sCCParticle
 {
@@ -147,8 +149,10 @@ typedef struct sCCParticle
  
  It is possible to customize any of the above mentioned properties in runtime. Example:
  
+ @code
 	emitter.radialAccel = 15;
 	emitter.startSpin = 0;
+ @endcode
  
  */
 @interface CCParticleSystem : CCNode <CCTextureProtocol>

@@ -65,7 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CONSTANTS:
 
-/** Possible texture pixel formats */
+/** @typedef CCTexture2DPixelFormat Possible texture pixel formats */
 typedef enum {
 	kCCTexture2DPixelFormat_Automatic = 0,
 	//! 32-bit texture: RGBA8888
