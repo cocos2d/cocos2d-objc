@@ -1,7 +1,7 @@
-version 0.99.3 - 00-May-2010
+version 0.99.3-rc - 18-May-2010
  . [NEW] License: Using MIT license
  . [NEW] Node: added removeFromParentAndCleanup:(BOOL) (issue #566)
- . [NEW] Particle: Added support for modes: "classic mode" and "radial movement" mode
+ . [NEW] Particle: Added support for modes: "gravity mode" (old behavior) and "radial movement" mode
  . [NEW] Particle: Added support Particle Designer (issue #XXX)
  . [NEW] Scheduler: supports pause/resume/'update' with priority (issue #439)
  . [FIX] ActionManager: using uthash instead of ccHashSet (easier to use)
