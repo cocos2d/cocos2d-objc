@@ -587,64 +587,78 @@
 #pragma mark ParticleSystem - Properties of Gravity Mode 
 -(void) setTangentialAccel:(float)t
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.tangentialAccel = t;
 }
 -(float) tangentialAccel
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.tangentialAccel;
 }
 
 -(void) setTangentialAccelVar:(float)t
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.tangentialAccelVar = t;
 }
 -(float) tangentialAccelVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.tangentialAccelVar;
 }
 
 -(void) setRadialAccel:(float)t
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.radialAccel = t;
 }
 -(float) radialAccel
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.radialAccel;
 }
 
 -(void) setRadialAccelVar:(float)t
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.radialAccelVar = t;
 }
 -(float) radialAccelVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.radialAccelVar;
 }
 
 -(void) setGravity:(CGPoint)g
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.gravity = g;
 }
 -(CGPoint) gravity
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.gravity;
 }
 
 -(void) setSpeed:(float)speed
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.speed = speed;
 }
 -(float) speed
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.speed;
 }
 
 -(void) setSpeedVar:(float)speedVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	mode.A.speedVar = speedVar;
 }
 -(float) speedVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeGravity, @"Particle Mode should be Gravity");
 	return mode.A.speedVar;
 }
 
@@ -652,55 +666,67 @@
 
 -(void) setStartRadius:(float)startRadius
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	mode.B.startRadius = startRadius;
 }
 -(float) startRadius
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	return mode.B.startRadius;
 }
 
 -(void) setStartRadiusVar:(float)startRadiusVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	mode.B.startRadiusVar = startRadiusVar;
 }
 -(float) startRadiusVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	return mode.B.startRadiusVar;
 }
 
 -(void) setEndRadius:(float)endRadius
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	mode.B.endRadius = endRadius;
 }
 -(float) endRadius
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	return mode.B.endRadius;
 }
 
 -(void) setEndRadiusVar:(float)endRadiusVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	mode.B.endRadiusVar = endRadiusVar;
 }
 -(float) endRadiusVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	return mode.B.endRadiusVar;
 }
 
 -(void) setRotatePerSecond:(float)degrees
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	mode.B.rotatePerSecond = degrees;
 }
 -(float) rotatePerSecond
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	return mode.B.rotatePerSecond;
 }
 
 -(void) setRotatePerSecondVar:(float)degrees
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	mode.B.rotatePerSecondVar = degrees;
 }
 -(float) rotatePerSecondVar
 {
+	NSAssert( emitterMode_ == kCCParticleModeRadius, @"Particle Mode should be Radius");
 	return mode.B.rotatePerSecondVar;
 }
 @end

@@ -780,12 +780,11 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
-	[self addChild: emitter z:10];
-
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
+	[self addChild: emitter z:10];
 }
 
 -(NSString *) title
@@ -802,12 +801,11 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpinningPeas.plist"];
-	[self addChild: emitter z:10];
-
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpinningPeas.plist"];
+	[self addChild: emitter z:10];
 	
 	// custom spinning
 	self.emitter.startSpin = 0;
@@ -831,12 +829,12 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/LavaFlow.plist"];
 	[self addChild: emitter z:10];
 
-	[self removeChild:background cleanup:YES];
-	background = nil;
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -858,7 +856,6 @@ Class restartAction()
 
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -880,7 +877,6 @@ Class restartAction()
 
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Comet.plist"];
 	[self addChild: emitter z:10];
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -902,7 +898,6 @@ Class restartAction()
 
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BurstPipe.plist"];
 	[self addChild: emitter z:10];
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -924,7 +919,6 @@ Class restartAction()
 	
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BoilingFoam.plist"];
 	[self addChild: emitter z:10];
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
