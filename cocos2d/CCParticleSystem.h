@@ -213,7 +213,7 @@ typedef struct sCCParticle
 			float endRadius;
 			// The ending radius variance of the particles
 			float endRadiusVar;			
-			// Numeber of degress to rotate a particle around the source pos per second
+			// Number of degress to rotate a particle around the source pos per second
 			float rotatePerSecond;
 			// Variance in degrees for rotatePerSecond
 			float rotatePerSecondVar;
@@ -329,7 +329,7 @@ typedef struct sCCParticle
 @property (nonatomic,readwrite,assign) float endRadius;
 /** The ending radius variance of the particles. Only available in 'Radius' mode. */
 @property (nonatomic,readwrite,assign) float endRadiusVar;			
-/** Numeber of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
+/** Number of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
 @property (nonatomic,readwrite,assign) float rotatePerSecond;
 /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
 @property (nonatomic,readwrite,assign) float rotatePerSecondVar;
@@ -366,7 +366,13 @@ typedef struct sCCParticle
 @property (nonatomic,readwrite, retain) CCTexture2D * texture;
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
-/** whether or not the particles are using blend additive */
+/** whether or not the particles are using blend additive.
+ If enabled, the following blending function will be used.
+ @code
+	source blend function = GL_SRC_ALPHA;
+	dest blend function = GL_ONE;
+ @endcode
+ */
 @property (nonatomic,readwrite) BOOL blendAdditive;
 /** particles movement type: Free or Grouped
  @since v0.8
@@ -378,8 +384,8 @@ typedef struct sCCParticle
  */
 @property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
 /** Switch between different kind of emitter modes:
-  A: uses gravity, radial and tangential acceleration
-  B: uses radial movement
+   - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
+   - kCCParticleModeRadius: uses radius movement + rotation
  */
 @property (nonatomic,readwrite) int emitterMode;
 
