@@ -89,7 +89,7 @@ typedef struct sCCParticle
 	float		rotation;
 	float		deltaRotation;
 
-	float		timeToLive;
+	ccTime		timeToLive;
 
 	union {
 		// Mode A: gravity, direction, radial accel, tangential accel
@@ -109,6 +109,8 @@ typedef struct sCCParticle
 	} mode;
 
 } tCCParticle;
+
+typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 
 @class CCTexture2D;
 
@@ -156,9 +158,7 @@ typedef struct sCCParticle
  
  */
 @interface CCParticleSystem : CCNode <CCTextureProtocol>
-{
-	int id;
-	
+{	
 	// is the particle system active ?
 	BOOL active;
 	// duration in seconds of the system. -1 is infinity
@@ -261,7 +261,7 @@ typedef struct sCCParticle
 	int particleCount;
 	
 	// color modulate
-	BOOL colorModulate;
+//	BOOL colorModulate;
 	
 	// How many particles can be emitted per second
 	float emissionRate;
@@ -280,6 +280,10 @@ typedef struct sCCParticle
 
 	//  particle idx
 	int particleIdx;
+	
+	// Optimization
+	CC_UPDATE_PARTICLE_IMP	updateParticleImp;
+	SEL						updateParticleSel;
 	
 // profiling
 #if CC_ENABLE_PROFILERS
@@ -422,7 +426,7 @@ typedef struct sCCParticle
 -(BOOL) isFull;
 
 //! should be overriden by subclasses
--(void) updateQuadWithParticle:(tCCParticle*)particle position:(CGPoint)position;
+-(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos;
 //! should be overriden by subclasses
 -(void) postStep;
 
