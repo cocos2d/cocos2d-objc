@@ -305,7 +305,8 @@
 {
 
 	// timeToLive
-	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() ); // no negative life
+	// no negative life. prevent division by 0
+	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() );
 
 	// position
 	particle->pos.x = (int) (centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1());
@@ -313,16 +314,16 @@
 	
 	// Color
 	ccColor4F start;
-	start.r = startColor.r + startColorVar.r * CCRANDOM_MINUS1_1();
-	start.g = startColor.g + startColorVar.g * CCRANDOM_MINUS1_1();
-	start.b = startColor.b + startColorVar.b * CCRANDOM_MINUS1_1();
-	start.a = startColor.a + startColorVar.a * CCRANDOM_MINUS1_1();
+	start.r = MIN(1, MAX(0, startColor.r + startColorVar.r * CCRANDOM_MINUS1_1() ) );
+	start.g = MIN(1, MAX(0, startColor.g + startColorVar.g * CCRANDOM_MINUS1_1() ) );
+	start.b = MIN(1, MAX(0, startColor.b + startColorVar.b * CCRANDOM_MINUS1_1() ) );
+	start.a = MIN(1, MAX(0, startColor.a + startColorVar.a * CCRANDOM_MINUS1_1() ) );
 	
 	ccColor4F end;
-	end.r = endColor.r + endColorVar.r * CCRANDOM_MINUS1_1();
-	end.g = endColor.g + endColorVar.g * CCRANDOM_MINUS1_1();
-	end.b = endColor.b + endColorVar.b * CCRANDOM_MINUS1_1();
-	end.a = endColor.a + endColorVar.a * CCRANDOM_MINUS1_1();
+	end.r = MIN(1, MAX(0, endColor.r + endColorVar.r * CCRANDOM_MINUS1_1() ) );
+	end.g = MIN(1, MAX(0, endColor.g + endColorVar.g * CCRANDOM_MINUS1_1() ) );
+	end.b = MIN(1, MAX(0, endColor.b + endColorVar.b * CCRANDOM_MINUS1_1() ) );
+	end.a = MIN(1, MAX(0, endColor.a + endColorVar.a * CCRANDOM_MINUS1_1() ) );
 	
 	particle->color = start;
 	particle->deltaColor.r = (end.r - start.r) / particle->timeToLive;
@@ -338,6 +339,7 @@
 		particle->deltaSize = 0;
 	else {
 		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
+		endS = MAX(0, endS);
 		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}
 	
@@ -446,6 +448,9 @@
 	{
 		tCCParticle *p = &particles[particleIdx];
 		
+		// life
+		p->timeToLive -= dt;
+
 		if( p->timeToLive > 0 ) {
 			
 			// Mode A: gravity, direction, tangential accel & radial accel
@@ -496,10 +501,7 @@
 			
 			// angle
 			p->rotation += (p->deltaRotation * dt);
-			
-			// life
-			p->timeToLive -= dt;
-			
+						
 			//
 			// update values in quad
 			//

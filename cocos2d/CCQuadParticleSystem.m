@@ -92,13 +92,13 @@
 	float maxT = [texture_ maxT];
 
 	for(int i=0; i<totalParticles; i++) {
-		// top-left vertex:
+		// bottom-left vertex:
 		quads[i].bl.texCoords.u = 0;
 		quads[i].bl.texCoords.v = 0;
-		// bottom-left vertex:
+		// bottom-right vertex:
 		quads[i].br.texCoords.u = maxS;
 		quads[i].br.texCoords.v = 0;
-		// top-right vertex:
+		// top-left vertex:
 		quads[i].tl.texCoords.u = 0;
 		quads[i].tl.texCoords.v = maxT;
 		// top-right vertex:
@@ -126,14 +126,6 @@
 	}
 }
 
-
-// XXX
-// XXX: All subclasses of ParticleSystem share this code
-// XXX: so some parts of this coded should be moved to the base class
-// XXX
-// XXX: BUT the change shall NOT DROP a single FPS
-// XXX:
-
 -(void) updateQuadWithParticle:(tCCParticle*)p position:(CGPoint)newPos;
 {				
 	// colors
@@ -148,8 +140,8 @@
 		float x1 = -size_2;
 		float y1 = -size_2;
 		
-		float x2 = x1 + p->size;
-		float y2 = y1 + p->size;
+		float x2 = size_2;
+		float y2 = size_2;
 		float x = newPos.x;
 		float y = newPos.y;
 		
@@ -165,14 +157,15 @@
 		float dx = x1 * cr - y2 * sr + x;
 		float dy = x1 * sr + y2 * cr + y;
 		
+		// bottom-left
 		quads[particleIdx].bl.vertices.x = ax;
 		quads[particleIdx].bl.vertices.y = ay;
 		
-		// bottom-left vertex:
+		// bottom-right vertex:
 		quads[particleIdx].br.vertices.x = bx;
 		quads[particleIdx].br.vertices.y = by;
 		
-		// top-right vertex:
+		// top-left vertex:
 		quads[particleIdx].tl.vertices.x = dx;
 		quads[particleIdx].tl.vertices.y = dy;
 		
@@ -180,15 +173,15 @@
 		quads[particleIdx].tr.vertices.x = cx;
 		quads[particleIdx].tr.vertices.y = cy;
 	} else {
-		// top-left vertex:
+		// bottom-left vertex:
 		quads[particleIdx].bl.vertices.x = newPos.x - size_2;
 		quads[particleIdx].bl.vertices.y = newPos.y - size_2;
 		
-		// bottom-left vertex:
+		// bottom-right vertex:
 		quads[particleIdx].br.vertices.x = newPos.x + size_2;
 		quads[particleIdx].br.vertices.y = newPos.y - size_2;
 		
-		// top-right vertex:
+		// top-left vertex:
 		quads[particleIdx].tl.vertices.x = newPos.x - size_2;
 		quads[particleIdx].tl.vertices.y = newPos.y + size_2;
 		
