@@ -126,8 +126,8 @@
 	}
 }
 
--(void) updateQuadWithParticle:(tCCParticle*)p position:(CGPoint)newPos;
-{				
+-(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
+{
 	// colors
 	quads[particleIdx].bl.colors = p->color;
 	quads[particleIdx].br.colors = p->color;

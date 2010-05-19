@@ -268,6 +268,11 @@
 #if CC_ENABLE_PROFILERS
 		_profilingTimer = [[CCProfiler timerWithName:@"particle system" andInstance:self] retain];
 #endif
+		
+		// Optimization: compile udpateParticle method
+		updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
+		updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
+
 		[self scheduleUpdate];
 		
 	}
@@ -436,13 +441,15 @@
 	
 	particleIdx = 0;
 	
-	CGPoint	absolutePosition;
-	if( positionType_ == kCCPositionTypeFree )
-		absolutePosition = [self convertToWorldSpace:CGPointZero];
 	
 #if CC_ENABLE_PROFILERS
 	CCProfilingBeginTimingBlock(_profilingTimer);
 #endif
+	
+
+	CGPoint absolutePosition = CGPointZero;
+	if( positionType_ == kCCPositionTypeFree )
+		absolutePosition = [self convertToWorldSpace:CGPointZero];
 	
 	while( particleIdx < particleCount )
 	{
@@ -479,14 +486,13 @@
 			}
 			
 			// Mode B: radius movement
-			else {
-				p->pos.x = - cosf(p->mode.B.angle) * p->mode.B.radius;
-				p->pos.y = - sinf(p->mode.B.angle) * p->mode.B.radius;
-				
-				// Update the angle of the particle from the sourcePosition and the radius.  This is only
-				// done of the particles are rotating
+			else {				
+				// Update the angle and radius of the particle.
 				p->mode.B.angle += p->mode.B.degreesPerSecond * dt;
 				p->mode.B.radius += p->mode.B.deltaRadius * dt;
+				
+				p->pos.x = - cosf(p->mode.B.angle) * p->mode.B.radius;
+				p->pos.y = - sinf(p->mode.B.angle) * p->mode.B.radius;
 			}
 			
 			// color
@@ -507,12 +513,13 @@
 			//
 			
 			CGPoint	newPos = p->pos;
+			
 			if( positionType_ == kCCPositionTypeFree ) {
 				newPos = ccpSub(absolutePosition, p->startPos);
 				newPos = ccpSub( p->pos, newPos);
 			}
 			
-			[self updateQuadWithParticle:p position:newPos];
+			updateParticleImp(self, updateParticleSel, p, newPos);
 			
 			// update particle counter
 			particleIdx++;
@@ -525,7 +532,7 @@
 			
 			if( particleCount == 0 && autoRemoveOnFinish_ ) {
 				[self unscheduleUpdate];
-				[[self parent] removeChild:self cleanup:YES];
+				[parent_ removeChild:self cleanup:YES];
 				return;
 			}
 		}
@@ -538,7 +545,7 @@
 	[self postStep];
 }
 
--(void) updateQuadWithParticle:(tCCParticle*)particle position:(CGPoint)position
+-(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos;
 {
 	// should be overriden
 }
