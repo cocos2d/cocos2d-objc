@@ -33,7 +33,7 @@
 //		http://love2d.org/
 //
 //
-// Mode "B" support, from 71 squared
+// Radius mode support, from 71 squared
 //		http://particledesigner.71squared.com/
 //
 // IMPORTANT: Particle Designer is supported by cocos2d, but

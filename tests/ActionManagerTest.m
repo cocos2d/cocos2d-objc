@@ -24,6 +24,7 @@ static NSString *transitions[] = {
 			@"LogicTest",
 			@"PauseTest",
 			@"RemoveTest",
+			@"Issue835",
 };
 
 Class nextAction()
@@ -241,7 +242,7 @@ Class restartAction()
 {
 	[self unschedule:_cmd];
 	CCNode *node = [self getChildByTag:kTagGrossini];
-	[[CCActionManager sharedManager] resumeAllActionsForTarget:node];
+	[[CCActionManager sharedManager] resumeTarget:node];
 }
 
 -(NSString *) title
@@ -298,6 +299,50 @@ Class restartAction()
 	return @"Should not crash. Testing issue #841";
 }
 @end
+
+#pragma mark -
+#pragma mark Issue835
+
+@implementation Issue835
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
+	[self addChild:grossini z:0 tag:kTagGrossini];
+	
+	[grossini setPosition:ccp(s.width/2, s.height/2)];
+
+	// An action should be scheduled before calling pause, otherwise pause won't pause a non-existang target
+	[grossini runAction:[CCScaleBy actionWithDuration:2 scale:2]];
+
+	[[CCActionManager sharedManager] pauseTarget: grossini];
+	[grossini runAction:[CCRotateBy actionWithDuration:2 angle:360]];
+	
+	[self schedule:@selector(resumeGrossini:) interval:3];
+}
+
+-(NSString *) title
+{
+	return @"Issue 835";
+}
+
+-(NSString*) subtitle
+{
+	return @"Grossini only rotate/scale in 3 seconds";
+}
+
+-(void) resumeGrossini:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	
+	id grossini = [self getChildByTag:kTagGrossini];
+	[[CCActionManager sharedManager] resumeTarget:grossini];
+}
+@end
+
 
 #pragma mark -
 #pragma mark Delegate

@@ -643,14 +643,14 @@
 }
 - (void) resumeSchedulerAndActions
 {
-	[[CCScheduler sharedScheduler] resumeAllSelectorsForTarget:self];
-	[[CCActionManager sharedManager] resumeAllActionsForTarget:self];
+	[[CCScheduler sharedScheduler] resumeTarget:self];
+	[[CCActionManager sharedManager] resumeTarget:self];
 }
 
 - (void) pauseSchedulerAndActions
 {
-	[[CCScheduler sharedScheduler] pauseAllSelectorsForTarget:self];
-	[[CCActionManager sharedManager] pauseAllActionsForTarget:self];
+	[[CCScheduler sharedScheduler] pauseTarget:self];
+	[[CCActionManager sharedManager] pauseTarget:self];
 }
 
 #pragma mark CCNode Transform

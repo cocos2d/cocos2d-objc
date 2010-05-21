@@ -202,7 +202,7 @@ Class restartTest()
 
 -(void) pause:(ccTime)dt
 {
-	[[CCScheduler sharedScheduler] pauseAllSelectorsForTarget:self];
+	[[CCScheduler sharedScheduler] pauseTarget:self];
 }
 @end
 

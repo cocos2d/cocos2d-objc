@@ -176,17 +176,19 @@ struct _hashUpdateEntry;
  */
 -(void) unscheduleAllSelectors;
 
-/** Pause all scheduled selectors for a given target.
- This also includes the "update" selector.
+/** Pauses the target.
+ All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
+ If the target is not present, nothing happens.
  @since v0.99.3
  */
--(void) pauseAllSelectorsForTarget:(id)target;
+-(void) pauseTarget:(id)target;
 
-/** Resumes all scheduled selectors for a given target.
- This also includes the "update" selector.
+/** Resumes the target.
+ The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
+ If the target is not present, nothing happens.
  @since v0.99.3
  */
--(void) resumeAllSelectorsForTarget:(id)target;
+-(void) resumeTarget:(id)target;
 
 
 /** schedules a Timer.
