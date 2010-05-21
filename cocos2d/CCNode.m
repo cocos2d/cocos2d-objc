@@ -471,8 +471,7 @@
 }
 
 -(void) transform
-{
-	
+{	
 	// transformations
 	
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -661,14 +660,18 @@
 		
 		transform_ = CGAffineTransformIdentity;
 		
-		if ( !isRelativeAnchorPoint_ )
+		if ( !isRelativeAnchorPoint_ && !CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 		
-		transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
-		transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
-		transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+		if( ! CGPointEqualToPoint(position_, CGPointZero) )
+			transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
+		if( rotation_ != 0 )
+			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
+		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
+			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
-		transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
+		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
+			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
 		
 		isTransformDirty_ = NO;
 	}

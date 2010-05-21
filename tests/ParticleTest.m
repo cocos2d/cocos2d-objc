@@ -1115,13 +1115,69 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCParticleSun node];
-	emitter.speed = 50;
-	emitter.angleVar = 0;
-
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:100];
 	[self addChild: emitter z:10];
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	id rot = [CCRotateBy actionWithDuration:3 angle:360];
+	// radius mode
+	emitter.emitterMode = kCCParticleModeRadius;
+	
+	// radius mode: 50 pixels from center
+	emitter.startRadius = 50;
+	emitter.startRadiusVar = 0;
+	emitter.endRadius = kCCParticleStartRadiusEqualToEndRadius;
+	emitter.endRadiusVar = 0;	// not used when start == end
+	
+	// radius mode: degrees per second
+	// 45 * 4 seconds of life = 180 degrees
+	emitter.rotatePerSecond = 0;
+	emitter.rotatePerSecondVar = 0;
+	
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 0;
+	
+	// emitter position
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	emitter.position = ccp( size.width/2, size.height/2);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 5;
+	emitter.lifeVar = 0;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 16;
+	emitter.startSizeVar = 0;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+
+	// additive
+	emitter.blendAdditive = NO;
+		
+	id rot = [CCRotateBy actionWithDuration:16 angle:360];
 	[emitter runAction: [CCRepeatForever actionWithAction:rot] ];
 	
 }
