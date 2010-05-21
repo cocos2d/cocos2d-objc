@@ -21,6 +21,8 @@
 @property (readwrite,retain) CCParticleSystem *emitter;
 
 -(NSString*) title;
+-(NSString*) subtitle;
+
 @end
 
 @interface DemoFirework : ParticleDemo
@@ -120,6 +122,10 @@
 @end
 
 @interface RadiusMode2 : ParticleDemo
+{}
+@end
+
+@interface Issue704 : ParticleDemo
 {}
 @end
 

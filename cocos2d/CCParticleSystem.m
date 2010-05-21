@@ -515,6 +515,8 @@
 			CGPoint	newPos = p->pos;
 			
 			if( positionType_ == kCCPositionTypeFree ) {
+				
+				// newPos = p->pos - (current abs position - start abs position)
 				newPos = ccpSub(absolutePosition, p->startPos);
 				newPos = ccpSub( p->pos, newPos);
 			}

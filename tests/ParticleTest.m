@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner7",
 		@"RadiusMode1",
 		@"RadiusMode2",
+		@"Issue704",
 };
 
 Class nextAction()
@@ -83,9 +84,12 @@ Class restartAction()
 		[self addChild:label z:100];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		CCLabel *tapScreen = [CCLabel labelWithString:@"Tap the Screen" fontName:@"Arial" fontSize:20];
-		[tapScreen setPosition: ccp(s.width/2, s.height-80)];
-		[self addChild:tapScreen z:100];
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:100];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}			
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -175,6 +179,10 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+-(NSString*) subtitle
+{
+	return @"Tap the screen";
 }
 
 -(void) toggleCallback: (id) sender
@@ -1093,6 +1101,39 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Radius Mode: Semi Circle";
+}
+@end
+
+#pragma mark -
+
+@implementation Issue704
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSun node];
+	emitter.speed = 50;
+	emitter.angleVar = 0;
+
+	[self addChild: emitter z:10];
+	
+	id rot = [CCRotateBy actionWithDuration:3 angle:360];
+	[emitter runAction: [CCRepeatForever actionWithAction:rot] ];
+	
+}
+
+-(NSString *) title
+{
+	return @"Issue 704. Free + Rot";
+}
+
+-(NSString*) subtitle
+{
+	return @"Emitted particles should not rotate";
 }
 @end
 
