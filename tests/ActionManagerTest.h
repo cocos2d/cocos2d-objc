@@ -37,3 +37,8 @@
 }
 @end
 
+@interface Issue835 : ActionManagerTest
+{
+}
+@end
+

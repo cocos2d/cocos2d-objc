@@ -1,4 +1,5 @@
 version 0.99.3 - XX-May-2010
+ . [FIX] ActionManager: Improved API, with better names (issue #835)
  . [FIX] Particle: Kill the particle if timeToLive < 0 before updating it.
 
 version 0.99.3-rc - 18-May-2010
@@ -11,7 +12,7 @@ version 0.99.3-rc - 18-May-2010
  . [FIX] Actions: CallFuncND can pass any void ptr, even 0 or 1.
  . [FIX] BitmapFontAtlas: using uthash instead of ccHashSet (easier to use)
  . [FIX] Grid: Fixed memory leak (issue #853)
- . [FIX] Menu: If items is disabled or invisible, touch is not consumed (issues #779, #866)
+ . [FIX] Menu: If items are disabled or invisible, touch is not consumed (issues #779, #866)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
  . [FIX] Particles: QuadParticle works with NPOT textures (issue #863)
  . [FIX] Scheduler: Improved performance (issue #492)
