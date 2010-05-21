@@ -450,13 +450,17 @@
 	CCProfilingBeginTimingBlock(_profilingTimer);
 #endif
 	
-
-	CGPoint currentPosition;
+	
+#if CC_PARTICLE_FREE_USES_TRANSFORM
 	CGAffineTransform	currentTransform;
-	if( positionType_ == kCCPositionTypeFree ) {
+	if( positionType_ == kCCPositionTypeFree )
+		currentTransform = [self nodeToWorldTransform];	
+#else
+	CGPoint currentPosition;
+	if( positionType_ == kCCPositionTypeFree )
 		currentPosition = [self convertToWorldSpace:CGPointZero];
-		currentTransform = [self nodeToWorldTransform];
-	}
+#endif // ! CC_PARTICLE_FREE_USES_TRANSFORM
+
 	
 	while( particleIdx < particleCount )
 	{
