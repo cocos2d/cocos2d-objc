@@ -446,7 +446,7 @@
 #endif
 	
 	
-	CGPoint currentPosition;
+	CGPoint currentPosition = CGPointZero;
 	if( positionType_ == kCCPositionTypeFree )
 		currentPosition = [self convertToWorldSpace:CGPointZero];
 	

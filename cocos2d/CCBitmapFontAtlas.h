@@ -38,7 +38,7 @@
 
 struct _KerningHashElement;
 
-/** bitmap font definition */
+/** @typedef bitmap font definition */
 typedef struct _bitmapFontDef {
 	//! ID of the character
 	unsigned int charID;
@@ -52,7 +52,7 @@ typedef struct _bitmapFontDef {
 	int xAdvance;
 } ccBitmapFontDef;
 
-/** bitmap font padding
+/** @typedef bitmap font padding
  @since v0.8.2
  */
 typedef struct _bitmapFontPadding {
@@ -68,7 +68,7 @@ typedef struct _bitmapFontPadding {
 
 enum {
 	// how many characters are supported
-	kBitmapFontAtlasMaxChars = 2048, //256,
+	kCCBitmapFontAtlasMaxChars = 2048, //256,
 };
 
 /** CCBitmapFontConfiguration has parsed configuration of the the .fnt file
@@ -79,13 +79,16 @@ enum {
 // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 @public
 	// The characters building up the font
-	ccBitmapFontDef	bitmapFontArray[kBitmapFontAtlasMaxChars];
+	ccBitmapFontDef	bitmapFontArray[kCCBitmapFontAtlasMaxChars];
 	
 	// FNTConfig: Common Height
 	NSUInteger		commonHeight;
 	
 	// Padding
 	ccBitmapFontPadding	padding;
+	
+	// atlas name
+	NSString		*atlasName;
 
 	// values for kerning
 	struct _KerningHashElement	*kerningDictionary;
@@ -132,13 +135,19 @@ enum {
 	// string to render
 	NSString		*string_;
 	
-	CCBitmapFontConfiguration	*configuration;
+	CCBitmapFontConfiguration	*configuration_;
 
 	// texture RGBA
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	BOOL opacityModifyRGB_;
 }
+
+/** Purges the cached data.
+ Removes from memory the cached configurations and the atlas name dictionary.
+ @since v0.99.3
+ */
++(void) purgeCachedData;
 
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;

@@ -748,7 +748,7 @@ Class restartAction()
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero
