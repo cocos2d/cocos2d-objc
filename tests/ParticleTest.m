@@ -233,8 +233,11 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [CCParticleFireworks node];
 	[background addChild: emitter z:10];
-	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+
+	// testing "alpha" blending in premultiplied images
+//	emitter.blendFunc = (ccBlendFunc) {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.blendAdditive = YES;
 	
 	[self setEmitterPosition];
 }

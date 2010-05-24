@@ -86,10 +86,7 @@
 
 -(void) draw
 {
-//	int blendSrc, blendDst;
-//	int colorMode;
-    
-    if (!particleIdx)
+    if (particleIdx==0)
         return;
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -186,7 +183,7 @@
 -(void) setEndSize:(float)size
 {
 	NSAssert( (size == kCCParticleStartSizeEqualToEndSize) ||
-			 ( size >= 0 && size <= CC_MAX_PARTICLE_SIZE), @"PointParticleSystem only supports -1 <= size <= 64");
+			 ( size >= 0 && size <= CC_MAX_PARTICLE_SIZE), @"PointParticleSystem only supports 0 <= size <= 64");
 	[super setEndSize:size];
 }
 @end

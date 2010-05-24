@@ -98,11 +98,21 @@
 /** array of frames */
 @property (nonatomic,readwrite,retain) NSMutableArray *frames;
 
+/** Creates a CCAnimation with a name
+ @since v0.99.3
+ */
++(id) animationWithName:(NSString*)name;
+
 /** Creates a CCAnimation with a name and delay between frames. */
 +(id) animationWithName:(NSString*)name delay:(float)delay;
 
 /** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
 +(id) animationWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames;
+
+/** Initializes a CCAnimation with a name
+ @since v0.99.3
+ */
+-(id) initWithName:(NSString*)name;
 
 /** Initializes a CCAnimation with a name and delay between frames. */
 -(id) initWithName:(NSString*)name delay:(float)delay;

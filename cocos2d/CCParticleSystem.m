@@ -205,7 +205,7 @@
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
 
-		if ( ! self.texture && textureData) {
+		if ( ! texture_ && textureData) {
 			
 			// if it fails, try to get it from the base64-gzipped data			
 			unsigned char *buffer = NULL;
@@ -356,13 +356,8 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 	
 	// position
-	if( positionType_ == kCCPositionTypeFree ) {
-#if CC_PARTICLE_FREE_USES_TRANSFORM
-		particle->startTransform = [self nodeToWorldTransform];
-#else
+	if( positionType_ == kCCPositionTypeFree )
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
-#endif // ! CC_PARTICLE_FREE_USES_TRANSFORM
-	}
 	
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );	
@@ -451,16 +446,9 @@
 #endif
 	
 	
-#if CC_PARTICLE_FREE_USES_TRANSFORM
-	CGAffineTransform	currentTransform;
-	if( positionType_ == kCCPositionTypeFree )
-		currentTransform = [self nodeToWorldTransform];	
-#else
 	CGPoint currentPosition;
 	if( positionType_ == kCCPositionTypeFree )
 		currentPosition = [self convertToWorldSpace:CGPointZero];
-#endif // ! CC_PARTICLE_FREE_USES_TRANSFORM
-
 	
 	while( particleIdx < particleCount )
 	{
@@ -523,20 +511,15 @@
 			// update values in quad
 			//
 			
-			CGPoint	newPos = p->pos;
+			CGPoint	newPos;
 			
 			if( positionType_ == kCCPositionTypeFree ) {
-
-#if CC_PARTICLE_FREE_USES_TRANSFORM
-				CGAffineTransform inverse = CGAffineTransformInvert( p->startTransform );
-				CGAffineTransform matrix = CGAffineTransformConcat( currentTransform, inverse );
-				CGPoint diff = CGPointApplyAffineTransform(CGPointZero, matrix);
-#else
 				CGPoint diff = ccpSub( currentPosition, p->startPos );
-#endif	// ! CC_PARTICLE_FREE_USES_TRANSFORM
-
 				newPos = ccpSub(p->pos, diff);
-			}
+				
+			} else
+				newPos = p->pos;
+
 			
 			updateParticleImp(self, updateParticleSel, p, newPos);
 			
@@ -582,7 +565,7 @@
 	texture_ = [texture retain];
 
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-	if( ! [texture hasPremultipliedAlpha] &&		
+	if( texture_ && ! [texture hasPremultipliedAlpha] &&		
 	   ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) ) {
 	
 		blendFunc_.src = GL_SRC_ALPHA;
