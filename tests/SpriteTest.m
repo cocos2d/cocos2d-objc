@@ -2985,10 +2985,10 @@ Class restartAction()
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
+// purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero

@@ -204,6 +204,13 @@ enum {
 	[self runCocos2d];
 }
 
+// purge memroy
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
+}
+
+
 #pragma mark -
 #pragma mark Init
 -(void) dealloc

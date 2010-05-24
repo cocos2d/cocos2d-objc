@@ -388,6 +388,14 @@ and when to execute the Scenes.
  */
 -(void) startAnimation;
 
+// Memory Helper
+
+/** Removes cached all cocos2d cached data.
+ It will purge the CCTextureCache, CCSpriteFrameCache, CCBitmapFont cache
+ @since v0.99.3
+ */
+-(void) purgeCachedData;
+ 
 
 // OpenGL Helper
 
