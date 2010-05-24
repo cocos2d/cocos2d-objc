@@ -103,6 +103,11 @@
  */
 +(id) animationWithName:(NSString*)name;
 
+/** Creates a CCAnimation with a name and frames
+ @since v0.99.3
+ */
++(id) animationWithName:(NSString*)name frames:(NSArray*)frames;
+
 /** Creates a CCAnimation with a name and delay between frames. */
 +(id) animationWithName:(NSString*)name delay:(float)delay;
 
@@ -113,6 +118,11 @@
  @since v0.99.3
  */
 -(id) initWithName:(NSString*)name;
+
+/** Initializes a CCAnimation with a name and frames
+ @since v0.99.3
+ */
+-(id) initWithName:(NSString*)name frames:(NSArray*)frames;
 
 /** Initializes a CCAnimation with a name and delay between frames. */
 -(id) initWithName:(NSString*)name delay:(float)delay;

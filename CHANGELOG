@@ -1,4 +1,5 @@
 version 0.99.3 - XX-May-2010
+ . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
  . [FIX] ActionManager: Improved API, with better names (issue #835)
  . [FIX] Particle: Kill the particle if timeToLive < 0 before updating it.
 
