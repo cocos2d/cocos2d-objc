@@ -1515,8 +1515,9 @@ Class restartAction()
 			[animFrames addObject:frame];
 		}
 
-		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+		// 14 frames * 0.2sec = 2,8 seconds
+		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 
 		// to test issue #732, uncomment the following line
 //		sprite.flipX = YES;
@@ -1543,9 +1544,10 @@ Class restartAction()
 		
 		// append frames from another sheet
 		[moreFrames addObjectsFromArray:animFrames];
-		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f frames:moreFrames];
+		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" frames:moreFrames];
 		
-		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animMixed restoreOriginalFrame:NO]]];
+		// 32 frames * 0.2 seconds = 6.4 seconds
+		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:6.4f animation:animMixed restoreOriginalFrame:NO]]];
 		
 		// to test issue #732, uncomment the following line
 //		sprite2.flipX = YES;
@@ -1612,8 +1614,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];			
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];			
 			[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:10 angle:360]]];
 
 			
@@ -1685,8 +1687,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 			[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:10 angle:360]]];
 			
 			[spritesheet addChild:sprite z:i];
@@ -1754,8 +1756,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];			
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];			
 			
 			id scale = [CCScaleBy actionWithDuration:2 scale:2];
 			id scale_back = [scale reverse];
@@ -1830,8 +1832,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 
 			id scale = [CCScaleBy actionWithDuration:2 scale:2];
 			id scale_back = [scale reverse];
