@@ -78,12 +78,7 @@ enum {
 typedef struct sCCParticle
 {
 	CGPoint				pos;
-#if CC_PARTICLE_FREE_USES_TRANSFORM
-	CGAffineTransform	startTransform;
-#else
 	CGPoint				startPos;
-#endif // ! CC_PARTICLE_FREE_USES_TRANSFORM
-
 
 	ccColor4F	color;
 	ccColor4F	deltaColor;
