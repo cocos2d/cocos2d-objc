@@ -75,30 +75,45 @@
 {
 	rotation_ = newRotation;
 	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif
 }
 
 -(void) setScaleX: (float)newScaleX
 {
 	scaleX_ = newScaleX;
 	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
 }
 
 -(void) setScaleY: (float)newScaleY
 {
 	scaleY_ = newScaleY;
 	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
 }
 
 -(void) setPosition: (CGPoint)newPosition
 {
 	position_ = newPosition;
 	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
 }
 
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
 {
 	isRelativeAnchorPoint_ = newValue;
 	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -107,6 +122,9 @@
 		anchorPoint_ = point;
 		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		isTransformGLDirty_ = YES;
+#endif		
 	}
 }
 -(CGPoint) anchorPoint
@@ -120,6 +138,9 @@
 		contentSize_ = size;
 		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		isTransformGLDirty_ = YES;
+#endif		
 	}
 }
 -(CGSize) contentSize
@@ -143,6 +164,9 @@
 {
 	scaleX_ = scaleY_ = s;
 	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
 }
 
 #pragma mark CCNode - Init & cleanup
@@ -169,7 +193,9 @@
 		isRelativeAnchorPoint_ = YES; 
 		
 		isTransformDirty_ = isInverseDirty_ = YES;
-		
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		isTransformGLDirty_ = YES;
+#endif
 		
 		vertexZ_ = 0;
 
@@ -477,10 +503,13 @@
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	// BEGIN alternative -- using cached transform
 	//
-	static GLfloat m[16];
-	CGAffineTransform t = [self nodeToParentTransform];
-	CGAffineToGL(&t, m);
-	glMultMatrixf(m);
+	if( isTransformGLDirty_ ) {
+		CGAffineTransform t = [self nodeToParentTransform];
+		CGAffineToGL(&t, transformGL_);
+		isTransformGLDirty_ = NO;
+	}
+
+	glMultMatrixf(transformGL_);
 	if( vertexZ_ )
 		glTranslatef(0, 0, vertexZ_);
 

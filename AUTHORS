@@ -213,6 +213,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		performance improvement on particles
 		TextureAtlas uses VBO instead of vertex array list patch
 		Director: FPSLabel uses RGBA4444 texture (patch)
+		Node: Added cached GL matrix (patch)
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
