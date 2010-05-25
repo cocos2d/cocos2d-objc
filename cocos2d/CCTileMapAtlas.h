@@ -33,14 +33,14 @@
  The tiles must be in a .PNG format while the map must be a .TGA file.
  
  For more information regarding the format, please see this post:
- http://blog.sapusmedia.com/2008/12/how-to-use-tilemap-editor-for-cocos2d.html
+ http://www.cocos2d-iphone.org/archives/27
  
  All features from CCAtlasNode are valid in CCTileMapAtlas
  
  IMPORTANT:
  This class is deprecated. It is maintained for compatibility reasons only.
  You SHOULD not use this class.
- Instead, use the newer TMX file format: TMXTiledMap
+ Instead, use the newer TMX file format: CCTMXTiledMap
  */
 @interface CCTileMapAtlas : CCAtlasNode {
 	
