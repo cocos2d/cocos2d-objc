@@ -12178,7 +12178,10 @@
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "COCOS2D_DEBUG=2";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"COCOS2D_DEBUG=2",
+				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THUMB_SUPPORT = YES;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
@@ -12194,7 +12197,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphonesimulator3.1;
+				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -12224,7 +12227,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphonesimulator3.1;
+				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
 		};

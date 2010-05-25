@@ -121,6 +121,9 @@ enum {
 	
 	// transform
 	CGAffineTransform transform_, inverse_;
+#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	GLfloat	transformGL_[16];
+#endif
 
 	// openGL real Z vertex
 	float vertexZ_;
@@ -152,6 +155,9 @@ enum {
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
+#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	BOOL isTransformGLDirty_:1;
+#endif
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
