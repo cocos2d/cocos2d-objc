@@ -119,7 +119,9 @@ typedef struct _KerningHashElement
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Kernings:%d | Image = %@>", [self class], self, HASH_COUNT(kerningDictionary), atlasName];
+	return [NSString stringWithFormat:@"<%@ = %08X | Kernings:%d | Image = %@>", [self class], self,
+			HASH_COUNT(kerningDictionary),
+			[[atlasName pathComponents] lastObject] ];
 }
 
 
@@ -440,8 +442,14 @@ typedef struct _KerningHashElement
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {	
+	
+	[configuration_ release]; // allow re-init
+
 	configuration_ = FNTConfigLoadFile(fntFile);
 	[configuration_ retain];
+
+	NSAssert( configuration_, @"Error creating config for BitmapFontAtlas");
+
 	
 	if ((self=[super initWithFile:configuration_->atlasName capacity:[theString length]])) {
 
