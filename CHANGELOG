@@ -1,4 +1,4 @@
-version 0.99.3 - XX-May-2010
+version 0.99.3 - 25-May-2010
  . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
  . [NEW] Director: added 'purgeCachedData' method. Should be called on memory-warning event.
  . [FIX] ActionManager: Improved API, with better names (issue #835)
