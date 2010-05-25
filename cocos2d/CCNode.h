@@ -30,7 +30,7 @@
 #import "ccTypes.h"
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
-
+#import "ccConfig.h"
 
 enum {
 	kCCNodeTagInvalid = -1,

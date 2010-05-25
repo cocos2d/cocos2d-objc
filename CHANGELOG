@@ -1,11 +1,12 @@
 version 0.99.3 - XX-May-2010
  . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
- . [NEW] Director: added 'purgeCachedData' method
+ . [NEW] Director: added 'purgeCachedData' method. Should be called on memory-warning event.
  . [FIX] ActionManager: Improved API, with better names (issue #835)
  . [FIX] Action CCCallFunc: supports class methods (issue #868)
  . [FIX] BitmapFontAtlas: Improved loading times (issue #833)
  . [FIX] Node: Improved performance when rendering at the cost of 16 bytes more per node (issue #830)
  . [FIX] Particle: Kill the particle if timeToLive < 0 before updating it.
+ . [FIX] Templates: Define DEBUG in Debug configurations
 
 version 0.99.3-rc - 18-May-2010
  . [NEW] License: Using MIT license

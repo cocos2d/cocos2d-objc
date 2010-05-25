@@ -53,6 +53,6 @@
 /** changes the string to render
  * @warning Changing the string is as expensive as creating a new CCLabel. To obtain better performance use CCLabelAtlas
  */
-- (void) setString:(NSString*)string;
+- (void) setString:(NSString*)str;
 
 @end
