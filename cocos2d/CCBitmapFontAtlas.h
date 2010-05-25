@@ -38,7 +38,9 @@
 
 struct _KerningHashElement;
 
-/** @typedef bitmap font definition */
+/** @struct ccBitmapFontDef
+ bitmap font definition
+ */
 typedef struct _bitmapFontDef {
 	//! ID of the character
 	unsigned int charID;
@@ -52,7 +54,8 @@ typedef struct _bitmapFontDef {
 	int xAdvance;
 } ccBitmapFontDef;
 
-/** @typedef bitmap font padding
+/** @struct ccBitmapFontPadding
+ bitmap font padding
  @since v0.8.2
  */
 typedef struct _bitmapFontPadding {

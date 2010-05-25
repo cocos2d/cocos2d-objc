@@ -59,7 +59,9 @@ enum {
 };
 
 
-/** @typedef tCCPositionType possible types of particle positions */
+/** @typedef tCCPositionType
+ possible types of particle positions
+ */
 typedef enum {
 	/** If the emitter is repositioned, the living particles won't be repositioned */
 	kCCPositionTypeFree,
@@ -73,10 +75,10 @@ enum {
 	kPositionTypeGrouped = kCCPositionTypeGrouped,
 }; 
 
-/** @typedef tCCParticle Structure that contains the values of each particle
+/** @struct tCCParticle
+ Structure that contains the values of each particle
  */
-typedef struct sCCParticle
-{
+typedef struct sCCParticle {
 	CGPoint				pos;
 	CGPoint				startPos;
 
@@ -108,7 +110,7 @@ typedef struct sCCParticle
 		} B;
 	} mode;
 
-} tCCParticle;
+}tCCParticle;
 
 typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 
