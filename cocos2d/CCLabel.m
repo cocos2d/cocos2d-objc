@@ -50,7 +50,7 @@
 }
 
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 
@@ -59,12 +59,12 @@
 		fontName_ = [name retain];
 		fontSize_ = size;
 		
-		[self setString:string];
+		[self setString:str];
 	}
 	return self;
 }
 
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 		
@@ -72,18 +72,18 @@
 		fontName_ = [name retain];
 		fontSize_ = size;
 		
-		[self setString:string];
+		[self setString:str];
 	}
 	return self;
 }
 
-- (void) setString:(NSString*)string
+- (void) setString:(NSString*)str
 {
 	CCTexture2D *tex;
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
-		tex = [[CCTexture2D alloc] initWithString:string fontName:fontName_ fontSize:fontSize_];
+		tex = [[CCTexture2D alloc] initWithString:str fontName:fontName_ fontSize:fontSize_];
 	else
-		tex = [[CCTexture2D alloc] initWithString:string dimensions:dimensions_ alignment:alignment_ fontName:fontName_ fontSize:fontSize_];
+		tex = [[CCTexture2D alloc] initWithString:str dimensions:dimensions_ alignment:alignment_ fontName:fontName_ fontSize:fontSize_];
 
 
 	[self setTexture:tex];
