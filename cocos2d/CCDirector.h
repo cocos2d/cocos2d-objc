@@ -31,7 +31,9 @@
 // OpenGL related
 #import "Support/EAGLView.h"
 
-/** @typedef tPixelFormat Possible Pixel Formats for the EAGLView */
+/** @typedef tPixelFormat
+ Possible Pixel Formats for the EAGLView
+ */
 typedef enum {
 	/** RGB565 pixel format. No alpha. 16-bit. (Default) */
 	kCCPixelFormatRGB565,
@@ -47,7 +49,8 @@ typedef enum {
 	kRGBA8 = kCCPixelFormatRGBA8888,
 } tPixelFormat;
 
-/** @typedef tDepthBufferFormat Possible DepthBuffer Formats for the EAGLView.
+/** @typedef tDepthBufferFormat
+ Possible DepthBuffer Formats for the EAGLView.
  Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
  */
 typedef enum {
@@ -63,7 +66,9 @@ typedef enum {
 	kDepthBuffer24 = kCCDepthBuffer24,
 } tDepthBufferFormat;
 
-/** @typedef ccDirectorProjection Possible OpenGL projections used by director */
+/** @typedef ccDirectorProjection
+ Possible OpenGL projections used by director
+ */
 typedef enum {
 	/// sets a 2D projection (orthogonal projection)
 	kCCDirectorProjection2D,
@@ -84,7 +89,8 @@ typedef enum {
 
 } ccDirectorProjection;
 
-/** @typedef ccDirectorType Possible Director Types.
+/** @typedef ccDirectorType
+ Possible Director Types.
  @since v0.8.2
  */
 typedef enum {
@@ -139,7 +145,9 @@ typedef enum {
 
 } ccDirectorType;
 
-/** @typedef ccDeviceOrientation Possible device orientations */
+/** @typedef ccDeviceOrientation
+ Possible device orientations
+ */
 typedef enum {
 	/// Device oriented vertically, home button on the bottom
 	kCCDeviceOrientationPortrait = UIDeviceOrientationPortrait,	

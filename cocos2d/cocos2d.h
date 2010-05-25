@@ -38,7 +38,7 @@
  */
 
 // 0x00 HI ME LO
-// 00   00 99 02
+// 00   00 99 03
 #define COCOS2D_VERSION 0x00009903
 
 //
