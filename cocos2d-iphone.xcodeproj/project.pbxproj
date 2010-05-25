@@ -9900,7 +9900,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dTestBed;
-				SDKROOT = iphoneos4.0;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/Tests/ external/Box2d";
 			};
 			name = Debug;
@@ -9928,7 +9927,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dTestBed;
-				SDKROOT = iphoneos4.0;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/Tests/ external/Box2d";
 				ZERO_LINK = NO;
 			};
@@ -12196,7 +12194,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphonesimulator3.1;
 			};
 			name = Debug;
 		};
@@ -12226,7 +12224,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphonesimulator3.1;
 			};
 			name = Release;
 		};
