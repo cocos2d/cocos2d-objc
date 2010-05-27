@@ -28,7 +28,9 @@ static NSString *transitions[] = {
 		@"DemoRotFlower",
 		@"DemoModernArt",
 		@"DemoRing",
+
 		@"ParallaxParticle",
+
 		@"ParticleDesigner1",
 		@"ParticleDesigner2",
 		@"ParticleDesigner3",
@@ -36,6 +38,10 @@ static NSString *transitions[] = {
 		@"ParticleDesigner5",
 		@"ParticleDesigner6",
 		@"ParticleDesigner7",
+		@"ParticleDesigner8",
+		@"ParticleDesigner9",
+		@"ParticleDesigner10",
+
 		@"RadiusMode1",
 		@"RadiusMode2",
 		@"Issue704",
@@ -941,6 +947,87 @@ Class restartAction()
 @end
 
 #pragma mark -
+
+@implementation ParticleDesigner8
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Flower.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Flower";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner9
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Spiral.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Blur Spiral";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner10
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Galaxy.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Galaxy";
+}
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+@end
+
+
+#pragma mark -
+
 
 @implementation RadiusMode1
 -(void) onEnter
