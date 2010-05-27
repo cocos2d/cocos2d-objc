@@ -117,6 +117,18 @@
 {}
 @end
 
+@interface ParticleDesigner8 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner9 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner10 : ParticleDemo
+{}
+@end
+
 @interface RadiusMode1 : ParticleDemo
 {}
 @end

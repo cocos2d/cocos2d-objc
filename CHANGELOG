@@ -1,6 +1,7 @@
 version 0.99.4-rc - XX-Jun-2010
 . [NEW] Particle: QuadParticle supports subrects (issue #870)
-. [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #873)
+. [FIX] Particle: Added support for ParticleDesigner 1.2
+. [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
 
 version 0.99.3 - 25-May-2010
  . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
