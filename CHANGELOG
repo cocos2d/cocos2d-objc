@@ -1,10 +1,14 @@
+version 0.99.4-rc - XX-Jun-2010
+. [NEW] Particle: QuadParticle supports subrects (issue #870)
+. [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #873)
+
 version 0.99.3 - 25-May-2010
  . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
  . [NEW] Director: added 'purgeCachedData' method. Should be called on memory-warning event.
  . [FIX] ActionManager: Improved API, with better names (issue #835)
  . [FIX] Action CCCallFunc: supports class methods (issue #868)
  . [FIX] BitmapFontAtlas: Improved loading times (issue #833)
- . [FIX] Node: Improved performance when rendering at the cost of 16 bytes more per node (issue #830)
+ . [FIX] Node: Improved performance when rendering at the cost of 64 bytes more per node (issue #830)
  . [FIX] Particle: Kill the particle if timeToLive < 0 before updating it.
  . [FIX] Templates: Define DEBUG in Debug configurations
 

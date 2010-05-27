@@ -95,6 +95,8 @@
 {
 	NSString *path = [CCFileUtils fullPathFromRelativePath:plistFile];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+	
+	NSAssert( dict != nil, @"Particles: file not found");
 	return [self initWithDictionary:dict];
 }
 

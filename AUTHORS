@@ -155,7 +155,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMX suports 1 tileset per layer patch
 	* jszatmary:
 		QuadParticleSystem works with NPOT textures. patch.
-		Menu items are not consumed is items are not enabled
+		QuadParticleSystem works with subrects. patch.
+		Menu items are not consumed if items are not enabled
 	* jtbowden
 		RotateTo uses min distance patch
 	* kasatani:
