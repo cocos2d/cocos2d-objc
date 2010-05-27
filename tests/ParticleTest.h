@@ -129,4 +129,14 @@
 {}
 @end
 
+@interface Issue872 : ParticleDemo
+{}
+@end
+
+@interface Issue870 : ParticleDemo
+{
+	int index;
+}
+@end
+
 

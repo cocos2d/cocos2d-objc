@@ -39,6 +39,8 @@ static NSString *transitions[] = {
 		@"RadiusMode1",
 		@"RadiusMode2",
 		@"Issue704",
+		@"Issue872",
+		@"Issue870",
 };
 
 Class nextAction()
@@ -1193,6 +1195,75 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"Emitted particles should not rotate";
+}
+@end
+
+#pragma mark -
+
+@implementation Issue872
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	emitter = [[CCQuadParticleSystem alloc] initWithFile:@"Particles/Upsidedown.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"Issue 872. UpsideDown";
+}
+
+-(NSString*) subtitle
+{
+	return @"Particles should NOT be Upside Down. M should appear, not W.";
+}
+@end
+
+#pragma mark -
+
+@implementation Issue870
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CCQuadParticleSystem *system = [[CCQuadParticleSystem alloc] initWithFile:@"Particles/SpinningPeas.plist"];
+	
+	[system setTexture: [[CCTextureCache sharedTextureCache] addImage:@"particles.png"] withRect:CGRectMake(0,0,32,32)];
+	[self addChild: system z:10];
+	
+	emitter = system;
+	
+	index = 0;
+	
+	[self schedule:@selector(updateQuads:) interval:2];
+}
+
+-(void) updateQuads:(ccTime)dt
+{
+	index = (index + 1) % 4;
+	CGRect rect = CGRectMake(index*32, 0,32,32);
+	
+	CCQuadParticleSystem *system = (CCQuadParticleSystem*) emitter;
+	[system setTexture:[emitter texture] withRect:rect];
+}
+
+-(NSString *) title
+{
+	return @"Issue 870. SubRect";
+}
+
+-(NSString*) subtitle
+{
+	return @"Every 2 seconds the particle should change";
 }
 @end
 
