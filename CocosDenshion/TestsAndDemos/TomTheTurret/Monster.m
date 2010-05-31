@@ -28,7 +28,7 @@
         monster.minMoveDuration = 4;
         monster.maxMoveDuration = 7;
         monster.hitEffectSoundId = SND_ID_MALE_HIT_EFFECT;
-        monster.hitEffectGain = 1.0;
+        monster.hitEffectGain = 1.0f;
     } else if (monsterType == MonsterTypeFastAndWeak) {
         monster = [[[Monster alloc] initWithSpriteFrameName:@"Level_person1.png"] autorelease];
         monster.hp = 2;
@@ -36,7 +36,7 @@
         monster.minMoveDuration = 3;
         monster.maxMoveDuration = 6;
         monster.hitEffectSoundId = SND_ID_FEMALE_HIT_EFFECT;
-        monster.hitEffectGain = 0.25;
+        monster.hitEffectGain = 0.25f;
     } else if (monsterType == MonsterTypeBoss) {
         monster = [[[Monster alloc] initWithSpriteFrameName:@"Level_scientist.png"] autorelease];
         monster.hp = 50;
@@ -44,7 +44,7 @@
         monster.minMoveDuration = 6;
         monster.maxMoveDuration = 9;
         monster.hitEffectSoundId = SND_ID_MALE_HIT_EFFECT;
-        monster.hitEffectGain = 1.0;
+        monster.hitEffectGain = 1.0f;
     }
     return monster;
 }

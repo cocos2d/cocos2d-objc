@@ -39,7 +39,7 @@ BOOL fadingOut;
 		sourceFader = [[CDSoundSourceFader alloc] init:sound1 interpolationType:kIT_SCurve startVal:1.0f endVal:0.0f];
 		[sourceFader setStopTargetWhenComplete:YES];
 		//Create a property modifier action to wrap the fader 
-		faderAction = [CDXPropertyModifierAction actionWithDuration:1.0 modifier:sourceFader];
+		faderAction = [CDXPropertyModifierAction actionWithDuration:1.0f modifier:sourceFader];
 		[faderAction retain];
 		return self;
 	} 
@@ -89,7 +89,7 @@ BOOL fadingOut;
 	sourceFader.endValue = 0.0f;
 	sourceFader.stopTargetWhenComplete = YES;
 	//Re-initialise the fader action, if you don't do this then the elapsed time won't be reset
-	[faderAction initWithDuration:1.0 modifier:sourceFader];
+	[faderAction initWithDuration:1.0f modifier:sourceFader];
 	//Now just run our action.
 	[actionManager addAction:faderAction target:sound1 paused:NO];
 }	
@@ -105,7 +105,7 @@ BOOL fadingOut;
 	sound2.looping = YES;
 	sound2.gain = 0.0f;
 	sound2.play;
-	[CDXPropertyModifierAction fadeSoundEffect:2.0 finalVolume:1.0 curveType:kIT_SCurve shouldStop:YES effect:sound2];
+	[CDXPropertyModifierAction fadeSoundEffect:2.0f finalVolume:1.0f curveType:kIT_SCurve shouldStop:YES effect:sound2];
 }	
 
 /** 
@@ -118,12 +118,12 @@ BOOL fadingOut;
 	[[CCActionManager sharedManager] removeAllActionsFromTarget:sound3];
 	if (!fadingOut) {
 		//Fade it out
-		[CDXPropertyModifierAction fadeSoundEffect:1.0 finalVolume:0.0 curveType:kIT_Linear shouldStop:YES effect:sound3];
+		[CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:0.0f curveType:kIT_Linear shouldStop:YES effect:sound3];
 	} else {
 		//Fade it in
 		sound3.looping = YES;
 		sound3.play;
-		[CDXPropertyModifierAction fadeSoundEffect:1.0 finalVolume:1.0 curveType:kIT_Linear shouldStop:NO effect:sound3];
+		[CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:1.0f curveType:kIT_Linear shouldStop:NO effect:sound3];
 	}
 	fadingOut = !fadingOut;
 }	
@@ -137,9 +137,10 @@ BOOL fadingOut;
 	CDLOG(@">>Test four");
 	[sae playEffect:@"dp1.caf" pitch:0.5f pan:0.0f gain:1.0f];
 	//Test locking
-	float pitch = 2.0;
+	float pitch = 2.0f;
 	for (int i = 0; i < 32; i++) {
-		ALuint played = [sae playEffect:@"dp4.caf" pitch:pitch pan:0.0f gain:0.1f];
+//		ALuint played = 
+		[sae playEffect:@"dp4.caf" pitch:pitch pan:0.0f gain:0.1f];
 		//CDLOG(@"-->Played %i",played);
 		pitch -= 1.5f/32.0f;
 	}
@@ -156,7 +157,7 @@ BOOL fadingOut;
 		[sae rewindBackgroundMusic];
 		[sae playBackgroundMusic:@"bgm.mp3"];
 	} else {
-		[CDXPropertyModifierAction fadeBackgroundMusic:2.0 finalVolume:0.0 curveType:kIT_Exponential shouldStop:YES];
+		[CDXPropertyModifierAction fadeBackgroundMusic:2.0f finalVolume:0.0f curveType:kIT_Exponential shouldStop:YES];
 	}	
 }
 
@@ -169,10 +170,10 @@ BOOL fadingOut;
 	CDLOG(@">>Test six");
 	if (sae.effectsVolume < 0.5f) {
 		//Fade in
-		[CDXPropertyModifierAction fadeSoundEffects:2.0 finalVolume:1.0 curveType:kIT_Linear shouldStop:NO];
+		[CDXPropertyModifierAction fadeSoundEffects:2.0f finalVolume:1.0f curveType:kIT_Linear shouldStop:NO];
 	} else {
 		//Fade out
-		[CDXPropertyModifierAction fadeSoundEffects:2.0 finalVolume:0.0 curveType:kIT_Linear shouldStop:NO];
+		[CDXPropertyModifierAction fadeSoundEffects:2.0f finalVolume:0.0f curveType:kIT_Linear shouldStop:NO];
 	}	
 }	
 

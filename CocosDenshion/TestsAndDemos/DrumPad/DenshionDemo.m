@@ -257,7 +257,8 @@ CDSoundSource *toneSource;
 			if ((touchedPads & (1 << 2)) != 0) {
 				//Pad 3 touched - play a one shot hat sound in the drum voices channel group with normal pitch and pan and the
 				//gain controlled by the slider
-				ALuint sourceId = [soundEngine playSound:SND_ID_STAB sourceGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
+//				ALuint sourceId = 
+				[soundEngine playSound:SND_ID_STAB sourceGroupId:CGROUP_FX_VOICES pitch:1.0f pan:((sliderValue * 2.0f) - 1.0f) gain:1.0f loop:NO];
 				flashIndex[2] = 0;
 				//[CDXFaderAction fadeSoundEffect:0.2f finalVolume:0.0f faderCurve:kFC_ExponentialFade sourceId:sourceId shouldStop:YES];
 			}

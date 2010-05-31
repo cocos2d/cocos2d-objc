@@ -1,7 +1,6 @@
 // @see header
 #import "AudioVisualization.h"
 #import "SimpleAudioEngine.h"
-#import "CGPointExtension+More.h"
 
 @implementation AudioVisualization
 static AudioVisualization *sharedAV = nil;
@@ -34,7 +33,9 @@ static AudioVisualization *sharedAV = nil;
 		
 		avAvgPowerLevelSel_ = @selector(avAvgPowerLevelDidChange:channel:);
 		avPeakPowerLevelSel_ = @selector(avPeakPowerLevelDidChange:channel:);
-		[[CCScheduler sharedScheduler] scheduleTimer:beatTimer_ = [CCTimer timerWithTarget:self selector:@selector(tick:)]];
+
+		[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 paused:NO];
+
 		[SimpleAudioEngine sharedEngine];
 		if([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying]){
 			
@@ -53,16 +54,14 @@ static AudioVisualization *sharedAV = nil;
 	if(filteredAverage_)
 		free(filteredAverage_);
 	[delegates_ release];
-	[[CCScheduler sharedScheduler]unscheduleTimer:beatTimer_];
+	[[CCScheduler sharedScheduler] unscheduleSelector:@selector(tick:) forTarget:self];
 	[super dealloc];
 }
 
 -(void)setMeteringInterval:(float) seconds
 {
-	if(beatTimer_){
-		[[CCScheduler sharedScheduler]unscheduleTimer:beatTimer_];
-	}
-	[[CCScheduler sharedScheduler] scheduleTimer:beatTimer_ = [CCTimer timerWithTarget:self selector:@selector(tick:) interval:seconds]];
+	[[CCScheduler sharedScheduler] unscheduleSelector:@selector(tick:) forTarget:self];
+	[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:seconds paused:NO];
 }
 
 -(void)tick:(ccTime) dt
@@ -76,16 +75,16 @@ static AudioVisualization *sharedAV = nil;
 			peakPowerForChannel = pow(10, (0.05 * [audioPlayer_ peakPowerForChannel:i]));
 			avgPowerForChannel = pow(10, (0.05 * [audioPlayer_ averagePowerForChannel:i]));
 			
-			filteredPeak_[i] = filterSmooth_ * peakPowerForChannel + (1.0 - filterSmooth_) * filteredPeak_[i];
-			filteredAverage_[i] = filterSmooth_ * avgPowerForChannel + (1.0 - filterSmooth_) * filteredAverage_[i];
+			filteredPeak_[i] = filterSmooth_ * peakPowerForChannel + (1.0f - filterSmooth_) * filteredPeak_[i];
+			filteredAverage_[i] = filterSmooth_ * avgPowerForChannel + (1.0f - filterSmooth_) * filteredAverage_[i];
 		}
 		
 		for(NSDictionary *delegate in delegates_){
 			if ([[delegate objectForKey:@"delegate"]respondsToSelector:avPeakPowerLevelSel_]) {
-				[[delegate objectForKey:@"delegate"]avPeakPowerLevelDidChange:filteredPeak_[[[delegate objectForKey:@"channel"] shortValue]] channel:[[delegate objectForKey:@"channel"] shortValue]];
+				[[delegate objectForKey:@"delegate"]avPeakPowerLevelDidChange:(float)filteredPeak_[[[delegate objectForKey:@"channel"] shortValue]] channel:[[delegate objectForKey:@"channel"] shortValue]];
 			}
 			if ([[delegate objectForKey:@"delegate"]respondsToSelector:avAvgPowerLevelSel_]) {
-				[[delegate objectForKey:@"delegate"]avAvgPowerLevelDidChange:filteredAverage_[[[delegate objectForKey:@"channel"] shortValue]] channel:[[delegate objectForKey:@"channel"] shortValue]];
+				[[delegate objectForKey:@"delegate"]avAvgPowerLevelDidChange:(float)filteredAverage_[[[delegate objectForKey:@"channel"] shortValue]] channel:[[delegate objectForKey:@"channel"] shortValue]];
 			}
 		}
 	}
