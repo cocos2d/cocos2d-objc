@@ -107,8 +107,8 @@
     // Animate the "tap to continue" so user notices...
     [_tapToCont runAction:[CCRepeatForever actionWithAction:
                            [CCSequence actions:
-                            [CCFadeOut actionWithDuration:1.0],
-                            [CCFadeIn actionWithDuration:1.0],
+                            [CCFadeOut actionWithDuration:1.0f],
+                            [CCFadeIn actionWithDuration:1.0f],
                             nil]]];
     
 }

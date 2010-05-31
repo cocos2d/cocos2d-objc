@@ -109,14 +109,14 @@ SimpleAudioEngine *soundEngine;
     [_player runAction:[CCRepeatForever actionWithAction:
                      [CCSequence actions:
                       [CCAnimate actionWithAnimation:blinkAnimation restoreOriginalFrame:NO],
-                      [CCDelayTime actionWithDuration:2.5],
+                      [CCDelayTime actionWithDuration:2.5f],
                       nil]]];
     
 
 	
 	// Schedule loops
     [self schedule:@selector(update:)];
-    [self schedule:@selector(gameLogic:) interval:0.1];
+    [self schedule:@selector(gameLogic:) interval:0.1f];
     
 }
 
@@ -149,9 +149,9 @@ SimpleAudioEngine *soundEngine;
             
             // Play the hit sound effect
 			if (monster.hitEffectSoundId == SND_ID_FEMALE_HIT_EFFECT) {
-				[soundEngine playEffect:@"femaleHit.wav" pitch:1.0 pan:0.0 gain:monster.hitEffectGain];
+				[soundEngine playEffect:@"femaleHit.wav" pitch:1.0f pan:0.0f gain:monster.hitEffectGain];
             } else {
-				[soundEngine playEffect:@"maleHit.wav"  pitch:1.0 pan:0.0 gain:monster.hitEffectGain];
+				[soundEngine playEffect:@"maleHit.wav"  pitch:1.0f pan:0.0f gain:monster.hitEffectGain];
 			}	
             // Remove the monster if it's dead
             if (monster.hp <= 0) {
@@ -194,7 +194,7 @@ SimpleAudioEngine *soundEngine;
 	// Create the actions
     static int X_OFFSET = 40;
 	id actionMove = [CCMoveTo actionWithDuration:actualDuration position:ccp(X_OFFSET+monster.contentSize.width/2, actualY)];
-    id actionPause = [CCDelayTime actionWithDuration:0.5];
+    id actionPause = [CCDelayTime actionWithDuration:0.5f];
     id actionMoveBack = [CCMoveTo actionWithDuration:actualDuration position:monster.position];
 	id actionMoveDone = [CCCallFuncN actionWithTarget:self selector:@selector(spriteMoveFinished:)];
 	[monster runAction:[CCSequence actions:actionMove, actionPause, actionMoveBack, actionMoveDone, nil]];
@@ -288,8 +288,8 @@ SimpleAudioEngine *soundEngine;
 		rotateDiff -= 360;
     if (rotateDiff < -180)
         rotateDiff += 360;    
-    CGFloat rotateSpeed = 0.5 / 180; // Would take 0.5 seconds to rotate half a circle
-    CGFloat rotateDuration = fabs(rotateDiff * rotateSpeed);
+    CGFloat rotateSpeed = 0.5f / 180; // Would take 0.5 seconds to rotate half a circle
+    CGFloat rotateDuration = fabsf(rotateDiff * rotateSpeed);
         
     // Actually set up the actions
     [_player runAction:[CCSequence actions:
@@ -301,7 +301,7 @@ SimpleAudioEngine *soundEngine;
     _nextProjectile.rotation = cocosAngle;
     
     // Move projectile offscreen
-    ccTime delta = 1.0;
+    ccTime delta = 1.0f;
     CGPoint normalizedShootVector = ccpNormalize(shootVector);
     CGPoint overshotVector = ccpMult(normalizedShootVector, 420);
     
@@ -370,7 +370,7 @@ SimpleAudioEngine *soundEngine;
         static int colorBuffer = 55;
         float percentage = ((float) monster.hp) / ((float) monster.maxHp);
         int actualY = ((endY-startY) * percentage) + startY;
-        int amtRed = ((1.0-percentage)*maxColor)+colorBuffer;
+        int amtRed = ((1.0f-percentage)*maxColor)+colorBuffer;
         int amtGreen = (percentage*maxColor)+colorBuffer;
         
         glEnable(GL_LINE_SMOOTH);

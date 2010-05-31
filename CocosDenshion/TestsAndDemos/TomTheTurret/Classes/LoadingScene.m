@@ -112,8 +112,8 @@
         // Animate the "tap to continue" much the same way we did the "loading" so user notices...
         [_tapToCont runAction:[CCRepeatForever actionWithAction:
                              [CCSequence actions:
-                              [CCFadeOut actionWithDuration:1.0],
-                              [CCFadeIn actionWithDuration:1.0],
+                              [CCFadeOut actionWithDuration:1.0f],
+                              [CCFadeIn actionWithDuration:1.0f],
                               nil]]];
         
     }
@@ -173,7 +173,7 @@
     [_tom runAction:[CCRepeatForever actionWithAction:
                      [CCSequence actions:
                       [CCAnimate actionWithAnimation:blinkAnimation restoreOriginalFrame:NO],
-                      [CCDelayTime actionWithDuration:2.5],
+                      [CCDelayTime actionWithDuration:2.5f],
                       nil]]];
         
     // Add "Loading..." to scene
@@ -185,8 +185,8 @@
     // Perform a little animation on the "loading" text to users know something is going on...
     [_loading runAction:[CCRepeatForever actionWithAction:
                          [CCSequence actions:
-                         [CCFadeOut actionWithDuration:1.0],
-                         [CCFadeIn actionWithDuration:1.0],
+                         [CCFadeOut actionWithDuration:1.0f],
+                         [CCFadeIn actionWithDuration:1.0f],
                           nil]]];
     
     self.imagesLoaded = YES;

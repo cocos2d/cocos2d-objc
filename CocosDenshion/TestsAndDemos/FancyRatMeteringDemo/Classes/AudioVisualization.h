@@ -24,7 +24,6 @@
 	double			filterSmooth_;
 	double			*filteredPeak_;
 	double			*filteredAverage_;
-	CCTimer			*beatTimer_;
 	NSMutableArray	*delegates_;
 	SEL				avAvgPowerLevelSel_;
 	SEL				avPeakPowerLevelSel_;
