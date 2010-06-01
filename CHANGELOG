@@ -1,4 +1,5 @@
 version 0.99.4-rc - XX-Jun-2010
+. [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
 . [NEW] Particle: QuadParticle supports subrects (issue #870)
 . [FIX] Particle: Added support for ParticleDesigner 1.2
 . [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
