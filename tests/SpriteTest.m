@@ -49,6 +49,7 @@ static NSString *transitions[] = {
 			@"SpriteChildrenChildren",
 			@"SpriteSheetChildrenChildren",
 			@"SpriteNilTexture",
+			@"SpriteSubclass",
 };
 
 enum {
@@ -2926,6 +2927,85 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark SpriteSubclass
+
+@interface MySprite1 : CCSprite
+{
+	int ivar1;
+}
+@end
+
+@implementation MySprite1
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self=[super initWithTexture:texture rect:rect]) ) {
+		ivar1 = 10;
+	}
+	   
+	return self;
+}
+@end
+
+
+@interface MySprite2 : CCSprite
+{
+	int ivar1;
+}
+@end
+@implementation MySprite2
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self=[super initWithTexture:texture rect:rect]) ) {
+		ivar1 = 10;
+	}
+	
+	return self;
+}
+@end
+		   
+@implementation SpriteSubclass
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
+		
+		CCSpriteSheet *aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		
+		// MySprite1
+		MySprite1 *sprite = [MySprite1 spriteWithSpriteFrameName:@"father.gif"];
+		sprite.position = ccp( s.width/4*1, s.height/2);
+		[aParent addChild:sprite];
+		
+		[self addChild:aParent];
+		
+		
+		// MySprite2
+		MySprite2 *sprite2 = [MySprite2 spriteWithFile:@"grossini.png"];
+		[self addChild:sprite2];
+		sprite2.position = ccp(s.width/4*3, s.height/2);
+		
+		NSLog(@"MySprite1: %@", sprite);
+		NSLog(@"MySprite2: %@", sprite2);
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Sprite subclass";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing initWithTexture:rect method";
+}
+@end
 
 #pragma mark -
 #pragma mark AppDelegate
