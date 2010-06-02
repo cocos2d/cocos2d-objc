@@ -108,10 +108,10 @@ typedef struct _hashElement
 /** Resumes the target. All queued actions will be resumed.
  @deprecated Use resumeTarget: instead. Will be removed in v1.0.
  */
--(void) resumeAllActionsForTarget:(id)target __attribute__((deprecated));
+-(void) resumeAllActionsForTarget:(id)target DEPRECATED_ATTRIBUTE;
 /** Pauses the target: all running actions and newly added actions will be paused.
  */
--(void) pauseAllActionsForTarget:(id)target __attribute__((deprecated));
+-(void) pauseAllActionsForTarget:(id)target DEPRECATED_ATTRIBUTE;
 
 
 @end

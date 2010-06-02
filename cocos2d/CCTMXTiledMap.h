@@ -134,7 +134,7 @@ enum
 /** return the TMXObjectGroup for the secific group
  @deprecated Use map#objectGroupNamed instead
  */
--(CCTMXObjectGroup*) groupNamed:(NSString *)groupName __attribute__((deprecated));
+-(CCTMXObjectGroup*) groupNamed:(NSString *)groupName DEPRECATED_ATTRIBUTE;
 
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;

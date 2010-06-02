@@ -104,6 +104,6 @@
  It returns an autorelease object.
  @deprecated use [CCSprite spriteWithSpriteFrameName:name]. This method will be removed on final v0.9
  */
--(CCSprite*) createSpriteWithFrameName:(NSString*)name __attribute__((deprecated));
+-(CCSprite*) createSpriteWithFrameName:(NSString*)name DEPRECATED_ATTRIBUTE;
 
 @end
