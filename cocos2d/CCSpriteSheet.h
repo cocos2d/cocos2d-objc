@@ -107,7 +107,7 @@
    - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  @deprecated Use [CCSprite spriteWithSpriteSheet:rect] instead;
  */
--(CCSprite*) createSpriteWithRect:(CGRect)rect __attribute__((deprecated));
+-(CCSprite*) createSpriteWithRect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 /** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet.
  It's the same as:
@@ -117,7 +117,7 @@
  @since v0.99.0
  @deprecated Use [CCSprite initWithSpriteSheet:rect] instead;
 */ 
--(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect __attribute__((deprecated));
+-(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
  @warning Removing a child from a CCSpriteSheet is very slow
