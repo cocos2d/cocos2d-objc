@@ -188,4 +188,8 @@
 {}
 @end
 
+@interface SpriteSubclass : SpriteDemo
+{}
+@end
+
 
