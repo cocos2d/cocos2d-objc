@@ -46,6 +46,7 @@
 //
 #import "ccConfig.h"	// should be included first
 
+#import "CCArray.h"
 #import "CCBlockSupport.h"
 #import "CCAction.h"
 #import "CCCamera.h"
