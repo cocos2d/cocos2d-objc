@@ -4,6 +4,7 @@
 //
 //  Created by Manuel Martinez-Almeida Castañeda on 02/06/10.
 //  Copyright 2010 Abstraction Works. All rights reserved.
+//  http://www.abstractionworks.com
 //
 
 #import "Support/ccArray.h"
