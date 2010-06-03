@@ -12,6 +12,11 @@
 
 @implementation CCArray
 
++ (id) array
+{
+	return [[[self alloc] init] autorelease];
+}
+
 + (id) arrayWithCapacity:(NSUInteger)capacity
 {
 	return [[[self alloc] initWithCapacity:capacity] autorelease];
@@ -27,6 +32,11 @@
 	return [[(CCArray*)[self alloc] initWithNSArray:otherArray] autorelease];
 }
 
+- (id) init
+{
+	self = [self initWithCapacity:2];
+	return self;
+}
 
 - (id) initWithCapacity:(NSUInteger)capacity
 {
@@ -55,6 +65,20 @@
 	return self;
 }
 
+
+
+- (id) initWithCoder:(NSCoder*)coder
+{
+	self = [self initWithNSArray:[coder decodeObjectForKey:@"nsarray"]];
+	return self;
+}
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:[self getNSArray] forKey:@"nsarray"];
+}
+
+
+
 - (NSUInteger) count
 {
 	return data->num;
@@ -79,8 +103,6 @@
 {
 	return data->arr[data->num];
 }
-
-
 
 - (BOOL) containsObject:(id)object
 {
@@ -154,8 +176,18 @@
 	ccArrayMakeObjectsPerformSelector(data, aSelector);
 }
 
+- (void) makeObjectsPerformSelector:(SEL)aSelector withObject:(id)object
+{
+	ccArrayMakeObjectsPerformSelectorWithObject(data, aSelector, object);
+}
+
 - (NSArray*) getNSArray{
-	return [NSMutableArray arrayWithCapacity:data->num];
+	NSMutableArray *nsarray = [NSMutableArray arrayWithCapacity:data->num];
+	int nu = data->num;
+	for(int i = 0; i<nu; i++)
+		[nsarray addObject:data->arr[i]];
+	
+	return nsarray;
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len
@@ -176,5 +208,3 @@
 
 
 @end
-
-

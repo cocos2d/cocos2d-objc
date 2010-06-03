@@ -227,6 +227,12 @@ static inline void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL sel)
 		[arr->arr[i] performSelector:sel];
 }
 
+static inline void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL sel, id object)
+{
+	for( NSUInteger i = 0; i < arr->num; i++)
+		[arr->arr[i] performSelector:sel withObject:object];
+}
+
 
 #pragma mark -
 #pragma mark ccCArray for Values (c structures)

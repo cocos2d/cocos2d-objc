@@ -10,11 +10,12 @@
 #import "Support/ccArray.h"
 
 
-@interface CCArray : NSObject <NSFastEnumeration>
+@interface CCArray : NSObject <NSFastEnumeration, NSCoding>
 {
 	@public ccArray *data;
 }
 
++ (id) array;
 + (id) arrayWithCapacity:(NSUInteger)capacity;
 + (id) arrayWithArray:(CCArray*)otherArray;
 + (id) arrayWithNSArray:(NSArray*)otherArray;
@@ -46,10 +47,14 @@
 - (void) removeObjectAtIndex:(NSUInteger)index;
 - (void) removeObjectsInArray:(CCArray*)otherArray;
 - (void) removeAllObjects;
-- (void) makeObjectsPerformSelector:(SEL)aSelector;
-
 - (void) fastRemoveObject:(id)object;
 - (void) fastRemoveObjectAtIndex:(NSUInteger)index;
+
+- (void) makeObjectsPerformSelector:(SEL)aSelector;
+- (void) makeObjectsPerformSelector:(SEL)aSelector withObject:(id)object;
+
+- (NSArray*) getNSArray;
+
 
 
 @end
