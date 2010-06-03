@@ -1751,6 +1751,8 @@
 		8EDF3FC10F6BE18B00F54643 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		8EDF3FDD0F6BE3FC00F54643 /* listener-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FD90F6BE3F400F54643 /* listener-marker.png */; };
 		8EDF3FDE0F6BE3FC00F54643 /* source-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FDA0F6BE3F400F54643 /* source-marker.png */; };
+		9995C42311B7EE0F0093600F /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 9995C42111B7EE0F0093600F /* CCArray.h */; };
+		9995C42411B7EE0F0093600F /* CCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9995C42211B7EE0F0093600F /* CCArray.m */; };
 		AAC2C3941005ED8E005B9B2C /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */; };
 		AAC2C3951005ED8E005B9B2C /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC2C3931005ED8E005B9B2C /* CocosDenshion.m */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -3378,6 +3380,8 @@
 		8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundEngineTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDF3FD90F6BE3F400F54643 /* listener-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listener-marker.png"; path = "experimental/sound-engine/sound-engine-sample/listener-marker.png"; sourceTree = SOURCE_ROOT; };
 		8EDF3FDA0F6BE3F400F54643 /* source-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "source-marker.png"; path = "experimental/sound-engine/sound-engine-sample/source-marker.png"; sourceTree = SOURCE_ROOT; };
+		9995C42111B7EE0F0093600F /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
+		9995C42211B7EE0F0093600F /* CCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCArray.m; sourceTree = "<group>"; };
 		AAC2C3921005ED8E005B9B2C /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		AAC2C3931005ED8E005B9B2C /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
@@ -4424,6 +4428,8 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				9995C42111B7EE0F0093600F /* CCArray.h */,
+				9995C42211B7EE0F0093600F /* CCArray.m */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
@@ -5793,6 +5799,7 @@
 				50FBB2DA117613F500150761 /* CCPropertyAction.h in Headers */,
 				50D898F31192CB7500458C29 /* uthash.h in Headers */,
 				508EAC311193F8B0007F058D /* utlist.h in Headers */,
+				9995C42311B7EE0F0093600F /* CCArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8514,6 +8521,7 @@
 				5015043C113300F900A9CA65 /* CCProgressTimerActions.m in Sources */,
 				5015043E113300F900A9CA65 /* CCRadialTransition.m in Sources */,
 				50FBB2DB117613F500150761 /* CCPropertyAction.m in Sources */,
+				9995C42411B7EE0F0093600F /* CCArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
