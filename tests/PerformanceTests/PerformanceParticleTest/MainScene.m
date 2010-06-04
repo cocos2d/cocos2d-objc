@@ -91,7 +91,7 @@ Class restartAction()
 		// particles on stage
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
-		labelAtlas.position = CGPointMake(254,50);
+		labelAtlas.position = ccp(s.width-66,50);
 		
 		// Next Prev Test
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
