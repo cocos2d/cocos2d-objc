@@ -27,12 +27,12 @@
  faster because:
  - it uses a plain C interface so it doesn't incur Objective-c messaging overhead 
  - it assumes you know what you're doing, so it doesn't spend time on safety checks
-   (index out of bounds, required capacity etc.)
+ (index out of bounds, required capacity etc.)
  - comparisons are done using pointer equality instead of isEqual
  
  There are 2 kind of functions:
-  - ccArray functions that manipulates objective-c objects (retain and release are performanced)
-  - ccCArray functions that manipulates values like if they were standard C structures (no retain/release is performed)
+ - ccArray functions that manipulates objective-c objects (retain and release are performanced)
+ - ccCArray functions that manipulates values like if they were standard C structures (no retain/release is performed)
  */
 
 #ifndef CC_ARRAY_H
@@ -135,6 +135,23 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 	ccArrayAppendArray(arr, plusArr);
 }
 
+static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUInteger index)
+{
+	if(index<=arr->num){
+		ccArrayEnsureExtraCapacity(arr, 1);
+		
+		for( NSUInteger i = arr->num; index < i; i--)
+			arr->arr[i] = arr->arr[i - 1];
+		
+		arr->arr[index] = [object retain];
+		arr->num++;
+		
+	}else{
+		NSString *format = [NSString stringWithFormat:@"-ccArrayInsertObjectAtIndex(arr,object,index) index (%d) beyond bounds (%d)", index, arr->num+1];
+		[NSException raise:@"ccArray" format:format];
+	}
+}
+
 /** Removes all objects from arr */
 static inline void ccArrayRemoveAllObjects(ccArray *arr)
 {
@@ -160,6 +177,13 @@ static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, NSUInteger index
 	[arr->arr[index] release];
 	NSUInteger last = --arr->num;
 	arr->arr[index] = arr->arr[last];
+}
+
+static inline void ccArrayFastRemoveObject(ccArray *arr, id object)
+{
+	NSUInteger index = ccArrayGetIndexOfObject(arr, object);
+	if (index != NSNotFound)
+		ccArrayFastRemoveObjectAtIndex(arr, index);
 }
 
 /** Searches for the first occurance of object and removes it. If object is not
@@ -202,6 +226,13 @@ static inline void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL sel)
 	for( NSUInteger i = 0; i < arr->num; i++)
 		[arr->arr[i] performSelector:sel];
 }
+
+static inline void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL sel, id object)
+{
+	for( NSUInteger i = 0; i < arr->num; i++)
+		[arr->arr[i] performSelector:sel withObject:object];
+}
+
 
 #pragma mark -
 #pragma mark ccCArray for Values (c structures)
@@ -264,7 +295,7 @@ static inline BOOL ccCArrayContainsValue(ccCArray *arr, void* value)
 static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUInteger index)
 {
 	assert( index < arr->max );
-			 
+	
 	int remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved

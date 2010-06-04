@@ -56,7 +56,7 @@
 	ccBlendFunc		blendFunc_;
 
 	// all descendants: chlidren, gran children, etc...
-	NSMutableArray	*descendants_;
+	CCArray	*descendants_;
 //	ccArray			*descendants_;
 }
 
@@ -67,7 +67,7 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** descendants (children, gran children, etc) */
-@property (nonatomic,readonly) NSMutableArray *descendants;
+@property (nonatomic,readonly) CCArray *descendants;
 
 /** creates a CCSpriteSheet with a texture2d and a default capacity of 29 children.
  The capacity will be increased in 33% in runtime if it run out of space.
