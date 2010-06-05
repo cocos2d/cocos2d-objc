@@ -952,6 +952,8 @@
 		506717E111B8EDE9006C0061 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 506717DF11B8EDE9006C0061 /* CCArray.h */; };
 		506717E211B8EDE9006C0061 /* CCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 506717DE11B8EDE9006C0061 /* CCArray.m */; };
 		506717E311B8EDE9006C0061 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 506717DF11B8EDE9006C0061 /* CCArray.h */; };
+		50671C1611B99FC9006C0061 /* background1-ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50671C1411B99FC9006C0061 /* background1-ipad.jpg */; };
+		50671C1711B99FC9006C0061 /* background2-ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50671C1511B99FC9006C0061 /* background2-ipad.jpg */; };
 		506747C4107A32AE0090963A /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 506747C1107A32AE0090963A /* ZAttributedString.h */; };
 		506747C5107A32AE0090963A /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 506747C2107A32AE0090963A /* ZAttributedString.m */; };
 		506747C6107A32AE0090963A /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 506747C3107A32AE0090963A /* ZAttributedStringPrivate.h */; };
@@ -3066,6 +3068,8 @@
 		506602100E38A70D000B500E /* CCScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScheduler.m; sourceTree = "<group>"; };
 		506717DE11B8EDE9006C0061 /* CCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCArray.m; sourceTree = "<group>"; };
 		506717DF11B8EDE9006C0061 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
+		50671C1411B99FC9006C0061 /* background1-ipad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background1-ipad.jpg"; sourceTree = "<group>"; };
+		50671C1511B99FC9006C0061 /* background2-ipad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background2-ipad.jpg"; sourceTree = "<group>"; };
 		506747C1107A32AE0090963A /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
 		506747C2107A32AE0090963A /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
 		506747C3107A32AE0090963A /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
@@ -4508,6 +4512,7 @@
 				50B130FC0DFE0923003BAB56 /* tests */,
 				5031689510284B8E003ACFE7 /* tools */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				50671C1211B99FC8006C0061 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				5052250511B3D4DF0061670F /* CoreGraphics.framework */,
@@ -5278,6 +5283,23 @@
 				506C78EB0E0178FD00B48100 /* CCMenuItem.m */,
 			);
 			name = "Menu Nodes";
+			sourceTree = "<group>";
+		};
+		50671C1211B99FC8006C0061 /* Resources-iPad */ = {
+			isa = PBXGroup;
+			children = (
+				50671C1311B99FC9006C0061 /* Images */,
+			);
+			path = "Resources-iPad";
+			sourceTree = "<group>";
+		};
+		50671C1311B99FC9006C0061 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				50671C1411B99FC9006C0061 /* background1-ipad.jpg */,
+				50671C1511B99FC9006C0061 /* background2-ipad.jpg */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		5069C791100B84BC00489758 /* bugs */ = {
@@ -8530,6 +8552,8 @@
 				50A2522C0F38B8DC007CAEB0 /* background2.jpg in Resources */,
 				502AAD050F79715E001E3F87 /* fire.pvr in Resources */,
 				505464521062886600AB7C52 /* fps_images.png in Resources */,
+				50671C1611B99FC9006C0061 /* background1-ipad.jpg in Resources */,
+				50671C1711B99FC9006C0061 /* background2-ipad.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12964,7 +12988,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -12990,6 +13014,7 @@
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -12997,7 +13022,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -13020,6 +13045,7 @@
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

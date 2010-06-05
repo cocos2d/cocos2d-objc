@@ -227,7 +227,13 @@ Class restartTransition()
 		x = size.width;
 		y = size.height;
 
-		CCSprite *bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
+		CCSprite *bg1;
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			bg1 = [CCSprite spriteWithFile:@"background1-ipad.jpg"];
+		} else {
+			bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
+		}
+		
 		bg1.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg1 z:-1];
 
@@ -325,7 +331,12 @@ Class restartTransition()
 		x = size.width;
 		y = size.height;
 		
-		CCSprite *bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
+		CCSprite *bg2;
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			bg2 = [CCSprite spriteWithFile:@"background2-ipad.jpg"];
+		} else {
+			bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
+		}		
 		bg2.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg2 z:-1];
 		
