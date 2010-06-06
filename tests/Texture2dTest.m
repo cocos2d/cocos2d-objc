@@ -95,11 +95,11 @@ Class restartAction()
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
-		[self addChild: menu z:1];
-
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+		[self addChild: menu z:1];	
+		
 	}
 	return self;
 }
@@ -489,9 +489,8 @@ Class restartAction()
 	[label setColor:ccc3(16,16,255)];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	CCSprite *background = [CCSprite spriteWithFile:@"background1.jpg"];
-	background.position = ccp(240,160);
+		
+	CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(128,128,128,255) width:s.width height:s.height];
 	[self addChild:background z:-1];
 	
 	// RGBA 8888 image (32-bit)
@@ -904,8 +903,7 @@ Class restartAction()
 				
 		CGSize size =[[CCDirector sharedDirector] winSize];
 	
-		CCSprite *background = [CCSprite spriteWithFile:@"background3.jpg"];
-		background.anchorPoint = CGPointZero;
+		CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(128,128,128,255) width:size.width height:size.height];
 		[self addChild:background z:-1];
 		
 		
