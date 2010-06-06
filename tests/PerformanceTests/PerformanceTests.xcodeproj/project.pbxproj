@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5006BA3B11BBF4DB00E488BD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
+		5006BA3F11BBF4DB00E488BD /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F411A81068D563002A0D5E /* fps_images.png */; };
+		5006BA4211BBF4DB00E488BD /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030946E10447D98005F7AFC /* b1.png */; };
+		5006BA4311BBF4DB00E488BD /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030946F10447D98005F7AFC /* b2.png */; };
+		5006BA4411BBF4DB00E488BD /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947010447D98005F7AFC /* f1.png */; };
+		5006BA4511BBF4DB00E488BD /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947110447D98005F7AFC /* f2.png */; };
+		5006BA4611BBF4DB00E488BD /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947510447D98005F7AFC /* r1.png */; };
+		5006BA4711BBF4DB00E488BD /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947610447D98005F7AFC /* r2.png */; };
+		5006BA4911BBF4DB00E488BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5030942510447BC7005F7AFC /* main.m */; };
+		5006BA4D11BBF4DB00E488BD /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
+		5006BA4E11BBF4DB00E488BD /* libFontLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F411741068D3F0002A0D5E /* libFontLabel.a */; };
+		5006BA4F11BBF4DB00E488BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671AB611B9596B006C0061 /* CoreGraphics.framework */; };
+		5006BA5011BBF4DB00E488BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671AB811B9596B006C0061 /* OpenGLES.framework */; };
+		5006BA5111BBF4DB00E488BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671ABA11B9596B006C0061 /* QuartzCore.framework */; };
+		5006BA5211BBF4DB00E488BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671ABC11B9596B006C0061 /* UIKit.framework */; };
+		5006BA5311BBF4DB00E488BD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671ABE11B9596B006C0061 /* libz.dylib */; };
+		5006BA5F11BBF58600E488BD /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006BA5C11BBF58600E488BD /* AppController.m */; };
+		5006BA6011BBF58600E488BD /* PerformanceNodeChildrenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006BA5E11BBF58600E488BD /* PerformanceNodeChildrenTest.m */; };
+		5006BB1611BC07B300E488BD /* spritesheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030951410447F2C005F7AFC /* spritesheet1.png */; };
 		5030943510447C15005F7AFC /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
 		5030946C10447D18005F7AFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5030942510447BC7005F7AFC /* main.m */; };
 		5030947710447D98005F7AFC /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030946E10447D98005F7AFC /* b1.png */; };
@@ -299,6 +318,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5006BA3711BBF4DB00E488BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 506EE05D10304ED200A389B3;
+			remoteInfo = "cocos2d libraries";
+		};
+		5006BA3911BBF4DB00E488BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50F411731068D3F0002A0D5E;
+			remoteInfo = FontLabel;
+		};
 		5030943310447C11005F7AFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -330,6 +363,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5006BA5711BBF4DB00E488BD /* ParticlePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticlePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5006BA5B11BBF58600E488BD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		5006BA5C11BBF58600E488BD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		5006BA5D11BBF58600E488BD /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
+		5006BA5E11BBF58600E488BD /* PerformanceNodeChildrenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceNodeChildrenTest.m; sourceTree = "<group>"; };
 		501F0DE311527BC6002BB7F1 /* fire-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fire-grayscale.png"; path = "../../Resources/Images/fire-grayscale.png"; sourceTree = SOURCE_ROOT; };
 		501F0DE411527BC6002BB7F1 /* stars-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stars-grayscale.png"; path = "../../Resources/Images/stars-grayscale.png"; sourceTree = SOURCE_ROOT; };
 		501F0DE511527BC6002BB7F1 /* stars2-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stars2-grayscale.png"; path = "../../Resources/Images/stars2-grayscale.png"; sourceTree = SOURCE_ROOT; };
@@ -612,6 +650,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5006BA4C11BBF4DB00E488BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5006BA4D11BBF4DB00E488BD /* libcocos2d libraries.a in Frameworks */,
+				5006BA4E11BBF4DB00E488BD /* libFontLabel.a in Frameworks */,
+				5006BA4F11BBF4DB00E488BD /* CoreGraphics.framework in Frameworks */,
+				5006BA5011BBF4DB00E488BD /* OpenGLES.framework in Frameworks */,
+				5006BA5111BBF4DB00E488BD /* QuartzCore.framework in Frameworks */,
+				5006BA5211BBF4DB00E488BD /* UIKit.framework in Frameworks */,
+				5006BA5311BBF4DB00E488BD /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5030942B10447C09005F7AFC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -664,6 +716,7 @@
 				5030942D10447C09005F7AFC /* SpritePerformance.app */,
 				50F411741068D3F0002A0D5E /* libFontLabel.a */,
 				506719FF11B956ED006C0061 /* ParticlePerformance.app */,
+				5006BA5711BBF4DB00E488BD /* ParticlePerformance.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -675,6 +728,7 @@
 				50F411831068D443002A0D5E /* FontLabel */,
 				503095C0104482EA005F7AFC /* PerformanceSpriteTest */,
 				5030944D10447CB5005F7AFC /* PerformanceParticleTest */,
+				5006BA5A11BBF58600E488BD /* PerformanceNodeChildrenTest */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				506719EE11B9348B006C0061 /* Resources-iPad */,
@@ -746,6 +800,17 @@
 				50671ABE11B9596B006C0061 /* libz.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5006BA5A11BBF58600E488BD /* PerformanceNodeChildrenTest */ = {
+			isa = PBXGroup;
+			children = (
+				5006BA5B11BBF58600E488BD /* AppController.h */,
+				5006BA5C11BBF58600E488BD /* AppController.m */,
+				5006BA5D11BBF58600E488BD /* PerformanceNodeChildrenTest.h */,
+				5006BA5E11BBF58600E488BD /* PerformanceNodeChildrenTest.m */,
+			);
+			path = PerformanceNodeChildrenTest;
 			sourceTree = "<group>";
 		};
 		5030944D10447CB5005F7AFC /* PerformanceParticleTest */ = {
@@ -1139,6 +1204,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5006BA3511BBF4DB00E488BD /* ChildrenNodePerformance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5006BA5411BBF4DB00E488BD /* Build configuration list for PBXNativeTarget "ChildrenNodePerformance" */;
+			buildPhases = (
+				5006BA3A11BBF4DB00E488BD /* Resources */,
+				5006BA4811BBF4DB00E488BD /* Sources */,
+				5006BA4C11BBF4DB00E488BD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5006BA3611BBF4DB00E488BD /* PBXTargetDependency */,
+				5006BA3811BBF4DB00E488BD /* PBXTargetDependency */,
+			);
+			name = ChildrenNodePerformance;
+			productName = ParticlePerformance;
+			productReference = 5006BA5711BBF4DB00E488BD /* ParticlePerformance.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5030942C10447C09005F7AFC /* SpritePerformance */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5030943210447C0A005F7AFC /* Build configuration list for PBXNativeTarget "SpritePerformance" */;
@@ -1227,11 +1311,28 @@
 				50F411731068D3F0002A0D5E /* FontLabel */,
 				5030942C10447C09005F7AFC /* SpritePerformance */,
 				506719FE11B956ED006C0061 /* ParticlePerformance */,
+				5006BA3511BBF4DB00E488BD /* ChildrenNodePerformance */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5006BA3A11BBF4DB00E488BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5006BB1611BC07B300E488BD /* spritesheet1.png in Resources */,
+				5006BA3B11BBF4DB00E488BD /* Default.png in Resources */,
+				5006BA3F11BBF4DB00E488BD /* fps_images.png in Resources */,
+				5006BA4211BBF4DB00E488BD /* b1.png in Resources */,
+				5006BA4311BBF4DB00E488BD /* b2.png in Resources */,
+				5006BA4411BBF4DB00E488BD /* f1.png in Resources */,
+				5006BA4511BBF4DB00E488BD /* f2.png in Resources */,
+				5006BA4611BBF4DB00E488BD /* r1.png in Resources */,
+				5006BA4711BBF4DB00E488BD /* r2.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5030942910447C09005F7AFC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1358,6 +1459,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5006BA4811BBF4DB00E488BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5006BA4911BBF4DB00E488BD /* main.m in Sources */,
+				5006BA5F11BBF58600E488BD /* AppController.m in Sources */,
+				5006BA6011BBF58600E488BD /* PerformanceNodeChildrenTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5030942A10447C09005F7AFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1470,6 +1581,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5006BA3611BBF4DB00E488BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 506EE05D10304ED200A389B3 /* cocos2d libraries */;
+			targetProxy = 5006BA3711BBF4DB00E488BD /* PBXContainerItemProxy */;
+		};
+		5006BA3811BBF4DB00E488BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50F411731068D3F0002A0D5E /* FontLabel */;
+			targetProxy = 5006BA3911BBF4DB00E488BD /* PBXContainerItemProxy */;
+		};
 		5030943410447C11005F7AFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 506EE05D10304ED200A389B3 /* cocos2d libraries */;
@@ -1493,6 +1614,53 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5006BA5511BBF4DB00E488BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "../../Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ParticlePerformance;
+			};
+			name = Debug;
+		};
+		5006BA5611BBF4DB00E488BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "../../Resources/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ParticlePerformance;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		5030943010447C0A005F7AFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1703,6 +1871,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5006BA5411BBF4DB00E488BD /* Build configuration list for PBXNativeTarget "ChildrenNodePerformance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5006BA5511BBF4DB00E488BD /* Debug */,
+				5006BA5611BBF4DB00E488BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5030943210447C0A005F7AFC /* Build configuration list for PBXNativeTarget "SpritePerformance" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

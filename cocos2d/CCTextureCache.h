@@ -24,8 +24,9 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGImage.h>
 
-#import "CCTexture2D.h"
+@class CCTexture2D;
 
 /** Singleton that handles the loading of textures
  * Once the texture is loaded, the next time it will return
