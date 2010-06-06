@@ -2,6 +2,7 @@ version 0.99.4-rc - XX-Jun-2010
 . [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
 . [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
 . [NEW] Particle: QuadParticle supports subrects (issue #870)
+. [NEW] TextureCache: Added removeTextureForKey: instance method
 . [FIX] Particle: Added support for ParticleDesigner 1.2
 . [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
 . [FIX] Tests: removed ParticleView, AccelViewPortDemo since they were deprecated

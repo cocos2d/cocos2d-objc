@@ -311,4 +311,13 @@ static CCTextureCache *sharedTextureCache;
 	for( NSUInteger i = 0; i < [keys count]; i++ )
 		[textures removeObjectForKey:[keys objectAtIndex:i]];
 }
+
+-(void) removeTextureForKey:(NSString*)name
+{
+	if( ! name )
+		return;
+	
+	[textures removeObjectForKey:name];
+}
+
 @end

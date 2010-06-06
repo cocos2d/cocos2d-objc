@@ -105,4 +105,8 @@
 {}
 @end
 
+@interface TextureCache1 : TextureDemo
+{}
+@end
+
 
