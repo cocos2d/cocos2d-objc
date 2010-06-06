@@ -246,10 +246,17 @@ const int defaultCapacity = 29;
 	UPDATE_IMP updateMethod = nil;
 	
 	ccArray *array = descendants_->data;
-	CCSprite *child = array->arr[0];
-	dirtyMethod = (DIRTY_IMP) [child methodForSelector:selDirty];
-	updateMethod = (UPDATE_IMP) [child methodForSelector:selUpdate];
+	CCSprite *child;
 	
+	// is there any child ?. compare with array->num
+	// if so, compile the isDirty and update methods
+	if( array->num > 0 ) {
+		child = array->arr[0];
+		dirtyMethod = (DIRTY_IMP) [child methodForSelector:selDirty];
+		updateMethod = (UPDATE_IMP) [child methodForSelector:selUpdate];
+	}
+	
+	// itera
 	for(int i = 0; i<array->num; i++)
 	{
 		child = array->arr[i];

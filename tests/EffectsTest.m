@@ -358,7 +358,12 @@ Class restartAction()
 		[node runAction:[effectClass actionWithDuration:3]];
 		[self addChild: node z:0 tag:kTagBackground];
 		
-		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
+		CCSprite *bg;
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			bg = [CCSprite spriteWithFile:@"background3-ipad.png"];
+		} else {
+			bg = [CCSprite spriteWithFile:@"background3.png"];
+		}		
 		[node addChild: bg z:0];
 //		bg.anchorPoint = CGPointZero;
 		bg.position = ccp(size.width/2, size.height/2);
@@ -437,14 +442,14 @@ Class restartAction()
 }
 -(void) nextCallback:(id) sender
 {
-	[self newOrientation];
+//	[self newOrientation];
 	nextAction();
 	[self newScene];
 }	
 
 -(void) backCallback:(id) sender
 {
-	[self newOrientation];
+//	[self newOrientation];
 	backAction();
 	[self newScene];
 }	
