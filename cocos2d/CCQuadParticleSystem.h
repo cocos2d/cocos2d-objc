@@ -33,7 +33,7 @@
 
  It includes all the features of ParticleSystem.
  
- Special features and Limitations:
+ Special features and Limitations:	
   - Particle size can be any float number.
   - The system can be scaled
   - The particles can be rotated

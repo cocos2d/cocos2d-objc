@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 			@"TextureGlClamp",
 			@"TextureGlRepeat",
 			@"TextureSizeTest",
+			@"TextureCache1",
 };
 
 #pragma mark Callbacks
@@ -79,7 +80,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];	
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild:label z:0 tag:kTagLabel];
+		[self addChild:label z:1 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
@@ -1084,7 +1085,62 @@ Class restartAction()
 {
 	return @"512x512, 1024x1024, 2048x2048 and 4096x4096. See the console.";
 }
+@end
 
+#pragma mark -
+#pragma mark TextureCache1
+
+@implementation TextureCache1
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCSprite *sprite;
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[sprite setPosition:ccp(s.width/5*1, s.height/2)];
+		[[sprite texture] setAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+
+		[[CCTextureCache sharedTextureCache] removeTexture:[sprite texture]];
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[sprite setPosition:ccp(s.width/5*2, s.height/2)];
+		[[sprite texture] setAntiAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+
+		// 2nd set of sprites
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		[sprite setPosition:ccp(s.width/5*3, s.height/2)];
+		[[sprite texture] setAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+		
+		[[CCTextureCache sharedTextureCache] removeTextureForKey:@"grossinis_sister2.png"];
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		[sprite setPosition:ccp(s.width/5*4, s.height/2)];
+		[[sprite texture] setAntiAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+		
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCTextureCache: remove";
+}
+-(NSString *) subtitle
+{
+	return @"4 images should appear: alias, antialias, alias, antilias";
+}
 @end
 
 
