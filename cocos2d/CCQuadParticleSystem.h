@@ -37,8 +37,9 @@
   - Particle size can be any float number.
   - The system can be scaled
   - The particles can be rotated
-  - It is only a bit slower that PointParticleSystem
-  - It consumes more RAM and more GPU memory than PointParticleSystem
+  - On 1st and 2nd gen iPhones: It is only a bit slower that CCPointParticleSystem
+  - On 3rd gen iPhone and iPads: It is MUCH faster than CCPointParticleSystem
+  - It consumes more RAM and more GPU memory than CCPointParticleSystem
   - It supports subrects
  @since v0.8
  */
