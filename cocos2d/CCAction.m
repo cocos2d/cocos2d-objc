@@ -49,7 +49,7 @@
 {
 	if( (self=[super init]) ) {	
 		originalTarget = target = nil;
-		tag = kActionTagInvalid;
+		tag = kCCActionTagInvalid;
 	}
 	return self;
 }

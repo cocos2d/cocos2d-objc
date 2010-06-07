@@ -244,7 +244,7 @@ static CCActionManager *_sharedManager = nil;
 
 -(void) removeActionByTag:(int) aTag target:(id)target
 {
-	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
 	
 	tHashElement *element = NULL;
@@ -268,7 +268,7 @@ static CCActionManager *_sharedManager = nil;
 
 -(CCAction*) getActionByTag:(int)aTag target:(id)target
 {
-	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
