@@ -258,7 +258,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"Iterate over SpriteSheet";
+	return @"none";
 }
 -(NSString*) profilerName
 {
@@ -281,6 +281,10 @@ Class restartAction()
 	CCProfilingEndTimingBlock(_profilingTimer);
 }
 
+-(NSString*) title
+{
+	return @"A - Iterate SpriteSheet";
+}
 -(NSString*) subtitle
 {
 	return @"Iterate children using Fast Enum API. See console";
@@ -310,6 +314,10 @@ Class restartAction()
 	CCProfilingEndTimingBlock(_profilingTimer);
 }
 
+-(NSString*) title
+{
+	return @"B - Iterate SpriteSheet";
+}
 -(NSString*) subtitle
 {
 	return @"Iterate children using C Array API. See console";
@@ -388,23 +396,28 @@ Class restartAction()
 
 -(void) update:(ccTime)dt
 {
+	// reset seed
+	srandom(0);
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
 
 	if( totalToAdd > 0 ) {
 		
 		CCSprite *sprites[ totalToAdd ];
+		int		zs[ totalToAdd];
 		
-		// Don't include the sprite creation time as part of the profiling
+		// Don't include the sprite creation time and random as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[spritesheet texture] rect:CGRectMake(0,0,32,32)];
+			zs[i] = CCRANDOM_MINUS1_1() * 50;
 		}
 		
 		// add them with random Z (very important!)
 		CCProfilingBeginTimingBlock(_profilingTimer);
 		for( int i=0; i < totalToAdd;i++ )
 		{
-			[spritesheet addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
+			[spritesheet addChild:sprites[i] z:zs[i] tag:kTagBase+i];
 		}
 		CCProfilingEndTimingBlock(_profilingTimer);
 		
@@ -418,7 +431,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"Add to spritesheet";
+	return @"C - Add to spritesheet";
 }
 -(NSString*) subtitle
 {
@@ -433,6 +446,8 @@ Class restartAction()
 @implementation RemoveSpriteSheet
 -(void) update:(ccTime)dt
 {
+	srandom(0);
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
 	
@@ -463,7 +478,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"Remove from spritesheet";
+	return @"D - Del from spritesheet";
 }
 -(NSString*) subtitle
 {
