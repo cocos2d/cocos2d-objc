@@ -363,7 +363,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5006BA5711BBF4DB00E488BD /* ParticlePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticlePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5006BA5711BBF4DB00E488BD /* ChildrenNodePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildrenNodePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5006BA5B11BBF58600E488BD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5006BA5C11BBF58600E488BD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		5006BA5D11BBF58600E488BD /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
@@ -715,7 +715,7 @@
 				5030942D10447C09005F7AFC /* SpritePerformance.app */,
 				50F411741068D3F0002A0D5E /* libFontLabel.a */,
 				506719FF11B956ED006C0061 /* ParticlePerformance.app */,
-				5006BA5711BBF4DB00E488BD /* ParticlePerformance.app */,
+				5006BA5711BBF4DB00E488BD /* ChildrenNodePerformance.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1210,7 +1210,7 @@
 			);
 			name = ChildrenNodePerformance;
 			productName = ParticlePerformance;
-			productReference = 5006BA5711BBF4DB00E488BD /* ParticlePerformance.app */;
+			productReference = 5006BA5711BBF4DB00E488BD /* ChildrenNodePerformance.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5030942C10447C09005F7AFC /* SpritePerformance */ = {
@@ -1623,7 +1623,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = ParticlePerformance;
+				PRODUCT_NAME = ChildrenNodePerformance;
 			};
 			name = Debug;
 		};
@@ -1646,7 +1646,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = ParticlePerformance;
+				PRODUCT_NAME = ChildrenNodePerformance;
 				ZERO_LINK = NO;
 			};
 			name = Release;

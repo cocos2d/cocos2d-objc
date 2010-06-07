@@ -2648,8 +2648,7 @@
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
 		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
 		5006B87C11BB71E000E488BD /* background3-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-ipad.png"; sourceTree = "<group>"; };
-		5006BD0D11BCF3C300E488BD /* PerformanceTestSprites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestSprites.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5006BD0F11BCF3C300E488BD /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy 2.plist"; path = "Resources/Info copy 2.plist"; sourceTree = "<group>"; };
+		5006BD0D11BCF3C300E488BD /* PerformanceTestChildrenNode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestChildrenNode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5006BD1C11BCF48D00E488BD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5006BD1D11BCF48D00E488BD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		5006BD1E11BCF48D00E488BD /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
@@ -4384,7 +4383,7 @@
 				505228BA11B3DBB90061670F /* CocosDenshion - Drum Pad.app */,
 				5052293C11B3DCD80061670F /* CocosDenshion - Fade To Grey.app */,
 				5052296E11B3DCE90061670F /* CocosDenshion - FancyRat Metering Demo.app */,
-				5006BD0D11BCF3C300E488BD /* PerformanceTestSprites.app */,
+				5006BD0D11BCF3C300E488BD /* PerformanceTestChildrenNode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4435,7 +4434,6 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
-				5006BD0F11BCF3C300E488BD /* Info copy 2.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -6422,7 +6420,7 @@
 			);
 			name = PerformanceTestChildrenNode;
 			productName = "PerformanceTest-Sprites";
-			productReference = 5006BD0D11BCF3C300E488BD /* PerformanceTestSprites.app */;
+			productReference = 5006BD0D11BCF3C300E488BD /* PerformanceTestChildrenNode.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5012DD180FE2994300D6DDD1 /* TouchesTest */ = {
@@ -10334,7 +10332,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "Resources/Info copy 2.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -10343,7 +10341,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = PerformanceTestSprites;
+				PRODUCT_NAME = PerformanceTestChildrenNode;
 			};
 			name = Debug;
 		};
@@ -10357,7 +10355,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "Resources/Info copy 2.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -10366,7 +10364,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = PerformanceTestSprites;
+				PRODUCT_NAME = PerformanceTestChildrenNode;
 				ZERO_LINK = NO;
 			};
 			name = Release;
