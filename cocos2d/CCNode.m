@@ -612,13 +612,13 @@
 
 -(void) stopActionByTag:(int)aTag
 {
-	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	[[CCActionManager sharedManager] removeActionByTag:aTag target:self];
 }
 
 -(CCAction*) getActionByTag:(int) aTag
 {
-	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	
 	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
 }

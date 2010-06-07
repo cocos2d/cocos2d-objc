@@ -731,7 +731,6 @@
 				5006BA5A11BBF58600E488BD /* PerformanceNodeChildrenTest */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				506719EE11B9348B006C0061 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				50671A0111B956ED006C0061 /* ParticlePerformance-Info.plist */,
@@ -1071,13 +1070,6 @@
 				5067194611B93361006C0061 /* ZipUtils.m */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		506719EE11B9348B006C0061 /* Resources-iPad */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
 		50F411831068D443002A0D5E /* FontLabel */ = {

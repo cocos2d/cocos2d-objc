@@ -260,6 +260,24 @@
 		500166040E72E1DB0085673F /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		5006B87D11BB71E000E488BD /* background3-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5006B87C11BB71E000E488BD /* background3-ipad.png */; };
 		5006B89F11BB76B100E488BD /* background1-ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50671C1411B99FC9006C0061 /* background1-ipad.jpg */; };
+		5006BCA011BCF3C300E488BD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		5006BCA111BCF3C300E488BD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		5006BCA211BCF3C300E488BD /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		5006BCA311BCF3C300E488BD /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		5006BCA411BCF3C300E488BD /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		5006BCA511BCF3C300E488BD /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		5006BCA611BCF3C300E488BD /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		5006BCA711BCF3C300E488BD /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		5006BCA911BCF3C300E488BD /* spritesheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E675060F65628C003DAA90 /* spritesheet1.png */; };
+		5006BCBE11BCF3C300E488BD /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
+		5006BD0011BCF3C300E488BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		5006BD0511BCF3C300E488BD /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		5006BD0611BCF3C300E488BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		5006BD0711BCF3C300E488BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		5006BD0811BCF3C300E488BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		5006BD0911BCF3C300E488BD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		5006BD2011BCF48D00E488BD /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006BD1D11BCF48D00E488BD /* AppController.m */; };
+		5006BD2111BCF48D00E488BD /* PerformanceNodeChildrenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5006BD1F11BCF48D00E488BD /* PerformanceNodeChildrenTest.m */; };
 		500AA21F0E77926900872752 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		500AA2200E77926900872752 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		500AA2210E77926900872752 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -1868,6 +1886,20 @@
 			remoteGlobalIDString = 5042256F0FC0B39C00B992F7;
 			remoteInfo = box2d;
 		};
+		5006BC9C11BCF3C300E488BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 504018E010FE800C0017842A;
+			remoteInfo = PerformanceTestTouches;
+		};
+		5006BC9E11BCF3C300E488BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		5012DD1A0FE2994300D6DDD1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2616,6 +2648,12 @@
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
 		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
 		5006B87C11BB71E000E488BD /* background3-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-ipad.png"; sourceTree = "<group>"; };
+		5006BD0D11BCF3C300E488BD /* PerformanceTestSprites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestSprites.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5006BD0F11BCF3C300E488BD /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy 2.plist"; path = "Resources/Info copy 2.plist"; sourceTree = "<group>"; };
+		5006BD1C11BCF48D00E488BD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		5006BD1D11BCF48D00E488BD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		5006BD1E11BCF48D00E488BD /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
+		5006BD1F11BCF48D00E488BD /* PerformanceNodeChildrenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceNodeChildrenTest.m; sourceTree = "<group>"; };
 		5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-mono.png"; sourceTree = "<group>"; };
 		5012DAC40FE179BF00D6DDD1 /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
 		5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3549,6 +3587,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5006BD0411BCF3C300E488BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5006BD0511BCF3C300E488BD /* libcocos2d.a in Frameworks */,
+				5006BD0611BCF3C300E488BD /* OpenGLES.framework in Frameworks */,
+				5006BD0711BCF3C300E488BD /* CoreGraphics.framework in Frameworks */,
+				5006BD0811BCF3C300E488BD /* QuartzCore.framework in Frameworks */,
+				5006BD0911BCF3C300E488BD /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5012DD310FE2994300D6DDD1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4334,6 +4384,7 @@
 				505228BA11B3DBB90061670F /* CocosDenshion - Drum Pad.app */,
 				5052293C11B3DCD80061670F /* CocosDenshion - Fade To Grey.app */,
 				5052296E11B3DCE90061670F /* CocosDenshion - FancyRat Metering Demo.app */,
+				5006BD0D11BCF3C300E488BD /* PerformanceTestSprites.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4384,6 +4435,7 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
+				5006BD0F11BCF3C300E488BD /* Info copy 2.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -4422,6 +4474,18 @@
 			);
 			name = "Box2DTestBed-Cocos2dIntegration";
 			path = "tests/Box2DTestBed-Cocos2dIntegration";
+			sourceTree = "<group>";
+		};
+		5006BD1B11BCF48D00E488BD /* PerformanceNodeChildrenTest */ = {
+			isa = PBXGroup;
+			children = (
+				5006BD1C11BCF48D00E488BD /* AppController.h */,
+				5006BD1D11BCF48D00E488BD /* AppController.m */,
+				5006BD1E11BCF48D00E488BD /* PerformanceNodeChildrenTest.h */,
+				5006BD1F11BCF48D00E488BD /* PerformanceNodeChildrenTest.m */,
+			);
+			name = PerformanceNodeChildrenTest;
+			path = tests/PerformanceTests/PerformanceNodeChildrenTest;
 			sourceTree = "<group>";
 		};
 		5012DD3E0FE299EA00D6DDD1 /* TouchesTest */ = {
@@ -5443,6 +5507,7 @@
 			isa = PBXGroup;
 			children = (
 				05CA7B0910ED679000F12774 /* blocks */,
+				5006BD1B11BCF48D00E488BD /* PerformanceNodeChildrenTest */,
 				50E2A41010A4A58700D894CE /* PerformanceParticleTest */,
 				50E2A40610A4A56900D894CE /* PerformanceSpriteTest */,
 				5040190010FE80650017842A /* PerformanceTouchesTest */,
@@ -6339,6 +6404,25 @@
 			name = Box2dTestBed;
 			productName = ChipmunkDemo;
 			productReference = 50010ED2103B3DB80059EC2E /* Box2dTestBed.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5006BC9A11BCF3C300E488BD /* PerformanceTestChildrenNode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5006BD0A11BCF3C300E488BD /* Build configuration list for PBXNativeTarget "PerformanceTestChildrenNode" */;
+			buildPhases = (
+				5006BC9F11BCF3C300E488BD /* Resources */,
+				5006BCFF11BCF3C300E488BD /* Sources */,
+				5006BD0411BCF3C300E488BD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5006BC9B11BCF3C300E488BD /* PBXTargetDependency */,
+				5006BC9D11BCF3C300E488BD /* PBXTargetDependency */,
+			);
+			name = PerformanceTestChildrenNode;
+			productName = "PerformanceTest-Sprites";
+			productReference = 5006BD0D11BCF3C300E488BD /* PerformanceTestSprites.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5012DD180FE2994300D6DDD1 /* TouchesTest */ = {
@@ -7412,6 +7496,7 @@
 				50C1953E0EE4B57E00829067 /* ParallaxTest */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
 				8EDF3EA90F6BDA0000F54643 /* PASoundEngineTest (experimental) */,
+				5006BC9A11BCF3C300E488BD /* PerformanceTestChildrenNode */,
 				50E2A3FF10A4A53000D894CE /* PerformanceTestParticles */,
 				50E2A3F310A4A51C00D894CE /* PerformanceTestSprites */,
 				504018E010FE800C0017842A /* PerformanceTestTouches */,
@@ -7512,6 +7597,23 @@
 				50011134103B7AFB0059EC2E /* r2.png in Resources */,
 				500111FE103B878B0059EC2E /* Icon.png in Resources */,
 				505464391062886600AB7C52 /* fps_images.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5006BC9F11BCF3C300E488BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5006BCA011BCF3C300E488BD /* Icon.png in Resources */,
+				5006BCA111BCF3C300E488BD /* Default.png in Resources */,
+				5006BCA211BCF3C300E488BD /* b1.png in Resources */,
+				5006BCA311BCF3C300E488BD /* b2.png in Resources */,
+				5006BCA411BCF3C300E488BD /* f1.png in Resources */,
+				5006BCA511BCF3C300E488BD /* f2.png in Resources */,
+				5006BCA611BCF3C300E488BD /* r1.png in Resources */,
+				5006BCA711BCF3C300E488BD /* r2.png in Resources */,
+				5006BCA911BCF3C300E488BD /* spritesheet1.png in Resources */,
+				5006BCBE11BCF3C300E488BD /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8711,6 +8813,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5006BCFF11BCF3C300E488BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5006BD0011BCF3C300E488BD /* main.m in Sources */,
+				5006BD2011BCF48D00E488BD /* AppController.m in Sources */,
+				5006BD2111BCF48D00E488BD /* PerformanceNodeChildrenTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5012DD2E0FE2994300D6DDD1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9429,6 +9541,16 @@
 			isa = PBXTargetDependency;
 			target = 5042256F0FC0B39C00B992F7 /* box2d */;
 			targetProxy = 50010EBE103B3DB80059EC2E /* PBXContainerItemProxy */;
+		};
+		5006BC9B11BCF3C300E488BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 504018E010FE800C0017842A /* PerformanceTestTouches */;
+			targetProxy = 5006BC9C11BCF3C300E488BD /* PBXContainerItemProxy */;
+		};
+		5006BC9D11BCF3C300E488BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 5006BC9E11BCF3C300E488BD /* PBXContainerItemProxy */;
 		};
 		5012DD190FE2994300D6DDD1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10198,6 +10320,53 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dTestBed;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/Tests/ external/Box2d";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		5006BD0B11BCF3C300E488BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Resources/Info copy 2.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = PerformanceTestSprites;
+			};
+			name = Debug;
+		};
+		5006BD0C11BCF3C300E488BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Resources/Info copy 2.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = PerformanceTestSprites;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -12745,6 +12914,15 @@
 			buildConfigurations = (
 				50010ED0103B3DB80059EC2E /* Debug */,
 				50010ED1103B3DB80059EC2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5006BD0A11BCF3C300E488BD /* Build configuration list for PBXNativeTarget "PerformanceTestChildrenNode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5006BD0B11BCF3C300E488BD /* Debug */,
+				5006BD0C11BCF3C300E488BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

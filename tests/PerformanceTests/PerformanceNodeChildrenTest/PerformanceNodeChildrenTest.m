@@ -13,15 +13,17 @@
 enum {
 	kTagInfoLayer = 1,
 	kTagMainLayer = 2,
-	kTagParticleSystem = 3,
-	kTagLabelAtlas = 4,
+	kTagLabelAtlas = 3,
+	
+	kTagBase = 20000,
 };
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 		@"IterateSpriteSheetFastEnum",
 		@"IterateSpriteSheetCArray",
-
+		@"AddSpriteSheet",
+		@"RemoveSpriteSheet",
 };
 
 Class nextAction()
@@ -318,5 +320,158 @@ Class restartAction()
 	return @"iter c-array";
 }
 
+@end
+
+#pragma mark -
+#pragma mark AddRemoveSpriteSheet
+
+@implementation AddRemoveSpriteSheet
+
+- (id)initWithQuantityOfNodes:(unsigned int)nodes
+{
+	spritesheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png"];
+	
+	if( ( self=[super initWithQuantityOfNodes:nodes]) ) {
+		
+		_profilingTimer = [[CCProfiler timerWithName:[self profilerName] andInstance:self] retain];
+		
+		[self addChild:spritesheet];		
+		[self scheduleUpdate];
+	}
+	
+	return self;
+}
+
+- (void) dealloc
+{
+	[CCProfiler releaseTimer:_profilingTimer];
+	[super dealloc];
+}
+
+-(void) updateQuantityOfNodes
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	// increase nodes
+	if( currentQuantityOfNodes < quantityOfNodes ) {
+		for(int i=0;i < (quantityOfNodes-currentQuantityOfNodes);i++) {
+			CCSprite *sprite = [CCSprite spriteWithTexture:[spritesheet texture] rect:CGRectMake(0, 0, 32, 32)];
+			[spritesheet addChild:sprite];
+			[sprite setPosition:ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height)];
+			[sprite setVisible:NO];
+		}
+	}
+	
+	
+	// decrease nodes
+	else if ( currentQuantityOfNodes > quantityOfNodes ) {
+		for(int i=0;i < (currentQuantityOfNodes-quantityOfNodes);i++) {
+			int index = currentQuantityOfNodes-i-1;
+			[spritesheet removeChildAtIndex:index cleanup:YES];
+		}
+		
+	}
+	
+	currentQuantityOfNodes = quantityOfNodes;
+}
+
+-(NSString*) title
+{
+	return @"none";
+}
+-(NSString*) profilerName
+{
+	return @"none";
+}
+@end
+
+@implementation AddSpriteSheet
+
+-(void) update:(ccTime)dt
+{
+	// 15 percent
+	int totalToAdd = currentQuantityOfNodes * 0.15f;
+
+	if( totalToAdd > 0 ) {
+		
+		CCSprite *sprites[ totalToAdd ];
+		
+		// Don't include the sprite creation time as part of the profiling
+		for(int i=0;i<totalToAdd;i++) {
+			sprites[i] = [CCSprite spriteWithTexture:[spritesheet texture] rect:CGRectMake(0,0,32,32)];
+		}
+		
+		// add them with random Z (very important!)
+		CCProfilingBeginTimingBlock(_profilingTimer);
+		for( int i=0; i < totalToAdd;i++ )
+		{
+			[spritesheet addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
+		}
+		CCProfilingEndTimingBlock(_profilingTimer);
+		
+		// remove them
+		for( int i=0;i <  totalToAdd;i++)
+		{
+			[spritesheet removeChildByTag:kTagBase+i cleanup:YES];
+		}
+	}
+}
+
+-(NSString*) title
+{
+	return @"Add to spritesheet";
+}
+-(NSString*) subtitle
+{
+	return @"Adds %10 of total sprites with random z. See console";
+}
+-(NSString*) profilerName
+{
+	return @"add sprites";
+}
+@end
+
+@implementation RemoveSpriteSheet
+-(void) update:(ccTime)dt
+{
+	// 15 percent
+	int totalToAdd = currentQuantityOfNodes * 0.15f;
+	
+	if( totalToAdd > 0 ) {
+		
+		CCSprite *sprites[ totalToAdd ];
+		
+		// Don't include the sprite creation time as part of the profiling
+		for(int i=0;i<totalToAdd;i++) {
+			sprites[i] = [CCSprite spriteWithTexture:[spritesheet texture] rect:CGRectMake(0,0,32,32)];
+		}
+		
+		// add them with random Z (very important!)
+		for( int i=0; i < totalToAdd;i++ )
+		{
+			[spritesheet addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
+		}
+		
+		// remove them
+		CCProfilingBeginTimingBlock(_profilingTimer);
+		for( int i=0;i <  totalToAdd;i++)
+		{
+			[spritesheet removeChildByTag:kTagBase+i cleanup:YES];
+		}
+		CCProfilingEndTimingBlock(_profilingTimer);
+	}
+}
+
+-(NSString*) title
+{
+	return @"Remove from spritesheet";
+}
+-(NSString*) subtitle
+{
+	return @"Remove %10 of total sprites placed randomly. See console";
+}
+-(NSString*) profilerName
+{
+	return @"remove sprites";
+}
 @end
 

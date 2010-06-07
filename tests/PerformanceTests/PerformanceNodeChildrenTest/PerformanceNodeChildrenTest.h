@@ -7,6 +7,8 @@
 
 Class nextAction();
 
+@class CCProfilingTimer;
+
 enum {
 	kMaxNodes = 15000,
 	kNodesIncrease = 500,
@@ -47,5 +49,22 @@ enum {
 @interface IterateSpriteSheetCArray : IterateSpriteSheet
 {}
 @end
+
+@interface AddRemoveSpriteSheet : MainScene
+{
+	CCSpriteSheet	*spritesheet;
+	CCProfilingTimer* _profilingTimer;
+}
+-(NSString*) profilerName;
+@end
+
+@interface AddSpriteSheet : AddRemoveSpriteSheet
+{}
+@end
+
+@interface RemoveSpriteSheet : AddRemoveSpriteSheet
+{}
+@end
+
 
 
