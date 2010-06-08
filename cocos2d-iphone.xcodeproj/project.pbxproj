@@ -668,11 +668,6 @@
 		505224E411B3D3A80061670F /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5052216311B3D38A0061670F /* SimpleAudioEngine.m */; };
 		5052250311B3D4950061670F /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		5052250411B3D4950061670F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		5052250611B3D4DF0061670F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250511B3D4DF0061670F /* CoreGraphics.framework */; };
-		5052250811B3D4DF0061670F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250711B3D4DF0061670F /* Foundation.framework */; };
-		5052250A11B3D4DF0061670F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250911B3D4DF0061670F /* OpenGLES.framework */; };
-		5052250C11B3D4DF0061670F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250B11B3D4DF0061670F /* QuartzCore.framework */; };
-		5052250E11B3D4DF0061670F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250D11B3D4DF0061670F /* UIKit.framework */; };
 		505227B911B3D7540061670F /* ActionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 505226B111B3D7530061670F /* ActionScene.m */; };
 		505227BA11B3D7540061670F /* GameSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 505226B311B3D7530061670F /* GameSoundManager.m */; };
 		505227BB11B3D7540061670F /* LoadingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 505226B511B3D7530061670F /* LoadingScene.m */; };
@@ -698,11 +693,6 @@
 		5052285811B3D8F40061670F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
 		505228AD11B3DBB90061670F /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		505228AE11B3DBB90061670F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		505228AF11B3DBB90061670F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250511B3D4DF0061670F /* CoreGraphics.framework */; };
-		505228B011B3DBB90061670F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250711B3D4DF0061670F /* Foundation.framework */; };
-		505228B111B3DBB90061670F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250911B3D4DF0061670F /* OpenGLES.framework */; };
-		505228B211B3DBB90061670F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250B11B3D4DF0061670F /* QuartzCore.framework */; };
-		505228B311B3DBB90061670F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250D11B3D4DF0061670F /* UIKit.framework */; };
 		505228B411B3DBB90061670F /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		505228B511B3DBB90061670F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		505228B611B3DBB90061670F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
@@ -733,21 +723,11 @@
 		505228FF11B3DC410061670F /* sixteensamples.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228E511B3DC410061670F /* sixteensamples.wav */; };
 		5052292F11B3DCD80061670F /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		5052293011B3DCD80061670F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		5052293111B3DCD80061670F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250511B3D4DF0061670F /* CoreGraphics.framework */; };
-		5052293211B3DCD80061670F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250711B3D4DF0061670F /* Foundation.framework */; };
-		5052293311B3DCD80061670F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250911B3D4DF0061670F /* OpenGLES.framework */; };
-		5052293411B3DCD80061670F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250B11B3D4DF0061670F /* QuartzCore.framework */; };
-		5052293511B3DCD80061670F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250D11B3D4DF0061670F /* UIKit.framework */; };
 		5052293611B3DCD80061670F /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		5052293711B3DCD80061670F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		5052293811B3DCD80061670F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
 		5052296111B3DCE90061670F /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		5052296211B3DCE90061670F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		5052296311B3DCE90061670F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250511B3D4DF0061670F /* CoreGraphics.framework */; };
-		5052296411B3DCE90061670F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250711B3D4DF0061670F /* Foundation.framework */; };
-		5052296511B3DCE90061670F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250911B3D4DF0061670F /* OpenGLES.framework */; };
-		5052296611B3DCE90061670F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250B11B3D4DF0061670F /* QuartzCore.framework */; };
-		5052296711B3DCE90061670F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5052250D11B3D4DF0061670F /* UIKit.framework */; };
 		5052296811B3DCE90061670F /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		5052296911B3DCE90061670F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		5052296A11B3DCE90061670F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
@@ -1433,6 +1413,26 @@
 		50D0E0D90FF930BA00098927 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50D0E0DA0FF930BA00098927 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50D0E0F10FF9316900098927 /* HelloEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D0E0F00FF9316900098927 /* HelloEvents.m */; };
+		50D1E6A111BE89E60030A027 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50D1E6A211BE89E60030A027 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50D1E6A311BE89E60030A027 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50D1E6A411BE89E60030A027 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50D1E6A511BE89E60030A027 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50D1E6A611BE89E70030A027 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50D1E6A711BE89E70030A027 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50D1E6A811BE89E70030A027 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50D1E6A911BE89E70030A027 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50D1E6AA11BE89E70030A027 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50D1E6AB11BE89E80030A027 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50D1E6AC11BE89E80030A027 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50D1E6AD11BE89E80030A027 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50D1E6AE11BE89E80030A027 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50D1E6AF11BE89E80030A027 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		50D1E6B011BE89E80030A027 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		50D1E6B111BE89E80030A027 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		50D1E6B211BE89E80030A027 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		50D1E6B311BE89E80030A027 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		50D1E6B411BE89E80030A027 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50D2AC9510E90DFA0068ECEB /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AC9110E90DFA0068ECEB /* CCTMXLayer.h */; };
 		50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9210E90DFA0068ECEB /* CCTMXLayer.m */; };
 		50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AC9310E90DFA0068ECEB /* CCTMXObjectGroup.h */; };
@@ -2824,11 +2824,6 @@
 		5052216311B3D38A0061670F /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		5052216711B3D38A0061670F /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 		505224F911B3D4700061670F /* CocosDenshion - Tom The Turret.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CocosDenshion - Tom The Turret.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5052250511B3D4DF0061670F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5052250711B3D4DF0061670F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5052250911B3D4DF0061670F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		5052250B11B3D4DF0061670F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		5052250D11B3D4DF0061670F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		505226B011B3D7530061670F /* ActionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionScene.h; sourceTree = "<group>"; };
 		505226B111B3D7530061670F /* ActionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionScene.m; sourceTree = "<group>"; };
 		505226B211B3D7530061670F /* GameSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSoundManager.h; sourceTree = "<group>"; };
@@ -3790,14 +3785,14 @@
 			files = (
 				5052250311B3D4950061670F /* libCocosDenshion.a in Frameworks */,
 				5052250411B3D4950061670F /* libcocos2d.a in Frameworks */,
-				5052250611B3D4DF0061670F /* CoreGraphics.framework in Frameworks */,
-				5052250811B3D4DF0061670F /* Foundation.framework in Frameworks */,
-				5052250A11B3D4DF0061670F /* OpenGLES.framework in Frameworks */,
-				5052250C11B3D4DF0061670F /* QuartzCore.framework in Frameworks */,
-				5052250E11B3D4DF0061670F /* UIKit.framework in Frameworks */,
 				5052285211B3D8CB0061670F /* OpenAL.framework in Frameworks */,
 				5052285511B3D8E50061670F /* AVFoundation.framework in Frameworks */,
 				5052285811B3D8F40061670F /* AudioToolbox.framework in Frameworks */,
+				50D1E6A111BE89E60030A027 /* CoreGraphics.framework in Frameworks */,
+				50D1E6A211BE89E60030A027 /* Foundation.framework in Frameworks */,
+				50D1E6A311BE89E60030A027 /* OpenGLES.framework in Frameworks */,
+				50D1E6A411BE89E60030A027 /* QuartzCore.framework in Frameworks */,
+				50D1E6A511BE89E60030A027 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3807,14 +3802,14 @@
 			files = (
 				505228AD11B3DBB90061670F /* libCocosDenshion.a in Frameworks */,
 				505228AE11B3DBB90061670F /* libcocos2d.a in Frameworks */,
-				505228AF11B3DBB90061670F /* CoreGraphics.framework in Frameworks */,
-				505228B011B3DBB90061670F /* Foundation.framework in Frameworks */,
-				505228B111B3DBB90061670F /* OpenGLES.framework in Frameworks */,
-				505228B211B3DBB90061670F /* QuartzCore.framework in Frameworks */,
-				505228B311B3DBB90061670F /* UIKit.framework in Frameworks */,
 				505228B411B3DBB90061670F /* OpenAL.framework in Frameworks */,
 				505228B511B3DBB90061670F /* AVFoundation.framework in Frameworks */,
 				505228B611B3DBB90061670F /* AudioToolbox.framework in Frameworks */,
+				50D1E6A611BE89E70030A027 /* CoreGraphics.framework in Frameworks */,
+				50D1E6A711BE89E70030A027 /* Foundation.framework in Frameworks */,
+				50D1E6A811BE89E70030A027 /* OpenGLES.framework in Frameworks */,
+				50D1E6A911BE89E70030A027 /* QuartzCore.framework in Frameworks */,
+				50D1E6AA11BE89E70030A027 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3824,14 +3819,14 @@
 			files = (
 				5052292F11B3DCD80061670F /* libCocosDenshion.a in Frameworks */,
 				5052293011B3DCD80061670F /* libcocos2d.a in Frameworks */,
-				5052293111B3DCD80061670F /* CoreGraphics.framework in Frameworks */,
-				5052293211B3DCD80061670F /* Foundation.framework in Frameworks */,
-				5052293311B3DCD80061670F /* OpenGLES.framework in Frameworks */,
-				5052293411B3DCD80061670F /* QuartzCore.framework in Frameworks */,
-				5052293511B3DCD80061670F /* UIKit.framework in Frameworks */,
 				5052293611B3DCD80061670F /* OpenAL.framework in Frameworks */,
 				5052293711B3DCD80061670F /* AVFoundation.framework in Frameworks */,
 				5052293811B3DCD80061670F /* AudioToolbox.framework in Frameworks */,
+				50D1E6AB11BE89E80030A027 /* CoreGraphics.framework in Frameworks */,
+				50D1E6AC11BE89E80030A027 /* Foundation.framework in Frameworks */,
+				50D1E6AD11BE89E80030A027 /* OpenGLES.framework in Frameworks */,
+				50D1E6AE11BE89E80030A027 /* QuartzCore.framework in Frameworks */,
+				50D1E6AF11BE89E80030A027 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3841,14 +3836,14 @@
 			files = (
 				5052296111B3DCE90061670F /* libCocosDenshion.a in Frameworks */,
 				5052296211B3DCE90061670F /* libcocos2d.a in Frameworks */,
-				5052296311B3DCE90061670F /* CoreGraphics.framework in Frameworks */,
-				5052296411B3DCE90061670F /* Foundation.framework in Frameworks */,
-				5052296511B3DCE90061670F /* OpenGLES.framework in Frameworks */,
-				5052296611B3DCE90061670F /* QuartzCore.framework in Frameworks */,
-				5052296711B3DCE90061670F /* UIKit.framework in Frameworks */,
 				5052296811B3DCE90061670F /* OpenAL.framework in Frameworks */,
 				5052296911B3DCE90061670F /* AVFoundation.framework in Frameworks */,
 				5052296A11B3DCE90061670F /* AudioToolbox.framework in Frameworks */,
+				50D1E6B011BE89E80030A027 /* CoreGraphics.framework in Frameworks */,
+				50D1E6B111BE89E80030A027 /* Foundation.framework in Frameworks */,
+				50D1E6B211BE89E80030A027 /* OpenGLES.framework in Frameworks */,
+				50D1E6B311BE89E80030A027 /* QuartzCore.framework in Frameworks */,
+				50D1E6B411BE89E80030A027 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4409,11 +4404,6 @@
 				50671C1211B99FC8006C0061 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				5052250511B3D4DF0061670F /* CoreGraphics.framework */,
-				5052250711B3D4DF0061670F /* Foundation.framework */,
-				5052250911B3D4DF0061670F /* OpenGLES.framework */,
-				5052250B11B3D4DF0061670F /* QuartzCore.framework */,
-				5052250D11B3D4DF0061670F /* UIKit.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -4441,16 +4431,16 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */,
+				2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				507FF879116BF6B000B6FAB2 /* PLBlocks.framework */,
 				50E3876C10446C6E00150883 /* AVFoundation.framework */,
 				50E3876E10446C6E00150883 /* AudioToolbox.framework */,
 				50E3877010446C6E00150883 /* OpenAL.framework */,
 				503092B210447296005F7AFC /* libz.dylib */,
-				2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */,
-				2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */,
-				1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */,
-				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -11055,7 +11045,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Tom The Turret";
-				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -11079,7 +11068,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Tom The Turret";
-				SDKROOT = iphoneos3.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -11104,7 +11092,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Drum Pad";
-				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -11128,7 +11115,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Drum Pad";
-				SDKROOT = iphoneos3.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -11153,7 +11139,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Fade To Grey";
-				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -11177,7 +11162,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Fade To Grey";
-				SDKROOT = iphoneos3.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -11202,7 +11186,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - FancyRat Metering Demo";
-				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -11226,7 +11209,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - FancyRat Metering Demo";
-				SDKROOT = iphoneos3.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -12707,7 +12689,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -12732,7 +12714,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -12741,7 +12723,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -12763,7 +12745,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
