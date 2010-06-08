@@ -137,19 +137,15 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 
 static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUInteger index)
 {
-	if(index<=arr->num){
-		ccArrayEnsureExtraCapacity(arr, 1);
-		
-		for( NSUInteger i = arr->num; index < i; i--)
-			arr->arr[i] = arr->arr[i - 1];
-		
-		arr->arr[index] = [object retain];
-		arr->num++;
-		
-	}else{
-		NSString *format = [NSString stringWithFormat:@"-ccArrayInsertObjectAtIndex(arr,object,index) index (%d) beyond bounds (%d)", index, arr->num+1];
-		[NSException raise:@"ccArray" format:format];
-	}
+	NSCAssert(index<=arr->num, @"Invalid index. Out of bounds");
+
+	ccArrayEnsureExtraCapacity(arr, 1);
+	
+	for( NSUInteger i = arr->num; index < i; i--)
+		arr->arr[i] = arr->arr[i - 1];
+	
+	arr->arr[index] = [object retain];
+	arr->num++;
 }
 
 /** Removes all objects from arr */
