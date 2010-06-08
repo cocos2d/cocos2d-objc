@@ -315,8 +315,8 @@
 	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() );
 
 	// position
-	particle->pos.x = (int) (centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1());
-	particle->pos.y = (int) (centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1());
+	particle->pos.x = centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1();
+	particle->pos.y = centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1();
 	
 	// Color
 	ccColor4F start;
