@@ -813,9 +813,10 @@ struct transformValues_ {
 	offsetPosition_.x += (origSize.width - rect.size.width) / 2;
 	offsetPosition_.y += (origSize.height - rect.size.height) / 2;
 
+	CCTexture2D *newTexture = [frame texture];
 	// update texture before updating texture rect
-	if ( frame.texture.name != self.texture.name )
-		[self setTexture: frame.texture];
+	if ( newTexture.name != texture_.name )
+		[self setTexture: newTexture];
 	
 	// update rect
 	[self setTextureRect:frame.rect untrimmedSize:frame.originalSize];
