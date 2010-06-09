@@ -111,12 +111,18 @@
 
 - (id) objectAtIndex:(NSUInteger)index
 {
+	if( index > data->num )
+		[NSException raise:NSRangeException
+					format: @"index out of range in objectAtIndex(%d)", data->num ];
+	
 	return data->arr[index];
 }
 
 - (id) lastObject
 {
-	return data->arr[data->num];
+	if( data->num > 0 )
+		return data->arr[data->num-1];
+	return nil;
 }
 
 - (BOOL) containsObject:(id)object

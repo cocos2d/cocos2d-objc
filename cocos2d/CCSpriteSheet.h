@@ -57,7 +57,6 @@
 
 	// all descendants: chlidren, gran children, etc...
 	CCArray	*descendants_;
-//	ccArray			*descendants_;
 }
 
 /** returns the TextureAtlas that is used */
