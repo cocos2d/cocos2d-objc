@@ -336,18 +336,22 @@ const int defaultCapacity = 29;
 
 -(NSUInteger) highestAtlasIndexInChild:(CCSprite*)sprite
 {
-	if( [[sprite children] count] == 0 )
+	CCArray *array = [sprite children];
+	int count = [array count];
+	if( count == 0 )
 		return sprite.atlasIndex;
 	else
-		return [self highestAtlasIndexInChild:[sprite.children lastObject]];
+		return [self highestAtlasIndexInChild:[array lastObject]];
 }
 
 -(NSUInteger) lowestAtlasIndexInChild:(CCSprite*)sprite
 {
-	if( [[sprite children] count] == 0 )
+	CCArray *array = [sprite children];
+	int count = [array count];
+	if( count == 0 )
 		return sprite.atlasIndex;
 	else
-		return [self lowestAtlasIndexInChild:[sprite.children objectAtIndex:0] ];
+		return [self lowestAtlasIndexInChild:[array objectAtIndex:0] ];
 }
 
 
