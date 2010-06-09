@@ -31,7 +31,7 @@
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
-#import "CCArray.h"
+#import "Support/CCArray.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
