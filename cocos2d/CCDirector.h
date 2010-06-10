@@ -240,6 +240,15 @@ and when to execute the Scenes.
 	/* projection used */
 	ccDirectorProjection projection_;
 	
+	/* screen, different than surface size */
+	CGSize	screenSize_;
+
+	/* screen, different than surface size */
+	CGSize	surfaceSize_;
+	
+	/* content scale factor */
+	CGFloat	contentScaleFactor_;
+	
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler;
 #endif
@@ -272,6 +281,12 @@ and when to execute the Scenes.
  @since v0.99.0
  */
 @property (nonatomic, readonly) BOOL	sendCleanupToScene;
+
+/** The scale factor determines how content in the OpenGL view is mapped from the logical coordinate space (measured in points) to the device coordinate space (measured in pixels).
+ Default value: 1.0
+ @since v0.99.4
+ */
+@property (nonatomic,readwrite) CGFloat	contentScaleFactor;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;

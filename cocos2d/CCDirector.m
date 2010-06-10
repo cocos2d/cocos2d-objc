@@ -178,6 +178,10 @@ static CCDirector *_sharedDirector = nil;
 		
 		// paused ?
 		isPaused_ = NO;
+		
+		contentScaleFactor_ = 1.0f;
+		
+		screenSize_ = surfaceSize_ = CGSizeZero;
 	}
 
 	return self;
@@ -318,12 +322,12 @@ static CCDirector *_sharedDirector = nil;
 
 -(float) getZEye
 {
-	return ( openGLView_.surfaceSize.height / 1.1566f );
+	return ( surfaceSize_.height / 1.1566f );
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize size = openGLView_.surfaceSize;
+	CGSize size = surfaceSize_;
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			glMatrixMode(GL_PROJECTION);
@@ -467,13 +471,21 @@ static CCDirector *_sharedDirector = nil;
 		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
 
 		// opaque by default (faster)
-		openGLView_.opaque = YES;		
+		openGLView_.opaque = YES;
+		
+		// content scale factor
+#ifdef __IPHONE_4_0
+		[openGLView_ setContentScaleFactor:contentScaleFactor_];
+#endif
 	}
 	else
 	{
 		// set the (new) frame of the glview
 		[openGLView_ setFrame:rect];
 	}
+	
+	screenSize_ = rect.size;
+	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height * contentScaleFactor_);
 	
 	// set the touch delegate of the glview to self
 	[openGLView_ setTouchDelegate: [CCTouchDispatcher sharedDispatcher]];
@@ -515,9 +527,9 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	CGSize s = openGLView_.surfaceSize;
+	CGSize s = screenSize_;
 	float newY = s.height - uiPoint.y;
-	float newX = s.width -uiPoint.x;
+	float newX = s.width - uiPoint.x;
 	
 	CGPoint ret;
 	switch ( deviceOrientation_) {
@@ -536,12 +548,14 @@ static CCDirector *_sharedDirector = nil;
 			ret.y = newX;
 			break;
 		}
+	
+	ret = ccpMult(ret, contentScaleFactor_);
 	return ret;
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	CGSize winSize = [self winSize];
+	CGSize winSize = surfaceSize_;
 	int oppositeX = winSize.width - glPoint.x;
 	int oppositeY = winSize.height - glPoint.y;
 	CGPoint uiPoint;
@@ -559,7 +573,8 @@ static CCDirector *_sharedDirector = nil;
 			uiPoint = ccp(oppositeY, glPoint.x);
 			break;
 	}
-	 	
+	
+	uiPoint = ccpMult(uiPoint, 1/contentScaleFactor_);
 	return uiPoint;
 }
 
@@ -567,7 +582,7 @@ static CCDirector *_sharedDirector = nil;
 // get the current size of the glview
 -(CGSize)winSize
 {
-	CGSize s = openGLView_.surfaceSize;
+	CGSize s = surfaceSize_;
 	
 	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
 		// swap x,y in landscape mode
@@ -581,7 +596,7 @@ static CCDirector *_sharedDirector = nil;
 // return  the current frame size
 -(CGSize)displaySize
 {
-	return openGLView_.surfaceSize;
+	return surfaceSize_;
 }
 
 - (void) setDeviceOrientation:(ccDeviceOrientation) orientation
@@ -610,7 +625,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) applyLandscape
 {	
-	CGSize s = [openGLView_ surfaceSize];
+	CGSize s = surfaceSize_;
 	float w = s.width / 2;
 	float h = s.height / 2;
 
@@ -866,6 +881,22 @@ static CCDirector *_sharedDirector = nil;
 }
 #endif
 
+-(CGFloat) contentScaleFactor
+{
+	return contentScaleFactor_;
+}
+
+-(void) setContentScaleFactor:(CGFloat)s
+{
+	if( s != contentScaleFactor_ ) {
+		contentScaleFactor_ = s;
+//		[openGLView_ setContentScaleFactor:s];
+		surfaceSize_ = CGSizeMake( screenSize_.width * s, screenSize_.height * s );
+	
+		// update projection
+		[self setProjection:projection_];
+	}
+}
 
 @end
 
