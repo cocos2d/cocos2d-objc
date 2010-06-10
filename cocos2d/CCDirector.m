@@ -318,7 +318,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(float) getZEye
 {
-	return ( openGLView_.frame.size.height / 1.1566f );
+	return ( openGLView_.surfaceSize.height / 1.1566f );
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -515,8 +515,9 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	float newY = openGLView_.frame.size.height - uiPoint.y;
-	float newX = openGLView_.frame.size.width -uiPoint.x;
+	CGSize s = openGLView_.surfaceSize;
+	float newY = s.height - uiPoint.y;
+	float newX = s.width -uiPoint.x;
 	
 	CGPoint ret;
 	switch ( deviceOrientation_) {
@@ -566,7 +567,6 @@ static CCDirector *_sharedDirector = nil;
 // get the current size of the glview
 -(CGSize)winSize
 {
-//	CGSize s = openGLView_.frame.size;
 	CGSize s = openGLView_.surfaceSize;
 	
 	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
@@ -581,7 +581,6 @@ static CCDirector *_sharedDirector = nil;
 // return  the current frame size
 -(CGSize)displaySize
 {
-//	return openGLView_.frame.size;
 	return openGLView_.surfaceSize;
 }
 
@@ -611,7 +610,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) applyLandscape
 {	
-	CGSize s = [openGLView_ frame].size;
+	CGSize s = [openGLView_ surfaceSize];
 	float w = s.width / 2;
 	float h = s.height / 2;
 

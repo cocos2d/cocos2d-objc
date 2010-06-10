@@ -65,8 +65,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "EAGLView.h"
 #import "OpenGL_Internal.h"
-#import "ccMacros.h"
+#import "CCDirector.h"
 #import "CCConfiguration.h"
+#import "ccMacros.h"
 #import "ES1Renderer.h"
 
 //CLASS IMPLEMENTATIONS:
@@ -132,6 +133,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
+	
+	// HACK to update the viewport. Viewport should be part of render, and not director
+	CCDirector *director = [CCDirector sharedDirector];
+	[director setProjection:[director projection]];
 }
 
 
