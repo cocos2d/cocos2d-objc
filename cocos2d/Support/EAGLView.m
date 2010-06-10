@@ -65,7 +65,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "EAGLView.h"
 #import "OpenGL_Internal.h"
-#import "CCDirector.h"
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ES1Renderer.h"
@@ -132,11 +131,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) layoutSubviews
 {
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	size_ = [renderer_ backingSize];
-	
-	// HACK to update the viewport. Viewport should be part of render, and not director
-	CCDirector *director = [CCDirector sharedDirector];
-	[director setProjection:[director projection]];
+	size_ = [renderer_ backingSize];	
 }
 
 

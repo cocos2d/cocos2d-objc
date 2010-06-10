@@ -3046,6 +3046,8 @@ Class restartAction()
 	// create an openGL view inside a window
 	[director attachInView:window];	
 
+	[director setContentScaleFactor:2];
+
 	[window makeKeyAndVisible];	
 	
 	CCScene *scene = [CCScene node];
