@@ -191,7 +191,8 @@ and when to execute the Scenes.
 {
 	EAGLView	*openGLView_;
 
-  NSBundle* loadingBundle;
+	NSBundle* loadingBundle;
+
 	// internal timer
 	NSTimeInterval animationInterval;
 	NSTimeInterval oldAnimationInterval;
@@ -260,8 +261,8 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (nonatomic,readwrite, assign) BOOL displayFPS;
-/** The OpenGL view */
-@property (nonatomic,readonly) EAGLView *openGLView;
+/** The EAGLView, where everything is rendered */
+@property (nonatomic,readwrite,retain) EAGLView *openGLView;
 /** Pixel format used to create the context */
 @property (nonatomic,readonly) tPixelFormat pixelFormat;
 /** whether or not the next delta time will be zero */
@@ -280,13 +281,12 @@ and when to execute the Scenes.
  If the new scene replaces the old one, the it will receive the "cleanup" message.
  @since v0.99.0
  */
-@property (nonatomic, readonly) BOOL	sendCleanupToScene;
+@property (nonatomic, readonly) BOOL sendCleanupToScene;
 
-/** The scale factor determines how content in the OpenGL view is mapped from the logical coordinate space (measured in points) to the device coordinate space (measured in pixels).
- Default value: 1.0
- @since v0.99.4
+/** The size in pixels of the surface. It could be different than the screen size.
+ High-res devices might have a higher surface size than the screen size
  */
-@property (nonatomic,readwrite) CGFloat	contentScaleFactor;
+@property (nonatomic, readwrite) CGFloat contentScaleFactor;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;
@@ -311,15 +311,15 @@ and when to execute the Scenes.
 
 // iPhone Specific
 
-/** change default pixel format.
- Call this class method before attaching it to a UIWindow/UIView
+/** Uses a new pixel format for the EAGLView.
+ Call this class method before attaching it to a UIView
  Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
  */
 -(void) setPixelFormat: (tPixelFormat) p;
 
-/** change depth buffer format.
+/** Change depth buffer format of the render buffer.
  Call this class method before attaching it to a UIWindow/UIView
- Default depth buffer: 0 (none).  Supported: kDepthBufferNone, kDepthBuffer16, and kDepthBuffer24
+ Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
  */
 -(void) setDepthBufferFormat: (tDepthBufferFormat) db;
 
@@ -327,13 +327,20 @@ and when to execute the Scenes.
 /** detach the cocos2d view from the view/window */
 -(BOOL)detach;
 
-/** attach in UIWindow using the full frame */
--(BOOL)attachInWindow:(UIWindow *)window;
+/** attach in UIWindow using the full frame.
+ It will create a EAGLView.
+ @deprecated Use attachInView instead
+ */
+-(BOOL)attachInWindow:(UIWindow *)window DEPRECATED_ATTRIBUTE;
 
-/** attach in UIView using the full frame */
+/** attach in UIView using the full frame.
+ It will create a EAGLView.
+ */
 -(BOOL)attachInView:(UIView *)view;
 
-/** attach in UIView using the given frame */
+/** attach in UIView using the given frame.
+ It will create a EAGLView and use it.
+ */
 -(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame;
 
 // Landscape

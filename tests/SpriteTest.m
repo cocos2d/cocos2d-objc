@@ -3031,28 +3031,41 @@ Class restartAction()
 	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
 
-	// Use this pixel format to have transparent buffers
-	[director setPixelFormat:kRGBA8];
+	// Create the EAGLView manually
+	EAGLView *glView = [[EAGLView alloc] initWithFrame:[window bounds]
+										   pixelFormat:kEAGLColorFormatRGBA8
+										   depthFormat:GL_DEPTH_COMPONENT24_OES
+									preserveBackbuffer:NO];
 	
-	// Create a depth buffer of 24 bits
-	// These means that openGL z-order will be taken into account
-	[director setDepthBufferFormat:kCCDepthBuffer24];
+	// TO ENABLE HI-RES DISPLAY FOLLOW INSTRUCTIONS FROM HERE:
+	// https://developer.apple.com/iphone/prerelease/library/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/SupportingResolutionIndependence/SupportingResolutionIndependence.html#//apple_ref/doc/uid/TP40007072-CH10-SW11
+	//
+	// And then uncomment the following line
+//	[director setContentScaleFactor:2];
+	//
+	// Once the iPhone SDK 4.0 is out of beta, this sample will be completed
+	//
 
+	// attach the openglView to the director
+	[director setOpenGLView:glView];
+	
+	// make the OpenGLView a child of the main window
+	[window addSubview:glView];
+	
+	// make main window visible
+	[window makeKeyAndVisible];	
+	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 	
-	// create an openGL view inside a window
-	[director attachInView:window];	
-
-	[director setContentScaleFactor:2];
-
-	[window makeKeyAndVisible];	
-	
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-			 
+	
+	
+	// and run it!
 	[director runWithScene: scene];
 }
 

@@ -86,7 +86,6 @@ extern NSString * cocos2dVersion(void);
 @synthesize animationInterval;
 @synthesize runningScene = runningScene_;
 @synthesize displayFPS;
-@synthesize openGLView=openGLView_;
 @synthesize pixelFormat=pixelFormat_;
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 @synthesize deviceOrientation=deviceOrientation_;
@@ -179,8 +178,7 @@ static CCDirector *_sharedDirector = nil;
 		// paused ?
 		isPaused_ = NO;
 		
-		contentScaleFactor_ = 1.0f;
-		
+		contentScaleFactor_ = 1;
 		screenSize_ = surfaceSize_ = CGSizeZero;
 	}
 
@@ -446,9 +444,9 @@ static CCDirector *_sharedDirector = nil;
 		NSString	*pFormat = nil;
 	    GLuint		depthFormat = 0;
 		
-		if(pixelFormat_==kPixelFormatRGBA8888)
+		if(pixelFormat_==kCCPixelFormatRGBA8888)
 			pFormat = kEAGLColorFormatRGBA8;
-		else if(pixelFormat_== kPixelFormatRGB565)
+		else if(pixelFormat_== kCCPixelFormatRGB565)
 			pFormat = kEAGLColorFormatRGB565;
 		else {
 			CCLOG(@"cocos2d: Director: Unknown pixel format.");
@@ -471,12 +469,7 @@ static CCDirector *_sharedDirector = nil;
 		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
 
 		// opaque by default (faster)
-		openGLView_.opaque = YES;
-		
-		// content scale factor
-#ifdef __IPHONE_4_0
-		[openGLView_ setContentScaleFactor:contentScaleFactor_];
-#endif
+		openGLView_.opaque = YES;		
 	}
 	else
 	{
@@ -486,6 +479,7 @@ static CCDirector *_sharedDirector = nil;
 	
 	screenSize_ = rect.size;
 	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height * contentScaleFactor_);
+
 	
 	// set the touch delegate of the glview to self
 	[openGLView_ setTouchDelegate: [CCTouchDispatcher sharedDispatcher]];
@@ -523,6 +517,31 @@ static CCDirector *_sharedDirector = nil;
 	return YES;
 }
 
+-(EAGLView*) openGLView
+{
+	return openGLView_;
+}
+
+-(void) setOpenGLView:(EAGLView *)view
+{
+	NSAssert( view, @"EAGView must be non-nil");
+
+	if( view != openGLView_ ) {
+		[openGLView_ release];
+		openGLView_ = [view retain];
+		
+		// set size
+		screenSize_ = [view bounds].size;
+		surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
+		
+		
+		CCTouchDispatcher *touchDispatcher = [CCTouchDispatcher sharedDispatcher];
+		[openGLView_ setTouchDelegate: touchDispatcher];
+		[touchDispatcher setDispatchEvents: YES];
+
+		[self initGLDefaultValues];
+	}
+}
 #pragma mark Director Scene Landscape
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
@@ -890,7 +909,6 @@ static CCDirector *_sharedDirector = nil;
 {
 	if( s != contentScaleFactor_ ) {
 		contentScaleFactor_ = s;
-//		[openGLView_ setContentScaleFactor:s];
 		surfaceSize_ = CGSizeMake( screenSize_.width * s, screenSize_.height * s );
 	
 		// update projection

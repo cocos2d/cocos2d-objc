@@ -131,7 +131,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) layoutSubviews
 {
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	size_ = [renderer_ backingSize];	
+	size_ = [renderer_ backingSize];
 }
 
 
