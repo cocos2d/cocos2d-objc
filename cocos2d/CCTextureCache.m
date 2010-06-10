@@ -24,9 +24,9 @@
  */
 
 #import "CCTextureCache.h"
+#import "CCTexture2D.h"
 #import "ccMacros.h"
 #import "CCDirector.h"
-#import "CCTexture2D.h"
 #import "Support/CCFileUtils.h"
 
 static EAGLContext *auxEAGLcontext = nil;
@@ -311,4 +311,13 @@ static CCTextureCache *sharedTextureCache;
 	for( NSUInteger i = 0; i < [keys count]; i++ )
 		[textures removeObjectForKey:[keys objectAtIndex:i]];
 }
+
+-(void) removeTextureForKey:(NSString*)name
+{
+	if( ! name )
+		return;
+	
+	[textures removeObjectForKey:name];
+}
+
 @end

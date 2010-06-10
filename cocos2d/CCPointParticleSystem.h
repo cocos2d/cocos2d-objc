@@ -36,6 +36,9 @@
   * consumes small memory: uses 1 vertex (x,y) per particle, no need to assign tex coordinates
   * size can't be bigger than 64
   * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
+ 
+ Limitations:
+  * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCQuadParticleSystem.
  */
 @interface CCPointParticleSystem : CCParticleSystem
 {	

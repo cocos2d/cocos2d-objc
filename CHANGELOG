@@ -1,14 +1,36 @@
-version 0.99.3 - 00-May-2010
+version 0.99.4-rc - XX-Jun-2010
+. [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
+. [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
+. [NEW] Particle: QuadParticle supports subrects (issue #870)
+. [NEW] TextureCache: Added removeTextureForKey: instance method
+. [NEW] Tests: Added PerformanceNodeChildren performance test
+. [FIX] Particle: Added support for ParticleDesigner 1.2
+. [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
+. [FIX] Tests: removed ParticleView, AccelViewPortDemo since they were deprecated
+. [FIX] Tests: fixed some tests so the look OK on the ipad
+. [FIX] Xcode: default family is: iPhone/iPad
+
+version 0.99.3 - 25-May-2010
+ . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
+ . [NEW] Director: added 'purgeCachedData' method. Should be called on memory-warning event.
+ . [FIX] ActionManager: Improved API, with better names (issue #835)
+ . [FIX] Action CCCallFunc: supports class methods (issue #868)
+ . [FIX] BitmapFontAtlas: Improved loading times (issue #833)
+ . [FIX] Node: Improved performance when rendering at the cost of 64 bytes more per node (issue #830)
+ . [FIX] Particle: Kill the particle if timeToLive < 0 before updating it.
+ . [FIX] Templates: Define DEBUG in Debug configurations
+
+version 0.99.3-rc - 18-May-2010
  . [NEW] License: Using MIT license
  . [NEW] Node: added removeFromParentAndCleanup:(BOOL) (issue #566)
- . [NEW] Particle: Added support for modes: "classic mode" and "radial movement" mode
+ . [NEW] Particle: Added support for modes: "gravity mode" (old behavior) and "radial movement" mode
  . [NEW] Particle: Added support Particle Designer (issue #XXX)
  . [NEW] Scheduler: supports pause/resume/'update' with priority (issue #439)
  . [FIX] ActionManager: using uthash instead of ccHashSet (easier to use)
  . [FIX] Actions: CallFuncND can pass any void ptr, even 0 or 1.
  . [FIX] BitmapFontAtlas: using uthash instead of ccHashSet (easier to use)
  . [FIX] Grid: Fixed memory leak (issue #853)
- . [FIX] Menu: If items is disabled or invisible, touch is not consumed (issues #779, #866)
+ . [FIX] Menu: If items are disabled or invisible, touch is not consumed (issues #779, #866)
  . [FIX] Particles: Removed unnecesary assert (issue #851)
  . [FIX] Particles: QuadParticle works with NPOT textures (issue #863)
  . [FIX] Scheduler: Improved performance (issue #492)

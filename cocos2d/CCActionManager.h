@@ -68,10 +68,10 @@ typedef struct _hashElement
 
 // actions
 
-/** Adds an action with a target. The action can be added paused or unpaused.
- The action will be run "against" the target.
- If the action is added paused, then it will be queued, but it won't be "ticked" until it is resumed.
- If the action is added unpaused, then it will be queued, and it will be "ticked" in every frame.
+/** Adds an action with a target.
+ If the target is already present, then the action will be added to the existing target.
+ If the target is not present, a new instance of this target will be created either paused or paused, and the action will be added to the newly created target.
+ When the target is paused, the queued actions won't be 'ticked'.
  */
 -(void) addAction: (CCAction*) action target:(id)target paused:(BOOL)paused;
 /** Removes all actions from all the targers.
@@ -97,14 +97,22 @@ typedef struct _hashElement
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(int) numberOfRunningActionsInTarget:(id)target;
-/** Pauses all actions for a certain target.
- When the actions are paused, they won't be "ticked".
+
+/** Pauses the target: all running actions and newly added actions will be paused.
  */
--(void) pauseAllActionsForTarget:(id)target;
-/** Resumes all actions for a certain target.
- Once the actions are resumed, they will be "ticked" in every frame.
+-(void) pauseTarget:(id)target;
+/** Resumes the target. All queued actions will be resumed.
  */
--(void) resumeAllActionsForTarget:(id)target;
+-(void) resumeTarget:(id)target;
+
+/** Resumes the target. All queued actions will be resumed.
+ @deprecated Use resumeTarget: instead. Will be removed in v1.0.
+ */
+-(void) resumeAllActionsForTarget:(id)target DEPRECATED_ATTRIBUTE;
+/** Pauses the target: all running actions and newly added actions will be paused.
+ */
+-(void) pauseAllActionsForTarget:(id)target DEPRECATED_ATTRIBUTE;
+
 
 @end
 

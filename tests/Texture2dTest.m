@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 			@"TextureGlClamp",
 			@"TextureGlRepeat",
 			@"TextureSizeTest",
+			@"TextureCache1",
 };
 
 #pragma mark Callbacks
@@ -79,7 +80,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];	
 		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild:label z:0 tag:kTagLabel];
+		[self addChild:label z:1 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
@@ -95,11 +96,11 @@ Class restartAction()
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
-		[self addChild: menu z:1];
-
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+		[self addChild: menu z:1];	
+		
 	}
 	return self;
 }
@@ -489,9 +490,8 @@ Class restartAction()
 	[label setColor:ccc3(16,16,255)];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	CCSprite *background = [CCSprite spriteWithFile:@"background1.jpg"];
-	background.position = ccp(240,160);
+		
+	CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(128,128,128,255) width:s.width height:s.height];
 	[self addChild:background z:-1];
 	
 	// RGBA 8888 image (32-bit)
@@ -904,8 +904,7 @@ Class restartAction()
 				
 		CGSize size =[[CCDirector sharedDirector] winSize];
 	
-		CCSprite *background = [CCSprite spriteWithFile:@"background3.jpg"];
-		background.anchorPoint = CGPointZero;
+		CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(128,128,128,255) width:size.width height:size.height];
 		[self addChild:background z:-1];
 		
 		
@@ -1086,7 +1085,62 @@ Class restartAction()
 {
 	return @"512x512, 1024x1024, 2048x2048 and 4096x4096. See the console.";
 }
+@end
 
+#pragma mark -
+#pragma mark TextureCache1
+
+@implementation TextureCache1
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCSprite *sprite;
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[sprite setPosition:ccp(s.width/5*1, s.height/2)];
+		[[sprite texture] setAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+
+		[[CCTextureCache sharedTextureCache] removeTexture:[sprite texture]];
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		[sprite setPosition:ccp(s.width/5*2, s.height/2)];
+		[[sprite texture] setAntiAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+
+		// 2nd set of sprites
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		[sprite setPosition:ccp(s.width/5*3, s.height/2)];
+		[[sprite texture] setAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+		
+		[[CCTextureCache sharedTextureCache] removeTextureForKey:@"grossinis_sister2.png"];
+		
+		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		[sprite setPosition:ccp(s.width/5*4, s.height/2)];
+		[[sprite texture] setAntiAliasTexParameters];
+		[sprite setScale:2];
+		[self addChild:sprite];
+		
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCTextureCache: remove";
+}
+-(NSString *) subtitle
+{
+	return @"4 images should appear: alias, antialias, alias, antilias";
+}
 @end
 
 
@@ -1146,9 +1200,10 @@ Class restartAction()
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero

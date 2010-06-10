@@ -28,14 +28,25 @@ static NSString *transitions[] = {
 		@"DemoRotFlower",
 		@"DemoModernArt",
 		@"DemoRing",
+
 		@"ParallaxParticle",
-//		@"ParticleDesigner1",
-//		@"ParticleDesigner2",
-//		@"ParticleDesigner3",
+
+		@"ParticleDesigner1",
+		@"ParticleDesigner2",
+		@"ParticleDesigner3",
 		@"ParticleDesigner4",
 		@"ParticleDesigner5",
 		@"ParticleDesigner6",
 		@"ParticleDesigner7",
+		@"ParticleDesigner8",
+		@"ParticleDesigner9",
+		@"ParticleDesigner10",
+
+		@"RadiusMode1",
+		@"RadiusMode2",
+		@"Issue704",
+		@"Issue872",
+		@"Issue870",
 };
 
 Class nextAction()
@@ -81,9 +92,12 @@ Class restartAction()
 		[self addChild:label z:100];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-		CCLabel *tapScreen = [CCLabel labelWithString:@"Tap the Screen" fontName:@"Arial" fontSize:20];
-		[tapScreen setPosition: ccp(s.width/2, s.height-80)];
-		[self addChild:tapScreen z:100];
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:100];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}			
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -174,6 +188,10 @@ Class restartAction()
 {
 	return @"No title";
 }
+-(NSString*) subtitle
+{
+	return @"Tap the screen";
+}
 
 -(void) toggleCallback: (id) sender
 {
@@ -223,8 +241,11 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [CCParticleFireworks node];
 	[background addChild: emitter z:10];
-	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+
+	// testing "alpha" blending in premultiplied images
+//	emitter.blendFunc = (ccBlendFunc) {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars.png"];
+	emitter.blendAdditive = YES;
 	
 	[self setEmitterPosition];
 }
@@ -323,27 +344,30 @@ Class restartAction()
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	// gravity
+	// Gravity Mode: gravity
 	emitter.gravity = CGPointZero;
+
+	// Set "Gravity" mode (default one)
+	emitter.emitterMode = kCCParticleModeGravity;
+	
+	// Gravity Mode: speed of particles
+	emitter.speed = 160;
+	emitter.speedVar = 20;
+		
+	// Gravity Mode: radial
+	emitter.radialAccel = -120;
+	emitter.radialAccelVar = 0;
+	
+	// Gravity Mode: tagential
+	emitter.tangentialAccel = 30;
+	emitter.tangentialAccelVar = 0;
 	
 	// angle
 	emitter.angle = 90;
 	emitter.angleVar = 360;
-	
-	// speed of particles
-	emitter.speed = 160;
-	emitter.speedVar = 20;
-	
-	// radial
-	emitter.radialAccel = -120;
-	emitter.radialAccelVar = 0;
-	
-	// tagential
-	emitter.tangentialAccel = 30;
-	emitter.tangentialAccelVar = 0;
-	
+		
 	// emitter position
 	emitter.position = ccp(160,240);
 	emitter.posVar = CGPointZero;
@@ -398,28 +422,26 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
-	[emitter release];
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	// gravity
+	// Set "Gravity" mode (default one)
+	emitter.emitterMode = kCCParticleModeGravity;
+
+	// Gravity mode: gravity
 	emitter.gravity = CGPointZero;
 	
-	// angle
-	emitter.angle = 90;
-	emitter.angleVar = 360;
-	
-	// speed of particles
+	// Gravity mode: speed of particles
 	emitter.speed = 160;
 	emitter.speedVar = 20;
 	
-	// radial
+	// Gravity mode: radial
 	emitter.radialAccel = -120;
 	emitter.radialAccelVar = 0;
 	
-	// tagential
+	// Gravity mode: tagential
 	emitter.tangentialAccel = 30;
 	emitter.tangentialAccelVar = 0;
 	
@@ -427,6 +449,10 @@ Class restartAction()
 	emitter.position = ccp(160,240);
 	emitter.posVar = CGPointZero;
 	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 360;
+		
 	// life of particles
 	emitter.life = 3;
 	emitter.lifeVar = 1;
@@ -626,31 +652,33 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCPointParticleSystem alloc] initWithTotalParticles:1000];
 	[background addChild: emitter z:10];
-	[emitter release];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// duration
-	emitter.duration = -1;
+	emitter.duration = kCCParticleDurationInfinity;
 	
-	// gravity
+	// Gravity mode
+	emitter.emitterMode = kCCParticleModeGravity;
+	
+	// Gravity mode: gravity
 	emitter.gravity = ccp(0,0);
+		
+	// Gravity mode: radial
+	emitter.radialAccel = 70;
+	emitter.radialAccelVar = 10;
+	
+	// Gravity mode: tagential
+	emitter.tangentialAccel = 80;
+	emitter.tangentialAccelVar = 0;
+	
+	// Gravity mode: speed of particles
+	emitter.speed = 50;
+	emitter.speedVar = 10;
 	
 	// angle
 	emitter.angle = 0;
 	emitter.angleVar = 360;
-	
-	// radial
-	emitter.radialAccel = 70;
-	emitter.radialAccelVar = 10;
-	
-	// tagential
-	emitter.tangentialAccel = 80;
-	emitter.tangentialAccelVar = 0;
-	
-	// speed of particles
-	emitter.speed = 50;
-	emitter.speedVar = 10;
 	
 	// emitter position
 	emitter.position = ccp( s.width/2, s.height/2);
@@ -704,7 +732,6 @@ Class restartAction()
 	[super onEnter];
 	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[background addChild: emitter z:10];
-	[emitter release];
 
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	emitter.lifeVar = 0;
@@ -745,7 +772,6 @@ Class restartAction()
 	
 	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[p1 addChild:emitter z:10];
-	[emitter release];
 	[emitter setPosition:ccp(250,200)];
 	
 	id par = [[CCParticleSun alloc] initWithTotalParticles:250];
@@ -771,18 +797,18 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-
+	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/PurpleFlame.plist"];
-	[self addChild: emitter z:10];
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
+	[self addChild: emitter z:10];
 }
 
 -(NSString *) title
 {
-	return @"PD: Purple Flame";
+	return @"PD: Spooky Peas";
 }
 @end
 
@@ -794,18 +820,25 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/QuickExplode.plist"];
-	[self addChild: emitter z:10];
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpinningPeas.plist"];
+	[self addChild: emitter z:10];
+	
+	// custom spinning
+	self.emitter.startSpin = 0;
+	self.emitter.startSpin = 360;
+	self.emitter.endSpin = 720;
+	self.emitter.endSpinVar = 360;	
 }
 
 -(NSString *) title
 {
-	return @"PD: Quick Explode";
+	return @"PD: Spinning Peas";
 }
 @end
+
 
 #pragma mark -
 
@@ -815,16 +848,17 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/VeryPretty.plist"];
-	[self addChild: emitter z:10];
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
+
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/LavaFlow.plist"];
+	[self addChild: emitter z:10];
+
 }
 
 -(NSString *) title
 {
-	return @"PD: Very Pretty";
+	return @"PD: Lava Flow";
 }
 @end
 
@@ -838,9 +872,9 @@ Class restartAction()
 	[self setColor:ccBLACK];
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ExplodingRing.plist"];
 	[self addChild: emitter z:10];
+
 	[self removeChild:background cleanup:YES];
 	background = nil;
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -862,13 +896,6 @@ Class restartAction()
 
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Comet.plist"];
 	[self addChild: emitter z:10];
-	[self setEmitterPosition];
-	
-	// custom smooth
-	self.emitter.startSpin = 0;
-	self.emitter.startSpin = 360;
-	self.emitter.endSpin = 720;
-	self.emitter.endSpinVar = 360;
 }
 
 -(NSString *) title
@@ -890,7 +917,6 @@ Class restartAction()
 
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BurstPipe.plist"];
 	[self addChild: emitter z:10];
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
@@ -912,12 +938,419 @@ Class restartAction()
 	
 	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BoilingFoam.plist"];
 	[self addChild: emitter z:10];
-	[self setEmitterPosition];
 }
 
 -(NSString *) title
 {
 	return @"PD: Boiling Foam";
+}
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner8
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Flower.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Flower";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner9
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Spiral.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Blur Spiral";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+
+@end
+
+#pragma mark -
+
+@implementation ParticleDesigner10
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Galaxy.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Galaxy";
+}
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+@end
+
+
+#pragma mark -
+
+
+@implementation RadiusMode1
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:200];
+	[self addChild: emitter z:10];
+
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+	
+	// duration
+	emitter.duration = kCCParticleDurationInfinity;
+
+	// radius mode
+	emitter.emitterMode = kCCParticleModeRadius;
+	
+	// radius mode: start and end radius in pixels
+	emitter.startRadius = 0;
+	emitter.startRadiusVar = 0;
+	emitter.endRadius = 160;
+	emitter.endRadiusVar = 0;
+	
+	// radius mode: degrees per second
+	emitter.rotatePerSecond = 180;
+	emitter.rotatePerSecondVar;
+	
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 0;
+		
+	// emitter position
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	emitter.position = ccp( size.width/2, size.height/2);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 5;
+	emitter.lifeVar = 0;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 32;
+	emitter.startSizeVar = 0;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+	
+	// additive
+	emitter.blendAdditive = NO;
+}
+
+
+-(NSString *) title
+{
+	return @"Radius Mode: Spiral";
+}
+@end
+
+#pragma mark -
+
+@implementation RadiusMode2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:200];
+	[self addChild: emitter z:10];
+	
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+	
+	// duration
+	emitter.duration = kCCParticleDurationInfinity;
+	
+	// radius mode
+	emitter.emitterMode = kCCParticleModeRadius;
+	
+	// radius mode: 100 pixels from center
+	emitter.startRadius = 100;
+	emitter.startRadiusVar = 0;
+	emitter.endRadius = kCCParticleStartRadiusEqualToEndRadius;
+	emitter.endRadiusVar = 0;	// not used when start == end
+	
+	// radius mode: degrees per second
+	// 45 * 4 seconds of life = 180 degrees
+	emitter.rotatePerSecond = 45;
+	emitter.rotatePerSecondVar = 0;
+	
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 0;
+	
+	// emitter position
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	emitter.position = ccp( size.width/2, size.height/2);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 4;
+	emitter.lifeVar = 0;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 32;
+	emitter.startSizeVar = 0;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+	
+	// additive
+	emitter.blendAdditive = NO;
+	
+}
+
+-(NSString *) title
+{
+	return @"Radius Mode: Semi Circle";
+}
+@end
+
+#pragma mark -
+
+@implementation Issue704
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:100];
+	[self addChild: emitter z:10];
+	emitter.duration = kCCParticleDurationInfinity;
+	
+	// radius mode
+	emitter.emitterMode = kCCParticleModeRadius;
+	
+	// radius mode: 50 pixels from center
+	emitter.startRadius = 50;
+	emitter.startRadiusVar = 0;
+	emitter.endRadius = kCCParticleStartRadiusEqualToEndRadius;
+	emitter.endRadiusVar = 0;	// not used when start == end
+	
+	// radius mode: degrees per second
+	// 45 * 4 seconds of life = 180 degrees
+	emitter.rotatePerSecond = 0;
+	emitter.rotatePerSecondVar = 0;
+	
+	
+	// angle
+	emitter.angle = 90;
+	emitter.angleVar = 0;
+	
+	// emitter position
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	emitter.position = ccp( size.width/2, size.height/2);
+	emitter.posVar = CGPointZero;
+	
+	// life of particles
+	emitter.life = 5;
+	emitter.lifeVar = 0;
+	
+	// spin of particles
+	emitter.startSpin = 0;
+	emitter.startSpinVar = 0;
+	emitter.endSpin = 0;
+	emitter.endSpinVar = 0;
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColor = startColor;
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	emitter.startColorVar = startColorVar;
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	emitter.endColor = endColor;
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	emitter.endColorVar = endColorVar;
+	
+	// size, in pixels
+	emitter.startSize = 16;
+	emitter.startSizeVar = 0;
+	emitter.endSize = kCCParticleStartSizeEqualToEndSize;
+	
+	// emits per second
+	emitter.emissionRate = emitter.totalParticles/emitter.life;
+
+	// additive
+	emitter.blendAdditive = NO;
+		
+	id rot = [CCRotateBy actionWithDuration:16 angle:360];
+	[emitter runAction: [CCRepeatForever actionWithAction:rot] ];
+	
+}
+
+-(NSString *) title
+{
+	return @"Issue 704. Free + Rot";
+}
+
+-(NSString*) subtitle
+{
+	return @"Emitted particles should not rotate";
+}
+@end
+
+#pragma mark -
+
+@implementation Issue872
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	emitter = [[CCQuadParticleSystem alloc] initWithFile:@"Particles/Upsidedown.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"Issue 872. UpsideDown";
+}
+
+-(NSString*) subtitle
+{
+	return @"Particles should NOT be Upside Down. M should appear, not W.";
+}
+@end
+
+#pragma mark -
+
+@implementation Issue870
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CCQuadParticleSystem *system = [[CCQuadParticleSystem alloc] initWithFile:@"Particles/SpinningPeas.plist"];
+	
+	[system setTexture: [[CCTextureCache sharedTextureCache] addImage:@"particles.png"] withRect:CGRectMake(0,0,32,32)];
+	[self addChild: system z:10];
+	
+	emitter = system;
+	
+	index = 0;
+	
+	[self schedule:@selector(updateQuads:) interval:2];
+}
+
+-(void) updateQuads:(ccTime)dt
+{
+	index = (index + 1) % 4;
+	CGRect rect = CGRectMake(index*32, 0,32,32);
+	
+	CCQuadParticleSystem *system = (CCQuadParticleSystem*) emitter;
+	[system setTexture:[emitter texture] withRect:rect];
+}
+
+-(NSString *) title
+{
+	return @"Issue 870. SubRect";
+}
+
+-(NSString*) subtitle
+{
+	return @"Every 2 seconds the particle should change";
 }
 @end
 
@@ -984,9 +1417,10 @@ Class restartAction()
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero

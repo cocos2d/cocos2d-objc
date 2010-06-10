@@ -60,35 +60,52 @@
 #define CCLOGINFO(...) NSLog(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
-//simple macro that swaps 2 variables
+/** @def CC_SWAP
+simple macro that swaps 2 variables
+*/
 #define CC_SWAP( x, y )			\
 ({ __typeof__(x) temp  = (x);		\
 		x = y; y = temp;		\
 })
 
 
-
-
-/// returns a random float between -1 and 1
+/** @def CCRANDOM_MINUS1_1
+ returns a random float between -1 and 1
+ */
 #define CCRANDOM_MINUS1_1() ((random() / (float)0x3fffffff )-1.0f)
 
-/// returns a random float between 0 and 1
+/** @def CCRANDOM_0_1
+ returns a random float between 0 and 1
+ */
 #define CCRANDOM_0_1() ((random() / (float)0x7fffffff ))
 
-/// converts degrees to radians
+/** @def CC_DEGREES_TO_RADIANS
+ converts degrees to radians
+ */
 #define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0f * (float)M_PI)
 
-/// converts radians to degrees
+/** @def CC_RADIANS_TO_DEGREES
+ converts radians to degrees
+ */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / (float)M_PI * 180.0f)
 
-/// default gl blend src function
-//#define CC_BLEND_SRC GL_SRC_ALPHA
+/** @def CC_BLEND_SRC
+default gl blend src function. Compatible with premultiplied alpha images.
+*/
 #define CC_BLEND_SRC GL_ONE
-/// default gl blend dst function
+
+/** @def CC_BLEND_DST
+ default gl blend dst function. Compatible with premultiplied alpha images.
+ */
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 
-/// GL states that are enabled: GL_TEXTURE_2D
-/// GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
+/** @def CC_ENABLE_DEFAULT_GL_STATES
+ GL states that are enabled:
+	- GL_TEXTURE_2D
+	- GL_VERTEX_ARRAY
+	- GL_TEXTURE_COORD_ARRAY
+	- GL_COLOR_ARRAY
+ */
 #define CC_ENABLE_DEFAULT_GL_STATES() {				\
 	glEnableClientState(GL_VERTEX_ARRAY);			\
 	glEnableClientState(GL_COLOR_ARRAY);			\
@@ -96,14 +113,16 @@
 	glEnable(GL_TEXTURE_2D);						\
 }
 
-/// Disable default GL states: GL_TEXTURE_2D,
-/// GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
+/** @def CC_DISABLE_DEFAULT_GL_STATES 
+ Disable default GL states:
+	- GL_TEXTURE_2D
+	- GL_VERTEX_ARRAY
+	- GL_TEXTURE_COORD_ARRAY
+	- GL_COLOR_ARRAY
+ */
 #define CC_DISABLE_DEFAULT_GL_STATES() {			\
 	glDisable(GL_TEXTURE_2D);						\
 	glDisableClientState(GL_COLOR_ARRAY);			\
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
 	glDisableClientState(GL_VERTEX_ARRAY);			\
 }
-
-
-

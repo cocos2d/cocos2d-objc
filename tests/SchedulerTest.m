@@ -202,7 +202,7 @@ Class restartTest()
 
 -(void) pause:(ccTime)dt
 {
-	[[CCScheduler sharedScheduler] pauseAllSelectorsForTarget:self];
+	[[CCScheduler sharedScheduler] pauseTarget:self];
 }
 @end
 
@@ -595,9 +595,10 @@ Class restartTest()
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 - (void) dealloc

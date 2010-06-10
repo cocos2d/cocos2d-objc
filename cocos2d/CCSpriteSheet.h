@@ -35,7 +35,7 @@
 
 @class CCSprite;
 
-/** CCSpriteSheet is an optimization node: if it contains children, it will draw them in 1 single OpenGL call
+/** CCSpriteSheet is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
  * (often known as "batch draw").
  *
  * A CCSpriteSheet can reference one and only one texture (one image file, one texture atlas).
@@ -56,8 +56,7 @@
 	ccBlendFunc		blendFunc_;
 
 	// all descendants: chlidren, gran children, etc...
-	NSMutableArray	*descendants_;
-//	ccArray			*descendants_;
+	CCArray	*descendants_;
 }
 
 /** returns the TextureAtlas that is used */
@@ -67,7 +66,7 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** descendants (children, gran children, etc) */
-@property (nonatomic,readonly) NSMutableArray *descendants;
+@property (nonatomic,readonly) CCArray *descendants;
 
 /** creates a CCSpriteSheet with a texture2d and a default capacity of 29 children.
  The capacity will be increased in 33% in runtime if it run out of space.
@@ -107,7 +106,7 @@
    - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
  @deprecated Use [CCSprite spriteWithSpriteSheet:rect] instead;
  */
--(CCSprite*) createSpriteWithRect:(CGRect)rect __attribute__((deprecated));
+-(CCSprite*) createSpriteWithRect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 /** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet.
  It's the same as:
@@ -117,7 +116,7 @@
  @since v0.99.0
  @deprecated Use [CCSprite initWithSpriteSheet:rect] instead;
 */ 
--(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect __attribute__((deprecated));
+-(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
  @warning Removing a child from a CCSpriteSheet is very slow

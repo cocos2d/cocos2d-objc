@@ -67,9 +67,9 @@ Class restartAction()
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];
 		
 	}
@@ -237,9 +237,10 @@ Class restartAction()
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero

@@ -31,7 +31,7 @@
 
 enum {
 	//! Default tag
-	kActionTagInvalid = -1,
+	kCCActionTagInvalid = -1,
 };
 
 /** Base class for CCAction objects.

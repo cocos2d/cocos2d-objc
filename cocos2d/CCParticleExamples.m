@@ -43,20 +43,19 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,-90);
 		
-		// angle
-		angle = 90;
-		angleVar = 20;
-		
-		// radial
+		// Gravity Mode:  radial
 		self.radialAccel = 0;
 		self.radialAccelVar = 0;
 
-		// speed of particles
+		//  Gravity Mode: speed of particles
 		self.speed = 180;
 		self.speedVar = 50;
 		
@@ -64,6 +63,10 @@
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
 		
+		// angle
+		angle = 90;
+		angleVar = 20;
+				
 		// life of particles
 		life = 3.5f;
 		lifeVar = 1;
@@ -118,18 +121,25 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
 		
-		// angle
-		self.angle = 90;
-		self.angleVar = 10;
-
-		// radial acceleration
+		// Gravity Mode: radial acceleration
 		self.radialAccel = 0;
 		self.radialAccelVar = 0;
+		
+		// Gravity Mode: speed of particles
+		self.speed = 60;
+		self.speedVar = 20;		
+		
+		// starting angle
+		angle = 90;
+		angleVar = 10;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -140,9 +150,6 @@
 		life = 3;
 		lifeVar = 0.25f;
 		
-		// speed of particles
-		self.speed = 60;
-		self.speedVar = 20;
 			
 		// size, in pixels
 		startSize = 54.0f;
@@ -197,18 +204,26 @@
 		self.blendAdditive = YES;
 			
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 		
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+		
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
+		
+		// Gravity mode: radial acceleration
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
+		
+		// Gravity mode: speed of particles
+		self.speed = 20;
+		self.speedVar = 5;
+				
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
-		
-		// radial acceleration
-		self.radialAccel = 0;
-		self.radialAccelVar = 0;	
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -218,10 +233,6 @@
 		// life of particles
 		life = 1;
 		lifeVar = 0.5f;
-		
-		// speed of particles
-		self.speed = 20;
-		self.speedVar = 5;
 		
 		// size, in pixels
 		startSize = 30.0f;
@@ -270,26 +281,29 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
+		
+		// Gravity Mode: speed of particles
+		self.speed = 60;
+		self.speedVar = 10;
+			
+		// Gravity Mode: radial
+		self.radialAccel = -80;
+		self.radialAccelVar = 0;
+		
+		// Gravity Mode: tagential
+		self.tangentialAccel = 80;
+		self.tangentialAccelVar = 0;
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
-		
-		// speed of particles
-		self.speed = 60;
-		self.speedVar = 10;
-			
-		// radial
-		self.radialAccel = -80;
-		self.radialAccelVar = 0;
-		
-		// tagential
-		self.tangentialAccel = 80;
-		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -350,26 +364,29 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
 		
-		// angle
-		angle = 90;
-		angleVar = 360;
-		
-		// speed of particles
+		// Gravity Mode: speed of particles
 		self.speed = 80;
 		self.speedVar = 10;
 		
-		// radial
+		// Gravity Mode: radial
 		self.radialAccel = -60;
 		self.radialAccelVar = 0;
 		
-		// tagential
+		// Gravity Mode: tagential
 		self.tangentialAccel = 15;
 		self.tangentialAccelVar = 0;
+
+		// angle
+		angle = 90;
+		angleVar = 360;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -430,26 +447,29 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 		
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+
+		// Gravity Mode: gravity
 		self.gravity = ccp(-200,200);
 
-		// angle
-		angle = 90;
-		angleVar = 360;
-		
-		// speed of particles
+		// Gravity Mode: speed of particles
 		self.speed = 15;
 		self.speedVar = 5;
 		
-		// radial
+		// Gravity Mode: radial
 		self.radialAccel = 0;
 		self.radialAccelVar = 0;
 		
-		// tagential
+		// Gravity Mode: tagential
 		self.tangentialAccel = 0;
 		self.tangentialAccelVar = 0;
+		
+		// angle
+		angle = 90;
+		angleVar = 360;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -510,26 +530,29 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 
-		// gravity
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+		
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
+		
+		// Gravity Mode: speed of particles
+		self.speed = 150;
+		self.speedVar = 0;
+		
+		// Gravity Mode: radial
+		self.radialAccel = -380;
+		self.radialAccelVar = 0;
+		
+		// Gravity Mode: tagential
+		self.tangentialAccel = 45;
+		self.tangentialAccelVar = 0;
 		
 		// angle
 		angle = 90;
 		angleVar = 0;
-		
-		// speed of particles
-		self.speed = 150;
-		self.speedVar = 0;
-		
-		// radial
-		self.radialAccel = -380;
-		self.radialAccelVar = 0;
-		
-		// tagential
-		self.tangentialAccel = 45;
-		self.tangentialAccelVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -592,25 +615,27 @@
 		// duration
 		duration = 0.1f;
 		
-		// gravity
+		self.emitterMode = kCCParticleModeGravity;
+
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
+		
+		// Gravity Mode: speed of particles
+		self.speed = 70;
+		self.speedVar = 40;
+		
+		// Gravity Mode: radial
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
+		
+		// Gravity Mode: tagential
+		self.tangentialAccel = 0;
+		self.tangentialAccelVar = 0;
 		
 		// angle
 		angle = 90;
 		angleVar = 360;
-		
-		// speed of particles
-		self.speed = 70;
-		self.speedVar = 40;
-		
-		// radial
-		self.radialAccel = 0;
-		self.radialAccelVar = 0;
-		
-		// tagential
-		self.tangentialAccel = 0;
-		self.tangentialAccelVar = 0;
-		
+				
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
@@ -670,22 +695,25 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 		
-		// Emitter mode: A
-		self.emitterMode = kCCParticleModeA;
+		// Emitter mode: Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
 		
-		// gravity
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
 
-		// radial acceleration
+		// Gravity Mode: radial acceleration
 		self.radialAccel = 0;
 		self.radialAccelVar = 0;
+		
+		// Gravity Mode: speed of particles
+		self.speed = 25;
+		self.speedVar = 10;
 		
 		// angle
 		angle = 90;
 		angleVar = 5;
-		
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
@@ -695,10 +723,6 @@
 		// life of particles
 		life = 4;
 		lifeVar = 1;
-		
-		// speed of particles
-		self.speed = 25;
-		self.speedVar = 10;
 		
 		// size, in pixels
 		startSize = 60.0f;
@@ -747,26 +771,23 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 		
-		self.emitterMode = kCCParticleModeA;
+		// set gravity mode.
+		self.emitterMode = kCCParticleModeGravity;
 
-		// gravity
+		// Gravity Mode: gravity
 		self.gravity = ccp(0,-1);
 		
-		// angle
-		angle = -90;
-		angleVar = 5;
-		
-		// speed of particles
+		// Gravity Mode: speed of particles
 		self.speed = 5;
 		self.speedVar = 1;
 		
-		// radial
+		// Gravity Mode: radial
 		self.radialAccel = 0;
 		self.radialAccelVar = 1;
 		
-		// tagential
+		// Gravity mode: tagential
 		self.tangentialAccel = 0;
 		self.tangentialAccelVar = 1;
 		
@@ -777,6 +798,10 @@
 		};
 		posVar = ccp( [[CCDirector sharedDirector] winSize].width / 2, 0 );
 		
+		// angle
+		angle = -90;
+		angleVar = 5;
+
 		// life of particles
 		life = 45;
 		lifeVar = 15;
@@ -828,28 +853,29 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
 		// duration
-		duration = -1;
+		duration = kCCParticleDurationInfinity;
 		
-		self.emitterMode = kCCParticleModeA;
+		self.emitterMode = kCCParticleModeGravity;
 
-		// gravity
+		// Gravity Mode: gravity
 		self.gravity = ccp(10,-10);
 		
-		// radial
+		// Gravity Mode: radial
 		self.radialAccel = 0;
 		self.radialAccelVar = 1;
 		
-		// tagential
+		// Gravity Mode: tagential
 		self.tangentialAccel = 0;
 		self.tangentialAccelVar = 1;
+
+		// Gravity Mode: speed of particles
+		self.speed = 130;
+		self.speedVar = 30;
 		
 		// angle
 		angle = -90;
 		angleVar = 5;
 		
-		// speed of particles
-		self.speed = 130;
-		self.speedVar = 30;
 		
 		// emitter position
 		self.position = (CGPoint) {

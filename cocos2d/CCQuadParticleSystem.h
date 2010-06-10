@@ -27,16 +27,20 @@
 
 #import "CCParticleSystem.h"
 
+@class CCSpriteFrame;
+
 /** CCQuadParticleSystem is a subclass of CCParticleSystem
 
  It includes all the features of ParticleSystem.
  
- Special features and Limitations:
+ Special features and Limitations:	
   - Particle size can be any float number.
   - The system can be scaled
   - The particles can be rotated
-  - It is a bit slower that PointParticleSystem
-  - It consumes more RAM and more GPU memory than PointParticleSystem
+  - On 1st and 2nd gen iPhones: It is only a bit slower that CCPointParticleSystem
+  - On 3rd gen iPhone and iPads: It is MUCH faster than CCPointParticleSystem
+  - It consumes more RAM and more GPU memory than CCPointParticleSystem
+  - It supports subrects
  @since v0.8
  */
 @interface CCQuadParticleSystem : CCParticleSystem
@@ -48,9 +52,20 @@
 
 // initialices the indices for the vertices
 -(void) initIndices;
-// initilizes the text coords
--(void) initTexCoords;
 
+// initilizes the text coords
+-(void) initTexCoordsWithRect:(CGRect)rect;
+
+/** Sets a new CCSpriteFrame as particle.
+ WARNING: this method is experimental. Use setTexture:withRect instead.
+ @since v0.99.4
+ */
+-(void)setDisplayFrame:(CCSpriteFrame*)spriteFrame;
+
+/** Sets a new texture with a rect. The rect is in pixels.
+ @since v0.99.4
+ */
+-(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;
 
 @end
 

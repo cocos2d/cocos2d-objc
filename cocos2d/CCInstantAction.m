@@ -301,7 +301,7 @@
 		data = d;
 
 #if COCOS2D_DEBUG
-		NSMethodSignature * sig = [[t class] instanceMethodSignatureForSelector:s];
+		NSMethodSignature * sig = [t methodSignatureForSelector:s]; // added
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void)name:(id)sender data:(void*)data");
 #endif
 		callbackMethod_ = (CC_CALLBACK_ND) [t methodForSelector:s];
