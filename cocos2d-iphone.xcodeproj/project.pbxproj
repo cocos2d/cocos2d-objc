@@ -870,6 +870,12 @@
 		505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseActionsTest.m */; };
+		505F4C3311BFA68B002DCD39 /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 505F4C3111BFA68A002DCD39 /* ES1Renderer.m */; };
+		505F4C3411BFA68B002DCD39 /* ES1Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 505F4C3211BFA68B002DCD39 /* ES1Renderer.h */; };
+		505F4C3511BFA68B002DCD39 /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 505F4C3111BFA68A002DCD39 /* ES1Renderer.m */; };
+		505F4C3611BFA68B002DCD39 /* ES1Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 505F4C3211BFA68B002DCD39 /* ES1Renderer.h */; };
+		505F4C3811BFA6E7002DCD39 /* ESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 505F4C3711BFA6E7002DCD39 /* ESRenderer.h */; };
+		505F4C3911BFA6E7002DCD39 /* ESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 505F4C3711BFA6E7002DCD39 /* ESRenderer.h */; };
 		506046A20E75CEFB0044A29B /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		506046A30E75CEFB0044A29B /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		506046A40E75CEFB0044A29B /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -2961,6 +2967,9 @@
 		505B63A30F2F4210001B4104 /* EaseActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B63A60F2F4295001B4104 /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseActionsTest.h; path = tests/EaseActionsTest.h; sourceTree = "<group>"; };
 		505B63A70F2F4295001B4104 /* EaseActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseActionsTest.m; path = tests/EaseActionsTest.m; sourceTree = "<group>"; };
+		505F4C3111BFA68A002DCD39 /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
+		505F4C3211BFA68B002DCD39 /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
+		505F4C3711BFA6E7002DCD39 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
 		506144080E589A2E003CCDB7 /* cocosnodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosnodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocosnodeTest.h; path = tests/cocosnodeTest.h; sourceTree = "<group>"; };
 		5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocosnodeTest.m; path = tests/cocosnodeTest.m; sourceTree = "<group>"; };
@@ -4654,6 +4663,9 @@
 		501CCFB60E99658900B86F68 /* OpenGLSupport */ = {
 			isa = PBXGroup;
 			children = (
+				505F4C3711BFA6E7002DCD39 /* ESRenderer.h */,
+				505F4C3211BFA68B002DCD39 /* ES1Renderer.h */,
+				505F4C3111BFA68A002DCD39 /* ES1Renderer.m */,
 				6F305B5D0FB9D2790052E700 /* TransformUtils.h */,
 				6F305B5E0FB9D2790052E700 /* TransformUtils.m */,
 				501CCFA40E99657C00B86F68 /* EAGLView.h */,
@@ -6033,6 +6045,8 @@
 				508EAC301193F8B0007F058D /* utlist.h in Headers */,
 				5080435411BEE8D60039CA83 /* ccCArray.h in Headers */,
 				508043DF11BEE9300039CA83 /* CCArray.h in Headers */,
+				505F4C3411BFA68B002DCD39 /* ES1Renderer.h in Headers */,
+				505F4C3811BFA6E7002DCD39 /* ESRenderer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6115,6 +6129,8 @@
 				508EAC311193F8B0007F058D /* utlist.h in Headers */,
 				5080435211BEE8D60039CA83 /* ccCArray.h in Headers */,
 				508043E011BEE9300039CA83 /* CCArray.h in Headers */,
+				505F4C3611BFA68B002DCD39 /* ES1Renderer.h in Headers */,
+				505F4C3911BFA6E7002DCD39 /* ESRenderer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8759,6 +8775,7 @@
 				0529445C11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				50FBB2DD117613F500150761 /* CCPropertyAction.m in Sources */,
 				5080435511BEE8D60039CA83 /* CCArray.m in Sources */,
+				505F4C3311BFA68B002DCD39 /* ES1Renderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8904,6 +8921,7 @@
 				5015043E113300F900A9CA65 /* CCRadialTransition.m in Sources */,
 				50FBB2DB117613F500150761 /* CCPropertyAction.m in Sources */,
 				5080435311BEE8D60039CA83 /* CCArray.m in Sources */,
+				505F4C3511BFA68B002DCD39 /* ES1Renderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
