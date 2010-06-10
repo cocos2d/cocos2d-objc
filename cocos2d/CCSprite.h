@@ -219,7 +219,7 @@ typedef enum {
 /** Creates an sprite with a CGImageRef.
  @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
  */
-+(id) spriteWithCGImage: (CGImageRef)image __attribute__((deprecated));
++(id) spriteWithCGImage: (CGImageRef)image DEPRECATED_ATTRIBUTE;
 
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
@@ -271,7 +271,7 @@ typedef enum {
 /** Initializes an sprite with a CGImageRef
  @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
  */
--(id) initWithCGImage: (CGImageRef)image __attribute__((deprecated));
+-(id) initWithCGImage: (CGImageRef)image DEPRECATED_ATTRIBUTE;
 
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.

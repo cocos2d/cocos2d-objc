@@ -131,7 +131,13 @@ static CCActionManager *_sharedManager = nil;
 
 #pragma mark ActionManager - Pause / Resume
 
+// XXX DEPRECATED. REMOVE IN 1.0
 -(void) pauseAllActionsForTarget:(id)target
+{
+	[self pauseTarget:target];
+}
+
+-(void) pauseTarget:(id)target
 {
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
@@ -140,7 +146,14 @@ static CCActionManager *_sharedManager = nil;
 //	else
 //		CCLOG(@"cocos2d: pauseAllActions: Target not found");
 }
+
+// XXX DEPRECATED. REMOVE IN 1.0
 -(void) resumeAllActionsForTarget:(id)target
+{
+	[self resumeTarget:target];
+}
+
+-(void) resumeTarget:(id)target
 {
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
@@ -231,7 +244,7 @@ static CCActionManager *_sharedManager = nil;
 
 -(void) removeActionByTag:(int) aTag target:(id)target
 {
-	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
 	
 	tHashElement *element = NULL;
@@ -255,7 +268,7 @@ static CCActionManager *_sharedManager = nil;
 
 -(CCAction*) getActionByTag:(int)aTag target:(id)target
 {
-	NSAssert( aTag != kActionTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);

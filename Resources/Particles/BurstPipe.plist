@@ -14,6 +14,8 @@
 	<integer>770</integer>
 	<key>duration</key>
 	<real>-1</real>
+	<key>emitterType</key>
+	<real>0.0</real>
 	<key>finishColorAlpha</key>
 	<real>1</real>
 	<key>finishColorBlue</key>
@@ -50,8 +52,6 @@
 	<real>0.46050000190734863</real>
 	<key>particleLifespanVariance</key>
 	<real>0.59210002422332764</real>
-	<key>particleType</key>
-	<real>0.0</real>
 	<key>rotatePerSecond</key>
 	<real>0.0</real>
 	<key>rotatePerSecondVariance</key>

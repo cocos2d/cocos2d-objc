@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'FadeToGrey' target in the 'FadeToGrey' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif

@@ -43,6 +43,7 @@
 #import "CCTouchDispatcher.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
+#import "CCBitmapFontAtlas.h"
 
 // support imports
 #import "Support/glu.h"
@@ -299,7 +300,16 @@ static CCDirector *_sharedDirector = nil;
    depthBufferFormat_ = format;
 }
 
-#pragma mark Director Scene OpenGL Helper
+#pragma mark Director - Memory Helper
+
+-(void) purgeCachedData
+{
+	[CCBitmapFontAtlas purgeCachedData];	
+	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
+	[CCTextureCache purgeSharedTextureCache];	
+}
+
+#pragma mark Director - Scene OpenGL Helper
 
 -(ccDirectorProjection) projection
 {
@@ -702,6 +712,9 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel release];
 	FPSLabel = nil;
 #endif	
+
+	// Purge bitmap cache
+	[CCBitmapFontAtlas purgeCachedData];
 
 	// Purge all managers
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];

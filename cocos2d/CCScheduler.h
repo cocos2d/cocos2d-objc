@@ -176,17 +176,19 @@ struct _hashUpdateEntry;
  */
 -(void) unscheduleAllSelectors;
 
-/** Pause all scheduled selectors for a given target.
- This also includes the "update" selector.
+/** Pauses the target.
+ All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
+ If the target is not present, nothing happens.
  @since v0.99.3
  */
--(void) pauseAllSelectorsForTarget:(id)target;
+-(void) pauseTarget:(id)target;
 
-/** Resumes all scheduled selectors for a given target.
- This also includes the "update" selector.
+/** Resumes the target.
+ The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
+ If the target is not present, nothing happens.
  @since v0.99.3
  */
--(void) resumeAllSelectorsForTarget:(id)target;
+-(void) resumeTarget:(id)target;
 
 
 /** schedules a Timer.
@@ -194,13 +196,13 @@ struct _hashUpdateEntry;
  
  @deprecated Use scheduleSelector:forTarget:interval:paused instead. Will be removed in 1.0
  */
--(void) scheduleTimer: (CCTimer*) timer __attribute__((deprecated));
+-(void) scheduleTimer: (CCTimer*) timer DEPRECATED_ATTRIBUTE;
 
 /** unschedules an already scheduled Timer
  
  @deprecated Use unscheduleSelector:forTarget. Will be removed in v1.0
  */
--(void) unscheduleTimer: (CCTimer*) timer __attribute__((deprecated));
+-(void) unscheduleTimer: (CCTimer*) timer DEPRECATED_ATTRIBUTE;
 
 /** unschedule all timers.
  You should NEVER call this method, unless you know what you are doing.
@@ -208,5 +210,5 @@ struct _hashUpdateEntry;
  @deprecated Use scheduleAllSelectors instead. Will be removed in 1.0
  @since v0.8
  */
--(void) unscheduleAllTimers __attribute__ ((deprecated));
+-(void) unscheduleAllTimers DEPRECATED_ATTRIBUTE;
 @end

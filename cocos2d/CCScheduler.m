@@ -480,7 +480,7 @@ static CCScheduler *sharedScheduler;
 	[self unscheduleUpdateForTarget:target];
 }
 
--(void) resumeAllSelectorsForTarget:(id)target
+-(void) resumeTarget:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
 	
@@ -494,12 +494,12 @@ static CCScheduler *sharedScheduler;
 	tHashUpdateEntry * elementUpdate = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
 	if( elementUpdate ) {
-		NSAssert( elementUpdate->entry != NULL, @"resumeUpdateForTarget: unknown error");
+		NSAssert( elementUpdate->entry != NULL, @"resumeTarget: unknown error");
 		elementUpdate->entry->paused = NO;
 	}	
 }
 
--(void) pauseAllSelectorsForTarget:(id)target
+-(void) pauseTarget:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
 	
@@ -513,7 +513,7 @@ static CCScheduler *sharedScheduler;
 	tHashUpdateEntry * elementUpdate = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
 	if( elementUpdate ) {
-		NSAssert( elementUpdate->entry != NULL, @"pauseUpdateForTarget: unknown error");
+		NSAssert( elementUpdate->entry != NULL, @"pauseTarget: unknown error");
 		elementUpdate->entry->paused = YES;
 	}
 	

@@ -49,6 +49,7 @@ static NSString *transitions[] = {
 			@"SpriteChildrenChildren",
 			@"SpriteSheetChildrenChildren",
 			@"SpriteNilTexture",
+			@"SpriteSubclass",
 };
 
 enum {
@@ -1515,8 +1516,9 @@ Class restartAction()
 			[animFrames addObject:frame];
 		}
 
-		CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+		// 14 frames * 0.2sec = 2,8 seconds
+		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 
 		// to test issue #732, uncomment the following line
 //		sprite.flipX = YES;
@@ -1543,9 +1545,10 @@ Class restartAction()
 		
 		// append frames from another sheet
 		[moreFrames addObjectsFromArray:animFrames];
-		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" delay:0.2f frames:moreFrames];
+		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" frames:moreFrames];
 		
-		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animMixed restoreOriginalFrame:NO]]];
+		// 32 frames * 0.2 seconds = 6.4 seconds
+		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:6.4f animation:animMixed restoreOriginalFrame:NO]]];
 		
 		// to test issue #732, uncomment the following line
 //		sprite2.flipX = YES;
@@ -1612,8 +1615,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];			
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];			
 			[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:10 angle:360]]];
 
 			
@@ -1685,8 +1688,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 			[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:10 angle:360]]];
 			
 			[spritesheet addChild:sprite z:i];
@@ -1754,8 +1757,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];			
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];			
 			
 			id scale = [CCScaleBy actionWithDuration:2 scale:2];
 			id scale_back = [scale reverse];
@@ -1830,8 +1833,8 @@ Class restartAction()
 				CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
 				[animFrames addObject:frame];
 			}
-			CCAnimation *animation = [CCAnimation animationWithName:@"dance" delay:0.2f frames:animFrames];
-			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation restoreOriginalFrame:NO] ]];
+			CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 
 			id scale = [CCScaleBy actionWithDuration:2 scale:2];
 			id scale_back = [scale reverse];
@@ -2924,6 +2927,85 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark SpriteSubclass
+
+@interface MySprite1 : CCSprite
+{
+	int ivar1;
+}
+@end
+
+@implementation MySprite1
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self=[super initWithTexture:texture rect:rect]) ) {
+		ivar1 = 10;
+	}
+	   
+	return self;
+}
+@end
+
+
+@interface MySprite2 : CCSprite
+{
+	int ivar1;
+}
+@end
+@implementation MySprite2
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self=[super initWithTexture:texture rect:rect]) ) {
+		ivar1 = 10;
+	}
+	
+	return self;
+}
+@end
+		   
+@implementation SpriteSubclass
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
+		
+		CCSpriteSheet *aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		
+		// MySprite1
+		MySprite1 *sprite = [MySprite1 spriteWithSpriteFrameName:@"father.gif"];
+		sprite.position = ccp( s.width/4*1, s.height/2);
+		[aParent addChild:sprite];
+		
+		[self addChild:aParent];
+		
+		
+		// MySprite2
+		MySprite2 *sprite2 = [MySprite2 spriteWithFile:@"grossini.png"];
+		[self addChild:sprite2];
+		sprite2.position = ccp(s.width/4*3, s.height/2);
+		
+		NSLog(@"MySprite1: %@", sprite);
+		NSLog(@"MySprite2: %@", sprite2);
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Sprite subclass";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing initWithTexture:rect method";
+}
+@end
 
 #pragma mark -
 #pragma mark AppDelegate
@@ -2983,10 +3065,10 @@ Class restartAction()
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
+// purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero

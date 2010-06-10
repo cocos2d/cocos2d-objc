@@ -12,7 +12,7 @@
 @implementation Layer1
 -(id) init
 {
-	if((self=[super init])) {
+	if( (self=[super initWithColor: ccc4(0,255,0,255)]) ) {
 	
 		
 		CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
@@ -91,7 +91,7 @@
 @implementation Layer2
 -(id) init
 {
-	if((self=[super init])) {
+	if( (self=[super initWithColor: ccc4(255,0,0,255)]) ) {
 	
 		timeCounter = 0;
 
@@ -248,9 +248,10 @@
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 // next delta time will be zero
