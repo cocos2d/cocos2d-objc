@@ -67,98 +67,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "OpenGL_Internal.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
+#import "ES1Renderer.h"
 
 //CLASS IMPLEMENTATIONS:
 
 @implementation EAGLView
 
-@synthesize delegate=_delegate, autoresizesSurface=_autoresize, surfaceSize=_size, framebuffer = _framebuffer, pixelFormat = _format, depthFormat = _depthFormat, context = _context, touchDelegate;
+@synthesize delegate=delegate_, surfaceSize=size_, pixelFormat=format_, depthFormat=depthFormat_, touchDelegate=touchDelegate_;
 
 + (Class) layerClass
 {
 	return [CAEAGLLayer class];
-}
-
-- (BOOL) _createSurface
-{
-	CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
-	CGSize					newSize;
-	GLuint					oldRenderbuffer;
-	GLuint					oldFramebuffer;
-	
-	if(![EAGLContext setCurrentContext:_context]) {
-		return NO;
-	}
-	
-	newSize = [eaglLayer bounds].size;
-	newSize.width = roundf(newSize.width);
-	newSize.height = roundf(newSize.height);
-	
-	glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, (GLint *) &oldRenderbuffer);
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, (GLint *) &oldFramebuffer);
-	
-	glGenRenderbuffersOES(1, &_renderbuffer);
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _renderbuffer);
-	
-	if(![_context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer]) {
-		glDeleteRenderbuffersOES(1, &_renderbuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_BINDING_OES, oldRenderbuffer);
-		return NO;
-	}
-	
-	glGenFramebuffersOES(1, &_framebuffer);
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, _framebuffer);
-	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, _renderbuffer);
-	if (_depthFormat) {
-		glGenRenderbuffersOES(1, &_depthBuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, _depthBuffer);
-		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, _depthFormat, newSize.width, newSize.height);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, _depthBuffer);
-	}
-
-	_size = newSize;
-	if(!_hasBeenCurrent) {
-		glViewport(0, 0, newSize.width, newSize.height);
-		glScissor(0, 0, newSize.width, newSize.height);
-		_hasBeenCurrent = YES;
-	}	
-
-	// DEFAULTS:
-	// Set the OpenGL context
-	[EAGLContext setCurrentContext:_context];
-
-	// the the color render buffers
-	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _renderbuffer);
-	
-	CHECK_GL_ERROR();
-	
-	[_delegate didResizeEAGLSurfaceForView:self];
-	
-	return YES;
-}
-
-- (void) _destroySurface
-{
-	EAGLContext *oldContext = [EAGLContext currentContext];
-	
-	if (oldContext != _context)
-		[EAGLContext setCurrentContext:_context];
-	
-	if(_depthFormat) {
-		glDeleteRenderbuffersOES(1, &_depthBuffer);
-		_depthBuffer = 0;
-	}
-	
-	glDeleteRenderbuffersOES(1, &_renderbuffer);
-	_renderbuffer = 0;
-
-	glDeleteFramebuffersOES(1, &_framebuffer);
-	_framebuffer = 0;
-	
-	if (oldContext != _context)
-		[EAGLContext setCurrentContext:oldContext];
-	else
-		[EAGLContext setCurrentContext:nil];
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -183,21 +102,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[eaglLayer setDrawableProperties:[NSDictionary dictionaryWithObjectsAndKeys:
 										  [NSNumber numberWithBool:retained], kEAGLDrawablePropertyRetainedBacking,
 										  format, kEAGLDrawablePropertyColorFormat, nil]];
-		_format = format;
-		_depthFormat = depth;
+		format_ = format;
+		depthFormat_ = depth;
+		size_ = frame.size;
+
 		
-		_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-		if(_context == nil) {
+		renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
+		if( ! renderer_ ) {
 			[self release];
 			return nil;
 		}
 		
-		if(![self _createSurface]) {
-			[self release];
-			return nil;
-		}
-		
-		_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+		discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	}
 
 	return self;
@@ -207,48 +123,21 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[self _destroySurface];
-	
-	[_context release];
-	_context = nil;
-	
+
+	[renderer_ release];
 	[super dealloc];
 }
 
 - (void) layoutSubviews
 {
-	CGRect bounds = [self bounds];
-	
-	if(_autoresize && ((roundf(bounds.size.width) != _size.width) || (roundf(bounds.size.height) != _size.height))) {
-		[self _destroySurface];
-		CCLOG(@"cocos2d: Resizing surface from %fx%f to %fx%f", _size.width, _size.height, roundf(bounds.size.width), roundf(bounds.size.height));
-		[self _createSurface];
-	}
+    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+	size_ = [renderer_ backingSize];
 }
 
-- (void) setAutoresizesEAGLSurface:(BOOL)autoresizesEAGLSurface
-{
-	_autoresize = autoresizesEAGLSurface;
-	if(_autoresize)
-	[self layoutSubviews];
-}
 
-- (void) setCurrentContext
+-(EAGLContext*) context
 {
-	if(![EAGLContext setCurrentContext:_context]) {
-		CCLOG(@"cocos2d: Failed to set current context %p in %s\n", _context, __FUNCTION__);
-	}
-}
-
-- (BOOL) isCurrentContext
-{
-	return ([EAGLContext currentContext] == _context ? YES : NO);
-}
-
-- (void) clearCurrentContext
-{
-	if(![EAGLContext setCurrentContext:nil])
-		CCLOG(@"cocos2d: Failed to clear current context in %s\n", __FUNCTION__);
+	return	[renderer_ context];
 }
 
 - (void) swapBuffers
@@ -258,14 +147,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//	-> _context MUST be the OpenGL context
 	//	-> _renderBuffer must be the the RENDER BUFFER
 
+	EAGLContext *context = [renderer_ context];
+
 #ifdef __IPHONE_4_0
-	if( _depthFormat && _discardFramebufferSupported ) {
+	if( depthFormat_ && discardFramebufferSupported_ ) {
 		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
 		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 	}
 #endif // __IPHONE_4_0
 	
-	if(![_context presentRenderbuffer:GL_RENDERBUFFER_OES])
+	if(![context presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 #if COCOS2D_DEBUG
@@ -273,50 +164,54 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif	
 }
 
+#pragma mark EAGLView - Point conversion
+
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
-	CGRect				bounds = [self bounds];
+	CGRect bounds = [self bounds];
 	
-	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * _size.width, (point.y - bounds.origin.y) / bounds.size.height * _size.height);
+	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * size_.width, (point.y - bounds.origin.y) / bounds.size.height * size_.height);
 }
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect
 {
-	CGRect				bounds = [self bounds];
+	CGRect bounds = [self bounds];
 	
-	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
+	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
 }
 
+
 // Pass the touches to the superview
+#pragma mark EAGLView - Touch Delegate
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate)
+	if(touchDelegate_)
 	{
-		[touchDelegate touchesBegan:touches withEvent:event];
+		[touchDelegate_ touchesBegan:touches withEvent:event];
 	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate)
+	if(touchDelegate_)
 	{
-		[touchDelegate touchesMoved:touches withEvent:event];
+		[touchDelegate_ touchesMoved:touches withEvent:event];
 	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate)
+	if(touchDelegate_)
 	{
-		[touchDelegate touchesEnded:touches withEvent:event];
+		[touchDelegate_ touchesEnded:touches withEvent:event];
 	}
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate)
+	if(touchDelegate_)
 	{
-		[touchDelegate touchesCancelled:touches withEvent:event];
+		[touchDelegate_ touchesCancelled:touches withEvent:event];
 	}
 }
 

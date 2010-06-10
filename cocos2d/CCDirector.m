@@ -323,7 +323,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize size = openGLView_.frame.size;
+	CGSize size = openGLView_.surfaceSize;
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			glMatrixMode(GL_PROJECTION);
@@ -468,9 +468,6 @@ static CCDirector *_sharedDirector = nil;
 
 		// opaque by default (faster)
 		openGLView_.opaque = YES;		
-		
-		// set autoresizing enabled when attaching the glview to another view
-		[openGLView_ setAutoresizesEAGLSurface:YES];		
 	}
 	else
 	{
@@ -569,11 +566,14 @@ static CCDirector *_sharedDirector = nil;
 // get the current size of the glview
 -(CGSize)winSize
 {
-	CGSize s = openGLView_.frame.size;
+//	CGSize s = openGLView_.frame.size;
+	CGSize s = openGLView_.surfaceSize;
+	
 	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
 		// swap x,y in landscape mode
-		s.width = openGLView_.frame.size.height;
-		s.height = openGLView_.frame.size.width;
+		CGSize tmp = s;
+		s.width = tmp.height;
+		s.height = tmp.width;
 	}
 	return s;
 }
@@ -581,7 +581,8 @@ static CCDirector *_sharedDirector = nil;
 // return  the current frame size
 -(CGSize)displaySize
 {
-	return openGLView_.frame.size;
+//	return openGLView_.frame.size;
+	return openGLView_.surfaceSize;
 }
 
 - (void) setDeviceOrientation:(ccDeviceOrientation) orientation

@@ -26,8 +26,8 @@
 #import "ccCArray.h"
 
 
-/*
- Fast
+/** A faster alternative of NSArray.
+ CCArray uses internally a c-array.
  @since v0.99.4
  */
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding>
@@ -74,7 +74,5 @@
 - (void) makeObjectsPerformSelector:(SEL)aSelector withObject:(id)object;
 
 - (NSArray*) getNSArray;
-
-
 
 @end
