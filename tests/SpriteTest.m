@@ -3036,7 +3036,7 @@ Class restartAction()
 	
 	// Create a depth buffer of 24 bits
 	// These means that openGL z-order will be taken into account
-	[director setDepthBufferFormat:kDepthBuffer24];
+	[director setDepthBufferFormat:kCCDepthBuffer24];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -3045,9 +3045,6 @@ Class restartAction()
 	
 	// create an openGL view inside a window
 	[director attachInView:window];	
-
-//	[[director openGLView] setContentScaleFactor:2];
-	
 
 	[window makeKeyAndVisible];	
 	
