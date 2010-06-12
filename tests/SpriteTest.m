@@ -3041,7 +3041,8 @@ Class restartAction()
 	// https://developer.apple.com/iphone/prerelease/library/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/SupportingResolutionIndependence/SupportingResolutionIndependence.html#//apple_ref/doc/uid/TP40007072-CH10-SW11
 	//
 	// And then uncomment the following line
-//	[director setContentScaleFactor:2];
+	[glView setContentScaleFactor:2];
+	[director setContentScaleFactor:2];
 	//
 	// Once the iPhone SDK 4.0 is out of beta, this sample will be completed
 	//

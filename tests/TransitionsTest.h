@@ -7,7 +7,10 @@
 {
 	UIWindow	*window;
 }
+
+@property (nonatomic, readonly) UIWindow *window;
 @end
+
 
 @interface TextLayer: CCLayer
 {
