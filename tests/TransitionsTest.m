@@ -426,6 +426,8 @@ Class restartTransition()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window

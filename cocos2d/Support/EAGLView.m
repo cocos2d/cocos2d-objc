@@ -73,7 +73,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation EAGLView
 
-@synthesize delegate=delegate_, surfaceSize=size_, pixelFormat=format_, depthFormat=depthFormat_, touchDelegate=touchDelegate_;
+@synthesize delegate=delegate_, surfaceSize=size_;
+@synthesize pixelFormat=format_, depthFormat=depthFormat_;
+@synthesize touchDelegate=touchDelegate_;
 
 + (Class) layerClass
 {
@@ -179,7 +181,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
 }
-
 
 // Pass the touches to the superview
 #pragma mark EAGLView - Touch Delegate

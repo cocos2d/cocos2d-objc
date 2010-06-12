@@ -65,8 +65,6 @@ extern NSString * cocos2dVersion(void);
 -(BOOL)isOpenGLAttached;
 -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
 
--(void) initGLDefaultValues;
-
 -(void) preMainLoop;
 -(void) mainLoop;
 -(void) setNextScene;
@@ -200,7 +198,7 @@ static CCDirector *_sharedDirector = nil;
 	[super dealloc];
 }
 
--(void) initGLDefaultValues
+-(void) setGLDefaultValues
 {
 	// This method SHOULD be called only after openGLView_ was initialized
 	NSAssert( openGLView_, @"openGLView_ must be initialized");
@@ -513,7 +511,7 @@ static CCDirector *_sharedDirector = nil;
 		
 	NSAssert( [self isOpenGLAttached], @"FATAL: Director: Could not attach OpenGL view");
 
-	[self initGLDefaultValues];
+	[self setGLDefaultValues];
 	return YES;
 }
 
@@ -539,7 +537,7 @@ static CCDirector *_sharedDirector = nil;
 		[openGLView_ setTouchDelegate: touchDispatcher];
 		[touchDispatcher setDispatchEvents: YES];
 
-		[self initGLDefaultValues];
+		[self setGLDefaultValues];
 	}
 }
 #pragma mark Director Scene Landscape

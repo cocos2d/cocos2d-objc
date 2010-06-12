@@ -345,9 +345,9 @@ and when to execute the Scenes.
 
 // Landscape
 
-/** returns the size of the OpenGL view according to the landspace */
+/** returns the size of the OpenGL view in pixels, according to the landspace */
 - (CGSize) winSize;
-/** returns the display size of the OpenGL view */
+/** returns the display size of the OpenGL view in pixels */
 -(CGSize) displaySize;
 
 /** converts a UIKit coordinate to an OpenGL coordinate
@@ -428,6 +428,9 @@ and when to execute the Scenes.
  
 
 // OpenGL Helper
+
+/** sets the OpenGL default values */
+-(void) setGLDefaultValues;
 
 /** enables/disables OpenGL alpha blending */
 - (void) setAlphaBlending: (BOOL) on;
