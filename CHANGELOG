@@ -4,6 +4,8 @@ version 0.99.4-rc - XX-Jun-2010
 . [NEW] Particle: QuadParticle supports subrects (issue #870)
 . [NEW] TextureCache: Added removeTextureForKey: instance method
 . [NEW] Tests: Added PerformanceNodeChildren performance test
+. [NEW] EAGLView: renderer is an object. EAGLView creates one (issue #883)
+. [NEW] EAGLView: it's possible to create a EAGLView manually
 . [FIX] Particle: Added support for ParticleDesigner 1.2
 . [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
 . [FIX] Tests: removed ParticleView, AccelViewPortDemo since they were deprecated
