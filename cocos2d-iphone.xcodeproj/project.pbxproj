@@ -885,6 +885,7 @@
 		505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseActionsTest.m */; };
+		505DEE5311C4DCFC0045B393 /* MainWindow-ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */; };
 		505F4C3311BFA68B002DCD39 /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 505F4C3111BFA68A002DCD39 /* ES1Renderer.m */; };
 		505F4C3411BFA68B002DCD39 /* ES1Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 505F4C3211BFA68B002DCD39 /* ES1Renderer.h */; };
 		505F4C3511BFA68B002DCD39 /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 505F4C3111BFA68A002DCD39 /* ES1Renderer.m */; };
@@ -2030,7 +2031,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
 		505224FF11B3D4860061670F /* PBXContainerItemProxy */ = {
@@ -2995,6 +2996,7 @@
 		505B63A30F2F4210001B4104 /* EaseActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B63A60F2F4295001B4104 /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseActionsTest.h; path = tests/EaseActionsTest.h; sourceTree = "<group>"; };
 		505B63A70F2F4295001B4104 /* EaseActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseActionsTest.m; path = tests/EaseActionsTest.m; sourceTree = "<group>"; };
+		505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-ipad.xib"; sourceTree = "<group>"; };
 		505F4C3111BFA68A002DCD39 /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
 		505F4C3211BFA68B002DCD39 /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
 		505F4C3711BFA6E7002DCD39 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
@@ -4805,6 +4807,7 @@
 				504E18E711C4C91200E19835 /* EAGLViewTest.h */,
 				504E18E811C4C91200E19835 /* EAGLViewTest.m */,
 				504E18E911C4C91200E19835 /* MainWindow.xib */,
+				505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */,
 			);
 			name = EAGLViewTest;
 			path = tests/EAGLViewTest;
@@ -5560,16 +5563,16 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				504E18E511C4C91200E19835 /* EAGLViewTest */,
+				504828C70F45B15700A30CEF /* attachDemo */,
 				05CA7B0910ED679000F12774 /* blocks */,
+				500111EA103B878B0059EC2E /* Box2DTestBed-Cocos2dIntegration */,
+				5069C791100B84BC00489758 /* bugs */,
+				50175B240F33B22300624901 /* cocosLiveDemo */,
+				504E18E511C4C91200E19835 /* EAGLViewTest */,
 				5006BD1B11BCF48D00E488BD /* PerformanceNodeChildrenTest */,
 				50E2A41010A4A58700D894CE /* PerformanceParticleTest */,
 				50E2A40610A4A56900D894CE /* PerformanceSpriteTest */,
 				5040190010FE80650017842A /* PerformanceTouchesTest */,
-				504828C70F45B15700A30CEF /* attachDemo */,
-				500111EA103B878B0059EC2E /* Box2DTestBed-Cocos2dIntegration */,
-				5069C791100B84BC00489758 /* bugs */,
-				50175B240F33B22300624901 /* cocosLiveDemo */,
 				50DFC2CC0FF62852007E7827 /* Samples */,
 				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				504CC3441035BECA0096894C /* ActionManagerTest.h */,
@@ -7563,6 +7566,7 @@
 				509B3A270F3102FD00F2FB95 /* cocosLiveTest */,
 				506143F10E589A2E003CCDB7 /* cocosnodeTest */,
 				501945550F964C620059CE7C /* drawPrimitivesTest */,
+				504E17DB11C4C7E100E19835 /* EAGLViewTest */,
 				505B63780F2F4210001B4104 /* EaseActionsTest */,
 				50A24E190F377FA1007CAEB0 /* EffectsTest */,
 				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedTest */,
@@ -7594,7 +7598,6 @@
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
 				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
 				507FF8CE116D16F600B6FAB2 /* Bug350 */,
-				504E17DB11C4C7E100E19835 /* EAGLViewTest */,
 			);
 		};
 /* End PBXProject section */
@@ -7918,6 +7921,7 @@
 			files = (
 				504E18EC11C4C91200E19835 /* MainWindow.xib in Resources */,
 				504E192411C4CE5B00E19835 /* fps_images.png in Resources */,
+				505DEE5311C4DCFC0045B393 /* MainWindow-ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11166,7 +11170,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EAGLViewTest;
-				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -11190,7 +11193,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EAGLViewTest;
-				SDKROOT = iphoneos4.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -12884,8 +12886,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SDKROOT = iphoneos3.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -12915,8 +12917,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SDKROOT = iphoneos3.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
