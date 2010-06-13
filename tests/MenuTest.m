@@ -118,7 +118,14 @@ enum {
 
 -(void) onQuit: (id) sender
 {
-	[[CCDirector sharedDirector] end];
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// Since v0.99.4 you have to remove the OpenGL View manually
+	EAGLView *view = [director openGLView];
+	[view removeFromSuperview];
+
+	// kill the director
+	[director end];
 	
 	// HA HA... no more terminate on sdk v3.0
 	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -213,7 +220,7 @@ enum {
 
 -(void) menuCallbackOpacity: (id) sender
 {
-	id menu = [sender parent];
+	CCMenu *menu = (CCMenu*) [sender parent];
 	GLubyte opacity = [menu opacity];
 	if( opacity == 128 )
 		[menu setOpacity: 255];
@@ -421,20 +428,30 @@ enum {
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
+	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
-
-	// show FPS
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-
-	// multiple touches or not ?
-//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
 	
 	// frames per second
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
-
-	// attach cocos2d to a window
-	[[CCDirector sharedDirector] attachInView:window];
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+//	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -446,8 +463,7 @@ enum {
 	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
-	[window makeKeyAndVisible];
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

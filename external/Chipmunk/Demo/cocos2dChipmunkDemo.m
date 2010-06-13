@@ -486,33 +486,44 @@ glutStuff(int argc, const char *argv[])
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
-	
 	// must be called before any othe call to the director
-	// Try to use DisplayLink director (SDK >= 3.1) if it fails, use FastDirector
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	//	[[CCDirector sharedDirector] setLandscape: YES];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// Fast Director doesn't support setAnimationInterval yet
-	//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
 	
-	[[CCDirector sharedDirector] attachInView:window];
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// enable multiple touches
+	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	CCScene *scene = [CCScene node];
 	
 	MainLayer * mainLayer =[MainLayer node];
 	
 	[scene addChild: mainLayer];
-	
-	[window makeKeyAndVisible];
-	
-	[[CCDirector sharedDirector] runWithScene: scene];
+		
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

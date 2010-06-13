@@ -1156,23 +1156,33 @@ Class restartAction()
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
-	
 	// must be called before any othe call to the director
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-
-	//
-	[[CCDirector sharedDirector] setPixelFormat:kCCPixelFormatRGB565];
-
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
+	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
 	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
@@ -1183,9 +1193,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-//	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // geting a call, pause the game

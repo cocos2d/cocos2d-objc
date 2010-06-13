@@ -111,13 +111,18 @@ enum {
 -(void) runCocos2d
 {
 	if( state == kStateEnd ) {
-		[[CCDirector sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
+		
+		EAGLView *glview = [EAGLView viewWithFrame:CGRectMake(0, 0, 250,350)];
+		[mainView addSubview:glview];
+		
+		CCDirector *director = [CCDirector sharedDirector];
+		[director setOpenGLView:glview];
 		
 		CCScene *scene = [CCScene node];
 		id node = [LayerExample node];
 		[scene addChild: node];
 		
-		[[CCDirector sharedDirector] runWithScene:scene];
+		[director runWithScene:scene];
 		
 		state = kStateRun;
 	}
@@ -129,8 +134,15 @@ enum {
 -(void) endCocos2d
 {
 	if( state == kStateRun || state == kStateAttach) {
-		// Director end releases the "inner" objects from memory
-		[[CCDirector sharedDirector] end];
+
+		CCDirector *director = [CCDirector sharedDirector];
+
+		// Since v0.99.4 you have to remove the OpenGL View manually
+		EAGLView *view = [director openGLView];
+		[view removeFromSuperview];
+		
+		// kill the director
+		[director end];
 		state = kStateEnd;
 	}
 	else
@@ -146,8 +158,14 @@ enum {
 -(void) attachView
 {
 	if( state == kStateDetach ) {
-		[[CCDirector sharedDirector] attachInView:mainView withFrame:CGRectMake(0, 0, 250,350)];
-		[[CCDirector sharedDirector] startAnimation];
+		CCDirector *director = [CCDirector sharedDirector];
+
+		// attach to super view
+		EAGLView *glview = [director openGLView];
+		[mainView addSubview:glview];
+		
+		// start the animation again
+		[director startAnimation];
 
 		state = kStateAttach;
 	}
@@ -158,8 +176,17 @@ enum {
 -(void) detachView
 {
 	if( state == kStateRun || state == kStateAttach ) {
-		[[CCDirector sharedDirector] detach];
-		[[CCDirector sharedDirector] stopAnimation];
+		
+		CCDirector *director = [CCDirector sharedDirector];
+
+		// remove the OpenGL view from the superview
+		EAGLView *view = [director openGLView];
+		[view removeFromSuperview];
+		
+		// Stop animation
+		[director stopAnimation];
+
+
 		state = kStateDetach;
 	} else {
 		NSLog(@"Run or Attach the view before calling detach");
@@ -193,11 +220,10 @@ enum {
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
 
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-	[[CCDirector sharedDirector] setAnimationInterval:1/240.0f];
+	CCDirector *director = [CCDirector sharedDirector];
+	[director setDisplayFPS:YES];
 
-
-	[window makeKeyAndVisible];	
+	[window makeKeyAndVisible];
 	
 	state = kStateEnd;
 

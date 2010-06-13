@@ -31,27 +31,41 @@
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-
+	// must be called before any othe call to the director
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	
+	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// show FPS
+	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
 	// frames per second
 	[director setAnimationInterval:1.0/60];
 	
-	// attach cocos2d to a window
-	[director attachInView:window];
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// multiple touches
+	[glView setMultipleTouchEnabled:NO];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
+	
 	
 	CCScene *scene = [CCScene node];	
 	[scene addChild:[Layer1 node] z:0];
-	
-	[window makeKeyAndVisible];
-	
+		
 //	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
 //	sprite.anchorPoint = CGPointZero;
 //	CC_ENABLE_DEFAULT_GL_STATES();
@@ -59,7 +73,7 @@
 //	CC_DISABLE_DEFAULT_GL_STATES();
 //	[[[CCDirector sharedDirector] openGLView] swapBuffers];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

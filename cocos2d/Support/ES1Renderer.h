@@ -13,8 +13,6 @@
 
 @interface ES1Renderer : NSObject <ESRenderer>
 {
-    EAGLContext *context_;
-
     // The pixel dimensions of the CAEAGLLayer
     GLint backingWidth_;
     GLint backingHeight_;
@@ -25,6 +23,10 @@
 	GLuint depthBuffer_;
 	
 	unsigned int	depthFormat_;
+
+
+	@public
+	EAGLContext *context_;
 }
 
 /** EAGLContext */

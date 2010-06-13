@@ -96,8 +96,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @interface EAGLView : UIView
 {
     id						<ESRenderer> renderer_;	
+	EAGLContext				*context_; // weak ref
 
-	NSString*				pixelformat_;
+	NSString				*pixelformat_;
 	GLuint					depthFormat_;
 
 	CGSize					size_;
@@ -105,6 +106,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	id<EAGLViewDelegate>	delegate_;
 	id<EAGLTouchDelegate>   touchDelegate_;
 }
+
++ (id) viewWithFrame:(CGRect)frame; //These also set the current context
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
+
+
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
@@ -115,7 +122,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) GLuint depthFormat;
 
 /** surface size */
-@property(nonatomic,readonly, nonatomic) CGSize surfaceSize;
+@property(nonatomic,readonly) CGSize surfaceSize;
+
+/** OpenGL context */
+@property(nonatomic,readonly) EAGLContext *context;
 
 /** delegate */
 @property(nonatomic,readwrite,assign) id<EAGLViewDelegate> delegate;
@@ -124,9 +134,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
-
-/** returns the OpenGL context */
--(EAGLContext*) context;
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;

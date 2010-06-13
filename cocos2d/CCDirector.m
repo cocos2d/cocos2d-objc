@@ -738,7 +738,6 @@ static CCDirector *_sharedDirector = nil;
 	[[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
 	
 	[self stopAnimation];
-	[self detach];
 	
 #if CC_DIRECTOR_FAST_FPS
 	[FPSLabel release];
@@ -756,6 +755,11 @@ static CCDirector *_sharedDirector = nil;
 	
 	
 	// OpenGL view
+	
+	// Since the director doesn't attach the openglview to the window
+	// it shouldn't remove it from the window too.
+//	[openGLView_ removeFromSuperview];
+
 	[openGLView_ release];
 	openGLView_ = nil;
 }

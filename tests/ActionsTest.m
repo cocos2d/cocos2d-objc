@@ -1007,25 +1007,35 @@ Class restartAction()
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	[window setUserInteractionEnabled:YES];
-	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
-	// Attach cocos2d to the window
-	[[CCDirector sharedDirector] attachInWindow:window];
+
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// display FPS (useful when debugging)
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	[director setDisplayFPS:YES];
 	
 	// frames per second
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
 
+	// multiple touches
+	[glView setMultipleTouchEnabled:NO];
+
+	// connect it to the director
+	[director setOpenGLView:glView];
+
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
 	// Make the window visible
 	[window makeKeyAndVisible];
 	
@@ -1037,7 +1047,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 		
 }
 

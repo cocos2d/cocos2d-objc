@@ -3032,10 +3032,10 @@ Class restartAction()
 	[director setDisplayFPS:YES];
 
 	// Create the EAGLView manually
-	EAGLView *glView = [[EAGLView alloc] initWithFrame:[window bounds]
-										   pixelFormat:kEAGLColorFormatRGBA8
-										   depthFormat:GL_DEPTH_COMPONENT24_OES
-									preserveBackbuffer:NO];
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO];
 	
 	// TO ENABLE HI-RES DISPLAY FOLLOW INSTRUCTIONS FROM HERE:
 	// https://developer.apple.com/iphone/prerelease/library/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/SupportingResolutionIndependence/SupportingResolutionIndependence.html#//apple_ref/doc/uid/TP40007072-CH10-SW11

@@ -80,10 +80,26 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize delegate=delegate_, surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize touchDelegate=touchDelegate_;
+@synthesize context=context_;
 
 + (Class) layerClass
 {
 	return [CAEAGLLayer class];
+}
+
++ (id) viewWithFrame:(CGRect)frame
+{
+	return [[[self alloc] initWithFrame:frame] autorelease];
+}
+
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
+{
+	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
+}
+
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
+{
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -118,8 +134,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
 		
 		pixelformat_ = kEAGLColorFormatRGB565;
-//		depthFormat_ = GL_DEPTH_COMPONENT24_OES;
-		depthFormat_ = 0;
+		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
 		size_ = [eaglLayer bounds].size;
 
 		if( ! [self setupSurface] )
@@ -145,7 +160,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[self release];
 		return NO;
 	}
-	[[renderer_ context] renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+	context_ = [renderer_ context];
+	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	
@@ -167,20 +183,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	size_ = [renderer_ backingSize];
 }
 
-
--(EAGLContext*) context
-{
-	return	[renderer_ context];
-}
-
 - (void) swapBuffers
 {
 	// IMPORTANT:
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
 	//	-> _renderBuffer must be the the RENDER BUFFER
-
-	EAGLContext *context = [renderer_ context];
 
 #ifdef __IPHONE_4_0
 	if( depthFormat_ && discardFramebufferSupported_ ) {
@@ -189,7 +197,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 #endif // __IPHONE_4_0
 	
-	if(![context presentRenderbuffer:GL_RENDERBUFFER_OES])
+	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 #if COCOS2D_DEBUG
