@@ -67,6 +67,8 @@
         NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
         return NO;
     }
+	
+	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
 	if (depthFormat_) {
 		if( ! depthBuffer_ )

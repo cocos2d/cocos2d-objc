@@ -314,34 +314,43 @@ and when to execute the Scenes.
 /** Uses a new pixel format for the EAGLView.
  Call this class method before attaching it to a UIView
  Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
+ 
+ @deprecated Set the pixel format when creating the EAGLView. This method will be removed in v1.0
  */
--(void) setPixelFormat: (tPixelFormat) p;
+-(void) setPixelFormat: (tPixelFormat)p DEPRECATED_ATTRIBUTE;
 
 /** Change depth buffer format of the render buffer.
  Call this class method before attaching it to a UIWindow/UIView
  Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
+ 
+ @deprecated Set the depth buffer format when creating the EAGLView. This method will be removed in v1.0
  */
--(void) setDepthBufferFormat: (tDepthBufferFormat) db;
+-(void) setDepthBufferFormat: (tDepthBufferFormat)db DEPRECATED_ATTRIBUTE;
 
 // Integration with UIKit
 /** detach the cocos2d view from the view/window */
--(BOOL)detach;
+-(BOOL)detach DEPRECATED_ATTRIBUTE;
 
 /** attach in UIWindow using the full frame.
  It will create a EAGLView.
- @deprecated Use attachInView instead
+ 
+ @deprecated set setOpenGLView instead. Will be removed in v1.0
  */
 -(BOOL)attachInWindow:(UIWindow *)window DEPRECATED_ATTRIBUTE;
 
 /** attach in UIView using the full frame.
  It will create a EAGLView.
+ 
+ @deprecated set setOpenGLView instead. Will be removed in v1.0
  */
--(BOOL)attachInView:(UIView *)view;
+-(BOOL)attachInView:(UIView *)view DEPRECATED_ATTRIBUTE;
 
 /** attach in UIView using the given frame.
  It will create a EAGLView and use it.
+ 
+ @deprecated set setOpenGLView instead. Will be removed in v1.0
  */
--(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame;
+-(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame DEPRECATED_ATTRIBUTE;
 
 // Landscape
 
@@ -392,7 +401,9 @@ and when to execute the Scenes.
  */
 -(void) replaceScene: (CCScene*) scene;
 
-/** Ends the execution, releases the running scene */
+/** Ends the execution, releases the running scene.
+ It doesn't remove the OpenGL view from its parent. You have to do it manually.
+ */
 -(void) end;
 
 /** Pauses the running scene.

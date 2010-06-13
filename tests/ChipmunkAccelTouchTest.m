@@ -179,27 +179,39 @@ eachShape(void *ptr, void* unused)
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:YES];
 	
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// before creating any layer, set the landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// multiple touches
+	[glView setMultipleTouchEnabled:NO];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	
-	// AnimationInterval doesn't work with FastDirector, yet
-//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];
-
-	// And you can later, once the openGLView was created
-	// you can change it's properties
-	[[[CCDirector sharedDirector] openGLView] setMultipleTouchEnabled:YES];
-
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -215,9 +227,7 @@ eachShape(void *ptr, void* unused)
 	label.position = ccp( s.width / 2, s.height - 30);
 	[scene addChild:label z:-1];
 
-	[window makeKeyAndVisible];
-
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene:scene];
 }
 
 - (void) dealloc

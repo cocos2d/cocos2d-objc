@@ -79,22 +79,35 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// must be called before any othe call to the director
-	//	[Director useFastDirector];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationLandscapeRight];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// show FPS
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-	
-	// multiple touches or not ?
-	//	[[Director sharedDirector] setMultipleTouchEnabled:YES];
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
 	
 	// frames per second
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
+	[director setAnimationInterval:1.0/60];
 	
-	// attach cocos2d to a window
-	[[CCDirector sharedDirector] attachInView:window];
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// enable multiple touches
+	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -105,8 +118,7 @@
 	
 	[scene addChild:[Layer1 node] z:0];
 	
-	[window makeKeyAndVisible];
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

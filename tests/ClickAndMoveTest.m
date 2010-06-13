@@ -82,22 +82,31 @@ enum
 
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	[window setUserInteractionEnabled:YES];
-	[window setMultipleTouchEnabled:YES];
 	
-	// must be called before any othe call to the director
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
-	// Attach cocos2d to the window
-	[[CCDirector sharedDirector] attachInWindow:window];	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Setup the layout Propertys
-//	[[Director sharedDirector] setLandscape:YES];
+	// before creating any layer, set the landscape mode
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// Show FPS, useful when debugging performance
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
 	
 	// Make the window visible
 	[window makeKeyAndVisible];
@@ -111,7 +120,7 @@ enum
 	MainLayer * mainLayer =[MainLayer node];	
 	[scene addChild: mainLayer z:2];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

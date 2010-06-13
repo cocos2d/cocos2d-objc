@@ -19,39 +19,42 @@
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:YES];
+	// must be called before any othe call to the director
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use the default director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeDefault];
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Use RGBA_8888 buffers
-	// Default is: RGB_565 buffers
-	[[CCDirector sharedDirector] setPixelFormat:kPixelFormatRGBA8888];
+	// before creating any layer, set the landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
 	
-	// Create a depth buffer of 16 bits
-	// Enable it if you are going to use 3D transitions or 3d objects
-//	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-	
-	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationPortrait];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-	
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
-	[window makeKeyAndVisible];		
+				
 		
-		
-	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];
+	[director runWithScene: [HelloWorld scene]];
 }
 
 
