@@ -88,17 +88,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS INTERFACE:
 
-/** EAGLView Class
+/** EAGLView Class.
  * This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
 @interface EAGLView : UIView
 {
-    id						<ESRenderer> renderer_;
-	
-	NSString*				format_;
+    id						<ESRenderer> renderer_;	
+
+	NSString*				pixelformat_;
 	GLuint					depthFormat_;
+
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
 	id<EAGLViewDelegate>	delegate_;
@@ -121,8 +122,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** touch delegate */
 @property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
 
-
+/** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
+
+/** returns the OpenGL context */
 -(EAGLContext*) context;
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;

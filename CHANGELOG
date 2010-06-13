@@ -1,16 +1,17 @@
 version 0.99.4-rc - XX-Jun-2010
-. [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
-. [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
-. [NEW] Particle: QuadParticle supports subrects (issue #870)
-. [NEW] TextureCache: Added removeTextureForKey: instance method
-. [NEW] Tests: Added PerformanceNodeChildren performance test
-. [NEW] EAGLView: renderer is an object. EAGLView creates one (issue #883)
-. [NEW] EAGLView: it's possible to create a EAGLView manually
-. [FIX] Particle: Added support for ParticleDesigner 1.2
-. [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
-. [FIX] Tests: removed ParticleView, AccelViewPortDemo since they were deprecated
-. [FIX] Tests: fixed some tests so the look OK on the ipad
-. [FIX] Xcode: default family is: iPhone/iPad
+ . [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
+ . [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
+ . [NEW] Director: added support for high-res resolutions
+ . [NEW] EAGLView: renderer is an object. EAGLView creates one (issue #883)
+ . [NEW] EAGLView: it's possible to create a EAGLView manually
+ . [NEW] Particle: QuadParticle supports subrects (issue #870)
+ . [NEW] TextureCache: Added removeTextureForKey: instance method
+ . [NEW] Tests: Added PerformanceNodeChildren performance test
+ . [FIX] Particle: Added support for ParticleDesigner 1.2
+ . [FIX] Particle: QuadParticle renders the image correctly (not upside-down) (issue #872)
+ . [FIX] Tests: removed ParticleView, AccelViewPortDemo since they were deprecated
+ . [FIX] Tests: fixed some tests so they look OK on the ipad
+ . [FIX] Xcode: default family is: iPhone/iPad
 
 version 0.99.3 - 25-May-2010
  . [NEW] Animation: added 2 methods to create the Animation without delay (updated samples)
