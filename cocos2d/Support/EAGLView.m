@@ -74,7 +74,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @implementation EAGLView
 
 @synthesize delegate=delegate_, surfaceSize=size_;
-@synthesize pixelFormat=format_, depthFormat=depthFormat_;
+@synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize touchDelegate=touchDelegate_;
 
 + (Class) layerClass
@@ -104,7 +104,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[eaglLayer setDrawableProperties:[NSDictionary dictionaryWithObjectsAndKeys:
 										  [NSNumber numberWithBool:retained], kEAGLDrawablePropertyRetainedBacking,
 										  format, kEAGLDrawablePropertyColorFormat, nil]];
-		format_ = format;
+		pixelformat_ = format;
 		depthFormat_ = depth;
 		size_ = frame.size;
 
@@ -119,6 +119,38 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 
 	return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+	if( (self = [super initWithCoder:aDecoder]) ) {
+		
+		// Get the layer
+        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+		
+        eaglLayer.opaque = TRUE;
+        eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
+										kEAGLColorFormatRGB565, kEAGLDrawablePropertyColorFormat, nil];
+		
+        renderer_ = [[ES1Renderer alloc] init];
+		
+		pixelformat_ = kEAGLColorFormatRGB565;
+//		depthFormat_ = GL_DEPTH_COMPONENT24_OES;
+		depthFormat_ = 0;
+		size_ = [eaglLayer bounds].size;
+		
+		renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
+        if (!renderer_)
+        {
+			[self release];
+			return nil;
+        }
+		
+		discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+    }
+	
+    return self;
 }
 
 - (void) dealloc
