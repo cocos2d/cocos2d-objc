@@ -71,6 +71,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
+@interface EAGLView (Private)
+-(BOOL) setupSurface;
+@end
+
 @implementation EAGLView
 
 @synthesize delegate=delegate_, surfaceSize=size_;
@@ -96,26 +100,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if((self = [super initWithFrame:frame]))
 	{
-		
-		[self setOpaque:YES];
-		
-		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
-
-		[eaglLayer setDrawableProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-										  [NSNumber numberWithBool:retained], kEAGLDrawablePropertyRetainedBacking,
-										  format, kEAGLDrawablePropertyColorFormat, nil]];
 		pixelformat_ = format;
 		depthFormat_ = depth;
 		size_ = frame.size;
-
 		
-		renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
-		if( ! renderer_ ) {
-			[self release];
+		if( ! [self setupSurface] )
 			return nil;
-		}
-		
-		discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	}
 
 	return self;
@@ -125,32 +115,41 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
 		
-		// Get the layer
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-		
-        eaglLayer.opaque = TRUE;
-        eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
-										kEAGLColorFormatRGB565, kEAGLDrawablePropertyColorFormat, nil];
-		
-        renderer_ = [[ES1Renderer alloc] init];
+		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
 		
 		pixelformat_ = kEAGLColorFormatRGB565;
 //		depthFormat_ = GL_DEPTH_COMPONENT24_OES;
 		depthFormat_ = 0;
 		size_ = [eaglLayer bounds].size;
-		
-		renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
-        if (!renderer_)
-        {
-			[self release];
+
+		if( ! [self setupSurface] )
 			return nil;
-        }
-		
-		discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
     }
 	
     return self;
+}
+
+-(BOOL) setupSurface
+{
+	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+	
+	eaglLayer.opaque = YES;
+	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+									[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
+									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
+	
+		
+	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
+	if (!renderer_)
+	{
+		[self release];
+		return NO;
+	}
+	[[renderer_ context] renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+
+	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+	
+	return YES;
 }
 
 - (void) dealloc
