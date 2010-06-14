@@ -231,29 +231,28 @@ enum {
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:YES];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. Attaches to the main window
+	// 3. Creates Display Link Director
+	// 3a. If it fails, it will use an NSTimer director
+	// 4. It will try to run at 60 FPS
+	// 4. Display FPS: NO
+	// 5. Device orientation: Portrait
+	// 6. Connect the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
-
-	// AnimationInterval doesn't work with FastDirector, yet
-//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];
-
-	// And you can later, once the openGLView was created
-	// you can change it's properties
-	[[[CCDirector sharedDirector] openGLView] setMultipleTouchEnabled:YES];
-
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
+	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -264,9 +263,7 @@ enum {
 	id box2dLayer = [[Box2DTestLayer alloc] init];
 	[scene addChild:box2dLayer z:0];
 
-	[window makeKeyAndVisible];
-
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 - (void) dealloc

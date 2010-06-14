@@ -1301,10 +1301,11 @@ Class restartAction()
 	// frames per second
 	[director setAnimationInterval:1.0/60];
 	
-	// create an OpenGL view
+	// create an OpenGL view a depth buffer of 16-bits (needed for z ordering)
+	//   and an RGB8 color buffer
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES
+								   depthFormat:GL_DEPTH_COMPONENT16_OES
 							preserveBackbuffer:NO];
 	[glView setMultipleTouchEnabled:YES];
 	

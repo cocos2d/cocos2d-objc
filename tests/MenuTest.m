@@ -118,14 +118,7 @@ enum {
 
 -(void) onQuit: (id) sender
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Since v0.99.4 you have to remove the OpenGL View manually
-	EAGLView *view = [director openGLView];
-	[view removeFromSuperview];
-
-	// kill the director
-	[director end];
+	CC_DIRECTOR_END();
 	
 	// HA HA... no more terminate on sdk v3.0
 	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -421,13 +414,8 @@ enum {
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
+	CC_DIRECTOR_INIT();
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
 	
@@ -436,22 +424,6 @@ enum {
 	
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
-	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
-//	[glView setMultipleTouchEnabled:YES];
-	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	// glview is a child of the main window
-	[window addSubview:glView];
-	
-	// Make the window visible
-	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565

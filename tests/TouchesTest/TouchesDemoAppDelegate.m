@@ -8,39 +8,28 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. Attaches to the main window
+	// 3. Creates Display Link Director
+	// 3a. If it fails, it will use an NSTimer director
+	// 4. It will try to run at 60 FPS
+	// 4. Display FPS: NO
+	// 5. Device orientation: Portrait
+	// 6. Connect the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
-	// get instance of the shared director
+	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
-	
-	// display FPS (useful when debugging)
+	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
-	
-	// enable multiple touches
-	[glView setMultipleTouchEnabled:YES];
-	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	// glview is a child of the main window
-	[window addSubview:glView];
-	
-	// Make the window visible
-	[window makeKeyAndVisible];
+	// Set multiple touches on
+	EAGLView *glView = [director openGLView];
+	[glView setMultipleTouchEnabled:YES];	
 	
 //	[[CCTouchDispatcher sharedDispatcher] link];
 	[director runWithScene:[PongScene node]];
