@@ -77,7 +77,7 @@ copy_base_files(){
 	copy_files external/FontLabel "$LIBS_DIR"
 
 	echo ...copying CocosDenshion files
-	copy_files CocosDenshion "$LIBS_DIR"
+	copy_files CocosDenshion/CocosDenshion "$LIBS_DIR"
 
 	echo ...copying cocoslive files
 	copy_files cocoslive "$LIBS_DIR"
