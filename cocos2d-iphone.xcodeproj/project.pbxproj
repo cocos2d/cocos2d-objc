@@ -2111,49 +2111,49 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 505224F811B3D4700061670F /* CocosDenshion - Tom The Turret */;
+			remoteGlobalIDString = 505224F811B3D4700061670F;
 			remoteInfo = "CocosDenshion - Tom The Turret";
 		};
 		505DEF0711C5841D0045B393 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5052289011B3DBB90061670F /* CocosDenshion - Drum Pad */;
+			remoteGlobalIDString = 5052289011B3DBB90061670F;
 			remoteInfo = "CocosDenshion - Drum Pad";
 		};
 		505DEF0911C5841D0045B393 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5052290E11B3DCD80061670F /* CocosDenshion - Fade To Grey */;
+			remoteGlobalIDString = 5052290E11B3DCD80061670F;
 			remoteInfo = "CocosDenshion - Fade To Grey";
 		};
 		505DEF0B11C5841D0045B393 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5052294011B3DCE90061670F /* CocosDenshion - FancyRat Metering */;
+			remoteGlobalIDString = 5052294011B3DCE90061670F;
 			remoteInfo = "CocosDenshion - FancyRat Metering";
 		};
 		505DEF0D11C5841D0045B393 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 504E17DB11C4C7E100E19835 /* EAGLViewTest */;
+			remoteGlobalIDString = 504E17DB11C4C7E100E19835;
 			remoteInfo = EAGLViewTest;
 		};
 		505DEF0F11C5841D0045B393 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5006BC9A11BCF3C300E488BD /* PerformanceTestChildrenNode */;
+			remoteGlobalIDString = 5006BC9A11BCF3C300E488BD;
 			remoteInfo = PerformanceTestChildrenNode;
 		};
 		505DEF1111C5841D0045B393 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 508CA7AD1193270F003AC397 /* SchedulerTest */;
+			remoteGlobalIDString = 508CA7AD1193270F003AC397;
 			remoteInfo = SchedulerTest;
 		};
 		506143F30E589A2E003CCDB7 /* PBXContainerItemProxy */ = {

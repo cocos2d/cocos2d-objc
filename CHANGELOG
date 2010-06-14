@@ -3,7 +3,7 @@ version 0.99.4-rc - XX-Jun-2010
  . [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
  . [NEW] Director: added support for high-res resolutions
  . [NEW] EAGLView: renderer is an object. EAGLView creates one (issue #883)
- . [NEW] EAGLView: it's possible to create a EAGLView manually
+ . [NEW] EAGLView: it's possible to create a EAGLView manually, or by using Interface Builder
  . [NEW] Particle: QuadParticle supports subrects (issue #870)
  . [NEW] TextureCache: Added removeTextureForKey: instance method
  . [NEW] Tests: Added PerformanceNodeChildren performance test

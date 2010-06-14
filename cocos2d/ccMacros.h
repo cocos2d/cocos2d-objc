@@ -128,13 +128,18 @@ default gl blend src function. Compatible with premultiplied alpha images.
 }
 
 /** @def CC_DIRECTOR_INIT
- Tries to create a Display Link director.
- If it fails (SDK < 3.1) it will create an NSTimer director.
- The director will be in low-res.
- The director will be in portrait mode.
- The director will have touches enabled. Multi touch will be disabled.
- It will create a an EAGLView with a 0-bit depth format, and an RGB565 color buffer.
- The EAGLView will be connected to the director, and will be added to the window
+	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
+	- The EAGLView view will have multiple touches disabled.
+	- It will parent the EAGLView to the main window.
+	- If the firmware >= 3.1 it will create a Display Link Director. Else it will create an NSTimer director.
+	- It will try to run at 60 FPS.
+	- The FPS won't be displayed.
+	- The orientation will be portrait.
+	- It will connect the director with the EAGLView.
+
+ IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
+ or if you want to use a 16-bit or 24-bit depth buffer, you should NOT
+ use this macro. Instead, you should create the EAGLView manually.
  
  @since v0.99.4
  */
@@ -147,7 +152,10 @@ do	{																							\
 	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
 	[__director setDisplayFPS:NO];																\
 	[__director setAnimationInterval:1.0/60];													\
-	EAGLView *__glView = [EAGLView viewWithFrame:[__window bounds]];							\
+	EAGLView *__glView = [EAGLView viewWithFrame:[__window bounds]								\
+									pixelFormat:kEAGLColorFormatRGB565							\
+									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
+							 preserveBackbuffer:NO];											\
 	[__director setOpenGLView:__glView];														\
 	[__window addSubview:__glView];																\
 	[__window makeKeyAndVisible];																\
