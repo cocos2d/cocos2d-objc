@@ -85,22 +85,22 @@ NSString* restartAction()
 	[self removeChildByTag:kTagLabel4 cleanup:YES];
     
 	
-//	CCLabel *top = [CCLabel labelWithString:aFont fontName:aFont fontSize:24];
-//	CCLabel *left = [CCLabel labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:aFont fontSize:32];
-//	CCLabel *center = [CCLabel labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:aFont fontSize:32];
-//	CCLabel *right = [CCLabel labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:aFont fontSize:32];
-//
-//	CGSize s = [[CCDirector sharedDirector] winSize];
-//	
-//	top.position = ccp(s.width/2,250);
-//	left.position = ccp(s.width/2,200);
-//	center.position = ccp(s.width/2,150);
-//	right.position = ccp(s.width/2,100);
-//	
-//	[self addChild:left z:0 tag:kTagLabel1];
-//	[self addChild:right z:0 tag:kTagLabel2];
-//	[self addChild:center z:0 tag:kTagLabel3];
-//	[self addChild:top z:0 tag:kTagLabel4];
+	CCLabel *top = [CCLabel labelWithString:aFont fontName:aFont fontSize:24];
+	CCLabel *left = [CCLabel labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:aFont fontSize:32];
+	CCLabel *center = [CCLabel labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:aFont fontSize:32];
+	CCLabel *right = [CCLabel labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:aFont fontSize:32];
+
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	top.position = ccp(s.width/2,250);
+	left.position = ccp(s.width/2,200);
+	center.position = ccp(s.width/2,150);
+	right.position = ccp(s.width/2,100);
+	
+	[self addChild:left z:0 tag:kTagLabel1];
+	[self addChild:right z:0 tag:kTagLabel2];
+	[self addChild:center z:0 tag:kTagLabel3];
+	[self addChild:top z:0 tag:kTagLabel4];
 	
 //    label = [[Label alloc] initWithString:"This is a test: left" fontName:aFont fontSize:30];
 //    label.color = ccc3(0xff, 0xff, 0xff);
