@@ -32,7 +32,6 @@
 	
 	// create an OpenGL view
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
-	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
 	[director setOpenGLView:glView];

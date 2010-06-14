@@ -65,6 +65,9 @@
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 
 	[director setOpenGLView:glView_];
+	
+	// turn on multiple touches
+	[glView_ setMultipleTouchEnabled:YES];
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [LayerExample node]];

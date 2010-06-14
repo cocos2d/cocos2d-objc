@@ -414,6 +414,18 @@ enum {
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. Parents EAGLView to the main window
+	// 4. Creates Display Link Director
+	// 4a. If it fails, it will use an NSTimer director
+	// 5. It will try to run at 60 FPS
+	// 6. Display FPS: NO
+	// 7. Device orientation: Portrait
+	// 8. Connects the director to the EAGLView
+	//	
 	CC_DIRECTOR_INIT();
 
 	// get instance of the shared director
