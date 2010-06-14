@@ -126,3 +126,43 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
 	glDisableClientState(GL_VERTEX_ARRAY);			\
 }
+
+/** @def CC_DIRECTOR_INIT
+ Tries to create a Display Link director.
+ If it fails (SDK < 3.1) it will create an NSTimer director.
+ The director will be in low-res.
+ The director will be in portrait mode.
+ The director will have touches enabled. Multi touch will be disabled.
+ It will create a an EAGLView with a 0-bit depth format, and an RGB565 color buffer.
+ The EAGLView will be connected to the director, and will be added to the window
+ 
+ @since v0.99.4
+ */
+#define CC_DIRECTOR_INIT()																		\
+do	{																							\
+	UIWindow *__window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];		\
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
+		[CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
+	CCDirector *__director = [CCDirector sharedDirector];										\
+	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
+	[__director setDisplayFPS:NO];																\
+	[__director setAnimationInterval:1.0/60];													\
+	EAGLView *__glView = [EAGLView viewWithFrame:[__window bounds]];							\
+	[__director setOpenGLView:__glView];														\
+	[__window addSubview:__glView];																\
+	[__window makeKeyAndVisible];																\
+} while(0)
+ 
+ /** @def CC_DIRECTOR_END
+  Stops and removes the director from memory.
+  Removes the EAGLView from its parent
+  
+  @since v0.99.4
+  */
+#define CC_DIRECTOR_END()										\
+do {															\
+	CCDirector *__director = [CCDirector sharedDirector];		\
+	EAGLView *__view = [__director openGLView];					\
+	[__view removeFromSuperview];								\
+	[__director end];											\
+} while(0)

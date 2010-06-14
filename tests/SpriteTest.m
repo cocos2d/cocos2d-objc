@@ -3027,11 +3027,17 @@ Class restartAction()
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
+	
+	// landscape orientation
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
+	
+	// Display FPS: yes
 	[director setDisplayFPS:YES];
 
-	// Create the EAGLView manually
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
