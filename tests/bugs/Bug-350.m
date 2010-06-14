@@ -28,40 +28,28 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. Parents EAGLView to the main window
+	// 4. Creates Display Link Director
+	// 4a. If it fails, it will use an NSTimer director
+	// 5. It will try to run at 60 FPS
+	// 6. Display FPS: NO
+	// 7. Device orientation: Portrait
+	// 8. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
-	// get instance of the shared director
+	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
+	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// display FPS (useful when debugging)
+	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
-	
-	// multiple touches
-	[glView setMultipleTouchEnabled:NO];
-	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	// glview is a child of the main window
-	[window addSubview:glView];
-	
-	// Make the window visible
-	[window makeKeyAndVisible];
-	
 	
 	CCScene *scene = [CCScene node];	
 	[scene addChild:[Layer1 node] z:0];

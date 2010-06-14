@@ -24,43 +24,52 @@
 {
     [application setStatusBarHidden:true];
 	
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. Parents EAGLView to the main window
+	// 4. Creates Display Link Director
+	// 4a. If it fails, it will use an NSTimer director
+	// 5. It will try to run at 60 FPS
+	// 6. Display FPS: NO
+	// 7. Device orientation: Portrait
+	// 8. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// must be called before any othe call to the director
-	//	[Director useFastDirector];
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-	
-	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
-	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-	
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];
-	[window makeKeyAndVisible];		
+	// Turn on display FPS
+	[director setDisplayFPS:YES];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+// getting a call, pause the game
+-(void) applicationWillResignActive:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] pause];
 }
 
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+// call got rejected
+-(void) applicationDidBecomeActive:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] resume];
 }
 
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
+}
 
 - (void)dealloc {
 	[window release];

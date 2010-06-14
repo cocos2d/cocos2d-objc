@@ -234,13 +234,14 @@ enum {
 	// CC_DIRECTOR_INIT()
 	//
 	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. Attaches to the main window
-	// 3. Creates Display Link Director
-	// 3a. If it fails, it will use an NSTimer director
-	// 4. It will try to run at 60 FPS
-	// 4. Display FPS: NO
-	// 5. Device orientation: Portrait
-	// 6. Connect the director to the EAGLView
+	// 2. EAGLView multiple touches: disabled
+	// 3. Parents EAGLView to the main window
+	// 4. Creates Display Link Director
+	// 4a. If it fails, it will use an NSTimer director
+	// 5. It will try to run at 60 FPS
+	// 6. Display FPS: NO
+	// 7. Device orientation: Portrait
+	// 8. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
 	
@@ -252,6 +253,10 @@ enum {
 	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
+	
+	// Turn on multiple touches
+	EAGLView *view = [director openGLView];
+	[view setMultipleTouchEnabled:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
