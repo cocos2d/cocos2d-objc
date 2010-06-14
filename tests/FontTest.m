@@ -53,25 +53,25 @@ NSString* restartAction()
 	return fontList[fontIdx];
 }
 
-@implementation FontLayer
+@implementation FontTest
 -(id) init
 {
-	if(!(self=[super init] ))
-        return nil;
+	if((self=[super init] )) {
     
-    // menu
-    CGSize size = [CCDirector sharedDirector].winSize;
-    CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-    CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-    CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-    CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-    menu.position = CGPointZero;
-    item1.position = ccp(size.width/2-100,30);
-    item2.position = ccp(size.width/2, 30);
-    item3.position = ccp(size.width/2+100,30);
-    [self addChild: menu z:1];
-    
-    [self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
+		// menu
+		CGSize size = [CCDirector sharedDirector].winSize;
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		menu.position = CGPointZero;
+		item1.position = ccp(size.width/2-100,30);
+		item2.position = ccp(size.width/2, 30);
+		item3.position = ccp(size.width/2+100,30);
+		[self addChild: menu z:1];
+		
+		[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
+	}
     
 	return self;
 }
@@ -85,22 +85,22 @@ NSString* restartAction()
 	[self removeChildByTag:kTagLabel4 cleanup:YES];
     
 	
-	CCLabel *top = [CCLabel labelWithString:aFont fontName:aFont fontSize:24];
-	CCLabel *left = [CCLabel labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:aFont fontSize:32];
-	CCLabel *center = [CCLabel labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:aFont fontSize:32];
-	CCLabel *right = [CCLabel labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:aFont fontSize:32];
-
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	top.position = ccp(s.width/2,250);
-	left.position = ccp(s.width/2,200);
-	center.position = ccp(s.width/2,150);
-	right.position = ccp(s.width/2,100);
-	
-	[[[[self addChild:left z:0 tag:kTagLabel1]
-	  addChild:right z:0 tag:kTagLabel2]
-	 addChild:center z:0 tag:kTagLabel3]
-	 addChild:top z:0 tag:kTagLabel4];
+//	CCLabel *top = [CCLabel labelWithString:aFont fontName:aFont fontSize:24];
+//	CCLabel *left = [CCLabel labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentLeft fontName:aFont fontSize:32];
+//	CCLabel *center = [CCLabel labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentCenter fontName:aFont fontSize:32];
+//	CCLabel *right = [CCLabel labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:UITextAlignmentRight fontName:aFont fontSize:32];
+//
+//	CGSize s = [[CCDirector sharedDirector] winSize];
+//	
+//	top.position = ccp(s.width/2,250);
+//	left.position = ccp(s.width/2,200);
+//	center.position = ccp(s.width/2,150);
+//	right.position = ccp(s.width/2,100);
+//	
+//	[self addChild:left z:0 tag:kTagLabel1];
+//	[self addChild:right z:0 tag:kTagLabel2];
+//	[self addChild:center z:0 tag:kTagLabel3];
+//	[self addChild:top z:0 tag:kTagLabel4];
 	
 //    label = [[Label alloc] initWithString:"This is a test: left" fontName:aFont fontSize:30];
 //    label.color = ccc3(0xff, 0xff, 0xff);
@@ -161,7 +161,7 @@ NSString* restartAction()
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [FontLayer node]];
+	[scene addChild: [FontTest node]];
 	
 	[director runWithScene: scene];
 }
