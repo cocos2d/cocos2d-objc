@@ -909,6 +909,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setContentScaleFactor:(CGFloat)s
 {
+#ifdef __IPHONE_4_0
 	if( s != contentScaleFactor_ ) {
 		contentScaleFactor_ = s;
 		surfaceSize_ = CGSizeMake( screenSize_.width * s, screenSize_.height * s );
@@ -916,6 +917,9 @@ static CCDirector *_sharedDirector = nil;
 		// update projection
 		[self setProjection:projection_];
 	}
+#else
+	NSAssert(NO, @"setContentScaleFactor is available in SDK >= 4.0");
+#endif // __IPHONE_4_0
 }
 
 @end

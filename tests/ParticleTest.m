@@ -41,6 +41,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner8",
 		@"ParticleDesigner9",
 		@"ParticleDesigner10",
+		@"ParticleDesigner11",
 
 		@"RadiusMode1",
 		@"RadiusMode2",
@@ -1025,6 +1026,32 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
+@implementation ParticleDesigner11
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/debian.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Debian";
+}
+-(NSString*) subtitle
+{
+	return @"Testing radial & tangential accel";
+}
+@end
+
+
 
 #pragma mark -
 
@@ -1380,9 +1407,6 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];

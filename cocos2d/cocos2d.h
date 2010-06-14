@@ -46,7 +46,6 @@
 //
 #import "ccConfig.h"	// should be included first
 
-#import "CCArray.h"
 #import "CCBlockSupport.h"
 #import "CCAction.h"
 #import "CCCamera.h"
@@ -118,7 +117,8 @@
 #import "Support/EAGLView.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccArray.h"
+#import "Support/ccCArray.h"
+#import "Support/CCArray.h"
 
 #if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
