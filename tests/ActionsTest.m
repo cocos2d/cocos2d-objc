@@ -1009,13 +1009,14 @@ Class restartAction()
 	//
 	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
 	// 2. EAGLView multiple touches: disabled
-	// 3. Parents EAGLView to the main window
-	// 4. Creates Display Link Director
-	// 4a. If it fails, it will use an NSTimer director
-	// 5. It will try to run at 60 FPS
-	// 6. Display FPS: NO
-	// 7. Device orientation: Portrait
-	// 8. Connects the director to the EAGLView
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
 	
