@@ -1,4 +1,4 @@
-version 0.99.4-rc - XX-Jun-2010
+version 0.99.4-rc - 14-Jun-2010
  . [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
  . [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
  . [NEW] Director: added support for high-res resolutions

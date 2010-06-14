@@ -107,21 +107,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	id<EAGLTouchDelegate>   touchDelegate_;
 }
 
-+ (id) viewWithFrame:(CGRect)frame; //These also set the current context
+/** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
++ (id) viewWithFrame:(CGRect)frame;
+/** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
+/** creates an initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
 
 
+/** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
+/** Initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
+/** Initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
 
-/** pixel format */
+/** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;
-/** depth format */
+/** depth format of the render buffer: 0, 16 or 24 bits*/
 @property(nonatomic,readonly) GLuint depthFormat;
 
-/** surface size */
+/** returns surface size in pixels */
 @property(nonatomic,readonly) CGSize surfaceSize;
 
 /** OpenGL context */
