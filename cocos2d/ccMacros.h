@@ -130,7 +130,8 @@ default gl blend src function. Compatible with premultiplied alpha images.
 /** @def CC_DIRECTOR_INIT
 	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
 	- The EAGLView view will have multiple touches disabled.
-	- It will parent the EAGLView to the main window.
+	- It will create a UIWindow and it will assign it the 'window' variable. 'window' must be declared before calling this marcro.
+	- It will parent the EAGLView to the created window
 	- If the firmware >= 3.1 it will create a Display Link Director. Else it will create an NSTimer director.
 	- It will try to run at 60 FPS.
 	- The FPS won't be displayed.
@@ -145,20 +146,20 @@ default gl blend src function. Compatible with premultiplied alpha images.
  */
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
-	UIWindow *__window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];		\
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
 		[CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
 	CCDirector *__director = [CCDirector sharedDirector];										\
 	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
 	[__director setDisplayFPS:NO];																\
 	[__director setAnimationInterval:1.0/60];													\
-	EAGLView *__glView = [EAGLView viewWithFrame:[__window bounds]								\
+	EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
 									pixelFormat:kEAGLColorFormatRGB565							\
 									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
 							 preserveBackbuffer:NO];											\
 	[__director setOpenGLView:__glView];														\
-	[__window addSubview:__glView];																\
-	[__window makeKeyAndVisible];																\
+	[window addSubview:__glView];																\
+	[window makeKeyAndVisible];																	\
 } while(0)
  
  /** @def CC_DIRECTOR_END
