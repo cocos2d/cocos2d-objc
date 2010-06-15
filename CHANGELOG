@@ -1,5 +1,21 @@
 version 0.99.4-beta - 14-Jun-2010
- . [NEW] CocosDenshion: Integrated new CocosDenshion with new tests and demos
+ . [NEW] CDSoundEngine loadBufferFromData method added for loading custom buffer data.
+ . [NEW] CDSoundEngine channel groups renamed source groups to make function clearer.
+ . [NEW] CDSoundEngine source groups can be dynamically modified using defineSourceGroups.
+ . [NEW] CDSoundSource new object oriented sound API
+ . [NEW] CDSoundEngine added soundSourceForSound method to create CDSoundSource objects
+ . [NEW] CDSoundEngine buffers are automatically increased as needed (no more CD_MAX_BUFFERS)
+ . [NEW] CDPropertyModifier class for modifying properties such as pitch and gain over time
+ . [NEW] CDXPropertyModifierAction class for modifying properties such as pitch and gain using cocos2d actions
+ . [NEW] Convenience methods for fading volume of background music, sound effects and CDSoundSource objects
+ . [NEW] SimpleAudioEngine soundSourceForFile method for creating CDSoundSource objects
+ . [NEW] SimpleAudioEngine rewrote buffer management code using new CDBufferManager class
+ . [NEW] CDBufferManager - class for associating buffer ids with a file name
+ . [NEW] CDAudioManager simplified initialisation. Now by default creates a single source group containing all sources
+ . [NEW] CDAudioInterruptProtocol - implemented by classes that can be muted or enabled such as CDAudioManager
+ . [NEW] Mute now works like television mute i.e. audio continues but is silenced use the enabled property to disable sound.
+ . [NEW] CDAudioTransportProtocol - implemented by classes that can be played, paused, stopped and rewound.
+ . [NEW] CDAudioInterruptTargetGroup container for objects that implement CDAudioInterruptProtocol so that groups of objects can be set mute/enabled.
  . [NEW] CCArray: added high performance array. Used by CCNode, CCSpriteSheet
  . [NEW] Director: added support for high-res resolutions
  . [NEW] EAGLView: renderer is an object. EAGLView creates a ES1Renderer object (issue #883)
