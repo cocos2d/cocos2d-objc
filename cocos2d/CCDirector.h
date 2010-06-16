@@ -264,7 +264,7 @@ and when to execute the Scenes.
 /** The EAGLView, where everything is rendered */
 @property (nonatomic,readwrite,retain) EAGLView *openGLView;
 /** Pixel format used to create the context */
-@property (nonatomic,readonly) tPixelFormat pixelFormat;
+@property (nonatomic,readonly) tPixelFormat pixelFormat DEPRECATED_ATTRIBUTE;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** The device orientattion */
