@@ -3013,14 +3013,10 @@ Class restartAction()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
 
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
@@ -3073,6 +3069,8 @@ Class restartAction()
 	
 	// and run it!
 	[director runWithScene: scene];
+	
+	return YES;
 }
 
 // getting a call, pause the game
