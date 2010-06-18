@@ -319,6 +319,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Created Box2d + cocos2d demo example
 		co-author of sample "CocosDenshion - Tom the Turret"
 		Author of sample "CocosDenshion - Drum Pad"
+		Author of sample "CocosDenshion - Fade to Grey"
 	* Stuart Carnie (http://www.manomio.com/):
 		Sprite with nil textures supports opacity & color. patch.
 		Added file templates: CCNode, CCLayer, CCSprite
