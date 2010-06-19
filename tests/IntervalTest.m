@@ -23,27 +23,35 @@
 		[self addChild:sun];
 
 		// timers
+		label0 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+		label4 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		
-		[self schedule: @selector(step1:) interval: 0.5f];
-		[self schedule: @selector(step2:) interval:1.0f];
-		[self schedule: @selector(step3:) interval: 1.5f];
+		[self scheduleUpdate];
+		[self schedule: @selector(step1:)];
+		[self schedule: @selector(step2:) interval:0];
+		[self schedule: @selector(step3:) interval:1.0f];
+		[self schedule: @selector(step4:) interval: 2.0f];
 		
-		label1.position = ccp(80,s.width/2);
-		label2.position = ccp(240,s.width/2);
-		label3.position = ccp(400,s.width/2);
-		
+		label0.position = ccp(s.width*1/6,s.height/2);
+		label1.position = ccp(s.width*2/6,s.height/2);
+		label2.position = ccp(s.width*3/6,s.height/2);
+		label3.position = ccp(s.width*4/6,s.height/2);
+		label4.position = ccp(s.width*5/6,s.height/2);
+
+		[self addChild:label0];
 		[self addChild:label1];
 		[self addChild:label2];
 		[self addChild:label3];
+		[self addChild:label4];
 		
 		// Sprite
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.position = ccp(40,50);
 		
-		id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
+		id jump = [CCJumpBy actionWithDuration:3 position:ccp(s.width-80,0) height:50 jumps:4];
 		
 		[self addChild:sprite];
 		[sprite runAction: [CCRepeatForever actionWithAction:
@@ -54,7 +62,7 @@
 		// pause button
 		CCMenuItem *item1 = [CCMenuItemFont itemFromString: @"Pause" target:self selector:@selector(pause:)];
 		CCMenu *menu = [CCMenu menuWithItems: item1, nil];
-		menu.position = ccp(s.height-50, 270);
+		menu.position = ccp(s.width/2, s.height-50);
 
 		[self addChild: menu];
 	}
@@ -86,25 +94,34 @@
 	[[CCDirector sharedDirector] resume];
 }
 
+-(void) update: (ccTime) delta
+{
+	time0 +=delta;
+	[label0 setString: [NSString stringWithFormat:@"%2.1f", time0] ];
+}
+
 -(void) step1: (ccTime) delta
 {
-//	time1 +=delta;
-	time1 +=1;
+	time1 +=delta;
 	[label1 setString: [NSString stringWithFormat:@"%2.1f", time1] ];
 }
 
 -(void) step2: (ccTime) delta
 {
-//	time2 +=delta;
-	time2 +=1;
+	time2 +=delta;
 	[label2 setString: [NSString stringWithFormat:@"%2.1f", time2] ];
 }
 
 -(void) step3: (ccTime) delta
 {
-//	time3 +=delta;
-	time3 +=1;
+	time3 +=delta;
 	[label3 setString: [NSString stringWithFormat:@"%2.1f", time3] ];
+}
+
+-(void) step4: (ccTime) delta
+{
+	time4 +=delta;
+	[label4 setString: [NSString stringWithFormat:@"%2.1f", time4] ];
 }
 
 @end
@@ -131,6 +148,9 @@
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
+	
+	// run at 30 FPS
+	[director setAnimationInterval:1/30.0f];
 	
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
