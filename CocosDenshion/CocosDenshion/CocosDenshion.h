@@ -73,11 +73,19 @@ Requirements:
 #import <AudioToolbox/AudioToolbox.h>
 #import "CDConfig.h"
 
-#if CD_DEBUG
-#define CDLOG(...) NSLog(__VA_ARGS__)
-#else
+#if !defined(CD_DEBUG) || CD_DEBUG == 0
 #define CDLOG(...) do {} while (0)
-#endif
+#define CDLOGINFO(...) do {} while (0)
+
+#elif CD_DEBUG == 1
+#define CDLOG(...) NSLog(__VA_ARGS__)
+#define CDLOGINFO(...) do {} while (0)
+
+#elif CD_DEBUG > 1
+#define CDLOG(...) NSLog(__VA_ARGS__)
+#define CDLOGINFO(...) NSLog(__VA_ARGS__)
+#endif // CD_DEBUG
+
 
 #import "CDOpenALSupport.h"
 
