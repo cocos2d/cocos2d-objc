@@ -1502,11 +1502,11 @@ Class restartAction()
 		// and therefore all the animation sprites are also drawn as part of the CCSpriteSheet
 		//
 		
-		CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		sprite.position = ccp( s.width/2-80, s.height/2);
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		sprite1.position = ccp( s.width/2-80, s.height/2);
 		
 		CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
-		[spritesheet addChild:sprite];
+		[spritesheet addChild:sprite1];
 		[self addChild:spritesheet];
 
 		NSMutableArray *animFrames = [NSMutableArray array];
@@ -1518,16 +1518,17 @@ Class restartAction()
 
 		CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
 		// 14 frames * 0.2sec = 2,8 seconds
-		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
+		[sprite1 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 
 		// to test issue #732, uncomment the following line
-//		sprite.flipX = YES;
+		sprite1.flipX = NO;
+		sprite1.flipY = NO;
 
 		//
 		// Animation using standard Sprite
 		//
 		//
-		CCSprite *sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite2.position = ccp( s.width/2 + 80, s.height/2);
 		[self addChild:sprite2];
 		
@@ -1551,10 +1552,48 @@ Class restartAction()
 		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:6.4f animation:animMixed restoreOriginalFrame:NO]]];
 		
 		// to test issue #732, uncomment the following line
-//		sprite2.flipX = YES;
+		sprite2.flipX = NO;
+		sprite2.flipY = NO;
+		
+		[self schedule:@selector(flipSprites:) interval:2];
+		
+		counter = 0;
 
 	}	
 	return self;
+}
+
+-(void) flipSprites:(ccTime)dt
+{
+	counter ++;
+	
+	BOOL fx = NO;
+	BOOL fy = NO;
+	int i = counter % 4;
+	
+	switch ( i ) {
+		case 0:
+			fx = NO;
+			fy = NO;
+			break;
+		case 1:
+			fx = YES;
+			fy = NO;
+			break;
+		case 2:
+			fx = NO;
+			fy = YES;
+			break;
+		case 3:
+			fx = YES;
+			fy = YES;
+			break;
+	}
+	
+	sprite1.flipX = sprite2.flipX = fx;
+	sprite1.flipY = sprite2.flipY = fy;
+	
+	NSLog(@"flipX:%d, flipY:%d", fx, fy);
 }
 
 - (void) dealloc
@@ -1566,6 +1605,11 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sprite vs. SpriteSheet animation";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing issue #792";
 }
 @end
 

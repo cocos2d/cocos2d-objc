@@ -1,6 +1,7 @@
 version 0.99.4-rc - XXX-Jun-2010
  . [FIX] Effects: Creates correct color buffer
  . [FIX] Director: Sets correctly portrait upside-down orientation
+ . [FIX] Sprites: flipX/Y works with offsets (issue #792)
  . [FIX] Templates: Bundle Version is 1.0 (issue #871)
 
 version 0.99.4-beta - 14-Jun-2010
