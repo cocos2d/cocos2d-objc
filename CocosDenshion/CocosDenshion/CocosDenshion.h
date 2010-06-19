@@ -121,6 +121,8 @@ typedef struct _sourceInfo {
 	ALuint attachedBufferId;
 } sourceInfo;	
 
+#pragma mark CDAudioTransportProtocol
+
 @protocol CDAudioTransportProtocol <NSObject>
 /** Play the audio */
 -(BOOL) play;
@@ -131,6 +133,8 @@ typedef struct _sourceInfo {
 /** Return playback to beginning */
 -(BOOL) rewind;
 @end
+
+#pragma mark CDAudioInterruptProtocol
 
 @protocol CDAudioInterruptProtocol <NSObject>
 /** Is audio mute */
@@ -143,6 +147,7 @@ typedef struct _sourceInfo {
 -(void) setEnabled:(BOOL) enabledValue;
 @end
 
+#pragma mark CDUtilities
 /**
  Collection of utilities required by CocosDenshion
  */
@@ -156,7 +161,7 @@ typedef struct _sourceInfo {
 @end
 
 
-////////////////////////////////////////////////////////////////////////////
+#pragma mark CDSoundEngine
 
 /** CDSoundEngine is built upon OpenAL and works with SDK 2.0.
  CDSoundEngine is a sound engine built upon OpenAL and derived from Apple's oalTouch 
@@ -246,6 +251,7 @@ typedef struct _sourceInfo {
 
 @end
 
+#pragma mark CDSoundSource
 /** CDSoundSource is a wrapper around an OpenAL sound source.
  It allows you to manipulate properties such as pitch, gain, pan and looping while the 
  sound is playing. CDSoundSource is based on the old CDSourceWrapper class but with much
@@ -253,7 +259,6 @@ typedef struct _sourceInfo {
  
  @since v1.0
  */
-
 @interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol> {
 	ALenum lastError;
 @public
@@ -279,7 +284,8 @@ typedef struct _sourceInfo {
 
 @end
 
-////////////////////////////////////////////////////////////////////////////
+#pragma mark CDAudioInterruptTargetGroup
+
 /** Container for objects that implement audio interrupt protocol i.e. they can be muted and enabled.
  Setting mute and enabled for the group propagates to all children. 
  Designed to be used with your CDSoundSource objects to get them to comply with global enabled and mute settings
@@ -292,7 +298,11 @@ typedef struct _sourceInfo {
 -(void) addAudioInterruptTarget:(NSObject<CDAudioInterruptProtocol>*) interruptibleTarget;
 @end
 
-////////////////////////////////////////////////////////////////////////////
+#pragma mark CDAsynchBufferLoader
+
+/** CDAsynchBufferLoader
+ TODO
+ */
 @interface CDAsynchBufferLoader : NSOperation {
 	NSArray *_loadRequests;
 	CDSoundEngine *_soundEngine;
@@ -302,8 +312,9 @@ typedef struct _sourceInfo {
 
 @end
 
-////////////////////////////////////////////////////////////////////////////
+#pragma mark CDBufferLoadRequest
 
+/** CDBufferLoadRequest */
 @interface CDBufferLoadRequest: NSObject
 {
 	NSString *filePath;
@@ -317,13 +328,14 @@ typedef struct _sourceInfo {
 - (id)init:(int) theSoundId filePath:(NSString *) theFilePath;
 @end
 
-////////////////////////////////////////////////////////////////////////////
+/** Interpolation type */
 typedef enum {
 	kIT_Linear,			//!Straight linear interpolation fade
 	kIT_SCurve,			//!S curved interpolation
 	kIT_Exponential 	//!Exponential interpolation
 } tCDInterpolationType;
 
+#pragma mark CDFloatInterpolator
 @interface CDFloatInterpolator: NSObject
 {
 	float start;
@@ -341,6 +353,8 @@ typedef enum {
 -(id) init:(tCDInterpolationType) type startVal:(float) startVal endVal:(float) endVal;
 
 @end
+
+#pragma mark CDPropertyModifier
 
 /** Base class for classes that modify properties such as pitch, pan and gain */
 @interface CDPropertyModifier: NSObject
@@ -368,17 +382,25 @@ typedef enum {
 
 @end
 
+#pragma mark CDSoundSourceFader
+
 /** Fader for CDSoundSource objects */
 @interface CDSoundSourceFader : CDPropertyModifier{}
 @end
+
+#pragma mark CDSoundSourcePanner
 
 /** Panner for CDSoundSource objects */
 @interface CDSoundSourcePanner : CDPropertyModifier{}
 @end
 
+#pragma mark CDSoundSourcePitchBender
+
 /** Pitch bender for CDSoundSource objects */
 @interface CDSoundSourcePitchBender : CDPropertyModifier{}
 @end
+
+#pragma mark CDSoundEngineFader
 
 /** Fader for CDSoundEngine objects */
 @interface CDSoundEngineFader : CDPropertyModifier{}
