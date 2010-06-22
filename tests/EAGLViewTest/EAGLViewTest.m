@@ -1,5 +1,7 @@
 //
 // EAGLViewTest
+// This sample/test shows how to create an EAGLView using Interface Builder
+//
 // http://www.cocos2d-iphone.org
 //
 
@@ -65,6 +67,9 @@
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 
 	[director setOpenGLView:glView_];
+
+	// High res mode
+//	[director setContentScaleFactor:2];
 	
 	// turn on multiple touches
 	[glView_ setMultipleTouchEnabled:YES];

@@ -3089,11 +3089,11 @@ Class restartAction()
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO];
 	
-	// To use High-Res un comment the following line
-//	[director setContentScaleFactor:2];
-
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
+	
+	// To use High-Res un comment the following line
+	[director setContentScaleFactor:2];	
 	
 	// make the OpenGLView a child of the main window
 	[window addSubview:glView];

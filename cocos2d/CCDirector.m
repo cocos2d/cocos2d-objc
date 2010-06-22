@@ -567,7 +567,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 	else
 	{
-		CCLOG(@"cocos2d: Warning: calling setContentScaleFactor on iOS < 4. Using unoptimized fallback");
+		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");
 		/* on pre-4.0 iOS, use bounds/transform */
 		openGLView_.bounds = CGRectMake(0, 0,
 										openGLView_.bounds.size.width * contentScaleFactor_,

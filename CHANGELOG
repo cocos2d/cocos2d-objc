@@ -1,4 +1,5 @@
-version 0.99.4-rc - XXX-Jun-2010
+version 0.99.4-rc - 22-Jun-2010
+ . [NEW] Director: supports "setContentScaleFactor" (high-res support natively)
  . [FIX] Effects: Creates correct color buffer
  . [FIX] Director: Sets correctly portrait upside-down orientation
  . [FIX] Sprites: flipX/Y works with offsets (issue #732)
