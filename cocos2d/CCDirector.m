@@ -72,6 +72,7 @@ extern NSString * cocos2dVersion(void);
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
+-(void) updateContentScaleFactor;
 
 #if CC_ENABLE_PROFILERS
 - (void) showProfilers;
@@ -178,6 +179,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		contentScaleFactor_ = 1;
 		screenSize_ = surfaceSize_ = CGSizeZero;
+		isHighResDevice_ = NO;
 	}
 
 	return self;
@@ -242,7 +244,7 @@ static CCDirector *_sharedDirector = nil;
 	
 	glPushMatrix();
 	
-	[self applyLandscape];
+	[self applyOrientation];
 	
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
@@ -537,9 +539,45 @@ static CCDirector *_sharedDirector = nil;
 		[openGLView_ setTouchDelegate: touchDispatcher];
 		[touchDispatcher setDispatchEvents: YES];
 
+		if( contentScaleFactor_ != 1 )
+			[self updateContentScaleFactor];
+
 		[self setGLDefaultValues];
 	}
 }
+
+-(void) updateContentScaleFactor
+{
+	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
+	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
+	{
+		// XXX: weak linking with iOS4 is possible, but sending an "integer" as a parameter to a selector without warnings
+		// XXX: you need to compile the method
+		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
+		
+		SEL selector = @selector(setContentScaleFactor:);
+		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
+		method(openGLView_,selector, contentScaleFactor_);
+		
+		/* on iOS 4.0, use contentsScaleFactor */
+//		[openGLView_ setContentScaleFactor: scaleFactor];
+		
+		isHighResDevice_ = YES;
+		
+	}
+	else
+	{
+		CCLOG(@"cocos2d: Warning: calling setContentScaleFactor on iOS < 4. Using unoptimized fallback");
+		/* on pre-4.0 iOS, use bounds/transform */
+		openGLView_.bounds = CGRectMake(0, 0,
+										openGLView_.bounds.size.width * contentScaleFactor_,
+										openGLView_.bounds.size.height * contentScaleFactor_);
+		openGLView_.transform = CGAffineTransformScale(openGLView_.transform, 1 / contentScaleFactor_, 1 / contentScaleFactor_); 
+		
+		isHighResDevice_ = NO;
+	}
+}
+
 #pragma mark Director Scene Landscape
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
@@ -565,8 +603,9 @@ static CCDirector *_sharedDirector = nil;
 			ret.y = newX;
 			break;
 		}
-	
-	ret = ccpMult(ret, contentScaleFactor_);
+
+	if( contentScaleFactor_ != 1 && isHighResDevice_ )
+		ret = ccpMult(ret, contentScaleFactor_);
 	return ret;
 }
 
@@ -640,7 +679,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
--(void) applyLandscape
+-(void) applyOrientation
 {	
 	CGSize s = surfaceSize_;
 	float w = s.width / 2;
@@ -907,19 +946,19 @@ static CCDirector *_sharedDirector = nil;
 	return contentScaleFactor_;
 }
 
--(void) setContentScaleFactor:(CGFloat)s
+-(void) setContentScaleFactor:(CGFloat)scaleFactor
 {
-#ifdef __IPHONE_4_0
-	if( s != contentScaleFactor_ ) {
-		contentScaleFactor_ = s;
-		surfaceSize_ = CGSizeMake( screenSize_.width * s, screenSize_.height * s );
-	
+	if( scaleFactor != contentScaleFactor_ ) {
+
+		contentScaleFactor_ = scaleFactor;
+		surfaceSize_ = CGSizeMake( screenSize_.width * scaleFactor, screenSize_.height * scaleFactor );
+
+		if( openGLView_ )
+			[self updateContentScaleFactor];
+
 		// update projection
 		[self setProjection:projection_];
 	}
-#else
-	NSAssert(NO, @"setContentScaleFactor is available in SDK >= 4.0");
-#endif // __IPHONE_4_0
 }
 
 @end

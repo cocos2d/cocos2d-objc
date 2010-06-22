@@ -250,6 +250,9 @@ and when to execute the Scenes.
 	/* content scale factor */
 	CGFloat	contentScaleFactor_;
 	
+	/* contentScaleFactor could be simulated */
+	BOOL	isHighResDevice_;
+	
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler;
 #endif
@@ -285,7 +288,7 @@ and when to execute the Scenes.
 
 /** The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
- Only available when compiled using SDK >= 4.0.
+ In non High-res device the contentScale will be emulated.
  @since v0.99.4
  */
 @property (nonatomic, readwrite) CGFloat contentScaleFactor;
@@ -294,17 +297,17 @@ and when to execute the Scenes.
 +(CCDirector *)sharedDirector;
 
 /** There are 4 types of Director.
- - CCDirectorTypeNSTimer (default)
- - CCDirectorTypeMainLoop
- - CCDirectorTypeThreadMainLoop
- - CCDirectorTypeDisplayLink
+ - kCCDirectorTypeNSTimer (default)
+ - kCCDirectorTypeMainLoop
+ - kCCDirectorTypeThreadMainLoop
+ - kCCDirectorTypeDisplayLink
  
  Each Director has it's own benefits, limitations.
  If you are using SDK 3.1 or newer it is recommed to use the DisplayLink director
  
  This method should be called before any other call to the director.
 
- It will return NO if the director type is CCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
+ It will return NO if the director type is kCCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
  
  @since v0.8.2
  */
@@ -370,8 +373,8 @@ and when to execute the Scenes.
  */
 -(CGPoint) convertToUI:(CGPoint)p;
 
-// rotates the screen if Landscape mode is activated
--(void) applyLandscape;
+// rotates the screen if an orientation differnent than Portrait is used
+-(void) applyOrientation;
 
 /// XXX: missing description
 -(float) getZEye;
