@@ -336,6 +336,18 @@ struct transformValues_ {
 
 	[self setContentSize:untrimmedSize];
 	[self updateTextureCoords:rect];
+
+	CGPoint relativeOffset = unflippedOffsetPositionFromCenter_;
+	
+	// issue #732
+	if( flipX_ )
+		relativeOffset.x = - relativeOffset.x;
+	if( flipY_ )
+		relativeOffset.y = - relativeOffset.y;
+	
+	offsetPosition_.x = relativeOffset.x + (contentSize_.width - rect_.size.width) / 2;
+	offsetPosition_.y = relativeOffset.y + (contentSize_.height - rect_.size.height) / 2;
+	
 	
 	// rendering using SpriteSheet
 	if( usesSpriteSheet_ ) {
@@ -346,27 +358,9 @@ struct transformValues_ {
 	// self rendering
 	else
 	{
-		float oX = offsetPosition_.x;
-		float oY = offsetPosition_.y;
-		
-		// flip offset: issue #792
-		if( flipX_ ) {
-			// obtain original offset
-			oX -= ( untrimmedSize.width - rect.size.width) / 2;
-			oX = - oX;
-			oX += ( untrimmedSize.width - rect.size.width) / 2;
-		}
-		
-		if( flipY_) {
-			// obtain original offset
-			oY -= ( untrimmedSize.height - rect.size.height) / 2;
-			oY = - oY;
-			oY += ( untrimmedSize.height - rect.size.height) / 2;			
-		}
-			
 		// Atlas: Vertex
-		float x1 = 0 + oX;
-		float y1 = 0 + oY;
+		float x1 = 0 + offsetPosition_.x;
+		float y1 = 0 + offsetPosition_.y;
 		float x2 = x1 + rect.size.width;
 		float y2 = y1 + rect.size.height;
 		
@@ -468,30 +462,14 @@ struct transformValues_ {
 	}
 	
 	
-	CGSize size = rect_.size;
-	
-	float oX = offsetPosition_.x;
-	float oY = offsetPosition_.y;
-
-	// flip offset: issue #792
-	if( flipX_ ) {
-		oX -= ( contentSize_.width - rect_.size.width) / 2;
-		oX = - oX;
-		oX += ( contentSize_.width - rect_.size.width) / 2;
-	}
-	
-	if( flipY_) {
-		oY -= ( contentSize_.height - rect_.size.height) / 2;
-		oY = - oY;
-		oY += ( contentSize_.height - rect_.size.height) / 2;			
-	}
-	
 	//
 	// calculate the Quad based on the Affine Matrix
 	//	
 
-	float x1 = oX;
-	float y1 = oY;
+	CGSize size = rect_.size;
+
+	float x1 = offsetPosition_.x;
+	float y1 = offsetPosition_.y;
 	
 	float x2 = x1 + size.width;
 	float y2 = y1 + size.height;
@@ -841,12 +819,7 @@ struct transformValues_ {
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
-	offsetPosition_ = frame.offset;
-	CGSize origSize = frame.originalSize;
-
-	CGRect rect = frame.rect;
-	offsetPosition_.x += (origSize.width - rect.size.width) / 2;
-	offsetPosition_.y += (origSize.height - rect.size.height) / 2;
+	unflippedOffsetPositionFromCenter_ = frame.offset;
 
 	CCTexture2D *newTexture = [frame texture];
 	// update texture before updating texture rect
@@ -854,7 +827,7 @@ struct transformValues_ {
 		[self setTexture: newTexture];
 	
 	// update rect
-	[self setTextureRect:frame.rect untrimmedSize:origSize];
+	[self setTextureRect:frame.rect untrimmedSize:frame.originalSize];
 	
 }
 

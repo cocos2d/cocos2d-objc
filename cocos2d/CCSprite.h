@@ -110,7 +110,8 @@ typedef enum {
 	CGRect rect_;
 	
 	// Offset Position (used by Zwoptex)
-	CGPoint	offsetPosition_;
+	CGPoint	offsetPosition_;	// absolute
+	CGPoint unflippedOffsetPositionFromCenter_;
 
 	// vertex coords, texture coords and color info
 	ccV3F_C4B_T2F_Quad quad_;
@@ -146,7 +147,7 @@ typedef enum {
 	sprite.scaleX *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipX;
-/** whether or not the sprite is flipped vertically\ 
+/** whether or not the sprite is flipped vertically.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
@@ -173,7 +174,7 @@ typedef enum {
 /** offset position of the sprite. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */
-@property (nonatomic,readwrite) CGPoint	offsetPosition;
+@property (nonatomic,readonly) CGPoint	offsetPosition;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 

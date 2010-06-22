@@ -1517,8 +1517,8 @@ Class restartAction()
 		}
 
 		CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
-		// 14 frames * 0.2sec = 2,8 seconds
-		[sprite1 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
+		// 14 frames * 1sec = 14 seconds
+		[sprite1 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:14.0f animation:animation restoreOriginalFrame:NO] ]];
 
 		// to test issue #732, uncomment the following line
 		sprite1.flipX = NO;
@@ -1548,19 +1548,25 @@ Class restartAction()
 		[moreFrames addObjectsFromArray:animFrames];
 		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" frames:moreFrames];
 		
-		// 32 frames * 0.2 seconds = 6.4 seconds
-		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:6.4f animation:animMixed restoreOriginalFrame:NO]]];
+		// 32 frames * 1 seconds = 32 seconds
+		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:32.0f animation:animMixed restoreOriginalFrame:NO]]];
 		
 		// to test issue #732, uncomment the following line
 		sprite2.flipX = NO;
 		sprite2.flipY = NO;
 		
-		[self schedule:@selector(flipSprites:) interval:2];
+		[self schedule:@selector(startIn05Secs:) interval:0.5f];
 		
 		counter = 0;
 
 	}	
 	return self;
+}
+
+-(void) startIn05Secs:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	[self schedule:@selector(flipSprites:) interval:1];
 }
 
 -(void) flipSprites:(ccTime)dt
