@@ -3089,14 +3089,8 @@ Class restartAction()
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO];
 	
-	// TO ENABLE HI-RES DISPLAY FOLLOW INSTRUCTIONS FROM HERE:
-	// https://developer.apple.com/iphone/prerelease/library/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/SupportingResolutionIndependence/SupportingResolutionIndependence.html#//apple_ref/doc/uid/TP40007072-CH10-SW11
-	//
-	// And then uncomment the following line
+	// To use High-Res un comment the following line
 //	[director setContentScaleFactor:2];
-	//
-	// Once the iPhone SDK 4.0 is out of beta, this sample will be completed
-	//
 
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
