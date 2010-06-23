@@ -462,26 +462,32 @@
 	
 	[self transform];
 	
-	ccArray *arrayData;
-	int i = 0, nu;
 	if(children_){
-		arrayData = children_->data;
-		nu = arrayData->num;
-		for(;i<nu; i++){
-			CCNode *child = arrayData->arr[i];
-			if ( child.zOrder < 0 )
+		ccArray *arrayData = children_->data;
+		id *arr = arrayData->arr;
+		NSUInteger nu = arrayData->num;
+		
+		while (nu > 0) {
+			CCNode *child = *arr;
+			if ( child.zOrder < 0 ) {
 				[child visit];
-			else
+				nu--;
+				arr++;
+			} else {
 				break;
+			}
 		}
+		
+		[self draw];
+		
+		while (nu > 0) {
+			CCNode *child = *arr++;
+			[child visit];
+			nu--;
+		}
+	} else {
+		[self draw];	
 	}
-	
-	[self draw];
-	
-	if(children_)
-		for (;i<nu; i++)
-			[arrayData->arr[i] visit];
-	
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
