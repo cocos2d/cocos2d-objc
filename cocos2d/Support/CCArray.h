@@ -39,8 +39,8 @@ typedef struct pccArrayForeach_ //p =private
 } pccArrayForeach;
 
 // Fast iteration, easy integration	
-#define CCARRAY_FOREACH(array, object)																																							\
-for(pccArrayForeach _d=(array && (object=array->data->arr[0])) ? (pccArrayForeach){0,array->data->num,array->data->arr}: (pccArrayForeach){0,0,nil}; _d.i<_d.num ; _d.i++, object=_d.arr[_d.i])	\
+#define CCARRAY_FOREACH(__array__, __object__)																																										\
+for(pccArrayForeach _d=(__array__ && (__object__=__array__->data->arr[0])) ? (pccArrayForeach){0,__array__->data->num,__array__->data->arr}: (pccArrayForeach){0,0,nil}; _d.i<_d.num ; _d.i++, __object__=_d.arr[_d.i])	\
 
 
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding>
