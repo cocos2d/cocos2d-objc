@@ -257,9 +257,10 @@ const int defaultCapacity = 29;
 	}
 	
 	// itera
-	for(int i = 0; i<array->num; i++)
-	{
-		child = array->arr[i];
+	id *arr = array->arr;
+	NSUInteger i = array->num;
+	while (i-- > 0) {
+		child = *arr++;
 		
 		// fast dispatch
 		if( dirtyMethod(child, selDirty) )
