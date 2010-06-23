@@ -61,7 +61,6 @@
 		//
 		// Sprite
 		//
-		
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.position = ccp( 0, 50);
 		
