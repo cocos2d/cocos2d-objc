@@ -47,6 +47,11 @@
 #pragma mark -
 #pragma mark ccArray for Objects
 
+// Easy integration	
+#define CCARRAYDATA_FOREACH(array, object)												\
+object=array->arr[0]; for(int i=0, num=array->num; i<num; i++, object=array->arr[i])	\
+
+
 typedef struct ccArray {
 	NSUInteger num, max;
 	id *arr;

@@ -315,7 +315,8 @@ const int defaultCapacity = 29;
 
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)node atlasIndex:(NSUInteger)index
 {
-	for( CCSprite *sprite in node.children ) {
+	CCSprite *sprite;
+	CCARRAY_FOREACH(children_, sprite){
 		if( sprite.zOrder < 0 )
 			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
 	}
@@ -326,7 +327,7 @@ const int defaultCapacity = 29;
 		index++;
 	}
 	
-	for( CCSprite *sprite in node.children ) {
+	CCARRAY_FOREACH(children_, sprite){
 		if( sprite.zOrder >= 0 )
 			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
 	}
@@ -420,14 +421,14 @@ const int defaultCapacity = 29;
 	
 	// update indices
 	NSUInteger i = index+1;
-	
+	CCSprite *child;
 	for(; i<descendantsData->num; i++){
-		CCSprite *child = descendantsData->arr[i];
+		child = descendantsData->arr[i];
 		child.atlasIndex = child.atlasIndex + 1;
 	}
 	
 	// add children recursively
-	for( CCSprite *child in sprite.children ) {
+	CCARRAY_FOREACH(sprite.children, child){
 		NSUInteger index = [self atlasIndexForChild:child atZ: child.zOrder];
 		[self insertChild:child inAtlasAtIndex:index];
 	}
@@ -458,9 +459,9 @@ const int defaultCapacity = 29;
 	}
 	
 	// remove children recursively
-	for( CCSprite *child in sprite.children ) {
+	CCSprite *child;
+	CCARRAY_FOREACH(sprite.children, child)
 		[self removeSpriteFromAtlas:child];
-	}	
 }
 
 #pragma mark CCSpriteSheet - CocosNodeTexture protocol
