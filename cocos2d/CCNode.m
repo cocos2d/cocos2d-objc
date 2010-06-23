@@ -248,12 +248,11 @@
 	
 	// children
 	
-	for (CCNode *child in children_) {
+	CCNode *child;
+	CCARRAY_FOREACH(children_, child)
 		child.parent = nil;
-	}
 	
 	[children_ release];
-	
 	
 	[super dealloc];
 }
@@ -287,7 +286,8 @@
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
-	for( CCNode *node in children_ ) {
+	CCNode *node;
+	CCARRAY_FOREACH(children_, node){
 		if( node.tag == aTag )
 			return node;
 	}
@@ -408,11 +408,12 @@
 }
 
 // helper used by reorderChild & add
--(void) insertChild:(CCNode*) child z:(int)z
+-(void) insertChild:(CCNode*)child z:(int)z
 {
 	int index=0;
 	BOOL added = NO;
-	for( CCNode *a in children_ ) {
+	CCNode *a;
+	CCARRAY_FOREACH(children_, a){
 		if ( a.zOrder > z ) {
 			added = YES;
 			[ children_ insertObject:child atIndex:index];
