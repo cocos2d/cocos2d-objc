@@ -30,6 +30,19 @@
  CCArray uses internally a c-array.
  @since v0.99.4
  */
+
+typedef struct pccArrayForeach_ //p =private
+{
+	int i;
+	int num;
+	id *arr;
+} pccArrayForeach;
+
+// Fast iteration, easy integration	
+#define CCARRAY_FOREACH(__array__, __object__)																																										\
+for(pccArrayForeach _d=(__array__ && (__object__=__array__->data->arr[0])) ? (pccArrayForeach){0,__array__->data->num,__array__->data->arr}: (pccArrayForeach){0,0,nil}; _d.i<_d.num ; _d.i++, __object__=_d.arr[_d.i])	\
+
+
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding>
 {
 	@public ccArray *data;
