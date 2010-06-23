@@ -179,7 +179,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		contentScaleFactor_ = 1;
 		screenSize_ = surfaceSize_ = CGSizeZero;
-		isHighResDevice_ = NO;
+		isContentScaleSupported_ = NO;
 	}
 
 	return self;
@@ -561,7 +561,7 @@ static CCDirector *_sharedDirector = nil;
 		// In Xcode 3.2.3 SDK 4.0, use this one:
 //		[openGLView_ setContentScaleFactor: scaleFactor];
 		
-		isHighResDevice_ = YES;
+		isContentScaleSupported_ = YES;
 		
 	}
 	else
@@ -573,7 +573,7 @@ static CCDirector *_sharedDirector = nil;
 										openGLView_.bounds.size.height * contentScaleFactor_);
 		openGLView_.transform = CGAffineTransformScale(openGLView_.transform, 1 / contentScaleFactor_, 1 / contentScaleFactor_); 
 		
-		isHighResDevice_ = NO;
+		isContentScaleSupported_ = NO;
 	}
 }
 
@@ -603,7 +603,7 @@ static CCDirector *_sharedDirector = nil;
 			break;
 		}
 
-	if( contentScaleFactor_ != 1 && isHighResDevice_ )
+	if( contentScaleFactor_ != 1 && isContentScaleSupported_ )
 		ret = ccpMult(ret, contentScaleFactor_);
 	return ret;
 }
