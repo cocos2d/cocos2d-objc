@@ -426,32 +426,49 @@ Class restartTransition()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	[window setUserInteractionEnabled:YES];
-	[window setMultipleTouchEnabled:NO];
 	
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
-	// Create a depth buffer of 16 bits
-	// Needed for the TurnPage transition
-	// These means that openGL z-order will be taken into account
-	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
-//	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16];
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-
-	[[CCDirector sharedDirector] attachInView:window];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
 	
 	// frames per second
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];	
+	[director setAnimationInterval:1.0/60];
 	
+	// create an OpenGL view
+	// PageTurnTransition needs a depth buffer of 16 or 24 bits
+	// These means that openGL z-order will be taken into account
+	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:0  // GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO];
+	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
+	
+		
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -460,9 +477,7 @@ Class restartTransition()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 	
-	[window makeKeyAndVisible];
-			 
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

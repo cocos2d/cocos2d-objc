@@ -173,6 +173,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added several functions to CGPointExtension like: clampf, ccpClamp, ccpFromSize,
 			ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 			ccpRotateByAngle, ccpLineIntersect
+		Author of sample "CocosDenshion - Fancy Rat Metering Demo"
 	* Leonardo Kasperavičius (http://www.instantgames.com.br/):
 		original author of QuadParticleSystem class
 		Author of the original Bezier action
@@ -270,6 +271,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TileMapAtlas: it works with 255 tiles
 		patch for TextureMgr: supports directory within image names
 		patch: Added support for tsx tilesets in TMX tiled maps
+	* Ray Wenderlich (http://www.raywenderlich.com/)
+		co-author of sample "CocosDenshion - Tom the Turret"
 	* Robert J Payne (http://www.zwopple.com/)
 		Author of Zwoptex editor, support
 		Added support for left,right,top,bottom trim in CCSpriteFrameCache (patch).
@@ -310,10 +313,13 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
 	* Steve Oldmeadow (http://www.smoco.com/):
-		patches for Texture2D
 		Author and maintainer of CocosDenshion Sound Engine
+		patches for Texture2D
 		Integrated Box2d physics engine
 		Created Box2d + cocos2d demo example
+		co-author of sample "CocosDenshion - Tom the Turret"
+		Author of sample "CocosDenshion - Drum Pad"
+		Author of sample "CocosDenshion - Fade to Grey"
 	* Stuart Carnie (http://www.manomio.com/):
 		Sprite with nil textures supports opacity & color. patch.
 		Added file templates: CCNode, CCLayer, CCSprite

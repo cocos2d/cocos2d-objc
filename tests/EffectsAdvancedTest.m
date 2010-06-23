@@ -300,9 +300,9 @@ Class restartAction()
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
+		item1.position = ccp(size.width/2-100,30);
+		item2.position = ccp(size.width/2, 30);
+		item3.position = ccp(size.width/2+100,30);
 		[self addChild: menu z:101];
 
 	}
@@ -356,30 +356,37 @@ Class restartAction()
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
-	
 	// must be called before any othe call to the director
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
+	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	// Use this pixel format to have transparent buffers
-	// BUG: glClearColor() in FBO needs to be converted to RGBA8888
-	[director setPixelFormat:kCCPixelFormatRGBA8888];
-
-	// Create a depth buffer of 16 bits
-	// Needed for the orbit + lens + waves examples
-	// These means that openGL z-order will be taken into account
-	[director setDepthBufferFormat:kCCDepthBuffer16];
 	
 	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation: kCCDeviceOrientationLandscapeRight];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
-	// create an openGL view inside a window
-	[director attachInView:window];	
-	[window makeKeyAndVisible];	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:GL_DEPTH_COMPONENT16_OES
+							preserveBackbuffer:NO];
+	[glView setMultipleTouchEnabled:YES];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565

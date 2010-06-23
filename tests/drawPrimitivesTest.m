@@ -240,26 +240,29 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// must be called before any othe call to the director
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
-	[window makeKeyAndVisible];	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -269,7 +272,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

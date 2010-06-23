@@ -74,6 +74,9 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 -(BOOL) _setUpSourceGroups:(int[]) definitions total:(int) total; 
 @end
 
+#pragma mark -
+#pragma mark CDUtilities
+
 @implementation CDUtilities
 
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
@@ -99,6 +102,8 @@ extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionS
 
 @end
 
+#pragma mark -
+#pragma mark CDSoundEngine
 
 @implementation CDSoundEngine
 
@@ -1296,7 +1301,11 @@ static BOOL _mixerRateSet = NO;
 }	
 
 @end
+
 ////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDAudioInterruptTargetGroup
+
 @implementation CDAudioInterruptTargetGroup
 
 -(id) init {
@@ -1358,6 +1367,9 @@ static BOOL _mixerRateSet = NO;
 
 ////////////////////////////////////////////////////////////////////////////
 
+#pragma mark -
+#pragma mark CDAsynchBufferLoader
+
 @implementation CDAsynchBufferLoader
 
 -(id) init:(NSArray *)loadRequests soundEngine:(CDSoundEngine *) theSoundEngine {
@@ -1399,6 +1411,9 @@ static BOOL _mixerRateSet = NO;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDBufferLoadRequest
+
 @implementation CDBufferLoadRequest
 
 @synthesize filePath, soundId;
@@ -1420,6 +1435,9 @@ static BOOL _mixerRateSet = NO;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDFloatInterpolator
+
 @implementation CDFloatInterpolator
 @synthesize start,end,interpolationType;
 
@@ -1466,6 +1484,9 @@ static BOOL _mixerRateSet = NO;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDPropertyModifier
+
 @implementation CDPropertyModifier
 
 @synthesize stopTargetWhenComplete;
@@ -1562,6 +1583,9 @@ static BOOL _mixerRateSet = NO;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDSoundSourceFader
+
 @implementation CDSoundSourceFader
 
 -(void) _setTargetProperty:(float) newVal {
@@ -1583,6 +1607,9 @@ static BOOL _mixerRateSet = NO;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDSoundSourcePanner
+
 @implementation CDSoundSourcePanner
 
 -(void) _setTargetProperty:(float) newVal {
@@ -1604,6 +1631,9 @@ static BOOL _mixerRateSet = NO;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDSoundSourcePitchBender
+
 @implementation CDSoundSourcePitchBender
 
 -(void) _setTargetProperty:(float) newVal {
@@ -1625,6 +1655,9 @@ static BOOL _mixerRateSet = NO;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+#pragma mark CDSoundEngineFader
+
 @implementation CDSoundEngineFader
 
 -(void) _setTargetProperty:(float) newVal {

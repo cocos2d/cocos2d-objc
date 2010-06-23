@@ -97,9 +97,9 @@ Class restartAction()
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(480/2-100,30);
-		item2.position = ccp(480/2, 30);
-		item3.position = ccp(480/2+100,30);
+		item1.position = ccp(s.width/2-100,30);
+		item2.position = ccp(s.width/2, 30);
+		item3.position = ccp(s.width/2+100,30);
 		[self addChild: menu z:1];
 	}
 
@@ -159,7 +159,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [CCEaseIn actionWithAction:[[move copy] autorelease] rate:3.0f];
@@ -206,7 +208,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 //	id move_back = [move reverse];
 	
 	id move_ease_inout1 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
@@ -240,7 +244,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [CCEaseSineIn actionWithAction:[[move copy] autorelease]];
@@ -272,7 +278,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease = [CCEaseSineInOut actionWithAction:[[move copy] autorelease]];
@@ -301,7 +309,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [CCEaseExponentialIn actionWithAction:[[move copy] autorelease]];
@@ -334,7 +344,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease = [CCEaseExponentialInOut actionWithAction:[[move copy] autorelease]];
@@ -364,8 +376,10 @@ Class restartAction()
 {
 	[super onEnter];
 
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
-
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
+	
 	id move_ease_inout1 = [CCEaseElasticInOut actionWithAction:[[move copy] autorelease] period:0.3f];
 	id move_ease_inout_back1 = [move_ease_inout1 reverse];
 	
@@ -399,7 +413,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [CCEaseElasticIn actionWithAction:[[move copy] autorelease]];
@@ -431,7 +447,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [CCEaseBounceIn actionWithAction:[[move copy] autorelease]];
@@ -461,7 +479,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease = [CCEaseBounceInOut actionWithAction:[[move copy] autorelease]];
@@ -490,7 +510,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease_in = [CCEaseBackIn actionWithAction:[[move copy] autorelease]];
@@ -520,7 +542,9 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 	id move_back = [move reverse];
 	
 	id move_ease = [CCEaseBackInOut actionWithAction:[[move copy] autorelease]];
@@ -551,9 +575,10 @@ Class restartAction()
 {
 	[super onEnter];
 	
-
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
 	// rotate and jump
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
 	CCIntervalAction *jump2 = [jump1 reverse];
 	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
 	CCIntervalAction *rot2 = [rot1 reverse];
@@ -627,9 +652,10 @@ Class restartAction()
 {
 	[super onEnter];
 	
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// rotate and jump
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
 	CCIntervalAction *jump2 = [jump1 reverse];
 	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
 	CCIntervalAction *rot2 = [rot1 reverse];
@@ -675,28 +701,29 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// must be called before any othe call to the director
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeDefault];
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
-	[window makeKeyAndVisible];	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -706,7 +733,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];	
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

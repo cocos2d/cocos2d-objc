@@ -126,7 +126,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			int oh = [[frameDict objectForKey:@"originalHeight"] intValue];
 			// check ow/oh
 			if(!ow || !oh) {
-				CCLOG(@"cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+				CCLOG(@"cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
 			}
 			// abs ow/oh
 			ow = abs(ow);
@@ -146,7 +146,10 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			*/
 			// create frame
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame offset:offset originalSize:sourceSize];
+		} else {
+			CCLOG(@"cocos2d: Unsupported Zwoptex version. Update cocos2d");
 		}
+
 		// add sprite frame
 		[spriteFrames setObject:spriteFrame forKey:frameDictKey];
 	}

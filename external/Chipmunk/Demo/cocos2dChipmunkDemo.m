@@ -483,36 +483,32 @@ glutStuff(int argc, const char *argv[])
 @implementation AppController
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. Attaches to the main window
+	// 3. Creates Display Link Director
+	// 3a. If it fails, it will use an NSTimer director
+	// 4. It will try to run at 60 FPS
+	// 4. Display FPS: NO
+	// 5. Device orientation: Portrait
+	// 6. Connect the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// must be called before any othe call to the director
-	// Try to use DisplayLink director (SDK >= 3.1) if it fails, use FastDirector
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeMainLoop];
-	
-	// before creating any layer, set the landscape mode
-	//	[[CCDirector sharedDirector] setLandscape: YES];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
-	
-	// Fast Director doesn't support setAnimationInterval yet
-	//	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	
-	[[CCDirector sharedDirector] attachInView:window];
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
 	
 	CCScene *scene = [CCScene node];
 	
 	MainLayer * mainLayer =[MainLayer node];
 	
 	[scene addChild: mainLayer];
-	
-	[window makeKeyAndVisible];
-	
-	[[CCDirector sharedDirector] runWithScene: scene];
+		
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game

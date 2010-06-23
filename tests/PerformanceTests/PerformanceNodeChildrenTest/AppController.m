@@ -11,26 +11,41 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
+	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	[window setUserInteractionEnabled:YES];
 	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use fast director
+	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-		
-//	[[CCDirector sharedDirector] setPixelFormat:kCCPixelFormatRGBA8888];
-
-	[[CCDirector sharedDirector] attachInWindow:window];
-	[CCDirector sharedDirector].displayFPS = YES;
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// before creating any layer, set the landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
 	[window makeKeyAndVisible];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithQuantityOfNodes:kNodesIncrease]];
 	
-	[[CCDirector sharedDirector] runWithScene:scene];
+	[director runWithScene:scene];
 }
 
 - (void)dealloc {

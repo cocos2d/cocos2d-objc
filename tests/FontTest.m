@@ -53,25 +53,25 @@ NSString* restartAction()
 	return fontList[fontIdx];
 }
 
-@implementation FontLayer
+@implementation FontTest
 -(id) init
 {
-	if(!(self=[super init] ))
-        return nil;
+	if((self=[super init] )) {
     
-    // menu
-    CGSize size = [CCDirector sharedDirector].winSize;
-    CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-    CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-    CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-    CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-    menu.position = CGPointZero;
-    item1.position = ccp(size.width/2-100,30);
-    item2.position = ccp(size.width/2, 30);
-    item3.position = ccp(size.width/2+100,30);
-    [self addChild: menu z:1];
-    
-    [self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
+		// menu
+		CGSize size = [CCDirector sharedDirector].winSize;
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		menu.position = CGPointZero;
+		item1.position = ccp(size.width/2-100,30);
+		item2.position = ccp(size.width/2, 30);
+		item3.position = ccp(size.width/2+100,30);
+		[self addChild: menu z:1];
+		
+		[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];
+	}
     
 	return self;
 }
@@ -97,10 +97,10 @@ NSString* restartAction()
 	center.position = ccp(s.width/2,150);
 	right.position = ccp(s.width/2,100);
 	
-	[[[[self addChild:left z:0 tag:kTagLabel1]
-	  addChild:right z:0 tag:kTagLabel2]
-	 addChild:center z:0 tag:kTagLabel3]
-	 addChild:top z:0 tag:kTagLabel4];
+	[self addChild:left z:0 tag:kTagLabel1];
+	[self addChild:right z:0 tag:kTagLabel2];
+	[self addChild:center z:0 tag:kTagLabel3];
+	[self addChild:top z:0 tag:kTagLabel4];
 	
 //    label = [[Label alloc] initWithString:"This is a test: left" fontName:aFont fontSize:30];
 //    label.color = ccc3(0xff, 0xff, 0xff);
@@ -132,24 +132,29 @@ NSString* restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// must be called before any othe call to the director
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-
-	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeRight];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-	[[CCDirector sharedDirector] setDisplayFPS:YES];
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];	
-	[window makeKeyAndVisible];	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -157,9 +162,9 @@ NSString* restartAction()
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [FontLayer node]];
+	[scene addChild: [FontTest node]];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 - (void) dealloc

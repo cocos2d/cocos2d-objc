@@ -191,7 +191,8 @@ and when to execute the Scenes.
 {
 	EAGLView	*openGLView_;
 
-  NSBundle* loadingBundle;
+	NSBundle* loadingBundle;
+
 	// internal timer
 	NSTimeInterval animationInterval;
 	NSTimeInterval oldAnimationInterval;
@@ -240,6 +241,18 @@ and when to execute the Scenes.
 	/* projection used */
 	ccDirectorProjection projection_;
 	
+	/* screen, different than surface size */
+	CGSize	screenSize_;
+
+	/* screen, different than surface size */
+	CGSize	surfaceSize_;
+	
+	/* content scale factor */
+	CGFloat	contentScaleFactor_;
+	
+	/* contentScaleFactor could be simulated */
+	BOOL	isHighResDevice_;
+	
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler;
 #endif
@@ -251,10 +264,10 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (nonatomic,readwrite, assign) BOOL displayFPS;
-/** The OpenGL view */
-@property (nonatomic,readonly) EAGLView *openGLView;
+/** The EAGLView, where everything is rendered */
+@property (nonatomic,readwrite,retain) EAGLView *openGLView;
 /** Pixel format used to create the context */
-@property (nonatomic,readonly) tPixelFormat pixelFormat;
+@property (nonatomic,readonly) tPixelFormat pixelFormat DEPRECATED_ATTRIBUTE;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** The device orientattion */
@@ -271,23 +284,30 @@ and when to execute the Scenes.
  If the new scene replaces the old one, the it will receive the "cleanup" message.
  @since v0.99.0
  */
-@property (nonatomic, readonly) BOOL	sendCleanupToScene;
+@property (nonatomic, readonly) BOOL sendCleanupToScene;
+
+/** The size in pixels of the surface. It could be different than the screen size.
+ High-res devices might have a higher surface size than the screen size.
+ In non High-res device the contentScale will be emulated.
+ @since v0.99.4
+ */
+@property (nonatomic, readwrite) CGFloat contentScaleFactor;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;
 
 /** There are 4 types of Director.
- - CCDirectorTypeNSTimer (default)
- - CCDirectorTypeMainLoop
- - CCDirectorTypeThreadMainLoop
- - CCDirectorTypeDisplayLink
+ - kCCDirectorTypeNSTimer (default)
+ - kCCDirectorTypeMainLoop
+ - kCCDirectorTypeThreadMainLoop
+ - kCCDirectorTypeDisplayLink
  
  Each Director has it's own benefits, limitations.
  If you are using SDK 3.1 or newer it is recommed to use the DisplayLink director
  
  This method should be called before any other call to the director.
 
- It will return NO if the director type is CCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
+ It will return NO if the director type is kCCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
  
  @since v0.8.2
  */
@@ -296,36 +316,52 @@ and when to execute the Scenes.
 
 // iPhone Specific
 
-/** change default pixel format.
- Call this class method before attaching it to a UIWindow/UIView
+/** Uses a new pixel format for the EAGLView.
+ Call this class method before attaching it to a UIView
  Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
+ 
+ @deprecated Set the pixel format when creating the EAGLView. This method will be removed in v1.0
  */
--(void) setPixelFormat: (tPixelFormat) p;
+-(void) setPixelFormat: (tPixelFormat)p DEPRECATED_ATTRIBUTE;
 
-/** change depth buffer format.
+/** Change depth buffer format of the render buffer.
  Call this class method before attaching it to a UIWindow/UIView
- Default depth buffer: 0 (none).  Supported: kDepthBufferNone, kDepthBuffer16, and kDepthBuffer24
+ Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
+ 
+ @deprecated Set the depth buffer format when creating the EAGLView. This method will be removed in v1.0
  */
--(void) setDepthBufferFormat: (tDepthBufferFormat) db;
+-(void) setDepthBufferFormat: (tDepthBufferFormat)db DEPRECATED_ATTRIBUTE;
 
 // Integration with UIKit
 /** detach the cocos2d view from the view/window */
--(BOOL)detach;
+-(BOOL)detach DEPRECATED_ATTRIBUTE;
 
-/** attach in UIWindow using the full frame */
--(BOOL)attachInWindow:(UIWindow *)window;
+/** attach in UIWindow using the full frame.
+ It will create a EAGLView.
+ 
+ @deprecated set setOpenGLView instead. Will be removed in v1.0
+ */
+-(BOOL)attachInWindow:(UIWindow *)window DEPRECATED_ATTRIBUTE;
 
-/** attach in UIView using the full frame */
--(BOOL)attachInView:(UIView *)view;
+/** attach in UIView using the full frame.
+ It will create a EAGLView.
+ 
+ @deprecated set setOpenGLView instead. Will be removed in v1.0
+ */
+-(BOOL)attachInView:(UIView *)view DEPRECATED_ATTRIBUTE;
 
-/** attach in UIView using the given frame */
--(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame;
+/** attach in UIView using the given frame.
+ It will create a EAGLView and use it.
+ 
+ @deprecated set setOpenGLView instead. Will be removed in v1.0
+ */
+-(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame DEPRECATED_ATTRIBUTE;
 
 // Landscape
 
-/** returns the size of the OpenGL view according to the landspace */
+/** returns the size of the OpenGL view in pixels, according to the landspace */
 - (CGSize) winSize;
-/** returns the display size of the OpenGL view */
+/** returns the display size of the OpenGL view in pixels */
 -(CGSize) displaySize;
 
 /** converts a UIKit coordinate to an OpenGL coordinate
@@ -337,8 +373,8 @@ and when to execute the Scenes.
  */
 -(CGPoint) convertToUI:(CGPoint)p;
 
-// rotates the screen if Landscape mode is activated
--(void) applyLandscape;
+// rotates the screen if an orientation differnent than Portrait is used
+-(void) applyOrientation;
 
 /// XXX: missing description
 -(float) getZEye;
@@ -370,7 +406,9 @@ and when to execute the Scenes.
  */
 -(void) replaceScene: (CCScene*) scene;
 
-/** Ends the execution, releases the running scene */
+/** Ends the execution, releases the running scene.
+ It doesn't remove the OpenGL view from its parent. You have to do it manually.
+ */
 -(void) end;
 
 /** Pauses the running scene.
@@ -406,6 +444,9 @@ and when to execute the Scenes.
  
 
 // OpenGL Helper
+
+/** sets the OpenGL default values */
+-(void) setGLDefaultValues;
 
 /** enables/disables OpenGL alpha blending */
 - (void) setAlphaBlending: (BOOL) on;
