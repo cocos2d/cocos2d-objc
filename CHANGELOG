@@ -1,4 +1,8 @@
 version 0.99.4-rc - 22-Jun-2010
+ . [NEW] Templates: BaseSDK 4.0. Deploy Target: 3.0
+ . [FIX] Removed artifacts from PageTurnTransition (issue #751)
+
+version 0.99.4-rc - 22-Jun-2010
  . [NEW] Director: supports "setContentScaleFactor" (high-res support natively)
  . [FIX] Effects: Creates correct color buffer
  . [FIX] Director: Sets correctly portrait upside-down orientation

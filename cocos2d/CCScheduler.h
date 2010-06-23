@@ -143,7 +143,7 @@ struct _hashUpdateEntry;
 
  @since v0.99.3
  */
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(float)interval paused:(BOOL)paused;
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused;
 
 /** Schedules the 'update' selector for a given target with a given priority.
  The 'update' selector will be called every frame.
