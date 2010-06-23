@@ -329,6 +329,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 			MenuItems: supports the "block" parameter
 			Tests: added Actions and Menu tests
 		Added ProfilingTimer: Director and Particles supports it when enabled
+	* svenito:
+		Fixed artifacts in PageTurnTransition
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:

@@ -76,9 +76,10 @@
 				p.z = 0.001f;
 			}
 			
-			//	Stop z coord from dropping beneath underlying page in a transition
-			if( p.z<0.001f )
-				p.z = 0.001f;
+			// Stop z coord from dropping beneath underlying page in a transition
+			// issue #751
+			if( p.z<0.9f )
+				p.z = 0.9f;
 			
 			// Set new coords
 			[self setVertex:ccg(i,j) vertex:p];

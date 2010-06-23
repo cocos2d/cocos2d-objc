@@ -57,7 +57,7 @@
 	
 	CCArray *array = [t children];
     for (CCNode *node in array) {
-        NSLog(@"0x%x, rc: %d", node, [node retainCount]);
+        NSLog(@"0x%x, rc: %d", (unsigned int)node, [node retainCount]);
         [self check:node];
     }
 }

@@ -122,7 +122,7 @@ Class restartAction()
 		
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
-		labelAtlas.position = ccp(254,50);
+		labelAtlas.position = ccp(s.width-66,50);
 		
 		// moving background
 		background = [CCSprite spriteWithFile:@"background3.png"];
@@ -1084,7 +1084,7 @@ Class restartAction()
 	
 	// radius mode: degrees per second
 	emitter.rotatePerSecond = 180;
-	emitter.rotatePerSecondVar;
+	emitter.rotatePerSecondVar = 0;
 	
 	
 	// angle
