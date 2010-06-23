@@ -251,7 +251,7 @@ and when to execute the Scenes.
 	CGFloat	contentScaleFactor_;
 	
 	/* contentScaleFactor could be simulated */
-	BOOL	isHighResDevice_;
+	BOOL	isContentScaleSupported_;
 	
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler;
