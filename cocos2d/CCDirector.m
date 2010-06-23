@@ -551,15 +551,14 @@ static CCDirector *_sharedDirector = nil;
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
 	{
-		// XXX: weak linking with iOS4 is possible, but sending an "integer" as a parameter to a selector without warnings
-		// XXX: you need to compile the method
+		// XXX: To avoid compile warning when using Xcode 3.2.2
 		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
 		
 		SEL selector = @selector(setContentScaleFactor:);
 		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
 		method(openGLView_,selector, contentScaleFactor_);
 		
-		/* on iOS 4.0, use contentsScaleFactor */
+		// In Xcode 3.2.3 SDK 4.0, use this one:
 //		[openGLView_ setContentScaleFactor: scaleFactor];
 		
 		isHighResDevice_ = YES;
