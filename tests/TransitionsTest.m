@@ -183,7 +183,7 @@ static NSString *transitions[] = {
 Class nextTransition()
 {	
 	// HACK: else NSClassFromString will fail
-//	[FadeTransition node];
+	[CCRadialCCWTransition node];
 	
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
@@ -455,7 +455,7 @@ Class restartTransition()
 	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0  // GL_DEPTH_COMPONENT24_OES
+								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO];
 	[glView setMultipleTouchEnabled:YES];
 	

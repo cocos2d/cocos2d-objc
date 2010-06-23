@@ -240,7 +240,7 @@ static CCScheduler *sharedScheduler;
 	NSAssert(NO, @"Not implemented. Use unscheduleAllSelectors");
 }
 
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(float)interval paused:(BOOL)paused
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
