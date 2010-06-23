@@ -316,7 +316,7 @@ const int defaultCapacity = 29;
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)node atlasIndex:(NSUInteger)index
 {
 	CCSprite *sprite;
-	CCARRAY_FOREACH(children_, sprite){
+	CCARRAY_FOREACH(node.children, sprite){
 		if( sprite.zOrder < 0 )
 			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
 	}
@@ -327,7 +327,7 @@ const int defaultCapacity = 29;
 		index++;
 	}
 	
-	CCARRAY_FOREACH(children_, sprite){
+	CCARRAY_FOREACH(node.children, sprite){
 		if( sprite.zOrder >= 0 )
 			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
 	}
