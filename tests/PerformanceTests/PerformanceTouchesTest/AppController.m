@@ -10,27 +10,37 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	[window setUserInteractionEnabled:YES];
-	[window setMultipleTouchEnabled:YES];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. Parents EAGLView to the main window
+	// 4. Creates Display Link Director
+	// 4a. If it fails, it will use an NSTimer director
+	// 5. It will try to run at 60 FPS
+	// 6. Display FPS: NO
+	// 7. Device orientation: Portrait
+	// 8. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use fast director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// before creating any layer, set the landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// set multiple touches ON
+	EAGLView *glView = [director openGLView];
+	[glView setMultipleTouchEnabled:YES];
 		
-//	[[CCDirector sharedDirector] setPixelFormat:kCCPixelFormatRGBA8888];
-
-	[[CCDirector sharedDirector] attachInWindow:window];
-	[CCDirector sharedDirector].displayFPS = YES;
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
-	[window makeKeyAndVisible];
-	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[[CCDirector sharedDirector] runWithScene:scene];
+	[director runWithScene:scene];
 }
 
 - (void)dealloc {

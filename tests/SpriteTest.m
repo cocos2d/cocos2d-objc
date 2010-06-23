@@ -1502,11 +1502,11 @@ Class restartAction()
 		// and therefore all the animation sprites are also drawn as part of the CCSpriteSheet
 		//
 		
-		CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		sprite.position = ccp( s.width/2-80, s.height/2);
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		sprite1.position = ccp( s.width/2-80, s.height/2);
 		
 		CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
-		[spritesheet addChild:sprite];
+		[spritesheet addChild:sprite1];
 		[self addChild:spritesheet];
 
 		NSMutableArray *animFrames = [NSMutableArray array];
@@ -1517,17 +1517,18 @@ Class restartAction()
 		}
 
 		CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
-		// 14 frames * 0.2sec = 2,8 seconds
-		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
+		// 14 frames * 1sec = 14 seconds
+		[sprite1 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:14.0f animation:animation restoreOriginalFrame:NO] ]];
 
 		// to test issue #732, uncomment the following line
-//		sprite.flipX = YES;
+		sprite1.flipX = NO;
+		sprite1.flipY = NO;
 
 		//
 		// Animation using standard Sprite
 		//
 		//
-		CCSprite *sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite2.position = ccp( s.width/2 + 80, s.height/2);
 		[self addChild:sprite2];
 		
@@ -1547,14 +1548,58 @@ Class restartAction()
 		[moreFrames addObjectsFromArray:animFrames];
 		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" frames:moreFrames];
 		
-		// 32 frames * 0.2 seconds = 6.4 seconds
-		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:6.4f animation:animMixed restoreOriginalFrame:NO]]];
+		// 32 frames * 1 seconds = 32 seconds
+		[sprite2 runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:32.0f animation:animMixed restoreOriginalFrame:NO]]];
 		
 		// to test issue #732, uncomment the following line
-//		sprite2.flipX = YES;
+		sprite2.flipX = NO;
+		sprite2.flipY = NO;
+		
+		[self schedule:@selector(startIn05Secs:) interval:0.5f];
+		
+		counter = 0;
 
 	}	
 	return self;
+}
+
+-(void) startIn05Secs:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	[self schedule:@selector(flipSprites:) interval:1];
+}
+
+-(void) flipSprites:(ccTime)dt
+{
+	counter ++;
+	
+	BOOL fx = NO;
+	BOOL fy = NO;
+	int i = counter % 4;
+	
+	switch ( i ) {
+		case 0:
+			fx = NO;
+			fy = NO;
+			break;
+		case 1:
+			fx = YES;
+			fy = NO;
+			break;
+		case 2:
+			fx = NO;
+			fy = YES;
+			break;
+		case 3:
+			fx = YES;
+			fy = YES;
+			break;
+	}
+	
+	sprite1.flipX = sprite2.flipX = fx;
+	sprite1.flipY = sprite2.flipY = fy;
+	
+	NSLog(@"flipX:%d, flipY:%d", fx, fy);
 }
 
 - (void) dealloc
@@ -1566,6 +1611,11 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sprite vs. SpriteSheet animation";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing issue #792";
 }
 @end
 
@@ -3013,44 +3063,58 @@ Class restartAction()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
 
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
+	
+	// landscape orientation
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
+	
+	// Display FPS: yes
 	[director setDisplayFPS:YES];
 
-	// Use this pixel format to have transparent buffers
-	[director setPixelFormat:kRGBA8];
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO];
 	
-	// Create a depth buffer of 24 bits
-	// These means that openGL z-order will be taken into account
-	[director setDepthBufferFormat:kDepthBuffer24];
-
+	// attach the openglView to the director
+	[director setOpenGLView:glView];
+	
+	// To use High-Res un comment the following line
+	[director setContentScaleFactor:2];	
+	
+	// make the OpenGLView a child of the main window
+	[window addSubview:glView];
+	
+	// make main window visible
+	[window makeKeyAndVisible];	
+	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 	
-	// create an openGL view inside a window
-	[director attachInView:window];	
-	[window makeKeyAndVisible];	
-	
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-			 
+	
+	
+	// and run it!
 	[director runWithScene: scene];
+	
+	return YES;
 }
 
 // getting a call, pause the game

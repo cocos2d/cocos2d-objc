@@ -166,16 +166,33 @@
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
+	// must be called before any othe call to the director
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
 	
-	[[CCDirector sharedDirector] setDeviceOrientation: CCDeviceOrientationPortrait];
-	[[CCDirector sharedDirector] setAnimationInterval:1.0/60];
-    
-	// create an openGL view inside a window
-	[[CCDirector sharedDirector] attachInView:window];
-	[window makeKeyAndVisible];		
+	// get instance of the shared director
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// before creating any layer, set the landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+	
+	// display FPS (useful when debugging)
+	[director setDisplayFPS:YES];
+	
+	// frames per second
+	[director setAnimationInterval:1.0/60];
+	
+	// create an OpenGL view
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	
+	// connect it to the director
+	[director setOpenGLView:glView];
+	
+	// glview is a child of the main window
+	[window addSubview:glView];
+	
+	// Make the window visible
+	[window makeKeyAndVisible];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [SoundEngineTest node]];

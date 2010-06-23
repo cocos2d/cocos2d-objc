@@ -140,26 +140,33 @@ enum {
 // Application entry point
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use Threaded director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeDefault];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	// create an initilize the main UIWindow
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// Enable Multiple Touches ? No
-	[window setMultipleTouchEnabled:NO];
-
-	// Attach cocos2d to the window
-	[[CCDirector sharedDirector] attachInWindow:window];
+	// Obtain the shared director in order to...
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
-	[[CCDirector sharedDirector] setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-
-	// Make the window visible
-	[window makeKeyAndVisible];
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
+	
+	// Set multiple touches on
+	EAGLView *glView = [director openGLView];
+	[glView setMultipleTouchEnabled:YES];	
 	
 	// Create and initialize parent and empty Scene
 	CCScene *scene = [CCScene node];
@@ -170,7 +177,7 @@ enum {
 	[scene addChild:layer];
 
 	// Run!
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 - (void) dealloc

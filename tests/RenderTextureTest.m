@@ -104,26 +104,30 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:NO];
-  
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
+	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
+	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	[director setAnimationInterval:1.0/60];
+	
+	// Turn on display FPS
 	[director setDisplayFPS:YES];
-  
-	// create an openGL view inside a window
-	[director attachInView:window];	
-	[window makeKeyAndVisible];		
-  
+	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [RenderTextureTest node]];
 	

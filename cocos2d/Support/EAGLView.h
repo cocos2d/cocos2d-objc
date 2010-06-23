@@ -67,6 +67,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+#import "ESRenderer.h"
+
 //CLASSES:
 
 @class EAGLView;
@@ -86,60 +88,58 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS INTERFACE:
 
-/** EAGLView Class
+/** EAGLView Class.
  * This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
 @interface EAGLView : UIView
 {
-@private
-	NSString*				_format;
-	GLuint					_depthFormat;
-	BOOL					_autoresize;
-	EAGLContext			*_context;
-	GLuint					_framebuffer;
-	GLuint					_renderbuffer;
-	GLuint					_depthBuffer;
-	CGSize					_size;
-	BOOL					_hasBeenCurrent;
-	BOOL					_discardFramebufferSupported;
-	id<EAGLViewDelegate>	_delegate;
-	id<EAGLTouchDelegate>   touchDelegate;
+    id						<ESRenderer> renderer_;	
+	EAGLContext				*context_; // weak ref
+
+	NSString				*pixelformat_;
+	GLuint					depthFormat_;
+
+	CGSize					size_;
+	BOOL					discardFramebufferSupported_;
+	id<EAGLViewDelegate>	delegate_;
+	id<EAGLTouchDelegate>   touchDelegate_;
 }
+
+/** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
++ (id) viewWithFrame:(CGRect)frame;
+/** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
+/** creates an initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
+
+
+/** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
+/** Initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
+/** Initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
 
-/** frame buffer id */
-@property(nonatomic,readonly) GLuint framebuffer;
-/** pixel format */
+/** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;
-/** depth format */
+/** depth format of the render buffer: 0, 16 or 24 bits*/
 @property(nonatomic,readonly) GLuint depthFormat;
-/** EAGL context */
-@property(nonatomic,readonly) EAGLContext *context;
 
-/** whether or not the surface will auto resize.
- NO by default - Set to YES to have the EAGL surface automatically resized when the view bounds change,
- otherwise the EAGL surface contents is rendered scaled
- */
-@property (nonatomic,readwrite) BOOL autoresizesSurface;
-/** surface size */
-@property(nonatomic,readonly, nonatomic) CGSize surfaceSize;
+/** returns surface size in pixels */
+@property(nonatomic,readonly) CGSize surfaceSize;
+
+/** OpenGL context */
+@property(nonatomic,readonly) EAGLContext *context;
 
 /** delegate */
 @property(nonatomic,readwrite,assign) id<EAGLViewDelegate> delegate;
 /** touch delegate */
 @property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
 
-- (void) setAutoresizesEAGLSurface:(BOOL)autoresizesEAGLSurface;
-
-- (void) setCurrentContext;
-- (BOOL) isCurrentContext;
-- (void) clearCurrentContext;
-
-- (void) swapBuffers; //This also checks the current OpenGL error and logs an error if needed
+/** EAGLView uses double-buffer. This method swaps the buffers */
+-(void) swapBuffers;
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;

@@ -28,30 +28,33 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 5a. If it fails, it will use an NSTimer director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Device orientation: Portrait
+	// 9. Connects the director to the EAGLView
+	//
+	CC_DIRECTOR_INIT();
 	
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-
+	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+	// Sets landscape mode
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
-	// show FPS
+	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// attach cocos2d to a window
-	[director attachInView:window];
 	
 	CCScene *scene = [CCScene node];	
 	[scene addChild:[Layer1 node] z:0];
-	
-	[window makeKeyAndVisible];
-	
+		
 //	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
 //	sprite.anchorPoint = CGPointZero;
 //	CC_ENABLE_DEFAULT_GL_STATES();
@@ -59,7 +62,7 @@
 //	CC_DISABLE_DEFAULT_GL_STATES();
 //	[[[CCDirector sharedDirector] openGLView] swapBuffers];
 	
-	[[CCDirector sharedDirector] runWithScene: scene];
+	[director runWithScene: scene];
 }
 
 // getting a call, pause the game
