@@ -561,7 +561,8 @@ typedef struct _KerningHashElement
 	[string_ release];
 	string_ = [newString retain];
 
-	for( CCNode *child in children_ )
+	CCNode *child;
+	CCARRAY_FOREACH(children_, child)
 		child.visible = NO;
 
 	[self createFontChars];
@@ -572,7 +573,8 @@ typedef struct _KerningHashElement
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
-	for( CCSprite* child in children_ )
+	CCSprite *child;
+	CCARRAY_FOREACH(children_, child)
 		[child setColor:color_];
 }
 
@@ -580,13 +582,15 @@ typedef struct _KerningHashElement
 {
 	opacity_ = opacity;
 
- 	for( id<CCRGBAProtocol> child in children_ )
+	id<CCRGBAProtocol> child;
+	CCARRAY_FOREACH(children_, child)
 		[child setOpacity:opacity_];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;
- 	for( id<CCRGBAProtocol> child in children_ )
+	id<CCRGBAProtocol> child;
+	CCARRAY_FOREACH(children_, child)
 		[child setOpacityModifyRGB:modify];
 }
 

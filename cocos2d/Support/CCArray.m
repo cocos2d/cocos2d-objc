@@ -202,11 +202,14 @@
 	ccArrayMakeObjectsPerformSelectorWithObject(data, aSelector, object);
 }
 
-- (NSArray*) getNSArray{
+- (NSArray*) getNSArray
+{
 	NSMutableArray *nsarray = [NSMutableArray arrayWithCapacity:data->num];
 	int nu = data->num;
-	for(int i = 0; i<nu; i++)
-		[nsarray addObject:data->arr[i]];
+	id *arr =  data->arr;
+	while (nu-- > 0) {
+		[nsarray addObject:*arr++];
+	}
 	
 	return nsarray;
 }
