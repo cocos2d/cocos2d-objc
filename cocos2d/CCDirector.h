@@ -289,6 +289,9 @@ and when to execute the Scenes.
 /** The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
  In non High-res device the contentScale will be emulated.
+
+ Warning: Emulation of High-Res on iOS < 4 is an EXPERIMENTAL feature.
+ 
  @since v0.99.4
  */
 @property (nonatomic, readwrite) CGFloat contentScaleFactor;
