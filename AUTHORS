@@ -70,12 +70,14 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
-	* David Whatley ( http://criticalthoughtgames.com/ )
+	* David Whatley (http://criticalthoughtgames.com/)
 		Scheduler supports the repeat parameter. patch.
 		Author of perFrameUpdate in Scheduler
 		Scheduler supports scaleTime per node
 		ActionManager supports scaleTime per node
 		Author of tests for: Scheduler:repeat, Scheduler:perFrameUpdate, Scheduler:scaleTime
+	* Derek van Vliet (http://http://getsetgames.com/)
+		Added fix to make JPEG images work correctly in iOS4
 	* Dominique Bongard:
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
@@ -149,6 +151,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		PointParticle asserts if size > 64
 		Fixed memory leaks when initialization of some nodes failed
 		Added removeFromParent method in CCNode
+		Improved performance in CCArray
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -219,6 +222,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCArray: author of high performance array
 		Added CCArray in CCNode and CCSpriteSheet to improve performance
 		ccCArray: added missing functions so that it easier to wrap a fast enum object around it.
+		Improved performance in serveral places by using CCARRAY_FOREACH
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
