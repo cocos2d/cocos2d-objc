@@ -713,7 +713,7 @@ static BOOL configured = FALSE;
 
 -(void) _stopTarget {
 	//Pause instead of stop as stop releases resources and causes problems in the simulator
-	((CDLongAudioSource*)target).pause;
+	[((CDLongAudioSource*)target) pause];
 }
 
 -(Class) _allowableType {

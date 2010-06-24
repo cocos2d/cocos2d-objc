@@ -80,7 +80,7 @@ BOOL fadingOut;
 	CDLOG(@">>Test one");
 	sound1.looping = YES;
 	sound1.gain = 1.0f;
-	sound1.play;
+	[sound1 play];
 	//Stop any actions that may already be running on our target
 	[actionManager removeAllActionsFromTarget:sound1];
 	//If these values haven't changed you don't have to set them again, this code is just to illustrate
@@ -104,7 +104,7 @@ BOOL fadingOut;
 	CDLOG(@">>Test two");
 	sound2.looping = YES;
 	sound2.gain = 0.0f;
-	sound2.play;
+	[sound2 play];
 	[CDXPropertyModifierAction fadeSoundEffect:2.0f finalVolume:1.0f curveType:kIT_SCurve shouldStop:YES effect:sound2];
 }	
 
@@ -122,7 +122,7 @@ BOOL fadingOut;
 	} else {
 		//Fade it in
 		sound3.looping = YES;
-		sound3.play;
+		[sound3 play];
 		[CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:1.0f curveType:kIT_Linear shouldStop:NO effect:sound3];
 	}
 	fadingOut = !fadingOut;
