@@ -248,12 +248,11 @@
 	
 	// children
 	
-	for (CCNode *child in children_) {
+	CCNode *child;
+	CCARRAY_FOREACH(children_, child)
 		child.parent = nil;
-	}
 	
 	[children_ release];
-	
 	
 	[super dealloc];
 }
@@ -287,7 +286,8 @@
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
-	for( CCNode *node in children_ ) {
+	CCNode *node;
+	CCARRAY_FOREACH(children_, node){
 		if( node.tag == aTag )
 			return node;
 	}
@@ -408,11 +408,12 @@
 }
 
 // helper used by reorderChild & add
--(void) insertChild:(CCNode*) child z:(int)z
+-(void) insertChild:(CCNode*)child z:(int)z
 {
 	int index=0;
 	BOOL added = NO;
-	for( CCNode *a in children_ ) {
+	CCNode *a;
+	CCARRAY_FOREACH(children_, a){
 		if ( a.zOrder > z ) {
 			added = YES;
 			[ children_ insertObject:child atIndex:index];
@@ -462,26 +463,32 @@
 	
 	[self transform];
 	
-	ccArray *arrayData;
-	int i = 0, nu;
 	if(children_){
-		arrayData = children_->data;
-		nu = arrayData->num;
-		for(;i<nu; i++){
-			CCNode *child = arrayData->arr[i];
-			if ( child.zOrder < 0 )
+		ccArray *arrayData = children_->data;
+		id *arr = arrayData->arr;
+		NSUInteger nu = arrayData->num;
+		
+		while (nu > 0) {
+			CCNode *child = *arr;
+			if ( child.zOrder < 0 ) {
 				[child visit];
-			else
+				nu--;
+				arr++;
+			} else {
 				break;
+			}
 		}
+		
+		[self draw];
+		
+		while (nu > 0) {
+			CCNode *child = *arr++;
+			[child visit];
+			nu--;
+		}
+	} else {
+		[self draw];	
 	}
-	
-	[self draw];
-	
-	if(children_)
-		for (;i<nu; i++)
-			[arrayData->arr[i] visit];
-	
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];

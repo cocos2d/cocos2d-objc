@@ -639,7 +639,8 @@ struct transformValues_ {
 	dirty_ = recursiveDirty_ = b;
 	// recursively set dirty
 	if( hasChildren_ ) {
-		for( CCSprite *child in children_)
+		CCSprite *child;
+		CCARRAY_FOREACH(children_, child)
 			[child setDirtyRecursively:YES];
 	}
 }
@@ -707,7 +708,8 @@ struct transformValues_ {
 		[super setVisible:v];
 		if( usesSpriteSheet_ && ! recursiveDirty_ ) {
 			dirty_ = recursiveDirty_ = YES;
-			for( id child in children_)
+			id child;
+			CCARRAY_FOREACH(children_, child)
 				[child setVisible:v];
 		}
 	}
