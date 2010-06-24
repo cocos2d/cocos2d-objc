@@ -1,8 +1,10 @@
 version 0.99.4-rc2 - 24-Jun-2010
+ . [NEW] CCArray: Internally uses CCARRAY_FOREACH. Improved performance
  . [NEW] Templates: BaseSDK 4.0. Deploy OS Target: 3.0
- . [FIX] CCArray: Internally uses CCARRAY_FOREACH
+ . [FIX] CocosDenshion: compiles with LLVM v1.5
  . [FIX] Removed artifacts from PageTurnTransition (issue #751)
  . [FIX] Templates: calls Director#purgeCachedData on memory warning
+ . [FIX] Templates: sets CD_DEBUG=1 in debug configuration
  . [FIX] Texture2D: JPEG images are displayed correctly in iOS4 (issue #886)
 
 version 0.99.4-rc - 22-Jun-2010
