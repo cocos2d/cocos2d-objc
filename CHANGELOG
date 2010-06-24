@@ -1,5 +1,6 @@
 version 0.99.4-rc - 22-Jun-2010
  . [NEW] Templates: BaseSDK 4.0. Deploy OS Target: 3.0
+ . [FIX] CCArray: Internally uses CCARRAY_FOREACH
  . [FIX] Removed artifacts from PageTurnTransition (issue #751)
 
 version 0.99.4-rc - 22-Jun-2010
