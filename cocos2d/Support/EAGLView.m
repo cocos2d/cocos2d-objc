@@ -120,8 +120,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		depthFormat_ = depth;
 		size_ = frame.size;
 		
-		if( ! [self setupSurface] )
+		if( ! [self setupSurface] ) {
+			[self release];
 			return nil;
+		}
 	}
 
 	return self;
@@ -137,8 +139,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
 		size_ = [eaglLayer bounds].size;
 
-		if( ! [self setupSurface] )
+		if( ! [self setupSurface] ) {
+			[self release];
 			return nil;
+		}
     }
 	
     return self;
@@ -156,10 +160,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		
 	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
 	if (!renderer_)
-	{
-		[self release];
 		return NO;
-	}
+
 	context_ = [renderer_ context];
 	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
@@ -187,11 +189,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	// IMPORTANT:
 	// - preconditions
-	//	-> _context MUST be the OpenGL context
-	//	-> _renderBuffer must be the the RENDER BUFFER
+	//	-> context_ MUST be the OpenGL context
+	//	-> renderBuffer_ must be the the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
-	if( depthFormat_ && discardFramebufferSupported_ ) {
+	if( discardFramebufferSupported_ && depthFormat_ ) {
 		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
 		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 	}

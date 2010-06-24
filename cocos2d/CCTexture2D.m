@@ -228,7 +228,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	size_t bpp = CGImageGetBitsPerComponent(image);
 	colorSpace = CGImageGetColorSpace(image);
-	
+
 	if(colorSpace) {
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixelFormat;
@@ -253,9 +253,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
+//			info = kCGImageAlphaPremultipliedLast;  // issue #886. This patch breaks BMP images.
 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);				
 			CGColorSpaceRelease(colorSpace);
 			break;
+
 		case kCCTexture2DPixelFormat_RGB565:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
