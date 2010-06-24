@@ -63,7 +63,7 @@
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	[[CCDirector sharedDirector] purgeCachedData];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
