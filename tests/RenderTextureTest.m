@@ -128,6 +128,9 @@
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
+	// Test HiRes with RenderTexture
+//	[director setContentScaleFactor:2];
+	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [RenderTextureTest node]];
 	
