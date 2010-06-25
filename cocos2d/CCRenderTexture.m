@@ -90,9 +90,9 @@
 	CGSize texSize = [texture_ contentSize];
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
-	float widthRatio = frame.size.width / texSize.width;
-	float heightRatio = frame.size.height / texSize.height;
+	CGSize size = [[CCDirector sharedDirector] displaySize];
+	float widthRatio = size.width / texSize.width;
+	float heightRatio = size.height / texSize.height;
 
 	// Adjust the orthographic propjection and viewport
 	glOrthof((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
@@ -109,8 +109,8 @@
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO_);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	CGRect frame = [[[CCDirector sharedDirector] openGLView] frame];
-	glViewport(0, 0, frame.size.width, frame.size.height);
+	CGSize size = [[CCDirector sharedDirector] displaySize];
+	glViewport(0, 0, size.width, size.height);
 
 	glColorMask(TRUE, TRUE, TRUE, TRUE);
 }

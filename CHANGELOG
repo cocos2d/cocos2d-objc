@@ -1,3 +1,6 @@
+version 0.99.4 - xx-MMM-2010
+ . [FIX] RenderTexture: works in HiRes mode (issue #898)
+
 version 0.99.4-rc2 - 24-Jun-2010
  . [NEW] CCArray: Internally uses CCARRAY_FOREACH. Improved performance
  . [NEW] Templates: BaseSDK 4.0. Deploy OS Target: 3.0
