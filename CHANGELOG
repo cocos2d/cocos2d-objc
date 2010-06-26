@@ -1,5 +1,6 @@
 version 0.99.4 - xx-MMM-2010
  . [FIX] RenderTexture: works in HiRes mode (issue #898)
+ . [FIX] Director: Avoid re-scale initial issue (issue #899, issue #350)
 
 version 0.99.4-rc2 - 24-Jun-2010
  . [NEW] CCArray: Internally uses CCARRAY_FOREACH. Improved performance

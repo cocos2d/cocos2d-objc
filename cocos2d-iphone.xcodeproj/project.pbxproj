@@ -4728,8 +4728,8 @@
 			isa = PBXGroup;
 			children = (
 				50D898FA1192CB8300458C29 /* Data Structures */,
-				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				501CCFB70E99659400B86F68 /* ImageSupport */,
+				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
 				50C508C40F7C194400799124 /* CCFileUtils.h */,
