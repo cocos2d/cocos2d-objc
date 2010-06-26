@@ -90,6 +90,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize deviceOrientation=deviceOrientation_;
 @synthesize isPaused=isPaused_;
 @synthesize sendCleanupToScene=sendCleanupToScene_;
+
 //
 // singleton stuff
 //
@@ -717,10 +718,7 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
 	
 	[self pushScene:scene];
-	[self startAnimation];
-	
-	// render the 1st frame to avoid flicker (issue #350)
-	[self mainLoop];
+	[self startAnimation];	
 }
 
 -(void) replaceScene: (CCScene*) scene
