@@ -252,7 +252,7 @@ and when to execute the Scenes.
 	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-	
+
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler;
 #endif
@@ -436,6 +436,9 @@ and when to execute the Scenes.
  @warning Dont' call this function to start the main loop. To run the main loop call runWithScene
  */
 -(void) startAnimation;
+
+/* main loop */
+-(void) mainLoop;
 
 // Memory Helper
 
