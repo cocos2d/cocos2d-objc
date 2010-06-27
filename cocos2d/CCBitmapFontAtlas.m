@@ -495,16 +495,28 @@ typedef struct _KerningHashElement
 -(void) createFontChars
 {
 	int nextFontPositionX = 0;
+	int nextFontPositionY = 0;
 	unichar prev = -1;
 	int kerningAmount = 0;
 	
 	CGSize tmpSize = CGSizeZero;
+
+	int longestLine = 0, totalHeight = configuration_->commonHeight;
 
 	NSUInteger l = [string_ length];
 	for(NSUInteger i=0; i<l; i++) {
 		unichar c = [string_ characterAtIndex:i];
 		NSAssert( c < kCCBitmapFontAtlasMaxChars, @"BitmapFontAtlas: character outside bounds");
 		
+		if (c == '\n') {
+			if (i < (l-1)) {
+				nextFontPositionX = 0;
+				nextFontPositionY -= configuration_->commonHeight;
+				totalHeight += configuration_->commonHeight;
+			}
+			continue;
+		}
+
 		kerningAmount = [self kerningAmountForFirst:prev second:c];
 		
 		ccBitmapFontDef fontDef = configuration_->bitmapFontArray[c];
@@ -527,20 +539,17 @@ typedef struct _KerningHashElement
 			fontChar.visible = YES;
 			fontChar.opacity = 255;
 		}
-
-		fontChar.position = ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f ,
-								(configuration_->commonHeight - fontDef.yOffset) - rect.size.height/2.0f );		
 		
+		float yOffset = configuration_->commonHeight - fontDef.yOffset;
+		fontChar.position = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
+								(float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+
 //		NSLog(@"position.y: %f", fontChar.position.y);
 		
 		// update kerning
-		fontChar.position = ccpAdd( fontChar.position, ccp(kerningAmount,0));
 		nextFontPositionX += configuration_->bitmapFontArray[c].xAdvance + kerningAmount;
 		prev = c;
-		
-		tmpSize.width += configuration_->bitmapFontArray[c].xAdvance + kerningAmount;
-		tmpSize.height = configuration_->commonHeight;
-		
+
 		// Apply label properties
 		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
@@ -550,8 +559,14 @@ typedef struct _KerningHashElement
 		// to prevent modifying the color too (issue #610)
 		if( opacity_ != 255 )
 			[fontChar setOpacity: opacity_];
+
+		if (longestLine < nextFontPositionX)
+			longestLine = nextFontPositionX;
 	}
-	
+
+	tmpSize.width = longestLine;
+	tmpSize.height = totalHeight;
+
 	[self setContentSize:tmpSize];
 }
 
