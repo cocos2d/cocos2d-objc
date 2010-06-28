@@ -186,7 +186,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	size_ = [renderer_ backingSize];
 
 	// Avoid flicker. Issue #350
-	[[CCDirector sharedDirector] mainLoop];
+	[[CCDirector sharedDirector] drawScene];
 }
 
 - (void) swapBuffers
