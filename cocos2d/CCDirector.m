@@ -66,7 +66,6 @@ extern NSString * cocos2dVersion(void);
 -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
 
 -(void) preMainLoop;
--(void) mainLoop;
 -(void) setNextScene;
 // shows the FPS in the screen
 -(void) showFPS;
@@ -82,9 +81,9 @@ extern NSString * cocos2dVersion(void);
 
 @implementation CCDirector
 
-@synthesize animationInterval;
+@synthesize animationInterval=animationInterval_;
 @synthesize runningScene = runningScene_;
-@synthesize displayFPS;
+@synthesize displayFPS = displayFPS_;
 @synthesize pixelFormat=pixelFormat_;
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 @synthesize deviceOrientation=deviceOrientation_;
@@ -165,15 +164,15 @@ static CCDirector *_sharedDirector = nil;
 		runningScene_ = nil;
 		nextScene_ = nil;
 		
-		oldAnimationInterval = animationInterval = 1.0 / kDefaultFPS;
+		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
 		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
 		
 		// landscape
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 
 		// FPS
-		displayFPS = NO;
-		frames = 0;
+		displayFPS_ = NO;
+		frames_ = 0;
 		
 		// paused ?
 		isPaused_ = NO;
@@ -191,7 +190,7 @@ static CCDirector *_sharedDirector = nil;
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 #if CC_DIRECTOR_FAST_FPS
-	[FPSLabel release];
+	[FPSLabel_ release];
 #endif
 	[runningScene_ release];
 	[scenesStack_ release];
@@ -214,19 +213,19 @@ static CCDirector *_sharedDirector = nil;
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
 #if CC_DIRECTOR_FAST_FPS
-    if (!FPSLabel) {
+    if (!FPSLabel_) {
 		CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
 		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-		FPSLabel = [[CCLabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
+		FPSLabel_ = [[CCLabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
 		[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
 	}
 #endif	// CC_DIRECTOR_FAST_FPS
 }
 
 //
-// main loop
+// Draw the Scene
 //
-- (void) mainLoop
+- (void) drawScene
 {    
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
@@ -252,7 +251,7 @@ static CCDirector *_sharedDirector = nil;
 
 	/* draw the scene */
 	[runningScene_ visit];
-	if( displayFPS )
+	if( displayFPS_ )
 		[self showFPS];
 	
 #if CC_ENABLE_PROFILERS
@@ -282,11 +281,11 @@ static CCDirector *_sharedDirector = nil;
 		dt = 0;
 		nextDeltaTimeZero_ = NO;
 	} else {
-		dt = (now.tv_sec - lastUpdate.tv_sec) + (now.tv_usec - lastUpdate.tv_usec) / 1000000.0f;
+		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
 		dt = MAX(0,dt);
 	}
 	
-	lastUpdate = now;	
+	lastUpdate_ = now;	
 }
 
 #pragma mark Director Scene iPhone Specific
@@ -776,8 +775,8 @@ static CCDirector *_sharedDirector = nil;
 	[self stopAnimation];
 	
 #if CC_DIRECTOR_FAST_FPS
-	[FPSLabel release];
-	FPSLabel = nil;
+	[FPSLabel_ release];
+	FPSLabel_ = nil;
 #endif	
 
 	// Purge bitmap cache
@@ -832,7 +831,7 @@ static CCDirector *_sharedDirector = nil;
 	if( isPaused_ )
 		return;
 
-	oldAnimationInterval = animationInterval;
+	oldAnimationInterval_ = animationInterval_;
 	
 	// when paused, don't consume CPU
 	[self setAnimationInterval:1/4.0];
@@ -844,9 +843,9 @@ static CCDirector *_sharedDirector = nil;
 	if( ! isPaused_ )
 		return;
 	
-	[self setAnimationInterval: oldAnimationInterval];
+	[self setAnimationInterval: oldAnimationInterval_];
 
-	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
+	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
@@ -875,23 +874,23 @@ static CCDirector *_sharedDirector = nil;
 // updates the FPS every frame
 -(void) showFPS
 {
-	frames++;
-	accumDt += dt;
+	frames_++;
+	accumDt_ += dt;
 	
-	if ( accumDt > CC_DIRECTOR_FPS_INTERVAL)  {
-		frameRate = frames/accumDt;
-		frames = 0;
-		accumDt = 0;
+	if ( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)  {
+		frameRate_ = frames_/accumDt_;
+		frames_ = 0;
+		accumDt_ = 0;
 
 //		sprintf(format,"%.1f",frameRate);
 //		[FPSLabel setCString:format];
 
-		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate];
-		[FPSLabel setString:str];
+		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate_];
+		[FPSLabel_ setString:str];
 		[str release];
 	}
 		
-	[FPSLabel draw];
+	[FPSLabel_ draw];
 }
 #else
 // display the FPS using a manually generated Texture (very slow)
@@ -968,11 +967,11 @@ static CCDirector *_sharedDirector = nil;
 {
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
 	
-	if( gettimeofday( &lastUpdate, NULL) != 0 ) {
+	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
-	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
+	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval_ target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
 	
 	//
 	//	If you want to attach the opengl view into UIScrollView
@@ -991,7 +990,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	animationInterval = interval;
+	animationInterval_ = interval;
 	
 	if(animationTimer) {
 		[self stopAnimation];
@@ -1042,7 +1041,7 @@ static CCDirector *_sharedDirector = nil;
 	[autoreleasePool release];
 	autoreleasePool = nil;
 
-	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
+	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
@@ -1083,7 +1082,7 @@ static CCDirector *_sharedDirector = nil;
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		}
 		
-		[self mainLoop];
+		[self drawScene];
 
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
@@ -1122,7 +1121,7 @@ static CCDirector *_sharedDirector = nil;
 - (void) startAnimation
 {
 	
-	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
+	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
 	}
 
@@ -1137,7 +1136,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	while( ![[NSThread currentThread] isCancelled] ) {
 		if( isRunning )
-			[self performSelectorOnMainThread:@selector(mainLoop) withObject:nil waitUntilDone:YES];
+			[self performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 		
 		if (isPaused_) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
@@ -1173,7 +1172,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	animationInterval = interval;
+	animationInterval_ = interval;
 	if(displayLink){
 		[self stopAnimation];
 		[self startAnimation];
@@ -1182,13 +1181,13 @@ static CCDirector *_sharedDirector = nil;
 
 - (void) startAnimation
 {
-	if ( gettimeofday( &lastUpdate, NULL) != 0 ) {
+	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}
 	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
-	int frameInterval	= (int) floor(animationInterval * 60.0f);
+	int frameInterval = (int) floor(animationInterval_ * 60.0f);
 	
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
@@ -1199,7 +1198,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) preMainLoop:(id)sender
 {
-	[self mainLoop];
+	[self drawScene];
 }
 
 - (void) stopAnimation
