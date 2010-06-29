@@ -28,6 +28,7 @@
 #import "ccMacros.h"
 #import "Support/uthash.h"
 #import "Support/utlist.h"
+#import "Support/ccCArray.h"
 
 //
 // Data structures

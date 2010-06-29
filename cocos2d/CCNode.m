@@ -34,7 +34,7 @@
 #import "CCDirector.h"
 #import "CCActionManager.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccArray.h"
+#import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 
 
