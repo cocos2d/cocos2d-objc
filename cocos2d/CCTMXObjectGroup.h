@@ -30,7 +30,6 @@
 
 #import "CCAtlasNode.h"
 #import "CCSpriteSheet.h"
-#import "Support/ccArray.h"
 
 
 @class CCTMXObjectGroup;
