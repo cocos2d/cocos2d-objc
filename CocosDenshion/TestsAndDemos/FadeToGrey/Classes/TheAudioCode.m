@@ -177,4 +177,17 @@ BOOL fadingOut;
 	}	
 }	
 
+/**
+ Test unloading effects
+ */
+-(void) testSeven:(id) sender {
+	[sae unloadEffect:@"dp1.caf"];
+	[sae unloadEffect:@"dp2.caf"];
+	//Try loading a non existant file
+	[sae preloadEffect:@"nosuchfile.caf"];
+	[sae preloadEffect:@"dp1.caf"];
+	[sae playEffect:@"dp1.caf"];
+}	
+
+
 @end
