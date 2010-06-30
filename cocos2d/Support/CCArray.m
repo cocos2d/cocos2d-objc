@@ -204,14 +204,7 @@
 
 - (NSArray*) getNSArray
 {
-	NSMutableArray *nsarray = [NSMutableArray arrayWithCapacity:data->num];
-	int nu = data->num;
-	id *arr =  data->arr;
-	while (nu-- > 0) {
-		[nsarray addObject:*arr++];
-	}
-	
-	return nsarray;
+	return [NSArray arrayWithObjects:data->arr count:data->num];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len
