@@ -21,7 +21,7 @@
  
  $Id$
  */
-#define COCOSDENSHION_VERSION "Aphex.1"
+#define COCOSDENSHION_VERSION "Aphex.rc"
 
 
 /**
