@@ -1,5 +1,6 @@
 version 0.99.4 - xx-MMM-2010
  . [FIX] All: Import ccCArray instead of ccArray (compiles in case sentive file system)
+ . [FIX] CocosDenshion: Fixed bug in CDBufferManager, added test case to FadeToGrey, fixed Info.plist
  . [FIX] RenderTexture: works in HiRes mode (issue #898)
  . [FIX] Director: Avoid re-scale initial issue (issue #899, issue #350)
  . [FIX] Director: renamed mainLoop -> drawScene
