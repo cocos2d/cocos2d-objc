@@ -55,6 +55,8 @@
 			break;	
 		case 6:
 			[audioTests testSix:nil];
+			//[audioTests testSeven:nil];
+
 			break;	
 		default:
 			break;
