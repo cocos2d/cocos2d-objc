@@ -1,4 +1,4 @@
-version 0.99.4 - xx-MMM-2010
+version 0.99.4-rc3 - 01-Jul-2010
  . [FIX] All: Import ccCArray instead of ccArray (compiles in case sentive file system)
  . [FIX] CCArray: fixed overflow (issue #901)
  . [FIX] CocosDenshion: Fixed bug in CDBufferManager, added test case to FadeToGrey, fixed Info.plist
