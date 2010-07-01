@@ -37,11 +37,16 @@ typedef struct pccArrayForeach_ //p =private
 	id *arr;
 } pccArrayForeach;
 
-// Fast iteration, easy integration	
-#define CCARRAY_FOREACH(__array__, __object__)			\
-	for(pccArrayForeach _d = __array__ && (__object__=__array__->data->arr[0]) ? (pccArrayForeach){__array__->data->num,__array__->data->arr+1} : (pccArrayForeach){0,nil};	\
-			_d.num > 0;										\
-			_d.num--, __object__=*_d.arr++)
+/** @def CCARRAY_FOREACH
+ A convience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
+ @since v0.99.4
+ */
+#define CCARRAY_FOREACH(__array__, __object__)										\
+	for(pccArrayForeach _d = __array__ && (__object__=__array__->data->arr[0]) ?	\
+			(pccArrayForeach){__array__->data->num,__array__->data->arr+0} :		\
+			(pccArrayForeach){0,nil};												\
+		_d.num > 0;																	\
+		_d.num--, __object__= _d.num ? *(++_d.arr) : nil )
 
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding>
 {
