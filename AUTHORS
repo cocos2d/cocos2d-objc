@@ -160,6 +160,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		QuadParticleSystem works with NPOT textures. patch.
 		QuadParticleSystem works with subrects. patch.
 		Menu items are not consumed if items are not enabled
+		Director#convertToUI works as expected. patch.
 	* jtbowden
 		RotateTo uses min distance patch
 	* kasatani:
