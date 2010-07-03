@@ -466,13 +466,13 @@
 	if(children_){
 		ccArray *arrayData = children_->data;
 		id *arr = arrayData->arr;
-		NSUInteger nu = arrayData->num;
+		NSUInteger num = arrayData->num;
 		
-		while (nu > 0) {
+		while (num > 0) {
 			CCNode *child = *arr;
 			if ( child.zOrder < 0 ) {
 				[child visit];
-				nu--;
+				num--;
 				arr++;
 			} else {
 				break;
@@ -481,11 +481,12 @@
 		
 		[self draw];
 		
-		while (nu > 0) {
+		while (num > 0) {
 			CCNode *child = *arr;
 			[child visit];
-			nu--;
-			if( nu > 0 )
+			num--;
+			// issue #901
+			if( num > 0 )
 				arr++;
 		}
 	} else {
