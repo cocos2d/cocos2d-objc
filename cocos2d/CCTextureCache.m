@@ -31,6 +31,29 @@
 
 static EAGLContext *auxEAGLcontext = nil;
 
+static NSString* loadHiResImage( NSString* path )
+{
+	NSString *newPath = nil;
+
+	if([[UIScreen mainScreen] scale] == 2.0)
+	{
+		NSString *path2x = [path stringByReplacingCharactersInRange:NSMakeRange([path length] - 4, 0) withString:@"@2x"];
+		newPath = [[UIImage alloc] initWithContentsOfFile:path2x];
+		
+		if(!newPath)
+		{
+			newPath = [[UIImage alloc] initWithContentsOfFile:path];
+		}
+	}
+	else
+	{
+		newPath = [[UIImage alloc] initWithContentsOfFile:path];
+	}
+	
+	return newPath;
+}
+
+
 @interface CCAsyncObject : NSObject
 {
 	SEL			selector_;
@@ -54,7 +77,6 @@ static EAGLContext *auxEAGLcontext = nil;
 	[super dealloc];
 }
 @end
-
 
 
 @implementation CCTextureCache
@@ -211,11 +233,16 @@ static CCTextureCache *sharedTextureCache;
 
 		else {
 
+//# work around for issue #910
+#if 0
+			UIImage *image = [UIImage imageNamed:path];
+			tex = [ [CCTexture2D alloc] initWithImage: image ];
+#else
 			// prevents overloading the autorelease pool
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
 			[image release];
-			
+#endif //
 
 			if( tex )
 				[textures setObject: tex forKey:path];

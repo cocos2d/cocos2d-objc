@@ -482,9 +482,11 @@
 		[self draw];
 		
 		while (nu > 0) {
-			CCNode *child = *arr++;
+			CCNode *child = *arr;
 			[child visit];
 			nu--;
+			if( nu > 0 )
+				arr++;
 		}
 	} else {
 		[self draw];	

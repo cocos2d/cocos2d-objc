@@ -19,4 +19,8 @@
 {}
 @end
 
+@interface Test2 : HiResDemo
+{}
+@end
+
 

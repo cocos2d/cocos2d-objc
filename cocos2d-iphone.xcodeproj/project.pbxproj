@@ -803,6 +803,7 @@
 		506887F70E96D4F000F943E5 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 506887D80E96C90000F943E5 /* CCAtlasNode.m */; };
 		5069723B0FFD3E2B00D49022 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		5069C794100B84BC00489758 /* Bug-422.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069C793100B84BC00489758 /* Bug-422.m */; };
+		5069E0A911DE537700D63745 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
 		506C77D90E01520900B48100 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		506C77DA0E01520900B48100 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		506C77DB0E01520900B48100 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -8774,6 +8775,7 @@
 				50E77D0011D4C925009CA2C2 /* fire.pvr in Resources */,
 				50E77D0111D4C925009CA2C2 /* grossini_dance_atlas-mono.png in Resources */,
 				50E77D0211D4C925009CA2C2 /* fps_images.png in Resources */,
+				5069E0A911DE537700D63745 /* bugs in Resources */,
 				50E77D0311D4C925009CA2C2 /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
