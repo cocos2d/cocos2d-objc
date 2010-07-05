@@ -147,7 +147,10 @@ static CDBufferManager *bufferManager = nil;
 
 -(void) preloadEffect:(NSString*) filePath
 {
-	NSAssert(! [NSThread isMainThread], @"must call off main thread");
+	// typically this should only be called off the main thread (to keep the UI responsive),
+	// but if serially loading an entire scene at once (with no 'loading' animations)
+	// then this method is safe to call on the main thread.
+//	NSAssert(! [NSThread isMainThread], @"must call off main thread");
 	int soundId;
 	@synchronized(bufferManager) {
 		soundId = [bufferManager bufferForFile:filePath create:YES];
