@@ -28,6 +28,7 @@
 @implementation SimpleAudioEngine
 
 static SimpleAudioEngine *sharedEngine = nil;
+// why keep these as static?  why not make them instance fields?
 static CDSoundEngine* soundEngine = nil;
 static CDAudioManager *am = nil;
 static CDBufferManager *bufferManager = nil;
@@ -130,12 +131,14 @@ static CDBufferManager *bufferManager = nil;
 
 -(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain
 {
-	int soundId = [bufferManager bufferForFile:filePath create:YES];
+	int soundId;
+	@synchronized (bufferManager) {
+		soundId = [bufferManager bufferForFile:filePath create:YES];
+	}
 	if (soundId != kCDNoBuffer) {
 		return [soundEngine playSound:soundId sourceGroupId:0 pitch:pitch pan:pan gain:gain loop:false];
-	} else {
-		return CD_MUTE;
-	}	
+	}
+	return CD_MUTE;
 }
 
 -(void) stopEffect:(ALuint) soundId {
@@ -144,7 +147,11 @@ static CDBufferManager *bufferManager = nil;
 
 -(void) preloadEffect:(NSString*) filePath
 {
-	int soundId = [bufferManager bufferForFile:filePath create:YES];
+	NSAssert(! [NSThread isMainThread], @"must call off main thread");
+	int soundId;
+	@synchronized(bufferManager) {
+		soundId = [bufferManager bufferForFile:filePath create:YES];
+	}
 	if (soundId == kCDNoBuffer) {
 		CDLOG(@"Denshion::SimpleAudioEngine sound failed to preload %@",filePath);
 	} else {
@@ -155,7 +162,9 @@ static CDBufferManager *bufferManager = nil;
 -(void) unloadEffect:(NSString*) filePath
 {
 	CDLOG(@"Denshion::SimpleAudioEngine unloadedEffect %@",filePath);
-	[bufferManager releaseBufferForFile:filePath];
+	@synchronized (bufferManager) {
+		[bufferManager releaseBufferForFile:filePath];
+	}
 }
 
 #pragma mark Audio Interrupt Protocol
@@ -209,14 +218,16 @@ static CDBufferManager *bufferManager = nil;
 }	
 
 -(CDSoundSource *) soundSourceForFile:(NSString*) filePath {
-	int soundId = [bufferManager bufferForFile:filePath create:YES];
+	int soundId;
+	@synchronized (bufferManager) {
+		soundId = [bufferManager bufferForFile:filePath create:YES];
+	}
 	if (soundId != kCDNoBuffer) {
 		CDSoundSource *result = [soundEngine soundSourceForSound:soundId sourceGroupId:0];
 		CDLOG(@"Denshion::SimpleAudioEngine sound source created for %@",filePath);
 		return result;
-	} else {
-		return nil;
-	}	
+	}
+	return nil;	
 }	
 
 @end 
