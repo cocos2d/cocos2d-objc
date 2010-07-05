@@ -25,7 +25,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *version = @"cocos2d v0.99.4-rc2";
+static NSString *version = @"cocos2d v0.99.4-rc3";
 
 NSString *cocos2dVersion()
 {	

@@ -29,7 +29,6 @@
 #import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
-#import "Support/ccArray.h"
 
 #pragma mark CCSpriteSheet
 

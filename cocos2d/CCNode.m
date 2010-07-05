@@ -34,7 +34,7 @@
 #import "CCDirector.h"
 #import "CCActionManager.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccArray.h"
+#import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 
 
@@ -451,6 +451,7 @@
 
 -(void) visit
 {
+	// quick return if not visible
 	if (!visible_)
 		return;
 	
@@ -463,32 +464,30 @@
 	
 	[self transform];
 	
-	if(children_){
+	if(children_) {
 		ccArray *arrayData = children_->data;
-		id *arr = arrayData->arr;
-		NSUInteger nu = arrayData->num;
+		int i=0;
 		
-		while (nu > 0) {
-			CCNode *child = *arr;
-			if ( child.zOrder < 0 ) {
+		// draw children zOrder < 0
+		for( ; i < arrayData->num; i++ ) {
+			CCNode *child =  arrayData->arr[i];
+			if ( [child zOrder] < 0 ) {
 				[child visit];
-				nu--;
-				arr++;
-			} else {
+			} else
 				break;
-			}
 		}
 		
+		// self draw
 		[self draw];
 		
-		while (nu > 0) {
-			CCNode *child = *arr++;
+		// draw children zOrder >= 0
+		for( ; i < arrayData->num; i++ ) {
+			CCNode *child =  arrayData->arr[i];
 			[child visit];
-			nu--;
 		}
-	} else {
+
+	} else
 		[self draw];	
-	}
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];

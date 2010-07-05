@@ -749,9 +749,9 @@ static BOOL configured = FALSE;
 			NSNumber* bufferId = nil;
 			//First try to get a buffer from the free buffers
 			if ([freedBuffers count] > 0) {
-				CDLOG(@"Denshion::CDBufferManager reusing buffer id %i",[bufferId intValue]);
-				bufferId = [freedBuffers lastObject];
+				bufferId = [[[freedBuffers lastObject] retain] autorelease];
 				[freedBuffers removeLastObject]; 
+				CDLOG(@"Denshion::CDBufferManager reusing buffer id %i",[bufferId intValue]);
 			} else {
 				bufferId = [[NSNumber alloc] initWithInt:nextBufferId];
 				[bufferId autorelease];
