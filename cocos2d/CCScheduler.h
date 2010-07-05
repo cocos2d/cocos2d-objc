@@ -25,7 +25,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Support/uthash.h"
-#import "Support/ccArray.h"
 
 #import "ccTypes.h"
 

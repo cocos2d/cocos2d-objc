@@ -1,11 +1,15 @@
-version 0.99.4 - xx-MMM-2010
+version 0.99.4-rc3 - 01-Jul-2010
+ . [FIX] All: Import ccCArray instead of ccArray (compiles in case sentive file system)
+ . [FIX] CCArray: fixed overflow (issue #901)
+ . [FIX] CocosDenshion: Fixed bug in CDBufferManager, added test case to FadeToGrey, fixed Info.plist
  . [FIX] RenderTexture: works in HiRes mode (issue #898)
  . [FIX] Director: Avoid re-scale initial issue (issue #899, issue #350)
+ . [FIX] Director: convertToUI works as expected (issue #902)
  . [FIX] Director: renamed mainLoop -> drawScene
  . [FIX] Director: appended '_' to ivars (eg: FPSLabel -> FPSLabel_)
 
 version 0.99.4-rc2 - 24-Jun-2010
- . [NEW] CCArray: Internally uses CCARRAY_FOREACH. Improved performance
+ . [NEW] CCArray: Internally uses CCARRAY_FOREACH. Improved performance (issue #353)
  . [NEW] Templates: BaseSDK 4.0. Deploy OS Target: 3.0
  . [FIX] CocosDenshion: compiles with LLVM v1.5
  . [FIX] Removed artifacts from PageTurnTransition (issue #751)

@@ -26,7 +26,7 @@
 
 
 #import "CCAction.h"
-#import "Support/ccArray.h"
+#import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
 typedef struct _hashElement

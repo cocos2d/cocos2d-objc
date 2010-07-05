@@ -585,7 +585,7 @@ static CCDirector *_sharedDirector = nil;
 	float newY = s.height - uiPoint.y;
 	float newX = s.width - uiPoint.x;
 	
-	CGPoint ret;
+	CGPoint ret = CGPointZero;
 	switch ( deviceOrientation_) {
 		case CCDeviceOrientationPortrait:
 			 ret = ccp( uiPoint.x, newY );
@@ -613,26 +613,26 @@ static CCDirector *_sharedDirector = nil;
 	CGSize winSize = surfaceSize_;
 	int oppositeX = winSize.width - glPoint.x;
 	int oppositeY = winSize.height - glPoint.y;
-	CGPoint uiPoint;
+	CGPoint uiPoint = CGPointZero;
 	switch ( deviceOrientation_) {
 		case CCDeviceOrientationPortrait:
-			 uiPoint = ccp(glPoint.x, glPoint.y);
+			uiPoint = ccp(glPoint.x, oppositeY);
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
-			uiPoint = ccp(oppositeX, oppositeY);
+			uiPoint = ccp(oppositeX, glPoint.y);
 			break;
 		case CCDeviceOrientationLandscapeLeft:
-			uiPoint = ccp(glPoint.y, oppositeX);
+			uiPoint = ccp(glPoint.y, glPoint.x);
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			uiPoint = ccp(oppositeY, glPoint.x);
+			// Can't use oppositeX/Y because x/y are flipped
+			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
 			break;
 	}
 	
 	uiPoint = ccpMult(uiPoint, 1/contentScaleFactor_);
 	return uiPoint;
 }
-
 
 // get the current size of the glview
 -(CGSize)winSize
