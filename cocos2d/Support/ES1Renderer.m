@@ -52,7 +52,7 @@
 		NSAssert( defaultFramebuffer_, @"Can't create default frame buffer");
         glGenRenderbuffersOES(1, &colorRenderbuffer_);
 		NSAssert( colorRenderbuffer_, @"Can't create default render buffer");
-				 
+
         glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer_);
         glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
         glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer_);
@@ -64,7 +64,7 @@
 //			glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
 //			glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, 100, 100);
 //			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
-			
+
 			// default buffer
 //			glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 		}
@@ -78,23 +78,23 @@
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {	
     // Allocate color buffer backing based on the current layer size
+
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
-    [context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
+
+	if (![context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer])
+	{
+		CCLOG(@"failed to call context");	
+	}
+
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth_);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight_);
 
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-    {
-        NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-        return NO;
-    }
-	
 	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
 	if (depthFormat_) {
 		if( ! depthBuffer_ )
 			glGenRenderbuffersOES(1, &depthBuffer_);
-		
+
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
 		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
@@ -103,6 +103,13 @@
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 
 	}
+
+	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
+	{
+		CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+		return NO;
+	}
+
     return YES;
 }
 
@@ -138,7 +145,7 @@
 		glDeleteRenderbuffersOES(1, &depthBuffer_);
 		depthBuffer_ = 0;
 	}
-	
+
     // Tear down context
     if ([EAGLContext currentContext] == context_)
         [EAGLContext setCurrentContext:nil];
