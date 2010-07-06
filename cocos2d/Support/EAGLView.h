@@ -75,10 +75,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //PROTOCOLS:
 
-@protocol EAGLViewDelegate <NSObject>
-- (void) didResizeEAGLSurfaceForView:(EAGLView*)view; //Called whenever the EAGL surface has been resized
-@end
-
 @protocol EAGLTouchDelegate <NSObject>
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
@@ -103,7 +99,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
-	id<EAGLViewDelegate>	delegate_;
 	id<EAGLTouchDelegate>   touchDelegate_;
 }
 
@@ -133,8 +128,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** OpenGL context */
 @property(nonatomic,readonly) EAGLContext *context;
 
-/** delegate */
-@property(nonatomic,readwrite,assign) id<EAGLViewDelegate> delegate;
 /** touch delegate */
 @property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
 
