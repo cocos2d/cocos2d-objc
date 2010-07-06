@@ -152,6 +152,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed memory leaks when initialization of some nodes failed
 		Added removeFromParent method in CCNode
 		Improved performance in CCArray
+	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
+		Author of the games tab in the cocos2d site
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -268,6 +270,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed compile error when keyboard registry is enabled
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
+	* Piero Tofy (http://indieappsalliance.org):
+		Author of the scraper script used to parse games data in the cocos2d site
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
