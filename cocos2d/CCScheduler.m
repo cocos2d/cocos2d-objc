@@ -266,9 +266,22 @@ static CCScheduler *sharedScheduler;
 	else if( element->timers->num == element->timers->max )
 		ccArrayDoubleCapacity(element->timers);
 	
-	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval];
-	ccArrayAppendObject(element->timers, timer);
-	[timer release];
+
+	BOOL found = NO;
+	for( unsigned int i=0; i< element->timers->num; i++ ) {
+		CCTimer *timer = element->timers->arr[i];
+		if( selector == timer->selector ) {
+			CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.2f to %.2f", timer->interval, interval);
+			timer->interval = interval;
+			found = YES;
+		}
+	}
+	
+	if( ! found ) {
+		CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval];
+		ccArrayAppendObject(element->timers, timer);
+		[timer release];
+	}
 }
 
 -(void) unscheduleSelector:(SEL)selector forTarget:(id)target

@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 	@"SchedulerUpdate",
 	@"SchedulerUpdateAndCustom",
 	@"SchedulerUpdateFromCustom",
+	@"RescheduleSelector",
 };
 
 Class nextTest()
@@ -536,6 +537,47 @@ Class restartTest()
 	[self unschedule:_cmd];
 	[self scheduleUpdate];
 	[self schedule:@selector(stopUpdate:) interval:2];
+}
+
+@end
+
+#pragma mark RescheduleSelector
+@implementation RescheduleSelector
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		interval = 1;
+		ticks = 0;
+		[self schedule:@selector(schedUpdate:) interval:interval];
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Reschedule Selector";
+}
+
+-(NSString *) subtitle
+{
+	return @"Interval is 1 second, then 2, then 3...";
+}								 
+
+
+-(void) schedUpdate:(ccTime)dt
+{
+	ticks++;
+
+	CCLOG(@"schedUpdate: %.2f", dt);
+	if( ticks > 3 ) {
+		[self schedule:_cmd interval:++interval];
+		ticks = 0;
+	}
+		
 }
 
 @end

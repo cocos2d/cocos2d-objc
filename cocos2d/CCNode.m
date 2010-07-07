@@ -332,7 +332,7 @@
 
 -(void) removeFromParentAndCleanup:(BOOL)cleanup
 {
-	[self.parent removeChild:self cleanup:cleanup];
+	[parent_ removeChild:self cleanup:cleanup];
 }
 
 /* "remove" logic MUST only be on this method
@@ -364,7 +364,8 @@
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
 	// not using detachChild improves speed here
-	for (CCNode *c in children_)
+	CCNode *c;
+	CCARRAY_FOREACH(children_, c)
 	{
 		// IMPORTANT:
 		//  -1st do onExit
