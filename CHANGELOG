@@ -1,6 +1,7 @@
 version 0.99.4 - xx-Jul-2010
  . [FIX] EAGLView: removed unused 'delegate_' ivar
  . [FIX] EAGLView: it is possible to resize the view (issue #914)
+ . [FIX] Scheduler: Doesn't reschedule already scheduled method. It only updates the interval.
  . [FIX] Templates & Tests: added App Delegate foreground & background callbacks
  
  version 0.99.4-rc3 - 01-Jul-2010

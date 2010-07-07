@@ -40,10 +40,10 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	id target;
 	TICK_IMP impMethod;
 	
-	ccTime interval;
 	ccTime elapsed;
 
 @public					// optimization
+	ccTime interval;
 	SEL selector;
 }
 
@@ -139,6 +139,7 @@ struct _hashUpdateEntry;
 /** The scheduled method will be called every 'interval' seconds.
  If paused is YES, then it won't be called until it is resumed.
  If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+ If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
 
  @since v0.99.3
  */
