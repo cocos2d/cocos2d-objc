@@ -26,7 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
-/** @file cocos2d blocks support
+/** @file
+ cocos2d blocks support
  */
 
 /*! creates a copy of block with a retain count of 1
