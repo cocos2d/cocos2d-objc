@@ -186,6 +186,44 @@ enum {
 	[super dealloc];
 }
 
+// getting a call, pause the game
+-(void) applicationWillResignActive:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] pause];
+}
+
+// call got rejected
+-(void) applicationDidBecomeActive:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] resume];
+}
+
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] startAnimation];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	[[CCDirector sharedDirector] end];
+}
+
+// purge memory
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] purgeCachedData];
+}
+
+// next delta time will be zero
+-(void) applicationSignificantTimeChange:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+}
 @end
 
 
