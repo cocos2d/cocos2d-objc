@@ -27,68 +27,80 @@
 #import "CCPointParticleSystem.h"
 #import "CCQuadParticleSystem.h"
 
+// build each architecture with the optimal particle system
+#ifdef __ARM_NEON__
+	// armv7
+	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCQuadParticleSystem
+#elif __arm__ || TARGET_IPHONE_SIMULATOR
+	// armv6 or simulator
+	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCPointParticleSystem
+#else
+	#error(unknown architecture)
+#endif
+
+
 //! A fire particle system
-@interface CCParticleFire: CCQuadParticleSystem
+@interface CCParticleFire: ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! A fireworks particle system
-@interface CCParticleFireworks : CCQuadParticleSystem
+@interface CCParticleFireworks : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! A sun particle system
-@interface CCParticleSun : CCQuadParticleSystem
+@interface CCParticleSun : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! A galaxy particle system
-@interface CCParticleGalaxy : CCQuadParticleSystem
+@interface CCParticleGalaxy : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! A flower particle system
-@interface CCParticleFlower : CCQuadParticleSystem
+@interface CCParticleFlower : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! A meteor particle system
-@interface CCParticleMeteor : CCQuadParticleSystem
+@interface CCParticleMeteor : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! An spiral particle system
-@interface CCParticleSpiral : CCQuadParticleSystem
+@interface CCParticleSpiral : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! An explosion particle system
-@interface CCParticleExplosion : CCQuadParticleSystem
+@interface CCParticleExplosion : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! An smoke particle system
-@interface CCParticleSmoke : CCQuadParticleSystem
+@interface CCParticleSmoke : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! An snow particle system
-@interface CCParticleSnow : CCQuadParticleSystem
+@interface CCParticleSnow : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
 
 //! A rain particle system
-@interface CCParticleRain : CCQuadParticleSystem
+@interface CCParticleRain : ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 }
 @end
