@@ -518,7 +518,7 @@ static BOOL _mixerRateSet = NO;
 
 -(BOOL) _resizeBuffers:(int) increment {
 	
-	void * tmpBufferInfos = realloc( _buffers, sizeof(_buffers[0]) * bufferTotal + increment );
+	void * tmpBufferInfos = realloc( _buffers, sizeof(_buffers[0]) * (bufferTotal + increment) );
 	
 	if(!tmpBufferInfos) {
 		free(tmpBufferInfos);
