@@ -2,6 +2,7 @@ version 0.99.4 - xx-Jul-2010
  . [FIX] CocosDenshion: fixed memory leak weak reallocing buffers (issue #919)
  . [FIX] EAGLView: removed unused 'delegate_' ivar
  . [FIX] EAGLView: it is possible to resize the view (issue #914)
+ . [FIX] GLES-Render: solid objects' colors synced with box2d repository
  . [FIX] Scheduler: Doesn't reschedule already scheduled method. It only updates the interval.
  . [FIX] Templates & Tests: added App Delegate foreground & background callbacks
  
