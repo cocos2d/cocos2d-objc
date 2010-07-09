@@ -3091,7 +3091,10 @@ Class restartAction()
 	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-	
+
+	// 2D projection
+//	[director setProjection:kCCDirectorProjection2D];
+
 	// To use High-Res un comment the following line
 //	[director setContentScaleFactor:2];	
 	
