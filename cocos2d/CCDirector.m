@@ -307,7 +307,6 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCBitmapFontAtlas purgeCachedData];	
-	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];	
 }
 
