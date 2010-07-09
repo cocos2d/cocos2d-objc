@@ -328,9 +328,10 @@ static CCDirector *_sharedDirector = nil;
 	CGSize size = surfaceSize_;
 	switch (projection) {
 		case kCCDirectorProjection2D:
+			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrthof(0, size.width, 0, size.height, -1000, 1000);
+			glOrthof(0, size.width, 0, size.height, -1024, 1024);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;
