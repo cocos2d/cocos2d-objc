@@ -568,6 +568,10 @@ typedef struct _KerningHashElement
 	[self createFontChars];
 }
 
+-(void) setCString:(char*)label {
+	[self setString:[NSString stringWithUTF8String:label]];
+}
+
 #pragma mark BitmapFontAtlas - CCRGBAProtocol protocol
 
 -(void) setColor:(ccColor3B)color
