@@ -1,4 +1,4 @@
-version 0.99.4 - xx-Jul-2010
+version 0.99.4 - 12-Jul-2010
  . [FIX] CocosDenshion: fixed memory leak weak reallocing buffers (issue #919)
  . [FIX] Director: 2d projection + HighRes works OK (issue #918)
  . [FIX] Director: purgeCachedData doesn't purge the SpriteFrameCache (issue #922)
