@@ -1,10 +1,11 @@
-version 0.99.4 - 12-Jul-2010
+version 0.99.4 - 13-Jul-2010
  . [FIX] CocosDenshion: fixed memory leak weak reallocing buffers (issue #919)
  . [FIX] ccCArray: ccCArrayAppendValueWithResize fixed function signature (issue #926)
  . [FIX] Director: 2d projection + HighRes works OK (issue #918)
  . [FIX] Director: purgeCachedData doesn't purge the SpriteFrameCache (issue #922)
  . [FIX] EAGLView: removed unused 'delegate_' ivar
  . [FIX] EAGLView: it is possible to resize the view (issue #914)
+ . [FIX] EAGLView: projection is recalculated after view is resized (issue #924)
  . [FIX] GLES-Render: solid objects' colors synced with box2d repository
  . [FIX] Scheduler: Doesn't reschedule already scheduled method. It only updates the interval.
  . [FIX] Templates & Tests: added App Delegate foreground & background callbacks

@@ -54,6 +54,8 @@
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
+//	[director setContentScaleFactor:2];
+	
 	// make the OpenGLView a child of the view controller
 	[viewController.view addSubview:glView];
 	

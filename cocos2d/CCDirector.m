@@ -533,14 +533,14 @@ static CCDirector *_sharedDirector = nil;
 		// set size
 		screenSize_ = [view bounds].size;
 		surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
-		
+
+		if( contentScaleFactor_ != 1 )
+			[self updateContentScaleFactor];
 		
 		CCTouchDispatcher *touchDispatcher = [CCTouchDispatcher sharedDispatcher];
 		[openGLView_ setTouchDelegate: touchDispatcher];
 		[touchDispatcher setDispatchEvents: YES];
 
-		if( contentScaleFactor_ != 1 )
-			[self updateContentScaleFactor];
 
 		[self setGLDefaultValues];
 	}
@@ -550,19 +550,10 @@ static CCDirector *_sharedDirector = nil;
 {
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
-	{
-		// XXX: To avoid compile warning when using Xcode 3.2.2
-		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
+	{		
+		[openGLView_ setContentScaleFactor: contentScaleFactor_];
 		
-		SEL selector = @selector(setContentScaleFactor:);
-		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
-		method(openGLView_,selector, contentScaleFactor_);
-		
-		// In Xcode 3.2.3 SDK 4.0, use this one:
-//		[openGLView_ setContentScaleFactor: scaleFactor];
-		
-		isContentScaleSupported_ = YES;
-		
+		isContentScaleSupported_ = YES;		
 	}
 	else
 	{
@@ -575,6 +566,14 @@ static CCDirector *_sharedDirector = nil;
 		
 		isContentScaleSupported_ = NO;
 	}
+}
+
+-(void) recalculateProjectionAndEAGLViewSize
+{
+	screenSize_ = [openGLView_ bounds].size;
+	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
+	
+	[self setProjection:projection_];
 }
 
 #pragma mark Director Scene Landscape

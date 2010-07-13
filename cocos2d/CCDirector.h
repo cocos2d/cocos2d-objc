@@ -457,6 +457,10 @@ and when to execute the Scenes.
 - (void) setAlphaBlending: (BOOL) on;
 /** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
+/** recalculate the projection view and projection size based on the EAGLVIEW
+ @since v0.99.4
+ */
+- (void) recalculateProjectionAndEAGLViewSize;
 
 @end
 
