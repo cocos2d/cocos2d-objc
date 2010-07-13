@@ -403,6 +403,7 @@ static CCDirector *_sharedDirector = nil;
 	return YES;
 }
 
+// XXX: Deprecated method
 -(BOOL)attachInWindow:(UIWindow *)window
 {
 	if([self initOpenGLViewWithView:window withFrame:[window bounds]])
@@ -413,6 +414,7 @@ static CCDirector *_sharedDirector = nil;
 	return NO;
 }
 
+// XXX: Deprecated method
 -(BOOL)attachInView:(UIView *)view
 {
 	if([self initOpenGLViewWithView:view withFrame:[view bounds]])
@@ -423,6 +425,7 @@ static CCDirector *_sharedDirector = nil;
 	return NO;
 }
 
+// XXX: Deprecated method
 -(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame
 {
 	if([self initOpenGLViewWithView:view withFrame:frame])
@@ -433,6 +436,7 @@ static CCDirector *_sharedDirector = nil;
 	return NO;
 }
 
+// XXX: Deprecated method
 -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
 {
 	NSAssert( ! [self isOpenGLAttached], @"FATAL: Can't re-attach the OpenGL View, because it is already attached. Detach it first");
@@ -550,10 +554,18 @@ static CCDirector *_sharedDirector = nil;
 {
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
-	{		
-		[openGLView_ setContentScaleFactor: contentScaleFactor_];
+	{			
+		// XXX: To avoid compile warning when using Xcode 3.2.2
+		// Version 1.0 will only support Xcode 3.2.3 or newer
+		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
 		
-		isContentScaleSupported_ = YES;		
+		SEL selector = @selector(setContentScaleFactor:);
+		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
+		method(openGLView_,selector, contentScaleFactor_);
+		
+//		[openGLView_ setContentScaleFactor: contentScaleFactor_];
+
+		isContentScaleSupported_ = YES;
 	}
 	else
 	{

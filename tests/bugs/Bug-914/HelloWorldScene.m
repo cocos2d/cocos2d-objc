@@ -39,7 +39,7 @@
 
 		CCColorLayer *layer;
 		
-		for( int i=0;i < 15;i++) {
+		for( int i=0;i < 5;i++) {
 			layer = [CCColorLayer layerWithColor:ccc4(i*20, i*20, i*20,255)];
 			[layer setContentSize:CGSizeMake(i*100, i*100)];
 			[layer setPosition:ccp(size.width/2, size.height/2)];
@@ -52,11 +52,9 @@
 		// create and initialize a Label
 		CCLabel* label = [CCLabel labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 		
-		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"press me 1"];
-		CCMenuItem *item2 = [CCMenuItemFont itemFromString:@"press me 2"];
-		CCMenuItem *item3 = [CCMenuItemFont itemFromString:@"press me 3"];
+		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"restart" target:self selector:@selector(restart:)];
 		
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, nil];
 		[menu alignItemsVertically];
 		[menu setPosition:ccp(size.width/2, 100)];
 		
@@ -69,6 +67,11 @@
 		[self addChild: label];
 	}
 	return self;
+}
+
+-(void) restart:(id)sender
+{
+	[[CCDirector sharedDirector] replaceScene:[HelloWorld scene]];
 }
 
 // on "dealloc" you need to release all your retained objects
