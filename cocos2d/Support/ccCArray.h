@@ -317,7 +317,7 @@ static inline void ccCArrayAppendValue(ccCArray *arr, void* value)
 }
 
 /** Appends an value. Capacity of arr is increased if needed. */
-static inline void ccCArrayAppendValueWithResize(ccCArray *arr, id value)
+static inline void ccCArrayAppendValueWithResize(ccCArray *arr, void* value)
 {
 	ccCArrayEnsureExtraCapacity(arr, 1);
 	ccCArrayAppendValue(arr, value);
