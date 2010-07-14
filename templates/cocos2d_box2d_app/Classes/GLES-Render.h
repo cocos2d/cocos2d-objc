@@ -23,10 +23,9 @@
 // http://www.cocos2d-iphone.org
 //
 
-#ifndef RENDER_H
-#define RENDER_H
+#ifndef GLES_RENDER_H
+#define GLES_RENDER_H
 
-#import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
@@ -65,4 +64,4 @@ public:
 };
 
 
-#endif
+#endif // GLES_RENDER_H

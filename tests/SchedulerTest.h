@@ -49,9 +49,15 @@
 {}
 @end
 
-
 @interface SchedulerUpdateFromCustom : SchedulerTest
 {}
+@end
+
+@interface RescheduleSelector : SchedulerTest
+{
+	float interval;
+	int ticks;
+}
 @end
 
 

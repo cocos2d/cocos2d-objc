@@ -78,7 +78,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation EAGLView
 
-@synthesize delegate=delegate_, surfaceSize=size_;
+@synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize touchDelegate=touchDelegate_;
 @synthesize context=context_;
@@ -185,8 +185,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
 
+	// Issue #914 #924
+	CCDirector *director = [CCDirector sharedDirector];
+	[director recalculateProjectionAndEAGLViewSize];
+
 	// Avoid flicker. Issue #350
-	[[CCDirector sharedDirector] drawScene];
+	[director drawScene];
 }
 
 - (void) swapBuffers

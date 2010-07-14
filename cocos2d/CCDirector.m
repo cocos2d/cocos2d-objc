@@ -307,7 +307,6 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCBitmapFontAtlas purgeCachedData];	
-	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];	
 }
 
@@ -328,9 +327,10 @@ static CCDirector *_sharedDirector = nil;
 	CGSize size = surfaceSize_;
 	switch (projection) {
 		case kCCDirectorProjection2D:
+			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrthof(0, size.width, 0, size.height, -1000, 1000);
+			glOrthof(0, size.width, 0, size.height, -1024, 1024);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;
@@ -403,6 +403,7 @@ static CCDirector *_sharedDirector = nil;
 	return YES;
 }
 
+// XXX: Deprecated method
 -(BOOL)attachInWindow:(UIWindow *)window
 {
 	if([self initOpenGLViewWithView:window withFrame:[window bounds]])
@@ -413,6 +414,7 @@ static CCDirector *_sharedDirector = nil;
 	return NO;
 }
 
+// XXX: Deprecated method
 -(BOOL)attachInView:(UIView *)view
 {
 	if([self initOpenGLViewWithView:view withFrame:[view bounds]])
@@ -423,6 +425,7 @@ static CCDirector *_sharedDirector = nil;
 	return NO;
 }
 
+// XXX: Deprecated method
 -(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame
 {
 	if([self initOpenGLViewWithView:view withFrame:frame])
@@ -433,6 +436,7 @@ static CCDirector *_sharedDirector = nil;
 	return NO;
 }
 
+// XXX: Deprecated method
 -(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
 {
 	NSAssert( ! [self isOpenGLAttached], @"FATAL: Can't re-attach the OpenGL View, because it is already attached. Detach it first");
@@ -533,14 +537,14 @@ static CCDirector *_sharedDirector = nil;
 		// set size
 		screenSize_ = [view bounds].size;
 		surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
-		
+
+		if( contentScaleFactor_ != 1 )
+			[self updateContentScaleFactor];
 		
 		CCTouchDispatcher *touchDispatcher = [CCTouchDispatcher sharedDispatcher];
 		[openGLView_ setTouchDelegate: touchDispatcher];
 		[touchDispatcher setDispatchEvents: YES];
 
-		if( contentScaleFactor_ != 1 )
-			[self updateContentScaleFactor];
 
 		[self setGLDefaultValues];
 	}
@@ -550,19 +554,18 @@ static CCDirector *_sharedDirector = nil;
 {
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
-	{
+	{			
 		// XXX: To avoid compile warning when using Xcode 3.2.2
+		// Version 1.0 will only support Xcode 3.2.3 or newer
 		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
 		
 		SEL selector = @selector(setContentScaleFactor:);
 		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
 		method(openGLView_,selector, contentScaleFactor_);
 		
-		// In Xcode 3.2.3 SDK 4.0, use this one:
-//		[openGLView_ setContentScaleFactor: scaleFactor];
-		
+//		[openGLView_ setContentScaleFactor: contentScaleFactor_];
+
 		isContentScaleSupported_ = YES;
-		
 	}
 	else
 	{
@@ -575,6 +578,14 @@ static CCDirector *_sharedDirector = nil;
 		
 		isContentScaleSupported_ = NO;
 	}
+}
+
+-(void) recalculateProjectionAndEAGLViewSize
+{
+	screenSize_ = [openGLView_ bounds].size;
+	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
+	
+	[self setProjection:projection_];
 }
 
 #pragma mark Director Scene Landscape

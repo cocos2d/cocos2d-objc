@@ -26,6 +26,10 @@
 #ifndef GLES_RENDER_H
 #define GLES_RENDER_H
 
+#import <OpenGLES/EAGL.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
+
 #include "Box2D.h"
 
 struct b2AABB;

@@ -743,6 +743,18 @@ Class restartAction()
 	[[CCDirector sharedDirector] resume];
 }
 
+// sent to background
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
+}
+
+// sent to foreground
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] startAnimation];
+}
+
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {

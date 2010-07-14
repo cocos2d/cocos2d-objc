@@ -31,27 +31,27 @@
 
 static EAGLContext *auxEAGLcontext = nil;
 
-static NSString* loadHiResImage( NSString* path )
-{
-	NSString *newPath = nil;
-
-	if([[UIScreen mainScreen] scale] == 2.0)
-	{
-		NSString *path2x = [path stringByReplacingCharactersInRange:NSMakeRange([path length] - 4, 0) withString:@"@2x"];
-		newPath = [[UIImage alloc] initWithContentsOfFile:path2x];
-		
-		if(!newPath)
-		{
-			newPath = [[UIImage alloc] initWithContentsOfFile:path];
-		}
-	}
-	else
-	{
-		newPath = [[UIImage alloc] initWithContentsOfFile:path];
-	}
-	
-	return newPath;
-}
+//static NSString* loadHiResImage( NSString* path )
+//{
+//	NSString *newPath = nil;
+//
+//	if([[UIScreen mainScreen] scale] == 2.0)
+//	{
+//		NSString *path2x = [path stringByReplacingCharactersInRange:NSMakeRange([path length] - 4, 0) withString:@"@2x"];
+//		newPath = [[UIImage alloc] initWithContentsOfFile:path2x];
+//		
+//		if(!newPath)
+//		{
+//			newPath = [[UIImage alloc] initWithContentsOfFile:path];
+//		}
+//	}
+//	else
+//	{
+//		newPath = [[UIImage alloc] initWithContentsOfFile:path];
+//	}
+//	
+//	return newPath;
+//}
 
 
 @interface CCAsyncObject : NSObject

@@ -111,6 +111,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
 		patches for Layer
 		patches for MultiplexLayer
+	* geefmijgratismail:
+		EAGLView supports resizing. patch.
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
@@ -152,6 +154,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed memory leaks when initialization of some nodes failed
 		Added removeFromParent method in CCNode
 		Improved performance in CCArray
+	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
+		Author of the games tab in the cocos2d site
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -266,8 +270,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMXTiledMaps: objects supports offsets. patch.
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
+	* NovaOblivion:
+		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
+	* Piero Tofy (http://indieappsalliance.org):
+		Author of the scraper script used to parse games data in the cocos2d site
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -291,6 +299,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
 		migrated all cocos2d code and all test to using the CC namespace
+	* sakamoto.kazuki:
+		2d projection works OK with HighRes. patch.
 	* samkass:
 		install_template.sh suports custom directory. patch.
 		install-template can be installed in user directory. patch.
