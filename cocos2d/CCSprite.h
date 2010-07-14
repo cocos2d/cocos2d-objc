@@ -108,6 +108,7 @@ typedef enum {
 
 	// texture pixels
 	CGRect rect_;
+	BOOL rectRotated_;
 	
 	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPosition_;	// absolute
@@ -139,6 +140,7 @@ typedef enum {
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the rect of the CCSprite */
 @property (nonatomic,readonly) CGRect textureRect;
+@property (nonatomic,readonly) BOOL textureRectRotated;
 /** whether or not the sprite is flipped horizontally. 
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
@@ -296,6 +298,9 @@ typedef enum {
 /** updates the texture rect of the CCSprite.
  */
 -(void) setTextureRect:(CGRect) rect;
+/** updates the texture rect and rectRotated of the CCSprite
+ */
+-(void) setTextureRect:(CGRect) rect rotated:(BOOL)rotated;
 
 /** tell the sprite to use self-render.
  @since v0.99.0

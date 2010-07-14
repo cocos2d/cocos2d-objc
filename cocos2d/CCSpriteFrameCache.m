@@ -93,8 +93,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	/*
 	Supported Zwoptex Formats:
 		enum {
-			ZWTCoordinatesListXMLFormat_Legacy = 0
-			ZWTCoordinatesListXMLFormat_v1_0,
+			ZWTCoordinatesListXMLFormat_Legacy = 0 // flash version
+			ZWTCoordinatesListXMLFormat_v1_0, // desktop version
+			ZWTCoordinatesListXMLFormat_v1_1, // desktop version - adds rotated support
 		};
 	*/
 	NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
@@ -107,7 +108,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	}
 	
 	// check the format
-	if(format < 0 || format > 1) {
+	if(format < 0 || format > 2) {
 		NSAssert(NO,@"cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
 		return;
 	}
@@ -132,20 +133,17 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			ow = abs(ow);
 			oh = abs(oh);
 			// create frame
-			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x, y, w, h) offset:CGPointMake(ox, oy) originalSize:CGSizeMake(ow, oh)];
-		} else if(format == 1) {
+			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x, y, w, h) rotated:NO offset:CGPointMake(ox, oy) originalSize:CGSizeMake(ow, oh)];
+		} else if(format == 1 || format == 2) {
 			CGRect frame = CGRectFromString([frameDict objectForKey:@"frame"]);
+			BOOL rotated = NO;
+			if(format == 2) {
+				rotated = [[frameDict objectForKey:@"rotated"] boolValue];
+			}
 			CGPoint offset = CGPointFromString([frameDict objectForKey:@"offset"]);
 			CGSize sourceSize = CGSizeFromString([frameDict objectForKey:@"sourceSize"]);
-			/*
-			CGRect sourceColorRect = CGRectFromString([frameDict objectForKey:@"sourceColorRect"]);
-			int leftTrim = sourceColorRect.origin.x;
-			int topTrim = sourceColorRect.origin.y;
-			int rightTrim = sourceColorRect.size.width + leftTrim;
-			int bottomTrim = sourceColorRect.size.height + topTrim;
-			*/
 			// create frame
-			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame offset:offset originalSize:sourceSize];
+			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame rotated:rotated offset:offset originalSize:sourceSize];
 		} else {
 			CCLOG(@"cocos2d: Unsupported Zwoptex version. Update cocos2d");
 		}

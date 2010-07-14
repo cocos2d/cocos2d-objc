@@ -54,7 +54,7 @@ struct transformValues_ {
 -(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
--(void) setTextureRect:(CGRect)rect untrimmedSize:(CGSize)size;
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 -(struct transformValues_) getTransformValues;	// optimization
 @end
 
@@ -64,6 +64,7 @@ struct transformValues_ {
 @synthesize quad = quad_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize textureRect = rect_;
+@synthesize textureRectRotated = rectRotated_;
 @synthesize blendFunc = blendFunc_;
 @synthesize usesSpriteSheet = usesSpriteSheet_;
 @synthesize textureAtlas = textureAtlas_;
@@ -172,7 +173,7 @@ struct transformValues_ {
 		// updated in "useSelfRender"
 		
 		// Atlas: TexCoords
-		[self setTextureRect:CGRectZero];
+		[self setTextureRect:CGRectZero rotated:NO];
 	}
 	
 	return self;
@@ -185,7 +186,7 @@ struct transformValues_ {
 	if( (self = [self init]) )
 	{
 		[self setTexture:texture];
-		[self setTextureRect:rect];
+		[self setTextureRect:rect rotated:NO];
 	}
 	return self;
 }
@@ -327,12 +328,16 @@ struct transformValues_ {
 
 -(void)setTextureRect:(CGRect)rect
 {
-	[self setTextureRect:rect untrimmedSize:rect.size];
+	[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 }
-
--(void)setTextureRect:(CGRect)rect untrimmedSize:(CGSize)untrimmedSize
+-(void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated
+{
+	[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
+}
+-(void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
 	rect_ = rect;
+	rectRotated_ = rotated;
 
 	[self setContentSize:untrimmedSize];
 	[self updateTextureCoords:rect];
@@ -368,7 +373,7 @@ struct transformValues_ {
 		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
 		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
 		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };			
+		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };	
 	}
 			
 }
@@ -378,26 +383,51 @@ struct transformValues_ {
 	
 	float atlasWidth = texture_.pixelsWide;
 	float atlasHeight = texture_.pixelsHigh;
-
-	float left = rect.origin.x / atlasWidth;
-	float right = (rect.origin.x + rect.size.width) / atlasWidth;
-	float top = rect.origin.y / atlasHeight;
-	float bottom = (rect.origin.y + rect.size.height) / atlasHeight;
-
 	
-	if( flipX_)
-		CC_SWAP(left,right);
-	if( flipY_)
-		CC_SWAP(top,bottom);
+	float left,right,top,bottom;
 	
-	quad_.bl.texCoords.u = left;
-	quad_.bl.texCoords.v = bottom;
-	quad_.br.texCoords.u = right;
-	quad_.br.texCoords.v = bottom;
-	quad_.tl.texCoords.u = left;
-	quad_.tl.texCoords.v = top;
-	quad_.tr.texCoords.u = right;
-	quad_.tr.texCoords.v = top;
+	if(rectRotated_)
+	{
+		left = rect.origin.x / atlasWidth;
+		right = (rect.origin.x + rect.size.height) / atlasWidth;
+		top = rect.origin.y / atlasHeight;
+		bottom = (rect.origin.y + rect.size.width) / atlasHeight;
+		
+		if( flipX_)
+			CC_SWAP(top,bottom);
+		if( flipY_)
+			CC_SWAP(left,right);
+		
+		quad_.bl.texCoords.u = left;
+		quad_.bl.texCoords.v = top;
+		quad_.br.texCoords.u = left;
+		quad_.br.texCoords.v = bottom;
+		quad_.tl.texCoords.u = right;
+		quad_.tl.texCoords.v = top;
+		quad_.tr.texCoords.u = right;
+		quad_.tr.texCoords.v = bottom;
+	}
+	else
+	{
+		left = rect.origin.x / atlasWidth;
+		right = (rect.origin.x + rect.size.width) / atlasWidth;
+		top = rect.origin.y / atlasHeight;
+		bottom = (rect.origin.y + rect.size.height) / atlasHeight;
+		
+		if( flipX_)
+			CC_SWAP(left,right);
+		if( flipY_)
+			CC_SWAP(top,bottom);
+		
+		quad_.bl.texCoords.u = left;
+		quad_.bl.texCoords.v = bottom;
+		quad_.br.texCoords.u = right;
+		quad_.br.texCoords.v = bottom;
+		quad_.tl.texCoords.u = left;
+		quad_.tl.texCoords.v = top;
+		quad_.tr.texCoords.u = right;
+		quad_.tr.texCoords.v = top;
+	}
 }
 
 -(void)updateTransform
@@ -719,7 +749,7 @@ struct transformValues_ {
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRect:rect_];	
+		[self setTextureRect:rect_ rotated:rectRotated_];	
 	}
 }
 -(BOOL) flipX
@@ -731,7 +761,7 @@ struct transformValues_ {
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		[self setTextureRect:rect_];	
+		[self setTextureRect:rect_ rotated:rectRotated_];	
 	}	
 }
 -(BOOL) flipY
@@ -829,7 +859,8 @@ struct transformValues_ {
 		[self setTexture: newTexture];
 	
 	// update rect
-	[self setTextureRect:frame.rect untrimmedSize:frame.originalSize];
+	rectRotated_ = frame.rotated;
+	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
 	
 }
 
