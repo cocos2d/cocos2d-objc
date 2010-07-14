@@ -378,6 +378,7 @@ static BOOL configured = FALSE;
 		backgroundMusicCompletionSelector = nil;
 		_isObservingAppEvents = FALSE;
 		_mute = NO;
+		_resigned = NO;
 		enabled_ = YES;
 		[self setMode:mode];
 		soundEngine = [[CDSoundEngine alloc] init];
@@ -574,8 +575,15 @@ static BOOL configured = FALSE;
 - (void) applicationWillResignActive:(NSNotification *) notification
 {
 	
+	self->_resigned = YES;
+	//Testing: change category to allow other audio
+	AudioSessionSetActive(NO);
+	UInt32 fakeCategory = kAudioSessionCategory_AmbientSound;
+	AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(fakeCategory), &fakeCategory);
+	AudioSessionSetActive(YES);
+	
 	switch (_resignBehavior) {
-
+			
 		case kAMRBStopPlay:
 			
 			for( CDLongAudioSource *audioSource in audioSourceChannels) {
@@ -601,7 +609,7 @@ static BOOL configured = FALSE;
 			
 		default:
 			break;
-
+			
 	}			
 	
 	CDLOG(@"Denshion::CDAudioManager - handling resign active");
@@ -610,27 +618,35 @@ static BOOL configured = FALSE;
 //Called when application becomes active only if setResignBehavior has been called 
 - (void) applicationDidBecomeActive:(NSNotification *) notification
 {
-
-	switch (_resignBehavior) {
-			
-		case kAMRBStopPlay:
-			
-			//Music had been stopped but stop maintains current time
-			//so playing again will continue from where music was before resign active
-			for( CDLongAudioSource *audioSource in audioSourceChannels) {
-				if (audioSource->systemPaused) {
-					[audioSource resume];
-					audioSource->systemPaused = NO;
-				}	
-			}	
-    		break;
-			
-		default:
-			break;
-			
-	}		
-	CDLOG(@"Denshion::CDAudioManager - audio manager handling become active");
 	
+	if (self->_resigned) {
+		_resigned = NO;
+		//Reset the mode incase something changed with audio while we were inactive
+		[self setMode:_mode];
+		switch (_resignBehavior) {
+				
+			case kAMRBStopPlay:
+				
+				//Music had been stopped but stop maintains current time
+				//so playing again will continue from where music was before resign active.
+				//We check if music can be played because while we were inactive the user might have
+				//done something that should force music to not play such as starting a track in the iPod
+				if (self.willPlayBackgroundMusic) {
+					for( CDLongAudioSource *audioSource in audioSourceChannels) {
+						if (audioSource->systemPaused) {
+							[audioSource resume];
+							audioSource->systemPaused = NO;
+						}	
+					}
+				}	
+				break;
+				
+			default:
+				break;
+				
+		}		
+		CDLOG(@"Denshion::CDAudioManager - audio manager handling become active");
+	}
 }
 
 //Called when application terminates only if setResignBehavior has been called 

@@ -144,7 +144,7 @@ typedef enum {
 	id backgroundMusicCompletionListener;
 	BOOL willPlayBackgroundMusic;
 	BOOL _mute;
-	//BOOL _muteStoppedMusic;
+	BOOL _resigned;
 	BOOL enabled_;
 	
 	//For handling resign/become active
