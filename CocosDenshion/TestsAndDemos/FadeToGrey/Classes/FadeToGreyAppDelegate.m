@@ -52,18 +52,28 @@
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-				
-		
+	
+	
 	[director runWithScene: [HelloWorld scene]];
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+- (void) applicationDidEnterBackground:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
+	[[CCDirector sharedDirector] pause];
+}
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
 	[[CCDirector sharedDirector] pause];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+	[[CCDirector sharedDirector] stopAnimation]; // call this to make sure you don't start a second display link!
 	[[CCDirector sharedDirector] resume];
+	[[CCDirector sharedDirector] startAnimation];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

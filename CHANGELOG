@@ -1,4 +1,5 @@
-version 0.99.4 - 13-Jul-2010
+version 0.99.4 - 14-Jul-2010
+ . [NEW] CocosDenshion: switching between background and foreground music (issue #928)
  . [FIX] CocosDenshion: fixed memory leak weak reallocing buffers (issue #919)
  . [FIX] CocosDenshion: SimpleAudioEngine's enable works as expected (issue #927)
  . [FIX] ccCArray: ccCArrayAppendValueWithResize fixed function signature (issue #926)
