@@ -17,6 +17,7 @@ BOOL fadingOut;
 	if( (self=[super init] )) {
 		//Get a pointer to the sound engine 
 		sae = [SimpleAudioEngine sharedEngine];
+		[[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
 		actionManager = [CCActionManager sharedManager];
 		
 		//Test preloading two of our files, this will have no performance effect. In reality you would
