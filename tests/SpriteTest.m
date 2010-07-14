@@ -3091,7 +3091,10 @@ Class restartAction()
 	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-	
+
+	// 2D projection
+//	[director setProjection:kCCDirectorProjection2D];
+
 	// To use High-Res un comment the following line
 //	[director setContentScaleFactor:2];	
 	
@@ -3127,6 +3130,21 @@ Class restartAction()
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] resume];
+}
+
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] startAnimation];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	[[CCDirector sharedDirector] end];
 }
 
 // purge memory

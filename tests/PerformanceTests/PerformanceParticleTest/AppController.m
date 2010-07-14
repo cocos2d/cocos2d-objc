@@ -22,7 +22,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
@@ -65,7 +65,22 @@
 	[[CCDirector sharedDirector] resume];
 }
 
-// purge memroy
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] startAnimation];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	[[CCDirector sharedDirector] end];
+}
+
+// purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }

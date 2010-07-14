@@ -413,7 +413,9 @@ enum {
 -(void) schedule: (SEL) s;
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
- If tiem is 0, it is recommended to use 'scheduleUpdate' instead.
+ If time is 0, it is recommended to use 'scheduleUpdate' instead.
+ 
+ If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
 /** unschedules a custom selector.*/

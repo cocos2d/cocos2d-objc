@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 	@"SchedulerUpdate",
 	@"SchedulerUpdateAndCustom",
 	@"SchedulerUpdateFromCustom",
+	@"RescheduleSelector",
 };
 
 Class nextTest()
@@ -540,6 +541,47 @@ Class restartTest()
 
 @end
 
+#pragma mark RescheduleSelector
+@implementation RescheduleSelector
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		interval = 1;
+		ticks = 0;
+		[self schedule:@selector(schedUpdate:) interval:interval];
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Reschedule Selector";
+}
+
+-(NSString *) subtitle
+{
+	return @"Interval is 1 second, then 2, then 3...";
+}								 
+
+
+-(void) schedUpdate:(ccTime)dt
+{
+	ticks++;
+
+	CCLOG(@"schedUpdate: %.2f", dt);
+	if( ticks > 3 ) {
+		[self schedule:_cmd interval:++interval];
+		ticks = 0;
+	}
+		
+}
+
+@end
+
 
 
 // CLASS IMPLEMENTATIONS
@@ -593,6 +635,21 @@ Class restartTest()
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] resume];
+}
+
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] stopAnimation];
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+	[[CCDirector sharedDirector] startAnimation];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	[[CCDirector sharedDirector] end];
 }
 
 // purge memory

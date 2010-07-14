@@ -59,6 +59,7 @@ static CDBufferManager *bufferManager = nil;
 		soundEngine = am.soundEngine;
 		bufferManager = [[CDBufferManager alloc] initWithEngine:soundEngine];
 		mute_ = NO;
+		enabled_ = YES;
 	}
 	return self;
 }
