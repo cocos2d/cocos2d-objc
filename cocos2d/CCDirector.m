@@ -940,9 +940,9 @@ static CCDirector *_sharedDirector = nil;
 
 #if CC_ENABLE_PROFILERS
 - (void) showProfilers {
-	accumDtForProfiler += dt;
-	if (accumDtForProfiler > 1.0f) {
-		accumDtForProfiler = 0;
+	accumDtForProfiler_ += dt;
+	if (accumDtForProfiler_ > 1.0f) {
+		accumDtForProfiler_ = 0;
 		[[CCProfiler sharedProfiler] displayTimers];
 	}
 }
