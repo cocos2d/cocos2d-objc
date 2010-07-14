@@ -59,11 +59,22 @@
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+	CGRect rect;
 	if(toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-		glView.frame = CGRectMake(0, 0, 320.0f, 480.0f);
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+			rect = CGRectMake(0, 0, 768, 1024);
+		else
+			rect = CGRectMake(0, 0, 320, 480 );
+
 	} else if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-		glView.frame = CGRectMake(0, 0, 480.0f, 320.0f);
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+			rect = CGRectMake(0, 0, 1024, 768);
+		else
+			rect = CGRectMake(0, 0, 480, 320 );
 	}
+
+	glView.frame = rect;
+
 }
 
 - (void)didReceiveMemoryWarning {
