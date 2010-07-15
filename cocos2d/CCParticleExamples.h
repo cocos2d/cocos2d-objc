@@ -27,80 +27,68 @@
 #import "CCPointParticleSystem.h"
 #import "CCQuadParticleSystem.h"
 
-// build each architecture with the optimal particle system
-#ifdef __ARM_NEON__
-	// armv7
-	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCQuadParticleSystem
-#elif __arm__ || TARGET_IPHONE_SIMULATOR
-	// armv6 or simulator
-	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCPointParticleSystem
-#else
-	#error(unknown architecture)
-#endif
-
-
 //! A fire particle system
-@interface CCParticleFire: ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleFire: CCQuadParticleSystem
 {
 }
 @end
 
 //! A fireworks particle system
-@interface CCParticleFireworks : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleFireworks : CCQuadParticleSystem
 {
 }
 @end
 
 //! A sun particle system
-@interface CCParticleSun : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleSun : CCQuadParticleSystem
 {
 }
 @end
 
 //! A galaxy particle system
-@interface CCParticleGalaxy : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleGalaxy : CCQuadParticleSystem
 {
 }
 @end
 
 //! A flower particle system
-@interface CCParticleFlower : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleFlower : CCQuadParticleSystem
 {
 }
 @end
 
 //! A meteor particle system
-@interface CCParticleMeteor : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleMeteor : CCQuadParticleSystem
 {
 }
 @end
 
 //! An spiral particle system
-@interface CCParticleSpiral : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleSpiral : CCQuadParticleSystem
 {
 }
 @end
 
 //! An explosion particle system
-@interface CCParticleExplosion : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleExplosion : CCQuadParticleSystem
 {
 }
 @end
 
 //! An smoke particle system
-@interface CCParticleSmoke : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleSmoke : CCQuadParticleSystem
 {
 }
 @end
 
 //! An snow particle system
-@interface CCParticleSnow : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleSnow : CCQuadParticleSystem
 {
 }
 @end
 
 //! A rain particle system
-@interface CCParticleRain : ARCH_OPTIMAL_PARTICLE_SYSTEM
+@interface CCParticleRain : CCQuadParticleSystem
 {
 }
 @end
