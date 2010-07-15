@@ -46,13 +46,8 @@ should be easy to port it to it.
 Build Requirements
 ------------------
 
-Mac OS X 10.5.3, Xcode 3.1, iPhone OS 2.0, Beta 8 release or later
+Mac OS X 10.6, Xcode 3.2.3 (or newer)
 
-
-Runtime Requirements
---------------------
-
-Mac OS X 10.5.3, iPhone OS 2.0, Beta 8 release or later
 
 
 Files and Folders
@@ -65,7 +60,9 @@ Files and Folders
   * CocosDenshion/  
      sound engine library
   * tests/  
-     tests, demo and template examples
+     tests, demo examples
+  * templates/
+     folder that contains the Xcode templates
   * experimental/  
      experimental stuff
   * external/  
