@@ -154,6 +154,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed memory leaks when initialization of some nodes failed
 		Added removeFromParent method in CCNode
 		Improved performance in CCArray
+		Particles: Uses Quad in ARMv7 and Point in ARMv6. patch.
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
 		Author of the games tab in the cocos2d site
 	* jkrippy:

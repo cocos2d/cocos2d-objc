@@ -1,5 +1,7 @@
 version 0.99.5-rc XX-MMM-2010
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
+ . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
+                and PointParticles when compiled in ARMv6
  
 version 0.99.4 - 14-Jul-2010
  . [NEW] CocosDenshion: switching between background and foreground music (issue #928)
