@@ -4,6 +4,7 @@ version 0.99.5-rc XX-MMM-2010
                 and PointParticles when compiled in ARMv6
  . [FIX] Templates & Tests: call CC_DIRECTOR_END() on AppDelegate Terminate
  . [FIX] TextureCache: JPEG workaround (issue #866) is only applied on iOS >= 4 (issue #932)
+ . [3RD] libpng: updated to v1.2.44 (libpng is only used by a cocos2d test)
  
 version 0.99.4 - 14-Jul-2010
  . [NEW] CocosDenshion: switching between background and foreground music (issue #928)
