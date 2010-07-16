@@ -25,21 +25,34 @@
 
 #import <OpenGLES/ES1/gl.h>
 
+/** iOS version definitions */
+enum {
+	kCCiOSVersion_3_0   = 0x03000000,
+	kCCiOSVersion_3_1   = 0x03010000,
+	kCCiOSVersion_3_1_1 = 0x03010100,
+	kCCiOSVersion_3_1_2 = 0x03010200,
+	kCCiOSVersion_3_1_3 = 0x03010300,
+	kCCiOSVersion_3_2   = 0x03020000,
+	kCCiOSVersion_3_2_1 = 0x03020100,
+	kCCiOSVersion_4_0   = 0x04000000,
+	kCCiOSVersion_4_0_1 = 0x04000100,
+};
+
 /**
  CCConfiguration contains some openGL variables
  @since v0.99.0
  */
-
 @interface CCConfiguration : NSObject {
 
-	NSBundle	*loadingBundle_;
+	NSBundle		*loadingBundle_;
 	
-	GLint		maxTextureSize_;
-	GLint		maxModelviewStackDepth_;
-	BOOL		supportsPVRTC_;
-	BOOL		supportsNPOT_;
-	BOOL		supportsBGRA8888_;
-	BOOL		supportsDiscardFramebuffer_;
+	GLint			maxTextureSize_;
+	GLint			maxModelviewStackDepth_;
+	BOOL			supportsPVRTC_;
+	BOOL			supportsNPOT_;
+	BOOL			supportsBGRA8888_;
+	BOOL			supportsDiscardFramebuffer_;
+	unsigned int	iOSVersion_;
 }
 
 /** the bundle we load everything from */
@@ -75,10 +88,18 @@
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
 
+/** returns the iOS version
+ 
+ @since v0.99.5
+ */
+@property (nonatomic, readonly) unsigned int iOSVersion;
+
 /** returns a shared instance of the CCConfiguration */
 +(CCConfiguration *) sharedConfiguration;
 
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
+
+
 
 @end
