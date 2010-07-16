@@ -72,6 +72,7 @@
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteSheet.h"
+#import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTextureCache.h"
 #import "CCTransition.h"

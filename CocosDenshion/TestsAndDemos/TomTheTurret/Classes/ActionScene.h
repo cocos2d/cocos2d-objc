@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 
 @interface ActionLayer : CCLayer {
-    CCSpriteSheet *_spriteSheet;
+    CCSpriteBatchNode *_batchNode;
     CCSprite *_level_bkgrnd;
     CCSprite *_player;
     NSMutableArray *_monsters;
@@ -21,7 +21,7 @@
     BOOL _inLevel;
 }
 
-@property (nonatomic, assign) CCSpriteSheet *spriteSheet;
+@property (nonatomic, assign) CCSpriteBatchNode *batchNode;
 @property (nonatomic, assign) CCSprite *level_bkgrnd;
 @property (nonatomic, assign) CCSprite *player;
 @property (nonatomic, retain) NSMutableArray *monsters;

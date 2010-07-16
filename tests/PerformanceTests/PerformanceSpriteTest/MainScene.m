@@ -65,23 +65,23 @@ Class restartAction()
 		
 		subtestNumber = subtest;
 		parent = p;
-		sheet = nil;
+		batchNode = nil;
 /*
  * Tests:
  * 1: 1 (32-bit) PNG sprite of 52 x 139
- * 2: 1 (32-bit) PNG Atlas sprite using 1 sprite of 52 x 139
- * 3: 1 (16-bit) PNG Atlas sprite using 1 sprite of 52 x 139
- * 4: 1 (4-bit) PVRTC Atlas sprite using 1 sprite of 52 x 139
+ * 2: 1 (32-bit) PNG Batch Node using 1 sprite of 52 x 139
+ * 3: 1 (16-bit) PNG Batch Node using 1 sprite of 52 x 139
+ * 4: 1 (4-bit) PVRTC Batch Node using 1 sprite of 52 x 139
 
  * 5: 14 (32-bit) PNG sprites of 85 x 121 each
- * 6: 14 (32-bit) PNG Atlassprites of 85 x 121 each
- * 7: 14 (16-bit) PNG Atlassprites of 85 x 121 each
- * 8: 14 (4-bit) PVRTC Atlassprites of 85 x 121 each
+ * 6: 14 (32-bit) PNG Batch Node of 85 x 121 each
+ * 7: 14 (16-bit) PNG Batch Node of 85 x 121 each
+ * 8: 14 (4-bit) PVRTC Batch Node of 85 x 121 each
  
  * 9: 64 (32-bit) sprites of 32 x 32 each
- *10: 64 (32-bit) PNG AtlasSprites of 32 x 32 each
- *11: 64 (16-bit) PNG AtlasSprites of 32 x 32 each
- *12: 64 (4-bit) PVRTC AtlasSprites of 32 x 32 each
+ *10: 64 (32-bit) PNG Batch Node of 32 x 32 each
+ *11: 64 (16-bit) PNG Batch Node of 32 x 32 each
+ *12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
  */
 		
 		// purge textures
@@ -99,56 +99,56 @@ Class restartAction()
 				///
 			case 2:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossinis_sister1.png" capacity:100];
+				[p addChild:batchNode z:0];
 				break;
 			case 3:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.png" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossinis_sister1.png" capacity:100];
+				[p addChild:batchNode z:0];
 				break;
 			case 4:
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossinis_sister1.pvr" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossinis_sister1.pvr" capacity:100];
+				[p addChild:batchNode z:0];
 				break;
 				
 				///
 			case 6:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
+				[p addChild:batchNode z:0];
 				break;				
 			case 7:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
+				[p addChild:batchNode z:0];
 				break;								
 			case 8:
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.pvr" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.pvr" capacity:100];
+				[p addChild:batchNode z:0];
 				break;
 
 				///
 			case 10:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.png" capacity:100];
+				[p addChild:batchNode z:0];
 				break;
 			case 11:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.png" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.png" capacity:100];
+				[p addChild:batchNode z:0];
 				break;				
 			case 12:
-				sheet = [CCSpriteSheet spriteSheetWithFile:@"spritesheet1.pvr" capacity:100];
-				[p addChild:sheet z:0];
+				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.pvr" capacity:100];
+				[p addChild:batchNode z:0];
 				break;
 				
 			default:
 				break;
 		}
 		
-		[sheet retain];
+		[batchNode retain];
 
 		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
 
@@ -159,7 +159,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[sheet release];
+	[batchNode release];
 	[super dealloc];
 }
 
@@ -178,8 +178,8 @@ Class restartAction()
 		case 2:
 		case 3: 
 		case 4: {
-			sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(0, 0, 52, 139)];
-			[sheet addChild:sprite z:0 tag:tag+100];
+			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(0, 0, 52, 139)];
+			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 
@@ -202,8 +202,8 @@ Class restartAction()
 
 			x *= 85;
 			y *= 121;
-			sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(x,y,85,121)];
-			[sheet addChild:sprite z:0 tag:tag+100];
+			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(x,y,85,121)];
+			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 
@@ -232,8 +232,8 @@ Class restartAction()
 			
 			x *= 32;
 			y *= 32;
-			sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(x,y,32,32)];
-			[sheet addChild:sprite z:0 tag:tag+100];
+			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(x,y,32,32)];
+			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
 			
@@ -263,8 +263,8 @@ Class restartAction()
 		case 10:
 		case 11:
 		case 12:
-			[sheet removeChildAtIndex:tag cleanup:YES];
-//			[sheet removeChildByTag:tag+100 cleanup:YES];
+			[batchNode removeChildAtIndex:tag cleanup:YES];
+//			[batchNode removeChildByTag:tag+100 cleanup:YES];
 			break;
 		default:
 			break;

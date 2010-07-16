@@ -34,7 +34,7 @@
 
 
 @implementation ActionLayer
-@synthesize spriteSheet = _spriteSheet;
+@synthesize batchNode = _batchNode;
 @synthesize level_bkgrnd = _level_bkgrnd;
 @synthesize player = _player;
 @synthesize monsters = _monsters;
@@ -56,14 +56,14 @@ SimpleAudioEngine *soundEngine;
         self.projectiles = [[[NSMutableArray alloc] init] autorelease];
         
         // Add a sprite sheet based on the loaded texture and add it to the scene
-        self.spriteSheet = [CCSpriteSheet spriteSheetWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
-        [self addChild:_spriteSheet z:-1];
+        self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
+        [self addChild:_batchNode z:-1];
         
         // Add main background to scene
         CGSize winSize = [CCDirector sharedDirector].winSize;
         self.level_bkgrnd = [CCSprite spriteWithSpriteFrameName:@"Level_bkgrnd.png"];
         _level_bkgrnd.position = ccp(winSize.width/2, winSize.height/2);
-        [_spriteSheet addChild:_level_bkgrnd];
+        [_batchNode addChild:_level_bkgrnd];
         
         // Add tom to the scene
         static int TOM_LEFT_MARGIN = 80;
@@ -85,11 +85,11 @@ SimpleAudioEngine *soundEngine;
     
     // Clear out old monsters/projectiles
     for (CCSprite *monster in _monsters) {
-        [_spriteSheet removeChild:monster cleanup:YES];
+        [_batchNode removeChild:monster cleanup:YES];
     }
     [_monsters removeAllObjects];    
     for (CCSprite *projectile in _projectiles) {
-        [_spriteSheet removeChild:projectile cleanup:YES];
+        [_batchNode removeChild:projectile cleanup:YES];
     }
     [_projectiles removeAllObjects];
     
@@ -156,7 +156,7 @@ SimpleAudioEngine *soundEngine;
             // Remove the monster if it's dead
             if (monster.hp <= 0) {
                 [_monsters removeObject:monster];
-                [_spriteSheet removeChild:monster cleanup:YES];									
+                [_batchNode removeChild:monster cleanup:YES];									
             }
             
             // Add the projectile to the list to delete
@@ -166,7 +166,7 @@ SimpleAudioEngine *soundEngine;
 	
 	for (CCSprite *projectile in projectilesToDelete) {
 		[_projectiles removeObject:projectile];
-		[_spriteSheet removeChild:projectile cleanup:YES];
+		[_batchNode removeChild:projectile cleanup:YES];
 	}
 	[projectilesToDelete release];
 }
@@ -183,7 +183,7 @@ SimpleAudioEngine *soundEngine;
 	// Create the monster slightly off-screen along the right edge,
 	// and along a random position along the Y axis as calculated above
 	monster.position = ccp(winSize.width + (monster.contentSize.width/2), actualY);
-	[_spriteSheet addChild:monster z:1];
+	[_batchNode addChild:monster z:1];
 	
 	// Determine speed of the monster
 	int minDuration = monster.minMoveDuration; //2.0;
@@ -319,7 +319,7 @@ SimpleAudioEngine *soundEngine;
     
     // Ok to add now - we've finished rotation!
     _nextProjectile.position = [_player convertToWorldSpace:ccp(_player.contentSize.width, _player.contentSize.height/2)];
-    [_spriteSheet addChild:_nextProjectile z:1];
+    [_batchNode addChild:_nextProjectile z:1];
     [_projectiles addObject:_nextProjectile];
     
     // Release
@@ -332,7 +332,7 @@ SimpleAudioEngine *soundEngine;
     
     if (!_inLevel) return;
 	CCSprite *sprite = (CCSprite *)sender;
-	[_spriteSheet removeChild:sprite cleanup:YES];
+	[_batchNode removeChild:sprite cleanup:YES];
 	
 	if (sprite.tag == 1) { // monster
 		[_monsters removeObject:sprite];
