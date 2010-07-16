@@ -178,6 +178,7 @@ static CCScheduler *sharedScheduler;
 +(void)purgeSharedScheduler
 {
 	[sharedScheduler release];
+	sharedScheduler = nil;
 }
 
 - (id) init

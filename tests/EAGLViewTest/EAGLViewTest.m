@@ -100,14 +100,20 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
-	[[CCDirector sharedDirector] end];
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director openGLView] removeFromSuperview];
+	[director end];
+	
+	// release glView here, else it won't be dealloced
+	[glView_ release];
+	glView_ = nil;
 }
 
 #pragma mark -
 #pragma mark Init
 -(void) dealloc
 {
-	[glView_ release];
+//	[glView_ release];
 	[window_ release];
 	[super dealloc];
 }

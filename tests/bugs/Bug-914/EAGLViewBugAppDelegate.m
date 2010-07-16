@@ -14,16 +14,13 @@
 @implementation EAGLViewBugAppDelegate
 
 @synthesize window;
+@synthesize viewController=bugViewController;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// cocos2d will inherit these values
-	[window setUserInteractionEnabled:YES];	
-	[window setMultipleTouchEnabled:YES];
-	
+		
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use the default director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
@@ -37,7 +34,7 @@
 	viewController.wantsFullScreenLayout = YES;
 	
 	// Create the EAGLView manually
-	EAGLView *glView = [[EAGLView alloc] initWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 										   pixelFormat:kEAGLColorFormatRGBA8
 										   depthFormat:GL_DEPTH_COMPONENT24_OES
 									preserveBackbuffer:NO];
@@ -48,9 +45,9 @@
 //	[director setContentScaleFactor:2];
 	
 	//
-	// IMPORTANT:
+	// VERY IMPORTANT:
 	// If the rotation is going to be controlled by a UIViewController
-	// then the device orientation should be "Portrait"
+	// then the device orientation should be "Portrait".
 	//
 	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
 	
@@ -59,15 +56,14 @@
 	
 	
 	
-	
 	// make the OpenGLView a child of the view controller
 	[viewController.view addSubview:glView];
-	
+
 	// make the View Controller a child of the main window
 	[window addSubview: viewController.view];
-	
+
 	[window makeKeyAndVisible];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -77,7 +73,7 @@
 	[director setDisplayFPS:YES];
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];
+	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];	
 }
 
 
@@ -94,7 +90,20 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	[[CCDirector sharedDirector] end];
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[[director openGLView] removeFromSuperview];
+
+	[viewController release];
+
+	[window release];
+	
+	[director end];
+	
+	// BUG: The view controller is not released... why ?
+	NSLog(@"viewController rc:%d", [viewController retainCount] );
+
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {
