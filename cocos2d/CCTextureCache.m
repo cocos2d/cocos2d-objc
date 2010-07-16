@@ -27,6 +27,7 @@
 #import "CCTexture2D.h"
 #import "ccMacros.h"
 #import "CCDirector.h"
+#import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
 
 static EAGLContext *auxEAGLcontext = nil;
@@ -216,7 +217,9 @@ static CCTextureCache *sharedTextureCache;
 			tex = [self addPVRTCImage:fullpath];
 		
 		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-		else if ( [lowerCase hasSuffix:@".jpg"] || [lowerCase hasSuffix:@".jpeg"]) {
+		else if ( ( [[CCConfiguration sharedConfiguration] iOSVersion] >= kCCiOSVersion_4_0) &&
+				  ( [lowerCase hasSuffix:@".jpg"] || [lowerCase hasSuffix:@".jpeg"] ) 
+				 ) {
 			// convert jpg to png before loading the texture
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
@@ -234,16 +237,10 @@ static CCTextureCache *sharedTextureCache;
 
 		else {
 
-//# work around for issue #910
-#if 0
-			UIImage *image = [UIImage imageNamed:path];
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
-#else
 			// prevents overloading the autorelease pool
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
 			[image release];
-#endif //
 
 			if( tex )
 				[textures setObject: tex forKey:path];

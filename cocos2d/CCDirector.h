@@ -32,7 +32,9 @@
 #import "Support/EAGLView.h"
 
 /** @typedef tPixelFormat
- Possible Pixel Formats for the EAGLView
+ Possible Pixel Formats for the EAGLView.
+ 
+ @deprecated Will be removed in v1.0
  */
 typedef enum {
 	/** RGB565 pixel format. No alpha. 16-bit. (Default) */
@@ -52,6 +54,8 @@ typedef enum {
 /** @typedef tDepthBufferFormat
  Possible DepthBuffer Formats for the EAGLView.
  Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
+ 
+ @deprecated Will be removed in v1.0
  */
 typedef enum {
 	/// A Depth Buffer of 0 bits will be used (default)
@@ -140,7 +144,7 @@ typedef enum {
 	CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
 	CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
 	CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
-	CCDirectorTypeDefault =kCCDirectorTypeDefault,
+	CCDirectorTypeDefault = kCCDirectorTypeDefault,
 
 
 } ccDirectorType;
@@ -266,7 +270,9 @@ and when to execute the Scenes.
 @property (nonatomic,readonly) tPixelFormat pixelFormat DEPRECATED_ATTRIBUTE;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
-/** The device orientattion */
+/** The device orientation.
+ If the EAGLView is going to be controlled by an UIViewController, then set the CCDirector orientation to portrait.
+ */
 @property (nonatomic,readwrite) ccDeviceOrientation deviceOrientation;
 /** Whether or not the Director is paused */
 @property (nonatomic,readonly) BOOL isPaused;
