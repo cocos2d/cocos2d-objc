@@ -13,48 +13,48 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 			@"Sprite1",
-			@"SpriteSheet1",
+			@"SpriteBatchNode1",
 			@"SpriteFrameTest",
 			@"SpriteAnchorPoint",
-			@"SpriteSheetAnchorPoint",
+			@"SpriteBatchNodeAnchorPoint",
 			@"SpriteOffsetAnchorRotation",
-			@"SpriteSheetOffsetAnchorRotation",
+			@"SpriteBatchNodeOffsetAnchorRotation",
 			@"SpriteOffsetAnchorScale",
-			@"SpriteSheetOffsetAnchorScale",
+			@"SpriteBatchNodeOffsetAnchorScale",
 			@"SpriteAnimationSplit",
 			@"SpriteColorOpacity",
-			@"SpriteSheetColorOpacity",
+			@"SpriteBatchNodeColorOpacity",
 			@"SpriteZOrder",
-			@"SpriteSheetZOrder",
-			@"SpriteSheetReorder",
-			@"SpriteSheetReorderIssue744",
-			@"SpriteSheetReorderIssue767",
+			@"SpriteBatchNodeZOrder",
+			@"SpriteBatchNodeReorder",
+			@"SpriteBatchNodeReorderIssue744",
+			@"SpriteBatchNodeReorderIssue767",
 			@"SpriteZVertex",
-			@"SpriteSheetZVertex",
+			@"SpriteBatchNodeZVertex",
 			@"Sprite6",
 			@"SpriteFlip",
-			@"SpriteSheetFlip",
+			@"SpriteBatchNodeFlip",
 			@"SpriteAliased",
-			@"SpriteSheetAliased",
+			@"SpriteBatchNodeAliased",
 			@"SpriteNewTexture",
-			@"SpriteSheetNewTexture",
+			@"SpriteBatchNodeNewTexture",
 			@"SpriteHybrid",
-			@"SpriteSheetChildren",
-			@"SpriteSheetChildren2",
-			@"SpriteSheetChildrenZ",
+			@"SpriteBatchNodeChildren",
+			@"SpriteBatchNodeChildren2",
+			@"SpriteBatchNodeChildrenZ",
 			@"SpriteChildrenVisibility",
 			@"SpriteChildrenAnchorPoint",
-			@"SpriteSheetChildrenAnchorPoint",
-			@"SpriteSheetChildrenScale",
+			@"SpriteBatchNodeChildrenAnchorPoint",
+			@"SpriteBatchNodeChildrenScale",
 			@"SpriteChildrenChildren",
-			@"SpriteSheetChildrenChildren",
+			@"SpriteBatchNodeChildrenChildren",
 			@"SpriteNilTexture",
 			@"SpriteSubclass",
 };
 
 enum {
 	kTagTileMap = 1,
-	kTagSpriteSheet = 1,
+	kTagSpriteBatchNode = 1,
 	kTagNode = 2,
 	kTagAnimation1 = 1,
 	kTagSpriteLeft,
@@ -112,7 +112,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 			
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
@@ -244,7 +244,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheet1
+@implementation SpriteBatchNode1
 
 -(id) init
 {
@@ -252,8 +252,8 @@ Class restartAction()
 		
 		self.isTouchEnabled = YES;
 
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
@@ -264,15 +264,15 @@ Class restartAction()
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 
-	CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(x,y,85,121)];
-	[sheet addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(x,y,85,121)];
+	[batch addChild:sprite];
 
 	sprite.position = ccp( p.x, p.y);
 
@@ -308,7 +308,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet (tap screen)";
+	return @"SpriteBatchNode (tap screen)";
 }
 @end
 
@@ -400,7 +400,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetColorOpacity
+@implementation SpriteBatchNodeColorOpacity
 
 -(id) init
 {
@@ -408,18 +408,18 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];		
 		
-		CCSprite *sprite1 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
-		CCSprite *sprite3 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
-		CCSprite *sprite4 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
+		CCSprite *sprite1 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+		CCSprite *sprite2 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite3 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
+		CCSprite *sprite4 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
 		
-		CCSprite *sprite5 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
-		CCSprite *sprite6 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
-		CCSprite *sprite7 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
-		CCSprite *sprite8 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
+		CCSprite *sprite5 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+		CCSprite *sprite6 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite7 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*2, 121*1, 85, 121)];
+		CCSprite *sprite8 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*3, 121*1, 85, 121)];
 		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -455,14 +455,14 @@ Class restartAction()
 		[sprite8 runAction:fade];
 		
 		// late add: test dirtyColor and dirtyPosition
-		[sheet addChild:sprite1 z:0 tag:kTagSprite1];
-		[sheet addChild:sprite2 z:0 tag:kTagSprite2];
-		[sheet addChild:sprite3 z:0 tag:kTagSprite3];
-		[sheet addChild:sprite4 z:0 tag:kTagSprite4];
-		[sheet addChild:sprite5 z:0 tag:kTagSprite5];
-		[sheet addChild:sprite6 z:0 tag:kTagSprite6];
-		[sheet addChild:sprite7 z:0 tag:kTagSprite7];
-		[sheet addChild:sprite8 z:0 tag:kTagSprite8];
+		[batch addChild:sprite1 z:0 tag:kTagSprite1];
+		[batch addChild:sprite2 z:0 tag:kTagSprite2];
+		[batch addChild:sprite3 z:0 tag:kTagSprite3];
+		[batch addChild:sprite4 z:0 tag:kTagSprite4];
+		[batch addChild:sprite5 z:0 tag:kTagSprite5];
+		[batch addChild:sprite6 z:0 tag:kTagSprite6];
+		[batch addChild:sprite7 z:0 tag:kTagSprite7];
+		[batch addChild:sprite8 z:0 tag:kTagSprite8];
 		
 		
 		[self schedule:@selector(removeAndAddSprite:) interval:2];
@@ -475,20 +475,20 @@ Class restartAction()
 //   color array and vertex array should be reindexed
 -(void) removeAndAddSprite:(ccTime) dt
 {
-	id sheet = [self getChildByTag:kTagSpriteSheet];
-	id sprite = [sheet getChildByTag:kTagSprite5];
+	id batch = [self getChildByTag:kTagSpriteBatchNode];
+	id sprite = [batch getChildByTag:kTagSprite5];
 	
 	[sprite retain];
 
-	[sheet removeChild:sprite cleanup:NO];
-	[sheet addChild:sprite z:0 tag:kTagSprite5];
+	[batch removeChild:sprite cleanup:NO];
+	[batch addChild:sprite z:0 tag:kTagSprite5];
 	
 	[sprite release];
 }
 
 -(NSString *) title
 {
-	return @"SpriteSheet: Color & Opacity";
+	return @"SpriteBatchNode: Color & Opacity";
 }
 @end
 
@@ -552,7 +552,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetZOrder
+@implementation SpriteBatchNodeZOrder
 
 -(id) init
 {
@@ -562,26 +562,26 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		float step = s.width/11;
 		for(int i=0;i<5;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp( (i+1)*step, s.height/2);
-			[sheet addChild:sprite z:i];
+			[batch addChild:sprite z:i];
 		}
 		
 		for(int i=5;i<10;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( (i+1)*step, s.height/2);
-			[sheet addChild:sprite z:14-i];
+			[batch addChild:sprite z:14-i];
 		}
 		
-		CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*3, 121*0, 85, 121)];
-		[sheet addChild:sprite z:-1 tag:kTagSprite1];
+		CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*3, 121*0, 85, 121)];
+		[batch addChild:sprite z:-1 tag:kTagSprite1];
 		sprite.position = ccp(s.width/2, s.height/2 - 20);
 		sprite.scaleX = 6;
 		[sprite setColor:ccRED];
@@ -593,8 +593,8 @@ Class restartAction()
 
 -(void) reorderSprite:(ccTime) dt
 {
-	id sheet = [self getChildByTag:kTagSpriteSheet];
-	id sprite = [sheet getChildByTag:kTagSprite1];
+	id batch = [self getChildByTag:kTagSpriteBatchNode];
+	id sprite = [batch getChildByTag:kTagSprite1];
 	
 	int z = [sprite zOrder];
 	
@@ -605,28 +605,28 @@ Class restartAction()
 	
 	z += dir * 3;
 
-	[sheet reorderChild:sprite z:z];
+	[batch reorderChild:sprite z:z];
 	
 }
 
 -(NSString *) title
 {
-	return @"SpriteSheet: Z order";
+	return @"SpriteBatchNode: Z order";
 }
 @end
 
-@implementation SpriteSheetReorder
+@implementation SpriteBatchNodeReorder
 
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
 		NSMutableArray* a = [NSMutableArray arrayWithCapacity:10];
-		CCSpriteSheet* asmtest = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		CCSpriteBatchNode* asmtest = [CCSpriteBatchNode batchNodeWithFile:@"animations/ghosts.png"];
 		
 		for(int i=0; i<10; i++)
 		{
-			CCSprite* s1 = [CCSprite spriteWithSpriteSheet:asmtest rect:CGRectMake(0, 0, 50, 50)];
+			CCSprite* s1 = [CCSprite spriteWithBatchNode:asmtest rect:CGRectMake(0, 0, 50, 50)];
 			[a addObject:s1];
 			[asmtest addChild:s1 z:10];
 		}
@@ -660,7 +660,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet: reorder #1";
+	return @"SpriteBatchNode: reorder #1";
 }
 -(NSString *) subtitle
 {
@@ -668,7 +668,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetReorderIssue744
+@implementation SpriteBatchNodeReorderIssue744
 
 -(id) init
 {
@@ -679,20 +679,20 @@ Class restartAction()
 
 		// Testing issue #744
 		// http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:15];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:15];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];		
 
-		CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(0, 0, 85, 121)];
+		CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(0, 0, 85, 121)];
 		sprite.position = ccp(s.width/2, s.height/2);
-		[sheet addChild:sprite z:3];
-		[sheet reorderChild:sprite z:1];
+		[batch addChild:sprite z:3];
+		[batch reorderChild:sprite z:1];
 	}	
 	return self;
 }
 
 -(NSString *) title
 {
-	return @"SpriteSheet: reorder issue #744";
+	return @"SpriteBatchNode: reorder issue #744";
 }
 
 -(NSString *) subtitle
@@ -701,7 +701,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetReorderIssue767
+@implementation SpriteBatchNodeReorderIssue767
 
 -(id) init
 {
@@ -715,10 +715,10 @@ Class restartAction()
 		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
 		
 		//
-		// SpriteSheet: 3 levels of children
+		// SpriteBatchNode: 3 levels of children
 		//
 		
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/ghosts.png"];
 		[self addChild:aParent z:0 tag:kTagSprite1];
 		
 		// parent
@@ -772,7 +772,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet: reorder issue #767";
+	return @"SpriteBatchNode: reorder issue #767";
 }
 
 -(NSString *) subtitle
@@ -782,8 +782,8 @@ Class restartAction()
 
 -(void) reorderSprites:(ccTime)dt
 {
-	id spritesheet = [self getChildByTag:kTagSprite1];
-	CCSprite *father = (CCSprite*)[spritesheet getChildByTag:kTagSprite2];
+	id spritebatch = [self getChildByTag:kTagSprite1];
+	CCSprite *father = (CCSprite*)[spritebatch getChildByTag:kTagSprite2];
 	CCSprite *left = (CCSprite*)[father getChildByTag:kTagSpriteLeft];
 	CCSprite *right = (CCSprite*)[father getChildByTag:kTagSpriteRight];
 
@@ -873,7 +873,7 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetZVertex
+@implementation SpriteBatchNodeZVertex
 
 -(void) onEnter
 {
@@ -912,38 +912,38 @@ Class restartAction()
 		
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:1];
 		// camera uses the center of the image as the pivoting point
-		[sheet setContentSize:CGSizeMake(s.width,s.height)];
-		[sheet setAnchorPoint:ccp(0.5f, 0.5f)];
-		[sheet setPosition:ccp(s.width/2, s.height/2)];
+		[batch setContentSize:CGSizeMake(s.width,s.height)];
+		[batch setAnchorPoint:ccp(0.5f, 0.5f)];
+		[batch setPosition:ccp(s.width/2, s.height/2)];
 		
 
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];		
 		
 		for(int i=0;i<5;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp( (i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + i*40;
-			[sheet addChild:sprite z:0];
+			[batch addChild:sprite z:0];
 			
 		}
 		
 		for(int i=5;i<11;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( (i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
-			[sheet addChild:sprite z:0];
+			[batch addChild:sprite z:0];
 		}
 		
-		[sheet runAction:[CCOrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
+		[batch runAction:[CCOrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
 	}	
 	return self;
 }
 
 -(NSString *) title
 {
-	return @"SpriteSheet: openGL Z vertex";
+	return @"SpriteBatchNode: openGL Z vertex";
 }
 @end
 
@@ -999,15 +999,15 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetAnchorPoint
+@implementation SpriteBatchNodeAnchorPoint
 -(id) init
 {
 	if( (self=[super init]) ) {
 
 		// small capacity. Testing resizing.
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];		
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
@@ -1015,7 +1015,7 @@ Class restartAction()
 		id rotate = [CCRotateBy actionWithDuration:10 angle:360];
 		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
 			sprite.position = ccp( s.width/4*(i+1), s.height/2);
 			
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
@@ -1039,7 +1039,7 @@ Class restartAction()
 			
 			id copy = [[action copy] autorelease];
 			[sprite runAction:copy];
-			[sheet addChild:sprite z:i];
+			[batch addChild:sprite z:i];
 		}		
 	}	
 	return self;
@@ -1047,7 +1047,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet: anchor point";
+	return @"SpriteBatchNode: anchor point";
 }
 @end
 
@@ -1061,21 +1061,21 @@ Class restartAction()
 		
 		// small capacity. Testing resizing
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:1];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
-		sheet.isRelativeAnchorPoint = NO;
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:1];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
+		batch.isRelativeAnchorPoint = NO;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		sheet.anchorPoint = ccp(0.5f, 0.5f);
-		sheet.contentSize = CGSizeMake(s.width, s.height);
+		batch.anchorPoint = ccp(0.5f, 0.5f);
+		batch.contentSize = CGSizeMake(s.width, s.height);
 		
 		
-		// SpriteSheet actions
+		// SpriteBatchNode actions
 		id rotate = [CCRotateBy actionWithDuration:5 angle:360];
 		id action = [CCRepeatForever actionWithAction:rotate];
 
-		// SpriteSheet actions
+		// SpriteBatchNode actions
 		id rotate_back = [rotate reverse];
 		id rotate_seq = [CCSequence actions:rotate, rotate_back, nil];
 		id rotate_forever = [CCRepeatForever actionWithAction:rotate_seq];
@@ -1088,21 +1088,21 @@ Class restartAction()
 		float step = s.width/4;
 
 		for(int i=0;i<3;i++) {
-			CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
+			CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*i, 121*1, 85, 121)];
 			sprite.position = ccp( (i+1)*step, s.height/2);
 
 			[sprite runAction: [[action copy] autorelease]];
-			[sheet addChild:sprite z:i];
+			[batch addChild:sprite z:i];
 		}
 		
-		[sheet runAction: scale_forever];
-		[sheet runAction: rotate_forever];
+		[batch runAction: scale_forever];
+		[batch runAction: rotate_forever];
 	}	
 	return self;
 }
 -(NSString*) title
 {
-	return @"SpriteSheet transformation";
+	return @"SpriteBatchNode transformation";
 }
 @end
 
@@ -1145,23 +1145,23 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetFlip
+@implementation SpriteBatchNodeFlip
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:10];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		CCSprite *sprite1 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite1 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
-		[sheet addChild:sprite1 z:0 tag:kTagSprite1];
+		[batch addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite2 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
-		[sheet addChild:sprite2 z:0 tag:kTagSprite2];
+		[batch addChild:sprite2 z:0 tag:kTagSprite2];
 		
 		[self schedule:@selector(flipSprites:) interval:1];
 	}	
@@ -1169,9 +1169,9 @@ Class restartAction()
 }
 -(void) flipSprites:(ccTime)dt
 {
-	id sheet = [self getChildByTag:kTagSpriteSheet];
-	id sprite1 = [sheet getChildByTag:kTagSprite1];
-	id sprite2 = [sheet getChildByTag:kTagSprite2];
+	id batch = [self getChildByTag:kTagSpriteBatchNode];
+	id sprite1 = [batch getChildByTag:kTagSprite1];
+	id sprite2 = [batch getChildByTag:kTagSprite2];
 	
 	BOOL x = [sprite1 flipX];
 	BOOL y = [sprite2 flipY];
@@ -1181,7 +1181,7 @@ Class restartAction()
 }
 -(NSString*) title
 {
-	return @"SpriteSheet Flip X & Y";
+	return @"SpriteBatchNode Flip X & Y";
 }
 @end
 
@@ -1243,23 +1243,23 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetAliased
+@implementation SpriteBatchNodeAliased
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:10];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:10];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		CCSprite *sprite1 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite1 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite1.position = ccp( s.width/2 - 100, s.height/2 );
-		[sheet addChild:sprite1 z:0 tag:kTagSprite1];
+		[batch addChild:sprite1 z:0 tag:kTagSprite1];
 		
-		CCSprite *sprite2 = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
+		CCSprite *sprite2 = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(85*1, 121*1, 85, 121)];
 		sprite2.position = ccp( s.width/2 + 100, s.height/2 );
-		[sheet addChild:sprite2 z:0 tag:kTagSprite2];
+		[batch addChild:sprite2 z:0 tag:kTagSprite2];
 		
 		id scale = [CCScaleBy actionWithDuration:2 scale:5];
 		id scale_back = [scale reverse];
@@ -1277,26 +1277,26 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
-	[sheet.texture setAliasTexParameters];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
+	[batch.texture setAliasTexParameters];
 }
 
 -(void) onExit
 {
 	// restore the tex parameter to AntiAliased.
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
-	[sheet.texture setAntiAliasTexParameters];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
+	[batch.texture setAntiAliasTexParameters];
 	[super onExit];
 }
 
 -(NSString*) title
 {
-	return @"SpriteSheet Aliased";
+	return @"SpriteBatchNode Aliased";
 }
 @end
 
 #pragma mark -
-#pragma mark Example SpriteSheet NewTexture
+#pragma mark Example SpriteBatchNode NewTexture
 
 @implementation SpriteNewTexture
 
@@ -1307,7 +1307,7 @@ Class restartAction()
 		isTouchEnabled = YES;
 		
 		CCNode *node = [CCNode node];
-		[self addChild:node z:0 tag:kTagSpriteSheet];
+		[self addChild:node z:0 tag:kTagSpriteBatchNode];
 
 		texture1 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"] retain];
 		texture2 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas-mono.png"] retain];
@@ -1339,7 +1339,7 @@ Class restartAction()
 	int y = (idx/5) * 121;
 	
 	
-	CCNode *node = [self getChildByTag:kTagSpriteSheet];
+	CCNode *node = [self getChildByTag:kTagSpriteBatchNode];
 	CCSprite *sprite = [CCSprite spriteWithTexture:texture1 rect:CGRectMake(x,y,85,121)];
 	[node addChild:sprite];
 	
@@ -1367,7 +1367,7 @@ Class restartAction()
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 
-	CCNode *node = [self getChildByTag:kTagSpriteSheet];
+	CCNode *node = [self getChildByTag:kTagSpriteBatchNode];
 	if( usingTexture1 ) {
 		for( CCSprite* sprite in node.children)
 			[sprite setTexture:texture2];
@@ -1385,17 +1385,17 @@ Class restartAction()
 }
 @end
 
-@implementation SpriteSheetNewTexture
+@implementation SpriteBatchNodeNewTexture
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
 		isTouchEnabled = YES;
 		
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:50];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
-		texture1 = [[sheet texture] retain];
+		texture1 = [[batch texture] retain];
 		texture2 = [[[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas-mono.png"] retain];
 		
 		for(int i=0;i<30;i++)
@@ -1418,15 +1418,15 @@ Class restartAction()
 	
 	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 	
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 	
-	CCSprite *sprite = [CCSprite spriteWithTexture:sheet.texture rect:CGRectMake(x,y,85,121)];
-	[sheet addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(x,y,85,121)];
+	[batch addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -1451,23 +1451,23 @@ Class restartAction()
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
 	
-	if( [sheet texture] == texture1 )
-		[sheet setTexture:texture2];
+	if( [batch texture] == texture1 )
+		[batch setTexture:texture2];
 	else
-		[sheet setTexture:texture1];	
+		[batch setTexture:texture1];	
 }
 
 -(NSString *) title
 {
-	return @"SpriteSheet new texture (tap)";
+	return @"SpriteBatchNode new texture (tap)";
 }
 @end
 
 
 #pragma mark -
-#pragma mark Example Sprite vs SpriteSheet Animation
+#pragma mark Example Sprite vs SpriteBatchNode Animation
 
 @implementation SpriteFrameTest
 
@@ -1489,25 +1489,25 @@ Class restartAction()
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_blue.plist"];
 
 		//
-		// Animation using Sprite Sheet
+		// Animation using Sprite batch
 		//
-		// A CCSpriteSheet can reference one and only one texture (one .png file)
-		// Sprites that are contained in that texture can be instantiatied as CCSprites and then added to the CCSpriteSheet
-		// All CCSprites added to a CCSpriteSheet are drawn in one OpenGL ES draw call
-		// If the CCSprites are not added to a CCSpriteSheet then an OpenGL ES draw call will be needed for each one, which is less efficient
+		// A CCSpriteBatchNode can reference one and only one texture (one .png file)
+		// Sprites that are contained in that texture can be instantiatied as CCSprites and then added to the CCSpriteBatchNode
+		// All CCSprites added to a CCSpriteBatchNode are drawn in one OpenGL ES draw call
+		// If the CCSprites are not added to a CCSpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
 		//
 		// When you animate a sprite, CCAnimation changes the frame of the sprite using setDisplayFrame: (this is why the animation must be in the same texture)
 		// When setDisplayFrame: is used in the CCAnimation it changes the frame to one specified by the CCSpriteFrames that were added to the animation,
-		// but texture id is still the same and so the sprite is still a child of the CCSpriteSheet, 
-		// and therefore all the animation sprites are also drawn as part of the CCSpriteSheet
+		// but texture id is still the same and so the sprite is still a child of the CCSpriteBatchNode, 
+		// and therefore all the animation sprites are also drawn as part of the CCSpriteBatchNode
 		//
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		sprite1.position = ccp( s.width/2-80, s.height/2);
 		
-		CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
-		[spritesheet addChild:sprite1];
-		[self addChild:spritesheet];
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png"];
+		[spritebatch addChild:sprite1];
+		[self addChild:spritebatch];
 
 		NSMutableArray *animFrames = [NSMutableArray array];
 		for(int i = 1; i < 15; i++) {
@@ -1544,7 +1544,7 @@ Class restartAction()
 			[moreFrames addObject:frame];
 		}
 		
-		// append frames from another sheet
+		// append frames from another batch
 		[moreFrames addObjectsFromArray:animFrames];
 		CCAnimation *animMixed = [CCAnimation animationWithName:@"dance" frames:moreFrames];
 		
@@ -1610,7 +1610,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite vs. SpriteSheet animation";
+	return @"Sprite vs. SpriteBatchNode animation";
 }
 
 -(NSString*) subtitle
@@ -1635,7 +1635,7 @@ Class restartAction()
 			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
 			
 			//
-			// Animation using Sprite Sheet
+			// Animation using Sprite batch
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( s.width/4*(i+1), s.height/2);
@@ -1690,9 +1690,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Example SpriteSheetOffsetAnchorRotation
+#pragma mark Example SpriteBatchNodeOffsetAnchorRotation
 
-@implementation SpriteSheetOffsetAnchorRotation
+@implementation SpriteBatchNodeOffsetAnchorRotation
 
 -(id) init
 {
@@ -1705,7 +1705,7 @@ Class restartAction()
 			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
 			
 			//
-			// Animation using Sprite Sheet
+			// Animation using Sprite batch
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( s.width/4*(i+1), s.height/2);
@@ -1729,8 +1729,8 @@ Class restartAction()
 			
 			point.position = sprite.position;
 			
-			CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
-			[self addChild:spritesheet];
+			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png"];
+			[self addChild:spritebatch];
 			
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
@@ -1742,7 +1742,7 @@ Class restartAction()
 			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
 			[sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:10 angle:360]]];
 			
-			[spritesheet addChild:sprite z:i];
+			[spritebatch addChild:sprite z:i];
 		}		
 	}	
 	return self;
@@ -1757,7 +1757,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet offset + anchor + rot";
+	return @"SpriteBatchNode offset + anchor + rot";
 }
 @end
 
@@ -1777,7 +1777,7 @@ Class restartAction()
 			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
 			
 			//
-			// Animation using Sprite Sheet
+			// Animation using Sprite batch
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( s.width/4*(i+1), s.height/2);
@@ -1835,9 +1835,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Example SpriteSheetOffsetAnchorScale
+#pragma mark Example SpriteBatchNodeOffsetAnchorScale
 
-@implementation SpriteSheetOffsetAnchorScale
+@implementation SpriteBatchNodeOffsetAnchorScale
 
 -(id) init
 {
@@ -1850,7 +1850,7 @@ Class restartAction()
 			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
 			
 			//
-			// Animation using Sprite Sheet
+			// Animation using Sprite batch
 			//
 			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			sprite.position = ccp( s.width/4*(i+1), s.height/2);
@@ -1874,8 +1874,8 @@ Class restartAction()
 			
 			point.position = sprite.position;
 			
-			CCSpriteSheet *spritesheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png"];
-			[self addChild:spritesheet];
+			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png"];
+			[self addChild:spritebatch];
 			
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
@@ -1891,7 +1891,7 @@ Class restartAction()
 			id seq_scale = [CCSequence actions:scale, scale_back, nil];
 			[sprite runAction:[CCRepeatForever actionWithAction:seq_scale]];
 			
-			[spritesheet addChild:sprite z:i];
+			[spritebatch addChild:sprite z:i];
 		}		
 	}	
 	return self;
@@ -1906,7 +1906,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet offset + anchor + scale";
+	return @"SpriteBatchNode offset + anchor + scale";
 }
 @end
 
@@ -1934,7 +1934,7 @@ Class restartAction()
 		
 		
 		//
-		// Animation using Sprite Sheet
+		// Animation using Sprite batch
 		//
 		CCSprite *sprite = [CCSprite spriteWithSpriteFrame:frame0];
 		sprite.position = ccp( s.width/2-80, s.height/2);
@@ -1987,10 +1987,10 @@ Class restartAction()
 
 		// parents
 		CCNode *parent1 = [CCNode node];
-		CCSpriteSheet *parent2 = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		CCSpriteBatchNode *parent2 = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
 		
 		[self addChild:parent1 z:0 tag:kTagNode];
-		[self addChild:parent2 z:0 tag:kTagSpriteSheet];
+		[self addChild:parent2 z:0 tag:kTagSpriteBatchNode];
 		
 		
 		// IMPORTANT:
@@ -2020,7 +2020,7 @@ Class restartAction()
 			[sprite runAction: [CCRepeatForever actionWithAction:action]];
 		}
 		
-		usingSpriteSheet = NO;
+		usingSpriteBatchNode = NO;
 		
 		
 		[self schedule:@selector(reparentSprite:) interval:2];
@@ -2031,12 +2031,12 @@ Class restartAction()
 -(void) reparentSprite:(ccTime)dt
 {
 	CCNode *p1 = [self getChildByTag:kTagNode];
-	CCNode *p2 = [self getChildByTag:kTagSpriteSheet];
+	CCNode *p2 = [self getChildByTag:kTagSpriteBatchNode];
 	
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:30];
 	
 
-	if( usingSpriteSheet )
+	if( usingSpriteBatchNode )
 		CC_SWAP(p1,p2);
 
 	NSLog(@"New parent is: %@", p2);
@@ -2054,7 +2054,7 @@ Class restartAction()
 		i++;
 	}		
 	
-	usingSpriteSheet = ! usingSpriteSheet;
+	usingSpriteBatchNode = ! usingSpriteBatchNode;
 }
 
 - (void) dealloc
@@ -2070,9 +2070,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark SpriteSheet Children
+#pragma mark SpriteBatchNode Children
 
-@implementation SpriteSheetChildren
+@implementation SpriteBatchNodeChildren
 
 -(id) init
 {
@@ -2081,9 +2081,9 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// parents
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
 		
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
@@ -2096,7 +2096,7 @@ Class restartAction()
 		CCSprite *sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-50,-50)];
 		
-		[sheet addChild:sprite1];
+		[batch addChild:sprite1];
 		[sprite1 addChild:sprite2];
 		[sprite1 addChild:sprite3];
 		
@@ -2137,14 +2137,14 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet Grand Children";
+	return @"SpriteBatchNode Grand Children";
 }
 @end
 
 #pragma mark -
-#pragma mark SpriteSheet Children2
+#pragma mark SpriteBatchNode Children2
 
-@implementation SpriteSheetChildren2
+@implementation SpriteBatchNodeChildren2
 
 -(id) init
 {
@@ -2153,10 +2153,10 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// parents
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
-		[sheet.texture generateMipmap];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
+		[batch.texture generateMipmap];
 		
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
 		
@@ -2172,7 +2172,7 @@ Class restartAction()
 		[sprite13 setPosition:ccp(-20,30)];
 		sprite13.scale = 0.2f;
 		
-		[sheet addChild:sprite11];
+		[batch addChild:sprite11];
 		[sprite11 addChild:sprite12 z:-2];
 		[sprite11 addChild:sprite13 z:2];
 
@@ -2207,7 +2207,7 @@ Class restartAction()
 		[sprite23 setPosition:ccp(-20,30)];
 		sprite23.scale = 0.8f;
 		
-		[sheet addChild:sprite21];
+		[batch addChild:sprite21];
 		[sprite21 addChild:sprite22 z:-2];
 		[sprite21 addChild:sprite23 z:2];
 		
@@ -2232,15 +2232,15 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet HonorTransform";
+	return @"SpriteBatchNode HonorTransform";
 }
 @end
 
 
 #pragma mark -
-#pragma mark SpriteSheet ChildrenZ
+#pragma mark SpriteBatchNode ChildrenZ
 
-@implementation SpriteSheetChildrenZ
+@implementation SpriteBatchNodeChildrenZ
 
 -(id) init
 {
@@ -2249,7 +2249,7 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// parents
-		CCSpriteSheet *sheet;
+		CCSpriteBatchNode *batch;
 		CCSprite *sprite1, *sprite2, *sprite3;
 
 		
@@ -2257,8 +2257,8 @@ Class restartAction()
 
 		
 		// test 1
-		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/3, s.height/2)];
@@ -2269,13 +2269,13 @@ Class restartAction()
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		[sheet addChild:sprite1];
+		[batch addChild:sprite1];
 		[sprite1 addChild:sprite2 z:2];
 		[sprite1 addChild:sprite3 z:-2];
 		
 		// test 2
-		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( 2*s.width/3, s.height/2)];
@@ -2286,13 +2286,13 @@ Class restartAction()
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
-		[sheet addChild:sprite1];
+		[batch addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:2];
 		
 		// test 3
-		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/2 - 90, s.height/4)];
@@ -2303,13 +2303,13 @@ Class restartAction()
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp( s.width/2 - 30, s.height/4)];
 		
-		[sheet addChild:sprite1 z:10];
-		[sheet addChild:sprite2 z:-10];
-		[sheet addChild:sprite3 z:-5];
+		[batch addChild:sprite1 z:10];
+		[batch addChild:sprite2 z:-10];
+		[batch addChild:sprite3 z:-5];
 
 		// test 4
-		sheet = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
+		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 		
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 		[sprite1 setPosition:ccp( s.width/2 +30, s.height/4)];
@@ -2320,9 +2320,9 @@ Class restartAction()
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp( s.width/2 +90, s.height/4)];
 		
-		[sheet addChild:sprite1 z:-10];
-		[sheet addChild:sprite2 z:-5];
-		[sheet addChild:sprite3 z:-2];
+		[batch addChild:sprite1 z:-10];
+		[batch addChild:sprite2 z:-5];
+		[batch addChild:sprite3 z:-2];
 		
 
 	}	
@@ -2337,7 +2337,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet Children Z";
+	return @"SpriteBatchNode Children Z";
 }
 @end
 
@@ -2357,10 +2357,10 @@ Class restartAction()
 		CCNode *aParent;
 		CCSprite *sprite1, *sprite2, *sprite3;
 		//
-		// SpriteSheet
+		// SpriteBatchNode
 		//
 		// parents
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
 		aParent.position = ccp(s.width/3, s.height/2);
 		[self addChild:aParent z:0];
 		
@@ -2415,7 +2415,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite & SpriteSheet Visibility";
+	return @"Sprite & SpriteBatchNode Visibility";
 }
 @end
 
@@ -2435,7 +2435,7 @@ Class restartAction()
 		CCNode *aParent;
 		CCSprite *sprite1, *sprite2, *sprite3, *sprite4, *point;
 		//
-		// SpriteSheet
+		// SpriteBatchNode
 		//
 		// parents
 		
@@ -2538,9 +2538,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark SpriteSheetChildrenAnchorPoint
+#pragma mark SpriteBatchNodeChildrenAnchorPoint
 
-@implementation SpriteSheetChildrenAnchorPoint
+@implementation SpriteBatchNodeChildrenAnchorPoint
 
 -(id) init
 {
@@ -2553,11 +2553,11 @@ Class restartAction()
 		CCNode *aParent;
 		CCSprite *sprite1, *sprite2, *sprite3, *sprite4, *point;
 		//
-		// SpriteSheet
+		// SpriteBatchNode
 		//
 		// parents
 		
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini.png" capacity:50];
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
 		[self addChild:aParent z:0];
 		
 		// anchor (0,0)
@@ -2648,14 +2648,14 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet: children + anchor";
+	return @"SpriteBatchNode: children + anchor";
 }
 @end
 
 #pragma mark -
-#pragma mark SpriteSheetChildrenScale
+#pragma mark SpriteBatchNodeChildrenScale
 
-@implementation SpriteSheetChildrenScale
+@implementation SpriteBatchNodeChildrenScale
 
 -(id) init
 {
@@ -2691,11 +2691,11 @@ Class restartAction()
 
 		
 		//
-		// Children + Scale using SpriteSheet
+		// Children + Scale using SpriteBatchNode
 		// Test 2
 		//
 		
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini_family.png"];
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister1.png"];
 		sprite1.position = ccp( 3*s.width/4, s.height/4);
 		sprite1.scaleX = -0.5f;
@@ -2734,7 +2734,7 @@ Class restartAction()
 		// Test 4
 		//
 		
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/grossini_family.png"];
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini_family.png"];
 		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossinis_sister1.png"];
 		sprite1.position = ccp( 3*s.width/4, 2*s.height/3);
 		sprite1.scaleX = 1.5f;
@@ -2754,7 +2754,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite/Sheet + child + scale + rot";
+	return @"Sprite/Batch + child + scale + rot";
 }
 @end
 
@@ -2780,7 +2780,7 @@ Class restartAction()
 		id rot_back_fe = [CCRepeatForever actionWithAction:rot_back];
 		
 		//
-		// SpriteSheet: 3 levels of children
+		// SpriteBatchNode: 3 levels of children
 		//
 		
 		aParent = [CCNode node];
@@ -2847,9 +2847,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark SpriteSheetChildrenChildren
+#pragma mark SpriteBatchNodeChildrenChildren
 
-@implementation SpriteSheetChildrenChildren
+@implementation SpriteBatchNodeChildrenChildren
 
 -(id) init
 {
@@ -2859,7 +2859,7 @@ Class restartAction()
 		
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
 		
-		CCSpriteSheet *aParent;
+		CCSpriteBatchNode *aParent;
 		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
 		id rot = [CCRotateBy actionWithDuration:10 angle:360];
 		id seq = [CCRepeatForever actionWithAction:rot];
@@ -2868,10 +2868,10 @@ Class restartAction()
 		id rot_back_fe = [CCRepeatForever actionWithAction:rot_back];
 		
 		//
-		// SpriteSheet: 3 levels of children
+		// SpriteBatchNode: 3 levels of children
 		//
 		
-		aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/ghosts.png"];
 		[[aParent texture] generateMipmap];
 		[self addChild:aParent];
 		
@@ -2930,7 +2930,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteSheet multiple levels of children";
+	return @"SpriteBatchNode multiple levels of children";
 }
 @end
 
@@ -3024,7 +3024,7 @@ Class restartAction()
 
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
 		
-		CCSpriteSheet *aParent = [CCSpriteSheet spriteSheetWithFile:@"animations/ghosts.png"];
+		CCSpriteBatchNode *aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/ghosts.png"];
 		
 		// MySprite1
 		MySprite1 *sprite = [MySprite1 spriteWithSpriteFrameName:@"father.gif"];
@@ -3144,7 +3144,9 @@ Class restartAction()
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
-	[[CCDirector sharedDirector] end];
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director openGLView] removeFromSuperview];
+	[director end];
 }
 
 // purge memory

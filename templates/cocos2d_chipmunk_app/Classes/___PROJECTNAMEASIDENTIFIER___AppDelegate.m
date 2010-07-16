@@ -75,7 +75,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	[[CCDirector sharedDirector] end];
+	CC_DIRECTOR_END();
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {

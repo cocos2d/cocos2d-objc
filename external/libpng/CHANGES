@@ -2679,6 +2679,31 @@ version 1.0.53rc02 and 1.2.43rc02 [February 19, 2010]
 version 1.0.53 and 1.2.43 [February 25, 2010]
   Removed unused gzio.c from contrib/pngminim gather and makefile scripts
 
+version 1.2.44beta01 [June 18, 2010]
+  In pngpread.c: png_push_have_row() add check for new_row > height
+  Removed the now-redundant check for out-of-bounds new_row from example.c
+
+version 1.2.44beta02 [June 19, 2010]
+  In pngpread.c: png_push_process_row() add check for too many rows.
+  Removed the now-redundant check for new_row > height in png_push_have_row().
+
+version 1.2.44beta03 [June 20, 2010]
+  Rewrote png_process_IDAT_data() to consistently treat extra data as warnings
+    and handle end conditions more cleanly.
+  Removed the new (beta02) check in png_push_process_row().
+
+version 1.2.44rc01 [June 21, 2010]
+  Revised some comments in png_process_IDAT_data().
+
+version 1.2.44rc02 [June 22, 2010]
+  Stop memory leak when reading a malformed sCAL chunk.
+
+version 1.2.44rc03 [June 23, 2010]
+  Revised pngpread.c patch of beta05 to avoid an endless loop.
+
+version 1.2.44 [June 26, 2010]
+  Updated some of the "last changed" dates.
+
 Send comments/corrections/commendations to png-mng-implement at lists.sf.net
 (subscription required; visit
 https://lists.sourceforge.net/lists/listinfo/png-mng-implement

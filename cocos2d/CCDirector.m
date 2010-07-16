@@ -807,7 +807,7 @@ static CCDirector *_sharedDirector = nil;
 //	[openGLView_ removeFromSuperview];
 
 	[openGLView_ release];
-	openGLView_ = nil;
+	openGLView_ = nil;	
 }
 
 -(void) setNextScene

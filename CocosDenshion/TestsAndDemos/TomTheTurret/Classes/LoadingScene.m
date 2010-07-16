@@ -29,7 +29,7 @@
 @implementation LoadingLayer
 
 @synthesize defaultImage = _defaultImage;
-@synthesize spriteSheet = _spriteSheet;
+@synthesize batchNode = _batchNode;
 @synthesize main_bkgrnd = _main_bkgrnd;
 @synthesize main_title = _main_title;
 @synthesize tom = _tom;
@@ -99,7 +99,7 @@
         self.isLoading = NO;
         
         // Remove loading sprite
-        [_spriteSheet removeChild:_loading cleanup:YES];
+        [_batchNode removeChild:_loading cleanup:YES];
         self.loading = nil;
         
         // Add "tap to continue" sprite...
@@ -107,7 +107,7 @@
         static int TAPTOCONT_BOTTOM_MARGIN = 30;
         self.tapToCont = [CCSprite spriteWithSpriteFrameName:@"Turret_main_taptocont.png"];
         _tapToCont.position = ccp(((winSize.width - _tom.contentSize.width) / 2) + _tom.contentSize.width, _tapToCont.contentSize.height/2 + TAPTOCONT_BOTTOM_MARGIN);
-        [_spriteSheet addChild:_tapToCont];
+        [_batchNode addChild:_tapToCont];
         
         // Animate the "tap to continue" much the same way we did the "loading" so user notices...
         [_tapToCont runAction:[CCRepeatForever actionWithAction:
@@ -142,27 +142,27 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"sprites.plist"];
     
     // Add a sprite sheet based on the loaded texture and add it to the scene
-    self.spriteSheet = [CCSpriteSheet spriteSheetWithTexture:tex];
-    [self addChild:_spriteSheet];
+    self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:tex];
+    [self addChild:_batchNode];
     
     // Add main background to scene
     CGSize winSize = [CCDirector sharedDirector].winSize;
     self.main_bkgrnd = [CCSprite spriteWithSpriteFrameName:@"Turret_main_bkgrnd.png"];
     _main_bkgrnd.position = ccp(winSize.width/2, winSize.height/2);
-    [_spriteSheet addChild:_main_bkgrnd];
+    [_batchNode addChild:_main_bkgrnd];
     
     // Add title to scene
     static int MAIN_TITLE_TOP_MARGIN = 20;
     self.main_title = [CCSprite spriteWithSpriteFrameName:@"Turret_main_title.png"];
     _main_title.position = ccp(winSize.width/2, winSize.height - _main_title.contentSize.height/2 - MAIN_TITLE_TOP_MARGIN);
-    [_spriteSheet addChild:_main_title];
+    [_batchNode addChild:_main_title];
     
     // Add Tom to scene
     static int TOM_BOTTOM_MARGIN = 30;
     static int TOM_LEFT_MARGIN = 20;
     self.tom = [CCSprite spriteWithSpriteFrameName:@"Tom.png"];
     _tom.position = ccp(_tom.contentSize.width/2 + TOM_LEFT_MARGIN, _tom.contentSize.height/2 + TOM_BOTTOM_MARGIN);
-    [_spriteSheet addChild:_tom];
+    [_batchNode addChild:_tom];
     
     // Make tom blink, for fun
     NSMutableArray *blinkAnimFrames = [NSMutableArray array];    
@@ -180,7 +180,7 @@
     static int LOADING_BOTTOM_MARGIN = 30;
     self.loading = [CCSprite spriteWithSpriteFrameName:@"Turret_loading.png"];
     _loading.position = ccp(((winSize.width - _tom.contentSize.width) / 2) + _tom.contentSize.width, _loading.contentSize.height/2 + LOADING_BOTTOM_MARGIN);
-    [_spriteSheet addChild:_loading];
+    [_batchNode addChild:_loading];
     
     // Perform a little animation on the "loading" text to users know something is going on...
     [_loading runAction:[CCRepeatForever actionWithAction:

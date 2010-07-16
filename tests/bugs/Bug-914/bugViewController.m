@@ -12,22 +12,10 @@
 
 
 @implementation bugViewController
-@synthesize glView;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-		for (UIView *view in self.view.subviews) {
-			CCLOG(@"view class: %@", [view class]);
-			if ([view isKindOfClass:[EAGLView class]]) {
-				self.glView = view;
-			}
-		}
-		
-    }
-    return self;
 }
 */
 
@@ -40,30 +28,50 @@
 */
 
 -(void)viewWillAppear:(BOOL)animated {
+	
 	for (UIView *view in self.view.subviews) {
 		if ([view isKindOfClass:[EAGLView class]]) {
-			self.glView = (EAGLView *) view;
+			
+			// weak reference
+			glView = (EAGLView *) view;
+			break;
 		}
 	}
-	
 }
 
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+
     // Return YES for supported orientations
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	
+	// eg: Only support landscape orientations ?
+//	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+//			interfaceOrientation == UIInterfaceOrientationLandscapeRight );
+	
+	// eg: Support 4 orientations
 	return YES;
 }
 
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+	CGRect rect;
 	if(toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-		glView.frame = CGRectMake(0, 0, 320.0f, 480.0f);
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+			rect = CGRectMake(0, 0, 768, 1024);
+		else
+			rect = CGRectMake(0, 0, 320, 480 );
+
 	} else if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-		glView.frame = CGRectMake(0, 0, 480.0f, 320.0f);
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+			rect = CGRectMake(0, 0, 1024, 768);
+		else
+			rect = CGRectMake(0, 0, 480, 320 );
 	}
+
+	glView.frame = rect;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,13 +82,18 @@
 }
 
 - (void)viewDidUnload {
-    [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+
+    [super viewDidUnload];
+	
+	// invalidate weak reference
+	glView = nil;
 }
 
 
 - (void)dealloc {
+	CCLOG(@"deallocing bugViewController: %@", self);
     [super dealloc];
 }
 

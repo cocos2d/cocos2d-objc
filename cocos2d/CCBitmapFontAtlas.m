@@ -515,7 +515,7 @@ typedef struct _KerningHashElement
 		
 		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
+			fontChar = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 			[self addChild:fontChar z:0 tag:i];
 			[fontChar release];
 		}

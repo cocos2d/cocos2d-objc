@@ -36,7 +36,7 @@ enum {
 
 @interface IterateSpriteSheet : MainScene
 {
-	CCSpriteSheet	*spritesheet;
+	CCSpriteBatchNode	*batchNode;
 	CCProfilingTimer* _profilingTimer;
 }
 -(NSString*) profilerName;
@@ -52,7 +52,7 @@ enum {
 
 @interface AddRemoveSpriteSheet : MainScene
 {
-	CCSpriteSheet	*spritesheet;
+	CCSpriteBatchNode	*batchNode;
 	CCProfilingTimer* _profilingTimer;
 }
 -(NSString*) profilerName;

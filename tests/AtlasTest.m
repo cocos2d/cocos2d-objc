@@ -749,6 +749,12 @@ Class restartAction()
 	[[CCDirector sharedDirector] stopAnimation];
 }
 
+// application will be killed
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	CC_DIRECTOR_END();
+}
+
 // sent to foreground
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {

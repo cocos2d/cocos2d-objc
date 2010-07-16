@@ -154,6 +154,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed memory leaks when initialization of some nodes failed
 		Added removeFromParent method in CCNode
 		Improved performance in CCArray
+		Particles: Uses Quad in ARMv7 and Point in ARMv6. patch.
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
 		Author of the games tab in the cocos2d site
 	* jkrippy:
@@ -287,8 +288,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Ray Wenderlich (http://www.raywenderlich.com/)
 		co-author of sample "CocosDenshion - Tom the Turret"
 	* Robert J Payne (http://www.zwopple.com/)
-		Author of Zwoptex editor, support
+		Author of Zwoptex editor. Added support for Zwoptex
 		Added support for left,right,top,bottom trim in CCSpriteFrameCache (patch).
+		Added support for Zwoptex rotated frames. patch
 	* Rolandas Razma (gamebit):
 		added support for auto-remove-on-finish in particles
 		TMX maps support visibility and opacity patch
