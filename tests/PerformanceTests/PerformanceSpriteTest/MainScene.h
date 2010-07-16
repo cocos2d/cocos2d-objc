@@ -11,7 +11,7 @@ Class nextAction();
 @interface SubTest : NSObject
 {
 	int					subtestNumber;
-	CCSpriteSheet		*sheet;
+	CCSpriteBatchNode	*batchNode;
 	id					parent;
 }
 -(id) createSpriteWithTag:(int)tag;

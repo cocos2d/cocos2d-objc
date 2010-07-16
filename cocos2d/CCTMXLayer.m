@@ -31,17 +31,17 @@
 #import "CCTMXTiledMap.h"
 #import "CCTMXXMLParser.h"
 #import "CCSprite.h"
-#import "CCSpriteSheet.h"
+#import "CCSpriteBatchNode.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
-#pragma mark CCSpriteSheet Extension
+#pragma mark CCSpriteBatchNode Extension
 
 /* IMPORTANT XXX IMPORTNAT:
  * These 2 methods can't be part of CCTMXLayer since they call [super add...], and CCSpriteSheet#add SHALL not be called
  */
-@implementation CCSpriteSheet (TMXTiledMapExtension)
+@implementation CCSpriteBatchNode (TMXTiledMapExtension)
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
@@ -60,7 +60,7 @@
 	// update the quad directly. Don't add the sprite to the scene graph
 	//
 
-	[sprite useSpriteSheetRender:self];
+	[sprite useBatchNode:self];
 	[sprite setAtlasIndex:index];
 
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
@@ -308,7 +308,7 @@
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-			tile = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
+			tile = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 			[tile setPosition: [self positionAt:pos]];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
@@ -340,9 +340,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 	else
-		[reusedTile_ initWithSpriteSheet:self rect:rect];
+		[reusedTile_ initWithBatchNode:self rect:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
@@ -377,9 +377,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 	else
-		[reusedTile_ initWithSpriteSheet:self rect:rect];
+		[reusedTile_ initWithBatchNode:self rect:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
@@ -406,9 +406,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithSpriteSheet:self rect:rect];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 	else
-		[reusedTile_ initWithSpriteSheet:self rect:rect];
+		[reusedTile_ initWithBatchNode:self rect:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];

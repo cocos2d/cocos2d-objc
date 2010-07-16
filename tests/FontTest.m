@@ -196,10 +196,12 @@ NSString* restartAction()
 	[[CCDirector sharedDirector] startAnimation];
 }
 
+// application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
-	[[CCDirector sharedDirector] end];
+	CC_DIRECTOR_END();
 }
+
 
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application

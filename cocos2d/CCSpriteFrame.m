@@ -120,30 +120,39 @@
 #pragma mark -
 #pragma mark CCSpriteFrame
 @implementation CCSpriteFrame
-@synthesize rect = rect_, offset = offset_, texture = texture_;
+@synthesize rect = rect_, rotated = rotated_, offset = offset_, texture = texture_;
 @synthesize originalSize=originalSize_;
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
-	return [[[self alloc] initWithTexture:texture rect:rect offset:offset originalSize:rect.size] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:rect.size] autorelease];
 }
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
-	return [[[self alloc] initWithTexture:texture rect:rect offset:offset originalSize:originalSize] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:originalSize] autorelease];
+}
+
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
+{
+	return [[[self alloc] initWithTexture:texture rect:rect rotated:rotated offset:offset originalSize:originalSize] autorelease];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
 {
-	return [self initWithTexture:texture rect:rect offset:offset originalSize:rect.size];
+	return [self initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:rect.size];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize {
+	return [self initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:originalSize];
+}
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
 	if( (self=[super init]) ) {
 		self.texture = texture;
-		offset_ = offset;
 		rect_ = rect;
+		rotated_ = rotated;
+		offset_ = offset;
 		originalSize_ = originalSize;
 	}
 	return self;

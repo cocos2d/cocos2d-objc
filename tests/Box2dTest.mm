@@ -87,7 +87,7 @@ enum {
 		
 		//Set up sprite
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"blocks.png" capacity:150];
+		CCSpriteBatchNode *mgr = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
@@ -97,7 +97,7 @@ enum {
 		[label setColor:ccc3(0,0,255)];
 		label.position = ccp( screenSize.width/2, screenSize.height-50);
 		
-		[self schedule: @selector(tick:)];
+		[self scheduleUpdate];
 	}
 	return self;
 }
@@ -108,6 +108,7 @@ enum {
 	world = NULL;
 	
 	delete m_debugDraw;
+	m_debugDraw = NULL;
 
 	[super dealloc];
 }	
@@ -132,14 +133,14 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteManager];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteManager];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = [sheet createSpriteWithRect:CGRectMake(32 * idx,32 * idy,32,32)];
-	[sheet addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithTexture:[batch texture] rect:CGRectMake(32 * idx,32 * idy,32,32)];						
+	[batch addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -165,7 +166,7 @@ enum {
 
 
 
--(void) tick: (ccTime) dt
+-(void) update: (ccTime) dt
 {
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
@@ -266,7 +267,7 @@ enum {
 	
 	// add layer
 	CCScene *scene = [CCScene node];
-	id box2dLayer = [[Box2DTestLayer alloc] init];
+	id box2dLayer = [Box2DTestLayer node];
 	[scene addChild:box2dLayer z:0];
 
 	[director runWithScene: scene];
@@ -288,6 +289,12 @@ enum {
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] resume];
+}
+
+// application will be killed
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	CC_DIRECTOR_END();
 }
 
 // sent to background

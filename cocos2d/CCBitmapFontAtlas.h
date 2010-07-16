@@ -33,7 +33,7 @@
  */
 
 #import "CCAtlasNode.h"
-#import "CCSpriteSheet.h"
+#import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 
 struct _KerningHashElement;
@@ -133,7 +133,7 @@ enum {
  @since v0.8
  */
 
-@interface CCBitmapFontAtlas : CCSpriteSheet <CCLabelProtocol, CCRGBAProtocol>
+@interface CCBitmapFontAtlas : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol>
 {
 	// string to render
 	NSString		*string_;

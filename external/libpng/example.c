@@ -509,20 +509,17 @@ row_callback(png_structp png_ptr, png_bytep new_row,
     * shown below:
     */
 
-   /* Check if row_num is in bounds. */
-   if ((row_num >= 0) && (row_num < height))
-   {
-     /* Get pointer to corresponding row in our
-      * PNG read buffer.
-      */
-     png_bytep old_row = ((png_bytep *)our_data)[row_num];
+   /* Get pointer to corresponding row in our
+    * PNG read buffer.
+    */
+   png_bytep old_row = ((png_bytep *)our_data)[row_num];
 
-     /* If both rows are allocated then copy the new row
-      * data to the corresponding row data.
-      */
-     if ((old_row != NULL) && (new_row != NULL))
-     png_progressive_combine_row(png_ptr, old_row, new_row);
-   }
+   /* If both rows are allocated then copy the new row
+    * data to the corresponding row data.
+    */
+   if ((old_row != NULL) && (new_row != NULL))
+   png_progressive_combine_row(png_ptr, old_row, new_row);
+
    /*
     * The rows and passes are called in order, so you don't really
     * need the row_num and pass, but I'm supplying them because it

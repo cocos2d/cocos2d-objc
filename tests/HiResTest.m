@@ -275,7 +275,9 @@ Class restartAction()
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
-	[[CCDirector sharedDirector] end];
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director openGLView] removeFromSuperview];
+	[director end];
 }
 
 // purge memory

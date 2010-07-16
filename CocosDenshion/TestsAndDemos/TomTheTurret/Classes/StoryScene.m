@@ -27,7 +27,7 @@
 @end
 
 @implementation StoryLayer
-@synthesize spriteSheet = _spriteSheet;
+@synthesize batchNode = _batchNode;
 @synthesize main_bkgrnd = _main_bkgrnd;
 @synthesize label = _label;
 @synthesize curStoryIndex = _curStoryIndex;
@@ -41,14 +41,14 @@
         self.isTouchEnabled = YES;
         
         // Add a sprite sheet based on the loaded texture and add it to the scene
-        self.spriteSheet = [CCSpriteSheet spriteSheetWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
-        [self addChild:_spriteSheet];
+        self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
+        [self addChild:_batchNode];
         
         // Add main background to scene
         CGSize winSize = [CCDirector sharedDirector].winSize;
         self.main_bkgrnd = [CCSprite spriteWithSpriteFrameName:@"Turret_main_bkgrnd.png"];
         _main_bkgrnd.position = ccp(winSize.width/2, winSize.height/2);
-        [_spriteSheet addChild:_main_bkgrnd];
+        [_batchNode addChild:_main_bkgrnd];
         
         // Add a label to the scene
         static int LABEL_MARGIN = 20;
@@ -63,14 +63,14 @@
         self.tapToCont = [CCSprite spriteWithSpriteFrameName:@"Turret_main_taptocont.png"];
         _tapToCont.position = ccp(winSize.width / 2, _tapToCont.contentSize.height/2 + TAPTOCONT_BOTTOM_MARGIN);
         _tapToCont.visible = NO;
-        [_spriteSheet addChild:_tapToCont];
+        [_batchNode addChild:_tapToCont];
         
         // Add "new game" sprite...
         static int NEWGAME_BOTTOM_MARGIN = 30;
         self.newGame = [CCSprite spriteWithSpriteFrameName:@"Turret_newgame.png"];
         _newGame.position = ccp(winSize.width / 2, _tapToCont.contentSize.height/2 + NEWGAME_BOTTOM_MARGIN);
         _newGame.visible = NO;
-        [_spriteSheet addChild:_newGame];
+        [_batchNode addChild:_newGame];
                         
     }
     

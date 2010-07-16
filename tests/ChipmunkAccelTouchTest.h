@@ -16,7 +16,6 @@
 {
 	cpSpace *space;
 }
--(void) step: (ccTime) dt;
 -(void) addNewSpriteX:(float)x y:(float)y;
 @end
 	

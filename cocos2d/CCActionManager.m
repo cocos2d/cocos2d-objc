@@ -33,7 +33,7 @@
 //
 // singleton stuff
 //
-static CCActionManager *_sharedManager = nil;
+static CCActionManager *sharedManager_ = nil;
 
 @interface CCActionManager (Private)
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element;
@@ -47,22 +47,23 @@ static CCActionManager *_sharedManager = nil;
 #pragma mark ActionManager - init
 + (CCActionManager *)sharedManager
 {
-	if (!_sharedManager)
-		_sharedManager = [[self alloc] init];
+	if (!sharedManager_)
+		sharedManager_ = [[self alloc] init];
 		
-	return _sharedManager;
+	return sharedManager_;
 }
 
 +(id)alloc
 {
-	NSAssert(_sharedManager == nil, @"Attempted to allocate a second instance of a singleton.");
+	NSAssert(sharedManager_ == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];
 }
 
 +(void)purgeSharedManager
 {
 	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
-	[_sharedManager release];
+	[sharedManager_ release];
+	sharedManager_ = nil;
 }
 
 -(id) init
@@ -81,7 +82,7 @@ static CCActionManager *_sharedManager = nil;
 	
 	[self removeAllActions];
 
-	_sharedManager = nil;
+	sharedManager_ = nil;
 
 	[super dealloc];
 }

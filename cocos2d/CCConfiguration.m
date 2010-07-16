@@ -23,6 +23,7 @@
  */
 
 
+#import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/gl.h>
 
 #import "CCBlockSupport.h"
@@ -39,6 +40,7 @@
 @synthesize supportsNPOT=supportsNPOT_;
 @synthesize supportsBGRA8888=supportsBGRA8888_;
 @synthesize supportsDiscardFramebuffer=supportsDiscardFramebuffer_;
+@synthesize iOSVersion=iOSVersion_;
 
 //
 // singleton stuff
@@ -66,7 +68,19 @@ static char * glExtensions;
 	if( (self=[super init])) {
 		
 		loadingBundle_ = [NSBundle mainBundle];
-
+		
+		// Obtain iOS version
+		iOSVersion_ = 0;		
+		NSString *iOSVer = [[UIDevice currentDevice] systemVersion];
+		NSArray *arr = [iOSVer componentsSeparatedByString:@"."];		
+		int idx=0x01000000;
+		for( NSString *str in arr ) {
+			int value = [str intValue];
+			iOSVersion_ += value * idx;
+			idx = idx >> 8;
+		}
+		CCLOG(@"cocos2d: iOS version: %@ (0x%08x)", iOSVer, iOSVersion_);
+		
 		CCLOG(@"cocos2d: GL_VENDOR:   %s", glGetString(GL_VENDOR) );
 		CCLOG(@"cocos2d: GL_RENDERER: %s", glGetString ( GL_RENDERER   ) );
 		CCLOG(@"cocos2d: GL_VERSION:  %s", glGetString ( GL_VERSION    ) );
@@ -79,7 +93,7 @@ static char * glExtensions;
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
 		supportsBGRA8888_ = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
-		supportsDiscardFramebuffer_ = 	[self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
+		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
 		CCLOG(@"cocos2d: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
 		CCLOG(@"cocos2d: GL_MAX_MODELVIEW_STACK_DEPTH: %d",maxModelviewStackDepth_);

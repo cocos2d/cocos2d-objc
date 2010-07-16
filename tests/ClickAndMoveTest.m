@@ -132,6 +132,12 @@ enum
 	[[CCDirector sharedDirector] resume];
 }
 
+// application will be killed
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	CC_DIRECTOR_END();
+}
+
 // sent to background
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
