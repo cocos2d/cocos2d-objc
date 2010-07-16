@@ -101,6 +101,7 @@ static CCTextureCache *sharedTextureCache;
 +(void)purgeSharedTextureCache
 {
 	[sharedTextureCache release];
+	sharedTextureCache = nil;
 }
 
 -(id) init

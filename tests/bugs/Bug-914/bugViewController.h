@@ -10,12 +10,9 @@
 #import "cocos2d.h"
 
 @interface bugViewController : UIViewController {
-	EAGLView *glView;
-	UIWindow *window;
-	
+
+	// weak reference
+	EAGLView *glView;	
 }
-
-@property(nonatomic, retain) EAGLView *glView;
-
 
 @end
