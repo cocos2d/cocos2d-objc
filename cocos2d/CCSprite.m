@@ -25,6 +25,7 @@
 
 
 #import "ccConfig.h"
+#import "CCSpriteBatchNode.h"
 #import "CCSpriteSheet.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
@@ -36,7 +37,7 @@
 #pragma mark -
 #pragma mark CCSprite
 
-#if CC_SPRITESHEET_RENDER_SUBPIXEL
+#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
@@ -66,9 +67,9 @@ struct transformValues_ {
 @synthesize textureRect = rect_;
 @synthesize textureRectRotated = rectRotated_;
 @synthesize blendFunc = blendFunc_;
-@synthesize usesSpriteSheet = usesSpriteSheet_;
+@synthesize usesBatchNode = usesBatchNode_;
 @synthesize textureAtlas = textureAtlas_;
-@synthesize spriteSheet = spriteSheet_;
+@synthesize batchNode = batchNode_;
 @synthesize honorParentTransform = honorParentTransform_;
 @synthesize offsetPosition = offsetPosition_;
 
@@ -120,9 +121,13 @@ struct transformValues_ {
 	return [[[self alloc] initWithCGImage:image key:key] autorelease];
 }
 
-+(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect
++(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
-	return [[[self alloc] initWithSpriteSheet:spritesheet rect:rect] autorelease];
+	return [[[self alloc] initWithBatchNode:batchNode rect:rect] autorelease];
+}
++(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
+{
+	return [self spriteWithBatchNode:spritesheet rect:rect];
 }
 
 -(id) init
@@ -272,11 +277,16 @@ struct transformValues_ {
 	return [self initWithTexture:texture rect:rect];
 }
 
--(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect
+-(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
-	id ret = [self initWithTexture:spritesheet.texture rect:rect];
-	[self useSpriteSheetRender:spritesheet];
+	id ret = [self initWithTexture:batchNode.texture rect:rect];
+	[self useBatchNode:batchNode];
 	return ret;
+}
+
+-(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
+{
+	return [self initWithBatchNode:spritesheet rect:rect];
 }
 
 - (NSString*) description
@@ -298,9 +308,9 @@ struct transformValues_ {
 -(void) useSelfRender
 {
 	atlasIndex_ = CCSpriteIndexNotInitialized;
-	usesSpriteSheet_ = NO;
+	usesBatchNode_ = NO;
 	textureAtlas_ = nil;
-	spriteSheet_ = nil;
+	batchNode_ = nil;
 	dirty_ = recursiveDirty_ = NO;
 	
 	float x1 = 0 + offsetPosition_.x;
@@ -313,11 +323,15 @@ struct transformValues_ {
 	quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
 }
 
--(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet
+-(void) useBatchNode:(CCSpriteBatchNode*)batchNode
 {
-	usesSpriteSheet_ = YES;
-	textureAtlas_ = [spriteSheet textureAtlas]; // weak ref
-	spriteSheet_ = spriteSheet; // weak ref
+	usesBatchNode_ = YES;
+	textureAtlas_ = [batchNode textureAtlas]; // weak ref
+	batchNode_ = batchNode; // weak ref
+}
+-(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet // XXX DEPRECATED
+{
+	[self useBatchNode:spriteSheet];
 }
 
 
@@ -355,7 +369,7 @@ struct transformValues_ {
 	
 	
 	// rendering using SpriteSheet
-	if( usesSpriteSheet_ ) {
+	if( usesBatchNode_ ) {
 		// update dirty_, don't update recursiveDirty_
 		dirty_ = YES;
 	}
@@ -432,7 +446,7 @@ struct transformValues_ {
 
 -(void)updateTransform
 {
-	NSAssert( usesSpriteSheet_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteSheet");
+	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteSheet");
 
 	CGAffineTransform matrix;
 	
@@ -446,9 +460,9 @@ struct transformValues_ {
 	}
 	
 
-	// Optimization: If parent is spritesheet, or parent is nil
+	// Optimization: If parent is batchnode, or parent is nil
 	// build Affine transform manually
-	if( ! parent_ || parent_ == spriteSheet_ ) {
+	if( ! parent_ || parent_ == batchNode_ ) {
 		
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
@@ -461,12 +475,12 @@ struct transformValues_ {
 	} 
 	
 	// else do affine transformation according to the HonorParentTransform
-	else if( parent_ != spriteSheet_ ) {
+	else if( parent_ != batchNode_ ) {
 
 		matrix = CGAffineTransformIdentity;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
-		for (CCNode *p = self ; p && p != spriteSheet_; p = p.parent) {
+		for (CCNode *p = self ; p && p != batchNode_ ; p = p.parent) {
 			
 			struct transformValues_ tv = [(CCSprite*)p getTransformValues];
 			
@@ -549,7 +563,7 @@ struct transformValues_ {
 
 -(void) draw
 {	
-	NSAssert(!usesSpriteSheet_, @"If CCSprite is being rendered by CCSpriteSheet, CCSprite#draw SHOULD NOT be called");
+	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -602,12 +616,12 @@ struct transformValues_ {
 	
 	id ret = [super addChild:child z:z tag:aTag];
 	
-	if( usesSpriteSheet_ ) {
-		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using SpriteSheet");
+	if( usesBatchNode_ ) {
+		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
-		NSUInteger index = [spriteSheet_ atlasIndexForChild:child atZ:z];
-		[spriteSheet_ insertChild:child inAtlasAtIndex:index];
+		NSUInteger index = [batchNode_ atlasIndexForChild:child atZ:z];
+		[batchNode_ insertChild:child inAtlasAtIndex:index];
 	}
 	
 	hasChildren_ = YES;
@@ -623,7 +637,7 @@ struct transformValues_ {
 	if( z == child.zOrder )
 		return;
 
-	if( usesSpriteSheet_ ) {
+	if( usesBatchNode_ ) {
 		// XXX: Instead of removing/adding, it is more efficient to reorder manually
 		[child retain];
 		[self removeChild:child cleanup:NO];
@@ -637,8 +651,8 @@ struct transformValues_ {
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
-	if( usesSpriteSheet_ )
-		[spriteSheet_ removeSpriteFromAtlas:sprite];
+	if( usesBatchNode_ )
+		[batchNode_ removeSpriteFromAtlas:sprite];
 
 	[super removeChild:sprite cleanup:doCleanup];
 	
@@ -647,9 +661,9 @@ struct transformValues_ {
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	if( usesSpriteSheet_ ) {
+	if( usesBatchNode_ ) {
 		for( CCSprite *child in children_ )
-			[spriteSheet_ removeSpriteFromAtlas:child];
+			[batchNode_ removeSpriteFromAtlas:child];
 	}
 	
 	[super removeAllChildrenWithCleanup:doCleanup];
@@ -659,7 +673,7 @@ struct transformValues_ {
 
 //
 // CCNode property overloads
-// used only when parent is CCSpriteSheet
+// used only when parent is CCSpriteBatchNode
 //
 #pragma mark CCSprite - property overloads
 
@@ -677,7 +691,7 @@ struct transformValues_ {
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {									\
-					if( usesSpriteSheet_ && ! recursiveDirty_ ) {	\
+					if( usesBatchNode_ && ! recursiveDirty_ ) {	\
 						dirty_ = recursiveDirty_ = YES;				\
 						if( hasChildren_)							\
 							[self setDirtyRecursively:YES];			\
@@ -728,7 +742,7 @@ struct transformValues_ {
 
 -(void)setRelativeAnchorPoint:(BOOL)relative
 {
-	NSAssert( ! usesSpriteSheet_, @"relativeTransformAnchor is invalid in CCSprite");
+	NSAssert( ! usesBatchNode_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setIsRelativeAnchorPoint:relative];
 }
 
@@ -736,7 +750,7 @@ struct transformValues_ {
 {
 	if( v != visible_ ) {
 		[super setVisible:v];
-		if( usesSpriteSheet_ && ! recursiveDirty_ ) {
+		if( usesBatchNode_ && ! recursiveDirty_ ) {
 			dirty_ = recursiveDirty_ = YES;
 			id child;
 			CCARRAY_FOREACH(children_, child)
@@ -783,7 +797,7 @@ struct transformValues_ {
 	quad_.tr.colors = color4;
 	
 	// renders using Sprite Manager
-	if( usesSpriteSheet_ ) {
+	if( usesBatchNode_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
@@ -910,7 +924,7 @@ struct transformValues_ {
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! usesSpriteSheet_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet");
+	NSAssert( ! usesBatchNode_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 
 	// it's possible to have an untextured sprite
 	if( !texture_ || ! [texture_ hasPremultipliedAlpha] ) {
@@ -926,7 +940,7 @@ struct transformValues_ {
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! usesSpriteSheet_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet");
+	NSAssert( ! usesBatchNode_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 	
 	// accept texture==nil as argument
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");

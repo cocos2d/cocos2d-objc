@@ -87,7 +87,7 @@ enum {
 		
 		//Set up sprite
 		
-		CCSpriteSheet *mgr = [CCSpriteSheet spriteSheetWithFile:@"blocks.png" capacity:150];
+		CCSpriteBatchNode *mgr = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
 		[self addChild:mgr z:0 tag:kTagSpriteManager];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
@@ -133,14 +133,14 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteManager];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteManager];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = [CCSprite spriteWithTexture:[sheet texture] rect:CGRectMake(32 * idx,32 * idy,32,32)];						
-	[sheet addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithTexture:[batch texture] rect:CGRectMake(32 * idx,32 * idy,32,32)];						
+	[batch addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	

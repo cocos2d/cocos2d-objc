@@ -9,11 +9,11 @@
 #import "cocos2d.h"
 
 @interface MainMenuLayer : CCLayer {
-    CCSpriteSheet *_spriteSheet;
+    CCSpriteBatchNode *_batchNode;
     CCSprite *_main_bkgrnd;
 }
 
-@property (nonatomic, assign) CCSpriteSheet *spriteSheet;
+@property (nonatomic, assign) CCSpriteBatchNode *batchNode;
 @property (nonatomic, assign) CCSprite *main_bkgrnd;
 
 @end

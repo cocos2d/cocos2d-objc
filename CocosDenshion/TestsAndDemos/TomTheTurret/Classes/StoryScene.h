@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 
 @interface StoryLayer : CCLayer {
-    CCSpriteSheet *_spriteSheet;
+    CCSpriteBatchNode *_batchNode;
     CCSprite *_main_bkgrnd;
     CCLabel *_label;
     CCSprite *_tapToCont;
@@ -17,7 +17,7 @@
     int _curStoryIndex;
 }
 
-@property (nonatomic, assign) CCSpriteSheet *spriteSheet;
+@property (nonatomic, assign) CCSpriteBatchNode *batchNode;
 @property (nonatomic, assign) CCSprite *main_bkgrnd;
 @property (nonatomic, assign) CCLabel *label;
 @property (nonatomic, assign) CCSprite *tapToCont;

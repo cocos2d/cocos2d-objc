@@ -1,5 +1,6 @@
 version 0.99.5-rc XX-MMM-2010
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
+ . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
                 and PointParticles when compiled in ARMv6
  . [FIX] Templates & Tests: call CC_DIRECTOR_END() on AppDelegate Terminate

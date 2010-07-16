@@ -26,7 +26,7 @@
 @end
 
 @implementation MainMenuLayer
-@synthesize spriteSheet = _spriteSheet;
+@synthesize batchNode = _batchNode;
 @synthesize main_bkgrnd = _main_bkgrnd;
 
 - (id) init {
@@ -34,14 +34,14 @@
     if ((self = [super init])) {
         
         // Add a sprite sheet based on the loaded texture and add it to the scene
-        self.spriteSheet = [CCSpriteSheet spriteSheetWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
-        [self addChild:_spriteSheet];
+        self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
+        [self addChild:_batchNode];
         
         // Add main background to scene
         CGSize winSize = [CCDirector sharedDirector].winSize;
         self.main_bkgrnd = [CCSprite spriteWithSpriteFrameName:@"Turret_main_bkgrnd.png"];
         _main_bkgrnd.position = ccp(winSize.width/2, winSize.height/2);
-        [_spriteSheet addChild:_main_bkgrnd];
+        [_batchNode addChild:_main_bkgrnd];
         
         // Add a main menu
         CCSprite *newGameSprite = [CCSprite spriteWithSpriteFrameName:@"Turret_newgame.png"];

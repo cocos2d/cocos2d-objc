@@ -7,7 +7,7 @@
 #import "ChipmunkAccelTouchTest.h"
 
 enum {
-	kTagSpriteSheet = 1,
+	kTagBatchNode = 1,
 };
 
 static void
@@ -37,7 +37,7 @@ eachShape(void *ptr, void* unused)
 {
 	int posx, posy;
 
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
 	
 	posx = (CCRANDOM_0_1() * 200);
 	posy = (CCRANDOM_0_1() * 200);
@@ -45,8 +45,8 @@ eachShape(void *ptr, void* unused)
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 	
-	CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(posx, posy, 85, 121)];
-	[sheet addChild: sprite];
+	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(posx, posy, 85, 121)];
+	[batch addChild: sprite];
 	
 	sprite.position = ccp(x,y);
 	
@@ -112,12 +112,12 @@ eachShape(void *ptr, void* unused)
 		shape->e = 1.0f; shape->u = 1.0f;
 		cpSpaceAddStaticShape(space, shape);
 		
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"grossini_dance_atlas.png" capacity:100];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
+		[self addChild:batch z:0 tag:kTagBatchNode];
 		
 		[self addNewSpriteX: 200 y:200];
 
-		[self schedule: @selector(step:)];
+		[self scheduleUpdate];
 	}
 
 	return self;
@@ -130,7 +130,7 @@ eachShape(void *ptr, void* unused)
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
 }
 
--(void) step: (ccTime) delta
+-(void) update:(ccTime) delta
 {
 	int steps = 2;
 	CGFloat dt = delta/(CGFloat)steps;

@@ -16,7 +16,7 @@
 
 @interface LoadingLayer : CCLayer {
     CCSprite *_defaultImage;
-    CCSpriteSheet *_spriteSheet;
+    CCSpriteBatchNode *_batchNode;
     CCSprite *_main_bkgrnd;
     CCSprite *_main_title;
     CCSprite *_tom;
@@ -28,7 +28,7 @@
 }
 
 @property (nonatomic, assign) CCSprite *defaultImage;
-@property (nonatomic, assign) CCSpriteSheet *spriteSheet;
+@property (nonatomic, assign) CCSpriteBatchNode *batchNode;
 @property (nonatomic, assign) CCSprite *main_bkgrnd;
 @property (nonatomic, assign) CCSprite *main_title;
 @property (nonatomic, assign) CCSprite *tom;

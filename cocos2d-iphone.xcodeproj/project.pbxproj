@@ -1810,6 +1810,8 @@
 		DAABAA931059A42E00794EB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		DAABAA941059A42E00794EB3 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		DAABAA961059A42E00794EB3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
+		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3585,6 +3587,8 @@
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
+		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5245,10 +5249,12 @@
 		506414C40F9C6792007A7B24 /* Sprite Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				509A79990F6188500032F449 /* CCSpriteSheet.h */,
-				509A799A0F6188500032F449 /* CCSpriteSheet.m */,
 				509A79950F6188420032F449 /* CCSprite.h */,
 				509A79960F6188420032F449 /* CCSprite.m */,
+				E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */,
+				E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */,
+				509A79990F6188500032F449 /* CCSpriteSheet.h */,
+				509A799A0F6188500032F449 /* CCSpriteSheet.m */,
 				50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */,
 				50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */,
 				502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */,
@@ -6209,6 +6215,7 @@
 				508043E011BEE9300039CA83 /* CCArray.h in Headers */,
 				505F4C3611BFA68B002DCD39 /* ES1Renderer.h in Headers */,
 				505F4C3911BFA6E7002DCD39 /* ESRenderer.h in Headers */,
+				E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9107,6 +9114,7 @@
 				50FBB2DB117613F500150761 /* CCPropertyAction.m in Sources */,
 				5080435311BEE8D60039CA83 /* CCArray.m in Sources */,
 				505F4C3511BFA68B002DCD39 /* ES1Renderer.m in Sources */,
+				E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
