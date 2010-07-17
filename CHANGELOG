@@ -1,4 +1,5 @@
 version 0.99.5-rc XX-MMM-2010
+ . [NEW] Configuration: added a helper method to obtain the iOS version
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
