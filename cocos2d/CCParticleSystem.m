@@ -172,13 +172,21 @@
 			mode.A.speed = [[dictionary valueForKey:@"speed"] floatValue];
 			mode.A.speedVar = [[dictionary valueForKey:@"speedVariance"] floatValue];
 			
-			// radial acceleration
-			mode.A.radialAccel = [[dictionary valueForKey:@"radialAcceleration"] floatValue];
-			mode.A.radialAccelVar = [[dictionary valueForKey:@"radialAccelVariance"] floatValue];
-			
+			// radial acceleration			
+			NSString *tmp = [dictionary valueForKey:@"radialAcceleration"];
+			if( tmp)
+				mode.A.radialAccel = [tmp floatValue];
+			tmp = [dictionary valueForKey:@"radialAccelVariance"];
+			if( tmp)
+				mode.A.radialAccelVar = [tmp floatValue];
+						
 			// tangential acceleration
-			mode.A.tangentialAccel = [[dictionary valueForKey:@"tangentialAcceleration"] floatValue];
-			mode.A.tangentialAccelVar = [[dictionary valueForKey:@"tangentialAccelVariance"] floatValue];
+			tmp = [dictionary valueForKey:@"tangentialAcceleration"];
+			if( tmp )
+				mode.A.tangentialAccel = [tmp floatValue];
+			tmp = [dictionary valueForKey:@"tangentialAccelVariance"];
+			if( tmp )
+				mode.A.tangentialAccelVar = [tmp floatValue];
 		}
 		
 		

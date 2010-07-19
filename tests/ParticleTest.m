@@ -13,6 +13,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
 		@"DemoFlower",
 		@"DemoGalaxy",
 		@"DemoFirework",

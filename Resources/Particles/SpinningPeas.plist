@@ -6,8 +6,6 @@
 	<real>90</real>
 	<key>angleVariance</key>
 	<real>360</real>
-	<key>blendAdditive</key>
-	<real>0.0</real>
 	<key>blendFuncDestination</key>
 	<integer>771</integer>
 	<key>blendFuncSource</key>
@@ -52,6 +50,10 @@
 	<real>10</real>
 	<key>particleLifespanVariance</key>
 	<real>0.0</real>
+	<key>radialAccelVariance</key>
+	<real>0.0</real>
+	<key>radialAcceleration</key>
+	<real>0.0</real>
 	<key>rotatePerSecond</key>
 	<real>0.0</real>
 	<key>rotatePerSecondVariance</key>
@@ -88,6 +90,10 @@
 	<real>64</real>
 	<key>startParticleSizeVariance</key>
 	<real>29.049999237060547</real>
+	<key>tangentialAccelVariance</key>
+	<real>0.0</real>
+	<key>tangentialAcceleration</key>
+	<real>0.0</real>
 	<key>textureFileName</key>
 	<string>SpinningPeas.png</string>
 	<key>textureImageData</key>
