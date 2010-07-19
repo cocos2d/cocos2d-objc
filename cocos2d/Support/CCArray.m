@@ -230,5 +230,13 @@
 	[super dealloc];
 }
 
+#pragma mark CCArray - NSCopying protocol
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	NSArray *nsArray = [self getNSArray];
+	CCArray *newArray = [[[[self class] allocWithZone:zone] initWithNSArray:nsArray] autorelease];
+	return newArray;
+}
 
 @end

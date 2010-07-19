@@ -42,7 +42,7 @@
 			arr < end && ((__object__ = *arr) != nil || true);									\
 			arr++)
 
-@interface CCArray : NSObject <NSFastEnumeration, NSCoding>
+@interface CCArray : NSObject <NSFastEnumeration, NSCoding, NSCopying>
 {
 	@public ccArray *data;
 }
