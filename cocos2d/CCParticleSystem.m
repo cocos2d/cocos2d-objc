@@ -174,19 +174,17 @@
 			
 			// radial acceleration			
 			NSString *tmp = [dictionary valueForKey:@"radialAcceleration"];
-			if( tmp)
-				mode.A.radialAccel = [tmp floatValue];
+			mode.A.radialAccel = tmp ? [tmp floatValue] : 0;
+			
 			tmp = [dictionary valueForKey:@"radialAccelVariance"];
-			if( tmp)
-				mode.A.radialAccelVar = [tmp floatValue];
+			mode.A.radialAccelVar = tmp ? [tmp floatValue] : 0;
 						
 			// tangential acceleration
 			tmp = [dictionary valueForKey:@"tangentialAcceleration"];
-			if( tmp )
-				mode.A.tangentialAccel = [tmp floatValue];
+			mode.A.tangentialAccel = tmp ? [tmp floatValue] : 0;
+			
 			tmp = [dictionary valueForKey:@"tangentialAccelVariance"];
-			if( tmp )
-				mode.A.tangentialAccelVar = [tmp floatValue];
+			mode.A.tangentialAccelVar = tmp ? [tmp floatValue] : 0;
 		}
 		
 		
