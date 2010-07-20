@@ -48,7 +48,7 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 
 @implementation CDLongAudioSource
 
-@synthesize audioSourcePlayer, audioSourceFilePath, delegate;
+@synthesize audioSourcePlayer, audioSourceFilePath, delegate, backgroundMusic;
 
 -(id) init {
 	if ((self = [super init])) {
@@ -216,14 +216,22 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 
 -(void)audioPlayerEndInterruption:(AVAudioPlayer *)player {
 	CDLOG(@"Denshion::CDLongAudioSource - audio player resumed");
-	[player play];
+	if (self.backgroundMusic) {
+		//Check if background music can play as rules may have changed during 
+		//the interruption
+		if([CDAudioManager sharedManager].willPlayBackgroundMusic) {
+			[player play];
+		}	
+	} else {
+		[player play];
+	}	
 }	
 
 @end
 
 
 @interface CDAudioManager (PrivateMethods)
-
+-(OSStatus) audioSessionSetActive:(BOOL) active;
 @end
 
 
@@ -235,6 +243,13 @@ static CDAudioManager *sharedManager;
 static tAudioManagerState _sharedManagerState = kAMStateUninitialised;
 static tAudioManagerMode configuredMode;
 static BOOL configured = FALSE;
+
+-(OSStatus) audioSessionSetActive:(BOOL) active {
+	_audioSessionActive = active;
+	OSStatus result = AudioSessionSetActive(active);
+	CDLOG(@"Denshion::CDAudioManager - Audio session set active %i status = %i", active, (int)result); 
+	return result;
+}	
 
 // Init
 + (CDAudioManager *) sharedManager
@@ -288,16 +303,6 @@ static BOOL configured = FALSE;
 	configured = TRUE;
 }	
 
-//Experimental TODO: review this
-/*
-- (void) determineCapabilities {
-	Class audioSessionClass = NSClassFromString(@"AVAudioSession");
-	if (audioSessionClass != nil) {
-		CDLOG(@"Denshion::CDAudioManager - AVAudioSession exists");
-	}	
-}
-*/ 
-
 -(BOOL) isOtherAudioPlaying {
 	UInt32 isPlaying;
 	UInt32 varSize = sizeof(isPlaying);
@@ -307,7 +312,7 @@ static BOOL configured = FALSE;
 
 -(void) setMode:(tAudioManagerMode) mode {
 
-	AudioSessionSetActive(NO);
+	[self audioSessionSetActive:NO];
 	_mode = mode;
 	switch (_mode) {
 			
@@ -360,11 +365,11 @@ static BOOL configured = FALSE;
 		//on OS 3.0. Thanks to Bryan Acceleroto (SO 2009.07.02)
 		UInt32 fakeCategory = kAudioSessionCategory_MediaPlayback;
 		AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(fakeCategory), &fakeCategory);
-		AudioSessionSetActive(YES);
-		AudioSessionSetActive(NO);
+		[self audioSessionSetActive:YES];
+		[self audioSessionSetActive:NO];
 	}	
 	AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory);
-	AudioSessionSetActive(YES);
+	[self audioSessionSetActive:YES];
 	
 }	
 
@@ -379,14 +384,18 @@ static BOOL configured = FALSE;
 		_isObservingAppEvents = FALSE;
 		_mute = NO;
 		_resigned = NO;
+		_interrupted = NO;
 		enabled_ = YES;
+		_audioSessionActive = NO;
 		[self setMode:mode];
 		soundEngine = [[CDSoundEngine alloc] init];
 		
 		//Set up audioSource channels
 		audioSourceChannels = [[NSMutableArray alloc] init];
 		CDLongAudioSource *leftChannel = [[CDLongAudioSource alloc] init];
+		leftChannel.backgroundMusic = YES;
 		CDLongAudioSource *rightChannel = [[CDLongAudioSource alloc] init];
+		rightChannel.backgroundMusic = NO;
 		[audioSourceChannels insertObject:leftChannel atIndex:kASC_Left];	
 		[audioSourceChannels insertObject:rightChannel atIndex:kASC_Right];
 		[leftChannel release];
@@ -405,7 +414,7 @@ static BOOL configured = FALSE;
 	if (_isObservingAppEvents) {
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
 	}
-	AudioSessionSetActive(FALSE);
+	[self audioSessionSetActive:NO];
 	[audioSourceChannels release];
 	[super dealloc];
 }	
@@ -502,21 +511,18 @@ static BOOL configured = FALSE;
 //Load background music ready for playing
 -(void) preloadBackgroundMusic:(NSString*) filePath
 {
-	if (!willPlayBackgroundMusic) {
-		CDLOG(@"Denshion::CDAudioManager - preload background music aborted because audio is not exclusive");
-		return;
-	}	
 	[self.backgroundMusic load:filePath];	
 }	
 
 -(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop
 {
+	[self.backgroundMusic load:filePath];
+
 	if (!willPlayBackgroundMusic || _mute) {
 		CDLOG(@"Denshion::CDAudioManager - play bgm aborted because audio is not exclusive or sound is muted");
 		return;
 	}
 		
-	[self.backgroundMusic load:filePath];
 	if (loop) {
 		[self.backgroundMusic setNumberOfLoops:-1];
 	} else {
@@ -537,6 +543,11 @@ static BOOL configured = FALSE;
 
 -(void) resumeBackgroundMusic
 {
+	if (!willPlayBackgroundMusic || _mute) {
+		CDLOG(@"Denshion::CDAudioManager - resume bgm aborted because audio is not exclusive or sound is muted");
+		return;
+	}
+	
 	[self.backgroundMusic resume];
 }	
 
@@ -571,16 +582,12 @@ static BOOL configured = FALSE;
 	_resignBehavior = resignBehavior;
 }	
 
-//Called when application resigns active only if setResignBehavior has been called 
-- (void) applicationWillResignActive:(NSNotification *) notification
-{
-	
+- (void) applicationWillResignActive {
 	self->_resigned = YES;
-	//Testing: change category to allow other audio
-	AudioSessionSetActive(NO);
+	
+	//Set the audio sesssion to one that allows sharing so that other audio won't be clobbered on resume
 	UInt32 fakeCategory = kAudioSessionCategory_AmbientSound;
 	AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(fakeCategory), &fakeCategory);
-	AudioSessionSetActive(YES);
 	
 	switch (_resignBehavior) {
 			
@@ -596,11 +603,11 @@ static BOOL configured = FALSE;
 					//by OS so we will stop it.
 					audioSource->systemPaused = NO;
 					[audioSource stop];
-				}	
-			}	
+				}
+			}
 			break;
 			
-		case kAMRBStop:	
+		case kAMRBStop:
 			//Stop music regardless of whether it is playing or not because if it was paused
 			//then the OS would resume it
 			for( CDLongAudioSource *audioSource in audioSourceChannels) {
@@ -612,12 +619,16 @@ static BOOL configured = FALSE;
 			
 	}			
 	
-	CDLOG(@"Denshion::CDAudioManager - handling resign active");
+	CDLOG(@"Denshion::CDAudioManager - handled resign active");
 }
 
-//Called when application becomes active only if setResignBehavior has been called 
-- (void) applicationDidBecomeActive:(NSNotification *) notification
+//Called when application resigns active only if setResignBehavior has been called
+- (void) applicationWillResignActive:(NSNotification *) notification
 {
+	[self applicationWillResignActive];
+}	
+
+- (void) applicationDidBecomeActive {
 	
 	if (self->_resigned) {
 		_resigned = NO;
@@ -636,17 +647,23 @@ static BOOL configured = FALSE;
 						if (audioSource->systemPaused) {
 							[audioSource resume];
 							audioSource->systemPaused = NO;
-						}	
+						}
 					}
-				}	
+				}
 				break;
 				
 			default:
 				break;
 				
-		}		
-		CDLOG(@"Denshion::CDAudioManager - audio manager handling become active");
+		}
+		CDLOG(@"Denshion::CDAudioManager - audio manager handled become active");
 	}
+}
+
+//Called when application becomes active only if setResignBehavior has been called
+- (void) applicationDidBecomeActive:(NSNotification *) notification
+{
+	[self applicationDidBecomeActive];
 }
 
 //Called when application terminates only if setResignBehavior has been called 
@@ -668,18 +685,14 @@ static BOOL configured = FALSE;
 -(void)audioSessionInterrupted 
 { 
     CDLOG(@"Denshion::CDAudioManager - Audio session interrupted"); 
+	_interrupted = YES;
 	ALenum  error = AL_NO_ERROR;
     // Deactivate the current audio session 
-    AudioSessionSetActive(NO); 
+    [self audioSessionSetActive:NO]; 
     // set the current context to NULL will 'shutdown' openAL 
     alcMakeContextCurrent(NULL); 
 	if((error = alGetError()) != AL_NO_ERROR) {
 		CDLOG(@"Denshion::CDAudioManager - Error making context current %x\n", error);
-	} 
-    // now suspend your context to 'pause' your sound world 
-    alcSuspendContext([soundEngine openALContext]); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDAudioManager - Error suspending context %x\n", error);
 	} 
 	#pragma unused(error)
 } 
@@ -687,13 +700,14 @@ static BOOL configured = FALSE;
 //Code to handle audio session resumption.  Thanks to Andy Fitter and Ben Britten.
 -(void)audioSessionResumed 
 { 
-    ALenum  error = AL_NO_ERROR;
 	CDLOG(@"Denshion::CDAudioManager - Audio session resumed"); 
+	_interrupted = NO;
+	ALenum  error = AL_NO_ERROR;
     // Reset audio session 
     OSStatus result = AudioSessionSetProperty ( kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory ); 
 	
 	// Reactivate the current audio session 
-    result = AudioSessionSetActive(YES); 
+    result = [self audioSessionSetActive:YES]; 
 	#pragma unused(result)
 	
     // Restore open al context 
@@ -702,11 +716,6 @@ static BOOL configured = FALSE;
 		CDLOG(@"Denshion::CDAudioManager - Error making context current%x\n", error);
 	} 
     #pragma unused(error)
-    // 'unpause' my context 
-    alcProcessContext([soundEngine openALContext]); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDAudioManager - Error processing context%x\n", error);
-	}
 }
 
 +(void) end {
