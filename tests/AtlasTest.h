@@ -62,3 +62,7 @@
 {}
 @end
 
+@interface BitmapFontMultiLine : AtlasDemo
+{}
+@end
+
