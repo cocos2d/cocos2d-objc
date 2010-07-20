@@ -235,7 +235,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	NSArray *nsArray = [self getNSArray];
-	CCArray *newArray = [[[[self class] allocWithZone:zone] initWithNSArray:nsArray] autorelease];
+	CCArray *newArray = [[[self class] allocWithZone:zone] initWithNSArray:nsArray];
 	return newArray;
 }
 
