@@ -246,7 +246,7 @@
 	<key>metadata</key>
 	<dict>
 		<key>format</key>
-		<integer>2</integer>
+		<integer>3</integer>
 		<key>size</key>
 		<string>{512, 256}</string>
 	</dict>
