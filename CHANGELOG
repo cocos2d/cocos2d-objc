@@ -3,6 +3,7 @@ version 0.99.5-rc XX-MMM-2010
  . [NEW] BitmapFontAtlas: added optional setCString method
  . [NEW] Configuration: added a helper method to obtain the iOS version
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
+ . [NEW] SpriteFrameCache: Added support for Zwoptex name aliases (issue #935)
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
  . [FIX] CCArray: conforms to NSCopying protocol (issue #934)
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
