@@ -54,17 +54,6 @@ ALvoid  alcMacOSXMixerOutputRateProc(const ALdouble value)
     return;
 }
 
-//Audio session interruption callback - used if sound engine is 
-//handling audio session interruption automatically
-extern void interruptionListenerCallback (void *inUserData, UInt32 interruptionState ) { 
-	CDSoundEngine *controller = (CDSoundEngine *) inUserData; 
-    if (interruptionState == kAudioSessionBeginInterruption) { 
-        [controller audioSessionInterrupted]; 
-    } else if (interruptionState == kAudioSessionEndInterruption) { 
-        [controller audioSessionResumed]; 
-    } 
-} 
-
 @interface CDSoundEngine (PrivateMethods)
 -(BOOL) _initOpenAL;
 -(void) _testGetGain;
@@ -357,33 +346,11 @@ static BOOL _mixerRateSet = NO;
 	free(defs);
 }	
 
-/**
- * Call this initialiser if you want the sound engine to automatically handle audio session interruption.
- * If you are using the sound engine in conjunction with another audio api such as AVAudioPlayer or
- * AudioQueue then you probably do not want the sound engine to handle audio session interruption
- * for you.
- *
- * The audioSessionCategory should be one of the audio session category enumeration values such as
- * kAudioSessionCategory_AmbientSound. Your choice is dependent on how you want your audio to interact
- * with other audio on the device.
- *
- * Please note that audio session interruption is different to application interruption.  Known triggers are
- * alarm notification from clock, incoming phone call that is rejected and video playback ending.
- */
-- (id)init:(UInt32) audioSessionCategory 
+- (id)init
 {	
 	if ((self = [super init])) {
 		
 		asynchLoadProgress_ = 0.0f;
-		_audioSessionCategory = audioSessionCategory;
-		_handleAudioSession = (_audioSessionCategory != CD_IGNORE_AUDIO_SESSION);
-		if (_handleAudioSession) {
-			CDLOG(@"Denshion::CDSoundEngine - Sound engine will handle audio session interruption");
-			//Set up audio session
-			OSStatus result = AudioSessionInitialize(NULL, NULL,interruptionListenerCallback, self); 
-			result = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory); 
-			#pragma unused(result)
-		}	
 		
 		bufferTotal = CD_BUFFERS_START;
 		_buffers = (bufferInfo *)malloc( sizeof(_buffers[0]) * bufferTotal);
@@ -410,13 +377,6 @@ static BOOL _mixerRateSet = NO;
 	
 	return self;
 }
-
-/**
- * If you call this initialiser the sound engine won't handle audio session interruption and resumption.
- */
-- (id)init {
-	return [self init:CD_IGNORE_AUDIO_SESSION];
-}	
 
 /**
  * Delete the buffer identified by soundId
@@ -636,100 +596,6 @@ static BOOL _mixerRateSet = NO;
 		return FALSE;
 	}	
 }
-
-/*
-- (BOOL) loadBuffer:(int) soundId filePath:(NSString*) filePath
-{
-	
-	ALenum  format;
-	ALvoid* data;
-	ALsizei size;
-	ALsizei freq;
-	
-	CDLOG(@"Denshion::CDSoundEngine - Loading openAL buffer %i %@", soundId, filePath);
-	
-	if (!functioning_) {
-		//OpenAL initialisation has previously failed
-		CDLOG(@"Denshion::CDSoundEngine - Loading buffer failed because sound engine state != functioning");
-		return FALSE;
-	}
-	
-	//Ensure soundId is within array bounds otherwise memory corruption will occur
-	if (soundId < 0) {
-		CDLOG(@"Denshion::CDSoundEngine - soundId is negative");
-		return FALSE;
-	}
-	
-	if (soundId >= bufferTotal) {
-		//Need to resize the buffers
-		int requiredIncrement = CD_BUFFERS_INCREMENT;
-		while (bufferTotal + requiredIncrement < soundId) {
-			requiredIncrement += CD_BUFFERS_INCREMENT;
-		}
-		CDLOG(@"Denshion::CDSoundEngine - attempting to resize buffers by %i for sound %i",requiredIncrement,soundId);
-		if (![self _resizeBuffers:requiredIncrement]) {
-			CDLOG(@"Denshion::CDSoundEngine - buffer resize failed");
-			return FALSE;
-		}	
-	}	
-	
-	CFURLRef fileURL = nil;
-	NSString *path = [CDUtilities fullPathFromRelativePath:filePath];
-	if (path) {
-		fileURL = (CFURLRef)[[NSURL fileURLWithPath:path] retain];
-	}
-	
-	if (fileURL)
-	{
-		if (_buffers[soundId].bufferState != CD_BS_EMPTY) {
-			CDLOG(@"Denshion::CDSoundEngine - non empty buffer, regenerating");
-			if (![self unloadBuffer:soundId]) {
-				//Deletion of buffer failed, delete buffer routine has set buffer state and lastErrorCode
-				CFRelease(fileURL);//Thanks clang ;)
-				return FALSE;
-			}	
-		}	
-		
-		data = CDGetOpenALAudioData(fileURL, &size, &format, &freq);
-		CDLOG(@"Denshion::CDSoundEngine - size %i frequency %i format %i %i", size, freq, format, data);
-#ifdef CD_DEBUG
-		//Check that sample rate matches mixer rate and warn if they do not
-		if (freq != (int)_mixerSampleRate) {
-			CDLOG(@"Denshion::CDSoundEngine - WARNING sample rate does not match mixer sample rate performance will not be optimal.");
-		}	
-#endif		
-		CFRelease(fileURL);
-		
-		if(data == NULL) {
-			CDLOG(@"Denshion::CDSoundEngine - error loading sound data is null");
-			_buffers[soundId].bufferState = CD_BS_FAILED;
-			return FALSE;
-		}
-		
-#ifdef CD_USE_STATIC_BUFFERS
-		alBufferDataStaticProc(_buffers[soundId].bufferId, format, data, size, freq);
-		_buffers[soundId].bufferData = data;//Save the pointer to the new data
-#else		
-		alBufferData(_buffers[soundId].bufferId, format, data, size, freq);
-		free(data);//Data can be freed here because alBufferData performs a memcpy		
-#endif
-		if((lastErrorCode_ = alGetError()) != AL_NO_ERROR) {
-			CDLOG(@"Denshion::CDSoundEngine -  error attaching audio to buffer: %x\n", lastErrorCode_);
-			_buffers[soundId].bufferState = CD_BS_FAILED;
-			return FALSE;
-		} 
-	} else {
-		CDLOG(@"Denshion: Could not find file!\n");
-		//Don't change buffer state here as it will be the same as before method was called	
-		return FALSE;
-	}	
-	
-	_buffers[soundId].bufferState = CD_BS_LOADED;
-	CDLOG(@"Denshion::CDSoundEngine -  =============== Buffer Loaded ===============");
-	return TRUE;
-}
- */
-
 
 - (ALfloat) masterGain {
 	if (mute_) {
@@ -1070,51 +936,6 @@ static BOOL _mixerRateSet = NO;
 -(ALCcontext *) openALContext {
 	return context;
 }	
-
-//Code to handle audio session interruption.  Thanks to Andy Fitter and Ben Britten.
--(void)audioSessionInterrupted 
-{ 
-    CDLOG(@"Denshion::CDSoundEngine - Audio session interrupted"); 
-	ALenum  error = AL_NO_ERROR;
-    // Deactivate the current audio session 
-    AudioSessionSetActive(NO); 
-    // set the current context to NULL will 'shutdown' openAL 
-    alcMakeContextCurrent(NULL); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDSoundEngine - Error making context current %x\n", error);
-	} 
-    // now suspend your context to 'pause' your sound world 
-    alcSuspendContext(context); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDSoundEngine - Error suspending context %x\n", error);
-	} 
-	#pragma unused(error)
-} 
-
-//Code to handle audio session resumption.  Thanks to Andy Fitter and Ben Britten.
--(void)audioSessionResumed 
-{ 
-    ALenum  error = AL_NO_ERROR;
-	CDLOG(@"Denshion::CDSoundEngine - Audio session resumed"); 
-    // Reset audio session 
-    OSStatus result = AudioSessionSetProperty ( kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory ); 
-	
-	// Reactivate the current audio session 
-    result = AudioSessionSetActive(YES); 
-	#pragma unused(result)
-	
-    // Restore open al context 
-    alcMakeContextCurrent(context); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDSoundEngine - Error making context current%x\n", error);
-	} 
-    // 'unpause' my context 
-    alcProcessContext(context); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDSoundEngine - Error processing context%x\n", error);
-	} 
-	#pragma unused(error)
-} 
 
 - (void) _dumpSourceGroupsInfo {
 #ifdef CD_DEBUG	

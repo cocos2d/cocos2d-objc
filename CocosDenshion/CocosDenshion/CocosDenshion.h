@@ -225,8 +225,6 @@ typedef struct _sourceInfo {
 
 /** Initializes the engine with a group definition and a total number of groups */
 -(id)init;
-/** Initializes the engine with a group definition, a total number of groups and an audio session category */
--(id)init:(UInt32) audioSessionCategory;
 
 /** Plays a sound in a channel group with a pitch, pan and gain. The sound could played looped or not */
 -(ALuint) playSound:(int) soundId sourceGroupId:(int)sourceGroupId pitch:(float) pitch pan:(float) pan gain:(float) gain loop:(BOOL) loop;
@@ -251,8 +249,6 @@ typedef struct _sourceInfo {
 -(void) loadBuffersAsynchronously:(NSArray *) loadRequests;
 -(BOOL) unloadBuffer:(int) soundId;
 -(ALCcontext *) openALContext;
--(void) audioSessionInterrupted;
--(void) audioSessionResumed;
 
 /** Used internally, never call unless you know what you are doing */
 -(void) _soundSourcePreRelease:(CDSoundSource *) soundSource;
