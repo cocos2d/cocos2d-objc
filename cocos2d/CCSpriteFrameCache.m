@@ -174,7 +174,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		if(spriteFrame != nil) {
 			CCLOG(@"%@",[NSString stringWithFormat:@"cocos2d: WARNING: an frame with name %@ already exists. Alias not added",frameAliasKey]);
 		}
-		spriteFrame = [spriteFrames objectForKey:[frameAliasDict objectForKey:frameAliasKey]];
+		spriteFrame = [[spriteFrames objectForKey:[frameAliasDict objectForKey:frameAliasKey]] copy];
 		[spriteFrames setObject:spriteFrame forKey:frameAliasKey];
 	}
 	
