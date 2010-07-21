@@ -45,17 +45,62 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+/*
+ * Extension: Added PVR non-compressed formats for cocos2d
+ */
+
 #import "CCPVRTexture.h"
 #import "ccMacros.h"
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
+#define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
 
 static char gPVRTexIdentifier[4] = "PVR!";
 
 enum
 {
-	kPVRTextureFlagTypePVRTC_2 = 24,
-	kPVRTextureFlagTypePVRTC_4
+	kPVRTextureFlagTypeRGBA_4444= 0x10,
+	kPVRTextureFlagTypeRGBA_5551,
+	kPVRTextureFlagTypeRGBA_8888,
+	kPVRTextureFlagTypeRGB_565,
+	kPVRTextureFlagTypeRGB_555,				// unsupported
+	kPVRTextureFlagTypeRGB_888,				// unsupported
+	kPVRTextureFlagTypeI_8,
+	kPVRTextureFlagTypeAI_88,
+	kPVRTextureFlagTypePVRTC_2,
+	kPVRTextureFlagTypePVRTC_4,	
+	kPVRTextureFlagTypeBGRA_8888,
+	kPVRTextureFlagTypeA_8,
+};
+
+static int tableFormats[][6] = {
+	
+	// - PVR texture format
+	// - OpenGL internal format
+	// - OpenGL format
+	// - OpenGL type
+	// - bpp
+	// - compressed
+	{ kPVRTextureFlagTypeRGBA_4444, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,	16, NO	},
+	{ kPVRTextureFlagTypeRGBA_5551, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,	16, NO	},
+	{ kPVRTextureFlagTypeRGBA_8888, GL_RGBA,	GL_RGBA, GL_UNSIGNED_BYTE,			32, NO	},
+	{ kPVRTextureFlagTypeRGB_565,	GL_RGB,		GL_RGB,	 GL_UNSIGNED_SHORT_5_6_5,	16, NO	},
+	{ kPVRTextureFlagTypeI_8,		GL_LUMINANCE,	GL_LUMINANCE,	GL_UNSIGNED_BYTE,			8,	NO	},
+	{ kPVRTextureFlagTypeAI_88,		GL_LUMINANCE_ALPHA,	GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,	16,	NO	},
+	{ kPVRTextureFlagTypePVRTC_2,	GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,	2,	YES },
+	{ kPVRTextureFlagTypePVRTC_4,	GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,	4,	YES	},
+	{ kPVRTextureFlagTypeBGRA_8888, GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,			32,	NO	},
+	{ kPVRTextureFlagTypeA_8,		GL_ALPHA,	GL_ALPHA,	GL_UNSIGNED_BYTE,		8,	NO	},
+};
+#define MAX_TABLE_ELEMENTS (sizeof(tableFormats) / sizeof(tableFormats[0]))
+
+enum {
+	kCCInternalPVRTextureFormat,
+	kCCInternalOpenGLInternalFormat,
+	kCCInternalOpenGLFormat,
+	kCCInternalOpenGLType,
+	kCCInternalBPP,
+	kCCInternalCompressedImage,
 };
 
 typedef struct _PVRTexHeader
@@ -78,14 +123,13 @@ typedef struct _PVRTexHeader
 
 @implementation CCPVRTexture
 
-@synthesize name = _name;
-@synthesize width = _width;
-@synthesize height = _height;
-@synthesize internalFormat = _internalFormat;
-@synthesize hasAlpha = _hasAlpha;
+@synthesize name = name_;
+@synthesize width = width_;
+@synthesize height = height_;
+@synthesize hasAlpha = hasAlpha_;
 
 // cocos2d integration
-@synthesize retainName = _retainName;
+@synthesize retainName = retainName_;
 
 
 - (BOOL)unpackPVRData:(NSData *)data
@@ -113,64 +157,75 @@ typedef struct _PVRTexHeader
 	
 	flags = CFSwapInt32LittleToHost(header->flags);
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
-	
-	if (formatFlags == kPVRTextureFlagTypePVRTC_4 || formatFlags == kPVRTextureFlagTypePVRTC_2)
-	{
-		[_imageData removeAllObjects];
-		
-		if (formatFlags == kPVRTextureFlagTypePVRTC_4)
-			_internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-		else if (formatFlags == kPVRTextureFlagTypePVRTC_2)
-			_internalFormat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-	
-		_width = width = CFSwapInt32LittleToHost(header->width);
-		_height = height = CFSwapInt32LittleToHost(header->height);
-		
-		if (CFSwapInt32LittleToHost(header->bitmaskAlpha))
-			_hasAlpha = TRUE;
-		else
-			_hasAlpha = FALSE;
-		
-		dataLength = CFSwapInt32LittleToHost(header->dataLength);
-		
-		bytes = ((uint8_t *)[data bytes]) + sizeof(PVRTexHeader);
-		
-		// Calculate the data size for each texture level and respect the minimum number of blocks
-		while (dataOffset < dataLength)
-		{
-			if (formatFlags == kPVRTextureFlagTypePVRTC_4)
-			{
-				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
-				widthBlocks = width / 4;
-				heightBlocks = height / 4;
-				bpp = 4;
-			}
-			else
-			{
-				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
-				widthBlocks = width / 8;
-				heightBlocks = height / 4;
-				bpp = 2;
-			}
-			
-			// Clamp to minimum number of blocks
-			if (widthBlocks < 2)
-				widthBlocks = 2;
-			if (heightBlocks < 2)
-				heightBlocks = 2;
+	int flipped = flags & PVR_TEXTURE_FLAG_FLIPPED_MASK;
+	if( flipped )
+		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it.");
 
-			dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
+	
+	for( tableFormatIndex_=0; tableFormatIndex_ < MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
+		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
 			
-			[_imageData addObject:[NSData dataWithBytes:bytes+dataOffset length:dataSize]];
+			[imageData_ removeAllObjects];
+					
+			width_ = width = CFSwapInt32LittleToHost(header->width);
+			height_ = height = CFSwapInt32LittleToHost(header->height);
 			
-			dataOffset += dataSize;
+			if (CFSwapInt32LittleToHost(header->bitmaskAlpha))
+				hasAlpha_ = TRUE;
+			else
+				hasAlpha_ = FALSE;
 			
-			width = MAX(width >> 1, 1);
-			height = MAX(height >> 1, 1);
+			dataLength = CFSwapInt32LittleToHost(header->dataLength);
+			
+			bytes = ((uint8_t *)[data bytes]) + sizeof(PVRTexHeader);
+			
+			// Calculate the data size for each texture level and respect the minimum number of blocks
+			while (dataOffset < dataLength)
+			{
+				switch (formatFlags) {
+					case kPVRTextureFlagTypePVRTC_2:
+						blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
+						widthBlocks = width / 8;
+						heightBlocks = height / 4;
+						bpp = 2;
+						break;
+					case kPVRTextureFlagTypePVRTC_4:
+						blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+						widthBlocks = width / 4;
+						heightBlocks = height / 4;
+						bpp = 4;
+						break;
+					default:
+						blockSize = 1;
+						widthBlocks = width;
+						heightBlocks = height;
+						bpp = tableFormats[ tableFormatIndex_][ kCCInternalBPP];
+						break;
+				}
+				
+				// Clamp to minimum number of blocks
+				if (widthBlocks < 2)
+					widthBlocks = 2;
+				if (heightBlocks < 2)
+					heightBlocks = 2;
+
+				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
+				
+				[imageData_ addObject:[NSData dataWithBytes:bytes+dataOffset length:dataSize]];
+				
+				dataOffset += dataSize;
+				
+				width = MAX(width >> 1, 1);
+				height = MAX(height >> 1, 1);
+			}
+					  
+			success = TRUE;
+			break;
 		}
-				  
-		success = TRUE;
 	}
+	
+	if( ! success )
+		CCLOG(@"cocos2d: WARNING: Unssupported PVR Pixel Format: 0x%2x", formatFlags);
 	
 	return success;
 }
@@ -178,24 +233,33 @@ typedef struct _PVRTexHeader
 
 - (BOOL)createGLTexture
 {
-	int width = _width;
-	int height = _height;
+	int width = width_;
+	int height = height_;
 	NSData *data;
 	GLenum err;
 	
-	if ([_imageData count] > 0)
+	if ([imageData_ count] > 0)
 	{
-		if (_name != 0)
-			glDeleteTextures(1, &_name);
+		if (name_ != 0)
+			glDeleteTextures(1, &name_);
 		
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
+		glGenTextures(1, &name_);
+		glBindTexture(GL_TEXTURE_2D, name_);
 	}
 
-	for (NSUInteger i=0; i < [_imageData count]; i++)
+	for (NSUInteger i=0; i < [imageData_ count]; i++)
 	{
-		data = [_imageData objectAtIndex:i];
-		glCompressedTexImage2D(GL_TEXTURE_2D, i, _internalFormat, width, height, 0, [data length], [data bytes]);
+		GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
+		GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
+		GLenum type = tableFormats[tableFormatIndex_][kCCInternalOpenGLType];
+		int compressed = tableFormats[tableFormatIndex_][kCCInternalCompressedImage];
+		
+		data = [imageData_ objectAtIndex:i];
+		if( compressed)
+			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, [data length], [data bytes]);
+		else 
+			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, [data bytes]);
+
 		
 		err = glGetError();
 		if (err != GL_NO_ERROR)
@@ -208,7 +272,7 @@ typedef struct _PVRTexHeader
 		height = MAX(height >> 1, 1);
 	}
 	
-	[_imageData removeAllObjects];
+	[imageData_ removeAllObjects];
 	
 	return TRUE;
 }
@@ -220,14 +284,14 @@ typedef struct _PVRTexHeader
 	{
 		NSData *data = [NSData dataWithContentsOfFile:path];
 		
-		_imageData = [[NSMutableArray alloc] initWithCapacity:10];
+		imageData_ = [[NSMutableArray alloc] initWithCapacity:10];
 		
-		_name = 0;
-		_width = _height = 0;
-		_internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-		_hasAlpha = FALSE;
+		name_ = 0;
+		width_ = height_ = 0;
+		tableFormatIndex_ = -1;
+		hasAlpha_ = FALSE;
 		
-		_retainName = NO; // cocos2d integration
+		retainName_ = NO; // cocos2d integration
 
 		if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
 		{
@@ -272,10 +336,10 @@ typedef struct _PVRTexHeader
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
-	[_imageData release];
+	[imageData_ release];
 	
-	if (_name != 0 && ! _retainName )
-		glDeleteTextures(1, &_name);
+	if (name_ != 0 && ! retainName_ )
+		glDeleteTextures(1, &name_);
 	
 	[super dealloc];
 }
