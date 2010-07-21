@@ -708,7 +708,21 @@ static BOOL configured = FALSE;
 	
 	// Reactivate the current audio session 
     result = [self audioSessionSetActive:YES]; 
-	#pragma unused(result)
+	//This code is to handle a problem with iOS 4.0 and 4.01 where reactivating the session can fail if
+	//task switching is performed too rapidly. A test case that reliably reproduces the issue is to call the
+	//iPhone and then hang up after two rings (timing may vary ;))
+	//Basically we keep waiting and trying to let the OS catch up with itself but the number of tries is
+	//limited.
+	if (result != 0) {
+		CDLOG(@"Denshion::CDAudioManager - Failure reactivating audio session, will try wait-try cycle"); 
+		int activateCount = 0;
+		while (result !=0 && activateCount < 10) {
+		    [NSThread sleepForTimeInterval:0.5];
+			result = [self audioSessionSetActive:YES]; 
+			activateCount++;
+			CDLOG(@"Denshion::CDAudioManager - Reactivation attempt %i status = %i",activateCount,(int)result); 
+		}	
+	}	
 	
     // Restore open al context 
     alcMakeContextCurrent([soundEngine openALContext]); 
