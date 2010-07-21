@@ -516,13 +516,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		if( pvr ) {
 			pvr.retainName = YES;	// don't dealloc texture on release
 			
-			float pvrW = [pvr width];
-			float pvrH = [pvr height];
 			_name = pvr.name;	// texture id
-			_maxS = pvrW / nextPOT(pvrW);
-			_maxT = pvrH / nextPOT(pvrH);
-			_width = pvrW;
-			_height = pvrH;
+			_maxS = 1;			// only POT texture are supported
+			_maxT = 1;
+			_width = pvr.width;
+			_height = pvr.height;
 			_size = CGSizeMake(_width, _height);
 
 			[pvr release];
