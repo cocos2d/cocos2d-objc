@@ -23,6 +23,7 @@ static NSString *transitions[] = {
 	@"TexturePVRMipMap",
 	@"TexturePVRMipMap2",
 	@"TexturePVRNonSquare",
+	@"TexturePVRNPOT",
 	@"TexturePVR2BPP",
 	@"TexturePVRRaw",
 	@"TexturePVR",
@@ -723,6 +724,33 @@ Class restartAction()
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
+	CCSprite *img = [CCSprite spriteWithFile:@"grossini_128x256_mipmap.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + Non square texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"Loading a 128x256 texture";
+}
+
+@end
+
+#pragma mark -
+#pragma mark TexturePVR NPOT
+
+@implementation TexturePVRNPOT
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
 	CCSprite *img = [CCSprite spriteWithFile:@"grossini_pvr_rgba4444.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -732,6 +760,11 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PVR + NPOT texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"Loading a 81x121 texture. Not supported yet";
 }
 @end
 

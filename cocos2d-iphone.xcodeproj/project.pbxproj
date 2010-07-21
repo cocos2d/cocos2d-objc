@@ -1822,6 +1822,7 @@
 		E0A4A18F11F75CDE003B9D29 /* test_image_a8.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A15411F758B0003B9D29 /* test_image_a8.pvr */; };
 		E0A4A1D011F7634C003B9D29 /* grossini_pvr_rgba4444.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A1CE11F7634C003B9D29 /* grossini_pvr_rgba4444.pvr */; };
 		E0A4A1DE11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */; };
+		E0A4A20B11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 /* End PBXBuildFile section */
@@ -3611,6 +3612,7 @@
 		E0A4A17111F75BF5003B9D29 /* test_image_i8.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_i8.pvr; sourceTree = "<group>"; };
 		E0A4A1CE11F7634C003B9D29 /* grossini_pvr_rgba4444.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba4444.pvr; sourceTree = "<group>"; };
 		E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba4444_mipmap.pvr; sourceTree = "<group>"; };
+		E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_128x256_mipmap.pvr; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -5767,6 +5769,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */,
 				E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */,
 				E0A4A1CE11F7634C003B9D29 /* grossini_pvr_rgba4444.pvr */,
 				E0A4A17111F75BF5003B9D29 /* test_image_i8.pvr */,
@@ -8258,6 +8261,7 @@
 				E0A4A18F11F75CDE003B9D29 /* test_image_a8.pvr in Resources */,
 				E0A4A1D011F7634C003B9D29 /* grossini_pvr_rgba4444.pvr in Resources */,
 				E0A4A1DE11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr in Resources */,
+				E0A4A20B11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -98,6 +98,9 @@
 {}
 @end
 
+@interface TexturePVRNPOT : TextureDemo
+{}
+@end
 
 @interface TexturePVRRaw : TextureDemo
 {}
