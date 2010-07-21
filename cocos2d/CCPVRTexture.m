@@ -55,6 +55,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 #define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
 
+static unsigned int nextPOT(unsigned int x)
+{
+    x = x - 1;
+    x = x | (x >> 1);
+    x = x | (x >> 2);
+    x = x | (x >> 4);
+    x = x | (x >> 8);
+    x = x | (x >>16);
+    return x + 1;
+}
+
 static char gPVRTexIdentifier[4] = "PVR!";
 
 enum
@@ -161,6 +172,8 @@ typedef struct _PVRTexHeader
 	if( flipped )
 		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it.");
 
+	if( header->width != nextPOT(header->width) || header->height != nextPOT(header->height) )
+		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported.");
 	
 	for( tableFormatIndex_=0; tableFormatIndex_ < MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
