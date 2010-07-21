@@ -5,6 +5,8 @@ version 0.99.5-rc XX-MMM-2010
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
  . [NEW] SpriteFrameCache: Added support for Zwoptex name aliases (issue #935)
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
+ . [NEW] Texture2D: Added support for Non compressed PVR images. New supported formats:
+			RGBA_8888, BGRA_8888, RGBA_4444, RGBA_5551, RGB_565, A_8, AI_88, I_8
  . [FIX] CCArray: conforms to NSCopying protocol (issue #934)
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
                 and PointParticles when compiled in ARMv6
