@@ -46,7 +46,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 */
 
 /*
- * Extension: Added PVR non-compressed formats for cocos2d
+ * Extended PVR formats for cocos2d project ( http://www.cocos2d-iphone.org )
+ *	- RGBA8888
+ *	- BGRA8888
+ *  - RGBA4444
+ *  - RGBA5551
+ *  - RGB565
+ *  - A8
+ *  - I8
+ *  - AI88
  */
 
 #import "CCPVRTexture.h"
