@@ -2,6 +2,7 @@ version 0.99.5-beta XX-MMM-2010
  . [NEW] BitmapFontAtlas: added support for multilines labels
  . [NEW] BitmapFontAtlas: added optional setCString method
  . [NEW] Configuration: added a helper method to obtain the iOS version
+ . [NEW] Config: added CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA. Enabled by default.
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
  . [NEW] SpriteFrameCache: Added support for Zwoptex name aliases (issue #935)
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
