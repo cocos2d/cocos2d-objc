@@ -141,6 +141,53 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 #pragma mark TextureTest
 
 @implementation TextureTest
+-(void) performTestsPNG:(NSString*)filename
+{
+	struct timeval now;
+	CCTexture2D *texture;
+	CCTextureCache *cache = [CCTextureCache sharedTextureCache];
+
+	printf("RGBA 8888");
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	gettimeofday(&now, NULL);	
+	texture = [cache addImage:filename];
+	if( texture )
+		printf("  ms:%f\n", calculateDeltaTime(&now) );
+	else
+		printf(" ERROR\n");
+	[cache removeTexture:texture];
+	
+	printf("RGBA 4444");
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+	gettimeofday(&now, NULL);	
+	texture = [cache addImage:filename];
+	if( texture )
+		printf("  ms:%f\n", calculateDeltaTime(&now) );
+	else
+		printf(" ERROR\n");
+	[cache removeTexture:texture];
+	
+	printf("RGBA 5551");
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB5A1];
+	gettimeofday(&now, NULL);	
+	texture = [cache addImage:filename];
+	if( texture )
+		printf("  ms:%f\n", calculateDeltaTime(&now) );
+	else
+		printf(" ERROR\n");
+	[cache removeTexture:texture];
+	
+	printf("RGB 565");
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
+	gettimeofday(&now, NULL);	
+	texture = [cache addImage:filename];
+	if( texture )
+		printf("  ms:%f\n", calculateDeltaTime(&now) );
+	else
+		printf(" ERROR\n");
+	[cache removeTexture:texture];
+}
+
 -(void) performTests
 {
 	CCTexture2D *texture;
@@ -149,47 +196,11 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 	
 	printf("\n\n--------\n\n");
 	
-	printf("Loading PNG 128x128... RGBA 8888");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"test_image.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-
-	printf("Loading PNG 128x128... RGBA 4444");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"test_image.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-
-	printf("Loading PNG 128x128... RGBA 5551");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB5A1];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"test_image.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-
-	printf("Loading PNG 128x128... RGB 565");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"test_image.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-
-	printf("Loading PVR 128x128... RGBA 8888");
+	printf("--- PNG 128x128 ---\n");
+	[self performTestsPNG:@"test_image.png"];
+	
+	printf("--- PVR 128x128 ---\n");
+	printf("RGBA 8888");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"test_image_rgba8888.pvr"];
 	if( texture )
@@ -198,7 +209,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 		printf("ERROR\n");
 	[cache removeTexture:texture];
 
-	printf("Loading PVR 128x128... BGRA 8888");
+	printf("BGRA 8888");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"test_image_bgra8888.pvr"];
 	if( texture )
@@ -207,7 +218,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 		printf("ERROR\n");
 	[cache removeTexture:texture];
 	
-	printf("Loading PVR 128x128... RGBA 4444");
+	printf("RGBA 4444");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"test_image_rgba4444.pvr"];
 	if( texture )
@@ -216,7 +227,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 		printf("ERROR\n");
 	[cache removeTexture:texture];
 
-	printf("Loading PVR 128x128... RGB 565");
+	printf("RGB 565");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"test_image_rgb565.pvr"];
 	if( texture )
@@ -226,39 +237,11 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 	[cache removeTexture:texture];
 	
 	
-	printf("--------\n");
+	printf("\n\n--- PNG 512x512 ---\n");
+	[self performTestsPNG:@"texture512x512.png"];
 	
-	printf("Loading PNG 512x512... RGBA 4444");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"texture512x512.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-
-	printf("Loading PNG 1024x1024... RGBA 4444");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"texture1024x1024.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-
-	printf("Loading PNG 2048x2048... RGBA 4444");
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"texture2048x2048.png"];
-	if( texture )
-		printf("  ms:%f\n", calculateDeltaTime(&now) );
-	else
-		printf("ERROR\n");
-	[cache removeTexture:texture];
-		
-	printf("Loading PVR 512x512... RGBA 4444");
+	printf("--- PVR 512x512 ---\n");
+	printf("RGBA 4444");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"texture512x512_rgba4444.pvr"];
 	if( texture )
@@ -266,8 +249,15 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 	else
 		printf("ERROR\n");
 	[cache removeTexture:texture];
+	
 
-	printf("Loading PVR 1024x1024... RGBA 4444");
+	
+	
+	printf("\n\n--- PNG 1024x1024 ---\n");
+	[self performTestsPNG:@"texture1024x1024.png"];
+	
+	printf("--- PVR 1024x1024 ---\n");
+	printf("RGBA 4444");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"texture1024x1024_rgba4444.pvr"];
 	if( texture )
@@ -275,8 +265,13 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 	else
 		printf("ERROR\n");
 	[cache removeTexture:texture];
-
-	printf("Loading PVR 2048x2048... RGBA 4444");
+	
+	
+	printf("\n\n--- PNG 2048x2048 ---\n");
+	[self performTestsPNG:@"texture2048x2048.png"];
+	
+	printf("--- PVR 2048x2048 ---\n");
+	printf("RGBA 4444");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"texture2048x2048_rgba4444.pvr"];
 	if( texture )
