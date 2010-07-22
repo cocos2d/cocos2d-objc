@@ -172,11 +172,23 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
  Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
-@interface CCTexture2D (PVRTC)
-/** Initializes a texture from a PVRTC buffer */
+@interface CCTexture2D (PVR)
+/** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
-/** Initializes a texture from a PVRTC file */
--(id) initWithPVRTCFile: (NSString*) file;
+/** Initializes a texture from a PVR file.
+ Supported PVR formats:
+	- BGRA 8888
+	- RGBA 8888
+	- RGBA 4444
+	- RGBA 5551
+	- RBG 565
+	- A 8
+	- I 8
+	- AI 8
+	- PVRTC 2BPP
+	- PVRTC 4BPP
+ */
+-(id) initWithPVRFile: (NSString*) file;
 @end
 
 /**

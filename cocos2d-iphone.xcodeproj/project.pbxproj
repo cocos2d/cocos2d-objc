@@ -5769,19 +5769,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */,
-				E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */,
-				E0A4A1CE11F7634C003B9D29 /* grossini_pvr_rgba4444.pvr */,
-				E0A4A17111F75BF5003B9D29 /* test_image_i8.pvr */,
-				E0A4A15411F758B0003B9D29 /* test_image_a8.pvr */,
-				E0A4A15511F758B0003B9D29 /* test_image_ai88.pvr */,
-				E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */,
-				E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */,
-				E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */,
-				E0A4A05511F72D79003B9D29 /* test_image_rgb565.pvr */,
-				E0A4A05611F72D79003B9D29 /* test_image_rgba4444.pvr */,
-				E0A4A05711F72D79003B9D29 /* test_image_rgba5551.pvr */,
-				E0A4A05811F72D79003B9D29 /* test_image_rgba8888.pvr */,
+				E0A4A24A11F899BB003B9D29 /* PVR test */,
 				50E2A52510A4AA1700D894CE /* sprites_test */,
 				508A333A0FBADD6A00D574A2 /* grossini images */,
 				508A333D0FBADE2D00D574A2 /* menu related images */,
@@ -5797,12 +5785,8 @@
 				8EDF3FDA0F6BE3F400F54643 /* source-marker.png */,
 				50E676960F6587FD003DAA90 /* spritesheet1.pvr */,
 				50E675060F65628C003DAA90 /* spritesheet1.png */,
-				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
-				5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */,
 				5031697F10289F68003ACFE7 /* pattern1.png */,
 				50B53B640F3F28DC00E81F83 /* test_image.gif */,
-				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
-				500044030F3CC15D00A5FBF4 /* test_image.pvrraw */,
 				500043710F3CB58600A5FBF4 /* test_image.bmp */,
 				500043720F3CB58600A5FBF4 /* test_image.jpeg */,
 				500043730F3CB58600A5FBF4 /* test_image.png */,
@@ -6168,6 +6152,30 @@
 				8EDF3EA60F6BD90B00F54643 /* SoundEngineTest.m */,
 			);
 			path = "sound-engine-sample";
+			sourceTree = "<group>";
+		};
+		E0A4A24A11F899BB003B9D29 /* PVR test */ = {
+			isa = PBXGroup;
+			children = (
+				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
+				500044030F3CC15D00A5FBF4 /* test_image.pvrraw */,
+				E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */,
+				E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */,
+				E0A4A1CE11F7634C003B9D29 /* grossini_pvr_rgba4444.pvr */,
+				E0A4A17111F75BF5003B9D29 /* test_image_i8.pvr */,
+				E0A4A15411F758B0003B9D29 /* test_image_a8.pvr */,
+				E0A4A15511F758B0003B9D29 /* test_image_ai88.pvr */,
+				E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */,
+				E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */,
+				E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */,
+				E0A4A05511F72D79003B9D29 /* test_image_rgb565.pvr */,
+				E0A4A05611F72D79003B9D29 /* test_image_rgba4444.pvr */,
+				E0A4A05711F72D79003B9D29 /* test_image_rgba5551.pvr */,
+				E0A4A05811F72D79003B9D29 /* test_image_rgba8888.pvr */,
+				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
+				5037AF1D0F49B980004DCA1F /* logo-nomipmap.pvr */,
+			);
+			name = "PVR test";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

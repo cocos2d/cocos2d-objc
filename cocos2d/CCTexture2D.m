@@ -465,7 +465,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 
 @end
 
-@implementation CCTexture2D (PVRTC)
+@implementation CCTexture2D (PVR)
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
 {
 //	GLint					saveName;
@@ -503,14 +503,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	return self;
 }
 
--(id) initWithPVRTCFile: (NSString*) file
+-(id) initWithPVRFile: (NSString*) file
 {
-	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
-		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
-		[self release];
-		return nil;
-	}	
-
 	if( (self = [super init]) ) {
 		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
 		if( pvr ) {
