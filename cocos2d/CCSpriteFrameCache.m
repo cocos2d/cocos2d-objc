@@ -96,11 +96,13 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			ZWTCoordinatesListXMLFormat_Legacy = 0 // flash version
 			ZWTCoordinatesListXMLFormat_v1_0 = 1, // desktop version
 			ZWTCoordinatesListXMLFormat_v1_1 = 2, // desktop version - adds rotated support
-			ZWTCoordinatesListXMLFormat_v1_2 = 3, // desktop version - adds aliasing support
+			ZWTCoordinatesListXMLFormat_v1_2 = 3, // desktop version - adds name aliasing support
 		};
 	*/
 	NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
 	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
+	NSMutableDictionary *frameAliasDict = [NSMutableDictionary dictionary];
+
 	int format = 0;
 	
 	// get the format
@@ -109,12 +111,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	}
 	
 	// check the format
-	if(format < 0 || format > 3) {
-		NSAssert(NO,@"cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
-		return;
-	}
+	NSAssert( format >= 0 && format <= 3, @"cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
 	
-	NSMutableDictionary *frameAliasDict = [NSMutableDictionary dictionary];
 	
 	// add real frames
 	for(NSString *frameDictKey in framesDict) {
@@ -169,6 +167,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	}
 	
 	// add aliased frames
+	// XXX: This code should be rewritten.
+	// XXX: An "alias" dictionary should be added instead of copying the SpriteFrame
 	for(NSString *frameAliasKey in frameAliasDict) {
 		CCSpriteFrame *spriteFrame = [spriteFrames objectForKey:frameAliasKey];
 		if(spriteFrame != nil) {
