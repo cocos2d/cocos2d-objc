@@ -245,8 +245,11 @@ static tAudioManagerMode configuredMode;
 static BOOL configured = FALSE;
 
 -(OSStatus) audioSessionSetActive:(BOOL) active {
-	_audioSessionActive = active;
 	OSStatus result = AudioSessionSetActive(active);
+	//0 means it worked
+	if (result == 0) {
+		_audioSessionActive = active;
+	}	
 	CDLOG(@"Denshion::CDAudioManager - Audio session set active %i status = %i", active, (int)result); 
 	return result;
 }	
@@ -619,6 +622,8 @@ static BOOL configured = FALSE;
 			
 	}			
 	
+	[self audioSessionInterrupted];//Testing
+
 	CDLOG(@"Denshion::CDAudioManager - handled resign active");
 }
 
@@ -658,6 +663,8 @@ static BOOL configured = FALSE;
 		}
 		CDLOG(@"Denshion::CDAudioManager - audio manager handled become active");
 	}
+	
+	[self audioSessionResumed];//Testing
 }
 
 //Called when application becomes active only if setResignBehavior has been called
@@ -684,52 +691,73 @@ static BOOL configured = FALSE;
 //Code to handle audio session interruption.  Thanks to Andy Fitter and Ben Britten.
 -(void)audioSessionInterrupted 
 { 
-    CDLOG(@"Denshion::CDAudioManager - Audio session interrupted"); 
-	_interrupted = YES;
-	ALenum  error = AL_NO_ERROR;
-    // Deactivate the current audio session 
-    [self audioSessionSetActive:NO]; 
-    // set the current context to NULL will 'shutdown' openAL 
-    alcMakeContextCurrent(NULL); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDAudioManager - Error making context current %x\n", error);
-	} 
-	#pragma unused(error)
+    if (!_interrupted) {
+		CDLOG(@"Denshion::CDAudioManager - Audio session interrupted"); 
+		_interrupted = YES;
+
+		// Deactivate the current audio session 
+		if (_audioSessionActive) {
+		    [self audioSessionSetActive:NO];
+		}	
+		
+		if (alcGetCurrentContext() != NULL) {
+			CDLOG(@"Denshion::CDAudioManager - Setting OpenAL context to NULL"); 
+
+			ALenum  error = AL_NO_ERROR;
+
+			// set the current context to NULL will 'shutdown' openAL 
+			alcMakeContextCurrent(NULL); 
+		
+			if((error = alGetError()) != AL_NO_ERROR) {
+				CDLOG(@"Denshion::CDAudioManager - Error making context current %x\n", error);
+			} 
+			#pragma unused(error)
+		}
+	}	
 } 
 
 //Code to handle audio session resumption.  Thanks to Andy Fitter and Ben Britten.
 -(void)audioSessionResumed 
 { 
-	CDLOG(@"Denshion::CDAudioManager - Audio session resumed"); 
-	_interrupted = NO;
-	ALenum  error = AL_NO_ERROR;
-    // Reset audio session 
-    OSStatus result = AudioSessionSetProperty ( kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory ); 
-	
-	// Reactivate the current audio session 
-    result = [self audioSessionSetActive:YES]; 
-	//This code is to handle a problem with iOS 4.0 and 4.01 where reactivating the session can fail if
-	//task switching is performed too rapidly. A test case that reliably reproduces the issue is to call the
-	//iPhone and then hang up after two rings (timing may vary ;))
-	//Basically we keep waiting and trying to let the OS catch up with itself but the number of tries is
-	//limited.
-	if (result != 0) {
-		CDLOG(@"Denshion::CDAudioManager - Failure reactivating audio session, will try wait-try cycle"); 
-		int activateCount = 0;
-		while (result !=0 && activateCount < 10) {
-		    [NSThread sleepForTimeInterval:0.5];
+	if (_interrupted) {
+		CDLOG(@"Denshion::CDAudioManager - Audio session resumed"); 
+		_interrupted = NO;
+		ALenum  error = AL_NO_ERROR;
+		// Reset audio session 
+		OSStatus result = AudioSessionSetProperty ( kAudioSessionProperty_AudioCategory, sizeof(_audioSessionCategory), &_audioSessionCategory ); 
+		
+		// Reactivate the current audio session
+		if (!_audioSessionActive) {
 			result = [self audioSessionSetActive:YES]; 
-			activateCount++;
-			CDLOG(@"Denshion::CDAudioManager - Reactivation attempt %i status = %i",activateCount,(int)result); 
+			
+			//This code is to handle a problem with iOS 4.0 and 4.01 where reactivating the session can fail if
+			//task switching is performed too rapidly. A test case that reliably reproduces the issue is to call the
+			//iPhone and then hang up after two rings (timing may vary ;))
+			//Basically we keep waiting and trying to let the OS catch up with itself but the number of tries is
+			//limited.
+			if (result != 0) {
+				CDLOG(@"Denshion::CDAudioManager - Failure reactivating audio session, will try wait-try cycle"); 
+				int activateCount = 0;
+				while (result !=0 && activateCount < 10) {
+					[NSThread sleepForTimeInterval:0.5];
+					result = [self audioSessionSetActive:YES]; 
+					activateCount++;
+					CDLOG(@"Denshion::CDAudioManager - Reactivation attempt %i status = %i",activateCount,(int)result); 
+				}	
+			}
+		}	
+		
+		if (alcGetCurrentContext() == NULL) {
+			CDLOG(@"Denshion::CDAudioManager - Restoring OpenAL context"); 
+
+			// Restore open al context 
+			alcMakeContextCurrent([soundEngine openALContext]); 
+			if((error = alGetError()) != AL_NO_ERROR) {
+				CDLOG(@"Denshion::CDAudioManager - Error making context current%x\n", error);
+			} 
+			#pragma unused(error)
 		}	
 	}	
-	
-    // Restore open al context 
-    alcMakeContextCurrent([soundEngine openALContext]); 
-	if((error = alGetError()) != AL_NO_ERROR) {
-		CDLOG(@"Denshion::CDAudioManager - Error making context current%x\n", error);
-	} 
-    #pragma unused(error)
 }
 
 +(void) end {
