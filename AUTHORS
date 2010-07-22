@@ -175,6 +175,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Labels in Texture2D
 	* Keith Peters:
 		author of Bezier drawing primitives
+	* Kristoffer Grönlund
+		Added multiline support in CCBitmapFontAtlas
 	* Lam Pham (http://www.fancyratstudios.com/)
 		Author of CCProgressTimer node
 		Author of CCProgressTo and CCProgressFromTo actions

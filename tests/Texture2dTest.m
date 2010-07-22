@@ -1397,28 +1397,28 @@ Class restartAction()
 		CCSprite *sprite = nil;
 		
 		printf("Loading 512x512 image...");
-		sprite = [CCSprite spriteWithFile:@"texture512x512.jpeg"];
+		sprite = [CCSprite spriteWithFile:@"texture512x512.png"];
 		if( sprite )
 			printf("OK\n");
 		else
 			printf("Error\n");
 
 		printf("Loading 1024x1024 image...");
-		sprite = [CCSprite spriteWithFile:@"texture1024x1024.jpeg"];
+		sprite = [CCSprite spriteWithFile:@"texture1024x1024.png"];
 		if( sprite )
 			printf("OK\n");
 		else
 			printf("Error\n");
 		
 		printf("Loading 2048x2048 image...");
-		sprite = [CCSprite spriteWithFile:@"texture2048x2048.jpeg"];
+		sprite = [CCSprite spriteWithFile:@"texture2048x2048.png"];
 		if( sprite )
 			printf("OK\n");
 		else
 			printf("Error\n");
 		
 		printf("Loading 4096x4096 image...");
-		sprite = [CCSprite spriteWithFile:@"texture4096x4096.jpeg"];
+		sprite = [CCSprite spriteWithFile:@"texture4096x4096.png"];
 		if( sprite )
 			printf("OK\n");
 		else
