@@ -106,6 +106,16 @@
  */
 #define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
 
+/** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
+ If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
+ Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)
+
+ To enable set it to a value different than 0. Enabled by default.
+
+ @since v0.99.5
+ */
+#define CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA 1
+
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
  Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
  It seems it is the recommend way, but it is much slower, so, enable it at your own risk
