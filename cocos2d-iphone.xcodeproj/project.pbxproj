@@ -809,7 +809,7 @@
 		5068820B0E95761200F943E5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		5068820C0E95761200F943E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		5068820D0E95761200F943E5 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		506882140E95763E00F943E5 /* AtlasTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506881E70E9575E100F943E5 /* AtlasTest.m */; };
+		506882140E95763E00F943E5 /* LabelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 506881E70E9575E100F943E5 /* LabelTest.m */; };
 		506882160E95770400F943E5 /* CCTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50637A160E95397A000C9182 /* CCTextureAtlas.m */; };
 		506882690E957C4A00F943E5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		506884D70E96921100F943E5 /* CCLabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506884710E96734A00F943E5 /* CCLabelAtlas.m */; };
@@ -3062,9 +3062,9 @@
 		506747C1107A32AE0090963A /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
 		506747C2107A32AE0090963A /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
 		506747C3107A32AE0090963A /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
-		506881E60E9575E100F943E5 /* AtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasTest.h; path = tests/AtlasTest.h; sourceTree = "<group>"; };
-		506881E70E9575E100F943E5 /* AtlasTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtlasTest.m; path = tests/AtlasTest.m; sourceTree = "<group>"; };
-		506882110E95761200F943E5 /* AtlasTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtlasTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		506881E60E9575E100F943E5 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelTest.h; path = tests/LabelTest.h; sourceTree = "<group>"; };
+		506881E70E9575E100F943E5 /* LabelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelTest.m; path = tests/LabelTest.m; sourceTree = "<group>"; };
+		506882110E95761200F943E5 /* LabelTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LabelTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506882680E957C4A00F943E5 /* atlastest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlastest.png; sourceTree = "<group>"; };
 		506884700E96734A00F943E5 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
 		506884710E96734A00F943E5 /* CCLabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelAtlas.m; sourceTree = "<group>"; };
@@ -4497,7 +4497,7 @@
 				50DB1BCA0E1C1E5900A89DFF /* ParticleTest.app */,
 				506144080E589A2E003CCDB7 /* cocosnodeTest.app */,
 				50C7D4950E5C2ED80035ACA2 /* IntervalTest.app */,
-				506882110E95761200F943E5 /* AtlasTest.app */,
+				506882110E95761200F943E5 /* LabelTest.app */,
 				50C195600EE4B57E00829067 /* ParallaxTest.app */,
 				505B62D60F2E6A0F001B4104 /* Texture2dTest.app */,
 				505B63A30F2F4210001B4104 /* EaseActionsTest.app */,
@@ -5708,8 +5708,8 @@
 				504CC3451035BECA0096894C /* ActionManagerTest.m */,
 				50C93AC30E0BF8FC00517B01 /* ActionsTest.h */,
 				50C93AC40E0BF8FC00517B01 /* ActionsTest.m */,
-				506881E60E9575E100F943E5 /* AtlasTest.h */,
-				506881E70E9575E100F943E5 /* AtlasTest.m */,
+				506881E60E9575E100F943E5 /* LabelTest.h */,
+				506881E70E9575E100F943E5 /* LabelTest.m */,
 				504227120FC0B96E00B992F7 /* Box2dTest.h */,
 				504227130FC0B96E00B992F7 /* Box2dTest.mm */,
 				50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */,
@@ -6997,9 +6997,9 @@
 			productReference = 506144080E589A2E003CCDB7 /* cocosnodeTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		506881F40E95761200F943E5 /* AtlasTest */ = {
+		506881F40E95761200F943E5 /* LabelTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "AtlasTest" */;
+			buildConfigurationList = 5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "LabelTest" */;
 			buildPhases = (
 				506881F70E95761200F943E5 /* Resources */,
 				506882040E95761200F943E5 /* Sources */,
@@ -7010,9 +7010,9 @@
 			dependencies = (
 				506881F50E95761200F943E5 /* PBXTargetDependency */,
 			);
-			name = AtlasTest;
+			name = LabelTest;
 			productName = AtlasTest;
-			productReference = 506882110E95761200F943E5 /* AtlasTest.app */;
+			productReference = 506882110E95761200F943E5 /* LabelTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506C77CB0E01520900B48100 /* ClickAndMoveTest */ = {
@@ -7687,7 +7687,6 @@
 				504CC30C1035BDE90096894C /* ActionManagerTest */,
 				50C93A930E0BF6E000517B01 /* ActionsTest */,
 				05CA7AEC10ED674700F12774 /* ActionsWithBlocksSample */,
-				506881F40E95761200F943E5 /* AtlasTest */,
 				5048287F0F45AED700A30CEF /* AttachTest */,
 				504226120FC0B5D500B992F7 /* Box2dAccelTouchTest */,
 				50010EBA103B3DB80059EC2E /* Box2dTestBed */,
@@ -7708,6 +7707,7 @@
 				DAABAA7D1059A42E00794EB3 /* FontTest */,
 				5078B5170E3E43540004233A /* IntervalTest */,
 				50E77CEE11D4C925009CA2C2 /* HiResTest */,
+				506881F40E95761200F943E5 /* LabelTest */,
 				50479999100F6A4200D1C71A /* LayerTest */,
 				506C79F20E01C73A00B48100 /* MenuTest */,
 				05AAF3B710EE85B300CACA2B /* MenuTestWithBlocks */,
@@ -9449,7 +9449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506882140E95763E00F943E5 /* AtlasTest.m in Sources */,
+				506882140E95763E00F943E5 /* LabelTest.m in Sources */,
 				506882050E95761200F943E5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10109,7 +10109,7 @@
 		};
 		509807141175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 506881F40E95761200F943E5 /* AtlasTest */;
+			target = 506881F40E95761200F943E5 /* LabelTest */;
 			targetProxy = 509807131175042A00EA7266 /* PBXContainerItemProxy */;
 		};
 		509807161175042A00EA7266 /* PBXTargetDependency */ = {
@@ -11823,7 +11823,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AtlasTest;
+				PRODUCT_NAME = LabelTest;
 			};
 			name = Debug;
 		};
@@ -11847,7 +11847,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AtlasTest;
+				PRODUCT_NAME = LabelTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13689,7 +13689,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "AtlasTest" */ = {
+		5068820E0E95761200F943E5 /* Build configuration list for PBXNativeTarget "LabelTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5068820F0E95761200F943E5 /* Debug */,
