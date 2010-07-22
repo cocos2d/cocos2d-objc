@@ -59,6 +59,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "CCPVRTexture.h"
 #import "ccMacros.h"
+#import "CCConfiguration.h"
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 #define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
@@ -178,10 +179,10 @@ typedef struct _PVRTexHeader
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
 	int flipped = flags & PVR_TEXTURE_FLAG_FLIPPED_MASK;
 	if( flipped )
-		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it.");
+		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
 	if( header->width != nextPOT(header->width) || header->height != nextPOT(header->height) )
-		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported.");
+		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it.");
 	
 	for( tableFormatIndex_=0; tableFormatIndex_ < MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
@@ -274,6 +275,11 @@ typedef struct _PVRTexHeader
 		GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
 		GLenum type = tableFormats[tableFormatIndex_][kCCInternalOpenGLType];
 		int compressed = tableFormats[tableFormatIndex_][kCCInternalCompressedImage];
+		
+		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+			CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+			return NO;
+		}			
 		
 		data = [imageData_ objectAtIndex:i];
 		if( compressed)
