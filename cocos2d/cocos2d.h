@@ -120,6 +120,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
 #import "Support/CCArray.h"
+#import "Support/ccUtils.h"
 
 #if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
