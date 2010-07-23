@@ -8,18 +8,20 @@
 #import "cocos2d.h"
 
 // local import
-#import "AtlasTest.h"
+#import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"Atlas1",
-			@"LabelAtlasTest",
-			@"LabelAtlasColorTest",
-			@"Atlas3",
-			@"Atlas4",
-			@"Atlas5",
-			@"Atlas6",
-			@"AtlasBitmapColor",
-			@"AtlasFastBitmap",
+	@"LabelAtlasTest",
+	@"LabelAtlasColorTest",
+	@"Atlas3",
+	@"Atlas4",
+	@"Atlas5",
+	@"Atlas6",
+	@"AtlasBitmapColor",
+	@"AtlasFastBitmap",
+	@"BitmapFontMultiLine",
+	
+	@"Atlas1",
 };
 
 enum {
@@ -75,33 +77,33 @@ Class restartAction()
 @implementation AtlasDemo
 -(id) init
 {
-	[super init];
+	if( (self = [super init])) {
 
-
-	CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+			
+		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label z:1];
+		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-	CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self addChild: label z:1];
-	[label setPosition: ccp(s.width/2, s.height-50)];
-	
-	NSString *subtitle = [self subtitle];
-	if( subtitle ) {
-		CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-		[self addChild:l z:1];
-		[l setPosition:ccp(s.width/2, s.height-80)];
-	}	
-	
-	CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-	
-	CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-	
-	menu.position = CGPointZero;
-	item1.position = ccp( s.width/2 - 100,30);
-	item2.position = ccp( s.width/2, 30);
-	item3.position = ccp( s.width/2 + 100,30);
-	[self addChild: menu z:1];	
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}	
+		
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		
+		menu.position = CGPointZero;
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+		[self addChild: menu z:1];	
+	}
 
 	return self;
 }
@@ -692,6 +694,60 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark -
+#pragma mark BitmapFontMultiLine
+
+/*
+ * Use any of these editors to generate bitmap font atlas:
+ *   http://www.n4te.com/hiero/hiero.jnlp
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp
+ *   http://www.angelcode.com/products/bmfont/
+ */
+
+@implementation BitmapFontMultiLine
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+
+		// Left
+		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nLeft" fntFile:@"bitmapFontTest3.fnt"];
+		label1.anchorPoint = ccp(0,0);
+		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		
+		// Center
+		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
+		label2.anchorPoint = ccp(0.5f, 0.5f);
+		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
+
+		// right
+		CCBitmapFontAtlas *label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nRight" fntFile:@"bitmapFontTest3.fnt"];
+		label3.anchorPoint = ccp(1,1);
+		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
+		
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];	
+		label1.position = ccp( 0,0);
+		label2.position = ccp( s.width/2, s.height/2);
+		label3.position = ccp( s.width, s.height);
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCBitmapFontAtlas";
+}
+
+-(NSString *) subtitle
+{
+	return @"Creating several CCBitmapFontAtlas with the same .fnt file should be fast";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark Application Delegate

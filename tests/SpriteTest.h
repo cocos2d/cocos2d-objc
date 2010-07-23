@@ -129,6 +129,10 @@
 }
 @end
 
+@interface SpriteFrameAliasingTest : SpriteDemo
+{}
+@end
+
 @interface SpriteOffsetAnchorRotation : SpriteDemo
 {}
 @end

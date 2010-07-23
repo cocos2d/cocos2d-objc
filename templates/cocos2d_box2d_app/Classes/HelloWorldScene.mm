@@ -19,7 +19,7 @@
 // enums that will be used as tags
 enum {
 	kTagTileMap = 1,
-	kTagSpriteSheet = 1,
+	kTagBatchNode = 1,
 	kTagAnimation1 = 1,
 };
 
@@ -113,8 +113,8 @@ enum {
 		
 		//Set up sprite
 		
-		CCSpriteSheet *sheet = [CCSpriteSheet spriteSheetWithFile:@"blocks.png" capacity:150];
-		[self addChild:sheet z:0 tag:kTagSpriteSheet];
+		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
+		[self addChild:batch z:0 tag:kTagBatchNode];
 		
 		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
 		
@@ -149,14 +149,14 @@ enum {
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet *sheet = (CCSpriteSheet*) [self getChildByTag:kTagSpriteSheet];
+	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = [CCSprite spriteWithSpriteSheet:sheet rect:CGRectMake(32 * idx,32 * idy,32,32)];
-	[sheet addChild:sprite];
+	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(32 * idx,32 * idy,32,32)];
+	[batch addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	

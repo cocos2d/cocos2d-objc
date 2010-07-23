@@ -293,7 +293,7 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 	
-	tex = [[CCTexture2D alloc] initWithPVRTCFile: fileimage];
+	tex = [[CCTexture2D alloc] initWithPVRFile: fileimage];
 	if( tex )
 		[textures setObject: tex forKey:fileimage];
 	else

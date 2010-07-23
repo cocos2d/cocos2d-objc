@@ -51,15 +51,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @interface CCPVRTexture : NSObject
 {
-	NSMutableArray *_imageData;
+	NSMutableArray *imageData_;
 	
-	GLuint _name;
-	uint32_t _width, _height;
-	GLenum _internalFormat;
-	BOOL _hasAlpha;
+	int		tableFormatIndex_;
+	uint32_t width_, height_;
+	GLuint	name_;
+	BOOL hasAlpha_;
 	
 	// cocos2d integration
-	BOOL _retainName;
+	BOOL retainName_;
 }
 
 - (id)initWithContentsOfFile:(NSString *)path;
@@ -70,7 +70,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property (nonatomic,readonly) GLuint name;
 @property (nonatomic,readonly) uint32_t width;
 @property (nonatomic,readonly) uint32_t height;
-@property (nonatomic,readonly) GLenum internalFormat;
 @property (nonatomic,readonly) BOOL hasAlpha;
 
 // cocos2d integration

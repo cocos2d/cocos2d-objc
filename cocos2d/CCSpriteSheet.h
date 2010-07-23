@@ -30,6 +30,14 @@
 #pragma mark CCSpriteSheet
 
 
+/* Added only to prevent GCC compile warnings
+ Will be removed in v1.1
+ */
+@interface CCSpriteSheetInternalOnly : CCSpriteBatchNode
+{
+}
+@end
+
 /** CCSpriteSheet is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
  * (often known as "batch draw").
  *
@@ -47,7 +55,7 @@
  *
  * @deprecated Use CCSpriteBatchNode instead. This class will be removed in v1.1
  */
-DEPRECATED_ATTRIBUTE @interface CCSpriteSheet : CCSpriteBatchNode
+DEPRECATED_ATTRIBUTE @interface CCSpriteSheet : CCSpriteSheetInternalOnly
 {
 }
 @end

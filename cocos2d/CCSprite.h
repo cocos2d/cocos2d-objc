@@ -30,6 +30,7 @@
 
 @class CCSpriteBatchNode;
 @class CCSpriteSheet;
+@class CCSpriteSheetInternalOnly;
 @class CCSpriteFrame;
 @class CCAnimation;
 
@@ -237,7 +238,8 @@ typedef enum {
 /** Creates an sprite with an CCBatchNode and a rect
  */
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
-+(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+
++(id) spriteWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 
 /** Initializes an sprite with a texture.
@@ -289,7 +291,7 @@ typedef enum {
 /** Initializes an sprite with an CCSpriteSheet and a rect
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
--(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+-(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 
 #pragma mark CCSprite - BatchNode methods
@@ -314,7 +316,7 @@ typedef enum {
  @since v0.99.0
  */
 -(void) useBatchNode:(CCSpriteBatchNode*)batchNode;
--(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet DEPRECATED_ATTRIBUTE;
+-(void) useSpriteSheetRender:(CCSpriteSheetInternalOnly*)spriteSheet DEPRECATED_ATTRIBUTE;
 
 
 #pragma mark CCSprite - Frames
