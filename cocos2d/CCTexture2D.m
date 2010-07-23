@@ -97,11 +97,10 @@ static unsigned int nextPOT(unsigned int x)
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_Default;
+static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat_Default;
 
-@interface CCTexture2D (Private)
--(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height;
-@end
+// By default PVR images are treated as if they don't have the alpha channel premultiplied
+static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 @implementation CCTexture2D
 
@@ -172,7 +171,17 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 - (id) initWithImage:(UIImage *)uiImage
 {
 	NSUInteger				POTWide, POTHigh;
-	CGImageRef				CGImage;	
+	CGImageRef				CGImage;
+	CGContextRef			context = nil;
+	void*					data = nil;;
+	CGColorSpaceRef			colorSpace;
+	void*					tempData;
+	unsigned int*			inPixel32;
+	unsigned short*			outPixel16;
+	BOOL					hasAlpha;
+	CGImageAlphaInfo		info;
+	CGSize					imageSize;
+	CCTexture2DPixelFormat	pixelFormat;
 	
 	CGImage = uiImage.CGImage;
 	
@@ -203,35 +212,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		return nil;
 	}
 	
-	// always load premultiplied images
-	self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
-
-	return self;
-}
-
--(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)POTWide pixelsHigh:(NSUInteger)POTHigh
-{
-	NSUInteger				i;
-	CGContextRef			context = nil;
-	void*					data = nil;;
-	CGColorSpaceRef			colorSpace;
-	void*					tempData;
-	unsigned int*			inPixel32;
-	unsigned short*			outPixel16;
-	BOOL					hasAlpha;
-	CGImageAlphaInfo		info;
-	CGSize					imageSize;
-	CCTexture2DPixelFormat	pixelFormat;
-		
-	info = CGImageGetAlphaInfo(image);
+	info = CGImageGetAlphaInfo(CGImage);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
-	size_t bpp = CGImageGetBitsPerComponent(image);
-	colorSpace = CGImageGetColorSpace(image);
+	size_t bpp = CGImageGetBitsPerComponent(CGImage);
+	colorSpace = CGImageGetColorSpace(CGImage);
 
 	if(colorSpace) {
 		if(hasAlpha || bpp >= 8)
-			pixelFormat = defaultAlphaPixelFormat;
+			pixelFormat = defaultAlphaPixelFormat_;
 		else {
 			CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
 			pixelFormat = kCCTexture2DPixelFormat_RGB565;
@@ -242,7 +231,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 	
-	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
+	imageSize = CGSizeMake(CGImageGetWidth(CGImage), CGImageGetHeight(CGImage));
 
 	// Create the bitmap graphics context
 	
@@ -277,7 +266,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 	
 	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
 	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
-	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
+	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(CGImage), CGImageGetHeight(CGImage)), CGImage);
 	
 	// Repack the pixel data into the right format
 	
@@ -286,7 +275,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
 		free(data);
 		data = tempData;
@@ -297,7 +286,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
@@ -314,7 +303,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
@@ -499,6 +488,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		_height = length;
 		_maxS = 1.0f;
 		_maxT = 1.0f;
+		_hasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
 	}					
 	return self;
 }
@@ -516,6 +506,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 			_width = pvr.width;
 			_height = pvr.height;
 			_size = CGSizeMake(_width, _height);
+			_hasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
 
 			[pvr release];
 
@@ -528,6 +519,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 		}
 	}
 	return self;
+}
+
++(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
+{
+	PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
 }
 @end
 
@@ -574,11 +570,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat = kCCTexture2DPixelFormat_
 @implementation CCTexture2D (PixelFormat)
 +(void) setDefaultAlphaPixelFormat:(CCTexture2DPixelFormat)format
 {
-	defaultAlphaPixelFormat = format;
+	defaultAlphaPixelFormat_ = format;
 }
 
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat
 {
-	return defaultAlphaPixelFormat;
+	return defaultAlphaPixelFormat_;
 }
 @end

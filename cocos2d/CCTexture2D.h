@@ -176,6 +176,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 /** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
 /** Initializes a texture from a PVR file.
+
  Supported PVR formats:
 	- BGRA 8888
 	- RGBA 8888
@@ -187,8 +188,22 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 	- AI 8
 	- PVRTC 2BPP
 	- PVRTC 4BPP
+ 
+ By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
+	- PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
+	
  */
 -(id) initWithPVRFile: (NSString*) file;
+
+/** treats (or not) PVR files as if they have alpha premultiplied.
+ Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+ possible load them as if they have (or not) the alpha channel premultiplied.
+ 
+ By default it is disabled by default.
+ 
+ @since v0.99.5
+ */
++(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
 @end
 
 /**
@@ -246,6 +261,8 @@ typedef struct _ccTexParams {
  How does it work ?
    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
    - If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
+ 
+ This parameter is not valid for PVR images.
  
  @since v0.8
  */
