@@ -232,7 +232,7 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 
 
 @interface CDAudioManager (PrivateMethods)
--(OSStatus) audioSessionSetActive:(BOOL) active;
+-(BOOL) audioSessionSetActive:(BOOL) active;
 -(BOOL) audioSessionSetCategory:(NSString*) category;
 @end
 
