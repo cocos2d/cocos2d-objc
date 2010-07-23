@@ -98,13 +98,18 @@
 	}
 	memset(data, 0, (int)(textureSize * textureSize * 4));
 	
-	CCTexture2D *texture = [[[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:s] autorelease];
+	CCTexture2D *texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:s];
 	free( data );
 
-	if ( (self = [self initWithSize:gSize texture:texture flippedTexture:NO] ) )
-	{
-		// do something
+	if( ! texture ) {
+		CCLOG(@"cocos2d: CCGrid: error creating texture");
+		[self release];
+		return nil;
 	}
+	
+	self = [self initWithSize:gSize texture:texture flippedTexture:NO];
+	
+	[texture release];
 	
 	return self;
 }
@@ -193,7 +198,7 @@
 	glViewport(0, 0, winSize.width, winSize.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, winSize.width, 0, winSize.height, -100, 100);
+	glOrthof(0, winSize.width, 0, winSize.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
 }
 

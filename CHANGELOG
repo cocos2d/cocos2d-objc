@@ -8,6 +8,8 @@ version 0.99.5-beta XX-MMM-2010
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
  . [NEW] Texture2D: Added support for Non compressed PVR images. New supported formats:
 			RGBA_8888, BGRA_8888, RGBA_4444, RGBA_5551, RGB_565, A_8, AI_88, I_8
+ . [NEW] Texture2D: PVR images can be treated as having alpha premultiplied with:
+		+(void) PVRImagesHavePremultipliedAlpha:(BOOL)
  . [FIX] CCArray: conforms to NSCopying protocol (issue #934)
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
                 and PointParticles when compiled in ARMv6
