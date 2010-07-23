@@ -1827,6 +1827,8 @@
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 		E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
 		E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54DC911F9CF2700B9E4CB /* ccUtils.h */; };
+		E0C54E4911F9D68500B9E4CB /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
+		E0C54E7511F9D8C700B9E4CB /* fire_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3619,6 +3621,7 @@
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
 		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
 		E0C54DC911F9CF2700B9E4CB /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
+		E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire_rgba8888.pvr; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5525,6 +5528,7 @@
 		508A333C0FBADDA700D574A2 /* particles images */ = {
 			isa = PBXGroup;
 			children = (
+				E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */,
 				50B2F56511AE5C4B008D770F /* particles.png */,
 				501F0D3511527023002BB7F1 /* fire-grayscale.png */,
 				501F0D3611527023002BB7F1 /* stars-grayscale.png */,
@@ -7811,6 +7815,8 @@
 				495E74F9104B75CC0012BB52 /* stars.png in Resources */,
 				495E7407104B75090012BB52 /* f2.png in Resources */,
 				5054644C1062886600AB7C52 /* fps_images.png in Resources */,
+				E0C54E4911F9D68500B9E4CB /* fire.png in Resources */,
+				E0C54E7511F9D8C700B9E4CB /* fire_rgba8888.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

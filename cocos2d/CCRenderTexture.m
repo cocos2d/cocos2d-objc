@@ -66,9 +66,14 @@
 			[NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
 		}
 		sprite_ = [CCSprite spriteWithTexture:texture_];
+		
 		[texture_ release];
 		[sprite_ setScaleY:-1];
 		[self addChild:sprite_];
+
+		// issue #937
+		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO_);
 	}
 	return self;
