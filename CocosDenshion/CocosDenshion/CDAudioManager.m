@@ -701,6 +701,11 @@ static BOOL configured = FALSE;
 	[self audioSessionInterrupted];
 }
 
+-(void) endInterruption {
+	CDLOG(@"Denshion::CDAudioManager - end interruption");
+	[self audioSessionResumed];
+}
+
 -(void) endInterruptionWithFlags:(NSUInteger)flags {
 	CDLOG(@"Denshion::CDAudioManager - interruption ended with flags %i",flags);
 	if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {
@@ -708,7 +713,6 @@ static BOOL configured = FALSE;
 	}	
 }	
 
-//Code to handle audio session interruption.  Thanks to Andy Fitter and Ben Britten.
 -(void)audioSessionInterrupted 
 { 
     if (!_interrupted) {
@@ -734,7 +738,6 @@ static BOOL configured = FALSE;
 	}	
 } 
 
-//Code to handle audio session resumption.  Thanks to Andy Fitter and Ben Britten.
 -(void)audioSessionResumed 
 { 
 	if (_interrupted) {
