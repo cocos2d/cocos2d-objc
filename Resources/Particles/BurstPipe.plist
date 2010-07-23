@@ -6,8 +6,6 @@
 	<real>0.0</real>
 	<key>angleVariance</key>
 	<real>360</real>
-	<key>blendAdditive</key>
-	<real>1</real>
 	<key>blendFuncDestination</key>
 	<integer>1</integer>
 	<key>blendFuncSource</key>
@@ -43,7 +41,7 @@
 	<key>maxParticles</key>
 	<real>1000</real>
 	<key>maxRadius</key>
-	<real>0.0</real>
+	<real>100</real>
 	<key>maxRadiusVariance</key>
 	<real>0.0</real>
 	<key>minRadius</key>
@@ -52,6 +50,10 @@
 	<real>0.46050000190734863</real>
 	<key>particleLifespanVariance</key>
 	<real>0.59210002422332764</real>
+	<key>radialAccelVariance</key>
+	<real>0.0</real>
+	<key>radialAcceleration</key>
+	<real>0.0</real>
 	<key>rotatePerSecond</key>
 	<real>0.0</real>
 	<key>rotatePerSecondVariance</key>
@@ -88,6 +90,10 @@
 	<real>0.0</real>
 	<key>startParticleSizeVariance</key>
 	<real>18.950000762939453</real>
+	<key>tangentialAccelVariance</key>
+	<real>0.0</real>
+	<key>tangentialAcceleration</key>
+	<real>0.0</real>
 	<key>textureFileName</key>
 	<string>BurstPipe.png</string>
 	<key>textureImageData</key>

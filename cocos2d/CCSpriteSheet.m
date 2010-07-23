@@ -30,5 +30,8 @@
 #pragma mark -
 #pragma mark CCSpriteSheet
 
+@implementation CCSpriteSheetInternalOnly
+@end
+
 @implementation CCSpriteSheet
 @end

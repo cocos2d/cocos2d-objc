@@ -24,6 +24,7 @@
 
 
 #import <math.h>
+#import "ccConfig.h"
 
 /**
  @file
@@ -92,12 +93,13 @@ simple macro that swaps 2 variables
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
+#if CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 #define CC_BLEND_SRC GL_ONE
-
-/** @def CC_BLEND_DST
- default gl blend dst function. Compatible with premultiplied alpha images.
- */
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#else
+#define CC_BLEND_SRC GL_SRC_ALPHA
+#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#endif // ! CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 
 /** @def CC_ENABLE_DEFAULT_GL_STATES
  GL states that are enabled:

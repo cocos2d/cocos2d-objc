@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 			@"Sprite1",
 			@"SpriteBatchNode1",
 			@"SpriteFrameTest",
+			@"SpriteFrameAliasingTest",
 			@"SpriteAnchorPoint",
 			@"SpriteBatchNodeAnchorPoint",
 			@"SpriteOffsetAnchorRotation",
@@ -1618,6 +1619,80 @@ Class restartAction()
 	return @"Testing issue #792";
 }
 @end
+
+#pragma mark -
+#pragma mark Example SpriteFrameAliasingTest
+
+@implementation SpriteFrameAliasingTest
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// IMPORTANT:
+		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
+		//     [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+		//
+		// CCSpriteFrameCache is a cache of CCSpriteFrames
+		// CCSpriteFrames each contain a texture id and a rect (frame).
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini-aliases.plist"];
+		
+		//
+		// Animation using Sprite batch
+		//
+		// A CCSpriteBatchNode can reference one and only one texture (one .png file)
+		// Sprites that are contained in that texture can be instantiatied as CCSprites and then added to the CCSpriteBatchNode
+		// All CCSprites added to a CCSpriteBatchNode are drawn in one OpenGL ES draw call
+		// If the CCSprites are not added to a CCSpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
+		//
+		// When you animate a sprite, CCAnimation changes the frame of the sprite using setDisplayFrame: (this is why the animation must be in the same texture)
+		// When setDisplayFrame: is used in the CCAnimation it changes the frame to one specified by the CCSpriteFrames that were added to the animation,
+		// but texture id is still the same and so the sprite is still a child of the CCSpriteBatchNode, 
+		// and therefore all the animation sprites are also drawn as part of the CCSpriteBatchNode
+		//
+		
+		CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		sprite.position = ccp(s.width * 0.5, s.height * 0.5);
+		
+		CCSpriteBatchNode *spriteBatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini-aliases.png"];
+		[spriteBatch addChild:sprite];
+		[self addChild:spriteBatch];
+		
+		NSMutableArray *animFrames = [NSMutableArray array];
+		for(int i = 1; i < 29; i++) {
+			
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",i]];
+			[animFrames addObject:frame];
+		}
+		
+		CCAnimation *animation = [CCAnimation animationWithName:@"dance" frames:animFrames];
+		// 14 frames * 1sec = 14 seconds
+		[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:14.0f animation:animation restoreOriginalFrame:NO] ]];
+		
+	}	
+	return self;
+}
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteFrameAliasing";
+}
+
+-(NSString*) subtitle
+{
+	return @"Zwoptex aliasing test";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark Example SpriteOffsetAnchorRotation

@@ -10,10 +10,16 @@
 			<string>{{2, 2}, {51, 109}}</string>
 			<key>offset</key>
 			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 7}, {51, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_15.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_02.png</key>
 		<dict>
@@ -21,10 +27,16 @@
 			<string>{{55, 2}, {63, 109}}</string>
 			<key>offset</key>
 			<string>{-6, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{5, 7}, {63, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_16.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_03.png</key>
 		<dict>
@@ -32,10 +44,16 @@
 			<string>{{120, 2}, {63, 109}}</string>
 			<key>offset</key>
 			<string>{-6, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{5, 7}, {63, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_17.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_04.png</key>
 		<dict>
@@ -43,10 +61,16 @@
 			<string>{{185, 2}, {74, 109}}</string>
 			<key>offset</key>
 			<string>{-0.5, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{5, 7}, {74, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_18.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_05.png</key>
 		<dict>
@@ -54,10 +78,16 @@
 			<string>{{261, 2}, {74, 109}}</string>
 			<key>offset</key>
 			<string>{-0.5, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{5, 7}, {74, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_19.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_06.png</key>
 		<dict>
@@ -65,10 +95,16 @@
 			<string>{{337, 2}, {63, 109}}</string>
 			<key>offset</key>
 			<string>{-6, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{5, 7}, {63, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_20.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_07.png</key>
 		<dict>
@@ -76,10 +112,16 @@
 			<string>{{402, 2}, {63, 109}}</string>
 			<key>offset</key>
 			<string>{-6, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{5, 7}, {63, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_21.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_08.png</key>
 		<dict>
@@ -87,10 +129,16 @@
 			<string>{{2, 113}, {51, 109}}</string>
 			<key>offset</key>
 			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 7}, {51, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_22.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_09.png</key>
 		<dict>
@@ -98,10 +146,16 @@
 			<string>{{55, 113}, {51, 109}}</string>
 			<key>offset</key>
 			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 7}, {51, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_23.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_10.png</key>
 		<dict>
@@ -109,10 +163,16 @@
 			<string>{{108, 113}, {62, 109}}</string>
 			<key>offset</key>
 			<string>{5.5, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 7}, {62, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_24.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_11.png</key>
 		<dict>
@@ -120,10 +180,16 @@
 			<string>{{172, 113}, {62, 109}}</string>
 			<key>offset</key>
 			<string>{5.5, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 7}, {62, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_25.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_12.png</key>
 		<dict>
@@ -131,10 +197,16 @@
 			<string>{{236, 113}, {51, 106}}</string>
 			<key>offset</key>
 			<string>{0, -2.5}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 10}, {51, 106}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_26.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_13.png</key>
 		<dict>
@@ -142,10 +214,16 @@
 			<string>{{289, 113}, {51, 109}}</string>
 			<key>offset</key>
 			<string>{0, -1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 7}, {51, 109}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_27.png</string>
+			</array>
 		</dict>
 		<key>grossini_dance_14.png</key>
 		<dict>
@@ -153,16 +231,22 @@
 			<string>{{342, 113}, {51, 106}}</string>
 			<key>offset</key>
 			<string>{0, -2.5}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{17, 10}, {51, 106}}</string>
 			<key>sourceSize</key>
 			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>grossini_dance_28.png</string>
+			</array>
 		</dict>
 	</dict>
 	<key>metadata</key>
 	<dict>
 		<key>format</key>
-		<integer>1</integer>
+		<integer>2</integer>
 		<key>size</key>
 		<string>{512, 256}</string>
 	</dict>

@@ -46,7 +46,59 @@
 {}
 @end
 
+@interface TexturePVR2BPP : TextureDemo
+{}
+@end
+
+@interface TexturePVR4BPP : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA8888 : TextureDemo
+{}
+@end
+
+@interface TexturePVRBGRA8888 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA4444 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA5551 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGB565 : TextureDemo
+{}
+@end
+
+@interface TexturePVRA8 : TextureDemo
+{}
+@end
+
+@interface TexturePVRI8 : TextureDemo
+{}
+@end
+
+@interface TexturePVRAI88 : TextureDemo
+{}
+@end
+
 @interface TexturePVRMipMap : TextureDemo
+{}
+@end
+
+@interface TexturePVRMipMap2 : TextureDemo
+{}
+@end
+
+@interface TexturePVRNonSquare : TextureDemo
+{}
+@end
+
+@interface TexturePVRNPOT : TextureDemo
 {}
 @end
 

@@ -125,7 +125,7 @@ struct transformValues_ {
 {
 	return [[[self alloc] initWithBatchNode:batchNode rect:rect] autorelease];
 }
-+(id) spriteWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
++(id) spriteWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
 {
 	return [self spriteWithBatchNode:spritesheet rect:rect];
 }
@@ -284,7 +284,7 @@ struct transformValues_ {
 	return ret;
 }
 
--(id) initWithSpriteSheet:(CCSpriteSheet*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
+-(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
 {
 	return [self initWithBatchNode:spritesheet rect:rect];
 }
@@ -329,7 +329,7 @@ struct transformValues_ {
 	textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	batchNode_ = batchNode; // weak ref
 }
--(void) useSpriteSheetRender:(CCSpriteSheet*)spriteSheet // XXX DEPRECATED
+-(void) useSpriteSheetRender:(CCSpriteSheetInternalOnly*)spriteSheet // XXX DEPRECATED
 {
 	[self useBatchNode:spriteSheet];
 }
@@ -446,7 +446,7 @@ struct transformValues_ {
 
 -(void)updateTransform
 {
-	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteSheet");
+	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
 
 	CGAffineTransform matrix;
 	
