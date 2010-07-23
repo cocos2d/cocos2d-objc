@@ -105,14 +105,14 @@ typedef enum {
  */
 @interface CCTexture2D : NSObject
 {
-	GLuint						_name;
-	CGSize						_size;
-	NSUInteger					_width,
-								_height;
-	CCTexture2DPixelFormat		_format;
-	GLfloat						_maxS,
-								_maxT;
-	BOOL						_hasPremultipliedAlpha;
+	GLuint						name_;
+	CGSize						size_;
+	NSUInteger					width_,
+								height_;
+	CCTexture2DPixelFormat		format_;
+	GLfloat						maxS_,
+								maxT_;
+	BOOL						hasPremultipliedAlpha_;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;

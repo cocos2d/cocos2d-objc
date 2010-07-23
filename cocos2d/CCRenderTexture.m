@@ -132,7 +132,7 @@
 
 -(BOOL)saveBuffer:(NSString*)name
 {
-	return [self saveBuffer:name format:kImageFormatJPG];
+	return [self saveBuffer:name format:kCCImageFormatJPG];
 }
 
 -(BOOL)saveBuffer:(NSString*)fileName format:(int)format
@@ -145,7 +145,7 @@
   
 	NSData *data;
   
-	if (format == kImageFormatPNG)
+	if (format == kCCImageFormatPNG)
 		data = UIImagePNGRepresentation(myImage);
 	else
 		data = UIImageJPEGRepresentation(myImage, 1.0f);

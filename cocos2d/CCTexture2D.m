@@ -94,13 +94,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 @implementation CCTexture2D
 
-@synthesize contentSize=_size, pixelFormat=_format, pixelsWide=_width, pixelsHigh=_height, name=_name, maxS=_maxS, maxT=_maxT;
-@synthesize hasPremultipliedAlpha=_hasPremultipliedAlpha;
+@synthesize contentSize=size_, pixelFormat=format_, pixelsWide=width_, pixelsHigh=height_, name=name_, maxS=maxS_, maxT=maxT_;
+@synthesize hasPremultipliedAlpha=hasPremultipliedAlpha_;
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
+		glGenTextures(1, &name_);
+		glBindTexture(GL_TEXTURE_2D, name_);
 
 		[self setAntiAliasTexParameters];
 		
@@ -128,14 +128,14 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 				
 		}
 
-		_size = size;
-		_width = width;
-		_height = height;
-		_format = pixelFormat;
-		_maxS = size.width / (float)width;
-		_maxT = size.height / (float)height;
+		size_ = size;
+		width_ = width;
+		height_ = height;
+		format_ = pixelFormat;
+		maxS_ = size.width / (float)width;
+		maxT_ = size.height / (float)height;
 
-		_hasPremultipliedAlpha = NO;
+		hasPremultipliedAlpha_ = NO;
 	}					
 	return self;
 }
@@ -143,15 +143,15 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	if(_name)
-		glDeleteTextures(1, &_name);
+	if(name_)
+		glDeleteTextures(1, &name_);
 	
 	[super dealloc];
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], self, _name, _width, _height, _maxS, _maxT];
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
 }
 
 @end
@@ -307,7 +307,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:imageSize];
 	
 	// should be after calling super init
-	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+	hasPremultipliedAlpha_ = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 	
 	CGContextRelease(context);
 	free(data);
@@ -398,27 +398,19 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 - (void) drawAtPoint:(CGPoint)point 
 {
-	GLfloat		coordinates[] = { 0.0f,	_maxT,
-								_maxS,	_maxT,
+	GLfloat		coordinates[] = { 0.0f,	maxT_,
+								maxS_,	maxT_,
 								0.0f,	0.0f,
-								_maxS,	0.0f };
-	GLfloat		width = (GLfloat)_width * _maxS,
-				height = (GLfloat)_height * _maxT;
+								maxS_,	0.0f };
+	GLfloat		width = (GLfloat)width_ * maxS_,
+				height = (GLfloat)height_ * maxT_;
 
-#if 0
-	GLfloat		vertices[] = {	-width / 2 + point.x,	-height / 2 + point.y,	0.0f,
-								width / 2 + point.x,	-height / 2 + point.y,	0.0f,
-								-width / 2 + point.x,	height / 2 + point.y,	0.0f,
-								width / 2 + point.x,	height / 2 + point.y,	0.0f };
-	
-#else // anchor is done by cocos2d automagically
 	GLfloat		vertices[] = {	point.x,			point.y,	0.0f,
 								width + point.x,	point.y,	0.0f,
 								point.x,			height  + point.y,	0.0f,
 								width + point.x,	height  + point.y,	0.0f };
-#endif
 	
-	glBindTexture(GL_TEXTURE_2D, _name);
+	glBindTexture(GL_TEXTURE_2D, name_);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -427,16 +419,16 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 - (void) drawInRect:(CGRect)rect
 {
-	GLfloat	 coordinates[] = {  0.0f,	_maxT,
-								_maxS,	_maxT,
+	GLfloat	 coordinates[] = {  0.0f,	maxT_,
+								maxS_,	maxT_,
 								0.0f,	0.0f,
-								_maxS,	0.0f  };
+								maxS_,	0.0f  };
 	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							/*0.0f,*/
 							rect.origin.x + rect.size.width,		rect.origin.y,							/*0.0f,*/
 							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
 							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 	
-	glBindTexture(GL_TEXTURE_2D, _name);
+	glBindTexture(GL_TEXTURE_2D, name_);
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -456,8 +448,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	}
 
 	if((self = [super init])) {
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
+		glGenTextures(1, &name_);
+		glBindTexture(GL_TEXTURE_2D, name_);
 
 		[self setAntiAliasTexParameters];
 		
@@ -473,12 +465,12 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		}
 		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
 
-		_size = CGSizeMake(length, length);
-		_width = length;
-		_height = length;
-		_maxS = 1.0f;
-		_maxT = 1.0f;
-		_hasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
+		size_ = CGSizeMake(length, length);
+		width_ = length;
+		height_ = length;
+		maxS_ = 1.0f;
+		maxT_ = 1.0f;
+		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
 	}					
 	return self;
 }
@@ -490,13 +482,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		if( pvr ) {
 			pvr.retainName = YES;	// don't dealloc texture on release
 			
-			_name = pvr.name;	// texture id
-			_maxS = 1;			// only POT texture are supported
-			_maxT = 1;
-			_width = pvr.width;
-			_height = pvr.height;
-			_size = CGSizeMake(_width, _height);
-			_hasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
+			name_ = pvr.name;	// texture id
+			maxS_ = 1;			// only POT texture are supported
+			maxT_ = 1;
+			width_ = pvr.width;
+			height_ = pvr.height;
+			size_ = CGSizeMake(width_, height_);
+			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
 
 			[pvr release];
 
@@ -524,14 +516,14 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 -(void) generateMipmap
 {
-	NSAssert( _width == ccNextPOT(_width) && _height == ccNextPOT(_height), @"Mimpap texture only works in POT textures");
-	glBindTexture( GL_TEXTURE_2D, self.name );
+	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
+	glBindTexture( GL_TEXTURE_2D, name_ );
 	glGenerateMipmapOES(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	NSAssert( (_width == ccNextPOT(_width) && _height == ccNextPOT(_height)) ||
+	NSAssert( (width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, self.name );
