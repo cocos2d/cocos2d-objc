@@ -1825,6 +1825,8 @@
 		E0B0E71311F8CF9F00414246 /* texture4096x4096.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
+		E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
+		E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54DC911F9CF2700B9E4CB /* ccUtils.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3615,6 +3617,8 @@
 		E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture4096x4096.png; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
+		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
+		E0C54DC911F9CF2700B9E4CB /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4806,6 +4810,8 @@
 				50D898FA1192CB8300458C29 /* Data Structures */,
 				501CCFB70E99659400B86F68 /* ImageSupport */,
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
+				E0C54DC811F9CF2700B9E4CB /* ccUtils.c */,
+				E0C54DC911F9CF2700B9E4CB /* ccUtils.h */,
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
 				50C508C40F7C194400799124 /* CCFileUtils.h */,
@@ -6263,6 +6269,7 @@
 				505F4C3611BFA68B002DCD39 /* ES1Renderer.h in Headers */,
 				505F4C3911BFA6E7002DCD39 /* ESRenderer.h in Headers */,
 				E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */,
+				E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9175,6 +9182,7 @@
 				5080435311BEE8D60039CA83 /* CCArray.m in Sources */,
 				505F4C3511BFA68B002DCD39 /* ES1Renderer.m in Sources */,
 				E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */,
+				E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

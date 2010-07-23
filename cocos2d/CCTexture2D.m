@@ -72,6 +72,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTexture2D.h"
 #import "CCPVRTexture.h"
 #import "CCConfiguration.h"
+#import "Support/ccUtils.h"
 
 
 #if CC_FONT_LABEL_SUPPORT
@@ -80,17 +81,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "FontLabelStringDrawing.h"
 #endif// CC_FONT_LABEL_SUPPORT
 
-
-static unsigned int nextPOT(unsigned int x)
-{
-    x = x - 1;
-    x = x | (x >> 1);
-    x = x | (x >> 2);
-    x = x | (x >> 4);
-    x = x | (x >> 8);
-    x = x | (x >>16);
-    return x + 1;
-}
 
 //CLASS IMPLEMENTATIONS:
 
@@ -201,8 +191,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	} else 
 #endif
 	{
-		POTWide = nextPOT(CGImageGetWidth(CGImage));
-		POTHigh = nextPOT(CGImageGetHeight(CGImage));
+		POTWide = ccNextPOT(CGImageGetWidth(CGImage));
+		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
 	}
 		
 	unsigned maxTextureSize = [conf maxTextureSize];
@@ -534,14 +524,14 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 -(void) generateMipmap
 {
-	NSAssert( _width == nextPOT(_width) && _height == nextPOT(_height), @"Mimpap texture only works in POT textures");
+	NSAssert( _width == ccNextPOT(_width) && _height == ccNextPOT(_height), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, self.name );
 	glGenerateMipmapOES(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	NSAssert( (_width == nextPOT(_width) && _height == nextPOT(_height)) ||
+	NSAssert( (_width == ccNextPOT(_width) && _height == ccNextPOT(_height)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, self.name );

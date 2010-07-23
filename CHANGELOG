@@ -6,11 +6,13 @@ version 0.99.5-beta XX-MMM-2010
  . [NEW] Sprite: Added support for Zwoptex v1.0 (issue #913)
  . [NEW] SpriteFrameCache: Added support for Zwoptex name aliases (issue #935)
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
+ . [NEW] Support/ccUtils.h: added new file that contains some useful functions like nextPOT
  . [NEW] Texture2D: Added support for Non compressed PVR images. New supported formats:
 			RGBA_8888, BGRA_8888, RGBA_4444, RGBA_5551, RGB_565, A_8, AI_88, I_8
  . [NEW] Texture2D: PVR images can be treated as having alpha premultiplied with:
 		+(void) PVRImagesHavePremultipliedAlpha:(BOOL)
  . [FIX] CCArray: conforms to NSCopying protocol (issue #934)
+ . [FIX] CocosDenshion: Improved sound interruption code (issue #928)
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
                 and PointParticles when compiled in ARMv6
  . [FIX] Templates & Tests: call CC_DIRECTOR_END() on AppDelegate Terminate

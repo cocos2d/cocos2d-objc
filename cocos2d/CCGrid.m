@@ -32,6 +32,7 @@
 
 #import "Support/glu.h"
 #import "Support/CGPointExtension.h"
+#import "Support/ccUtils.h"
 
 #pragma mark -
 #pragma mark CCGridBase
@@ -81,24 +82,23 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize s = [director winSize];
-	int textureSize = 8;
-	while (textureSize < s.width || textureSize < s.height)
-		textureSize *= 2;
+	
+	unsigned int POTWide = ccNextPOT(s.width);
+	unsigned int POTHigh = ccNextPOT(s.height);
 	
 	EAGLView *glview = [[CCDirector sharedDirector] openGLView];
 	NSString *pixelFormat = [glview pixelFormat];
 
 	CCTexture2DPixelFormat format = [pixelFormat isEqualToString: kEAGLColorFormatRGB565] ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
 	
-	void *data = malloc((int)(textureSize * textureSize * 4));
+	void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 	if( ! data ) {
 		CCLOG(@"cocos2d: CCGrid: not enough memory");
 		[self release];
 		return nil;
 	}
-	memset(data, 0, (int)(textureSize * textureSize * 4));
 	
-	CCTexture2D *texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:textureSize pixelsHigh:textureSize contentSize:s];
+	CCTexture2D *texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:POTWide pixelsHigh:POTHigh contentSize:s];
 	free( data );
 
 	if( ! texture ) {
