@@ -31,13 +31,13 @@
 
 enum  
 {
-	kImageFormatJPG = 0,
-	kImageFormatPNG = 1
+	kCCImageFormatJPG = 0,
+	kCCImageFormatPNG = 1
 };
 
 
 /**
- RenderTexture is a generic rendering target. To render things into it,
+ CCRenderTexture is a generic rendering target. To render things into it,
  simply construct a render target, call begin on it, call visit on any cocos
  scenes or objects to render them, and call end. For convienience, render texture
  adds a sprite as it's display child with the results, so you can simply add
@@ -54,7 +54,11 @@ enum
 	CCSprite*			sprite_;
 }
 
-/** sprite being used */
+/** The CCSprite being used.
+ The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
+ The blending function can be changed in runtime by calling:
+	- [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+*/
 @property (nonatomic,readwrite, assign) CCSprite* sprite;
 
 /** creates a RenderTexture object with width and height */
