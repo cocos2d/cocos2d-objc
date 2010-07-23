@@ -91,6 +91,7 @@ typedef enum {
 	id<CDLongAudioSourceDelegate> delegate; 
 	BOOL			mute;
 	BOOL			enabled_;
+	BOOL			backgroundMusic;
 @public	
 	BOOL			systemPaused;//Used for auto resign handling
 	NSTimeInterval	systemPauseLocation;//Used for auto resign handling
@@ -101,7 +102,9 @@ typedef enum {
 @property (readonly) NSString *audioSourceFilePath;
 @property (readwrite, nonatomic) NSInteger numberOfLoops;
 @property (readwrite, nonatomic) float volume;
-@property(assign) id<CDLongAudioSourceDelegate> delegate; 
+@property (assign) id<CDLongAudioSourceDelegate> delegate;
+/* This long audio source functions as background music */
+@property (readwrite, nonatomic) BOOL backgroundMusic;
 
 /** Loads the file into the audio source */
 -(void) load:(NSString*) filePath;
@@ -133,11 +136,11 @@ typedef enum {
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  @since v0.8
  */
-@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol> {
+@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol, AVAudioSessionDelegate> {
 	CDSoundEngine		*soundEngine;
 	CDLongAudioSource	*backgroundMusic;
 	NSMutableArray		*audioSourceChannels;
-	UInt32				_audioSessionCategory;
+	NSString*			_audioSessionCategory;
 	BOOL				_audioWasPlayingAtStartup;
 	tAudioManagerMode	_mode;
 	SEL backgroundMusicCompletionSelector;
@@ -145,6 +148,8 @@ typedef enum {
 	BOOL willPlayBackgroundMusic;
 	BOOL _mute;
 	BOOL _resigned;
+	BOOL _interrupted;
+	BOOL _audioSessionActive;
 	BOOL enabled_;
 	
 	//For handling resign/become active
@@ -177,6 +182,11 @@ typedef enum {
 /** Shuts down the shared audio manager instance so that it can be reinitialised */
 +(void) end;
 
+/** Call if you want to use built in resign behavior but need to do some additional audio processing on resign active. */
+- (void) applicationWillResignActive;
+/** Call if you want to use built in resign behavior but need to do some additional audio processing on become active. */
+- (void) applicationDidBecomeActive;
+
 //New AVAudioPlayer API
 /** Loads the data from the specified file path to the channel's audio source */
 -(CDLongAudioSource*) audioSourceLoad:(NSString*) filePath channel:(tAudioSourceChannel) channel;
@@ -185,7 +195,7 @@ typedef enum {
 
 //Legacy AVAudioPlayer API
 /** Plays music in background. The music can be looped or not
- It is recommended to use .mp3 files as background music since they are decoded by the device (hardware).
+ It is recommended to use .aac files as background music since they are decoded by the device (hardware).
  */
 -(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop;
 /** Preloads a background music */
