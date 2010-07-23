@@ -136,11 +136,11 @@ typedef enum {
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  @since v0.8
  */
-@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol> {
+@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol, AVAudioSessionDelegate> {
 	CDSoundEngine		*soundEngine;
 	CDLongAudioSource	*backgroundMusic;
 	NSMutableArray		*audioSourceChannels;
-	UInt32				_audioSessionCategory;
+	NSString*			_audioSessionCategory;
 	BOOL				_audioWasPlayingAtStartup;
 	tAudioManagerMode	_mode;
 	SEL backgroundMusicCompletionSelector;
@@ -195,7 +195,7 @@ typedef enum {
 
 //Legacy AVAudioPlayer API
 /** Plays music in background. The music can be looped or not
- It is recommended to use .mp3 files as background music since they are decoded by the device (hardware).
+ It is recommended to use .aac files as background music since they are decoded by the device (hardware).
  */
 -(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop;
 /** Preloads a background music */
