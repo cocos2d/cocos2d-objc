@@ -3,14 +3,16 @@
  *
  */
 
-/*
- ccNextPOT function is licensed under the same license that is used in CCTexture2D.m.
- */
-
+#ifndef __CC_UTILS_H
+#define __CC_UTILS_H
 
 /** @file ccUtils.h
  Misc free functions
-*/
+ */
+
+/*
+ ccNextPOT function is licensed under the same license that is used in CCTexture2D.m.
+ */
 
 /** returns the Next Power of Two value.
  
@@ -21,4 +23,8 @@
  
  @since v0.99.5
  */
+
+
 unsigned int ccNextPOT( unsigned int value );
+
+#endif // ! __CC_UTILS_H
