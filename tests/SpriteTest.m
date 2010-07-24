@@ -15,7 +15,7 @@ static NSString *transitions[] = {
 			@"Sprite1",
 			@"SpriteBatchNode1",
 			@"SpriteFrameTest",
-			@"SpriteFrameAliasingTest",
+			@"SpriteFrameAliasNameTest",
 			@"SpriteAnchorPoint",
 			@"SpriteBatchNodeAnchorPoint",
 			@"SpriteOffsetAnchorRotation",
@@ -1621,9 +1621,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Example SpriteFrameAliasingTest
+#pragma mark Example SpriteFrameAliasNameTest
 
-@implementation SpriteFrameAliasingTest
+@implementation SpriteFrameAliasNameTest
 
 -(id) init
 {
@@ -1655,16 +1655,17 @@ Class restartAction()
 		//
 		
 		CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		sprite.position = ccp(s.width * 0.5, s.height * 0.5);
+		sprite.position = ccp(s.width * 0.5f, s.height * 0.5f);
 		
 		CCSpriteBatchNode *spriteBatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini-aliases.png"];
 		[spriteBatch addChild:sprite];
 		[self addChild:spriteBatch];
 		
 		NSMutableArray *animFrames = [NSMutableArray array];
-		for(int i = 1; i < 29; i++) {
+		for(int i = 1; i < 15; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",i]];
+			// Obtain frames by alias name
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"dance_%02d",i]];
 			[animFrames addObject:frame];
 		}
 		
@@ -1683,12 +1684,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteFrameAliasing";
+	return @"SpriteFrame Alias Name";
 }
 
 -(NSString*) subtitle
 {
-	return @"Zwoptex aliasing test";
+	return @"SpriteFrames are obtained using the alias name";
 }
 
 @end

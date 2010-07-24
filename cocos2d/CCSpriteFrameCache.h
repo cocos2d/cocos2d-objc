@@ -44,7 +44,8 @@
  */
 @interface CCSpriteFrameCache : NSObject {
 
-	NSMutableDictionary *spriteFrames;
+	NSMutableDictionary *spriteFrames_;
+	NSMutableDictionary *spriteFramesAliases_;
 }
 
 /** Retruns ths shared instance of the Sprite Frame cache */

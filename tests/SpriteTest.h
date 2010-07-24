@@ -129,7 +129,7 @@
 }
 @end
 
-@interface SpriteFrameAliasingTest : SpriteDemo
+@interface SpriteFrameAliasNameTest : SpriteDemo
 {}
 @end
 
