@@ -501,19 +501,31 @@ typedef struct _KerningHashElement
 	
 	CGSize tmpSize = CGSizeZero;
 
-	int longestLine = 0, totalHeight = configuration_->commonHeight;
+	int longestLine = 0;
+	int totalHeight = 0;
+	
+	int quantityOfLines = 1;
 
-	NSUInteger l = [string_ length];
-	for(NSUInteger i=0; i<l; i++) {
+	unsigned int stringLen = [string_ length];
+
+	// quantity of lines NEEDS to be calculated before parsing the lines,
+	// since the Y position needs to be calcualted before hand
+	for( unsigned int i=0; i < stringLen-1;i++) {
+		unichar c = [string_ characterAtIndex:i];
+		if( c=='\n')
+			quantityOfLines++;
+	}
+	
+	totalHeight = configuration_->commonHeight * quantityOfLines;
+	nextFontPositionY = -(configuration_->commonHeight - configuration_->commonHeight*quantityOfLines);
+
+	for(unsigned int i=0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
 		NSAssert( c < kCCBitmapFontAtlasMaxChars, @"BitmapFontAtlas: character outside bounds");
 		
 		if (c == '\n') {
-			if (i < (l-1)) {
-				nextFontPositionX = 0;
-				nextFontPositionY -= configuration_->commonHeight;
-				totalHeight += configuration_->commonHeight;
-			}
+			nextFontPositionX = 0;
+			nextFontPositionY -= configuration_->commonHeight;
 			continue;
 		}
 
@@ -555,7 +567,7 @@ typedef struct _KerningHashElement
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
 		[fontChar setColor:color_];
 
-		// only apply opaccity if it is different than 255 )
+		// only apply opacity if it is different than 255 )
 		// to prevent modifying the color too (issue #610)
 		if( opacity_ != 255 )
 			[fontChar setOpacity: opacity_];
@@ -583,7 +595,8 @@ typedef struct _KerningHashElement
 	[self createFontChars];
 }
 
--(void) setCString:(char*)label {
+-(void) setCString:(char*)label
+{
 	[self setString:[NSString stringWithUTF8String:label]];
 }
 

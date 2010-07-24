@@ -151,7 +151,7 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_SPRITESHEET_DEBUG_DRAW 0
+#define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 
 /** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
  If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
