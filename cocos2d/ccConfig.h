@@ -81,7 +81,7 @@
  
  To enable set it to a value different than 0. Enabled by default.
  */
-#define CC_SPRITESHEET_RENDER_SUBPIXEL	1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 
 /** @def CC_TEXTURE_ATLAS_USES_VBO
  If enabled, the CCTextureAtlas object will use VBO instead of vertex list (VBO is recommended by Apple)
