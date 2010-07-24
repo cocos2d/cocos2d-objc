@@ -177,6 +177,8 @@
 //	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
 	NSString *rankStr = [NSString stringWithCString:[receivedData bytes] encoding: NSASCIIStringEncoding];
 	
+//	NSLog(@"XXXX: Ranking: %@", rankStr);
+	
 	// creating trimmed string by trimming everything that's not numbers from the receivedData
 	NSString *trimmedStr = [rankStr stringByTrimmingCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
 	
