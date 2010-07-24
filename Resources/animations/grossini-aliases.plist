@@ -18,7 +18,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_15.png</string>
+				<string>dance_01</string>
 			</array>
 		</dict>
 		<key>grossini_dance_02.png</key>
@@ -35,7 +35,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_16.png</string>
+				<string>dance_02</string>
 			</array>
 		</dict>
 		<key>grossini_dance_03.png</key>
@@ -52,7 +52,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_17.png</string>
+				<string>dance_03</string>
 			</array>
 		</dict>
 		<key>grossini_dance_04.png</key>
@@ -69,7 +69,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_18.png</string>
+				<string>dance_04</string>
 			</array>
 		</dict>
 		<key>grossini_dance_05.png</key>
@@ -86,7 +86,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_19.png</string>
+				<string>dance_05</string>
 			</array>
 		</dict>
 		<key>grossini_dance_06.png</key>
@@ -103,7 +103,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_20.png</string>
+				<string>dance_06</string>
 			</array>
 		</dict>
 		<key>grossini_dance_07.png</key>
@@ -120,7 +120,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_21.png</string>
+				<string>dance_07</string>
 			</array>
 		</dict>
 		<key>grossini_dance_08.png</key>
@@ -137,7 +137,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_22.png</string>
+				<string>dance_08</string>
 			</array>
 		</dict>
 		<key>grossini_dance_09.png</key>
@@ -154,7 +154,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_23.png</string>
+				<string>dance_09</string>
 			</array>
 		</dict>
 		<key>grossini_dance_10.png</key>
@@ -171,7 +171,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_24.png</string>
+				<string>dance_10</string>
 			</array>
 		</dict>
 		<key>grossini_dance_11.png</key>
@@ -188,7 +188,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_25.png</string>
+				<string>dance_11</string>
 			</array>
 		</dict>
 		<key>grossini_dance_12.png</key>
@@ -205,7 +205,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_26.png</string>
+				<string>dance_12</string>
 			</array>
 		</dict>
 		<key>grossini_dance_13.png</key>
@@ -222,7 +222,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_27.png</string>
+				<string>dance_13</string>
 			</array>
 		</dict>
 		<key>grossini_dance_14.png</key>
@@ -239,7 +239,7 @@
 			<string>{85, 121}</string>
 			<key>aliases</key>
 			<array>
-				<string>grossini_dance_28.png</string>
+				<string>dance_14</string>
 			</array>
 		</dict>
 	</dict>
