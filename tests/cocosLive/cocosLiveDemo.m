@@ -59,6 +59,36 @@
 	return CCRANDOM_0_1() * max;
 }
 
+-(void) requestRank
+{
+	
+	CLScoreServerRequest *request = [[CLScoreServerRequest alloc] initWithGameName:@"DemoGame 3" delegate:self];
+	
+	NSString *cat = @"easy2";
+
+	int score = CCRANDOM_0_1() * 20000;
+	int category_idx = CCRANDOM_0_1() * 3;
+	switch( category_idx ) {
+		case 0:
+			cat = @"easy2";
+			break;
+		case 1:
+			cat = @"medium";
+			break;
+		case 2:
+			cat = @"hard";
+			break;
+	}
+	
+	NSLog(@"Requesting Rank for Score %d in category %@", score, cat);
+
+	// Request Ranking for a given score and category
+	[request requestRankForScore:score andCategory:cat];
+	
+	// Release. It won't be freed from memory until the connection fails or suceeds
+	[request release];	
+}
+
 -(void) requestScore
 {
 	NSLog(@"Requesting scores...");
@@ -89,7 +119,7 @@
 	// request All time Scores: the only supported version as of v0.2
 	// request best 15 scores (limit:15, offset:0)
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
-
+	
 	// Release. It won't be freed from memory until the connection fails or suceeds
 	[request release];
 }
@@ -156,6 +186,9 @@
 	
 	// Release. It won't be freed from memory until the connection fails or suceeds
 	[server release];
+	
+	
+	// Test for 
 }
 
 #pragma mark -
@@ -194,6 +227,13 @@
 #pragma mark -
 #pragma mark ScoreRequest Delegate
 
+-(void) scoreRequestRankOk: (id) sender
+{
+	NSLog(@"score request Rank OK");	
+	int rank = [sender parseRank];
+	NSLog(@"Ranking: %d", rank);
+}
+
 -(void) scoreRequestOk: (id) sender
 {
 	NSLog(@"score request OK");	
@@ -204,6 +244,9 @@
 	self.globalScores = mutable;
 		
 	[myTableView reloadData];
+	
+	// Test Rank
+	[self requestRank];
 }
 
 -(void) scoreRequestFail: (id) sender
