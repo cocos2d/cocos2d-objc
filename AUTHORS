@@ -149,11 +149,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		BitmapFontAtlas supports sub-directories patch
 	* Joe Vennix:
 		patches for CocosNode
-	* Jon Kean:
+	* Jon Kean (http://twitter.com/awesomestsoft):
 		PointParticle asserts if size > 64
 		Fixed memory leaks when initialization of some nodes failed
 		Added removeFromParent method in CCNode
 		Improved performance in CCArray
+		Simplified CCArray getNSArray code
 		Particles: Uses Quad in ARMv7 and Point in ARMv6. patch.
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
 		Author of the games tab in the cocos2d site
@@ -215,7 +216,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of CCPropertyAction
 	* magicyu (crmagicxxx):
 		CocosLive client supports ranking request patch
-	* manucorporat (manu.valladolid) (http://manucorporat.blogspot.com/):
+	* manucorporat (manu.valladolid) (http://www.abstractionworks.com/):
 		added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
 		MenuItemLabel: color is saved when item is disabled

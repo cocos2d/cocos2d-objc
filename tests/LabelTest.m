@@ -710,24 +710,36 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		CGSize s;
 
 		// Left
 		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nLeft" fntFile:@"bitmapFontTest3.fnt"];
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
 		
+		s = [label1 contentSize];
+		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
+		
+		
 		// Center
 		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
 		label2.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 
+		s = [label2 contentSize];
+		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
+
+		
 		// right
-		CCBitmapFontAtlas *label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nRight" fntFile:@"bitmapFontTest3.fnt"];
+		CCBitmapFontAtlas *label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nRight\nThree lines Three" fntFile:@"bitmapFontTest3.fnt"];
 		label3.anchorPoint = ccp(1,1);
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
+
+		s = [label3 contentSize];
+		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
+
 		
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];	
+		s = [[CCDirector sharedDirector] winSize];	
 		label1.position = ccp( 0,0);
 		label2.position = ccp( s.width/2, s.height/2);
 		label3.position = ccp( s.width, s.height);

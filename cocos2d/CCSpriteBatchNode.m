@@ -282,7 +282,7 @@ const int defaultCapacity = 29;
 		if( dirtyMethod(child, selDirty) )
 			updateMethod(child, selUpdate);
 		
-#if CC_SPRITESHEET_DEBUG_DRAW
+#if CC_SPRITEBATCHNODE_DEBUG_DRAW
 		CGRect rect = [child boundingBox]; //Issue #528
 		CGPoint vertices[4]={
 			ccp(rect.origin.x,rect.origin.y),
@@ -291,7 +291,7 @@ const int defaultCapacity = 29;
 			ccp(rect.origin.x,rect.origin.y+rect.size.height),
 		};
 		ccDrawPoly(vertices, 4, YES);
-#endif // CC_SPRITESHEET_DEBUG_DRAW
+#endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
 	}
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
