@@ -50,12 +50,14 @@
 			return nil;
 		}
 
+#if CC_USES_VBO
 		glGenBuffers(1, &verticesID);
 		
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, verticesID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices,GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);		
+		glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 	}
 
 	return self;
@@ -64,7 +66,9 @@
 -(void) dealloc
 {
 	free(vertices);
+#if CC_USES_VBO
 	glDeleteBuffers(1, &verticesID);
+#endif
 	
 	[super dealloc];
 }
@@ -79,9 +83,11 @@
 
 -(void) postStep
 {
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccPointSprite)*particleCount, vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 }
 
 -(void) draw
@@ -97,17 +103,29 @@
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 	
 	glEnable(GL_POINT_SPRITE_OES);
-	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );	
+	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );
 	
+	int kPointSize = sizeof(vertices[0]);
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 
-	glVertexPointer(2,GL_FLOAT,sizeof(vertices[0]),0);
+	glVertexPointer(2,GL_FLOAT, kPointSize, 0);
 
-	glColorPointer(4, GL_FLOAT, sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,colors) );
+	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccPointSprite, colors) );
 
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glPointSizePointerOES(GL_FLOAT,sizeof(vertices[0]),(GLvoid*) offsetof(ccPointSprite,size) );
+	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccPointSprite, size) );
+#else	
+	int offset = (int)vertices;
+	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
 	
+	int diff = offsetof(ccPointSprite, colors);
+	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+	
+	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
+	diff = offsetof(ccPointSprite, size);
+	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+#endif
 
 	BOOL newBlend = NO;
 	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
@@ -135,8 +153,10 @@
 	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, colorMode);
 #endif
 	
+#if CC_USES_VBO
 	// unbind VBO buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 	
 	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glDisable(GL_POINT_SPRITE_OES);

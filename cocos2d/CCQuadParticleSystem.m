@@ -66,13 +66,15 @@
 		[self initTexCoordsWithRect:CGRectMake(0, 0, 1, 1)];
 		[self initIndices];
 
+#if CC_USES_VBO
 		// create the VBO buffer
 		glGenBuffers(1, &quadsID);
 		
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quads[0])*totalParticles, quads,GL_DYNAMIC_DRAW);	
-		glBindBuffer(GL_ARRAY_BUFFER, 0);		
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 	}
 		
 	return self;
@@ -82,7 +84,9 @@
 {
 	free(quads);
 	free(indices);
+#if CC_USES_VBO
 	glDeleteBuffers(1, &quadsID);
+#endif
 	
 	[super dealloc];
 }
@@ -234,9 +238,11 @@
 
 -(void) postStep
 {
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads[0])*particleCount, quads);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 }
 
 // overriding draw method
@@ -249,14 +255,25 @@
 	
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 
+	int kPointSize = sizeof(quads[0].bl);
+
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
 
-#define kPointSize sizeof(quads[0].bl)
 	glVertexPointer(2,GL_FLOAT, kPointSize, 0);
 
 	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
 	
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
+#else
+	int offset = (int) quads;
+	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) 0);
+	int diff = offsetof(ccV2F_C4F_T2F,colors);
+	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+	diff = offsetof(ccV2F_C4F_T2F,texCoords);
+	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+#endif
+	
 	
 	
 	BOOL newBlend = NO;
@@ -288,7 +305,9 @@
 	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, colorMode);
 #endif
 	
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 
 	// restore GL default state
 	// -

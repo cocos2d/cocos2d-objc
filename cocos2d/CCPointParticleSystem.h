@@ -45,7 +45,9 @@
 	// Array of (x,y,size) 
 	ccPointSprite *vertices;
 	// vertices buffer id
-	GLuint	verticesID;	
+#if CC_USES_VBO
+	GLuint	verticesID;
+#endif
 }
 @end
 

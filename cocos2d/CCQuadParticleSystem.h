@@ -47,7 +47,9 @@
 {
 	ccV2F_C4F_T2F_Quad	*quads;		// quads to be rendered
 	GLushort			*indices;	// indices
+#if CC_USES_VBO
 	GLuint				quadsID;	// VBO id
+#endif
 }
 
 // initialices the indices for the vertices
