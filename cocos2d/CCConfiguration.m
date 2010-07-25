@@ -109,7 +109,7 @@ static char * glExtensions;
 #endif
 			  );
 		CCLOG(@"cocos2d: compiled with VBO support in TextureAtlas : %s",
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 			  "YES"
 #else
 			  "NO"

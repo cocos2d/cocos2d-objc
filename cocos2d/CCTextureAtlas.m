@@ -85,10 +85,10 @@
 			return nil;
 		}
 		
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 		// initial binding
 		glGenBuffers(2, &buffersVBO_[0]);		
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+#endif // CC_USES_VBO
 
 		[self initIndices];
 	}
@@ -108,9 +108,9 @@
 	free(quads_);
 	free(indices_);
 	
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 	glDeleteBuffers(2, buffersVBO_);
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+#endif // CC_USES_VBO
 	
 	
 	[texture_ release];
@@ -143,14 +143,14 @@
 #endif	
 	}
 	
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * capacity_, quads_, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * capacity_ * 6, indices_, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+#endif // CC_USES_VBO
 }
 
 #pragma mark TextureAtlas - Update, Insert, Move & Remove
@@ -284,7 +284,7 @@
 #define kQuadSize sizeof(quads_[0].bl)
 
 
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
 	
 	// XXX: update is done in draw... perhaps it should be done in a timer
@@ -309,7 +309,7 @@
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-#else // ! CC_TEXTURE_ATLAS_USES_VBO
+#else // ! CC_USES_VBO
 	
 	int offset = (int)quads_;
 
@@ -331,7 +331,7 @@
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices_);	
 #endif
 	
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+#endif // CC_USES_VBO
 }
 
 @end
