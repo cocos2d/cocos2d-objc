@@ -117,9 +117,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if((self = [super initWithFrame:frame]))
 	{
-		pixelformat_ = format;
-		depthFormat_ = depth;
-		size_ = frame.size;
+		pixelformat_		= format;
+		depthFormat_		= depth;
+		preserveBackbuffer_	= retained;
+		size_				= frame.size;
 		
 		if( ! [self setupSurface] ) {
 			[self release];
@@ -155,7 +156,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	eaglLayer.opaque = YES;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
+									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
 		

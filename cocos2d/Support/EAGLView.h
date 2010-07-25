@@ -96,6 +96,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	NSString				*pixelformat_;
 	GLuint					depthFormat_;
+	BOOL					preserveBackbuffer_;
 
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
