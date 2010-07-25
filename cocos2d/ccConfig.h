@@ -90,7 +90,7 @@
  
  @since v0.99.5
  */
-#define CC_USES_VBO 1
+#define CC_USES_VBO 0
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.

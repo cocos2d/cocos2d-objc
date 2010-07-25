@@ -558,7 +558,9 @@
 	CCProfilingEndTimingBlock(_profilingTimer);
 #endif
 	
+#ifdef CC_USES_VBO
 	[self postStep];
+#endif
 }
 
 -(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos;
