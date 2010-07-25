@@ -8,7 +8,7 @@
 Class nextAction();
 
 enum {
-	kMaxParticles = 9000,
+	kMaxParticles = 14000,
 	kNodesIncrease = 100,
 };
 
