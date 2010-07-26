@@ -297,6 +297,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of Zwoptex editor. Added support for Zwoptex
 		Added support for left,right,top,bottom trim in CCSpriteFrameCache (patch).
 		Added support for Zwoptex rotated frames. patch
+		Author of Zwoptex Test
 	* Rolandas Razma (gamebit):
 		added support for auto-remove-on-finish in particles
 		TMX maps support visibility and opacity patch
