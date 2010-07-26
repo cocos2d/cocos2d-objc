@@ -232,6 +232,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added CCArray in CCNode and CCSpriteSheet to improve performance
 		ccCArray: added missing functions so that it easier to wrap a fast enum object around it.
 		Improved performance in serveral places by using CCARRAY_FOREACH
+		Particles: also work with vertex array list (compile time option). patch.
 	* Marco Tillemans:
 		RenderTexture renders images with correct blend function. patch.
 	* marcu.catalin:

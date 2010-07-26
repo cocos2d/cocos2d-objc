@@ -2724,7 +2724,6 @@
 		5001659E0E72DB470085673F /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b2.png; sourceTree = "<group>"; };
 		5001659F0E72DB470085673F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
-		500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "cocos2d-iphone.xcclassmodel"; sourceTree = "<group>"; };
 		5006B87C11BB71E000E488BD /* background3-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-ipad.png"; sourceTree = "<group>"; };
 		5006BD0D11BCF3C300E488BD /* PerformanceTestChildrenNode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTestChildrenNode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5006BD1C11BCF48D00E488BD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -3178,7 +3177,6 @@
 		507C0F0B11D609290075E747 /* Bug899.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug899.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		507C0F1111D60A740075E747 /* Bug-899.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-899.h"; sourceTree = "<group>"; };
 		507C0F1211D60A740075E747 /* Bug-899.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-899.m"; sourceTree = "<group>"; };
-		507FF879116BF6B000B6FAB2 /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PLBlocks.framework; sourceTree = "<group>"; };
 		507FF8F2116D16F600B6FAB2 /* Bug350.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug350.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5080435011BEE8D60039CA83 /* ccCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccCArray.h; sourceTree = "<group>"; };
 		5080435111BEE8D60039CA83 /* CCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCArray.m; sourceTree = "<group>"; };
@@ -4594,7 +4592,6 @@
 				505460E91061413300AB7C52 /* Fonts */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
 				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
-				500576EA0F911700002EB855 /* cocos2d-iphone.xcclassmodel */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
 				5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */,
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
@@ -4612,7 +4609,6 @@
 				2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */,
 				2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-				507FF879116BF6B000B6FAB2 /* PLBlocks.framework */,
 				50E3876C10446C6E00150883 /* AVFoundation.framework */,
 				50E3876E10446C6E00150883 /* AudioToolbox.framework */,
 				50E3877010446C6E00150883 /* OpenAL.framework */,
@@ -13268,7 +13264,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COMPRESS_PNG_FILES = NO;
+				COMPRESS_PNG_FILES = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
@@ -13304,7 +13300,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COMPRESS_PNG_FILES = NO;
+				COMPRESS_PNG_FILES = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
