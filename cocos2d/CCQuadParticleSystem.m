@@ -255,7 +255,7 @@
 	
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 
-#define kPointSize (sizeof(quads[0].bl))
+#define kPointSize sizeof(quads[0].bl)
 
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
@@ -265,14 +265,15 @@
 	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
 	
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
-#else
+#else // vertex array list
+
 	int offset = (int) quads;
-	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) 0);
+	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
 	int diff = offsetof(ccV2F_C4F_T2F,colors);
 	glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
 	diff = offsetof(ccV2F_C4F_T2F,texCoords);
 	glTexCoordPointer(2, GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
-#endif
+#endif // CC_USES_VBO
 	
 	
 	
@@ -282,15 +283,6 @@
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
 	
-	// save color mode
-#if 0
-	glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &colorMode);
-	if( colorModulate )
-		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-	else
-		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-#endif
-
 	if( particleIdx != particleCount ) {
 		NSLog(@"pd:%d, pc:%d", particleIdx, particleCount);
 	}
@@ -299,12 +291,7 @@
 	// restore blend state
 	if( newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
-	
-#if 0
-	// restore color mode
-	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, colorMode);
-#endif
-	
+
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif

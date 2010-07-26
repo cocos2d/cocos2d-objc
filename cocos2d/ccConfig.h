@@ -75,8 +75,8 @@
  */
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
 
-/** @def CC_SPRITESHEET_RENDER_SUBPIXEL
- If enabled, the CCSprite objects rendered with CCSpriteSheet will be able to render in subpixels.
+/** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
+ If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
  To enable set it to a value different than 0. Enabled by default.
@@ -93,7 +93,7 @@
  @since v0.99.5
  */
 
-#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR
+#if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR)
 #define CC_USES_VBO 1
 #else
 #define CC_USES_VBO 0
@@ -152,7 +152,7 @@
  */
 #define CC_SPRITE_DEBUG_DRAW 0
 
-/** @def CC_SPRITESHEET_DEBUG_DRAW
+/** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
