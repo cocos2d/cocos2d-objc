@@ -93,13 +93,11 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture
 {
 	/*
-	Supported Zwoptex Formats:
-		enum {
-			ZWTCoordinatesListXMLFormat_Legacy = 0 // flash version
-			ZWTCoordinatesListXMLFormat_v1_0 = 1, // desktop version
-			ZWTCoordinatesListXMLFormat_v1_1 = 2, // desktop version - adds rotated support
-			ZWTCoordinatesListXMLFormat_v1_2 = 3, // desktop version - adds name aliasing support
-		};
+	 Supported Zwoptex Formats:
+	 ZWTCoordinatesFormatOptionXMLLegacy = 0, // Flash Version
+	 ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
+	 ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
+	 ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
 	*/
 	NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
 	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
@@ -137,30 +135,42 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			oh = abs(oh);
 			// create frame
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x, y, w, h) rotated:NO offset:CGPointMake(ox, oy) originalSize:CGSizeMake(ow, oh)];
-		} else if(format == 1 || format == 2 || format == 3) {
+		} else if(format == 1 || format == 2) {
 			CGRect frame = CGRectFromString([frameDict objectForKey:@"frame"]);
 			BOOL rotated = NO;
 			
 			// rotation
-			if(format == 2 || format == 3)
+			if(format == 2)
 				rotated = [[frameDict objectForKey:@"rotated"] boolValue];
-			
-			// name aliases
-			if(format == 3) {
-				NSArray *aliases = [frameDict objectForKey:@"aliases"];
-				for(NSString *alias in aliases) {
-					if( [spriteFramesAliases_ objectForKey:alias] )
-						CCLOG(@"cocos2d: WARNING: an alias with name %@ already exists",alias);
-					
-					[spriteFramesAliases_ setObject:frameDictKey forKey:alias];
-				}
-			}
 			
 			CGPoint offset = CGPointFromString([frameDict objectForKey:@"offset"]);
 			CGSize sourceSize = CGSizeFromString([frameDict objectForKey:@"sourceSize"]);
 			
 			// create frame
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame rotated:rotated offset:offset originalSize:sourceSize];
+		} else if(format == 3) {
+			// get values
+			CGSize spriteSize = CGSizeFromString([frameDict objectForKey:@"spriteSize"]);
+			CGPoint spriteOffset = CGPointFromString([frameDict objectForKey:@"spriteOffset"]);
+			CGSize spriteSourceSize = CGSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
+			CGRect textureRect = CGRectFromString([frameDict objectForKey:@"textureRect"]);
+			BOOL textureRotated = [[frameDict objectForKey:@"textureRotated"] boolValue];
+			
+			// get aliases
+			NSArray *aliases = [frameDict objectForKey:@"aliases"];
+			for(NSString *alias in aliases) {
+				if( [spriteFramesAliases_ objectForKey:alias] )
+					CCLOG(@"cocos2d: WARNING: an alias with name %@ already exists",alias);
+				
+				[spriteFramesAliases_ setObject:frameDictKey forKey:alias];
+			}
+			
+			// create frame
+			spriteFrame = [CCSpriteFrame frameWithTexture:texture 
+													 rect:CGRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height) 
+												  rotated:textureRotated 
+												   offset:spriteOffset 
+											 originalSize:spriteSourceSize];
 		}
 
 		// add sprite frame
