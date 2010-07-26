@@ -105,7 +105,8 @@
 	glEnable(GL_POINT_SPRITE_OES);
 	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );
 	
-	int kPointSize = sizeof(vertices[0]);
+#define kPointSize sizeof(vertices[0])
+
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 
@@ -115,7 +116,7 @@
 
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccPointSprite, size) );
-#else	
+#else // Uses Vertex Array List
 	int offset = (int)vertices;
 	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
 	
@@ -133,14 +134,6 @@
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	}
 
-	// save color mode
-#if 0
-	glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &colorMode);
-	if( colorModulate )
-		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-	else
-		glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-#endif
 
 	glDrawArrays(GL_POINTS, 0, particleIdx);
 	
@@ -148,10 +141,6 @@
 	if( newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
 
-#if 0
-	// restore color mode
-	glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, colorMode);
-#endif
 	
 #if CC_USES_VBO
 	// unbind VBO buffer
