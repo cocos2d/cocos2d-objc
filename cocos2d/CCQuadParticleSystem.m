@@ -255,7 +255,7 @@
 	
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 
-	int kPointSize = sizeof(quads[0].bl);
+#define kPointSize (sizeof(quads[0].bl))
 
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID);

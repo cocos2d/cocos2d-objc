@@ -86,11 +86,18 @@
 /** @def CC_USES_VBO
  If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to a value different than 0.
+ Enabled by default on ARMv7 processors and iPhone Simulator.
+ Disabled by default on ARMv6 processors.
  
  @since v0.99.5
  */
+
+#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR
 #define CC_USES_VBO 1
+#else
+#define CC_USES_VBO 0
+#endif
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.

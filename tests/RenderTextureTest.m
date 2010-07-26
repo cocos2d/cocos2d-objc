@@ -170,7 +170,7 @@ Class restartAction()
 	static int counter=0;
 	
 	NSString *str = [NSString stringWithFormat:@"image-%d.png", counter];
-	[target saveBuffer:str format:kImageFormatPNG];
+	[target saveBuffer:str format:kCCImageFormatPNG];
 	NSLog(@"Image saved: %@", str);
 	
 	counter++;
