@@ -9,7 +9,7 @@ Class nextAction();
 
 enum {
 	kMaxParticles = 14000,
-	kNodesIncrease = 500,
+	kNodesIncrease = 100,
 };
 
 @interface MainScene : CCScene {
