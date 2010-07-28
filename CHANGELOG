@@ -19,6 +19,7 @@ version 0.99.5-beta XX-MMM-2010
  . [FIX] CocosDenshion: Improved sound interruption code (issue #928)
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
                 and PointParticles when compiled in ARMv6
+ . [FIX] Sprites: No artifacts when using spritehsheets (issue #938)
  . [FIX] Templates & Tests: call CC_DIRECTOR_END() on AppDelegate Terminate
  . [FIX] Templates: Use LLVM-GCC as default compiler
  . [FIX] Tests: AtlasTest renamed to LabelTest

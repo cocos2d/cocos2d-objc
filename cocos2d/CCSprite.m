@@ -394,6 +394,58 @@ struct transformValues_ {
 
 -(void)updateTextureCoords:(CGRect)rect
 {
+	CCTexture2D *tex	= (usesBatchNode_)?[textureAtlas_ texture]:texture_;
+	if(!tex)
+		return;
+	
+	float atlasWidth = (float)tex.pixelsWide;
+	float atlasHeight = (float)tex.pixelsHigh;
+	
+	float left,right,top,bottom;
+	
+	if(rectRotated_){
+		left	= ((2*rect.origin.x)+1)/(2*atlasWidth);
+		right	= (((2*rect.origin.x)+1)+(rect.size.height*2)-2)/(2*atlasWidth);
+		top		= ((2*rect.origin.y)+1)/(2*atlasHeight);
+		bottom	= (((2*rect.origin.y)+1)+(rect.size.width*2)-2)/(2*atlasHeight);
+		
+		if( flipX_)
+			CC_SWAP(top,bottom);
+		if( flipY_)
+			CC_SWAP(left,right);
+		
+		quad_.bl.texCoords.u = left;
+		quad_.bl.texCoords.v = top;
+		quad_.br.texCoords.u = left;
+		quad_.br.texCoords.v = bottom;
+		quad_.tl.texCoords.u = right;
+		quad_.tl.texCoords.v = top;
+		quad_.tr.texCoords.u = right;
+		quad_.tr.texCoords.v = bottom;
+	}else{
+		left	= ((2*rect.origin.x)+1)/(2*atlasWidth);
+		right	= (((2*rect.origin.x)+1)+(rect.size.width*2)-2)/(2*atlasWidth);
+		top	= ((2*rect.origin.y)+1)/(2*atlasHeight);
+		bottom	= (((2*rect.origin.y)+1)+(rect.size.height*2)-2)/(2*atlasHeight);
+		
+		if( flipX_)
+			CC_SWAP(left,right);
+		if( flipY_)
+			CC_SWAP(top,bottom);
+		
+		quad_.bl.texCoords.u = left;
+		quad_.bl.texCoords.v = bottom;
+		quad_.br.texCoords.u = right;
+		quad_.br.texCoords.v = bottom;
+		quad_.tl.texCoords.u = left;
+		quad_.tl.texCoords.v = top;
+		quad_.tr.texCoords.u = right;
+		quad_.tr.texCoords.v = top;
+	}
+}
+
+-(void)ignoreupdateTextureCoords:(CGRect)rect
+{
 	
 	float atlasWidth = texture_.pixelsWide;
 	float atlasHeight = texture_.pixelsHigh;
