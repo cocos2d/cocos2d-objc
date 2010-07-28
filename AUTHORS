@@ -55,6 +55,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added Ease Elastic actions
 		oapcity + color works with premultiplied textures. patch.
 		Director: fixed startup flicker
+		Fixed the artifact in textures atlas with no border.
 	* cjlesh:
 		RotateTo action rotates to shortest angle patch
 	* Clinth Harris:
