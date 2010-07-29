@@ -158,17 +158,26 @@
 
 	int x = pos.x;
 	int y = pos.y;
-	float row = (value.r % itemsPerRow) * texStepX;
-	float col = (value.r / itemsPerRow) * texStepY;
+	float row = (value.r % itemsPerRow);
+	float col = (value.r / itemsPerRow);
+	
+	float textureWide = [[textureAtlas_ texture] pixelsWide];
+	float textureHigh = [[textureAtlas_ texture] pixelsHigh];
 
-	quad.tl.texCoords.u = row;
-	quad.tl.texCoords.v = col;
-	quad.tr.texCoords.u = row + texStepX;
-	quad.tr.texCoords.v = col;
-	quad.bl.texCoords.u = row;
-	quad.bl.texCoords.v = col + texStepY;
-	quad.br.texCoords.u = row + texStepX;
-	quad.br.texCoords.v = col + texStepY;
+	float left		= (2*row*itemWidth+1)/(2*textureWide);
+	float right		= left+(itemWidth*2-2)/(2*textureWide);
+	float top		= (2*col*itemHeight+1)/(2*textureHigh);
+	float bottom	= top+(itemHeight*2-2)/(2*textureHigh);		
+	
+
+	quad.tl.texCoords.u = left;
+	quad.tl.texCoords.v = top;
+	quad.tr.texCoords.u = right;
+	quad.tr.texCoords.v = top;
+	quad.bl.texCoords.u = left;
+	quad.bl.texCoords.v = bottom;
+	quad.br.texCoords.u = right;
+	quad.br.texCoords.v = bottom;
 
 	quad.bl.vertices.x = (int) (x * itemWidth);
 	quad.bl.vertices.y = (int) (y * itemHeight);

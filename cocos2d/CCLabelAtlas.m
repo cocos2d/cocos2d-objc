@@ -70,19 +70,29 @@
 
 	const char *s = [string_ UTF8String];
 
+	CCTexture2D *texture = [textureAtlas_ texture];
+	float textureWide = [texture pixelsWide];
+	float textureHigh = [texture pixelsHigh];
+
 	for( int i=0; i<n; i++) {
 		unsigned char a = s[i] - mapStartChar;
-		float row = (a % itemsPerRow) * texStepX;
-		float col = (a / itemsPerRow) * texStepY;
+		float row = (a % itemsPerRow);
+		float col = (a / itemsPerRow);
 		
-		quad.tl.texCoords.u = row;
-		quad.tl.texCoords.v = col;
-		quad.tr.texCoords.u = row + texStepX;
-		quad.tr.texCoords.v = col;
-		quad.bl.texCoords.u = row;
-		quad.bl.texCoords.v = col + texStepY;
-		quad.br.texCoords.u = row + texStepX;
-		quad.br.texCoords.v = col + texStepY;
+		// Issue #938. Don't use texStepX & texStepY
+		float left		= (2*row*itemWidth+1)/(2*textureWide);
+		float right		= left+(itemWidth*2-2)/(2*textureWide);
+		float top		= (2*col*itemHeight+1)/(2*textureHigh);
+		float bottom	= top+(itemHeight*2-2)/(2*textureHigh);		
+		
+		quad.tl.texCoords.u = left;
+		quad.tl.texCoords.v = top;
+		quad.tr.texCoords.u = right;
+		quad.tr.texCoords.v = top;
+		quad.bl.texCoords.u = left;
+		quad.bl.texCoords.v = bottom;
+		quad.br.texCoords.u = right;
+		quad.br.texCoords.v = bottom;
 		
 		quad.bl.vertices.x = (int) (i * itemWidth);
 		quad.bl.vertices.y = 0;
