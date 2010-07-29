@@ -50,8 +50,8 @@
 {
 	if( (self=[super init]) ) {
 	
-		itemWidth = w;
-		itemHeight = h;
+		itemWidth_ = w;
+		itemHeight_ = h;
 
 		opacity_ = 255;
 		color_ = colorUnmodified_ = ccWHITE;
@@ -87,15 +87,15 @@
 -(void) calculateMaxItems
 {
 	CGSize s = [[textureAtlas_ texture] contentSize];
-	itemsPerColumn = s.height / itemHeight;
-	itemsPerRow = s.width / itemWidth;
+	itemsPerColumn_ = s.height / itemHeight_;
+	itemsPerRow_ = s.width / itemWidth_;
 }
 
 -(void) calculateTexCoordsSteps
 {
 	CCTexture2D *tex = [textureAtlas_ texture];
-	texStepX = itemWidth / (float) [tex pixelsWide];
-	texStepY = itemHeight / (float) [tex pixelsHigh]; 	
+	texStepX_ = itemWidth_ / (float) [tex pixelsWide];
+	texStepY_ = itemHeight_ / (float) [tex pixelsHigh]; 	
 }
 
 -(void) updateAtlasValues

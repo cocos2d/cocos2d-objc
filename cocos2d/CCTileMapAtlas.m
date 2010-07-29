@@ -56,7 +56,7 @@
 
 		[self updateAtlasValues];
 		
-		[self setContentSize: CGSizeMake(tgaInfo->width*itemWidth, tgaInfo->height*itemHeight)];
+		[self setContentSize: CGSizeMake(tgaInfo->width*itemWidth_, tgaInfo->height*itemHeight_)];
 	}
 
 	return self;
@@ -158,16 +158,16 @@
 
 	int x = pos.x;
 	int y = pos.y;
-	float row = (value.r % itemsPerRow);
-	float col = (value.r / itemsPerRow);
+	float row = (value.r % itemsPerRow_);
+	float col = (value.r / itemsPerRow_);
 	
 	float textureWide = [[textureAtlas_ texture] pixelsWide];
 	float textureHigh = [[textureAtlas_ texture] pixelsHigh];
 
-	float left		= (2*row*itemWidth+1)/(2*textureWide);
-	float right		= left+(itemWidth*2-2)/(2*textureWide);
-	float top		= (2*col*itemHeight+1)/(2*textureHigh);
-	float bottom	= top+(itemHeight*2-2)/(2*textureHigh);		
+	float left		= (2*row*itemWidth_+1)/(2*textureWide);
+	float right		= left+(itemWidth_*2-2)/(2*textureWide);
+	float top		= (2*col*itemHeight_+1)/(2*textureHigh);
+	float bottom	= top+(itemHeight_*2-2)/(2*textureHigh);
 	
 
 	quad.tl.texCoords.u = left;
@@ -179,17 +179,17 @@
 	quad.br.texCoords.u = right;
 	quad.br.texCoords.v = bottom;
 
-	quad.bl.vertices.x = (int) (x * itemWidth);
-	quad.bl.vertices.y = (int) (y * itemHeight);
+	quad.bl.vertices.x = (int) (x * itemWidth_);
+	quad.bl.vertices.y = (int) (y * itemHeight_);
 	quad.bl.vertices.z = 0.0f;
-	quad.br.vertices.x = (int)(x * itemWidth + itemWidth);
-	quad.br.vertices.y = (int)(y * itemHeight);
+	quad.br.vertices.x = (int)(x * itemWidth_ + itemWidth_);
+	quad.br.vertices.y = (int)(y * itemHeight_);
 	quad.br.vertices.z = 0.0f;
-	quad.tl.vertices.x = (int)(x * itemWidth);
-	quad.tl.vertices.y = (int)(y * itemHeight + itemHeight);
+	quad.tl.vertices.x = (int)(x * itemWidth_);
+	quad.tl.vertices.y = (int)(y * itemHeight_ + itemHeight_);
 	quad.tl.vertices.z = 0.0f;
-	quad.tr.vertices.x = (int)(x * itemWidth + itemWidth);
-	quad.tr.vertices.y = (int)(y * itemHeight + itemHeight);
+	quad.tr.vertices.x = (int)(x * itemWidth_ + itemWidth_);
+	quad.tr.vertices.y = (int)(y * itemHeight_ + itemHeight_);
 	quad.tr.vertices.z = 0.0f;
 	
 	[textureAtlas_ updateQuad:&quad atIndex:idx];
