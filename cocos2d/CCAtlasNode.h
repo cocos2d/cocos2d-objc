@@ -45,12 +45,7 @@
 	int				itemsPerRow_;
 	// chars per column
 	int				itemsPerColumn_;
-	
-	// texture coordinate x increment
-	float			texStepX_;
-	// texture coordinate y increment
-	float			texStepY_;
-	
+		
 	// width of each char
 	int				itemWidth_;
 	// height of each char
