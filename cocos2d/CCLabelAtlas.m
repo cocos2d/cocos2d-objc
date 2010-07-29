@@ -76,14 +76,14 @@
 
 	for( int i=0; i<n; i++) {
 		unsigned char a = s[i] - mapStartChar;
-		float row = (a % itemsPerRow);
-		float col = (a / itemsPerRow);
+		float row = (a % itemsPerRow_);
+		float col = (a / itemsPerRow_);
 		
 		// Issue #938. Don't use texStepX & texStepY
-		float left		= (2*row*itemWidth+1)/(2*textureWide);
-		float right		= left+(itemWidth*2-2)/(2*textureWide);
-		float top		= (2*col*itemHeight+1)/(2*textureHigh);
-		float bottom	= top+(itemHeight*2-2)/(2*textureHigh);		
+		float left		= (2*row*itemWidth_+1)/(2*textureWide);
+		float right		= left+(itemWidth_*2-2)/(2*textureWide);
+		float top		= (2*col*itemHeight_+1)/(2*textureHigh);
+		float bottom	= top+(itemHeight_*2-2)/(2*textureHigh);		
 		
 		quad.tl.texCoords.u = left;
 		quad.tl.texCoords.v = top;
@@ -94,17 +94,17 @@
 		quad.br.texCoords.u = right;
 		quad.br.texCoords.v = bottom;
 		
-		quad.bl.vertices.x = (int) (i * itemWidth);
+		quad.bl.vertices.x = (int) (i * itemWidth_);
 		quad.bl.vertices.y = 0;
 		quad.bl.vertices.z = 0.0f;
-		quad.br.vertices.x = (int)(i * itemWidth + itemWidth);
+		quad.br.vertices.x = (int)(i * itemWidth_ + itemWidth_);
 		quad.br.vertices.y = 0;
 		quad.br.vertices.z = 0.0f;
-		quad.tl.vertices.x = (int)(i * itemWidth);
-		quad.tl.vertices.y = (int)(itemHeight);
+		quad.tl.vertices.x = (int)(i * itemWidth_);
+		quad.tl.vertices.y = (int)(itemHeight_);
 		quad.tl.vertices.z = 0.0f;
-		quad.tr.vertices.x = (int)(i * itemWidth + itemWidth);
-		quad.tr.vertices.y = (int)(itemHeight);
+		quad.tr.vertices.x = (int)(i * itemWidth_ + itemWidth_);
+		quad.tr.vertices.y = (int)(itemHeight_);
 		quad.tr.vertices.z = 0.0f;
 		
 		[textureAtlas_ updateQuad:&quad atIndex:i];
@@ -123,8 +123,8 @@
 	[self updateAtlasValues];
 
 	CGSize s;
-	s.width = [string_ length] * itemWidth;
-	s.height = itemHeight;
+	s.width = [string_ length] * itemWidth_;
+	s.height = itemHeight_;
 	[self setContentSize:s];
 }
 
