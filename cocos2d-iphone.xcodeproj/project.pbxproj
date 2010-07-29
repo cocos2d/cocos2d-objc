@@ -3691,7 +3691,6 @@
 		E0C54DC911F9CF2700B9E4CB /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
 		E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire_rgba8888.pvr; sourceTree = "<group>"; };
 		E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZwoptexTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0C5588811FE48E700B9E4CB /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info copy.plist"; path = "Resources/Info copy.plist"; sourceTree = "<group>"; };
 		E0C5588911FE493B00B9E4CB /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZwoptexTest.h; path = tests/ZwoptexTest.h; sourceTree = "<group>"; };
 		E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZwoptexTest.m; path = tests/ZwoptexTest.m; sourceTree = "<group>"; };
 		E0C5588E11FE4CF100B9E4CB /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = Resources/zwoptex; sourceTree = "<group>"; };
@@ -4688,7 +4687,6 @@
 				50B2CEA70E12A58900AE9530 /* ChipmunkDemo-Info.plist */,
 				50B2CB240E10EE4A00AE9530 /* Default.png */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
-				E0C5588811FE48E700B9E4CB /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

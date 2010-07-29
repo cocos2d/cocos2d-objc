@@ -190,8 +190,8 @@ Class restartAction()
 	
 		
 		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
-		// Convert it to "alias" (GL_LINEAR filtering)
-		[map.texture setAliasTexParameters];
+		// Convert it to "anti alias" (GL_LINEAR filtering)
+		[map.texture setAntiAliasTexParameters];
 		
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
@@ -204,14 +204,14 @@ Class restartAction()
 		
 		map.anchorPoint = ccp(0, 0.5f);
 		
-//		id s = [ScaleBy actionWithDuration:4 scale:0.8f];
-//		id scaleBack = [s reverse];
-//		
-//		id seq = [Sequence actions: s,
-//								scaleBack,
-//								nil];
-//		
-//		[map runAction:[RepeatForever actionWithAction:seq]];
+		CCScaleBy *scale = [CCScaleBy actionWithDuration:4 scale:0.8f];
+		CCIntervalAction *scaleBack = [scale reverse];
+		
+		id seq = [CCSequence actions: scale,
+								scaleBack,
+								nil];
+		
+		[map runAction:[CCRepeatForever actionWithAction:seq]];
 	}
 	
 	return self;

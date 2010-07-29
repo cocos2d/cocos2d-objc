@@ -404,10 +404,10 @@ struct transformValues_ {
 	float left,right,top,bottom;
 	
 	if(rectRotated_){
-		left	= ((2*rect.origin.x)+1)/(2*atlasWidth);
-		right	= (((2*rect.origin.x)+1)+(rect.size.height*2)-2)/(2*atlasWidth);
-		top		= ((2*rect.origin.y)+1)/(2*atlasHeight);
-		bottom	= (((2*rect.origin.y)+1)+(rect.size.width*2)-2)/(2*atlasHeight);
+		left	= (2*rect.origin.x+1)/(2*atlasWidth);
+		right	= left+(rect.size.height*2-2)/(2*atlasWidth);
+		top		= (2*rect.origin.y+1)/(2*atlasHeight);
+		bottom	= top+(rect.size.width*2-2)/(2*atlasHeight);
 		
 		if( flipX_)
 			CC_SWAP(top,bottom);
@@ -423,10 +423,10 @@ struct transformValues_ {
 		quad_.tr.texCoords.u = right;
 		quad_.tr.texCoords.v = bottom;
 	}else{
-		left	= ((2*rect.origin.x)+1)/(2*atlasWidth);
-		right	= (((2*rect.origin.x)+1)+(rect.size.width*2)-2)/(2*atlasWidth);
-		top	= ((2*rect.origin.y)+1)/(2*atlasHeight);
-		bottom	= (((2*rect.origin.y)+1)+(rect.size.height*2)-2)/(2*atlasHeight);
+		left	= (2*rect.origin.x+1)/(2*atlasWidth);
+		right	= left + (rect.size.width*2-2)/(2*atlasWidth);
+		top		= (2*rect.origin.y+1)/(2*atlasHeight);
+		bottom	= top + (rect.size.height*2-2)/(2*atlasHeight);
 		
 		if( flipX_)
 			CC_SWAP(left,right);

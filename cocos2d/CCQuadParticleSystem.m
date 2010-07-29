@@ -63,7 +63,7 @@
 		}
 		
 		// initialize only once the texCoords and the indices
-		[self initTexCoordsWithRect:CGRectMake(0, 0, 1, 1)];
+		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
 		[self initIndices];
 
 #if CC_USES_VBO
@@ -91,38 +91,35 @@
 	[super dealloc];
 }
 
-// rect should be in Texture coordinates, not pixel coordinates
+// rect is in pixels coordinates.
 -(void) initTexCoordsWithRect:(CGRect)rect
 {
-	float bottomLeftX = rect.origin.x;
-	float bottomLeftY = rect.origin.y;
+	// convert to Tex coords
 	
-	float bottomRightX = bottomLeftX + rect.size.width;
-	float bottomRightY = bottomLeftY;
-	
-	float topLeftX = bottomLeftX;
-	float topLeftY = bottomLeftY + rect.size.height;
-	
-	float topRightX = bottomRightX;
-	float topRightY = topLeftY;
+	float wide = [texture_ pixelsWide];
+	float high = [texture_ pixelsHigh];
+
+	float left = (rect.origin.x*2+1) / (wide*2);
+	float bottom = (rect.origin.y*2+1) / (high*2);
+	float right = left + (rect.size.width*2-2) / (wide*2);
+	float top = bottom + (rect.size.height*2-2) / (high*2);
 	
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
-	CC_SWAP( topRightY, bottomRightY);
-	CC_SWAP( topLeftY, bottomLeftY );
+	CC_SWAP( top, bottom);
 	
 	for(int i=0; i<totalParticles; i++) {
 		// bottom-left vertex:
-		quads[i].bl.texCoords.u = bottomLeftX;
-		quads[i].bl.texCoords.v = bottomLeftY;
+		quads[i].bl.texCoords.u = left;
+		quads[i].bl.texCoords.v = bottom;
 		// bottom-right vertex:
-		quads[i].br.texCoords.u = bottomRightX;
-		quads[i].br.texCoords.v = bottomRightY;
+		quads[i].br.texCoords.u = right;
+		quads[i].br.texCoords.v = bottom;
 		// top-left vertex:
-		quads[i].tl.texCoords.u = topLeftX;
-		quads[i].tl.texCoords.v = topLeftY;
+		quads[i].tl.texCoords.u = left;
+		quads[i].tl.texCoords.v = top;
 		// top-right vertex:
-		quads[i].tr.texCoords.u = topRightX;
-		quads[i].tr.texCoords.v = topRightY;
+		quads[i].tr.texCoords.u = right;
+		quads[i].tr.texCoords.v = top;
 	}
 }
 
@@ -132,14 +129,6 @@
 	if( [texture name] != [texture_ name] )
 		[super setTexture:texture];
 	
-	// convert to Tex coords
-	
-	float wide = [texture pixelsWide];
-	float high = [texture pixelsHigh];
-	rect.origin.x = rect.origin.x / wide;
-	rect.origin.y = rect.origin.y / high;
-	rect.size.width = rect.size.width / wide;
-	rect.size.height = rect.size.height / high;
 	[self initTexCoordsWithRect:rect];
 }
 
