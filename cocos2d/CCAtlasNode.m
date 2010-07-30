@@ -27,9 +27,8 @@
 #import "ccMacros.h"
 
 
-@interface CCAtlasNode (Private)
+@interface CCAtlasNode ()
 -(void) calculateMaxItems;
--(void) calculateTexCoordsSteps;
 -(void) updateBlendFunc;
 -(void) updateOpacityModifyRGB;
 @end
@@ -50,8 +49,8 @@
 {
 	if( (self=[super init]) ) {
 	
-		itemWidth = w;
-		itemHeight = h;
+		itemWidth_ = w;
+		itemHeight_ = h;
 
 		opacity_ = 255;
 		color_ = colorUnmodified_ = ccWHITE;
@@ -69,7 +68,6 @@
 		[self updateOpacityModifyRGB];
 			
 		[self calculateMaxItems];
-		[self calculateTexCoordsSteps];
 	}
 	
 	return self;
@@ -87,15 +85,8 @@
 -(void) calculateMaxItems
 {
 	CGSize s = [[textureAtlas_ texture] contentSize];
-	itemsPerColumn = s.height / itemHeight;
-	itemsPerRow = s.width / itemWidth;
-}
-
--(void) calculateTexCoordsSteps
-{
-	CCTexture2D *tex = [textureAtlas_ texture];
-	texStepX = itemWidth / (float) [tex pixelsWide];
-	texStepY = itemHeight / (float) [tex pixelsHigh]; 	
+	itemsPerColumn_ = s.height / itemHeight_;
+	itemsPerRow_ = s.width / itemWidth_;
 }
 
 -(void) updateAtlasValues

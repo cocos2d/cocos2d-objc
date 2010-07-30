@@ -755,7 +755,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Creating several CCBitmapFontAtlas with the same .fnt file should be fast";
+	return @"Multiline + anchor point";
 }
 
 @end

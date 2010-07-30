@@ -1829,6 +1829,34 @@
 		E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54DC911F9CF2700B9E4CB /* ccUtils.h */; };
 		E0C54E4911F9D68500B9E4CB /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
 		E0C54E7511F9D8C700B9E4CB /* fire_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */; };
+		E0C5586611FE48E600B9E4CB /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		E0C5586711FE48E600B9E4CB /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		E0C5586811FE48E600B9E4CB /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		E0C5586911FE48E600B9E4CB /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		E0C5586A11FE48E600B9E4CB /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		E0C5586B11FE48E600B9E4CB /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		E0C5586C11FE48E600B9E4CB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		E0C5586D11FE48E600B9E4CB /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		E0C5586E11FE48E600B9E4CB /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		E0C5586F11FE48E600B9E4CB /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		E0C5587011FE48E600B9E4CB /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		E0C5587111FE48E600B9E4CB /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
+		E0C5587211FE48E600B9E4CB /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		E0C5587311FE48E600B9E4CB /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
+		E0C5587411FE48E600B9E4CB /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
+		E0C5587511FE48E600B9E4CB /* grossini_dance_atlas-mono.png in Resources */ = {isa = PBXBuildFile; fileRef = 5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */; };
+		E0C5587611FE48E600B9E4CB /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
+		E0C5587711FE48E600B9E4CB /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
+		E0C5587911FE48E600B9E4CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		E0C5587C11FE48E600B9E4CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		E0C5587D11FE48E600B9E4CB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		E0C5587E11FE48E600B9E4CB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		E0C5587F11FE48E600B9E4CB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		E0C5588011FE48E600B9E4CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		E0C5588111FE48E600B9E4CB /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		E0C5588211FE48E600B9E4CB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */; };
+		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2678,6 +2706,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		E0C5586411FE48E600B9E4CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		E0C558EE11FE508800B9E4CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50E77CEE11D4C925009CA2C2;
+			remoteInfo = HiResTest;
+		};
+		E0C558F011FE508800B9E4CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0C5586211FE48E600B9E4CB;
+			remoteInfo = ZwoptexTest;
+		};
+		E0C558F211FE508800B9E4CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50CBA46311CBD6FB007B009D;
+			remoteInfo = Bug886;
+		};
+		E0C558F411FE508800B9E4CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 507C0EE611D609290075E747;
+			remoteInfo = Bug899;
+		};
+		E0C558F611FE508800B9E4CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 502BF54411E39CC30030C477;
+			remoteInfo = Bug914;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -3620,6 +3690,10 @@
 		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
 		E0C54DC911F9CF2700B9E4CB /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
 		E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire_rgba8888.pvr; sourceTree = "<group>"; };
+		E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZwoptexTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0C5588911FE493B00B9E4CB /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZwoptexTest.h; path = tests/ZwoptexTest.h; sourceTree = "<group>"; };
+		E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZwoptexTest.m; path = tests/ZwoptexTest.m; sourceTree = "<group>"; };
+		E0C5588E11FE4CF100B9E4CB /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = Resources/zwoptex; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4461,6 +4535,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E0C5587B11FE48E600B9E4CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0C5587C11FE48E600B9E4CB /* Foundation.framework in Frameworks */,
+				E0C5587D11FE48E600B9E4CB /* UIKit.framework in Frameworks */,
+				E0C5587E11FE48E600B9E4CB /* CoreGraphics.framework in Frameworks */,
+				E0C5587F11FE48E600B9E4CB /* OpenGLES.framework in Frameworks */,
+				E0C5588011FE48E600B9E4CB /* QuartzCore.framework in Frameworks */,
+				E0C5588111FE48E600B9E4CB /* libcocos2d.a in Frameworks */,
+				E0C5588211FE48E600B9E4CB /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -4552,6 +4640,7 @@
 				50E77D1211D4C926009CA2C2 /* SpriteTest.app */,
 				507C0F0B11D609290075E747 /* Bug899.app */,
 				502BF56911E39CC30030C477 /* Bug914.app */,
+				E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4584,6 +4673,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0C5588E11FE4CF100B9E4CB /* zwoptex */,
 				50CBA4A711CBD7FB007B009D /* bugs */,
 				50B77511119AF58100F567F4 /* Particles */,
 				50CA8BF810B6AE340072E0D3 /* TileMaps */,
@@ -5766,6 +5856,8 @@
 				503F5CCF101FE9A9002A37E5 /* TileMapTest.m */,
 				50C938E30E0A9E1100517B01 /* TransitionsTest.h */,
 				50C938E40E0A9E1100517B01 /* TransitionsTest.m */,
+				E0C5588911FE493B00B9E4CB /* ZwoptexTest.h */,
+				E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */,
 				50B2CB170E10EE0800AE9530 /* main.m */,
 				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
 			);
@@ -7210,6 +7302,11 @@
 				505DEF0E11C5841D0045B393 /* PBXTargetDependency */,
 				505DEF1011C5841D0045B393 /* PBXTargetDependency */,
 				505DEF1211C5841D0045B393 /* PBXTargetDependency */,
+				E0C558EF11FE508800B9E4CB /* PBXTargetDependency */,
+				E0C558F111FE508800B9E4CB /* PBXTargetDependency */,
+				E0C558F311FE508800B9E4CB /* PBXTargetDependency */,
+				E0C558F511FE508800B9E4CB /* PBXTargetDependency */,
+				E0C558F711FE508800B9E4CB /* PBXTargetDependency */,
 			);
 			name = "build all tests";
 			productName = "build all tests";
@@ -7668,6 +7765,24 @@
 			productReference = DAABAA9A1059A42E00794EB3 /* FontTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E0C5586211FE48E600B9E4CB /* ZwoptexTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0C5588311FE48E600B9E4CB /* Build configuration list for PBXNativeTarget "ZwoptexTest" */;
+			buildPhases = (
+				E0C5586511FE48E600B9E4CB /* Resources */,
+				E0C5587811FE48E600B9E4CB /* Sources */,
+				E0C5587B11FE48E600B9E4CB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0C5586311FE48E600B9E4CB /* PBXTargetDependency */,
+			);
+			name = ZwoptexTest;
+			productName = AtlasSpriteTest;
+			productReference = E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -7736,6 +7851,7 @@
 				503F5C96101FE930002A37E5 /* TileMapTest */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
 				50C938C60E0A9DBB00517B01 /* TransitionsTest */,
+				E0C5586211FE48E600B9E4CB /* ZwoptexTest */,
 				50DFC2870FF627B6007E7827 /* HelloWorldSample */,
 				50D0E0480FF9232E00098927 /* HelloActionsSample */,
 				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
@@ -9020,6 +9136,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E0C5586511FE48E600B9E4CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0C5586611FE48E600B9E4CB /* b1.png in Resources */,
+				E0C5586711FE48E600B9E4CB /* b2.png in Resources */,
+				E0C5586811FE48E600B9E4CB /* f1.png in Resources */,
+				E0C5586911FE48E600B9E4CB /* f2.png in Resources */,
+				E0C5586A11FE48E600B9E4CB /* r1.png in Resources */,
+				E0C5586B11FE48E600B9E4CB /* r2.png in Resources */,
+				E0C5586C11FE48E600B9E4CB /* Default.png in Resources */,
+				E0C5586D11FE48E600B9E4CB /* Icon.png in Resources */,
+				E0C5586E11FE48E600B9E4CB /* grossini.png in Resources */,
+				E0C5586F11FE48E600B9E4CB /* grossinis_sister1.png in Resources */,
+				E0C5587011FE48E600B9E4CB /* grossinis_sister2.png in Resources */,
+				E0C5587111FE48E600B9E4CB /* fire.png in Resources */,
+				E0C5587211FE48E600B9E4CB /* atlastest.png in Resources */,
+				E0C5587311FE48E600B9E4CB /* grossini_dance_atlas.png in Resources */,
+				E0C5587411FE48E600B9E4CB /* fire.pvr in Resources */,
+				E0C5587511FE48E600B9E4CB /* grossini_dance_atlas-mono.png in Resources */,
+				E0C5587611FE48E600B9E4CB /* fps_images.png in Resources */,
+				E0C5587711FE48E600B9E4CB /* animations in Resources */,
+				E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -9829,6 +9971,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E0C5587811FE48E600B9E4CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0C5587911FE48E600B9E4CB /* main.m in Sources */,
+				E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -10436,6 +10587,36 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = DAABAA7F1059A42E00794EB3 /* PBXContainerItemProxy */;
+		};
+		E0C5586311FE48E600B9E4CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = E0C5586411FE48E600B9E4CB /* PBXContainerItemProxy */;
+		};
+		E0C558EF11FE508800B9E4CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50E77CEE11D4C925009CA2C2 /* HiResTest */;
+			targetProxy = E0C558EE11FE508800B9E4CB /* PBXContainerItemProxy */;
+		};
+		E0C558F111FE508800B9E4CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0C5586211FE48E600B9E4CB /* ZwoptexTest */;
+			targetProxy = E0C558F011FE508800B9E4CB /* PBXContainerItemProxy */;
+		};
+		E0C558F311FE508800B9E4CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50CBA46311CBD6FB007B009D /* Bug886 */;
+			targetProxy = E0C558F211FE508800B9E4CB /* PBXContainerItemProxy */;
+		};
+		E0C558F511FE508800B9E4CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 507C0EE611D609290075E747 /* Bug899 */;
+			targetProxy = E0C558F411FE508800B9E4CB /* PBXContainerItemProxy */;
+		};
+		E0C558F711FE508800B9E4CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 502BF54411E39CC30030C477 /* Bug914 */;
+			targetProxy = E0C558F611FE508800B9E4CB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -13426,6 +13607,55 @@
 			};
 			name = Release;
 		};
+		E0C5588411FE48E600B9E4CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ZwoptexTest;
+			};
+			name = Debug;
+		};
+		E0C5588511FE48E600B9E4CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ZwoptexTest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -14010,6 +14240,15 @@
 			buildConfigurations = (
 				DAABAA981059A42E00794EB3 /* Debug */,
 				DAABAA991059A42E00794EB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0C5588311FE48E600B9E4CB /* Build configuration list for PBXNativeTarget "ZwoptexTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0C5588411FE48E600B9E4CB /* Debug */,
+				E0C5588511FE48E600B9E4CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

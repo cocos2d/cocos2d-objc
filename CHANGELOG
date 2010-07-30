@@ -1,4 +1,4 @@
-version 0.99.5-beta XX-MMM-2010
+version 0.99.5-beta 30-Jul-2010
  . [NEW] BitmapFontAtlas: added support for multilines labels
  . [NEW] BitmapFontAtlas: added optional setCString method
  . [NEW] Configuration: added a helper method to obtain the iOS version
@@ -10,6 +10,7 @@ version 0.99.5-beta XX-MMM-2010
  . [NEW] SpriteSheet is deprecatd. Use SpriteBatchNode instead.
  . [NEW] Support/ccUtils.h: added new file that contains some useful functions like nextPOT
  . [NEW] RenderTexture: default blend function compatible with premultiplied alpha (issue #937)
+ . [NEW] Tests: Zwoptex Test added
  . [NEW] Texture2D: Added support for Non compressed PVR images. New supported formats:
 			RGBA_8888, BGRA_8888, RGBA_4444, RGBA_5551, RGB_565, A_8, AI_88, I_8
  . [NEW] Texture2D: PVR images can be treated as having alpha premultiplied with:
@@ -18,6 +19,7 @@ version 0.99.5-beta XX-MMM-2010
  . [FIX] CocosDenshion: Improved sound interruption code (issue #928)
  . [FIX] Particles: Built-in particles use QuadParticles when compiled in ARMv7,
                 and PointParticles when compiled in ARMv6
+ . [FIX] Sprites: No artifacts when using spritehsheets (issue #938)
  . [FIX] Templates & Tests: call CC_DIRECTOR_END() on AppDelegate Terminate
  . [FIX] Templates: Use LLVM-GCC as default compiler
  . [FIX] Tests: AtlasTest renamed to LabelTest

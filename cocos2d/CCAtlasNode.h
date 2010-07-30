@@ -42,19 +42,14 @@
 	CCTextureAtlas	*textureAtlas_;
 
 	// chars per row
-	int				itemsPerRow;
+	int				itemsPerRow_;
 	// chars per column
-	int				itemsPerColumn;
-	
-	// texture coordinate x increment
-	float			texStepX;
-	// texture coordinate y increment
-	float			texStepY;
-	
+	int				itemsPerColumn_;
+		
 	// width of each char
-	int				itemWidth;
+	int				itemWidth_;
 	// height of each char
-	int				itemHeight;
+	int				itemHeight_;
 
 	// blend function
 	ccBlendFunc		blendFunc_;
