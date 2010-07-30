@@ -1,4 +1,4 @@
-version 0.99.5-beta 29-Jul-2010
+version 0.99.5-beta 30-Jul-2010
  . [NEW] BitmapFontAtlas: added support for multilines labels
  . [NEW] BitmapFontAtlas: added optional setCString method
  . [NEW] Configuration: added a helper method to obtain the iOS version
