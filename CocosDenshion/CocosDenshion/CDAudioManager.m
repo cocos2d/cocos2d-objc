@@ -706,12 +706,14 @@ static BOOL configured = FALSE;
 	[self audioSessionResumed];
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
 -(void) endInterruptionWithFlags:(NSUInteger)flags {
 	CDLOG(@"Denshion::CDAudioManager - interruption ended with flags %i",flags);
 	if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {
 		[self audioSessionResumed];
 	}	
-}	
+}
+#endif
 
 -(void)audioSessionInterrupted 
 { 
