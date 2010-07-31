@@ -571,7 +571,7 @@
 		5052281F11B3D7540061670F /* sprites.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5052278311B3D7540061670F /* sprites.plist */; };
 		5052282011B3D7540061670F /* sprites.png in Resources */ = {isa = PBXBuildFile; fileRef = 5052278411B3D7540061670F /* sprites.png */; };
 		5052285211B3D8CB0061670F /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
-		5052285511B3D8E50061670F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
+		5052285511B3D8E50061670F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		5052285811B3D8F40061670F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
 		505228AD11B3DBB90061670F /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		505228AE11B3DBB90061670F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
@@ -11475,6 +11475,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Tom The Turret";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -11498,6 +11499,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Tom The Turret";
+				SDKROOT = iphoneos4.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
