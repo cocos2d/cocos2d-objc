@@ -429,11 +429,18 @@ struct transformValues_ {
 		quad_.tl.texCoords.v = top;
 		quad_.tr.texCoords.u = right;
 		quad_.tr.texCoords.v = bottom;
-	}else{
+	} else {
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		left	= (2*rect.origin.x+1)/(2*atlasWidth);
 		right	= left + (rect.size.width*2-2)/(2*atlasWidth);
 		top		= (2*rect.origin.y+1)/(2*atlasHeight);
 		bottom	= top + (rect.size.height*2-2)/(2*atlasHeight);
+#else
+		left	= rect.origin.x/atlasWidth;
+		right	= left + rect.size.width/atlasWidth;
+		top		= rect.origin.y/atlasHeight;
+		bottom	= top + rect.size.height/atlasHeight;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		
 		if( flipX_)
 			CC_SWAP(left,right);
