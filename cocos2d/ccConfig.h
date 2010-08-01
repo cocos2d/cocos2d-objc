@@ -31,11 +31,12 @@
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
  If enabled, the texture coordinates will be calculated by using this formula:
    - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
-   - texCoord.right = texCoord.left + (rect.size.height*2-2)/(texture.wide*2);
+   - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
  
  The same for bottom and top.
- This formula prevents artifacts by not using 99% of the texture.
- The "correct" way to prevent the artifacts is by using the spritesheet-artifact-fixer.py or a similar tool
+ 
+ This formula prevents artifacts by using 99% of the texture.
+ The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
  
  Affected nodes:
 	- CCSprite / CCSpriteBatchNode and subclasses: CCBitmapFontAtlas, CCTMXTiledMap
