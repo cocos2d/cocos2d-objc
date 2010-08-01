@@ -29,6 +29,7 @@
 #import <OpenGLES/ES1/gl.h>
 
 // cocos2d
+#import "ccConfig.h"
 #import "CCQuadParticleSystem.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
@@ -99,10 +100,17 @@
 	float wide = [texture_ pixelsWide];
 	float high = [texture_ pixelsHigh];
 
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	float left = (rect.origin.x*2+1) / (wide*2);
 	float bottom = (rect.origin.y*2+1) / (high*2);
 	float right = left + (rect.size.width*2-2) / (wide*2);
 	float top = bottom + (rect.size.height*2-2) / (high*2);
+#else
+	float left = rect.origin.x / wide;
+	float bottom = rect.origin.y / high;
+	float right = left + rect.size.width / wide;
+	float top = bottom + rect.size.height / high;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
 	CC_SWAP( top, bottom);

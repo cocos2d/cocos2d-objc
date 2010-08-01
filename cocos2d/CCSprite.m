@@ -404,10 +404,17 @@ struct transformValues_ {
 	float left,right,top,bottom;
 	
 	if(rectRotated_){
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		left	= (2*rect.origin.x+1)/(2*atlasWidth);
 		right	= left+(rect.size.height*2-2)/(2*atlasWidth);
 		top		= (2*rect.origin.y+1)/(2*atlasHeight);
 		bottom	= top+(rect.size.width*2-2)/(2*atlasHeight);
+#else
+		left	= rect.origin.x/atlasWidth;
+		right	= left+(rect.size.height/atlasWidth);
+		top		= rect.origin.y/atlasHeight;
+		bottom	= top+(rect.size.width/atlasHeight);
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		
 		if( flipX_)
 			CC_SWAP(top,bottom);
