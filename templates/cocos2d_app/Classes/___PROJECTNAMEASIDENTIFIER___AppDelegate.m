@@ -114,10 +114,7 @@
 	
 	[window release];
 	
-	[director end];
-	
-	// BUG: The view controller is not released... why ?
-	NSLog(@"viewController rc:%d", [viewController retainCount] );
+	[director end];	
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {

@@ -6,9 +6,12 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-#import "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
 #import "cocos2d.h"
+
+#import "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
+#import "GameConfig.h"
 #import "HelloWorldScene.h"
+#import "RootViewController.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppDelegate
 
@@ -16,41 +19,69 @@
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// Obtain the shared director in order to...
+	// Try to use CADisplayLink director
+	// if it fails (SDK < 3.1) use the default director
+	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
+		[CCDirector setDirectorType:kCCDirectorTypeDefault];
+	
+	
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	// Init the View Controller
+	viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController.wantsFullScreenLayout = YES;
 	
-	// Turn on display FPS
+	//
+	// Create the EAGLView manually
+	//  1. Create a RGB565 format. Alternative: RGBA8
+	//	2. depth format of 0 bit. Use 16 or 24 bit for 3d effects, like CCPageTurnTransition
+	//
+	//
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+								   pixelFormat:kEAGLColorFormatRGB565	// kEAGLColorFormatRGBA8
+								   depthFormat:0						// GL_DEPTH_COMPONENT16_OES
+							preserveBackbuffer:NO];
+	
+	// attach the openglView to the director
+	[director setOpenGLView:glView];
+	
+	// To enable Hi-Red mode (iPhone4)
+	//	[director setContentScaleFactor:2];
+	
+	//
+	// VERY IMPORTANT:
+	// If the rotation is going to be controlled by a UIViewController
+	// then the device orientation should be "Portrait".
+	//
+#if GAME_AUTOROTATION == kGameAutorotationUIViewController
+	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+#else
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+#endif
+	
+	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
 	
-	// Turn on multiple touches
-	EAGLView *view = [director openGLView];
-	[view setMultipleTouchEnabled:YES];
+	
+	// make the OpenGLView a child of the view controller
+	[viewController setView:glView];
+	
+	// make the View Controller a child of the main window
+	[window addSubview: viewController.view];
+	
+	[window makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
-		
-		
-	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	
+	// Run the intro Scene
+	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];		
 }
 
 
@@ -75,7 +106,15 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	CC_DIRECTOR_END();
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[[director openGLView] removeFromSuperview];
+	
+	[viewController release];
+	
+	[window release];
+	
+	[director end];	
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {
