@@ -279,6 +279,7 @@
 		E0C5505511FA3A5400B9E4CB /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54FBA11FA3A5400B9E4CB /* utlist.h */; };
 		E0C5505611FA3A5400B9E4CB /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54FBB11FA3A5400B9E4CB /* ZipUtils.h */; };
 		E0C5505711FA3A5400B9E4CB /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54FBC11FA3A5400B9E4CB /* ZipUtils.m */; };
+		E0F81038120A173C005866B8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F81037120A173C005866B8 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -565,6 +566,9 @@
 		E0C54FBB11FA3A5400B9E4CB /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		E0C54FBC11FA3A5400B9E4CB /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
 		E0C5505A11FA3A8000B9E4CB /* LICENSE.chipmunk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.chipmunk; sourceTree = "<group>"; };
+		E0F81035120A173C005866B8 /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
+		E0F81036120A173C005866B8 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		E0F81037120A173C005866B8 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -655,10 +659,13 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				507022A2107672FA00393637 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */,
-				1F3B9A2C0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				E0F81035120A173C005866B8 /* GameConfig.h */,
 				507022A3107672FA00393637 /* HelloWorldScene.m */,
 				506EDC2F102F528A00A389B3 /* HelloWorldScene.h */,
+				E0F81036120A173C005866B8 /* RootViewController.h */,
+				E0F81037120A173C005866B8 /* RootViewController.m */,
+				1F3B9A2C0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				507022A2107672FA00393637 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1269,6 +1276,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				507022A4107672FA00393637 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */,
 				507022A5107672FA00393637 /* HelloWorldScene.m in Sources */,
+				E0F81038120A173C005866B8 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1509,6 +1517,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1528,6 +1537,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
