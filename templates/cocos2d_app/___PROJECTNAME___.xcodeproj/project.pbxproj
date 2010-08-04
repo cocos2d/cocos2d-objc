@@ -227,6 +227,7 @@
 		E0C552F111FA3B0C00B9E4CB /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C5525611FA3B0C00B9E4CB /* utlist.h */; };
 		E0C552F211FA3B0C00B9E4CB /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C5525711FA3B0C00B9E4CB /* ZipUtils.h */; };
 		E0C552F311FA3B0C00B9E4CB /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5525811FA3B0C00B9E4CB /* ZipUtils.m */; };
+		E0F80F60120A0182005866B8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F80F5F120A0182005866B8 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -460,6 +461,9 @@
 		E0C5525611FA3B0C00B9E4CB /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		E0C5525711FA3B0C00B9E4CB /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		E0C5525811FA3B0C00B9E4CB /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
+		E0F80F5D120A0182005866B8 /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
+		E0F80F5E120A0182005866B8 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		E0F80F5F120A0182005866B8 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,8 +553,11 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E0F80F5D120A0182005866B8 /* GameConfig.h */,
 				506EDC2F102F528A00A389B3 /* HelloWorldScene.h */,
 				506EDC30102F528A00A389B3 /* HelloWorldScene.m */,
+				E0F80F5E120A0182005866B8 /* RootViewController.h */,
+				E0F80F5F120A0182005866B8 /* RootViewController.m */,
 				1F3B9A2C0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
 				1F3B9A2B0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */,
 			);
@@ -1033,6 +1040,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1F3B9A2D0EF2145700286867 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */,
 				506EDC31102F528A00A389B3 /* HelloWorldScene.m in Sources */,
+				E0F80F60120A0182005866B8 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

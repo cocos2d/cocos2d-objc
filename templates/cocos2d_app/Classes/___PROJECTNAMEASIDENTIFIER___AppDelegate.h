@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ___PROJECTNAMEASIDENTIFIER___AppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow *window;
+@class RootViewController;
+
+@interface v0995aAppDelegate : NSObject <UIApplicationDelegate> {
+	UIWindow			*window;
+	RootViewController	*viewController;
 }
 
 @property (nonatomic, retain) UIWindow *window;
