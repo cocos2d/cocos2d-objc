@@ -56,7 +56,7 @@ struct transformValues_ {
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
--(struct transformValues_) getTransformValues;	// optimization
+-(void) getTransformValues:(struct transformValues_*)tv;	// optimization
 @end
 
 @implementation CCSprite
@@ -548,7 +548,8 @@ struct transformValues_ {
 		
 		for (CCNode *p = self ; p && p != batchNode_ ; p = p.parent) {
 			
-			struct transformValues_ tv = [(CCSprite*)p getTransformValues];
+			struct transformValues_ tv;
+			[(CCSprite*)p getTransformValues: &tv];
 			
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
@@ -613,16 +614,13 @@ struct transformValues_ {
 
 // XXX: Optimization: instead of calling 5 times the parent sprite to obtain: position, scale.x, scale.y, anchorpoint and rotation,
 // this fuction return the 5 values in 1 single call
--(struct transformValues_) getTransformValues
+-(void) getTransformValues:(struct transformValues_*) tv
 {
-	struct transformValues_ tv;
-	tv.pos = position_;
-	tv.scale.x = scaleX_;
-	tv.scale.y = scaleY_;
-	tv.rotation = rotation_;
-	tv.ap = anchorPointInPixels_;
-	
-	return tv;
+	tv->pos = position_;
+	tv->scale.x = scaleX_;
+	tv->scale.y = scaleY_;
+	tv->rotation = rotation_;
+	tv->ap = anchorPointInPixels_;
 }
 
 #pragma mark CCSprite - draw
