@@ -179,8 +179,8 @@
 		E0C54FF111FA3A5400B9E4CB /* CCNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F5511FA3A5400B9E4CB /* CCNode.m */; };
 		E0C54FF211FA3A5400B9E4CB /* CCPageTurn3DAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F5611FA3A5400B9E4CB /* CCPageTurn3DAction.h */; };
 		E0C54FF311FA3A5400B9E4CB /* CCPageTurn3DAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F5711FA3A5400B9E4CB /* CCPageTurn3DAction.m */; };
-		E0C54FF411FA3A5400B9E4CB /* CCPageTurnTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F5811FA3A5400B9E4CB /* CCPageTurnTransition.h */; };
-		E0C54FF511FA3A5400B9E4CB /* CCPageTurnTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F5911FA3A5400B9E4CB /* CCPageTurnTransition.m */; };
+		E0C54FF411FA3A5400B9E4CB /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F5811FA3A5400B9E4CB /* CCTransitionPageTurn.h */; };
+		E0C54FF511FA3A5400B9E4CB /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F5911FA3A5400B9E4CB /* CCTransitionPageTurn.m */; };
 		E0C54FF611FA3A5400B9E4CB /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F5A11FA3A5400B9E4CB /* CCParallaxNode.h */; };
 		E0C54FF711FA3A5400B9E4CB /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F5B11FA3A5400B9E4CB /* CCParallaxNode.m */; };
 		E0C54FF811FA3A5400B9E4CB /* CCParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F5C11FA3A5400B9E4CB /* CCParticleExamples.h */; };
@@ -200,8 +200,8 @@
 		E0C5500611FA3A5400B9E4CB /* CCPVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F6A11FA3A5400B9E4CB /* CCPVRTexture.m */; };
 		E0C5500711FA3A5400B9E4CB /* CCQuadParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F6B11FA3A5400B9E4CB /* CCQuadParticleSystem.h */; };
 		E0C5500811FA3A5400B9E4CB /* CCQuadParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F6C11FA3A5400B9E4CB /* CCQuadParticleSystem.m */; };
-		E0C5500911FA3A5400B9E4CB /* CCRadialTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F6D11FA3A5400B9E4CB /* CCRadialTransition.h */; };
-		E0C5500A11FA3A5400B9E4CB /* CCRadialTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F6E11FA3A5400B9E4CB /* CCRadialTransition.m */; };
+		E0C5500911FA3A5400B9E4CB /* CCTransitionRadial.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F6D11FA3A5400B9E4CB /* CCTransitionRadial.h */; };
+		E0C5500A11FA3A5400B9E4CB /* CCTransitionRadial.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F6E11FA3A5400B9E4CB /* CCTransitionRadial.m */; };
 		E0C5500B11FA3A5400B9E4CB /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F6F11FA3A5400B9E4CB /* CCRenderTexture.h */; };
 		E0C5500C11FA3A5400B9E4CB /* CCRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C54F7011FA3A5400B9E4CB /* CCRenderTexture.m */; };
 		E0C5500D11FA3A5400B9E4CB /* CCRibbon.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54F7111FA3A5400B9E4CB /* CCRibbon.h */; };
@@ -465,8 +465,8 @@
 		E0C54F5511FA3A5400B9E4CB /* CCNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNode.m; sourceTree = "<group>"; };
 		E0C54F5611FA3A5400B9E4CB /* CCPageTurn3DAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPageTurn3DAction.h; sourceTree = "<group>"; };
 		E0C54F5711FA3A5400B9E4CB /* CCPageTurn3DAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPageTurn3DAction.m; sourceTree = "<group>"; };
-		E0C54F5811FA3A5400B9E4CB /* CCPageTurnTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPageTurnTransition.h; sourceTree = "<group>"; };
-		E0C54F5911FA3A5400B9E4CB /* CCPageTurnTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPageTurnTransition.m; sourceTree = "<group>"; };
+		E0C54F5811FA3A5400B9E4CB /* CCTransitionPageTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionPageTurn.h; sourceTree = "<group>"; };
+		E0C54F5911FA3A5400B9E4CB /* CCTransitionPageTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionPageTurn.m; sourceTree = "<group>"; };
 		E0C54F5A11FA3A5400B9E4CB /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		E0C54F5B11FA3A5400B9E4CB /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
 		E0C54F5C11FA3A5400B9E4CB /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleExamples.h; sourceTree = "<group>"; };
@@ -486,8 +486,8 @@
 		E0C54F6A11FA3A5400B9E4CB /* CCPVRTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPVRTexture.m; sourceTree = "<group>"; };
 		E0C54F6B11FA3A5400B9E4CB /* CCQuadParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCQuadParticleSystem.h; sourceTree = "<group>"; };
 		E0C54F6C11FA3A5400B9E4CB /* CCQuadParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCQuadParticleSystem.m; sourceTree = "<group>"; };
-		E0C54F6D11FA3A5400B9E4CB /* CCRadialTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRadialTransition.h; sourceTree = "<group>"; };
-		E0C54F6E11FA3A5400B9E4CB /* CCRadialTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRadialTransition.m; sourceTree = "<group>"; };
+		E0C54F6D11FA3A5400B9E4CB /* CCTransitionRadial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionRadial.h; sourceTree = "<group>"; };
+		E0C54F6E11FA3A5400B9E4CB /* CCTransitionRadial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionRadial.m; sourceTree = "<group>"; };
 		E0C54F6F11FA3A5400B9E4CB /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
 		E0C54F7011FA3A5400B9E4CB /* CCRenderTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderTexture.m; sourceTree = "<group>"; };
 		E0C54F7111FA3A5400B9E4CB /* CCRibbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRibbon.h; sourceTree = "<group>"; };
@@ -942,8 +942,8 @@
 				E0C54F5511FA3A5400B9E4CB /* CCNode.m */,
 				E0C54F5611FA3A5400B9E4CB /* CCPageTurn3DAction.h */,
 				E0C54F5711FA3A5400B9E4CB /* CCPageTurn3DAction.m */,
-				E0C54F5811FA3A5400B9E4CB /* CCPageTurnTransition.h */,
-				E0C54F5911FA3A5400B9E4CB /* CCPageTurnTransition.m */,
+				E0C54F5811FA3A5400B9E4CB /* CCTransitionPageTurn.h */,
+				E0C54F5911FA3A5400B9E4CB /* CCTransitionPageTurn.m */,
 				E0C54F5A11FA3A5400B9E4CB /* CCParallaxNode.h */,
 				E0C54F5B11FA3A5400B9E4CB /* CCParallaxNode.m */,
 				E0C54F5C11FA3A5400B9E4CB /* CCParticleExamples.h */,
@@ -963,8 +963,8 @@
 				E0C54F6A11FA3A5400B9E4CB /* CCPVRTexture.m */,
 				E0C54F6B11FA3A5400B9E4CB /* CCQuadParticleSystem.h */,
 				E0C54F6C11FA3A5400B9E4CB /* CCQuadParticleSystem.m */,
-				E0C54F6D11FA3A5400B9E4CB /* CCRadialTransition.h */,
-				E0C54F6E11FA3A5400B9E4CB /* CCRadialTransition.m */,
+				E0C54F6D11FA3A5400B9E4CB /* CCTransitionRadial.h */,
+				E0C54F6E11FA3A5400B9E4CB /* CCTransitionRadial.m */,
 				E0C54F6F11FA3A5400B9E4CB /* CCRenderTexture.h */,
 				E0C54F7011FA3A5400B9E4CB /* CCRenderTexture.m */,
 				E0C54F7111FA3A5400B9E4CB /* CCRibbon.h */,
@@ -1141,7 +1141,7 @@
 				E0C54FEE11FA3A5400B9E4CB /* CCMotionStreak.h in Headers */,
 				E0C54FF011FA3A5400B9E4CB /* CCNode.h in Headers */,
 				E0C54FF211FA3A5400B9E4CB /* CCPageTurn3DAction.h in Headers */,
-				E0C54FF411FA3A5400B9E4CB /* CCPageTurnTransition.h in Headers */,
+				E0C54FF411FA3A5400B9E4CB /* CCTransitionPageTurn.h in Headers */,
 				E0C54FF611FA3A5400B9E4CB /* CCParallaxNode.h in Headers */,
 				E0C54FF811FA3A5400B9E4CB /* CCParticleExamples.h in Headers */,
 				E0C54FFA11FA3A5400B9E4CB /* CCParticleSystem.h in Headers */,
@@ -1152,7 +1152,7 @@
 				E0C5500411FA3A5400B9E4CB /* CCProtocols.h in Headers */,
 				E0C5500511FA3A5400B9E4CB /* CCPVRTexture.h in Headers */,
 				E0C5500711FA3A5400B9E4CB /* CCQuadParticleSystem.h in Headers */,
-				E0C5500911FA3A5400B9E4CB /* CCRadialTransition.h in Headers */,
+				E0C5500911FA3A5400B9E4CB /* CCTransitionRadial.h in Headers */,
 				E0C5500B11FA3A5400B9E4CB /* CCRenderTexture.h in Headers */,
 				E0C5500D11FA3A5400B9E4CB /* CCRibbon.h in Headers */,
 				E0C5500F11FA3A5400B9E4CB /* CCScene.h in Headers */,
@@ -1353,7 +1353,7 @@
 				E0C54FEF11FA3A5400B9E4CB /* CCMotionStreak.m in Sources */,
 				E0C54FF111FA3A5400B9E4CB /* CCNode.m in Sources */,
 				E0C54FF311FA3A5400B9E4CB /* CCPageTurn3DAction.m in Sources */,
-				E0C54FF511FA3A5400B9E4CB /* CCPageTurnTransition.m in Sources */,
+				E0C54FF511FA3A5400B9E4CB /* CCTransitionPageTurn.m in Sources */,
 				E0C54FF711FA3A5400B9E4CB /* CCParallaxNode.m in Sources */,
 				E0C54FF911FA3A5400B9E4CB /* CCParticleExamples.m in Sources */,
 				E0C54FFB11FA3A5400B9E4CB /* CCParticleSystem.m in Sources */,
@@ -1363,7 +1363,7 @@
 				E0C5500311FA3A5400B9E4CB /* CCPropertyAction.m in Sources */,
 				E0C5500611FA3A5400B9E4CB /* CCPVRTexture.m in Sources */,
 				E0C5500811FA3A5400B9E4CB /* CCQuadParticleSystem.m in Sources */,
-				E0C5500A11FA3A5400B9E4CB /* CCRadialTransition.m in Sources */,
+				E0C5500A11FA3A5400B9E4CB /* CCTransitionRadial.m in Sources */,
 				E0C5500C11FA3A5400B9E4CB /* CCRenderTexture.m in Sources */,
 				E0C5500E11FA3A5400B9E4CB /* CCRibbon.m in Sources */,
 				E0C5501011FA3A5400B9E4CB /* CCScene.m in Sources */,
