@@ -1,4 +1,5 @@
 version 0.99.5-rc XX-Ago-2010
+ . [NEW] Transitions: new transition naming convention (issue #946)
  . [FIX] Artifact fixer is a compile time option in ccConfig. Disabled by default
  . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager
  . [FIX] Sprite: little optimization when using BatchNode + children

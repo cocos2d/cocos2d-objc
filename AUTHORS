@@ -242,6 +242,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added TintTo action
 	* mark at abitofthought:
 		author of the single threaded Fast Director
+	* Mark Sawicki:
+		Converted all transitions from: transitionName-Transition to Transition-trasitionName.
+		Converted TransitionTest to use the new naming convention
 	* master@hpi.cc:
 		updated patch for TMX per-tile properties.
 		Added Test for TMX per-tile properties

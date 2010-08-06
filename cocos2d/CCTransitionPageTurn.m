@@ -28,7 +28,11 @@
 #import	"CCPageTurn3DAction.h"
 #import "CCDirector.h"
 
+// XXX Deprecated XXX Will be removed in v1.0.1
 @implementation CCPageTurnTransition
+@end
+
+@implementation CCTransitionPageTurn
 
 /** creates a base transition with duration and incoming scene */
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s backwards:(BOOL) back
