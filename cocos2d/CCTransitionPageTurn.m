@@ -24,7 +24,7 @@
  */
 
 
-#import "CCPageTurnTransition.h"
+#import "CCTransitionPageTurn.h"
 #import	"CCPageTurn3DAction.h"
 #import "CCDirector.h"
 
