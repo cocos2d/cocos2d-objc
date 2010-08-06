@@ -26,7 +26,7 @@
 
 
 #import "CCDirector.h"
-#import "CCRadialTransition.h"
+#import "CCTransitionRadial.h"
 #import "CCRenderTexture.h"
 #import "CCLayer.h"
 #import "CCInstantAction.h"

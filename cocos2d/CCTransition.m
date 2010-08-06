@@ -173,7 +173,7 @@ enum {
 //
 // Oriented Transition
 //
-@implementation CCOrientedTransitionScene
+@implementation CCTransitionSceneOriented
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o
 {
 	return [[[self alloc] initWithDuration:t scene:s orientation:o] autorelease];
@@ -191,7 +191,7 @@ enum {
 //
 // RotoZoom
 //
-@implementation CCRotoZoomTransition
+@implementation CCTransitionRotoZoom
 -(void) onEnter
 {
 	[super onEnter];
@@ -221,7 +221,7 @@ enum {
 //
 // JumpZoom
 //
-@implementation CCJumpZoomTransition
+@implementation CCTransitionJumpZoom
 -(void) onEnter
 {
 	[super onEnter];
@@ -253,7 +253,7 @@ enum {
 //
 // MoveInL
 //
-@implementation CCMoveInLTransition
+@implementation CCTransitionMoveInL
 -(void) onEnter
 {
 	[super onEnter];
@@ -290,7 +290,7 @@ enum {
 //
 // MoveInR
 //
-@implementation CCMoveInRTransition
+@implementation CCTransitionMoveInR
 -(void) initScenes
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -301,7 +301,7 @@ enum {
 //
 // MoveInT
 //
-@implementation CCMoveInTTransition
+@implementation CCTransitionMoveInT
 -(void) initScenes
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -312,7 +312,7 @@ enum {
 //
 // MoveInB
 //
-@implementation CCMoveInBTransition
+@implementation CCTransitionMoveInB
 -(void) initScenes
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -329,7 +329,7 @@ enum {
 // The other issue is that in some transitions (and I don't know why)
 // the order should be reversed (In in top of Out or vice-versa).
 #define ADJUST_FACTOR 0.5f
-@implementation CCSlideInLTransition
+@implementation CCTransitionSlideInL
 -(void) onEnter
 {
 	[super onEnter];
@@ -374,7 +374,7 @@ enum {
 //
 // SlideInR
 //
-@implementation CCSlideInRTransition
+@implementation CCTransitionSlideInR
 -(void) sceneOrder
 {
 	inSceneOnTop = YES;
@@ -396,7 +396,7 @@ enum {
 //
 // SlideInT
 //
-@implementation CCSlideInTTransition
+@implementation CCTransitionSlideInT
 -(void) sceneOrder
 {
 	inSceneOnTop = NO;
@@ -418,7 +418,7 @@ enum {
 //
 // SlideInB
 //
-@implementation CCSlideInBTransition
+@implementation CCTransitionSlideInB
 -(void) sceneOrder
 {
 	inSceneOnTop = YES;
@@ -440,7 +440,7 @@ enum {
 //
 // ShrinkGrow Transition
 //
-@implementation CCShrinkGrowTransition
+@implementation CCTransitionShrinkGrow
 -(void) onEnter
 {
 	[super onEnter];
@@ -470,7 +470,7 @@ enum {
 //
 // FlipX Transition
 //
-@implementation CCFlipXTransition
+@implementation CCTransitionFlipX
 -(void) onEnter
 {
 	[super onEnter];
@@ -514,7 +514,7 @@ enum {
 //
 // FlipY Transition
 //
-@implementation CCFlipYTransition
+@implementation CCTransitionFlipY
 -(void) onEnter
 {
 	[super onEnter];
@@ -557,7 +557,7 @@ enum {
 //
 // FlipAngular Transition
 //
-@implementation CCFlipAngularTransition
+@implementation CCTransitionFlipAngular
 -(void) onEnter
 {
 	[super onEnter];
@@ -599,7 +599,7 @@ enum {
 //
 // ZoomFlipX Transition
 //
-@implementation CCZoomFlipXTransition
+@implementation CCTransitionZoomFlipX
 -(void) onEnter
 {
 	[super onEnter];
@@ -648,7 +648,7 @@ enum {
 //
 // ZoomFlipY Transition
 //
-@implementation CCZoomFlipYTransition
+@implementation CCTransitionZoomFlipY
 -(void) onEnter
 {
 	[super onEnter];
@@ -698,7 +698,7 @@ enum {
 //
 // ZoomFlipAngular Transition
 //
-@implementation CCZoomFlipAngularTransition
+@implementation CCTransitionZoomFlipAngular
 -(void) onEnter
 {
 	[super onEnter];
@@ -750,7 +750,7 @@ enum {
 //
 // Fade Transition
 //
-@implementation CCFadeTransition
+@implementation CCTransitionFade
 +(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)color
 {
 	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
@@ -804,7 +804,7 @@ enum {
 //
 // Cross Fade Transition
 //
-@implementation CCCrossFadeTransition
+@implementation CCTransitionCrossFade
 
 -(void) draw
 {
@@ -888,7 +888,7 @@ enum {
 //
 // TurnOffTilesTransition
 //
-@implementation CCTurnOffTilesTransition
+@implementation CCTransitionTurnOffTiles
 
 // override addScenes, and change the order
 -(void) sceneOrder
@@ -925,7 +925,7 @@ enum {
 //
 // SplitCols Transition
 //
-@implementation CCSplitColsTransition
+@implementation CCTransitionSplitCols
 
 -(void) onEnter
 {
@@ -962,7 +962,7 @@ enum {
 //
 // SplitRows Transition
 //
-@implementation CCSplitRowsTransition
+@implementation CCTransitionSplitRows
 -(CCIntervalAction*) action
 {
 	return [CCSplitRows actionWithRows:3 duration:duration/2.0f];
@@ -975,7 +975,7 @@ enum {
 //
 // FadeTR Transition
 //
-@implementation CCFadeTRTransition
+@implementation CCTransitionFadeTR
 -(void) sceneOrder
 {
 	inSceneOnTop = NO;
@@ -1015,7 +1015,7 @@ enum {
 //
 // FadeBL Transition
 //
-@implementation CCFadeBLTransition
+@implementation CCTransitionFadeBL
 -(CCIntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutBLTiles actionWithSize:v duration:duration];
@@ -1025,7 +1025,7 @@ enum {
 //
 // FadeUp Transition
 //
-@implementation CCFadeUpTransition
+@implementation CCTransitionFadeUp
 -(CCIntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutUpTiles actionWithSize:v duration:duration];
@@ -1035,7 +1035,7 @@ enum {
 //
 // FadeDown Transition
 //
-@implementation CCFadeDownTransition
+@implementation CCTransitionFadeDown
 -(CCIntervalAction*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutDownTiles actionWithSize:v duration:duration];
