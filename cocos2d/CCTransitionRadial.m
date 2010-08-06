@@ -36,7 +36,10 @@ enum {
 	kSceneRadial = 0xc001,
 };
 
-@implementation CCRadialCCWTransition
+#pragma mark -
+#pragma mark Transition Radial CCW
+
+@implementation CCTransitionRadialCCW
 -(void) sceneOrder
 {
 	inSceneOnTop = NO;
@@ -98,9 +101,21 @@ enum {
 }
 @end
 
-@implementation CCRadialCWTransition
+/* XXX DEPRECATED. Will be removed in v1.0.1 */
+@implementation CCRadialCCWTransition
+@end
+
+#pragma mark -
+#pragma mark Transition Radial CW
+
+@implementation CCTransitionRadialCW
 -(CCProgressTimerType) radialType
 {
 	return kCCProgressTimerTypeRadialCW;
 }
 @end
+
+/* XXX DEPRECATED. Will be removed in v1.0.1 */
+@implementation CCRadialCWTransition
+@end
+

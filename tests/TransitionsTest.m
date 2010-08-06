@@ -10,7 +10,7 @@
 
 #define TRANSITION_DURATION (1.2f)
 
-@interface FadeWhiteTransition : CCTransitionFade 
+@interface FadeWhiteTransition : CCTransitionFade
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
 @interface FlipXLeftOver : CCTransitionFlipX 
@@ -49,10 +49,10 @@
 @interface ZoomFlipAngularRightOver : CCTransitionZoomFlipAngular 
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface PageTransitionForward : CCPageTurnTransition
+@interface TransitionPageForward : CCTransitionPageTurn
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface PageTransitionBackward : CCPageTurnTransition
+@interface TransitionPageBackward : CCTransitionPageTurn
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
 
@@ -124,13 +124,13 @@
 }
 @end
 
-@implementation PageTransitionForward
+@implementation TransitionPageForward
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
 	return [self transitionWithDuration:t scene:s backwards:NO];
 }
 @end
 
-@implementation PageTransitionBackward
+@implementation TransitionPageBackward
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
 	return [self transitionWithDuration:t scene:s backwards:YES];
 }
@@ -143,10 +143,10 @@ static int sceneIdx=0;
 static NSString *transitions[] = {
 						@"CCTransitionJumpZoom",
 						@"CCTransitionCrossFade",
-						@"CCRadialCCWTransition",
-						@"CCRadialCWTransition",
-						@"PageTransitionForward",
-						@"PageTransitionBackward",
+						@"CCTransitionRadialCCW",
+						@"CCTransitionRadialCW",
+						@"TransitionPageForward",
+						@"TransitionPageBackward",
 						@"CCTransitionFadeTR",
 						@"CCTransitionFadeBL",
 						@"CCTransitionFadeUp",
@@ -183,7 +183,7 @@ static NSString *transitions[] = {
 Class nextTransition()
 {	
 	// HACK: else NSClassFromString will fail
-	[CCRadialCCWTransition node];
+	[CCTransitionRadialCCW node];
 	
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
