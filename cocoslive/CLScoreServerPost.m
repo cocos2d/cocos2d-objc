@@ -272,15 +272,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	
 //	NSString *dataString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
 	NSString *dataString = [NSString stringWithCString:[receivedData bytes] encoding: NSASCIIStringEncoding];
-	if( [dataString isEqual: @"OK"] ) {
-		
-		// Ok
-		postStatus_ = kPostStatusOK;
-
-		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
-			[delegate scorePostOk:self];
-
-	} else if( [dataString hasPrefix:@"OK:"] ) {
+	
+	if( [dataString hasPrefix:@"OK:"] ) {
 		// parse ranking and other possible answers
 		NSArray *values = [dataString componentsSeparatedByString:@":"];
 		NSArray *answer = [ [values objectAtIndex:1] componentsSeparatedByString:@","];
@@ -302,10 +295,19 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		}
 		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
 			[delegate scorePostOk:self];
+	
+	} else if( [dataString hasPrefix: @"OK"] ) {
+			
+		// Ok
+		postStatus_ = kPostStatusOK;
+		
+		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
+			[delegate scorePostOk:self];
+			
 		
 	} else {
 		
-		CCLOG(@"Post Score failed. Reason: %@", dataString);
+		NSLog(@"cocoslive: Post Score failed. Reason: %@", dataString);
 
 		// Error parsing answer
 		postStatus_ = kPostStatusPostFailed;
