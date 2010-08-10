@@ -199,9 +199,6 @@ static BOOL _mixerRateSet = NO;
 			// Make the new context the Current OpenAL Context
 			alcMakeContextCurrent(context);
 			
-			//Don't want a distance model
-			alDistanceModel(AL_NONE);
-			
 			// Create some OpenAL Buffer Objects
 			[self _generateBuffers:0 endIndex:bufferTotal-1];
 			
