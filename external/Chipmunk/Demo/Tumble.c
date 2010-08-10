@@ -27,8 +27,8 @@
 #include "drawSpace.h"
 #include "ChipmunkDemo.h"
 
-extern cpSpace *space;
-extern cpBody *staticBody;
+static cpSpace *space;
+static cpBody *staticBody;
 
 static void
 update(int ticks)
@@ -79,19 +79,19 @@ init(void)
 	cpVect c = cpv( 200,  200);
 	cpVect d = cpv( 200, -200);
 	
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, a, b, 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, a, b, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, b, c, 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, b, c, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, c, d, 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, c, d, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, d, a, 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, d, a, 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	
@@ -124,7 +124,7 @@ destroy(void)
 	cpSpaceFree(space);
 }
 
-const chipmunkDemo Tumble = {
+chipmunkDemo Tumble = {
 	"Tumble",
 	NULL,
 	init,
