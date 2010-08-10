@@ -87,7 +87,7 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);		
 }
 
 

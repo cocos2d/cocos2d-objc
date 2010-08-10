@@ -2,6 +2,7 @@ version 0.99.5-rc XX-Ago-2010
  . [NEW] Transitions: new transition naming convention (issue #946)
  . [FIX] Artifact fixer is a compile time option in ccConfig. Disabled by default
  . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager
+ . [FIX] CocosDenshion: panning does not work correctly on iOS4 (issue #949)
  . [FIX] Sprite: little optimization when using BatchNode + children
  
 version 0.99.5-beta 30-Jul-2010 - AKA 'CJ the artifact killer'
