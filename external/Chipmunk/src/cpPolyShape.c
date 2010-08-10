@@ -211,8 +211,8 @@ cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 cpPolyShape *
 cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
 {
-	cpFloat hw = width/2.0f;
-	cpFloat hh = height/2.0f;
+	cpFloat hw = width/(cpFloat)2.0;
+	cpFloat hh = height/(cpFloat)2.0;
 	
 	cpVect verts[] = {
 		cpv(-hw,-hh),
