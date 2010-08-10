@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 void
-cpMessage(char *message, char *condition, char *file, int line, int isError)
+cpMessage(const char *message, const char *condition, const char *file, int line, int isError)
 {
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
 	fprintf(stderr, "\tFailed condition: %s\n", condition);
@@ -43,7 +43,7 @@ cpMessage(char *message, char *condition, char *file, int line, int isError)
 }
 
 
-char *cpVersionString = "5.x.x";
+const char *cpVersionString = "5.3.x";
 
 void
 cpInitChipmunk(void)
@@ -98,7 +98,7 @@ cpMomentForPoly(cpFloat m, const int numVerts, cpVect *verts, cpVect offset)
 cpFloat
 cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
 {
-	return m*(width*width + height*height)/12;
+	return m*(width*width + height*height)/12.0;
 }
 
 

@@ -42,5 +42,7 @@ void *cpArrayPop(cpArray *arr);
 void cpArrayDeleteIndex(cpArray *arr, int idx);
 void cpArrayDeleteObj(cpArray *arr, void *obj);
 
+void cpArrayAppend(cpArray *arr, cpArray *other);
+
 void cpArrayEach(cpArray *arr, cpArrayIter iterFunc, void *data);
-int cpArrayContains(cpArray *arr, void *ptr);
+cpBool cpArrayContains(cpArray *arr, void *ptr);

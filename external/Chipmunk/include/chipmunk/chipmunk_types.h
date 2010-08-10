@@ -2,12 +2,14 @@
    #import "TargetConditionals.h"
 #endif
 
-// Use single precision floats on the iPhone.
-#if TARGET_OS_IPHONE==1
-	#define CP_USE_DOUBLES 0
-#else
-	// use doubles by default for higher precision
-	#define CP_USE_DOUBLES 1
+#ifndef CP_USE_DOUBLES
+  // Use single precision floats on the iPhone.
+  #if TARGET_OS_IPHONE
+    #define CP_USE_DOUBLES 0
+  #else
+    // use doubles by default for higher precision
+    #define CP_USE_DOUBLES 1
+  #endif
 #endif
 
 #if CP_USE_DOUBLES
@@ -36,6 +38,42 @@
 	#define cpfceil ceilf
 #endif
 
+static inline cpFloat
+cpfmax(cpFloat a, cpFloat b)
+{
+	return (a > b) ? a : b;
+}
+
+static inline cpFloat
+cpfmin(cpFloat a, cpFloat b)
+{
+	return (a < b) ? a : b;
+}
+
+static inline cpFloat
+cpfabs(cpFloat n)
+{
+	return (n < 0) ? -n : n;
+}
+
+static inline cpFloat
+cpfclamp(cpFloat f, cpFloat min, cpFloat max)
+{
+	return cpfmin(cpfmax(f, min), max);
+}
+
+static inline cpFloat
+cpflerp(cpFloat f1, cpFloat f2, cpFloat t)
+{
+	return f1*(1.0f - t) + f2*t;
+}
+
+static inline cpFloat
+cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
+{
+	return f1 + cpfclamp(f2 - f1, -d, d);
+}
+
 #if TARGET_OS_IPHONE
 	// CGPoints are structurally the same, and allow
 	// easy interoperability with other iPhone libraries
@@ -46,6 +84,21 @@
 #endif
 
 typedef unsigned int cpHashValue;
+
+// Oh C, how we love to define our own boolean types to get compiler compatibility
+#ifdef CP_BOOL_TYPE
+	typedef CP_BOOL_TYPE cpBool;
+#else
+	typedef int cpBool;
+#endif
+
+#ifndef cpTrue
+	#define cpTrue 1
+#endif
+
+#ifndef cpFalse
+	#define cpFalse 0
+#endif
 
 #ifdef CP_DATA_POINTER_TYPE
 	typedef CP_DATA_POINTER_TYPE cpDataPointer;
@@ -69,6 +122,12 @@ typedef unsigned int cpHashValue;
 	typedef CP_GROUP_TYPE cpLayers;
 #else
 	typedef unsigned int cpLayers;
+#endif
+
+#ifdef CP_TIMESTAMP_TYPE
+	typedef CP_TIMESTAMP_TYPE cpTimestamp;
+#else
+	typedef unsigned int cpTimestamp;
 #endif
 
 #ifndef CP_NO_GROUP

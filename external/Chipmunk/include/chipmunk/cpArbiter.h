@@ -58,6 +58,8 @@ typedef enum cpArbiterState {
 	cpArbiterStateNormal,
 	cpArbiterStateFirstColl,
 	cpArbiterStateIgnore,
+	cpArbiterStateSleep,
+	cpArbiterStateCached,
 } cpArbiterState;
 
 // Data structure for tracking collisions between shapes.
@@ -66,8 +68,10 @@ typedef struct cpArbiter {
 	int numContacts;
 	cpContact *contacts;
 	
-	// The two shapes involved in the collision.
+	// The two shapes and bodies involved in the collision.
 	// These variables are NOT in the order defined by the collision handler.
+	// Using CP_ARBITER_GET_SHAPES and CP_ARBITER_GET_BODIES will save you from
+	// many headaches
 	cpShape *private_a, *private_b;
 	
 	// Calculated before calling the pre-solve collision handler
@@ -78,13 +82,13 @@ typedef struct cpArbiter {
 	cpVect surface_vr;
 	
 	// Time stamp of the arbiter. (from cpSpace)
-	int stamp;
+	cpTimestamp stamp;
 	
 	struct cpCollisionHandler *handler;
 	
 	// Are the shapes swapped in relation to the collision handler?
-	char swappedColl;
-	char state;
+	cpBool swappedColl;
+	cpArbiterState state;
 } cpArbiter;
 
 // Arbiters are allocated in large buffers by the space and don't require a destroy function
@@ -116,7 +120,16 @@ cpArbiterGetShapes(cpArbiter *arb, cpShape **a, cpShape **b)
 }
 #define CP_ARBITER_GET_SHAPES(arb, a, b) cpShape *a, *b; cpArbiterGetShapes(arb, &a, &b);
 
-static inline int
+static inline void
+cpArbiterGetBodies(cpArbiter *arb, cpBody **a, cpBody **b)
+{
+	CP_ARBITER_GET_SHAPES(arb, shape_a, shape_b);
+	(*a) = shape_a->body;
+	(*b) = shape_b->body;
+}
+#define CP_ARBITER_GET_BODIES(arb, a, b) cpBody *a, *b; cpArbiterGetBodies(arb, &a, &b);
+
+static inline cpBool
 cpArbiterIsFirstContact(cpArbiter *arb)
 {
 	return arb->state == cpArbiterStateFirstColl;

@@ -27,8 +27,7 @@
 static void
 preStep(cpGrooveJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// calculate endpoints in worldspace
 	cpVect ta = cpBodyLocal2World(a, joint->grv_a);
@@ -79,8 +78,7 @@ grooveConstrain(cpGrooveJoint *joint, cpVect j){
 static void
 applyImpulse(cpGrooveJoint *joint)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	cpVect r1 = joint->r1;
 	cpVect r2 = joint->r2;
