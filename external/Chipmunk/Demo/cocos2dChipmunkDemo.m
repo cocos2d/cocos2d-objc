@@ -39,9 +39,6 @@
 #include <math.h>
 #include <limits.h>
 
-#ifdef __IPHONE_2_0
-#endif
-
 #include "chipmunk.h"
 #include "drawSpace.h"
 #include "cocos2dChipmunkDemo.h"
@@ -72,6 +69,7 @@ extern chipmunkDemo Tank;
 //extern chipmunkDemo Test;
 
 static chipmunkDemo *demos[] = {
+	&MagnetsElectric,
 	&LogoSmash,
 	&Simple,
 	&PyramidStack,
@@ -83,18 +81,15 @@ static chipmunkDemo *demos[] = {
 	&Springies,
 	&Pump,
 	&TheoJansen,
-	&MagnetsElectric,
+//	&MagnetsElectric,
 	&UnsafeOps,
 	&Query,
 	&OneWay,
 	&Player,
 	&Sensors,
 	&Joints,
-    &Tank,
+	&Tank,
 };
-
-static int maxDemos = sizeof(demos) / sizeof(demos[0]);
-
 static const int demoCount = sizeof(demos)/sizeof(chipmunkDemo *);
 static chipmunkDemo *currDemo = NULL;
 static const int firstDemoIndex = 'a' - 'a';
@@ -126,23 +121,35 @@ drawSpaceOptions options = {
 };
 
 static void
-drawString(int x, int y, char *str)
+drawString(int x, int y, const char *str)
 {
-	// implement me
+//	glColor3f(0.0f, 0.0f, 0.0f);
+//	glRasterPos2i(x, y);
+//	
+//	for(int i=0, len=strlen(str); i<len; i++){
+//		if(str[i] == '\n'){
+//			y -= 16;
+//			glRasterPos2i(x, y);
+//		} else if(str[i] == '*'){ // print out the last demo key
+//			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, 'A' + demoCount - 1);
+//		} else {
+//			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, str[i]);
+//		}
+//	}
 }
 
 static void
 drawInstructions()
 {
 	drawString(-300, 220,
-		"Controls:\n"
-		"A - * Switch demos. (return restarts)\n"
-		"Use the mouse to grab objects.\n"
-		"Arrow keys control some demos.\n"
-		"\\ enables anti-aliasing.\n"
-		"- toggles spatial hash visualization.\n"
-		"= toggles bounding boxes."
-	);
+			   "Controls:\n"
+			   "A - * Switch demos. (return restarts)\n"
+			   "Use the mouse to grab objects.\n"
+			   "Arrow keys control some demos.\n"
+			   "\\ enables anti-aliasing.\n"
+			   "- toggles spatial hash visualization.\n"
+			   "= toggles bounding boxes."
+			   );
 }
 
 static int maxArbiters = 0;
@@ -164,41 +171,65 @@ drawInfo()
 	maxPoints = points > maxPoints ? points : maxPoints;
 	maxConstraints = constraints > maxConstraints ? constraints : maxConstraints;
 	
-	char buffer[1000];
-	char *format = 
-		"Arbiters: %d (%d) - "
-		"Contact Points: %d (%d)\n"
-		"Other Constraints: %d, Iterations: %d\n"
-		"Constraints x Iterations: %d (%d)";
+	char buffer[1024];
+	const char *format = 
+	"Arbiters: %d (%d) - "
+	"Contact Points: %d (%d)\n"
+	"Other Constraints: %d, Iterations: %d\n"
+	"Constraints x Iterations: %d (%d)\n"
+	"KE:% 5.2e";
 	
-	snprintf(buffer, 1000, format,
-		arbiters, maxArbiters,
-		points, maxPoints,
-		space->constraints->num, space->iterations + space->elasticIterations,
-		constraints, maxConstraints
-	);
+	cpArray *bodies = space->bodies;
+	cpFloat ke = 0.0f;
+	for(int i=0; i<bodies->num; i++){
+		cpBody *body = (cpBody *)bodies->arr[i];
+		if(body->m == INFINITY || body->i == INFINITY) continue;
+		
+		ke += body->m*cpvdot(body->v, body->v) + body->i*body->w*body->w;
+	}
+	
+	sprintf(buffer, format,
+			arbiters, maxArbiters,
+			points, maxPoints,
+			space->constraints->num, space->iterations + space->elasticIterations,
+			constraints, maxConstraints, (ke < 1e-10f ? 0.0f : ke)
+			);
 	
 	drawString(0, 220, buffer);
 }
 
 static void
+reshape(int width, int height)
+{
+	glViewport(0, 0, width, height);
+	
+	float rx = width / 2.0f;
+	float ry = height / 2.0f;
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrthof(-rx, rx, -ry, ry, -1.0f, 1.0f);
+	glTranslatef(0.5f, 0.5f, 0.0f);
+}
+
+static void
 display(void)
 {
+	cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
+	mouseBody->p = newPoint;
+	mouseBody->v = cpvmult(cpvsub(newPoint, mousePoint_last), 60.0f);
+	mousePoint_last = newPoint;
+	currDemo->updateFunc(ticks);
+	
 //	glClear(GL_COLOR_BUFFER_BIT);
 //	
 //	drawSpace(space, currDemo->drawOptions ? currDemo->drawOptions : &options);
 //	drawInstructions();
 //	drawInfo();
 //	drawString(-300, -210, messageString);
-//		
+//	
 //	glutSwapBuffers();
 	ticks++;
-	
-	cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
-	mouseBody->p = newPoint;
-	mouseBody->v = cpvmult(cpvsub(newPoint, mousePoint_last), 60.0f);
-	mousePoint_last = newPoint;
-	currDemo->updateFunc(ticks);
 }
 
 static char *
@@ -215,7 +246,7 @@ runDemo(chipmunkDemo *demo)
 {
 	if(currDemo)
 		currDemo->destroyFunc();
-		
+	
 	currDemo = demo;
 	ticks = 0;
 	mouseJoint = NULL;
@@ -224,7 +255,7 @@ runDemo(chipmunkDemo *demo)
 	maxPoints = 0;
 	maxConstraints = 0;
 	space = currDemo->initFunc();
-
+	
 //	glutSetWindowTitle(demoTitle(currDemo));
 }
 
@@ -265,8 +296,9 @@ mouseToSpace(int x, int y)
 //	
 //	GLdouble mx, my, mz;
 //	gluUnProject(x, glutGet(GLUT_WINDOW_HEIGHT) - y, 0.0f, model, proj, view, &mx, &my, &mz);
-	
+//	
 //	return cpv(mx, my);
+	
 	return cpv(x,y);
 }
 
@@ -282,8 +314,8 @@ click(int button, int state, int x, int y)
 //	if(button == GLUT_LEFT_BUTTON){
 //		if(state == GLUT_DOWN){
 //			cpVect point = mouseToSpace(x, y);
-//		
-//			cpShape *shape = cpSpacePointQueryFirst(space, point, GRABABLE_MASK_BIT, 0);
+//			
+//			cpShape *shape = cpSpacePointQueryFirst(space, point, GRABABLE_MASK_BIT, CP_NO_GROUP);
 //			if(shape){
 //				cpBody *body = shape->body;
 //				mouseJoint = cpPivotJointNew2(mouseBody, body, cpvzero, cpBodyWorld2Local(body, point));
@@ -303,7 +335,7 @@ static void
 timercall(int value)
 {
 //	glutTimerFunc(SLEEP_TICKS, timercall, 0);
-//		
+//	
 //	glutPostRedisplay();
 }
 
@@ -327,7 +359,7 @@ arrowKeyDownFunc(int key, int x, int y)
 //	else if(key == GLUT_KEY_DOWN) key_down = 1;
 //	else if(key == GLUT_KEY_LEFT) key_left = 1;
 //	else if(key == GLUT_KEY_RIGHT) key_right = 1;
-
+	
 	set_arrowDirection();
 }
 
@@ -338,27 +370,22 @@ arrowKeyUpFunc(int key, int x, int y)
 //	else if(key == GLUT_KEY_DOWN) key_down = 0;
 //	else if(key == GLUT_KEY_LEFT) key_left = 0;
 //	else if(key == GLUT_KEY_RIGHT) key_right = 0;
-
+	
 	set_arrowDirection();
 }
 
-static void
-idle(void)
-{
+//static void
+//idle(void)
+//{
 //	glutPostRedisplay();
-}
+//}
 
 static void
 initGL(void)
 {
-//	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-//
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	glOrtho(-320.0f, 320.0f, -240.0f, 240.0f, -1.0f, 1.0f);
-//	glTranslatef(0.5f, 0.5f, 0.0f);
-//	
-//	glEnableClientState(GL_VERTEX_ARRAY);
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
 }
 
 static void
@@ -373,41 +400,47 @@ glutStuff(int argc, const char *argv[])
 //	
 //	initGL();
 //	
+//	glutReshapeFunc(reshape);
 //	glutDisplayFunc(display);
-////	glutIdleFunc(idle);
+//	//	glutIdleFunc(idle);
 //	glutTimerFunc(SLEEP_TICKS, timercall, 0);
-//
+//	
 //	glutIgnoreKeyRepeat(1);
 //	glutKeyboardFunc(keyboard);
 //	
 //	glutSpecialFunc(arrowKeyDownFunc);
 //	glutSpecialUpFunc(arrowKeyUpFunc);
-//
+//	
 //	glutMotionFunc(mouse);
 //	glutPassiveMotionFunc(mouse);
 //	glutMouseFunc(click);
 }
 
-//#include <sys/time.h>
-//void time_trial(char index, int count)
-//{
-//	currDemo = demos[index];
-//	space = currDemo->initFunc();
-//	
-//	struct timeval start_time, end_time;
-//	gettimeofday(&start_time, NULL);
-//	
-//	for(int i=0; i<count; i++)
-//		currDemo->updateFunc(i);
-//	
-//	gettimeofday(&end_time, NULL);
-//	long millisecs = (end_time.tv_sec - start_time.tv_sec)*1000;
-//	millisecs += (end_time.tv_usec - start_time.tv_usec)/1000;
-//	
-//	currDemo->destroyFunc();
-//	
-//	printf("Time(%c) = %ldms\n", index + 'a', millisecs);
-//}
+//#define TIME_TRIAL
+#ifdef TIME_TRIAL
+#include <sys/time.h>
+#include <unistd.h>
+void time_trial(int index, int count)
+{
+	currDemo = demos[index];
+	space = currDemo->initFunc();
+	
+	struct timeval start_time, end_time;
+	gettimeofday(&start_time, NULL);
+	
+	for(int i=0; i<count; i++)
+		currDemo->updateFunc(i);
+	
+	gettimeofday(&end_time, NULL);
+	long millisecs = (end_time.tv_sec - start_time.tv_sec)*1000;
+	millisecs += (end_time.tv_usec - start_time.tv_usec)/1000;
+	
+	currDemo->destroyFunc();
+	
+	printf("Time(%c) = %ldms\n", index + 'a', millisecs);
+}
+#endif
+
 
 #pragma mark -
 #pragma mark MainLayer
@@ -418,6 +451,8 @@ glutStuff(int argc, const char *argv[])
 	if( (self=[super init]) ) {
 		self.isTouchEnabled = YES;
 		cpInitChipmunk();	
+		cp_collision_slop = 0.2f;
+
 		mouseBody = cpBodyNew(INFINITY, INFINITY);
 
 		runDemo(demos[firstDemoIndex]);
@@ -470,7 +505,7 @@ glutStuff(int argc, const char *argv[])
 {
 	
 	demoIndex++;
-	if( demoIndex >= maxDemos )
+	if( demoIndex >= demoCount )
 		demoIndex = 0;
 	
 	runDemo(demos[demoIndex]);

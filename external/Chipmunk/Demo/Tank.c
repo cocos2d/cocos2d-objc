@@ -46,10 +46,10 @@ update(int ticks)
 		cpBodySetAngle(tankControlBody, tankBody->a - turn);
 		
 		// drive the tank towards the mouse
-		if(cpvnear(mousePoint, tankBody->p, 30.0)){
+		if(cpvnear(mousePoint, tankBody->p, 30.0f)){
 			tankControlBody->v = cpvzero; // stop
 		} else {
-			cpFloat direction = (cpvdot(mouseDelta, tankBody->rot) > 0.0 ? 1.0 : -1.0);
+			cpFloat direction = (cpvdot(mouseDelta, tankBody->rot) > 0.0f ? 1.0f : -1.0f);
 			tankControlBody->v = cpvrotate(tankBody->rot, cpv(30.0f*direction, 0.0f));
 		}
 		
@@ -109,7 +109,7 @@ init(void)
 	shape->layers = NOT_GRABABLE_MASK;
 	
 	for(int i=0; i<50; i++){
-		cpBody *body = add_box(10.0, 1.0);
+		cpBody *body = add_box(10.0f, 1.0f);
 		
 		cpConstraint *pivot = cpSpaceAddConstraint(space, cpPivotJointNew2(staticBody, body, cpvzero, cpvzero));
 		pivot->biasCoef = 0.0f; // disable joint correction
@@ -122,7 +122,7 @@ init(void)
 	
 	// We joint the tank to the control body and control the tank indirectly by modifying the control body.
 	tankControlBody = cpBodyNew(INFINITY, INFINITY);
-	tankBody = add_box(15.0, 10.0);
+	tankBody = add_box(15.0f, 10.0f);
 	
 	cpConstraint *pivot = cpSpaceAddConstraint(space, cpPivotJointNew2(tankControlBody, tankBody, cpvzero, cpvzero));
 	pivot->biasCoef = 0.0f; // disable joint correction

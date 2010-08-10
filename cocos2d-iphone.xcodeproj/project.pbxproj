@@ -1857,6 +1857,7 @@
 		E0C5588211FE48E600B9E4CB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */; };
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
+		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3731,6 +3732,7 @@
 		E0C783B21210A39200E309E2 /* VaryingRestitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VaryingRestitution.h; sourceTree = "<group>"; };
 		E0C783B31210A39200E309E2 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
+		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4849,6 +4851,7 @@
 		5017569F0F336F8800624901 /* ChipmunkDemo */ = {
 			isa = PBXGroup;
 			children = (
+				E0C786AC1211A40400E309E2 /* Tank.c */,
 				506D872C10D1AAF3008964A3 /* Bounce.c */,
 				506D872D10D1AAF3008964A3 /* LogoSmash.c */,
 				506D872E10D1AAF3008964A3 /* MagnetsElectric.c */,
@@ -6153,8 +6156,8 @@
 		50E5F2BB110690C600E3FCF5 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				50E5F2BC110690C600E3FCF5 /* chipmunk.c */,
 				50E5F2BE110690C600E3FCF5 /* constraints */,
+				50E5F2BC110690C600E3FCF5 /* chipmunk.c */,
 				50E5F2CA110690C600E3FCF5 /* cpArbiter.c */,
 				50E5F2CB110690C600E3FCF5 /* cpArray.c */,
 				50E5F2CC110690C600E3FCF5 /* cpBB.c */,
@@ -9879,6 +9882,7 @@
 				506D874910D1AAF3008964A3 /* TheoJansen.c in Sources */,
 				506D874A10D1AAF3008964A3 /* Tumble.c in Sources */,
 				506D874B10D1AAF3008964A3 /* UnsafeOps.c in Sources */,
+				E0C786AD1211A40400E309E2 /* Tank.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,7 +4,7 @@ version 0.99.5-rc XX-Ago-2010
  . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager
  . [FIX] CocosDenshion: panning does not work correctly on iOS4 (issue #949)
  . [FIX] Sprite: little optimization when using BatchNode + children
- . [3RD] Chipmunk: updated to Chipmunk v5.3
+ . [3RD] Chipmunk: updated to Chipmunk v5.3 and Chipmunk Demos
  
 version 0.99.5-beta 30-Jul-2010 - AKA 'CJ the artifact killer'
  . [NEW] BitmapFontAtlas: added support for multilines labels
