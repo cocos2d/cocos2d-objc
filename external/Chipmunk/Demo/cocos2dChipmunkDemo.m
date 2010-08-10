@@ -67,6 +67,7 @@ extern chipmunkDemo OneWay;
 extern chipmunkDemo Player;
 extern chipmunkDemo Sensors;
 extern chipmunkDemo Joints;
+extern chipmunkDemo Tank;
 
 //extern chipmunkDemo Test;
 
@@ -84,11 +85,12 @@ static chipmunkDemo *demos[] = {
 	&TheoJansen,
 	&MagnetsElectric,
 	&UnsafeOps,
-//	&Query,
+	&Query,
 	&OneWay,
 	&Player,
 	&Sensors,
 	&Joints,
+    &Tank,
 };
 
 static int maxDemos = sizeof(demos) / sizeof(demos[0]);
