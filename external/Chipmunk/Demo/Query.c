@@ -116,8 +116,8 @@ init(void)
 		
 		cpVect verts[NUM_VERTS];
 		for(int i=0; i<NUM_VERTS; i++){
-			cpFloat angle = -2*M_PI*i/((cpFloat) NUM_VERTS);
-			verts[i] = cpv(30*cos(angle), 30*sin(angle));
+			cpFloat angle = -2*(cpFloat)M_PI*i/((cpFloat) NUM_VERTS);
+			verts[i] = cpv(30*cosf(angle), 30*sinf(angle));
 		}
 		
 		cpBody *body = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, NUM_VERTS, verts, cpvzero)));
