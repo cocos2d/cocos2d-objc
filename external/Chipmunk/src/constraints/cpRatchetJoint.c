@@ -29,8 +29,7 @@
 static void
 preStep(cpRatchetJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	cpFloat angle = joint->angle;
 	cpFloat phase = joint->phase;
@@ -70,8 +69,7 @@ applyImpulse(cpRatchetJoint *joint)
 {
 	if(!joint->bias) return; // early exit
 
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// compute relative rotational velocity
 	cpFloat wr = b->w - a->w;
@@ -116,7 +114,8 @@ cpRatchetJointInit(cpRatchetJoint *joint, cpBody *a, cpBody *b, cpFloat phase, c
 	joint->phase = phase;
 	joint->ratchet = ratchet;
 	
-	joint->angle = b->a - a->a;
+	// STATIC_BODY_CHECK
+	joint->angle = (b ? b->a : 0.0f) - (a ? a->a : 0.0f);
 	
 	return joint;
 }

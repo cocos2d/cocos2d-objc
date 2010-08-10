@@ -110,7 +110,7 @@ cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
 	arb->private_a = a;
 	arb->private_b = b;
 	
-	arb->stamp = -1;
+	arb->stamp = 0;
 	arb->state = cpArbiterStateFirstColl;
 	
 	return arb;
@@ -172,17 +172,18 @@ cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisio
 	arb->surface_vr = cpvsub(a->surface_v, b->surface_v);
 	
 	// For collisions between two similar primitive types, the order could have been swapped.
-	arb->private_a = a; arb->private_b = b;
+	arb->private_a = a;
+	arb->private_b = b;
+	
+	// mark it as new if it's been cached
+	if(arb->state == cpArbiterStateCached) arb->state = cpArbiterStateFirstColl;
 }
 
 void
 cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv)
 {
-	cpShape *shapea = arb->private_a;
-	cpShape *shapeb = arb->private_b;
-
-	cpBody *a = shapea->body;
-	cpBody *b = shapeb->body;
+	cpBody *a = arb->private_a->body;
+	cpBody *b = arb->private_b->body;
 	
 	for(int i=0; i<arb->numContacts; i++){
 		cpContact *con = &arb->contacts[i];

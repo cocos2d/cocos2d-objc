@@ -36,6 +36,12 @@ cpVect cpvforangle(const cpFloat a); // convert radians to a normalized vector
 cpFloat cpvtoangle(const cpVect v); // convert a vector to radians
 char *cpvstr(const cpVect v); // get a string representation of a vector
 
+static inline cpBool
+cpveql(const cpVect v1, const cpVect v2)
+{
+	return (v1.x == v2.x && v1.y == v2.y);
+}
+
 static inline cpVect
 cpvadd(const cpVect v1, const cpVect v2)
 {
@@ -150,7 +156,7 @@ cpvdistsq(const cpVect v1, const cpVect v2)
 	return cpvlengthsq(cpvsub(v1, v2));
 }
 
-static inline int
+static inline cpBool
 cpvnear(const cpVect v1, const cpVect v2, const cpFloat dist)
 {
 	return cpvdistsq(v1, v2) < dist*dist;
