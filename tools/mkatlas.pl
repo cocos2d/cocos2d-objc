@@ -1,7 +1,7 @@
 #!/usr/bin/perl -W
 
-#
 # Author: Matthias Hoechsmann, gamedrs.com
+# Artefact Removal using Edge Copy by Patrick Wolowicz, subzero.eu
 # This source code an be used freely and is provided "AS IS" without any warrenties.
 # Go and visit www.zombiesmash.gamedrs.com. Thank you :)
 
@@ -51,6 +51,8 @@
 # Happy coding! - Matthias
 
 # Changes
+# 10-08-02 added support for improved artefact removal with -p > 2 (required for mip mapping)
+# 09-13-09 improved artefact removal when called with -p 2, removed warning about init not initialized
 # 08-16-09 fixed bug: alpha channel not copied for first image in atl file
 
 use GD;
@@ -258,15 +260,14 @@ sub main
     close(H);
 	
 	# create pvr texture file
-	my $call = "$texturetool -o ${file_prefix}Atlas.pvr -f PVR -e PVRTC -p ${file_prefix}Atlas_pvrprev.png ${file_prefix}Atlas.png";
-	print "Calling $call\n";
+	my $call = "$texturetool -o \"${file_prefix}Atlas.pvr\" -f PVR -e PVRTC -p \"${file_prefix}Atlas_pvrprev.png\" \"${file_prefix}Atlas.png\"";print "Calling $call\n";
     system($call); 	
 }
 
 sub generateAtlas
 {
     my ($node, $atlasParam) = @_;
-
+    $init = 0;
     if($node->{IMG_REF})
     {
 	my $img = $node->{IMG_REF};
@@ -320,17 +321,22 @@ sub generateAtlas
 	}		
 		
 		
-	# fill surrounding margin with image bg color
-	# This should reduce pvr artefacts but there should be better ways to do that ...
+	# fill surrounding margin with image
 	if($margin != 0)
 	{
-		$bg_color = $atlasParam->{ATLAS_REF}->getPixel($x_dest+$margin,$y_dest+$margin);	
-		$atlasParam->{ATLAS_REF}->filledRectangle($x_dest, $y_dest, $x_dest+$w_dst+2*$margin-1, $y_dest+$margin-1, $bg_color);	# upper	
-		$atlasParam->{ATLAS_REF}->filledRectangle($x_dest, $y_dest+$h_dst+$margin, $x_dest+$w_dst+2*$margin-1, $y_dest+$h_dst+2*$margin-1, $bg_color); # lower
-		$atlasParam->{ATLAS_REF}->filledRectangle($x_dest, $y_dest+$margin, $x_dest+$margin-1, $y_dest+$h_dst+$margin-1, $bg_color); #left
-		$atlasParam->{ATLAS_REF}->filledRectangle($x_dest+$w_dst+$margin, $y_dest+$margin, $x_dest+$w_dst+2*$margin-1, $y_dest+$h_dst+$margin-1, $bg_color); #right
+			for ($counter = 0; $counter < $margin;$counter++)
+			{
+				$atlasParam->{ATLAS_REF}->copy($atlasParam->{ATLAS_REF},$x_dest+$margin, $y_dest+$counter,$x_dest+$margin,$y_dest+$margin,$w_dst,1); #upper
+				$atlasParam->{ATLAS_REF}->copy($atlasParam->{ATLAS_REF},$x_dest+$margin, $y_dest+($margin*2)+$h_dst-$counter-1,$x_dest+$margin,$y_dest+$h_dst+$margin-1,$w_dst,1); #lower
+			}
+			for ($counter = 0; $counter < $margin;$counter++)
+			{
+				$atlasParam->{ATLAS_REF}->copy($atlasParam->{ATLAS_REF},$x_dest+$counter,$y_dest,$x_dest+$margin,$y_dest,1,$h_dst+$margin*2);#left
+				$atlasParam->{ATLAS_REF}->copy($atlasParam->{ATLAS_REF},$x_dest+$margin+$w_dst+$counter,$y_dest,$x_dest+$w_dst+$margin-1,$y_dest,1,$h_dst+$margin*2);#right
+			}
+
 	}
-		
+			
     #generate header line
 	if($altName eq "")
 	{
