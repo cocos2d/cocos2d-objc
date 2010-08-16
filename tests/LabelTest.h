@@ -66,3 +66,9 @@
 {}
 @end
 
+@interface LabelsEmpty : AtlasDemo
+{
+	BOOL setEmpty;
+}
+@end
+
