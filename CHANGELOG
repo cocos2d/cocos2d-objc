@@ -4,6 +4,7 @@ version 0.99.5-rc XX-Ago-2010
  . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager
  . [FIX] CocosDenshion: panning does not work correctly on iOS4 (issue #949)
  . [FIX] Director: Works with Fast FPS disabled (issue #954)
+ . [FIX] Director: it's possible to set a custom projection before setting the openGL view (issue #952)
  . [FIX] Label: BitmapFontAtlas supports empty strings (issue #950)
  . [FIX] Sprite: little optimization when using BatchNode + children
  . [FIX] Tools: mkatlas supports artifact removal (issue #549)
