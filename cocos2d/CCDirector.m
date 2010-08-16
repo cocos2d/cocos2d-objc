@@ -167,9 +167,12 @@ static CCDirector *_sharedDirector = nil;
 		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
 		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
 		
-		// landscape
+		// portrait mode default
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 
+		// Set default projection (3D)
+		projection_ = kCCDirectorProjectionDefault;
+		
 		// FPS
 		displayFPS_ = NO;
 		frames_ = 0;
@@ -207,7 +210,7 @@ static CCDirector *_sharedDirector = nil;
 
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
-	[self setProjection: kCCDirectorProjectionDefault];
+	[self setProjection: projection_];
 	
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
