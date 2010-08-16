@@ -20,7 +20,9 @@ static NSString *transitions[] = {
 	@"AtlasBitmapColor",
 	@"AtlasFastBitmap",
 	@"BitmapFontMultiLine",
+	@"LabelsEmpty",
 	
+	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
 };
 
@@ -760,6 +762,78 @@ Class restartAction()
 
 @end
 
+
+#pragma mark -
+#pragma mark LabelsEmpty
+
+@implementation LabelsEmpty
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		// CCBitmapFontAtlas
+		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"" fntFile:@"bitmapFontTest3.fnt"];
+		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		[label1 setPosition: ccp(s.width/2, s.height-100)];
+
+		
+		// CCLabel
+		CCLabel* label2 = [CCLabel labelWithString:@"" fontName:@"Arial" fontSize:24];
+		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
+		[label2 setPosition: ccp(s.width/2, s.height/2) ];
+
+		// CCLabelAtlas
+		CCLabelAtlas *label3 = [CCLabelAtlas labelAtlasWithString:@"" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
+		label3.position = ccp(s.width/2, 0+100);
+		
+		
+		[self schedule:@selector(updateStrings:) interval:1];
+		
+		setEmpty = NO;
+
+	}
+	
+	return self;
+}
+
+-(void) updateStrings:(ccTime)dt
+{
+	id<CCLabelProtocol> label1 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas1];
+	id<CCLabelProtocol> label2 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas2];
+	id<CCLabelProtocol> label3 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas3];
+	
+	if( ! setEmpty ) {
+		label1.string = @"not empty";
+		label2.string = @"not empty";
+		label3.string = @"hi";
+		
+		setEmpty = YES;
+
+	} else {
+		
+		label1.string = @"";
+		label2.string = @"";
+		label3.string = @"";
+		
+		setEmpty = NO;
+	}
+
+}
+
+-(NSString*) title
+{
+	return @"Testing empty labels";
+}
+
+-(NSString *) subtitle
+{
+	return @"3 empty labels: LabelAtlas, Label and BitmapFontAtlas";
+}
+
+@end
 
 #pragma mark -
 #pragma mark Application Delegate
