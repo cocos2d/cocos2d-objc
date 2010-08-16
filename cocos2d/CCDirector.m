@@ -908,16 +908,16 @@ static CCDirector *_sharedDirector = nil;
 // updates the FPS 3 times per second aprox.
 -(void) showFPS
 {
-	frames++;
-	accumDt += dt;
+	frames_++;
+	accumDt_ += dt;
 	
-	if ( accumDt > CC_DIRECTOR_FPS_INTERVAL)  {
-		frameRate = frames/accumDt;
-		frames = 0;
-		accumDt = 0;
+	if ( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)  {
+		frameRate_ = frames_/accumDt_;
+		frames_ = 0;
+		accumDt_ = 0;
 	}
 	
-	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate];
+	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate_];
 	CCTexture2D *texture = [[CCTexture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:24];
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
