@@ -65,6 +65,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * https://devforums.apple.com/message/37855#37855 by a1studmuffin
  */
 
+#import <Foundation/Foundation.h>
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/glext.h>
 #import "CCPVRTexture.h"
