@@ -23,11 +23,13 @@
  * THE SOFTWARE.
  */
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
+#import <Foundation/Foundation.h>
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/gl.h>
 #import "CCAction.h"
 
-#else
+#elif __MAC_OS_VERSION_MIN_REQUIRED
 #import <OpenGL/gl.h>
 #endif
 

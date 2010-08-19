@@ -28,13 +28,15 @@
  cocos2d (cc) types
 */
 
-#import <objc/objc.h>				// BOOL
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
+#import <Foundation/Foundation.h>
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
 #import <OpenGLES/ES1/gl.h>			// GLenum, GLubyte
-#else
-#import <Foundation/Foundation.h>
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <OpenGL/gl.h>
+
 #endif
 
 /** RGB color composed of bytes 3 bytes

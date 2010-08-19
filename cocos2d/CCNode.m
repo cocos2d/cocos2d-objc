@@ -23,13 +23,15 @@
  * THE SOFTWARE.
  */
 
+#import <Foundation/Foundation.h>
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCCamera.h"
 #import "CCGrid.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCDirector.h"
-#endif
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 #import "ccConfig.h"
 #import "CCNode.h"
@@ -471,7 +473,7 @@
 		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
-#endif
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 	[self transform];
 	
@@ -503,7 +505,7 @@
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
-#endif
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 	
 	glPopMatrix();
 }
@@ -548,7 +550,7 @@
 		if( translate )
 			glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	}
-#endif
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 	
 	
 	// END alternative
@@ -711,7 +713,7 @@
 	[[CCActionManager sharedManager] pauseTarget:self];
 }
 
-#endif __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 
 #pragma mark CCNode Transform

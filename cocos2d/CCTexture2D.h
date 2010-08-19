@@ -60,11 +60,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
+#import <Foundation/Foundation.h>
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/gl.h>
-#else
-#import <Foundation/Foundation.h>
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED 
 #import <OpenGL/gl.h>
 #endif
 
