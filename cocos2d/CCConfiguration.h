@@ -23,7 +23,13 @@
  */
 
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/gl.h>
+#else
+#import <OpenGL/gl.h>
+#endif
+
+#import <Foundation/Foundation.h>
 
 /** iOS version definitions */
 enum {

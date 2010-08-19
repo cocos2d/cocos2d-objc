@@ -23,16 +23,17 @@
  * THE SOFTWARE.
  */
 
-
-
-#import "ccConfig.h"
-#import "CCNode.h"
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCCamera.h"
 #import "CCGrid.h"
 #import "CCScheduler.h"
-#import "ccMacros.h"
-#import "CCDirector.h"
 #import "CCActionManager.h"
+#import "CCDirector.h"
+#endif
+
+#import "ccConfig.h"
+#import "CCNode.h"
+#import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
@@ -223,9 +224,11 @@
 
 - (void)cleanup
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// actions
 	[self stopAllActions];
 	[self unscheduleAllSelectors];
+#endif
 	
 	// timers
 	
@@ -267,6 +270,7 @@
 // camera: lazy alloc
 -(CCCamera*) camera
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( ! camera_ ) {
 		camera_ = [[CCCamera alloc] init];
 		
@@ -280,6 +284,10 @@
 	}
 	
 	return camera_;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	NSAssert( NO, @"Not supported on Mac yet");
+	return nil;
+#endif
 }
 
 -(CCNode*) getChildByTag:(int) aTag
@@ -458,11 +466,13 @@
 	
 	glPushMatrix();
 	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
-	
+#endif
+
 	[self transform];
 	
 	if(children_) {
@@ -488,10 +498,12 @@
 		}
 
 	} else
-		[self draw];	
+		[self draw];
 	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
+#endif
 	
 	glPopMatrix();
 }
@@ -524,6 +536,7 @@
 		glTranslatef(0, 0, vertexZ_);
 	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if ( camera_ && !(grid_ && grid_.active) ) {
 		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
 		
@@ -535,6 +548,7 @@
 		if( translate )
 			glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	}
+#endif
 	
 	
 	// END alternative
@@ -578,7 +592,9 @@
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnter)];
 	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[self resumeSchedulerAndActions];
+#endif
 	
 	isRunning_ = YES;
 }
@@ -590,7 +606,9 @@
 
 -(void) onExit
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[self pauseSchedulerAndActions];
+#endif
 	
 	isRunning_ = NO;	
 	
@@ -598,6 +616,8 @@
 }
 
 #pragma mark CCNode Actions
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 
 -(CCAction*) runAction:(CCAction*) action
 {
@@ -691,6 +711,9 @@
 	[[CCActionManager sharedManager] pauseTarget:self];
 }
 
+#endif __IPHONE_OS_VERSION_MIN_REQUIRED
+
+
 #pragma mark CCNode Transform
 
 - (CGAffineTransform)nodeToParentTransform
@@ -767,11 +790,18 @@
 
 - (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
     CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
 	return [[CCDirector sharedDirector] convertToUI:worldPoint];
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	NSAssert(NO, @"Not supported on Mac yet");
+	return CGPointZero;
+#endif
 }
 
 // convenience methods which take a UITouch instead of CGPoint
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
@@ -786,5 +816,7 @@
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
 
 @end

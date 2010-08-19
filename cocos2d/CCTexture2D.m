@@ -65,12 +65,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * https://devforums.apple.com/message/37855#37855 by a1studmuffin
  */
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/glext.h>
+#import "CCPVRTexture.h"
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import <OpenGL/OpenGL.h>
+#endif
 
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCTexture2D.h"
-#import "CCPVRTexture.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 
@@ -90,7 +94,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat_Default;
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 @implementation CCTexture2D
 
@@ -157,11 +163,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 @end
 
 @implementation CCTexture2D (Image)
-	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 - (id) initWithImage:(UIImage *)uiImage
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+- (id) initWithImage:(CGImageRef)CGImage
+#endif
 {
 	NSUInteger				POTWide, POTHigh;
-	CGImageRef				CGImage;
 	CGContextRef			context = nil;
 	void*					data = nil;;
 	CGColorSpaceRef			colorSpace;
@@ -173,7 +181,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 	
-	CGImage = uiImage.CGImage;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+	CGImageRef	CGImage = uiImage.CGImage;
+#endif
 	
 	if(CGImage == NULL) {
 		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
@@ -316,6 +326,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 }
 @end
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @implementation CCTexture2D (Text)
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
@@ -391,8 +402,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	
 	return self;
 }
-
 @end
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED 
 
 @implementation CCTexture2D (Drawing)
 
@@ -436,6 +447,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 @end
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @implementation CCTexture2D (PVR)
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
 {
@@ -508,6 +520,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
 }
 @end
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 //
 // Use to apply MIN/MAG filter
@@ -518,7 +531,11 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, name_ );
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	glGenerateMipmapOES(GL_TEXTURE_2D);
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	glGenerateMipmap(GL_TEXTURE_2D);
+#endif	
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams

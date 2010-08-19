@@ -22,9 +22,12 @@
  * THE SOFTWARE.
  */
 
-
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/gl.h>
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import <OpenGL/gl.h>
+#endif
 
 #import "CCBlockSupport.h"
 #import "CCConfiguration.h"
@@ -70,8 +73,12 @@ static char * glExtensions;
 		loadingBundle_ = [NSBundle mainBundle];
 		
 		// Obtain iOS version
-		iOSVersion_ = 0;		
+		iOSVersion_ = 0;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		NSString *iOSVer = [[UIDevice currentDevice] systemVersion];
+#else
+		NSString *iOSVer = nil;
+#endif
 		NSArray *arr = [iOSVer componentsSeparatedByString:@"."];		
 		int idx=0x01000000;
 		for( NSString *str in arr ) {

@@ -58,7 +58,11 @@
  
  To enable set it to a value different than 0. Enabled by default.
  */
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #define CC_FONT_LABEL_SUPPORT	1
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#define CC_FONT_LABEL_SUPPORT 0
+#endif
 
 /** @def CC_DIRECTOR_FAST_FPS
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
