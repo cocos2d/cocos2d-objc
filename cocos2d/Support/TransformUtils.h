@@ -23,8 +23,13 @@
  *
  */
 
+#import <Foundation/Foundation.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/gl.h>
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import <OpenGL/gl.h>
+#endif
 
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
 void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);

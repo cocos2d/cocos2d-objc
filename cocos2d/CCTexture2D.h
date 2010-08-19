@@ -60,8 +60,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/gl.h>
+#else
+#import <Foundation/Foundation.h>
+#import <OpenGL/gl.h>
+#endif
 
 //CONSTANTS:
 
@@ -154,20 +159,28 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture2D (Image)
 /** Initializes a texture from a UIImage object */
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 - (id) initWithImage:(UIImage *)uiImage;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+- (id) initWithImage:(CGImageRef)cgImage;
+#endif
 @end
 
 /**
 Extensions to make it easy to create a CCTexture2D object from a string of text.
 Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 */
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @interface CCTexture2D (Text)
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 /**
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
  Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
@@ -205,6 +218,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  */
 +(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
 @end
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 /**
  Extension to set the Min / Mag filter

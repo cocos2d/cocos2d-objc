@@ -29,8 +29,13 @@
 */
 
 #import <objc/objc.h>				// BOOL
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
 #import <OpenGLES/ES1/gl.h>			// GLenum, GLubyte
+#else
+#import <Foundation/Foundation.h>
+#import <OpenGL/gl.h>
+#endif
 
 /** RGB color composed of bytes 3 bytes
 @since v0.8

@@ -61,11 +61,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import <OpenGL/gl.h>
+#endif
 
 #import "ESRenderer.h"
 

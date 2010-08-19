@@ -24,7 +24,9 @@
  */
 
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
 #import <UIKit/UIKit.h>
+#endif
 #include <sys/time.h>
 
 #import "ccTypes.h"

@@ -23,10 +23,14 @@
  * THE SOFTWARE.
  */
 
-
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
 #import <OpenGLES/ES1/gl.h>
-
 #import "CCAction.h"
+
+#else
+#import <OpenGL/gl.h>
+#endif
+
 #import "ccTypes.h"
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
@@ -352,6 +356,8 @@ enum {
 
 // actions
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 /** Executes an action, and returns the action that is executed.
  The node becomes the action's target.
  @warning Starting from v0.8 actions don't retain their target anymore.
@@ -436,6 +442,8 @@ enum {
  */
 -(void) pauseSchedulerAndActions;
 
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
 // transformation methods
 
 /** Returns the local affine transform matrix
@@ -472,6 +480,8 @@ enum {
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 /** convenience methods which take a UITouch instead of CGPoint
  @since v0.7.1
  */
@@ -480,4 +490,5 @@ enum {
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 @end
