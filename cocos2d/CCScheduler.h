@@ -23,7 +23,8 @@
  */
 
 
-#import <Foundation/Foundation.h>
+#import <Availability.h>
+
 #import "Support/uthash.h"
 
 #import "ccTypes.h"

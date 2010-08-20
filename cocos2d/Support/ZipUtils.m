@@ -14,13 +14,12 @@
  *		from the mapreader.cpp file 
  */
 
+#import <Availability.h>
+
 #import <zlib.h>
 #import <stdlib.h>
 #import <assert.h>
 #import <stdio.h>
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 20000
-#import <UIKit/UIKit.h>
-#endif
 
 #import "ZipUtils.h"
 #import "ccMacros.h"

@@ -49,6 +49,20 @@
 		E01E678E121CA044001A484F /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E66EF121CA044001A484F /* utlist.h */; };
 		E01E678F121CA044001A484F /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E66F0121CA044001A484F /* ZipUtils.h */; };
 		E01E6790121CA044001A484F /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E66F1121CA044001A484F /* ZipUtils.m */; };
+		E01E69B8121ED50A001A484F /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E69B6121ED50A001A484F /* CCScheduler.h */; };
+		E01E69B9121ED50A001A484F /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E69B7121ED50A001A484F /* CCScheduler.m */; };
+		E01E69DD121ED6D4001A484F /* CCAtlasNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E69DB121ED6D4001A484F /* CCAtlasNode.h */; };
+		E01E69DE121ED6D4001A484F /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E69DC121ED6D4001A484F /* CCAtlasNode.m */; };
+		E01E69E1121ED6EA001A484F /* CCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E69DF121ED6EA001A484F /* CCTextureAtlas.h */; };
+		E01E69E2121ED6EA001A484F /* CCTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E69E0121ED6EA001A484F /* CCTextureAtlas.m */; };
+		E01E69EF121ED790001A484F /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E69ED121ED790001A484F /* CCLabelAtlas.h */; };
+		E01E69F0121ED790001A484F /* CCLabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E69EE121ED790001A484F /* CCLabelAtlas.m */; };
+		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
+		E01E6B00121EDCE4001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
+		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
+		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		E01E6C0A121EE487001A484F /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6C08121EE487001A484F /* CCCamera.h */; };
+		E01E6C0B121EE487001A484F /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6C09121EE487001A484F /* CCCamera.m */; };
 		E036A79D121B5C720037C5C6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E036A79F121B5C870037C5C6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
@@ -58,7 +72,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E01E663C121CA00A001A484F /* cocos2d */;
+			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
 		};
 /* End PBXContainerItemProxy section */
@@ -114,6 +128,17 @@
 		E01E66EF121CA044001A484F /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		E01E66F0121CA044001A484F /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		E01E66F1121CA044001A484F /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
+		E01E69B6121ED50A001A484F /* CCScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler.h; sourceTree = "<group>"; };
+		E01E69B7121ED50A001A484F /* CCScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScheduler.m; sourceTree = "<group>"; };
+		E01E69DB121ED6D4001A484F /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAtlasNode.h; sourceTree = "<group>"; };
+		E01E69DC121ED6D4001A484F /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAtlasNode.m; sourceTree = "<group>"; };
+		E01E69DF121ED6EA001A484F /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
+		E01E69E0121ED6EA001A484F /* CCTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureAtlas.m; sourceTree = "<group>"; };
+		E01E69ED121ED790001A484F /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
+		E01E69EE121ED790001A484F /* CCLabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelAtlas.m; sourceTree = "<group>"; };
+		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		E01E6C08121EE487001A484F /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
+		E01E6C09121EE487001A484F /* CCCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCamera.m; sourceTree = "<group>"; };
 		E036A79C121B5C720037C5C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -127,6 +152,7 @@
 				E036A79D121B5C720037C5C6 /* OpenGL.framework in Frameworks */,
 				E036A79F121B5C870037C5C6 /* QuartzCore.framework in Frameworks */,
 				E01E6640121CA023001A484F /* libcocos2d.a in Frameworks */,
+				E01E6B00121EDCE4001A484F /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +160,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */,
+				E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */,
+				E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +191,9 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E036A79C121B5C720037C5C6 /* OpenGL.framework */,
+				E036A79E121B5C870037C5C6 /* QuartzCore.framework */,
+				E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -187,8 +219,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				E036A79C121B5C720037C5C6 /* OpenGL.framework */,
-				E036A79E121B5C870037C5C6 /* QuartzCore.framework */,
 			);
 			name = "cocos2d-mac";
 			sourceTree = "<group>";
@@ -225,6 +255,16 @@
 		E01E6651121CA044001A484F /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				E01E6C08121EE487001A484F /* CCCamera.h */,
+				E01E6C09121EE487001A484F /* CCCamera.m */,
+				E01E69ED121ED790001A484F /* CCLabelAtlas.h */,
+				E01E69EE121ED790001A484F /* CCLabelAtlas.m */,
+				E01E69DF121ED6EA001A484F /* CCTextureAtlas.h */,
+				E01E69E0121ED6EA001A484F /* CCTextureAtlas.m */,
+				E01E69DB121ED6D4001A484F /* CCAtlasNode.h */,
+				E01E69DC121ED6D4001A484F /* CCAtlasNode.m */,
+				E01E69B6121ED50A001A484F /* CCScheduler.h */,
+				E01E69B7121ED50A001A484F /* CCScheduler.m */,
 				E01E6662121CA044001A484F /* ccConfig.h */,
 				E01E6663121CA044001A484F /* CCConfiguration.h */,
 				E01E6664121CA044001A484F /* CCConfiguration.m */,
@@ -300,6 +340,11 @@
 				E01E678D121CA044001A484F /* uthash.h in Headers */,
 				E01E678E121CA044001A484F /* utlist.h in Headers */,
 				E01E678F121CA044001A484F /* ZipUtils.h in Headers */,
+				E01E69B8121ED50A001A484F /* CCScheduler.h in Headers */,
+				E01E69DD121ED6D4001A484F /* CCAtlasNode.h in Headers */,
+				E01E69E1121ED6EA001A484F /* CCTextureAtlas.h in Headers */,
+				E01E69EF121ED790001A484F /* CCLabelAtlas.h in Headers */,
+				E01E6C0A121EE487001A484F /* CCCamera.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +446,11 @@
 				E01E678A121CA044001A484F /* TGAlib.m in Sources */,
 				E01E678C121CA044001A484F /* TransformUtils.m in Sources */,
 				E01E6790121CA044001A484F /* ZipUtils.m in Sources */,
+				E01E69B9121ED50A001A484F /* CCScheduler.m in Sources */,
+				E01E69DE121ED6D4001A484F /* CCAtlasNode.m in Sources */,
+				E01E69E2121ED6EA001A484F /* CCTextureAtlas.m in Sources */,
+				E01E69F0121ED790001A484F /* CCLabelAtlas.m in Sources */,
+				E01E6C0B121EE487001A484F /* CCCamera.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

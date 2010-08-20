@@ -23,16 +23,17 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#import <Availability.h>
+
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import "CCCamera.h"
 #import "CCGrid.h"
-#import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCDirector.h"
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
+#import "CCCamera.h"
+#import "CCScheduler.h"
 #import "ccConfig.h"
 #import "CCNode.h"
 #import "ccMacros.h"
@@ -229,8 +230,9 @@
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// actions
 	[self stopAllActions];
-	[self unscheduleAllSelectors];
 #endif
+
+	[self unscheduleAllSelectors];
 	
 	// timers
 	
@@ -272,7 +274,6 @@
 // camera: lazy alloc
 -(CCCamera*) camera
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( ! camera_ ) {
 		camera_ = [[CCCamera alloc] init];
 		
@@ -286,10 +287,6 @@
 	}
 	
 	return camera_;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-	NSAssert( NO, @"Not supported on Mac yet");
-	return nil;
-#endif
 }
 
 -(CCNode*) getChildByTag:(int) aTag
@@ -538,8 +535,12 @@
 		glTranslatef(0, 0, vertexZ_);
 	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
+	if ( camera_
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-	if ( camera_ && !(grid_ && grid_.active) ) {
+		&& !(grid_ && grid_.active)
+#endif
+		)
+	{
 		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
 		
 		if( translate )
@@ -550,7 +551,6 @@
 		if( translate )
 			glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	}
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 	
 	
 	// END alternative
@@ -592,11 +592,8 @@
 
 -(void) onEnter
 {
-	[children_ makeObjectsPerformSelector:@selector(onEnter)];
-	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+	[children_ makeObjectsPerformSelector:@selector(onEnter)];	
 	[self resumeSchedulerAndActions];
-#endif
 	
 	isRunning_ = YES;
 }
@@ -608,10 +605,7 @@
 
 -(void) onExit
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[self pauseSchedulerAndActions];
-#endif
-	
 	isRunning_ = NO;	
 	
 	[children_ makeObjectsPerformSelector:@selector(onExit)];
@@ -657,8 +651,10 @@
 	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
 
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
-#pragma mark CCNode - Callbacks
+
+#pragma mark CCNode - Scheduler
 
 -(void) scheduleUpdate
 {
@@ -704,17 +700,21 @@
 - (void) resumeSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] resumeTarget:self];
+	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCActionManager sharedManager] resumeTarget:self];
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
 }
 
 - (void) pauseSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] pauseTarget:self];
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCActionManager sharedManager] pauseTarget:self];
-}
-
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
+}
 
 #pragma mark CCNode Transform
 
