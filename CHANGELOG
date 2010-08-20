@@ -1,4 +1,5 @@
 version 0.99.5-beta2 XX-Ago-2010
+ . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
  . [NEW] Mac: Many classes compile on Mac too
  . [NEW] Director: New naming convention: CCnameDirector -> CCDirectorName
  . [NEW] Director: DirectorIOS is responsible for swapping buffers
