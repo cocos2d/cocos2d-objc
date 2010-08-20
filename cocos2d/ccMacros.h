@@ -26,6 +26,8 @@
 #import <math.h>
 #import "ccConfig.h"
 
+#import <Foundation/Foundation.h>
+
 /**
  @file
  cocos2d helper macros

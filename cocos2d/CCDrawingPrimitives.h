@@ -26,6 +26,17 @@
 #ifndef __CC_DRAWING_PRIMITIVES_H
 #define __CC_DRAWING_PRIMITIVES_H
 
+#import <Availability.h>
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import <CoreGraphics/CGGeometry.h>	// for CGPoint
+#import <objc/objc.h>/				// for BOOL
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import <Foundation/Foundation.h>
+#endif
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif	
@@ -43,13 +54,7 @@ extern "C" {
  
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <CoreGraphics/CGGeometry.h>	// for CGPoint
-#import <objc/objc.h>				// for BOOL
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <Foundation/Foundation.h>
-#endif
+	
 
 /** draws a point given x and y coordinate */
 void ccDrawPoint( CGPoint point );

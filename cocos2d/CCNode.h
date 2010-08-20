@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/gl.h>
@@ -387,6 +387,8 @@ enum {
  */
 -(int) numberOfRunningActions;
 
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
 // timers
 
 /** check whether a selector is scheduled. */
@@ -444,7 +446,6 @@ enum {
  */
 -(void) pauseSchedulerAndActions;
 
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 // transformation methods
 

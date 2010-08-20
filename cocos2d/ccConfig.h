@@ -23,6 +23,8 @@
  */
 
 
+#import <Availability.h>
+
 /**
  @file
  cocos2d (cc) configuration file
