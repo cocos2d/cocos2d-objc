@@ -46,7 +46,7 @@
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
-	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval_ target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
+	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval_ target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
 	
 	//
 	//	If you want to attach the opengl view into UIScrollView
@@ -55,6 +55,14 @@
 	//
 	//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
 	//								 forMode:NSRunLoopCommonModes];
+}
+
+-(void) mainLoop
+{
+	[self drawScene];
+
+	/* swap buffers */
+	[openGLView_ swapBuffers];
 }
 
 - (void)stopAnimation
@@ -123,7 +131,7 @@
 
 	isRunning = YES;
 
-	SEL selector = @selector(preMainLoop);
+	SEL selector = @selector(mainLoop);
 	NSMethodSignature* sig = [[[CCDirector sharedDirector] class]
 							  instanceMethodSignatureForSelector:selector];
 	NSInvocation* invocation = [NSInvocation
@@ -134,14 +142,14 @@
 								 withObject:[CCDirector sharedDirector] waitUntilDone:NO];
 	
 //	NSInvocationOperation *loopOperation = [[[NSInvocationOperation alloc]
-//											 initWithTarget:self selector:@selector(preMainLoop) object:nil]
+//											 initWithTarget:self selector:@selector(mainLoop) object:nil]
 //											autorelease];
 //	
 //	[loopOperation performSelectorOnMainThread:@selector(start) withObject:nil
 //								 waitUntilDone:NO];
 }
 
--(void) preMainLoop
+-(void) mainLoop
 {
 	while (isRunning) {
 	
@@ -158,6 +166,9 @@
 		}
 		
 		[self drawScene];
+		
+		/* swap buffers */
+		[openGLView_ swapBuffers];
 
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
@@ -202,16 +213,19 @@
 
 	isRunning = YES;
 
-	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(preMainLoop) object:nil];
+	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[thread start];
 	[thread release];
 }
 
--(void) preMainLoop
+-(void) mainLoop
 {
 	while( ![[NSThread currentThread] isCancelled] ) {
 		if( isRunning )
 			[self performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+		
+		/* swap buffers */
+		[openGLView_ swapBuffers];
 		
 		if (isPaused_) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
@@ -266,14 +280,17 @@
 	
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
-	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(preMainLoop:)];
+	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
--(void) preMainLoop:(id)sender
+-(void) mainLoop:(id)sender
 {
 	[self drawScene];
+	
+	/* swap buffers */
+	[openGLView_ swapBuffers];
 }
 
 - (void) stopAnimation

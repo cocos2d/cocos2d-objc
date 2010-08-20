@@ -201,7 +201,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//	-> context_ MUST be the OpenGL context
 	//	-> renderBuffer_ must be the the RENDER BUFFER
 
-#ifdef __IPHONE_4_0
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
 	if( discardFramebufferSupported_ && depthFormat_ ) {
 		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
 		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);

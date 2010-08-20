@@ -264,10 +264,7 @@ static CCDirector *_sharedDirector = nil;
 	
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
-	glPopMatrix();
-	
-	/* swap buffers */
-	[openGLView_ swapBuffers];	
+	glPopMatrix();	
 }
 
 -(void) calculateDeltaTime

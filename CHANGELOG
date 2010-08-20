@@ -1,6 +1,7 @@
 version 0.99.5-beta2 XX-Ago-2010
  . [NEW] Mac: Many classes compile on Mac too
  . [NEW] Director: New naming convention: CCnameDirector -> CCDirectorName
+ . [NEW] Director: DirectorIOS is responsible for swapping buffers
  . [NEW] Label: CCLabelAtlas#labelAtlasWithString: -> labelWithString. Old method deprecated
  . [NEW] Label: CCBitmapFontAtlas deprecated. Use CCLabelBMFont instead.
  . [NEW] Label: CCBitmapFontAtlas#bitmapFontAtlasWithString -> labelWithString. Old method deprecated.

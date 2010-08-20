@@ -47,7 +47,7 @@
 	
 	NSAutoreleasePool	*autoreleasePool;
 }
--(void) preMainLoop;
+-(void) mainLoop;
 @end
 
 /** ThreadedFastDirector is a Director that triggers the main loop from a thread.
@@ -63,7 +63,7 @@
 {
 	BOOL isRunning;	
 }
--(void) preMainLoop;
+-(void) mainLoop;
 @end
 
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
@@ -81,7 +81,7 @@
 {
 	id displayLink;
 }
--(void) preMainLoop:(id)sender;
+-(void) mainLoop:(id)sender;
 @end
 
 /** TimerDirector is a Director that calls the main loop from an NSTimer object
@@ -97,5 +97,6 @@
 {
 	NSTimer *animationTimer;
 }
+-(void) mainLoop;
 @end
 

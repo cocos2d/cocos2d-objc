@@ -388,7 +388,6 @@ static CCTextureCache *sharedTextureCache;
 -(void) removeUnusedTextures
 {
 	NSArray *keys = [textures allKeys];
-	NSLog(@"keys: %@", keys);
 	for( id key in keys ) {
 		id value = [textures objectForKey:key];		
 		if( [value retainCount] == 1 ) {

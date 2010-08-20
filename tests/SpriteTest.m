@@ -3146,6 +3146,7 @@ Class restartAction()
 
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
+//	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
