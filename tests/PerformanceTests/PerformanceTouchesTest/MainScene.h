@@ -7,7 +7,7 @@
 Class nextAction();
 
 @interface MainScene : CCLayer {
-	CCBitmapFontAtlas *label;
+	CCLabelBMFont *label;
 	int			numberOfTouchesB;
 	int			numberOfTouchesM;
 	int			numberOfTouchesE;

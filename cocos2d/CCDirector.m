@@ -30,6 +30,7 @@
 
 // cocos2d imports
 #import "CCDirector.h"
+#import "CCDirectorIOS.h"
 #import "CCTouchDelegateProtocol.h"
 #import "CCCamera.h"
 #import "CCScheduler.h"
@@ -43,7 +44,7 @@
 #import "CCTouchDispatcher.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
-#import "CCBitmapFontAtlas.h"
+#import "CCLabelBMFont.h"
 
 // support imports
 #import "Support/glu.h"
@@ -103,7 +104,7 @@ static CCDirector *_sharedDirector = nil;
 		// Default Director is TimerDirector
 		// 
 		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[CCTimerDirector alloc] init];
+			_sharedDirector = [[CCDirectorTimer alloc] init];
 		else
 			_sharedDirector = [[self alloc] init];
 	}
@@ -124,16 +125,16 @@ static CCDirector *_sharedDirector = nil;
 	}
 	switch (type) {
 		case CCDirectorTypeNSTimer:
-			[CCTimerDirector sharedDirector];
+			[CCDirectorTimer sharedDirector];
 			break;
 		case CCDirectorTypeDisplayLink:
-			[CCDisplayLinkDirector sharedDirector];
+			[CCDirectorDisplayLink sharedDirector];
 			break;
 		case CCDirectorTypeMainLoop:
-			[CCFastDirector sharedDirector];
+			[CCDirectorFast sharedDirector];
 			break;
 		case CCDirectorTypeThreadMainLoop:
-			[CCThreadedFastDirector sharedDirector];
+			[CCDirectorFastThreaded sharedDirector];
 			break;
 		default:
 			NSAssert(NO,@"Unknown director type");
@@ -219,7 +220,7 @@ static CCDirector *_sharedDirector = nil;
     if (!FPSLabel_) {
 		CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
 		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-		FPSLabel_ = [[CCLabelAtlas labelAtlasWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
+		FPSLabel_ = [[CCLabelAtlas labelWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
 		[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
 	}
 #endif	// CC_DIRECTOR_FAST_FPS
@@ -309,7 +310,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) purgeCachedData
 {
-	[CCBitmapFontAtlas purgeCachedData];	
+	[CCLabelBMFont purgeCachedData];	
 	[CCTextureCache purgeSharedTextureCache];	
 }
 
@@ -794,7 +795,7 @@ static CCDirector *_sharedDirector = nil;
 #endif	
 
 	// Purge bitmap cache
-	[CCBitmapFontAtlas purgeCachedData];
+	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
@@ -973,257 +974,3 @@ static CCDirector *_sharedDirector = nil;
 
 @end
 
-#pragma mark -
-#pragma mark Director TimerDirector
-
-@implementation CCTimerDirector
-- (void)startAnimation
-{
-	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
-	
-	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
-	
-	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval_ target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
-	
-	//
-	//	If you want to attach the opengl view into UIScrollView
-	//  uncomment this line to prevent 'freezing'.
-	//	It doesn't work on with the Fast Director
-	//
-	//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
-	//								 forMode:NSRunLoopCommonModes];
-}
-
-- (void)stopAnimation
-{
-	[animationTimer invalidate];
-	animationTimer = nil;
-}
-
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	animationInterval_ = interval;
-	
-	if(animationTimer) {
-		[self stopAnimation];
-		[self startAnimation];
-	}
-}
-
--(void) dealloc
-{
-	[animationTimer release];
-	[super dealloc];
-}
-@end
-
-
-#pragma mark -
-#pragma mark Director FastDirector
-
-@implementation CCFastDirector
-
-- (id) init
-{
-	if(( self = [super init] )) {
-		
-#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
-		CCLOG(@"cocos2d: Fast Events enabled");
-#else
-		CCLOG(@"cocos2d: Fast Events disabled");
-#endif		
-		isRunning = NO;
-		
-		// XXX:
-		// XXX: Don't create any autorelease object before calling "fast director"
-		// XXX: else it will be leaked
-		// XXX:
-		autoreleasePool = [NSAutoreleasePool new];
-	}
-
-	return self;
-}
-
-- (void) startAnimation
-{
-	// XXX:
-	// XXX: release autorelease objects created
-	// XXX: between "use fast director" and "runWithScene"
-	// XXX:
-	[autoreleasePool release];
-	autoreleasePool = nil;
-
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
-	
-
-	isRunning = YES;
-
-	SEL selector = @selector(preMainLoop);
-	NSMethodSignature* sig = [[[CCDirector sharedDirector] class]
-							  instanceMethodSignatureForSelector:selector];
-	NSInvocation* invocation = [NSInvocation
-								invocationWithMethodSignature:sig];
-	[invocation setTarget:[CCDirector sharedDirector]];
-	[invocation setSelector:selector];
-	[invocation performSelectorOnMainThread:@selector(invokeWithTarget:)
-								 withObject:[CCDirector sharedDirector] waitUntilDone:NO];
-	
-//	NSInvocationOperation *loopOperation = [[[NSInvocationOperation alloc]
-//											 initWithTarget:self selector:@selector(preMainLoop) object:nil]
-//											autorelease];
-//	
-//	[loopOperation performSelectorOnMainThread:@selector(start) withObject:nil
-//								 waitUntilDone:NO];
-}
-
--(void) preMainLoop
-{
-	while (isRunning) {
-	
-		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
-
-#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
-		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
-#else
-		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
-#endif
-
-		if (isPaused_) {
-			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
-		}
-		
-		[self drawScene];
-
-#if CC_DIRECTOR_DISPATCH_FAST_EVENTS
-		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
-#else
-		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
-#endif
-
-		[loopPool release];
-	}	
-}
-- (void) stopAnimation
-{
-	isRunning = NO;
-}
-
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	NSLog(@"FastDirectory doesn't support setAnimationInterval, yet");
-}
-@end
-
-#pragma mark -
-#pragma mark Director ThreadedFastDirector
-
-@implementation CCThreadedFastDirector
-
-- (id) init
-{
-	if(( self = [super init] )) {		
-		isRunning = NO;		
-	}
-	
-	return self;
-}
-
-- (void) startAnimation
-{
-	
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
-	}
-
-	isRunning = YES;
-
-	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(preMainLoop) object:nil];
-	[thread start];
-	[thread release];
-}
-
--(void) preMainLoop
-{
-	while( ![[NSThread currentThread] isCancelled] ) {
-		if( isRunning )
-			[self performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-		
-		if (isPaused_) {
-			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
-		} else {
-//			usleep(2000);
-		}
-	}	
-}
-- (void) stopAnimation
-{
-	isRunning = NO;
-}
-
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	NSLog(@"FastDirector doesn't support setAnimationInterval, yet");
-}
-@end
-
-#pragma mark -
-#pragma mark DisplayLinkDirector
-
-// Allows building DisplayLinkDirector for pre-3.1 SDKS
-// without getting compiler warnings.
-@interface NSObject(CADisplayLink)
-+ (id) displayLinkWithTarget:(id)arg1 selector:(SEL)arg2;
-- (void) addToRunLoop:(id)arg1 forMode:(id)arg2;
-- (void) setFrameInterval:(int)interval;
-- (void) invalidate;
-@end
-
-@implementation CCDisplayLinkDirector
-
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	animationInterval_ = interval;
-	if(displayLink){
-		[self stopAnimation];
-		[self startAnimation];
-	}
-}
-
-- (void) startAnimation
-{
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
-	}
-	
-	// approximate frame rate
-	// assumes device refreshes at 60 fps
-	int frameInterval = (int) floor(animationInterval_ * 60.0f);
-	
-	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
-
-	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(preMainLoop:)];
-	[displayLink setFrameInterval:frameInterval];
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-}
-
--(void) preMainLoop:(id)sender
-{
-	[self drawScene];
-}
-
-- (void) stopAnimation
-{
-	[displayLink invalidate];
-	displayLink = nil;
-}
-
--(void) dealloc
-{
-	[displayLink release];
-	[super dealloc];
-}
-@end

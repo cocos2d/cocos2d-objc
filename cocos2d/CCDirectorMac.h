@@ -20,26 +20,35 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 
+#import <QuartzCore/CVDisplayLink.h>
+#import "CCDirector.h"
 
-#import <Foundation/Foundation.h>
+/** Base class of Mac directors
+ @since v0.99.5
+ */
 
-#import "CCNode.h"
-
-/** CCScene is a subclass of CCNode that is used only as an abstract concept.
- 
- CCScene an CCNode are almost identical with the difference that CCScene has it's
- anchor point (by default) at the center of the screen.
-
- For the moment CCScene has no other logic than that, but in future releases it might have
- additional logic.
-
- It is a good practice to use and CCScene as the parent of all your nodes.
-*/
-@interface CCScene : CCNode {
-
-}
+@interface CCDirectorMac : CCDirector
 @end
+
+
+/** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+ *
+ * Features and Limitations:
+ * - Only available on 3.1+
+ * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
+ * - Only supports animation intervals of 1/60 1/30 & 1/15
+ *
+ * It is the recommended Director if the SDK is 3.1 or newer
+ *
+ * @since v0.8.2
+ */
+@interface CCDisplayLinkDirector : CCDirectorIOS
+{
+	CVDisplayLinkRef displayLink;
+}
+-(void) preMainLoop:(id)sender;
+@end
+

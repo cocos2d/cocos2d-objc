@@ -25,11 +25,15 @@
 
 
 
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_REQUIRED_MIN
+#import "CCDirector.h"
+#endif
+
 #import "CCAction.h"
 #import "ccMacros.h"
 
 #import "CCIntervalAction.h"
-#import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 //
 // Action Base Class
@@ -259,6 +263,7 @@
 
 -(id) initWithTarget:(CCNode *)fNode
 {
+#if __IPHONE_OS_VERSION_REQUIRED_MIN
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
@@ -269,11 +274,13 @@
 		halfScreenSize = ccpMult(fullScreenSize, .5f);
 	}
 	
+#endif
 	return self;
 }
 
 -(id) initWithTarget:(CCNode *)fNode worldBoundary:(CGRect)rect
 {
+#if __IPHONE_OS_VERSION_REQUIRED_MIN
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
@@ -305,6 +312,7 @@
 		if( (topBoundary == bottomBoundary) && (leftBoundary == rightBoundary) )
 			boundaryFullyCovered = TRUE;
 	}
+#endif
 	
 	return self;
 }

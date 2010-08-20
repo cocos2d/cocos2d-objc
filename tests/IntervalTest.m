@@ -23,11 +23,11 @@
 		[self addChild:sun];
 
 		// timers
-		label0 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
-		label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
-		label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
-		label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
-		label4 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+		label0 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+		label1 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+		label2 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+		label3 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
+		label4 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		
 		[self scheduleUpdate];
 		[self schedule: @selector(step1:)];

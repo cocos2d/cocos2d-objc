@@ -35,9 +35,15 @@
 @implementation CCLabelAtlas
 
 #pragma mark CCLabelAtlas - Creation & Init
-+(id) labelAtlasWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
++(id) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
 {
 	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
+}
+
+// XXX DEPRECATED. Remove it in 1.0.1
++(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
+{
+	return [self labelWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c];
 }
 
 

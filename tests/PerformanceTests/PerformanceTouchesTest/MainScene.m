@@ -75,7 +75,7 @@ Class restartAction()
 		
 		[self schedule:@selector(update:)];
 		
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"arial16.fnt"];
+		label = [CCLabelBMFont labelWithString:@"00.0" fntFile:@"arial16.fnt"];
 		label.position = ccp(s.width/2, s.height/2);
 		[self addChild:label];
 				

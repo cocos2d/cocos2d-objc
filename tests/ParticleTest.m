@@ -121,7 +121,7 @@ Class restartAction()
 
 		[self addChild: menu z:100];	
 		
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
 		labelAtlas.position = ccp(s.width-66,50);
 		

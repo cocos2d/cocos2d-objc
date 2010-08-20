@@ -235,12 +235,12 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 	
-		CCLabelAtlas *label1 = [CCLabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label1 z:0 tag:kTagSprite1];
 		label1.position = ccp(10,100);
 		label1.opacity = 200;
 
-		CCLabelAtlas *label2 = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		CCLabelAtlas *label2 = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label2 z:0 tag:kTagSprite2];
 		label2.position = ccp(10,200);
 		label2.opacity = 32;
@@ -284,12 +284,12 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 		
-		CCLabelAtlas *label1 = [CCLabelAtlas labelAtlasWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label1 z:0 tag:kTagSprite1];
 		label1.position = ccp(10,100);
 		label1.opacity = 200;
 		
-		CCLabelAtlas *label2 = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		CCLabelAtlas *label2 = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label2 z:0 tag:kTagSprite2];
 		label2.position = ccp(10,200);
 		label2.color = ccRED;
@@ -351,7 +351,7 @@ Class restartAction()
 		CCColorLayer *col = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
 		
-		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		
 		// testing anchors
 		label1.anchorPoint = ccp(0,0);
@@ -367,14 +367,14 @@ Class restartAction()
 		// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
 		// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
 		// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
 		label2.anchorPoint = ccp(0.5f, 0.5f);
 		label2.color = ccRED;
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		[label2 runAction: [[repeat copy] autorelease]];
 		
-		CCBitmapFontAtlas *label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+		CCLabelBMFont *label3 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
 		label3.anchorPoint = ccp(1,1);
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
@@ -396,19 +396,19 @@ Class restartAction()
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%2.2f Test j", time];
 	
-	CCBitmapFontAtlas *label1 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas1];
+	CCLabelBMFont *label1 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas1];
 	[label1 setString:string];
 	
-	CCBitmapFontAtlas *label2 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
+	CCLabelBMFont *label2 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas2];
 	[label2 setString:string];
 	
-	CCBitmapFontAtlas *label3 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas3];
+	CCLabelBMFont *label3 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas3];
 	[label3 setString:string];
 }
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
@@ -433,7 +433,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		// Upper Label
-		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -470,7 +470,7 @@ Class restartAction()
 		
 		
 		// Bottom Label
-		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		label2.position = ccp(s.width/2.0f, 80);
 		
@@ -496,13 +496,13 @@ Class restartAction()
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%04.1f", time];
 	
-	CCBitmapFontAtlas *label1 = (CCBitmapFontAtlas*) [self getChildByTag:kTagBitmapAtlas2];
+	CCLabelBMFont *label1 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas2];
 	[label1 setString:string];	
 }
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
@@ -526,7 +526,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
 		[self addChild:label];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -540,7 +540,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
@@ -567,18 +567,18 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		CCBitmapFontAtlas *label = nil;
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"FaFeFiFoFu" fntFile:@"bitmapFontTest5.fnt"];
+		CCLabelBMFont *label = nil;
+		label = [CCLabelBMFont labelWithString:@"FaFeFiFoFu" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2+50);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 		
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
+		label = [CCLabelBMFont labelWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"aeiou" fntFile:@"bitmapFontTest5.fnt"];
+		label = [CCLabelBMFont labelWithString:@"aeiou" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2-50);
 		label.anchorPoint = ccp(0.5f, 0.5f);
@@ -590,7 +590,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
@@ -617,20 +617,20 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		CCBitmapFontAtlas *label = nil;
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Blue" fntFile:@"bitmapFontTest5.fnt"];
+		CCLabelBMFont *label = nil;
+		label = [CCLabelBMFont labelWithString:@"Blue" fntFile:@"bitmapFontTest5.fnt"];
 		label.color = ccBLUE;
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/4);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Red" fntFile:@"bitmapFontTest5.fnt"];
+		label = [CCLabelBMFont labelWithString:@"Red" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, 2*s.height/4);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 		label.color = ccRED;
 
-		label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"G" fntFile:@"bitmapFontTest5.fnt"];
+		label = [CCLabelBMFont labelWithString:@"G" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, 3*s.height/4);
 		label.anchorPoint = ccp(0.5f, 0.5f);
@@ -644,7 +644,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
@@ -671,7 +671,7 @@ Class restartAction()
 		
 		// Upper Label
 		for( int i=0 ; i < 100;i ++ ) {
-			CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
+			CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
 			[self addChild:label];
 			
 			CGSize s = [[CCDirector sharedDirector] winSize];
@@ -687,12 +687,12 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
 {
-	return @"Creating several CCBitmapFontAtlas with the same .fnt file should be fast";
+	return @"Creating several CCLabelBMFont with the same .fnt file should be fast";
 }
 
 @end
@@ -715,7 +715,7 @@ Class restartAction()
 		CGSize s;
 
 		// Left
-		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nLeft" fntFile:@"bitmapFontTest3.fnt"];
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Multi line\nLeft" fntFile:@"bitmapFontTest3.fnt"];
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
 		
@@ -724,7 +724,7 @@ Class restartAction()
 		
 		
 		// Center
-		CCBitmapFontAtlas *label2 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
 		label2.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 
@@ -733,7 +733,7 @@ Class restartAction()
 
 		
 		// right
-		CCBitmapFontAtlas *label3 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Multi line\nRight\nThree lines Three" fntFile:@"bitmapFontTest3.fnt"];
+		CCLabelBMFont *label3 = [CCLabelBMFont labelWithString:@"Multi line\nRight\nThree lines Three" fntFile:@"bitmapFontTest3.fnt"];
 		label3.anchorPoint = ccp(1,1);
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
 
@@ -752,7 +752,7 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"CCBitmapFontAtlas";
+	return @"CCLabelBMFont";
 }
 
 -(NSString *) subtitle
@@ -773,8 +773,8 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		// CCBitmapFontAtlas
-		CCBitmapFontAtlas *label1 = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"" fntFile:@"bitmapFontTest3.fnt"];
+		// CCLabelBMFont
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"" fntFile:@"bitmapFontTest3.fnt"];
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
 		[label1 setPosition: ccp(s.width/2, s.height-100)];
 
@@ -784,8 +784,8 @@ Class restartAction()
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		[label2 setPosition: ccp(s.width/2, s.height/2) ];
 
-		// CCLabelAtlas
-		CCLabelAtlas *label3 = [CCLabelAtlas labelAtlasWithString:@"" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		// CCLabelBMFont
+		CCLabelAtlas *label3 = [CCLabelAtlas labelWithString:@"" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
 		label3.position = ccp(s.width/2, 0+100);
 		

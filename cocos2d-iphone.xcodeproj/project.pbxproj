@@ -773,8 +773,6 @@
 		5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */; };
 		5062D256110E205A00D9E347 /* b2TOISolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5062D254110E205A00D9E347 /* b2TOISolver.cpp */; };
 		5062D257110E205A00D9E347 /* b2TOISolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 5062D255110E205A00D9E347 /* b2TOISolver.h */; };
-		506414ED0F9C7021007A7B24 /* CCBitmapFontAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 506414EB0F9C7021007A7B24 /* CCBitmapFontAtlas.h */; };
-		506414EE0F9C7021007A7B24 /* CCBitmapFontAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506414EC0F9C7021007A7B24 /* CCBitmapFontAtlas.m */; };
 		506602110E38A70D000B500E /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* CCScheduler.h */; };
 		506602120E38A70D000B500E /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* CCScheduler.m */; };
 		50671C1611B99FC9006C0061 /* background1-ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50671C1411B99FC9006C0061 /* background1-ipad.jpg */; };
@@ -1806,6 +1804,10 @@
 		E0112F54120CB406006667F8 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */; };
 		E0112F55120CB406006667F8 /* CCTransitionRadial.h in Headers */ = {isa = PBXBuildFile; fileRef = E0112F51120CB406006667F8 /* CCTransitionRadial.h */; };
 		E0112F56120CB406006667F8 /* CCTransitionRadial.m in Sources */ = {isa = PBXBuildFile; fileRef = E0112F52120CB406006667F8 /* CCTransitionRadial.m */; };
+		E01E6D54121F0909001A484F /* CCDirectorIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D52121F0909001A484F /* CCDirectorIOS.h */; };
+		E01E6D55121F0909001A484F /* CCDirectorIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D53121F0909001A484F /* CCDirectorIOS.m */; };
+		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
+		E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D8B121F130E001A484F /* CCLabelBMFont.m */; };
 		E0A4A05911F72D79003B9D29 /* test_image_bgra8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */; };
 		E0A4A05A11F72D79003B9D29 /* test_image_pvrtc2bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */; };
 		E0A4A05B11F72D79003B9D29 /* test_image_pvrtc4bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */; };
@@ -3119,8 +3121,6 @@
 		5062D255110E205A00D9E347 /* b2TOISolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2TOISolver.h; sourceTree = "<group>"; };
 		50637A150E95397A000C9182 /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
 		50637A160E95397A000C9182 /* CCTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureAtlas.m; sourceTree = "<group>"; };
-		506414EB0F9C7021007A7B24 /* CCBitmapFontAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBitmapFontAtlas.h; sourceTree = "<group>"; };
-		506414EC0F9C7021007A7B24 /* CCBitmapFontAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBitmapFontAtlas.m; sourceTree = "<group>"; };
 		5066020F0E38A70D000B500E /* CCScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler.h; sourceTree = "<group>"; };
 		506602100E38A70D000B500E /* CCScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScheduler.m; sourceTree = "<group>"; };
 		50671C1411B99FC9006C0061 /* background1-ipad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background1-ipad.jpg"; sourceTree = "<group>"; };
@@ -3669,6 +3669,10 @@
 		E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionPageTurn.m; sourceTree = "<group>"; };
 		E0112F51120CB406006667F8 /* CCTransitionRadial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionRadial.h; sourceTree = "<group>"; };
 		E0112F52120CB406006667F8 /* CCTransitionRadial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionRadial.m; sourceTree = "<group>"; };
+		E01E6D52121F0909001A484F /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
+		E01E6D53121F0909001A484F /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
+		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
+		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_bgra8888.pvr; sourceTree = "<group>"; };
 		E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc2bpp.pvr; sourceTree = "<group>"; };
 		E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc4bpp.pvr; sourceTree = "<group>"; };
@@ -4897,6 +4901,7 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
+				E01E6D51121F08EE001A484F /* Director Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
 				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
@@ -4924,8 +4929,6 @@
 				503862D911007181005D2C92 /* CCConfiguration.m */,
 				50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */,
 				50B2CCC30E119B8E00AE9530 /* CCDrawingPrimitives.m */,
-				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
-				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
 				50E2A25110A46CC600D894CE /* CCProtocols.h */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
 				506602100E38A70D000B500E /* CCScheduler.m */,
@@ -5427,8 +5430,8 @@
 		506414C50F9C67C0007A7B24 /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				506414EB0F9C7021007A7B24 /* CCBitmapFontAtlas.h */,
-				506414EC0F9C7021007A7B24 /* CCBitmapFontAtlas.m */,
+				E01E6D8A121F130E001A484F /* CCLabelBMFont.h */,
+				E01E6D8B121F130E001A484F /* CCLabelBMFont.m */,
 				5018F25C0DFDEAFF00C013A5 /* CCLabel.h */,
 				5018F25D0DFDEAFF00C013A5 /* CCLabel.m */,
 				506884700E96734A00F943E5 /* CCLabelAtlas.h */,
@@ -6293,6 +6296,17 @@
 			path = "sound-engine-sample";
 			sourceTree = "<group>";
 		};
+		E01E6D51121F08EE001A484F /* Director Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
+				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
+				E01E6D52121F0909001A484F /* CCDirectorIOS.h */,
+				E01E6D53121F0909001A484F /* CCDirectorIOS.m */,
+			);
+			name = "Director Nodes";
+			sourceTree = "<group>";
+		};
 		E0A4A24A11F899BB003B9D29 /* PVR test */ = {
 			isa = PBXGroup;
 			children = (
@@ -6406,7 +6420,6 @@
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
 				50D413260F9A3FE00040C3C8 /* CCQuadParticleSystem.h in Headers */,
-				506414ED0F9C7021007A7B24 /* CCBitmapFontAtlas.h in Headers */,
 				6F167CBE0F9EF1D800843D49 /* CCTouchDispatcher.h in Headers */,
 				6F167CC00F9EF1D800843D49 /* CCTouchHandler.h in Headers */,
 				5016F52F0FA0D16B000E9BB2 /* CCPointParticleSystem.h in Headers */,
@@ -6448,6 +6461,8 @@
 				E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */,
 				E0112F53120CB406006667F8 /* CCTransitionPageTurn.h in Headers */,
 				E0112F55120CB406006667F8 /* CCTransitionRadial.h in Headers */,
+				E01E6D54121F0909001A484F /* CCDirectorIOS.h in Headers */,
+				E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9378,7 +9393,6 @@
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				50D413270F9A3FE00040C3C8 /* CCQuadParticleSystem.m in Sources */,
-				506414EE0F9C7021007A7B24 /* CCBitmapFontAtlas.m in Sources */,
 				6F167CBF0F9EF1D800843D49 /* CCTouchDispatcher.m in Sources */,
 				6F167CC10F9EF1D800843D49 /* CCTouchHandler.m in Sources */,
 				5016F5300FA0D16B000E9BB2 /* CCPointParticleSystem.m in Sources */,
@@ -9413,6 +9427,8 @@
 				E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */,
 				E0112F54120CB406006667F8 /* CCTransitionPageTurn.m in Sources */,
 				E0112F56120CB406006667F8 /* CCTransitionRadial.m in Sources */,
+				E01E6D55121F0909001A484F /* CCDirectorIOS.m in Sources */,
+				E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
