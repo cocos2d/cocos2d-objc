@@ -89,7 +89,7 @@ Class restartAction()
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 		
 		// particles on stage
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
 		labelAtlas.position = ccp(s.width-66,50);
 		

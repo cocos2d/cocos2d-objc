@@ -190,7 +190,10 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
 @interface CCTexture2D (PVR)
-/** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer */
+/** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer
+ *
+ * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
+ */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
 /** Initializes a texture from a PVR file.
 
@@ -208,6 +211,8 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  
  By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
 	- PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
+ 
+ IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
 	
  */
 -(id) initWithPVRFile: (NSString*) file;
