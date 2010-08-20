@@ -30,7 +30,7 @@
 #import "CCDirector.h"
 #import "CCGrabber.h"
 
-#import "Support/glu.h"
+#import "PlatformIOS/glu.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
 

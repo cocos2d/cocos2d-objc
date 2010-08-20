@@ -27,7 +27,7 @@
 #import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import "Support/glu.h"
+#import "PlatformIOS/glu.h"
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <OpenGL/glu.h>

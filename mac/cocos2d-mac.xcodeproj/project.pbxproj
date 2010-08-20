@@ -305,8 +305,6 @@
 				E01E667E121CA044001A484F /* ccMacros.h */,
 				E01E6699121CA044001A484F /* CCProtocols.h */,
 				E01E66D1121CA044001A484F /* ccTypes.h */,
-				E01E6CFA121EFD15001A484F /* CCDirector.h */,
-				E01E6CFB121EFD15001A484F /* CCDirector.m */,
 				E01E6CFE121EFDF8001A484F /* CCScene.h */,
 				E01E6CFF121EFDF8001A484F /* CCScene.m */,
 			);
@@ -394,6 +392,8 @@
 		E01E6D71121F0EB7001A484F /* Director Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E01E6CFA121EFD15001A484F /* CCDirector.h */,
+				E01E6CFB121EFD15001A484F /* CCDirector.m */,
 				E01E6D6D121F0EAC001A484F /* CCDirectorMac.h */,
 				E01E6D6E121F0EAC001A484F /* CCDirectorMac.m */,
 			);

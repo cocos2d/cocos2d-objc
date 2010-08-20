@@ -57,10 +57,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  *  - AI88
  */
 
-#import "CCPVRTexture.h"
+#import "CCTexturePVR.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
-#import "Support/ccUtils.h"
+#import "../Support/ccUtils.h"
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 #define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
@@ -131,7 +131,7 @@ typedef struct _PVRTexHeader
 } PVRTexHeader;
 
 
-@implementation CCPVRTexture
+@implementation CCTexturePVR
 
 @synthesize name = name_;
 @synthesize width = width_;
@@ -345,7 +345,7 @@ typedef struct _PVRTexHeader
 	if (![url isFileURL])
 		return nil;
 	
-	return [CCPVRTexture pvrTextureWithContentsOfFile:[url path]];
+	return [CCTexturePVR pvrTextureWithContentsOfFile:[url path]];
 }
 
 

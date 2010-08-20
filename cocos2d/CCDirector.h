@@ -23,16 +23,16 @@
  */
 
 
+#import <Availability.h>
 
-//
 #import "ccConfig.h"
 #import "ccTypes.h"
 
 // OpenGL related
-#import "Support/EAGLView.h"
+#import "PlatformIOS/EAGLView.h"
 
 /** @typedef tPixelFormat
- Possible Pixel Formats for the EAGLView.
+ Possible Pixel Formats for the OpenGL View.
  
  @deprecated Will be removed in v1.0
  */
