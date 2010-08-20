@@ -25,7 +25,7 @@
 
 
 #import "CCTouchDelegateProtocol.h"
-#import "Support/EAGLView.h"
+#import "EAGLView.h"
 
 
 typedef enum

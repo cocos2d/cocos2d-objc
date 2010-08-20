@@ -27,6 +27,7 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/EAGL.h>
+#import "CCDirector.h"
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <OpenGL/OpenGL.h>
 #import <Cocoa/Cocoa.h>
@@ -37,10 +38,6 @@
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import "CCDirector.h"
-#endif
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 static EAGLContext *auxGLcontext = nil;
@@ -233,6 +230,25 @@ static CCTextureCache *sharedTextureCache;
 		
 		// Split up directory and filename
 		NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+		
+#if __MAC_OS_X_VERSION_MIN_REQUIRED
+		{
+			NSURL *url = [NSURL fileURLWithPath: fullpath];
+			CGImageSourceRef src = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+			CGImageRef image = CGImageSourceCreateImageAtIndex(src, 0, NULL);			
+			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			CGImageRelease(image);
+			CFRelease(src);
+			
+			if( tex )
+				[textures setObject: tex forKey:path];
+			else
+				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+			
+			[tex release];			
+		}
+#endif // __MAC_OS_X_VERSION_MIN_REQUIRED
+		
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 		NSString *lowerCase = [path lowercaseString];
@@ -266,28 +282,16 @@ static CCTextureCache *sharedTextureCache;
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
 			[image release];
+			
+			if( tex )
+				[textures setObject: tex forKey:path];
+			else
+				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+			
+			[tex release];			
 		}
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
-
-#if __MAC_OS_X_VERSION_MIN_REQUIRED
-		{
-			NSURL *url = [NSURL fileURLWithPath: fullpath];
-			CGImageSourceRef src = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-			CGImageRef image = CGImageSourceCreateImageAtIndex(src, 0, NULL);			
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
-			CGImageRelease(image);
-			CFRelease(src);
-		}
-#endif // __MAC_OS_X_VERSION_MIN_REQUIRED
-
-		if( tex )
-			[textures setObject: tex forKey:path];
-		else
-			CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
-
-		
-		[tex release];
 	}
 	
 	[dictLock unlock];
@@ -384,6 +388,7 @@ static CCTextureCache *sharedTextureCache;
 -(void) removeUnusedTextures
 {
 	NSArray *keys = [textures allKeys];
+	NSLog(@"keys: %@", keys);
 	for( id key in keys ) {
 		id value = [textures objectForKey:key];		
 		if( [value retainCount] == 1 ) {

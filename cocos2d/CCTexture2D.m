@@ -69,7 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/glext.h>
-#import "CCPVRTexture.h"
+#import "PlatformIOS/CCTexturePVR.h"
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <OpenGL/OpenGL.h>
 #endif
@@ -492,7 +492,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 -(id) initWithPVRFile: (NSString*) file
 {
 	if( (self = [super init]) ) {
-		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:file];
 		if( pvr ) {
 			pvr.retainName = YES;	// don't dealloc texture on release
 			

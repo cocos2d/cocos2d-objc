@@ -53,8 +53,6 @@
 #import "CCProtocols.h"
 #import "CCNode.h"
 #import "CCDirector.h"
-#import "CCTouchDispatcher.h"
-#import "CCTouchDelegateProtocol.h"
 #import "CCInstantAction.h"
 #import "CCIntervalAction.h"
 #import "CCEaseAction.h"
@@ -98,8 +96,6 @@
 #import "CCPageTurn3DAction.h"
 #import "CCTransitionPageTurn.h"
 #import "CCTexture2D.h"
-#import "CCPVRTexture.h"
-#import "CCTouchHandler.h"
 #import "CCConfiguration.h"
 #import "CCTransitionRadial.h"
 #import "CCProgressTimerActions.h"
@@ -111,11 +107,25 @@
 #import "ccTypes.h"
 #import "ccMacros.h"
 
+
+#import <Availability.h>
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "PlatformIOS/CCTouchDispatcher.h"
+#import "PlatformIOS/CCTouchDelegateProtocol.h"
+#import "PlatformIOS/CCTouchHandler.h"
+#import "PlatformIOS/EAGLView.h"
+#import "PlatformIOS/CCTexturePVR.h"
+#import "PlatformIOS/CCDirectorIOS.h"
+
+#elif __MAC_OS_VERSION_MIN_REQUIRED
+#import "PlatformMac/CGLView.h"
+#endif
+
 //
 // cocos2d helper files
 //
 #import "Support/OpenGL_Internal.h"
-#import "Support/EAGLView.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"

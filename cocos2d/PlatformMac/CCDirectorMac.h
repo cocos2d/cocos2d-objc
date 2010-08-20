@@ -45,7 +45,7 @@
  *
  * @since v0.8.2
  */
-@interface CCDisplayLinkDirector : CCDirectorIOS
+@interface CCDirectorDisplayLink : CCDirectorIOS
 {
 	CVDisplayLinkRef displayLink;
 }
