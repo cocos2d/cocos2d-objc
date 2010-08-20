@@ -26,7 +26,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CCProgressTimer.h"
-#import "CCIntervalAction.h"
+#import "CCActionInterval.h"
 
 /**
  Progress to percentage

@@ -25,7 +25,7 @@
 
 
 
-#import "CCCameraAction.h"
+#import "CCActionCamera.h"
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccMacros.h"

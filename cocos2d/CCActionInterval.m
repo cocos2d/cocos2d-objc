@@ -25,7 +25,7 @@
 
 
 
-#import "CCIntervalAction.h"
+#import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCNode.h"

@@ -25,7 +25,7 @@
 
 
 #import "CCBlockSupport.h"
-#import "CCInstantAction.h"
+#import "CCActionInstant.h"
 #import "CCNode.h"
 #import "CCSprite.h"
 

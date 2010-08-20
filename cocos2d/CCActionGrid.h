@@ -24,10 +24,8 @@
  */
 
 
-#import <UIKit/UIKit.h>
-
-#import "CCIntervalAction.h"
-#import "CCInstantAction.h"
+#import "CCActionInterval.h"
+#import "CCActionInstant.h"
 #import "CCGrid.h"
 
 @class CCGridBase;
