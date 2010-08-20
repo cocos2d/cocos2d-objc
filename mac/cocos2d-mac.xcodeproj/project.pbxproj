@@ -75,10 +75,8 @@
 		E01E6C51121EF506001A484F /* CCTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6C4F121EF506001A484F /* CCTextureCache.m */; };
 		E01E6D00121EFDF8001A484F /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6CFE121EFDF8001A484F /* CCScene.h */; };
 		E01E6D01121EFDF8001A484F /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6CFF121EFDF8001A484F /* CCScene.m */; };
-		E01E6D08121EFE58001A484F /* CCDirector.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6CFA121EFD15001A484F /* CCDirector.h */; };
-		E01E6D09121EFE58001A484F /* CCDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6CFB121EFD15001A484F /* CCDirector.m */; };
-		E01E6D6F121F0EAC001A484F /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D6D121F0EAC001A484F /* CCDirectorMac.h */; };
-		E01E6D70121F0EAC001A484F /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D6E121F0EAC001A484F /* CCDirectorMac.m */; };
+		E01E6EEE121F382A001A484F /* MacOpenGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6EEC121F382A001A484F /* MacOpenGLView.h */; };
+		E01E6EEF121F382A001A484F /* MacOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6EED121F382A001A484F /* MacOpenGLView.m */; };
 		E036A79D121B5C720037C5C6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E036A79F121B5C870037C5C6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
@@ -169,8 +167,10 @@
 		E01E6CFB121EFD15001A484F /* CCDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirector.m; sourceTree = "<group>"; };
 		E01E6CFE121EFDF8001A484F /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
 		E01E6CFF121EFDF8001A484F /* CCScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScene.m; sourceTree = "<group>"; };
-		E01E6D6D121F0EAC001A484F /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
-		E01E6D6E121F0EAC001A484F /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
+		E01E6ED3121F36A4001A484F /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
+		E01E6ED4121F36A4001A484F /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
+		E01E6EEC121F382A001A484F /* MacOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacOpenGLView.h; sourceTree = "<group>"; };
+		E01E6EED121F382A001A484F /* MacOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacOpenGLView.m; sourceTree = "<group>"; };
 		E036A79C121B5C720037C5C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -292,6 +292,7 @@
 				E01E6C4A121EF4B8001A484F /* Label Nodes */,
 				E01E6C48121EF48C001A484F /* Actions */,
 				E01E6C4D121EF4DD001A484F /* Textures */,
+				E01E6ED2121F36A4001A484F /* PlatformMac */,
 				E01E66D4121CA044001A484F /* Support */,
 				E01E6C08121EE487001A484F /* CCCamera.h */,
 				E01E6C09121EE487001A484F /* CCCamera.m */,
@@ -394,10 +395,19 @@
 			children = (
 				E01E6CFA121EFD15001A484F /* CCDirector.h */,
 				E01E6CFB121EFD15001A484F /* CCDirector.m */,
-				E01E6D6D121F0EAC001A484F /* CCDirectorMac.h */,
-				E01E6D6E121F0EAC001A484F /* CCDirectorMac.m */,
 			);
 			name = "Director Nodes";
+			sourceTree = "<group>";
+		};
+		E01E6ED2121F36A4001A484F /* PlatformMac */ = {
+			isa = PBXGroup;
+			children = (
+				E01E6EEC121F382A001A484F /* MacOpenGLView.h */,
+				E01E6EED121F382A001A484F /* MacOpenGLView.m */,
+				E01E6ED3121F36A4001A484F /* CCDirectorMac.h */,
+				E01E6ED4121F36A4001A484F /* CCDirectorMac.m */,
+			);
+			path = PlatformMac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -439,8 +449,7 @@
 				E01E6C44121EF46F001A484F /* CCIntervalAction.h in Headers */,
 				E01E6C50121EF506001A484F /* CCTextureCache.h in Headers */,
 				E01E6D00121EFDF8001A484F /* CCScene.h in Headers */,
-				E01E6D08121EFE58001A484F /* CCDirector.h in Headers */,
-				E01E6D6F121F0EAC001A484F /* CCDirectorMac.h in Headers */,
+				E01E6EEE121F382A001A484F /* MacOpenGLView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,8 +562,7 @@
 				E01E6C45121EF46F001A484F /* CCIntervalAction.m in Sources */,
 				E01E6C51121EF506001A484F /* CCTextureCache.m in Sources */,
 				E01E6D01121EFDF8001A484F /* CCScene.m in Sources */,
-				E01E6D09121EFE58001A484F /* CCDirector.m in Sources */,
-				E01E6D70121F0EAC001A484F /* CCDirectorMac.m in Sources */,
+				E01E6EEF121F382A001A484F /* MacOpenGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
