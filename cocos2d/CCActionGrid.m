@@ -24,7 +24,7 @@
  */
 
 
-#import "CCGridAction.h"
+#import "CCActionGrid.h"
 #import "CCDirector.h"
 
 #pragma mark -

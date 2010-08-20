@@ -23,53 +23,40 @@
  *
  */
 
-#import "CCPropertyAction.h"
 
+#import <Foundation/Foundation.h>
+#import "CCActionInterval.h"
 
-@implementation CCPropertyAction
+/** CCPropertyAction
+ 
+ CCPropertyAction is an action that lets you update any property of an object.
+ For example, if you want to modify the "width" property of a target from 200 to 300 in 2 senconds, then:
+ 
+	id modifyWidth = [CCPropertyAction actionWithDuration:2 key:@"width" from:200 to:300];
+	[target runAction:modifyWidth];
+ 
 
-+ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
+ Another example: CCScaleTo action could be rewriten using CCPropertyAction:
+ 
+	// scaleA and scaleB are equivalents
+	id scaleA = [CCScaleTo actionWithDuration:2 scale:3];
+	id scaleB = [CCPropertyAction actionWithDuration:2 key:@"scale" from:1 to:3];
 
-	return [[[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo] autorelease];
+ 
+ @since v0.99.2
+ */
+@interface CCPropertyAction : CCIntervalAction {
+
+	NSString		*key_;
+    
+	float			from_, to_;
+	float			delta_;
 }
 
+/** creates an initializes the action with the property name (key), and the from and to parameters. */
++ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
 
-- (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
+/** initializes the action with the property name (key), and the from and to parameters. */
+- (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
     
-	if ((self = [super initWithDuration:aDuration])) {
-    
-		key_	= [key copy];
-		to_		= to;
-		from_	= from;
-
-	}
-    
-	return self;
-}
-
-- (void) dealloc
-{
-	[key_ release];
-	[super dealloc];
-}
-
-- (void)startWithTarget:aTarget
-{
-    
-	[super startWithTarget:aTarget];
-    
-	delta_ = to_ - from_;
-}
-
-- (void) update:(ccTime) dt {
-    
-	[target setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
-}
-
-- (CCIntervalAction *) reverse
-{
-	return [[self class] actionWithDuration:duration key:key_ from:to_ to:from_];
-}
-
-
 @end

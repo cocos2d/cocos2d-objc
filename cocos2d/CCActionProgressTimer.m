@@ -24,7 +24,7 @@
  */
 
 
-#import "CCProgressTimerActions.h"
+#import "CCActionProgressTimer.h"
 
 #define kProgressTimerCast CCProgressTimer*
 

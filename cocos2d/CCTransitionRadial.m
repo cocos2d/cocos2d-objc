@@ -29,7 +29,7 @@
 #import "CCTransitionRadial.h"
 #import "CCRenderTexture.h"
 #import "CCLayer.h"
-#import "CCInstantAction.h"
+#import "CCActionInstant.h"
 #import "Support/CGPointExtension.h"
 
 enum {

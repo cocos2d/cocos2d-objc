@@ -24,7 +24,7 @@
  */
 
 
-#import "CCGrid3DAction.h"
+#import "CCActionGrid3D.h"
 
 /**
  * This action simulates a page turn from the bottom right hand corner of the screen

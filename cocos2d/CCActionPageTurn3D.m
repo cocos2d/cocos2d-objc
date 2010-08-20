@@ -23,7 +23,7 @@
  *
  */
 
-#import "CCPageTurn3DAction.h"
+#import "CCActionPageTurn3D.h"
 
 @implementation CCPageTurn3D
 

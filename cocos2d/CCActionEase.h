@@ -24,7 +24,7 @@
  */
 
 
-#import "CCIntervalAction.h"
+#import "CCActionInterval.h"
 
 /** Base class for Easing actions
  */

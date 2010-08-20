@@ -23,7 +23,7 @@
  *
  */
 
-#import "CCIntervalAction.h"
+#import "CCActionInterval.h"
 
 @class CCCamera;
 
