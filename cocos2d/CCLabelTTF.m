@@ -25,10 +25,10 @@
 
 
 
-#import "CCLabel.h"
+#import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
 
-@implementation CCLabel
+@implementation CCLabelTTF
 
 - (id) init
 {

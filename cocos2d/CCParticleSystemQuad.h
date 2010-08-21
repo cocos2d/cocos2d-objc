@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2009 Leonardo Kasperavičius
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,28 +27,47 @@
 
 #import "CCParticleSystem.h"
 
-#define CC_MAX_PARTICLE_SIZE 64
+@class CCSpriteFrame;
 
-/** CCPointParticleSystem is a subclass of CCParticleSystem
- Attributes of a Particle System:
- * All the attributes of Particle System
+/** CCParticleSystemQuad is a subclass of CCParticleSystem
 
- Features:
-  * consumes small memory: uses 1 vertex (x,y) per particle, no need to assign tex coordinates
-  * size can't be bigger than 64
-  * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
+ It includes all the features of ParticleSystem.
  
- Limitations:
-  * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCQuadParticleSystem.
+ Special features and Limitations:	
+  - Particle size can be any float number.
+  - The system can be scaled
+  - The particles can be rotated
+  - On 1st and 2nd gen iPhones: It is only a bit slower that CCParticleSystemPoint
+  - On 3rd gen iPhone and iPads: It is MUCH faster than CCParticleSystemPoint
+  - It consumes more RAM and more GPU memory than CCParticleSystemPoint
+  - It supports subrects
+ @since v0.8
  */
-@interface CCPointParticleSystem : CCParticleSystem
-{	
-	// Array of (x,y,size) 
-	ccPointSprite *vertices;
-	// vertices buffer id
+@interface CCParticleSystemQuad : CCParticleSystem
+{
+	ccV2F_C4F_T2F_Quad	*quads;		// quads to be rendered
+	GLushort			*indices;	// indices
 #if CC_USES_VBO
-	GLuint	verticesID;
+	GLuint				quadsID;	// VBO id
 #endif
 }
+
+// initialices the indices for the vertices
+-(void) initIndices;
+
+// initilizes the text coords
+-(void) initTexCoordsWithRect:(CGRect)rect;
+
+/** Sets a new CCSpriteFrame as particle.
+ WARNING: this method is experimental. Use setTexture:withRect instead.
+ @since v0.99.4
+ */
+-(void)setDisplayFrame:(CCSpriteFrame*)spriteFrame;
+
+/** Sets a new texture with a rect. The rect is in pixels.
+ @since v0.99.4
+ */
+-(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;
+
 @end
 

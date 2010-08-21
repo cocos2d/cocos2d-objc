@@ -47,7 +47,7 @@ enum {
 		[view setAnchorPoint:ccp(0,0)];
 		[view setPosition:ccp(s.width/2, s.height/3)];
 		
-		CCLabel* label = [CCLabel labelWithString:[view title] fontName:@"Arial" fontSize:32];
+		CCLabel* label = [CCLabelTTF labelWithString:[view title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		

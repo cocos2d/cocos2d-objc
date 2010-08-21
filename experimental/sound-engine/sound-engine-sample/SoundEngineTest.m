@@ -44,7 +44,7 @@
         [bgTrack setGain:0.3f];
         [bgTrack playAtListenerPosition];
 
-		CCLabel *info = [CCLabel labelWithString:@"Tap and move your finger to update\nthe listener's position." dimensions:CGSizeMake(320, 40) alignment:UITextAlignmentCenter fontName:@"TrebuchetMS-Bold" fontSize:14];
+		CCLabelTTF *info = [CCLabelTTF labelWithString:@"Tap and move your finger to update\nthe listener's position." dimensions:CGSizeMake(320, 40) alignment:UITextAlignmentCenter fontName:@"TrebuchetMS-Bold" fontSize:14];
         [self addChild:info z:1];
         info.position = ccp(size.width/2, size.height-40);
         

@@ -33,7 +33,7 @@
  *
  * CCLabel objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
  */
-@interface CCLabel : CCSprite <CCLabelProtocol>
+@interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
 	CGSize dimensions_;
 	UITextAlignment alignment_;

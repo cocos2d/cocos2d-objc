@@ -12,6 +12,10 @@ version 0.99.5-beta2 XX-Ago-2010
  . [NEW] Label: CCLabelAtlas#labelAtlasWithString: -> labelWithString. Old method deprecated
  . [NEW] Label: CCBitmapFontAtlas deprecated. Use CCLabelBMFont instead.
  . [NEW] Label: CCBitmapFontAtlas#bitmapFontAtlasWithString -> labelWithString. Old method deprecated.
+ . [NEW] Label: CCLabel renamed to CCLabelTTF
+ . [NEW] Particles: New naming convention:
+			CCPointParticleSystem -> CCParticleSystemPoint
+			CCQuadParticleSystem -> CCParticleSystemQuad
  . [NEW] Transitions: new transition naming convention (issue #946)
  . [FIX] Artifact fixer is a compile time option in ccConfig. Disabled by default
  . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager

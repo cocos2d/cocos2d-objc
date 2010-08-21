@@ -101,13 +101,13 @@ Class restartAction()
 		[tamara setPosition: ccp(s.width/2, 2*s.height/3)];
 		[kathia setPosition: ccp(s.width/2, s.height/2)];
 		
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
@@ -517,7 +517,7 @@ Class restartAction()
 -(void) callback1
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel *label = [CCLabel labelWithString:@"callback 1 called" fontName:@"Marker Felt" fontSize:16];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 1 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*1,s.height/2)];
 	
 	[self addChild:label];
@@ -526,7 +526,7 @@ Class restartAction()
 -(void) callback2:(id)sender
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel *label = [CCLabel labelWithString:@"callback 2 called" fontName:@"Marker Felt" fontSize:16];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 2 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*2,s.height/2)];
 	
 	[self addChild:label];
@@ -535,7 +535,7 @@ Class restartAction()
 -(void) callback3:(id)sender data:(void*)data
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel *label = [CCLabel labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*3,s.height/2)];
 	
 	[self addChild:label];
@@ -810,7 +810,7 @@ Class restartAction()
 {
 	NSLog(@"callback 1 called");
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel *label = [CCLabel labelWithString:@"callback 1 called" fontName:@"Marker Felt" fontSize:16];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 1 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*1,s.height/2)];
 
 	[self addChild:label];
@@ -819,7 +819,7 @@ Class restartAction()
 {
 	NSLog(@"callback 2 called from:%@", sender);
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel *label = [CCLabel labelWithString:@"callback 2 called" fontName:@"Marker Felt" fontSize:16];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 2 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*2,s.height/2)];
 
 	[self addChild:label];
@@ -829,7 +829,7 @@ Class restartAction()
 {
 	NSLog(@"callback 3 called from:%@ with data:%x",sender,(int)data);
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel *label = [CCLabel labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*3,s.height/2)];
 	[self addChild:label];
 }
