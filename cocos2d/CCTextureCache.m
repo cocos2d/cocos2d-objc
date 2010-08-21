@@ -31,7 +31,9 @@
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "Platforms/iOS/CCTexturePVR.h"
 #import "CCDirector.h"
 #endif
 
@@ -296,55 +298,6 @@ static CCTextureCache *sharedTextureCache;
 	return tex;
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
--(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
-{
-	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
-	NSAssert( bpp==2 || bpp==4, @"TextureCache: bpp must be either 2 or 4");
-	
-	CCTexture2D * tex;
-	
-	if( (tex=[textures objectForKey: path] ) ) {
-		return tex;
-	}
-	
-	// Split up directory and filename
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
-	
-	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
-	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
-	if( tex )
-		[textures setObject: tex forKey:path];
-	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
-
-	[nsdata release];
-
-	return [tex autorelease];
-}
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
-
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
--(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
-{
-	NSAssert(fileimage != nil, @"TextureCache: fileimage MUST not be nill");
-
-	CCTexture2D * tex;
-	
-	if( (tex=[textures objectForKey: fileimage] ) ) {
-		return tex;
-	}
-	
-	tex = [[CCTexture2D alloc] initWithPVRFile: fileimage];
-	if( tex )
-		[textures setObject: tex forKey:fileimage];
-	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
-	
-	return [tex autorelease];
-}
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
 {

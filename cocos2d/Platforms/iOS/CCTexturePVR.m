@@ -61,6 +61,142 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "../../Support/ccUtils.h"
+#import "../../Support/CCFileUtils.h"
+
+#pragma mark -
+#pragma mark CCTextureCache PVR extension
+
+@implementation CCTextureCache (PVR)
+
+-(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
+{
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert( bpp==2 || bpp==4, @"TextureCache: bpp must be either 2 or 4");
+	
+	CCTexture2D * tex;
+	
+	if( (tex=[textures objectForKey: path] ) ) {
+		return tex;
+	}
+	
+	// Split up directory and filename
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	
+	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
+	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
+	if( tex )
+		[textures setObject: tex forKey:path];
+	else
+		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
+		
+		[nsdata release];
+	
+	return [tex autorelease];
+}
+
+-(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
+{
+	NSAssert(fileimage != nil, @"TextureCache: fileimage MUST not be nill");
+	
+	CCTexture2D * tex;
+	
+	if( (tex=[textures objectForKey: fileimage] ) ) {
+		return tex;
+	}
+	
+	tex = [[CCTexture2D alloc] initWithPVRFile: fileimage];
+	if( tex )
+		[textures setObject: tex forKey:fileimage];
+	else
+		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
+		
+		return [tex autorelease];
+}
+
+@end
+
+
+#pragma mark -
+#pragma mark CCTexture2D PVR extension
+
+// By default PVR images are treated as if they don't have the alpha channel premultiplied
+static BOOL PVRHaveAlphaPremultiplied_ = NO;
+
+@implementation CCTexture2D (PVR)
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
+{
+	//	GLint					saveName;
+	
+	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		[self release];
+		return nil;
+	}
+	
+	if((self = [super init])) {
+		glGenTextures(1, &name_);
+		glBindTexture(GL_TEXTURE_2D, name_);
+		
+		[self setAntiAliasTexParameters];
+		
+		GLenum format;
+		GLsizei size = length * length * bpp / 8;
+		if(hasAlpha) {
+			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+		} else {
+			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+		}
+		if(size < 32) {
+			size = 32;
+		}
+		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
+		
+		size_ = CGSizeMake(length, length);
+		width_ = length;
+		height_ = length;
+		maxS_ = 1.0f;
+		maxT_ = 1.0f;
+		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+	}					
+	return self;
+}
+
+-(id) initWithPVRFile: (NSString*) file
+{
+	if( (self = [super init]) ) {
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:file];
+		if( pvr ) {
+			pvr.retainName = YES;	// don't dealloc texture on release
+			
+			name_ = pvr.name;	// texture id
+			maxS_ = 1;			// only POT texture are supported
+			maxT_ = 1;
+			width_ = pvr.width;
+			height_ = pvr.height;
+			size_ = CGSizeMake(width_, height_);
+			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+			
+			[pvr release];
+			
+			[self setAntiAliasTexParameters];
+		} else {
+			
+			CCLOG(@"cocos2d: Couldn't load PVR image");
+			[self release];
+			return nil;
+		}
+	}
+	return self;
+}
+
++(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
+{
+	PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+}
+@end
+
+#pragma mark -
+#pragma mark CCTexturePVR
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 #define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
