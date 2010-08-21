@@ -182,51 +182,6 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-/**
- Extensions to make it easy to create a CCTexture2D object from a PVRTC file
- Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
- */
-@interface CCTexture2D (PVR)
-/** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer
- *
- * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
- */
--(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
-/** Initializes a texture from a PVR file.
-
- Supported PVR formats:
-	- BGRA 8888
-	- RGBA 8888
-	- RGBA 4444
-	- RGBA 5551
-	- RBG 565
-	- A 8
-	- I 8
-	- AI 8
-	- PVRTC 2BPP
-	- PVRTC 4BPP
- 
- By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
-	- PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
- 
- IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
-	
- */
--(id) initWithPVRFile: (NSString*) file;
-
-/** treats (or not) PVR files as if they have alpha premultiplied.
- Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
- possible load them as if they have (or not) the alpha channel premultiplied.
- 
- By default it is disabled by default.
- 
- @since v0.99.5
- */
-+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
-@end
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
-
 /**
  Extension to set the Min / Mag filter
  */

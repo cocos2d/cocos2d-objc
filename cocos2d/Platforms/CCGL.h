@@ -30,6 +30,7 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/glu.h"
 
