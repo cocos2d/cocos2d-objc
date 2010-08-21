@@ -63,14 +63,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <OpenGLES/ES1/gl.h>
 #import <UIKit/UIKit.h>			// for UIImage
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED 
-#import <OpenGL/gl.h>
 #endif
 
 #import <Foundation/Foundation.h> //	for NSObject
 
+#import "Platforms/CCGL.h" // OpenGL stuff
 
 //CONSTANTS:
 

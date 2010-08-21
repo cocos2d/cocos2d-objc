@@ -28,10 +28,10 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCGrid.h"
-#import "CCActionManager.h"
 #import "CCDirector.h"
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
+#import "CCActionManager.h"
 #import "CCCamera.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"

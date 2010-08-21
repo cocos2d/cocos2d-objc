@@ -24,16 +24,11 @@
  */
 
 
-#import <Availability.h>
-
 // cocos2d
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
 #import "CCTexture2D.h"
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCTextureCache.h"
-#endif
 
 
 @interface CCTextureAtlas (Private)
@@ -62,14 +57,9 @@
 
 -(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// retained in property
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:file];	
-	return [self initWithTexture:tex capacity:n];
-	
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED	
-	return nil;
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+	return [self initWithTexture:tex capacity:n];	
 }
 
 -(id) initWithTexture:(CCTexture2D*)tex capacity:(NSUInteger)n

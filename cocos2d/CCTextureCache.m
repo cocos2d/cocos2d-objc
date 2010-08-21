@@ -25,19 +25,16 @@
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <OpenGLES/EAGL.h>
-#import "CCDirector.h"
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <OpenGL/OpenGL.h>
-#import <Cocoa/Cocoa.h>
-#endif
-
+#import "Platforms/CCGL.h"
 #import "CCTextureCache.h"
 #import "CCTexture2D.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "CCDirector.h"
+#endif
+
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 static EAGLContext *auxGLcontext = nil;

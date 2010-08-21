@@ -23,21 +23,9 @@
  */
 
 
-
-#import <Availability.h>
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import "PlatformIOS/glu.h"
-
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <OpenGL/glu.h>
-
-#endif
-
+#import "Platforms/CCGL.h"
 #import "CCCamera.h"
 #import "ccMacros.h"
-
-
 #import "CCDrawingPrimitives.h"
 
 @implementation CCCamera

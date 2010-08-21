@@ -25,16 +25,15 @@
 #import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <OpenGLES/ES1/gl.h>
 #import <UIKit/UIKit.h>		// Needed for UIDevice
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <OpenGL/gl.h>
 #endif
 
+#import "Platforms/CCGL.h"
 #import "CCBlockSupport.h"
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ccConfig.h"
+
 
 @implementation CCConfiguration
 
