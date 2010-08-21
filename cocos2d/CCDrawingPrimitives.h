@@ -30,7 +30,7 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
-#import <objc/objc.h>/				// for BOOL
+#import <objc/objc.h>				// for BOOL
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <Foundation/Foundation.h>

@@ -30,11 +30,11 @@
 #import "CCDirector.h"
 #endif
 
-#import "CCAction.h"
 #import "ccMacros.h"
-
-#import "CCIntervalAction.h"
+#import "CCAction.h"
+#import "CCActionInterval.h"
 #import "Support/CGPointExtension.h"
+
 //
 // Action Base Class
 //

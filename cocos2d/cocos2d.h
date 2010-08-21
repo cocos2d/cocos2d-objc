@@ -118,15 +118,16 @@
 #import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import "PlatformIOS/CCTouchDispatcher.h"
-#import "PlatformIOS/CCTouchDelegateProtocol.h"
-#import "PlatformIOS/CCTouchHandler.h"
-#import "PlatformIOS/EAGLView.h"
-#import "PlatformIOS/CCTexturePVR.h"
-#import "PlatformIOS/CCDirectorIOS.h"
+#import "Platforms/iOS/CCTouchDispatcher.h"
+#import "Platforms/iOS/CCTouchDelegateProtocol.h"
+#import "Platforms/iOS/CCTouchHandler.h"
+#import "Platforms/iOS/EAGLView.h"
+#import "Platforms/iOS/CCTexturePVR.h"
+#import "Platforms/iOS/CCDirectorIOS.h"
 
 #elif __MAC_OS_VERSION_MIN_REQUIRED
-#import "PlatformMac/CGLView.h"
+#import "Platforms/Mac/MacOpenGLView.h"
+#import "Platforms/iOS/CCDirectorMac.h"
 #endif
 
 //

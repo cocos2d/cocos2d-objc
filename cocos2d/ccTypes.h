@@ -33,12 +33,9 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
-#import <OpenGLES/ES1/gl.h>			// GLenum, GLubyte
-
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <OpenGL/gl.h>
-
 #endif
+
+#import "Platforms/CCGL.h"
 
 /** RGB color composed of bytes 3 bytes
 @since v0.8

@@ -65,20 +65,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * https://devforums.apple.com/message/37855#37855 by a1studmuffin
  */
 
-#import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <OpenGLES/ES1/glext.h>
-#import "PlatformIOS/CCTexturePVR.h"
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <OpenGL/OpenGL.h>
-#endif
-
+#import "CCTexture2D.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "CCTexture2D.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
+
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "Platforms/iOS/CCTexturePVR.h"
+#endif
 
 
 #if CC_FONT_LABEL_SUPPORT
@@ -533,11 +530,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, name_ );
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-	glGenerateMipmapOES(GL_TEXTURE_2D);
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-	glGenerateMipmap(GL_TEXTURE_2D);
-#endif	
+	CC_GL_GENERATE_MIPMAP(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams

@@ -22,19 +22,12 @@
  * THE SOFTWARE.
  */
 
-#import <Availability.h>
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <OpenGLES/ES1/gl.h>
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <OpenGL/gl.h>
-#endif
-
 #import <math.h>
 #import <stdlib.h>
 #import <string.h>
 
 #import "CCDrawingPrimitives.h"
+#import "Platforms/CCGL.h"
 
 void ccDrawPoint( CGPoint point )
 {

@@ -23,8 +23,6 @@
  */
 
 
-#import <Availability.h>
-
 #import "CCDirector.h"
 
 /** Base class of iOS directors

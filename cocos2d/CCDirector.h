@@ -29,7 +29,7 @@
 #import "ccTypes.h"
 
 // OpenGL related
-#import "PlatformIOS/EAGLView.h"
+#import "Platforms/iOS/EAGLView.h"
 
 /** @typedef tPixelFormat
  Possible Pixel Formats for the OpenGL View.

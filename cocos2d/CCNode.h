@@ -25,14 +25,8 @@
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <OpenGLES/ES1/gl.h>
+#import "Platforms/CCGL.h"
 #import "CCAction.h"
-
-#elif __MAC_OS_VERSION_MIN_REQUIRED
-#import <OpenGL/gl.h>
-#endif
-
 #import "ccTypes.h"
 #import "CCTexture2D.h"
 #import "CCProtocols.h"

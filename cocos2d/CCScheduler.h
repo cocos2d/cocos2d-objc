@@ -23,14 +23,11 @@
  */
 
 
-#import <Availability.h>
 
 #import "Support/uthash.h"
-
 #import "ccTypes.h"
 
 typedef void (*TICK_IMP)(id, SEL, ccTime);
-
 
 //
 // CCTimer

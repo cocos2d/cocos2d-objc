@@ -47,7 +47,7 @@
 #import "CCLabelBMFont.h"
 
 // support imports
-#import "PlatformIOS/glu.h"
+#import "Platforms/iOS/glu.h"
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 

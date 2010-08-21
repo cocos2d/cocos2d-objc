@@ -26,7 +26,7 @@
 #import "CCMenuItem.h"
 #import "CCLabel.h"
 #import "CCLabelAtlas.h"
-#import "CCIntervalAction.h"
+#import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 
