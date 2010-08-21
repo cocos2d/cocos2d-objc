@@ -29,27 +29,27 @@
 /** Instant actions are immediate actions. They don't have a duration like
  the CCIntervalAction actions.
 */ 
-@interface CCInstantAction : CCFiniteTimeAction <NSCopying>
+@interface CCActionInstant : CCFiniteTimeAction <NSCopying>
 {}
 @end
 
 /** Show the node
  */
- @interface CCShow : CCInstantAction
+ @interface CCShow : CCActionInstant
 {
 }
 @end
 
 /** Hide the node
  */
-@interface CCHide : CCInstantAction
+@interface CCHide : CCActionInstant
 {
 }
 @end
 
 /** Toggles the visibility of a node
  */
-@interface CCToggleVisibility : CCInstantAction
+@interface CCToggleVisibility : CCActionInstant
 {
 }
 @end
@@ -57,7 +57,7 @@
 /** Flips the sprite horizontally
  @since v0.99.0
  */
-@interface CCFlipX : CCInstantAction
+@interface CCFlipX : CCActionInstant
 {
 	BOOL	flipX;
 }
@@ -68,7 +68,7 @@
 /** Flips the sprite vertically
  @since v0.99.0
  */
-@interface CCFlipY : CCInstantAction
+@interface CCFlipY : CCActionInstant
 {
 	BOOL	flipY;
 }
@@ -78,7 +78,7 @@
 
 /** Places the node in a certain position
  */
-@interface CCPlace : CCInstantAction <NSCopying>
+@interface CCPlace : CCActionInstant <NSCopying>
 {
 	CGPoint position;
 }
@@ -90,7 +90,7 @@
 
 /** Calls a 'callback'
  */
-@interface CCCallFunc : CCInstantAction <NSCopying>
+@interface CCCallFunc : CCActionInstant <NSCopying>
 {
 	id targetCallback;
 	SEL selector;
@@ -137,7 +137,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 
 /** Executes a callback using a block
  */
-@interface CCCallBlock : CCInstantAction<NSCopying>
+@interface CCCallBlock : CCActionInstant<NSCopying>
 {
 	void (^block_)();
 }
@@ -156,7 +156,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 
 /** Executes a callback using a block with a single CCNode parameter
  */
-@interface CCCallBlockN : CCInstantAction<NSCopying>
+@interface CCCallBlockN : CCActionInstant<NSCopying>
 {
 	void (^block_)(CCNode *);
 }

@@ -31,7 +31,7 @@
 @class CCGridBase;
 
 /** Base class for Grid actions */
-@interface CCGridAction : CCIntervalAction
+@interface CCGridAction : CCActionInterval
 {
 	ccGridSize gridSize;
 }
@@ -87,10 +87,10 @@
 ////////////////////////////////////////////////////////////
 
 /** CCAccelDeccelAmplitude action */
-@interface CCAccelDeccelAmplitude : CCIntervalAction
+@interface CCAccelDeccelAmplitude : CCActionInterval
 {
 	float			rate;
-	CCIntervalAction *other;
+	CCActionInterval *other;
 }
 
 /** amplitude rate */
@@ -106,10 +106,10 @@
 ////////////////////////////////////////////////////////////
 
 /** CCAccelAmplitude action */
-@interface CCAccelAmplitude : CCIntervalAction
+@interface CCAccelAmplitude : CCActionInterval
 {
 	float			rate;
-	CCIntervalAction *other;
+	CCActionInterval *other;
 }
 
 /** amplitude rate */
@@ -125,10 +125,10 @@
 ////////////////////////////////////////////////////////////
 
 /** CCDeccelAmplitude action */
-@interface CCDeccelAmplitude : CCIntervalAction
+@interface CCDeccelAmplitude : CCActionInterval
 {
 	float			rate;
-	CCIntervalAction *other;
+	CCActionInterval *other;
 }
 
 /** amplitude rate */
@@ -148,7 +148,7 @@
  Call if you want to remove the the grid effect. Example:
  [Sequence actions:[Lens ...], [StopGrid action], nil];
  */
-@interface CCStopGrid : CCInstantAction
+@interface CCStopGrid : CCActionInstant
 {
 }
 @end
@@ -156,7 +156,7 @@
 ////////////////////////////////////////////////////////////
 
 /** CCReuseGrid action */
-@interface CCReuseGrid : CCInstantAction
+@interface CCReuseGrid : CCActionInstant
 {
 	int t;
 }

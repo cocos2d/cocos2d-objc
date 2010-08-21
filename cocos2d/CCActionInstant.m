@@ -33,9 +33,9 @@
 //
 // InstantAction
 //
-#pragma mark CCInstantAction
+#pragma mark CCActionInstant
 
-@implementation CCInstantAction
+@implementation CCActionInstant
 
 -(id) init
 {
@@ -46,7 +46,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] init];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] init];
 	return copy;
 }
 
@@ -148,7 +148,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithFlipX:flipX];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipX:flipX];
 	return copy;
 }
 @end
@@ -186,7 +186,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithFlipY:flipY];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipY:flipY];
 	return copy;
 }
 @end
@@ -212,7 +212,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithPosition: position];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: position];
 	return copy;
 }
 
@@ -251,7 +251,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector];
 	return copy;
 }
 
@@ -311,7 +311,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector data:data];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector data:data];
 	return copy;
 }
 
@@ -349,7 +349,7 @@
 }
 
 -(id) copyWithZone: (NSZone*) zone {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 	return copy;
 }
 
@@ -386,7 +386,7 @@
 }
 
 -(id) copyWithZone: (NSZone*) zone {
-	CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 	return copy;
 }
 

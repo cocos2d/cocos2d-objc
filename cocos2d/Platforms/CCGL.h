@@ -37,7 +37,7 @@
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
-#import <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
 #endif
 
 

@@ -1695,8 +1695,8 @@
 		50F7B2780F28DE7C00057537 /* CCActionEase.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* CCActionEase.h */; };
 		50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* CCActionEase.m */; };
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
-		50FBB2DA117613F500150761 /* CCActionProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionProperty.h */; };
-		50FBB2DB117613F500150761 /* CCActionProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionProperty.m */; };
+		50FBB2DA117613F500150761 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
+		50FBB2DB117613F500150761 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
 		50FD7B170FFAA63C004073B5 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
 		50FD7B3C0FFAA8AC004073B5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		50FD7B3F0FFAA8BC004073B5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
@@ -3618,8 +3618,8 @@
 		50F7B2770F28DE7C00057537 /* CCActionEase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionEase.m; sourceTree = "<group>"; };
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
-		50FBB2D8117613F500150761 /* CCActionProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProperty.h; sourceTree = "<group>"; };
-		50FBB2D9117613F500150761 /* CCActionProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProperty.m; sourceTree = "<group>"; };
+		50FBB2D8117613F500150761 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
+		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
@@ -5734,8 +5734,8 @@
 				50545BFE105E8D6C00AB7C52 /* CCActionPageTurn3D.m */,
 				50150435113300F900A9CA65 /* CCActionProgressTimer.h */,
 				50150436113300F900A9CA65 /* CCActionProgressTimer.m */,
-				50FBB2D8117613F500150761 /* CCActionProperty.h */,
-				50FBB2D9117613F500150761 /* CCActionProperty.m */,
+				50FBB2D8117613F500150761 /* CCActionTween.h */,
+				50FBB2D9117613F500150761 /* CCActionTween.m */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -6459,7 +6459,7 @@
 				0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */,
 				50150439113300F900A9CA65 /* CCProgressTimer.h in Headers */,
 				5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */,
-				50FBB2DA117613F500150761 /* CCActionProperty.h in Headers */,
+				50FBB2DA117613F500150761 /* CCActionTween.h in Headers */,
 				50D898F31192CB7500458C29 /* uthash.h in Headers */,
 				508EAC311193F8B0007F058D /* utlist.h in Headers */,
 				5080435211BEE8D60039CA83 /* ccCArray.h in Headers */,
@@ -9431,7 +9431,7 @@
 				0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				5015043A113300F900A9CA65 /* CCProgressTimer.m in Sources */,
 				5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */,
-				50FBB2DB117613F500150761 /* CCActionProperty.m in Sources */,
+				50FBB2DB117613F500150761 /* CCActionTween.m in Sources */,
 				5080435311BEE8D60039CA83 /* CCArray.m in Sources */,
 				E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */,
 				E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */,

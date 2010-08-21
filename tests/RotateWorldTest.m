@@ -67,11 +67,11 @@
 	
 	[sprite runAction: rot];
 
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
-	CCIntervalAction *jump2 = [jump1 reverse];
+	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+	CCActionInterval *jump2 = [jump1 reverse];
 	
-	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
-	CCIntervalAction *rot2 = [rot1 reverse];
+	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCActionInterval *rot2 = [rot1 reverse];
 	
 	[spriteSister1 runAction: [CCRepeat actionWithAction: [CCSequence actions:jump2, jump1, nil] times:5 ] ];
 	[spriteSister2 runAction: [CCRepeat actionWithAction: [CCSequence actions:[[jump1 copy] autorelease], [[jump2 copy] autorelease], nil] times:5 ] ];

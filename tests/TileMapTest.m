@@ -205,7 +205,7 @@ Class restartAction()
 		map.anchorPoint = ccp(0, 0.5f);
 		
 		CCScaleBy *scale = [CCScaleBy actionWithDuration:4 scale:0.8f];
-		CCIntervalAction *scaleBack = [scale reverse];
+		CCActionInterval *scaleBack = [scale reverse];
 		
 		id seq = [CCSequence actions: scale,
 								scaleBack,

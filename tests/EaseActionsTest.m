@@ -578,10 +578,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// rotate and jump
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
-	CCIntervalAction *jump2 = [jump1 reverse];
-	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
-	CCIntervalAction *rot2 = [rot1 reverse];
+	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
+	CCActionInterval *jump2 = [jump1 reverse];
+	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCActionInterval *rot2 = [rot1 reverse];
 	
 	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
 	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
@@ -655,10 +655,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// rotate and jump
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
-	CCIntervalAction *jump2 = [jump1 reverse];
-	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
-	CCIntervalAction *rot2 = [rot1 reverse];
+	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
+	CCActionInterval *jump2 = [jump1 reverse];
+	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCActionInterval *rot2 = [rot1 reverse];
 	
 	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
 	id seq3_2 = [CCSequence actions: rot1, rot2, nil];

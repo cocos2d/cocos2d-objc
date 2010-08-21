@@ -85,7 +85,7 @@
 	return copy;
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [[self class] actionWithDuration:duration from:to_ to:from_];
 }

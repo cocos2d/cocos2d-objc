@@ -33,7 +33,7 @@
 //
 // CameraAction
 //
-@implementation CCCameraAction
+@implementation CCActionCamera
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
