@@ -50,7 +50,7 @@
 		
 
 		// create and initialize a Label
-		CCLabel* label = [CCLabel labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 		
 		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"restart" target:self selector:@selector(restart:)];
 		

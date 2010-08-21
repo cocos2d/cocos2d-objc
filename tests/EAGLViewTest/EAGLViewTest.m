@@ -23,15 +23,15 @@
 	if( (self=[super init] ) )
 	{
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCLabel *label;
+		CCLabelTTF *label;
 		
 #ifdef __IPHONE_3_2
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			label = [CCLabel labelWithString:@"Hello iPad" fontName:@"Marker Felt" fontSize:40];
+			label = [CCLabelTTF labelWithString:@"Hello iPad" fontName:@"Marker Felt" fontSize:40];
 
 		else
 #endif
-			label = [CCLabel labelWithString:@"Hello iPhone" fontName:@"Marker Felt" fontSize:40];
+			label = [CCLabelTTF labelWithString:@"Hello iPhone" fontName:@"Marker Felt" fontSize:40];
 
 		label.position = ccp(s.width/2, s.height/2);
 		[self addChild:label];

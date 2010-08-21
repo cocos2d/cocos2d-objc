@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2009 Lam Pham
+ * Copyright (c) 2008-2010 Ricardo Quesada
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,30 @@
  */
 
 
-/*
+#import "CCParticleSystem.h"
 
-EMPTY FILE
+#define CC_MAX_PARTICLE_SIZE 64
 
-Will be removed in cocos2d v1.0.1
+/** CCParticleSystemPoint is a subclass of CCParticleSystem
+ Attributes of a Particle System:
+ * All the attributes of Particle System
 
-*/
+ Features:
+  * consumes small memory: uses 1 vertex (x,y) per particle, no need to assign tex coordinates
+  * size can't be bigger than 64
+  * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
+ 
+ Limitations:
+  * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
+ */
+@interface CCParticleSystemPoint : CCParticleSystem
+{	
+	// Array of (x,y,size) 
+	ccPointSprite *vertices;
+	// vertices buffer id
+#if CC_USES_VBO
+	GLuint	verticesID;
+#endif
+}
+@end
+

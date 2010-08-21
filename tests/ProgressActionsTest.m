@@ -58,7 +58,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 				
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 

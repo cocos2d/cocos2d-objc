@@ -83,7 +83,7 @@ Class restartAction()
 		menu.position = ccp(s.width/2, s.height-65);
 		[self addChild:menu z:1];
 		
-		CCLabel *infoLabel = [CCLabel labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
+		CCLabelTTF *infoLabel = [CCLabelTTF labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
@@ -139,7 +139,7 @@ Class restartAction()
 		[self addChild:menu z:2];
 		
 
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:40];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setColor:ccc3(255,255,40)];
@@ -201,40 +201,40 @@ Class restartAction()
 	switch( subtestNumber) {
 		case 1:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 2:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
 		case 3:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
-			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;						
 		case 4:
-			particleSystem = [[CCPointParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
 		case 5:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 6:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;			
 		case 7:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
-			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;						
 		case 8:
-			particleSystem = [[CCQuadParticleSystem alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
 		default:
@@ -310,7 +310,7 @@ Class restartAction()
 {
 	if( quantityParticles != lastRenderedCount ) {
 		
-		CCLabel *infoLabel = (CCLabel *) [self getChildByTag:kTagInfoLayer];
+		CCLabelTTF *infoLabel = (CCLabelTTF *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u particles", quantityParticles] ];
 		
 		lastRenderedCount = quantityParticles;

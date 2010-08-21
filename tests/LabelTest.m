@@ -83,13 +83,13 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 			
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}	
@@ -779,12 +779,12 @@ Class restartAction()
 		[label1 setPosition: ccp(s.width/2, s.height-100)];
 
 		
-		// CCLabel
-		CCLabel* label2 = [CCLabel labelWithString:@"" fontName:@"Arial" fontSize:24];
+		// CCLabelTTF
+		CCLabelTTF* label2 = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:24];
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		[label2 setPosition: ccp(s.width/2, s.height/2) ];
 
-		// CCLabelBMFont
+		// CCLabelAtlas
 		CCLabelAtlas *label3 = [CCLabelAtlas labelWithString:@"" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
 		label3.position = ccp(s.width/2, 0+100);

@@ -74,7 +74,7 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// Title
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:40];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setColor:ccc3(255,255,40)];
@@ -82,7 +82,7 @@ Class restartAction()
 		// Subtitle
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
@@ -102,7 +102,7 @@ Class restartAction()
 		menu.position = ccp(s.width/2, s.height/2+15);
 		[self addChild:menu z:1];
 		
-		CCLabel *infoLabel = [CCLabel labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
+		CCLabelTTF *infoLabel = [CCLabelTTF labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height/2-15);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
@@ -191,7 +191,7 @@ Class restartAction()
 {
 	if( quantityOfNodes != lastRenderedCount ) {
 		
-		CCLabel *infoLabel = (CCLabel *) [self getChildByTag:kTagInfoLayer];
+		CCLabelTTF *infoLabel = (CCLabelTTF *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u nodes", quantityOfNodes] ];
 		
 		lastRenderedCount = quantityOfNodes;

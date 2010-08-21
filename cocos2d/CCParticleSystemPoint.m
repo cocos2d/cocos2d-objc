@@ -28,7 +28,7 @@
 #import <OpenGLES/ES1/gl.h>
 
 // cocos2d
-#import "CCPointParticleSystem.h"
+#import "CCParticleSystemPoint.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 
@@ -36,7 +36,7 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
-@implementation CCPointParticleSystem
+@implementation CCParticleSystemPoint
 
 -(id) initWithTotalParticles:(int) numberOfParticles
 {

@@ -66,13 +66,13 @@
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
 
-#import "CCLabel.h"
+#import "CCLabelTTF.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelAtlas.h"
 
 #import "CCParticleSystem.h"
-#import "CCPointParticleSystem.h"
-#import "CCQuadParticleSystem.h"
+#import "CCParticleSystemPoint.h"
+#import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
 
 #import "CCTexture2D.h"

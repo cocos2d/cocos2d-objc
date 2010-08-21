@@ -30,7 +30,7 @@
 
 // cocos2d
 #import "ccConfig.h"
-#import "CCQuadParticleSystem.h"
+#import "CCParticleSystemQuad.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
@@ -39,7 +39,7 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
-@implementation CCQuadParticleSystem
+@implementation CCParticleSystemQuad
 
 
 // overriding the init method

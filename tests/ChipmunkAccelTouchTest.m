@@ -214,7 +214,7 @@ eachShape(void *ptr, void* unused)
 	
 	// add the label
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabel* label = [CCLabel labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
 	label.position = ccp( s.width / 2, s.height - 30);
 	[scene addChild:label z:-1];
 

@@ -87,7 +87,7 @@ Class restartAction()
 		[kathia setPosition: ccp(60, 150)];
 		[tamara setPosition: ccp(60, 250)];
 		
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+ 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 

@@ -25,7 +25,7 @@
 		//
 		
 		// create and initialize a Label
-		CCLabel* label = [CCLabel labelWithString:@"Actions with Blocks" fontName:@"Marker Felt" fontSize:64];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Actions with Blocks" fontName:@"Marker Felt" fontSize:64];
 		
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];

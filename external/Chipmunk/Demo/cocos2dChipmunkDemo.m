@@ -457,7 +457,7 @@ void time_trial(int index, int count)
 
 		runDemo(demos[firstDemoIndex]);
 		
-		label = [CCLabel labelWithString:[NSString stringWithUTF8String:demos[firstDemoIndex]->name ] fontName:@"Marker Felt" fontSize:32];
+		label = [CCLabelTTF labelWithString:[NSString stringWithUTF8String:demos[firstDemoIndex]->name ] fontName:@"Marker Felt" fontSize:32];
 		label.position = ccp(0,-300);
 		label.color = ccBLACK;
 		[self addChild:label];

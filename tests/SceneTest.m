@@ -157,7 +157,7 @@
 {
 	if( (self=[super initWithColor: ccc4(0,0,255,255)]) ) {
 		self.isTouchEnabled = YES;
-		id label = [CCLabel labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
+		id label = [CCLabelTTF labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label];
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[label setPosition:ccp(s.width/2, s.height/2)];
