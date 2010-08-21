@@ -23,10 +23,10 @@
  *
  */
 
-#import "CCActionProperty.h"
+#import "CCActionTween.h"
 
 
-@implementation CCPropertyAction
+@implementation CCActionTween
 
 + (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
 
@@ -66,7 +66,7 @@
 	[target setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [[self class] actionWithDuration:duration key:key_ from:to_ to:from_];
 }

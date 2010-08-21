@@ -81,7 +81,7 @@ enum {
 	outNode.anchorPoint = ccp(0.5f,0.5f);
 			
 	// create the blend action
-	CCIntervalAction * layerAction = [CCSequence actions:
+	CCActionInterval * layerAction = [CCSequence actions:
 									  [CCProgressFromTo actionWithDuration:duration from:100.f to:0.f],
 									  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 									  nil ];	

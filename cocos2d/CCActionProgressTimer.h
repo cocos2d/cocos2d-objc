@@ -32,7 +32,7 @@
  Progress to percentage
 @since v0.99.1
 */
-@interface CCProgressTo : CCIntervalAction <NSCopying>
+@interface CCProgressTo : CCActionInterval <NSCopying>
 {
 	float to_;
 	float from_;
@@ -47,7 +47,7 @@
  Progress from a percentage to another percentage
  @since v0.99.1
  */
-@interface CCProgressFromTo : CCIntervalAction <NSCopying>
+@interface CCProgressFromTo : CCActionInterval <NSCopying>
 {
 	float to_;
 	float from_;

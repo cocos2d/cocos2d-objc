@@ -25,7 +25,7 @@
 
 
 #import "CCScene.h"
-@class CCIntervalAction;
+@class CCActionInterval;
 @class CCNode;
 
 /** CCTransitionEaseScene can ease the actions of the scene protocol.
@@ -35,7 +35,7 @@
 /** returns the Ease action that will be performed on a linear action.
  @since v0.8.2
  */
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action;
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action;
 @end
 
 /** Orientation Type used by some transitions
@@ -118,7 +118,7 @@ DEPRECATED_ATTRIBUTE @interface CCJumpZoomTransition : CCTransitionJumpZoom
 /** initializes the scenes */
 -(void) initScenes;
 /** returns the action that will be performed */
--(CCIntervalAction*) action;
+-(CCActionInterval*) action;
 @end
 
 /* XXX DEPRECATED. Will be removed in v1.0.1 */
@@ -174,7 +174,7 @@ DEPRECATED_ATTRIBUTE @interface CCMoveInBTransition : CCTransitionMoveInB
 /** initializes the scenes */
 -(void) initScenes;
 /** returns the action that will be performed by the incomming and outgoing scene */
--(CCIntervalAction*) action;
+-(CCActionInterval*) action;
 @end
 
 /* XXX DEPRECATED. Will be removed in v1.0.1 */
@@ -374,7 +374,7 @@ DEPRECATED_ATTRIBUTE @interface CCTurnOffTilesTransition : CCTransitionTurnOffTi
  */
 @interface CCTransitionSplitCols : CCTransitionScene <CCTransitionEaseScene>
 {}
--(CCIntervalAction*) action;
+-(CCActionInterval*) action;
 @end
 
 /* XXX DEPRECATED. Will be removed in v1.0.1 */
@@ -401,7 +401,7 @@ DEPRECATED_ATTRIBUTE @interface CCSplitRowsTransition : CCTransitionSplitRows
  */
 @interface CCTransitionFadeTR : CCTransitionScene <CCTransitionEaseScene>
 {}
--(CCIntervalAction*) actionWithSize:(ccGridSize) vector;
+-(CCActionInterval*) actionWithSize:(ccGridSize) vector;
 @end
 
 /* XXX DEPRECATED. Will be removed in v1.0.1 */

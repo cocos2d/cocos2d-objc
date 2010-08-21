@@ -26,7 +26,7 @@
 
 
 #import <Availability.h>
-#if __IPHONE_OS_VERSION_REQUIRED_MIN
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCDirector.h"
 #endif
 
@@ -124,12 +124,12 @@
 #pragma mark -
 #pragma mark RepeatForever
 @implementation CCRepeatForever
-+(id) actionWithAction: (CCIntervalAction*) action
++(id) actionWithAction: (CCActionInterval*) action
 {
 	return [[[self alloc] initWithAction: action] autorelease];
 }
 
--(id) initWithAction: (CCIntervalAction*) action
+-(id) initWithAction: (CCActionInterval*) action
 {
 	if( (self=[super init]) )	
 		other = [action retain];
@@ -173,7 +173,7 @@
 	return NO;
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [CCRepeatForever actionWithAction:[other reverse]];
 }
@@ -188,12 +188,12 @@
 @implementation CCSpeed
 @synthesize speed;
 
-+(id) actionWithAction: (CCIntervalAction*) action speed:(float)r
++(id) actionWithAction: (CCActionInterval*) action speed:(float)r
 {
 	return [[[self alloc] initWithAction: action speed:r] autorelease];
 }
 
--(id) initWithAction: (CCIntervalAction*) action speed:(float)r
+-(id) initWithAction: (CCActionInterval*) action speed:(float)r
 {
 	if( (self=[super init]) ) {
 		other = [action retain];
@@ -236,7 +236,7 @@
 	return [other isDone];
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [CCSpeed actionWithAction:[other reverse] speed:speed];
 }
@@ -263,14 +263,15 @@
 
 -(id) initWithTarget:(CCNode *)fNode
 {
-#if __IPHONE_OS_VERSION_REQUIRED_MIN
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
 		boundarySet = FALSE;
 		boundaryFullyCovered = FALSE;
 		
-		fullScreenSize = CGPointMake([CCDirector sharedDirector].winSize.width, [CCDirector sharedDirector].winSize.height);
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		fullScreenSize = CGPointMake(s.width, s.height);
 		halfScreenSize = ccpMult(fullScreenSize, .5f);
 	}
 	
@@ -280,7 +281,7 @@
 
 -(id) initWithTarget:(CCNode *)fNode worldBoundary:(CGRect)rect
 {
-#if __IPHONE_OS_VERSION_REQUIRED_MIN
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];

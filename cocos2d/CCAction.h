@@ -104,19 +104,19 @@ enum {
 @end
 
 
-@class CCIntervalAction;
+@class CCActionInterval;
 /** Repeats an action for ever.
  To repeat the an action for a limited number of times use the Repeat action.
  @warning This action can't be Sequenceable because it is not an IntervalAction
  */
 @interface CCRepeatForever : CCAction <NSCopying>
 {
-	CCIntervalAction *other;
+	CCActionInterval *other;
 }
 /** creates the action */
-+(id) actionWithAction: (CCIntervalAction*) action;
++(id) actionWithAction: (CCActionInterval*) action;
 /** initializes the action */
--(id) initWithAction: (CCIntervalAction*) action;
+-(id) initWithAction: (CCActionInterval*) action;
 @end
 
 /** Changes the speed of an action, making it take longer (speed>1)
@@ -126,15 +126,15 @@ enum {
  */
 @interface CCSpeed : CCAction <NSCopying>
 {
-	CCIntervalAction	*other;
+	CCActionInterval	*other;
 	float speed;
 }
 /** alter the speed of the inner function in runtime */
 @property (nonatomic,readwrite) float speed;
 /** creates the action */
-+(id) actionWithAction: (CCIntervalAction*) action speed:(float)rate;
++(id) actionWithAction: (CCActionInterval*) action speed:(float)rate;
 /** initializes the action */
--(id) initWithAction: (CCIntervalAction*) action speed:(float)rate;
+-(id) initWithAction: (CCActionInterval*) action speed:(float)rate;
 @end
 
 @class CCNode;

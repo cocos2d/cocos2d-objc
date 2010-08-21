@@ -19,7 +19,7 @@
 	[self runAction:permanentRotation];
 	
 	float growDuration = 0.5f + (random() % 1000) / 500.0f;
-	CCIntervalAction *grow = [CCScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
+	CCActionInterval *grow = [CCScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
 	CCAction *permanentScaleLoop = [CCRepeatForever actionWithAction:[CCSequence actionOne:grow two:[grow reverse]]];
 	[self runAction:permanentScaleLoop];
 }
@@ -39,7 +39,7 @@
 	[self runAction:permanentRotation];
 	
 	float growDuration = 0.5f + (random() % 1000) / 500.0f;
-	CCIntervalAction *grow = [CCScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
+	CCActionInterval *grow = [CCScaleBy actionWithDuration:growDuration scaleX:0.5f scaleY:0.5f];
 	CCAction *permanentScaleLoop = [CCRepeatForever actionWithAction:[CCSequence actionOne:grow two:[grow reverse]]];
 	[self runAction:permanentScaleLoop];
 }

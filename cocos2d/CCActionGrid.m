@@ -84,7 +84,7 @@
 	return nil;
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCReverseTime actionWithAction:self];
 }
@@ -161,12 +161,12 @@
 
 ////////////////////////////////////////////////////////////
 
-@interface CCIntervalAction (Amplitude)
+@interface CCActionInterval (Amplitude)
 -(void)setAmplitudeRate:(CGFloat)amp;
 -(CGFloat)getAmplitudeRate;
 @end
 
-@implementation CCIntervalAction (Amplitude)
+@implementation CCActionInterval (Amplitude)
 -(void)setAmplitudeRate:(CGFloat)amp
 {
 	[NSException raise:@"IntervalAction (Amplitude)" format:@"Abstract class needs implementation"];
@@ -230,7 +230,7 @@
 	[other update:time];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCAccelDeccelAmplitude actionWithAction:[other reverse] duration:duration];
 }
@@ -280,7 +280,7 @@
 	[other update:time];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCAccelAmplitude actionWithAction:[other reverse] duration:self.duration];
 }
@@ -330,7 +330,7 @@
 	[other update:time];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCDeccelAmplitude actionWithAction:[other reverse] duration:self.duration];
 }

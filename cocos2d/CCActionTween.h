@@ -27,12 +27,12 @@
 #import <Foundation/Foundation.h>
 #import "CCActionInterval.h"
 
-/** CCPropertyAction
+/** CCActionTween
  
- CCPropertyAction is an action that lets you update any property of an object.
+ CCActionTween is an action that lets you update any property of an object.
  For example, if you want to modify the "width" property of a target from 200 to 300 in 2 senconds, then:
  
-	id modifyWidth = [CCPropertyAction actionWithDuration:2 key:@"width" from:200 to:300];
+	id modifyWidth = [CCActionTween actionWithDuration:2 key:@"width" from:200 to:300];
 	[target runAction:modifyWidth];
  
 
@@ -40,12 +40,12 @@
  
 	// scaleA and scaleB are equivalents
 	id scaleA = [CCScaleTo actionWithDuration:2 scale:3];
-	id scaleB = [CCPropertyAction actionWithDuration:2 key:@"scale" from:1 to:3];
+	id scaleB = [CCActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
 
  
  @since v0.99.2
  */
-@interface CCPropertyAction : CCIntervalAction {
+@interface CCActionTween : CCActionInterval {
 
 	NSString		*key_;
     

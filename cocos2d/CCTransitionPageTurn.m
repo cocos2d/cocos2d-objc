@@ -100,7 +100,7 @@
 	
 }
 
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	if( back_ )
 	{

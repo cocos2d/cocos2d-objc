@@ -34,7 +34,7 @@
 It has an start time, and a finish time. The finish time is the parameter
 duration plus the start time.
 
-These CCIntervalAction actions have some interesting properties, like:
+These CCActionInterval actions have some interesting properties, like:
  - They can run normally (default)
  - They can run reversed with the reverse method
  - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
@@ -46,7 +46,7 @@ Example:
  
 	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
 */
-@interface CCIntervalAction: CCFiniteTimeAction <NSCopying>
+@interface CCActionInterval: CCFiniteTimeAction <NSCopying>
 {
 	ccTime elapsed;
 	BOOL	firstTick;
@@ -62,12 +62,12 @@ Example:
 /** returns YES if the action has finished */
 -(BOOL) isDone;
 /** returns a reversed action */
-- (CCIntervalAction*) reverse;
+- (CCActionInterval*) reverse;
 @end
 
 /** Runs actions sequentially, one after another
  */
-@interface CCSequence : CCIntervalAction <NSCopying>
+@interface CCSequence : CCActionInterval <NSCopying>
 {
 	CCFiniteTimeAction *actions[2];
 	ccTime split;
@@ -85,7 +85,7 @@ Example:
 /** Repeats an action a number of times.
  * To repeat an action forever use the CCRepeatForever action.
  */
-@interface CCRepeat : CCIntervalAction <NSCopying>
+@interface CCRepeat : CCActionInterval <NSCopying>
 {
 	unsigned int times_;
 	unsigned int total_;
@@ -99,7 +99,7 @@ Example:
 
 /** Spawn a new action immediately
  */
-@interface CCSpawn : CCIntervalAction <NSCopying>
+@interface CCSpawn : CCActionInterval <NSCopying>
 {
 	CCFiniteTimeAction *one;
 	CCFiniteTimeAction *two;
@@ -116,7 +116,7 @@ Example:
  rotation attribute.
  The direction will be decided by the shortest angle.
 */ 
-@interface CCRotateTo : CCIntervalAction <NSCopying>
+@interface CCRotateTo : CCActionInterval <NSCopying>
 {
 	float dstAngle;
 	float startAngle;
@@ -130,7 +130,7 @@ Example:
 
 /** Rotates a CCNode object clockwise a number of degrees by modiying it's rotation attribute.
 */
-@interface CCRotateBy : CCIntervalAction <NSCopying>
+@interface CCRotateBy : CCActionInterval <NSCopying>
 {
 	float angle;
 	float startAngle;
@@ -143,7 +143,7 @@ Example:
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
 */
-@interface CCMoveTo : CCIntervalAction <NSCopying>
+@interface CCMoveTo : CCActionInterval <NSCopying>
 {
 	CGPoint endPosition;
 	CGPoint startPosition;
@@ -170,7 +170,7 @@ Example:
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
- @interface CCJumpBy : CCIntervalAction <NSCopying>
+ @interface CCJumpBy : CCActionInterval <NSCopying>
 {
 	CGPoint startPosition;
 	CGPoint delta;
@@ -203,7 +203,7 @@ typedef struct _ccBezierConfig {
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  */
-@interface CCBezierBy : CCIntervalAction <NSCopying>
+@interface CCBezierBy : CCActionInterval <NSCopying>
 {
 	ccBezierConfig config;
 	CGPoint startPosition;
@@ -227,7 +227,7 @@ typedef struct _ccBezierConfig {
 /** Scales a CCNode object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
  */
-@interface CCScaleTo : CCIntervalAction <NSCopying>
+@interface CCScaleTo : CCActionInterval <NSCopying>
 {
 	float scaleX;
 	float scaleY;
@@ -257,7 +257,7 @@ typedef struct _ccBezierConfig {
 
 /** Blinks a CCNode object by modifying it's visible attribute
 */
-@interface CCBlink : CCIntervalAction <NSCopying>
+@interface CCBlink : CCActionInterval <NSCopying>
 {
 	int times;
 }
@@ -270,7 +270,7 @@ typedef struct _ccBezierConfig {
 /** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
  */
-@interface CCFadeIn : CCIntervalAction <NSCopying>
+@interface CCFadeIn : CCActionInterval <NSCopying>
 {
 }
 @end
@@ -278,7 +278,7 @@ typedef struct _ccBezierConfig {
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
 */
-@interface CCFadeOut : CCIntervalAction <NSCopying>
+@interface CCFadeOut : CCActionInterval <NSCopying>
 {
 }
 @end
@@ -286,7 +286,7 @@ typedef struct _ccBezierConfig {
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  @warning This action doesn't support "reverse"
  */
-@interface CCFadeTo : CCIntervalAction <NSCopying>
+@interface CCFadeTo : CCActionInterval <NSCopying>
 {
 	GLubyte toOpacity;
 	GLubyte fromOpacity;
@@ -301,7 +301,7 @@ typedef struct _ccBezierConfig {
  @warning This action doesn't support "reverse"
  @since v0.7.2
 */
-@interface CCTintTo : CCIntervalAction <NSCopying>
+@interface CCTintTo : CCActionInterval <NSCopying>
 {
 	ccColor3B to;
 	ccColor3B from;
@@ -315,7 +315,7 @@ typedef struct _ccBezierConfig {
 /** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @since v0.7.2
  */
-@interface CCTintBy : CCIntervalAction <NSCopying>
+@interface CCTintBy : CCActionInterval <NSCopying>
 {
 	GLshort deltaR, deltaG, deltaB;
 	GLshort fromR, fromG, fromB;
@@ -328,7 +328,7 @@ typedef struct _ccBezierConfig {
 
 /** Delays the action a certain amount of seconds
 */
-@interface CCDelayTime : CCIntervalAction <NSCopying>
+@interface CCDelayTime : CCActionInterval <NSCopying>
 {
 }
 @end
@@ -340,7 +340,7 @@ typedef struct _ccBezierConfig {
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
 */
-@interface CCReverseTime : CCIntervalAction <NSCopying>
+@interface CCReverseTime : CCActionInterval <NSCopying>
 {
 	CCFiniteTimeAction * other;
 }
@@ -354,7 +354,7 @@ typedef struct _ccBezierConfig {
 @class CCAnimation;
 @class CCTexture2D;
 /** Animates a sprite given the name of an Animation */
-@interface CCAnimate : CCIntervalAction <NSCopying>
+@interface CCAnimate : CCActionInterval <NSCopying>
 {
 	CCAnimation *animation_;
 	id origFrame;

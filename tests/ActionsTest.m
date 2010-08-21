@@ -969,15 +969,15 @@ Class restartAction()
 	
 	[self centerSprites:3];
 
-	id rot = [CCPropertyAction actionWithDuration:2 key:@"rotation" from:0 to:-270];
+	id rot = [CCActionTween actionWithDuration:2 key:@"rotation" from:0 to:-270];
 	id rot_back = [rot reverse];
 	id rot_seq = [CCSequence actions:rot, rot_back, nil];
 	
-	id scale = [CCPropertyAction actionWithDuration:2 key:@"scale" from:1 to:3];
+	id scale = [CCActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
 	id scale_back = [scale reverse];
 	id scale_seq = [CCSequence actions:scale, scale_back, nil];
 	
-	id opacity = [CCPropertyAction actionWithDuration:2 key:@"opacity" from:255 to:0];
+	id opacity = [CCActionTween actionWithDuration:2 key:@"opacity" from:255 to:0];
 	id opacity_back = [opacity reverse];
 	id opacity_seq = [CCSequence actions:opacity, opacity_back, nil];
 	

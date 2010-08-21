@@ -36,7 +36,7 @@
 //
 #pragma mark -
 #pragma mark IntervalAction
-@implementation CCIntervalAction
+@implementation CCActionInterval
 
 @synthesize elapsed;
 
@@ -101,7 +101,7 @@
 	firstTick = YES;
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	NSException* myException = [NSException
 								exceptionWithName:@"ReverseActionNotImplemented"
@@ -221,7 +221,7 @@
 	last = found;
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [[self class] actionOne: [actions[1] reverse] two: [actions[0] reverse ] ];
 }
@@ -317,7 +317,7 @@
 	return ( total_ == times_ );
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [[self class] actionWithAction:[other_ reverse] times:times_];
 }
@@ -410,7 +410,7 @@
 	[two update:t];
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	return [[self class] actionOne: [one reverse] two: [two reverse ] ];
 }
@@ -503,7 +503,7 @@
 	[target setRotation: (startAngle + angle * t )];
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithDuration: duration angle: -angle];
 }
@@ -582,7 +582,7 @@
 	delta = dTmp;
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithDuration: duration position: ccp( -delta.x, -delta.y)];
 }
@@ -639,7 +639,7 @@
 	
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithDuration: duration position: ccp(-delta.x,-delta.y) height: height jumps:jumps];
 }
@@ -721,7 +721,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[target setPosition:  ccpAdd( startPosition, ccp(x,y))];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	ccBezierConfig r;
 
@@ -819,7 +819,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	deltaY = startScaleY * endScaleY - startScaleY;
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithDuration: duration scaleX: 1/endScaleX scaleY:1/endScaleY];
 }
@@ -857,7 +857,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[target setVisible: (m > slice/2) ? YES : NO];
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	// return 'self'
 	return [[self class] actionWithDuration: duration blinks: times];
@@ -874,7 +874,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[(id<CCRGBAProtocol>) target setOpacity: 255 *t];
 }
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [CCFadeOut actionWithDuration: duration];
 }
@@ -890,7 +890,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[(id<CCRGBAProtocol>) target setOpacity: 255 *(1-t)];
 }
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [CCFadeIn actionWithDuration: duration];
 }
@@ -1014,7 +1014,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target;
 	[tn setColor:ccc3( fromR + deltaR * t, fromG + deltaG * t, fromB + deltaB * t)];
 }
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCTintBy actionWithDuration:duration red:-deltaR green:-deltaG blue:-deltaB];
 }
@@ -1087,7 +1087,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[other update:1-t];
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[other copy] autorelease];
 }
@@ -1200,7 +1200,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	}
 }
 
-- (CCIntervalAction *) reverse
+- (CCActionInterval *) reverse
 {
 	NSArray *oldArray = [animation_ frames];
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[oldArray count]];

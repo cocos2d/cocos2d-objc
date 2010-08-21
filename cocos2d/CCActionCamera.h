@@ -29,7 +29,7 @@
 
 /** Base class for CCCamera actions
  */
-@interface CCCameraAction : CCIntervalAction <NSCopying> {
+@interface CCActionCamera : CCActionInterval <NSCopying> {
 	
 	float centerXOrig;
 	float centerYOrig;
@@ -48,7 +48,7 @@
 /** CCOrbitCamera action
  Orbits the camera around the center of the screen using spherical coordinates
  */
-@interface CCOrbitCamera : CCCameraAction <NSCopying> {
+@interface CCOrbitCamera : CCActionCamera <NSCopying> {
 	float radius;
 	float deltaRadius;
 	float angleZ;

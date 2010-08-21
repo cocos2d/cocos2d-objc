@@ -202,7 +202,7 @@ enum {
 	[inScene setAnchorPoint:ccp(0.5f, 0.5f)];
 	[outScene setAnchorPoint:ccp(0.5f, 0.5f)];
 	
-	CCIntervalAction *rotozoom = [CCSequence actions: [CCSpawn actions:
+	CCActionInterval *rotozoom = [CCSequence actions: [CCSpawn actions:
 								   [CCScaleBy actionWithDuration:duration/2 scale:0.001f],
 								   [CCRotateBy actionWithDuration:duration/2 angle:360 *2],
 								   nil],
@@ -233,14 +233,14 @@ enum {
 	[inScene setAnchorPoint:ccp(0.5f, 0.5f)];
 	[outScene setAnchorPoint:ccp(0.5f, 0.5f)];
 
-	CCIntervalAction *jump = [CCJumpBy actionWithDuration:duration/4 position:ccp(-s.width,0) height:s.width/4 jumps:2];
-	CCIntervalAction *scaleIn = [CCScaleTo actionWithDuration:duration/4 scale:1.0f];
-	CCIntervalAction *scaleOut = [CCScaleTo actionWithDuration:duration/4 scale:0.5f];
+	CCActionInterval *jump = [CCJumpBy actionWithDuration:duration/4 position:ccp(-s.width,0) height:s.width/4 jumps:2];
+	CCActionInterval *scaleIn = [CCScaleTo actionWithDuration:duration/4 scale:1.0f];
+	CCActionInterval *scaleOut = [CCScaleTo actionWithDuration:duration/4 scale:0.5f];
 	
-	CCIntervalAction *jumpZoomOut = [CCSequence actions: scaleOut, jump, nil];
-	CCIntervalAction *jumpZoomIn = [CCSequence actions: jump, scaleIn, nil];
+	CCActionInterval *jumpZoomOut = [CCSequence actions: scaleOut, jump, nil];
+	CCActionInterval *jumpZoomIn = [CCSequence actions: jump, scaleIn, nil];
 	
-	CCIntervalAction *delay = [CCDelayTime actionWithDuration:duration/2];
+	CCActionInterval *delay = [CCDelayTime actionWithDuration:duration/2];
 	
 	[outScene runAction: jumpZoomOut];
 	[inScene runAction: [CCSequence actions: delay,
@@ -260,7 +260,7 @@ enum {
 	
 	[self initScenes];
 	
-	CCIntervalAction *a = [self action];
+	CCActionInterval *a = [self action];
 
 	[inScene runAction: [CCSequence actions:
 						 [self easeActionWithAction:a],
@@ -269,12 +269,12 @@ enum {
 	];
 	 		
 }
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	return [CCMoveTo actionWithDuration:duration position:ccp(0,0)];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseOut actionWithAction:action rate:2.0f];
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
@@ -336,8 +336,8 @@ enum {
 
 	[self initScenes];
 	
-	CCIntervalAction *in = [self action];
-	CCIntervalAction *out = [self action];
+	CCActionInterval *in = [self action];
+	CCActionInterval *out = [self action];
 
 	id inAction = [self easeActionWithAction:in];
 	id outAction = [CCSequence actions:
@@ -357,13 +357,13 @@ enum {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	[inScene setPosition: ccp( -(s.width-ADJUST_FACTOR),0) ];
 }
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(s.width-ADJUST_FACTOR,0)];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseOut actionWithAction:action rate:2.0f];
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
@@ -385,7 +385,7 @@ enum {
 	[inScene setPosition: ccp( s.width-ADJUST_FACTOR,0) ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(-(s.width-ADJUST_FACTOR),0)];
@@ -407,7 +407,7 @@ enum {
 	[inScene setPosition: ccp(0,s.height-ADJUST_FACTOR) ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(0,-(s.height-ADJUST_FACTOR))];
@@ -430,7 +430,7 @@ enum {
 	[inScene setPosition: ccp(0,-(s.height-ADJUST_FACTOR)) ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(0,s.height-ADJUST_FACTOR)];
@@ -451,8 +451,8 @@ enum {
 	[inScene setAnchorPoint:ccp(2/3.0f,0.5f)];
 	[outScene setAnchorPoint:ccp(1/3.0f,0.5f)];	
 	
-	CCIntervalAction *scaleOut = [CCScaleTo actionWithDuration:duration scale:0.01f];
-	CCIntervalAction *scaleIn = [CCScaleTo actionWithDuration:duration scale:1.0f];
+	CCActionInterval *scaleOut = [CCScaleTo actionWithDuration:duration scale:0.01f];
+	CCActionInterval *scaleIn = [CCScaleTo actionWithDuration:duration scale:1.0f];
 
 	[inScene runAction: [self easeActionWithAction:scaleIn]];
 	[outScene runAction: [CCSequence actions:
@@ -460,7 +460,7 @@ enum {
 					[CCCallFunc actionWithTarget:self selector:@selector(finish)],
 					nil] ];
 }
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseOut actionWithAction:action rate:2.0f];
 //	return [EaseElasticOut actionWithAction:action period:0.3f];
@@ -475,7 +475,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 
 	float inDeltaZ, inAngleZ;
@@ -519,7 +519,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 
 	float inDeltaZ, inAngleZ;
@@ -562,7 +562,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 
 	float inDeltaZ, inAngleZ;
@@ -604,7 +604,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 	
 	float inDeltaZ, inAngleZ;
@@ -653,7 +653,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 	
 	float inDeltaZ, inAngleZ;
@@ -703,7 +703,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 	
 	float inDeltaZ, inAngleZ;
@@ -784,7 +784,7 @@ enum {
 	
 	CCNode *f = [self getChildByTag:kSceneFade];
 	
-	CCIntervalAction *a = [CCSequence actions:
+	CCActionInterval *a = [CCSequence actions:
 						   [CCFadeIn actionWithDuration:duration/2],
 						   [CCCallFunc actionWithTarget:self selector:@selector(hideOutShowIn)],
 						   [CCFadeOut actionWithDuration:duration/2],
@@ -861,7 +861,7 @@ enum {
 	[outTexture.sprite setOpacity:255];
 	
 	// create the blend action
-	CCIntervalAction * layerAction = [CCSequence actions:
+	CCActionInterval * layerAction = [CCSequence actions:
 									  [CCFadeTo actionWithDuration:duration opacity:0],
 									  [CCCallFunc actionWithTarget:self selector:@selector(hideOutShowIn)],
 									  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
@@ -913,7 +913,7 @@ enum {
 	 ];
 
 }
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return action;
 //	return [EaseIn actionWithAction:action rate:2.0f];
@@ -948,12 +948,12 @@ enum {
 	 ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	return [CCSplitCols actionWithCols:3 duration:duration/2.0f];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseInOut actionWithAction:action rate:3.0f];
 }
@@ -963,7 +963,7 @@ enum {
 // SplitRows Transition
 //
 @implementation CCTransitionSplitRows
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	return [CCSplitRows actionWithRows:3 duration:duration/2.0f];
 }
@@ -1000,12 +1000,12 @@ enum {
 	 ];
 }
 
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutTRTiles actionWithSize:v duration:duration];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return action;
 //	return [EaseIn actionWithAction:action rate:2.0f];
@@ -1016,7 +1016,7 @@ enum {
 // FadeBL Transition
 //
 @implementation CCTransitionFadeBL
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutBLTiles actionWithSize:v duration:duration];
 }
@@ -1026,7 +1026,7 @@ enum {
 // FadeUp Transition
 //
 @implementation CCTransitionFadeUp
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutUpTiles actionWithSize:v duration:duration];
 }
@@ -1036,7 +1036,7 @@ enum {
 // FadeDown Transition
 //
 @implementation CCTransitionFadeDown
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutDownTiles actionWithSize:v duration:duration];
 }

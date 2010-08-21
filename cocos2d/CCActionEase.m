@@ -42,14 +42,14 @@
 //
 // EaseAction
 //
-@implementation CCEaseAction
+@implementation CCActionEase
 
-+(id) actionWithAction: (CCIntervalAction*) action
++(id) actionWithAction: (CCActionInterval*) action
 {
 	return [[[self alloc] initWithAction: action] autorelease ];
 }
 
--(id) initWithAction: (CCIntervalAction*) action
+-(id) initWithAction: (CCActionInterval*) action
 {
 	NSAssert( action!=nil, @"Ease: arguments must be non-nil");
   
@@ -88,7 +88,7 @@
 	[other update: t];
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithAction: [other reverse]];
 }
@@ -103,12 +103,12 @@
 //
 @implementation CCEaseRateAction
 @synthesize rate;
-+(id) actionWithAction: (CCIntervalAction*) action rate:(float)aRate
++(id) actionWithAction: (CCActionInterval*) action rate:(float)aRate
 {
 	return [[[self alloc] initWithAction: action rate:aRate] autorelease ];
 }
 
--(id) initWithAction: (CCIntervalAction*) action rate:(float)aRate
+-(id) initWithAction: (CCActionInterval*) action rate:(float)aRate
 {
 	if( (self=[super initWithAction:action ]) ) {
 		self.rate = aRate;
@@ -127,7 +127,7 @@
 	[super dealloc];
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithAction: [other reverse] rate:1/rate];
 }
@@ -171,7 +171,7 @@
 }
 
 // InOut and OutIn are symmetrical
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	return [[self class] actionWithAction: [other reverse] rate:rate];
 }
@@ -189,7 +189,7 @@
 {
 	[other update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f];
 }
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseExponentialOut actionWithAction: [other reverse]];
 }
@@ -203,7 +203,7 @@
 {
 	[other update: (t==1) ? 1 : (-powf(2, -10 * t/1) + 1)];
 }
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseExponentialIn actionWithAction: [other reverse]];
 }
@@ -236,7 +236,7 @@
 {
 	[other update:-1*cosf(t * (float)M_PI_2) +1];
 }
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseSineOut actionWithAction: [other reverse]];
 }
@@ -250,7 +250,7 @@
 {
 	[other update:sinf(t * (float)M_PI_2)];
 }
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseSineIn actionWithAction: [other reverse]];
 }
@@ -276,22 +276,22 @@
 
 @synthesize period=period_;
 
-+(id) actionWithAction: (CCIntervalAction*) action
++(id) actionWithAction: (CCActionInterval*) action
 {
 	return [[[self alloc] initWithAction:action period:0.3f] autorelease];
 }
 
-+(id) actionWithAction: (CCIntervalAction*) action period:(float)period
++(id) actionWithAction: (CCActionInterval*) action period:(float)period
 {
 	return [[[self alloc] initWithAction:action period:period] autorelease];
 }
 
--(id) initWithAction: (CCIntervalAction*) action
+-(id) initWithAction: (CCActionInterval*) action
 {
 	return [self initWithAction:action period:0.3f];
 }
 
--(id) initWithAction: (CCIntervalAction*) action period:(float)period
+-(id) initWithAction: (CCActionInterval*) action period:(float)period
 {
 	if( (self=[super initWithAction:action]) ) {
 		period_ = period;
@@ -306,7 +306,7 @@
 	return copy;
 }
 
--(CCIntervalAction*) reverse
+-(CCActionInterval*) reverse
 {
 	NSAssert(NO,@"Override me");
 	return nil;
@@ -333,7 +333,7 @@
 	[other update:newT];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseElasticOut actionWithAction: [other reverse] period:period_];
 }
@@ -358,7 +358,7 @@
 	[other update:newT];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseElasticIn actionWithAction: [other reverse] period:period_];
 }
@@ -391,7 +391,7 @@
 	[other update:newT];	
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseElasticInOut actionWithAction: [other reverse] period:period_];
 }
@@ -436,7 +436,7 @@
 	[other update:newT];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseBounceOut actionWithAction: [other reverse]];
 }
@@ -451,7 +451,7 @@
 	[other update:newT];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseBounceIn actionWithAction: [other reverse]];
 }
@@ -487,7 +487,7 @@
 	[other update: t * t * ((overshoot + 1) * t - overshoot)];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseBackOut actionWithAction: [other reverse]];
 }
@@ -505,7 +505,7 @@
 	[other update: t * t * ((overshoot + 1) * t + overshoot) + 1];
 }
 
-- (CCIntervalAction*) reverse
+- (CCActionInterval*) reverse
 {
 	return [CCEaseBackIn actionWithAction: [other reverse]];
 }
