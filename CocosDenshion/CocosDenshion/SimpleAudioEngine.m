@@ -23,7 +23,6 @@
  */
 
 #import "SimpleAudioEngine.h"
-#import <AVFoundation/AVFoundation.h>
 
 @implementation SimpleAudioEngine
 
