@@ -264,25 +264,22 @@ static CCScheduler *sharedScheduler;
 	
 	if( element->timers == nil )
 		element->timers = ccArrayNew(10);
-	else if( element->timers->num == element->timers->max )
-		ccArrayDoubleCapacity(element->timers);
-	
-
-	BOOL found = NO;
-	for( unsigned int i=0; i< element->timers->num; i++ ) {
-		CCTimer *timer = element->timers->arr[i];
-		if( selector == timer->selector ) {
-			CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.2f to %.2f", timer->interval, interval);
-			timer->interval = interval;
-			found = YES;
+	else
+	{
+		for( unsigned int i=0; i< element->timers->num; i++ ) {
+			CCTimer *timer = element->timers->arr[i];
+			if( selector == timer->selector ) {
+				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.2f to %.2f", timer->interval, interval);
+				timer->interval = interval;
+				return;
+			}
 		}
+		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 	
-	if( ! found ) {
-		CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval];
-		ccArrayAppendObject(element->timers, timer);
-		[timer release];
-	}
+	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval];
+	ccArrayAppendObject(element->timers, timer);
+	[timer release];
 }
 
 -(void) unscheduleSelector:(SEL)selector forTarget:(id)target

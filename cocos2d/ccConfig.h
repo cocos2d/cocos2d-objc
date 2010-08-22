@@ -121,7 +121,6 @@
  
  @since v0.99.5
  */
-
 #if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR)
 #define CC_USES_VBO 1
 #else
@@ -159,7 +158,8 @@
  To enable set it to a value different than 0. Disabled by default.
 
  */
-#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
+#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 1
+
 
 /** @def CC_TEXTURE_NPOT_SUPPORT
  If enabled, NPOT textures will be used where available. Only 3rd gen (and newer) devices support NPOT textures.
