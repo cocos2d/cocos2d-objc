@@ -158,7 +158,7 @@
  To enable set it to a value different than 0. Disabled by default.
 
  */
-#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 1
+#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
 
 
 /** @def CC_TEXTURE_NPOT_SUPPORT
