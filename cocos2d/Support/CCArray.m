@@ -166,7 +166,7 @@
 
 - (void) removeLastObject
 {
-	if( index == 0 )
+	if( data->num == 0 )
 		[NSException raise:NSRangeException
 					format: @"no objects added"];
 	ccArrayRemoveObjectAtIndex(data, data->num-1);
