@@ -192,6 +192,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	// Avoid flicker. Issue #350
 	[director drawScene];
+	
+	[self swapBuffers];
 }
 
 - (void) swapBuffers

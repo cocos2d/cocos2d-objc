@@ -38,7 +38,6 @@
 #import "CCTextureCache.h"
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
-#import "ccExceptions.h"
 #import "CCTransition.h"
 #import "CCScene.h"
 #import "CCTouchDispatcher.h"
