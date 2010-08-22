@@ -67,11 +67,12 @@ Requirements:
  
 */ 
 
-#import <UIKit/UIKit.h>
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <Foundation/Foundation.h>
 #import "CDConfig.h"
+
 
 #if !defined(CD_DEBUG) || CD_DEBUG == 0
 #define CDLOG(...) do {} while (0)
