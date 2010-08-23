@@ -297,7 +297,7 @@ static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUIn
 {
 	assert( index < arr->max );
 	
-	int remaining = arr->num - index;
+	NSInteger remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved
 	if( remaining > 0) {

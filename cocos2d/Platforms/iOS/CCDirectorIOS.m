@@ -57,6 +57,11 @@
 
 @implementation CCDirector (iOSExtensionClassMethods)
 
++(Class) defaultDirector
+{
+	return [CCDirectorTimer class];
+}
+
 + (BOOL) setDirectorType:(ccDirectorType)type
 {
 	if( type == CCDirectorTypeDisplayLink ) {
@@ -104,12 +109,6 @@
 @implementation CCDirectorIOS
 
 @synthesize pixelFormat=pixelFormat_;
-
-// Default director is the "Timer" director
-+ (Class) defaultDirector
-{
-	return [CCDirectorTimer class];
-}
 
 - (id) init
 {  

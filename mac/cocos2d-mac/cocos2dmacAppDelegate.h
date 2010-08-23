@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "cocos2d.h"
 
+@interface MyLayer : CCLayer
+@end
+
 @interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow	*window;
 	MacGLView	*glView;

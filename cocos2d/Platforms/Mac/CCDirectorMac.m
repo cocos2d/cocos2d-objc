@@ -25,7 +25,25 @@
 #import <sys/time.h>
  
 #import "CCDirectorMac.h"
+#import "CCNode.h"
+#import "CCScheduler.h"
 #import "ccMacros.h"
+
+#pragma mark -
+#pragma mark Director Mac extensions
+
+@interface CCDirector ()
+-(void) setNextScene;
+-(void) showFPS;
+-(void) calculateDeltaTime;
+@end
+
+@implementation CCDirector (MacExtension)
++(Class) defaultDirector
+{
+	return [CCDirectorDisplayLink class];
+}
+@end
 
 #pragma mark -
 #pragma mark Director Mac
@@ -38,11 +56,6 @@
 
 
 @implementation CCDirectorDisplayLink
-
-+ (Class) defaultDirector
-{
-	return [CCDirectorDisplayLink class];
-}
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
@@ -61,16 +74,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 {
     CVReturn result = [(CCDirectorDisplayLink*)displayLinkContext getFrameForTime:outputTime];
     return result;
-}
-
-
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	animationInterval_ = interval;
-	if(displayLink){
-		[self stopAnimation];
-		[self startAnimation];
-	}
 }
 
 - (void) startAnimation
@@ -109,4 +112,58 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	}
 	[super dealloc];
 }
+
+		
+//
+// Draw the Scene
+//
+- (void) drawScene
+{    
+	// We draw on a secondary thread through the display link
+	// When resizing the view, -reshape is called automatically on the main thread
+	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
+	CGLLockContext([[openGLView_ openGLContext] CGLContextObj]);
+	[[openGLView_ openGLContext] makeCurrentContext];
+	
+	/* calculate "global" dt */
+	[self calculateDeltaTime];
+	
+	/* tick before glClear: issue #533 */
+	if( ! isPaused_ ) {
+		[[CCScheduler sharedScheduler] tick: dt];	
+	}
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
+	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
+	if( nextScene_ )
+		[self setNextScene];
+	
+	glPushMatrix();
+	
+	
+	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
+	CC_ENABLE_DEFAULT_GL_STATES();
+	
+	/* draw the scene */
+	[runningScene_ visit];
+	if( displayFPS_ )
+		[self showFPS];
+	
+#if CC_ENABLE_PROFILERS
+	[self showProfilers];
+#endif
+	
+	CC_DISABLE_DEFAULT_GL_STATES();
+	
+	glPopMatrix();
+	
+//	glFinish();
+	glFlush();
+		
+	[[openGLView_ openGLContext] flushBuffer];	
+	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
+}
+
 @end

@@ -52,15 +52,10 @@
 #import "MacGLView.h"
 #import <OpenGL/gl.h>
 
-@interface MacGLView (PrivateMethods)
-
-- (void) drawView;
-
-@end
 
 @implementation MacGLView
 
-+(void) load
++(void) load_
 {
 	NSLog(@"%@ loaded", self);
 }
@@ -107,21 +102,6 @@
     glLoadIdentity();
     glOrtho(-1.0f, rect.size.width, 0, rect.size.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
-	
-	CGLUnlockContext([[self openGLContext] CGLContextObj]);
-}
-
-- (void) drawView
-{
-	// We draw on a secondary thread through the display link
-	// When resizing the view, -reshape is called automatically on the main thread
-	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
-	CGLLockContext([[self openGLContext] CGLContextObj]);
-	
-	[[self openGLContext] makeCurrentContext];
-		
-	
-	[[self openGLContext] flushBuffer];
 	
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
