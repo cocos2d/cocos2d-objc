@@ -32,7 +32,7 @@
 
 @protocol ESRenderer <NSObject>
 
--(id) initWithDepthFormat:(unsigned int)depthFormat;
+-(id) initWithDepthFormat:(unsigned int)depthFormat withSharegroup:(EAGLSharegroup*)sharegroup;
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
 
