@@ -72,6 +72,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASSES:
 
 @class EAGLView;
+@class EAGLSharegroup;
 
 //PROTOCOLS:
 
@@ -116,7 +117,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** Initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 /** Initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup;
 
 /** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;

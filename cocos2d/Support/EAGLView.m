@@ -73,7 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS IMPLEMENTATIONS:
 
 @interface EAGLView (Private)
--(BOOL) setupSurface;
+-(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 @end
 
 @implementation EAGLView
@@ -100,20 +100,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:nil] autorelease];
 }
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO];
+	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO];
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup
 {
 	if((self = [super initWithFrame:frame]))
 	{
@@ -122,7 +122,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		preserveBackbuffer_	= retained;
 		size_				= frame.size;
 		
-		if( ! [self setupSurface] ) {
+		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
 			return nil;
 		}
@@ -141,7 +141,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
 		size_ = [eaglLayer bounds].size;
 
-		if( ! [self setupSurface] ) {
+		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
 			return nil;
 		}
@@ -150,7 +150,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     return self;
 }
 
--(BOOL) setupSurface
+-(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
 	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
 	
@@ -160,7 +160,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
 		
-	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
+	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_ withSharegroup:sharegroup];
 	if (!renderer_)
 		return NO;
 
