@@ -590,7 +590,7 @@ struct transformValues_ {
 #define kQuadSize sizeof(quad_.bl)
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
-	int offset = (int)&quad_;
+	long offset = (long)&quad_;
 	
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);

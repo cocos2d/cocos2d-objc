@@ -88,6 +88,22 @@
 		E0EADB6D12221DB600B0C81C /* CCTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADA971222171A00B0C81C /* CCTransition.h */; };
 		E0EADB6E12221DB600B0C81C /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADA981222171A00B0C81C /* CCTransition.m */; };
 		E0EADB9E12221F4600B0C81C /* MacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADB9D12221F4600B0C81C /* MacGLView.m */; };
+		E0EADBBC1222B86100B0C81C /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADBB21222B86100B0C81C /* CCParallaxNode.h */; };
+		E0EADBBD1222B86100B0C81C /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADBB31222B86100B0C81C /* CCParallaxNode.m */; };
+		E0EADBBE1222B86100B0C81C /* CCParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADBB41222B86100B0C81C /* CCParticleExamples.h */; };
+		E0EADBBF1222B86100B0C81C /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADBB51222B86100B0C81C /* CCParticleExamples.m */; };
+		E0EADBC01222B86100B0C81C /* CCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADBB61222B86100B0C81C /* CCParticleSystem.h */; };
+		E0EADBC11222B86100B0C81C /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADBB71222B86100B0C81C /* CCParticleSystem.m */; };
+		E0EADBC41222B86100B0C81C /* CCParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADBBA1222B86100B0C81C /* CCParticleSystemQuad.h */; };
+		E0EADBC51222B86100B0C81C /* CCParticleSystemQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADBBB1222B86100B0C81C /* CCParticleSystemQuad.m */; };
+		E0EADC211222BFC900B0C81C /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADC1B1222BFC900B0C81C /* CCSprite.h */; };
+		E0EADC221222BFC900B0C81C /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADC1C1222BFC900B0C81C /* CCSprite.m */; };
+		E0EADC231222BFC900B0C81C /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADC1D1222BFC900B0C81C /* CCSpriteBatchNode.h */; };
+		E0EADC241222BFC900B0C81C /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADC1E1222BFC900B0C81C /* CCSpriteBatchNode.m */; };
+		E0EADC251222BFC900B0C81C /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADC1F1222BFC900B0C81C /* CCSpriteFrame.h */; };
+		E0EADC261222BFC900B0C81C /* CCSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADC201222BFC900B0C81C /* CCSpriteFrame.m */; };
+		E0EADC6E1222C2D000B0C81C /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADC6C1222C2D000B0C81C /* CCLabelBMFont.h */; };
+		E0EADC6F1222C2D000B0C81C /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADC6D1222C2D000B0C81C /* CCLabelBMFont.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,6 +219,22 @@
 		E0EADA9C1222176000B0C81C /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayer.h; sourceTree = "<group>"; };
 		E0EADA9D1222176000B0C81C /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayer.m; sourceTree = "<group>"; };
 		E0EADB9D12221F4600B0C81C /* MacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacGLView.m; sourceTree = "<group>"; };
+		E0EADBB21222B86100B0C81C /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
+		E0EADBB31222B86100B0C81C /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
+		E0EADBB41222B86100B0C81C /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleExamples.h; sourceTree = "<group>"; };
+		E0EADBB51222B86100B0C81C /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleExamples.m; sourceTree = "<group>"; };
+		E0EADBB61222B86100B0C81C /* CCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem.h; sourceTree = "<group>"; };
+		E0EADBB71222B86100B0C81C /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
+		E0EADBBA1222B86100B0C81C /* CCParticleSystemQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad.h; sourceTree = "<group>"; };
+		E0EADBBB1222B86100B0C81C /* CCParticleSystemQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemQuad.m; sourceTree = "<group>"; };
+		E0EADC1B1222BFC900B0C81C /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite.h; sourceTree = "<group>"; };
+		E0EADC1C1222BFC900B0C81C /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite.m; sourceTree = "<group>"; };
+		E0EADC1D1222BFC900B0C81C /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
+		E0EADC1E1222BFC900B0C81C /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
+		E0EADC1F1222BFC900B0C81C /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
+		E0EADC201222BFC900B0C81C /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
+		E0EADC6C1222C2D000B0C81C /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
+		E0EADC6D1222C2D000B0C81C /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +353,9 @@
 				E01E6D71121F0EB7001A484F /* Director Nodes */,
 				E01E6C4A121EF4B8001A484F /* Label Nodes */,
 				E0EADA9B1222173300B0C81C /* Layers, Scenes, Transitions Nodes */,
+				E0EADBC61222B86F00B0C81C /* TiledMap and Parallax Nodes */,
+				E0EADBC71222B87E00B0C81C /* Particle Nodes */,
+				E0EADC271222BFCF00B0C81C /* Sprite Nodes */,
 				E01E6C48121EF48C001A484F /* Actions */,
 				E01E6C4D121EF4DD001A484F /* Textures */,
 				E01E66D4121CA044001A484F /* Support */,
@@ -400,6 +435,8 @@
 		E01E6C4A121EF4B8001A484F /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E0EADC6C1222C2D000B0C81C /* CCLabelBMFont.h */,
+				E0EADC6D1222C2D000B0C81C /* CCLabelBMFont.m */,
 				E01E69ED121ED790001A484F /* CCLabelAtlas.h */,
 				E01E69EE121ED790001A484F /* CCLabelAtlas.m */,
 			);
@@ -485,6 +522,41 @@
 			name = "Layers, Scenes, Transitions Nodes";
 			sourceTree = "<group>";
 		};
+		E0EADBC61222B86F00B0C81C /* TiledMap and Parallax Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				E0EADBB21222B86100B0C81C /* CCParallaxNode.h */,
+				E0EADBB31222B86100B0C81C /* CCParallaxNode.m */,
+			);
+			name = "TiledMap and Parallax Nodes";
+			sourceTree = "<group>";
+		};
+		E0EADBC71222B87E00B0C81C /* Particle Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				E0EADBB41222B86100B0C81C /* CCParticleExamples.h */,
+				E0EADBB51222B86100B0C81C /* CCParticleExamples.m */,
+				E0EADBB61222B86100B0C81C /* CCParticleSystem.h */,
+				E0EADBB71222B86100B0C81C /* CCParticleSystem.m */,
+				E0EADBBA1222B86100B0C81C /* CCParticleSystemQuad.h */,
+				E0EADBBB1222B86100B0C81C /* CCParticleSystemQuad.m */,
+			);
+			name = "Particle Nodes";
+			sourceTree = "<group>";
+		};
+		E0EADC271222BFCF00B0C81C /* Sprite Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				E0EADC1B1222BFC900B0C81C /* CCSprite.h */,
+				E0EADC1C1222BFC900B0C81C /* CCSprite.m */,
+				E0EADC1D1222BFC900B0C81C /* CCSpriteBatchNode.h */,
+				E0EADC1E1222BFC900B0C81C /* CCSpriteBatchNode.m */,
+				E0EADC1F1222BFC900B0C81C /* CCSpriteFrame.h */,
+				E0EADC201222BFC900B0C81C /* CCSpriteFrame.m */,
+			);
+			name = "Sprite Nodes";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -530,6 +602,14 @@
 				E0EADB6512221DA200B0C81C /* CCLayer.h in Headers */,
 				E0EADB6912221DAC00B0C81C /* CCScene.h in Headers */,
 				E0EADB6D12221DB600B0C81C /* CCTransition.h in Headers */,
+				E0EADBBC1222B86100B0C81C /* CCParallaxNode.h in Headers */,
+				E0EADBBE1222B86100B0C81C /* CCParticleExamples.h in Headers */,
+				E0EADBC01222B86100B0C81C /* CCParticleSystem.h in Headers */,
+				E0EADBC41222B86100B0C81C /* CCParticleSystemQuad.h in Headers */,
+				E0EADC211222BFC900B0C81C /* CCSprite.h in Headers */,
+				E0EADC231222BFC900B0C81C /* CCSpriteBatchNode.h in Headers */,
+				E0EADC251222BFC900B0C81C /* CCSpriteFrame.h in Headers */,
+				E0EADC6E1222C2D000B0C81C /* CCLabelBMFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +727,14 @@
 				E0EADB6A12221DAC00B0C81C /* CCScene.m in Sources */,
 				E0EADB6E12221DB600B0C81C /* CCTransition.m in Sources */,
 				E0EADB9E12221F4600B0C81C /* MacGLView.m in Sources */,
+				E0EADBBD1222B86100B0C81C /* CCParallaxNode.m in Sources */,
+				E0EADBBF1222B86100B0C81C /* CCParticleExamples.m in Sources */,
+				E0EADBC11222B86100B0C81C /* CCParticleSystem.m in Sources */,
+				E0EADBC51222B86100B0C81C /* CCParticleSystemQuad.m in Sources */,
+				E0EADC221222BFC900B0C81C /* CCSprite.m in Sources */,
+				E0EADC241222BFC900B0C81C /* CCSpriteBatchNode.m in Sources */,
+				E0EADC261222BFC900B0C81C /* CCSpriteFrame.m in Sources */,
+				E0EADC6F1222C2D000B0C81C /* CCLabelBMFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
