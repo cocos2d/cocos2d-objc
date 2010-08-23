@@ -36,6 +36,9 @@
  */
  
 
+#import <Availability.h>
+#import <Foundation/Foundation.h>
+
 enum {
 	TMXLayerAttribNone = 1 << 0,
 	TMXLayerAttribBase64 = 1 << 1,
@@ -133,10 +136,15 @@ enum {
  This information is obtained from the TMX file.
  
  */
-#ifdef __IPHONE_4_0
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#if defined(__IPHONE_4_0)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #else
 @interface CCTMXMapInfo : NSObject
+#endif
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+@interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #endif
 {	
 	NSMutableString	*currentString;

@@ -26,10 +26,13 @@
 #import <QuartzCore/CVDisplayLink.h>
 #import "CCDirector.h"
 
+@interface CCDirector (MacExtension)
++(Class) defaultDirector;
+@end
+
 /** Base class of Mac directors
  @since v0.99.5
  */
-
 @interface CCDirectorMac : CCDirector
 @end
 

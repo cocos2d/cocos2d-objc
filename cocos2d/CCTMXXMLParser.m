@@ -28,8 +28,8 @@
  */
 
 
+#import <Foundation/Foundation.h>
 #include <zlib.h>
-#import <UIKit/UIKit.h>
 
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"

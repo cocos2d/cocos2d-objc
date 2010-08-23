@@ -254,9 +254,9 @@
 		//
 		// XXX: Camera should be applied in the AnchorPoint
 		//
-		glTranslatef(offset.x, offset.y, 0);
+		ccglTranslate(offset.x, offset.y, 0);
 		[target.camera locate];
-		glTranslatef(-offset.x, -offset.y, 0);
+		ccglTranslate(-offset.x, -offset.y, 0);
 	}
 		
 	glBindTexture(GL_TEXTURE_2D, texture_.name);

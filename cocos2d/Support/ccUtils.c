@@ -6,6 +6,8 @@
 /*
  ccNextPOT function is licensed under the same license that is used in CCTexture2D.m.
  */
+#include "ccUtils.h"
+
 unsigned int ccNextPOT(unsigned int x)
 {
     x = x - 1;

@@ -41,13 +41,20 @@
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
 #import "CCLabelBMFont.h"
+#import "CCLayer.h"
 
 // support imports
 #import "Platforms/CCGL.h"
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
-#import "CCLayer.h"
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#define CC_DIRECTOR_DEFAULT CCDirectorTimer
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import "Platforms/Mac/CCDirectorMac.h"
+#define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
+#endif
 
 #if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
@@ -58,7 +65,7 @@
 extern NSString * cocos2dVersion(void);
 
 
-@interface CCDirector ()
+@interface CCDirector (Private)
 -(void) setNextScene;
 // shows the FPS in the screen
 -(void) showFPS;
@@ -85,10 +92,6 @@ extern NSString * cocos2dVersion(void);
 //
 static CCDirector *_sharedDirector = nil;
 
-+ (Class) defaultDirector
-{
-	return [self class];
-}
 + (CCDirector *)sharedDirector
 {
 	if (!_sharedDirector) {
@@ -97,7 +100,7 @@ static CCDirector *_sharedDirector = nil;
 		// Default Director is TimerDirector
 		// 
 		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[[self defaultDirector] alloc] init];
+			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] init];
 		else
 			_sharedDirector = [[self alloc] init];
 	}

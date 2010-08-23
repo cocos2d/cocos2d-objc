@@ -229,25 +229,7 @@ static CCTextureCache *sharedTextureCache;
 		// Split up directory and filename
 		NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
 		
-#if __MAC_OS_X_VERSION_MIN_REQUIRED
-		{
-			NSURL *url = [NSURL fileURLWithPath: fullpath];
-			CGImageSourceRef src = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-			CGImageRef image = CGImageSourceCreateImageAtIndex(src, 0, NULL);			
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
-			CGImageRelease(image);
-			CFRelease(src);
-			
-			if( tex )
-				[textures setObject: tex forKey:path];
-			else
-				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
-			
-			[tex release];			
-		}
-#endif // __MAC_OS_X_VERSION_MIN_REQUIRED
-		
-
+		// Only iPhone
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 		NSString *lowerCase = [path lowercaseString];
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
@@ -288,7 +270,25 @@ static CCTextureCache *sharedTextureCache;
 			
 			[tex release];			
 		}
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
+		// Only in Mac
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		{
+			NSURL *url = [NSURL fileURLWithPath: fullpath];
+			CGImageSourceRef src = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+			CGImageRef image = CGImageSourceCreateImageAtIndex(src, 0, NULL);			
+			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			CGImageRelease(image);
+			CFRelease(src);
+			
+			if( tex )
+				[textures setObject: tex forKey:path];
+			else
+				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+			
+			[tex release];			
+		}
+#endif // __MAC_OS_X_VERSION_MIN_REQUIRED
 
 	}
 	

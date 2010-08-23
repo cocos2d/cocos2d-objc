@@ -123,7 +123,46 @@
 		E0EADD261222CD2C00B0C81C /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADD1E1222CD2C00B0C81C /* CCActionTween.m */; };
 		E0EADD2F1222CD8E00B0C81C /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EADD2D1222CD8E00B0C81C /* CCRenderTexture.h */; };
 		E0EADD301222CD8E00B0C81C /* CCRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EADD2E1222CD8E00B0C81C /* CCRenderTexture.m */; };
-		E0EAE1391222EB9B00B0C81C /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1381222EB9B00B0C81C /* fps_images.png */; };
+		E0EAE1B91222F75900B0C81C /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1AF1222F75900B0C81C /* b1.png */; };
+		E0EAE1BA1222F75900B0C81C /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B01222F75900B0C81C /* b2.png */; };
+		E0EAE1BB1222F75900B0C81C /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B11222F75900B0C81C /* f1.png */; };
+		E0EAE1BC1222F75900B0C81C /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B21222F75900B0C81C /* f2.png */; };
+		E0EAE1BD1222F75900B0C81C /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B31222F75900B0C81C /* fire-grayscale.png */; };
+		E0EAE1BE1222F75900B0C81C /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B41222F75900B0C81C /* fire.png */; };
+		E0EAE1C01222F75900B0C81C /* Fog.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B61222F75900B0C81C /* Fog.png */; };
+		E0EAE1C11222F75900B0C81C /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B71222F75900B0C81C /* r1.png */; };
+		E0EAE1C21222F75900B0C81C /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE1B81222F75900B0C81C /* r2.png */; };
+		E0EAE23E1222FC8200B0C81C /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAE2341222FC8200B0C81C /* CCTileMapAtlas.h */; };
+		E0EAE23F1222FC8200B0C81C /* CCTileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAE2351222FC8200B0C81C /* CCTileMapAtlas.m */; };
+		E0EAE2401222FC8200B0C81C /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAE2361222FC8200B0C81C /* CCTMXLayer.h */; };
+		E0EAE2411222FC8200B0C81C /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAE2371222FC8200B0C81C /* CCTMXLayer.m */; };
+		E0EAE2421222FC8200B0C81C /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAE2381222FC8200B0C81C /* CCTMXObjectGroup.h */; };
+		E0EAE2431222FC8200B0C81C /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAE2391222FC8200B0C81C /* CCTMXObjectGroup.m */; };
+		E0EAE2441222FC8200B0C81C /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAE23A1222FC8200B0C81C /* CCTMXTiledMap.h */; };
+		E0EAE2451222FC8200B0C81C /* CCTMXTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAE23B1222FC8200B0C81C /* CCTMXTiledMap.m */; };
+		E0EAE2461222FC8200B0C81C /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAE23C1222FC8200B0C81C /* CCTMXXMLParser.h */; };
+		E0EAE2471222FC8200B0C81C /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAE23D1222FC8200B0C81C /* CCTMXXMLParser.m */; };
+		E0EAE38C122309F500B0C81C /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE358122309F500B0C81C /* A Damn Mess.ttf */; };
+		E0EAE38D122309F500B0C81C /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE359122309F500B0C81C /* Abberancy.ttf */; };
+		E0EAE38E122309F500B0C81C /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE35A122309F500B0C81C /* Abduction.ttf */; };
+		E0EAE38F122309F500B0C81C /* arial16.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE35B122309F500B0C81C /* arial16.fnt */; };
+		E0EAE390122309F500B0C81C /* arial16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE35C122309F500B0C81C /* arial16.png */; };
+		E0EAE391122309F500B0C81C /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE35D122309F500B0C81C /* bitmapFontTest.fnt */; };
+		E0EAE392122309F500B0C81C /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE35E122309F500B0C81C /* bitmapFontTest.png */; };
+		E0EAE393122309F500B0C81C /* bitmapFontTest2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE35F122309F500B0C81C /* bitmapFontTest2.bmp */; };
+		E0EAE394122309F500B0C81C /* bitmapFontTest2.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE360122309F500B0C81C /* bitmapFontTest2.fnt */; };
+		E0EAE395122309F500B0C81C /* bitmapFontTest3.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE361122309F500B0C81C /* bitmapFontTest3.fnt */; };
+		E0EAE396122309F500B0C81C /* bitmapFontTest3.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE362122309F500B0C81C /* bitmapFontTest3.png */; };
+		E0EAE397122309F500B0C81C /* bitmapFontTest4.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE363122309F500B0C81C /* bitmapFontTest4.fnt */; };
+		E0EAE398122309F500B0C81C /* bitmapFontTest4.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE364122309F500B0C81C /* bitmapFontTest4.png */; };
+		E0EAE399122309F500B0C81C /* bitmapFontTest5.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE365122309F500B0C81C /* bitmapFontTest5.fnt */; };
+		E0EAE39A122309F500B0C81C /* bitmapFontTest5.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE366122309F500B0C81C /* bitmapFontTest5.png */; };
+		E0EAE39B122309F500B0C81C /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE367122309F500B0C81C /* fps_images.png */; };
+		E0EAE39C122309F500B0C81C /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE368122309F500B0C81C /* Paint Boy.ttf */; };
+		E0EAE39D122309F500B0C81C /* Schwarzwald Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE369122309F500B0C81C /* Schwarzwald Regular.ttf */; };
+		E0EAE39E122309F500B0C81C /* Scissor Cuts.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE36A122309F500B0C81C /* Scissor Cuts.ttf */; };
+		E0EAE39F122309F500B0C81C /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE36B122309F500B0C81C /* tuffy_bold_italic-charmap.png */; };
+		E0EAE3FA12230C0B00B0C81C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE3F912230C0B00B0C81C /* TileMaps */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,7 +312,46 @@
 		E0EADD1E1222CD2C00B0C81C /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
 		E0EADD2D1222CD8E00B0C81C /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
 		E0EADD2E1222CD8E00B0C81C /* CCRenderTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderTexture.m; sourceTree = "<group>"; };
-		E0EAE1381222EB9B00B0C81C /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../Resources/Fonts/fps_images.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1AF1222F75900B0C81C /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b1.png; path = ../Resources/Images/b1.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B01222F75900B0C81C /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b2.png; path = ../Resources/Images/b2.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B11222F75900B0C81C /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f1.png; path = ../Resources/Images/f1.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B21222F75900B0C81C /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f2.png; path = ../Resources/Images/f2.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B31222F75900B0C81C /* fire-grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fire-grayscale.png"; path = "../Resources/Images/fire-grayscale.png"; sourceTree = SOURCE_ROOT; };
+		E0EAE1B41222F75900B0C81C /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = ../Resources/Images/fire.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B61222F75900B0C81C /* Fog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Fog.png; path = ../Resources/Images/Fog.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B71222F75900B0C81C /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r1.png; path = ../Resources/Images/r1.png; sourceTree = SOURCE_ROOT; };
+		E0EAE1B81222F75900B0C81C /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r2.png; path = ../Resources/Images/r2.png; sourceTree = SOURCE_ROOT; };
+		E0EAE2341222FC8200B0C81C /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
+		E0EAE2351222FC8200B0C81C /* CCTileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTileMapAtlas.m; sourceTree = "<group>"; };
+		E0EAE2361222FC8200B0C81C /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
+		E0EAE2371222FC8200B0C81C /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
+		E0EAE2381222FC8200B0C81C /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
+		E0EAE2391222FC8200B0C81C /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
+		E0EAE23A1222FC8200B0C81C /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
+		E0EAE23B1222FC8200B0C81C /* CCTMXTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXTiledMap.m; sourceTree = "<group>"; };
+		E0EAE23C1222FC8200B0C81C /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
+		E0EAE23D1222FC8200B0C81C /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXXMLParser.m; sourceTree = "<group>"; };
+		E0EAE358122309F500B0C81C /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
+		E0EAE359122309F500B0C81C /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
+		E0EAE35A122309F500B0C81C /* Abduction.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abduction.ttf; sourceTree = "<group>"; };
+		E0EAE35B122309F500B0C81C /* arial16.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arial16.fnt; sourceTree = "<group>"; };
+		E0EAE35C122309F500B0C81C /* arial16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arial16.png; sourceTree = "<group>"; };
+		E0EAE35D122309F500B0C81C /* bitmapFontTest.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest.fnt; sourceTree = "<group>"; };
+		E0EAE35E122309F500B0C81C /* bitmapFontTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest.png; sourceTree = "<group>"; };
+		E0EAE35F122309F500B0C81C /* bitmapFontTest2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = bitmapFontTest2.bmp; sourceTree = "<group>"; };
+		E0EAE360122309F500B0C81C /* bitmapFontTest2.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest2.fnt; sourceTree = "<group>"; };
+		E0EAE361122309F500B0C81C /* bitmapFontTest3.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest3.fnt; sourceTree = "<group>"; };
+		E0EAE362122309F500B0C81C /* bitmapFontTest3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest3.png; sourceTree = "<group>"; };
+		E0EAE363122309F500B0C81C /* bitmapFontTest4.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest4.fnt; sourceTree = "<group>"; };
+		E0EAE364122309F500B0C81C /* bitmapFontTest4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest4.png; sourceTree = "<group>"; };
+		E0EAE365122309F500B0C81C /* bitmapFontTest5.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest5.fnt; sourceTree = "<group>"; };
+		E0EAE366122309F500B0C81C /* bitmapFontTest5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest5.png; sourceTree = "<group>"; };
+		E0EAE367122309F500B0C81C /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		E0EAE368122309F500B0C81C /* Paint Boy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Paint Boy.ttf"; sourceTree = "<group>"; };
+		E0EAE369122309F500B0C81C /* Schwarzwald Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Schwarzwald Regular.ttf"; sourceTree = "<group>"; };
+		E0EAE36A122309F500B0C81C /* Scissor Cuts.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Scissor Cuts.ttf"; sourceTree = "<group>"; };
+		E0EAE36B122309F500B0C81C /* tuffy_bold_italic-charmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap.png"; sourceTree = "<group>"; };
+		E0EAE3F912230C0B00B0C81C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Resources/TileMaps; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,8 +444,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E0EAE1381222EB9B00B0C81C /* fps_images.png */,
-				E01E6631121C9D8D001A484F /* grossini.png */,
+				E0EAE3F912230C0B00B0C81C /* TileMaps */,
+				E0EAE357122309F500B0C81C /* Fonts */,
+				E0EAE1C31222F76200B0C81C /* Images */,
 				8D1107310486CEB800E47090 /* cocos2d_mac-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -579,6 +658,16 @@
 		E0EADBC61222B86F00B0C81C /* TiledMap and Parallax Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E0EAE2341222FC8200B0C81C /* CCTileMapAtlas.h */,
+				E0EAE2351222FC8200B0C81C /* CCTileMapAtlas.m */,
+				E0EAE2361222FC8200B0C81C /* CCTMXLayer.h */,
+				E0EAE2371222FC8200B0C81C /* CCTMXLayer.m */,
+				E0EAE2381222FC8200B0C81C /* CCTMXObjectGroup.h */,
+				E0EAE2391222FC8200B0C81C /* CCTMXObjectGroup.m */,
+				E0EAE23A1222FC8200B0C81C /* CCTMXTiledMap.h */,
+				E0EAE23B1222FC8200B0C81C /* CCTMXTiledMap.m */,
+				E0EAE23C1222FC8200B0C81C /* CCTMXXMLParser.h */,
+				E0EAE23D1222FC8200B0C81C /* CCTMXXMLParser.m */,
 				E0EADBB21222B86100B0C81C /* CCParallaxNode.h */,
 				E0EADBB31222B86100B0C81C /* CCParallaxNode.m */,
 			);
@@ -630,6 +719,51 @@
 			);
 			name = "Misc Nodes";
 			sourceTree = "<group>";
+		};
+		E0EAE1C31222F76200B0C81C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E0EAE1AF1222F75900B0C81C /* b1.png */,
+				E0EAE1B01222F75900B0C81C /* b2.png */,
+				E0EAE1B11222F75900B0C81C /* f1.png */,
+				E0EAE1B21222F75900B0C81C /* f2.png */,
+				E0EAE1B31222F75900B0C81C /* fire-grayscale.png */,
+				E0EAE1B41222F75900B0C81C /* fire.png */,
+				E0EAE1B61222F75900B0C81C /* Fog.png */,
+				E0EAE1B71222F75900B0C81C /* r1.png */,
+				E0EAE1B81222F75900B0C81C /* r2.png */,
+				E01E6631121C9D8D001A484F /* grossini.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		E0EAE357122309F500B0C81C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E0EAE358122309F500B0C81C /* A Damn Mess.ttf */,
+				E0EAE359122309F500B0C81C /* Abberancy.ttf */,
+				E0EAE35A122309F500B0C81C /* Abduction.ttf */,
+				E0EAE35B122309F500B0C81C /* arial16.fnt */,
+				E0EAE35C122309F500B0C81C /* arial16.png */,
+				E0EAE35D122309F500B0C81C /* bitmapFontTest.fnt */,
+				E0EAE35E122309F500B0C81C /* bitmapFontTest.png */,
+				E0EAE35F122309F500B0C81C /* bitmapFontTest2.bmp */,
+				E0EAE360122309F500B0C81C /* bitmapFontTest2.fnt */,
+				E0EAE361122309F500B0C81C /* bitmapFontTest3.fnt */,
+				E0EAE362122309F500B0C81C /* bitmapFontTest3.png */,
+				E0EAE363122309F500B0C81C /* bitmapFontTest4.fnt */,
+				E0EAE364122309F500B0C81C /* bitmapFontTest4.png */,
+				E0EAE365122309F500B0C81C /* bitmapFontTest5.fnt */,
+				E0EAE366122309F500B0C81C /* bitmapFontTest5.png */,
+				E0EAE367122309F500B0C81C /* fps_images.png */,
+				E0EAE368122309F500B0C81C /* Paint Boy.ttf */,
+				E0EAE369122309F500B0C81C /* Schwarzwald Regular.ttf */,
+				E0EAE36A122309F500B0C81C /* Scissor Cuts.ttf */,
+				E0EAE36B122309F500B0C81C /* tuffy_bold_italic-charmap.png */,
+			);
+			name = Fonts;
+			path = ../Resources/Fonts;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -694,6 +828,11 @@
 				E0EADD231222CD2C00B0C81C /* CCActionTiledGrid.h in Headers */,
 				E0EADD251222CD2C00B0C81C /* CCActionTween.h in Headers */,
 				E0EADD2F1222CD8E00B0C81C /* CCRenderTexture.h in Headers */,
+				E0EAE23E1222FC8200B0C81C /* CCTileMapAtlas.h in Headers */,
+				E0EAE2401222FC8200B0C81C /* CCTMXLayer.h in Headers */,
+				E0EAE2421222FC8200B0C81C /* CCTMXObjectGroup.h in Headers */,
+				E0EAE2441222FC8200B0C81C /* CCTMXTiledMap.h in Headers */,
+				E0EAE2461222FC8200B0C81C /* CCTMXXMLParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,7 +901,36 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				E01E6632121C9D8D001A484F /* grossini.png in Resources */,
-				E0EAE1391222EB9B00B0C81C /* fps_images.png in Resources */,
+				E0EAE1B91222F75900B0C81C /* b1.png in Resources */,
+				E0EAE1BA1222F75900B0C81C /* b2.png in Resources */,
+				E0EAE1BB1222F75900B0C81C /* f1.png in Resources */,
+				E0EAE1BC1222F75900B0C81C /* f2.png in Resources */,
+				E0EAE1BD1222F75900B0C81C /* fire-grayscale.png in Resources */,
+				E0EAE1BE1222F75900B0C81C /* fire.png in Resources */,
+				E0EAE1C01222F75900B0C81C /* Fog.png in Resources */,
+				E0EAE1C11222F75900B0C81C /* r1.png in Resources */,
+				E0EAE1C21222F75900B0C81C /* r2.png in Resources */,
+				E0EAE38C122309F500B0C81C /* A Damn Mess.ttf in Resources */,
+				E0EAE38D122309F500B0C81C /* Abberancy.ttf in Resources */,
+				E0EAE38E122309F500B0C81C /* Abduction.ttf in Resources */,
+				E0EAE38F122309F500B0C81C /* arial16.fnt in Resources */,
+				E0EAE390122309F500B0C81C /* arial16.png in Resources */,
+				E0EAE391122309F500B0C81C /* bitmapFontTest.fnt in Resources */,
+				E0EAE392122309F500B0C81C /* bitmapFontTest.png in Resources */,
+				E0EAE393122309F500B0C81C /* bitmapFontTest2.bmp in Resources */,
+				E0EAE394122309F500B0C81C /* bitmapFontTest2.fnt in Resources */,
+				E0EAE395122309F500B0C81C /* bitmapFontTest3.fnt in Resources */,
+				E0EAE396122309F500B0C81C /* bitmapFontTest3.png in Resources */,
+				E0EAE397122309F500B0C81C /* bitmapFontTest4.fnt in Resources */,
+				E0EAE398122309F500B0C81C /* bitmapFontTest4.png in Resources */,
+				E0EAE399122309F500B0C81C /* bitmapFontTest5.fnt in Resources */,
+				E0EAE39A122309F500B0C81C /* bitmapFontTest5.png in Resources */,
+				E0EAE39B122309F500B0C81C /* fps_images.png in Resources */,
+				E0EAE39C122309F500B0C81C /* Paint Boy.ttf in Resources */,
+				E0EAE39D122309F500B0C81C /* Schwarzwald Regular.ttf in Resources */,
+				E0EAE39E122309F500B0C81C /* Scissor Cuts.ttf in Resources */,
+				E0EAE39F122309F500B0C81C /* tuffy_bold_italic-charmap.png in Resources */,
+				E0EAE3FA12230C0B00B0C81C /* TileMaps in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,6 +997,11 @@
 				E0EADD241222CD2C00B0C81C /* CCActionTiledGrid.m in Sources */,
 				E0EADD261222CD2C00B0C81C /* CCActionTween.m in Sources */,
 				E0EADD301222CD8E00B0C81C /* CCRenderTexture.m in Sources */,
+				E0EAE23F1222FC8200B0C81C /* CCTileMapAtlas.m in Sources */,
+				E0EAE2411222FC8200B0C81C /* CCTMXLayer.m in Sources */,
+				E0EAE2431222FC8200B0C81C /* CCTMXObjectGroup.m in Sources */,
+				E0EAE2451222FC8200B0C81C /* CCTMXTiledMap.m in Sources */,
+				E0EAE2471222FC8200B0C81C /* CCTMXXMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,6 +1080,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COCOS2D_DEBUG=2",
+					DEBUG,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -920,6 +1099,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;

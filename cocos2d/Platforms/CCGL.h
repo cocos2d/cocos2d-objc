@@ -54,6 +54,7 @@
 #define ccglFramebufferTexture2D	glFramebufferTexture2DOES
 #define ccglDeleteFramebuffers		glDeleteFramebuffersOES
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
+#define ccglTranslate				glTranslatef
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
@@ -71,6 +72,7 @@
 #define ccglFramebufferTexture2D	glFramebufferTexture2D
 #define ccglDeleteFramebuffers		glDeleteFramebuffers
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatus
+#define ccglTranslate				glTranslated
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING

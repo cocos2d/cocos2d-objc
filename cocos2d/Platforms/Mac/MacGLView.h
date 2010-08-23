@@ -55,5 +55,5 @@
 	
 }
 
-+(void) load;
++(void) load_;
 @end
