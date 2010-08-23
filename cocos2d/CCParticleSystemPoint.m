@@ -25,7 +25,7 @@
 
 
 // opengl
-#import <OpenGLES/ES1/gl.h>
+#import "Platforms/CCGL.h"
 
 // cocos2d
 #import "CCParticleSystemPoint.h"

@@ -42,7 +42,7 @@
 //
 
 // opengl
-#import <OpenGLES/ES1/gl.h>
+#import "Platforms/CCGL.h"
 
 // cocos2d
 #import "ccConfig.h"
@@ -215,9 +215,12 @@
 		// texture		
 		// Try to get the texture from the cache
 		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
-		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+		
+		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
 
 		if ( ! texture_ && textureData) {
 			
@@ -238,6 +241,9 @@
 			[data release];
 			[image release];
 		}
+#else
+		NSAssert(NO, @"ParticleDesigner format is not supported yet in Mac");
+#endif // ! __IPHONE_OS_VERSION_MIN_REQUIRED
 		
 		NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
 		

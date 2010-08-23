@@ -24,15 +24,19 @@
  */
 
 
+#import <Availability.h>
+
 #import "CCParticleSystemPoint.h"
 #import "CCParticleSystemQuad.h"
 
 // build each architecture with the optimal particle system
-#ifdef __ARM_NEON__
-	// armv7
+
+// ARMv7, Mac or Simulator use "Quad" particle
+#if defined(__ARM_NEON__) || __MAC_OS_X_VERSION_MIN_REQUIRED || TARGET_IPHONE_SIMULATOR
 	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCParticleSystemQuad
-#elif __arm__ || TARGET_IPHONE_SIMULATOR
-	// armv6 or simulator
+
+// ARMv6 use "Point" particle
+#elif __arm__
 	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCParticleSystemPoint
 #else
 	#error(unknown architecture)

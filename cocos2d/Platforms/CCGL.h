@@ -44,16 +44,15 @@
 
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#define CC_GLVIEW				EAGLView
-#define CC_GL_GENERATE_MIPMAP	glGenerateMipmapOES
-#define CC_GL_ORTHO				glOrthof
-#define	CC_GL_CLEAR_DEPTH		glClearDepthf
-
+#define CC_GLVIEW					EAGLView
+#define CC_GL_GENERATE_MIPMAP		glGenerateMipmapOES
+#define CC_GL_ORTHO					glOrthof
+#define	CC_GL_CLEAR_DEPTH			glClearDepthf
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#define CC_GLVIEW				MacGLView
-#define CC_GL_GENERATE_MIPMAP	glGenerateMipmap
-#define CC_GL_ORTHO				glOrtho
-#define	CC_GL_CLEAR_DEPTH		glClearDepth
+#define CC_GLVIEW					MacGLView
+#define CC_GL_GENERATE_MIPMAP		glGenerateMipmap
+#define CC_GL_ORTHO					glOrtho
+#define	CC_GL_CLEAR_DEPTH			glClearDepth
 
 #endif
