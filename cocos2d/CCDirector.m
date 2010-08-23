@@ -27,6 +27,7 @@
  */
  
 #import <unistd.h>
+#import <Availability.h>
 
 // cocos2d imports
 #import "CCDirector.h"
@@ -236,7 +237,7 @@ static CCDirector *_sharedDirector = nil;
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			CC_GL_ORTHO(0, size.width, 0, size.height, -1024, 1024);
+			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;
@@ -279,7 +280,7 @@ static CCDirector *_sharedDirector = nil;
 - (void) setDepthTest: (BOOL) on
 {
 	if (on) {
-		CC_GL_CLEAR_DEPTH(1.0f);
+		ccglClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -405,7 +406,9 @@ static CCDirector *_sharedDirector = nil;
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers
+#if __IPHONE_OS_VERSION_MIN_REQURIED
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
+#endif
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];

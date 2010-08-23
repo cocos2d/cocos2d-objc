@@ -43,16 +43,38 @@
 #endif
 
 
+// iOS
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #define CC_GLVIEW					EAGLView
-#define CC_GL_GENERATE_MIPMAP		glGenerateMipmapOES
-#define CC_GL_ORTHO					glOrthof
-#define	CC_GL_CLEAR_DEPTH			glClearDepthf
+#define ccglOrtho					glOrthof
+#define	ccglClearDepth				glClearDepthf
+#define ccglGenerateMipmap			glGenerateMipmapOES
+#define ccglGenFramebuffers			glGenFramebuffersOES
+#define ccglBindFramebuffer			glBindFramebufferOES
+#define ccglFramebufferTexture2D	glFramebufferTexture2DOES
+#define ccglDeleteFramebuffers		glDeleteFramebuffersOES
+#define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
 
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
+
+// Mac
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #define CC_GLVIEW					MacGLView
-#define CC_GL_GENERATE_MIPMAP		glGenerateMipmap
-#define CC_GL_ORTHO					glOrtho
-#define	CC_GL_CLEAR_DEPTH			glClearDepth
+#define ccglOrtho					glOrtho
+#define	ccglClearDepth				glClearDepth
+#define ccglGenerateMipmap			glGenerateMipmap
+#define ccglGenFramebuffers			glGenFramebuffers
+#define ccglBindFramebuffer			glBindFramebuffer
+#define ccglFramebufferTexture2D	glFramebufferTexture2D
+#define ccglDeleteFramebuffers		glDeleteFramebuffers
+#define ccglCheckFramebufferStatus	glCheckFramebufferStatus
+
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
 
 #endif

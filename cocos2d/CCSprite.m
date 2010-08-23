@@ -23,6 +23,7 @@
  *
  */
 
+#import <Availability.h>
 
 #import "ccConfig.h"
 #import "CCSpriteBatchNode.h"
@@ -106,8 +107,13 @@ struct transformValues_ {
 
 +(id)spriteWithSpriteFrameName:(NSString*)spriteFrameName
 {
+#if __IPHONE_OS_VERSION_MIN_REQURIED
 	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
 	return [self spriteWithSpriteFrame:frame];
+#else
+	NSAssert(NO, @"Not implemented in Mac yet");
+	return nil;
+#endif
 }
 
 // XXX: deprecated
@@ -245,8 +251,13 @@ struct transformValues_ {
 {
 	NSAssert(spriteFrameName!=nil, @"Invalid spriteFrameName for sprite");
 
+#if __IPHONE_OS_VERSION_MIN_REQURIED
 	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
 	return [self initWithSpriteFrame:frame];
+#else
+	NSAssert(NO, @"Not implemented in Mac yet");
+	return nil;
+#endif
 }
 
 // XXX: deprecated

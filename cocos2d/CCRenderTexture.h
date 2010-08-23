@@ -75,12 +75,12 @@ enum
 /** clears the texture with a color */
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 /** saves the texture into a file */
 -(BOOL)saveBuffer:(NSString*)name;
 /** saves the texture into a file. The format can be JPG or PNG */
 -(BOOL)saveBuffer:(NSString*)name format:(int)format;
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 /* get buffer as UIImage */
 -(UIImage *)getUIImageFromBuffer;
 #endif

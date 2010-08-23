@@ -54,18 +54,15 @@
 
 @interface MacGLView (PrivateMethods)
 
-- (BOOL) initImageData;
 - (void) drawView;
 
 @end
 
 @implementation MacGLView
 
-// This is the renderer output callback function
-static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
++(void) load
 {
-    CVReturn result = [(MacGLView*)displayLinkContext getFrameForTime:outputTime];
-    return result;
+	NSLog(@"%@ loaded", self);
 }
 
 - (id) initWithFrame:(NSRect)frameRect
@@ -131,8 +128,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) dealloc
 {	
-	// Release the display link
-    CVDisplayLinkRelease(displayLink);
 
 	[super dealloc];
 }

@@ -27,7 +27,7 @@
 #import "CCNode.h"
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
-#import <OpenGLES/ES1/gl.h>
+#import "Platforms/CCGL.h"
 
 /**
  * A CCRibbon is a dynamically generated list of polygons drawn as a single or series

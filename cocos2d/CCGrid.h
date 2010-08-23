@@ -24,9 +24,7 @@
  */
 
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <UIKit/UIKit.h>
-#endif
+#import <Foundation/Foundation.h>
 
 #import "CCNode.h"
 #import "CCCamera.h"

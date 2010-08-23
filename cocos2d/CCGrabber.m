@@ -24,6 +24,7 @@
  */
 
 
+#import "Platforms/CCGL.h"
 #import "CCGrabber.h"
 #import "ccMacros.h"
 #import "CCTexture2D.h"
@@ -35,34 +36,34 @@
 {
 	if(( self = [super init] )) {
 		// generate FBO
-		glGenFramebuffersOES(1, &fbo);		
+		ccglGenFramebuffers(1, &fbo);		
 	}
 	return self;
 }
 -(void)grab:(CCTexture2D*)texture
 {
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
+	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
 	
 	// bind
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo);
 
 	// associate texture with FBO
-	glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texture.name, 0);
+	ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 	
 	// check if it worked (probably worth doing :) )
-	GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
-	if (status != GL_FRAMEBUFFER_COMPLETE_OES)
+	GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
+	if (status != CC_GL_FRAMEBUFFER_COMPLETE)
 	{
 		[NSException raise:@"Frame Grabber" format:@"Could not attach texture to framebuffer"];
 	}
 	
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO);
 }
 
 -(void)beforeRender:(CCTexture2D*)texture
 {
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &oldFBO);
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
+	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo);
 
 	// BUG XXX: doesn't work with RGB565.
 
@@ -81,14 +82,14 @@
 
 -(void)afterRender:(CCTexture2D*)texture
 {
- 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, oldFBO);
+ 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO);
 //	glColorMask(TRUE, TRUE, TRUE, TRUE);	// #631
 }
 
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	glDeleteFramebuffersOES(1, &fbo);
+	ccglDeleteFramebuffers(1, &fbo);
 	[super dealloc];
 }
 

@@ -25,17 +25,13 @@
 
 #import <Availability.h>
 
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "CCNode.h"
 #import "CCGrid.h"
 #import "CCDirector.h"
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
-
 #import "CCActionManager.h"
 #import "CCCamera.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
-#import "CCNode.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
@@ -227,10 +223,8 @@
 
 - (void)cleanup
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// actions
 	[self stopAllActions];
-#endif
 
 	[self unscheduleAllSelectors];
 	
@@ -465,12 +459,10 @@
 	
 	glPushMatrix();
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 	[self transform];
 	
@@ -499,10 +491,8 @@
 	} else
 		[self draw];
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 	
 	glPopMatrix();
 }
@@ -535,11 +525,7 @@
 		glTranslatef(0, 0, vertexZ_);
 	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( camera_
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-		&& !(grid_ && grid_.active)
-#endif
-		)
+	if ( camera_ && !(grid_ && grid_.active) )
 	{
 		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
 		
@@ -696,19 +682,13 @@
 {
 	[[CCScheduler sharedScheduler] resumeTarget:self];
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCActionManager sharedManager] resumeTarget:self];
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
-
 }
 
 - (void) pauseSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] pauseTarget:self];
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCActionManager sharedManager] pauseTarget:self];
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
-
 }
 
 #pragma mark CCNode Transform
@@ -787,13 +767,8 @@
 
 - (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
     CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
 	return [[CCDirector sharedDirector] convertToUI:worldPoint];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-	NSAssert(NO, @"Not supported on Mac yet");
-	return CGPointZero;
-#endif
 }
 
 // convenience methods which take a UITouch instead of CGPoint
