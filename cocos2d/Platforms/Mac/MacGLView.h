@@ -50,15 +50,10 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <QuartzCore/CVDisplayLink.h>
-
-@class CCTexture2D;
 
 @interface MacGLView : NSOpenGLView {
 	
-	CVDisplayLinkRef displayLink;
-	
-	CCTexture2D		*texture;
 }
 
++(void) load;
 @end

@@ -41,24 +41,26 @@
 // 00   00 99 05
 #define COCOS2D_VERSION 0x00009905
 
+#import <Availability.h>
+
 //
 // all cocos2d include files
 //
 #import "ccConfig.h"	// should be included first
 
+#import "CCActionManager.h"
 #import "CCAction.h"
 #import "CCActionInstant.h"
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
 #import "CCActionCamera.h"
+#import "CCActionTween.h"
 #import "CCActionEase.h"
 #import "CCActionTiledGrid.h"
 #import "CCActionGrid3D.h"
 #import "CCActionGrid.h"
 #import "CCActionProgressTimer.h"
-#import "CCActionTween.h"
 #import "CCActionPageTurn3D.h"
-#import "CCActionManager.h"
 
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
@@ -66,7 +68,9 @@
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCLabelTTF.h"
+#endif
 #import "CCLabelBMFont.h"
 #import "CCLabelAtlas.h"
 
@@ -115,7 +119,6 @@
 #import "ccMacros.h"
 
 
-#import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCTouchDispatcher.h"
@@ -125,9 +128,9 @@
 #import "Platforms/iOS/CCTexturePVR.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 
-#elif __MAC_OS_VERSION_MIN_REQUIRED
-#import "Platforms/Mac/MacOpenGLView.h"
-#import "Platforms/iOS/CCDirectorMac.h"
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import "Platforms/Mac/MacGLView.h"
+#import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
 //

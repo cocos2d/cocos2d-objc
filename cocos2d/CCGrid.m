@@ -24,6 +24,8 @@
  */
 
 
+#import <Availability.h>
+
 #import "ccMacros.h"
 #import "CCGrid.h"
 #import "CCTexture2D.h"
@@ -34,7 +36,6 @@
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
 
-#import <Availability.h>
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
@@ -57,7 +58,7 @@
 
 +(id) gridWithSize:(ccGridSize)gridSize
 {
-	return [[[self alloc] initWithSize:gridSize] autorelease];
+	return [[(CCGridBase*)[self alloc] initWithSize:gridSize] autorelease];
 }
 
 -(id) initWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
@@ -91,10 +92,14 @@
 	unsigned int POTWide = ccNextPOT(s.width);
 	unsigned int POTHigh = ccNextPOT(s.height);
 	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	EAGLView *glview = [[CCDirector sharedDirector] openGLView];
 	NSString *pixelFormat = [glview pixelFormat];
 
 	CCTexture2DPixelFormat format = [pixelFormat isEqualToString: kEAGLColorFormatRGB565] ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
+#else
+	CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
+#endif
 	
 	void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 	if( ! data ) {
@@ -164,6 +169,7 @@
 }
 
 // This routine can be merged with Director
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 -(void)applyLandscape
 {
 	CCDirector *director = [CCDirector sharedDirector];
@@ -194,6 +200,7 @@
 			break;
 	}
 }
+#endif
 
 -(void)set2DProjection
 {
@@ -203,7 +210,7 @@
 	glViewport(0, 0, winSize.width, winSize.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, winSize.width, 0, winSize.height, -1024, 1024);
+	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -236,7 +243,9 @@
 	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[self applyLandscape];
+#endif
 
 	if( target.camera.dirty ) {
 

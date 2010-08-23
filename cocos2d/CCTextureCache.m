@@ -31,12 +31,11 @@
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
+#import "CCDirector.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCTexturePVR.h"
-#import "CCDirector.h"
-#endif
-
+#endif // iPhone
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 static EAGLContext *auxGLcontext = nil;

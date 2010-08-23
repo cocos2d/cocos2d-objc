@@ -24,9 +24,8 @@
  */
 
 
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
-#import <UIKit/UIKit.h>
+#import "Platforms/CCGL.h"
+#import <Foundation/Foundation.h>
 
 @class CCTexture2D;
 

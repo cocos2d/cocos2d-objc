@@ -446,7 +446,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, name_ );
-	CC_GL_GENERATE_MIPMAP(GL_TEXTURE_2D);
+	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams

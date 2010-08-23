@@ -39,6 +39,11 @@
 
 @implementation CCDirectorDisplayLink
 
++ (Class) defaultDirector
+{
+	return [CCDirectorDisplayLink class];
+}
+
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
 	// There is no autorelease pool when this method is called because it will be called from a background thread
@@ -54,7 +59,7 @@
 // This is the renderer output callback function
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    CVReturn result = [(MacGLView*)displayLinkContext getFrameForTime:outputTime];
+    CVReturn result = [(CCDirectorDisplayLink*)displayLinkContext getFrameForTime:outputTime];
     return result;
 }
 
@@ -72,13 +77,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 {
 	gettimeofday( &lastUpdate_, NULL);
 	
-	// approximate frame rate
-	// assumes device refreshes at 60 fps
-	int frameInterval = (int) floor(animationInterval_ * 60.0f);
-	
-	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
-
-	
 	// Create a display link capable of being used with all active displays
 	CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
 	
@@ -86,8 +84,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
 	
 	// Set the display link for the current renderer
-	CGLContextObj cglContext = [[self openGLContext] CGLContextObj];
-	CGLPixelFormatObj cglPixelFormat = [[self pixelFormat] CGLPixelFormatObj];
+	CGLContextObj cglContext = [[openGLView_ openGLContext] CGLContextObj];
+	CGLPixelFormatObj cglPixelFormat = [[openGLView_ pixelFormat] CGLPixelFormatObj];
 	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
 	
 	// Activate the display link
