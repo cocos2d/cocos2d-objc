@@ -30,9 +30,14 @@
 #import "CCDirector.h"
 #import "CCGrabber.h"
 
-#import "Platforms/iOS/glu.h"
+#import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
+
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 #pragma mark -
 #pragma mark CCGridBase

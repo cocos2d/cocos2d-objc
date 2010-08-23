@@ -613,8 +613,6 @@
 
 #pragma mark CCNode Actions
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
@@ -650,9 +648,6 @@
 {
 	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
-
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
-
 
 #pragma mark CCNode - Scheduler
 

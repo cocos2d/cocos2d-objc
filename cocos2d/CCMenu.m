@@ -30,6 +30,11 @@
 #import "CCTouchDispatcher.h"
 #import "Support/CGPointExtension.h"
 
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
 enum {
 	kDefaultPadding =  5,
 };

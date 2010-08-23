@@ -24,15 +24,19 @@
  */
 
 
-
-#import <OpenGLES/ES1/gl.h>
 #import <stdarg.h>
+
+#import "Platforms/CCGL.h"
 
 #import "CCLayer.h"
 #import "CCDirector.h"
-#import "CCTouchDispatcher.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
+
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "CCTouchDispatcher.h"
+#endif // __iPHONE
 
 #pragma mark -
 #pragma mark Layer
@@ -60,7 +64,9 @@
 
 -(void) registerWithTouchDispatcher
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCTouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
+#endif
 }
 
 -(BOOL) isAccelerometerEnabled
@@ -70,6 +76,7 @@
 
 -(void) setIsAccelerometerEnabled:(BOOL)enabled
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( enabled != isAccelerometerEnabled ) {
 		isAccelerometerEnabled = enabled;
 		if( isRunning_ ) {
@@ -79,6 +86,7 @@
 				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 		}
 	}
+#endif // __iPHONE
 }
 
 -(BOOL) isTouchEnabled
@@ -88,6 +96,7 @@
 
 -(void) setIsTouchEnabled:(BOOL)enabled
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( isTouchEnabled != enabled ) {
 		isTouchEnabled = enabled;
 		if( isRunning_ ) {
@@ -97,6 +106,7 @@
 				[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 		}
 	}
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 }
 
 #pragma mark Layer - Callbacks
@@ -110,25 +120,32 @@
 	// then iterate over all the children
 	[super onEnter];
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 }
 
 -(void) onExit
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	if( isTouchEnabled )
 		[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 	
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 	
 	[super onExit];
 }
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	NSAssert(NO, @"Layer#ccTouchBegan override me");
 	return YES;
 }
+#endif
 @end
 
 #pragma mark -
@@ -152,7 +169,7 @@
 
 + (id) layerWithColor:(ccColor4B)color
 {
-	return [[[self alloc] initWithColor:color] autorelease];
+	return [[(CCColorLayer*)[self alloc] initWithColor:color] autorelease];
 }
 
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h

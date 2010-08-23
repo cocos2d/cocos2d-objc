@@ -35,9 +35,13 @@
 #import "CCCamera.h"
 #import "CCActionTiledGrid.h"
 #import "CCActionEase.h"
-#import "CCTouchDispatcher.h"
 #import "CCRenderTexture.h"
 #import "Support/CGPointExtension.h"
+
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import "CCTouchDispatcher.h"
+#endif // iphone
 
 enum {
 	kSceneFade = 0xFADEFADE,
@@ -69,8 +73,10 @@ enum {
 		
 		NSAssert( inScene != outScene, @"Incoming scene must be different from the outgoing scene" );
 		
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		// disable events while transitions
 		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
+#endif
 
 		[self sceneOrder];
 	}
@@ -121,8 +127,10 @@ enum {
 	
 	[director replaceScene: inScene];
 	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// enable events while transitions
 	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
+#endif // IPHONE
 	
 	// issue #267
 	[outScene setVisible:YES];	

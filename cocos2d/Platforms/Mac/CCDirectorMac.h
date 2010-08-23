@@ -45,10 +45,9 @@
  *
  * @since v0.8.2
  */
-@interface CCDirectorDisplayLink : CCDirectorIOS
+@interface CCDirectorDisplayLink : CCDirectorMac
 {
 	CVDisplayLinkRef displayLink;
 }
--(void) preMainLoop:(id)sender;
 @end
 

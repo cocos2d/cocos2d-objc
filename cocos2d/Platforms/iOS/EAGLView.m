@@ -68,7 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ES1Renderer.h"
-#import "CCDirector.h"
+#import "CCDirectorIOS.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -187,13 +187,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	size_ = [renderer_ backingSize];
 
 	// Issue #914 #924
-	CCDirector *director = [CCDirector sharedDirector];
+	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	[director recalculateProjectionAndEAGLViewSize];
 
 	// Avoid flicker. Issue #350
-	[director drawScene];
-	
-	[self swapBuffers];
+	[director drawScene];	
 }
 
 - (void) swapBuffers

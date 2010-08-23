@@ -28,6 +28,10 @@
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
 
+#import <Availability.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import <UIKit/UIKit.h>
+#endif // iPHone
 
 enum  
 {
@@ -67,14 +71,20 @@ enum
 -(id)initWithWidth:(int)width height:(int)height;
 -(void)begin;
 -(void)end;
-/* get buffer as UIImage */
--(UIImage *)getUIImageFromBuffer;
+
+/** clears the texture with a color */
+-(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
+
 /** saves the texture into a file */
 -(BOOL)saveBuffer:(NSString*)name;
 /** saves the texture into a file. The format can be JPG or PNG */
 -(BOOL)saveBuffer:(NSString*)name format:(int)format;
-/** clears the texture with a color */
--(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+/* get buffer as UIImage */
+-(UIImage *)getUIImageFromBuffer;
+#endif
+
 @end
 
 
