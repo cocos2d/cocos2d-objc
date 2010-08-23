@@ -467,7 +467,7 @@ static CCDirector *_sharedDirector = nil;
 		}
 		
 		// alloc and init the opengl view
-		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
+		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO sharegroup:nil];
 		
 		// check if the view was alloced and initialized
 		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
