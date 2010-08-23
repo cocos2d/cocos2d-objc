@@ -24,26 +24,16 @@
  */
 
 
-#import <Availability.h>
-
 #import "CCScene.h"
 #import "Support/CGPointExtension.h"
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCDirector.h"
-#endif
 
 
 @implementation CCScene
 -(id) init
 {
 	if( (self=[super init]) ) {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		CGSize s = [[CCDirector sharedDirector] winSize];
-#else
-		// XXX
-		CGSize s = CGSizeMake(800,600);
-#endif
 		self.isRelativeAnchorPoint = NO;
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];	

@@ -54,7 +54,7 @@
 // This is the renderer output callback function
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    CVReturn result = [(MyOpenGLView*)displayLinkContext getFrameForTime:outputTime];
+    CVReturn result = [(MacGLView*)displayLinkContext getFrameForTime:outputTime];
     return result;
 }
 

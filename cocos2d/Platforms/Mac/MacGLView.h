@@ -1,6 +1,6 @@
 /*
  
- File: MyOpenGLView.h
+ File: MacGLView.h
  
  Abstract: An NSOpenGLView subclass that demonstrates fundamental techniques 
  to obtain optimal textuture upload performance.
@@ -54,7 +54,7 @@
 
 @class CCTexture2D;
 
-@interface MacOpenGLView : NSOpenGLView {
+@interface MacGLView : NSOpenGLView {
 	
 	CVDisplayLinkRef displayLink;
 	

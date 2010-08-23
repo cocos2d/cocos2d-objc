@@ -33,18 +33,27 @@
 #import <OpenGLES/ES1/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/glu.h"
+#import "iOS/EAGLView.h"
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
+#import "Mac/MacGLView.h"
 #endif
 
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#define CC_GL_GENERATE_MIPMAP glGenerateMipmapOES
+#define CC_GLVIEW				EAGLView
+#define CC_GL_GENERATE_MIPMAP	glGenerateMipmapOES
+#define CC_GL_ORTHO				glOrthof
+#define	CC_GL_CLEAR_DEPTH		glClearDepthf
+
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#define CC_GL_GENERATE_MIPMAP glGenerateMipmap
+#define CC_GLVIEW				MacGLView
+#define CC_GL_GENERATE_MIPMAP	glGenerateMipmap
+#define CC_GL_ORTHO				glOrtho
+#define	CC_GL_CLEAR_DEPTH		glClearDepth
 
 #endif

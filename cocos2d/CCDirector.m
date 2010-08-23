@@ -30,9 +30,6 @@
 
 // cocos2d imports
 #import "CCDirector.h"
-#import "CCDirectorIOS.h"
-#import "CCTouchDelegateProtocol.h"
-#import "CCCamera.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
@@ -40,13 +37,12 @@
 #import "ccMacros.h"
 #import "CCTransition.h"
 #import "CCScene.h"
-#import "CCTouchDispatcher.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
 #import "CCLabelBMFont.h"
 
 // support imports
-#import "Platforms/iOS/glu.h"
+#import "Platforms/CCGL.h"
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
@@ -61,17 +57,12 @@
 extern NSString * cocos2dVersion(void);
 
 
-@interface CCDirector (Private)
--(BOOL)isOpenGLAttached;
--(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
-
--(void) preMainLoop;
+@interface CCDirector ()
 -(void) setNextScene;
 // shows the FPS in the screen
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
--(void) updateContentScaleFactor;
 
 #if CC_ENABLE_PROFILERS
 - (void) showProfilers;
@@ -84,9 +75,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize animationInterval=animationInterval_;
 @synthesize runningScene = runningScene_;
 @synthesize displayFPS = displayFPS_;
-@synthesize pixelFormat=pixelFormat_;
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
-@synthesize deviceOrientation=deviceOrientation_;
 @synthesize isPaused=isPaused_;
 @synthesize sendCleanupToScene=sendCleanupToScene_;
 
@@ -95,6 +84,10 @@ extern NSString * cocos2dVersion(void);
 //
 static CCDirector *_sharedDirector = nil;
 
++ (Class) defaultDirector
+{
+	return [self class];
+}
 + (CCDirector *)sharedDirector
 {
 	if (!_sharedDirector) {
@@ -103,43 +96,12 @@ static CCDirector *_sharedDirector = nil;
 		// Default Director is TimerDirector
 		// 
 		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[CCDirectorTimer alloc] init];
+			_sharedDirector = [[[self defaultDirector] alloc] init];
 		else
 			_sharedDirector = [[self alloc] init];
 	}
 		
 	return _sharedDirector;
-}
-
-+ (BOOL) setDirectorType:(ccDirectorType)type
-{
-	NSAssert(_sharedDirector==nil, @"A Director was alloced. setDirectorType must be the first call to Director");
-
-	if( type == CCDirectorTypeDisplayLink ) {
-		NSString *reqSysVer = @"3.1";
-		NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-		
-		if([currSysVer compare:reqSysVer options:NSNumericSearch] == NSOrderedAscending)
-			return NO;
-	}
-	switch (type) {
-		case CCDirectorTypeNSTimer:
-			[CCDirectorTimer sharedDirector];
-			break;
-		case CCDirectorTypeDisplayLink:
-			[CCDirectorDisplayLink sharedDirector];
-			break;
-		case CCDirectorTypeMainLoop:
-			[CCDirectorFast sharedDirector];
-			break;
-		case CCDirectorTypeThreadMainLoop:
-			[CCDirectorFastThreaded sharedDirector];
-			break;
-		default:
-			NSAssert(NO,@"Unknown director type");
-	}
-	
-	return YES;
 }
 
 +(id)alloc
@@ -156,10 +118,6 @@ static CCDirector *_sharedDirector = nil;
 
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 		
-		// default values
-		pixelFormat_ = kCCPixelFormatDefault;
-		depthBufferFormat_ = 0;
-
 		// scenes
 		runningScene_ = nil;
 		nextScene_ = nil;
@@ -167,9 +125,6 @@ static CCDirector *_sharedDirector = nil;
 		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
 		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
 		
-		// portrait mode default
-		deviceOrientation_ = CCDeviceOrientationPortrait;
-
 		// Set default projection (3D)
 		projection_ = kCCDirectorProjectionDefault;
 		
@@ -180,9 +135,7 @@ static CCDirector *_sharedDirector = nil;
 		// paused ?
 		isPaused_ = NO;
 		
-		contentScaleFactor_ = 1;
 		screenSize_ = surfaceSize_ = CGSizeZero;
-		isContentScaleSupported_ = NO;
 	}
 
 	return self;
@@ -229,41 +182,8 @@ static CCDirector *_sharedDirector = nil;
 // Draw the Scene
 //
 - (void) drawScene
-{    
-	/* calculate "global" dt */
-	[self calculateDeltaTime];
-	
-	/* tick before glClear: issue #533 */
-	if( ! isPaused_ ) {
-		[[CCScheduler sharedScheduler] tick: dt];	
-	}
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
-	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( nextScene_ )
-		[self setNextScene];
-	
-	glPushMatrix();
-	
-	[self applyOrientation];
-	
-	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
-	CC_ENABLE_DEFAULT_GL_STATES();
-
-	/* draw the scene */
-	[runningScene_ visit];
-	if( displayFPS_ )
-		[self showFPS];
-	
-#if CC_ENABLE_PROFILERS
-	[self showProfilers];
-#endif
-	
-	CC_DISABLE_DEFAULT_GL_STATES();
-	
-	glPopMatrix();	
+{ 
+	// Override me
 }
 
 -(void) calculateDeltaTime
@@ -286,20 +206,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 	
 	lastUpdate_ = now;	
-}
-
-#pragma mark Director Scene iPhone Specific
-
--(void) setPixelFormat: (tPixelFormat) format
-{	
-	NSAssert( ! [self isOpenGLAttached], @"Can't change the pixel format after the director was initialized" );	
-	pixelFormat_ = format;
-}
-
--(void) setDepthBufferFormat: (tDepthBufferFormat) format
-{
-	NSAssert( ! [self isOpenGLAttached], @"Can't change the depth buffer format after the director was initialized");
-   depthBufferFormat_ = format;
 }
 
 #pragma mark Director - Memory Helper
@@ -330,7 +236,7 @@ static CCDirector *_sharedDirector = nil;
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrthof(0, size.width, 0, size.height, -1024, 1024);
+			CC_GL_ORTHO(0, size.width, 0, size.height, -1024, 1024);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;
@@ -373,7 +279,7 @@ static CCDirector *_sharedDirector = nil;
 - (void) setDepthTest: (BOOL) on
 {
 	if (on) {
-		glClearDepthf(1.0f);
+		CC_GL_CLEAR_DEPTH(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -383,341 +289,50 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
-// is the view currently attached
--(BOOL)isOpenGLAttached
-{
-	return ([openGLView_ superview]!=nil);
-}
-
-// detach or attach to a view or a window
--(BOOL)detach
-{
-	NSAssert([self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, because it is not attached. Attach it first.");
-	
-	// remove from the superview
-	[openGLView_ removeFromSuperview];
-	
-	NSAssert(![self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, it is still attached to the superview.");
-	
-	
-	return YES;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInWindow:(UIWindow *)window
-{
-	if([self initOpenGLViewWithView:window withFrame:[window bounds]])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInView:(UIView *)view
-{
-	if([self initOpenGLViewWithView:view withFrame:[view bounds]])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame
-{
-	if([self initOpenGLViewWithView:view withFrame:frame])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
-{
-	NSAssert( ! [self isOpenGLAttached], @"FATAL: Can't re-attach the OpenGL View, because it is already attached. Detach it first");
-	
-	// check if the view is not initialized
-	if(!openGLView_)
-	{
-		// define the pixel format
-		NSString	*pFormat = nil;
-	    GLuint		depthFormat = 0;
-		
-		if(pixelFormat_==kCCPixelFormatRGBA8888)
-			pFormat = kEAGLColorFormatRGBA8;
-		else if(pixelFormat_== kCCPixelFormatRGB565)
-			pFormat = kEAGLColorFormatRGB565;
-		else {
-			CCLOG(@"cocos2d: Director: Unknown pixel format.");
-		}
-		
-		if(depthBufferFormat_ == kCCDepthBuffer16)
-			depthFormat = GL_DEPTH_COMPONENT16_OES;
-		else if(depthBufferFormat_ == kCCDepthBuffer24)
-			depthFormat = GL_DEPTH_COMPONENT24_OES;
-		else if(depthBufferFormat_ == kCCDepthBufferNone)
-			depthFormat = 0;
-		else {
-			CCLOG(@"cocos2d: Director: Unknown buffer depth.");
-		}
-		
-		// alloc and init the opengl view
-		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
-		
-		// check if the view was alloced and initialized
-		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
-
-		// opaque by default (faster)
-		openGLView_.opaque = YES;		
-	}
-	else
-	{
-		// set the (new) frame of the glview
-		[openGLView_ setFrame:rect];
-	}
-	
-	screenSize_ = rect.size;
-	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height * contentScaleFactor_);
-
-	
-	// set the touch delegate of the glview to self
-	[openGLView_ setTouchDelegate: [CCTouchDispatcher sharedDispatcher]];
-
-	
-	// check if the superview has touchs enabled and enable it in our view
-	if([view isUserInteractionEnabled])
-	{
-		[openGLView_ setUserInteractionEnabled:YES];
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
-	}
-	else
-	{
-		[openGLView_ setUserInteractionEnabled:NO];
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
-	}
-	
-	// check if multi touches are enabled and set them
-	if([view isMultipleTouchEnabled])
-	{
-		[openGLView_ setMultipleTouchEnabled:YES];
-	}
-	else
-	{
-		[openGLView_ setMultipleTouchEnabled:NO];
-	}
-	
-	// add the glview to his (new) superview
-	[view addSubview:openGLView_];
-	
-		
-	NSAssert( [self isOpenGLAttached], @"FATAL: Director: Could not attach OpenGL view");
-
-	[self setGLDefaultValues];
-	return YES;
-}
-
--(EAGLView*) openGLView
+-(CC_GLVIEW*) openGLView
 {
 	return openGLView_;
 }
 
--(void) setOpenGLView:(EAGLView *)view
+-(void) setOpenGLView:(CC_GLVIEW *)view
 {
-	NSAssert( view, @"EAGView must be non-nil");
+	NSAssert( view, @"OpenGLView must be non-nil");
 
 	if( view != openGLView_ ) {
 		[openGLView_ release];
 		openGLView_ = [view retain];
 		
 		// set size
-		screenSize_ = [view bounds].size;
-		surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
-
-		if( contentScaleFactor_ != 1 )
-			[self updateContentScaleFactor];
-		
-		CCTouchDispatcher *touchDispatcher = [CCTouchDispatcher sharedDispatcher];
-		[openGLView_ setTouchDelegate: touchDispatcher];
-		[touchDispatcher setDispatchEvents: YES];
-
+		surfaceSize_ = screenSize_ = [view bounds].size;
 
 		[self setGLDefaultValues];
 	}
-}
-
--(void) updateContentScaleFactor
-{
-	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
-	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
-	{			
-		// XXX: To avoid compile warning when using Xcode 3.2.2
-		// Version 1.0 will only support Xcode 3.2.3 or newer
-		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
-		
-		SEL selector = @selector(setContentScaleFactor:);
-		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
-		method(openGLView_,selector, contentScaleFactor_);
-		
-//		[openGLView_ setContentScaleFactor: contentScaleFactor_];
-
-		isContentScaleSupported_ = YES;
-	}
-	else
-	{
-		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");
-		/* on pre-4.0 iOS, use bounds/transform */
-		openGLView_.bounds = CGRectMake(0, 0,
-										openGLView_.bounds.size.width * contentScaleFactor_,
-										openGLView_.bounds.size.height * contentScaleFactor_);
-		openGLView_.transform = CGAffineTransformScale(openGLView_.transform, 1 / contentScaleFactor_, 1 / contentScaleFactor_); 
-		
-		isContentScaleSupported_ = NO;
-	}
-}
-
--(void) recalculateProjectionAndEAGLViewSize
-{
-	screenSize_ = [openGLView_ bounds].size;
-	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
-	
-	[self setProjection:projection_];
 }
 
 #pragma mark Director Scene Landscape
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	CGSize s = screenSize_;
-	float newY = s.height - uiPoint.y;
-	float newX = s.width - uiPoint.x;
-	
-	CGPoint ret = CGPointZero;
-	switch ( deviceOrientation_) {
-		case CCDeviceOrientationPortrait:
-			 ret = ccp( uiPoint.x, newY );
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			ret = ccp(newX, uiPoint.y);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			ret.x = uiPoint.y;
-			ret.y = uiPoint.x;
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			ret.x = newY;
-			ret.y = newX;
-			break;
-		}
-
-	if( contentScaleFactor_ != 1 && isContentScaleSupported_ )
-		ret = ccpMult(ret, contentScaleFactor_);
-	return ret;
+	CCLOG(@"CCDirector#convertToGL: OVERRIDE ME.");
+	return CGPointZero;
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	CGSize winSize = surfaceSize_;
-	int oppositeX = winSize.width - glPoint.x;
-	int oppositeY = winSize.height - glPoint.y;
-	CGPoint uiPoint = CGPointZero;
-	switch ( deviceOrientation_) {
-		case CCDeviceOrientationPortrait:
-			uiPoint = ccp(glPoint.x, oppositeY);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			uiPoint = ccp(oppositeX, glPoint.y);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			uiPoint = ccp(glPoint.y, glPoint.x);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			// Can't use oppositeX/Y because x/y are flipped
-			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
-			break;
-	}
-	
-	uiPoint = ccpMult(uiPoint, 1/contentScaleFactor_);
-	return uiPoint;
+	CCLOG(@"CCDirector#convertToUI: OVERRIDE ME.");
+	return CGPointZero;
 }
 
 // get the current size of the glview
 -(CGSize)winSize
 {
-	CGSize s = surfaceSize_;
-	
-	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
-		// swap x,y in landscape mode
-		CGSize tmp = s;
-		s.width = tmp.height;
-		s.height = tmp.width;
-	}
-	return s;
+	return surfaceSize_;
 }
 
 // return  the current frame size
 -(CGSize)displaySize
 {
 	return surfaceSize_;
-}
-
-- (void) setDeviceOrientation:(ccDeviceOrientation) orientation
-{
-	if( deviceOrientation_ != orientation ) {
-		deviceOrientation_ = orientation;
-		switch( deviceOrientation_) {
-			case CCDeviceOrientationPortrait:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
-				break;
-			case CCDeviceOrientationPortraitUpsideDown:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIDeviceOrientationPortraitUpsideDown animated:NO];
-				break;
-			case CCDeviceOrientationLandscapeLeft:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated:NO];
-				break;
-			case CCDeviceOrientationLandscapeRight:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
-				break;
-			default:
-				NSLog(@"Director: Unknown device orientation");
-				break;
-		}
-	}
-}
-
--(void) applyOrientation
-{	
-	CGSize s = surfaceSize_;
-	float w = s.width / 2;
-	float h = s.height / 2;
-
-	// XXX it's using hardcoded values.
-	// What if the the screen size changes in the future?
-	switch ( deviceOrientation_ ) {
-		case CCDeviceOrientationPortrait:
-			// nothing
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			// upside down
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(w,h,0);
-			glRotatef(-90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-	}	
 }
 
 #pragma mark Director Scene Management
@@ -778,10 +393,6 @@ static CCDirector *_sharedDirector = nil;
 	// remove all objects, but don't release it.
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
-
-	// don't release the event handlers
-	// They are needed in case the director is run again
-	[[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
 	
 	[self stopAnimation];
 	
@@ -947,26 +558,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 #endif
-
--(CGFloat) contentScaleFactor
-{
-	return contentScaleFactor_;
-}
-
--(void) setContentScaleFactor:(CGFloat)scaleFactor
-{
-	if( scaleFactor != contentScaleFactor_ ) {
-
-		contentScaleFactor_ = scaleFactor;
-		surfaceSize_ = CGSizeMake( screenSize_.width * scaleFactor, screenSize_.height * scaleFactor );
-
-		if( openGLView_ )
-			[self updateContentScaleFactor];
-
-		// update projection
-		[self setProjection:projection_];
-	}
-}
 
 @end
 

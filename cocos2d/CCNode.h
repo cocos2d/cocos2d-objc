@@ -352,8 +352,6 @@ enum {
 
 // actions
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-
 /** Executes an action, and returns the action that is executed.
  The node becomes the action's target.
  @warning Starting from v0.8 actions don't retain their target anymore.
@@ -380,8 +378,6 @@ enum {
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(int) numberOfRunningActions;
-
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 // timers
 

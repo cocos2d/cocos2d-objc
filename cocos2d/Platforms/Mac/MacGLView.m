@@ -1,6 +1,6 @@
 /*
  
- File: MyOpenGLView.m
+ File: MacGLView.m
  
  Abstract: An NSOpenGLView subclass that demonstrates fundamental techniques 
  to obtain optimal textuture upload performance.
@@ -49,22 +49,22 @@
  
  */
 
-#import "MacOpenGLView.h"
+#import "MacGLView.h"
 #import <OpenGL/gl.h>
 
-@interface MacOpenGLView (PrivateMethods)
+@interface MacGLView (PrivateMethods)
 
 - (BOOL) initImageData;
 - (void) drawView;
 
 @end
 
-@implementation MacOpenGLView
+@implementation MacGLView
 
 // This is the renderer output callback function
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    CVReturn result = [(MacOpenGLView*)displayLinkContext getFrameForTime:outputTime];
+    CVReturn result = [(MacGLView*)displayLinkContext getFrameForTime:outputTime];
     return result;
 }
 

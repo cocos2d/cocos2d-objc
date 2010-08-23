@@ -3733,7 +3733,7 @@
 		E0EAD0F9121F4B4600B0C81C /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		E0EAD0FB121F4B4600B0C81C /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		E0EAD0FC121F4B4600B0C81C /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
-		E0EAD0FD121F4B4600B0C81C /* MacOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacOpenGLView.h; sourceTree = "<group>"; };
+		E0EAD0FD121F4B4600B0C81C /* MacGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacGLView.h; sourceTree = "<group>"; };
 		E0EAD0FE121F4B4600B0C81C /* MacOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacOpenGLView.m; sourceTree = "<group>"; };
 		E0EAD19C121F4D7300B0C81C /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
@@ -6388,7 +6388,7 @@
 			children = (
 				E0EAD0FB121F4B4600B0C81C /* CCDirectorMac.h */,
 				E0EAD0FC121F4B4600B0C81C /* CCDirectorMac.m */,
-				E0EAD0FD121F4B4600B0C81C /* MacOpenGLView.h */,
+				E0EAD0FD121F4B4600B0C81C /* MacGLView.h */,
 				E0EAD0FE121F4B4600B0C81C /* MacOpenGLView.m */,
 			);
 			path = Mac;
