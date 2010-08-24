@@ -30,6 +30,7 @@
  * http://zwoptex.zwopple.com/
  */
 
+#import "Platforms/CCNS.h"
 #import "ccMacros.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrameCache.h"
@@ -136,24 +137,24 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			// create frame
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x, y, w, h) rotated:NO offset:CGPointMake(ox, oy) originalSize:CGSizeMake(ow, oh)];
 		} else if(format == 1 || format == 2) {
-			CGRect frame = CGRectFromString([frameDict objectForKey:@"frame"]);
+			CGRect frame = CCRectFromString([frameDict objectForKey:@"frame"]);
 			BOOL rotated = NO;
 			
 			// rotation
 			if(format == 2)
 				rotated = [[frameDict objectForKey:@"rotated"] boolValue];
 			
-			CGPoint offset = CGPointFromString([frameDict objectForKey:@"offset"]);
-			CGSize sourceSize = CGSizeFromString([frameDict objectForKey:@"sourceSize"]);
+			CGPoint offset = CCPointFromString([frameDict objectForKey:@"offset"]);
+			CGSize sourceSize = CCSizeFromString([frameDict objectForKey:@"sourceSize"]);
 			
 			// create frame
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame rotated:rotated offset:offset originalSize:sourceSize];
 		} else if(format == 3) {
 			// get values
-			CGSize spriteSize = CGSizeFromString([frameDict objectForKey:@"spriteSize"]);
-			CGPoint spriteOffset = CGPointFromString([frameDict objectForKey:@"spriteOffset"]);
-			CGSize spriteSourceSize = CGSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
-			CGRect textureRect = CGRectFromString([frameDict objectForKey:@"textureRect"]);
+			CGSize spriteSize = CCSizeFromString([frameDict objectForKey:@"spriteSize"]);
+			CGPoint spriteOffset = CCPointFromString([frameDict objectForKey:@"spriteOffset"]);
+			CGSize spriteSourceSize = CCSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
+			CGRect textureRect = CCRectFromString([frameDict objectForKey:@"textureRect"]);
 			BOOL textureRotated = [[frameDict objectForKey:@"textureRotated"] boolValue];
 			
 			// get aliases

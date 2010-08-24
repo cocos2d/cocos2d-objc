@@ -54,7 +54,7 @@
 			// Progress action. Works OK.
 			CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
 
-			CCProgressTimer *sprite = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
+			CCProgressTimer *sprite = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
 			sprite.type = kCCProgressTimerTypeRadialCW;
 			[self addChild:sprite];
 			[sprite setPosition:ccp(s.width-50, s.height/2)];
@@ -67,6 +67,15 @@
 			// particle. Works OK
 			CCParticleSystem *particle = [CCParticleFlower node];
 			particle.position = ccp(80, s.height/2);
+			[self addChild:particle z:10];
+		}
+#endif
+
+#if 1
+		{
+			// particle designer. Works OK
+			CCParticleSystem *particle = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
+			particle.position = ccp(s.width, s.height/2);
 			[self addChild:particle z:10];
 		}
 #endif

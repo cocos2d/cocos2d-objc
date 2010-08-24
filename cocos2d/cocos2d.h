@@ -120,6 +120,9 @@
 #import "ccMacros.h"
 
 
+// Platform common
+#import "Platforms/CCGL.h"
+#import "Platforms/CCNS.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCTouchDispatcher.h"
