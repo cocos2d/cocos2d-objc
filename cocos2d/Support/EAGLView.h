@@ -110,7 +110,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
-
+/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format and a sharegroup */
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup;
 
 /** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
