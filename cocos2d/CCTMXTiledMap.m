@@ -81,7 +81,7 @@
 		for( CCTMXLayerInfo *layerInfo in mapInfo.layers ) {
 			
 			if( layerInfo.visible ) {
-				id child = [self parseLayer:layerInfo map:mapInfo];
+				CCNode *child = [self parseLayer:layerInfo map:mapInfo];
 				[self addChild:child z:idx tag:idx];
 				
 				// update content size with the max size

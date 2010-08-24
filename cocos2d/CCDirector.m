@@ -45,6 +45,8 @@
 
 // support imports
 #import "Platforms/CCGL.h"
+#import "Platforms/CCNS.h"
+
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
@@ -307,7 +309,7 @@ static CCDirector *_sharedDirector = nil;
 		openGLView_ = [view retain];
 		
 		// set size
-		surfaceSize_ = screenSize_ = [view bounds].size;
+		surfaceSize_ = screenSize_ = CCNSSizeToCGSize( [view bounds].size );
 
 		[self setGLDefaultValues];
 	}

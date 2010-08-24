@@ -30,14 +30,21 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 
-#define CCRectFromString	CGRectFromString
-#define CCPointFromString	CGPointFromString
-#define CCSizeFromString	CGSizeFromString
+#define CCRectFromString(__r__)		CGRectFromString(__r__)
+#define CCPointFromString(__p__)	CGPointFromString(__p__)
+#define CCSizeFromString(__s__)		CGSizeFromString(__s__)
+#define CCNSSizeToCGSize
+#define CCNSRectToCGRect
+#define CCNSPointToCGPoint
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#define CCRectFromString	NSRectFromString
-#define CCPointFromString	NSPointFromString
-#define CCSizeFromString	NSSizeFromString
+#define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
+#define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )
+#define CCSizeFromString(__s__)		NSSizeToCGSize( NSSizeFromString(__s__) )
+#define CCNSSizeToCGSize	NSSizeToCGSize
+#define CCNSRectToCGRect	NSRectToCGRect
+#define CCNSPointToCGPoint	NSPointToCGPoint
+
 
 #endif
 
