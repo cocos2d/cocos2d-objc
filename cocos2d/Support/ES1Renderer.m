@@ -34,6 +34,11 @@
 
 @synthesize context=context_;
 
+- (id)initWithDepthFormat:(GLuint)depthFormat
+{
+	return [self initWithDepthFormat:depthFormat withSharegroup:nil];
+}
+
 // Create an OpenGL ES 1.1 context
 - (id)initWithDepthFormat:(GLuint)depthFormat withSharegroup:(EAGLSharegroup*)sharegroup
 {
