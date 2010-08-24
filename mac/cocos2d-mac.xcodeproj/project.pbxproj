@@ -165,6 +165,7 @@
 		E0EAE3FA12230C0B00B0C81C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE3F912230C0B00B0C81C /* TileMaps */; };
 		E0F9241D12240EF800EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9241B12240EF800EF2362 /* CCTexturePVR.h */; };
 		E0F9241E12240EF800EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F9241C12240EF800EF2362 /* CCTexturePVR.m */; };
+		E0F9256E1224207200EF2362 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,6 +355,7 @@
 		E0EAE3F912230C0B00B0C81C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Resources/TileMaps; sourceTree = SOURCE_ROOT; };
 		E0F9241B12240EF800EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F9241C12240EF800EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
+		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +368,7 @@
 				E036A79F121B5C870037C5C6 /* QuartzCore.framework in Frameworks */,
 				E01E6640121CA023001A484F /* libcocos2d.a in Frameworks */,
 				E01E6B00121EDCE4001A484F /* ApplicationServices.framework in Frameworks */,
+				E0F9256E1224207200EF2362 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +433,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				E0F9256D1224207200EF2362 /* libz.dylib */,
 			);
 			name = "cocos2d-mac";
 			sourceTree = "<group>";

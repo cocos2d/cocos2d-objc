@@ -403,7 +403,8 @@
 	}
 }
 
--(void) recalculateProjectionAndEAGLViewSize
+// overriden, don't call super
+-(void) reshapeProjection:(CGSize)size
 {
 	screenSize_ = [openGLView_ bounds].size;
 	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);

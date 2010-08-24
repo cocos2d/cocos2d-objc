@@ -162,12 +162,14 @@ and when to execute the Scenes.
 
 
 
-// Landscape
+// Window size
 
 /** returns the size of the OpenGL view in pixels, according to the landspace */
 - (CGSize) winSize;
 /** returns the display size of the OpenGL view in pixels */
 -(CGSize) displaySize;
+/** changes the projection size */
+-(void) reshapeProjection:(CGSize)newWindowSize;
 
 /** converts a UIKit coordinate to an OpenGL coordinate
  Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)

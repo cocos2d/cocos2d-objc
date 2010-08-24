@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="372"/>
 			<integer value="29"/>
+			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1318,7 +1318,7 @@
 			<object class="NSWindowTemplate" id="972006081">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{335, 390}, {480, 360}}</string>
+				<string key="NSWindowRect">{{335, 435}, {580, 416}}</string>
 				<int key="NSWTFlags">1685585920</int>
 				<string key="NSWindowTitle">cocos2dmac</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -1331,18 +1331,19 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSOpenGLView" id="335206536">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">1292</int>
+							<int key="NSvFlags">1298</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrameSize">{480, 360}</string>
+							<string key="NSFrame">{{0, 20}, {580, 396}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<object class="NSOpenGLPixelFormat" key="NSPixelFormat">
 								<object class="NSMutableData" key="NSPixelAttributes">
-									<bytes key="NS.bytes">AAAAYAAAAAwAAAAQAAAAAA</bytes>
+									<bytes key="NS.bytes">AAAABQAAAGAAAAAIAAAAGAAAAAsAAAAIAAAAAA</bytes>
 								</object>
 							</object>
 						</object>
 					</object>
-					<string key="NSFrameSize">{480, 360}</string>
+					<string key="NSFrameSize">{580, 416}</string>
 					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
@@ -3486,9 +3487,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{380, 396}, {480, 360}}</string>
+					<string>{{367, 257}, {580, 416}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{380, 396}, {480, 360}}</string>
+					<string>{{367, 257}, {580, 416}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

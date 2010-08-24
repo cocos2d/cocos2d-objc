@@ -116,12 +116,12 @@
  If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
  
  To enable set it to a value different than 0.
- Enabled by default on ARMv7 processors and iPhone Simulator.
- Disabled by default on ARMv6 processors.
+ Enabled by default on iPhone with ARMv7 processors, iPhone Simulator and Mac
+ Disabled by default on iPhone with ARMv6 processors.
  
  @since v0.99.5
  */
-#if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR)
+#if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR) || __MAC_OS_X_VERSION_MIN_REQUIRED
 #define CC_USES_VBO 1
 #else
 #define CC_USES_VBO 0

@@ -281,7 +281,7 @@
 	}
 	
 	if( particleIdx != particleCount ) {
-		NSLog(@"pd:%d, pc:%d", particleIdx, particleCount);
+		NSLog(@"pd:%d, pc:%d", (unsigned int)particleIdx, (unsigned int)particleCount);
 	}
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices);	
 	

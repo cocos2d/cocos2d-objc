@@ -52,6 +52,8 @@
 #import "MacGLView.h"
 #import <OpenGL/gl.h>
 
+#import "CCDirector.h"
+
 
 @implementation MacGLView
 
@@ -96,12 +98,12 @@
 	CGLLockContext([[self openGLContext] CGLContextObj]);
 	
 	NSRect rect = [self bounds];
-	glViewport(0, 0, rect.size.width, rect.size.height);
 	
-	glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-1.0f, rect.size.width, 0, rect.size.height, -1024, 1024);
-	glMatrixMode(GL_MODELVIEW);
+	CCDirector *director = [CCDirector sharedDirector];
+	[director reshapeProjection:rect.size];
+	
+	// avoid flicker
+	[director drawScene];
 	
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }

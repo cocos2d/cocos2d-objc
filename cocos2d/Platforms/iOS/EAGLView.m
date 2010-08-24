@@ -64,11 +64,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <QuartzCore/QuartzCore.h>
 
 #import "EAGLView.h"
-#import "OpenGL_Internal.h"
-#import "CCConfiguration.h"
-#import "ccMacros.h"
 #import "ES1Renderer.h"
-#import "CCDirectorIOS.h"
+#import "../../CCDirector.h"
+#import "../../ccMacros.h"
+#import "../../CCConfiguration.h"
+#import "../../Support/OpenGL_Internal.h"
+
+
+
 
 //CLASS IMPLEMENTATIONS:
 
@@ -187,8 +190,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	size_ = [renderer_ backingSize];
 
 	// Issue #914 #924
-	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
-	[director recalculateProjectionAndEAGLViewSize];
+	CCDirector *director = [CCDirector sharedDirector];
+	[director reshapeProjection:size_];
 
 	// Avoid flicker. Issue #350
 	[director drawScene];	

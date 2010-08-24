@@ -27,10 +27,10 @@
 		[sprite runAction:forever];
 		
 		
-		// particle
+		// particle. NOT WORKING !?!?
 		CCParticleSystem *particle = [CCParticleSun node];
-		particle.position = ccp(3*s.width/4, s.height/2);
-		[self addChild:particle];
+		particle.position = ccp(s.width/2, s.height/2);
+		[self addChild:particle z:10];
 		
 		
 		// BMFont
@@ -39,7 +39,7 @@
 		[self addChild:label];
 		
 		
-		// Tile Map
+		// Tile Map 1.
 		{
 			CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 			// Convert it to "anti alias" (GL_LINEAR filtering)
@@ -64,6 +64,29 @@
 			[map runAction:[CCRepeatForever actionWithAction:seq]];
 		}
 		
+		// Tile map 2
+		{
+			//
+			// Test orthogonal with 3d camera and anti-alias textures
+			//
+			// it should not flicker. No artifacts should appear
+			//
+			
+			CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
+			[self addChild:map z:-10];
+			
+			CGSize s = map.contentSize;
+			NSLog(@"ContentSize: %f, %f", s.width,s.height);
+			
+			for( CCSpriteBatchNode* child in [map children] ) {
+				[[child texture] setAntiAliasTexParameters];
+			}
+			
+			float x, y, z;
+			[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
+			[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
+			
+		}		
 		
 	}
 	
@@ -81,8 +104,10 @@
 	CCDirector *director = [CCDirector sharedDirector];
 
 	[director setDisplayFPS:YES];
-
+	
 	[director setOpenGLView:glView];
+	
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	CCScene *scene = [CCScene node];
 	MyLayer *layer = [MyLayer node];

@@ -181,7 +181,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	
 	// Different modes
 	
-	int emitterMode_;
+	NSInteger emitterMode_;
 	union {
 		// Mode A:Gravity + Tangential Accel + Radial Accel
 		struct {
@@ -258,9 +258,9 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	// Array of particles
 	tCCParticle *particles;
 	// Maximum particles
-	int totalParticles;
+	NSUInteger totalParticles;
 	// Count of active particles
-	int particleCount;
+	NSUInteger particleCount;
 	
 	// color modulate
 //	BOOL colorModulate;
@@ -281,7 +281,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	BOOL	autoRemoveOnFinish_;
 
 	//  particle idx
-	int particleIdx;
+	NSUInteger particleIdx;
 	
 	// Optimization
 	CC_UPDATE_PARTICLE_IMP	updateParticleImp;
@@ -296,7 +296,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** Is the emitter active */
 @property (nonatomic,readonly) BOOL active;
 /** Quantity of particles that are being simulated at the moment */
-@property (nonatomic,readonly) int	particleCount;
+@property (nonatomic,readonly) NSUInteger	particleCount;
 /** How many seconds the emitter wil run. -1 means 'forever' */
 @property (nonatomic,readwrite,assign) float duration;
 /** centerOfGravity of the emitter */
@@ -367,7 +367,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** emission rate of the particles */
 @property (nonatomic,readwrite,assign) float emissionRate;
 /** maximum particles of the system */
-@property (nonatomic,readwrite,assign) int totalParticles;
+@property (nonatomic,readwrite,assign) NSUInteger totalParticles;
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite, retain) CCTexture2D * texture;
 /** conforms to CocosNodeTexture protocol */
@@ -393,7 +393,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
    - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
    - kCCParticleModeRadius: uses radius movement + rotation
  */
-@property (nonatomic,readwrite) int emitterMode;
+@property (nonatomic,readwrite) NSInteger emitterMode;
 
 /** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
