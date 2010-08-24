@@ -103,6 +103,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:nil] autorelease];
 }
 
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup *)sharegroup
+{
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup] autorelease];
+}
+
 - (id) initWithFrame:(CGRect)frame
 {
 	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil];
