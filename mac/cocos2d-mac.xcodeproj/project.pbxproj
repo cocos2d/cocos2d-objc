@@ -337,6 +337,10 @@
 		E0F929CC122448B100EF2362 /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F929C8122448B100EF2362 /* CCMotionStreak.m */; };
 		E0F929CD122448B100EF2362 /* CCRibbon.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F929C9122448B100EF2362 /* CCRibbon.h */; };
 		E0F929CE122448B100EF2362 /* CCRibbon.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F929CA122448B100EF2362 /* CCRibbon.m */; };
+		E0F92AB61224546E00EF2362 /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AB41224546E00EF2362 /* CCSpriteFrameCache.h */; };
+		E0F92AB71224546E00EF2362 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F92AB51224546E00EF2362 /* CCSpriteFrameCache.m */; };
+		E0F92AE41224570700EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AE31224570700EF2362 /* CCNS.h */; };
+		E0F92B3C12245A2B00EF2362 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E0F92B3B12245A2B00EF2362 /* Particles */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -698,6 +702,14 @@
 		E0F929C8122448B100EF2362 /* CCMotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMotionStreak.m; sourceTree = "<group>"; };
 		E0F929C9122448B100EF2362 /* CCRibbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRibbon.h; sourceTree = "<group>"; };
 		E0F929CA122448B100EF2362 /* CCRibbon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRibbon.m; sourceTree = "<group>"; };
+		E0F92AB41224546E00EF2362 /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
+		E0F92AB51224546E00EF2362 /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
+		E0F92AE31224570700EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
+		E0F92B3B12245A2B00EF2362 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = ../Resources/Particles; sourceTree = SOURCE_ROOT; };
+		E0F92B7012245C7900EF2362 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = SOURCE_ROOT; };
+		E0F92B7112245C7900EF2362 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CHANGELOG; path = ../CHANGELOG; sourceTree = SOURCE_ROOT; };
+		E0F92B7212245C7900EF2362 /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DONORS; path = ../DONORS; sourceTree = SOURCE_ROOT; };
+		E0F92B7312245C7900EF2362 /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.cocos2d; path = ../LICENSE.cocos2d; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -769,6 +781,10 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
+				E0F92B7012245C7900EF2362 /* AUTHORS */,
+				E0F92B7112245C7900EF2362 /* CHANGELOG */,
+				E0F92B7212245C7900EF2362 /* DONORS */,
+				E0F92B7312245C7900EF2362 /* LICENSE.cocos2d */,
 				E01E6651121CA044001A484F /* cocos2d */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -792,6 +808,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0F92B3B12245A2B00EF2362 /* Particles */,
 				E0F927FE1224415B00EF2362 /* Images */,
 				E0EAE3F912230C0B00B0C81C /* TileMaps */,
 				E0EAE357122309F500B0C81C /* Fonts */,
@@ -958,6 +975,7 @@
 				E0EAD146121F4C1700B0C81C /* iOS */,
 				E0EAD157121F4C1700B0C81C /* Mac */,
 				E0EAD1A2121F4DCD00B0C81C /* CCGL.h */,
+				E0F92AE31224570700EF2362 /* CCNS.h */,
 			);
 			path = Platforms;
 			sourceTree = "<group>";
@@ -1052,6 +1070,8 @@
 				E0EADC1E1222BFC900B0C81C /* CCSpriteBatchNode.m */,
 				E0EADC1F1222BFC900B0C81C /* CCSpriteFrame.h */,
 				E0EADC201222BFC900B0C81C /* CCSpriteFrame.m */,
+				E0F92AB41224546E00EF2362 /* CCSpriteFrameCache.h */,
+				E0F92AB51224546E00EF2362 /* CCSpriteFrameCache.m */,
 			);
 			name = "Sprite Nodes";
 			sourceTree = "<group>";
@@ -1377,6 +1397,8 @@
 				E0F929C31224488900EF2362 /* CCTransitionRadial.h in Headers */,
 				E0F929CB122448B100EF2362 /* CCMotionStreak.h in Headers */,
 				E0F929CD122448B100EF2362 /* CCRibbon.h in Headers */,
+				E0F92AB61224546E00EF2362 /* CCSpriteFrameCache.h in Headers */,
+				E0F92AE41224570700EF2362 /* CCNS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1632,6 +1654,7 @@
 				E0F9294C1224415B00EF2362 /* texture4096x4096.png in Resources */,
 				E0F9294D1224415B00EF2362 /* texture512x512.png in Resources */,
 				E0F9294E1224415B00EF2362 /* texture512x512_rgba4444.pvr in Resources */,
+				E0F92B3C12245A2B00EF2362 /* Particles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1711,6 +1734,7 @@
 				E0F929C41224488900EF2362 /* CCTransitionRadial.m in Sources */,
 				E0F929CC122448B100EF2362 /* CCMotionStreak.m in Sources */,
 				E0F929CE122448B100EF2362 /* CCRibbon.m in Sources */,
+				E0F92AB71224546E00EF2362 /* CCSpriteFrameCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

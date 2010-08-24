@@ -19,6 +19,7 @@ version 0.99.5-beta2 XX-Ago-2010
  . [NEW] Transitions: new transition naming convention (issue #946)
  . [FIX] Artifact fixer is a compile time option in ccConfig. Disabled by default
  . [FIX] ccCArray: off-by-1 offset, and lastObject fixed (issue #960 and #961)
+ . [FIX] ccTypes: using GL types for CC GL structures. Prevents possible errors on 64-bit machines
  . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager
  . [FIX] CocosDenshion: panning does not work correctly on iOS4 (issue #949)
  . [FIX] Director: Works with Fast FPS disabled (issue #954)

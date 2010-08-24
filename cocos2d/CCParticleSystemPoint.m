@@ -75,8 +75,12 @@
 
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
 {
+	ccVertex2F pos;
+	pos.x = newPos.x;
+	pos.y = newPos.y;
+	
 	// place vertices and colos in array
-	vertices[particleIdx].pos = newPos;
+	vertices[particleIdx].pos = pos;
 	vertices[particleIdx].size = p->size;
 	vertices[particleIdx].colors = p->color;
 }

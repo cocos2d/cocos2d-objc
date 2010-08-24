@@ -271,14 +271,14 @@ static CCTextureCache *sharedTextureCache;
 
 		// Only in Mac
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
-		else {
-			NSURL *url = [NSURL fileURLWithPath: fullpath];
-			CGImageSourceRef src = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-			CGImageRef image = CGImageSourceCreateImageAtIndex(src, 0, NULL);			
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
-			CGImageRelease(image);
-			CFRelease(src);
+		else {			
+			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
+			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+			tex = [ [CCTexture2D alloc] initWithImage:[image CGImage]];
 			
+			[data release];
+			[image release];
+
 			if( tex )
 				[textures setObject: tex forKey:path];
 			else

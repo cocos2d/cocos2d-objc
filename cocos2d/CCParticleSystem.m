@@ -218,8 +218,6 @@
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-		
 		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
 
 		if ( ! texture_ && textureData) {
@@ -235,15 +233,16 @@
 				
 			NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
 			NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
-			UIImage *image = [[UIImage alloc] initWithData:data];
 			
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+			UIImage *image = [[UIImage alloc] initWithData:data];
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+#endif
 			self.texture = [[CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName];
 			[data release];
 			[image release];
 		}
-#else
-		NSAssert(NO, @"ParticleDesigner format is not supported yet in Mac");
-#endif // ! __IPHONE_OS_VERSION_MIN_REQUIRED
 		
 		NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
 		

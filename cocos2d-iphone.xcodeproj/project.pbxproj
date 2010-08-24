@@ -1858,6 +1858,7 @@
 		E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */; };
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
+		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3737,6 +3738,7 @@
 		E0EADCBB1222C6E600B0C81C /* MacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacGLView.m; sourceTree = "<group>"; };
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
+		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6358,6 +6360,7 @@
 				E0EAD0E9121F4B4600B0C81C /* iOS */,
 				E0EAD0FA121F4B4600B0C81C /* Mac */,
 				E0EAD19C121F4D7300B0C81C /* CCGL.h */,
+				E0F92AC31224559800EF2362 /* CCNS.h */,
 			);
 			path = Platforms;
 			sourceTree = "<group>";
@@ -6480,6 +6483,7 @@
 				E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */,
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
+				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

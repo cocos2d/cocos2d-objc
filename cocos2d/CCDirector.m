@@ -415,9 +415,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers
-#if __IPHONE_OS_VERSION_MIN_REQURIED
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
-#endif
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];
