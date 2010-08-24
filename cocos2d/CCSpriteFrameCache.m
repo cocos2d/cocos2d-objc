@@ -139,7 +139,6 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		} else if(format == 1 || format == 2) {
 			CGRect frame = CCRectFromString([frameDict objectForKey:@"frame"]);
 			BOOL rotated = NO;
-			
 			// rotation
 			if(format == 2)
 				rotated = [[frameDict objectForKey:@"rotated"] boolValue];
