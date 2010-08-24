@@ -339,6 +339,12 @@ static CCDirector *_sharedDirector = nil;
 	return surfaceSize_;
 }
 
+-(void) reshapeProjection:(CGSize)newWindowSize
+{
+	surfaceSize_ = screenSize_ = newWindowSize;
+	[self setProjection:projection_];
+}
+
 #pragma mark Director Scene Management
 
 - (void)runWithScene:(CCScene*) scene

@@ -256,11 +256,6 @@ typedef enum {
  */
 -(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame DEPRECATED_ATTRIBUTE;
 
-/** recalculate the projection view and projection size based on the EAGLVIEW
- @since v0.99.4
- */
-- (void) recalculateProjectionAndEAGLViewSize;
-
 @end
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.

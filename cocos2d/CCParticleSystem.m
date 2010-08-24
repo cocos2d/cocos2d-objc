@@ -102,7 +102,7 @@
 
 -(id) initWithDictionary:(NSDictionary *)dictionary
 {
-	int maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
+	NSUInteger maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
 	// self, not super
 	if ((self=[self initWithTotalParticles:maxParticles] ) ) {
 		
@@ -226,11 +226,11 @@
 			
 			// if it fails, try to get it from the base64-gzipped data			
 			unsigned char *buffer = NULL;
-			int len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
+			NSUInteger len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
 			NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
 				
 			unsigned char *deflated = NULL;
-			int deflatedLen = inflateMemory(buffer, len, &deflated);
+			NSUInteger deflatedLen = inflateMemory(buffer, len, &deflated);
 			free( buffer );
 				
 			NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");

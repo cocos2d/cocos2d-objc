@@ -160,7 +160,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	glPopMatrix();
 	
 //	glFinish();
-	glFlush();
+//	glFlush();
 		
 	[[openGLView_ openGLContext] flushBuffer];	
 	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
