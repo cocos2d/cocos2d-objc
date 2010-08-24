@@ -248,8 +248,7 @@
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
-	
-	
+
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 
 #define kQuadSize sizeof(quads_[0].bl)
@@ -276,8 +275,9 @@
 	
 	// tex coords
 	diff = offsetof( ccV2F_C4F_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));	
-#endif // CC_USES_VBO
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
+
+#endif // ! CC_USES_VBO
 	
 	
 	
@@ -288,7 +288,6 @@
 	}
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
-	
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices_);
 	
 	// restore blend state
