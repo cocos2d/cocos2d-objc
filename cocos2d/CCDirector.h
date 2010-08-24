@@ -88,7 +88,7 @@ and when to execute the Scenes.
 	/* display FPS ? */
 	BOOL displayFPS_;
 
-	int frames_;
+	NSUInteger frames_;
 	ccTime accumDt_;
 	ccTime frameRate_;
 #if	CC_DIRECTOR_FAST_FPS

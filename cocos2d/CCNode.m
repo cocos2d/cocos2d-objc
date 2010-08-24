@@ -412,7 +412,7 @@
 // helper used by reorderChild & add
 -(void) insertChild:(CCNode*)child z:(int)z
 {
-	int index=0;
+	NSUInteger index=0;
 	BOOL added = NO;
 	CCNode *a;
 	CCARRAY_FOREACH(children_, a){
@@ -468,7 +468,7 @@
 	
 	if(children_) {
 		ccArray *arrayData = children_->data;
-		int i=0;
+		NSUInteger i=0;
 		
 		// draw children zOrder < 0
 		for( ; i < arrayData->num; i++ ) {

@@ -172,7 +172,7 @@
 	NSAssert( totalQuads_ <= capacity_, @"invalid totalQuads");
 	
 	// issue #575. index can be > totalQuads
-	int remaining = (totalQuads_-1) - index;
+	NSInteger remaining = (totalQuads_-1) - index;
 	
 	// last object doesn't need to be moved
 	if( remaining > 0) {
@@ -193,8 +193,8 @@
 		return;
 
 	NSUInteger howMany = abs( oldIndex - newIndex);
-	int dst = oldIndex;
-	int src = oldIndex + 1;
+	NSUInteger dst = oldIndex;
+	NSUInteger src = oldIndex + 1;
 	if( oldIndex > newIndex) {
 		dst = newIndex+1;
 		src = newIndex;
@@ -310,10 +310,10 @@
 	
 #else // ! CC_USES_VBO
 	
-	int offset = (int)quads_;
+	NSUInteger offset = (int)quads_;
 
 	// vertex
-	int diff = offsetof( ccV3F_C4B_T2F, vertices);
+	NSUInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
 
 	// color

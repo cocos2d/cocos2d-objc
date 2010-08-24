@@ -604,7 +604,7 @@ struct transformValues_ {
 	long offset = (long)&quad_;
 	
 	// vertex
-	int diff = offsetof( ccV3F_C4B_T2F, vertices);
+	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
 	
 	// color
