@@ -79,8 +79,8 @@ enum {
  Structure that contains the values of each particle
  */
 typedef struct sCCParticle {
-	CGPoint				pos;
-	CGPoint				startPos;
+	CGPoint		pos;
+	CGPoint		startPos;
 
 	ccColor4F	color;
 	ccColor4F	deltaColor;
@@ -146,7 +146,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  cocos2d uses a another approach, but the results are almost identical. 
  
  cocos2d supports all the variables used by Particle Designer plus a bit more:
-	- spinning particles (supported when using CCQuadParticleSystem)
+	- spinning particles (supported when using CCParticleSystemQuad)
 	- tangential acceleration (Gravity mode)
 	- radial acceleration (Gravity mode)
 	- radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only)

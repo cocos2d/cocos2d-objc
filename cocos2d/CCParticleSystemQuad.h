@@ -46,10 +46,10 @@
  */
 @interface CCParticleSystemQuad : CCParticleSystem
 {
-	ccV2F_C4F_T2F_Quad	*quads;		// quads to be rendered
-	GLushort			*indices;	// indices
+	ccV2F_C4F_T2F_Quad	*quads_;		// quads to be rendered
+	GLushort			*indices_;		// indices
 #if CC_USES_VBO
-	GLuint				quadsID;	// VBO id
+	GLuint				quadsID_;		// VBO id
 #endif
 }
 

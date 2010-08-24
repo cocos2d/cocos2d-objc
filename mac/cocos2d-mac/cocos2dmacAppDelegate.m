@@ -15,30 +15,33 @@
 -(id) init
 {
 	if ((self=[super init]) ) {
-		
-		// sprite
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
-		sprite.position = ccp(s.width/4, s.height/2);
-		[self addChild:sprite];
-		
-		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
-		id forever = [CCRepeatForever actionWithAction:rotate];
-		[sprite runAction:forever];
+
+		// sprite
+//		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+//		sprite.position = ccp(s.width/4, s.height/2);
+//		[self addChild:sprite];
+//		
+//		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
+//		id forever = [CCRepeatForever actionWithAction:rotate];
+//		[sprite runAction:forever];
 		
 		
 		// particle. NOT WORKING !?!?
-		CCParticleSystem *particle = [CCParticleSun node];
+		CCParticleSystem *particle = [CCParticleFlower node];
 		particle.position = ccp(s.width/2, s.height/2);
 		[self addChild:particle z:10];
 		
 		
 		// BMFont
-		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"cocos2d for Mac" fntFile:@"bitmapFontTest4.fnt"];
-		label.position = ccp(s.width/2, s.height-80);
-		[self addChild:label];
+//		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"cocos2d for Mac" fntFile:@"bitmapFontTest4.fnt"];
+//		label.position = ccp(s.width/2, s.height-80);
+//		[self addChild:label];
 		
 		
+		
+#if 0
 		// Tile Map 1.
 		{
 			CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
@@ -63,6 +66,9 @@
 			
 			[map runAction:[CCRepeatForever actionWithAction:seq]];
 		}
+#endif
+		
+#if 0
 		
 		// Tile map 2
 		{
@@ -87,6 +93,7 @@
 			[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
 			
 		}		
+#endif
 		
 	}
 	

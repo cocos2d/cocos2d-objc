@@ -278,6 +278,9 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n
 {	
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: -
 	
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 #define kQuadSize sizeof(quads_[0].bl)
@@ -290,19 +293,19 @@
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0]) * n, quads_);
 	
 	// vertices
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, vertices));
+	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
 	
 	// colors
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, colors));
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
 	
 	// tex coords
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, texCoords));
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (void*)0);    
+	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0);    
 #else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, (void*)0); 
+	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0); 
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -310,19 +313,19 @@
 	
 #else // ! CC_USES_VBO
 	
-	NSUInteger offset = (int)quads_;
+	NSUInteger offset = (NSUInteger)quads_;
 
 	// vertex
 	NSUInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
+	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) (offset + diff) );
 
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
 	
 	// tex coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
 	
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices_);	
