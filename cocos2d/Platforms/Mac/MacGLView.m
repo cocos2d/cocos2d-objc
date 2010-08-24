@@ -100,7 +100,7 @@
 	NSRect rect = [self bounds];
 	
 	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection:rect.size];
+	[director reshapeProjection: NSSizeToCGSize(rect.size) ];
 	
 	// avoid flicker
 	[director drawScene];
