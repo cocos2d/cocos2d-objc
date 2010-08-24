@@ -80,6 +80,7 @@
 #import "CCParticleExamples.h"
 
 #import "CCTexture2D.h"
+#import "CCTexturePVR.h"
 #import "CCTextureCache.h"
 #import "CCTextureAtlas.h"
 
@@ -125,7 +126,6 @@
 #import "Platforms/iOS/CCTouchDelegateProtocol.h"
 #import "Platforms/iOS/CCTouchHandler.h"
 #import "Platforms/iOS/EAGLView.h"
-#import "Platforms/iOS/CCTexturePVR.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED

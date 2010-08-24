@@ -136,7 +136,7 @@ enum {
 	CCGridBase *grid_;
 	
 	// z-order value
-	int zOrder_;
+	NSInteger zOrder_;
 	
 	// array of children
 	CCArray *children_;
@@ -145,7 +145,7 @@ enum {
 	CCNode *parent_;
 	
 	// a tag. any number you want to assign to the node
-	int tag_;
+	NSInteger tag_;
     
 	// user data field
 	void *userData;
@@ -162,7 +162,7 @@ enum {
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
-@property(nonatomic,readonly) int zOrder;
+@property(nonatomic,readonly) NSInteger zOrder;
 /** The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
    - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
@@ -221,7 +221,7 @@ enum {
  */
 @property(nonatomic,readwrite,assign) BOOL isRelativeAnchorPoint;
 /** A tag used to identify the node easily */
-@property(nonatomic,readwrite,assign) int tag;
+@property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
 @property(nonatomic,readwrite,assign) void *userData;
 

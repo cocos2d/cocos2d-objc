@@ -163,6 +163,8 @@
 		E0EAE39E122309F500B0C81C /* Scissor Cuts.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE36A122309F500B0C81C /* Scissor Cuts.ttf */; };
 		E0EAE39F122309F500B0C81C /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE36B122309F500B0C81C /* tuffy_bold_italic-charmap.png */; };
 		E0EAE3FA12230C0B00B0C81C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E0EAE3F912230C0B00B0C81C /* TileMaps */; };
+		E0F9241D12240EF800EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9241B12240EF800EF2362 /* CCTexturePVR.h */; };
+		E0F9241E12240EF800EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F9241C12240EF800EF2362 /* CCTexturePVR.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,8 +251,6 @@
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E0EAD147121F4C1700B0C81C /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
 		E0EAD148121F4C1700B0C81C /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
-		E0EAD149121F4C1700B0C81C /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
-		E0EAD14A121F4C1700B0C81C /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0EAD14B121F4C1700B0C81C /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
 		E0EAD14C121F4C1700B0C81C /* CCTouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDispatcher.h; sourceTree = "<group>"; };
 		E0EAD14D121F4C1700B0C81C /* CCTouchDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchDispatcher.m; sourceTree = "<group>"; };
@@ -352,6 +352,8 @@
 		E0EAE36A122309F500B0C81C /* Scissor Cuts.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Scissor Cuts.ttf"; sourceTree = "<group>"; };
 		E0EAE36B122309F500B0C81C /* tuffy_bold_italic-charmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap.png"; sourceTree = "<group>"; };
 		E0EAE3F912230C0B00B0C81C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Resources/TileMaps; sourceTree = SOURCE_ROOT; };
+		E0F9241B12240EF800EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
+		E0F9241C12240EF800EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -579,12 +581,14 @@
 		E01E6C4D121EF4DD001A484F /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				E01E66B2121CA044001A484F /* CCTexture2D.h */,
+				E01E66B3121CA044001A484F /* CCTexture2D.m */,
+				E0F9241B12240EF800EF2362 /* CCTexturePVR.h */,
+				E0F9241C12240EF800EF2362 /* CCTexturePVR.m */,
 				E01E6C4E121EF506001A484F /* CCTextureCache.h */,
 				E01E6C4F121EF506001A484F /* CCTextureCache.m */,
 				E01E69DF121ED6EA001A484F /* CCTextureAtlas.h */,
 				E01E69E0121ED6EA001A484F /* CCTextureAtlas.m */,
-				E01E66B2121CA044001A484F /* CCTexture2D.h */,
-				E01E66B3121CA044001A484F /* CCTexture2D.m */,
 			);
 			name = Textures;
 			sourceTree = "<group>";
@@ -613,8 +617,6 @@
 			children = (
 				E0EAD147121F4C1700B0C81C /* CCDirectorIOS.h */,
 				E0EAD148121F4C1700B0C81C /* CCDirectorIOS.m */,
-				E0EAD149121F4C1700B0C81C /* CCTexturePVR.h */,
-				E0EAD14A121F4C1700B0C81C /* CCTexturePVR.m */,
 				E0EAD14B121F4C1700B0C81C /* CCTouchDelegateProtocol.h */,
 				E0EAD14C121F4C1700B0C81C /* CCTouchDispatcher.h */,
 				E0EAD14D121F4C1700B0C81C /* CCTouchDispatcher.m */,
@@ -833,6 +835,7 @@
 				E0EAE2421222FC8200B0C81C /* CCTMXObjectGroup.h in Headers */,
 				E0EAE2441222FC8200B0C81C /* CCTMXTiledMap.h in Headers */,
 				E0EAE2461222FC8200B0C81C /* CCTMXXMLParser.h in Headers */,
+				E0F9241D12240EF800EF2362 /* CCTexturePVR.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,6 +1005,7 @@
 				E0EAE2431222FC8200B0C81C /* CCTMXObjectGroup.m in Sources */,
 				E0EAE2451222FC8200B0C81C /* CCTMXTiledMap.m in Sources */,
 				E0EAE2471222FC8200B0C81C /* CCTMXXMLParser.m in Sources */,
+				E0F9241E12240EF800EF2362 /* CCTexturePVR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,6 +1089,7 @@
 					DEBUG,
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1100,6 +1105,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

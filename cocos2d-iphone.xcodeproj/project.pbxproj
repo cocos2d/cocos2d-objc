@@ -1842,8 +1842,6 @@
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
 		E0EAD0FF121F4B4600B0C81C /* CCDirectorIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0EA121F4B4600B0C81C /* CCDirectorIOS.h */; };
 		E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD0EB121F4B4600B0C81C /* CCDirectorIOS.m */; };
-		E0EAD101121F4B4600B0C81C /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0EC121F4B4600B0C81C /* CCTexturePVR.h */; };
-		E0EAD102121F4B4600B0C81C /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD0ED121F4B4600B0C81C /* CCTexturePVR.m */; };
 		E0EAD103121F4B4600B0C81C /* CCTouchDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0EE121F4B4600B0C81C /* CCTouchDelegateProtocol.h */; };
 		E0EAD104121F4B4600B0C81C /* CCTouchDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0EF121F4B4600B0C81C /* CCTouchDispatcher.h */; };
 		E0EAD105121F4B4600B0C81C /* CCTouchDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD0F0121F4B4600B0C81C /* CCTouchDispatcher.m */; };
@@ -1858,6 +1856,8 @@
 		E0EAD10E121F4B4600B0C81C /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0F9121F4B4600B0C81C /* glu.h */; };
 		E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD19C121F4D7300B0C81C /* CCGL.h */; };
 		E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */; };
+		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
+		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3717,8 +3717,6 @@
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
 		E0EAD0EA121F4B4600B0C81C /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
 		E0EAD0EB121F4B4600B0C81C /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
-		E0EAD0EC121F4B4600B0C81C /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
-		E0EAD0ED121F4B4600B0C81C /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0EAD0EE121F4B4600B0C81C /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
 		E0EAD0EF121F4B4600B0C81C /* CCTouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDispatcher.h; sourceTree = "<group>"; };
 		E0EAD0F0121F4B4600B0C81C /* CCTouchDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchDispatcher.m; sourceTree = "<group>"; };
@@ -3737,6 +3735,8 @@
 		E0EAD19C121F4D7300B0C81C /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		E0EADCBB1222C6E600B0C81C /* MacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacGLView.m; sourceTree = "<group>"; };
+		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
+		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5986,6 +5986,8 @@
 		50E1355310ADEA9400C9E7FA /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				E0F9246F1224140400EF2362 /* CCTexturePVR.h */,
+				E0F924701224140400EF2362 /* CCTexturePVR.m */,
 				50E1357110ADEB1B00C9E7FA /* CCTexture2D.h */,
 				50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */,
 				50637A150E95397A000C9182 /* CCTextureAtlas.h */,
@@ -6365,8 +6367,6 @@
 			children = (
 				E0EAD0EA121F4B4600B0C81C /* CCDirectorIOS.h */,
 				E0EAD0EB121F4B4600B0C81C /* CCDirectorIOS.m */,
-				E0EAD0EC121F4B4600B0C81C /* CCTexturePVR.h */,
-				E0EAD0ED121F4B4600B0C81C /* CCTexturePVR.m */,
 				E0EAD0EE121F4B4600B0C81C /* CCTouchDelegateProtocol.h */,
 				E0EAD0EF121F4B4600B0C81C /* CCTouchDispatcher.h */,
 				E0EAD0F0121F4B4600B0C81C /* CCTouchDispatcher.m */,
@@ -6470,7 +6470,6 @@
 				E0112F55120CB406006667F8 /* CCTransitionRadial.h in Headers */,
 				E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */,
 				E0EAD0FF121F4B4600B0C81C /* CCDirectorIOS.h in Headers */,
-				E0EAD101121F4B4600B0C81C /* CCTexturePVR.h in Headers */,
 				E0EAD103121F4B4600B0C81C /* CCTouchDelegateProtocol.h in Headers */,
 				E0EAD104121F4B4600B0C81C /* CCTouchDispatcher.h in Headers */,
 				E0EAD106121F4B4600B0C81C /* CCTouchHandler.h in Headers */,
@@ -6480,6 +6479,7 @@
 				E0EAD10E121F4B4600B0C81C /* glu.h in Headers */,
 				E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */,
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
+				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9439,12 +9439,12 @@
 				E0112F56120CB406006667F8 /* CCTransitionRadial.m in Sources */,
 				E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */,
 				E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */,
-				E0EAD102121F4B4600B0C81C /* CCTexturePVR.m in Sources */,
 				E0EAD105121F4B4600B0C81C /* CCTouchDispatcher.m in Sources */,
 				E0EAD107121F4B4600B0C81C /* CCTouchHandler.m in Sources */,
 				E0EAD109121F4B4600B0C81C /* EAGLView.m in Sources */,
 				E0EAD10B121F4B4600B0C81C /* ES1Renderer.m in Sources */,
 				E0EAD10D121F4B4600B0C81C /* glu.c in Sources */,
+				E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13580,7 +13580,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
@@ -13613,7 +13613,7 @@
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;

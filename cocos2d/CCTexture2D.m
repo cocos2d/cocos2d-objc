@@ -66,13 +66,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 
 
+#import <Availability.h>
+
+#import "Platforms/CCGL.h"
+
 #import "CCTexture2D.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
-
-#import "Platforms/CCGL.h"
+#import "CCTexturePVR.h"
 
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
@@ -195,9 +198,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
 	}
 		
-	unsigned maxTextureSize = [conf maxTextureSize];
+	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", POTWide, POTHigh, maxTextureSize, maxTextureSize);
+		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d",
+			  (unsigned int)POTWide, (unsigned int)POTHigh,
+			  (unsigned int)maxTextureSize, (unsigned int)maxTextureSize);
 		[self release];
 		return nil;
 	}
@@ -394,6 +399,85 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 }
 @end
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED 
+
+@implementation CCTexture2D (PVRSupport)
+
+// By default PVR images are treated as if they don't have the alpha channel premultiplied
+static BOOL PVRHaveAlphaPremultiplied_ = NO;
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
+{
+	//	GLint					saveName;
+	
+	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		[self release];
+		return nil;
+	}
+	
+	if((self = [super init])) {
+		glGenTextures(1, &name_);
+		glBindTexture(GL_TEXTURE_2D, name_);
+		
+		[self setAntiAliasTexParameters];
+		
+		GLenum format;
+		GLsizei size = length * length * bpp / 8;
+		if(hasAlpha) {
+			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+		} else {
+			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+		}
+		if(size < 32) {
+			size = 32;
+		}
+		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
+		
+		size_ = CGSizeMake(length, length);
+		width_ = length;
+		height_ = length;
+		maxS_ = 1.0f;
+		maxT_ = 1.0f;
+		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+	}					
+	return self;
+}
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
+-(id) initWithPVRFile: (NSString*) file
+{
+	if( (self = [super init]) ) {
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:file];
+		if( pvr ) {
+			pvr.retainName = YES;	// don't dealloc texture on release
+			
+			name_ = pvr.name;	// texture id
+			maxS_ = 1;			// only POT texture are supported
+			maxT_ = 1;
+			width_ = pvr.width;
+			height_ = pvr.height;
+			size_ = CGSizeMake(width_, height_);
+			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+			
+			[pvr release];
+			
+			[self setAntiAliasTexParameters];
+		} else {
+			
+			CCLOG(@"cocos2d: Couldn't load PVR image");
+			[self release];
+			return nil;
+		}
+	}
+	return self;
+}
+
++(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
+{
+	PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+}
+@end
 
 @implementation CCTexture2D (Drawing)
 

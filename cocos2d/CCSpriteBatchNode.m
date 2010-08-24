@@ -33,7 +33,7 @@
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
-const int defaultCapacity = 29;
+const NSUInteger defaultCapacity = 29;
 
 #pragma mark -
 #pragma mark CCSpriteBatchNode
@@ -317,7 +317,9 @@ const int defaultCapacity = 29;
 	// this is likely computationally expensive
 	NSUInteger quantity = (textureAtlas_.capacity + 1) * 4 / 3;
 	
-	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].", textureAtlas_.capacity, quantity);
+	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%u] to [%u].",
+		  (unsigned int)textureAtlas_.capacity,
+		  (unsigned int)quantity);
 	
 	
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
@@ -355,7 +357,7 @@ const int defaultCapacity = 29;
 -(NSUInteger) highestAtlasIndexInChild:(CCSprite*)sprite
 {
 	CCArray *array = [sprite children];
-	int count = [array count];
+	NSUInteger count = [array count];
 	if( count == 0 )
 		return sprite.atlasIndex;
 	else
@@ -365,7 +367,7 @@ const int defaultCapacity = 29;
 -(NSUInteger) lowestAtlasIndexInChild:(CCSprite*)sprite
 {
 	CCArray *array = [sprite children];
-	int count = [array count];
+	NSUInteger count = [array count];
 	if( count == 0 )
 		return sprite.atlasIndex;
 	else
