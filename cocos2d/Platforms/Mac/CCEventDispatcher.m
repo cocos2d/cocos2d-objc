@@ -27,10 +27,20 @@
 static CCEventDispatcher *sharedDispatcher = nil;
 
 enum  {
-	kCCImplementsMouseDown = 1 << 0,
-	kCCImplementsMouseUp = 1 << 1,
-	kCCImplementsMouseMoved = 1 << 2,
-	kCCImplementsMouseDragged = 1 << 3,
+	kCCImplementsMouseDown			= 1 << 0,
+	kCCImplementsMouseMoved			= 1 << 1,
+	kCCImplementsMouseDragged		= 1 << 2,	
+	kCCImplementsMouseUp			= 1 << 3,
+	kCCImplementsRightMouseDown		= 1 << 4,
+	kCCImplementsRightMouseDragged	= 1 << 5,
+	kCCImplementsRightMouseUp		= 1 << 6,
+	kCCImplementsOtherMouseDown		= 1 << 7,
+	kCCImplementsOtherMouseDragged	= 1 << 8,
+	kCCImplementsOtherMouseUp		= 1 << 9,
+	kCCImplementsScrollWheel		= 1 << 10,
+	kCCImplementsMouseEntered		= 1 << 11,
+	kCCImplementsMouseExited		= 1 << 12,
+		
 	
 	kCCImplementsKeyUp = 1 << 0,
 	kCCImplementsKeyDown = 1 << 1,
@@ -159,11 +169,24 @@ typedef struct _listEntry
 {
 	NSUInteger flags = 0;
 	
-	flags |= ( [delegate respondsToSelector:@selector(ccMouseUp:)] ? kCCImplementsMouseUp : 0 );
 	flags |= ( [delegate respondsToSelector:@selector(ccMouseDown:)] ? kCCImplementsMouseDown : 0 );
 	flags |= ( [delegate respondsToSelector:@selector(ccMouseDragged:)] ? kCCImplementsMouseDragged : 0 );
 	flags |= ( [delegate respondsToSelector:@selector(ccMouseMoved:)] ? kCCImplementsMouseMoved : 0 );
-	
+	flags |= ( [delegate respondsToSelector:@selector(ccMouseUp:)] ? kCCImplementsMouseUp : 0 );
+
+	flags |= ( [delegate respondsToSelector:@selector(ccRightMouseDown:)] ? kCCImplementsRightMouseDown : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccRightMouseDragged:)] ? kCCImplementsRightMouseDragged : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccRightMouseUp:)] ? kCCImplementsRightMouseUp : 0 );
+
+	flags |= ( [delegate respondsToSelector:@selector(ccOtherMouseDown:)] ? kCCImplementsOtherMouseDown : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccOtherMouseDragged:)] ? kCCImplementsOtherMouseDragged : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccOtherMouseUp:)] ? kCCImplementsOtherMouseUp : 0 );
+
+	flags |= ( [delegate respondsToSelector:@selector(ccMouseEntered:)] ? kCCImplementsMouseEntered : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccMouseExited:)] ? kCCImplementsMouseExited : 0 );
+
+	flags |= ( [delegate respondsToSelector:@selector(ccScrollWheel:)] ? kCCImplementsScrollWheel : 0 );
+
 	[self addDelegate:delegate priority:priority flags:flags list:&mouseDelegates_];
 }
 
@@ -198,7 +221,13 @@ typedef struct _listEntry
 }
 
 #pragma mark CCEventDispatcher - Mouse events
+//
 // Mouse events
+//
+
+//
+// Left
+//
 - (void)mouseDown:(NSEvent *)event
 {
 	if( dispatchEvents_ ) {
@@ -207,21 +236,6 @@ typedef struct _listEntry
 		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseDown ) {
 				void *swallows = [entry->delegate performSelector:@selector(ccMouseDown:) withObject:event];
-				if( swallows )
-					break;
-			}
-		}
-	}
-}
-
-- (void)mouseUp:(NSEvent *)event
-{
-	if( dispatchEvents_ ) {
-		tListEntry *entry, *tmp;
-		
-		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
-			if ( entry->flags & kCCImplementsMouseUp ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseUp:) withObject:event];
 				if( swallows )
 					break;
 			}
@@ -258,6 +272,168 @@ typedef struct _listEntry
 		}
 	}
 }
+
+- (void)mouseUp:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsMouseUp ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccMouseUp:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+//
+// Mouse Right
+//
+- (void)rightMouseDown:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsRightMouseDown ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccRightMouseDown:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)rightMouseDragged:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsRightMouseDragged ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccRightMouseDragged:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)rightMouseUp:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsRightMouseUp ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccRightMouseUp:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+//
+// Mouse Other
+//
+- (void)otherMouseDown:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsOtherMouseDown ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccOtherMouseDown:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)otherMouseDragged:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsOtherMouseDragged ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccOtherMouseDragged:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)otherMouseUp:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsOtherMouseUp ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccOtherMouseUp:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+//
+// Scroll Wheel
+//
+- (void)scrollWheel:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsScrollWheel ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccScrollWheel:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+//
+// Mouse enter / exit
+- (void)mouseExited:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsMouseEntered ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccMouseEntered:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}	
+}
+
+- (void)mouseEntered:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsMouseExited) {
+				void *swallows = [entry->delegate performSelector:@selector(ccMouseExited:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}	
+}
+
 
 #pragma mark CCEventDispatcher - Keyboard events
 

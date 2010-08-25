@@ -32,6 +32,16 @@
 - (void)mouseUp:(NSEvent *)theEvent;
 - (void)mouseMoved:(NSEvent *)theEvent;
 - (void)mouseDragged:(NSEvent *)theEvent;
+- (void)rightMouseDown:(NSEvent*)event;
+- (void)rightMouseDragged:(NSEvent*)event;
+- (void)rightMouseUp:(NSEvent*)event;
+- (void)otherMouseDown:(NSEvent*)event;
+- (void)otherMouseDragged:(NSEvent*)event;
+- (void)otherMouseUp:(NSEvent*)event;
+- (void)scrollWheel:(NSEvent *)theEvent;
+- (void)mouseEntered:(NSEvent *)theEvent;
+- (void)mouseExited:(NSEvent *)theEvent;
+
 
 // Keyboard
 - (void)keyDown:(NSEvent *)theEvent;

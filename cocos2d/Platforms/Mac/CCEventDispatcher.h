@@ -36,15 +36,14 @@
  */
 @protocol CCMouseEventDelegate <NSObject>
 @optional
+
+//
+// left
+//
 /** called when the "mouseDown" event is received.
  Return YES to avoid propagating the event to other delegates.
  */
 -(BOOL) ccMouseDown:(NSEvent*)event;
-
-/** called when the "mouseUp" event is received.
- Return YES to avoid propagating the event to other delegates.
- */
--(BOOL) ccMouseUp:(NSEvent*)event;
 
 /** called when the "mouseDragged" event is received.
  Return YES to avoid propagating the event to other delegates.
@@ -56,6 +55,75 @@
  By default, "mouseMoved" is disabled. To enable it, send the "setAcceptsMouseMovedEvents:YES" message to the main window.
  */
 -(BOOL) ccMouseMoved:(NSEvent*)event;
+
+/** called when the "mouseUp" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccMouseUp:(NSEvent*)event;
+
+
+//
+// right
+//
+
+/** called when the "rightMouseDown" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccRightMouseDown:(NSEvent*)event;
+
+/** called when the "rightMouseDragged" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccRightMouseDragged:(NSEvent*)event;
+
+/** called when the "rightMouseUp" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccRightMouseUp:(NSEvent*)event;
+
+//
+// other
+//
+
+/** called when the "otherMouseDown" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccOtherMouseDown:(NSEvent*)event;
+
+/** called when the "otherMouseDragged" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccOtherMouseDragged:(NSEvent*)event;
+
+/** called when the "otherMouseUp" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccOtherMouseUp:(NSEvent*)event;
+
+//
+// scroll wheel
+//
+
+/** called when the "scrollWheel" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (BOOL)ccScrollWheel:(NSEvent *)theEvent;
+
+
+//
+// enter / exit
+//
+
+/** called when the "mouseEntered" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (void)ccMouseEntered:(NSEvent *)theEvent;
+
+/** called when the "mouseExited" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (void)ccMouseExited:(NSEvent *)theEvent;
+
 @end
 
 #pragma mark -
