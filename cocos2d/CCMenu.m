@@ -27,22 +27,17 @@
 
 #import "CCMenu.h"
 #import "CCDirector.h"
-#import "CCTouchDispatcher.h"
 #import "Support/CGPointExtension.h"
 
 #import <Availability.h>
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCDirectorIOS.h"
+#import "Platforms/iOS/CCTouchDispatcher.h"
 #endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 enum {
 	kDefaultPadding =  5,
 };
-
-@interface CCMenu (Private)
-// returns touched menu item, if any
--(CCMenuItem *) itemForTouch: (UITouch *) touch;
-@end
 
 @implementation CCMenu
 
@@ -83,12 +78,14 @@ enum {
 		
 		// XXX: in v0.7, winSize should return the visible size
 		// XXX: so the bar calculation should be done there
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
 		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 		if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
 			s.height -= r.size.width;
 		else
 			s.height -= r.size.height;
+#endif
 		self.position = ccp(s.width/2, s.height/2);
 
 		int z=0;
@@ -125,11 +122,34 @@ enum {
 	return [super addChild:child z:z tag:aTag];
 }
 	
-#pragma mark Menu - Events
+#pragma mark Menu - Touches
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+}
+
+-(CCMenuItem *) itemForTouch: (UITouch *) touch
+{
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	
+	CCMenuItem* item;
+	CCARRAY_FOREACH(children_, item){
+		// ignore invisible and disabled items: issue #779, #866
+		if ( [item visible] && [item isEnabled] ) {
+			
+			CGPoint local = [item convertToNodeSpace:touchLocation];
+			
+			CGRect r = [item rect];
+			r.origin = CGPointZero;
+			
+			if( CGRectContainsPoint( r, local ) )
+				return item;
+		}
+	}
+	return nil;
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -178,6 +198,10 @@ enum {
 		[selectedItem selected];
 	}
 }
+#pragma mark Menu - Mouse
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#endif
 
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically
@@ -396,29 +420,5 @@ enum {
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(children_, item)
 		[item setColor:color_];
-}
-
-#pragma mark Menu - Private
-
--(CCMenuItem *) itemForTouch: (UITouch *) touch
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	CCMenuItem* item;
-	CCARRAY_FOREACH(children_, item){
-		// ignore invisible and disabled items: issue #779, #866
-		if ( [item visible] && [item isEnabled] ) {
-
-			CGPoint local = [item convertToNodeSpace:touchLocation];
-
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
-			
-			if( CGRectContainsPoint( r, local ) )
-				return item;
-		}
-	}
-	return nil;
 }
 @end

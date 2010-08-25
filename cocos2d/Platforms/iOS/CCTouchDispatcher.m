@@ -68,10 +68,10 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 		toQuit = NO;
 		locked = NO;
 
-		handlerHelperData[ccTouchBegan] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesBegan:withEvent:),@selector(ccTouchBegan:withEvent:),ccTouchSelectorBeganBit};
-		handlerHelperData[ccTouchMoved] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesMoved:withEvent:),@selector(ccTouchMoved:withEvent:),ccTouchSelectorMovedBit};
-		handlerHelperData[ccTouchEnded] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesEnded:withEvent:),@selector(ccTouchEnded:withEvent:),ccTouchSelectorEndedBit};
-		handlerHelperData[ccTouchCancelled] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesCancelled:withEvent:),@selector(ccTouchCancelled:withEvent:),ccTouchSelectorCancelledBit};
+		handlerHelperData[kCCTouchBegan] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesBegan:withEvent:),@selector(ccTouchBegan:withEvent:),kCCTouchSelectorBeganBit};
+		handlerHelperData[kCCTouchMoved] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesMoved:withEvent:),@selector(ccTouchMoved:withEvent:),kCCTouchSelectorMovedBit};
+		handlerHelperData[kCCTouchEnded] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesEnded:withEvent:),@selector(ccTouchEnded:withEvent:),kCCTouchSelectorEndedBit};
+		handlerHelperData[kCCTouchCancelled] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesCancelled:withEvent:),@selector(ccTouchCancelled:withEvent:),kCCTouchSelectorCancelledBit};
 		
 	}
 	
@@ -230,7 +230,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 			for(CCTargetedTouchHandler *handler in targetedHandlers) {
 				
 				BOOL claimed = NO;
-				if( idx == ccTouchBegan ) {
+				if( idx == kCCTouchBegan ) {
 					claimed = [handler.delegate ccTouchBegan:touch withEvent:event];
 					if( claimed )
 						[handler.claimedTouches addObject:touch];
@@ -242,7 +242,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 					if( handler.enabledSelectors & helper.type )
 						[handler.delegate performSelector:helper.touchSel withObject:touch withObject:event];
 					
-					if( helper.type & (ccTouchSelectorCancelledBit | ccTouchSelectorEndedBit) )
+					if( helper.type & (kCCTouchSelectorCancelledBit | kCCTouchSelectorEndedBit) )
 						[handler.claimedTouches removeObject:touch];
 				}
 					
@@ -298,23 +298,23 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )
-		[self touches:touches withEvent:event withTouchType:ccTouchBegan];
+		[self touches:touches withEvent:event withTouchType:kCCTouchBegan];
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents ) 
-		[self touches:touches withEvent:event withTouchType:ccTouchMoved];
+		[self touches:touches withEvent:event withTouchType:kCCTouchMoved];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )
-		[self touches:touches withEvent:event withTouchType:ccTouchEnded];
+		[self touches:touches withEvent:event withTouchType:kCCTouchEnded];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if( dispatchEvents )
-		[self touches:touches withEvent:event withTouchType:ccTouchCancelled];
+		[self touches:touches withEvent:event withTouchType:kCCTouchCancelled];
 }
 @end

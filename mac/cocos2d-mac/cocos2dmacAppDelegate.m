@@ -12,6 +12,10 @@
 
 @implementation MyLayer
 
+-(void) menuCallback:(id)sender
+{
+}
+
 -(id) init
 {
 	if ((self=[super init]) ) {
@@ -19,6 +23,70 @@
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 #if 1
+		{
+			// menu.
+			[CCMenuItemFont setFontSize:30];
+			[CCMenuItemFont setFontName: @"Courier New"];
+			
+			// Font Item
+			
+			CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
+			CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
+			CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
+			CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback:)];
+			
+			// Image Item
+			CCMenuItem *item2 = [CCMenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback:)];
+			
+			// Label Item (LabelAtlas)
+			CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+			CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallback:)];
+			item3.disabledColor = ccc3(32,32,64);
+			item3.color = ccc3(200,200,255);
+			
+			
+			// Font Item
+			CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallback:)];
+			
+			// Label Item (BitmapFontAtlas)
+			CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
+			CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback:)];
+			
+			// Testing issue #500
+			item5.scale = 0.8f;
+			
+			// Font Item
+			CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(menuCallback:)];
+			
+			id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
+			id color_back = [color_action reverse];
+			id seq = [CCSequence actions:color_action, color_back, nil];
+			[item6 runAction:[CCRepeatForever actionWithAction:seq]];
+			
+			CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
+			[menu alignItemsVertically];
+			
+			
+			// elastic effect
+			int i=0;
+			for( CCNode *child in [menu children] ) {
+				CGPoint dstPoint = child.position;
+				int offset = s.width/2 + 50;
+				if( i % 2 == 0)
+					offset = -offset;
+				child.position = ccp( dstPoint.x + offset, dstPoint.y);
+				[child runAction: 
+				 [CCEaseElasticOut actionWithAction:
+				  [CCMoveBy actionWithDuration:2 position:ccp(dstPoint.x - offset,0)]
+											 period: 0.35f]
+				 ];
+				i++;
+			}
+						
+			[self addChild: menu];
+		}
+#endif
+#if 0
 		{
 			// sprite. Works OK.
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
@@ -31,7 +99,7 @@
 		}
 #endif
 
-#if 1
+#if 0
 		{
 			// Effects. Works OK.			
 			CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
@@ -49,7 +117,7 @@
 		}
 #endif
 
-#if 1
+#if 0
 		{
 			// Progress action. Works OK.
 			CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
@@ -62,7 +130,7 @@
 		}
 #endif
 		
-#if 1
+#if 0
 		{
 			// particle. Works OK
 			CCParticleSystem *particle = [CCParticleFlower node];
@@ -71,7 +139,7 @@
 		}
 #endif
 
-#if 1
+#if 0
 		{
 			// particle designer. Works OK
 			CCParticleSystem *particle = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
@@ -81,7 +149,7 @@
 #endif
 		
 		
-#if 1
+#if 0
 		{
 			// BMFont. Works OK.
 			CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"cocos2d for Mac" fntFile:@"bitmapFontTest4.fnt"];
@@ -91,7 +159,7 @@
 #endif
 		
 		
-#if 1
+#if 0
 		{
 			// Tile Map 1. Works OK.
 			CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
@@ -118,7 +186,7 @@
 		}
 #endif
 		
-#if 1
+#if 0
 		{
 			// Tile map 2. Works OK.			
 			CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
