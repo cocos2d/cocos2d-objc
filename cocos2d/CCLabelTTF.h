@@ -24,6 +24,7 @@
  */
 
 
+#import "Platforms/CCNS.h"
 #import "CCTexture2D.h"
 #import "CCSprite.h"
 
@@ -36,17 +37,17 @@
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
 	CGSize dimensions_;
-	UITextAlignment alignment_;
+	CCTextAlignment alignment_;
 	NSString * fontName_;
 	CGFloat fontSize_;
 }
 
 /** creates a CCLabel from a fontname, alignment, dimension and font size */
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** creates a CCLabel from a fontname and font size */
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name, alignment, dimension and font size */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name and font size */
 - (id) initWithString:(NSString*)string  fontName:(NSString*)name fontSize:(CGFloat)size;
 

@@ -69,6 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <Foundation/Foundation.h> //	for NSObject
 
 #import "Platforms/CCGL.h" // OpenGL stuff
+#import "Platforms/CCNS.h" // Next-Step stuff
 
 //CONSTANTS:
 
@@ -172,14 +173,12 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 Extensions to make it easy to create a CCTexture2D object from a string of text.
 Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 */
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @interface CCTexture2D (Text)
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 
 
 /**

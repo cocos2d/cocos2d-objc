@@ -23,27 +23,34 @@
  */
 
 //
-// Common layer for OpenGL stuff
+// Common layer for NS (Next-Step) stuff
 //
 
 #import <Availability.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-
 #define CCRectFromString(__r__)		CGRectFromString(__r__)
 #define CCPointFromString(__p__)	CGPointFromString(__p__)
 #define CCSizeFromString(__s__)		CGSizeFromString(__s__)
 #define CCNSSizeToCGSize
 #define CCNSRectToCGRect
 #define CCNSPointToCGPoint
+#define CCTextAlignment				UITextAlignment
+#define CCTextAlignmentCenter		UITextAlignmentCenter
+#define CCTextAlignmentLeft			UITextAlignmentLeft
+#define CCTextAlignmentRight		UITextAlignmentRight
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )
 #define CCSizeFromString(__s__)		NSSizeToCGSize( NSSizeFromString(__s__) )
-#define CCNSSizeToCGSize	NSSizeToCGSize
-#define CCNSRectToCGRect	NSRectToCGRect
-#define CCNSPointToCGPoint	NSPointToCGPoint
+#define CCNSSizeToCGSize			NSSizeToCGSize
+#define CCNSRectToCGRect			NSRectToCGRect
+#define CCNSPointToCGPoint			NSPointToCGPoint
+#define CCTextAlignment				NSTextAlignment
+#define CCTextAlignmentCenter		NSTextAlignmentCenter
+#define CCTextAlignmentLeft			NSTextAlignmentLeft
+#define CCTextAlignmentRight		NSTextAlignmentRight
 
 
 #endif
