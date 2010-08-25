@@ -69,6 +69,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <Availability.h>
 
 #import "Platforms/CCGL.h"
+#import "Platforms/CCNS.h"
+
 
 #import "CCTexture2D.h"
 #import "ccConfig.h"
@@ -325,7 +327,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
     CGSize dim;
 	
 #if CC_FONT_LABEL_SUPPORT
@@ -334,39 +335,35 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
         dim = [string sizeWithZFont:zFont];
     else
 #endif
+	{
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
         dim = [string sizeWithFont:[UIFont fontWithName:name size:size]];
+	
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		NSAttributedString *stringWithAttributes =
+		[[[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:
+																	   [[NSFontManager sharedFontManager]
+																		fontWithFamily:name
+																		traits:NSUnboldFontMask | NSUnitalicFontMask
+																		weight:0 size:size]
+																								  forKey:NSFontAttributeName]] autorelease];
+		dim = [stringWithAttributes size];
+#endif
+	}
     
 	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter fontName:name fontSize:size];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-	return nil;
-#endif
 }
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
+	NSUInteger width = ccNextPOT(dimensions.width);
+	NSUInteger height = ccNextPOT(dimensions.height);
+	unsigned char*			data;
+	
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-	NSUInteger				width,
-							height,
-							i;
 	CGContextRef			context;
-	void*					data;
 	CGColorSpaceRef			colorSpace;
-	id						uiFont;
-    
-	width = dimensions.width;
-	if((width != 1) && (width & (width - 1))) {
-		i = 1;
-		while(i < width)
-			i *= 2;
-		width = i;
-	}
-	height = dimensions.height;
-	if((height != 1) && (height & (height - 1))) {
-		i = 1;
-		while(i < height)
-			i *= 2;
-		height = i;
-	}
+	id						uifont;
 	
 	colorSpace = CGColorSpaceCreateDeviceGray();
 	data = calloc(height, width);
@@ -377,32 +374,66 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
 	CGContextTranslateCTM(context, 0.0f, height);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
+	
 	UIGraphicsPushContext(context);
-    
-
+	
 #if CC_FONT_LABEL_SUPPORT
-	uiFont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-    if (uiFont != nil)
-        [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+	uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
+    if (uifont != nil)
+        [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
     else
 #endif // CC_FONT_LABEL_SUPPORT
 	{
-        uiFont = [UIFont fontWithName:name size:size];
-        [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-    }
-	if( ! uiFont )
-		CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
-	UIGraphicsPopContext();
+        uifont = [UIFont fontWithName:name size:size];
+		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+	}
+	
+	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+	free(data);
+	
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	
+	//String with attributes
+	NSAttributedString *stringWithAttributes =
+	[[[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:
+																   [[NSFontManager sharedFontManager]
+																	fontWithFamily:name
+																	traits:NSUnboldFontMask | NSUnitalicFontMask
+																	weight:0 size:size]
+																							  forKey:NSFontAttributeName]] autorelease];
+	
+	//Alignment
+	float xPadding = 0;
+	CGSize realDimensions = [stringWithAttributes size];
+	switch (alignment) {
+		case CCTextAlignmentLeft: xPadding = 0; break;
+		case CCTextAlignmentCenter: xPadding = (dimensions.width-realDimensions.width)/2.0f; break;
+		case CCTextAlignmentRight: xPadding = dimensions.width-realDimensions.width; break;
+		default: break;
+	}
+	
+	//Disable antialias
+	[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
+
+	NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(width, height)];
+	[image lockFocus];	
+	
+	[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, height-dimensions.height)]; // draw at offset position	
+	
+	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, width, height)];
+	[image unlockFocus];
+
+	data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+	
+	for(int i = 0; i<(width*height); i++) //Convert RGBA8888 to A8
+		data[i] = data[i*4+3];
 	
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
 	
-	CGContextRelease(context);
-	free(data);
-	
-	return self;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-	return nil;
+	[bitmap release];
+	[image release];
 #endif
+	return self;
 }
 @end
 

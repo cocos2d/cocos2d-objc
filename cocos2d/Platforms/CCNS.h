@@ -28,7 +28,10 @@
 
 #import <Availability.h>
 
+#import <Foundation/Foundation.h> //	for NSObject
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 #define CCRectFromString(__r__)		CGRectFromString(__r__)
 #define CCPointFromString(__p__)	CGPointFromString(__p__)
 #define CCSizeFromString(__s__)		CGSizeFromString(__s__)
@@ -40,7 +43,9 @@
 #define CCTextAlignmentLeft			UITextAlignmentLeft
 #define CCTextAlignmentRight		UITextAlignmentRight
 
+
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )
 #define CCSizeFromString(__s__)		NSSizeToCGSize( NSSizeFromString(__s__) )
@@ -48,10 +53,9 @@
 #define CCNSRectToCGRect			NSRectToCGRect
 #define CCNSPointToCGPoint			NSPointToCGPoint
 #define CCTextAlignment				NSTextAlignment
-#define CCTextAlignmentCenter		NSTextAlignmentCenter
-#define CCTextAlignmentLeft			NSTextAlignmentLeft
-#define CCTextAlignmentRight		NSTextAlignmentRight
-
+#define CCTextAlignmentCenter		NSCenterTextAlignment
+#define CCTextAlignmentLeft			NSLeftTextAlignment
+#define CCTextAlignmentRight		NSRightTextAlignment
 
 #endif
 

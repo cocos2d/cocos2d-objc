@@ -68,9 +68,7 @@
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "CCLabelTTF.h"
-#endif
 #import "CCLabelBMFont.h"
 #import "CCLabelAtlas.h"
 

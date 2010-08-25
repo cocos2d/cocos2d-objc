@@ -55,8 +55,8 @@
 
 /** @def CC_FONT_LABEL_SUPPORT
  If enabled, FontLabel will be used to render .ttf files.
- If the .ttf file is not found, then it will use the standard UIFont class
- If disabled, the standard UIFont class will be used.
+ If the .ttf file is not found, then it will use the standard CCFont class
+ If disabled, the standard CCFont class will be used.
  
  To enable set it to a value different than 0. Enabled by default.
  */

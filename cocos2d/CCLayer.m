@@ -33,7 +33,6 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
-#import <Availability.h>
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED

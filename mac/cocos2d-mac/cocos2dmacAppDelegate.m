@@ -158,6 +158,27 @@
 		}
 #endif
 		
+#if 0
+		{
+			// TTFFont. Works OK.
+			CCLabelBMFont *label = [CCLabelTTF labelWithString:@"Hello world" fontName:@"Arial" fontSize:18];
+			label.position = ccp(s.width/2, 120);
+			[self addChild:label z:12];
+			
+			// TTFFont alignment. Works OK.
+			CCLabelBMFont *left = [CCLabelTTF labelWithString:@"Left" dimensions:CGSizeMake(s.width, 30) alignment:CCTextAlignmentLeft fontName:@"Verdana" fontSize:12];
+			left.position = ccp(s.width/2, 80);
+			[self addChild:left z:12];
+			
+			CCLabelBMFont *center = [CCLabelTTF labelWithString:@"Center" dimensions:CGSizeMake(s.width, 30) alignment:CCTextAlignmentCenter fontName:@"Verdana" fontSize:12];
+			center.position = ccp(s.width/2, 60);
+			[self addChild:center z:12];
+			
+			CCLabelBMFont *right = [CCLabelTTF labelWithString:@"Right" dimensions:CGSizeMake(s.width, 30) alignment:CCTextAlignmentRight fontName:@"Verdana" fontSize:12];
+			right.position = ccp(s.width/2, 40);
+			[self addChild:right z:12];
+		}
+#endif
 		
 #if 0
 		{

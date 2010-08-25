@@ -24,9 +24,6 @@
  */
 
 
-
-#import <Foundation/Foundation.h>
-
 #import "CCNode.h"
 
 /** CCScene is a subclass of CCNode that is used only as an abstract concept.

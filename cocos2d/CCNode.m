@@ -23,8 +23,6 @@
  * THE SOFTWARE.
  */
 
-#import <Availability.h>
-
 #import "CCNode.h"
 #import "CCGrid.h"
 #import "CCDirector.h"
