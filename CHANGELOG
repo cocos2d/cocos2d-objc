@@ -6,17 +6,18 @@ version 0.99.5-beta2 XX-Ago-2010
 			CCEaseAction -> CCActionEase
 			CCCameraAction -> CCActionCamera
  . [NEW] Action: CCPropertyAction renamed to CCActionTween
- . [NEW] Mac: Many classes compile on Mac too
  . [NEW] Director: New naming convention: CCnameDirector -> CCDirectorName
  . [NEW] Director: DirectorIOS is responsible for swapping buffers
  . [NEW] Label: CCLabelAtlas#labelAtlasWithString: -> labelWithString. Old method deprecated
  . [NEW] Label: CCBitmapFontAtlas deprecated. Use CCLabelBMFont instead.
  . [NEW] Label: CCBitmapFontAtlas#bitmapFontAtlasWithString -> labelWithString. Old method deprecated.
  . [NEW] Label: CCLabel renamed to CCLabelTTF
+ . [NEW] Mac: cocos2d works on Mac
  . [NEW] Particles: New naming convention:
 			CCPointParticleSystem -> CCParticleSystemPoint
 			CCQuadParticleSystem -> CCParticleSystemQuad
  . [NEW] Transitions: new transition naming convention (issue #946)
+ . [FIX] Actions: ivars 'duration', 'elapsed', 'tag' now have the '_' suffix in their names.
  . [FIX] Artifact fixer is a compile time option in ccConfig. Disabled by default
  . [FIX] ccCArray: off-by-1 offset, and lastObject fixed (issue #960 and #961)
  . [FIX] ccTypes: using GL types for CC GL structures. Prevents possible errors on 64-bit machines
@@ -25,6 +26,7 @@ version 0.99.5-beta2 XX-Ago-2010
  . [FIX] Director: Works with Fast FPS disabled (issue #954)
  . [FIX] Director: it's possible to set a custom projection before setting the openGL view (issue #952)
  . [FIX] Label: BitmapFontAtlas supports empty strings (issue #950)
+ . [FIX] Layer: ivars isTouchEnabled / isAccelerometerEnabled have the '_' suffix in their names
  . [FIX] Sprite: little optimization when using BatchNode + children
  . [FIX] Templates: Added missing keys in Info.plist (issue #939)
  . [FIX] Tools: mkatlas supports artifact removal (issue #549)

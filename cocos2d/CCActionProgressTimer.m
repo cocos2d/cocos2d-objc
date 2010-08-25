@@ -43,14 +43,14 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:duration percent:to_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ percent:to_];
 	return copy;
 }
 
 -(void) startWithTarget:(id) aTarget;
 {
 	[super startWithTarget:aTarget];
-	from_ = [(kProgressTimerCast)target percentage];
+	from_ = [(kProgressTimerCast)target_ percentage];
 	
 	// XXX: Is this correct ?
 	// Adding it to support CCRepeat
@@ -60,7 +60,7 @@
 
 -(void) update: (ccTime) t
 {
-	[(kProgressTimerCast)target setPercentage: from_ + ( to_ - from_ ) * t];
+	[(kProgressTimerCast)target_ setPercentage: from_ + ( to_ - from_ ) * t];
 }
 @end
 
@@ -81,13 +81,13 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:duration from:from_ to:to_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ from:from_ to:to_];
 	return copy;
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithDuration:duration from:to_ to:from_];
+	return [[self class] actionWithDuration:duration_ from:to_ to:from_];
 }
 
 -(void) startWithTarget:(id) aTarget;
@@ -97,6 +97,6 @@
 
 -(void) update: (ccTime) t
 {
-	[(kProgressTimerCast)target setPercentage: from_ + ( to_ - from_ ) * t];
+	[(kProgressTimerCast)target_ setPercentage: from_ + ( to_ - from_ ) * t];
 }
 @end

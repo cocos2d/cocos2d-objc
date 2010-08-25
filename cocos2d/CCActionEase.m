@@ -74,7 +74,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target];
+	[other startWithTarget:target_];
 }
 
 -(void) stop

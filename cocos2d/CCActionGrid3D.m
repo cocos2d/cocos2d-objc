@@ -54,7 +54,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -104,7 +104,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize duration:duration_];
 	return copy;
 }
 
@@ -278,7 +278,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -355,7 +355,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius waves:waves amplitude:amplitude grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius waves:waves amplitude:amplitude grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -411,7 +411,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -482,7 +482,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -540,7 +540,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude horizontal:horizontal vertical:vertical grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude horizontal:horizontal vertical:vertical grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -607,7 +607,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position twirls:twirls amplitude:amplitude grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position twirls:twirls amplitude:amplitude grid:gridSize duration:duration_];
 	return copy;
 }
 

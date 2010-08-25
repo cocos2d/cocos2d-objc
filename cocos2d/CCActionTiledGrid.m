@@ -59,7 +59,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -126,7 +126,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shatterZ:shatterZ grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shatterZ:shatterZ grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -198,7 +198,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSeed:seed grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSeed:seed grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -238,7 +238,7 @@ typedef struct
 {
 	ccQuad3	coords = [self originalTile:pos];
 	
-	CGPoint step = [[target grid] step];
+	CGPoint step = [[target_ grid] step];
 	coords.bl.x += (int)(t.position.x * step.x);
 	coords.bl.y += (int)(t.position.y * step.y);
 
@@ -334,7 +334,7 @@ typedef struct
 -(void)transformTile:(ccGridSize)pos distance:(float)distance
 {
 	ccQuad3	coords = [self originalTile:pos];
-	CGPoint	step = [[target grid] step];
+	CGPoint	step = [[target_ grid] step];
 	
 	coords.bl.x += (step.x / 2) * (1.0f - distance);
 	coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -408,7 +408,7 @@ typedef struct
 -(void)transformTile:(ccGridSize)pos distance:(float)distance
 {
 	ccQuad3	coords = [self originalTile:pos];
-	CGPoint step = [[target grid] step];
+	CGPoint step = [[target_ grid] step];
 	
 	coords.bl.y += (step.y / 2) * (1.0f - distance);
 	coords.br.y += (step.y / 2) * (1.0f - distance);
@@ -462,7 +462,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSeed:seed grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSeed:seed grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -564,7 +564,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithWaves:waves amplitude:amplitude grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -619,7 +619,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithJumps:jumps amplitude:amplitude grid:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithJumps:jumps amplitude:amplitude grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -678,7 +678,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRows:rows duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRows:rows duration:duration_];
 	return copy;
 }
 
@@ -731,7 +731,7 @@ typedef struct
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithCols:cols duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithCols:cols duration:duration_];
 	return copy;
 }
 

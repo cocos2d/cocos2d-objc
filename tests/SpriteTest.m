@@ -1305,7 +1305,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		
 		CCNode *node = [CCNode node];
 		[self addChild:node z:0 tag:kTagSpriteBatchNode];
@@ -1391,7 +1391,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
 		
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];

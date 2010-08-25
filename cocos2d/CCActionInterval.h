@@ -48,8 +48,8 @@ Example:
 */
 @interface CCActionInterval: CCFiniteTimeAction <NSCopying>
 {
-	ccTime elapsed;
-	BOOL	firstTick;
+	ccTime	elapsed_;
+	BOOL	firstTick_;
 }
 
 /** how many seconds had elapsed since the actions started to run. */

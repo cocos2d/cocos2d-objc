@@ -55,7 +55,7 @@
 
 	CCGridBase *newgrid = [self grid];
 	
-	CCNode *t = (CCNode*) target;
+	CCNode *t = (CCNode*) target_;
 	CCGridBase *targetGrid = [t grid];
 	
 	if ( targetGrid && targetGrid.reuseGrid > 0 )
@@ -91,7 +91,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize duration:duration];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize duration:duration_];
 	return copy;
 }
 @end
@@ -110,19 +110,19 @@
 
 -(ccVertex3F)vertex:(ccGridSize)pos
 {
-	CCGrid3D *g = (CCGrid3D *)[target grid];
+	CCGrid3D *g = (CCGrid3D *)[target_ grid];
 	return [g vertex:pos];
 }
 
 -(ccVertex3F)originalVertex:(ccGridSize)pos
 {
-	CCGrid3D *g = (CCGrid3D *)[target grid];
+	CCGrid3D *g = (CCGrid3D *)[target_ grid];
 	return [g originalVertex:pos];
 }
 
 -(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
 {
-	CCGrid3D *g = (CCGrid3D *)[target grid];
+	CCGrid3D *g = (CCGrid3D *)[target_ grid];
 	return [g setVertex:pos vertex:vertex];
 }
 @end
@@ -141,19 +141,19 @@
 
 -(ccQuad3)tile:(ccGridSize)pos
 {
-	CCTiledGrid3D *g = (CCTiledGrid3D *)[target grid];
+	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
 	return [g tile:pos];
 }
 
 -(ccQuad3)originalTile:(ccGridSize)pos
 {
-	CCTiledGrid3D *g = (CCTiledGrid3D *)[target grid];
+	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
 	return [g originalTile:pos];
 }
 
 -(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
 {
-	CCTiledGrid3D *g = (CCTiledGrid3D *)[target grid];
+	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
 	[g setTile:pos coords:coords];
 }
 
@@ -213,7 +213,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target];
+	[other startWithTarget:target_];
 }
 
 -(void) update: (ccTime) time
@@ -232,7 +232,7 @@
 
 - (CCActionInterval*) reverse
 {
-	return [CCAccelDeccelAmplitude actionWithAction:[other reverse] duration:duration];
+	return [CCAccelDeccelAmplitude actionWithAction:[other reverse] duration:duration_];
 }
 
 @end
@@ -271,7 +271,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target];
+	[other startWithTarget:target_];
 }
 
 -(void) update: (ccTime) time
@@ -321,7 +321,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target];
+	[other startWithTarget:target_];
 }
 
 -(void) update: (ccTime) time
