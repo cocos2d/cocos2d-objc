@@ -35,8 +35,10 @@
 
 #import <Availability.h>
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import "CCTouchDispatcher.h"
-#endif // __iPHONE
+#import "Platforms/iOS/CCTouchDispatcher.h"
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import "Platforms/Mac/CCEventDispatcher.h"
+#endif
 
 #pragma mark -
 #pragma mark Layer
@@ -53,8 +55,13 @@
 		[self setContentSize:s];
 		self.isRelativeAnchorPoint = NO;
 
-		isTouchEnabled = NO;
-		isAccelerometerEnabled = NO;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+		isTouchEnabled_ = NO;
+		isAccelerometerEnabled_ = NO;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		isMouseEnabled_ = NO;
+		isKeyboardEnabled_ = NO;
+#endif
 	}
 	
 	return self;
@@ -62,23 +69,21 @@
 
 #pragma mark Layer - Touch and Accelerometer related
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 -(void) registerWithTouchDispatcher
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCTouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
-#endif
 }
 
 -(BOOL) isAccelerometerEnabled
 {
-	return isAccelerometerEnabled;
+	return isAccelerometerEnabled_;
 }
 
 -(void) setIsAccelerometerEnabled:(BOOL)enabled
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-	if( enabled != isAccelerometerEnabled ) {
-		isAccelerometerEnabled = enabled;
+	if( enabled != isAccelerometerEnabled_ ) {
+		isAccelerometerEnabled_ = enabled;
 		if( isRunning_ ) {
 			if( enabled )
 				[[UIAccelerometer sharedAccelerometer] setDelegate:self];
@@ -86,19 +91,17 @@
 				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 		}
 	}
-#endif // __iPHONE
 }
 
 -(BOOL) isTouchEnabled
 {
-	return isTouchEnabled;
+	return isTouchEnabled_;
 }
 
 -(void) setIsTouchEnabled:(BOOL)enabled
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-	if( isTouchEnabled != enabled ) {
-		isTouchEnabled = enabled;
+	if( isTouchEnabled_ != enabled ) {
+		isTouchEnabled_ = enabled;
 		if( isRunning_ ) {
 			if( enabled )
 				[self registerWithTouchDispatcher];
@@ -106,35 +109,106 @@
 				[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 		}
 	}
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
 }
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+#pragma mark CCLayer - Mouse & Keyboard events
+
+-(NSInteger) mouseDelegatePriority
+{
+	return 0;
+}
+
+-(BOOL) isMouseEnabled
+{
+	return isMouseEnabled_;
+}
+
+-(void) setIsMouseEnabled:(BOOL)enabled
+{
+	if( isMouseEnabled_ != enabled ) {
+		isMouseEnabled_ = enabled;
+		
+		if( isRunning_ ) {
+			if( enabled )
+				[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
+			else
+				[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
+		}
+	}
+}
+
+-(NSInteger) keyboardDelegatePriority
+{
+	return 0;
+}
+
+-(BOOL) isKeyboardEnabled
+{
+	return isKeyboardEnabled_;
+}
+
+-(void) setIsKeyboardEnabled:(BOOL)enabled
+{
+	if( isKeyboardEnabled_ != enabled ) {
+		isKeyboardEnabled_ = enabled;
+		
+		if( isRunning_ ) {
+			if( enabled )
+				[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority] ];
+			else
+				[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
+		}
+	}
+}
+
+
+#endif // Mac
+
 
 #pragma mark Layer - Callbacks
 -(void) onEnter
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
-	if (isTouchEnabled)
+	if (isTouchEnabled_)
 		[self registerWithTouchDispatcher];
+	
+	if( isAccelerometerEnabled_ )
+		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	if( isMouseEnabled_ )
+		[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
+	
+	if( isKeyboardEnabled_)
+		[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority]];
+#endif
 	
 	// then iterate over all the children
 	[super onEnter];
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-	if( isAccelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+	
+	
 }
 
 -(void) onExit
 {
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-	if( isTouchEnabled )
+	if( isTouchEnabled_ )
 		[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 	
-	if( isAccelerometerEnabled )
+	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	if( isMouseEnabled_ )
+		[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
+	
+	if( isKeyboardEnabled_ )
+		[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
+#endif
 	
 	[super onExit];
 }

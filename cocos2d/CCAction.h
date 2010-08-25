@@ -37,9 +37,9 @@ enum {
 /** Base class for CCAction objects.
  */
 @interface CCAction : NSObject <NSCopying> {
-	id	originalTarget;
-	id	target;
-	int	tag;
+	id			originalTarget;
+	id			target;
+	NSInteger	tag;
 }
 
 /** The "target". The action will modify the target properties.
@@ -57,7 +57,7 @@ enum {
 
 
 /** The action tag. An identifier of the action */
-@property (nonatomic,readwrite,assign) int tag;
+@property (nonatomic,readwrite,assign) NSInteger tag;
 
 /** Allocates and initializes the action */
 +(id) action;

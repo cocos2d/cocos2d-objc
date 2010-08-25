@@ -22,7 +22,7 @@
 #import <stdio.h>
 
 #import "ZipUtils.h"
-#import "ccMacros.h"
+#import "../ccMacros.h"
 
 int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {

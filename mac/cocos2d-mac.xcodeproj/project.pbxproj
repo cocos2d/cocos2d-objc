@@ -75,6 +75,8 @@
 		E0D63609122552E000678AB3 /* CCMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D63605122552E000678AB3 /* CCMenuItem.m */; };
 		E0D63627122569CF00678AB3 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D63625122569CF00678AB3 /* CCLabelTTF.h */; };
 		E0D63628122569CF00678AB3 /* CCLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D63626122569CF00678AB3 /* CCLabelTTF.m */; };
+		E0D636891225779700678AB3 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D636871225779700678AB3 /* CCEventDispatcher.h */; };
+		E0D6368A1225779700678AB3 /* CCEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D636881225779700678AB3 /* CCEventDispatcher.m */; };
 		E0EAD16E121F4C1700B0C81C /* MacGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD15A121F4C1700B0C81C /* MacGLView.h */; };
 		E0EAD174121F4C4100B0C81C /* CCActionInstant.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD170121F4C4100B0C81C /* CCActionInstant.h */; };
 		E0EAD175121F4C4100B0C81C /* CCActionInstant.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD171121F4C4100B0C81C /* CCActionInstant.m */; };
@@ -436,6 +438,8 @@
 		E0D63605122552E000678AB3 /* CCMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenuItem.m; sourceTree = "<group>"; };
 		E0D63625122569CF00678AB3 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
 		E0D63626122569CF00678AB3 /* CCLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelTTF.m; sourceTree = "<group>"; };
+		E0D636871225779700678AB3 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
+		E0D636881225779700678AB3 /* CCEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEventDispatcher.m; sourceTree = "<group>"; };
 		E0EAD147121F4C1700B0C81C /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
 		E0EAD148121F4C1700B0C81C /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
 		E0EAD14B121F4C1700B0C81C /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
@@ -1034,6 +1038,8 @@
 				E0EAD159121F4C1700B0C81C /* CCDirectorMac.m */,
 				E0EAD15A121F4C1700B0C81C /* MacGLView.h */,
 				E0EADB9D12221F4600B0C81C /* MacGLView.m */,
+				E0D636871225779700678AB3 /* CCEventDispatcher.h */,
+				E0D636881225779700678AB3 /* CCEventDispatcher.m */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -1428,6 +1434,7 @@
 				E0D63606122552E000678AB3 /* CCMenu.h in Headers */,
 				E0D63608122552E000678AB3 /* CCMenuItem.h in Headers */,
 				E0D63627122569CF00678AB3 /* CCLabelTTF.h in Headers */,
+				E0D636891225779700678AB3 /* CCEventDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1767,6 +1774,7 @@
 				E0D63607122552E000678AB3 /* CCMenu.m in Sources */,
 				E0D63609122552E000678AB3 /* CCMenuItem.m in Sources */,
 				E0D63628122569CF00678AB3 /* CCLabelTTF.m in Sources */,
+				E0D6368A1225779700678AB3 /* CCEventDispatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

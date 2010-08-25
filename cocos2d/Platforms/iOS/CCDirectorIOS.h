@@ -23,7 +23,7 @@
  */
 
 
-#import "CCDirector.h"
+#import "../../CCDirector.h"
 
 /** @typedef ccDeviceOrientation
  Possible device orientations

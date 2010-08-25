@@ -13,8 +13,8 @@
 @end
 
 @interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow	*window;
-	MacGLView	*glView;
+    NSWindow	*window_;
+	MacGLView	*glView_;
 }
 
 @property (assign) IBOutlet NSWindow	*window;

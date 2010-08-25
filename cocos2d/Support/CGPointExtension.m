@@ -26,7 +26,7 @@
 #include "stdio.h"
 #include "math.h"
 
-#import "ccMacros.h"		// CC_SWAP
+#import "../ccMacros.h"		// CC_SWAP
 #include "CGPointExtension.h"
 
 #define kCGPointEpsilon FLT_EPSILON
