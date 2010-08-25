@@ -175,7 +175,7 @@ do	{																							\
 #define CC_DIRECTOR_END()										\
 do {															\
 	CCDirector *__director = [CCDirector sharedDirector];		\
-	EAGLView *__view = [__director openGLView];					\
+	CC_GLVIEW *__view = [__director openGLView];					\
 	[__view removeFromSuperview];								\
 	[__director end];											\
 } while(0)

@@ -104,7 +104,7 @@ typedef struct _listEntry
 {
 	tListEntry *listElement = malloc( sizeof(*listElement) );
 	
-	listElement->delegate = delegate;
+	listElement->delegate = [delegate retain];
 	listElement->priority = priority;
 	listElement->flags = flags;
 	listElement->next = listElement->prev = NULL;
@@ -148,6 +148,7 @@ typedef struct _listEntry
 	DL_FOREACH_SAFE( *list, entry, tmp ) {
 		if( entry->delegate == delegate ) {
 			DL_DELETE( *list, entry );
+			[delegate release];
 			free(entry);
 			break;
 		}
