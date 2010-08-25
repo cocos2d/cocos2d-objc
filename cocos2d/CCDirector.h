@@ -23,8 +23,6 @@
  */
 
 
-#import <Availability.h>
-
 #import "ccConfig.h"
 #import "ccTypes.h"
 

@@ -24,9 +24,10 @@
  */
 
 
-#import "Platforms/CCNS.h"
 #import "CCTexture2D.h"
 #import "CCSprite.h"
+#import "Platforms/CCNS.h"
+
 
 /** CCLabel is a subclass of CCTextureNode that knows how to render text labels
  *
@@ -34,6 +35,7 @@
  *
  * CCLabel objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
  */
+
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
 	CGSize dimensions_;

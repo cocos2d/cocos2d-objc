@@ -24,8 +24,6 @@
  */
 
 
-#import <Foundation/Foundation.h>
-
 #import "CCMenuItem.h"
 #import "CCLayer.h"
 
