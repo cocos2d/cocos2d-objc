@@ -28,12 +28,12 @@
 // cocos2d imports
 #import "CCDirectorIOS.h"
 #import "CCTouchDelegateProtocol.h"
-#import "CCScheduler.h"
-#import "CCActionManager.h"
-#import "CCTextureCache.h"
-#import "ccMacros.h"
-#import "CCScene.h"
 #import "CCTouchDispatcher.h"
+#import "../../CCScheduler.h"
+#import "../../CCActionManager.h"
+#import "../../CCTextureCache.h"
+#import "../../ccMacros.h"
+#import "../../CCScene.h"
 
 // support imports
 #import "glu.h"

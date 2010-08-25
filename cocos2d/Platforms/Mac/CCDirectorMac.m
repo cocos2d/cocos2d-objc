@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2010 Ricardo Quesada
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,12 @@
 #import <sys/time.h>
  
 #import "CCDirectorMac.h"
-#import "CCNode.h"
-#import "CCScheduler.h"
-#import "ccMacros.h"
+#import "CCEventDispatcher.h"
+#import "MacGLView.h"
+
+#import "../../CCNode.h"
+#import "../../CCScheduler.h"
+#import "../../ccMacros.h"
 
 #pragma mark -
 #pragma mark Director Mac extensions
@@ -48,6 +51,11 @@
 #pragma mark -
 #pragma mark Director Mac
 @implementation CCDirectorMac
+-(CGPoint) convertEventToGL:(NSEvent*)event
+{
+	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
+	return NSPointToCGPoint(point);
+}
 @end
 
 
@@ -165,5 +173,24 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[[openGLView_ openGLContext] flushBuffer];	
 	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
 }
+
+// set the event dispatcher
+-(void) setOpenGLView:(MacGLView *)view
+{
+	if( view != openGLView_ ) {
+		
+		[super setOpenGLView:view];
+				
+		CCEventDispatcher *eventDispatcher = [CCEventDispatcher sharedDispatcher];
+		[openGLView_ setEventDelegate: eventDispatcher];
+		[eventDispatcher setDispatchEvents: YES];
+		
+		// Enable Touches. Default no.
+		[view setAcceptsTouchEvents:NO];
+//		[view setAcceptsTouchEvents:YES];
+		
+	}
+}
+
 
 @end

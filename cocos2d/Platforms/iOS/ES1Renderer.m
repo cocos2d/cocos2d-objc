@@ -27,8 +27,8 @@
 
 
 #import "ES1Renderer.h"
-#import "OpenGL_Internal.h"
-#import "ccMacros.h"
+#import "../../Support/OpenGL_Internal.h"
+#import "../../ccMacros.h"
 
 @implementation ES1Renderer
 

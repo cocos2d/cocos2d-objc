@@ -28,8 +28,10 @@
 #import <Availability.h>
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>					// Needed for UIAccelerometerDelegate
-#import "CCTouchDelegateProtocol.h"		// Touches only supported on iOS
-#endif	 // iPHONE
+#import "Platforms/iOS/CCTouchDelegateProtocol.h"		// Touches only supported on iOS
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import "Platforms/Mac/CCEventDispatcher.h"
+#endif
 
 #import "CCProtocols.h"
 #import "CCNode.h"
@@ -45,14 +47,10 @@
 */
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 @interface CCLayer : CCNode <UIAccelerometerDelegate, CCStandardTouchDelegate, CCTargetedTouchDelegate>
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-@interface CCLayer : CCNode
-#endif
 {
-	BOOL isTouchEnabled;
-	BOOL isAccelerometerEnabled;
+	BOOL isTouchEnabled_;
+	BOOL isAccelerometerEnabled_;
 }
-
 /** If isTouchEnabled, this method is called onEnter. Override it to change the
  way CCLayer receives touch events.
  ( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
@@ -61,6 +59,9 @@
      {
         [[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
      }
+ 
+ Valid only on iOS. Not valid on Mac.
+ 
  @since v0.8.0
  */
 -(void) registerWithTouchDispatcher;
@@ -68,14 +69,60 @@
 /** whether or not it will receive Touch events.
  You can enable / disable touch events with this property.
  Only the touches of this node will be affected. This "method" is not propagated to it's children.
+ 
+ Valid only on iOS. Not valid on Mac.
+
  @since v0.8.1
  */
 @property(nonatomic,assign) BOOL isTouchEnabled;
 /** whether or not it will receive Accelerometer events
  You can enable / disable accelerometer events with this property.
+ 
+ Valid only on iOS. Not valid on Mac.
+
  @since v0.8.1
  */
 @property(nonatomic,assign) BOOL isAccelerometerEnabled;
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+
+@interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate>
+{
+	BOOL	isMouseEnabled_;
+	BOOL	isKeyboardEnabled_;
+}
+
+/** whether or not it will receive mouse events.
+ 
+ Valind only Mac. Not valid on iOS
+ */
+@property (nonatomic, readwrite) BOOL isMouseEnabled;
+
+/** whether or not it will receive keyboard events.
+ 
+ Valind only Mac. Not valid on iOS
+ */
+@property (nonatomic, readwrite) BOOL isKeyboardEnabled;
+
+/** priority of the mouse event delegate.
+ Default 0.
+ Override this method to set another priority.
+ 
+ Valind only Mac. Not valid on iOS 
+ */
+-(NSInteger) mouseDelegatePriority;
+
+/** priority of the keyboard event delegate.
+ Default 0.
+ Override this method to set another priority.
+ 
+ Valind only Mac. Not valid on iOS 
+ */
+-(NSInteger) keyboardDelegatePriority;
+
+#endif // mac
+
 
 @end
 

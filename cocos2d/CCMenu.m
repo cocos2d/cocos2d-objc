@@ -33,7 +33,10 @@
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "Platforms/iOS/CCDirectorIOS.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#import "Platforms/Mac/MacGLView.h"
+#import "Platforms/Mac/CCDirectorMac.h"
+#endif
 
 enum {
 	kDefaultPadding =  5,
@@ -67,7 +70,11 @@ enum {
 {
 	if( (self=[super init]) ) {
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		self.isTouchEnabled = YES;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		self.isMouseEnabled = YES;
+#endif
 		
 		// menu in the center of the screen
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -201,7 +208,82 @@ enum {
 #pragma mark Menu - Mouse
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#endif
+
+-(NSInteger) mouseDelegatePriority
+{
+	return NSIntegerMin+1;
+}
+
+-(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
+{
+	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	
+	CCMenuItem* item;
+	CCARRAY_FOREACH(children_, item){
+		// ignore invisible and disabled items: issue #779, #866
+		if ( [item visible] && [item isEnabled] ) {
+			
+			CGPoint local = [item convertToNodeSpace:location];
+			
+			CGRect r = [item rect];
+			r.origin = CGPointZero;
+			
+			if( CGRectContainsPoint( r, local ) )
+				return item;
+		}
+	}
+	return nil;
+	
+	
+	return nil;
+}
+
+-(BOOL) ccMouseUp:(NSEvent *)event
+{	
+	state = kMenuStateWaiting;
+
+	if( selectedItem ) {
+		[selectedItem unselected];
+		[selectedItem activate];
+		
+		return YES;
+	}
+	
+	return NO;
+}
+
+-(BOOL) ccMouseDown:(NSEvent *)event
+{
+	if( state != kMenuStateWaiting || !visible_ )
+		return NO;
+	
+	selectedItem = [self itemForMouseEvent:event];
+	[selectedItem selected];
+	
+	if( selectedItem ) {
+		state = kMenuStateTrackingTouch;
+		return YES;
+	}
+	return NO;	
+}
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CCMenuItem *currentItem = [self itemForMouseEvent:event];
+	
+	if (currentItem != selectedItem) {
+		[selectedItem unselected];
+		selectedItem = currentItem;
+		[selectedItem selected];
+	}
+	
+	// swallows event ?
+	if( state == kMenuStateTrackingTouch )
+		return YES;
+	return NO;
+}
+
+#endif // Mac Mouse support
 
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically

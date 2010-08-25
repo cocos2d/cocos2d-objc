@@ -214,7 +214,7 @@
 
 @implementation cocos2dmacAppDelegate
 
-@synthesize window, glView;
+@synthesize window=window_, glView=glView_;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	
@@ -223,9 +223,13 @@
 
 	[director setDisplayFPS:YES];
 	
-	[director setOpenGLView:glView];
+	[director setOpenGLView:glView_];
 	
 //	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+
 	
 	CCScene *scene = [CCScene node];
 	MyLayer *layer = [MyLayer node];

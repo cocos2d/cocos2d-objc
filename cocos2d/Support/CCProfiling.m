@@ -23,7 +23,7 @@
  *
  */
 
-#import "ccConfig.h"
+#import "../ccConfig.h"
 
 #if CC_ENABLE_PROFILERS
 

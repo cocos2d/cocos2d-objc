@@ -23,7 +23,7 @@
  */
 
 #import "CCArray.h"
-#import "ccMacros.h"
+#import "../ccMacros.h"
 
 
 @implementation CCArray
