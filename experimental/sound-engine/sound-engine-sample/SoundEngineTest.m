@@ -27,7 +27,7 @@
 
 - (id)init {
     if ((self = [super init])) {
-        isTouchEnabled = YES;
+		self.isTouchEnabled = YES;
         
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		

@@ -40,7 +40,7 @@
 -(id) init
 {
 	if( (self=[super init]) )	
-		duration = 0;
+		duration_ = 0;
 	return self;
 }
 
@@ -77,7 +77,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	((CCNode *)target).visible = YES;
+	((CCNode *)target_).visible = YES;
 }
 -(CCFiniteTimeAction*) reverse
 {
@@ -94,7 +94,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	((CCNode *)target).visible = NO;
+	((CCNode *)target_).visible = NO;
 }
 -(CCFiniteTimeAction*) reverse
 {
@@ -111,7 +111,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	((CCNode *)target).visible = !((CCNode *)target).visible;
+	((CCNode *)target_).visible = !((CCNode *)target_).visible;
 }
 @end
 
@@ -219,7 +219,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	((CCNode *)target).position = position;
+	((CCNode *)target_).position = position;
 }
 @end
 
@@ -277,7 +277,7 @@
 
 -(void) execute
 {
-	[targetCallback performSelector:selector withObject:target];
+	[targetCallback performSelector:selector withObject:target_];
 }
 @end
 
@@ -323,7 +323,7 @@
 
 -(void) execute
 {
-	callbackMethod_(targetCallback,selector,target, data);
+	callbackMethod_(targetCallback,selector,target_, data);
 }
 @end
 
@@ -396,7 +396,7 @@
 }
 
 -(void) execute {
-	block_(target);
+	block_(target_);
 }
 
 -(void) dealloc {

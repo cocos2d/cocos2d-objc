@@ -37,9 +37,9 @@ enum {
 /** Base class for CCAction objects.
  */
 @interface CCAction : NSObject <NSCopying> {
-	id			originalTarget;
-	id			target;
-	NSInteger	tag;
+	id			originalTarget_;
+	id			target_;
+	NSInteger	tag_;
 }
 
 /** The "target". The action will modify the target properties.
@@ -94,7 +94,7 @@ enum {
 @interface CCFiniteTimeAction : CCAction <NSCopying>
 {
 	//! duration in seconds
-	ccTime duration;
+	ccTime duration_;
 }
 //! duration in seconds of the action
 @property (nonatomic,readwrite) ccTime duration;

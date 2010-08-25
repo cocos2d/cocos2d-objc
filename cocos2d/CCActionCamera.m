@@ -37,7 +37,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	CCCamera *camera = [target camera];
+	CCCamera *camera = [target_ camera];
 	[camera centerX:&centerXOrig centerY:&centerYOrig centerZ: &centerZOrig];
 	[camera eyeX:&eyeXOrig eyeY:&eyeYOrig eyeZ: &eyeZOrig];
 	[camera upX:&upXOrig upY:&upYOrig upZ: &upZOrig];
@@ -57,7 +57,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithDuration:duration radius:radius deltaRadius:deltaRadius angleZ:angleZ deltaAngleZ:deltaAngleZ angleX:angleX deltaAngleX:deltaAngleX];
+	return [[[self class] allocWithZone: zone] initWithDuration:duration_ radius:radius deltaRadius:deltaRadius angleZ:angleZ deltaAngleZ:deltaAngleZ angleX:angleX deltaAngleX:deltaAngleX];
 }
 
 
@@ -106,7 +106,7 @@
 	float j = sinf(za) * sinf(xa) * r + centerYOrig;
 	float k = cosf(za) * r + centerZOrig;
 
-	[[target camera] setEyeX:i eyeY:j eyeZ:k];
+	[[target_ camera] setEyeX:i eyeY:j eyeZ:k];
 	
 }
 
@@ -116,7 +116,7 @@
 	float r; // radius
 	float s;
 	
-	CCCamera *camera = [target camera];
+	CCCamera *camera = [target_ camera];
 	[camera eyeX:&ex eyeY:&ey eyeZ:&ez];
 	[camera centerX:&cx centerY:&cy centerZ:&cz];
 	

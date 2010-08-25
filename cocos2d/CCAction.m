@@ -39,7 +39,7 @@
 #pragma mark Action
 @implementation CCAction
 
-@synthesize tag, target, originalTarget;
+@synthesize tag=tag_, target=target_, originalTarget=originalTarget_;
 
 +(id) action
 {
@@ -49,8 +49,8 @@
 -(id) init
 {
 	if( (self=[super init]) ) {	
-		originalTarget = target = nil;
-		tag = kCCActionTagInvalid;
+		originalTarget_ = target_ = nil;
+		tag_ = kCCActionTagInvalid;
 	}
 	return self;
 }
@@ -63,24 +63,24 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag];
+	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCAction *copy = [[[self class] allocWithZone: zone] init];
-	copy.tag = tag;
+	copy.tag = tag_;
 	return copy;
 }
 
 -(void) startWithTarget:(id)aTarget
 {
-	originalTarget = target = aTarget;
+	originalTarget_ = target_ = aTarget;
 }
 
 -(void) stop
 {
-	target = nil;
+	target_ = nil;
 }
 
 -(BOOL) isDone
@@ -105,7 +105,7 @@
 #pragma mark -
 #pragma mark FiniteTimeAction
 @implementation CCFiniteTimeAction
-@synthesize duration;
+@synthesize duration=duration_;
 
 - (CCFiniteTimeAction*) reverse
 {
@@ -149,7 +149,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target];
+	[other startWithTarget:target_];
 }
 
 -(void) step:(ccTime) dt
@@ -157,7 +157,7 @@
 	[other step: dt];
 	if( [other isDone] ) {
 		ccTime diff = dt + other.duration - other.elapsed;
-		[other startWithTarget:target];
+		[other startWithTarget:target_];
 		
 		// to prevent jerk. issue #390
 		[other step: diff];
@@ -214,7 +214,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target];
+	[other startWithTarget:target_];
 }
 
 -(void) stop
@@ -314,7 +314,7 @@
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCAction *copy = [[[self class] allocWithZone: zone] init];
-	copy.tag = tag;
+	copy.tag = tag_;
 	return copy;
 }
 
@@ -329,10 +329,10 @@
 			return;
 		
 		CGPoint tempPos = ccpSub( halfScreenSize, followedNode_.position);
-		[target setPosition:ccp(CLAMP(tempPos.x,leftBoundary,rightBoundary), CLAMP(tempPos.y,bottomBoundary,topBoundary))];
+		[target_ setPosition:ccp(CLAMP(tempPos.x,leftBoundary,rightBoundary), CLAMP(tempPos.y,bottomBoundary,topBoundary))];
 	}
 	else
-		[target setPosition:ccpSub( halfScreenSize, followedNode_.position )];
+		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];
 	
 #undef CLAMP
 }
@@ -345,7 +345,7 @@
 
 -(void) stop
 {
-	target = nil;
+	target_ = nil;
 	[super stop];
 }
 
