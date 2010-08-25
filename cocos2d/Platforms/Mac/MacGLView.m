@@ -103,16 +103,52 @@
 	[eventDelegate_ mouseDown:theEvent];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
-	[eventDelegate_ mouseUp:theEvent];
-}
-
 - (void)mouseMoved:(NSEvent *)theEvent {
 	[eventDelegate_ mouseMoved:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent {
 	[eventDelegate_ mouseDragged:theEvent];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+	[eventDelegate_ mouseUp:theEvent];
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent {
+	[eventDelegate_ rightMouseDown:theEvent];
+}
+
+- (void)rightMouseDragged:(NSEvent *)theEvent {
+	[eventDelegate_ rightMouseDragged:theEvent];
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent {
+	[eventDelegate_ rightMouseUp:theEvent];
+}
+
+- (void)otherMouseDown:(NSEvent *)theEvent {
+	[eventDelegate_ otherMouseDown:theEvent];
+}
+
+- (void)otherMouseDragged:(NSEvent *)theEvent {
+	[eventDelegate_ otherMouseDragged:theEvent];
+}
+
+- (void)otherMouseUp:(NSEvent *)theEvent {
+	[eventDelegate_ otherMouseUp:theEvent];
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+	[eventDelegate_ mouseEntered:theEvent];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+	[eventDelegate_ mouseExited:theEvent];
+}
+
+-(void) scrollWheel:(NSEvent *)theEvent {
+	[eventDelegate_ scrollWheel:theEvent];
 }
 
 #pragma mark MacGLView - Key events
