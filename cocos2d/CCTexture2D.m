@@ -347,7 +347,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 																		traits:NSUnboldFontMask | NSUnitalicFontMask
 																		weight:0 size:size]
 																								  forKey:NSFontAttributeName]] autorelease];
-		dim = [stringWithAttributes size];
+		dim = NSSizeToCGSize( [stringWithAttributes size] );
 #endif
 	}
     
@@ -404,7 +404,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	//Alignment
 	float xPadding = 0;
-	CGSize realDimensions = [stringWithAttributes size];
+	NSSize realDimensions = [stringWithAttributes size];
 	switch (alignment) {
 		case CCTextAlignmentLeft: xPadding = 0; break;
 		case CCTextAlignmentCenter: xPadding = (dimensions.width-realDimensions.width)/2.0f; break;
@@ -415,7 +415,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	//Disable antialias
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
 
-	NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(width, height)];
+	NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
 	[image lockFocus];	
 	
 	[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, height-dimensions.height)]; // draw at offset position	

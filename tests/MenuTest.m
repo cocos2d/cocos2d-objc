@@ -118,14 +118,7 @@ enum {
 
 -(void) onQuit: (id) sender
 {
-	CC_DIRECTOR_END();
-	
-	// HA HA... no more terminate on sdk v3.0
-	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
-	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
-	else
-		NSLog(@"YOU CAN'T TERMINATE YOUR APPLICATION PROGRAMATICALLY in SDK 3.0+");
+	CC_DIRECTOR_END();	
 }
 @end
 
@@ -410,8 +403,13 @@ enum {
 
 
 // CLASS IMPLEMENTATIONS
-@implementation AppController
 
+#pragma mark -
+#pragma mark AppController - iPhone
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
+@implementation AppController
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -497,5 +495,39 @@ enum {
 	[window dealloc];
 	[super dealloc];
 }
+@end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	
+	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	[scene addChild: layer z:0];
+	
+	[director runWithScene:scene];
+}
 
 @end
+#endif
