@@ -114,4 +114,46 @@
 	[super dealloc];
 }
 
+#pragma mark MacGLView - Mouse events
+- (void)mouseDown:(NSEvent *)theEvent {
+	NSLog(@"mouse down: %@", theEvent);
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+	NSLog(@"mouse up: %@", theEvent);
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent {
+	NSLog(@"mouse moved: %@", theEvent);
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent {
+	NSLog(@"mouse dragged: %@", theEvent);
+}
+
+#pragma mark MacGLView - Key events
+
+-(BOOL) becomeFirstResponder
+{
+	return YES;
+}
+
+-(BOOL) acceptsFirstResponder
+{
+	return YES;
+}
+
+-(BOOL) resignFirstResponder
+{
+	return YES;
+}
+
+- (void)keyDown:(NSEvent *)theEvent {
+	NSLog(@"key down: %@", theEvent);
+}
+
+- (void)keyUp:(NSEvent *)theEvent {
+	NSLog(@"key up: %@", theEvent);
+}
+
 @end

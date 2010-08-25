@@ -321,11 +321,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 }
 @end
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @implementation CCTexture2D (Text)
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
     CGSize dim;
 	
 #if CC_FONT_LABEL_SUPPORT
@@ -336,11 +336,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #endif
         dim = [string sizeWithFont:[UIFont fontWithName:name size:size]];
     
-	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];
+	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter fontName:name fontSize:size];
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	return nil;
+#endif
 }
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	NSUInteger				width,
 							height,
 							i;
@@ -396,9 +400,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	free(data);
 	
 	return self;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	return nil;
+#endif
 }
 @end
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED 
 
 @implementation CCTexture2D (PVRSupport)
 
