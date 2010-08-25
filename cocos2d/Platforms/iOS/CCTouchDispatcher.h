@@ -30,21 +30,21 @@
 
 typedef enum
 {
-	ccTouchSelectorBeganBit = 1 << 0,
-	ccTouchSelectorMovedBit = 1 << 1,
-	ccTouchSelectorEndedBit = 1 << 2,
-	ccTouchSelectorCancelledBit = 1 << 3,
-	ccTouchSelectorAllBits = ( ccTouchSelectorBeganBit | ccTouchSelectorMovedBit | ccTouchSelectorEndedBit | ccTouchSelectorCancelledBit),
+	kCCTouchSelectorBeganBit = 1 << 0,
+	kCCTouchSelectorMovedBit = 1 << 1,
+	kCCTouchSelectorEndedBit = 1 << 2,
+	kCCTouchSelectorCancelledBit = 1 << 3,
+	kCCTouchSelectorAllBits = ( kCCTouchSelectorBeganBit | kCCTouchSelectorMovedBit | kCCTouchSelectorEndedBit | kCCTouchSelectorCancelledBit),
 } ccTouchSelectorFlag;
 
 
 enum {
-	ccTouchBegan,
-	ccTouchMoved,
-	ccTouchEnded,
-	ccTouchCancelled,
+	kCCTouchBegan,
+	kCCTouchMoved,
+	kCCTouchEnded,
+	kCCTouchCancelled,
 	
-	ccTouchMax,
+	kCCTouchMax,
 };
 
 struct ccTouchHandlerHelperData {
@@ -84,7 +84,7 @@ struct ccTouchHandlerHelperData {
 	BOOL	dispatchEvents;
 	
 	// 4, 1 for each type of event
-	struct ccTouchHandlerHelperData handlerHelperData[ccTouchMax];
+	struct ccTouchHandlerHelperData handlerHelperData[kCCTouchMax];
 }
 
 /** singleton of the CCTouchDispatcher */

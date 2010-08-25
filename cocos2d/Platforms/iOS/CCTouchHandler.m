@@ -73,13 +73,13 @@
 {
 	if( (self=[super initWithDelegate:del priority:pri]) ) {
 		if( [del respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorBeganBit;
+			enabledSelectors_ |= kCCTouchSelectorBeganBit;
 		if( [del respondsToSelector:@selector(ccTouchesMoved:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorMovedBit;
+			enabledSelectors_ |= kCCTouchSelectorMovedBit;
 		if( [del respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorEndedBit;
+			enabledSelectors_ |= kCCTouchSelectorEndedBit;
 		if( [del respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorCancelledBit;
+			enabledSelectors_ |= kCCTouchSelectorCancelledBit;
 	}
 	return self;
 }
@@ -108,13 +108,13 @@
 		swallowsTouches = swallow;
 		
 		if( [aDelegate respondsToSelector:@selector(ccTouchBegan:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorBeganBit;
+			enabledSelectors_ |= kCCTouchSelectorBeganBit;
 		if( [aDelegate respondsToSelector:@selector(ccTouchMoved:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorMovedBit;
+			enabledSelectors_ |= kCCTouchSelectorMovedBit;
 		if( [aDelegate respondsToSelector:@selector(ccTouchEnded:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorEndedBit;
+			enabledSelectors_ |= kCCTouchSelectorEndedBit;
 		if( [aDelegate respondsToSelector:@selector(ccTouchCancelled:withEvent:)] )
-			enabledSelectors_ |= ccTouchSelectorCancelledBit;
+			enabledSelectors_ |= kCCTouchSelectorCancelledBit;
 	}
 	
 	return self;

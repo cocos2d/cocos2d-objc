@@ -69,6 +69,12 @@
 		E01E6C51121EF506001A484F /* CCTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6C4F121EF506001A484F /* CCTextureCache.m */; };
 		E036A79D121B5C720037C5C6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E036A79F121B5C870037C5C6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
+		E0D63606122552E000678AB3 /* CCMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D63602122552E000678AB3 /* CCMenu.h */; };
+		E0D63607122552E000678AB3 /* CCMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D63603122552E000678AB3 /* CCMenu.m */; };
+		E0D63608122552E000678AB3 /* CCMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D63604122552E000678AB3 /* CCMenuItem.h */; };
+		E0D63609122552E000678AB3 /* CCMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D63605122552E000678AB3 /* CCMenuItem.m */; };
+		E0D63627122569CF00678AB3 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D63625122569CF00678AB3 /* CCLabelTTF.h */; };
+		E0D63628122569CF00678AB3 /* CCLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D63626122569CF00678AB3 /* CCLabelTTF.m */; };
 		E0EAD16E121F4C1700B0C81C /* MacGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD15A121F4C1700B0C81C /* MacGLView.h */; };
 		E0EAD174121F4C4100B0C81C /* CCActionInstant.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD170121F4C4100B0C81C /* CCActionInstant.h */; };
 		E0EAD175121F4C4100B0C81C /* CCActionInstant.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD171121F4C4100B0C81C /* CCActionInstant.m */; };
@@ -424,6 +430,12 @@
 		E01E6CFF121EFDF8001A484F /* CCScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScene.m; sourceTree = "<group>"; };
 		E036A79C121B5C720037C5C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E0D63602122552E000678AB3 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenu.h; sourceTree = "<group>"; };
+		E0D63603122552E000678AB3 /* CCMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenu.m; sourceTree = "<group>"; };
+		E0D63604122552E000678AB3 /* CCMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItem.h; sourceTree = "<group>"; };
+		E0D63605122552E000678AB3 /* CCMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenuItem.m; sourceTree = "<group>"; };
+		E0D63625122569CF00678AB3 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
+		E0D63626122569CF00678AB3 /* CCLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelTTF.m; sourceTree = "<group>"; };
 		E0EAD147121F4C1700B0C81C /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
 		E0EAD148121F4C1700B0C81C /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
 		E0EAD14B121F4C1700B0C81C /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
@@ -835,6 +847,7 @@
 				E01E6D71121F0EB7001A484F /* Director Nodes */,
 				E01E6C4A121EF4B8001A484F /* Label Nodes */,
 				E0EADA9B1222173300B0C81C /* Layers, Scenes, Transitions Nodes */,
+				E0D6360A122552E700678AB3 /* Menu Nodes */,
 				E0EADBC61222B86F00B0C81C /* TiledMap and Parallax Nodes */,
 				E0EADBC71222B87E00B0C81C /* Particle Nodes */,
 				E0EADC271222BFCF00B0C81C /* Sprite Nodes */,
@@ -937,6 +950,8 @@
 		E01E6C4A121EF4B8001A484F /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E0D63625122569CF00678AB3 /* CCLabelTTF.h */,
+				E0D63626122569CF00678AB3 /* CCLabelTTF.m */,
 				E0EADC6C1222C2D000B0C81C /* CCLabelBMFont.h */,
 				E0EADC6D1222C2D000B0C81C /* CCLabelBMFont.m */,
 				E01E69ED121ED790001A484F /* CCLabelAtlas.h */,
@@ -967,6 +982,17 @@
 				E01E6CFB121EFD15001A484F /* CCDirector.m */,
 			);
 			name = "Director Nodes";
+			sourceTree = "<group>";
+		};
+		E0D6360A122552E700678AB3 /* Menu Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				E0D63602122552E000678AB3 /* CCMenu.h */,
+				E0D63603122552E000678AB3 /* CCMenu.m */,
+				E0D63604122552E000678AB3 /* CCMenuItem.h */,
+				E0D63605122552E000678AB3 /* CCMenuItem.m */,
+			);
+			name = "Menu Nodes";
 			sourceTree = "<group>";
 		};
 		E0EAD145121F4C1700B0C81C /* Platforms */ = {
@@ -1399,6 +1425,9 @@
 				E0F929CD122448B100EF2362 /* CCRibbon.h in Headers */,
 				E0F92AB61224546E00EF2362 /* CCSpriteFrameCache.h in Headers */,
 				E0F92AE41224570700EF2362 /* CCNS.h in Headers */,
+				E0D63606122552E000678AB3 /* CCMenu.h in Headers */,
+				E0D63608122552E000678AB3 /* CCMenuItem.h in Headers */,
+				E0D63627122569CF00678AB3 /* CCLabelTTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1735,6 +1764,9 @@
 				E0F929CC122448B100EF2362 /* CCMotionStreak.m in Sources */,
 				E0F929CE122448B100EF2362 /* CCRibbon.m in Sources */,
 				E0F92AB71224546E00EF2362 /* CCSpriteFrameCache.m in Sources */,
+				E0D63607122552E000678AB3 /* CCMenu.m in Sources */,
+				E0D63609122552E000678AB3 /* CCMenuItem.m in Sources */,
+				E0D63628122569CF00678AB3 /* CCLabelTTF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
