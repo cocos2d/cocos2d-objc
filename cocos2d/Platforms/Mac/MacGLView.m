@@ -101,69 +101,110 @@
 #pragma mark MacGLView - Mouse events
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	NSLog(@"event thread: %@", [NSThread currentThread]);
-	
-//	NSArray *array = [NSArray arrayWithObjects:NSDefaultRunLoopMode, nil];
-//	
-//	[eventDelegate_ performSelector:@selector(mouseDown:)
-//						   onThread:[CCDirectorMac executionThread]
-//						 withObject:theEvent
-//					  waitUntilDone:NO
-//							  modes:array];
-//	[eventDelegate_ performSelector:@selector(mouseDown:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
-
-	[eventDelegate_ mouseDown:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
-- (void)mouseMoved:(NSEvent *)theEvent {
-//	[eventDelegate_ performSelector:@selector(mouseMoved:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
-	[eventDelegate_ mouseMoved:theEvent];
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent {
-//	[eventDelegate_ performSelector:@selector(mouseDragged:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
-	[eventDelegate_ mouseDragged:theEvent];
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
-//	[eventDelegate_ performSelector:@selector(mouseUp:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
-	[eventDelegate_ mouseUp:theEvent];
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
-	[eventDelegate_ rightMouseDown:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent {
-	[eventDelegate_ rightMouseDragged:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent {
-	[eventDelegate_ rightMouseUp:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent {
-	[eventDelegate_ otherMouseDown:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent {
-	[eventDelegate_ otherMouseDragged:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent {
-	[eventDelegate_ otherMouseUp:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {
-	[eventDelegate_ mouseEntered:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
-	[eventDelegate_ mouseExited:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 -(void) scrollWheel:(NSEvent *)theEvent {
-	[eventDelegate_ scrollWheel:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 #pragma mark MacGLView - Key events
@@ -184,32 +225,56 @@
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
-	[eventDelegate_ keyDown:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
-	[eventDelegate_ keyUp:theEvent];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:theEvent
+		   waitUntilDone:NO];
 }
 
 #pragma mark MacGLView - Touch events
 - (void)touchesBeganWithEvent:(NSEvent *)event
 {
-	[eventDelegate_ touchesBeganWithEvent:event];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:event
+		   waitUntilDone:NO];
 }
 
 - (void)touchesMovedWithEvent:(NSEvent *)event
 {
-	[eventDelegate_ touchesMovedWithEvent:event];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:event
+		   waitUntilDone:NO];
 }
 
 - (void)touchesEndedWithEvent:(NSEvent *)event
 {
-	[eventDelegate_ touchesEndedWithEvent:event];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:event
+		   waitUntilDone:NO];
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent *)event
 {
-	[eventDelegate_ touchesCancelledWithEvent:event];
+	NSObject *obj = eventDelegate_;
+	[obj performSelector:_cmd
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+			  withObject:event
+		   waitUntilDone:NO];
 }
 
 @end

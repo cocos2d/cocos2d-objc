@@ -51,20 +51,16 @@
 #pragma mark -
 #pragma mark Director Mac
 
-NSThread *_directorThread = nil;
-NSRunLoop *_directorRunLoop = nil;
-
 @implementation CCDirectorMac
+
+@synthesize runThread=runThread_;
+
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
 	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
 	return NSPointToCGPoint(point);
 }
 
-+(NSThread*) executionThread
-{
-	return _directorThread;
-}
 @end
 
 
@@ -76,21 +72,8 @@ NSRunLoop *_directorRunLoop = nil;
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
-	// There is no autorelease pool when this method is called because it will be called from a background thread
-	// It's important to create one or you will leak objects
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	[self performSelector:@selector(drawScene) onThread:runThread_ withObject:nil waitUntilDone:YES];
 	
-	if( ! _directorThread )
-		_directorThread = [NSThread currentThread];
-	
-	if( !_directorRunLoop )
-		_directorRunLoop = [NSRunLoop currentRunLoop];
-
-	NSLog(@"runn loop: %@", [_directorRunLoop currentMode]);
-
-	[self drawScene];
-	
-	[pool release];
     return kCVReturnSuccess;
 }
 
@@ -103,6 +86,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) startAnimation
 {
+	runThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
+	[runThread_ start];	
+	
 	gettimeofday( &lastUpdate_, NULL);
 	
 	// Create a display link capable of being used with all active displays
@@ -125,6 +111,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
+		[runThread_ cancel];
+		[runThread_ release];
+		runThread_ = nil;
 		displayLink = NULL;
 	}
 }
@@ -138,6 +127,21 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[super dealloc];
 }
 
+//
+// Mac Director has its own thread
+//
+-(void) mainLoop
+{
+	while( ![[NSThread currentThread] isCancelled] ) {
+		// There is no autorelease pool when this method is called because it will be called from a background thread
+		// It's important to create one or you will leak objects
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
+		[[NSRunLoop currentRunLoop] run];
+
+		[pool release];
+	}
+}
 		
 //
 // Draw the Scene
@@ -183,10 +187,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	glPopMatrix();
-	
-//	glFinish();
-//	glFlush();
-		
+			
 	[[openGLView_ openGLContext] flushBuffer];	
 	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
 }

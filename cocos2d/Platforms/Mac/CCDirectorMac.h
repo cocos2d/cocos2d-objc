@@ -34,10 +34,13 @@
  @since v0.99.5
  */
 @interface CCDirectorMac : CCDirector
+{
+	NSThread	*runThread_;
+}
 
-/** returns the director execution thread */
-+(NSThread*) executionThread;
-
+/** returns the cocos2d thread */
+@property (readonly, nonatomic ) NSThread *runThread;
+		   
 /** converts an NSEvent to GL coordinates */
 -(CGPoint) convertEventToGL:(NSEvent*)event;
 
