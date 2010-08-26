@@ -35,6 +35,7 @@
 #pragma mark -
 #pragma mark Director Mac extensions
 
+
 @interface CCDirector ()
 -(void) setNextScene;
 -(void) showFPS;
@@ -70,7 +71,20 @@
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
+#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+	if( ! runningThread_ )
+		runningThread_ = [NSThread currentThread];
+	
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	[self drawScene];	
+	[[NSRunLoop currentRunLoop] run];
+	
+	[pool release];
+
+#else
 	[self performSelector:@selector(drawScene) onThread:runningThread_ withObject:nil waitUntilDone:YES];
+#endif
 	
     return kCVReturnSuccess;
 }
@@ -84,8 +98,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) startAnimation
 {
+#if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[runningThread_ start];	
+#endif
 	
 	gettimeofday( &lastUpdate_, NULL);
 	
@@ -109,10 +125,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
+		displayLink = NULL;
+		
+#if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 		[runningThread_ cancel];
 		[runningThread_ release];
 		runningThread_ = nil;
-		displayLink = NULL;
+#endif
 	}
 }
 
