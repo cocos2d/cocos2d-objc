@@ -228,11 +228,16 @@ Class restartTransition()
 		y = size.height;
 
 		CCSprite *bg1;
+		
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 			bg1 = [CCSprite spriteWithFile:@"background1-ipad.jpg"];
 		} else {
 			bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
 		}
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
+#endif // Mac
 		
 		bg1.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg1 z:-1];
@@ -332,11 +337,15 @@ Class restartTransition()
 		y = size.height;
 		
 		CCSprite *bg2;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 			bg2 = [CCSprite spriteWithFile:@"background2-ipad.jpg"];
 		} else {
 			bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
-		}		
+		}
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
+#endif // Mac
 		bg2.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg2 z:-1];
 		
@@ -424,6 +433,12 @@ Class restartTransition()
 @end
 
 // CLASS IMPLEMENTATIONS
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
+#pragma mark -
+#pragma mark AppController - iPhone
+
 @implementation AppController
 
 @synthesize window;
@@ -528,3 +543,36 @@ Class restartTransition()
 }
 
 @end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [TextLayer node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
