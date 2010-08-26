@@ -66,6 +66,9 @@
 		[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 		
 		
+//		GLint order = -1;
+//		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
+		
 		// event delegate
 		eventDelegate_ = nil;
 	}

@@ -66,16 +66,9 @@ Class restartAction()
 {
 	if( (self=[super init])) {
 
-		// Example:
-		// You can create a sprite using a Texture2D
-		CCTexture2D *tex = [[CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[CCConfiguration sharedConfiguration].loadingBundle pathForResource:@"grossini.png" ofType:nil] ] ];
-		grossini = [[CCSprite spriteWithTexture:tex] retain];
-		[tex release];
-		
-		// Example:
-		// Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
-		kathia = [[CCSprite spriteWithFile:@"grossinis_sister2.png"] retain];
+		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
+		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
+		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
 		
 		[self addChild: grossini z:3];
 		[self addChild: kathia z:2];
@@ -622,6 +615,7 @@ Class restartAction()
 @end
 
 @implementation SchedulerTest
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 - (UISlider *)sliderCtl
 {
     if (sliderCtl == nil) 
@@ -642,10 +636,33 @@ Class restartAction()
     }
     return [sliderCtl autorelease];
 }
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+-(NSSlider*) sliderCtl
+{
+	if( sliderCtl == nil )
+	{
+		sliderCtl = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+		[sliderCtl setMinValue: 0];
+		[sliderCtl setMaxValue: 3];
+		[sliderCtl setFloatValue: 1];
+		[sliderCtl setAction: @selector (sliderAction:)];
+		[sliderCtl setTarget: self];
+		[sliderCtl setContinuous: YES];
+	}
+	
+	return sliderCtl;
+}
+#endif // Mac
 
 -(void) sliderAction:(id) sender
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[CCScheduler sharedScheduler] setTimeScale: sliderCtl.value];
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	
+	NSLog(@"value: %f", [sliderCtl floatValue]);
+	[[CCScheduler sharedScheduler] setTimeScale: [sliderCtl floatValue]];
+#endif
 }
 
 -(void) onEnter
@@ -677,12 +694,42 @@ Class restartAction()
 	[self addChild:emitter];
 	
 	sliderCtl = [self sliderCtl];
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+	MacGLView *view = [[CCDirector sharedDirector] openGLView];
+
+	if( ! overlayWindow ) {
+		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
+													 styleMask:NSBorderlessWindowMask
+													   backing:NSBackingStoreBuffered
+														 defer:NO];
+
+		[overlayWindow setFrame:[[view window] frame] display:NO];
+
+		[[overlayWindow contentView] addSubview:sliderCtl];
+		[overlayWindow setParentWindow:[view window]];
+		[overlayWindow setOpaque:NO];
+		[overlayWindow makeKeyAndOrderFront:nil];
+		[overlayWindow setBackgroundColor:[NSColor clearColor]];
+		[[overlayWindow contentView] display];
+	}
+	
+	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+#endif
+	
 }
 
 -(void) onExit
 {
 	[sliderCtl removeFromSuperview];
+
+#if __MAC_OS_X_VERSION_MIN_REQUIRED
+	MacGLView *view = [[CCDirector sharedDirector] openGLView];
+	[[view window] removeChildWindow:overlayWindow];
+	[overlayWindow release];
+	overlayWindow = nil;
+#endif
 	[super onExit];
 }
 
@@ -697,6 +744,9 @@ Class restartAction()
 #pragma mark AppController
 
 // CLASS IMPLEMENTATIONS
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -784,3 +834,33 @@ Class restartAction()
 }
 
 @end
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
