@@ -194,7 +194,11 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		self.isTouchEnabled = YES;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		self.isMouseEnabled = YES;
+#endif
 		
 		// Top Layer, a simple image
 		CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
@@ -244,6 +248,7 @@ Class restartAction()
 	return self;
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
@@ -277,6 +282,19 @@ Class restartAction()
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
 
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CCNode *node = [self getChildByTag:kTagNode];
+	CGPoint currentPos = [node position];
+	[node setPosition: ccpAdd(currentPos, CGPointMake( event.deltaX, -event.deltaY) )];
+	
+	return YES;
+}
+
+#endif
+
 
 -(NSString *) title
 {
@@ -286,6 +304,8 @@ Class restartAction()
 
 
 // CLASS IMPLEMENTATIONS
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -366,3 +386,33 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
