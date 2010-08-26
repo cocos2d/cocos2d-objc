@@ -50,11 +50,20 @@
 
 #pragma mark -
 #pragma mark Director Mac
+
+NSThread *_directorThread = nil;
+NSRunLoop *_directorRunLoop = nil;
+
 @implementation CCDirectorMac
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
 	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
 	return NSPointToCGPoint(point);
+}
+
++(NSThread*) executionThread
+{
+	return _directorThread;
 }
 @end
 
@@ -71,6 +80,14 @@
 	// It's important to create one or you will leak objects
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+	if( ! _directorThread )
+		_directorThread = [NSThread currentThread];
+	
+	if( !_directorRunLoop )
+		_directorRunLoop = [NSRunLoop currentRunLoop];
+
+	NSLog(@"runn loop: %@", [_directorRunLoop currentMode]);
+
 	[self drawScene];
 	
 	[pool release];
