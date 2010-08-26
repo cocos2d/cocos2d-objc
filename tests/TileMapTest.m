@@ -79,7 +79,11 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 		self.isTouchEnabled = YES;
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+		self.isMouseEnabled = YES;
+#endif
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 			
@@ -115,6 +119,7 @@ Class restartAction()
 	[super dealloc];
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
@@ -147,6 +152,17 @@ Class restartAction()
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CCNode *node = [self getChildByTag:kTagTileMap];
+	CGPoint currentPos = [node position];
+	[node setPosition: ccpAdd(currentPos, CGPointMake( event.deltaX, -event.deltaY) )];
+
+	return YES;
+}
+#endif
 
 -(void) restartCallback: (id) sender
 {
@@ -1274,10 +1290,13 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark Application Delegate
-
 // CLASS IMPLEMENTATIONS
+
+#pragma mark -
+#pragma mark AppController - iPhone
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -1380,3 +1399,46 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	//
+	// Run all the test with 2d projection
+	//
+	[director setProjection:kCCDirectorProjection2D];
+	
+	
+	//
+	// Finally, run the scene
+	//
+	[director runWithScene: scene];
+}
+
+@end
+#endif
+
