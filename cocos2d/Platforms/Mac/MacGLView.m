@@ -29,7 +29,7 @@
 #import "MacGLView.h"
 #import <OpenGL/gl.h>
 
-#import "../../CCDirector.h"
+#import "CCDirectorMac.h"
 
 
 @implementation MacGLView
@@ -99,19 +99,34 @@
 }
 
 #pragma mark MacGLView - Mouse events
-- (void)mouseDown:(NSEvent *)theEvent {
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	NSLog(@"event thread: %@", [NSThread currentThread]);
+	
+//	NSArray *array = [NSArray arrayWithObjects:NSDefaultRunLoopMode, nil];
+//	
+//	[eventDelegate_ performSelector:@selector(mouseDown:)
+//						   onThread:[CCDirectorMac executionThread]
+//						 withObject:theEvent
+//					  waitUntilDone:NO
+//							  modes:array];
+//	[eventDelegate_ performSelector:@selector(mouseDown:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
+
 	[eventDelegate_ mouseDown:theEvent];
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent {
+//	[eventDelegate_ performSelector:@selector(mouseMoved:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
 	[eventDelegate_ mouseMoved:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent {
+//	[eventDelegate_ performSelector:@selector(mouseDragged:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
 	[eventDelegate_ mouseDragged:theEvent];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent {
+//	[eventDelegate_ performSelector:@selector(mouseUp:) onThread:[CCDirectorMac executionThread] withObject:theEvent waitUntilDone:NO];
 	[eventDelegate_ mouseUp:theEvent];
 }
 

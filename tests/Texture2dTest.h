@@ -1,7 +1,6 @@
 #import "cocos2d.h"
 
 //CLASS INTERFACE
-//CLASS INTERFACE
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 @interface AppController : NSObject <UIApplicationDelegate>
 {

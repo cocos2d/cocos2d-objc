@@ -35,6 +35,9 @@
  */
 @interface CCDirectorMac : CCDirector
 
+/** returns the director execution thread */
++(NSThread*) executionThread;
+
 /** converts an NSEvent to GL coordinates */
 -(CGPoint) convertEventToGL:(NSEvent*)event;
 
