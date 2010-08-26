@@ -35,11 +35,7 @@
  */
 @interface CCDirectorMac : CCDirector
 {
-	NSThread	*runThread_;
 }
-
-/** returns the cocos2d thread */
-@property (readonly, nonatomic ) NSThread *runThread;
 		   
 /** converts an NSEvent to GL coordinates */
 -(CGPoint) convertEventToGL:(NSEvent*)event;

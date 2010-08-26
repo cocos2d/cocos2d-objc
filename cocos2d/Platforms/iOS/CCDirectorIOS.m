@@ -125,6 +125,9 @@
 		contentScaleFactor_ = 1;
 		screenSize_ = surfaceSize_ = CGSizeZero;
 		isContentScaleSupported_ = NO;
+		
+		// running thread is main thread on iOS
+		runningThread_ = [NSThread currentThread];
 	}
 	
 	return self;

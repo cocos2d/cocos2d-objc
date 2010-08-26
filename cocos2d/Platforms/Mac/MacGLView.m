@@ -103,7 +103,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -112,7 +112,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -121,7 +121,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -130,7 +130,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -138,7 +138,7 @@
 - (void)rightMouseDown:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -146,7 +146,7 @@
 - (void)rightMouseDragged:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -154,7 +154,7 @@
 - (void)rightMouseUp:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -162,7 +162,7 @@
 - (void)otherMouseDown:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -170,7 +170,7 @@
 - (void)otherMouseDragged:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -178,7 +178,7 @@
 - (void)otherMouseUp:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -186,7 +186,7 @@
 - (void)mouseEntered:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -194,7 +194,7 @@
 - (void)mouseExited:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -202,7 +202,7 @@
 -(void) scrollWheel:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -227,7 +227,7 @@
 - (void)keyDown:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -235,7 +235,7 @@
 - (void)keyUp:(NSEvent *)theEvent {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:theEvent
 		   waitUntilDone:NO];
 }
@@ -245,7 +245,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:event
 		   waitUntilDone:NO];
 }
@@ -254,7 +254,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:event
 		   waitUntilDone:NO];
 }
@@ -263,7 +263,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:event
 		   waitUntilDone:NO];
 }
@@ -272,7 +272,7 @@
 {
 	NSObject *obj = eventDelegate_;
 	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
+				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
 			  withObject:event
 		   waitUntilDone:NO];
 }

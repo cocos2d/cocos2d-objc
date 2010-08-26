@@ -169,10 +169,7 @@ static CCTextureCache *sharedTextureCache;
 		CCTexture2D *tex = [self addImage:async.data];
 
 		// The callback will be executed on the main thread
-		[async.target performSelector:async.selector
-							 onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runThread]
-						   withObject:tex
-						waitUntilDone:NO];
+		[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];		
 		
 		[EAGLContext setCurrentContext:nil];
 	} else {
@@ -205,7 +202,11 @@ static CCTextureCache *sharedTextureCache;
 	CCTexture2D *tex = [self addImage:async.data];
 	
 	// The callback will be executed on the main thread
-	[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
+	[async.target performSelector:async.selector
+						 onThread:[[CCDirector sharedDirector] runningThread]
+					   withObject:tex
+					waitUntilDone:NO];
+	
 	
 	[NSOpenGLContext clearCurrentContext];
 

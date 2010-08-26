@@ -53,8 +53,6 @@
 
 @implementation CCDirectorMac
 
-@synthesize runThread=runThread_;
-
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
 	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
@@ -72,7 +70,7 @@
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
-	[self performSelector:@selector(drawScene) onThread:runThread_ withObject:nil waitUntilDone:YES];
+	[self performSelector:@selector(drawScene) onThread:runningThread_ withObject:nil waitUntilDone:YES];
 	
     return kCVReturnSuccess;
 }
@@ -86,8 +84,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) startAnimation
 {
-	runThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
-	[runThread_ start];	
+	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
+	[runningThread_ start];	
 	
 	gettimeofday( &lastUpdate_, NULL);
 	
@@ -111,9 +109,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
-		[runThread_ cancel];
-		[runThread_ release];
-		runThread_ = nil;
+		[runningThread_ cancel];
+		[runningThread_ release];
+		runningThread_ = nil;
 		displayLink = NULL;
 	}
 }

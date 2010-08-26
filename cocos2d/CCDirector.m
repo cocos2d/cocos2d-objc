@@ -88,7 +88,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
 @synthesize isPaused=isPaused_;
 @synthesize sendCleanupToScene=sendCleanupToScene_;
-
+@synthesize runningThread=runningThread_;
 //
 // singleton stuff
 //
@@ -140,6 +140,9 @@ static CCDirector *_sharedDirector = nil;
 		
 		// paused ?
 		isPaused_ = NO;
+		
+		// running thread
+		runningThread_ = nil;
 		
 		screenSize_ = surfaceSize_ = CGSizeZero;
 	}
