@@ -147,9 +147,9 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) addImageWithAsyncObject:(CCAsyncObject*)async
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 	// textures will be created on the main OpenGL context
 	// it seems that in SDK 2.2.x there can't be 2 threads creating textures at the same time
 	// the lock is used for this purpose: issue #472
@@ -180,8 +180,36 @@ static CCTextureCache *sharedTextureCache;
 	[autoreleasepool release];
 
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
-	NSAssert(NO, @"Not implemented yet on Mac");
 
+	[contextLock lock];
+	if( auxGLcontext == nil ) {
+
+		MacGLView *view = [[CCDirector sharedDirector] openGLView];
+		
+		NSOpenGLPixelFormat *pf = [view pixelFormat];
+		NSOpenGLContext *share = [view openGLContext];
+
+		auxGLcontext = [[NSOpenGLContext alloc] initWithFormat:pf shareContext:share];
+		
+		
+		if( ! auxGLcontext )
+			CCLOG(@"cocos2d: TextureCache: Could not create NSOpenGLContext");
+	}
+	
+	[auxGLcontext makeCurrentContext];
+		
+	// load / create the texture
+	CCTexture2D *tex = [self addImage:async.data];
+	
+	// The callback will be executed on the main thread
+	[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
+	
+	[NSOpenGLContext clearCurrentContext];
+
+	[contextLock unlock];
+	
+	[autoreleasepool release];
+	
 #endif // __MAC_OS_X_VERSION_MIN_REQUIRED
 }
 
