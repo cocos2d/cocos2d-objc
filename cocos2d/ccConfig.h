@@ -94,7 +94,19 @@
  
  @warning This feature is experimental
  */
- #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
+#define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
+
+/** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+ If enabled, cocos2d-mac will run on the Display Link thread.
+ 
+ By default cocos2d-mac will run in its own thread. Enable it if your game is skipping some frames.
+ 
+ To enable set it to a value different than 0. Disabled by default.
+
+ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
+
+ */
+#define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 0
 
 /** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
