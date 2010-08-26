@@ -349,6 +349,8 @@ Class restartAction()
 @end
 
 // CLASS IMPLEMENTATIONS
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -449,3 +451,33 @@ Class restartAction()
 }
 
 @end
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
