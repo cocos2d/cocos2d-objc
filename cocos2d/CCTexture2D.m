@@ -10,7 +10,7 @@ is subject to change, and software implemented based on this sample code should
 be tested with final operating system software and final documentation. Newer
 versions of this sample code may be provided with future seeds of the API or
 technology. For information about updates to this and other developer
-documentation, view the New & Updated sidebars in subsequent documentation
+documentation, view the New & Updated sidebars in subsequent documentationd
 seeds.
 
 =====================
@@ -405,34 +405,43 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	//Alignment
 	float xPadding = 0;
 	NSSize realDimensions = [stringWithAttributes size];
-	switch (alignment) {
-		case CCTextAlignmentLeft: xPadding = 0; break;
-		case CCTextAlignmentCenter: xPadding = (dimensions.width-realDimensions.width)/2.0f; break;
-		case CCTextAlignmentRight: xPadding = dimensions.width-realDimensions.width; break;
-		default: break;
+	
+	// Mac crashes if the width or height is 0
+	if( realDimensions.width > 0 && realDimensions.height > 0 ) {
+		switch (alignment) {
+			case CCTextAlignmentLeft: xPadding = 0; break;
+			case CCTextAlignmentCenter: xPadding = (dimensions.width-realDimensions.width)/2.0f; break;
+			case CCTextAlignmentRight: xPadding = dimensions.width-realDimensions.width; break;
+			default: break;
+		}
+		
+		//Disable antialias
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
+
+		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
+		[image lockFocus];	
+		
+		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, height-dimensions.height)]; // draw at offset position	
+		
+		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, width, height)];
+		[image unlockFocus];
+
+		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+		
+		for(int i = 0; i<(width*height); i++) //Convert RGBA8888 to A8
+			data[i] = data[i*4+3];
+		
+		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+		
+		[bitmap release];
+		[image release]; 
+		
+	} else {
+		[self release];
+		return nil;
 	}
-	
-	//Disable antialias
-	[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
 
-	NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
-	[image lockFocus];	
-	
-	[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, height-dimensions.height)]; // draw at offset position	
-	
-	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, width, height)];
-	[image unlockFocus];
-
-	data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
-	
-	for(int i = 0; i<(width*height); i++) //Convert RGBA8888 to A8
-		data[i] = data[i*4+3];
-	
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
-	
-	[bitmap release];
-	[image release];
-#endif
+#endif // Mac
 	return self;
 }
 @end

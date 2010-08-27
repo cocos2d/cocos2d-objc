@@ -27,13 +27,10 @@
 #define __CC_DRAWING_PRIMITIVES_H
 
 #import <Availability.h>
+#import <Foundation/Foundation.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
-#import <objc/objc.h>				// for BOOL
-
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
-#import <Foundation/Foundation.h>
 #endif
 
 
@@ -62,27 +59,27 @@ void ccDrawPoint( CGPoint point );
 /** draws an array of points.
  @since v0.7.2
  */
-void ccDrawPoints( CGPoint *points, unsigned int numberOfPoints );
+void ccDrawPoints( CGPoint *points, NSUInteger numberOfPoints );
 
 /** draws a line given the origin and destination point */
 void ccDrawLine( CGPoint origin, CGPoint destination );
 
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
  */
-void ccDrawPoly( CGPoint *vertices, int numOfVertices, BOOL closePolygon );
+void ccDrawPoly( CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
-void ccDrawCircle( CGPoint center, float radius, float angle, int segments, BOOL drawLineToCenter);
+void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8
  */
-void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments);
+void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments);
 
 /** draws a cubic bezier path
  @since v0.8
  */
-void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
+void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
 
 #ifdef __cplusplus
 }
