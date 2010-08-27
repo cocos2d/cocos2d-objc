@@ -78,18 +78,9 @@ Class restartAction()
 {
 	if( (self=[super init])) {
 	
-		// Example:
-		// You can create a sprite using a Texture2D
-		CCTexture2D *tex = [ [CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[CCConfiguration sharedConfiguration].loadingBundle pathForResource:@"grossini.png" ofType:nil] ] ];
-		grossini = [[CCSprite spriteWithTexture:tex] retain];
-		[tex release];
-
-		
-		// Example:
-		// Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
-		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
-		
-		kathia = [[CCSprite spriteWithFile:@"grossinis_sister2.png"] retain];
+		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
+		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
+		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
 		
 		[self addChild:grossini z:1];
 		[self addChild:tamara z:2];
@@ -827,7 +818,7 @@ Class restartAction()
 }
 -(void) callback3:(id)sender data:(void*)data
 {
-	NSLog(@"callback 3 called from:%@ with data:%x",sender,(int)data);
+	NSLog(@"callback 3 called from:%@ with data:%x",sender,(NSUInteger)data);
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*3,s.height/2)];
@@ -988,7 +979,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PropertyAction";
+	return @"ActionTween";
 }
 
 -(NSString*) subtitle
@@ -1001,6 +992,11 @@ Class restartAction()
 
 
 // CLASS IMPLEMENTATIONS
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
+#pragma mark AppController - iOS
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -1090,3 +1086,36 @@ Class restartAction()
 }
 
 @end
+
+#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+
+#pragma mark AppController - Mac
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
+
