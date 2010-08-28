@@ -3592,7 +3592,7 @@
 		50E675060F65628C003DAA90 /* spritesheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet1.png; sourceTree = "<group>"; };
 		50E676960F6587FD003DAA90 /* spritesheet1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = spritesheet1.pvr; sourceTree = "<group>"; };
 		50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossinis_sister1.pvr; sourceTree = "<group>"; };
-		50E77D1211D4C926009CA2C2 /* SpriteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50E77D1211D4C926009CA2C2 /* HiResTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiResTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F29F5510204FD60046CA73 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		50F29F6E102053370046CA73 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		50F2A102102094550046CA73 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
@@ -4678,7 +4678,7 @@
 				5006BD0D11BCF3C300E488BD /* PerformanceTestChildrenNode.app */,
 				504E17DC11C4C7E100E19835 /* EAGLViewTest.app */,
 				50CBA48711CBD6FB007B009D /* Bug886.app */,
-				50E77D1211D4C926009CA2C2 /* SpriteTest.app */,
+				50E77D1211D4C926009CA2C2 /* HiResTest.app */,
 				507C0F0B11D609290075E747 /* Bug899.app */,
 				502BF56911E39CC30030C477 /* Bug914.app */,
 				E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */,
@@ -7795,7 +7795,7 @@
 			);
 			name = HiResTest;
 			productName = AtlasSpriteTest;
-			productReference = 50E77D1211D4C926009CA2C2 /* SpriteTest.app */;
+			productReference = 50E77D1211D4C926009CA2C2 /* HiResTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8E6CBEEE0F7A758000D47B3A /* vorbis */ = {
@@ -13440,7 +13440,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SpriteTest;
+				PRODUCT_NAME = HiResTest;
 			};
 			name = Debug;
 		};
@@ -13464,7 +13464,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SpriteTest;
+				PRODUCT_NAME = HiResTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;

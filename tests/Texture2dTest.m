@@ -271,9 +271,9 @@ Class restartAction()
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
 	NSData *data = [NSData dataWithContentsOfFile:fullpath];
@@ -476,14 +476,14 @@ Class restartAction()
 {
 	[super onEnter];
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
 	CCSprite *img = [CCSprite spriteWithTexture:tex];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
 	NSLog(@"This test is not supported by Mac");
 #endif
@@ -1536,7 +1536,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - iPhone
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @implementation AppController
 
@@ -1628,7 +1628,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 @implementation cocos2dmacAppDelegate
 

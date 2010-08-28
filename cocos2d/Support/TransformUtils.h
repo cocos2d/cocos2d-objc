@@ -25,10 +25,10 @@
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/gl.h>
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import <OpenGL/gl.h>
 #import <Foundation/Foundation.h>
 #endif

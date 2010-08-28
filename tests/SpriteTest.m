@@ -187,9 +187,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
 #endif
 		
@@ -231,7 +231,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -242,7 +242,7 @@ Class restartAction()
 		[self addNewSpriteWithCoords: location];
 	}
 }
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
 	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
@@ -265,9 +265,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
 #endif
 
@@ -314,7 +314,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -325,7 +325,7 @@ Class restartAction()
 		[self addNewSpriteWithCoords: location];
 	}
 }
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
 	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
@@ -1334,9 +1334,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
 #endif
 		
@@ -1398,9 +1398,9 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 #endif
 {
@@ -1416,7 +1416,8 @@ Class restartAction()
 		usingTexture1 = YES;
 	}
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	return YES;
 #endif
 }
@@ -1432,9 +1433,9 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
 #endif
 		
@@ -1495,9 +1496,9 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 #endif
 {
@@ -1508,7 +1509,8 @@ Class restartAction()
 	else
 		[batch setTexture:texture1];	
 	
-#if __MAC_OS_X_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	return YES;
 #endif
 }
@@ -3191,7 +3193,7 @@ Class restartAction()
 
 // CLASS IMPLEMENTATIONS
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -3303,7 +3305,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 @implementation cocos2dmacAppDelegate
 

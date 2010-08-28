@@ -79,9 +79,9 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
 #endif
 
@@ -119,7 +119,7 @@ Class restartAction()
 	[super dealloc];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
@@ -152,7 +152,7 @@ Class restartAction()
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
@@ -1295,7 +1295,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - iPhone
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @implementation AppController
 
@@ -1403,7 +1403,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 @implementation cocos2dmacAppDelegate
 

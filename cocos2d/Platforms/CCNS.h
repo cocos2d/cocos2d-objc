@@ -30,7 +30,7 @@
 
 #import <Foundation/Foundation.h> //	for NSObject
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #define CCRectFromString(__r__)		CGRectFromString(__r__)
 #define CCPointFromString(__p__)	CGPointFromString(__p__)
@@ -44,7 +44,7 @@
 #define CCTextAlignmentRight		UITextAlignmentRight
 
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )

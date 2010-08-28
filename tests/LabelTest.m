@@ -840,7 +840,7 @@ Class restartAction()
 
 // CLASS IMPLEMENTATIONS
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -925,7 +925,7 @@ Class restartAction()
 @end
 
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 #pragma mark AppController - Mac
 

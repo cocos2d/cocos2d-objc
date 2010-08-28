@@ -29,7 +29,7 @@
 #import <Availability.h>
 #import <Foundation/Foundation.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
 #endif
 

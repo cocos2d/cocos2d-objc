@@ -474,7 +474,7 @@ enum {
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /** convenience methods which take a UITouch instead of CGPoint
  @since v0.7.1
  */
@@ -483,5 +483,5 @@ enum {
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 @end

@@ -39,9 +39,9 @@
 #import "Support/CGPointExtension.h"
 
 #import <Availability.h>
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
@@ -76,9 +76,9 @@ enum {
 		NSAssert( inScene != outScene, @"Incoming scene must be different from the outgoing scene" );
 
 		// disable events while transitions
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
 #endif
 
@@ -132,9 +132,9 @@ enum {
 	[director replaceScene: inScene];
 
 	// enable events while transitions
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];
 #endif
 	

@@ -407,7 +407,7 @@ enum {
 #pragma mark -
 #pragma mark AppController - iPhone
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @implementation AppController
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -500,7 +500,7 @@ enum {
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 @implementation cocos2dmacAppDelegate
 

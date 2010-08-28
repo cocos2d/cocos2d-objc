@@ -62,7 +62,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <UIKit/UIKit.h>			// for UIImage
 #endif
 
@@ -162,9 +162,9 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture2D (Image)
 /** Initializes a texture from a UIImage object */
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (id) initWithImage:(UIImage *)uiImage;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (id) initWithImage:(CGImageRef)cgImage;
 #endif
 @end
@@ -190,9 +190,9 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  *
  * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
  */
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Initializes a texture from a PVR file.
  
  Supported PVR formats:

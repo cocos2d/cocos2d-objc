@@ -24,7 +24,7 @@
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <UIKit/UIKit.h>		// Needed for UIDevice
 #endif
 
@@ -75,7 +75,7 @@ static char * glExtensions;
 		
 		// Obtain iOS version
 		iOSVersion_ = 0;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		NSString *iOSVer = [[UIDevice currentDevice] systemVersion];
 #else
 		NSString *iOSVer = nil;

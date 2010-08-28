@@ -158,9 +158,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 @end
 
 @implementation CCTexture2D (Image)
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (id) initWithImage:(UIImage *)uiImage
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (id) initWithImage:(CGImageRef)CGImage
 #endif
 {
@@ -176,7 +176,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	CGImageRef	CGImage = uiImage.CGImage;
 #endif
 	
@@ -336,10 +336,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
     else
 #endif
 	{
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
         dim = [string sizeWithFont:[UIFont fontWithName:name size:size]];
 	
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		NSAttributedString *stringWithAttributes =
 		[[[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:
 																	   [[NSFontManager sharedFontManager]
@@ -360,7 +360,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	NSUInteger height = ccNextPOT(dimensions.height);
 	unsigned char*			data;
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	CGContextRef			context;
 	CGColorSpaceRef			colorSpace;
 	id						uifont;
@@ -391,7 +391,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
 	free(data);
 	
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
 	//String with attributes
 	NSAttributedString *stringWithAttributes =
@@ -451,7 +451,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
 {
 	//	GLint					saveName;
@@ -489,7 +489,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	}					
 	return self;
 }
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 -(id) initWithPVRFile: (NSString*) file
 {
