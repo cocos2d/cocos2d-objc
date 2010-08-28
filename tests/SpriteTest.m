@@ -245,7 +245,7 @@ Class restartAction()
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 	[self addNewSpriteWithCoords: location];
 	
 	return YES;
@@ -328,7 +328,7 @@ Class restartAction()
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 	[self addNewSpriteWithCoords: location];
 	
 	return YES;

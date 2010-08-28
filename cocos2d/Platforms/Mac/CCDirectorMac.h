@@ -27,7 +27,8 @@
 #import "../../CCDirector.h"
 
 @interface CCDirector (MacExtension)
-+(Class) defaultDirector;
+/** converts an NSEvent to GL coordinates */
+-(CGPoint) convertEventToGL:(NSEvent*)event;
 @end
 
 /** Base class of Mac directors
@@ -36,10 +37,6 @@
 @interface CCDirectorMac : CCDirector
 {
 }
-		   
-/** converts an NSEvent to GL coordinates */
--(CGPoint) convertEventToGL:(NSEvent*)event;
-
 @end
 
 

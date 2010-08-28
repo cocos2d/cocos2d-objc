@@ -43,10 +43,12 @@
 @end
 
 @implementation CCDirector (MacExtension)
-+(Class) defaultDirector
+-(CGPoint) convertEventToGL:(NSEvent*)event
 {
-	return [CCDirectorDisplayLink class];
+	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
+	return NSPointToCGPoint(point);
 }
+
 @end
 
 #pragma mark -
@@ -54,11 +56,6 @@
 
 @implementation CCDirectorMac
 
--(CGPoint) convertEventToGL:(NSEvent*)event
-{
-	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
-	return NSPointToCGPoint(point);
-}
 
 @end
 
