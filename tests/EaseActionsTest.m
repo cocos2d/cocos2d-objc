@@ -615,7 +615,7 @@ Class restartAction()
 @end
 
 @implementation SchedulerTest
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (UISlider *)sliderCtl
 {
     if (sliderCtl == nil) 
@@ -636,7 +636,7 @@ Class restartAction()
     }
     return [sliderCtl autorelease];
 }
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(NSSlider*) sliderCtl
 {
 	if( sliderCtl == nil )
@@ -656,11 +656,10 @@ Class restartAction()
 
 -(void) sliderAction:(id) sender
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[CCScheduler sharedScheduler] setTimeScale: sliderCtl.value];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
-	NSLog(@"value: %f", [sliderCtl floatValue]);
 	[[CCScheduler sharedScheduler] setTimeScale: [sliderCtl floatValue]];
 #endif
 }
@@ -694,9 +693,9 @@ Class restartAction()
 	[self addChild:emitter];
 	
 	sliderCtl = [self sliderCtl];
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	MacGLView *view = [[CCDirector sharedDirector] openGLView];
 
 	if( ! overlayWindow ) {
@@ -724,7 +723,8 @@ Class restartAction()
 {
 	[sliderCtl removeFromSuperview];
 
-#if __MAC_OS_X_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	MacGLView *view = [[CCDirector sharedDirector] openGLView];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
@@ -745,7 +745,7 @@ Class restartAction()
 
 // CLASS IMPLEMENTATIONS
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @implementation AppController
 
@@ -835,7 +835,7 @@ Class restartAction()
 
 @end
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 @implementation cocos2dmacAppDelegate
 

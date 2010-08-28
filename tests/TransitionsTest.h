@@ -2,7 +2,7 @@
 
 @class CCLabel;
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface AppController : NSObject <UIApplicationDelegate>
 {
 	UIWindow *window;
@@ -12,7 +12,7 @@
 
 @end
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 @interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate>
 {
 	NSWindow	*window_;

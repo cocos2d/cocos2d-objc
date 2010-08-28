@@ -29,7 +29,7 @@
 #import "Support/OpenGL_Internal.h"
 
 #import <Availability.h>
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
@@ -75,7 +75,7 @@ enum
 /** clears the texture with a color */
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 /** saves the texture into a file */
 -(BOOL)saveBuffer:(NSString*)name;

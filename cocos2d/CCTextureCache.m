@@ -34,9 +34,9 @@
 #import "Support/CCFileUtils.h"
 #import "CCDirector.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 static EAGLContext *auxGLcontext = nil;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 static NSOpenGLContext *auxGLcontext = nil;
 #endif
 
@@ -149,7 +149,7 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// textures will be created on the main OpenGL context
 	// it seems that in SDK 2.2.x there can't be 2 threads creating textures at the same time
 	// the lock is used for this purpose: issue #472
@@ -179,7 +179,7 @@ static CCTextureCache *sharedTextureCache;
 	
 	[autoreleasepool release];
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 	[contextLock lock];
 	if( auxGLcontext == nil ) {
@@ -214,7 +214,7 @@ static CCTextureCache *sharedTextureCache;
 	
 	[autoreleasepool release];
 	
-#endif // __MAC_OS_X_VERSION_MIN_REQUIRED
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 }
 
 -(void) addImageAsync: (NSString*) filename target:(id)target selector:(SEL)selector
@@ -265,7 +265,7 @@ static CCTextureCache *sharedTextureCache;
 			tex = [self addPVRTCImage:fullpath];
 
 		// Only iPhone
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 		else if ( ( [[CCConfiguration sharedConfiguration] iOSVersion] >= kCCiOSVersion_4_0) &&
@@ -302,7 +302,7 @@ static CCTextureCache *sharedTextureCache;
 		}
 
 		// Only in Mac
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		else {			
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
@@ -318,7 +318,7 @@ static CCTextureCache *sharedTextureCache;
 			
 			[tex release];			
 		}
-#endif // __MAC_OS_X_VERSION_MIN_REQUIRED
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 	}
 	
@@ -339,13 +339,13 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// prevents overloading the autorelease pool
 	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
 	tex = [[CCTexture2D alloc] initWithImage: image];
 	[image release];
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	tex = [[CCTexture2D alloc] initWithImage: imageref];
 #endif
 	
@@ -400,7 +400,7 @@ static CCTextureCache *sharedTextureCache;
 
 @implementation CCTextureCache (PVRTCSupport)
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
@@ -426,7 +426,7 @@ static CCTextureCache *sharedTextureCache;
 	
 	return [tex autorelease];
 }
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 -(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
 {

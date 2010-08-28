@@ -28,14 +28,14 @@
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/glu.h"
 #import "iOS/EAGLView.h"
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
@@ -44,7 +44,7 @@
 
 
 // iOS
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_GLVIEW					EAGLView
 #define ccglOrtho					glOrthof
 #define	ccglClearDepth				glClearDepthf
@@ -62,7 +62,7 @@
 #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 // Mac
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_GLVIEW					MacGLView
 #define ccglOrtho					glOrtho
 #define	ccglClearDepth				glClearDepth

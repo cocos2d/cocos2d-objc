@@ -229,13 +229,13 @@ Class restartTransition()
 
 		CCSprite *bg1;
 		
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 			bg1 = [CCSprite spriteWithFile:@"background1-ipad.jpg"];
 		} else {
 			bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
 		}
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
 #endif // Mac
 		
@@ -337,13 +337,13 @@ Class restartTransition()
 		y = size.height;
 		
 		CCSprite *bg2;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 			bg2 = [CCSprite spriteWithFile:@"background2-ipad.jpg"];
 		} else {
 			bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
 		}
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
 #endif // Mac
 		bg2.position = ccp(size.width/2, size.height/2);
@@ -434,7 +434,7 @@ Class restartTransition()
 
 // CLASS IMPLEMENTATIONS
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #pragma mark -
 #pragma mark AppController - iPhone
@@ -547,7 +547,7 @@ Class restartTransition()
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 @implementation cocos2dmacAppDelegate
 

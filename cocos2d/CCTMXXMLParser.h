@@ -136,14 +136,14 @@ enum {
  This information is obtained from the TMX file.
  
  */
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #if defined(__IPHONE_4_0)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #else
 @interface CCTMXMapInfo : NSObject
 #endif
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #endif
 {	

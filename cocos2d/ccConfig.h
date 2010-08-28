@@ -60,9 +60,9 @@
  
  To enable set it to a value different than 0. Enabled by default.
  */
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_FONT_LABEL_SUPPORT	1
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_FONT_LABEL_SUPPORT 0
 #endif
 
@@ -133,7 +133,7 @@
  
  @since v0.99.5
  */
-#if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR) || __MAC_OS_X_VERSION_MIN_REQUIRED
+#if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR) || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_USES_VBO 1
 #else
 #define CC_USES_VBO 0

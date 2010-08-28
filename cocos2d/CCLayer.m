@@ -33,9 +33,9 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
@@ -54,10 +54,10 @@
 		[self setContentSize:s];
 		self.isRelativeAnchorPoint = NO;
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		isTouchEnabled_ = NO;
 		isAccelerometerEnabled_ = NO;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		isMouseEnabled_ = NO;
 		isKeyboardEnabled_ = NO;
 #endif
@@ -68,7 +68,7 @@
 
 #pragma mark Layer - Touch and Accelerometer related
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
@@ -110,7 +110,7 @@
 	}
 }
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 #pragma mark CCLayer - Mouse & Keyboard events
 
@@ -169,7 +169,7 @@
 #pragma mark Layer - Callbacks
 -(void) onEnter
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
 	if (isTouchEnabled_)
@@ -178,7 +178,7 @@
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	if( isMouseEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
 	
@@ -194,14 +194,14 @@
 
 -(void) onExit
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	if( isTouchEnabled_ )
 		[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 	
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	if( isMouseEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
 	
@@ -212,7 +212,7 @@
 	[super onExit];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	NSAssert(NO, @"Layer#ccTouchBegan override me");

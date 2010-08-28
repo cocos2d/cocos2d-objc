@@ -122,14 +122,14 @@
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCTouchDelegateProtocol.h"
 #import "Platforms/iOS/CCTouchHandler.h"
 #import "Platforms/iOS/EAGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/MacGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif

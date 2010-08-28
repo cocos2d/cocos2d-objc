@@ -30,10 +30,10 @@
 #import "Support/CGPointExtension.h"
 
 #import <Availability.h>
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/MacGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
@@ -70,9 +70,9 @@ enum {
 {
 	if( (self=[super init]) ) {
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
 #endif
 		
@@ -85,7 +85,7 @@ enum {
 		
 		// XXX: in v0.7, winSize should return the visible size
 		// XXX: so the bar calculation should be done there
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
 		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 		if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
@@ -131,7 +131,7 @@ enum {
 	
 #pragma mark Menu - Touches
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
@@ -207,7 +207,7 @@ enum {
 }
 #pragma mark Menu - Mouse
 
-#elif __MAC_OS_X_VERSION_MIN_REQUIRED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 -(NSInteger) mouseDelegatePriority
 {

@@ -25,7 +25,7 @@
 
 #import <Availability.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <CoreGraphics/CGImage.h>
 #endif
 
@@ -118,9 +118,9 @@
  *
  * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
  */
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(CCTexture2D*) addPVRTCImage:(NSString*)fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 /** Returns a Texture2D object given an PVRTC filename
  * If the file image was not previously loaded, it will create a new CCTexture2D

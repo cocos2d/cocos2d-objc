@@ -771,7 +771,7 @@
 
 // convenience methods which take a UITouch instead of CGPoint
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
@@ -786,7 +786,7 @@
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
-#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 
 @end
