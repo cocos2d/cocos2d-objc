@@ -128,6 +128,17 @@ enum {
 	NSAssert( [child isKindOfClass:[CCMenuItem class]], @"Menu only supports MenuItem objects as children");
 	return [super addChild:child z:z tag:aTag];
 }
+
+- (void) onExit
+{
+	if(state == kMenuStateTrackingTouch)
+	{
+		[selectedItem unselected];		
+		state = kMenuStateWaiting;
+		selectedItem = nil;
+	}
+	[super onExit];
+}
 	
 #pragma mark Menu - Touches
 
