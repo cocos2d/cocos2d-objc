@@ -705,7 +705,7 @@ Class restartAction()
 														 defer:NO];
 
 		[overlayWindow setFrame:[[view window] frame] display:NO];
-
+				
 		[[overlayWindow contentView] addSubview:sliderCtl];
 		[overlayWindow setParentWindow:[view window]];
 		[overlayWindow setOpaque:NO];
