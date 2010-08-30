@@ -101,10 +101,6 @@ enum {
 }
 @end
 
-/* XXX DEPRECATED. Will be removed in v1.0.1 */
-@implementation CCRadialCCWTransition
-@end
-
 #pragma mark -
 #pragma mark Transition Radial CW
 
@@ -113,9 +109,5 @@ enum {
 {
 	return kCCProgressTimerTypeRadialCW;
 }
-@end
-
-/* XXX DEPRECATED. Will be removed in v1.0.1 */
-@implementation CCRadialCWTransition
 @end
 

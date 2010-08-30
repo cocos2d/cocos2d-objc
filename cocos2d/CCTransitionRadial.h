@@ -33,16 +33,8 @@
 @interface CCTransitionRadialCCW : CCTransitionScene
 @end
 
-/* will be removed in v1.0.1 */
-DEPRECATED_ATTRIBUTE @interface CCRadialCCWTransition : CCTransitionRadialCCW
-@end
-
 /** CCTransitionRadialCW transition.
  A counter colock-wise radial transition to the next scene
 */
 @interface CCTransitionRadialCW : CCTransitionRadialCCW
-@end
-
-/* will be removed in v1.0.1 */
-DEPRECATED_ATTRIBUTE @interface CCRadialCWTransition : CCTransitionRadialCW
 @end
