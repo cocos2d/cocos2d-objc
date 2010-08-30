@@ -51,6 +51,22 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 
 /* This class is available with iPhone 2.2 or later */
 @interface AVAudioPlayer : NSObject <NSSoundDelegate> {
+	
+	// properties
+	id<AVAudioPlayerDelegate> delegate;
+	NSUInteger numberOfChannels;
+	BOOL playing;
+	NSTimeInterval duration; 
+	NSURL *url;
+	NSData *data;
+	float pan;
+	float volume;
+	NSTimeInterval currentTime;
+	NSTimeInterval deviceCurrentTime; 
+	NSInteger numberOfLoops;
+	BOOL meteringEnabled;
+	
+
 @private
     NSSound* _player;
 }
@@ -156,6 +172,18 @@ enum {
 };
 
 @interface AVAudioSession : NSObject {
+	
+	// properties
+	NSString* category;
+	double preferredHardwareSampleRate;
+	NSTimeInterval preferredIOBufferDuration;
+	
+	BOOL inputIsAvailable;
+	double currentHardwareSampleRate;
+	NSInteger currentHardwareInputNumberOfChannels;
+	NSInteger currentHardwareOutputNumberOfChannels;
+	id<AVAudioSessionDelegate> delegate;
+
 @private
     __strong void *_impl;
 }
