@@ -58,8 +58,3 @@
 -(CCActionInterval*) actionWithSize:(ccGridSize) vector;
 
 @end
-
-DEPRECATED_ATTRIBUTE @interface CCPageTurnTransition : CCTransitionPageTurn
-{
-}
-@end
