@@ -97,16 +97,16 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 	return [_player isPlaying];
 }	
 
--(void) setVolume:(float) volume {
-	[_player setVolume:volume];
+-(void) setVolume:(float) vol {
+	[_player setVolume:vol];
 }
 
 -(float) volume {
 	return [_player volume];
 }	
 
--(void) setNumberOfLoops:(NSInteger) numberOfLoops {
-	if (numberOfLoops < 0) {
+-(void) setNumberOfLoops:(NSInteger) nOfLoops {
+	if (nOfLoops < 0) {
 		[_player setLoops:YES];
 	} else {
 		[_player setLoops:NO];
@@ -121,8 +121,8 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 	}	
 }	
 
--(void) setCurrentTime:(NSTimeInterval) currentTime {
-	[_player setCurrentTime:currentTime];
+-(void) setCurrentTime:(NSTimeInterval) aCurrentTime {
+	[_player setCurrentTime:aCurrentTime];
 }
 
 -(NSTimeInterval) currentTime {

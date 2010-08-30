@@ -289,7 +289,7 @@ enum {
 	}
 	
 	// swallows event ?
-	if( state == kMenuStateTrackingTouch )
+	if( state == kMenuStateTrackingTouch && currentItem )
 		return YES;
 	return NO;
 }
