@@ -15,6 +15,7 @@ version 0.99.5-beta2 31-Ago-2010
  . [NEW] Mac: cocos2d works on Mac. All objects works with the following exceptions:
 			- CCParticleSystemPoint is not supported. Use CCParticleSystemQuad instead
 			- CCRenderTexture doesn't save textures to images
+			- ZLabel (FontLabel) is not supported
 			- Mmm... probably a bit more.
  . [NEW] Particles: New naming convention:
 			CCPointParticleSystem -> CCParticleSystemPoint
