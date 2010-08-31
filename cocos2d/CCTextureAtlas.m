@@ -58,8 +58,16 @@
 -(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
 {
 	// retained in property
-	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:file];	
-	return [self initWithTexture:tex capacity:n];	
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:file];
+	if( tex )
+		return [self initWithTexture:tex capacity:n];
+	
+	// else
+	{
+		CCLOG(@"cocos2d: Could not open file: %@", file);
+		[self release];
+		return nil;
+	}
 }
 
 -(id) initWithTexture:(CCTexture2D*)tex capacity:(NSUInteger)n
