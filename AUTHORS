@@ -346,13 +346,15 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
 	* Steve Oldmeadow (http://www.smoco.com/):
-		Author and maintainer of CocosDenshion Sound Engine
-		patches for Texture2D
-		Integrated Box2d physics engine
-		Created Box2d + cocos2d demo example
+		Author and maintainer of CocosDenshion Sound Engine:
+			It includes patching, maintaing, porting it to Mac,
+			adding new features, adding documentation, etc.
 		co-author of sample "CocosDenshion - Tom the Turret"
 		Author of sample "CocosDenshion - Drum Pad"
 		Author of sample "CocosDenshion - Fade to Grey"
+		patches for Texture2D
+		Integrated Box2d physics engine
+		Created Box2d + cocos2d demo example
 	* Stuart Carnie (http://www.manomio.com/):
 		Sprite with nil textures supports opacity & color. patch.
 		Added file templates: CCNode, CCLayer, CCSprite
