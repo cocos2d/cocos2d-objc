@@ -245,9 +245,6 @@ enum {
 		}
 	}
 	return nil;
-	
-	
-	return nil;
 }
 
 -(BOOL) ccMouseUp:(NSEvent *)event
@@ -256,6 +253,8 @@ enum {
 		[selectedItem unselected];
 		[selectedItem activate];
 		
+		state = kCCMenuStateWaiting;
+
 		return YES;
 	}
 	
@@ -269,9 +268,11 @@ enum {
 	
 	selectedItem = [self itemForMouseEvent:event];
 	[selectedItem selected];
-	
-	if( selectedItem )
+
+	if( selectedItem ) {
+		state = kCCMenuStateTrackingTouch;
 		return YES;
+	}
 
 	return NO;	
 }
@@ -287,7 +288,7 @@ enum {
 	}
 	
 	// swallows event ?
-	if( selectedItem )
+	if( currentItem && state == kCCMenuStateTrackingTouch )
 		return YES;
 	return NO;
 }
