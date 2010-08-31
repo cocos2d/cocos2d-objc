@@ -1,4 +1,4 @@
-version 0.99.5-beta2 XX-Ago-2010
+version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
  . [NEW] Actions: Using new naming convetion:
 			CCInstantAction -> CCActionInstant
@@ -12,7 +12,10 @@ version 0.99.5-beta2 XX-Ago-2010
  . [NEW] Label: CCBitmapFontAtlas deprecated. Use CCLabelBMFont instead.
  . [NEW] Label: CCBitmapFontAtlas#bitmapFontAtlasWithString -> labelWithString. Old method deprecated.
  . [NEW] Label: CCLabel renamed to CCLabelTTF
- . [NEW] Mac: cocos2d works on Mac
+ . [NEW] Mac: cocos2d works on Mac. All objects works with the following exceptions:
+			- CCParticleSystemPoint is not supported. Use CCParticleSystemQuad instead
+			- CCRenderTexture doesn't save textures to images
+			- Mmm... probably a bit more.
  . [NEW] Particles: New naming convention:
 			CCPointParticleSystem -> CCParticleSystemPoint
 			CCQuadParticleSystem -> CCParticleSystemQuad
