@@ -4899,13 +4899,12 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				E01E6D51121F08EE001A484F /* Director Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite Nodes */,
-				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
-				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
+				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
+				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
 				50EA8DA011354A6000746D2A /* Misc Nodes */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
@@ -4916,6 +4915,8 @@
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 				505462FB1062768000AB7C52 /* ccConfig.h */,
+				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
+				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
 				50BAF3970F33CCD8003F654C /* ccMacros.h */,
 				50F9E8160E1AA34E000E7616 /* ccTypes.h */,
 				509E665C0E06CD940050992C /* CCCamera.h */,
@@ -6270,15 +6271,6 @@
 				8EDF3EA60F6BD90B00F54643 /* SoundEngineTest.m */,
 			);
 			path = "sound-engine-sample";
-			sourceTree = "<group>";
-		};
-		E01E6D51121F08EE001A484F /* Director Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
-				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
-			);
-			name = "Director Nodes";
 			sourceTree = "<group>";
 		};
 		E0A4A24A11F899BB003B9D29 /* PVR test */ = {

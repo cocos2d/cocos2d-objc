@@ -143,7 +143,12 @@ Class restartAction()
 		// create a brush image to draw into the texture with
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
 		[brush setOpacity:20];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+		lastLocation = CGPointMake( s.width/2, s.height/2);
+#endif
 		
 		// Save Image menu
 		[CCMenuItemFont setFontSize:16];
@@ -167,6 +172,7 @@ Class restartAction()
 
 -(void) saveImage:(id)sender
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	static int counter=0;
 	
 	NSString *str = [NSString stringWithFormat:@"image-%d.png", counter];
@@ -174,6 +180,9 @@ Class restartAction()
 	NSLog(@"Image saved: %@", str);
 	
 	counter++;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSLog(@"CCRenderTexture Save is not supported yet");
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 }
 
 -(void) dealloc
@@ -185,6 +194,8 @@ Class restartAction()
 	
 }
 
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -219,6 +230,55 @@ Class restartAction()
 	// finish drawing and return context back to the screen
 	[target end];
 }
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+-(BOOL) ccMouseDown:(NSEvent *)event
+{
+	lastLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	return YES;
+}
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CGPoint currentLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	
+	CGPoint start = currentLocation;
+	CGPoint end = lastLocation;
+	
+	// begin drawing to the render texture
+	[target begin];
+	
+	// for extra points, we'll draw this smoothly from the last position and vary the sprite's
+	// scale/rotation/offset
+	float distance = ccpDistance(start, end);
+	if (distance > 1)
+	{
+		int d = (int)distance;
+		for (int i = 0; i < d; i++)
+		{
+			float difx = end.x - start.x;
+			float dify = end.y - start.y;
+			float delta = (float)i / distance;
+			[brush setPosition:ccp(start.x + (difx * delta), start.y + (dify * delta))];
+			[brush setRotation:rand()%360];
+			float r = ((float)(rand()%50)/50.f) + 0.25f;
+			[brush setScale:r];
+			// Call visit to draw the brush, don't call draw..
+			[brush visit];
+		}
+	}
+	// finish drawing and return context back to the screen
+	[target end];
+	
+	lastLocation = currentLocation;
+	
+	// swallow the event. Don't propagate it
+	return YES;
+	
+}
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 @end
 
 #pragma mark -
@@ -292,7 +352,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark AppDelegate
+#pragma mark AppDelegate (iOS)
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
@@ -395,3 +457,36 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+#pragma mark -
+#pragma mark AppDelegate (Mac)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
