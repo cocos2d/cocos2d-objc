@@ -38,8 +38,8 @@
 
 struct _KerningHashElement;
 
-/** @struct ccBitmapFontDef
- bitmap font definition
+/** @struct ccBMFontDef
+ BMFont definition
  */
 typedef struct _BMFontDef {
 	//! ID of the character
@@ -54,8 +54,8 @@ typedef struct _BMFontDef {
 	int xAdvance;
 } ccBMFontDef;
 
-/** @struct ccBitmapFontPadding
- bitmap font padding
+/** @struct ccBMFontPadding
+ BMFont padding
  @since v0.8.2
  */
 typedef struct _BMFontPadding {
@@ -74,7 +74,7 @@ enum {
 	kCCBMFontMaxChars = 2048, //256,
 };
 
-/** CCBitmapFontConfiguration has parsed configuration of the the .fnt file
+/** CCBMFontConfiguration has parsed configuration of the the .fnt file
  @since v0.8
  */
 @interface CCBMFontConfiguration : NSObject
@@ -97,14 +97,14 @@ enum {
 	struct _KerningHashElement	*kerningDictionary;
 }
 
-/** allocates a CCBitmapFontConfiguration with a FNT file */
+/** allocates a CCBMFontConfiguration with a FNT file */
 +(id) configurationWithFNTFile:(NSString*)FNTfile;
-/** initializes a BitmapFontConfiguration with a FNT file */
+/** initializes a CCBMFontConfiguration with a FNT file */
 -(id) initWithFNTfile:(NSString*)FNTfile;
 @end
 
 
-/** CCLabelBMFont is a subclass of CCSpriteSheet.
+/** CCLabelBMFont is a subclass of CCSpriteBatchNode
   
  Features:
  - Treats each character like a CCSprite. This means that each individual character can be:
@@ -158,15 +158,15 @@ enum {
 @property (nonatomic,readwrite) ccColor3B color;
 
 
-/** creates a bitmap font altas with an initial string and the FNT file */
+/** creates a BMFont label with an initial string and the FNT file */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
-/** creates a bitmap font altas with an initial string and the FNT file
+/** creates a BMFont label with an initial string and the FNT file
  @deprecated Will be removed in 1.0.1. Use "labelWithString" instead.
  */
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile DEPRECATED_ATTRIBUTE;
 
-/** init a bitmap font altas with an initial string and the FNT file */
+/** init a BMFont label with an initial string and the FNT file */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
 /** updates the font chars based on the string to render */
