@@ -388,8 +388,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
 	}
 	
+	if( ! uifont )
+		CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
+	UIGraphicsPopContext();
+	
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+	CGContextRelease(context);
 	free(data);
+
+	
 	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
