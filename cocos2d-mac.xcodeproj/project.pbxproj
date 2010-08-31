@@ -34,6 +34,7 @@
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		E05052B2122D5655005B74CB /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		E076E43E1225C4BE00DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076E43F1225C4BE00DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E076E4401225C4BE00DE0DA2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
@@ -222,7 +223,6 @@
 		E076E8CF1225EDD000DE0DA2 /* bitmapFontTest4.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7AE1225EDD000DE0DA2 /* bitmapFontTest4.png */; };
 		E076E8D01225EDD000DE0DA2 /* bitmapFontTest5.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E076E7AF1225EDD000DE0DA2 /* bitmapFontTest5.fnt */; };
 		E076E8D11225EDD000DE0DA2 /* bitmapFontTest5.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B01225EDD000DE0DA2 /* bitmapFontTest5.png */; };
-		E076E8D21225EDD000DE0DA2 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		E076E8D31225EDD000DE0DA2 /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B21225EDD000DE0DA2 /* Paint Boy.ttf */; };
 		E076E8D41225EDD000DE0DA2 /* Schwarzwald Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B31225EDD000DE0DA2 /* Schwarzwald Regular.ttf */; };
 		E076E8D51225EDD000DE0DA2 /* Scissor Cuts.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B41225EDD000DE0DA2 /* Scissor Cuts.ttf */; };
@@ -3213,7 +3213,6 @@
 		E0AC079E1228041700EFA814 /* drawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = drawPrimitivesTest.h; path = tests/drawPrimitivesTest.h; sourceTree = "<group>"; };
 		E0AC079F1228041700EFA814 /* drawPrimitivesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = drawPrimitivesTest.m; path = tests/drawPrimitivesTest.m; sourceTree = "<group>"; };
 		E0AC092A12280B7000EFA814 /* LabelTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LabelTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0AC092C12280B7000EFA814 /* cocos2d_mac-Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cocos2d_mac-Info copy 3.plist"; path = "Resources-Mac/cocos2d_mac-Info copy 3.plist"; sourceTree = "<group>"; };
 		E0AC092F12280BB900EFA814 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelTest.h; path = tests/LabelTest.h; sourceTree = "<group>"; };
 		E0AC093012280BB900EFA814 /* LabelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelTest.m; path = tests/LabelTest.m; sourceTree = "<group>"; };
 		E0B92DCD1226A0C9003FF67E /* ParallaxTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParallaxTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3470,7 +3469,6 @@
 				E076E78E1225EDD000DE0DA2 /* cocos2d-artwork */,
 				E076E7A11225EDD000DE0DA2 /* Fonts */,
 				E076E7B71225EDD000DE0DA2 /* Images */,
-				E0AC092C12280B7000EFA814 /* cocos2d_mac-Info copy 3.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -4475,7 +4473,6 @@
 				E076E8CF1225EDD000DE0DA2 /* bitmapFontTest4.png in Resources */,
 				E076E8D01225EDD000DE0DA2 /* bitmapFontTest5.fnt in Resources */,
 				E076E8D11225EDD000DE0DA2 /* bitmapFontTest5.png in Resources */,
-				E076E8D21225EDD000DE0DA2 /* fps_images.png in Resources */,
 				E076E8D31225EDD000DE0DA2 /* Paint Boy.ttf in Resources */,
 				E076E8D41225EDD000DE0DA2 /* Schwarzwald Regular.ttf in Resources */,
 				E076E8D51225EDD000DE0DA2 /* Scissor Cuts.ttf in Resources */,
@@ -4652,6 +4649,7 @@
 				E076EAE21225EE2B00DE0DA2 /* TileMaps in Resources */,
 				E076EAE31225EE2B00DE0DA2 /* zwoptex in Resources */,
 				E076EB301225EFF200DE0DA2 /* MainMenu.xib in Resources */,
+				E05052B2122D5655005B74CB /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
