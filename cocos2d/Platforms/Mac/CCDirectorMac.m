@@ -22,6 +22,12 @@
  * THE SOFTWARE.
  */
 
+// Only compile this code on Mac. These files should not be included on your iOS project.
+// But in case they are included, it won't be compiled.
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
 #import <sys/time.h>
  
 #import "CCDirectorMac.h"
@@ -226,3 +232,5 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 
 @end
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
