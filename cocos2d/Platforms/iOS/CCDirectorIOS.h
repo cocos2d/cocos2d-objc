@@ -23,6 +23,11 @@
  */
 
 
+// Only compile this code on iOS. These files should NOT be included on your Mac project.
+// But in case they are included, it won't be compiled.
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 #import "../../CCDirector.h"
 
 /** @typedef ccDeviceOrientation
@@ -324,3 +329,4 @@ typedef enum {
 -(void) mainLoop;
 @end
 
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED

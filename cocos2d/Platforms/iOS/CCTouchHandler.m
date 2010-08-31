@@ -24,6 +24,11 @@
  */
 
 
+// Only compile this code on iOS. These files should NOT be included on your Mac project.
+// But in case they are included, it won't be compiled.
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 /*
  * This file contains the delegates of the touches
  * There are 2 possible delegates:
@@ -125,3 +130,6 @@
 	[super dealloc];
 }
 @end
+
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED

@@ -61,6 +61,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+// Only compile this code on iOS. These files should NOT be included on your Mac project.
+// But in case they are included, it won't be compiled.
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -138,3 +143,5 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 @end
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED

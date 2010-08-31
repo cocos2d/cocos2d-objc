@@ -109,7 +109,7 @@ enum {
 	//	[self alignItemsVertically];
 		
 		selectedItem = nil;
-		state = kMenuStateWaiting;
+		state = kCCMenuStateWaiting;
 	}
 	
 	return self;
@@ -131,10 +131,10 @@ enum {
 
 - (void) onExit
 {
-	if(state == kMenuStateTrackingTouch)
+	if(state == kCCMenuStateTrackingTouch)
 	{
 		[selectedItem unselected];		
-		state = kMenuStateWaiting;
+		state = kCCMenuStateWaiting;
 		selectedItem = nil;
 	}
 	[super onExit];
@@ -172,14 +172,14 @@ enum {
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	if( state != kMenuStateWaiting || !visible_ )
+	if( state != kCCMenuStateWaiting || !visible_ )
 		return NO;
 	
 	selectedItem = [self itemForTouch:touch];
 	[selectedItem selected];
 	
 	if( selectedItem ) {
-		state = kMenuStateTrackingTouch;
+		state = kCCMenuStateTrackingTouch;
 		return YES;
 	}
 	return NO;
@@ -187,26 +187,26 @@ enum {
 
 -(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
+	NSAssert(state == kCCMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
 	
 	[selectedItem unselected];
 	[selectedItem activate];
 	
-	state = kMenuStateWaiting;
+	state = kCCMenuStateWaiting;
 }
 
 -(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
+	NSAssert(state == kCCMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
 	
 	[selectedItem unselected];
 	
-	state = kMenuStateWaiting;
+	state = kCCMenuStateWaiting;
 }
 
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state == kMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
+	NSAssert(state == kCCMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
 	
 	CCMenuItem *currentItem = [self itemForTouch:touch];
 	
@@ -216,6 +216,7 @@ enum {
 		[selectedItem selected];
 	}
 }
+
 #pragma mark Menu - Mouse
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -251,8 +252,6 @@ enum {
 
 -(BOOL) ccMouseUp:(NSEvent *)event
 {	
-	state = kMenuStateWaiting;
-
 	if( selectedItem ) {
 		[selectedItem unselected];
 		[selectedItem activate];
@@ -265,16 +264,15 @@ enum {
 
 -(BOOL) ccMouseDown:(NSEvent *)event
 {
-	if( state != kMenuStateWaiting || !visible_ )
+	if( ! visible_ )
 		return NO;
 	
 	selectedItem = [self itemForMouseEvent:event];
 	[selectedItem selected];
 	
-	if( selectedItem ) {
-		state = kMenuStateTrackingTouch;
+	if( selectedItem )
 		return YES;
-	}
+
 	return NO;	
 }
 
@@ -289,7 +287,7 @@ enum {
 	}
 	
 	// swallows event ?
-	if( state == kMenuStateTrackingTouch && currentItem )
+	if( selectedItem )
 		return YES;
 	return NO;
 }

@@ -6,6 +6,11 @@
 // 
 // 
 
+// Only compile this code on iOS. These files should NOT be included on your Mac project.
+// But in case they are included, it won't be compiled.
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 #import <OpenGLES/ES1/gl.h>
 #import <math.h>
 #import "../../Support/OpenGL_Internal.h"
@@ -105,4 +110,4 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
     glTranslatef(-eyex, -eyey, -eyez);
 }
 
-
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
