@@ -150,7 +150,7 @@ CDSoundSource *toneSource;
 	gettimeofday( &end, NULL);
 	
 	float dt = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0f;
-	CCLOG(@"Buffer load time %0.4f",dt);
+	NSLog(@"Buffer load time %0.4f",dt);
 	
 }	
 
