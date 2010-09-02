@@ -52,11 +52,9 @@ enum {
 @synthesize isSelected=isSelected_;
 -(id) init
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"MenuItemInit"
-								reason:@"Init not supported. Use InitFromString"
-								userInfo:nil];
-	@throw myException;	
+	NSAssert(NO, @"MenuItemInit: Init not supported.");
+	[self release];
+	return nil;
 }
 
 +(id) itemWithTarget:(id) r selector:(SEL) s

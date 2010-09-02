@@ -48,11 +48,9 @@ enum {
 
 - (id) init
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"MenuInit"
-								reason:@"Use initWithItems instead"
-								userInfo:nil];
-	@throw myException;
+	NSAssert(NO, @"CCMenu: Init not supported.");
+	[self release];
+	return nil;	
 }
 
 +(id) menuWithItems: (CCMenuItem*) item, ...
