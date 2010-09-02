@@ -84,11 +84,9 @@
 }
 
 -(id) init {
-	NSException* myException = [NSException
-								exceptionWithName:@"Particle.init"
-								reason:@"Particle.init shall not be called. Use initWithTotalParticles instead."
-								userInfo:nil];
-	@throw myException;	
+	NSAssert(NO, @"CCParticleSystem: Init not supported.");
+	[self release];
+	return nil;	
 }
 
 -(id) initWithFile:(NSString *)plistFile

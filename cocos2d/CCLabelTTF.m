@@ -32,11 +32,9 @@
 
 - (id) init
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"LabelInit"
-								reason:@"Use initWithString:dimensions:aligment:fontName:font instead"
-								userInfo:nil];
-	@throw myException;
+	NSAssert(NO, @"CCLabelTTF: Init not supported. Use initWithString");
+	[self release];
+	return nil;
 }
 
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size

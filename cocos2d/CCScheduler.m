@@ -81,11 +81,9 @@ typedef struct _hashSelectorEntry
 
 -(id) init
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"TimerInvalid"
-								reason:@"Invalid init for Timer. Use initWithTarget:sel:"
-								userInfo:nil];
-	@throw myException;
+	NSAssert(NO, @"CCTimer: Init not supported.");
+	[self release];
+	return nil;
 }
 
 +(id) timerWithTarget:(id)t selector:(SEL)s

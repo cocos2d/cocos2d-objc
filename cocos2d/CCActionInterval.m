@@ -42,12 +42,9 @@
 
 -(id) init
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"IntervalActionInit"
-								reason:@"Init not supported. Use InitWithDuration"
-								userInfo:nil];
-	@throw myException;
-	
+	NSAssert(NO, @"IntervalActionInit: Init not supported. Use InitWithDuration");
+	[self release];
+	return nil;
 }
 
 +(id) actionWithDuration: (ccTime) d
@@ -103,11 +100,8 @@
 
 - (CCActionInterval*) reverse
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"ReverseActionNotImplemented"
-								reason:@"Reverse Action not implemented"
-								userInfo:nil];
-	@throw myException;	
+	NSAssert(NO, @"CCIntervalAction: reverse not implemented.");
+	return nil;
 }
 @end
 
