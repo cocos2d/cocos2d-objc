@@ -39,6 +39,9 @@
 										   depthFormat:GL_DEPTH_COMPONENT24_OES
 									preserveBackbuffer:NO];
 	
+	
+	[glView setMultipleTouchEnabled:YES];
+
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
