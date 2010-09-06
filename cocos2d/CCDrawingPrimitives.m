@@ -157,7 +157,7 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	if( ! vertices )
 		return;
 
-	for(int i=0;i<=segs;i++)
+	for(NSUInteger i=0;i<=segs;i++)
 	{
 		float rads = i*coef;
 		GLfloat j = r * cosf(rads + a) + center.x;
@@ -192,7 +192,7 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	ccVertex2F vertices[segments + 1];
 	
 	float t = 0.0f;
-	for(int i = 0; i < segments; i++)
+	for(NSUInteger i = 0; i < segments; i++)
 	{
 		GLfloat x = powf(1 - t, 2) * origin.x + 2.0f * (1 - t) * t * control.x + t * t * destination.x;
 		GLfloat y = powf(1 - t, 2) * origin.y + 2.0f * (1 - t) * t * control.y + t * t * destination.y;
@@ -222,7 +222,7 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	ccVertex2F vertices[segments + 1];
 	
 	float t = 0;
-	for(int i = 0; i < segments; i++)
+	for(NSUInteger i = 0; i < segments; i++)
 	{
 		GLfloat x = powf(1 - t, 3) * origin.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * destination.x;
 		GLfloat y = powf(1 - t, 3) * origin.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * destination.y;

@@ -65,7 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	NSMutableArray *imageData_;
 	
-	int		tableFormatIndex_;
+	unsigned int	tableFormatIndex_;
 	uint32_t width_, height_;
 	GLuint	name_;
 	BOOL hasAlpha_;

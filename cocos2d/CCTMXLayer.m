@@ -454,7 +454,7 @@ int compareInts (const void * a, const void * b)
 	// XXX: This can be improved with a sort of binary search
 	NSUInteger i=0;
 	for( i=0; i< atlasIndexArray_->num ; i++) {
-		NSInteger val = (NSInteger) atlasIndexArray_->arr[i];
+		NSUInteger val = (NSUInteger) atlasIndexArray_->arr[i];
 		if( z < val )
 			break;
 	}	

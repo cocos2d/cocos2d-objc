@@ -89,7 +89,7 @@ enum
 	kPVRTextureFlagTypeA_8,
 };
 
-static NSInteger tableFormats[][6] = {
+static const uint32_t tableFormats[][6] = {
 	
 	// - PVR texture format
 	// - OpenGL internal format
@@ -182,7 +182,7 @@ typedef struct _PVRTexHeader
 	if( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height) )
 		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it.");
 	
-	for( tableFormatIndex_=0; tableFormatIndex_ < MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
+	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
 			
 			[imageData_ removeAllObjects];
