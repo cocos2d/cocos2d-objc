@@ -23,6 +23,8 @@
  *
  */
 
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 // opengl
 #import "Platforms/CCGL.h"
@@ -200,5 +202,7 @@
 	[super setEndSize:size];
 }
 @end
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 
