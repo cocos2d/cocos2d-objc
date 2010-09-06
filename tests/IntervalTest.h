@@ -13,11 +13,11 @@
 
 @interface Layer1 : CCLayer
 {
-	CCBitmapFontAtlas *label0;
-	CCBitmapFontAtlas *label1;
-	CCBitmapFontAtlas *label2;
-	CCBitmapFontAtlas *label3;
-	CCBitmapFontAtlas *label4;
+	CCLabelBMFont *label0;
+	CCLabelBMFont *label1;
+	CCLabelBMFont *label2;
+	CCLabelBMFont *label3;
+	CCLabelBMFont *label4;
 	
 	ccTime time0, time1, time2, time3, time4;
 }

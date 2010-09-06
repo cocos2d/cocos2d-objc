@@ -34,7 +34,7 @@ enum {
 		CCMenuItem *item2 = [CCMenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 
 		// Label Item (LabelAtlas)
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
 		item3.disabledColor = ccc3(32,32,64);
 		item3.color = ccc3(200,200,255);
@@ -44,7 +44,7 @@ enum {
 		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
 		
 		// Label Item (BitmapFontAtlas)
-		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
 		
 		// Testing issue #500
@@ -118,14 +118,7 @@ enum {
 
 -(void) onQuit: (id) sender
 {
-	CC_DIRECTOR_END();
-	
-	// HA HA... no more terminate on sdk v3.0
-	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
-	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
-	else
-		NSLog(@"YOU CAN'T TERMINATE YOUR APPLICATION PROGRAMATICALLY in SDK 3.0+");
+	CC_DIRECTOR_END();	
 }
 @end
 
@@ -242,7 +235,7 @@ enum {
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:28];
 
-		CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
 		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 		
@@ -367,7 +360,7 @@ enum {
     [CCMenuItemFont setFontName: @"Marker Felt"];
 	[CCMenuItemFont setFontSize:34];
 	
-	CCBitmapFontAtlas *label = [CCBitmapFontAtlas bitmapFontAtlasWithString:@"go back" fntFile:@"bitmapFontTest3.fnt"];
+	CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"go back" fntFile:@"bitmapFontTest3.fnt"];
 	CCMenuItemLabel *back = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(backCallback:)];
     
 	CCMenu *menu = [CCMenu menuWithItems:
@@ -410,8 +403,13 @@ enum {
 
 
 // CLASS IMPLEMENTATIONS
-@implementation AppController
 
+#pragma mark -
+#pragma mark AppController - iPhone
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+@implementation AppController
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -497,5 +495,39 @@ enum {
 	[window dealloc];
 	[super dealloc];
 }
+@end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	
+	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	[scene addChild: layer z:0];
+	
+	[director runWithScene:scene];
+}
 
 @end
+#endif

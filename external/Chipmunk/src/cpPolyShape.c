@@ -94,7 +94,7 @@ cpPolyShapeDestroy(cpShape *shape)
 	cpfree(poly->tAxes);
 }
 
-static int
+static cpBool
 cpPolyShapePointQuery(cpShape *shape, cpVect p){
 	return cpBBcontainsVect(shape->bb, p) && cpPolyShapeContainsVert((cpPolyShape *)shape, p);
 }
@@ -137,7 +137,7 @@ static const cpShapeClass polyClass = {
 	cpPolyShapeSegmentQuery,
 };
 
-int
+cpBool
 cpPolyValidate(cpVect *verts, int numVerts)
 {
 	for(int i=0; i<numVerts; i++){
@@ -146,10 +146,10 @@ cpPolyValidate(cpVect *verts, int numVerts)
 		cpVect c = verts[(i+2)%numVerts];
 		
 		if(cpvcross(cpvsub(b, a), cpvsub(c, b)) > 0.0f)
-			return 0;
+			return cpFalse;
 	}
 	
-	return 1;
+	return cpTrue;
 }
 
 int
@@ -211,8 +211,8 @@ cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 cpPolyShape *
 cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
 {
-	cpFloat hw = width/2;
-	cpFloat hh = height/2;
+	cpFloat hw = width/(cpFloat)2.0;
+	cpFloat hh = height/(cpFloat)2.0;
 	
 	cpVect verts[] = {
 		cpv(-hw,-hh),

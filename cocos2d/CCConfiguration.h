@@ -22,10 +22,12 @@
  * THE SOFTWARE.
  */
 
+#import <Foundation/Foundation.h>
 
-#import <OpenGLES/ES1/gl.h>
+#import "Platforms/CCGL.h"
 
-/** iOS version definitions */
+/** OS version definitions. Includes both iOS and Mac OS versions
+ */
 enum {
 	kCCiOSVersion_3_0   = 0x03000000,
 	kCCiOSVersion_3_1   = 0x03010000,
@@ -38,6 +40,9 @@ enum {
 	kCCiOSVersion_4_0_1 = 0x04000100,
 	kCCiOSVersion_4_1   = 0x04010000,
 
+	kCCMacVersion_10_5  = 0x0a050000,
+	kCCMacVersion_10_6  = 0x0a060000,
+	kCCMacVersion_10_7  = 0x0a070000,
 };
 
 /**
@@ -54,7 +59,7 @@ enum {
 	BOOL			supportsNPOT_;
 	BOOL			supportsBGRA8888_;
 	BOOL			supportsDiscardFramebuffer_;
-	unsigned int	iOSVersion_;
+	NSUInteger		OSVersion_;
 }
 
 /** the bundle we load everything from */
@@ -90,11 +95,13 @@ enum {
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
 
-/** returns the iOS version
+/** returns the OS version.
+	- On iOS devices it returns the firmware version.
+	- On Mac returns the OS version
  
  @since v0.99.5
  */
-@property (nonatomic, readonly) unsigned int iOSVersion;
+@property (nonatomic, readonly) NSUInteger OSVersion;
 
 /** returns a shared instance of the CCConfiguration */
 +(CCConfiguration *) sharedConfiguration;

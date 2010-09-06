@@ -1,7 +1,15 @@
 // Create non static inlined copies of Chipmunk functions, useful for working with dynamic FFIs
 // This file should only be included in chipmunk.c
 
-#define MAKE_REF(name) __typeof__(name) *_##name = name
+#ifdef _MSC_VER
+ #if _MSC_VER >= 1600
+  #define MAKE_REF(name) decltype(name) *_##name = name
+ #else
+  #define MAKE_REF(name)
+ #endif
+#else
+ #define MAKE_REF(name) __typeof__(name) *_##name = name
+#endif
 
 MAKE_REF(cpv); // makes a variable named _cpv that contains the function pointer for cpv()
 MAKE_REF(cpvadd);

@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 
-void cpMessage(char *message, char *condition, char *file, int line, int isError);
+void cpMessage(const char *message, const char *condition, const char *file, int line, int isError);
 #ifdef NDEBUG
 	#define	cpAssertWarn(condition, message)
 #else
@@ -41,42 +41,6 @@ void cpMessage(char *message, char *condition, char *file, int line, int isError
 
 #include "chipmunk_types.h"
 	
-static inline cpFloat
-cpfmax(cpFloat a, cpFloat b)
-{
-	return (a > b) ? a : b;
-}
-
-static inline cpFloat
-cpfmin(cpFloat a, cpFloat b)
-{
-	return (a < b) ? a : b;
-}
-
-static inline cpFloat
-cpfabs(cpFloat n)
-{
-	return (n < 0) ? -n : n;
-}
-
-static inline cpFloat
-cpfclamp(cpFloat f, cpFloat min, cpFloat max)
-{
-	return cpfmin(cpfmax(f, min), max);
-}
-
-static inline cpFloat
-cpflerp(cpFloat f1, cpFloat f2, cpFloat t)
-{
-	return f1*(1.0f - t) + f2*t;
-}
-
-static inline cpFloat
-cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
-{
-	return f1 + cpfclamp(f2 - f1, -d, d);
-}
-
 #ifndef INFINITY
 	#ifdef _MSC_VER
 		union MSVC_EVIL_FLOAT_HACK
@@ -107,11 +71,11 @@ cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 
 #include "cpVect.h"
 #include "cpBB.h"
-#include "cpBody.h"
 #include "cpArray.h"
 #include "cpHashSet.h"
 #include "cpSpaceHash.h"
 
+#include "cpBody.h"
 #include "cpShape.h"
 #include "cpPolyShape.h"
 
@@ -125,7 +89,7 @@ cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 #define CP_HASH_COEF (3344921057ul)
 #define CP_HASH_PAIR(A, B) ((cpHashValue)(A)*CP_HASH_COEF ^ (cpHashValue)(B)*CP_HASH_COEF)
 
-extern char *cpVersionString;
+extern const char *cpVersionString;
 void cpInitChipmunk(void);
 
 // Calculate the moment of inertia for a circle, r1 and r2 are the inner and outer diameters.

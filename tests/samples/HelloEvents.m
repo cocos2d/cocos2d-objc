@@ -40,8 +40,8 @@ enum {
 		// CCLabel
 		//
 		
-		// create and initialize a CCLabel
-		CCLabel* label = [CCLabel labelWithString:@"Hello Events" fontName:@"Marker Felt" fontSize:64];
+		// create and initialize a CCLabelTTF
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello Events" fontName:@"Marker Felt" fontSize:64];
 
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];

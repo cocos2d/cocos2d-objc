@@ -22,14 +22,18 @@
  * THE SOFTWARE.
  */
 
+#import <Availability.h>
 
-#import <UIKit/UIKit.h>
-#import <OpenGLES/ES1/gl.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import <UIKit/UIKit.h>		// Needed for UIDevice
+#endif
 
+#import "Platforms/CCGL.h"
 #import "CCBlockSupport.h"
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ccConfig.h"
+
 
 @implementation CCConfiguration
 
@@ -40,7 +44,7 @@
 @synthesize supportsNPOT=supportsNPOT_;
 @synthesize supportsBGRA8888=supportsBGRA8888_;
 @synthesize supportsDiscardFramebuffer=supportsDiscardFramebuffer_;
-@synthesize iOSVersion=iOSVersion_;
+@synthesize OSVersion=OSVersion_;
 
 //
 // singleton stuff
@@ -63,6 +67,20 @@ static char * glExtensions;
 	return [super alloc];
 }
 
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+- (NSString*)getMacVersion
+{
+    SInt32 versionMajor, versionMinor, versionBugFix;
+	Gestalt(gestaltSystemVersionMajor, &versionMajor);
+	Gestalt(gestaltSystemVersionMinor, &versionMinor);
+	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
+	
+	return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+}
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+
 -(id) init
 {
 	if( (self=[super init])) {
@@ -70,16 +88,20 @@ static char * glExtensions;
 		loadingBundle_ = [NSBundle mainBundle];
 		
 		// Obtain iOS version
-		iOSVersion_ = 0;		
-		NSString *iOSVer = [[UIDevice currentDevice] systemVersion];
-		NSArray *arr = [iOSVer componentsSeparatedByString:@"."];		
+		OSVersion_ = 0;
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		NSString *OSVer = [self getMacVersion];
+#endif
+		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
 		int idx=0x01000000;
 		for( NSString *str in arr ) {
 			int value = [str intValue];
-			iOSVersion_ += value * idx;
+			OSVersion_ += value * idx;
 			idx = idx >> 8;
 		}
-		CCLOG(@"cocos2d: iOS version: %@ (0x%08x)", iOSVer, iOSVersion_);
+		CCLOG(@"cocos2d: OS version: %@ (0x%08x)", OSVer, OSVersion_);
 		
 		CCLOG(@"cocos2d: GL_VENDOR:   %s", glGetString(GL_VENDOR) );
 		CCLOG(@"cocos2d: GL_RENDERER: %s", glGetString ( GL_RENDERER   ) );
@@ -91,7 +113,11 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
 		
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		supportsNPOT_ = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
+#endif
 		supportsBGRA8888_ = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 

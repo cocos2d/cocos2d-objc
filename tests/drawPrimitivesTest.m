@@ -54,7 +54,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+ 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
@@ -81,6 +81,7 @@ Class restartAction()
 
 -(void) newOrientation
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 	switch (orientation) {
 		case CCDeviceOrientationLandscapeLeft:
@@ -97,6 +98,7 @@ Class restartAction()
 			break;
 	}
 	[[CCDirector sharedDirector] setDeviceOrientation:orientation];
+#endif // iPhone
 }
 -(void) restartCallback: (id) sender
 {
@@ -232,10 +234,12 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark AppController
-
 // CLASS IMPLEMENTATIONS
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+#pragma mark AppController - iOS
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -322,3 +326,36 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+#pragma mark AppController - Mac
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif
+

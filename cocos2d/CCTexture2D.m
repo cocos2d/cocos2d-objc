@@ -10,7 +10,7 @@ is subject to change, and software implemented based on this sample code should
 be tested with final operating system software and final documentation. Newer
 versions of this sample code may be provided with future seeds of the API or
 technology. For information about updates to this and other developer
-documentation, view the New & Updated sidebars in subsequent documentation
+documentation, view the New & Updated sidebars in subsequent documentationd
 seeds.
 
 =====================
@@ -65,15 +65,19 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * https://devforums.apple.com/message/37855#37855 by a1studmuffin
  */
 
-#import <OpenGLES/ES1/glext.h>
 
+#import <Availability.h>
+
+#import "Platforms/CCGL.h"
+#import "Platforms/CCNS.h"
+
+
+#import "CCTexture2D.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "CCTexture2D.h"
-#import "CCPVRTexture.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
-
+#import "CCTexturePVR.h"
 
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
@@ -88,9 +92,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
 static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat_Default;
-
-// By default PVR images are treated as if they don't have the alpha channel premultiplied
-static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 @implementation CCTexture2D
 
@@ -157,11 +158,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 @end
 
 @implementation CCTexture2D (Image)
-	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (id) initWithImage:(UIImage *)uiImage
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+- (id) initWithImage:(CGImageRef)CGImage
+#endif
 {
 	NSUInteger				POTWide, POTHigh;
-	CGImageRef				CGImage;
 	CGContextRef			context = nil;
 	void*					data = nil;;
 	CGColorSpaceRef			colorSpace;
@@ -173,7 +176,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 	
-	CGImage = uiImage.CGImage;
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	CGImageRef	CGImage = uiImage.CGImage;
+#endif
 	
 	if(CGImage == NULL) {
 		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
@@ -195,9 +200,11 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
 	}
 		
-	unsigned maxTextureSize = [conf maxTextureSize];
+	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d", POTWide, POTHigh, maxTextureSize, maxTextureSize);
+		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d",
+			  (unsigned int)POTWide, (unsigned int)POTHigh,
+			  (unsigned int)maxTextureSize, (unsigned int)maxTextureSize);
 		[self release];
 		return nil;
 	}
@@ -328,35 +335,35 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
         dim = [string sizeWithZFont:zFont];
     else
 #endif
+	{
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
         dim = [string sizeWithFont:[UIFont fontWithName:name size:size]];
+	
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		NSAttributedString *stringWithAttributes =
+		[[[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:
+																	   [[NSFontManager sharedFontManager]
+																		fontWithFamily:name
+																		traits:NSUnboldFontMask | NSUnitalicFontMask
+																		weight:0 size:size]
+																								  forKey:NSFontAttributeName]] autorelease];
+		dim = NSSizeToCGSize( [stringWithAttributes size] );
+#endif
+	}
     
-	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];
+	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter fontName:name fontSize:size];
 }
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	NSUInteger				width,
-							height,
-							i;
+	NSUInteger width = ccNextPOT(dimensions.width);
+	NSUInteger height = ccNextPOT(dimensions.height);
+	unsigned char*			data;
+	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	CGContextRef			context;
-	void*					data;
 	CGColorSpaceRef			colorSpace;
-	id						uiFont;
-    
-	width = dimensions.width;
-	if((width != 1) && (width & (width - 1))) {
-		i = 1;
-		while(i < width)
-			i *= 2;
-		width = i;
-	}
-	height = dimensions.height;
-	if((height != 1) && (height & (height - 1))) {
-		i = 1;
-		while(i < height)
-			i *= 2;
-		height = i;
-	}
+	id						uifont;
 	
 	colorSpace = CGColorSpaceCreateDeviceGray();
 	data = calloc(height, width);
@@ -367,31 +374,162 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
 	CGContextTranslateCTM(context, 0.0f, height);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
+	
 	UIGraphicsPushContext(context);
-    
-
+	
 #if CC_FONT_LABEL_SUPPORT
-	uiFont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-    if (uiFont != nil)
-        [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+	uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
+    if (uifont != nil)
+        [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
     else
 #endif // CC_FONT_LABEL_SUPPORT
 	{
-        uiFont = [UIFont fontWithName:name size:size];
-        [string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-    }
-	if( ! uiFont )
+        uifont = [UIFont fontWithName:name size:size];
+		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+	}
+	
+	if( ! uifont )
 		CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
 	UIGraphicsPopContext();
 	
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
-	
 	CGContextRelease(context);
 	free(data);
+
 	
+	
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	
+	//String with attributes
+	NSAttributedString *stringWithAttributes =
+	[[[NSAttributedString alloc] initWithString:string attributes:[NSDictionary dictionaryWithObject:
+																   [[NSFontManager sharedFontManager]
+																	fontWithFamily:name
+																	traits:NSUnboldFontMask | NSUnitalicFontMask
+																	weight:0 size:size]
+																							  forKey:NSFontAttributeName]] autorelease];
+	
+	//Alignment
+	float xPadding = 0;
+	NSSize realDimensions = [stringWithAttributes size];
+	
+	// Mac crashes if the width or height is 0
+	if( realDimensions.width > 0 && realDimensions.height > 0 ) {
+		switch (alignment) {
+			case CCTextAlignmentLeft: xPadding = 0; break;
+			case CCTextAlignmentCenter: xPadding = (dimensions.width-realDimensions.width)/2.0f; break;
+			case CCTextAlignmentRight: xPadding = dimensions.width-realDimensions.width; break;
+			default: break;
+		}
+		
+		//Disable antialias
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
+
+		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
+		[image lockFocus];	
+		
+		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, height-dimensions.height)]; // draw at offset position	
+		
+		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, width, height)];
+		[image unlockFocus];
+
+		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+		
+		for(int i = 0; i<(width*height); i++) //Convert RGBA8888 to A8
+			data[i] = data[i*4+3];
+		
+		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+		
+		[bitmap release];
+		[image release]; 
+		
+	} else {
+		[self release];
+		return nil;
+	}
+
+#endif // Mac
+	return self;
+}
+@end
+
+@implementation CCTexture2D (PVRSupport)
+
+// By default PVR images are treated as if they don't have the alpha channel premultiplied
+static BOOL PVRHaveAlphaPremultiplied_ = NO;
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
+{
+	//	GLint					saveName;
+	
+	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
+		[self release];
+		return nil;
+	}
+	
+	if((self = [super init])) {
+		glGenTextures(1, &name_);
+		glBindTexture(GL_TEXTURE_2D, name_);
+		
+		[self setAntiAliasTexParameters];
+		
+		GLenum format;
+		GLsizei size = length * length * bpp / 8;
+		if(hasAlpha) {
+			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+		} else {
+			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+		}
+		if(size < 32) {
+			size = 32;
+		}
+		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
+		
+		size_ = CGSizeMake(length, length);
+		width_ = length;
+		height_ = length;
+		maxS_ = 1.0f;
+		maxT_ = 1.0f;
+		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+	}					
+	return self;
+}
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
+-(id) initWithPVRFile: (NSString*) file
+{
+	if( (self = [super init]) ) {
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:file];
+		if( pvr ) {
+			pvr.retainName = YES;	// don't dealloc texture on release
+			
+			name_ = pvr.name;	// texture id
+			maxS_ = 1;			// only POT texture are supported
+			maxT_ = 1;
+			width_ = pvr.width;
+			height_ = pvr.height;
+			size_ = CGSizeMake(width_, height_);
+			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+			
+			[pvr release];
+			
+			[self setAntiAliasTexParameters];
+		} else {
+			
+			CCLOG(@"cocos2d: Couldn't load PVR image");
+			[self release];
+			return nil;
+		}
+	}
 	return self;
 }
 
++(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
+{
+	PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+}
 @end
 
 @implementation CCTexture2D (Drawing)
@@ -436,79 +574,6 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 @end
 
-@implementation CCTexture2D (PVR)
--(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
-{
-//	GLint					saveName;
-
-	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
-		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
-		[self release];
-		return nil;
-	}
-
-	if((self = [super init])) {
-		glGenTextures(1, &name_);
-		glBindTexture(GL_TEXTURE_2D, name_);
-
-		[self setAntiAliasTexParameters];
-		
-		GLenum format;
-		GLsizei size = length * length * bpp / 8;
-		if(hasAlpha) {
-			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-		} else {
-			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-		}
-		if(size < 32) {
-			size = 32;
-		}
-		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
-
-		size_ = CGSizeMake(length, length);
-		width_ = length;
-		height_ = length;
-		maxS_ = 1.0f;
-		maxT_ = 1.0f;
-		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
-	}					
-	return self;
-}
-
--(id) initWithPVRFile: (NSString*) file
-{
-	if( (self = [super init]) ) {
-		CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
-		if( pvr ) {
-			pvr.retainName = YES;	// don't dealloc texture on release
-			
-			name_ = pvr.name;	// texture id
-			maxS_ = 1;			// only POT texture are supported
-			maxT_ = 1;
-			width_ = pvr.width;
-			height_ = pvr.height;
-			size_ = CGSizeMake(width_, height_);
-			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
-
-			[pvr release];
-
-			[self setAntiAliasTexParameters];
-		} else {
-
-			CCLOG(@"cocos2d: Couldn't load PVR image");
-			[self release];
-			return nil;
-		}
-	}
-	return self;
-}
-
-+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
-{
-	PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
-}
-@end
-
 //
 // Use to apply MIN/MAG filter
 //
@@ -518,7 +583,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, name_ );
-	glGenerateMipmapOES(GL_TEXTURE_2D);
+	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams

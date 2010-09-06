@@ -62,6 +62,6 @@ extern char messageString[1024];
 @interface MainLayer : CCLayer
 {
 	int	demoIndex;
-	CCLabel	*label;
+	CCLabelTTF	*label;
 }
 @end

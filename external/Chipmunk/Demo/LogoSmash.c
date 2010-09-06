@@ -73,7 +73,7 @@ get_pixel(int x, int y)
 	return (image_bitmap[(x>>3) + y*image_row_length]>>(~x&0x7)) & 1;
 }
 
-cpSpace *space;
+static cpSpace *space;
 
 static void
 update(int ticks)
@@ -103,6 +103,7 @@ init(void)
 {
 	space = cpSpaceNew();
 	cpSpaceResizeActiveHash(space, 2.0f, 10000);
+	cpSpaceResizeStaticHash(space, 2.0f, 10000);
 	space->iterations = 1;
 	
 	cpBody *body;
@@ -143,7 +144,7 @@ drawSpaceOptions draw_options = {
 	0, 0, 0, 2.0f, 3.0f, 0.0f,
 };
 
-const chipmunkDemo LogoSmash = {
+chipmunkDemo LogoSmash = {
 	"Logo Smash",
 	&draw_options,
 	init,

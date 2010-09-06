@@ -49,7 +49,7 @@
 
 // Easy integration	
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
-__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+__object__=__array__->arr[0]; for(NSUInteger i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
 
 typedef struct ccArray {
@@ -297,7 +297,7 @@ static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUIn
 {
 	assert( index < arr->max );
 	
-	int remaining = arr->num - index;
+	NSInteger remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved
 	if( remaining > 0) {

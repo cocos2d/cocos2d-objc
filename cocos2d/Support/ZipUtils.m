@@ -14,14 +14,15 @@
  *		from the mapreader.cpp file 
  */
 
+#import <Availability.h>
+
 #import <zlib.h>
 #import <stdlib.h>
 #import <assert.h>
 #import <stdio.h>
-#import <UIKit/UIKit.h>
 
 #import "ZipUtils.h"
-#import "ccMacros.h"
+#import "../ccMacros.h"
 
 int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {

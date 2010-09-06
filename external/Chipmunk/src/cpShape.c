@@ -60,8 +60,9 @@ cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body)
 	shape->layers = CP_ALL_LAYERS;
 	
 	shape->data = NULL;
+	shape->next = NULL;
 	
-	cpShapeCacheBB(shape);
+//	cpShapeCacheBB(shape);
 	
 	return shape;
 }
@@ -90,12 +91,12 @@ cpShapeCacheBB(cpShape *shape)
 	return shape->bb;
 }
 
-int
+cpBool
 cpShapePointQuery(cpShape *shape, cpVect p){
 	return shape->klass->pointQuery(shape, p);
 }
 
-int
+cpBool
 cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info){
 	cpSegmentQueryInfo blank = {NULL, 0.0f, cpvzero};
 	(*info) = blank;
@@ -138,7 +139,7 @@ cpCircleShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	return bbFromCircle(circle->tc, circle->r);
 }
 
-static int
+static cpBool
 cpCircleShapePointQuery(cpShape *shape, cpVect p){
 	cpCircleShape *circle = (cpCircleShape *)shape;
 	return cpvnear(circle->tc, p, circle->r);
@@ -147,7 +148,7 @@ cpCircleShapePointQuery(cpShape *shape, cpVect p){
 static void
 circleSegmentQuery(cpShape *shape, cpVect center, cpFloat r, cpVect a, cpVect b, cpSegmentQueryInfo *info)
 {
-	// umm... gross I normally frown upon such things
+	// offset the line to be relative to the circle
 	a = cpvsub(a, center);
 	b = cpvsub(b, center);
 	
@@ -239,16 +240,16 @@ cpSegmentShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	return cpBBNew(l - rad, s - rad, r + rad, t + rad);
 }
 
-static int
+static cpBool
 cpSegmentShapePointQuery(cpShape *shape, cpVect p){
-	if(!cpBBcontainsVect(shape->bb, p)) return 0;
+	if(!cpBBcontainsVect(shape->bb, p)) return cpFalse;
 	
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
 	
 	// Calculate normal distance from segment.
 	cpFloat dn = cpvdot(seg->tn, p) - cpvdot(seg->ta, seg->tn);
 	cpFloat dist = cpfabs(dn) - seg->r;
-	if(dist > 0.0f) return 0;
+	if(dist > 0.0f) return cpFalse;
 	
 	// Calculate tangential distance along segment.
 	cpFloat dt = -cpvcross(seg->tn, p);
@@ -258,23 +259,23 @@ cpSegmentShapePointQuery(cpShape *shape, cpVect p){
 	// Decision tree to decide which feature of the segment to collide with.
 	if(dt <= dtMin){
 		if(dt < (dtMin - seg->r)){
-			return 0;
+			return cpFalse;
 		} else {
 			return cpvlengthsq(cpvsub(seg->ta, p)) < (seg->r*seg->r);
 		}
 	} else {
 		if(dt < dtMax){
-			return 1;
+			return cpTrue;
 		} else {
 			if(dt < (dtMax + seg->r)) {
 				return cpvlengthsq(cpvsub(seg->tb, p)) < (seg->r*seg->r);
 			} else {
-				return 0;
+				return cpFalse;
 			}
 		}
 	}
 	
-	return 1;	
+	return cpTrue;	
 }
 
 static void

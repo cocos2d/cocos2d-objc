@@ -1,4 +1,45 @@
-version 0.99.5-beta 30-Jul-2010
+version 0.99.5-beta2 31-Ago-2010
+ . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
+ . [NEW] Actions: Using new naming convetion:
+			CCInstantAction -> CCActionInstant
+			CCIntervalAction -> CCActionInterval
+			CCEaseAction -> CCActionEase
+			CCCameraAction -> CCActionCamera
+ . [NEW] Action: CCPropertyAction renamed to CCActionTween
+ . [NEW] Director: New naming convention: CCnameDirector -> CCDirectorName
+ . [NEW] Director: DirectorIOS is responsible for swapping buffers
+ . [NEW] Label: CCLabelAtlas#labelAtlasWithString: -> labelWithString. Old method deprecated
+ . [NEW] Label: CCBitmapFontAtlas deprecated. Use CCLabelBMFont instead.
+ . [NEW] Label: CCBitmapFontAtlas#bitmapFontAtlasWithString -> labelWithString. Old method deprecated.
+ . [NEW] Label: CCLabel renamed to CCLabelTTF
+ . [NEW] Mac: cocos2d works on Mac. All objects works with the following exceptions:
+			- CCParticleSystemPoint is not supported. Use CCParticleSystemQuad instead
+			- CCRenderTexture doesn't save textures to images
+			- ZLabel (FontLabel) is not supported
+			- Mmm... probably a bit more.
+ . [NEW] Particles: New naming convention:
+			CCPointParticleSystem -> CCParticleSystemPoint
+			CCQuadParticleSystem -> CCParticleSystemQuad
+ . [NEW] Transitions: new transition naming convention (issue #946)
+ . [FIX] Actions: ivars 'duration', 'elapsed', 'tag' now have the '_' suffix in their names.
+ . [FIX] Artifact fixer is a compile time option in ccConfig. Disabled by default
+ . [FIX] ccCArray: off-by-1 offset, and lastObject fixed (issue #960 and #961)
+ . [FIX] ccTypes: using GL types for CC GL structures. Prevents possible errors on 64-bit machines
+ . [FIX] CocosDenshion: Added SDK4.0 compile check in CDAudioManager
+ . [FIX] CocosDenshion: panning does not work correctly on iOS4 (issue #949)
+ . [FIX] Director: Works with Fast FPS disabled (issue #954)
+ . [FIX] Director: it's possible to set a custom projection before setting the openGL view (issue #952)
+ . [FIX] Label: BitmapFontAtlas supports empty strings (issue #950)
+ . [FIX] Label: LabelAtlas doesn't crash if the texture file can't be found (issue #965)
+ . [FIX] Layer: ivars isTouchEnabled / isAccelerometerEnabled have the '_' suffix in their names
+ . [FIX] Menu: Disabled possible menuItem on onExit (issue #969)
+ . [FIX] Sprite: little optimization when using BatchNode + children
+ . [FIX] Templates: Added missing keys in Info.plist (issue #939)
+ . [FIX] Tools: mkatlas supports artifact removal (issue #549)
+ . [FIX] Tools: mkatlas supports spaces in the name (issue #618)
+ . [3RD] Chipmunk: updated to Chipmunk v5.3 and Chipmunk Demos
+ 
+version 0.99.5-beta 30-Jul-2010 - AKA 'CJ the artifact killer'
  . [NEW] BitmapFontAtlas: added support for multilines labels
  . [NEW] BitmapFontAtlas: added optional setCString method
  . [NEW] Configuration: added a helper method to obtain the iOS version

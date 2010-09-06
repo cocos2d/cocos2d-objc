@@ -23,14 +23,23 @@
  *
  */
 
+#import <Availability.h>
+
+#import "Platforms/CCGL.h"
 #import "CCTextureCache.h"
 #import "CCTexture2D.h"
+#import "CCTexturePVR.h"
 #import "ccMacros.h"
-#import "CCDirector.h"
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
+#import "CCDirector.h"
 
-static EAGLContext *auxEAGLcontext = nil;
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+static EAGLContext *auxGLcontext = nil;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+static NSOpenGLContext *auxGLcontext = nil;
+#endif
+
 
 //static NSString* loadHiResImage( NSString* path )
 //{
@@ -128,8 +137,8 @@ static CCTextureCache *sharedTextureCache;
 	[textures release];
 	[dictLock release];
 	[contextLock release];
-	[auxEAGLcontext release];
-	auxEAGLcontext = nil;
+	[auxGLcontext release];
+	auxGLcontext = nil;
 	sharedTextureCache = nil;
 	[super dealloc];
 }
@@ -140,26 +149,27 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// textures will be created on the main OpenGL context
 	// it seems that in SDK 2.2.x there can't be 2 threads creating textures at the same time
 	// the lock is used for this purpose: issue #472
 	[contextLock lock];
-	if( auxEAGLcontext == nil ) {
-		auxEAGLcontext = [[EAGLContext alloc]
+	if( auxGLcontext == nil ) {
+		auxGLcontext = [[EAGLContext alloc]
 							   initWithAPI:kEAGLRenderingAPIOpenGLES1
 							   sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 		
-		if( ! auxEAGLcontext )
+		if( ! auxGLcontext )
 			CCLOG(@"cocos2d: TextureCache: Could not create EAGL context");
 	}
 	
-	if( [EAGLContext setCurrentContext:auxEAGLcontext] ) {
+	if( [EAGLContext setCurrentContext:auxGLcontext] ) {
 
 		// load / create the texture
 		CCTexture2D *tex = [self addImage:async.data];
 
 		// The callback will be executed on the main thread
-		[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];
+		[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];		
 		
 		[EAGLContext setCurrentContext:nil];
 	} else {
@@ -168,6 +178,43 @@ static CCTextureCache *sharedTextureCache;
 	[contextLock unlock];
 	
 	[autoreleasepool release];
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+	[contextLock lock];
+	if( auxGLcontext == nil ) {
+
+		MacGLView *view = [[CCDirector sharedDirector] openGLView];
+		
+		NSOpenGLPixelFormat *pf = [view pixelFormat];
+		NSOpenGLContext *share = [view openGLContext];
+
+		auxGLcontext = [[NSOpenGLContext alloc] initWithFormat:pf shareContext:share];
+		
+		
+		if( ! auxGLcontext )
+			CCLOG(@"cocos2d: TextureCache: Could not create NSOpenGLContext");
+	}
+	
+	[auxGLcontext makeCurrentContext];
+		
+	// load / create the texture
+	CCTexture2D *tex = [self addImage:async.data];
+	
+	// The callback will be executed on the main thread
+	[async.target performSelector:async.selector
+						 onThread:[[CCDirector sharedDirector] runningThread]
+					   withObject:tex
+					waitUntilDone:NO];
+	
+	
+	[NSOpenGLContext clearCurrentContext];
+
+	[contextLock unlock];
+	
+	[autoreleasepool release];
+	
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 }
 
 -(void) addImageAsync: (NSString*) filename target:(id)target selector:(SEL)selector
@@ -210,14 +257,18 @@ static CCTextureCache *sharedTextureCache;
 		
 		// Split up directory and filename
 		NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-
+		
 		NSString *lowerCase = [path lowercaseString];
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
+		
 		if ( [lowerCase hasSuffix:@".pvr"] )
 			tex = [self addPVRTCImage:fullpath];
-		
+
+		// Only iPhone
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-		else if ( ( [[CCConfiguration sharedConfiguration] iOSVersion] >= kCCiOSVersion_4_0) &&
+		else if ( ( [[CCConfiguration sharedConfiguration] OSVersion] >= kCCiOSVersion_4_0) &&
 				  ( [lowerCase hasSuffix:@".jpg"] || [lowerCase hasSuffix:@".jpeg"] ) 
 				 ) {
 			// convert jpg to png before loading the texture
@@ -234,22 +285,41 @@ static CCTextureCache *sharedTextureCache;
 			
 			[tex release];
 		}
-
+		
 		else {
-
+			
 			// prevents overloading the autorelease pool
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			[image release];
+			
+			if( tex )
+				[textures setObject: tex forKey:path];
+			else
+				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+			
+			[tex release];			
+		}
+
+		// Only in Mac
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		else {			
+			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
+			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+			tex = [ [CCTexture2D alloc] initWithImage:[image CGImage]];
+			
+			[data release];
 			[image release];
 
 			if( tex )
 				[textures setObject: tex forKey:path];
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
-
 			
-			[tex release];
+			[tex release];			
 		}
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+
 	}
 	
 	[dictLock unlock];
@@ -257,50 +327,6 @@ static CCTextureCache *sharedTextureCache;
 	return tex;
 }
 
--(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
-{
-	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
-	NSAssert( bpp==2 || bpp==4, @"TextureCache: bpp must be either 2 or 4");
-	
-	CCTexture2D * tex;
-	
-	if( (tex=[textures objectForKey: path] ) ) {
-		return tex;
-	}
-	
-	// Split up directory and filename
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
-	
-	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
-	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
-	if( tex )
-		[textures setObject: tex forKey:path];
-	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
-
-	[nsdata release];
-
-	return [tex autorelease];
-}
-
--(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
-{
-	NSAssert(fileimage != nil, @"TextureCache: fileimage MUST not be nill");
-
-	CCTexture2D * tex;
-	
-	if( (tex=[textures objectForKey: fileimage] ) ) {
-		return tex;
-	}
-	
-	tex = [[CCTexture2D alloc] initWithPVRFile: fileimage];
-	if( tex )
-		[textures setObject: tex forKey:fileimage];
-	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
-	
-	return [tex autorelease];
-}
 
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
 {
@@ -313,10 +339,15 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// prevents overloading the autorelease pool
 	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
 	tex = [[CCTexture2D alloc] initWithImage: image];
 	[image release];
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	tex = [[CCTexture2D alloc] initWithImage: imageref];
+#endif
 	
 	if(tex && key)
 		[textures setObject: tex forKey:key];
@@ -362,6 +393,58 @@ static CCTextureCache *sharedTextureCache;
 		return;
 	
 	[textures removeObjectForKey:name];
+}
+
+@end
+
+
+@implementation CCTextureCache (PVRTCSupport)
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
+{
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert( bpp==2 || bpp==4, @"TextureCache: bpp must be either 2 or 4");
+	
+	CCTexture2D * tex;
+	
+	if( (tex=[textures objectForKey: path] ) ) {
+		return tex;
+	}
+	
+	// Split up directory and filename
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	
+	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
+	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
+	if( tex )
+		[textures setObject: tex forKey:path];
+	else
+		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
+	
+	[nsdata release];
+	
+	return [tex autorelease];
+}
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
+-(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
+{
+	NSAssert(fileimage != nil, @"TextureCache: fileimage MUST not be nill");
+	
+	CCTexture2D * tex;
+	
+	if( (tex=[textures objectForKey: fileimage] ) ) {
+		return tex;
+	}
+	
+	tex = [[CCTexture2D alloc] initWithPVRFile: fileimage];
+	if( tex )
+		[textures setObject: tex forKey:fileimage];
+	else
+		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
+	
+	return [tex autorelease];
 }
 
 @end

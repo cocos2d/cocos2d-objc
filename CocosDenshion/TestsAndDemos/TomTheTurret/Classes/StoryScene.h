@@ -11,7 +11,7 @@
 @interface StoryLayer : CCLayer {
     CCSpriteBatchNode *_batchNode;
     CCSprite *_main_bkgrnd;
-    CCLabel *_label;
+    CCLabelTTF *_label;
     CCSprite *_tapToCont;
     CCSprite *_newGame;
     int _curStoryIndex;
@@ -19,7 +19,7 @@
 
 @property (nonatomic, assign) CCSpriteBatchNode *batchNode;
 @property (nonatomic, assign) CCSprite *main_bkgrnd;
-@property (nonatomic, assign) CCLabel *label;
+@property (nonatomic, assign) CCLabelTTF *label;
 @property (nonatomic, assign) CCSprite *tapToCont;
 @property (nonatomic, assign) CCSprite *newGame;
 @property (nonatomic, assign) int curStoryIndex;

@@ -27,6 +27,7 @@
 
 //Audio session interruption callback - used if sound engine is 
 //handling audio session interruption automatically
+/*
 extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionState ) { 
 	CDAudioManager *controller = (CDAudioManager *) inUserData; 
     if (interruptionState == kAudioSessionBeginInterruption) { 
@@ -34,7 +35,8 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
     } else if (interruptionState == kAudioSessionEndInterruption) { 
         [controller audioSessionResumed]; 
     } 
-} 
+}
+*/ 
 
 //NSOperation object used to asynchronously initialise 
 @implementation CDAsynchInitialiser
@@ -77,9 +79,9 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 			[audioSourcePlayer release];//Release old AVAudioPlayer, they can't be reused
 		}
 		audioSourceFilePath = [filePath copy];
-		NSError *error;
+		NSError *error = nil;
 		NSString *path = [CDUtilities fullPathFromRelativePath:audioSourceFilePath];
-		audioSourcePlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:&error];
+		audioSourcePlayer = [(AVAudioPlayer*)[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:&error];
 		if (error == nil) {
 			[audioSourcePlayer prepareToPlay];
 			audioSourcePlayer.delegate = self;
@@ -324,7 +326,7 @@ static BOOL configured = FALSE;
 }	
 
 -(BOOL) isOtherAudioPlaying {
-	UInt32 isPlaying;
+	UInt32 isPlaying = 0;
 	UInt32 varSize = sizeof(isPlaying);
 	AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
 	return (isPlaying != 0);
@@ -706,12 +708,14 @@ static BOOL configured = FALSE;
 	[self audioSessionResumed];
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
 -(void) endInterruptionWithFlags:(NSUInteger)flags {
 	CDLOG(@"Denshion::CDAudioManager - interruption ended with flags %i",flags);
 	if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {
 		[self audioSessionResumed];
 	}	
-}	
+}
+#endif
 
 -(void)audioSessionInterrupted 
 { 

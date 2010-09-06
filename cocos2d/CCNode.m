@@ -23,16 +23,14 @@
  * THE SOFTWARE.
  */
 
-
-
-#import "ccConfig.h"
 #import "CCNode.h"
-#import "CCCamera.h"
 #import "CCGrid.h"
-#import "CCScheduler.h"
-#import "ccMacros.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
+#import "CCCamera.h"
+#import "CCScheduler.h"
+#import "ccConfig.h"
+#import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
@@ -41,7 +39,7 @@
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (int)
+#define RENDER_IN_SUBPIXEL (NSInteger)
 #endif
 
 @interface CCNode (Private)
@@ -225,6 +223,7 @@
 {
 	// actions
 	[self stopAllActions];
+
 	[self unscheduleAllSelectors];
 	
 	// timers
@@ -411,7 +410,7 @@
 // helper used by reorderChild & add
 -(void) insertChild:(CCNode*)child z:(int)z
 {
-	int index=0;
+	NSUInteger index=0;
 	BOOL added = NO;
 	CCNode *a;
 	CCARRAY_FOREACH(children_, a){
@@ -462,12 +461,12 @@
 		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
-	
+
 	[self transform];
 	
 	if(children_) {
 		ccArray *arrayData = children_->data;
-		int i=0;
+		NSUInteger i=0;
 		
 		// draw children zOrder < 0
 		for( ; i < arrayData->num; i++ ) {
@@ -488,7 +487,7 @@
 		}
 
 	} else
-		[self draw];	
+		[self draw];
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -524,16 +523,17 @@
 		glTranslatef(0, 0, vertexZ_);
 	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( camera_ && !(grid_ && grid_.active) ) {
+	if ( camera_ && !(grid_ && grid_.active) )
+	{
 		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
 		
 		if( translate )
-			glTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
+			ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
 		
 		[camera_ locate];
 		
 		if( translate )
-			glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+			ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	}
 	
 	
@@ -576,8 +576,7 @@
 
 -(void) onEnter
 {
-	[children_ makeObjectsPerformSelector:@selector(onEnter)];
-	
+	[children_ makeObjectsPerformSelector:@selector(onEnter)];	
 	[self resumeSchedulerAndActions];
 	
 	isRunning_ = YES;
@@ -591,7 +590,6 @@
 -(void) onExit
 {
 	[self pauseSchedulerAndActions];
-	
 	isRunning_ = NO;	
 	
 	[children_ makeObjectsPerformSelector:@selector(onExit)];
@@ -635,8 +633,7 @@
 	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
 
-
-#pragma mark CCNode - Callbacks
+#pragma mark CCNode - Scheduler
 
 -(void) scheduleUpdate
 {
@@ -682,6 +679,7 @@
 - (void) resumeSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] resumeTarget:self];
+	
 	[[CCActionManager sharedManager] resumeTarget:self];
 }
 
@@ -773,6 +771,8 @@
 
 // convenience methods which take a UITouch instead of CGPoint
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
 	CGPoint point = [touch locationInView: [touch view]];
@@ -786,5 +786,7 @@
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
 
 @end

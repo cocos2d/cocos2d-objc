@@ -25,7 +25,7 @@
 
 
 #import "CCFileUtils.h"
-#import "CCConfiguration.h"
+#import "../CCConfiguration.h"
 
 @implementation CCFileUtils
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath

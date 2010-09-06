@@ -56,6 +56,12 @@ typedef cpConstraint cpJoint;
 void cpConstraintDestroy(cpConstraint *constraint);
 void cpConstraintFree(cpConstraint *constraint);
 
+static inline void
+cpConstraintActivateBodies(cpConstraint *constraint)
+{
+	cpBody *a = constraint->a; if(a) cpBodyActivate(a);
+	cpBody *b = constraint->b; if(b) cpBodyActivate(b);
+}
 
 #define cpConstraintCheckCast(constraint, struct) \
 	cpAssert(constraint->klass == struct##GetClass(), "Constraint is not a "#struct);

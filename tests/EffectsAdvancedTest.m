@@ -281,7 +281,7 @@ Class restartAction()
 		[tamara runAction: [CCRepeatForever actionWithAction: [CCSequence actions:sc2, sc2_back, nil]]];
 		
 		
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Marker Felt" fontSize:32];
 		
 		[label setPosition: ccp(x/2,y-40)];
 		[self addChild: label z:100];
@@ -289,7 +289,7 @@ Class restartAction()
 		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:101];
 			[l setPosition:ccp(size.width/2, size.height-80)];
 		}		
@@ -349,6 +349,8 @@ Class restartAction()
 @end
 
 // CLASS IMPLEMENTATIONS
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -449,3 +451,33 @@ Class restartAction()
 }
 
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif

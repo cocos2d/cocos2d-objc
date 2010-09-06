@@ -163,6 +163,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for menu align. takes scale into account
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
+		mkatlas.pl supports spaces in the name
 	* jszatmary:
 		QuadParticleSystem works with NPOT textures. patch.
 		QuadParticleSystem works with subrects. patch.
@@ -234,6 +235,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		ccCArray: added missing functions so that it easier to wrap a fast enum object around it.
 		Improved performance in serveral places by using CCARRAY_FOREACH
 		Particles: also work with vertex array list (compile time option). patch.
+		Mac Port: Ported CCLabelTTF to Mac
+		MenuItems are disabled at exit time (patch)
 	* Marco Tillemans:
 		RenderTexture renders images with correct blend function. patch.
 	* marcu.catalin:
@@ -242,6 +245,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added TintTo action
 	* mark at abitofthought:
 		author of the single threaded Fast Director
+	* Mark Sawicki:
+		Converted all transitions from: transitionName-Transition to Transition-trasitionName.
+		Converted TransitionTest to use the new naming convention
 	* master@hpi.cc:
 		updated patch for TMX per-tile properties.
 		Added Test for TMX per-tile properties
@@ -282,6 +288,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
+	* Patrick Wolocicz:
+		mkatlas: added artifact removal by copying borders to margins
 	* Piero Tofy (http://indieappsalliance.org):
 		Author of the scraper script used to parse games data in the cocos2d site
 	* psionic81:
@@ -338,13 +346,15 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
 	* Steve Oldmeadow (http://www.smoco.com/):
-		Author and maintainer of CocosDenshion Sound Engine
-		patches for Texture2D
-		Integrated Box2d physics engine
-		Created Box2d + cocos2d demo example
+		Author and maintainer of CocosDenshion Sound Engine:
+			It includes patching, maintaing, porting it to Mac,
+			adding new features, adding documentation, etc.
 		co-author of sample "CocosDenshion - Tom the Turret"
 		Author of sample "CocosDenshion - Drum Pad"
 		Author of sample "CocosDenshion - Fade to Grey"
+		patches for Texture2D
+		Integrated Box2d physics engine
+		Created Box2d + cocos2d demo example
 	* Stuart Carnie (http://www.manomio.com/):
 		Sprite with nil textures supports opacity & color. patch.
 		Added file templates: CCNode, CCLayer, CCSprite

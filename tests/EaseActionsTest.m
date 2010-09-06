@@ -66,16 +66,9 @@ Class restartAction()
 {
 	if( (self=[super init])) {
 
-		// Example:
-		// You can create a sprite using a Texture2D
-		CCTexture2D *tex = [[CCTexture2D alloc] initWithImage: [UIImage imageWithContentsOfFile: [[CCConfiguration sharedConfiguration].loadingBundle pathForResource:@"grossini.png" ofType:nil] ] ];
-		grossini = [[CCSprite spriteWithTexture:tex] retain];
-		[tex release];
-		
-		// Example:
-		// Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-		tamara = [[CCSprite spriteWithFile:@"grossinis_sister1.png"] retain];
-		kathia = [[CCSprite spriteWithFile:@"grossinis_sister2.png"] retain];
+		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
+		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
+		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
 		
 		[self addChild: grossini z:3];
 		[self addChild: kathia z:2];
@@ -87,7 +80,7 @@ Class restartAction()
 		[kathia setPosition: ccp(60, 150)];
 		[tamara setPosition: ccp(60, 250)];
 		
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+ 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
@@ -578,10 +571,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// rotate and jump
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
-	CCIntervalAction *jump2 = [jump1 reverse];
-	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
-	CCIntervalAction *rot2 = [rot1 reverse];
+	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
+	CCActionInterval *jump2 = [jump1 reverse];
+	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCActionInterval *rot2 = [rot1 reverse];
 	
 	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
 	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
@@ -622,6 +615,7 @@ Class restartAction()
 @end
 
 @implementation SchedulerTest
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (UISlider *)sliderCtl
 {
     if (sliderCtl == nil) 
@@ -642,10 +636,32 @@ Class restartAction()
     }
     return [sliderCtl autorelease];
 }
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(NSSlider*) sliderCtl
+{
+	if( sliderCtl == nil )
+	{
+		sliderCtl = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+		[sliderCtl setMinValue: 0];
+		[sliderCtl setMaxValue: 3];
+		[sliderCtl setFloatValue: 1];
+		[sliderCtl setAction: @selector (sliderAction:)];
+		[sliderCtl setTarget: self];
+		[sliderCtl setContinuous: YES];
+	}
+	
+	return sliderCtl;
+}
+#endif // Mac
 
 -(void) sliderAction:(id) sender
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[CCScheduler sharedScheduler] setTimeScale: sliderCtl.value];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	
+	[[CCScheduler sharedScheduler] setTimeScale: [sliderCtl floatValue]];
+#endif
 }
 
 -(void) onEnter
@@ -655,10 +671,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	// rotate and jump
-	CCIntervalAction *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
-	CCIntervalAction *jump2 = [jump1 reverse];
-	CCIntervalAction *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
-	CCIntervalAction *rot2 = [rot1 reverse];
+	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
+	CCActionInterval *jump2 = [jump1 reverse];
+	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCActionInterval *rot2 = [rot1 reverse];
 	
 	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
 	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
@@ -677,12 +693,43 @@ Class restartAction()
 	[self addChild:emitter];
 	
 	sliderCtl = [self sliderCtl];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	MacGLView *view = [[CCDirector sharedDirector] openGLView];
+
+	if( ! overlayWindow ) {
+		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
+													 styleMask:NSBorderlessWindowMask
+													   backing:NSBackingStoreBuffered
+														 defer:NO];
+
+		[overlayWindow setFrame:[[view window] frame] display:NO];
+				
+		[[overlayWindow contentView] addSubview:sliderCtl];
+		[overlayWindow setParentWindow:[view window]];
+		[overlayWindow setOpaque:NO];
+		[overlayWindow makeKeyAndOrderFront:nil];
+		[overlayWindow setBackgroundColor:[NSColor clearColor]];
+		[[overlayWindow contentView] display];
+	}
+	
+	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+#endif
+	
 }
 
 -(void) onExit
 {
 	[sliderCtl removeFromSuperview];
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	MacGLView *view = [[CCDirector sharedDirector] openGLView];
+	[[view window] removeChildWindow:overlayWindow];
+	[overlayWindow release];
+	overlayWindow = nil;
+#endif
 	[super onExit];
 }
 
@@ -697,6 +744,9 @@ Class restartAction()
 #pragma mark AppController
 
 // CLASS IMPLEMENTATIONS
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -784,3 +834,33 @@ Class restartAction()
 }
 
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif

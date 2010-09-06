@@ -383,7 +383,7 @@ Class restartAction()
 		[tamara runAction: [CCRepeatForever actionWithAction: [CCSequence actions:sc2, sc2_back, nil]]];
 		
 		
-		CCLabel* label = [CCLabel labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
 		
 		[label setPosition: ccp(x/2,y-80)];
 		[self addChild: label];

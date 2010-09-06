@@ -60,8 +60,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import <UIKit/UIKit.h>
-#import <OpenGLES/ES1/gl.h>
+#import <Availability.h>
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import <UIKit/UIKit.h>			// for UIImage
+#endif
+
+#import <Foundation/Foundation.h> //	for NSObject
+
+#import "Platforms/CCGL.h" // OpenGL stuff
+#import "Platforms/CCNS.h" // Next-Step stuff
 
 //CONSTANTS:
 
@@ -154,7 +162,11 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture2D (Image)
 /** Initializes a texture from a UIImage object */
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (id) initWithImage:(UIImage *)uiImage;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+- (id) initWithImage:(CGImageRef)cgImage;
+#endif
 @end
 
 /**
@@ -163,35 +175,43 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 */
 @interface CCTexture2D (Text)
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
+
 
 /**
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
  Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
-@interface CCTexture2D (PVR)
-/** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer */
+@interface CCTexture2D (PVRSupport)
+/** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer
+ *
+ * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
+ */
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Initializes a texture from a PVR file.
-
+ 
  Supported PVR formats:
-	- BGRA 8888
-	- RGBA 8888
-	- RGBA 4444
-	- RGBA 5551
-	- RBG 565
-	- A 8
-	- I 8
-	- AI 8
-	- PVRTC 2BPP
-	- PVRTC 4BPP
+ - BGRA 8888
+ - RGBA 8888
+ - RGBA 4444
+ - RGBA 5551
+ - RBG 565
+ - A 8
+ - I 8
+ - AI 8
+ - PVRTC 2BPP
+ - PVRTC 4BPP
  
  By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
-	- PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
-	
+ - PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
+ 
+ IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
+ 
  */
 -(id) initWithPVRFile: (NSString*) file;
 

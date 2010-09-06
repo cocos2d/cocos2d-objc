@@ -126,8 +126,8 @@
 -(id)addSpriteWithoutQuad:(CCSprite*)child z:(int)z tag:(int)aTag;
 
 // index
--(unsigned int) atlasIndexForExistantZ:(unsigned int)z;
--(unsigned int) atlasIndexForNewZ:(int)z;
+-(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z;
+-(NSUInteger) atlasIndexForNewZ:(NSUInteger)z;
 @end
 
 @implementation CCTMXLayer
@@ -337,7 +337,7 @@
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
-	int z = pos.x + pos.y * layerSize_.width;
+	NSInteger z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
 		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
@@ -350,7 +350,7 @@
 	[reusedTile_ setOpacity:opacity_];
 	
 	// get atlas index
-	unsigned int indexForZ = [self atlasIndexForNewZ:z];
+	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
 	
 	// Optimization: add the quad without adding a child
 	[self addQuadFromSprite:reusedTile_ quadIndex:indexForZ];
@@ -403,7 +403,7 @@
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
-	int z = pos.x + pos.y * layerSize_.width;
+	NSInteger z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
 		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
@@ -418,7 +418,7 @@
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since
 	// it appends the tile at the end of the texture atlas
-	unsigned int indexForZ = atlasIndexArray_->num;
+	NSUInteger indexForZ = atlasIndexArray_->num;
 
 
 	// don't add it using the "standard" way.
@@ -438,23 +438,23 @@ int compareInts (const void * a, const void * b)
 	return ( *(int*)a - *(int*)b );
 }
 
--(unsigned int) atlasIndexForExistantZ:(unsigned int)z
+-(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
-	int key=z;
-	int *item = bsearch((void*)&key, (void*)&atlasIndexArray_->arr[0], atlasIndexArray_->num, sizeof(void*), compareInts);
+	NSInteger key=z;
+	NSInteger *item = bsearch((void*)&key, (void*)&atlasIndexArray_->arr[0], atlasIndexArray_->num, sizeof(void*), compareInts);
 	
 	NSAssert( item, @"TMX atlas index not found. Shall not happen");
 
-	int index = ((int)item - (int)atlasIndexArray_->arr) / sizeof(void*);
+	NSUInteger index = ((NSInteger)item - (NSInteger)atlasIndexArray_->arr) / sizeof(void*);
 	return index;
 }
 
--(unsigned int)atlasIndexForNewZ:(int)z
+-(NSUInteger)atlasIndexForNewZ:(NSUInteger)z
 {
 	// XXX: This can be improved with a sort of binary search
-	unsigned int i=0;
+	NSUInteger i=0;
 	for( i=0; i< atlasIndexArray_->num ; i++) {
-		int val = (int) atlasIndexArray_->arr[i];
+		NSInteger val = (NSInteger) atlasIndexArray_->arr[i];
 		if( z < val )
 			break;
 	}	
@@ -511,7 +511,7 @@ int compareInts (const void * a, const void * b)
 	NSAssert( [children_ containsObject:sprite], @"Tile does not belong to TMXLayer");
 	
 	unsigned int atlasIndex = [sprite atlasIndex];
-	unsigned int zz = (unsigned int) atlasIndexArray_->arr[atlasIndex];
+	NSUInteger zz = (NSUInteger) atlasIndexArray_->arr[atlasIndex];
 	tiles_[zz] = 0;
 	ccCArrayRemoveValueAtIndex(atlasIndexArray_, atlasIndex);
 	[super removeChild:sprite cleanup:cleanup];

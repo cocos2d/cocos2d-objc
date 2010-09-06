@@ -53,7 +53,7 @@
         // Add a label to the scene
         static int LABEL_MARGIN = 20;
         static int LABEL_MARGIN_BOTTOM = 50;
-        self.label = [CCLabel labelWithString:@"" dimensions:CGSizeMake(winSize.width - LABEL_MARGIN*2, winSize.height - LABEL_MARGIN-LABEL_MARGIN_BOTTOM) alignment:UITextAlignmentCenter fontName:@"Verdana" fontSize:24];
+        self.label = [CCLabelTTF labelWithString:@"" dimensions:CGSizeMake(winSize.width - LABEL_MARGIN*2, winSize.height - LABEL_MARGIN-LABEL_MARGIN_BOTTOM) alignment:UITextAlignmentCenter fontName:@"Verdana" fontSize:24];
         _label.position = ccp(winSize.width/2, winSize.height/2);
         _label.color = ccc3(0, 0, 0);
         [self addChild:_label];

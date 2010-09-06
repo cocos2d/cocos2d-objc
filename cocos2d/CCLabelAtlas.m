@@ -35,9 +35,15 @@
 @implementation CCLabelAtlas
 
 #pragma mark CCLabelAtlas - Creation & Init
-+(id) labelAtlasWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
++(id) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
 {
 	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
+}
+
+// XXX DEPRECATED. Remove it in 1.0.1
++(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
+{
+	return [self labelWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c];
 }
 
 
@@ -79,11 +85,18 @@
 		float row = (a % itemsPerRow_);
 		float col = (a / itemsPerRow_);
 		
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		// Issue #938. Don't use texStepX & texStepY
 		float left		= (2*row*itemWidth_+1)/(2*textureWide);
 		float right		= left+(itemWidth_*2-2)/(2*textureWide);
 		float top		= (2*col*itemHeight_+1)/(2*textureHigh);
-		float bottom	= top+(itemHeight_*2-2)/(2*textureHigh);		
+		float bottom	= top+(itemHeight_*2-2)/(2*textureHigh);
+#else
+		float left		= row*itemWidth_/textureWide;
+		float right		= left+itemWidth_/textureWide;
+		float top		= col*itemHeight_/textureHigh;
+		float bottom	= top+itemHeight_/textureHigh;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		
 		quad.tl.texCoords.u = left;
 		quad.tl.texCoords.v = top;

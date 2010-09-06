@@ -120,7 +120,7 @@ nextContactPoint(cpContact *arr, int *numPtr)
 {
 	int num = *numPtr;
 	
-	if(num <= CP_MAX_CONTACTS_PER_ARBITER)
+	if(num < CP_MAX_CONTACTS_PER_ARBITER)
 		(*numPtr) = num + 1;
 	
 	return &arr[num];
@@ -148,9 +148,11 @@ findMSA(cpPolyShape *poly, cpPolyShapeAxis *axes, int num, cpFloat *min_out)
 	return min_index;
 }
 
-// Add contacts for penetrating vertexes.
+// Add contacts for probably penetrating vertexes.
+// This handles the degenerate case where an overlap was detected, but no vertexes fall inside
+// the opposing polygon. (like a star of david)
 static inline int
-findVerts(cpContact *arr, cpPolyShape *poly1, cpPolyShape *poly2, cpVect n, cpFloat dist)
+findVertsFallback(cpContact *arr, cpPolyShape *poly1, cpPolyShape *poly2, cpVect n, cpFloat dist)
 {
 	int num = 0;
 	
@@ -166,10 +168,28 @@ findVerts(cpContact *arr, cpPolyShape *poly1, cpPolyShape *poly2, cpVect n, cpFl
 			cpContactInit(nextContactPoint(arr, &num), v, n, dist, CP_HASH_PAIR(poly2->shape.hashid, i));
 	}
 	
-	//	if(!num)
-	//		addContactPoint(arr, &size, &num, cpContactNew(shape1->body->p, n, dist, 0));
-
 	return num;
+}
+
+// Add contacts for penetrating vertexes.
+static inline int
+findVerts(cpContact *arr, cpPolyShape *poly1, cpPolyShape *poly2, cpVect n, cpFloat dist)
+{
+	int num = 0;
+	
+	for(int i=0; i<poly1->numVerts; i++){
+		cpVect v = poly1->tVerts[i];
+		if(cpPolyShapeContainsVert(poly2, v))
+			cpContactInit(nextContactPoint(arr, &num), v, n, dist, CP_HASH_PAIR(poly1->shape.hashid, i));
+	}
+	
+	for(int i=0; i<poly2->numVerts; i++){
+		cpVect v = poly2->tVerts[i];
+		if(cpPolyShapeContainsVert(poly1, v))
+			cpContactInit(nextContactPoint(arr, &num), v, n, dist, CP_HASH_PAIR(poly2->shape.hashid, i));
+	}
+	
+	return (num ? num : findVertsFallback(arr, poly1, poly2, n, dist));
 }
 
 // Collide poly shapes together.

@@ -23,6 +23,7 @@
  */
 
 #import "CCArray.h"
+#import "../ccMacros.h"
 
 
 @implementation CCArray
@@ -111,7 +112,7 @@
 
 - (id) objectAtIndex:(NSUInteger)index
 {
-	if( index > data->num )
+	if( index >= data->num )
 		[NSException raise:NSRangeException
 					format: @"index out of range in objectAtIndex(%d)", data->num ];
 	
@@ -123,6 +124,12 @@
 	if( data->num > 0 )
 		return data->arr[data->num-1];
 	return nil;
+}
+
+- (id) randomObject
+{
+	if(data->num==0) return nil;
+	return data->arr[(int)(data->num*CCRANDOM_0_1())];
 }
 
 - (BOOL) containsObject:(id)object
@@ -159,7 +166,10 @@
 
 - (void) removeLastObject
 {
-	ccArrayRemoveObjectAtIndex(data, data->num);
+	if( data->num == 0 )
+		[NSException raise:NSRangeException
+					format: @"no objects added"];
+	ccArrayRemoveObjectAtIndex(data, data->num-1);
 }
 
 - (void) removeObject:(id)object

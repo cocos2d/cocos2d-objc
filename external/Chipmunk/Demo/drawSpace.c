@@ -26,7 +26,6 @@
 #include <string.h>
 
 #import "cocos2d.h"
-
 #include "chipmunk.h"
 #include "drawSpace.h"
 
@@ -44,7 +43,7 @@
 
 #define LINE_COLOR 0.0f, 0.0f, 0.0f, 1.0f
 #define COLLISION_COLOR 1.0f, 0.0f, 0.0f, 1.0f
-#define BODY_COLOR 0.0f, 0.0f, 1.0f
+#define BODY_COLOR 0.0f, 0.0f, 1.0f, 1.0f
 
 static void
 glColor_from_pointer(void *ptr)
@@ -79,6 +78,25 @@ glColor_from_pointer(void *ptr)
 	glColor4ub(r, g, b, 255);
 }
 
+static void
+glColor_for_shape(cpShape *shape, cpSpace *space)
+{
+	cpBody *body = shape->body;
+	if(body){
+		if(body->node.next){
+			GLfloat v = 0.25f;
+			glColor4f(v,v,v,1);
+			return;
+		} else if(body->node.idleTime > space->sleepTimeThreshold) {
+			GLfloat v = 0.9f;
+			glColor4f(v,v,v,1);
+			return;
+		}
+	}
+	
+	glColor_from_pointer(shape);
+}
+
 static const GLfloat circleVAR[] = {
 	 0.0000f,  1.0000f,
 	 0.2588f,  0.9659f,
@@ -110,10 +128,10 @@ static const GLfloat circleVAR[] = {
 static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/2;
 
 static void
-drawCircleShape(cpBody *body, cpCircleShape *circle)
+drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
 {
 	glVertexPointer(2, GL_FLOAT, 0, circleVAR);
-
+	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states:  GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -121,14 +139,15 @@ drawCircleShape(cpBody *body, cpCircleShape *circle)
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
+
 	glPushMatrix(); {
-		cpVect center = cpvadd(body->p, cpvrotate(circle->c, body->rot));
+		cpVect center = circle->tc;
 		glTranslatef(center.x, center.y, 0.0f);
-		glRotatef(body->a*180.0f/(cpFloat)M_PI, 0.0f, 0.0f, 1.0f);
+		glRotatef(body->a*180.0f/(float)M_PI, 0.0f, 0.0f, 1.0f);
 		glScalef(circle->r, circle->r, 1.0f);
 		
 		if(!circle->shape.sensor){
-			glColor_from_pointer(circle);
+			glColor_for_shape((cpShape *)circle, space);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, circleVAR_count - 1);
 		}
 		
@@ -139,57 +158,49 @@ drawCircleShape(cpBody *body, cpCircleShape *circle)
 	// restore default GL state
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
 static const GLfloat pillVAR[] = {
-	 0.0000f,  1.0000f,
-	 0.2588f,  0.9659f,
-	 0.5000f,  0.8660f,
-	 0.7071f,  0.7071f,
-	 0.8660f,  0.5000f,
-	 0.9659f,  0.2588f,
-	 1.0000f,  0.0000f,
-	 0.9659f, -0.2588f,
-	 0.8660f, -0.5000f,
-	 0.7071f, -0.7071f,
-	 0.5000f, -0.8660f,
-	 0.2588f, -0.9659f,
-	 0.0000f, -1.0000f,
+	 0.0000f,  1.0000f, 1.0f,
+	 0.2588f,  0.9659f, 1.0f,
+	 0.5000f,  0.8660f, 1.0f,
+	 0.7071f,  0.7071f, 1.0f,
+	 0.8660f,  0.5000f, 1.0f,
+	 0.9659f,  0.2588f, 1.0f,
+	 1.0000f,  0.0000f, 1.0f,
+	 0.9659f, -0.2588f, 1.0f,
+	 0.8660f, -0.5000f, 1.0f,
+	 0.7071f, -0.7071f, 1.0f,
+	 0.5000f, -0.8660f, 1.0f,
+	 0.2588f, -0.9659f, 1.0f,
+	 0.0000f, -1.0000f, 1.0f,
 
-	 0.0000f, -1.0000f,
-	-0.2588f, -0.9659f,
-	-0.5000f, -0.8660f,
-	-0.7071f, -0.7071f,
-	-0.8660f, -0.5000f,
-	-0.9659f, -0.2588f,
-	-1.0000f, -0.0000f,
-	-0.9659f,  0.2588f,
-	-0.8660f,  0.5000f,
-	-0.7071f,  0.7071f,
-	-0.5000f,  0.8660f,
-	-0.2588f,  0.9659f,
-	 0.0000f,  1.0000f,
+	 0.0000f, -1.0000f, 0.0f,
+	-0.2588f, -0.9659f, 0.0f,
+	-0.5000f, -0.8660f, 0.0f,
+	-0.7071f, -0.7071f, 0.0f,
+	-0.8660f, -0.5000f, 0.0f,
+	-0.9659f, -0.2588f, 0.0f,
+	-1.0000f, -0.0000f, 0.0f,
+	-0.9659f,  0.2588f, 0.0f,
+	-0.8660f,  0.5000f, 0.0f,
+	-0.7071f,  0.7071f, 0.0f,
+	-0.5000f,  0.8660f, 0.0f,
+	-0.2588f,  0.9659f, 0.0f,
+	 0.0000f,  1.0000f, 0.0f,
 };
-static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/2;
+static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
 
 static void
-drawSegmentShape(cpBody *body, cpSegmentShape *seg)
+drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
 {
-	cpVect a = cpvadd(body->p, cpvrotate(seg->a, body->rot));
-	cpVect b = cpvadd(body->p, cpvrotate(seg->b, body->rot));
+	cpVect a = seg->ta;
+	cpVect b = seg->tb;
 	
 	if(seg->r){
-		cpVect delta = cpvsub(b, a);
-		cpFloat len = cpvlength(delta)/seg->r;
+		glVertexPointer(3, GL_FLOAT, 0, pillVAR);
 		
-		GLfloat VAR[pillVAR_count*2];
-		memcpy(VAR, pillVAR, sizeof(pillVAR));
-		
-		for(int i=0, half=pillVAR_count; i<half; i+=2)
-			VAR[i] += len;
-			
-		glVertexPointer(2, GL_FLOAT, 0, VAR);
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states:  GL_VERTEX_ARRAY, 
 		// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -197,45 +208,48 @@ drawSegmentShape(cpBody *body, cpSegmentShape *seg)
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		
+		
 		glPushMatrix(); {
-			GLfloat x = a.x;
-			GLfloat y = a.y;
-			GLfloat cos = delta.x/len;
-			GLfloat sin = delta.y/len;
+			cpVect d = cpvsub(b, a);
+			cpVect r = cpvmult(d, seg->r/cpvlength(d));
 
 			const GLfloat matrix[] = {
-				 cos,  sin, 0.0f, 0.0f,
-				-sin,  cos, 0.0f, 0.0f,
-				0.0f, 0.0f, 1.0f, 1.0f,
-					 x,    y, 0.0f, 1.0f,
+				 r.x, r.y, 0.0f, 0.0f,
+				-r.y, r.x, 0.0f, 0.0f,
+				 d.x, d.y, 0.0f, 0.0f,
+				 a.x, a.y, 0.0f, 1.0f,
 			};
-			
 			glMultMatrixf(matrix);
-				
+			
 			if(!seg->shape.sensor){
-				glColor_from_pointer(seg);
+				glColor_for_shape((cpShape *)seg, space);
 				glDrawArrays(GL_TRIANGLE_FAN, 0, pillVAR_count);
 			}
 			
 			glColor4f(LINE_COLOR);
 			glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
 		} glPopMatrix();
-
-		// Restore Default GL states
+		
+		// restore default GL state
 		glEnable(GL_TEXTURE_2D);
 		glEnableClientState(GL_COLOR_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+		
 	} else {
 		glColor4f(LINE_COLOR);
-		ccDrawLine( a,b);
+		ccDrawLine(a,b);
 	}
 }
 
 static void
-drawPolyShape(cpBody *body, cpPolyShape *poly)
+drawPolyShape(cpBody *body, cpPolyShape *poly, cpSpace *space)
 {
-	int count = count=poly->numVerts;
-	GLfloat VAR[count*2];
+	int count = poly->numVerts;
+#if CP_USE_DOUBLES
+	glVertexPointer(2, GL_DOUBLE, 0, poly->tVerts);
+#else
+	glVertexPointer(2, GL_FLOAT, 0, poly->tVerts);
+#endif
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states:  GL_VERTEX_ARRAY, 
@@ -244,45 +258,35 @@ drawPolyShape(cpBody *body, cpPolyShape *poly)
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, VAR);
-
-	cpVect *verts = poly->verts;
-	for(int i=0; i<count; i++){
-		cpVect v = cpvadd(body->p, cpvrotate(verts[i], body->rot));
-		VAR[2*i    ] = v.x;
-		VAR[2*i + 1] = v.y;
-	}
 	
-
 	if(!poly->shape.sensor){
-		glColor_from_pointer(poly);
+		glColor_for_shape((cpShape *)poly, space);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, count);
 	}
 	
 	glColor4f(LINE_COLOR);
 	glDrawArrays(GL_LINE_LOOP, 0, count);
 	
-	// Restore Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// restore default GL state
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
 static void
-drawObject(void *ptr, void *unused)
+drawObject(cpShape *shape, cpSpace *space)
 {
-	cpShape *shape = (cpShape *)ptr;
 	cpBody *body = shape->body;
 	
 	switch(shape->klass->type){
 		case CP_CIRCLE_SHAPE:
-			drawCircleShape(body, (cpCircleShape *)shape);
+			drawCircleShape(body, (cpCircleShape *)shape, space);
 			break;
 		case CP_SEGMENT_SHAPE:
-			drawSegmentShape(body, (cpSegmentShape *)shape);
+			drawSegmentShape(body, (cpSegmentShape *)shape, space);
 			break;
 		case CP_POLY_SHAPE:
-			drawPolyShape(body, (cpPolyShape *)shape);
+			drawPolyShape(body, (cpPolyShape *)shape, space);
 			break;
 		default:
 			printf("Bad enumeration in drawObject().\n");
@@ -315,7 +319,8 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 	cpVect b = cpvadd(body_b->p, cpvrotate(spring->anchr2, body_b->rot));
 
 	glPointSize(5.0f);
-	ccDrawLine( a,b);
+	ccDrawPoint(a);
+	ccDrawPoint(b);
 
 	cpVect delta = cpvsub(b, a);
 
@@ -335,20 +340,21 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 		GLfloat s = 1.0f/cpvlength(delta);
 
 		const GLfloat matrix[] = {
-			 cos,  sin, 0.0f, 0.0f,
+				 cos,    sin, 0.0f, 0.0f,
 			-sin*s,  cos*s, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-				 x,    y, 0.0f, 1.0f,
+				0.0f,   0.0f, 1.0f, 0.0f,
+					 x,      y, 0.0f, 1.0f,
 		};
 		
 		glMultMatrixf(matrix);
 		glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
 	} glPopMatrix();
 	
-	// Restore Default GL states
+	// restore default GL state
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	
 }
 
 static void
@@ -367,8 +373,8 @@ drawConstraint(cpConstraint *constraint)
 		glPointSize(5.0f);
 		ccDrawPoint(a);
 		ccDrawPoint(b);
-
-		ccDrawLine(a,b);
+		ccDrawLine(a, b);
+		
 	} else if(klass == cpSlideJointGetClass()){
 		cpSlideJoint *joint = (cpSlideJoint *)constraint;
 	
@@ -378,8 +384,8 @@ drawConstraint(cpConstraint *constraint)
 		glPointSize(5.0f);
 		ccDrawPoint(a);
 		ccDrawPoint(b);
+		ccDrawLine(a, b);
 
-		ccDrawLine(a,b);
 	} else if(klass == cpPivotJointGetClass()){
 		cpPivotJoint *joint = (cpPivotJoint *)constraint;
 	
@@ -398,7 +404,7 @@ drawConstraint(cpConstraint *constraint)
 
 		glPointSize(5.0f);
 		ccDrawPoint(c);
-		ccDrawLine(a,b);
+		ccDrawLine(a, b);
 	} else if(klass == cpDampedSpringGetClass()){
 		drawSpring((cpDampedSpring *)constraint, body_a, body_b);
 	} else {
@@ -407,28 +413,16 @@ drawConstraint(cpConstraint *constraint)
 }
 
 static void
-drawBB(void *ptr, void *unused)
+drawBB(cpShape *shape, void *unused)
 {
-	cpShape *shape = (cpShape *)ptr;
-
 	CGPoint vertices[] = {
 		{shape->bb.l, shape->bb.b},
 		{shape->bb.l, shape->bb.t},
 		{shape->bb.r, shape->bb.t},
 		{shape->bb.r, shape->bb.b},
 	};
-
 	ccDrawPoly(vertices, 4, NO);
-}
-
-static void
-drawCollisions(void *ptr, void *data)
-{
-	cpArbiter *arb = (cpArbiter *)ptr;
-	for(int i=0; i<arb->numContacts; i++){
-		cpVect v = arb->contacts[i].p;
-		ccDrawPoint(v);
-	}
+	
 }
 
 // copied from cpSpaceHash.c
@@ -460,7 +454,7 @@ drawSpatialHash(cpSpaceHash *hash)
 				cell_count++;
 			
 			GLfloat v = 1.0f - (GLfloat)cell_count/10.0f;
-			glColor4f(v,v,v,1.0f);
+			glColor4f(v,v,v,1);
 //			glRectf(i*dim, j*dim, (i + 1)*dim, (j + 1)*dim);
 		}
 	}
@@ -469,43 +463,68 @@ drawSpatialHash(cpSpaceHash *hash)
 void
 drawSpace(cpSpace *space, drawSpaceOptions *options)
 {
-	if(options->drawHash)
+	if(options->drawHash){
+		glColorMask(GL_FALSE, GL_TRUE, GL_FALSE, GL_TRUE);
 		drawSpatialHash(space->activeShapes);
+		glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+		drawSpatialHash(space->staticShapes);
+		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	}
+	
+	glLineWidth(options->lineThickness);
+	if(options->drawShapes){
+		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawObject, space);
+		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawObject, space);
+	}
 	
 	glLineWidth(1.0f);
 	if(options->drawBBs){
-		glColor4f(0.3f, 0.5f, 0.3f, 1.0f);
-		cpSpaceHashEach(space->activeShapes, &drawBB, NULL);
-		cpSpaceHashEach(space->staticShapes, &drawBB, NULL);
+		glColor4f(0.3f, 0.5f, 0.3f,1);
+		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawBB, NULL);
+		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawBB, NULL);
 	}
 
-	glLineWidth(options->lineThickness);
-	if(options->drawShapes){
-		cpSpaceHashEach(space->activeShapes, &drawObject, NULL);
-		cpSpaceHashEach(space->staticShapes, &drawObject, NULL);
-	}
-	
 	cpArray *constraints = space->constraints;
 
-	glColor4f(0.5f, 1.0f, 0.5f, 1.0f);
+	glColor4f(0.5f, 1.0f, 0.5f, 1);
 	for(int i=0, count = constraints->num; i<count; i++){
-		drawConstraint(constraints->arr[i]);
+		drawConstraint((cpConstraint *)constraints->arr[i]);
 	}
 	
 	if(options->bodyPointSize){
+		glPointSize(options->bodyPointSize);
+		
 		cpArray *bodies = space->bodies;
 
-		glPointSize(options->bodyPointSize);
 		glColor4f(LINE_COLOR);
 		for(int i=0, count = bodies->num; i<count; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
 			ccDrawPoint(body->p);
 		}
+
+//			glColor3f(0.5f, 0.5f, 0.5f);
+//			cpArray *components = space->components;
+//			for(int i=0; i<components->num; i++){
+//				cpBody *root = components->arr[i];
+//				cpBody *body = root, *next;
+//				do {
+//					next = body->node.next;
+//					glVertex2f(body->p.x, body->p.y);
+//				} while((body = next) != root);
+//			}
 	}
 
 	if(options->collisionPointSize){
 		glPointSize(options->collisionPointSize);
-		glColor4f(COLLISION_COLOR);
-		cpArrayEach(space->arbiters, &drawCollisions, NULL);
+		cpArray *arbiters = space->arbiters;
+		for(int i=0; i<arbiters->num; i++){
+			cpArbiter *arb = (cpArbiter*)arbiters->arr[i];
+			
+			glColor4f(COLLISION_COLOR);
+			for(int i=0; i<arb->numContacts; i++){
+				cpVect v = arb->contacts[i].p;
+				ccDrawPoint(v);
+			}
+		}
 	}
 }

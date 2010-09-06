@@ -24,9 +24,9 @@
  */
 
 #import "CCMenuItem.h"
-#import "CCLabel.h"
+#import "CCLabelTTF.h"
 #import "CCLabelAtlas.h"
-#import "CCIntervalAction.h"
+#import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 
@@ -52,11 +52,9 @@ enum {
 @synthesize isSelected=isSelected_;
 -(id) init
 {
-	NSException* myException = [NSException
-								exceptionWithName:@"MenuItemInit"
-								reason:@"Init not supported. Use InitFromString"
-								userInfo:nil];
-	@throw myException;	
+	NSAssert(NO, @"MenuItemInit: Init not supported.");
+	[self release];
+	return nil;
 }
 
 +(id) itemWithTarget:(id) r selector:(SEL) s
@@ -373,7 +371,7 @@ enum {
 {
 	NSAssert( [value length] != 0, @"Value lenght must be greater than 0");
 	
-	CCLabel *label = [CCLabel labelWithString:value fontName:_fontName fontSize:_fontSize];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:_fontName fontSize:_fontSize];
 
 	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
 		// do something ?

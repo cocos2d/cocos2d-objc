@@ -34,6 +34,8 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
 
+		
+		self.isTouchEnabled = YES;
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
@@ -50,7 +52,7 @@
 		
 
 		// create and initialize a Label
-		CCLabel* label = [CCLabel labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 		
 		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"restart" target:self selector:@selector(restart:)];
 		
@@ -67,6 +69,16 @@
 		[self addChild: label];
 	}
 	return self;
+}
+
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	NSLog(@"Number of touches: %d", [touches count]);
+}
+
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	[self ccTouchesMoved:touches withEvent:event];
 }
 
 -(void) restart:(id)sender

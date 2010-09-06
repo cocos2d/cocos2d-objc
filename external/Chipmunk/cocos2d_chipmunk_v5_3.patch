@@ -1,0 +1,28 @@
+diff --git a/external/Chipmunk/src/chipmunk.c b/external/Chipmunk/src/chipmunk.c
+index 340bede..1963763 100644
+--- a/external/Chipmunk/src/chipmunk.c
++++ b/external/Chipmunk/src/chipmunk.c
+@@ -98,7 +98,7 @@ cpMomentForPoly(cpFloat m, const int numVerts, cpVect *verts, cpVect offset)
+ cpFloat
+ cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
+ {
+-	return m*(width*width + height*height)/12.0;
++	return m*(width*width + height*height)/12;
+ }
+ 
+ 
+diff --git a/external/Chipmunk/src/cpPolyShape.c b/external/Chipmunk/src/cpPolyShape.c
+index 95908fd..5561e59 100644
+--- a/external/Chipmunk/src/cpPolyShape.c
++++ b/external/Chipmunk/src/cpPolyShape.c
+@@ -211,8 +211,8 @@ cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset)
+ cpPolyShape *
+ cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
+ {
+-	cpFloat hw = width/2.0;
+-	cpFloat hh = height/2.0;
++	cpFloat hw = width/2;
++	cpFloat hh = height/2;
+ 	
+ 	cpVect verts[] = {
+ 		cpv(-hw,-hh),

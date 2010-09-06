@@ -42,7 +42,7 @@
 //
 
 // opengl
-#import <OpenGLES/ES1/gl.h>
+#import "Platforms/CCGL.h"
 
 // cocos2d
 #import "ccConfig.h"
@@ -84,11 +84,9 @@
 }
 
 -(id) init {
-	NSException* myException = [NSException
-								exceptionWithName:@"Particle.init"
-								reason:@"Particle.init shall not be called. Use initWithTotalParticles instead."
-								userInfo:nil];
-	@throw myException;	
+	NSAssert(NO, @"CCParticleSystem: Init not supported.");
+	[self release];
+	return nil;	
 }
 
 -(id) initWithFile:(NSString *)plistFile
@@ -102,7 +100,7 @@
 
 -(id) initWithDictionary:(NSDictionary *)dictionary
 {
-	int maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
+	NSUInteger maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
 	// self, not super
 	if ((self=[self initWithTotalParticles:maxParticles] ) ) {
 		
@@ -215,25 +213,30 @@
 		// texture		
 		// Try to get the texture from the cache
 		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
-		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
+
+		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
 
 		if ( ! texture_ && textureData) {
 			
 			// if it fails, try to get it from the base64-gzipped data			
 			unsigned char *buffer = NULL;
-			int len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
+			NSUInteger len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
 			NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
 				
 			unsigned char *deflated = NULL;
-			int deflatedLen = inflateMemory(buffer, len, &deflated);
+			NSUInteger deflatedLen = inflateMemory(buffer, len, &deflated);
 			free( buffer );
 				
 			NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
 			NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
-			UIImage *image = [[UIImage alloc] initWithData:data];
 			
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+			UIImage *image = [[UIImage alloc] initWithData:data];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+#endif
 			self.texture = [[CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName];
 			[data release];
 			[image release];

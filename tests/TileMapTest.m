@@ -79,17 +79,21 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 			
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
@@ -115,6 +119,7 @@ Class restartAction()
 	[super dealloc];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
@@ -147,6 +152,17 @@ Class restartAction()
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CCNode *node = [self getChildByTag:kTagTileMap];
+	CGPoint currentPos = [node position];
+	[node setPosition: ccpAdd(currentPos, CGPointMake( event.deltaX, -event.deltaY) )];
+
+	return YES;
+}
+#endif
 
 -(void) restartCallback: (id) sender
 {
@@ -205,7 +221,7 @@ Class restartAction()
 		map.anchorPoint = ccp(0, 0.5f);
 		
 		CCScaleBy *scale = [CCScaleBy actionWithDuration:4 scale:0.8f];
-		CCIntervalAction *scaleBack = [scale reverse];
+		CCActionInterval *scaleBack = [scale reverse];
 		
 		id seq = [CCSequence actions: scale,
 								scaleBack,
@@ -1274,10 +1290,13 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark Application Delegate
-
 // CLASS IMPLEMENTATIONS
+
+#pragma mark -
+#pragma mark AppController - iPhone
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -1380,3 +1399,46 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	//
+	// Run all the test with 2d projection
+	//
+	[director setProjection:kCCDirectorProjection2D];
+	
+	
+	//
+	// Finally, run the scene
+	//
+	[director runWithScene: scene];
+}
+
+@end
+#endif
+

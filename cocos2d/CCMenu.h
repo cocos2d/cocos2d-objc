@@ -24,15 +24,13 @@
  */
 
 
-#import <UIKit/UIKit.h>
-
 #import "CCMenuItem.h"
 #import "CCLayer.h"
 
 typedef enum  {
-	kMenuStateWaiting,
-	kMenuStateTrackingTouch
-} MenuState;
+	kCCMenuStateWaiting,
+	kCCMenuStateTrackingTouch
+} tCCMenuState;
 
 /** A CCMenu
  * 
@@ -42,7 +40,7 @@ typedef enum  {
  */
 @interface CCMenu : CCLayer <CCRGBAProtocol>
 {
-	MenuState state;
+	tCCMenuState state;
 	CCMenuItem *selectedItem;
 	GLubyte		opacity_;
 	ccColor3B	color_;

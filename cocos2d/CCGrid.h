@@ -24,7 +24,7 @@
  */
 
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #import "CCNode.h"
 #import "CCCamera.h"

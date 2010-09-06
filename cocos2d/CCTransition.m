@@ -28,16 +28,22 @@
 #import "CCTransition.h"
 #import "CCNode.h"
 #import "CCDirector.h"
-#import "CCIntervalAction.h"
-#import "CCInstantAction.h"
-#import "CCCameraAction.h"
+#import "CCActionInterval.h"
+#import "CCActionInstant.h"
+#import "CCActionCamera.h"
 #import "CCLayer.h"
 #import "CCCamera.h"
-#import "CCTiledGridAction.h"
-#import "CCEaseAction.h"
-#import "CCTouchDispatcher.h"
+#import "CCActionTiledGrid.h"
+#import "CCActionEase.h"
 #import "CCRenderTexture.h"
 #import "Support/CGPointExtension.h"
+
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "Platforms/iOS/CCTouchDispatcher.h"
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import "Platforms/Mac/CCEventDispatcher.h"
+#endif
 
 enum {
 	kSceneFade = 0xFADEFADE,
@@ -68,9 +74,13 @@ enum {
 		[outScene retain];
 		
 		NSAssert( inScene != outScene, @"Incoming scene must be different from the outgoing scene" );
-		
+
 		// disable events while transitions
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
+#endif
 
 		[self sceneOrder];
 	}
@@ -120,9 +130,13 @@ enum {
 	sendCleanupToScene = [director sendCleanupToScene];
 	
 	[director replaceScene: inScene];
-	
+
 	// enable events while transitions
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];
+#endif
 	
 	// issue #267
 	[outScene setVisible:YES];	
@@ -173,7 +187,7 @@ enum {
 //
 // Oriented Transition
 //
-@implementation CCOrientedTransitionScene
+@implementation CCTransitionSceneOriented
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o
 {
 	return [[[self alloc] initWithDuration:t scene:s orientation:o] autorelease];
@@ -191,7 +205,7 @@ enum {
 //
 // RotoZoom
 //
-@implementation CCRotoZoomTransition
+@implementation CCTransitionRotoZoom
 -(void) onEnter
 {
 	[super onEnter];
@@ -202,7 +216,7 @@ enum {
 	[inScene setAnchorPoint:ccp(0.5f, 0.5f)];
 	[outScene setAnchorPoint:ccp(0.5f, 0.5f)];
 	
-	CCIntervalAction *rotozoom = [CCSequence actions: [CCSpawn actions:
+	CCActionInterval *rotozoom = [CCSequence actions: [CCSpawn actions:
 								   [CCScaleBy actionWithDuration:duration/2 scale:0.001f],
 								   [CCRotateBy actionWithDuration:duration/2 angle:360 *2],
 								   nil],
@@ -221,7 +235,7 @@ enum {
 //
 // JumpZoom
 //
-@implementation CCJumpZoomTransition
+@implementation CCTransitionJumpZoom
 -(void) onEnter
 {
 	[super onEnter];
@@ -233,14 +247,14 @@ enum {
 	[inScene setAnchorPoint:ccp(0.5f, 0.5f)];
 	[outScene setAnchorPoint:ccp(0.5f, 0.5f)];
 
-	CCIntervalAction *jump = [CCJumpBy actionWithDuration:duration/4 position:ccp(-s.width,0) height:s.width/4 jumps:2];
-	CCIntervalAction *scaleIn = [CCScaleTo actionWithDuration:duration/4 scale:1.0f];
-	CCIntervalAction *scaleOut = [CCScaleTo actionWithDuration:duration/4 scale:0.5f];
+	CCActionInterval *jump = [CCJumpBy actionWithDuration:duration/4 position:ccp(-s.width,0) height:s.width/4 jumps:2];
+	CCActionInterval *scaleIn = [CCScaleTo actionWithDuration:duration/4 scale:1.0f];
+	CCActionInterval *scaleOut = [CCScaleTo actionWithDuration:duration/4 scale:0.5f];
 	
-	CCIntervalAction *jumpZoomOut = [CCSequence actions: scaleOut, jump, nil];
-	CCIntervalAction *jumpZoomIn = [CCSequence actions: jump, scaleIn, nil];
+	CCActionInterval *jumpZoomOut = [CCSequence actions: scaleOut, jump, nil];
+	CCActionInterval *jumpZoomIn = [CCSequence actions: jump, scaleIn, nil];
 	
-	CCIntervalAction *delay = [CCDelayTime actionWithDuration:duration/2];
+	CCActionInterval *delay = [CCDelayTime actionWithDuration:duration/2];
 	
 	[outScene runAction: jumpZoomOut];
 	[inScene runAction: [CCSequence actions: delay,
@@ -253,14 +267,14 @@ enum {
 //
 // MoveInL
 //
-@implementation CCMoveInLTransition
+@implementation CCTransitionMoveInL
 -(void) onEnter
 {
 	[super onEnter];
 	
 	[self initScenes];
 	
-	CCIntervalAction *a = [self action];
+	CCActionInterval *a = [self action];
 
 	[inScene runAction: [CCSequence actions:
 						 [self easeActionWithAction:a],
@@ -269,12 +283,12 @@ enum {
 	];
 	 		
 }
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	return [CCMoveTo actionWithDuration:duration position:ccp(0,0)];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseOut actionWithAction:action rate:2.0f];
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
@@ -290,7 +304,7 @@ enum {
 //
 // MoveInR
 //
-@implementation CCMoveInRTransition
+@implementation CCTransitionMoveInR
 -(void) initScenes
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -301,7 +315,7 @@ enum {
 //
 // MoveInT
 //
-@implementation CCMoveInTTransition
+@implementation CCTransitionMoveInT
 -(void) initScenes
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -312,7 +326,7 @@ enum {
 //
 // MoveInB
 //
-@implementation CCMoveInBTransition
+@implementation CCTransitionMoveInB
 -(void) initScenes
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -329,15 +343,15 @@ enum {
 // The other issue is that in some transitions (and I don't know why)
 // the order should be reversed (In in top of Out or vice-versa).
 #define ADJUST_FACTOR 0.5f
-@implementation CCSlideInLTransition
+@implementation CCTransitionSlideInL
 -(void) onEnter
 {
 	[super onEnter];
 
 	[self initScenes];
 	
-	CCIntervalAction *in = [self action];
-	CCIntervalAction *out = [self action];
+	CCActionInterval *in = [self action];
+	CCActionInterval *out = [self action];
 
 	id inAction = [self easeActionWithAction:in];
 	id outAction = [CCSequence actions:
@@ -357,13 +371,13 @@ enum {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	[inScene setPosition: ccp( -(s.width-ADJUST_FACTOR),0) ];
 }
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(s.width-ADJUST_FACTOR,0)];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseOut actionWithAction:action rate:2.0f];
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
@@ -374,7 +388,7 @@ enum {
 //
 // SlideInR
 //
-@implementation CCSlideInRTransition
+@implementation CCTransitionSlideInR
 -(void) sceneOrder
 {
 	inSceneOnTop = YES;
@@ -385,7 +399,7 @@ enum {
 	[inScene setPosition: ccp( s.width-ADJUST_FACTOR,0) ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(-(s.width-ADJUST_FACTOR),0)];
@@ -396,7 +410,7 @@ enum {
 //
 // SlideInT
 //
-@implementation CCSlideInTTransition
+@implementation CCTransitionSlideInT
 -(void) sceneOrder
 {
 	inSceneOnTop = NO;
@@ -407,7 +421,7 @@ enum {
 	[inScene setPosition: ccp(0,s.height-ADJUST_FACTOR) ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(0,-(s.height-ADJUST_FACTOR))];
@@ -418,7 +432,7 @@ enum {
 //
 // SlideInB
 //
-@implementation CCSlideInBTransition
+@implementation CCTransitionSlideInB
 -(void) sceneOrder
 {
 	inSceneOnTop = YES;
@@ -430,7 +444,7 @@ enum {
 	[inScene setPosition: ccp(0,-(s.height-ADJUST_FACTOR)) ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [CCMoveBy actionWithDuration:duration position:ccp(0,s.height-ADJUST_FACTOR)];
@@ -440,7 +454,7 @@ enum {
 //
 // ShrinkGrow Transition
 //
-@implementation CCShrinkGrowTransition
+@implementation CCTransitionShrinkGrow
 -(void) onEnter
 {
 	[super onEnter];
@@ -451,8 +465,8 @@ enum {
 	[inScene setAnchorPoint:ccp(2/3.0f,0.5f)];
 	[outScene setAnchorPoint:ccp(1/3.0f,0.5f)];	
 	
-	CCIntervalAction *scaleOut = [CCScaleTo actionWithDuration:duration scale:0.01f];
-	CCIntervalAction *scaleIn = [CCScaleTo actionWithDuration:duration scale:1.0f];
+	CCActionInterval *scaleOut = [CCScaleTo actionWithDuration:duration scale:0.01f];
+	CCActionInterval *scaleIn = [CCScaleTo actionWithDuration:duration scale:1.0f];
 
 	[inScene runAction: [self easeActionWithAction:scaleIn]];
 	[outScene runAction: [CCSequence actions:
@@ -460,7 +474,7 @@ enum {
 					[CCCallFunc actionWithTarget:self selector:@selector(finish)],
 					nil] ];
 }
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseOut actionWithAction:action rate:2.0f];
 //	return [EaseElasticOut actionWithAction:action period:0.3f];
@@ -470,12 +484,12 @@ enum {
 //
 // FlipX Transition
 //
-@implementation CCFlipXTransition
+@implementation CCTransitionFlipX
 -(void) onEnter
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 
 	float inDeltaZ, inAngleZ;
@@ -514,12 +528,12 @@ enum {
 //
 // FlipY Transition
 //
-@implementation CCFlipYTransition
+@implementation CCTransitionFlipY
 -(void) onEnter
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 
 	float inDeltaZ, inAngleZ;
@@ -557,12 +571,12 @@ enum {
 //
 // FlipAngular Transition
 //
-@implementation CCFlipAngularTransition
+@implementation CCTransitionFlipAngular
 -(void) onEnter
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 
 	float inDeltaZ, inAngleZ;
@@ -599,12 +613,12 @@ enum {
 //
 // ZoomFlipX Transition
 //
-@implementation CCZoomFlipXTransition
+@implementation CCTransitionZoomFlipX
 -(void) onEnter
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 	
 	float inDeltaZ, inAngleZ;
@@ -648,12 +662,12 @@ enum {
 //
 // ZoomFlipY Transition
 //
-@implementation CCZoomFlipYTransition
+@implementation CCTransitionZoomFlipY
 -(void) onEnter
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 	
 	float inDeltaZ, inAngleZ;
@@ -698,12 +712,12 @@ enum {
 //
 // ZoomFlipAngular Transition
 //
-@implementation CCZoomFlipAngularTransition
+@implementation CCTransitionZoomFlipAngular
 -(void) onEnter
 {
 	[super onEnter];
 	
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	[inScene setVisible: NO];
 	
 	float inDeltaZ, inAngleZ;
@@ -750,7 +764,7 @@ enum {
 //
 // Fade Transition
 //
-@implementation CCFadeTransition
+@implementation CCTransitionFade
 +(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)color
 {
 	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
@@ -784,7 +798,7 @@ enum {
 	
 	CCNode *f = [self getChildByTag:kSceneFade];
 	
-	CCIntervalAction *a = [CCSequence actions:
+	CCActionInterval *a = [CCSequence actions:
 						   [CCFadeIn actionWithDuration:duration/2],
 						   [CCCallFunc actionWithTarget:self selector:@selector(hideOutShowIn)],
 						   [CCFadeOut actionWithDuration:duration/2],
@@ -804,7 +818,7 @@ enum {
 //
 // Cross Fade Transition
 //
-@implementation CCCrossFadeTransition
+@implementation CCTransitionCrossFade
 
 -(void) draw
 {
@@ -861,7 +875,7 @@ enum {
 	[outTexture.sprite setOpacity:255];
 	
 	// create the blend action
-	CCIntervalAction * layerAction = [CCSequence actions:
+	CCActionInterval * layerAction = [CCSequence actions:
 									  [CCFadeTo actionWithDuration:duration opacity:0],
 									  [CCCallFunc actionWithTarget:self selector:@selector(hideOutShowIn)],
 									  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
@@ -888,7 +902,7 @@ enum {
 //
 // TurnOffTilesTransition
 //
-@implementation CCTurnOffTilesTransition
+@implementation CCTransitionTurnOffTiles
 
 // override addScenes, and change the order
 -(void) sceneOrder
@@ -913,7 +927,7 @@ enum {
 	 ];
 
 }
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return action;
 //	return [EaseIn actionWithAction:action rate:2.0f];
@@ -925,7 +939,7 @@ enum {
 //
 // SplitCols Transition
 //
-@implementation CCSplitColsTransition
+@implementation CCTransitionSplitCols
 
 -(void) onEnter
 {
@@ -948,12 +962,12 @@ enum {
 	 ];
 }
 
--(CCIntervalAction*) action
+-(CCActionInterval*) action
 {
 	return [CCSplitCols actionWithCols:3 duration:duration/2.0f];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return [CCEaseInOut actionWithAction:action rate:3.0f];
 }
@@ -962,8 +976,8 @@ enum {
 //
 // SplitRows Transition
 //
-@implementation CCSplitRowsTransition
--(CCIntervalAction*) action
+@implementation CCTransitionSplitRows
+-(CCActionInterval*) action
 {
 	return [CCSplitRows actionWithRows:3 duration:duration/2.0f];
 }
@@ -975,7 +989,7 @@ enum {
 //
 // FadeTR Transition
 //
-@implementation CCFadeTRTransition
+@implementation CCTransitionFadeTR
 -(void) sceneOrder
 {
 	inSceneOnTop = NO;
@@ -1000,12 +1014,12 @@ enum {
 	 ];
 }
 
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutTRTiles actionWithSize:v duration:duration];
 }
 
--(CCIntervalAction*) easeActionWithAction:(CCIntervalAction*)action
+-(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return action;
 //	return [EaseIn actionWithAction:action rate:2.0f];
@@ -1015,8 +1029,8 @@ enum {
 //
 // FadeBL Transition
 //
-@implementation CCFadeBLTransition
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+@implementation CCTransitionFadeBL
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutBLTiles actionWithSize:v duration:duration];
 }
@@ -1025,8 +1039,8 @@ enum {
 //
 // FadeUp Transition
 //
-@implementation CCFadeUpTransition
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+@implementation CCTransitionFadeUp
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutUpTiles actionWithSize:v duration:duration];
 }
@@ -1035,12 +1049,9 @@ enum {
 //
 // FadeDown Transition
 //
-@implementation CCFadeDownTransition
--(CCIntervalAction*) actionWithSize: (ccGridSize) v
+@implementation CCTransitionFadeDown
+-(CCActionInterval*) actionWithSize: (ccGridSize) v
 {
 	return [CCFadeOutDownTiles actionWithSize:v duration:duration];
 }
 @end
-
-
-

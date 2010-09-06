@@ -24,15 +24,21 @@
  */
 
 
+#import <Availability.h>
+
 #import "ccMacros.h"
 #import "CCGrid.h"
 #import "CCTexture2D.h"
 #import "CCDirector.h"
 #import "CCGrabber.h"
 
-#import "Support/glu.h"
+#import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #pragma mark -
 #pragma mark CCGridBase
@@ -52,7 +58,7 @@
 
 +(id) gridWithSize:(ccGridSize)gridSize
 {
-	return [[[self alloc] initWithSize:gridSize] autorelease];
+	return [[(CCGridBase*)[self alloc] initWithSize:gridSize] autorelease];
 }
 
 -(id) initWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
@@ -86,10 +92,14 @@
 	unsigned int POTWide = ccNextPOT(s.width);
 	unsigned int POTHigh = ccNextPOT(s.height);
 	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	EAGLView *glview = [[CCDirector sharedDirector] openGLView];
 	NSString *pixelFormat = [glview pixelFormat];
 
 	CCTexture2DPixelFormat format = [pixelFormat isEqualToString: kEAGLColorFormatRGB565] ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
+#else
+	CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
+#endif
 	
 	void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 	if( ! data ) {
@@ -159,6 +169,7 @@
 }
 
 // This routine can be merged with Director
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void)applyLandscape
 {
 	CCDirector *director = [CCDirector sharedDirector];
@@ -189,6 +200,7 @@
 			break;
 	}
 }
+#endif
 
 -(void)set2DProjection
 {
@@ -198,7 +210,7 @@
 	glViewport(0, 0, winSize.width, winSize.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrthof(0, winSize.width, 0, winSize.height, -1024, 1024);
+	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -231,7 +243,9 @@
 	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[self applyLandscape];
+#endif
 
 	if( target.camera.dirty ) {
 
@@ -240,9 +254,9 @@
 		//
 		// XXX: Camera should be applied in the AnchorPoint
 		//
-		glTranslatef(offset.x, offset.y, 0);
+		ccglTranslate(offset.x, offset.y, 0);
 		[target.camera locate];
-		glTranslatef(-offset.x, -offset.y, 0);
+		ccglTranslate(-offset.x, -offset.y, 0);
 	}
 		
 	glBindTexture(GL_TEXTURE_2D, texture_.name);

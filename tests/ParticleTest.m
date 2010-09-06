@@ -90,13 +90,13 @@ Class restartAction()
 		self.isTouchEnabled = YES;
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:100];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:100];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}			
@@ -121,7 +121,7 @@ Class restartAction()
 
 		[self addChild: menu z:100];	
 		
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelAtlasWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
 		labelAtlas.position = ccp(s.width-66,50);
 		
@@ -341,7 +341,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:50];
+	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:50];
 	[background addChild: emitter z:10];
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
@@ -422,7 +422,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:300];
+	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:300];
 	[background addChild: emitter z:10];
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
 	
@@ -652,7 +652,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[CCPointParticleSystem alloc] initWithTotalParticles:1000];
+	self.emitter = [[CCParticleSystemPoint alloc] initWithTotalParticles:1000];
 	[background addChild: emitter z:10];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -804,7 +804,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -825,7 +825,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/SpinningPeas.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpinningPeas.plist"];
 	[self addChild: emitter z:10];
 	
 	// custom spinning
@@ -853,7 +853,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/LavaFlow.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
 	[self addChild: emitter z:10];
 
 }
@@ -872,7 +872,7 @@ Class restartAction()
 	[super onEnter];
 	
 	[self setColor:ccBLACK];
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/ExplodingRing.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/ExplodingRing.plist"];
 	[self addChild: emitter z:10];
 
 	[self removeChild:background cleanup:YES];
@@ -896,7 +896,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Comet.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Comet.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -917,7 +917,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BurstPipe.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/BurstPipe.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -938,7 +938,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/BoilingFoam.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/BoilingFoam.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -959,7 +959,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Flower.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -986,7 +986,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Spiral.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -1013,7 +1013,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/Galaxy.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Galaxy.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -1038,7 +1038,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [CCQuadParticleSystem particleWithFile:@"Particles/debian.plist"];
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/debian.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -1066,7 +1066,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:200];
+	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
 	[self addChild: emitter z:10];
 
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -1150,7 +1150,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:200];
+	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
 	[self addChild: emitter z:10];
 	
 	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -1235,7 +1235,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [[CCQuadParticleSystem alloc] initWithTotalParticles:100];
+	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:100];
 	[self addChild: emitter z:10];
 	emitter.duration = kCCParticleDurationInfinity;
 	
@@ -1324,7 +1324,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	emitter = [[CCQuadParticleSystem alloc] initWithFile:@"Particles/Upsidedown.plist"];
+	emitter = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/Upsidedown.plist"];
 	[self addChild: emitter z:10];
 }
 
@@ -1350,7 +1350,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	CCQuadParticleSystem *system = [[CCQuadParticleSystem alloc] initWithFile:@"Particles/SpinningPeas.plist"];
+	CCParticleSystemQuad *system = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/SpinningPeas.plist"];
 	
 	[system setTexture: [[CCTextureCache sharedTextureCache] addImage:@"particles.png"] withRect:CGRectMake(0,0,32,32)];
 	[self addChild: system z:10];
@@ -1367,7 +1367,7 @@ Class restartAction()
 	index = (index + 1) % 4;
 	CGRect rect = CGRectMake(index*32, 0,32,32);
 	
-	CCQuadParticleSystem *system = (CCQuadParticleSystem*) emitter;
+	CCParticleSystemQuad *system = (CCParticleSystemQuad*) emitter;
 	[system setTexture:[emitter texture] withRect:rect];
 }
 

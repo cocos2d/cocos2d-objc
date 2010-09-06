@@ -23,13 +23,9 @@
  */
 
 
-
-#import "CCDirector.h"
+#import "Platforms/CCGL.h"
 #import "CCCamera.h"
 #import "ccMacros.h"
-
-#import "Support/glu.h"
-
 #import "CCDrawingPrimitives.h"
 
 @implementation CCCamera

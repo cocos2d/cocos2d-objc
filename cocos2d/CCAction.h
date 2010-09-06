@@ -24,8 +24,8 @@
  */
 
 
-#import <UIKit/UIKit.h>
 #include <sys/time.h>
+#import <Foundation/Foundation.h>
 
 #import "ccTypes.h"
 
@@ -37,9 +37,9 @@ enum {
 /** Base class for CCAction objects.
  */
 @interface CCAction : NSObject <NSCopying> {
-	id	originalTarget;
-	id	target;
-	int	tag;
+	id			originalTarget_;
+	id			target_;
+	NSInteger	tag_;
 }
 
 /** The "target". The action will modify the target properties.
@@ -57,7 +57,7 @@ enum {
 
 
 /** The action tag. An identifier of the action */
-@property (nonatomic,readwrite,assign) int tag;
+@property (nonatomic,readwrite,assign) NSInteger tag;
 
 /** Allocates and initializes the action */
 +(id) action;
@@ -94,7 +94,7 @@ enum {
 @interface CCFiniteTimeAction : CCAction <NSCopying>
 {
 	//! duration in seconds
-	ccTime duration;
+	ccTime duration_;
 }
 //! duration in seconds of the action
 @property (nonatomic,readwrite) ccTime duration;
@@ -104,19 +104,19 @@ enum {
 @end
 
 
-@class CCIntervalAction;
+@class CCActionInterval;
 /** Repeats an action for ever.
  To repeat the an action for a limited number of times use the Repeat action.
  @warning This action can't be Sequenceable because it is not an IntervalAction
  */
 @interface CCRepeatForever : CCAction <NSCopying>
 {
-	CCIntervalAction *other;
+	CCActionInterval *other;
 }
 /** creates the action */
-+(id) actionWithAction: (CCIntervalAction*) action;
++(id) actionWithAction: (CCActionInterval*) action;
 /** initializes the action */
--(id) initWithAction: (CCIntervalAction*) action;
+-(id) initWithAction: (CCActionInterval*) action;
 @end
 
 /** Changes the speed of an action, making it take longer (speed>1)
@@ -126,15 +126,15 @@ enum {
  */
 @interface CCSpeed : CCAction <NSCopying>
 {
-	CCIntervalAction	*other;
+	CCActionInterval	*other;
 	float speed;
 }
 /** alter the speed of the inner function in runtime */
 @property (nonatomic,readwrite) float speed;
 /** creates the action */
-+(id) actionWithAction: (CCIntervalAction*) action speed:(float)rate;
++(id) actionWithAction: (CCActionInterval*) action speed:(float)rate;
 /** initializes the action */
--(id) initWithAction: (CCIntervalAction*) action speed:(float)rate;
+-(id) initWithAction: (CCActionInterval*) action speed:(float)rate;
 @end
 
 @class CCNode;

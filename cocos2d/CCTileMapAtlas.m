@@ -23,6 +23,7 @@
  *
  */
 
+#import "ccConfig.h"
 #import "CCTileMapAtlas.h"
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
@@ -164,10 +165,17 @@
 	float textureWide = [[textureAtlas_ texture] pixelsWide];
 	float textureHigh = [[textureAtlas_ texture] pixelsHigh];
 
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	float left		= (2*row*itemWidth_+1)/(2*textureWide);
 	float right		= left+(itemWidth_*2-2)/(2*textureWide);
 	float top		= (2*col*itemHeight_+1)/(2*textureHigh);
 	float bottom	= top+(itemHeight_*2-2)/(2*textureHigh);
+#else
+	float left		= (row*itemWidth_)/textureWide;
+	float right		= left+itemWidth_/textureWide;
+	float top		= (col*itemHeight_)/textureHigh;
+	float bottom	= top+itemHeight_/textureHigh;
+#endif
 	
 
 	quad.tl.texCoords.u = left;

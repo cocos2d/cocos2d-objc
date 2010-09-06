@@ -113,13 +113,13 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 			
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:26];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
@@ -187,8 +187,11 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
-		
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
@@ -228,6 +231,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -238,6 +242,16 @@ Class restartAction()
 		[self addNewSpriteWithCoords: location];
 	}
 }
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteWithCoords: location];
+	
+	return YES;
+
+}
+#endif
 
 -(NSString *) title
 {
@@ -251,7 +265,11 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
@@ -296,6 +314,7 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -306,6 +325,16 @@ Class restartAction()
 		[self addNewSpriteWithCoords: location];
 	}
 }
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteWithCoords: location];
+	
+	return YES;
+	
+}
+#endif
 
 -(NSString *) title
 {
@@ -643,7 +672,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"children %x - atlasIndex:%d", (int)child, currentIndex);
+			NSLog(@"children %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
 			prev = currentIndex;
 		}
 		
@@ -652,7 +681,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"descendant %x - atlasIndex:%d", (int)child, currentIndex);
+			NSLog(@"descendant %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
 			prev = currentIndex;
 		}		
 	}	
@@ -1305,7 +1334,11 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		isTouchEnabled = YES;
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 		
 		CCNode *node = [CCNode node];
 		[self addChild:node z:0 tag:kTagSpriteBatchNode];
@@ -1365,7 +1398,11 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+#endif
 {
 
 	CCNode *node = [self getChildByTag:kTagSpriteBatchNode];
@@ -1378,8 +1415,13 @@ Class restartAction()
 			[sprite setTexture:texture1];
 		usingTexture1 = YES;
 	}
-}
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	return YES;
+#endif
+}
+	
 -(NSString *) title
 {
 	return @"Sprite New texture (tap)";
@@ -1391,7 +1433,11 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		isTouchEnabled = YES;
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 		
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
@@ -1450,7 +1496,11 @@ Class restartAction()
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+#endif
 {
 	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
 	
@@ -1458,6 +1508,11 @@ Class restartAction()
 		[batch setTexture:texture2];
 	else
 		[batch setTexture:texture1];	
+	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	return YES;
+#endif
 }
 
 -(NSString *) title
@@ -3137,6 +3192,8 @@ Class restartAction()
 #pragma mark AppDelegate
 
 // CLASS IMPLEMENTATIONS
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -3146,6 +3203,7 @@ Class restartAction()
 
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
+//	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
@@ -3243,3 +3301,36 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif

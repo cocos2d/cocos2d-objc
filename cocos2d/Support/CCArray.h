@@ -63,6 +63,7 @@
 - (NSUInteger) indexOfObject:(id)object;
 - (id) objectAtIndex:(NSUInteger)index;
 - (id) lastObject;
+- (id) randomObject;
 - (BOOL) containsObject:(id)object;
 
 #pragma mark Adding Objects

@@ -64,10 +64,17 @@
 		self.textureAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
 		[textureAtlas_ release];
 		
+		if( ! textureAtlas_ ) {
+			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
+			[self release];
+			return nil;
+		}
+		
 		[self updateBlendFunc];
 		[self updateOpacityModifyRGB];
-			
+		
 		[self calculateMaxItems];
+		
 	}
 	
 	return self;

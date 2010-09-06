@@ -28,7 +28,7 @@
 /** Base class for actions that modify audio properties
  @since v 1.0
  */
-@interface CDXPropertyModifierAction : CCIntervalAction {
+@interface CDXPropertyModifierAction : CCActionInterval {
 	CDPropertyModifier *modifier;
 	float lastSetValue;
 }

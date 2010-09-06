@@ -92,13 +92,13 @@ Class restartAction()
 	if( (self = [super init]) ) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];	
-		CCLabel* label = [CCLabel labelWithString:[self title] fontName:@"Arial" fontSize:26];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild:label z:1 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
-			CCLabel* l = [CCLabel labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}		
@@ -271,8 +271,17 @@ Class restartAction()
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
+	NSData *data = [NSData dataWithContentsOfFile:fullpath];
+	NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+#endif
+	
 	CGImageRef imageref = [image CGImage];
+	
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addCGImage:imageref forKey:@"test_image.png"];
 	CCSprite *img = [CCSprite spriteWithTexture:tex];
 	img.position = ccp( 3*s.width/4.0f, s.height/2.0f);
@@ -354,24 +363,29 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	CCSprite *imgMipMap = [CCSprite spriteWithFile:@"logo-mipmap.pvr"];
+	if( imgMipMap ) {
 	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
-	[self addChild:imgMipMap];
+		[self addChild:imgMipMap];
 
-	// support mipmap filtering
-	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
-	[imgMipMap.texture setTexParameters:&texParams];
+		// support mipmap filtering
+		ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
+		[imgMipMap.texture setTexParameters:&texParams];
+	}
+	
 	CCSprite *img = [CCSprite spriteWithFile:@"logo-nomipmap.pvr"];
-	img.position = ccp( s.width/2.0f+100, s.height/2.0f);
-	[self addChild:img];
-	
-	id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
-	id sc_back = [scale1 reverse];
-	
-	id scale2 = [[scale1 copy] autorelease];
-	id sc_back2 = [scale2 reverse];
-	
-	[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
-	[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
+	if( img ) {
+		img.position = ccp( s.width/2.0f+100, s.height/2.0f);
+		[self addChild:img];
+		
+		id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
+		id sc_back = [scale1 reverse];
+		
+		id scale2 = [[scale1 copy] autorelease];
+		id sc_back2 = [scale2 reverse];
+		
+		[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
+		[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
+	}
 }
 
 -(NSString *) title
@@ -438,9 +452,11 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtc2bpp.pvr"];
-	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
 	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
 }
 
 -(NSString *) title
@@ -459,12 +475,18 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
 	CCSprite *img = [CCSprite spriteWithTexture:tex];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	
+	NSLog(@"This test is not supported by Mac");
+#endif
 	
 }
 
@@ -486,8 +508,13 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.pvr"];
-	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
+	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"This test is not supported in cocos2d-mac");
+	}
 	
 }
 
@@ -510,9 +537,14 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtc4bpp.pvr"];
-	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
 	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"This test is not supported in cocos2d-mac");
+	}
+
 }
 
 -(NSString *) title
@@ -837,7 +869,7 @@ Class restartAction()
 	// 4- 16-bit RGB565
 	[super onEnter];
 	
-	CCLabel *label = (CCLabel*) [self getChildByTag:kTagLabel];
+	CCLabelTTF *label = (CCLabelTTF*) [self getChildByTag:kTagLabel];
 	[label setColor:ccc3(16,16,255)];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -976,7 +1008,7 @@ Class restartAction()
 	
 		CGSize size =[[CCDirector sharedDirector] winSize];
 
-		CCLabel *label = [CCLabel labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
 		label.position = ccp( size.width/2, size.height/2);
 		[self addChild:label z:10];
 		
@@ -1500,6 +1532,12 @@ Class restartAction()
 
 
 // CLASS IMPLEMENTATIONS
+
+#pragma mark -
+#pragma mark AppController - iPhone
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -1586,3 +1624,36 @@ Class restartAction()
 	[super dealloc];
 }
 @end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
+
+@end
+#endif

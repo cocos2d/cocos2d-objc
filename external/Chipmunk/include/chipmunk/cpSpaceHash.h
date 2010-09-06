@@ -30,7 +30,7 @@ typedef struct cpHandle{
 	int retain;
 	// Query stamp. Used to make sure two objects
 	// aren't identified twice in the same query.
-	int stamp;
+	cpTimestamp stamp;
 } cpHandle;
 
 // Linked list element for in the chains.
@@ -62,7 +62,7 @@ typedef struct cpSpaceHash{
 	cpArray *allocatedBuffers;
 	
 	// Incremented on each query. See cpHandle.stamp.
-	int stamp;
+	cpTimestamp stamp;
 } cpSpaceHash;
 
 //Basic allocation/destruction functions.

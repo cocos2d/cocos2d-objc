@@ -39,6 +39,9 @@
 										   depthFormat:GL_DEPTH_COMPONENT24_OES
 									preserveBackbuffer:NO];
 	
+	
+	[glView setMultipleTouchEnabled:YES];
+
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
@@ -57,7 +60,7 @@
 	
 	
 	// make the OpenGLView a child of the view controller
-	[viewController.view addSubview:glView];
+	[viewController setView:glView];
 
 	// make the View Controller a child of the main window
 	[window addSubview: viewController.view];
