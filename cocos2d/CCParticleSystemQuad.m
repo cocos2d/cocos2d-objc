@@ -158,23 +158,26 @@
 -(void) initIndices
 {
 	for( NSUInteger i=0;i< totalParticles;i++) {
-		indices_[i*6+0] = (GLushort) i*4+0;
-		indices_[i*6+1] = (GLushort) i*4+1;
-		indices_[i*6+2] = (GLushort) i*4+2;
+		const int i6 = i*6;
+		const int i4 = i*4;
+		indices_[i6+0] = (GLushort) i4+0;
+		indices_[i6+1] = (GLushort) i4+1;
+		indices_[i6+2] = (GLushort) i4+2;
 		
-		indices_[i*6+5] = (GLushort) i*4+1;
-		indices_[i*6+4] = (GLushort) i*4+2;
-		indices_[i*6+3] = (GLushort) i*4+3;
+		indices_[i6+5] = (GLushort) i4+1;
+		indices_[i6+4] = (GLushort) i4+2;
+		indices_[i6+3] = (GLushort) i4+3;
 	}
 }
 
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
 {
 	// colors
-	quads_[particleIdx].bl.colors = p->color;
-	quads_[particleIdx].br.colors = p->color;
-	quads_[particleIdx].tl.colors = p->color;
-	quads_[particleIdx].tr.colors = p->color;
+	ccV2F_C4F_T2F_Quad *quad = &(quads[particleIdx]);
+	quad->bl.colors = p->color;
+	quad->br.colors = p->color;
+	quad->tl.colors = p->color;
+	quad->tr.colors = p->color;
 	
 	// vertices
 	GLfloat size_2 = p->size/2;
@@ -200,36 +203,36 @@
 		GLfloat dy = x1 * sr + y2 * cr + y;
 		
 		// bottom-left
-		quads_[particleIdx].bl.vertices.x = ax;
-		quads_[particleIdx].bl.vertices.y = ay;
+		quad->bl.vertices.x = ax;
+		quad->bl.vertices.y = ay;
 		
 		// bottom-right vertex:
-		quads_[particleIdx].br.vertices.x = bx;
-		quads_[particleIdx].br.vertices.y = by;
+		quad->br.vertices.x = bx;
+		quad->br.vertices.y = by;
 		
 		// top-left vertex:
-		quads_[particleIdx].tl.vertices.x = dx;
-		quads_[particleIdx].tl.vertices.y = dy;
+		quad->tl.vertices.x = dx;
+		quad->tl.vertices.y = dy;
 		
 		// top-right vertex:
-		quads_[particleIdx].tr.vertices.x = cx;
-		quads_[particleIdx].tr.vertices.y = cy;
+		quad->tr.vertices.x = cx;
+		quad->tr.vertices.y = cy;
 	} else {
 		// bottom-left vertex:
-		quads_[particleIdx].bl.vertices.x = newPos.x - size_2;
-		quads_[particleIdx].bl.vertices.y = newPos.y - size_2;
+		quad->bl.vertices.x = newPos.x - size_2;
+		quad->bl.vertices.y = newPos.y - size_2;
 		
 		// bottom-right vertex:
-		quads_[particleIdx].br.vertices.x = newPos.x + size_2;
-		quads_[particleIdx].br.vertices.y = newPos.y - size_2;
+		quad->br.vertices.x = newPos.x + size_2;
+		quad->br.vertices.y = newPos.y - size_2;
 		
 		// top-left vertex:
-		quads_[particleIdx].tl.vertices.x = newPos.x - size_2;
-		quads_[particleIdx].tl.vertices.y = newPos.y + size_2;
+		quad->tl.vertices.x = newPos.x - size_2;
+		quad->tl.vertices.y = newPos.y + size_2;
 		
 		// top-right vertex:
-		quads_[particleIdx].tr.vertices.x = newPos.x + size_2;
-		quads_[particleIdx].tr.vertices.y = newPos.y + size_2;				
+		quad->tr.vertices.x = newPos.x + size_2;
+		quad->tr.vertices.y = newPos.y + size_2;				
 	}
 }
 
