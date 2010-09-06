@@ -173,7 +173,7 @@
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
 {
 	// colors
-	ccV2F_C4F_T2F_Quad *quad = &(quads[particleIdx]);
+	ccV2F_C4F_T2F_Quad *quad = &(quads_[particleIdx]);
 	quad->bl.colors = p->color;
 	quad->br.colors = p->color;
 	quad->tl.colors = p->color;
