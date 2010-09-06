@@ -291,7 +291,7 @@
 			NSUInteger endRunIndex = runIndex+1;
 			runIndex--;
 			// search backwards
-			while (runIndex >= 0) {
+			while (true) {
 				if (run.index <= rangeLimit.location) {
 					break;
 				}
@@ -536,7 +536,6 @@
 }
 
 - (id)initWithIndex:(NSUInteger)idx attributes:(NSDictionary *)attrs {
-	NSParameterAssert(idx >= 0);
 	if ((self = [super init])) {
 		_index = idx;
 		if (attrs == nil) {

@@ -512,11 +512,11 @@ typedef struct _KerningHashElement
 	
 	int quantityOfLines = 1;
 
-	int stringLen = [string_ length];
+	unsigned int stringLen = [string_ length];
 
 	// quantity of lines NEEDS to be calculated before parsing the lines,
 	// since the Y position needs to be calcualted before hand
-	for( int i=0; i < stringLen-1;i++) {
+	for(unsigned int i=0; i < stringLen-1;i++) {
 		unichar c = [string_ characterAtIndex:i];
 		if( c=='\n')
 			quantityOfLines++;
