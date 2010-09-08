@@ -966,19 +966,20 @@ Class restartAction()
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-zorder.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 		
-		[map setPosition:ccp(-700,-50)];
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		[map setPosition:ccp(-s.width/2,0)];
 		
 		tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[map addChild:tamara z: [[map children] count]];
 		[tamara retain];
 		int mapWidth = map.mapSize.width * map.tileSize.width;
-		[tamara setPosition:ccp( mapWidth/2,0)];
+		[tamara setPositionInPixels:ccp( mapWidth/2,0)];
 		[tamara setAnchorPoint:ccp(0.5f,0)];
 
 		
-		id move = [CCMoveBy actionWithDuration:10 position:ccp(300,250)];
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(300 / CC_CONTENT_SCALE_FACTOR(),250 / CC_CONTENT_SCALE_FACTOR())];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
@@ -997,7 +998,7 @@ Class restartAction()
 
 -(void) repositionSprite:(ccTime)dt
 {
-	CGPoint p = [tamara position];
+	CGPoint p = [tamara positionInPixels];
 	CCNode *map = [self getChildByTag:kTagTileMap];
 	
 	// there are only 4 layers. (grass and 3 trees layers)

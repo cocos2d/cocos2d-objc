@@ -179,7 +179,7 @@
 		
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
-		[self setContentSize: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
+		[self setContentSizeInPixels: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
 		
 		useAutomaticVertexZ_= NO;
 		vertexZvalue_ = 0;
