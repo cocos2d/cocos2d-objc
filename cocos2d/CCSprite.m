@@ -354,7 +354,7 @@ struct transformValues_ {
 	rect_ = rect;
 	rectRotated_ = rotated;
 
-	[self setContentSize:untrimmedSize];
+	[self setContentSizeInPixels:untrimmedSize];
 	[self updateTextureCoords:rect];
 
 	CGPoint relativeOffset = unflippedOffsetPositionFromCenter_;
@@ -365,8 +365,8 @@ struct transformValues_ {
 	if( flipY_ )
 		relativeOffset.y = - relativeOffset.y;
 	
-	offsetPosition_.x = relativeOffset.x + (contentSize_.width - rect_.size.width) / 2;
-	offsetPosition_.y = relativeOffset.y + (contentSize_.height - rect_.size.height) / 2;
+	offsetPosition_.x = relativeOffset.x + (contentSizeInPixels_.width - rect_.size.width) / 2;
+	offsetPosition_.y = relativeOffset.y + (contentSizeInPixels_.height - rect_.size.height) / 2;
 	
 	
 	// rendering using SpriteSheet
@@ -611,7 +611,7 @@ struct transformValues_ {
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 #if CC_SPRITE_DEBUG_DRAW
-	CGSize s = [self contentSize];
+	CGSize s = [self contentSizeInPixels];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
