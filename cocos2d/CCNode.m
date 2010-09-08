@@ -127,7 +127,7 @@
 {
 	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
 		anchorPoint_ = point;
-		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
@@ -143,7 +143,8 @@
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
-		anchorPointInPixels_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
+		contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
@@ -153,6 +154,23 @@
 -(CGSize) contentSize
 {
 	return contentSize_;
+}
+
+-(void) setContentSizeInPixels:(CGSize)size
+{
+	if( ! CGSizeEqualToSize(size, contentSizeInPixels_) ) {
+		contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
+		contentSizeInPixels_ = size;
+		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		isTransformGLDirty_ = YES;
+#endif		
+	}
+}
+-(CGSize) contentSizeInPixels
+{
+	return contentSizeInPixels_;
 }
 
 - (CGRect) boundingBox
@@ -193,7 +211,7 @@
 		scaleX_ = scaleY_ = 1.0f;
 		positionInPixels_ = position_ = CGPointZero;
 		anchorPointInPixels_ = anchorPoint_ = CGPointZero;
-		contentSize_ = CGSizeZero;
+		contentSizeInPixels_ = contentSize_ = CGSizeZero;
 		
 		
 		// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to NO

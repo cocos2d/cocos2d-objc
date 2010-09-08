@@ -33,7 +33,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {
-		CGSize s = [[CCDirector sharedDirector] winSizeInPixels];
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		self.isRelativeAnchorPoint = NO;
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];	
