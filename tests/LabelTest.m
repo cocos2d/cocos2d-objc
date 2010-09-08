@@ -338,7 +338,7 @@ Class restartAction()
 #pragma mark Example Atlas3
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont labels:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -421,7 +421,7 @@ Class restartAction()
 #pragma mark Example Atlas4
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont labels:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -433,7 +433,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		// Upper Label
-		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"BMFont label" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -515,7 +515,7 @@ Class restartAction()
 #pragma mark Example Atlas5
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont labels:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -554,7 +554,7 @@ Class restartAction()
 #pragma mark Example Atlas6
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -604,7 +604,7 @@ Class restartAction()
 #pragma mark Example AtlasBitmapColor
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -658,7 +658,7 @@ Class restartAction()
 #pragma mark Example AtlasFastBitmap
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -701,7 +701,7 @@ Class restartAction()
 #pragma mark BitmapFontMultiLine
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -866,6 +866,9 @@ Class restartAction()
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
+	// To use High-Res un comment the following line
+	[director setContentScaleFactor:2];
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	

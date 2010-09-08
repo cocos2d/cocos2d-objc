@@ -2115,6 +2115,9 @@
 		E04C646F12382F9400A4B3E6 /* b2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2@2x.png */; };
 		E04C647012382F9400A4B3E6 /* b1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1@2x.png */; };
 		E04C647112382F9400A4B3E6 /* b2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2@2x.png */; };
+		E04C651512383CA600A4B3E6 /* background3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3@2x.png */; };
+		E04C651612383CA800A4B3E6 /* background3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3@2x.png */; };
+		E04C651712383CB300A4B3E6 /* background3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3@2x.png */; };
 		E0704C2B123821EE009C628B /* background1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1@2x.jpg */; };
 		E0704C2C123821EE009C628B /* background2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2@2x.jpg */; };
 		E0704C2D123821EE009C628B /* background1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1@2x.jpg */; };
@@ -9198,6 +9201,7 @@
 				E04C636712382F6100A4B3E6 /* r2@2x.png in Resources */,
 				E04C642612382F9400A4B3E6 /* b1@2x.png in Resources */,
 				E04C642712382F9400A4B3E6 /* b2@2x.png in Resources */,
+				E04C651712383CB300A4B3E6 /* background3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9364,6 +9368,7 @@
 				E04C63B312382F6100A4B3E6 /* r2@2x.png in Resources */,
 				E04C644C12382F9400A4B3E6 /* b1@2x.png in Resources */,
 				E04C644D12382F9400A4B3E6 /* b2@2x.png in Resources */,
+				E04C651612383CA800A4B3E6 /* background3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9626,6 +9631,7 @@
 				E04C63AF12382F6100A4B3E6 /* r2@2x.png in Resources */,
 				E04C644A12382F9400A4B3E6 /* b1@2x.png in Resources */,
 				E04C644B12382F9400A4B3E6 /* b2@2x.png in Resources */,
+				E04C651512383CA600A4B3E6 /* background3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

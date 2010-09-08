@@ -71,7 +71,7 @@
 
 #pragma mark CCNode - Transform related properties
 
-@synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
+@synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_;
 @synthesize anchorPointInPixels=anchorPointInPixels_, isRelativeAnchorPoint=isRelativeAnchorPoint_;
 @synthesize userData;
 
@@ -103,11 +103,28 @@
 #endif	
 }
 
+-(CGPoint) position
+{
+	return position_;
+}
 -(void) setPosition: (CGPoint)newPosition
 {
 	position_ = newPosition;
-	positionInPixels_.x = newPosition.x * CC_CONTENT_SCALE_FACTOR();
-	positionInPixels_.y = newPosition.y * CC_CONTENT_SCALE_FACTOR();
+	positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
+	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
+}
+
+-(CGPoint) positionInPixels
+{
+	return positionInPixels_;
+}
+-(void) setPositionInPixels:(CGPoint)newPosition
+{
+	position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
+	positionInPixels_ = newPosition;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -775,8 +792,7 @@
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
 	CGPoint ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
-	ret.x /= CC_CONTENT_SCALE_FACTOR();
-	ret.y /= CC_CONTENT_SCALE_FACTOR();
+	ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
 	return ret;
 }
 

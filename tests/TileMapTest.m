@@ -1331,6 +1331,9 @@ Class restartAction()
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
+	// Retina Display
+	[director setContentScaleFactor:2];
+
 	// glview is a child of the main window
 	[window addSubview:glView];
 	
