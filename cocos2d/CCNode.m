@@ -756,7 +756,10 @@
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
-	return CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+	CGPoint ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+	ret.x /= CC_CONTENT_SCALE_FACTOR();
+	ret.y /= CC_CONTENT_SCALE_FACTOR();
+	return ret;
 }
 
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint

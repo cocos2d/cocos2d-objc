@@ -132,6 +132,9 @@
 // adds a new segment to the ribbon
 -(void)addPointAt:(CGPoint)location width:(float)w
 {
+	location.x *= CC_CONTENT_SCALE_FACTOR();
+	location.y *= CC_CONTENT_SCALE_FACTOR();
+
 	w=w*0.5f;
 	// if this is the first point added, cache it and return
 	if (!pastFirstPoint_)
