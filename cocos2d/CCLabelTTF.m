@@ -24,9 +24,15 @@
  */
 
 
+#import <Availability.h>
 
 #import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
+#import "ccMacros.h"
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#endif
 
 @implementation CCLabelTTF
 
@@ -52,10 +58,10 @@
 {
 	if( (self=[super init]) ) {
 
-		dimensions_ = dimensions;
+		dimensions_ = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
 		alignment_ = alignment;
 		fontName_ = [name retain];
-		fontSize_ = size;
+		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
 		
 		[self setString:str];
 	}
@@ -68,7 +74,7 @@
 		
 		dimensions_ = CGSizeZero;
 		fontName_ = [name retain];
-		fontSize_ = size;
+		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
 		
 		[self setString:str];
 	}
@@ -79,9 +85,15 @@
 {
 	CCTexture2D *tex;
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
-		tex = [[CCTexture2D alloc] initWithString:str fontName:fontName_ fontSize:fontSize_];
+		tex = [[CCTexture2D alloc] initWithString:str
+										 fontName:fontName_
+										 fontSize:fontSize_];
 	else
-		tex = [[CCTexture2D alloc] initWithString:str dimensions:dimensions_ alignment:alignment_ fontName:fontName_ fontSize:fontSize_];
+		tex = [[CCTexture2D alloc] initWithString:str
+									   dimensions:dimensions_
+										alignment:alignment_
+										 fontName:fontName_
+										 fontSize:fontSize_];
 
 
 	[self setTexture:tex];

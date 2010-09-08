@@ -104,6 +104,7 @@ enum {
 	
 	// position of the node
 	CGPoint position_;
+	CGPoint	positionInPixels_;
 
 	// is visible
 	BOOL visible_;
@@ -180,7 +181,7 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleX;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
-/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
+/** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** A CCCamera object that lets you move the node using a gluLookAt
 */

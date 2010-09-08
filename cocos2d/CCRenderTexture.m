@@ -96,7 +96,7 @@
 	CGSize texSize = [texture_ contentSize];
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySize];
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
@@ -115,7 +115,7 @@
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	CGSize size = [[CCDirector sharedDirector] displaySize];
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 
 	glColorMask(TRUE, TRUE, TRUE, TRUE);

@@ -35,6 +35,7 @@
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
+#import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
@@ -268,17 +269,17 @@
 
 - (id) initWithColor:(ccColor4B)color
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] winSizeInPixels];
 	return [self initWithColor:color width:s.width height:s.height];
 }
 
 // override contentSize
 -(void) setContentSize: (CGSize) size
 {
-	squareVertices[2] = size.width;
-	squareVertices[5] = size.height;
-	squareVertices[6] = size.width;
-	squareVertices[7] = size.height;
+	squareVertices[2] = size.width * CC_CONTENT_SCALE_FACTOR();
+	squareVertices[5] = size.height * CC_CONTENT_SCALE_FACTOR();
+	squareVertices[6] = size.width * CC_CONTENT_SCALE_FACTOR();
+	squareVertices[7] = size.height * CC_CONTENT_SCALE_FACTOR();
 	
 	[super setContentSize:size];
 }

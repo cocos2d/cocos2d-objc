@@ -144,7 +144,7 @@ static CCDirector *_sharedDirector = nil;
 		// running thread
 		runningThread_ = nil;
 		
-		screenSize_ = surfaceSize_ = CGSizeZero;
+		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
 	}
 
 	return self;
@@ -234,12 +234,12 @@ static CCDirector *_sharedDirector = nil;
 
 -(float) getZEye
 {
-	return ( surfaceSize_.height / 1.1566f );
+	return ( winSizeInPixels_.height / 1.1566f );
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize size = surfaceSize_;
+	CGSize size = winSizeInPixels_;
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			glViewport(0, 0, size.width, size.height);
@@ -312,7 +312,7 @@ static CCDirector *_sharedDirector = nil;
 		openGLView_ = [view retain];
 		
 		// set size
-		surfaceSize_ = screenSize_ = CCNSSizeToCGSize( [view bounds].size );
+		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
 
 		[self setGLDefaultValues];
 	}
@@ -332,21 +332,24 @@ static CCDirector *_sharedDirector = nil;
 	return CGPointZero;
 }
 
-// get the current size of the glview
 -(CGSize)winSize
 {
-	return surfaceSize_;
+	return winSizeInPoints_;
 }
 
-// return  the current frame size
--(CGSize)displaySize
+-(CGSize)winSizeInPixels
 {
-	return surfaceSize_;
+	return winSizeInPixels_;
+}
+
+-(CGSize)displaySizeInPixels
+{
+	return winSizeInPixels_;
 }
 
 -(void) reshapeProjection:(CGSize)newWindowSize
 {
-	surfaceSize_ = screenSize_ = newWindowSize;
+	winSizeInPixels_ = winSizeInPoints_ = newWindowSize;
 	[self setProjection:projection_];
 }
 

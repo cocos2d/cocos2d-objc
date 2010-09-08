@@ -205,9 +205,6 @@ typedef enum {
 	/* orientation */
 	ccDeviceOrientation	deviceOrientation_;
 	
-	/* content scale factor */
-	CGFloat	contentScaleFactor_;
-	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
 	
@@ -328,5 +325,8 @@ typedef enum {
 }
 -(void) mainLoop;
 @end
+
+// optimization. Should only be used to read it. Never to write it.
+extern CGFloat	__ccContentScaleFactor;
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED

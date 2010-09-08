@@ -143,8 +143,8 @@ enum {
 
 -(CGRect) rect
 {
-	return CGRectMake( self.position.x - contentSize_.width*anchorPoint_.x, self.position.y-
-					  contentSize_.height*anchorPoint_.y,
+	return CGRectMake( position_.x - contentSize_.width*anchorPoint_.x,
+					  position_.y - contentSize_.height*anchorPoint_.y,
 					  contentSize_.width, contentSize_.height);
 }
 @end

@@ -44,13 +44,13 @@
 	CGFloat fontSize_;
 }
 
-/** creates a CCLabel from a fontname, alignment, dimension and font size */
+/** creates a CCLabel from a fontname, alignment, dimension in points and font size in points*/
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** creates a CCLabel from a fontname and font size */
+/** creates a CCLabel from a fontname and font size in points*/
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
-/** initializes the CCLabel with a font name, alignment, dimension and font size */
+/** initializes the CCLabel with a font name, alignment, dimension in points and font size in points */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** initializes the CCLabel with a font name and font size */
+/** initializes the CCLabel with a font name and font size in points */
 - (id) initWithString:(NSString*)string  fontName:(NSString*)name fontSize:(CGFloat)size;
 
 /** changes the string to render
