@@ -34,6 +34,12 @@
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
+#import "ccMacros.h"
+
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#endif
 
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
@@ -100,6 +106,8 @@
 -(void) setPosition: (CGPoint)newPosition
 {
 	position_ = newPosition;
+	positionInPixels_.x = newPosition.x * CC_CONTENT_SCALE_FACTOR();
+	positionInPixels_.y = newPosition.y * CC_CONTENT_SCALE_FACTOR();
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -183,7 +191,7 @@
 		
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
-		position_ = CGPointZero;
+		positionInPixels_ = position_ = CGPointZero;
 		anchorPointInPixels_ = anchorPoint_ = CGPointZero;
 		contentSize_ = CGSizeZero;
 		
@@ -547,9 +555,9 @@
 		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	
 	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(position_.y + anchorPointInPixels_.y), vertexZ_);
-	else if ( position_.x !=0 || position_.y !=0 || vertexZ_ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(position_.x), RENDER_IN_SUBPIXEL(position_.y), vertexZ_ );
+		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y + anchorPointInPixels_.y), vertexZ_);
+	else if ( positionInPixels_.x !=0 || positionInPixels_.y !=0 || vertexZ_ != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y), vertexZ_ );
 	
 	// rotate
 	if (rotation_ != 0.0f )
@@ -700,8 +708,8 @@
 		if ( !isRelativeAnchorPoint_ && !CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 		
-		if( ! CGPointEqualToPoint(position_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
+		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
+			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 

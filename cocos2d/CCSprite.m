@@ -485,7 +485,7 @@ struct transformValues_ {
 		
 		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
 									   -s * scaleY_, c * scaleY_,
-									   position_.x, position_.y);
+									   positionInPixels_.x, positionInPixels_.y);
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
 	} 
 	
@@ -565,7 +565,7 @@ struct transformValues_ {
 // this fuction return the 5 values in 1 single call
 -(void) getTransformValues:(struct transformValues_*) tv
 {
-	tv->pos = position_;
+	tv->pos = positionInPixels_;
 	tv->scale.x = scaleX_;
 	tv->scale.y = scaleY_;
 	tv->rotation = rotation_;
