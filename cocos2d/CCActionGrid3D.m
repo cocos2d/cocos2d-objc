@@ -25,6 +25,7 @@
 
 
 #import "CCActionGrid3D.h"
+#import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
 #pragma mark -
@@ -255,8 +256,7 @@
 
 @implementation CCLens3D
 
-@synthesize lensEffect;
-@synthesize position;
+@synthesize lensEffect=lensEffect_;
 
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d
 {
@@ -267,10 +267,11 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		position = pos;
-		radius = r;
-		lensEffect = 0.7f;
-		lastPosition = ccp(-1,-1);
+		position_ = ccp(-1,-1);
+		self.position = pos;
+		radius_ = r;
+		lensEffect_ = 0.7f;
+		dirty_ = YES;
 	}
 	
 	return self;
@@ -278,14 +279,29 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius grid:gridSize duration:duration_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position_ radius:radius_ grid:gridSize duration:duration_];
 	return copy;
 }
 
+-(void) setPosition:(CGPoint)pos
+{
+	if( ! CGPointEqualToPoint(pos, position_) ) {
+		position_ = pos;
+		positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
+		positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
+		
+		dirty_ = YES;
+	}
+}
 
+-(CGPoint) position
+{
+	return position_;
+}
+	
 -(void)update:(ccTime)time
 {
-	if ( position.x != lastPosition.x || position.y != lastPosition.y )
+	if ( dirty_ )
 	{
 		int i, j;
 		
@@ -294,22 +310,22 @@
 			for( j = 0; j < gridSize.y+1; j++ )
 			{
 				ccVertex3F	v = [self originalVertex:ccg(i,j)];
-				CGPoint vect = ccpSub(position, ccp(v.x,v.y));
+				CGPoint vect = ccpSub(positionInPixels_, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
 				
-				if ( r < radius )
+				if ( r < radius_ )
 				{
-					r = radius - r;
-					CGFloat pre_log = r / radius;
+					r = radius_ - r;
+					CGFloat pre_log = r / radius_;
 					if ( pre_log == 0 ) pre_log = 0.001f;
-					float l = logf(pre_log) * lensEffect;
-					float new_r = expf( l ) * radius;
+					float l = logf(pre_log) * lensEffect_;
+					float new_r = expf( l ) * radius_;
 					
 					if ( ccpLength(vect) > 0 )
 					{
 						vect = ccpNormalize(vect);
 						CGPoint new_vect = ccpMult(vect, new_r);
-						v.z += ccpLength(new_vect) * lensEffect;
+						v.z += ccpLength(new_vect) * lensEffect_;
 					}
 				}
 				
@@ -317,7 +333,7 @@
 			}
 		}
 		
-		lastPosition = position;
+		dirty_ = NO;
 	}
 }
 
@@ -330,9 +346,8 @@
 
 @implementation CCRipple3D
 
-@synthesize position;
-@synthesize amplitude;
-@synthesize amplitudeRate;
+@synthesize amplitude=amplitude_;
+@synthesize amplitudeRate=amplitudeRate_;
 
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
 {
@@ -343,19 +358,31 @@
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
-		position = pos;
-		radius = r;
-		waves = wav;
-		amplitude = amp;
-		amplitudeRate = 1.0f;
+		self.position = pos;
+		radius_ = r;
+		waves_ = wav;
+		amplitude_ = amp;
+		amplitudeRate_ = 1.0f;
 	}
 	
 	return self;
 }
 
+-(CGPoint) position
+{
+	return position_;
+}
+
+-(void) setPosition:(CGPoint)pos
+{
+	position_ = pos;
+	positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
+	positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
+}
+
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position radius:radius waves:waves amplitude:amplitude grid:gridSize duration:duration_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position_ radius:radius_ waves:waves_ amplitude:amplitude_ grid:gridSize duration:duration_];
 	return copy;
 }
 
@@ -369,14 +396,14 @@
 		for( j = 0; j < (gridSize.y+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccg(i,j)];
-			CGPoint vect = ccpSub(position, ccp(v.x,v.y));
+			CGPoint vect = ccpSub(positionInPixels_, ccp(v.x,v.y));
 			CGFloat r = ccpLength(vect);
 			
-			if ( r < radius )
+			if ( r < radius_ )
 			{
-				r = radius - r;
-				CGFloat rate = powf( r / radius, 2);
-				v.z += (sinf( time*(CGFloat)M_PI*waves*2 + r * 0.1f) * amplitude * amplitudeRate * rate );
+				r = radius_ - r;
+				CGFloat rate = powf( r / radius_, 2);
+				v.z += (sinf( time*(CGFloat)M_PI*waves_*2 + r * 0.1f) * amplitude_ * amplitudeRate_ * rate );
 			}
 			
 			[self setVertex:ccg(i,j) vertex:v];
@@ -553,9 +580,8 @@
 
 @implementation CCTwirl
 
-@synthesize position;
-@synthesize amplitude;
-@synthesize amplitudeRate;
+@synthesize amplitude=amplitude_;
+@synthesize amplitudeRate=amplitudeRate_;
 
 +(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
 {
@@ -567,18 +593,30 @@
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
 		self.position = pos;
-		twirls = t;
-		amplitude = amp;
-		amplitudeRate = 1.0f;
+		twirls_ = t;
+		amplitude_ = amp;
+		amplitudeRate_ = 1.0f;
 	}
 	
 	return self;
 }
 
+-(void) setPosition:(CGPoint)pos
+{
+	position_ = pos;
+	positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
+	positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
+}
+
+-(CGPoint) position
+{
+	return position_;
+}
+
 -(void)update:(ccTime)time
 {
 	int i, j;
-	CGPoint		c = position;
+	CGPoint		c = positionInPixels_;
 	
 	for( i = 0; i < (gridSize.x+1); i++ )
 	{
@@ -589,8 +627,8 @@
 			CGPoint	avg = ccp(i-(gridSize.x/2.0f), j-(gridSize.y/2.0f));
 			CGFloat r = ccpLength( avg );
 			
-			CGFloat amp = 0.1f * amplitude * amplitudeRate;
-			CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * twirls * 2 ) * amp;
+			CGFloat amp = 0.1f * amplitude_ * amplitudeRate_;
+			CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * twirls_ * 2 ) * amp;
 			
 			CGPoint	d;
 			
@@ -607,7 +645,11 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position twirls:twirls amplitude:amplitude grid:gridSize duration:duration_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithPosition:position_
+																	  twirls:twirls_
+																   amplitude:amplitude_
+																		grid:gridSize
+																	duration:duration_];
 	return copy;
 }
 
