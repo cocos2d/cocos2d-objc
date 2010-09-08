@@ -483,7 +483,7 @@ CGFloat	__ccContentScaleFactor = 1;
 }
 
 // get the current size of the glview
--(CGSize)winSize
+-(CGSize) winSize
 {
 	CGSize s = winSizeInPoints_;
 	
@@ -493,6 +493,16 @@ CGFloat	__ccContentScaleFactor = 1;
 		s.width = tmp.height;
 		s.height = tmp.width;
 	}
+	return s;
+}
+
+-(CGSize) winSizeInPixels
+{
+	CGSize s = [self winSize];
+	
+	s.width *= CC_CONTENT_SCALE_FACTOR();
+	s.height *= CC_CONTENT_SCALE_FACTOR();
+	
 	return s;
 }
 

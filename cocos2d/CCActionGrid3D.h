@@ -72,20 +72,21 @@
 /** CCLens3D action */
 @interface CCLens3D : CCGrid3DAction
 {
-	CGPoint	position;
-	float	radius;
-	float	lensEffect;
-	CGPoint	lastPosition;
+	CGPoint	position_;
+	CGPoint	positionInPixels_;
+	float	radius_;
+	float	lensEffect_;
+	BOOL	dirty_;
 }
 
 /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
 @property (nonatomic,readwrite) float lensEffect;
-/** lens center position */
+/** lens center position in Points */
 @property (nonatomic,readwrite) CGPoint position;
 
-/** creates the action with center position, radius, a grid size and duration */
+/** creates the action with center position in Points, radius, a grid size and duration */
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d;
-/** initializes the action with center position, radius, a grid size and duration */
+/** initializes the action with center position in Points, radius, a grid size and duration */
 -(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
@@ -95,23 +96,24 @@
 /** CCRipple3D action */
 @interface CCRipple3D : CCGrid3DAction
 {
-	CGPoint	position;
-	float	radius;
-	int		waves;
-	float	amplitude;
-	float	amplitudeRate;
+	CGPoint	position_;
+	CGPoint	positionInPixels_;
+	float	radius_;
+	int		waves_;
+	float	amplitude_;
+	float	amplitudeRate_;
 }
 
-/** center position */
+/** center position in Points */
 @property (nonatomic,readwrite) CGPoint position;
 /** amplitude */
 @property (nonatomic,readwrite) float amplitude;
 /** amplitude rate */
 @property (nonatomic,readwrite) float amplitudeRate;
 
-/** creates the action with radius, number of waves, amplitude, a grid size and duration */
+/** creates the action with a position in points, radius, number of waves, amplitude, a grid size and duration */
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
-/** initializes the action with radius, number of waves, amplitude, a grid size and duration */
+/** initializes the action with a position in points, radius, number of waves, amplitude, a grid size and duration */
 -(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
 
 @end
@@ -184,10 +186,11 @@
 /** CCTwirl action */
 @interface CCTwirl : CCGrid3DAction
 {
-	CGPoint	position;
-	int		twirls;
-	float	amplitude;
-	float	amplitudeRate;
+	CGPoint	position_;
+	CGPoint	positionInPixels_;
+	int		twirls_;
+	float	amplitude_;
+	float	amplitudeRate_;
 }
 
 /** twirl center */
