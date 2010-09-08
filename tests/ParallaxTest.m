@@ -334,6 +334,9 @@ Class restartAction()
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
+	// Retina Display
+	[director setContentScaleFactor:2];
+	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
