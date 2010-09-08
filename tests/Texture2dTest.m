@@ -1563,6 +1563,9 @@ Class restartAction()
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
+	// To use High-Res un comment the following line
+	[director setContentScaleFactor:2];	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
