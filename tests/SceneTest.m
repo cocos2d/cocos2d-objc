@@ -221,6 +221,9 @@
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
+	// Retina Display
+	[director setContentScaleFactor:2];
+	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
