@@ -157,6 +157,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Improved performance in CCArray
 		Simplified CCArray getNSArray code
 		Particles: Uses Quad in ARMv7 and Point in ARMv6. patch.
+		Particles Quad: code easier to read and optimize
+		Several patches that uses unsigned ints instead of signed ints
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
 		Author of the games tab in the cocos2d site
 	* jkrippy:
