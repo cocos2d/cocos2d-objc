@@ -50,7 +50,7 @@
 {
 	if( (self=[super init]) ) {
 	
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSizeInPixels];
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
 		self.isRelativeAnchorPoint = NO;
@@ -262,7 +262,7 @@
 			squareVertices[i] = 0.0f;
 				
 		[self updateColor];
-		[self setContentSize:CGSizeMake(w,h)];
+		[self setContentSize:CGSizeMake(w, h) ];
 	}
 	return self;
 }

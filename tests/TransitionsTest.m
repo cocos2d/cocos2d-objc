@@ -477,6 +477,9 @@ Class restartTransition()
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
+	// retina display
+	[director setContentScaleFactor:2];
+	
 	// glview is a child of the main window
 	[window addSubview:glView];
 	
