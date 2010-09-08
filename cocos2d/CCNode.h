@@ -184,12 +184,13 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleY;
 /** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
+/** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
+@property(nonatomic,readwrite,assign) CGPoint positionInPixels;
 /** A CCCamera object that lets you move the node using a gluLookAt
 */
-
+@property(nonatomic,readonly) CCCamera* camera;
+/** Array of children */
 @property(nonatomic,readonly) CCArray *children;
-
- @property(nonatomic,readonly) CCCamera* camera;
 /** A CCGrid object that is used when applying effects */
 @property(nonatomic,readwrite,retain) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */

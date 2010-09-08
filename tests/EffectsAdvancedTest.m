@@ -384,6 +384,9 @@ Class restartAction()
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
+	// To use High-Res un comment the following line
+	[director setContentScaleFactor:2];
+
 	// glview is a child of the main window
 	[window addSubview:glView];
 	

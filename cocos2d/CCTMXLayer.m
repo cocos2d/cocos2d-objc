@@ -175,7 +175,7 @@
 		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
-		[self setPosition:offset];
+		[self setPositionInPixels:offset];
 		
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
@@ -309,7 +309,7 @@
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
 			tile = [[CCSprite alloc] initWithBatchNode:self rect:rect];
-			[tile setPosition: [self positionAt:pos]];
+			[tile setPositionInPixels: [self positionAt:pos]];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
 			[tile setOpacity:opacity_];
@@ -381,7 +381,7 @@
 	else
 		[reusedTile_ initWithBatchNode:self rect:rect];
 	
-	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	[reusedTile_ setOpacity:opacity_];
@@ -410,7 +410,7 @@
 	else
 		[reusedTile_ initWithBatchNode:self rect:rect];
 	
-	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	[reusedTile_ setOpacity:opacity_];
