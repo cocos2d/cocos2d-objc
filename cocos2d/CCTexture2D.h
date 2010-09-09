@@ -135,8 +135,9 @@ typedef enum {
 /** texture name */
 @property(nonatomic,readonly) GLuint name;
 
-/** content size */
+/** content size in pixels */
 @property(nonatomic,readonly, nonatomic) CGSize contentSize;
+
 /** texture max S */
 @property(nonatomic,readwrite) GLfloat maxS;
 /** texture max T */
