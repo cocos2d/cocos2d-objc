@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 	@"AtlasFastBitmap",
 	@"BitmapFontMultiLine",
 	@"LabelsEmpty",
+	@"LabelRetinaDisplay",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -836,6 +837,40 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark LabelRetinaDisplay
+
+@implementation LabelRetinaDisplay
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// CCLabelBMFont
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"arista16.fnt"];
+		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+				
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing Retina Display BMFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"loading arista16 or arista16-hd";
+}
+
+@end
+
+
+#pragma mark -
 #pragma mark Application Delegate - iPhone
 
 // CLASS IMPLEMENTATIONS
@@ -867,7 +902,7 @@ Class restartAction()
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// To use High-Res un comment the following line
-	[director setContentScaleFactor:2];
+//	[director setContentScaleFactor:2];
 
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
