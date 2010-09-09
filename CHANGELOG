@@ -1,3 +1,6 @@
+version 0.99.5-beta3
+ . [NEW] RetinaDisplay supported automatically
+ 
 version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
  . [NEW] Actions: Using new naming convetion:
