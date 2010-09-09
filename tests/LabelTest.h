@@ -86,3 +86,8 @@
 }
 @end
 
+@interface LabelRetinaDisplay : AtlasDemo
+{
+}
+@end
+
