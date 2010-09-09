@@ -139,6 +139,7 @@ typedef struct _KerningHashElement
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
+	NSLog(@"xxxx: %@", fullpath);
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
 	
 	
@@ -212,6 +213,8 @@ typedef struct _KerningHashElement
 	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
 	
 	NSString *textureAtlasName = [CCFileUtils fullPathFromRelativePath:propertyValue];
+	NSLog(@"xxxx texture: %@", textureAtlasName);
+
 	NSString *relDirPathOfTextureAtlas = [fntFile stringByDeletingLastPathComponent];
 	
 	atlasName = [relDirPathOfTextureAtlas stringByAppendingPathComponent:textureAtlasName];	
