@@ -135,8 +135,8 @@ typedef enum {
 /** texture name */
 @property(nonatomic,readonly) GLuint name;
 
-/** content size in pixels */
-@property(nonatomic,readonly, nonatomic) CGSize contentSize;
+/** returns content size of the texture in pixels */
+@property(nonatomic,readonly, nonatomic) CGSize contentSizeInPixels;
 
 /** texture max S */
 @property(nonatomic,readwrite) GLfloat maxS;
@@ -294,6 +294,18 @@ typedef struct _ccTexParams {
  */
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat;
 @end
+
+
+// XXX DEPRECATED XXX
+@interface CCTexture2D (Deprecated)
+/** returns the content size in pixels.
+ 
+ @deprecated Use contentSizeInPixels instead. Will be removed in 1.0.1
+ */
+-(CGSize) contentSize DEPRECATED_ATTRIBUTE;
+@end
+
+
 
 
 

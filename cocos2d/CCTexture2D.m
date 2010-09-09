@@ -93,9 +93,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Default is: RGBA8888 (32-bit textures)
 static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat_Default;
 
+#pragma mark -
+#pragma mark CCTexture2D - Main
+
 @implementation CCTexture2D
 
-@synthesize contentSize=size_, pixelFormat=format_, pixelsWide=width_, pixelsHigh=height_, name=name_, maxS=maxS_, maxT=maxT_;
+@synthesize contentSizeInPixels=size_, pixelFormat=format_, pixelsWide=width_, pixelsHigh=height_, name=name_, maxS=maxS_, maxT=maxT_;
 @synthesize hasPremultipliedAlpha=hasPremultipliedAlpha_;
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
@@ -154,8 +157,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
 }
-
 @end
+
+#pragma mark -
+#pragma mark CCTexture2D - Image
 
 @implementation CCTexture2D (Image)
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -323,6 +328,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 }
 @end
 
+#pragma mark -
+#pragma mark CCTexture2D - Text
+
 @implementation CCTexture2D (Text)
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
@@ -453,6 +461,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 }
 @end
 
+#pragma mark -
+#pragma mark CCTexture2D - PVRSupport
+
 @implementation CCTexture2D (PVRSupport)
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
@@ -532,6 +543,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 }
 @end
 
+#pragma mark -
+#pragma mark CCTexture2D - Drawing
+
 @implementation CCTexture2D (Drawing)
 
 - (void) drawAtPoint:(CGPoint)point 
@@ -574,6 +588,10 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 @end
 
+
+#pragma mark -
+#pragma mark CCTexture2D - GLFilter
+
 //
 // Use to apply MIN/MAG filter
 //
@@ -611,6 +629,10 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 }
 @end
 
+
+#pragma mark -
+#pragma mark CCTexture2D - Pixel Format
+
 //
 // Texture options for images that contains alpha
 //
@@ -625,3 +647,15 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	return defaultAlphaPixelFormat_;
 }
 @end
+
+#pragma mark -
+#pragma mark CCTexture2D - Deprecated
+
+// XXX DEPRECATED XXX. Remove in v1.0.1
+@implementation CCTexture2D (Deprecated)
+-(CGSize) contentSize
+{
+	return size_;
+}
+@end
+

@@ -282,7 +282,7 @@
 {
 	[texture_ release];
 	texture_ = [texture retain];
-	[self setContentSize: texture.contentSize];
+	[self setContentSizeInPixels: texture.contentSizeInPixels];
 	/* XXX Don't update blending function in Ribbons */
 }
 

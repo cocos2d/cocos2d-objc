@@ -72,7 +72,7 @@
 		self.texture = texture;
 		isTextureFlipped_ = flipped;
 		
-		CGSize texSize = [texture_ contentSize];
+		CGSize texSize = [texture_ contentSizeInPixels];
 		step_.x = texSize.width / gridSize_.x;
 		step_.y = texSize.height / gridSize_.y;
 		
@@ -319,7 +319,7 @@
 {
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
-	float imageH = texture_.contentSize.height;
+	float imageH = texture_.contentSizeInPixels.height;
 	
 	int x, y, i;
 	
@@ -458,7 +458,7 @@
 {
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
-	float imageH = texture_.contentSize.height;
+	float imageH = texture_.contentSizeInPixels.height;
 	
 	int numQuads = gridSize_.x * gridSize_.y;
 	

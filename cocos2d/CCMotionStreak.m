@@ -51,11 +51,11 @@
 		segThreshold_ = seg;
 		width_ = width;
 		lastLocation_ = CGPointZero;
-		ribbon_ = [CCRibbon ribbonWithWidth: width_ image:path length:length color:color fade:fade];
+		ribbon_ = [CCRibbon ribbonWithWidth:width_ image:path length:length color:color fade:fade];
 		[self addChild:ribbon_];
 
 		// update ribbon position
-		[self schedule:@selector(update:) interval:0];
+		[self scheduleUpdate];
 	}
 	return self;
 }
