@@ -847,10 +847,9 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// CCLabelBMFont
-		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"arista16.fnt"];
-		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"konqa32.fnt"];
+		[self addChild:label1];
 		[label1 setPosition: ccp(s.width/2, s.height/2)];
-				
 		
 	}
 	
@@ -902,7 +901,7 @@ Class restartAction()
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// To use High-Res un comment the following line
-//	[director setContentScaleFactor:2];
+	[director setContentScaleFactor:2];
 
 	// Turn on display FPS
 	[director setDisplayFPS:YES];

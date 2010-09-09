@@ -2122,6 +2122,10 @@
 		E0704C2C123821EE009C628B /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
 		E0704C2D123821EE009C628B /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		E0704C2E123821EE009C628B /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
+		E080DE8F1239689400A647EC /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8B1239689400A647EC /* konqa32-hd.fnt */; };
+		E080DE901239689400A647EC /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8C1239689400A647EC /* konqa32-hd.png */; };
+		E080DE911239689400A647EC /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8D1239689400A647EC /* konqa32.fnt */; };
+		E080DE921239689400A647EC /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8E1239689400A647EC /* konqa32.png */; };
 		E0A4A05911F72D79003B9D29 /* test_image_bgra8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */; };
 		E0A4A05A11F72D79003B9D29 /* test_image_pvrtc2bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */; };
 		E0A4A05B11F72D79003B9D29 /* test_image_pvrtc4bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */; };
@@ -2141,10 +2145,6 @@
 		E0B0E71311F8CF9F00414246 /* texture4096x4096.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
-		E0C456641239609000176A0D /* arista16-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C456601239609000176A0D /* arista16-hd.fnt */; };
-		E0C456651239609000176A0D /* arista16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C456611239609000176A0D /* arista16-hd.png */; };
-		E0C456661239609000176A0D /* arista16.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C456621239609000176A0D /* arista16.fnt */; };
-		E0C456671239609000176A0D /* arista16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C456631239609000176A0D /* arista16.png */; };
 		E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
 		E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C54DC911F9CF2700B9E4CB /* ccUtils.h */; };
 		E0C54E4911F9D68500B9E4CB /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
@@ -4005,6 +4005,10 @@
 		E04C640512382F9300A4B3E6 /* b2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-hd.png"; sourceTree = "<group>"; };
 		E0704C29123821EE009C628B /* background1-hd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background1-hd.jpg"; sourceTree = "<group>"; };
 		E0704C2A123821EE009C628B /* background2-hd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background2-hd.jpg"; sourceTree = "<group>"; };
+		E080DE8B1239689400A647EC /* konqa32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-hd.fnt"; sourceTree = "<group>"; };
+		E080DE8C1239689400A647EC /* konqa32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-hd.png"; sourceTree = "<group>"; };
+		E080DE8D1239689400A647EC /* konqa32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = konqa32.fnt; sourceTree = "<group>"; };
+		E080DE8E1239689400A647EC /* konqa32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = konqa32.png; sourceTree = "<group>"; };
 		E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_bgra8888.pvr; sourceTree = "<group>"; };
 		E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc2bpp.pvr; sourceTree = "<group>"; };
 		E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc4bpp.pvr; sourceTree = "<group>"; };
@@ -4024,10 +4028,6 @@
 		E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture4096x4096.png; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
-		E0C456601239609000176A0D /* arista16-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arista16-hd.fnt"; sourceTree = "<group>"; };
-		E0C456611239609000176A0D /* arista16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arista16-hd.png"; sourceTree = "<group>"; };
-		E0C456621239609000176A0D /* arista16.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arista16.fnt; sourceTree = "<group>"; };
-		E0C456631239609000176A0D /* arista16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arista16.png; sourceTree = "<group>"; };
 		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
 		E0C54DC911F9CF2700B9E4CB /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
 		E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire_rgba8888.pvr; sourceTree = "<group>"; };
@@ -5720,10 +5720,10 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
-				E0C456601239609000176A0D /* arista16-hd.fnt */,
-				E0C456611239609000176A0D /* arista16-hd.png */,
-				E0C456621239609000176A0D /* arista16.fnt */,
-				E0C456631239609000176A0D /* arista16.png */,
+				E080DE8B1239689400A647EC /* konqa32-hd.fnt */,
+				E080DE8C1239689400A647EC /* konqa32-hd.png */,
+				E080DE8D1239689400A647EC /* konqa32.fnt */,
+				E080DE8E1239689400A647EC /* konqa32.png */,
 				50E51F3110FA5A08003DFBA3 /* arial16.fnt */,
 				50E51F3210FA5A08003DFBA3 /* arial16.png */,
 				505463971062867800AB7C52 /* bitmapFontTest.fnt */,
@@ -9133,10 +9133,10 @@
 				E04C639F12382F6100A4B3E6 /* r2-hd.png in Resources */,
 				E04C644212382F9400A4B3E6 /* b1-hd.png in Resources */,
 				E04C644312382F9400A4B3E6 /* b2-hd.png in Resources */,
-				E0C456641239609000176A0D /* arista16-hd.fnt in Resources */,
-				E0C456651239609000176A0D /* arista16-hd.png in Resources */,
-				E0C456661239609000176A0D /* arista16.fnt in Resources */,
-				E0C456671239609000176A0D /* arista16.png in Resources */,
+				E080DE8F1239689400A647EC /* konqa32-hd.fnt in Resources */,
+				E080DE901239689400A647EC /* konqa32-hd.png in Resources */,
+				E080DE911239689400A647EC /* konqa32.fnt in Resources */,
+				E080DE921239689400A647EC /* konqa32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
