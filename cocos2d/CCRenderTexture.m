@@ -97,7 +97,7 @@
 	// Save the current matrix
 	glPushMatrix();
 	
-	CGSize texSize = [texture_ contentSize];
+	CGSize texSize = [texture_ contentSizeInPixels];
 
 	// Calculate the adjustment ratios based on the old and new projections
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
@@ -164,8 +164,9 @@
 /* get buffer as UIImage */
 -(UIImage *)getUIImageFromBuffer
 {
-	int tx = texture_.contentSize.width;
-	int ty = texture_.contentSize.height;
+	CGSize s = [texture_ contentSizeInPixels];
+	int tx = s.width;
+	int ty = s.height;
   
 	int bitsPerComponent			= 8;
 	int bitsPerPixel				= 32;

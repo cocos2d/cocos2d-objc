@@ -137,8 +137,10 @@ const char kProgressTextureCoords = 0x1e;
 	CGPoint tmp;
 	ccVertex2F ret;
 	if (sprite_.texture) {
-		tmp = ccp(sprite_.texture.contentSize.width * texCoord.x/sprite_.texture.maxS,
-				   sprite_.texture.contentSize.height * (1 - (texCoord.y/sprite_.texture.maxT)));
+		CCTexture2D *texture = [sprite_ texture];
+		CGSize texSize = [texture contentSizeInPixels];
+		tmp = ccp(texSize.width * texCoord.x/texture.maxS,
+				   texSize.height * (1 - (texCoord.y/texture.maxT)));
 	} else {
 		tmp = CGPointZero;
 	}

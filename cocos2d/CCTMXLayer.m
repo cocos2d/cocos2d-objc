@@ -227,7 +227,7 @@
 -(void) setupTiles
 {	
 	// Optimization: quick hack that sets the image size on the tileset
-	tileset_.imageSize = [textureAtlas_.texture contentSize];
+	tileset_.imageSize = [textureAtlas_.texture contentSizeInPixels];
 	
 	// By default all the tiles are aliased
 	// pros:

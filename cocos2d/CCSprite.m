@@ -202,7 +202,7 @@ struct transformValues_ {
 	NSAssert(texture!=nil, @"Invalid texture for sprite");
 
 	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
+	rect.size = texture.contentSizeInPixels;
 	return [self initWithTexture:texture rect:rect];
 }
 
@@ -213,7 +213,7 @@ struct transformValues_ {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture ) {
 		CGRect rect = CGRectZero;
-		rect.size = texture.contentSize;
+		rect.size = texture.contentSizeInPixels;
 		return [self initWithTexture:texture rect:rect];
 	}
 
@@ -259,7 +259,7 @@ struct transformValues_ {
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSize;
+	CGSize size = texture.contentSizeInPixels;
 	CGRect rect = CGRectMake(0, 0, size.width, size.height );
 	
 	return [self initWithTexture:texture rect:rect];
@@ -272,7 +272,7 @@ struct transformValues_ {
 	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSize;
+	CGSize size = texture.contentSizeInPixels;
 	CGRect rect = CGRectMake(0, 0, size.width, size.height );
 	
 	return [self initWithTexture:texture rect:rect];

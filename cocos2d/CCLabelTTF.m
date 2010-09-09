@@ -99,7 +99,7 @@
 	[self setTexture:tex];
 	[tex release];
 
-	CGSize size = [texture_ contentSize];
+	CGSize size = [texture_ contentSizeInPixels];
 	[self setTextureRect: CGRectMake(0, 0, size.width, size.height)];
 }
 
