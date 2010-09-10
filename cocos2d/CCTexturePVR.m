@@ -180,7 +180,7 @@ typedef struct _PVRTexHeader
 		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
 	if( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height) )
-		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it.");
+		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it. (Guard Malloc crash)");
 	
 	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
@@ -196,7 +196,6 @@ typedef struct _PVRTexHeader
 				hasAlpha_ = FALSE;
 			
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
-			
 			bytes = ((uint8_t *)[data bytes]) + sizeof(PVRTexHeader);
 			
 			// Calculate the data size for each texture level and respect the minimum number of blocks
@@ -230,10 +229,11 @@ typedef struct _PVRTexHeader
 					heightBlocks = 2;
 
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
+				float packetLenght = (dataLength-dataOffset);
+				packetLenght = packetLenght > dataSize ? dataSize : packetLenght;
+				[imageData_ addObject:[NSData dataWithBytes:bytes+dataOffset length:packetLenght]];
 				
-				[imageData_ addObject:[NSData dataWithBytes:bytes+dataOffset length:dataSize]];
-				
-				dataOffset += dataSize;
+				dataOffset += packetLenght;
 				
 				width = MAX(width >> 1, 1);
 				height = MAX(height >> 1, 1);
