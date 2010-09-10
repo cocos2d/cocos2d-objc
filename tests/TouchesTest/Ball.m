@@ -9,7 +9,7 @@
 
 - (float)radius
 {
-	return self.texture.contentSize.width / 2;
+	return self.texture.contentSizeInPixels.width / 2;
 }
 
 + (id)ballWithTexture:(CCTexture2D *)aTexture
