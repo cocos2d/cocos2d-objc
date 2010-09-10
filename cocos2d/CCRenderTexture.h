@@ -65,9 +65,9 @@ enum
 */
 @property (nonatomic,readwrite, assign) CCSprite* sprite;
 
-/** creates a RenderTexture object with width and height */
+/** creates a RenderTexture object with width and height in Points */
 +(id)renderTextureWithWidth:(int)width height:(int)height;
-/** initializes a RenderTexture object with width and height */
+/** initializes a RenderTexture object with width and height in Points */
 -(id)initWithWidth:(int)width height:(int)height;
 -(void)begin;
 -(void)end;

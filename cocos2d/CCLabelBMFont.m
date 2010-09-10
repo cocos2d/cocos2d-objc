@@ -212,6 +212,7 @@ typedef struct _KerningHashElement
 	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
 	
 	NSString *textureAtlasName = [CCFileUtils fullPathFromRelativePath:propertyValue];
+
 	NSString *relDirPathOfTextureAtlas = [fntFile stringByDeletingLastPathComponent];
 	
 	atlasName = [relDirPathOfTextureAtlas stringByAppendingPathComponent:textureAtlasName];	
@@ -512,11 +513,13 @@ typedef struct _KerningHashElement
 	
 	int quantityOfLines = 1;
 
-	unsigned int stringLen = [string_ length];
+	NSUInteger stringLen = [string_ length];
+	if( ! stringLen )
+		return;
 
 	// quantity of lines NEEDS to be calculated before parsing the lines,
 	// since the Y position needs to be calcualted before hand
-	for(unsigned int i=0; i < stringLen-1;i++) {
+	for(NSUInteger i=0; i < stringLen-1;i++) {
 		unichar c = [string_ characterAtIndex:i];
 		if( c=='\n')
 			quantityOfLines++;
@@ -524,8 +527,8 @@ typedef struct _KerningHashElement
 	
 	totalHeight = configuration_->commonHeight * quantityOfLines;
 	nextFontPositionY = -(configuration_->commonHeight - configuration_->commonHeight*quantityOfLines);
-
-	for(unsigned int i=0; i<stringLen; i++) {
+	
+	for(NSUInteger i=0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
 		NSAssert( c < kCCBMFontMaxChars, @"BitmapFontAtlas: character outside bounds");
 		
@@ -559,11 +562,9 @@ typedef struct _KerningHashElement
 		}
 		
 		float yOffset = configuration_->commonHeight - fontDef.yOffset;
-		fontChar.position = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
+		fontChar.positionInPixels = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
 								(float)nextFontPositionY + yOffset - rect.size.height*0.5f );
 
-//		NSLog(@"position.y: %f", fontChar.position.y);
-		
 		// update kerning
 		nextFontPositionX += configuration_->BMFontArray[c].xAdvance + kerningAmount;
 		prev = c;
@@ -585,7 +586,7 @@ typedef struct _KerningHashElement
 	tmpSize.width = longestLine;
 	tmpSize.height = totalHeight;
 
-	[self setContentSize:tmpSize];
+	[self setContentSizeInPixels:tmpSize];
 }
 
 #pragma mark BitmapFontAtlas - CCLabelProtocol protocol

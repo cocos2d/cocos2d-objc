@@ -28,6 +28,7 @@
 #import "CCMenu.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
+#import "ccMacros.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -150,6 +151,9 @@ enum {
 {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	
+	touchLocation.x = touchLocation.x * CC_CONTENT_SCALE_FACTOR();
+	touchLocation.y = touchLocation.y * CC_CONTENT_SCALE_FACTOR();
 	
 	CCMenuItem* item;
 	CCARRAY_FOREACH(children_, item){

@@ -228,7 +228,7 @@ Class restartAction()
 	[director setDisplayFPS:YES];
 	
 	// Hi-Res mode
-//	[director setContentScaleFactor:2];
+	[director setContentScaleFactor:2];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

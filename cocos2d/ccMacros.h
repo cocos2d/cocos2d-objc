@@ -27,6 +27,7 @@
 #import "ccConfig.h"
 
 #import <Foundation/Foundation.h>
+#import <Availability.h>
 
 /**
  @file
@@ -179,3 +180,15 @@ do {															\
 	[__view removeFromSuperview];								\
 	[__director end];											\
 } while(0)
+
+
+/** @def CC_CONTENT_SCALE_FACTOR
+	On Mac it returns 1;
+	On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+*/
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "Platforms/iOS/CCDirectorIOS.h"
+#define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+#define CC_CONTENT_SCALE_FACTOR() 1
+#endif

@@ -27,6 +27,7 @@
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
+#import "Support/ccUtils.h"
 
 @implementation CCRenderTexture
 
@@ -42,15 +43,18 @@
 	self = [super init];
 	if (self)
 	{
+		w *= CC_CONTENT_SCALE_FACTOR();
+		h *= CC_CONTENT_SCALE_FACTOR();
+
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;  
-		// textures must be power of two squared
-		int pow = 8;
-		while (pow < w || pow < h) pow*=2;
-    
-		void *data = malloc((int)(pow * pow * 4));
-		memset(data, 0, (int)(pow * pow * 4));
-		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:pow pixelsHigh:pow contentSize:CGSizeMake(w, h)];
+		// textures must be power of two
+		NSUInteger powW = ccNextPOT(w);
+		NSUInteger powH = ccNextPOT(h);
+		
+		void *data = malloc((int)(powW * powH * 4));
+		memset(data, 0, (int)(powW * powH * 4));
+		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
 		free( data );
     
 		// generate FBO
@@ -93,10 +97,10 @@
 	// Save the current matrix
 	glPushMatrix();
 	
-	CGSize texSize = [texture_ contentSize];
+	CGSize texSize = [texture_ contentSizeInPixels];
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySize];
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
@@ -115,7 +119,7 @@
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	CGSize size = [[CCDirector sharedDirector] displaySize];
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 
 	glColorMask(TRUE, TRUE, TRUE, TRUE);
@@ -160,8 +164,9 @@
 /* get buffer as UIImage */
 -(UIImage *)getUIImageFromBuffer
 {
-	int tx = texture_.contentSize.width;
-	int ty = texture_.contentSize.height;
+	CGSize s = [texture_ contentSizeInPixels];
+	int tx = s.width;
+	int ty = s.height;
   
 	int bitsPerComponent			= 8;
 	int bitsPerPixel				= 32;

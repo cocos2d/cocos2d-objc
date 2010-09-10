@@ -186,6 +186,20 @@
  */
 #define CC_TEXTURE_NPOT_SUPPORT 0
 
+/** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
+ It's the suffix that will be appended to the files in order to load "retina display" images.
+
+ On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
+ If the file doesn't exist it will use the non-retina display image.
+ 
+ Platforms: Only used on Retina Display devices like iPhone 4.
+ 
+ @since v0.99.5
+ */
+ 
+#define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
+
+
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.

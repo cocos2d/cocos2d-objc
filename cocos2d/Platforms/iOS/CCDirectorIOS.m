@@ -51,6 +51,12 @@
 #import "../../Support/CCProfiling.h"
 #endif
 
+
+#pragma mark -
+#pragma mark Director - global variables (optimization)
+
+CGFloat	__ccContentScaleFactor = 1;
+
 #pragma mark -
 #pragma mark Director iOS
 
@@ -127,8 +133,7 @@
 		// portrait mode default
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 		
-		contentScaleFactor_ = 1;
-		screenSize_ = surfaceSize_ = CGSizeZero;
+		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
 		
 		// running thread is main thread on iOS
@@ -301,8 +306,8 @@
 		[openGLView_ setFrame:rect];
 	}
 	
-	screenSize_ = rect.size;
-	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height * contentScaleFactor_);
+	winSizeInPoints_ = rect.size;
+	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height * __ccContentScaleFactor);
 	
 	
 	// set the touch delegate of the glview to self
@@ -348,9 +353,9 @@
 		[super setOpenGLView:view];
 
 		// set size
-		surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
+		winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 		
-		if( contentScaleFactor_ != 1 )
+		if( __ccContentScaleFactor != 1 )
 			[self updateContentScaleFactor];
 		
 		CCTouchDispatcher *touchDispatcher = [CCTouchDispatcher sharedDispatcher];
@@ -363,15 +368,15 @@
 
 -(CGFloat) contentScaleFactor
 {
-	return contentScaleFactor_;
+	return __ccContentScaleFactor;
 }
 
 -(void) setContentScaleFactor:(CGFloat)scaleFactor
 {
-	if( scaleFactor != contentScaleFactor_ ) {
+	if( scaleFactor != __ccContentScaleFactor ) {
 		
-		contentScaleFactor_ = scaleFactor;
-		surfaceSize_ = CGSizeMake( screenSize_.width * scaleFactor, screenSize_.height * scaleFactor );
+		__ccContentScaleFactor = scaleFactor;
+		winSizeInPixels_ = CGSizeMake( winSizeInPoints_.width * scaleFactor, winSizeInPoints_.height * scaleFactor );
 		
 		if( openGLView_ )
 			[self updateContentScaleFactor];
@@ -392,7 +397,7 @@
 		
 		SEL selector = @selector(setContentScaleFactor:);
 		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
-		method(openGLView_,selector, contentScaleFactor_);
+		method(openGLView_,selector, __ccContentScaleFactor);
 		
 		//		[openGLView_ setContentScaleFactor: contentScaleFactor_];
 		
@@ -403,9 +408,9 @@
 		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");
 		/* on pre-4.0 iOS, use bounds/transform */
 		openGLView_.bounds = CGRectMake(0, 0,
-										openGLView_.bounds.size.width * contentScaleFactor_,
-										openGLView_.bounds.size.height * contentScaleFactor_);
-		openGLView_.transform = CGAffineTransformScale(openGLView_.transform, 1 / contentScaleFactor_, 1 / contentScaleFactor_); 
+										openGLView_.bounds.size.width * __ccContentScaleFactor,
+										openGLView_.bounds.size.height * __ccContentScaleFactor);
+		openGLView_.transform = CGAffineTransformScale(openGLView_.transform, 1 / __ccContentScaleFactor, 1 / __ccContentScaleFactor); 
 		
 		isContentScaleSupported_ = NO;
 	}
@@ -414,8 +419,8 @@
 // overriden, don't call super
 -(void) reshapeProjection:(CGSize)size
 {
-	screenSize_ = [openGLView_ bounds].size;
-	surfaceSize_ = CGSizeMake(screenSize_.width * contentScaleFactor_, screenSize_.height *contentScaleFactor_);
+	winSizeInPoints_ = [openGLView_ bounds].size;
+	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 	
 	[self setProjection:projection_];
 }
@@ -424,7 +429,7 @@
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	CGSize s = screenSize_;
+	CGSize s = winSizeInPoints_;
 	float newY = s.height - uiPoint.y;
 	float newX = s.width - uiPoint.x;
 	
@@ -446,14 +451,14 @@
 			break;
 	}
 	
-	if( contentScaleFactor_ != 1 && isContentScaleSupported_ )
-		ret = ccpMult(ret, contentScaleFactor_);
+//	if( __ccContentScaleFactor != 1 && isContentScaleSupported_ )
+//		ret = ccpMult(ret, __ccContentScaleFactor);
 	return ret;
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	CGSize winSize = surfaceSize_;
+	CGSize winSize = winSizeInPoints_;
 	int oppositeX = winSize.width - glPoint.x;
 	int oppositeY = winSize.height - glPoint.y;
 	CGPoint uiPoint = CGPointZero;
@@ -473,14 +478,14 @@
 			break;
 	}
 	
-	uiPoint = ccpMult(uiPoint, 1/contentScaleFactor_);
+	uiPoint = ccpMult(uiPoint, 1/__ccContentScaleFactor);
 	return uiPoint;
 }
 
 // get the current size of the glview
--(CGSize)winSize
+-(CGSize) winSize
 {
-	CGSize s = surfaceSize_;
+	CGSize s = winSizeInPoints_;
 	
 	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
 		// swap x,y in landscape mode
@@ -488,6 +493,16 @@
 		s.width = tmp.height;
 		s.height = tmp.width;
 	}
+	return s;
+}
+
+-(CGSize) winSizeInPixels
+{
+	CGSize s = [self winSize];
+	
+	s.width *= CC_CONTENT_SCALE_FACTOR();
+	s.height *= CC_CONTENT_SCALE_FACTOR();
+	
 	return s;
 }
 
@@ -522,7 +537,7 @@
 
 -(void) applyOrientation
 {	
-	CGSize s = surfaceSize_;
+	CGSize s = winSizeInPixels_;
 	float w = s.width / 2;
 	float h = s.height / 2;
 	

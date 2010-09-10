@@ -33,7 +33,7 @@
 /** Base class for Grid actions */
 @interface CCGridAction : CCActionInterval
 {
-	ccGridSize gridSize;
+	ccGridSize gridSize_;
 }
 
 /** size of the grid */

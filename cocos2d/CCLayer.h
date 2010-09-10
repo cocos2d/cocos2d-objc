@@ -145,21 +145,21 @@
 	ccBlendFunc	blendFunc_;
 }
 
-/** creates a CCLayer with color, width and height */
+/** creates a CCLayer with color, width and height in Points*/
 + (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** creates a CCLayer with color. Width and height are the window size. */
 + (id) layerWithColor: (ccColor4B)color;
 
-/** initializes a CCLayer with color, width and height */
+/** initializes a CCLayer with color, width and height in Points */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** initializes a CCLayer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
 
-/** change width */
+/** change width in Points */
 -(void) changeWidth: (GLfloat)w;
-/** change height */
+/** change height in Points */
 -(void) changeHeight: (GLfloat)h;
-/** change width and height
+/** change width and height in Points
  @since v0.8
  */
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;

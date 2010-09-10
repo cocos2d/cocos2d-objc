@@ -91,7 +91,7 @@
 
 -(void) calculateMaxItems
 {
-	CGSize s = [[textureAtlas_ texture] contentSize];
+	CGSize s = [[textureAtlas_ texture] contentSizeInPixels];
 	itemsPerColumn_ = s.height / itemHeight_;
 	itemsPerRow_ = s.width / itemWidth_;
 }
