@@ -1,4 +1,4 @@
-version 0.99.5-beta3
+version 0.99.5-beta3 xx-Sep-2010
  . [NEW] RetinaDisplay supported automatically:
 	Director: winSize returns size in Points. Use winSizeInPixels for pixels
 	Node: position is in Points. Use positionInPixels for pixles
@@ -9,7 +9,7 @@ version 0.99.5-beta3
 		TMXTileMap, Sprite, Node, ParticleSystem, LabelBMFont, LabelTTF, Menu, MenuItem,
 		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions.
 	The nodes that weren't updated is because there was no need to update them.
-	
+ . [FIX] Templates: Default SDK is 4.1
  
 version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
