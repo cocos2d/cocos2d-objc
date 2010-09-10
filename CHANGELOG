@@ -10,6 +10,8 @@ version 0.99.5-beta3 xx-Sep-2010
 		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions.
 	The nodes that weren't updated is because there was no need to update them.
  . [FIX] Templates: Default SDK is 4.1
+ . [FIX] Texture2d: Fixed possible crash in NPOT PVR images
+ . [FIX] Texture2d: Optimized loading time of PVR images
  
 version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
