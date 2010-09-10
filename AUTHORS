@@ -239,6 +239,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Particles: also work with vertex array list (compile time option). patch.
 		Mac Port: Ported CCLabelTTF to Mac
 		MenuItems are disabled at exit time (patch)
+		Fixed possible crash with NPOT PVR images
+		Optimized the loading time of PVR images
 	* Marco Tillemans:
 		RenderTexture renders images with correct blend function. patch.
 	* marcu.catalin:
