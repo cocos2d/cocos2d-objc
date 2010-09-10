@@ -1,5 +1,15 @@
 version 0.99.5-beta3
- . [NEW] RetinaDisplay supported automatically
+ . [NEW] RetinaDisplay supported automatically:
+	Director: winSize returns size in Points. Use winSizeInPixels for pixels
+	Node: position is in Points. Use positionInPixels for pixles
+	Node: contentSize is in Points. Use contentSizeInPixels for pixels
+	Texture2d: contentSize is deprecated. Use contentSizeInPixels
+	FileUtils: Will try to load the file with the suffix "-hd" if RetinaDisplay is enabled
+	The following objects were enhanced to work with points:
+		TMXTileMap, Sprite, Node, ParticleSystem, LabelBMFont, LabelTTF, Menu, MenuItem,
+		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions.
+	The nodes that weren't updated is because there was no need to update them.
+	
  
 version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
