@@ -36,11 +36,12 @@
  A convience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
  @since v0.99.4
  */
-#define CCARRAY_FOREACH(__array__, __object__)													\
-	if (__array__)																				\
-	for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->data->num;		\
-			arr < end && ((__object__ = *arr) != nil || true);									\
-			arr++)
+
+#define CCARRAY_FOREACH(__array__, __object__)												\
+if (__array__)																				\
+for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->data->num;		\
+		arr < end && ((__object__ = *arr) != nil || true);									\
+		arr++)
 
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding, NSCopying>
 {
