@@ -185,7 +185,7 @@ typedef struct _PVRTexHeader
 	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
 			
-			[imageData_ removeAllObjects];
+			ccArrayRemoveAllObjects(imageData_);
 					
 			width_ = width = CFSwapInt32LittleToHost(header->width);
 			height_ = height = CFSwapInt32LittleToHost(header->height);
@@ -231,7 +231,7 @@ typedef struct _PVRTexHeader
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
 				float packetLenght = (dataLength-dataOffset);
 				packetLenght = packetLenght > dataSize ? dataSize : packetLenght;
-				[imageData_ addObject:[NSData dataWithBytes:bytes+dataOffset length:packetLenght]];
+				ccArrayAppendObjectWithResize(imageData_, [NSData dataWithBytes:bytes+dataOffset length:packetLenght]);
 				
 				dataOffset += packetLenght;
 				
@@ -258,7 +258,7 @@ typedef struct _PVRTexHeader
 	NSData *data;
 	GLenum err;
 	
-	if ([imageData_ count] > 0)
+	if (imageData_->num > 0)
 	{
 		if (name_ != 0)
 			glDeleteTextures(1, &name_);
@@ -267,7 +267,7 @@ typedef struct _PVRTexHeader
 		glBindTexture(GL_TEXTURE_2D, name_);
 	}
 
-	for (NSUInteger i=0; i < [imageData_ count]; i++)
+	for (NSUInteger i=0; i < imageData_->num; i++)
 	{
 		GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
 		GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
@@ -279,7 +279,7 @@ typedef struct _PVRTexHeader
 			return NO;
 		}			
 		
-		data = [imageData_ objectAtIndex:i];
+		data = imageData_->arr[i];
 		if( compressed)
 			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, [data length], [data bytes]);
 		else 
@@ -297,7 +297,7 @@ typedef struct _PVRTexHeader
 		height = MAX(height >> 1, 1);
 	}
 	
-	[imageData_ removeAllObjects];
+	ccArrayRemoveAllObjects(imageData_);
 	
 	return TRUE;
 }
@@ -308,8 +308,7 @@ typedef struct _PVRTexHeader
 	if((self = [super init]))
 	{
 		NSData *data = [NSData dataWithContentsOfFile:path];
-		
-		imageData_ = [[NSMutableArray alloc] initWithCapacity:10];
+		imageData_ = ccArrayNew(10);
 		
 		name_ = 0;
 		width_ = height_ = 0;
@@ -361,7 +360,7 @@ typedef struct _PVRTexHeader
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
-	[imageData_ release];
+	ccArrayFree(imageData_);
 	
 	if (name_ != 0 && ! retainName_ )
 		glDeleteTextures(1, &name_);
