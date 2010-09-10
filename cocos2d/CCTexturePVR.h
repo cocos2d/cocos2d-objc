@@ -50,6 +50,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/CCGL.h"
 #import "CCTextureCache.h"
 #import "CCTexture2D.h"
+#import "ccCArray.h"
 
 #pragma mark -
 #pragma mark CCTextureCache PVR extension
@@ -63,7 +64,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @interface CCTexturePVR : NSObject
 {
-	NSMutableArray *imageData_;
+	ccArray *imageData_;
+	
 	
 	unsigned int	tableFormatIndex_;
 	uint32_t width_, height_;
