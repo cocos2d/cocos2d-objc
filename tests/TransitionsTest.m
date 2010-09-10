@@ -477,8 +477,9 @@ Class restartTransition()
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
-	// retina display
-	[director setContentScaleFactor:2];
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if ([UIScreen instancesRespondToSelector:@selector(scale)])
+		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
 	
 	// glview is a child of the main window
 	[window addSubview:glView];

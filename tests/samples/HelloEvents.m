@@ -168,6 +168,10 @@ enum {
 	EAGLView *glView = [director openGLView];
 	[glView setMultipleTouchEnabled:YES];	
 	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if ([UIScreen instancesRespondToSelector:@selector(scale)])
+		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
+	
 	// Create and initialize parent and empty Scene
 	CCScene *scene = [CCScene node];
 
