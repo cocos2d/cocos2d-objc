@@ -143,9 +143,9 @@ enum {
 
 -(CGRect) rect
 {
-	return CGRectMake( self.position.x - contentSize_.width*anchorPoint_.x, self.position.y-
-					  contentSize_.height*anchorPoint_.y,
-					  contentSize_.width, contentSize_.height);
+	return CGRectMake( position_.x - contentSizeInPixels_.width*anchorPoint_.x,
+					  position_.y - contentSizeInPixels_.height*anchorPoint_.y,
+					  contentSizeInPixels_.width, contentSizeInPixels_.height);
 }
 @end
 

@@ -104,7 +104,7 @@
 {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
+	rect.size = texture.contentSizeInPixels;
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
 	[frames_ addObject:frame];
 }

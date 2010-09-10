@@ -72,7 +72,7 @@
 		self.texture = texture;
 		isTextureFlipped_ = flipped;
 		
-		CGSize texSize = [texture_ contentSize];
+		CGSize texSize = [texture_ contentSizeInPixels];
 		step_.x = texSize.width / gridSize_.x;
 		step_.y = texSize.height / gridSize_.y;
 		
@@ -87,7 +87,7 @@
 -(id)initWithSize:(ccGridSize)gSize
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	CGSize s = [director winSize];
+	CGSize s = [director winSizeInPixels];
 	
 	unsigned int POTWide = ccNextPOT(s.width);
 	unsigned int POTHigh = ccNextPOT(s.height);
@@ -174,7 +174,7 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	CGSize winSize = [director displaySize];
+	CGSize winSize = [director displaySizeInPixels];
 	float w = winSize.width / 2;
 	float h = winSize.height / 2;
 
@@ -204,7 +204,7 @@
 
 -(void)set2DProjection
 {
-	CGSize	winSize = [[CCDirector sharedDirector] winSize];
+	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
 	
 	glLoadIdentity();
 	glViewport(0, 0, winSize.width, winSize.height);
@@ -217,7 +217,9 @@
 // This routine can be merged with Director
 -(void)set3DProjection
 {
-	CGSize	winSize = [[CCDirector sharedDirector] displaySize];
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	CGSize	winSize = [director displaySizeInPixels];
 	
 	glViewport(0, 0, winSize.width, winSize.height);
 	glMatrixMode(GL_PROJECTION);
@@ -226,7 +228,7 @@
 	
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
-	gluLookAt( winSize.width/2, winSize.height/2, [[CCDirector sharedDirector] getZEye],
+	gluLookAt( winSize.width/2, winSize.height/2, [director getZEye],
 			  winSize.width/2, winSize.height/2, 0,
 			  0.0f, 1.0f, 0.0f
 			  );
@@ -317,7 +319,7 @@
 {
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
-	float imageH = texture_.contentSize.height;
+	float imageH = texture_.contentSizeInPixels.height;
 	
 	int x, y, i;
 	
@@ -456,7 +458,7 @@
 {
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
-	float imageH = texture_.contentSize.height;
+	float imageH = texture_.contentSizeInPixels.height;
 	
 	int numQuads = gridSize_.x * gridSize_.y;
 	

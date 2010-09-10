@@ -433,6 +433,10 @@ enum {
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
+	
+	// Retina Display ON
+	[director setContentScaleFactor:2];
+	
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	

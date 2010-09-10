@@ -119,11 +119,11 @@ and when to execute the Scenes.
 	/* projection used */
 	ccDirectorProjection projection_;
 	
-	/* screen, different than surface size */
-	CGSize	screenSize_;
-
-	/* screen, different than surface size */
-	CGSize	surfaceSize_;
+	/* window size in points */
+	CGSize	winSizeInPoints_;
+	
+	/* window size in pixels */
+	CGSize	winSizeInPixels_;
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
@@ -170,10 +170,20 @@ and when to execute the Scenes.
 
 // Window size
 
-/** returns the size of the OpenGL view in pixels, according to the landspace */
+/** returns the size of the OpenGL view in points.
+ It takes into account any possible rotation (device orientation) of the window
+ */
 - (CGSize) winSize;
-/** returns the display size of the OpenGL view in pixels */
--(CGSize) displaySize;
+
+/** returns the size of the OpenGL view in pixels.
+ It takes into account any possible rotation (device orientation) of the window.
+ On Mac winSize and winSizeInPixels return the same value.
+ */
+- (CGSize) winSizeInPixels;
+/** returns the display size of the OpenGL view in pixels.
+ It doesn't take into account any possible rotation of the window.
+ */
+-(CGSize) displaySizeInPixels;
 /** changes the projection size */
 -(void) reshapeProjection:(CGSize)newWindowSize;
 

@@ -152,7 +152,7 @@
 		// position
 		float x = [[dictionary valueForKey:@"sourcePositionx"] floatValue];
 		float y = [[dictionary valueForKey:@"sourcePositiony"] floatValue];
-		position_ = ccp(x,y);
+		self.position = ccp(x,y);
 		posVar.x = [[dictionary valueForKey:@"sourcePositionVariancex"] floatValue];
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
 				
@@ -333,7 +333,9 @@
 
 	// position
 	particle->pos.x = centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1();
+	particle->pos.x *= CC_CONTENT_SCALE_FACTOR();
 	particle->pos.y = centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1();
+	particle->pos.y *= CC_CONTENT_SCALE_FACTOR();
 	
 	// Color
 	ccColor4F start;
@@ -356,6 +358,7 @@
 	
 	// size
 	float startS = MAX(0, startSize + startSizeVar * CCRANDOM_MINUS1_1() ); // no negative size
+	startS *= CC_CONTENT_SCALE_FACTOR();
 	
 	particle->size = startS;
 	if( endSize == kCCParticleStartSizeEqualToEndSize )
@@ -363,6 +366,7 @@
 	else {
 		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
 		endS = MAX(0, endS);
+		endS *= CC_CONTENT_SCALE_FACTOR();
 		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}
 	
@@ -373,8 +377,10 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 	
 	// position
-	if( positionType_ == kCCPositionTypeFree )
-		particle->startPos = [self convertToWorldSpace:CGPointZero];
+	if( positionType_ == kCCPositionTypeFree ) {
+		CGPoint p = [self convertToWorldSpace:CGPointZero];
+		particle->startPos = ccp( p.x * CC_CONTENT_SCALE_FACTOR(), p.y * CC_CONTENT_SCALE_FACTOR() );
+	}
 	
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );	
@@ -387,15 +393,19 @@
 		v.y = sinf( a );
 		v.x = cosf( a );
 		float s = mode.A.speed + mode.A.speedVar * CCRANDOM_MINUS1_1();
+		s *= CC_CONTENT_SCALE_FACTOR();
 		
 		// direction
 		particle->mode.A.dir = ccpMult( v, s );
 		
 		// radial accel
 		particle->mode.A.radialAccel = mode.A.radialAccel + mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
+		particle->mode.A.radialAccel *= CC_CONTENT_SCALE_FACTOR();
 		
 		// tangential accel
 		particle->mode.A.tangentialAccel = mode.A.tangentialAccel + mode.A.tangentialAccelVar * CCRANDOM_MINUS1_1();
+		particle->mode.A.tangentialAccel *= CC_CONTENT_SCALE_FACTOR();
+
 	}
 	
 	// Mode Radius: B
@@ -404,6 +414,9 @@
 		float startRadius = mode.B.startRadius + mode.B.startRadiusVar * CCRANDOM_MINUS1_1();
 		float endRadius = mode.B.endRadius + mode.B.endRadiusVar * CCRANDOM_MINUS1_1();
 
+		startRadius *= CC_CONTENT_SCALE_FACTOR();
+		endRadius *= CC_CONTENT_SCALE_FACTOR();
+		
 		particle->mode.B.radius = startRadius;
 
 		if( mode.B.endRadius == kCCParticleStartRadiusEqualToEndRadius )
@@ -413,7 +426,6 @@
 	
 		particle->mode.B.angle = a;
 		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
-		
 	}	
 }
 
@@ -464,8 +476,11 @@
 	
 	
 	CGPoint currentPosition = CGPointZero;
-	if( positionType_ == kCCPositionTypeFree )
+	if( positionType_ == kCCPositionTypeFree ) {
 		currentPosition = [self convertToWorldSpace:CGPointZero];
+		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
+		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
+	}
 	
 	while( particleIdx < particleCount )
 	{

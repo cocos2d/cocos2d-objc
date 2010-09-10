@@ -392,7 +392,7 @@ Class restartAction()
 //	[director setProjection:kCCDirectorProjection2D];
 	
 	// To use High-Res un comment the following line
-//	[director setContentScaleFactor:2];	
+	[director setContentScaleFactor:2];	
 	
 	// make the OpenGLView a child of the main window
 	[window addSubview:glView];
