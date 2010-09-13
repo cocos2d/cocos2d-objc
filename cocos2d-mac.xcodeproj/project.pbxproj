@@ -3037,7 +3037,6 @@
 		E036A79C121B5C720037C5C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E0505401122D5AE6005B74CB /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0505403122D5AE6005B74CB /* cocos2d_mac-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cocos2d_mac-Info copy.plist"; path = "Resources-Mac/cocos2d_mac-Info copy.plist"; sourceTree = "<group>"; };
 		E0505404122D5B58005B74CB /* RenderTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTextureTest.h; path = tests/RenderTextureTest.h; sourceTree = "<group>"; };
 		E0505405122D5B58005B74CB /* RenderTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderTextureTest.m; path = tests/RenderTextureTest.m; sourceTree = "<group>"; };
 		E076E4471225C4BE00DE0DA2 /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3719,7 +3718,6 @@
 				E076E78E1225EDD000DE0DA2 /* cocos2d-artwork */,
 				E076E7A11225EDD000DE0DA2 /* Fonts */,
 				E076E7B71225EDD000DE0DA2 /* Images */,
-				E0505403122D5AE6005B74CB /* cocos2d_mac-Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

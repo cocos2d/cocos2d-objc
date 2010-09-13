@@ -18,6 +18,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -784,9 +785,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"grossini_pvr_rgba4444.pvr"];
-	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
-	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
 }
 
 -(NSString *) title
