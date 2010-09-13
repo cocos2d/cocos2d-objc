@@ -49,7 +49,7 @@
 
 // Easy integration	
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
-__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+__object__=__array__->arr[0]; for(NSUInteger i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
 
 typedef struct ccArray {
@@ -88,7 +88,6 @@ static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
 	arr->arr = (id*) realloc( arr->arr, arr->max * sizeof(id) );
-	NSLog(@"\t ccArray realloc: %i", arr->max * sizeof(id) );
 }
 
 /** Increases array capacity such that max >= num + extra. */
