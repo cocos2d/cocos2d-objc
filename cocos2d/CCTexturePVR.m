@@ -179,8 +179,10 @@ typedef struct _PVRTexHeader
 	if( flipped )
 		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
-	if( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height) )
-		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it. (Guard Malloc crash)");
+	if( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height) ) {
+		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it.");
+		return NO;
+	}
 	
 	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
@@ -267,6 +269,7 @@ typedef struct _PVRTexHeader
 		glBindTexture(GL_TEXTURE_2D, name_);
 	}
 
+	// Generate textures with mipmaps
 	for (NSUInteger i=0; i < imageData_->num; i++)
 	{
 		GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
@@ -280,6 +283,9 @@ typedef struct _PVRTexHeader
 		}			
 		
 		data = imageData_->arr[i];
+		
+		NSLog(@"len: %d  %d", [data length], width * height );
+
 		if( compressed)
 			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, [data length], [data bytes]);
 		else 
