@@ -143,11 +143,12 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUInteger index)
 {
 	NSCAssert(index<=arr->num, @"Invalid index. Out of bounds");
-
+	
 	ccArrayEnsureExtraCapacity(arr, 1);
 	
-	for( NSUInteger i = arr->num; index < i; i--)
-		arr->arr[i] = arr->arr[i - 1];
+	int remaining = arr->num - index;
+	if( remaining > 0)
+		memmove(arr->arr[index+1], arr->arr[index], sizeof(id) * remaining );
 	
 	arr->arr[index] = [object retain];
 	arr->num++;
@@ -165,9 +166,11 @@ static inline void ccArrayRemoveAllObjects(ccArray *arr)
 static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 {
 	[arr->arr[index] release];
+	arr->num--;
 	
-	for( NSUInteger last = --arr->num; index < last; index++)
-		arr->arr[index] = arr->arr[index + 1];
+	int remaining = arr->num - index;
+	if(remaining>0)
+		memmove(arr->arr[index], arr->arr[index+1], remaining * sizeof(id));
 }
 
 /** Removes object at specified index and fills the gap with the last object,
