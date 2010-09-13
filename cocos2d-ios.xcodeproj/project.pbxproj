@@ -2203,6 +2203,9 @@
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
+		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
+		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
+		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4098,6 +4101,9 @@
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
+		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
+		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
+		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5744,7 +5750,10 @@
 			isa = PBXGroup;
 			children = (
 				505464301062886600AB7C52 /* fps_images.png */,
+				E0FDACE6123DAC8300F25BB4 /* larabie-16.png */,
+				E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */,
 				505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */,
+				E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */,
 			);
 			name = "LabelAtlas fonts";
 			sourceTree = "<group>";
@@ -9137,6 +9146,9 @@
 				E080DE901239689400A647EC /* konqa32-hd.png in Resources */,
 				E080DE911239689400A647EC /* konqa32.fnt in Resources */,
 				E080DE921239689400A647EC /* konqa32.png in Resources */,
+				E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */,
+				E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */,
+				E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

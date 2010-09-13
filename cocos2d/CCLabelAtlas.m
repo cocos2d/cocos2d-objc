@@ -80,7 +80,7 @@
 	float textureWide = [texture pixelsWide];
 	float textureHigh = [texture pixelsHigh];
 
-	for( int i=0; i<n; i++) {
+	for( NSUInteger i=0; i<n; i++) {
 		unsigned char a = s[i] - mapStartChar;
 		float row = (a % itemsPerRow_);
 		float col = (a / itemsPerRow_);
@@ -138,7 +138,7 @@
 	CGSize s;
 	s.width = [string_ length] * itemWidth_;
 	s.height = itemHeight_;
-	[self setContentSize:s];
+	[self setContentSizeInPixels:s];
 }
 
 #pragma mark CCLabelAtlas - draw

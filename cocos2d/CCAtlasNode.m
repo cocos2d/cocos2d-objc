@@ -49,8 +49,8 @@
 {
 	if( (self=[super init]) ) {
 	
-		itemWidth_ = w;
-		itemHeight_ = h;
+		itemWidth_ = w * CC_CONTENT_SCALE_FACTOR();
+		itemHeight_ = h * CC_CONTENT_SCALE_FACTOR();
 
 		opacity_ = 255;
 		color_ = colorUnmodified_ = ccWHITE;

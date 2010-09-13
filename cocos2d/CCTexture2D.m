@@ -157,6 +157,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
 }
+
+-(CGSize) contentSize
+{
+	CGSize ret;
+	ret.width = size_.width / CC_CONTENT_SCALE_FACTOR();
+	ret.height = size_.height / CC_CONTENT_SCALE_FACTOR();
+	
+	return ret;
+}
 @end
 
 #pragma mark -
@@ -645,17 +654,6 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixelFormat_;
-}
-@end
-
-#pragma mark -
-#pragma mark CCTexture2D - Deprecated
-
-// XXX DEPRECATED XXX. Remove in v1.0.1
-@implementation CCTexture2D (Deprecated)
--(CGSize) contentSize
-{
-	return size_;
 }
 @end
 

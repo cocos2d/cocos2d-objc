@@ -86,7 +86,12 @@
 }
 @end
 
-@interface LabelRetinaDisplay : AtlasDemo
+@interface LabelBMFontHD : AtlasDemo
+{
+}
+@end
+
+@interface LabelAtlasHD : AtlasDemo
 {
 }
 @end
