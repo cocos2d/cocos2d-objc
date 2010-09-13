@@ -21,7 +21,8 @@ static NSString *transitions[] = {
 	@"AtlasFastBitmap",
 	@"BitmapFontMultiLine",
 	@"LabelsEmpty",
-	@"LabelRetinaDisplay",
+	@"LabelBMFontHD",
+	@"LabelAtlasHD",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -837,9 +838,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark LabelRetinaDisplay
+#pragma mark LabelBMFontHD
 
-@implementation LabelRetinaDisplay
+@implementation LabelBMFontHD
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -867,6 +868,41 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark -
+#pragma mark LabelAtlasHD
+
+@implementation LabelAtlasHD
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// CCLabelBMFont
+		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"TESTING RETINA DISPLAY" charMapFile:@"larabie-16.png" itemWidth:10 itemHeight:20 startCharMap:'A'];
+		label1.anchorPoint = ccp(0.5f, 0.5f);
+		
+		[self addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"LabelAtlas with Retina Display";
+}
+
+-(NSString *) subtitle
+{
+	return @"loading larabie-16 / larabie-16-hd";
+}
+
+@end
+
 
 
 #pragma mark -

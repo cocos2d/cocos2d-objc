@@ -32,7 +32,6 @@
  *
  */
 
-#import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 

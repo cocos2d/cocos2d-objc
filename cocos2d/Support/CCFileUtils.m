@@ -50,7 +50,7 @@ static NSFileManager *__localFileManager=nil;
 		if( [__localFileManager fileExistsAtPath:retinaName] )
 			return retinaName;
 
-		CCLOGINFO(@"cocos2d: retina display file not found: %@", retinaName);
+		CCLOG(@"cocos2d: Waring HD file not found: %@", [retinaName lastPathComponent] );
 	}
 	
 	return path;

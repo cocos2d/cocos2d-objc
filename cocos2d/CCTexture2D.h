@@ -144,6 +144,9 @@ typedef enum {
 @property(nonatomic,readwrite) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
+
+/** returns the content size of the texture in points */
+-(CGSize) contentSize;
 @end
 
 /**
@@ -293,16 +296,6 @@ typedef struct _ccTexParams {
  @since v0.8
  */
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat;
-@end
-
-
-// XXX DEPRECATED XXX
-@interface CCTexture2D (Deprecated)
-/** returns the content size in pixels.
- 
- @deprecated Use contentSizeInPixels instead. Will be removed in 1.0.1
- */
--(CGSize) contentSize DEPRECATED_ATTRIBUTE;
 @end
 
 

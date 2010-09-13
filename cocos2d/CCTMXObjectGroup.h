@@ -28,7 +28,6 @@
  *
  */
 
-#import "CCAtlasNode.h"
 #import "CCSpriteSheet.h"
 
 
