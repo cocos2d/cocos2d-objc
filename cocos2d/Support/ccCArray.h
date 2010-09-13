@@ -49,7 +49,7 @@
 
 // Easy integration	
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
-__object__=__array__->arr[0]; for(NSUInteger i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
 
 typedef struct ccArray {
@@ -88,6 +88,7 @@ static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
 	arr->arr = (id*) realloc( arr->arr, arr->max * sizeof(id) );
+	NSLog(@"\t ccArray realloc: %i", arr->max * sizeof(id) );
 }
 
 /** Increases array capacity such that max >= num + extra. */
@@ -148,7 +149,7 @@ static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUIntege
 	
 	int remaining = arr->num - index;
 	if( remaining > 0)
-		memmove(arr->arr[index+1], arr->arr[index], sizeof(id) * remaining );
+		memmove(&arr->arr[index+1], &arr->arr[index], sizeof(id) * remaining );
 	
 	arr->arr[index] = [object retain];
 	arr->num++;
@@ -170,7 +171,7 @@ static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 	
 	int remaining = arr->num - index;
 	if(remaining>0)
-		memmove(arr->arr[index], arr->arr[index+1], remaining * sizeof(id));
+		memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(id));
 }
 
 /** Removes object at specified index and fills the gap with the last object,
@@ -300,7 +301,7 @@ static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUIn
 {
 	assert( index < arr->max );
 	
-	NSInteger remaining = arr->num - index;
+	int remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved
 	if( remaining > 0) {
