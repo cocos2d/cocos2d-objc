@@ -241,6 +241,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuItems are disabled at exit time (patch)
 		Fixed possible crash with NPOT PVR images
 		Optimized the loading time of PVR images
+		CCArray: improved performance in insert & delete elements
 	* Marco Tillemans:
 		RenderTexture renders images with correct blend function. patch.
 	* marcu.catalin:
