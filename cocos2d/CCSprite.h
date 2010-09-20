@@ -142,6 +142,7 @@ typedef enum {
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the rect of the CCSprite */
 @property (nonatomic,readonly) CGRect textureRect;
+/** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
 /** whether or not the sprite is flipped horizontally. 
  It only flips the texture of the sprite, and not the texture of the sprite's children.
