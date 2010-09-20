@@ -6,7 +6,7 @@ version 0.99.5-beta3 xx-Sep-2010
 	Texture2d: contentSize is in Points. Use contentSizeInPixels for pixels
 	FileUtils: Will try to load the file with the suffix "-hd" if RetinaDisplay is enabled
 	The following objects were enhanced to work with points:
-		TMXTileMap, Sprite, Node, ParticleSystem, LabelBMFont, LabelTTF, Menu, MenuItem,
+		TMXTileMap, Sprite, SpriteFrame, Node, ParticleSystem, LabelBMFont, LabelTTF, Menu, MenuItem,
 		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions, LabelAtlas, AtlasNode.
 	The nodes that weren't updated is because there was no need to update them.
  . [FIX] CCArray: improved speed in inserting and deleting elements

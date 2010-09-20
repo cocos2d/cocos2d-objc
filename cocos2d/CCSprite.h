@@ -108,12 +108,13 @@ typedef enum {
 	// whether or not it's parent is a CCSpriteBatchNode
 	BOOL	usesBatchNode_;
 
-	// texture pixels
-	CGRect rect_;
-	BOOL rectRotated_;
+	// texture
+	CGRect	rect_;
+	CGRect	rectInPixels_;
+	BOOL	rectRotated_;
 	
 	// Offset Position (used by Zwoptex)
-	CGPoint	offsetPosition_;	// absolute
+	CGPoint	offsetPositionInPixels_;
 	CGPoint unflippedOffsetPositionFromCenter_;
 
 	// vertex coords, texture coords and color info
@@ -140,7 +141,7 @@ typedef enum {
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
-/** returns the rect of the CCSprite */
+/** returns the rect of the CCSprite in points */
 @property (nonatomic,readonly) CGRect textureRect;
 /** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
@@ -176,10 +177,10 @@ typedef enum {
  @since v0.99.0
  */
 @property (nonatomic,readwrite) ccHonorParentTransform honorParentTransform;
-/** offset position of the sprite. Calculated automatically by editors like Zwoptex.
+/** offset position in pixels of the sprite in points. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */
-@property (nonatomic,readonly) CGPoint	offsetPosition;
+@property (nonatomic,readonly) CGPoint	offsetPositionInPixels;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 

@@ -135,7 +135,12 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			ow = abs(ow);
 			oh = abs(oh);
 			// create frame
-			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(x, y, w, h) rotated:NO offset:CGPointMake(ox, oy) originalSize:CGSizeMake(ow, oh)];
+			
+			spriteFrame = [[CCSpriteFrame alloc] initInPixelsWithTexture:texture
+																	rect:CGRectMake(x, y, w, h)
+																 rotated:NO
+																  offset:CGPointMake(ox, oy)
+															originalSize:CGSizeMake(ow, oh)];
 		} else if(format == 1 || format == 2) {
 			CGRect frame = CCRectFromString([frameDict objectForKey:@"frame"]);
 			BOOL rotated = NO;
@@ -148,7 +153,11 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			CGSize sourceSize = CCSizeFromString([frameDict objectForKey:@"sourceSize"]);
 			
 			// create frame
-			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame rotated:rotated offset:offset originalSize:sourceSize];
+			spriteFrame = [[CCSpriteFrame alloc] initInPixelsWithTexture:texture
+																	rect:frame
+																 rotated:rotated
+																  offset:offset
+															originalSize:sourceSize];
 		} else if(format == 3) {
 			// get values
 			CGSize spriteSize = CCSizeFromString([frameDict objectForKey:@"spriteSize"]);
@@ -167,15 +176,16 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			}
 			
 			// create frame
-			spriteFrame = [CCSpriteFrame frameWithTexture:texture 
-													 rect:CGRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height) 
-												  rotated:textureRotated 
-												   offset:spriteOffset 
-											 originalSize:spriteSourceSize];
+			spriteFrame = [[CCSpriteFrame alloc] initInPixelsWithTexture:texture 
+																	rect:CGRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height) 
+																 rotated:textureRotated 
+																  offset:spriteOffset 
+															originalSize:spriteSourceSize];
 		}
 
 		// add sprite frame
 		[spriteFrames_ setObject:spriteFrame forKey:frameDictKey];
+		[spriteFrame release];
 	}
 }
 
