@@ -284,8 +284,6 @@ typedef struct _PVRTexHeader
 		
 		data = imageData_->arr[i];
 		
-		NSLog(@"len: %d  %d", [data length], width * height );
-
 		if( compressed)
 			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, [data length], [data bytes]);
 		else 
