@@ -38,9 +38,19 @@ static NSFileManager *__localFileManager=nil;
 {
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 	{
-		NSString *extension = [path pathExtension];
+		
 		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+		NSString *name = [pathWithoutExtension lastPathComponent];
+		
+		// check if path already has the suffix. If so, ignore it.			
+		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
+		
+			CCLOG(@"cocos2d: CCFileUtils: FileName(%@) with %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+			return path;
+		}
 
+		
+		NSString *extension = [path pathExtension];
 		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
 		retinaName = [retinaName stringByAppendingPathExtension:extension];
 
@@ -50,7 +60,7 @@ static NSFileManager *__localFileManager=nil;
 		if( [__localFileManager fileExistsAtPath:retinaName] )
 			return retinaName;
 
-		CCLOG(@"cocos2d: Waring HD file not found: %@", [retinaName lastPathComponent] );
+		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
 	}
 	
 	return path;
@@ -58,6 +68,8 @@ static NSFileManager *__localFileManager=nil;
 
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
+	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");
+
 	NSString *fullpath = nil;
 	
 	// only if it is not an absolute path

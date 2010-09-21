@@ -290,7 +290,7 @@ typedef enum {
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
-/** Initializes an sprite with an CCSpriteSheet and a rect
+/** Initializes an sprite with an CCSpriteSheet and a rect in points
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
 -(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
@@ -302,10 +302,10 @@ typedef enum {
  */
 -(void)updateTransform;
 
-/** updates the texture rect of the CCSprite.
+/** updates the texture rect of the CCSprite in points.
  */
 -(void) setTextureRect:(CGRect) rect;
-/** updates the texture rect and rectRotated of the CCSprite
+/** updates the texture rect and rectRotated of the CCSprite in points.
  */
 -(void) setTextureRect:(CGRect) rect rotated:(BOOL)rotated;
 

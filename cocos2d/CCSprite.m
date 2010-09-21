@@ -345,6 +345,7 @@ struct transformValues_ {
 {
 	[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 }
+
 -(void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated
 {
 	[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
