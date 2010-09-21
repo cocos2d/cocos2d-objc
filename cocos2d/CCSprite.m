@@ -56,7 +56,6 @@ struct transformValues_ {
 -(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
--(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 -(void) getTransformValues:(struct transformValues_*)tv;	// optimization
 @end
 
@@ -83,11 +82,6 @@ struct transformValues_ {
 +(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
 	return [[[self alloc] initWithTexture:texture rect:rect] autorelease];
-}
-
-+(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
-{
-	return [[[self alloc] initWithTexture:texture rect:rect offset:offset] autorelease];
 }
 
 +(id)spriteWithFile:(NSString*)filename
@@ -179,7 +173,7 @@ struct transformValues_ {
 		// updated in "useSelfRender"
 		
 		// Atlas: TexCoords
-		[self setTextureRect:CGRectZero rotated:NO];
+		[self setTextureRectInPixels:CGRectZero rotated:NO untrimmedSize:CGSizeZero];
 	}
 	
 	return self;
@@ -192,7 +186,7 @@ struct transformValues_ {
 	if( (self = [self init]) )
 	{
 		[self setTexture:texture];
-		[self setTextureRect:rect rotated:NO];
+		[self setTextureRect:rect];
 	}
 	return self;
 }
@@ -259,7 +253,7 @@ struct transformValues_ {
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSizeInPixels;
+	CGSize size = texture.contentSize;
 	CGRect rect = CGRectMake(0, 0, size.width, size.height );
 	
 	return [self initWithTexture:texture rect:rect];
@@ -272,7 +266,7 @@ struct transformValues_ {
 	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSizeInPixels;
+	CGSize size = texture.contentSize;
 	CGRect rect = CGRectMake(0, 0, size.width, size.height );
 	
 	return [self initWithTexture:texture rect:rect];
@@ -281,6 +275,14 @@ struct transformValues_ {
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
 	id ret = [self initWithTexture:batchNode.texture rect:rect];
+	[self useBatchNode:batchNode];
+	return ret;
+}
+
+-(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rectInPixels:(CGRect)rect
+{
+	id ret = [self initWithTexture:batchNode.texture];
+	[self setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 	[self useBatchNode:batchNode];
 	return ret;
 }
@@ -343,27 +345,20 @@ struct transformValues_ {
 
 -(void)setTextureRect:(CGRect)rect
 {
-	[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
+	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
+	[self setTextureRectInPixels:rectInPixels rotated:NO untrimmedSize:rectInPixels.size];
 }
 
--(void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated
+-(void)setTextureRectInPixels:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
-}
--(void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
-{
-	rect_ = rect;
-	rectInPixels_ = CGRectMake( rect.origin.x * CC_CONTENT_SCALE_FACTOR(),
-							   rect.origin.y * CC_CONTENT_SCALE_FACTOR(),
-							   rect.size.width * CC_CONTENT_SCALE_FACTOR(),
-							   rect.size.height * CC_CONTENT_SCALE_FACTOR() );
+	rectInPixels_ = rect;
+	rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
 	rectRotated_ = rotated;
 
-	[self setContentSize:untrimmedSize];
+	[self setContentSizeInPixels:untrimmedSize];
 	[self updateTextureCoords:rectInPixels_];
 
-	CGPoint relativeOffsetInPixels = CGPointMake( unflippedOffsetPositionFromCenter_.x * CC_CONTENT_SCALE_FACTOR(),
-										 unflippedOffsetPositionFromCenter_.y * CC_CONTENT_SCALE_FACTOR() );
+	CGPoint relativeOffsetInPixels = unflippedOffsetPositionFromCenter_;
 	
 	// issue #732
 	if( flipX_ )
@@ -781,7 +776,7 @@ struct transformValues_ {
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRect:rect_ rotated:rectRotated_];	
+		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:rectInPixels_.size];
 	}
 }
 -(BOOL) flipX
@@ -793,7 +788,7 @@ struct transformValues_ {
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		[self setTextureRect:rect_ rotated:rectRotated_];	
+		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:rectInPixels_.size];
 	}	
 }
 -(BOOL) flipY
@@ -883,7 +878,7 @@ struct transformValues_ {
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
-	unflippedOffsetPositionFromCenter_ = frame.offset;
+	unflippedOffsetPositionFromCenter_ = frame.offsetInPixels;
 
 	CCTexture2D *newTexture = [frame texture];
 	// update texture before updating texture rect
@@ -892,8 +887,7 @@ struct transformValues_ {
 	
 	// update rect
 	rectRotated_ = frame.rotated;
-	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
-	
+	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
 }
 
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
@@ -918,7 +912,7 @@ struct transformValues_ {
 
 -(CCSpriteFrame*) displayedFrame
 {
-	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_ offset:CGPointZero];
+	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_];
 }
 
 -(void) addAnimation: (CCAnimation*) anim

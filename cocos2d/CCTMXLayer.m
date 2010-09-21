@@ -308,7 +308,7 @@
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-			tile = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+			tile = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 			[tile setPositionInPixels: [self positionAt:pos]];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
@@ -340,9 +340,9 @@
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
 	[reusedTile_ setPosition: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
@@ -377,9 +377,9 @@
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
 	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
@@ -406,9 +406,9 @@
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
 	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
@@ -487,7 +487,7 @@ int compareInts (const void * a, const void * b)
 			id sprite = [self getChildByTag:z];
 			if( sprite ) {
 				CGRect rect = [tileset_ rectForGID:gid];
-				[sprite setTextureRect:CC_RECT_PIXELS_TO_POINTS(rect)];
+				[sprite setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 				tiles_[z] = gid;
 			} else {
 				[self updateTileForGID:gid at:pos];
