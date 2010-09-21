@@ -3,11 +3,13 @@ version 0.99.5-beta3 xx-Sep-2010
 	Director: winSize returns size in Points. Use winSizeInPixels for pixels
 	Node: position is in Points. Use positionInPixels for pixles
 	Node: contentSize is in Points. Use contentSizeInPixels for pixels
+	Node: boundingBox is in Points. Use boundingBoxInPixels for pixels
 	Texture2d: contentSize is in Points. Use contentSizeInPixels for pixels
 	FileUtils: Will try to load the file with the suffix "-hd" if RetinaDisplay is enabled, unless the "-hd" suffix is already present
 	The following objects were enhanced to work with points:
 		TMXTileMap, Sprite, SpriteFrame, Node, ParticleSystem, LabelBMFont, LabelTTF, Menu, MenuItem,
-		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions, LabelAtlas, AtlasNode.
+		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions, LabelAtlas, AtlasNode
+		and the drawing primitives
 	The nodes that weren't updated is because there was no need to update them.
  . [FIX] CCArray: improved speed in inserting and deleting elements
  . [FIX] Templates: Default SDK is 4.1

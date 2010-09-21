@@ -53,7 +53,7 @@ extern "C" {
  */
 	
 
-/** draws a point given x and y coordinate */
+/** draws a point given x and y coordinate measured in points. */
 void ccDrawPoint( CGPoint point );
 
 /** draws an array of points.
@@ -61,22 +61,23 @@ void ccDrawPoint( CGPoint point );
  */
 void ccDrawPoints( CGPoint *points, NSUInteger numberOfPoints );
 
-/** draws a line given the origin and destination point */
+/** draws a line given the origin and destination point measured in points. */
 void ccDrawLine( CGPoint origin, CGPoint destination );
 
-/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
+/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
+ The polygon can be closed or open
  */
 void ccDrawPoly( CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
-/** draws a circle given the center, radius and number of segments. */
+/** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
 
-/** draws a quad bezier path
+/** draws a quad bezier path measured in points.
  @since v0.8
  */
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments);
 
-/** draws a cubic bezier path
+/** draws a cubic bezier path measured in points.
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);

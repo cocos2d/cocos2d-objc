@@ -283,7 +283,8 @@ const NSUInteger defaultCapacity = 29;
 			updateMethod(child, selUpdate);
 		
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
-		CGRect rect = [child boundingBox]; //Issue #528
+		//Issue #528
+		CGRect rect = [child boundingBox];
 		CGPoint vertices[4]={
 			ccp(rect.origin.x,rect.origin.y),
 			ccp(rect.origin.x+rect.size.width,rect.origin.y),

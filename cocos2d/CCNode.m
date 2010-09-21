@@ -192,9 +192,16 @@
 
 - (CGRect) boundingBox
 {
-	CGRect rect = CGRectMake(0, 0, contentSize_.width, contentSize_.height);
+	CGRect ret = [self boundingBoxInPixels];
+	return CC_RECT_PIXELS_TO_POINTS( ret );
+}
+
+- (CGRect) boundingBoxInPixels
+{
+	CGRect rect = CGRectMake(0, 0, contentSizeInPixels_.width, contentSizeInPixels_.height);
 	return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
 }
+
 
 -(float) scale
 {
