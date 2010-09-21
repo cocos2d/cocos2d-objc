@@ -192,3 +192,11 @@ do {															\
 #elif __MAC_OS_X_VERSION_MAX_ALLOWED
 #define CC_CONTENT_SCALE_FACTOR() 1
 #endif
+
+
+/** @def CC_RECT_PIXELS_TO_POINTS
+	Converts a rect in pixels to points
+ */
+#define CC_RECT_PIXELS_TO_POINTS(__pixels__)																		\
+	CGRectMake(__pixels__.origin.x / CC_CONTENT_SCALE_FACTOR(), __pixels__.origin.y / CC_CONTENT_SCALE_FACTOR(),	\
+			__pixels__.size.width / CC_CONTENT_SCALE_FACTOR(), __pixels__.size.height / CC_CONTENT_SCALE_FACTOR() )

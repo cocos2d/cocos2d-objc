@@ -57,12 +57,12 @@
 /** TileMap info */
 @property (nonatomic,readonly) tImageTGA *tgaInfo;
 
-/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
+/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
  The tile file will be loaded using the TextureMgr.
  */
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;
 
-/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
+/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
  The file will be loaded using the TextureMgr.
  */
 -(id) initWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h;
