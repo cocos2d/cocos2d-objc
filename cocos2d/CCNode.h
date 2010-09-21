@@ -353,13 +353,21 @@ enum {
  */
 -(void) transformAncestors;
 
-/** returns a "local" axis aligned bounding box of the node.
+/** returns a "local" axis aligned bounding box of the node in points.
  The returned box is relative only to its parent.
  The returned box is in Points.
  
  @since v0.8.2
  */
 - (CGRect) boundingBox;
+
+/** returns a "local" axis aligned bounding box of the node in pixels.
+ The returned box is relative only to its parent.
+ The returned box is in Points.
+ 
+ @since v0.99.5
+ */
+- (CGRect) boundingBoxInPixels;
 
 
 // actions

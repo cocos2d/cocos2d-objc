@@ -611,7 +611,7 @@ struct transformValues_ {
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 #if CC_SPRITE_DEBUG_DRAW
-	CGSize s = [self contentSizeInPixels];
+	CGSize s = [self contentSize];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
