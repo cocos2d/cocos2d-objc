@@ -548,13 +548,13 @@ typedef struct _KerningHashElement
 		
 		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+			fontChar = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 			[self addChild:fontChar z:0 tag:i];
 			[fontChar release];
 		}
 		else {
 			// reusing fonts
-			[fontChar setTextureRect:CC_RECT_PIXELS_TO_POINTS(rect)];
+			[fontChar setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 			
 			// restore to default in case they were modified
 			fontChar.visible = YES;

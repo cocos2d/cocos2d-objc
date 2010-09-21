@@ -105,13 +105,13 @@
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect];
 	[frames_ addObject:frame];
 }
 
 -(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:CGPointZero];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect];
 	[frames_ addObject:frame];
 }
 
@@ -120,57 +120,37 @@
 #pragma mark -
 #pragma mark CCSpriteFrame
 @implementation CCSpriteFrame
-@synthesize rect = rect_, rotated = rotated_, offset = offset_, texture = texture_;
-@synthesize originalSize=originalSize_;
+@synthesize rect = rect_, rectInPixels=rectInPixels_;
+@synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
+@synthesize originalSizeInPixels=originalSizeInPixels_;
 
-+(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
++(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	return [[[self alloc] initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:rect.size] autorelease];
+	return [[[self alloc] initWithTexture:texture rect:rect] autorelease];
 }
 
-+(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize
++(id) frameWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
-	return [[[self alloc] initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:originalSize] autorelease];
+	return [[[self alloc] initWithTexture:texture rectInPixels:rect rotated:rotated offset:offset originalSize:originalSize] autorelease];
 }
 
-+(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	return [[[self alloc] initWithTexture:texture rect:rect rotated:rotated offset:offset originalSize:originalSize] autorelease];
+	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
+	return [self initWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
 }
 
-+(id) frameInPixelsWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
-{
-	return [[[self alloc] initInPixelsWithTexture:texture rect:rect rotated:rotated offset:offset originalSize:originalSize] autorelease];
-}
-
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset
-{
-	return [self initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:rect.size];
-}
-
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect offset:(CGPoint)offset originalSize:(CGSize)originalSize {
-	return [self initWithTexture:texture rect:rect rotated:NO offset:offset originalSize:originalSize];
-}
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
+-(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
 	if( (self=[super init]) ) {
 		self.texture = texture;
-		rect_ = rect;
+		rectInPixels_ = rect;
+		rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
 		rotated_ = rotated;
-		offset_ = offset;
-		originalSize_ = originalSize;
+		offsetInPixels_ = offset;
+		originalSizeInPixels_ = originalSize;
 	}
-	return self;
-}
-
--(id) initInPixelsWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
-{
-	CGRect rectInPoints = CGRectMake( rect.origin.x / CC_CONTENT_SCALE_FACTOR(), rect.origin.y / CC_CONTENT_SCALE_FACTOR(),
-					   rect.size.width / CC_CONTENT_SCALE_FACTOR(), rect.size.height / CC_CONTENT_SCALE_FACTOR() );
-	CGPoint offsetInPoints = CGPointMake( offset.x / CC_CONTENT_SCALE_FACTOR(), offset.y / CC_CONTENT_SCALE_FACTOR() );
-	CGSize originalSizeInPoints = CGSizeMake( originalSize.width / CC_CONTENT_SCALE_FACTOR(), originalSize.height / CC_CONTENT_SCALE_FACTOR() );
-	
-	return [self initWithTexture:texture rect:rectInPoints rotated:rotated offset:offsetInPoints originalSize:originalSizeInPoints];
+	return self;	
 }
 
 - (NSString*) description
@@ -192,7 +172,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rect:rect_ rotated:rotated_ offset:offset_ originalSize:originalSize_];
+	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rectInPixels:rectInPixels_ rotated:rotated_ offset:offsetInPixels_ originalSize:originalSizeInPixels_];
 	return copy;
 }
 @end
