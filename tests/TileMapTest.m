@@ -13,8 +13,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
-	@"TMXBug987",
-
 			@"TMXIsoZorder",
 			@"TMXOrthoZorder",
 			@"TMXIsoVertexZ",
@@ -36,6 +34,7 @@ static NSString *transitions[] = {
 			@"TMXResizeTest",
 			@"TMXIsoMoveLayer",
 			@"TMXOrthoMoveLayer",
+			@"TMXBug987",
 
 			@"TileMapTest",
 			@"TileMapEditTest",
