@@ -237,6 +237,9 @@
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
 #endif
+			
+			free(deflated); deflated = NULL;
+
 			self.texture = [[CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName];
 			[data release];
 			[image release];

@@ -12,6 +12,7 @@ version 0.99.5-beta3 xx-Sep-2010
 		and the drawing primitives
 	The nodes that weren't updated is because there was no need to update them.
  . [FIX] CCArray: improved speed in inserting and deleting elements
+ . [FIX] ParticleSystem: fixed memory leak when using ParticleDesigner (issue #986)
  . [FIX] Templates: Default SDK is 4.1
  . [FIX] Texture2d: Fixed possible crash in NPOT PVR images
  . [FIX] Texture2d: If Text in context can't be created return nil (prevent possible crash)
