@@ -1160,14 +1160,18 @@ Class restartAction()
 }
 -(void) flipSprites:(ccTime)dt
 {
-	id sprite1 = [self getChildByTag:kTagSprite1];
-	id sprite2 = [self getChildByTag:kTagSprite2];
+	CCSprite *sprite1 = (CCSprite*)[self getChildByTag:kTagSprite1];
+	CCSprite *sprite2 = (CCSprite*)[self getChildByTag:kTagSprite2];
 	
 	BOOL x = [sprite1 flipX];
 	BOOL y = [sprite2 flipY];
 	
+	// testing bug #970
+	NSLog(@"Pre: %f", sprite1.contentSize.height);
 	[sprite1 setFlipX: !x];
 	[sprite2 setFlipY: !y];
+	NSLog(@"Post: %f", sprite1.contentSize.height);
+
 }
 -(NSString*) title
 {
@@ -1200,14 +1204,19 @@ Class restartAction()
 -(void) flipSprites:(ccTime)dt
 {
 	id batch = [self getChildByTag:kTagSpriteBatchNode];
-	id sprite1 = [batch getChildByTag:kTagSprite1];
-	id sprite2 = [batch getChildByTag:kTagSprite2];
+	CCSprite *sprite1 = (CCSprite*)[batch getChildByTag:kTagSprite1];
+	CCSprite *sprite2 = (CCSprite*)[batch getChildByTag:kTagSprite2];
 	
 	BOOL x = [sprite1 flipX];
 	BOOL y = [sprite2 flipY];
 	
+
+	// testing bug #970
+	NSLog(@"Pre: %f", sprite1.contentSize.height);
 	[sprite1 setFlipX: !x];
-	[sprite2 setFlipY: !y];
+	[sprite2 setFlipY: !y];	
+	NSLog(@"Post: %f", sprite1.contentSize.height);
+	
 }
 -(NSString*) title
 {
