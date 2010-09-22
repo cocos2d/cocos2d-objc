@@ -253,6 +253,40 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		[spriteFrames_ removeObjectForKey:name];
 }
 
+- (void) removeSpriteFramesFromFile:(NSString*) plist
+{
+	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+	
+	[self removeSpriteFramesFromDictionary:dict];
+}
+
+- (void) removeSpriteFramesFromDictionary:(NSDictionary*) dictionary
+{
+	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
+	NSMutableArray *keysToRemove=[NSMutableArray array];
+	
+	for(NSString *frameDictKey in framesDict)
+	{
+		if ([spriteFrames_ objectForKey:frameDictKey]!=nil)
+			[keysToRemove addObject:frameDictKey];
+	}
+	[spriteFrames_ removeObjectsForKeys:keysToRemove];
+}
+
+- (void) removeSpriteFramesFromTexture:(CCTexture2D*) texture
+{
+	NSMutableArray *keysToRemove=[NSMutableArray array];
+	
+	for (NSString *spriteFrameKey in spriteFrames_)
+	{
+		if ([[spriteFrames_ valueForKey:spriteFrameKey] texture] == texture) 
+			[keysToRemove addObject:spriteFrameKey];
+		
+	}
+	[spriteFrames_ removeObjectsForKeys:keysToRemove];
+}
+
 #pragma mark CCSpriteFrameCache - getting
 
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name
