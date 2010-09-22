@@ -1,4 +1,4 @@
-version 0.99.5-beta3 xx-Sep-2010
+version 0.99.5-beta3 23-Sep-2010
  . [NEW] RetinaDisplay supported automatically:
 	Director: winSize returns size in Points. Use winSizeInPixels for pixels
 	Node: position is in Points. Use positionInPixels for pixles
@@ -11,6 +11,7 @@ version 0.99.5-beta3 xx-Sep-2010
 		ColorLayer, RenderTexture, MotionStreak, Transitions, Actions, LabelAtlas, AtlasNode
 		and the drawing primitives
 	The nodes that weren't updated is because there was no need to update them.
+ . [NEW] SpriteFrameCache:	Added a way to remove from the SpriteFrameCache frames given a dictionary, file or texture (issue #953)
  . [FIX] CCArray: improved speed in inserting and deleting elements
  . [FIX] ParticleSystem: fixed memory leak when using ParticleDesigner (issue #986)
  . [FIX] Templates: Default SDK is 4.1
