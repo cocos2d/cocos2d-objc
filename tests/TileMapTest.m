@@ -13,6 +13,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
+	@"TMXBug987",
+
 			@"TMXIsoZorder",
 			@"TMXOrthoZorder",
 			@"TMXIsoVertexZ",
@@ -440,7 +442,7 @@ Class restartAction()
 
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
 		CGSize s = [layer layerSize];
-		
+	
 		CCSprite *sprite;
 		sprite = [layer tileAt:ccp(0,0)];
 		[sprite setScale:2];
@@ -1293,6 +1295,43 @@ Class restartAction()
 {
 	return @"Trees should be horizontally aligned";
 }
+@end
+
+#pragma mark -
+#pragma mark TMXBug987
+
+@implementation TMXBug987
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test6.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s1 = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s1.width,s1.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		[map setAnchorPoint:ccp(0, 0)];
+		
+		CCTMXLayer *layer = [map layerNamed:@"Tile Layer 1"];
+
+		[layer setTileGID:3 at:ccp(2,2)];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Bug 987";
+}
+-(NSString *) subtitle
+{
+	return @"You should see an square";
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS

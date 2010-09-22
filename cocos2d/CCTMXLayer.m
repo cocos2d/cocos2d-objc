@@ -344,7 +344,7 @@
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	[reusedTile_ setOpacity:opacity_];
