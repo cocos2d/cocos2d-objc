@@ -36,13 +36,13 @@ Main features
    * Integrated Pause/Resume
    * Integrated Slow motion/Fast forward
    * Fast textures: PVRTC 2-bit & 4-bit textures, RGBA 16-bit (and 32-bit) textures
+   * Point based: iPhone4 + RetinaDisplay mode compatible
    * Language: objective-c
    * Open Source: Compatible with open and closed source projects
    * OpenGL ES 1.1  / OpenGL 1.5 based
 
 
-This library does not work with the toolchain, but it
-should be easy to port it to it.
+This library does not work with the toolchain, but it should be easy to port it to it.
 
 
 Build Requirements
@@ -54,7 +54,7 @@ Mac OS X 10.6, Xcode 3.2.3 (or newer)
 Runtime Requirements
 --------------------
   * iOS 3.0 or newer for iOS games
-  * Snow Leopard (v10.6) or newer for Mac games
+  * Snow Leopard (v10.5) or newer for Mac games
 
 
 Files and Folders
