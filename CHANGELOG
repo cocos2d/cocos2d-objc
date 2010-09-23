@@ -14,10 +14,12 @@ version 0.99.5-beta3 23-Sep-2010
  . [NEW] SpriteFrameCache:	Added a way to remove from the SpriteFrameCache frames given a dictionary, file or texture (issue #953)
  . [FIX] CCArray: improved speed in inserting and deleting elements
  . [FIX] ParticleSystem: fixed memory leak when using ParticleDesigner (issue #986)
+ . [FIX] RenderTexture: creates a POW texture, but this doesn't mean that it should be an squared texture (issue #993)
  . [FIX] Templates: Default SDK is 4.1
  . [FIX] Texture2d: Fixed possible crash in NPOT PVR images
  . [FIX] Texture2d: If Text in context can't be created return nil (prevent possible crash)
  . [FIX] Texture2d: Optimized loading time of PVR images
+ . [FIX] Transitions: PageTurn3D transition has fewer visible artifacts (issue #751)
  
 version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
