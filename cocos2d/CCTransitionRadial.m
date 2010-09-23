@@ -42,7 +42,7 @@ enum {
 @implementation CCTransitionRadialCCW
 -(void) sceneOrder
 {
-	inSceneOnTop = NO;
+	inSceneOnTop_ = NO;
 }
 -(CCProgressTimerType) radialType
 {
@@ -64,7 +64,7 @@ enum {
 	// render outScene to its texturebuffer
 	[outTexture clear:0 g:0 b:0 a:1];
 	[outTexture begin];
-	[outScene visit];
+	[outScene_ visit];
 	[outTexture end];
 	
 	//	Since we've passed the outScene to the texture we don't need it.
@@ -82,7 +82,7 @@ enum {
 			
 	// create the blend action
 	CCActionInterval * layerAction = [CCSequence actions:
-									  [CCProgressFromTo actionWithDuration:duration from:100.f to:0.f],
+									  [CCProgressFromTo actionWithDuration:duration_ from:100.f to:0.f],
 									  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 									  nil ];	
 	// run the blend action
