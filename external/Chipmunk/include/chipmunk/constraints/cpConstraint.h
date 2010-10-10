@@ -63,13 +63,19 @@ cpConstraintActivateBodies(cpConstraint *constraint)
 	cpBody *b = constraint->b; if(b) cpBodyActivate(b);
 }
 
+static inline cpFloat
+cpConstraintGetImpulse(cpConstraint *constraint)
+{
+	return constraint->klass->getImpulse(constraint);
+}
+
 #define cpConstraintCheckCast(constraint, struct) \
 	cpAssert(constraint->klass == struct##GetClass(), "Constraint is not a "#struct);
 
 
 #define CP_DefineConstraintGetter(struct, type, member, name) \
 static inline type \
-struct##Get##name(cpConstraint *constraint){ \
+struct##Get##name(const cpConstraint *constraint){ \
 	cpConstraintCheckCast(constraint, struct); \
 	return ((struct *)constraint)->member; \
 } \
@@ -78,6 +84,7 @@ struct##Get##name(cpConstraint *constraint){ \
 static inline void \
 struct##Set##name(cpConstraint *constraint, type value){ \
 	cpConstraintCheckCast(constraint, struct); \
+	cpConstraintActivateBodies(constraint); \
 	((struct *)constraint)->member = value; \
 } \
 

@@ -165,13 +165,13 @@ void cpSegmentQueryInfoPrint(cpSegmentQueryInfo *info);
 cpBool cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info);
 
 static inline cpVect
-cpSegmentQueryHitPoint(cpVect start, cpVect end, cpSegmentQueryInfo info)
+cpSegmentQueryHitPoint(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)
 {
 	return cpvlerp(start, end, info.t);
 }
 
 static inline cpFloat
-cpSegmentQueryHitDist(cpVect start, cpVect end, cpSegmentQueryInfo info)
+cpSegmentQueryHitDist(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)
 {
 	return cpvdist(start, end)*info.t;
 }

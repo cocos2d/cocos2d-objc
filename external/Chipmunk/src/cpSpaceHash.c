@@ -36,11 +36,7 @@ cpHandleInit(cpHandle *hand, void *obj)
 	return hand;
 }
 
-static inline void
-cpHandleRetain(cpHandle *hand)
-{
-	hand->retain++;
-}
+static inline void cpHandleRetain(cpHandle *hand){hand->retain++;}
 
 static inline void
 cpHandleRelease(cpHandle *hand, cpArray *pooledHandles)
@@ -55,7 +51,7 @@ cpSpaceHashAlloc(void)
 	return (cpSpaceHash *)cpcalloc(1, sizeof(cpSpaceHash));
 }
 
-// Frees the old table, and allocates a new one.
+// Frees the old table, and allocate a new one.
 static void
 cpSpaceHashAllocTable(cpSpaceHash *hash, int numcells)
 {
@@ -127,7 +123,6 @@ clearHashCell(cpSpaceHash *hash, int idx)
 	while(bin){
 		cpSpaceHashBin *next = bin->next;
 		
-		// Release the lock on the handle.
 		cpHandleRelease(bin->handle, hash->pooledHandles);
 		recycleBin(hash, bin);
 		
@@ -261,36 +256,32 @@ hashHandle(cpSpaceHash *hash, cpHandle *hand, cpBB bb)
 }
 
 void
-cpSpaceHashInsert(cpSpaceHash *hash, void *obj, cpHashValue hashid, cpBB bb)
+cpSpaceHashInsert(cpSpaceHash *hash, void *obj, cpHashValue hashid, cpBB _deprecated_unused)
 {
 	cpHandle *hand = (cpHandle *)cpHashSetInsert(hash->handleSet, hashid, obj, hash);
-	hashHandle(hash, hand, bb);
+	hashHandle(hash, hand, hash->bbfunc(obj));
 }
 
 void
 cpSpaceHashRehashObject(cpSpaceHash *hash, void *obj, cpHashValue hashid)
 {
-	cpHandle *hand = (cpHandle *)cpHashSetFind(hash->handleSet, hashid, obj);
-	hashHandle(hash, hand, hash->bbfunc(obj));
+	cpHandle *hand = (cpHandle *)cpHashSetRemove(hash->handleSet, hashid, obj);
+	
+	if(hand){
+		hand->obj = NULL;
+		cpHandleRelease(hand, hash->pooledHandles);
+		
+		cpSpaceHashInsert(hash, obj, hashid, cpBBNew(0.0f, 0.0f, 0.0f, 0.0f));
+	}
 }
 
-// Hashset iterator function for rehashing the spatial hash. (hash hash hash hash?)
-static void
-handleRehashHelper(void *elt, void *data)
-{
-	cpHandle *hand = (cpHandle *)elt;
-	cpSpaceHash *hash = (cpSpaceHash *)data;
-	
-	hashHandle(hash, hand, hash->bbfunc(hand->obj));
-}
+static void handleRehashHelper(cpHandle *hand, cpSpaceHash *hash){hashHandle(hash, hand, hash->bbfunc(hand->obj));}
 
 void
 cpSpaceHashRehash(cpSpaceHash *hash)
 {
 	clearHash(hash);
-	
-	// Rehash all of the handles.
-	cpHashSetEach(hash->handleSet, &handleRehashHelper, hash);
+	cpHashSetEach(hash->handleSet, (cpHashSetIterFunc)handleRehashHelper, hash);
 }
 
 void
@@ -304,73 +295,62 @@ cpSpaceHashRemove(cpSpaceHash *hash, void *obj, cpHashValue hashid)
 	}
 }
 
-// Used by the cpSpaceHashEach() iterator.
 typedef struct eachPair {
 	cpSpaceHashIterator func;
 	void *data;
 } eachPair;
 
-// Calls the user iterator function. (Gross I know.)
-static void
-eachHelper(void *elt, void *data)
-{
-	cpHandle *hand = (cpHandle *)elt;
-	eachPair *pair = (eachPair *)data;
-	
-	pair->func(hand->obj, pair->data);
-}
+static void eachHelper(cpHandle *hand, eachPair *pair){pair->func(hand->obj, pair->data);}
 
 // Iterate over the objects in the spatial hash.
 void
 cpSpaceHashEach(cpSpaceHash *hash, cpSpaceHashIterator func, void *data)
 {
-	// Bundle the callback up to send to the hashset iterator.
 	eachPair pair = {func, data};
-	
-	cpHashSetEach(hash->handleSet, &eachHelper, &pair);
+	cpHashSetEach(hash->handleSet, (cpHashSetIterFunc)eachHelper, &pair);
+}
+
+static inline void
+removeOrphanedHandles(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr)
+{
+	cpSpaceHashBin *bin = *bin_ptr;
+	while(bin){
+		cpHandle *hand = bin->handle;
+		cpSpaceHashBin *next = bin->next;
+		
+		if(!hand->obj){
+			// orphaned handle, unlink and recycle the bin
+			(*bin_ptr) = bin->next;
+			recycleBin(hash, bin);
+			
+			cpHandleRelease(hand, hash->pooledHandles);
+		} else {
+			bin_ptr = &bin->next;
+		}
+		
+		bin = next;
+	}
 }
 
 // Calls the callback function for the objects in a given chain.
 static inline void
 query(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr, void *obj, cpSpaceHashQueryFunc func, void *data)
 {
-	cpSpaceHashBin *bin = *bin_ptr;
-	while(bin){
-//	for(cpSpaceHashBin *bin=*bin_ptr; bin; bin_ptr=&bin->next, bin=bin->next){
+	restart:
+	for(cpSpaceHashBin *bin = *bin_ptr; bin; bin = bin->next){
 		cpHandle *hand = bin->handle;
 		void *other = hand->obj;
 		
-		// Skip over certain conditions
-		if(
-			// Have we already tried this pair in the currnt query in a different cell?
-			hand->stamp == hash->stamp
-			// Is obj the same as other?
-			|| obj == other 
-		){
-			bin_ptr = &bin->next;
-			bin = bin->next;
+		if(hand->stamp == hash->stamp || obj == other){
 			continue;
-		}
-		
-		if(other){
+		} else if(other){
 			func(obj, other, data);
-			
-			// Stamp that the handle was checked already against this object.
 			hand->stamp = hash->stamp;
-			
-			bin_ptr = &bin->next;
-			bin = bin->next;
-		} else { // The object has been removed 
-			cpSpaceHashBin *next = bin->next;
-			
-			// unlink and recycle the bin
-			(*bin_ptr) = bin->next;
-			recycleBin(hash, bin);
-			
-			// release the reference to the handle
-			cpHandleRelease(hand, hash->pooledHandles);
-			
-			bin = next;
+		} else {
+			// The object for this handle has been removed
+			// cleanup this cell and restart the query
+			removeOrphanedHandles(hash, bin_ptr);
+			goto restart; // GCC not smart enough/able to tail call an inlined function.
 		}
 	}
 }
@@ -382,9 +362,6 @@ cpSpaceHashPointQuery(cpSpaceHash *hash, cpVect point, cpSpaceHashQueryFunc func
 	int idx = hash_func(floor_int(point.x/dim), floor_int(point.y/dim), hash->numcells);  // Fix by ShiftZ
 	
 	query(hash, &hash->table[idx], &point, func, data);
-
-	// Increment the stamp.
-	// Only one cell is checked, but query() requires it anyway.
 	hash->stamp++;
 }
 
@@ -404,12 +381,10 @@ cpSpaceHashQuery(cpSpaceHash *hash, void *obj, cpBB bb, cpSpaceHashQueryFunc fun
 	// Iterate over the cells and query them.
 	for(int i=l; i<=r; i++){
 		for(int j=b; j<=t; j++){
-			int idx = hash_func(i,j,n);
-			query(hash, &table[idx], obj, func, data);
+			query(hash, &table[hash_func(i,j,n)], obj, func, data);
 		}
 	}
 	
-	// Increment the stamp.
 	hash->stamp++;
 }
 
@@ -446,9 +421,6 @@ handleQueryRehashHelper(void *elt, void *data)
 
 	for(int i=l; i<=r; i++){
 		for(int j=b; j<=t; j++){
-//			// exit the loops if the object has been deleted in func().
-//			if(!hand->obj) goto break_out;
-			
 			int idx = hash_func(i,j,n);
 			cpSpaceHashBin *bin = table[idx];
 			
@@ -464,8 +436,7 @@ handleQueryRehashHelper(void *elt, void *data)
 		}
 	}
 	
-//	break_out:
-	// Increment the stamp for each object we hash.
+	// Increment the stamp for each object hashed.
 	hash->stamp++;
 }
 
@@ -479,26 +450,27 @@ cpSpaceHashQueryRehash(cpSpaceHash *hash, cpSpaceHashQueryFunc func, void *data)
 }
 
 static inline cpFloat
-segmentQuery(cpSpaceHash *hash, cpSpaceHashBin *bin, void *obj, cpSpaceHashSegmentQueryFunc func, void *data)
+segmentQuery(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr, void *obj, cpSpaceHashSegmentQueryFunc func, void *data)
 {
 	cpFloat t = 1.0f;
 	 
-	for(; bin; bin = bin->next){
+	restart:
+	for(cpSpaceHashBin *bin = *bin_ptr; bin; bin = bin->next){
 		cpHandle *hand = bin->handle;
 		void *other = hand->obj;
 		
 		// Skip over certain conditions
-		if(
-			// Have we already tried this pair in this query?
-			hand->stamp == hash->stamp
-			// Has other been removed since the last rehash?
-			|| !other
-			) continue;
-		
-		// Stamp that the handle was checked already against this object.
-		hand->stamp = hash->stamp;
-		
-		t = cpfmin(t, func(obj, other, data));
+		if(hand->stamp == hash->stamp){
+			continue;
+		} else if(other){
+			t = cpfmin(t, func(obj, other, data));
+			hand->stamp = hash->stamp;
+		} else {
+			// The object for this handle has been removed
+			// cleanup this cell and restart the query
+			removeOrphanedHandles(hash, bin_ptr);
+			goto restart; // GCC not smart enough/able to tail call an inlined function.
+		}
 	}
 	
 	return t;
@@ -509,8 +481,6 @@ void cpSpaceHashSegmentQuery(cpSpaceHash *hash, void *obj, cpVect a, cpVect b, c
 {
 	a = cpvmult(a, 1.0f/hash->celldim);
 	b = cpvmult(b, 1.0f/hash->celldim);
-	
-	cpFloat dt_dx = 1.0f/cpfabs(b.x - a.x), dt_dy = 1.0f/cpfabs(b.y - a.y);
 	
 	int cell_x = floor_int(a.x), cell_y = floor_int(a.y);
 
@@ -535,6 +505,10 @@ void cpSpaceHashSegmentQuery(cpSpaceHash *hash, void *obj, cpVect a, cpVect b, c
 		temp_v = (a.y - cpffloor(a.y));
 	}
 	
+	// Division by zero is *very* slow on ARM
+	cpFloat dx = cpfabs(b.x - a.x), dy = cpfabs(b.y - a.y);
+	cpFloat dt_dx = (dx ? 1.0f/dx : INFINITY), dt_dy = (dy ? 1.0f/dy : INFINITY);
+	
 	// fix NANs in horizontal directions
 	cpFloat next_h = (temp_h ? temp_h*dt_dx : dt_dx);
 	cpFloat next_v = (temp_v ? temp_v*dt_dy : dt_dy);
@@ -544,7 +518,7 @@ void cpSpaceHashSegmentQuery(cpSpaceHash *hash, void *obj, cpVect a, cpVect b, c
 	int n = hash->numcells;
 	while(t < t_exit){
 		int idx = hash_func(cell_x, cell_y, n);
-		t_exit = cpfmin(t_exit, segmentQuery(hash, table[idx], obj, func, data));
+		t_exit = cpfmin(t_exit, segmentQuery(hash, &table[idx], obj, func, data));
 
 		if (next_v < next_h){
 			cell_y += y_inc;

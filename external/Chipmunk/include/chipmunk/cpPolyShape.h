@@ -73,7 +73,7 @@ cpPolyShapeValueOnAxis(const cpPolyShape *poly, const cpVect n, const cpFloat d)
 
 // Returns true if the polygon contains the vertex.
 static inline cpBool
-cpPolyShapeContainsVert(cpPolyShape *poly, cpVect v)
+cpPolyShapeContainsVert(const cpPolyShape *poly, const cpVect v)
 {
 	cpPolyShapeAxis *axes = poly->tAxes;
 	
@@ -88,7 +88,7 @@ cpPolyShapeContainsVert(cpPolyShape *poly, cpVect v)
 
 // Same as cpPolyShapeContainsVert() but ignores faces pointing away from the normal.
 static inline cpBool
-cpPolyShapeContainsVertPartial(cpPolyShape *poly, cpVect v, cpVect n)
+cpPolyShapeContainsVertPartial(const cpPolyShape *poly, const cpVect v, const cpVect n)
 {
 	cpPolyShapeAxis *axes = poly->tAxes;
 	

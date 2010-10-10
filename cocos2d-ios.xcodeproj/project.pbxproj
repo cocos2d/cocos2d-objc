@@ -2198,6 +2198,9 @@
 		E0B0E71111F8CF9F00414246 /* texture1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E70D11F8CF9F00414246 /* texture1024x1024.png */; };
 		E0B0E71211F8CF9F00414246 /* texture2048x2048.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E70E11F8CF9F00414246 /* texture2048x2048.png */; };
 		E0B0E71311F8CF9F00414246 /* texture4096x4096.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */; };
+		E0B1E8021261F9E300ACD961 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E7FF1261F9E300ACD961 /* cpSpaceComponent.c */; };
+		E0B1E8031261F9E300ACD961 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E8001261F9E300ACD961 /* cpSpaceQuery.c */; };
+		E0B1E8041261F9E300ACD961 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 		E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
@@ -4088,6 +4091,9 @@
 		E0B0E70D11F8CF9F00414246 /* texture1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture1024x1024.png; sourceTree = "<group>"; };
 		E0B0E70E11F8CF9F00414246 /* texture2048x2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture2048x2048.png; sourceTree = "<group>"; };
 		E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture4096x4096.png; sourceTree = "<group>"; };
+		E0B1E7FF1261F9E300ACD961 /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
+		E0B1E8001261F9E300ACD961 /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
+		E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
 		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
@@ -6608,6 +6614,9 @@
 				50E5F2D1110690C600E3FCF5 /* cpShape.c */,
 				50E5F2D2110690C600E3FCF5 /* cpSpace.c */,
 				50E5F2D3110690C600E3FCF5 /* cpSpaceHash.c */,
+				E0B1E7FF1261F9E300ACD961 /* cpSpaceComponent.c */,
+				E0B1E8001261F9E300ACD961 /* cpSpaceQuery.c */,
+				E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */,
 				50E5F2D4110690C600E3FCF5 /* cpVect.c */,
 				50E5F2D5110690C600E3FCF5 /* prime.h */,
 			);
@@ -10729,6 +10738,9 @@
 				50E5F305110690C600E3FCF5 /* cpSpace.c in Sources */,
 				50E5F306110690C600E3FCF5 /* cpSpaceHash.c in Sources */,
 				50E5F307110690C600E3FCF5 /* cpVect.c in Sources */,
+				E0B1E8021261F9E300ACD961 /* cpSpaceComponent.c in Sources */,
+				E0B1E8031261F9E300ACD961 /* cpSpaceQuery.c in Sources */,
+				E0B1E8041261F9E300ACD961 /* cpSpaceStep.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

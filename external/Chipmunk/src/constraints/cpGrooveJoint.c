@@ -134,3 +134,28 @@ cpGrooveJointNew(cpBody *a, cpBody *b, cpVect groove_a, cpVect groove_b, cpVect 
 {
 	return (cpConstraint *)cpGrooveJointInit(cpGrooveJointAlloc(), a, b, groove_a, groove_b, anchr2);
 }
+
+void
+cpGrooveJointSetGrooveA(cpConstraint *constraint, cpVect value)
+{
+	cpGrooveJoint *g = (cpGrooveJoint *)constraint;
+	cpConstraintCheckCast(constraint, cpGrooveJoint);
+	
+	g->grv_a = value;
+	g->grv_n = cpvperp(cpvnormalize(cpvsub(g->grv_b, value)));
+	
+	cpConstraintActivateBodies(constraint);
+}
+
+void
+cpGrooveJointSetGrooveB(cpConstraint *constraint, cpVect value)
+{
+	cpGrooveJoint *g = (cpGrooveJoint *)constraint;
+	cpConstraintCheckCast(constraint, cpGrooveJoint);
+	
+	g->grv_b = value;
+	g->grv_n = cpvperp(cpvnormalize(cpvsub(value, g->grv_a)));
+	
+	cpConstraintActivateBodies(constraint);
+}
+

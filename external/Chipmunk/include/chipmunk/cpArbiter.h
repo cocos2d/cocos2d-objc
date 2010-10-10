@@ -110,7 +110,7 @@ void cpArbiterIgnore(cpArbiter *arb);
 
 
 static inline void
-cpArbiterGetShapes(cpArbiter *arb, cpShape **a, cpShape **b)
+cpArbiterGetShapes(const cpArbiter *arb, cpShape **a, cpShape **b)
 {
 	if(arb->swappedColl){
 		(*a) = arb->private_b, (*b) = arb->private_a;
@@ -121,7 +121,7 @@ cpArbiterGetShapes(cpArbiter *arb, cpShape **a, cpShape **b)
 #define CP_ARBITER_GET_SHAPES(arb, a, b) cpShape *a, *b; cpArbiterGetShapes(arb, &a, &b);
 
 static inline void
-cpArbiterGetBodies(cpArbiter *arb, cpBody **a, cpBody **b)
+cpArbiterGetBodies(const cpArbiter *arb, cpBody **a, cpBody **b)
 {
 	CP_ARBITER_GET_SHAPES(arb, shape_a, shape_b);
 	(*a) = shape_a->body;
@@ -130,20 +130,20 @@ cpArbiterGetBodies(cpArbiter *arb, cpBody **a, cpBody **b)
 #define CP_ARBITER_GET_BODIES(arb, a, b) cpBody *a, *b; cpArbiterGetBodies(arb, &a, &b);
 
 static inline cpBool
-cpArbiterIsFirstContact(cpArbiter *arb)
+cpArbiterIsFirstContact(const cpArbiter *arb)
 {
 	return arb->state == cpArbiterStateFirstColl;
 }
 
 static inline cpVect
-cpArbiterGetNormal(cpArbiter *arb, int i)
+cpArbiterGetNormal(const cpArbiter *arb, int i)
 {
 	cpVect n = arb->contacts[i].n;
 	return arb->swappedColl ? cpvneg(n) : n;
 }
 
 static inline cpVect
-cpArbiterGetPoint(cpArbiter *arb, int i)
+cpArbiterGetPoint(const cpArbiter *arb, int i)
 {
 	return arb->contacts[i].p;
 }
