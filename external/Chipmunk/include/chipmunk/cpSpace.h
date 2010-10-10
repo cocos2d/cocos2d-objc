@@ -94,9 +94,9 @@ typedef struct cpSpace{
 	cpArray *arbiters, *pooledArbiters;
 	
 	// Linked list ring of contact buffers.
-	// Head is the current buffer. Tail is the oldest buffer.
-	// The list points in the direction of tail->head.
-	cpContactBufferHeader *contactBuffersHead, *contactBuffersTail;
+	// Head is the newest buffer, and each buffer points to a newer buffer.
+	// Head wraps around and points to the oldest (tail) buffer.
+	cpContactBufferHeader *contactBuffersHead, *_contactBuffersTail;
 	
 	// List of buffers to be free()ed when destroying the space.
 	cpArray *allocatedBuffers;
@@ -127,14 +127,6 @@ void cpSpaceFree(cpSpace *space);
 
 // Convenience function. Frees all referenced entities. (bodies, shapes and constraints)
 void cpSpaceFreeChildren(cpSpace *space);
-
-// Needed to be defined after the cpSpace type was closed
-static inline cpBool
-cpBodyIsStatic(cpBody *body)
-{
-	cpSpace *space = body->space;
-	return (space != ((cpSpace*)0) && body == &space->staticBody);
-}
 
 // Collision handler management functions.
 void cpSpaceSetDefaultCollisionHandler(
@@ -180,7 +172,7 @@ cpShape *cpSpacePointQueryFirst(cpSpace *space, cpVect point, cpLayers layers, c
 
 // Segment query callback function
 typedef void (*cpSpaceSegmentQueryFunc)(cpShape *shape, cpFloat t, cpVect n, void *data);
-cpBool cpSpaceSegmentQuery(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryFunc func, void *data);
+void cpSpaceSegmentQuery(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryFunc func, void *data);
 cpShape *cpSpaceSegmentQueryFirst(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSegmentQueryInfo *out);
 
 // BB query callback function
@@ -196,6 +188,8 @@ void cpSpaceEachBody(cpSpace *space, cpSpaceBodyIterator func, void *data);
 void cpSpaceResizeStaticHash(cpSpace *space, cpFloat dim, int count);
 void cpSpaceResizeActiveHash(cpSpace *space, cpFloat dim, int count);
 void cpSpaceRehashStatic(cpSpace *space);
+
+void cpSpaceRehashShape(cpSpace *space, cpShape *shape);
 
 // Update the space.
 void cpSpaceStep(cpSpace *space, cpFloat dt);

@@ -12,6 +12,7 @@
 #endif
 
 MAKE_REF(cpv); // makes a variable named _cpv that contains the function pointer for cpv()
+MAKE_REF(cpveql);
 MAKE_REF(cpvadd);
 MAKE_REF(cpvneg);
 MAKE_REF(cpvsub);
@@ -30,8 +31,8 @@ MAKE_REF(cpvnormalize_safe);
 MAKE_REF(cpvclamp);
 MAKE_REF(cpvlerpconst);
 MAKE_REF(cpvdist);
-MAKE_REF(cpvnear);
 MAKE_REF(cpvdistsq);
+MAKE_REF(cpvnear);
 
 MAKE_REF(cpBBNew);
 MAKE_REF(cpBBintersects);
@@ -43,8 +44,16 @@ MAKE_REF(cpBBexpand);
 MAKE_REF(cpBodyWorld2Local);
 MAKE_REF(cpBodyLocal2World);
 MAKE_REF(cpBodyApplyImpulse);
+MAKE_REF(cpBodyIsSleeping);
+MAKE_REF(cpBodyIsRogue);
+MAKE_REF(cpBodyKineticEnergy);
 
 MAKE_REF(cpArbiterIsFirstContact);
 MAKE_REF(cpArbiterGetShapes);
 MAKE_REF(cpArbiterGetNormal);
 MAKE_REF(cpArbiterGetPoint);
+
+MAKE_REF(cpConstraintGetImpulse);
+
+MAKE_REF(cpSegmentQueryHitPoint);
+MAKE_REF(cpSegmentQueryHitDist);

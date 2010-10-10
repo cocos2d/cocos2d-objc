@@ -77,7 +77,7 @@ void cpSpaceHashFree(cpSpaceHash *hash);
 void cpSpaceHashResize(cpSpaceHash *hash, cpFloat celldim, int numcells);
 
 // Add an object to the hash.
-void cpSpaceHashInsert(cpSpaceHash *hash, void *obj, cpHashValue id, cpBB bb);
+void cpSpaceHashInsert(cpSpaceHash *hash, void *obj, cpHashValue id, cpBB _deprecated_ignored);
 // Remove an object from the hash.
 void cpSpaceHashRemove(cpSpaceHash *hash, void *obj, cpHashValue id);
 

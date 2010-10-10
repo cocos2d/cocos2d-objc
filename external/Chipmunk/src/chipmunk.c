@@ -43,7 +43,7 @@ cpMessage(const char *message, const char *condition, const char *file, int line
 }
 
 
-const char *cpVersionString = "5.3.x";
+const char *cpVersionString = "5.3.2";
 
 void
 cpInitChipmunk(void)
@@ -98,7 +98,7 @@ cpMomentForPoly(cpFloat m, const int numVerts, cpVect *verts, cpVect offset)
 cpFloat
 cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
 {
-	return m*(width*width + height*height)/(cpFloat)12.0;
+	return m*(width*width + height*height)/12.0f;
 }
 
 

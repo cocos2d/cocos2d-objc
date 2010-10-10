@@ -92,17 +92,26 @@ void cpMessage(const char *message, const char *condition, const char *file, int
 extern const char *cpVersionString;
 void cpInitChipmunk(void);
 
-// Calculate the moment of inertia for a circle, r1 and r2 are the inner and outer diameters.
-// (A solid circle has an inner diameter of 0)
+/**
+	Calculate the moment of inertia for a circle.
+	r1 and r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
+*/
 cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset);
 
-// Calculate the moment of inertia for a line segment. (beveling radius not supported)
+/**
+	Calculate the moment of inertia for a line segment.
+	Beveling radius is not supported.
+*/
 cpFloat cpMomentForSegment(cpFloat m, cpVect a, cpVect b);
 
-// Calculate the moment of inertia for a solid polygon shape.
+/**
+	Calculate the moment of inertia for a solid polygon shape.
+*/
 cpFloat cpMomentForPoly(cpFloat m, int numVerts, cpVect *verts, cpVect offset);
 
-// Calculate the moment of inertia for a solid box.
+/**
+	Calculate the moment of inertia for a solid box.
+*/
 cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
 
 #ifdef __cplusplus

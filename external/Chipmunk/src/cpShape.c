@@ -278,9 +278,13 @@ cpSegmentShapePointQuery(cpShape *shape, cpVect p){
 	return cpTrue;	
 }
 
+static inline cpBool inUnitRange(cpFloat t){return (0.0f < t && t < 1.0f);}
+
 static void
 cpSegmentShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info)
 {
+	// TODO this function could be optimized better.
+	
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
 	cpVect n = seg->tn;
 	// flip n if a is behind the axis
@@ -289,40 +293,37 @@ cpSegmentShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInf
 	
 	cpFloat an = cpvdot(a, n);
 	cpFloat bn = cpvdot(b, n);
-	cpFloat d = cpvdot(seg->ta, n) + seg->r;
 	
-	cpFloat t = (d - an)/(bn - an);
-	if(0.0f < t && t < 1.0f){
-		cpVect point = cpvlerp(a, b, t);
-		cpFloat dt = -cpvcross(seg->tn, point);
-		cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
-		cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
+	if(an != bn){
+		cpFloat d = cpvdot(seg->ta, n) + seg->r;
+		cpFloat t = (d - an)/(bn - an);
 		
-		if(dtMin < dt && dt < dtMax){
-			info->shape = shape;
-			info->t = t;
-			info->n = n;
+		if(0.0f < t && t < 1.0f){
+			cpVect point = cpvlerp(a, b, t);
+			cpFloat dt = -cpvcross(seg->tn, point);
+			cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
+			cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
 			
-			return; // don't continue on and check endcaps
+			if(dtMin < dt && dt < dtMax){
+				info->shape = shape;
+				info->t = t;
+				info->n = n;
+				
+				return; // don't continue on and check endcaps
+			}
 		}
 	}
 	
 	if(seg->r) {
-		cpSegmentQueryInfo info1; info1.shape = NULL;
-		cpSegmentQueryInfo info2; info2.shape = NULL;
+		cpSegmentQueryInfo info1 = {NULL, 1.0f, cpvzero};
+		cpSegmentQueryInfo info2 = {NULL, 1.0f, cpvzero};
 		circleSegmentQuery(shape, seg->ta, seg->r, a, b, &info1);
 		circleSegmentQuery(shape, seg->tb, seg->r, a, b, &info2);
 		
-		if(info1.shape && !info2.shape){
+		if(info1.t < info2.t){
 			(*info) = info1;
-		} else if(info2.shape && !info1.shape){
+		} else {
 			(*info) = info2;
-		} else if(info1.shape && info2.shape){
-			if(info1.t < info2.t){
-				(*info) = info1;
-			} else {
-				(*info) = info2;
-			}
 		}
 	}
 }

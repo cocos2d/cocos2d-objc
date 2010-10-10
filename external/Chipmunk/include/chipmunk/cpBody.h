@@ -71,15 +71,15 @@ typedef struct cpBody{
 	// Used for fast vector rotation using cpvrotate().
 	cpVect rot;
 	
-	// *** Other Fields
-	
-	// Maximum velocities this body can move at after integrating velocity
-	cpFloat v_limit, w_limit;
-	
 	// *** User Definable Fields
 	
 	// User defined data pointer.
 	cpDataPointer data;
+	
+	// *** Other Fields
+	
+	// Maximum velocities this body can move at after integrating velocity
+	cpFloat v_limit, w_limit;
 	
 	// *** Internally Used Fields
 	
@@ -106,32 +106,35 @@ cpBody *cpBodyNew(cpFloat m, cpFloat i);
 void cpBodyDestroy(cpBody *body);
 void cpBodyFree(cpBody *body);
 
-// Wake up a sleeping or idle body.
+// Wake up a sleeping or idle body. (defined in cpSpace.c)
 void cpBodyActivate(cpBody *body);
 
+// Force a body to sleep;
+void cpBodySleep(cpBody *body);
+//void cpBodySleepGroup(cpBody *body, ...);
+
 static inline cpBool
-cpBodyIsSleeping(cpBody *body)
+cpBodyIsSleeping(const cpBody *body)
 {
 	return (body->node.next != ((cpBody*)0));
 }
 
-// defined in cpSpace.h after the cpSpace type has been defined
-static inline cpBool
-cpBodyIsStatic(cpBody *body);
+cpBool cpBodyIsStatic(const cpBody *body);
 
 static inline cpBool
-cpBodyIsRogue(cpBody *body)
+cpBodyIsRogue(const cpBody *body)
 {
 	return (body->space == ((struct cpSpace*)0));
 }
 
 
 #define CP_DefineBodyGetter(type, member, name) \
-static inline type cpBodyGet##name(cpBody *body){return body->member;}
+static inline type cpBodyGet##name(const cpBody *body){return body->member;}
 
 #define CP_DefineBodySetter(type, member, name) \
 static inline void \
-cpBodySet##name(cpBody *body, type value){ \
+cpBodySet##name(cpBody *body, const type value){ \
+	cpBodyActivate(body); \
 	body->member = value; \
 } \
 
@@ -169,21 +172,21 @@ void cpBodyUpdatePosition(cpBody *body, cpFloat dt);
 
 // Convert body local to world coordinates
 static inline cpVect
-cpBodyLocal2World(cpBody *body, cpVect v)
+cpBodyLocal2World(const cpBody *body, const cpVect v)
 {
 	return cpvadd(body->p, cpvrotate(v, body->rot));
 }
 
 // Convert world to body local coordinates
 static inline cpVect
-cpBodyWorld2Local(cpBody *body, cpVect v)
+cpBodyWorld2Local(const cpBody *body, const cpVect v)
 {
 	return cpvunrotate(cpvsub(v, body->p), body->rot);
 }
 
 // Apply an impulse (in world coordinates) to the body at a point relative to the center of gravity (also in world coordinates).
 static inline void
-cpBodyApplyImpulse(cpBody *body, cpVect j, cpVect r)
+cpBodyApplyImpulse(cpBody *body, const cpVect j, const cpVect r)
 {
 	body->v = cpvadd(body->v, cpvmult(j, body->m_inv));
 	body->w += body->i_inv*cpvcross(r, j);
@@ -192,10 +195,10 @@ cpBodyApplyImpulse(cpBody *body, cpVect j, cpVect r)
 // Zero the forces on a body.
 void cpBodyResetForces(cpBody *body);
 // Apply a force (in world coordinates) to a body at a point relative to the center of gravity (also in world coordinates).
-void cpBodyApplyForce(cpBody *body, cpVect f, cpVect r);
+void cpBodyApplyForce(cpBody *body, const cpVect f, const cpVect r);
 
 static inline cpFloat
-cpBodyKineticEnergy(cpBody *body)
+cpBodyKineticEnergy(const cpBody *body)
 {
 	// Need to do some fudging to avoid NaNs
 	cpFloat vsq = cpvdot(body->v, body->v);
