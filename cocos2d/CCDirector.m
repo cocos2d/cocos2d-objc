@@ -89,6 +89,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize isPaused=isPaused_;
 @synthesize sendCleanupToScene=sendCleanupToScene_;
 @synthesize runningThread=runningThread_;
+@synthesize notificationNode=notificationNode_;
 //
 // singleton stuff
 //
@@ -128,6 +129,8 @@ static CCDirector *_sharedDirector = nil;
 		runningScene_ = nil;
 		nextScene_ = nil;
 		
+		notificationNode_ = nil;
+		
 		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
 		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
 		
@@ -158,6 +161,7 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel_ release];
 #endif
 	[runningScene_ release];
+	[notificationNode_ release];
 	[scenesStack_ release];
 	
 	_sharedDirector = nil;

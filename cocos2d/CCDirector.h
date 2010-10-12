@@ -99,6 +99,9 @@ and when to execute the Scenes.
 	/* The running scene */
 	CCScene *runningScene_;
 	
+	/* This object will be visited after the scene. Useful to hook a notification node */
+	id notificationNode_;
+	
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
 	CCScene *nextScene_;
@@ -162,6 +165,13 @@ and when to execute the Scenes.
  @since v0.99.0
  */
 @property (nonatomic, readonly) BOOL sendCleanupToScene;
+
+/** This object will be visited after the main scene is visited.
+ This object MUST implement the "visit" selector.
+ Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
+ @since v0.99.5
+ */
+@property (nonatomic, readwrite, retain) id	notificationNode;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;
