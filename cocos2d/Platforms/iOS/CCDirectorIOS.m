@@ -161,6 +161,8 @@ CGFloat	__ccContentScaleFactor = 1;
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
 	
+	if ([openGLView_ multiSampling]) [openGLView_ bindMultiSamplingFrameBuffer];
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
@@ -296,7 +298,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		}
 		
 		// alloc and init the opengl view
-		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO];
+		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO  multiSampling:NO numberOfSamples:0];
 		
 		// check if the view was alloced and initialized
 		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
