@@ -177,6 +177,10 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	/* draw the scene */
 	[runningScene_ visit];
+	
+	/* draw the notification node */
+	[notificationNode_ visit];
+
 	if( displayFPS_ )
 		[self showFPS];
 	

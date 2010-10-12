@@ -197,6 +197,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	/* draw the scene */
 	[runningScene_ visit];
+	
+	/* draw the notification node */
+	[notificationNode_ visit];
+
 	if( displayFPS_ )
 		[self showFPS];
 	
