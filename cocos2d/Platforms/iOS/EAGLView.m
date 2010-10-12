@@ -76,12 +76,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../Support/OpenGL_Internal.h"
 
 
-
-
 //CLASS IMPLEMENTATIONS:
 
 @interface EAGLView (Private)
 -(BOOL) setupSurface;
+- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
 @implementation EAGLView
@@ -90,6 +89,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize touchDelegate=touchDelegate_;
 @synthesize context=context_;
+@synthesize multiSampling=multiSampling_;
 
 + (Class) layerClass
 {
@@ -106,29 +106,31 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained multiSampling:sampling numberOfSamples:nSamples] autorelease];
 }
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO];
+	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO];
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples
 {
 	if((self = [super initWithFrame:frame]))
 	{
-		pixelformat_		= format;
-		depthFormat_		= depth;
-		preserveBackbuffer_	= retained;
-		size_				= frame.size;
+		pixelformat_ = format;
+		depthFormat_ = depth;
+		multiSampling_=sampling;
+		requestedSamples=nSamples;
+		
+		size_ = frame.size;
 		
 		if( ! [self setupSurface] ) {
 			[self release];
@@ -143,10 +145,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
 		
-		CAEAGLLayer *eaglLayer = (CAEAGLLayer*)[self layer];
+		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
 		
 		pixelformat_ = kEAGLColorFormatRGB565;
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
+		multiSampling_=NO;
+		requestedSamples=0;
 		size_ = [eaglLayer bounds].size;
 
 		if( ! [self setupSurface] ) {
@@ -167,11 +171,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
-		
-	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
+	//XXX number of samples should dynamic.	
+	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_ withPixelFormat:[self convertPixelFormat:pixelformat_] withMultiSampling:multiSampling_ withNumberOfSamples:requestedSamples];
 	if (!renderer_)
 		return NO;
-
+	
 	context_ = [renderer_ context];
 	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
@@ -207,13 +211,44 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// IMPORTANT:
 	// - preconditions
 	//	-> context_ MUST be the OpenGL context
-	//	-> renderBuffer_ must be the the RENDER BUFFER
+	//	-> renderbuffer_ must be the the RENDER BUFFER
 
-#if defined(__IPHONE_4_0)
-	if( discardFramebufferSupported_ && depthFormat_ ) {
-		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
-		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+#ifdef __IPHONE_4_0
+	
+	
+	if (multiSampling_)
+	{
+	
+		/* Resolve from msaaFramebuffer to resolveFramebuffer */
+		//glDisable(GL_SCISSOR_TEST);     
+		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glResolveMultisampleFramebufferAPPLE();
 	}
+	
+	if( discardFramebufferSupported_)
+	{	
+		if (multiSampling_)
+		{
+			if (depthFormat_)
+			{
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
+				glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 2, attachments);
+			}
+			else
+			{
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
+				glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+			}
+	
+		}	
+		else if (depthFormat_ ) {
+			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
+			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+		}
+	}
+	
+	if (multiSampling_) glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
 #endif // __IPHONE_4_0
 	
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
@@ -222,6 +257,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #if COCOS2D_DEBUG
 	CHECK_GL_ERROR();
 #endif	
+}
+
+- (void) bindMultiSamplingFrameBuffer
+{
+	glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);
+}
+
+- (unsigned int) convertPixelFormat:(NSString*) pixelFormat
+{
+	// define the pixel format
+	GLenum pFormat;
+	
+	
+	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
+		pFormat = GL_RGB565_OES;
+	else 
+		pFormat = GL_RGBA8_OES;
+	
+	return pFormat;
 }
 
 #pragma mark EAGLView - Point conversion
