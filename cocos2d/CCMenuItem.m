@@ -141,12 +141,13 @@ enum {
     return isEnabled_;
 }
 
--(CGRect) rectInPixels
+-(CGRect) rect
 {
-	return CGRectMake( position_.x - contentSizeInPixels_.width*anchorPoint_.x,
-					  position_.y - contentSizeInPixels_.height*anchorPoint_.y,
-					  contentSizeInPixels_.width, contentSizeInPixels_.height);	
+	return CGRectMake( position_.x - contentSize_.width*anchorPoint_.x,
+					  position_.y - contentSize_.height*anchorPoint_.y,
+					  contentSize_.width, contentSize_.height);	
 }
+
 @end
 
 

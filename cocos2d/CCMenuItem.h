@@ -69,8 +69,8 @@
 -(id) initWithBlock:(void(^)(id sender))block;
 #endif
 
-/** Returns the outside box in pixels */
--(CGRect) rectInPixels;
+/** Returns the outside box in points */
+-(CGRect) rect;
 
 /** Activate the item */
 -(void) activate;

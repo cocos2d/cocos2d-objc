@@ -1,6 +1,7 @@
 version 0.99.5-rc0 - XX-XXX-2010
 . [NEW] Director: Added "hook" for notifications or any other kind of object like CCNotifications
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)
+. [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] Tests: Touch Tests works on RetinaDisplay (issue #1000)
 . [3RD] Chipmunk: Using version 5.3.2
 

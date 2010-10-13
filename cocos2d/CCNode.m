@@ -793,26 +793,27 @@
 
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
 {
-	CGPoint point = ccpMult( worldPoint, CC_CONTENT_SCALE_FACTOR() );
-	return CGPointApplyAffineTransform(point, [self worldToNodeTransform]);
+	CGPoint ret = ccpMult( worldPoint, CC_CONTENT_SCALE_FACTOR() );
+	ret = CGPointApplyAffineTransform(ret, [self worldToNodeTransform]);
+	return ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
 }
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
-	CGPoint ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
-	ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
-	return ret;
+	CGPoint ret = ccpMult( nodePoint, CC_CONTENT_SCALE_FACTOR() );
+	ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+	return ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
 }
 
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
 {
 	CGPoint nodePoint = [self convertToNodeSpace:worldPoint];
-	return ccpSub(nodePoint, anchorPointInPixels_);
+	return ccpSub(nodePoint, anchorPoint_);
 }
 
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint
 {
-	nodePoint = ccpAdd(nodePoint, anchorPointInPixels_);
+	nodePoint = ccpAdd(nodePoint, anchorPoint_);
 	return [self convertToWorldSpace:nodePoint];
 }
 
