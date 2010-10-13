@@ -152,9 +152,6 @@ enum {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
-	touchLocation.x = touchLocation.x * CC_CONTENT_SCALE_FACTOR();
-	touchLocation.y = touchLocation.y * CC_CONTENT_SCALE_FACTOR();
-	
 	CCMenuItem* item;
 	CCARRAY_FOREACH(children_, item){
 		// ignore invisible and disabled items: issue #779, #866
@@ -162,7 +159,7 @@ enum {
 			
 			CGPoint local = [item convertToNodeSpace:touchLocation];
 			
-			CGRect r = [item rect];
+			CGRect r = [item rectInPixels];
 			r.origin = CGPointZero;
 			
 			if( CGRectContainsPoint( r, local ) )

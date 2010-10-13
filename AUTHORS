@@ -177,6 +177,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		RotateTo uses min distance patch
 	* kasatani:
 		AtlasSprite index 0 is not overwritten
+	* keisuke.hata:
+		TouchTest works in RetinaDisplay
+		Node: convertToNodeSpace works on RetinaDisplay
 	* kermidt.zed:
 		patches for absolutePosition in CocosNode
 		patches for Labels in Texture2D

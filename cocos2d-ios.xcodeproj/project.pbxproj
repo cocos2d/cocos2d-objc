@@ -2201,6 +2201,8 @@
 		E0B1E8021261F9E300ACD961 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E7FF1261F9E300ACD961 /* cpSpaceComponent.c */; };
 		E0B1E8031261F9E300ACD961 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E8001261F9E300ACD961 /* cpSpaceQuery.c */; };
 		E0B1E8041261F9E300ACD961 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */; };
+		E0B1F6641266476800ACD961 /* ball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B1F6621266476800ACD961 /* ball-hd.png */; };
+		E0B1F6651266476800ACD961 /* paddle-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B1F6631266476800ACD961 /* paddle-hd.png */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 		E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
@@ -4094,6 +4096,8 @@
 		E0B1E7FF1261F9E300ACD961 /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
 		E0B1E8001261F9E300ACD961 /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
 		E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
+		E0B1F6621266476800ACD961 /* ball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball-hd.png"; sourceTree = "<group>"; };
+		E0B1F6631266476800ACD961 /* paddle-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paddle-hd.png"; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
 		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
@@ -5216,7 +5220,9 @@
 		5012DD3E0FE299EA00D6DDD1 /* TouchesTest */ = {
 			isa = PBXGroup;
 			children = (
+				E0B1F6621266476800ACD961 /* ball-hd.png */,
 				5012DD4B0FE29A7D00D6DDD1 /* ball.png */,
+				E0B1F6631266476800ACD961 /* paddle-hd.png */,
 				5012DD4C0FE29A7D00D6DDD1 /* paddle.png */,
 				5012DD3F0FE299EA00D6DDD1 /* Ball.h */,
 				5012DD400FE299EA00D6DDD1 /* Ball.m */,
@@ -8603,6 +8609,8 @@
 				E04C635712382F6100A4B3E6 /* r2-hd.png in Resources */,
 				E04C641E12382F9400A4B3E6 /* b1-hd.png in Resources */,
 				E04C641F12382F9400A4B3E6 /* b2-hd.png in Resources */,
+				E0B1F6641266476800ACD961 /* ball-hd.png in Resources */,
+				E0B1F6651266476800ACD961 /* paddle-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

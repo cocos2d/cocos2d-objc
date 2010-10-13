@@ -459,47 +459,47 @@ enum {
 
 // transformation methods
 
-/** Returns the local affine transform matrix
+/** Returns the local affine transform matrix.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToParentTransform;
-/** Returns the inverse local affine transform matrix
+/** Returns the inverse local affine transform matrix.
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
-/** Retrusn the world affine transform matrix
+/** Retrusn the world affine transform matrix.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
-/** Returns the inverse world affine transform matrix
+/** Returns the inverse world affine transform matrix.
  @since v0.7.1
  */
 - (CGAffineTransform)worldToNodeTransform;
-/** converts a world coordinate to local coordinate
+/** converts a world coordinate in Points to local coordinate in Points.
  @since v0.7.1
  */
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
-/** converts local coordinate to world space
+/** converts local coordinate in Points to world space in Points.
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
-/** converts a world coordinate to local coordinate
- treating the returned/received node point as anchor relative
+/** converts a world coordinate to local coordinate.
+ treating the returned/received node point as anchor relative.
  @since v0.7.1
  */
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
-/** converts local coordinate to world space
- treating the returned/received node point as anchor relative
+/** converts local coordinate to world space.
+ treating the returned/received node point as anchor relative.
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-/** convenience methods which take a UITouch instead of CGPoint
+/** convenience methods which take a UITouch instead of CGPoint.
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
-/** converts a UITouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
+/** converts a UITouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative)..
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;

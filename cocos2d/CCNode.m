@@ -793,7 +793,8 @@
 
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
 {
-	return CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
+	CGPoint point = ccpMult( worldPoint, CC_CONTENT_SCALE_FACTOR() );
+	return CGPointApplyAffineTransform(point, [self worldToNodeTransform]);
 }
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
@@ -838,6 +839,7 @@
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
+
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 
