@@ -13,6 +13,7 @@ typedef enum tagPaddleState {
 }
 
 @property(nonatomic, readonly) CGRect rect;
+@property(nonatomic, readonly) CGRect rectInPixels;
 
 + (id)paddleWithTexture:(CCTexture2D *)texture;
 @end

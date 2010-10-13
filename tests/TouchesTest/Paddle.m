@@ -5,9 +5,15 @@
 
 @implementation Paddle
 
+- (CGRect)rectInPixels
+{
+	CGSize s = [texture_ contentSizeInPixels];
+	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
+}
+
 - (CGRect)rect
 {
-	CGSize s = [self.texture contentSizeInPixels];
+	CGSize s = [texture_ contentSize];
 	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
@@ -40,7 +46,9 @@
 
 - (BOOL)containsTouchLocation:(UITouch *)touch
 {
-	return CGRectContainsPoint(self.rect, [self convertTouchToNodeSpaceAR:touch]);
+	CGPoint p = [self convertTouchToNodeSpaceAR:touch];
+	CGRect r = [self rectInPixels];
+	return CGRectContainsPoint(r, p);
 }
 
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event

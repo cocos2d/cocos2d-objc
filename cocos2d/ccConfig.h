@@ -206,7 +206,7 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_SPRITE_DEBUG_DRAW 0
+#define CC_SPRITE_DEBUG_DRAW 1
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
@@ -214,7 +214,7 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
+#define CC_SPRITEBATCHNODE_DEBUG_DRAW 1
 
 /** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
  If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
@@ -222,7 +222,7 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_BITMAPFONTATLAS_DEBUG_DRAW 0
+#define CC_BITMAPFONTATLAS_DEBUG_DRAW 1
 
 /** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of LabeltAtlas will draw a bounding box
@@ -230,7 +230,7 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_LABELATLAS_DEBUG_DRAW 0
+#define CC_LABELATLAS_DEBUG_DRAW 1
 
 /** @def CC_ENABLE_PROFILERS
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
