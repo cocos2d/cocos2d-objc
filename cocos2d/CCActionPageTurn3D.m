@@ -61,29 +61,27 @@
 			if( beta <= M_PI)
 			{
 				p.x = ( r * sinf(beta));
-				p.y = ( R + ay - ( r*(1 - cosBeta)*sinTheta));
-				
-				// We scale z here to avoid the animation being
-				// too much bigger than the screen due to perspectve transform
-				p.z = (r * ( 1 - cosBeta ) * cosTheta) / 100;
 			}
 			else
 			{
 				// Force X = 0 to stop wrapped
 				// points
 				p.x = 0;
-				p.y = ( R + ay - ( r*(1 - cosBeta)*sinTheta));
-				p.z = 0.001f;
 			}
 			
+			p.y = ( R + ay - ( r*(1 - cosBeta)*sinTheta));
+			
+			// We scale z here to avoid the animation being
+			// too much bigger than the screen due to perspectve transform
+			p.z = (r * ( 1 - cosBeta ) * cosTheta) / 7; // "100" didn't work for
+				
 			// Stop z coord from dropping beneath underlying page in a transition
-			// issue #751
-			if( p.z<0.22f )
-				p.z = 0.22f;
+			// issue #751				
+			if( p.z<0.5f )
+				p.z = 0.5f;
 			
 			// Set new coords
 			[self setVertex:ccg(i,j) vertex:p];
-			
 		}
 	}
 }

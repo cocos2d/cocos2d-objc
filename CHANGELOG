@@ -3,6 +3,7 @@ version 0.99.5-rc0 - XX-XXX-2010
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] Tests: Touch Tests works on RetinaDisplay (issue #1000)
+. [Fix] Transitions: PageTurnTransition re-fixed. No more artifacts. This time is for real (issue #751)
 . [3RD] Chipmunk: Using version 5.3.2
 
 version 0.99.5-beta3 23-Sep-2010
