@@ -159,7 +159,7 @@ enum {
 			
 			CGPoint local = [item convertToNodeSpace:touchLocation];
 			
-			CGRect r = [item rectInPixels];
+			CGRect r = [item rect];
 			r.origin = CGPointZero;
 			
 			if( CGRectContainsPoint( r, local ) )
