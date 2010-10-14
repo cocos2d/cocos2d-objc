@@ -106,6 +106,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
+{
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+}
+
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
@@ -260,7 +265,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
 	}
 	
-	if (multiSampling_) glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
+	if (multiSampling_)
+		glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
 #endif // __IPHONE_4_0
 	
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])

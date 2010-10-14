@@ -488,8 +488,7 @@ Class restartAction()
 	// create an OpenGL view
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0
-							preserveBackbuffer:NO];
+								   depthFormat:0];
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
