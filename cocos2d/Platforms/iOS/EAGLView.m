@@ -106,6 +106,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
+{
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained multiSampling:NO numberOfSamples:0] autorelease];
+}
+
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained multiSampling:sampling numberOfSamples:nSamples] autorelease];
