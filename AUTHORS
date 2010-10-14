@@ -34,6 +34,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		FileUtils doesn't convert full paths
 	* Anton Zemlyanov:
 		patches for MenuItemToggle that supports selectedIndex
+	* Araker:
+		Added multisampling support in EAGLView, ESRenderer
 	* arya.irani:
 		CCCallFunc supports class methods (patch)
 	* asad.rehman:
